@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WhereToFly.Core.Views.SettingsPage"
+             xmlns:converter="clr-namespace:WhereToFly.Core.Converter">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:MapOverlayTypeDisplayConverter x:Key="MapOverlayTypeDisplayConverter" />
+            <converter:CoordinateDisplayFormatDisplayConverter x:Key="CoordinateDisplayFormatDisplayConverter" />
+            <converter:MapShadingModeDisplayConverter x:Key="MapShadingModeDisplayConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+
+        <!-- Grid with all settings -->
+        <Grid VerticalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Map overlay -->
+            <Label Grid.Row="1" Grid.Column="0"  Text="Map overlay" />
+            <Picker Grid.Row="1" Grid.Column="1" Title="Map overlay"
+                    ItemsSource="{Binding MapOverlayTypeItems, Converter=MapOverlayTypeDisplayConverter, Mode=OneWay}"
+                    SelectedItem="{Binding SelectedMapOverlayType, Mode=TwoWay}" />
+
+            <!-- Lat/long coordinates format -->
+            <Label Grid.Row="1" Grid.Column="0"  Text="Coordinates format" />
+            <Picker Grid.Row="1" Grid.Column="1" Title="Coordinates format"
+                    Items="{Binding CoordinateDisplayFormatItems, Converter=CoordinateDisplayFormatDisplayConverter, Mode=OneWay}"
+                    SelectedItem="{Binding SelectedCoordinateDisplayFormatItem, Mode=TwoWay}" />
+
+            <!-- Map shading mode -->
+            <Label Grid.Row="0" Grid.Column="0" Text="Map shading" />
+            <Picker Grid.Row="0" Grid.Column="1" Title="Map shading"
+                    Items="{Binding MapShadingModeItems, Converter=MapShadingModeDisplayConverter, Mode=OneWay}"
+                    SelectedItem="{Binding SelectedMapShadingModeItem, Mode=TwoWay}" />
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <title>Map</title>
+    <script src="Cesium/Cesium.js"></script>
+    <style>
+        @import url(Cesium/Widgets/widgets.css);
+
+        html, body, #mapElement {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body style="margin: 0px">
+    <script src="mapView3D.js"></script>
+
+    <div id="mapElement"></div>
+
+    <script type="text/javascript">
+
+        // function used to call to C#
+        function callAction(funcName, params) {
+            window.location.href = "callback://" + funcName + "/" + JSON.stringify(params);
+        }
+
+        map = new MapView({
+            id: 'mapElement',
+            initialCenterPoint: {latitude:47.67, longitude:11.88},
+            initialZoomLevel: 14
+        });
+
+        map.addLocationList([
+            { "id": "{cc8fa282-10fb-4bab-8af2-0a31f5d528a3}", "name": "Brecherspitz", "isTourLocation": true, "type": "Summit", "latitude": 47.6764385, "longitude": 11.8710533, "elevation": 1685 },
+            { "id": "{d5012732-c371-4b46-9b28-a0aa7a3e47c7}", "name": "Jägerkamp", "isTourLocation": true, "type": "Summit", "latitude": 47.673511, "longitude": 11.9060494, "elevation": 1746 },
+            { "id": "{2121170e-2f6f-49bd-8f57-b8d64d8b38bb}", "name": "Ankel-Alm", "isTourLocation": true, "type": "AlpineHut", "latitude": 47.6838571, "longitude": 11.8687695, "elevation": 1311 },
+            { "id": "{a963bac3-c573-4498-80d3-447ddeb9494a}", "name": "Schönfeldhütte", "isTourLocation": true, "type": "AlpineHut", "latitude": 47.66508, "longitude": 11.90612, "elevation": 1410 },
+            { "id": "{807a72a2-34b9-486d-9f5a-24b404a797ae}", "name": "Spitzingsattel", "isTourLocation": true, "type": "Pass", "latitude": 47.672138, "longitude": 11.8862728, "elevation": 1129 },
+            { "id": "{ec0a1a47-b67e-42f1-b6d2-322d259ca729}", "name": "Bahnhof Neuhaus (Schliersee)", "isTourLocation": false, "type": "PublicTransportTrain", "latitude": 47.70599, "longitude": 11.87451, "elevation": 809 },
+            { "id": "{4064d1f0-a476-4fe8-973f-f784cae39790}", "name": "RBO Bus 9562 Bushaltestelle Spitzingsattel", "isTourLocation": false, "type": "PublicTransportBus", "latitude": 47.672138, "longitude": 11.8862728, "elevation": 1129 }
+        ]);
+
+        setTimeout(function () {
+            map.updateMyLocation({latitude: 48.1166294, longitude: 11.58238613, zoomTo: false});
+        }, 2000);
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WhereToFly.Core.Views.LocationDetailsPage">
+    <ContentPage.Content>
+
+        <!-- Grid with all location details -->
+        <Grid VerticalOptions="FillAndExpand" ColumnSpacing="16" RowSpacing="16" Padding="8,8,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Longitude -->
+            <Label Grid.Row="0" Grid.Column="0" Text="Longitude" />
+            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Longitude, Mode=OneWay}" />
+
+            <!-- Latitude -->
+            <Label Grid.Row="1" Grid.Column="0" Text="Latitude" />
+            <Label Grid.Row="1" Grid.Column="1" Text="{Binding Latitude, Mode=OneWay}" />
+
+            <!-- Altitude -->
+            <Label Grid.Row="2" Grid.Column="0" Text="Altitude [m]" />
+            <Label Grid.Row="2" Grid.Column="1" Text="{Binding Altitude, Mode=OneWay}" />
+
+            <!-- Accuracy -->
+            <Label Grid.Row="3" Grid.Column="0" Text="Accuracy [m]" />
+            <Label Grid.Row="3" Grid.Column="1" Text="{Binding Accuracy, Mode=OneWay}" />
+
+            <!-- Last position fix -->
+            <Label Grid.Row="4" Grid.Column="0" Text="Last position fix" />
+            <Label Grid.Row="4" Grid.Column="1" Text="{Binding LastPositionFix, Mode=OneWay}" />
+
+            <!-- Speed -->
+            <Label Grid.Row="5" Grid.Column="0" Text="Speed [km/h]" />
+            <Label Grid.Row="5" Grid.Column="1" Text="{Binding SpeedInKmh, Mode=OneWay}" />
+
+            <!-- Heading -->
+            <Label Grid.Row="6" Grid.Column="0" Text="Heading [°]"
+                   IsVisible="{Binding IsHeadingAvail, Mode=OneWay}" />
+            <Label Grid.Row="6" Grid.Column="1" Text="{Binding HeadingInDegrees, Mode=OneWay}"
+                   IsVisible="{Binding IsHeadingAvail, Mode=OneWay}" />
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>
