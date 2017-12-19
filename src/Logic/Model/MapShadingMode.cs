@@ -24,5 +24,10 @@
         /// Display map shading based on current time, but 2 hours ahead
         /// </summary>
         Ahead2Hours = 3,
+
+        /// <summary>
+        /// No map shading is used, all mountains are lit equally
+        /// </summary>
+        None = 4,
     }
 }
