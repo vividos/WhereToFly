@@ -31,15 +31,15 @@ function MapView(options) {
     });
 
     console.log("#3 clock");
-    var today = new Date();
-    today.setHours(10, 0, 0, 0);
-
-    var fixedTime = Cesium.JulianDate.fromDate(today);
+    var now = Cesium.JulianDate.now();
+    var end = new Cesium.JulianDate();
+    Cesium.JulianDate.addDays(now, 1, end);
 
     var clock = new Cesium.Clock({
-        startTime: fixedTime,
-        endTime: fixedTime,
-        currentTime: fixedTime,
+        startTime: now,
+        endTime: end,
+        currentTime: now.clone(),
+        clockStep: Cesium.ClockStep.SYSTEM_CLOCK,
         clockRange: Cesium.ClockRange.CLAMPED
     });
 
@@ -92,6 +92,79 @@ function MapView(options) {
 
     this.myLocationMarker = this.viewer.entities.add(myLocationEntity);
 }
+
+/**
+ * Sets new map overlay type
+ * @param {string} overlayType overlay type constant; the following constants currently can be
+ * used: 'OpenStreetMap'.
+ */
+MapView.prototype.setOverlayType = function (overlayType) {
+
+    console.log("setting new overlay type: " + overlayType);
+
+    switch (overlayType) {
+        case 'OpenStreetMap':
+            break;
+        default:
+            console.log('invalid overlay type: ' + overlayType);
+    }
+}
+
+/**
+ * Sets new map shading mode
+ * @param {string} shadingMode shading mode constant; the following constants currently can be
+ * used: 'Fixed10Am', 'Fixed3Pm', 'CurrentTime', 'Ahead2Hours' and 'None'.
+ */
+MapView.prototype.setShadingMode = function (shadingMode) {
+
+    console.log("setting new shading mode: " + shadingMode);
+
+    var today = new Date();
+    var now = Cesium.JulianDate.now();
+
+    switch (shadingMode) {
+        case 'Fixed10Am':
+        case 'Fixed3Pm':
+            today.setHours(shadingMode === 'Fixed10Am' ? 10 : 15, 0, 0, 0);
+            var fixedTime = Cesium.JulianDate.fromDate(today);
+
+            this.viewer.clockViewModel.startTime = fixedTime;
+            this.viewer.clockViewModel.currentTime = fixedTime.clone();
+            this.viewer.clockViewModel.endTime = fixedTime.clone();
+            this.viewer.clockViewModel.clockStep = 0;
+            break;
+
+        case 'CurrentTime':
+            var end = new Cesium.JulianDate();
+            Cesium.JulianDate.addDays(now, 1, end);
+            this.viewer.clockViewModel.startTime = now;
+            this.viewer.clockViewModel.currentTime = now.clone();
+            this.viewer.clockViewModel.endTime = end;
+            this.viewer.clockViewModel.clockStep = Cesium.ClockStep.SYSTEM_CLOCK;
+            break;
+
+        case 'Ahead2Hours':
+            var ahead = new Cesium.JulianDate();
+            Cesium.JulianDate.addHours(now, 2, ahead);
+            var end2 = new Cesium.JulianDate();
+            Cesium.JulianDate.addDays(ahead, 1, end2);
+
+            this.viewer.clockViewModel.startTime = ahead;
+            this.viewer.clockViewModel.currentTime = ahead.clone();
+            this.viewer.clockViewModel.endTime = end2;
+            this.viewer.clockViewModel.clockStep = Cesium.ClockStep.SYSTEM_CLOCK;
+            break;
+
+        case 'None':
+            break;
+
+        default:
+            console.log('invalid overlay type: ' + overlayType);
+    }
+
+    this.viewer.terrainShadows =
+        shadingMode === 'None' ? Cesium.ShadowMode.DISABLED : Cesium.ShadowMode.RECEIVE_ONLY;
+};
 
 /**
  * Updates the "my location" marker on the map
