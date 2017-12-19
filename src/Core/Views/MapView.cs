@@ -82,6 +82,7 @@ namespace WhereToFly.Core.Views
             {
                 return this.mapShadingMode;
             }
+
             set
             {
                 if (this.mapShadingMode != value)
