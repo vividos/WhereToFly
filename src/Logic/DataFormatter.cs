@@ -49,7 +49,8 @@ namespace WhereToFly.Logic
         /// <returns>displayable text for sharing</returns>
         public static string FormatMyPositionShareText(MapPoint point, double altitude, DateTimeOffset dateTime)
         {
-            return string.Format("My current position is {0}, at altitude of {1} m, as of {2} local time",
+            return string.Format(
+                "My current position is {0}, at an altitude of {1} m, as of {2} local time",
                 point.ToString(),
                 (int)altitude,
                 dateTime.ToLocalTime().ToString("yyyy-MM-dd HH\\:mm\\:ss"));
