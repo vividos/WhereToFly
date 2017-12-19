@@ -41,6 +41,26 @@ namespace WhereToFly.Core.Views
             this.BindingContext = this.viewModel = new LocationDetailsViewModel();
 
             this.SetupToolbar();
+
+            Task.Factory.StartNew(this.InitPositionAsync);
+        }
+
+        /// <summary>
+        /// Get initial position and show it. Waits for 1 second; when no position is found, just
+        /// wait for regular PositionChanged events from Geolocator.
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task InitPositionAsync()
+        {
+            var position =
+                await this.geolocator.GetPositionAsync(timeout: TimeSpan.FromSeconds(1), includeHeading: false);
+
+            if (position != null)
+            {
+                this.viewModel.OnPositionChanged(
+                    this,
+                    new PositionEventArgs(position));
+            }
         }
 
         /// <summary>
