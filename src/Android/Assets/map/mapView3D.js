@@ -69,7 +69,7 @@ function MapView(options) {
     var long = this.options.initialCenterPoint['longitude'];
     var lat = this.options.initialCenterPoint['latitude'];
 
-    if (long != 0 && lat != 0) {
+    if (long !== 0 && lat !== 0) {
 
         var initialCenter =
             Cesium.Cartesian3.fromDegrees(long, lat, 5000.0);
@@ -108,7 +108,7 @@ MapView.prototype.setOverlayType = function (overlayType) {
         default:
             console.log('invalid overlay type: ' + overlayType);
     }
-}
+};
 
 /**
  * Sets new map shading mode
@@ -259,6 +259,7 @@ MapView.prototype.addLocationList = function (locationList) {
  * @param {string} pinImage Relative link URL to SVG image to use in pin
  * @param {double} longitude Longitude of entity
  * @param {double} latitude Latitude of entity
+ * @returns {object} entity description, usable for viewer.entities.add()
  */
 MapView.prototype.createEntity = function (name, description, pinColor, pinImage, longitude, latitude) {
 
@@ -274,12 +275,12 @@ MapView.prototype.createEntity = function (name, description, pinColor, pinImage
             heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
         }
     };
-}
+};
 
 /**
  * Returns a relative image Url for given location type
  * @param {string} locationType location type
- * @returns relative image Url
+ * @returns {string} relative image Url
  */
 MapView.prototype.imageUrlFromLocationType = function (locationType) {
 
