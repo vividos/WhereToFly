@@ -55,7 +55,8 @@ function MapView(options) {
         homeButton: false,
         timeline: false,
         skyAtmosphere: false,
-        skyBox: false
+        skyBox: false,
+        scene3DOnly: true
     });
 
     this.viewer.scene.globe.enableLighting = true;
