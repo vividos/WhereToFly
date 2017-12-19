@@ -47,7 +47,7 @@ function MapView(options) {
     this.viewer = new Cesium.Viewer(this.options.id, {
         imageryProvider: imageryProvider,
         terrainProvider: terrainProvider,
-        clock: clock,
+        clockViewModel: new Cesium.ClockViewModel(clock),
         baseLayerPicker: false,
         sceneModePicker: false,
         animation: false,
