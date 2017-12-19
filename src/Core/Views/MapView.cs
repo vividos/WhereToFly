@@ -21,6 +21,16 @@ namespace WhereToFly.Core.Views
         private readonly WebView webView;
 
         /// <summary>
+        /// Current map overlay type
+        /// </summary>
+        private MapOverlayType mapOverlayType = MapOverlayType.OpenStreetMap;
+
+        /// <summary>
+        /// Current map shading mode
+        /// </summary>
+        private MapShadingMode mapShadingMode = MapShadingMode.Fixed10Am;
+
+        /// <summary>
         /// Delegate of function to call when navigation to location should be started
         /// </summary>
         /// <param name="locationId">location id of location to navigate to</param>
@@ -40,6 +50,49 @@ namespace WhereToFly.Core.Views
         /// Event that is signaled when location should be shared
         /// </summary>
         public event OnShareMyLocationCallback ShareMyLocation;
+
+        /// <summary>
+        /// Gets or sets map overlay type
+        /// </summary>
+        public MapOverlayType MapOverlayType
+        {
+            get
+            {
+                return this.mapOverlayType;
+            }
+
+            set
+            {
+                if (this.mapOverlayType != value)
+                {
+                    this.mapOverlayType = value;
+
+                    string js = string.Format("map.setOverlayType('{0}');", value);
+                    this.RunJavaScript(js);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets map shading mode
+        /// </summary>
+        public MapShadingMode MapShadingMode
+        {
+            get
+            {
+                return this.mapShadingMode;
+            }
+            set
+            {
+                if (this.mapShadingMode != value)
+                {
+                    this.mapShadingMode = value;
+
+                    string js = string.Format("map.setShadingMode('{0}');", value);
+                    this.RunJavaScript(js);
+                }
+            }
+        }
 
         /// <summary>
         /// Creates a new MapView C# object

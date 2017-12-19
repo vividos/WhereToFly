@@ -36,6 +36,12 @@ namespace WhereToFly.Core.Views
         private bool zoomToMyPosition;
 
         /// <summary>
+        /// Indicates if settings page was started; used to update settings when returning to this
+        /// page.
+        /// </summary>
+        private bool startedSettingsPage;
+
+        /// <summary>
         /// Map view control on C# side
         /// </summary>
         private MapView mapView;
@@ -61,6 +67,8 @@ namespace WhereToFly.Core.Views
         public MapPage()
         {
             this.zoomToMyPosition = false;
+            this.startedSettingsPage = false;
+
             this.geolocator = Plugin.Geolocator.CrossGeolocator.Current;
 
             Task.Factory.StartNew(this.InitLayoutAsync);
@@ -238,6 +246,7 @@ namespace WhereToFly.Core.Views
         /// <returns>task to wait on</returns>
         private async Task OnClicked_ToolbarButtonSettings()
         {
+            this.startedSettingsPage = true;
             await NavigationService.Instance.NavigateAsync(Constants.PageKeySettingsPage, animated: true);
         }
 
@@ -353,6 +362,10 @@ namespace WhereToFly.Core.Views
             MapPoint initialCenter = this.appSettings.LastKnownPosition ?? new MapPoint(0.0, 0.0);
 
             this.mapView.Create(initialCenter, 14);
+
+            this.mapView.MapOverlayType = this.appSettings.MapOverlayType;
+            this.mapView.MapShadingMode = this.appSettings.ShadingMode;
+
             this.mapView.AddLocationList(this.locationList);
         }
 
@@ -436,6 +449,14 @@ namespace WhereToFly.Core.Views
             });
 
             this.geolocator.PositionChanged += this.OnPositionChanged;
+
+            if (this.startedSettingsPage)
+            {
+                this.startedSettingsPage = false;
+
+                this.mapView.MapOverlayType = this.appSettings.MapOverlayType;
+                this.mapView.MapShadingMode = this.appSettings.ShadingMode;
+            }
         }
 
         /// <summary>
