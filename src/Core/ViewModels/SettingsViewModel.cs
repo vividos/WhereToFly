@@ -172,9 +172,9 @@ namespace WhereToFly.Core.ViewModels
             this.MapShadingModeItems = new List<MapShadingModeViewModel>
             {
                 new MapShadingModeViewModel { Text = "Fixed at 10 a.m.", Value = MapShadingMode.Fixed10Am },
-                ////new MapShadingModeViewModel { Text = "Fixed at 3 p.m.", Value = MapShadingMode.Fixed3Pm },
-                ////new MapShadingModeViewModel { Text = "Follow current time", Value = MapShadingMode.CurrentTime },
-                ////new MapShadingModeViewModel { Text = "Current time + 2 hours", Value = MapShadingMode.Ahead2Hours },
+                new MapShadingModeViewModel { Text = "Fixed at 3 p.m.", Value = MapShadingMode.Fixed3Pm },
+                new MapShadingModeViewModel { Text = "Follow current time", Value = MapShadingMode.CurrentTime },
+                new MapShadingModeViewModel { Text = "Current time + 2 hours", Value = MapShadingMode.Ahead2Hours },
             };
         }
 

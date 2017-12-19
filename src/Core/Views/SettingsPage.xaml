@@ -5,7 +5,7 @@
     <ContentPage.Content>
 
         <!-- Grid with all settings -->
-        <Grid VerticalOptions="FillAndExpand">
+        <Grid VerticalOptions="FillAndExpand" ColumnSpacing="16" RowSpacing="16" Padding="8">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -17,23 +17,23 @@
             </Grid.ColumnDefinitions>
 
             <!-- Map overlay -->
-            <Label Grid.Row="1" Grid.Column="0"  Text="Map overlay" />
-            <Picker Grid.Row="1" Grid.Column="1" Title="Map overlay"
+            <Label Grid.Row="0" Grid.Column="0" FontSize="Medium" Text="Map overlay" />
+            <Picker Grid.Row="0" Grid.Column="1" Title="Map overlay"
                     ItemsSource="{Binding MapOverlayTypeItems, Mode=OneWay}"
                     ItemDisplayBinding="{Binding Text}"
                     SelectedItem="{Binding SelectedMapOverlayType, Mode=TwoWay}" />
 
-            <!-- Lat/long coordinates format -->
-            <Label Grid.Row="1" Grid.Column="0"  Text="Coordinates format" />
+            <!-- Lat/long coordinates display format -->
+            <Label Grid.Row="1" Grid.Column="0" FontSize="Medium" Text="Coordinates display format" />
             <Picker Grid.Row="1" Grid.Column="1" Title="Coordinates format"
-                    Items="{Binding CoordinateDisplayFormatItems, Mode=OneWay}"
+                    ItemsSource="{Binding CoordinateDisplayFormatItems, Mode=OneWay}"
                     ItemDisplayBinding="{Binding Text}"
                     SelectedItem="{Binding SelectedCoordinateDisplayFormatItem, Mode=TwoWay}" />
 
             <!-- Map shading mode -->
-            <Label Grid.Row="0" Grid.Column="0" Text="Map shading" />
-            <Picker Grid.Row="0" Grid.Column="1" Title="Map shading"
-                    Items="{Binding MapShadingModeItems, Mode=OneWay}"
+            <Label Grid.Row="2" Grid.Column="0" FontSize="Medium" Text="Map shading" />
+            <Picker Grid.Row="2" Grid.Column="1" Title="Map shading"
+                    ItemsSource="{Binding MapShadingModeItems, Mode=OneWay}"
                     ItemDisplayBinding="{Binding Text}"
                     SelectedItem="{Binding SelectedMapShadingModeItem, Mode=TwoWay}" />
         </Grid>
