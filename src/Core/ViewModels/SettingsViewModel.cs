@@ -86,8 +86,11 @@ namespace WhereToFly.Core.ViewModels
 
             set
             {
-                this.appSettings.MapOverlayType = value.Value;
-                Task.Factory.StartNew(async () => await this.SaveSettingsAsync());
+                if (this.appSettings.MapOverlayType != value.Value)
+                {
+                    this.appSettings.MapOverlayType = value.Value;
+                    Task.Factory.StartNew(async () => await this.SaveSettingsAsync());
+                }
             }
         }
 
@@ -111,8 +114,11 @@ namespace WhereToFly.Core.ViewModels
 
             set
             {
-                this.appSettings.CoordinateDisplayFormat = value.Value;
-                Task.Factory.StartNew(async () => await this.SaveSettingsAsync());
+                if (this.appSettings.CoordinateDisplayFormat != value.Value)
+                {
+                    this.appSettings.CoordinateDisplayFormat = value.Value;
+                    Task.Factory.StartNew(async () => await this.SaveSettingsAsync());
+                }
             }
         }
 
@@ -136,8 +142,11 @@ namespace WhereToFly.Core.ViewModels
 
             set
             {
-                this.appSettings.ShadingMode = value.Value;
-                Task.Factory.StartNew(async () => await this.SaveSettingsAsync());
+                if (this.appSettings.ShadingMode != value.Value)
+                {
+                    this.appSettings.ShadingMode = value.Value;
+                    Task.Factory.StartNew(async () => await this.SaveSettingsAsync());
+                }
             }
         }
         #endregion
