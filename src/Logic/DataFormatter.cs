@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using WhereToFly.Logic.Model;
 
@@ -37,6 +38,21 @@ namespace WhereToFly.Logic
             }
 
             return "?";
+        }
+
+        /// <summary>
+        /// Formats text for sharing the current position with another app
+        /// </summary>
+        /// <param name="point">location map point</param>
+        /// <param name="altitude">altitude in meters</param>
+        /// <param name="dateTime">date time of position fix</param>
+        /// <returns>displayable text for sharing</returns>
+        public static string FormatMyPositionShareText(MapPoint point, double altitude, DateTimeOffset dateTime)
+        {
+            return string.Format("My current position is {0}, at altitude of {1} m, as of {2} local time",
+                point.ToString(),
+                (int)altitude,
+                dateTime.ToLocalTime().ToString("yyyy-MM-dd HH\\:mm\\:ss"));
         }
     }
 }

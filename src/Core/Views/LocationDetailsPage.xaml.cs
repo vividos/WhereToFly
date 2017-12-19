@@ -1,6 +1,11 @@
 ﻿using Plugin.Geolocator.Abstractions;
+using Plugin.Share;
+using Plugin.Share.Abstractions;
+using System;
 using System.Threading.Tasks;
 using WhereToFly.Core.ViewModels;
+using WhereToFly.Logic;
+using WhereToFly.Logic.Model;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -67,8 +72,25 @@ namespace WhereToFly.Core.Views
         /// <returns>task to wait on</returns>
         private async Task OnClicked_ToolbarButtonSharePosition()
         {
-            // TODO
-            await Task.Delay(0);
+            var position =
+                await this.geolocator.GetPositionAsync(timeout: TimeSpan.FromSeconds(0.1), includeHeading: false);
+
+            if (position != null)
+            {
+                var point = new MapPoint(position.Latitude, position.Longitude);
+
+                await CrossShare.Current.Share(
+                    new ShareMessage
+                    {
+                        Title = "Where-to-fly",
+                        Text = DataFormatter.FormatMyPositionShareText(point, position.Altitude, position.Timestamp)
+                    },
+                    new ShareOptions
+                    {
+                        ChooserTitle = "Share my position with..."
+                    });
+            }
+
         }
 
         #region Page lifecycle methods

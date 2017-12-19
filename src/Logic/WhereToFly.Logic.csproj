@@ -20,6 +20,7 @@
   
   <ItemGroup>
     <PackageReference Include="CommonMark.NET" Version="0.15.1" />
+    <PackageReference Include="Plugin.Share" Version="7.1.0" />
   </ItemGroup>
 
 </Project>

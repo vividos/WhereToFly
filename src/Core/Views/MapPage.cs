@@ -1,12 +1,15 @@
 ﻿using Plugin.Geolocator.Abstractions;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
+using Plugin.Share;
+using Plugin.Share.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.Core.Services;
+using WhereToFly.Logic;
 using WhereToFly.Logic.Model;
 using Xamarin.Forms;
 
@@ -298,6 +301,7 @@ namespace WhereToFly.Core.Views
             this.mapView = new MapView(this.webView);
 
             this.mapView.NavigateToLocation += this.OnMapView_NavigateToLocation;
+            this.mapView.ShareMyLocation += async () => await this.OnMapView_ShareMyLocation();
 
             this.Content = this.webView;
 
@@ -387,6 +391,32 @@ namespace WhereToFly.Core.Views
             }
 
             return this.locationList.Find(location => location.Id == locationId);
+        }
+
+        /// <summary>
+        /// Called when the user clicked on the "Share position" link in the "my position" pin description.
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task OnMapView_ShareMyLocation()
+        {
+            var position =
+                await this.geolocator.GetPositionAsync(timeout: TimeSpan.FromSeconds(0.1), includeHeading: false);
+
+            if (position != null)
+            {
+                var point = new MapPoint(position.Latitude, position.Longitude);
+
+                await CrossShare.Current.Share(
+                    new ShareMessage
+                    {
+                        Title = "Where-to-fly",
+                        Text = DataFormatter.FormatMyPositionShareText(point, position.Altitude, position.Timestamp)
+                    },
+                    new ShareOptions
+                    {
+                        ChooserTitle = "Share my position with..."
+                    });
+            }
         }
 
         /// <summary>
