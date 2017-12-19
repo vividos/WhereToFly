@@ -13,7 +13,7 @@ namespace WhereToFly.Android
     /// Main activity for the Android app
     /// </summary>
     [Activity(Label = "Where-to-fly",
-        MainLauncher = true,
+        Name = "wheretofly.MainActivity",
         Icon = "@drawable/icon",
         Theme = "@style/MainTheme",
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]

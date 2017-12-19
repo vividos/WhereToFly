@@ -10,7 +10,8 @@ namespace WhereToFly.Android
     /// See https://developer.xamarin.com/guides/android/user_interface/creating_a_splash_screen/
     /// and https://montemagno.com/beautiful-android-splash-screens/
     /// </summary>
-    [Activity(MainLauncher = false,
+    [Activity(MainLauncher = true,
+        Name = "wheretofly.SplashActivity",
         NoHistory = true,
         Theme = "@style/SplashTheme",
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,
