@@ -419,6 +419,7 @@ namespace WhereToFly.Core.Views
             }
         }
 
+        #region Page lifecycle methods
         /// <summary>
         /// Called when page is appearing; start position updates
         /// </summary>
@@ -451,6 +452,7 @@ namespace WhereToFly.Core.Views
                 await this.geolocator.StopListeningAsync();
             });
         }
+        #endregion
 
         /// <summary>
         /// Called when position has changed
