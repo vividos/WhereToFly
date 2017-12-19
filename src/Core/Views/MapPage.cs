@@ -454,6 +454,8 @@ namespace WhereToFly.Core.Views
             {
                 this.startedSettingsPage = false;
 
+                this.appSettings = App.Settings;
+
                 this.mapView.MapOverlayType = this.appSettings.MapOverlayType;
                 this.mapView.MapShadingMode = this.appSettings.ShadingMode;
             }
