@@ -32,6 +32,8 @@ namespace WhereToFly.Core.Views
         /// </summary>
         public LocationDetailsPage()
         {
+            this.Title = "Location details";
+
             this.InitializeComponent();
 
             this.geolocator = Plugin.Geolocator.CrossGeolocator.Current;
@@ -90,7 +92,6 @@ namespace WhereToFly.Core.Views
                         ChooserTitle = "Share my position with..."
                     });
             }
-
         }
 
         #region Page lifecycle methods
