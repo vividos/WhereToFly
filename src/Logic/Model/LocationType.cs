@@ -6,79 +6,84 @@
     public enum LocationType
     {
         /// <summary>
+        /// A general waypoint
+        /// </summary>
+        Waypoint = 0,
+
+        /// <summary>
         /// Location is a summit
         /// </summary>
-        Summit = 0,
+        Summit = 1,
 
         /// <summary>
         /// A mountain pass, saddle or col
         /// </summary>
-        Pass = 1,
+        Pass = 2,
 
         /// <summary>
         /// A lake access point
         /// </summary>
-        Lake = 2,
+        Lake = 3,
 
         /// <summary>
         /// A bridge
         /// </summary>
-        Bridge = 3,
+        Bridge = 4,
 
         /// <summary>
         /// A viewpoint or scenic view
         /// </summary>
-        Viewpoint = 4,
+        Viewpoint = 5,
 
         /// <summary>
         /// Alpine hut
         /// </summary>
-        AlpineHut = 5,
+        AlpineHut = 6,
 
         /// <summary>
         /// A restaurant
         /// </summary>
-        Restaurant = 6,
+        Restaurant = 7,
 
         /// <summary>
         /// Church, chapel or small shrine
         /// </summary>
-        Church = 7,
+        Church = 8,
 
         /// <summary>
         /// Castle or ruin
         /// </summary>
-        Castle = 8,
+        Castle = 9,
 
         /// <summary>
         /// Cave or grotto
         /// </summary>
-        Cave = 9,
+        Cave = 10,
 
         /// <summary>
         /// Information spot
         /// </summary>
-        Information = 10,
+        Information = 11,
 
         /// <summary>
         /// A spot for swimming, e.g. a beach or a river spot
         /// </summary>
-        SwimmingSpot = 11,
+        SwimmingSpot = 12,
 
         /// <summary>
         /// Public transport station for bus
         /// </summary>
-        PublicTransportBus = 12,
+        PublicTransportBus = 13,
 
         /// <summary>
         /// Public transport station for train
         /// </summary>
-        PublicTransportTrain = 13,
+        PublicTransportTrain = 14,
 
         /// <summary>
         /// Parking area, usually for cars
         /// </summary>
-        Parking = 14,
+        Parking = 15,
 
         /// <summary>
         /// Start or end point of a via ferrata, a climbing trail
@@ -94,6 +99,11 @@
         /// Cable car station, either on top of the mountain, or in the valley
         /// </summary>
         CableCar = 102,
+
+        /// <summary>
+        /// Live waypoint that is getting updated over the internet
+        /// </summary>
+        LiveWaypoint = 200,
 
         /// <summary>
         /// An undefined location; should not be used
