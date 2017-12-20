@@ -63,10 +63,9 @@ namespace WhereToFly.Core.Services
         /// <returns>task to wait on</returns>
         public async Task StoreAppSettingsAsync(AppSettings appSettings)
         {
-            var platform = DependencyService.Get<IPlatform>();
-
             string json = JsonConvert.SerializeObject(appSettings);
 
+            var platform = DependencyService.Get<IPlatform>();
             string filename = Path.Combine(platform.AppDataFolder, AppSettingsFilename);
 
             await Task.Factory.StartNew(() => File.WriteAllText(filename, json, Encoding.UTF8));
@@ -121,6 +120,21 @@ namespace WhereToFly.Core.Services
                     InternetLink = "https://de.wikipedia.org/wiki/Brecherspitz"
                 }
             };
+        }
+
+        /// <summary>
+        /// Stores new location list
+        /// </summary>
+        /// <param name="locationList">location list to store</param>
+        /// <returns>task to wait on</returns>
+        public async Task StoreLocationListAsync(List<Location> locationList)
+        {
+            string json = JsonConvert.SerializeObject(locationList);
+
+            var platform = DependencyService.Get<IPlatform>();
+            string filename = Path.Combine(platform.AppDataFolder, LocationListFilename);
+
+            await Task.Factory.StartNew(() => File.WriteAllText(filename, json, Encoding.UTF8));
         }
     }
 }
