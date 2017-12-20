@@ -60,6 +60,17 @@ namespace WhereToFly.Core.Services
         }
 
         /// <summary>
+        /// Navigates back in navigation stack
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        public async Task GoBack()
+        {
+            Debug.Assert(this.NavigationPage != null, "NavigationPage property must have been set");
+
+            await this.NavigationPage.Navigation.PopAsync();
+        }
+
+        /// <summary>
         /// Navigates to a page with given type and parameters; async version
         /// </summary>
         /// <param name="pageType">page type</param>
