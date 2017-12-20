@@ -78,15 +78,25 @@ namespace WhereToFly.Android
         }
 
         /// <summary>
+        /// Opens asset stream and returns it
+        /// </summary>
+        /// <param name="assetFilename">asset filename</param>
+        /// <returns>stream to read from file</returns>
+        public Stream OpenAssetStream(string assetFilename)
+        {
+            var assetManager = this.CurrentContext.Assets;
+
+            return assetManager.Open(assetFilename);
+        }
+
+        /// <summary>
         /// Loads text of Android asset file from given filename
         /// </summary>
         /// <param name="assetFilename">asset filename</param>
         /// <returns>text content of asset</returns>
         public string LoadAssetText(string assetFilename)
         {
-            var assetManager = this.CurrentContext.Assets;
-
-            using (var stream = assetManager.Open(assetFilename))
+            using (var stream = this.OpenAssetStream(assetFilename))
             using (var streamReader = new StreamReader(stream))
             {
                 return streamReader.ReadToEnd();

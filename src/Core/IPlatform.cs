@@ -1,4 +1,6 @@
-﻿namespace WhereToFly.Core
+﻿using System.IO;
+
+namespace WhereToFly.Core
 {
     /// <summary>
     /// Platform abstraction interface
@@ -25,6 +27,13 @@
         /// Base path to use in WebView control
         /// </summary>
         string WebViewBasePath { get; }
+
+        /// <summary>
+        /// Opens asset stream and returns it
+        /// </summary>
+        /// <param name="assetFilename">asset filename</param>
+        /// <returns>stream to read from file</returns>
+        Stream OpenAssetStream(string assetFilename);
 
         /// <summary>
         /// Loads text of asset file from given filename
