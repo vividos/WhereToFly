@@ -157,6 +157,14 @@ namespace WhereToFly.Core.Views
         }
 
         /// <summary>
+        /// Clears location list
+        /// </summary>
+        public void ClearLocationList()
+        {
+            this.RunJavaScript("map.clearLocationList();");
+        }
+
+        /// <summary>
         /// Adds a list of locations to the map, to be displayed as pins.
         /// </summary>
         /// <param name="locationList">list of locations to add</param>

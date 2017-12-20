@@ -217,6 +217,18 @@ MapView.prototype.zoomToLocation = function (options) {
 };
 
 /**
+ * Clears list of locations
+ */
+MapView.prototype.clearLocationList = function () {
+
+    console.log("clearing location list");
+
+    this.viewer.entities.removeAll();
+    if (this.myLocationMarker !== null)
+        this.viewer.entities.add(this.myLocationMarker);
+};
+
+/**
  * Adds list of locations to the map, as marker pins
  * @param {array} locationList An array of location, each with the following object layout:
  * { id:"location-id", name:"Location Name", type:"LocationType", latitude: 123.45678, longitude: 9.87654, elevation:1234 }
