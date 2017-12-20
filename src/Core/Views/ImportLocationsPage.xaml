@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WhereToFly.Core.Views.ImportLocationsPage">
+    <ContentPage.Content>
+
+        <!-- Buttons for importing location lists -->
+        <StackLayout>
+            <Button Text="Import included"
+                    Command="{Binding ImportIncludedCommand}"
+                    WidthRequest="120"
+                    AutomationId="ImportIncludedButton" />
+
+            <Button Text="Import from storage"
+                    Command="{Binding ImportFromStorageCommand}"
+                    WidthRequest="120"
+                    AutomationId="ImportFromStorageButton" />
+
+            <Button Text="Clear locations list"
+                    Command="{Binding ClearLocationsCommand}"
+                    WidthRequest="120"
+                    AutomationId="ClearLocationsCommandButton" />
+        </StackLayout>
+
+    </ContentPage.Content>
+</ContentPage>
