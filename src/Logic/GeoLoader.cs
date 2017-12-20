@@ -26,21 +26,37 @@ namespace WhereToFly.Logic
                 case ".kml":
                     using (Stream stream = new FileStream(filename, FileMode.Open))
                     {
-                        var kml = SharpKml.Engine.KmlFile.Load(stream);
-
-                        return LoadFromKml(kml);
+                        return LoadLocationList(stream, isKml: true);
                     }
 
                 case ".kmz":
                     using (Stream stream = new FileStream(filename, FileMode.Open))
                     {
-                        var kmz = KmzFile.Open(stream);
-
-                        return LoadFromKml(kmz.GetDefaultKmlFile());
+                        return LoadLocationList(stream, isKml: false);
                     }
 
                 default:
                     throw new ArgumentException("file is not a valid .kml or .kmz file");
+            }
+        }
+
+        /// <summary>
+        /// Loads a location list from given stream
+        /// </summary>
+        /// <param name="stream">stream of file to load</param>
+        /// <param name="isKml">indicates if the stream is a .kml stream or a .kmz stream</param>
+        /// <returns>list of locations found in the file</returns>
+        public static List<Model.Location> LoadLocationList(Stream stream, bool isKml)
+        {
+            if (isKml)
+            {
+                var kml = KmlFile.Load(stream);
+                return LoadFromKml(kml);
+            }
+            else
+            {
+                var kmz = KmzFile.Open(stream);
+                return LoadFromKml(kmz.GetDefaultKmlFile());
             }
         }
 
