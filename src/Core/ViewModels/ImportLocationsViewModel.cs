@@ -74,8 +74,6 @@ namespace WhereToFly.Core.ViewModels
                 return;
             }
 
-            bool appendToList = await AskAppendToList();
-
             string assetFilename = this.includedLocationsList[result];
 
             List<Location> locationList = await LoadLocationListFromAssetsAsync(assetFilename);
@@ -84,6 +82,8 @@ namespace WhereToFly.Core.ViewModels
             {
                 return;
             }
+
+            bool appendToList = await AskAppendToList();
 
             var dataService = DependencyService.Get<DataService>();
 
@@ -135,14 +135,14 @@ namespace WhereToFly.Core.ViewModels
             // TODO selector
             string storageFilename = string.Empty;
 
-            bool appendToList = await AskAppendToList();
-
             List<Location> locationList = await LoadLocationListFromStorageAsync(storageFilename);
 
             if (locationList == null)
             {
                 return;
             }
+
+            bool appendToList = await AskAppendToList();
 
             var dataService = DependencyService.Get<DataService>();
 
