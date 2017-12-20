@@ -112,6 +112,7 @@
     <AndroidAsset Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_9.json" />
     <AndroidAsset Include="Assets\map\Cesium\Assets\approximateTerrainHeights.json" />
     <AndroidAsset Include="Assets\info.md" />
+    <AndroidAsset Include="Assets\locations\paraglidingspots_nzl_2017_12_20.kmz" />
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
