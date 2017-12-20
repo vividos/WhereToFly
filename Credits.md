@@ -32,6 +32,11 @@ library to format MarkDown as HTML.
 The component is licensed using the
 [BSD 3-clause "New" or "Revised" License](https://github.com/Knagis/CommonMark.NET/blob/master/LICENSE.md).
 
+The app uses the [SharpKML](https://github.com/samcragg/sharpkml) library to
+load Google Earth .kml and .kmz files.
+The library is licensed using the
+[MIT License](https://github.com/samcragg/sharpkml/blob/master/LICENSE).
+
 ## Resources
 
 ### Icons

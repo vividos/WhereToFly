@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>waypoints.kml</name>
+	<Style id="sh_ranger_station">
+		<IconStyle>
+			<scale>1.4</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/ranger_station.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<BalloonStyle>
+			<text>$[description]</text>
+		</BalloonStyle>
+	</Style>
+	<Style id="sh_arrow">
+		<IconStyle>
+			<scale>1.4</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/arrow.png</href>
+			</Icon>
+			<hotSpot x="32" y="1" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+	</Style>
+	<StyleMap id="msn_arrow">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_arrow</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_arrow</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="msn_ranger_station">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_ranger_station</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_ranger_station</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sn_arrow">
+		<IconStyle>
+			<scale>1.2</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/arrow.png</href>
+			</Icon>
+			<hotSpot x="32" y="1" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+	</Style>
+	<Style id="sn_ranger_station">
+		<IconStyle>
+			<scale>1.2</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/ranger_station.png</href>
+			</Icon>
+			<hotSpot x="0.5" y="0" xunits="fraction" yunits="fraction"/>
+		</IconStyle>
+		<BalloonStyle>
+			<text>$[description]</text>
+		</BalloonStyle>
+	</Style>
+	<Folder>
+		<name>waypoints</name>
+		<open>1</open>
+		<Placemark id="13627876285765142961">
+			<name>Hochgernhaus</name>
+			<description><![CDATA[Das Hochgernhaus ist eine privat geführte Schutzhütte in Höhe auf der Südwestseite des Hochgerns rund 1300 Meter Luftlinie westlich des Gipfels im Bereich der Weitalm.<br/>
+<a href="http://www.hochgernhaus.de/">http://www.hochgernhaus.de/</a><br/>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/IMG_Hochgernhaus2.jpg/450px-IMG_Hochgernhaus2.jpg">
+]]></description>
+			<styleUrl>#msn_ranger_station</styleUrl>
+			<ExtendedData>
+				<Data name="tracking_href_2">
+					<value>http://www.google.com/maps/gen_204?ct=google_earth:popup&amp;oi=blaces-lodging-lodging._._._.de7872643fce0207_en&amp;cad=lat:47.7502428,lon:12.4981545,quad:0201030012221,cc:DE</value>
+				</Data>
+			</ExtendedData>
+			<Point>
+				<altitudeMode>absolute</altitudeMode>
+				<coordinates>12.49810213069041,47.7502659528833,1461</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Hochgern 1748m</name>
+			<description><![CDATA[<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Hochgerngipfel.jpg/450px-Hochgerngipfel.jpg"><br/>
+<a href="https://de.wikipedia.org/wiki/Hochgern">https://de.wikipedia.org/wiki/Hochgern</a>]]></description>
+			<LookAt>
+				<longitude>12.51619687933428</longitude>
+				<latitude>47.75132454534931</latitude>
+				<altitude>0</altitude>
+				<heading>-11.43066619210783</heading>
+				<tilt>39.40638788806525</tilt>
+				<range>383.1706238013231</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#msn_arrow</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>12.51669148799914,47.75108306437478,0</coordinates>
+			</Point>
+		</Placemark>
+	</Folder>
+</Document>
+</kml>
