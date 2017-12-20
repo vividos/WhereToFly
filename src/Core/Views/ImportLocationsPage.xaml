@@ -5,20 +5,20 @@
     <ContentPage.Content>
 
         <!-- Buttons for importing location lists -->
-        <StackLayout>
+        <StackLayout WidthRequest="80">
             <Button Text="Import included"
                     Command="{Binding ImportIncludedCommand}"
-                    WidthRequest="120"
+                    HorizontalOptions="FillAndExpand"
                     AutomationId="ImportIncludedButton" />
 
             <Button Text="Import from storage"
                     Command="{Binding ImportFromStorageCommand}"
-                    WidthRequest="120"
+                    HorizontalOptions="FillAndExpand"
                     AutomationId="ImportFromStorageButton" />
 
             <Button Text="Clear locations list"
                     Command="{Binding ClearLocationsCommand}"
-                    WidthRequest="120"
+                    HorizontalOptions="FillAndExpand"
                     AutomationId="ClearLocationsCommandButton" />
         </StackLayout>
 
