@@ -80,7 +80,7 @@ namespace WhereToFly.Core.Views
         /// <returns>task to wait on</returns>
         private async Task InitLayoutAsync()
         {
-            this.Title = "Where-to-fly";
+            this.Title = Constants.AppTitle;
 
             App.RunOnUiThread(() => this.SetupToolbar());
 
@@ -176,9 +176,8 @@ namespace WhereToFly.Core.Views
                 {
                     if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Location))
                     {
-                        // TODO move to app
                         await this.DisplayAlert(
-                            "Where-to-fly",
+                            Constants.AppTitle,
                             "The location permission is needed in order to locate your position on the map",
                             "OK");
                     }
@@ -422,7 +421,7 @@ namespace WhereToFly.Core.Views
                 await CrossShare.Current.Share(
                     new ShareMessage
                     {
-                        Title = "Where-to-fly",
+                        Title = Constants.AppTitle,
                         Text = DataFormatter.FormatMyPositionShareText(point, position.Altitude, position.Timestamp)
                     },
                     new ShareOptions

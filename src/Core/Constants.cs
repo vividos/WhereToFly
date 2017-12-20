@@ -8,6 +8,11 @@ namespace WhereToFly.Core
     public static class Constants
     {
         /// <summary>
+        /// App title for display in pages and alert boxes
+        /// </summary>
+        public const string AppTitle = "Where-to-fly";
+
+        /// <summary>
         /// Visual Studio App Center key for Android app
         /// </summary>
         public const string AppCenterKeyAndroid = "dc3a41ea-d024-41a8-9940-4529a24086b1";

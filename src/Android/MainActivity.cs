@@ -12,7 +12,7 @@ namespace WhereToFly.Android
     /// <summary>
     /// Main activity for the Android app
     /// </summary>
-    [Activity(Label = "Where-to-fly",
+    [Activity(Label = Constants.AppTitle,
         Name = "wheretofly.MainActivity",
         Icon = "@drawable/icon",
         Theme = "@style/MainTheme",

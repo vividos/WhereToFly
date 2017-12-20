@@ -104,7 +104,7 @@ namespace WhereToFly.Core.Views
                 await CrossShare.Current.Share(
                     new ShareMessage
                     {
-                        Title = "Where-to-fly",
+                        Title = Constants.AppTitle,
                         Text = DataFormatter.FormatMyPositionShareText(point, position.Altitude, position.Timestamp)
                     },
                     new ShareOptions
