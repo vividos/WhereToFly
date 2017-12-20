@@ -42,6 +42,12 @@ namespace WhereToFly.Core.Views
         private bool startedSettingsPage;
 
         /// <summary>
+        /// Indicates if location list page was started; used to update location list when
+        /// returning to this page.
+        /// </summary>
+        private bool startedLocationListPage;
+
+        /// <summary>
         /// Map view control on C# side
         /// </summary>
         private MapView mapView;
@@ -68,6 +74,7 @@ namespace WhereToFly.Core.Views
         {
             this.zoomToMyPosition = false;
             this.startedSettingsPage = false;
+            this.startedLocationListPage = false;
 
             this.geolocator = Plugin.Geolocator.CrossGeolocator.Current;
 
@@ -99,6 +106,7 @@ namespace WhereToFly.Core.Views
             this.AddLocateMeToolbarButton();
             this.AddLocationDetailsToolbarButton();
             this.AddSettingsToolbarButton();
+            this.AddImportLocationsToolbarButton();
             this.AddInfoToolbarButton();
         }
 
@@ -247,6 +255,33 @@ namespace WhereToFly.Core.Views
         {
             this.startedSettingsPage = true;
             await NavigationService.Instance.NavigateAsync(Constants.PageKeySettingsPage, animated: true);
+        }
+
+        /// <summary>
+        /// Adds "Import locations" toolbar button
+        /// </summary>
+        private void AddImportLocationsToolbarButton()
+        {
+            ToolbarItem importLocationsButton = new ToolbarItem(
+                "Import locations",
+                "playlist_plus.xml",
+                async () => await this.OnClicked_ToolbarButtonImportLocations(),
+                ToolbarItemOrder.Secondary)
+            {
+                AutomationId = "ImportLocations"
+            };
+
+            this.ToolbarItems.Add(importLocationsButton);
+        }
+
+        /// <summary>
+        /// Called when toolbar button "Import locations" was clicked
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task OnClicked_ToolbarButtonImportLocations()
+        {
+            this.startedLocationListPage = true;
+            await NavigationService.Instance.NavigateAsync(Constants.PageKeyImportLocationsPage, animated: true);
         }
 
         /// <summary>
@@ -449,6 +484,15 @@ namespace WhereToFly.Core.Views
 
             this.geolocator.PositionChanged += this.OnPositionChanged;
 
+            App.RunOnUiThread(async () => await this.CheckReloadData());
+        }
+
+        /// <summary>
+        /// Checks if a reload of data into the map view is necessary
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task CheckReloadData()
+        {
             if (this.startedSettingsPage)
             {
                 this.startedSettingsPage = false;
@@ -457,6 +501,18 @@ namespace WhereToFly.Core.Views
 
                 this.mapView.MapOverlayType = this.appSettings.MapOverlayType;
                 this.mapView.MapShadingMode = this.appSettings.ShadingMode;
+            }
+
+            if (this.startedLocationListPage)
+            {
+                this.startedLocationListPage = false;
+
+                var dataService = DependencyService.Get<DataService>();
+
+                this.locationList = await dataService.GetLocationListAsync(CancellationToken.None);
+
+                this.mapView.ClearLocationList();
+                this.mapView.AddLocationList(this.locationList);
             }
         }
 
