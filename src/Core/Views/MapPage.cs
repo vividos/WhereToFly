@@ -501,6 +501,8 @@ namespace WhereToFly.Core.Views
 
                 this.mapView.MapOverlayType = this.appSettings.MapOverlayType;
                 this.mapView.MapShadingMode = this.appSettings.ShadingMode;
+
+                App.ShowToast("Settings were saved.");
             }
 
             if (this.startedLocationListPage)
