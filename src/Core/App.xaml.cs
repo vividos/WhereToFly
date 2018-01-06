@@ -47,14 +47,17 @@ namespace WhereToFly.Core
         }
 
         /// <summary>
-        /// Sets up MainPage
+        /// Sets up MainPage; it contains a MapPage instance.
         /// </summary>
         private void SetupMainPage()
         {
-            var navigationPage = new NavigationPage(new MapPage())
+            var mapPage = new MapPage();
+            var navigationPage = new NavigationPage(mapPage)
             {
                 BarBackgroundColor = Constants.PrimaryColor
             };
+
+            NavigationPage.SetTitleIcon(mapPage, "icon.png");
 
             this.MainPage = navigationPage;
             NavigationService.Instance.NavigationPage = navigationPage;
