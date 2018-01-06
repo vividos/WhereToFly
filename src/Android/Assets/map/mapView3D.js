@@ -64,6 +64,9 @@ function MapView(options) {
     // allow scripts to run in info box
     this.viewer.infoBox.frame.sandbox = this.viewer.infoBox.frame.sandbox + " allow-scripts";
 
+    // switch to Touch instructions, as the control is mainly used on touch devices
+    this.viewer.navigationHelpButton.viewModel.showTouch();
+
     console.log("#5 setView");
     var longitude = this.options.initialCenterPoint['longitude'];
     var latitude = this.options.initialCenterPoint['latitude'];
