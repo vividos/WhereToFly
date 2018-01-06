@@ -49,11 +49,17 @@ namespace WhereToFly.Logic
         /// <returns>displayable text for sharing</returns>
         public static string FormatMyPositionShareText(MapPoint point, double altitude, DateTimeOffset dateTime)
         {
+            string mapsLink = string.Format(
+                "https://www.google.com/maps/?q={0},{1}&z=15",
+                point.Latitude.ToString("F6", CultureInfo.InvariantCulture),
+                point.Longitude.ToString("F6", CultureInfo.InvariantCulture));
+
             return string.Format(
-                "My current position is {0}, at an altitude of {1} m, as of {2} local time",
+                "My current position is {0}, at an altitude of {1} m, as of {2} local time. {3}",
                 point.ToString(),
                 (int)altitude,
-                dateTime.ToLocalTime().ToString("yyyy-MM-dd HH\\:mm\\:ss"));
+                dateTime.ToLocalTime().ToString("yyyy-MM-dd HH\\:mm\\:ss"),
+                mapsLink);
         }
     }
 }
