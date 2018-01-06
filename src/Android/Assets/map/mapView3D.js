@@ -162,6 +162,8 @@ MapView.prototype.setShadingMode = function (shadingMode) {
             console.log('invalid overlay type: ' + overlayType);
     }
 
+    this.viewer.scene.globe.enableLighting = shadingMode !== 'None';
+
     this.viewer.terrainShadows =
         shadingMode === 'None' ? Cesium.ShadowMode.DISABLED : Cesium.ShadowMode.RECEIVE_ONLY;
 };
