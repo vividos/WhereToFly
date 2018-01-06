@@ -34,7 +34,7 @@ namespace WhereToFly.Android
             Forms.SetFlags("FastRenderers_Experimental");
             Forms.Init(this, savedInstanceState);
 
-            MessagingCenter.Subscribe<string>(this, Constants.MessageShowToast, this.ShowToast);
+            MessagingCenter.Subscribe<App, string>(this, Constants.MessageShowToast, this.ShowToast);
 
             this.LoadApplication(new Core.App());
         }
@@ -59,10 +59,11 @@ namespace WhereToFly.Android
         /// <summary>
         /// Shows toast message with given text
         /// </summary>
+        /// <param name="app">app object; unused</param>
         /// <param name="message">toast message</param>
-        private void ShowToast(string message)
+        private void ShowToast(App app, string message)
         {
-            Toast.MakeText(this, message, ToastLength.Short);
+            Toast.MakeText(this, message, ToastLength.Short).Show();
         }
     }
 }
