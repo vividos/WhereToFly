@@ -59,7 +59,6 @@ function MapView(options) {
     });
 
     this.viewer.scene.globe.enableLighting = true;
-    //this.viewer.scene.globe.depthTestAgainstTerrain = true;
 
     // allow scripts to run in info box
     this.viewer.infoBox.frame.sandbox = this.viewer.infoBox.frame.sandbox + " allow-scripts";
