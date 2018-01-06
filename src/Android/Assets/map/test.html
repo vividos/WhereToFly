@@ -16,10 +16,25 @@
             padding: 0;
             overflow: hidden;
         }
+
+        .cesium-infoBox {
+            width: 80%;
+            max-width: 80%;
+        }
     </style>
 </head>
 <body style="margin: 0px">
     <script src="mapView3D.js"></script>
+
+    <div>
+        <select name="mapShadingMode" onChange="map.setShadingMode(this.value.toString())">
+            <option value="Fixed10Am">Fixed at 10 am.</option>
+            <option value="Fixed3Pm">Fixed at 3 pm.</option>
+            <option value="CurrentTime">Current time</option>
+            <option value="Ahead2Hours">Current time + 2 hours</option>
+            <option value="None">No shading</option>
+        </select>
+    </div>
 
     <div id="mapElement"></div>
 
@@ -32,7 +47,7 @@
 
         map = new MapView({
             id: 'mapElement',
-            initialCenterPoint: {latitude:47.67, longitude:11.88},
+            initialCenterPoint: { latitude: 47.67, longitude: 11.88 },
             initialZoomLevel: 14
         });
 
@@ -40,17 +55,17 @@
         map.setShadingMode('Ahead2Hours');
 
         map.addLocationList([
-            { "id": "{cc8fa282-10fb-4bab-8af2-0a31f5d528a3}", "name": "Brecherspitz", "isTourLocation": true, "type": "Summit", "latitude": 47.6764385, "longitude": 11.8710533, "elevation": 1685 },
-            { "id": "{d5012732-c371-4b46-9b28-a0aa7a3e47c7}", "name": "Jägerkamp", "isTourLocation": true, "type": "Summit", "latitude": 47.673511, "longitude": 11.9060494, "elevation": 1746 },
-            { "id": "{2121170e-2f6f-49bd-8f57-b8d64d8b38bb}", "name": "Ankel-Alm", "isTourLocation": true, "type": "AlpineHut", "latitude": 47.6838571, "longitude": 11.8687695, "elevation": 1311 },
-            { "id": "{a963bac3-c573-4498-80d3-447ddeb9494a}", "name": "Schönfeldhütte", "isTourLocation": true, "type": "AlpineHut", "latitude": 47.66508, "longitude": 11.90612, "elevation": 1410 },
-            { "id": "{807a72a2-34b9-486d-9f5a-24b404a797ae}", "name": "Spitzingsattel", "isTourLocation": true, "type": "Pass", "latitude": 47.672138, "longitude": 11.8862728, "elevation": 1129 },
-            { "id": "{ec0a1a47-b67e-42f1-b6d2-322d259ca729}", "name": "Bahnhof Neuhaus (Schliersee)", "isTourLocation": false, "type": "PublicTransportTrain", "latitude": 47.70599, "longitude": 11.87451, "elevation": 809 },
-            { "id": "{4064d1f0-a476-4fe8-973f-f784cae39790}", "name": "RBO Bus 9562 Bushaltestelle Spitzingsattel", "isTourLocation": false, "type": "PublicTransportBus", "latitude": 47.672138, "longitude": 11.8862728, "elevation": 1129 }
+            { "id": "{cc8fa282-10fb-4bab-8af2-0a31f5d528a3}", "name": "Brecherspitz", "description": "Herrliche Aussicht über die drei Seen Schliersee im Norden, Tegernsee im Westen und den Spitzingsee im Süden.", "type": "Summit", "latitude": 47.6764385, "longitude": 11.8710533, "elevation": 1685 },
+            { "id": "{d5012732-c371-4b46-9b28-a0aa7a3e47c7}", "name": "Jägerkamp", "description": "Gipfel in den Schlierseer Bergen, mit Ausblick auf Schliersee und die umliegenden Berge.", "type": "Summit", "latitude": 47.673511, "longitude": 11.9060494, "elevation": 1746 },
+            { "id": "{2121170e-2f6f-49bd-8f57-b8d64d8b38bb}", "name": "Ankel-Alm", "description": "Privat bewirtschaftete Alm; Montag Ruhetag", "type": "AlpineHut", "latitude": 47.6838571, "longitude": 11.8687695, "elevation": 1311 },
+            { "id": "{a963bac3-c573-4498-80d3-447ddeb9494a}", "name": "Schönfeldhütte", "description": "Alpenvereinshütte der Sektion München des DAV", "type": "AlpineHut", "latitude": 47.66508, "longitude": 11.90612, "elevation": 1410 },
+            { "id": "{807a72a2-34b9-486d-9f5a-24b404a797ae}", "name": "Spitzingsattel", "description": "Sattel auf halbem Wege zwischen Schliersee und Spitzingsee", "type": "Pass", "latitude": 47.672138, "longitude": 11.8862728, "elevation": 1129 },
+            { "id": "{ec0a1a47-b67e-42f1-b6d2-322d259ca729}", "name": "Bahnhof Neuhaus (Schliersee)", "description": "Anschlussmöglichkeiten zum RBO Bus 9562 zum Spitzingsattel", "type": "PublicTransportTrain", "latitude": 47.70599, "longitude": 11.87451, "elevation": 809 },
+            { "id": "{4064d1f0-a476-4fe8-973f-f784cae39790}", "name": "RBO Bus 9562 Bushaltestelle Spitzingsattel", "description": "Haltestelle am Spitzingsattel. Abfahrtszeiten Richtung Schliersee: 8:42, 11:15, 15:31, 18:02.", "type": "PublicTransportBus", "latitude": 47.672138, "longitude": 11.8862728, "elevation": 1129 }
         ]);
 
         setTimeout(function () {
-            map.updateMyLocation({latitude: 48.1166294, longitude: 11.58238613, zoomTo: false});
+            map.updateMyLocation({ latitude: 48.1166294, longitude: 11.58238613, zoomTo: false });
         }, 2000);
 
     </script>
