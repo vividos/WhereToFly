@@ -54,7 +54,6 @@ function MapView(options) {
         geocoder: false,
         homeButton: false,
         timeline: false,
-        skyAtmosphere: false,
         skyBox: false,
         scene3DOnly: true
     });
