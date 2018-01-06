@@ -66,22 +66,21 @@ function MapView(options) {
     this.viewer.infoBox.frame.sandbox = this.viewer.infoBox.frame.sandbox + " allow-scripts";
 
     console.log("#5 setView");
-    var long = this.options.initialCenterPoint['longitude'];
-    var lat = this.options.initialCenterPoint['latitude'];
+    var longitude = this.options.initialCenterPoint['longitude'];
+    var latitude = this.options.initialCenterPoint['latitude'];
+    var altitude = this.options.initialCenterPoint['altitude'] || 500.0;
 
-    if (long !== 0 && lat !== 0) {
+    if (longitude !== 0 && latitude !== 0) {
 
         var initialCenter =
-            Cesium.Cartesian3.fromDegrees(long, lat, 5000.0);
+            Cesium.Cartesian3.fromDegrees(longitude, latitude, altitude);
 
-        this.viewer.camera.setView({
-            destination: initialCenter,
-            orientation: {
-                heading: 0.0, // north
-                pitch: -Cesium.Math.PI_OVER_TWO,
-                roll: 0.0
-            }
-        });
+        this.viewer.camera.lookAt(
+            initialCenter,
+            new Cesium.HeadingPitchRange(
+                0.0, // heading: north
+                -Cesium.Math.PI_OVER_TWO, // pitch: 90 degrees
+                5000.0));
     }
 
     console.log("#6 my location marker");
