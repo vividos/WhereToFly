@@ -15,6 +15,8 @@ namespace WhereToFly.Core.Views
         /// </summary>
         public ImportLocationsPage()
         {
+            this.Title = "Import locations";
+
             this.InitializeComponent();
 
             this.BindingContext = new ImportLocationsViewModel();
