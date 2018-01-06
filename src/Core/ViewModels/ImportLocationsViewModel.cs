@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Plugin.FilePicker;
+using Plugin.FilePicker.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -132,10 +134,18 @@ namespace WhereToFly.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task ImportFromStorageAsync()
         {
-            // TODO selector
-            string storageFilename = string.Empty;
+            FileData result = await CrossFilePicker.Current.PickFile();
+            if (result == null ||
+                string.IsNullOrEmpty(result.FilePath))
+            {
+                await App.Current.MainPage.DisplayAlert(
+                    Constants.AppTitle,
+                    "Couldn't load selected file", "OK");
 
-            List<Location> locationList = await LoadLocationListFromStorageAsync(storageFilename);
+                return;
+            }
+
+            List<Location> locationList = await LoadLocationListFromStorageAsync(result.FilePath);
 
             if (locationList == null)
             {
