@@ -287,6 +287,10 @@ __pycache__/
 *.odx.cs
 *.xsd.cs
 
+# SonarCloud
+src/.sonarqube/
+src/bw-output/
+
 # my ignores
 stuff/
 *.designer.cs

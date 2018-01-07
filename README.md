@@ -13,3 +13,6 @@ Builds are made by Visual Studio AppCenter:
 
 Test versions are available here:
 https://install.appcenter.ms/users/michael.fink/apps/wheretofly/distribution_groups/beta%20tester
+
+Builds are occasionally checked with SonarCloud:
+[![Quality Gate](https://sonarcloud.io/api/badges/gate?key=WhereToFly)](https://sonarcloud.io/dashboard?id=WhereToFly)
