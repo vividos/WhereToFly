@@ -17,14 +17,14 @@ function MapView(options) {
     if (this.options.callback === undefined)
         this.options.callback = callAction;
 
-    console.log("#1 imagery");
+    console.log("#1 imagery provider");
     var imageryProvider = Cesium.createOpenStreetMapImageryProvider({
         url: 'https://{s}.tile.openstreetmap.org/',
         subdomains: 'abc',
         maximumLevel: 18
     });
 
-    console.log("#2 terrain");
+    console.log("#2 terrain provider");
     var terrainProvider = new Cesium.CesiumTerrainProvider({
         url: 'https://assets.agi.com/stk-terrain/v1/tilesets/world/tiles',
         requestWaterMask: false,
