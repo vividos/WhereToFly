@@ -5,7 +5,9 @@
     <ContentPage.Content>
 
         <!-- Grid with all settings -->
-        <Grid VerticalOptions="FillAndExpand" ColumnSpacing="16" RowSpacing="16" Padding="8">
+        <Grid WidthRequest="350" MinimumWidthRequest="350"
+              HorizontalOptions="Center" VerticalOptions="FillAndExpand"
+              ColumnSpacing="16" RowSpacing="16" Padding="8">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
