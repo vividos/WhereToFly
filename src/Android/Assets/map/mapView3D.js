@@ -19,7 +19,8 @@ function MapView(options) {
 
     console.log("#1 imagery");
     var imageryProvider = Cesium.createOpenStreetMapImageryProvider({
-        url: 'https://a.tile.openstreetmap.org/',
+        url: 'https://{s}.tile.openstreetmap.org/',
+        subdomains: 'abc',
         maximumLevel: 18
     });
 
