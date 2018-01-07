@@ -120,14 +120,14 @@ namespace WhereToFly.Core.Views
         /// <param name="initialZoomLevel">initial zoom level, in 2D zoom level steps</param>
         public void Create(MapPoint initialCenterPoint, int initialZoomLevel)
         {
-            string initialRectangle = string.Format(
+            string initialCenterJs = string.Format(
                 "{{latitude:{0}, longitude:{1}}}",
                 initialCenterPoint.Latitude.ToString(CultureInfo.InvariantCulture),
                 initialCenterPoint.Longitude.ToString(CultureInfo.InvariantCulture));
 
             string js = string.Format(
                 "map = new MapView({{id: 'mapElement', initialCenterPoint: {0}, initialZoomLevel: {1}}});",
-                initialRectangle,
+                initialCenterJs,
                 initialZoomLevel);
 
             this.RunJavaScript(js);
@@ -161,11 +161,11 @@ namespace WhereToFly.Core.Views
                 latitude = position.Latitude.ToString(CultureInfo.InvariantCulture),
                 longitude = position.Longitude.ToString(CultureInfo.InvariantCulture),
                 altitude = altitudeInMeter,
-                timestamp = timestamp,
+                timestamp,
                 displayLatitude = DataFormatter.FormatLatLong(position.Latitude, this.CoordinateDisplayFormat),
                 displayLongitude = DataFormatter.FormatLatLong(position.Longitude, this.CoordinateDisplayFormat),
                 displayTimestamp = timestamp.ToLocalTime().ToString("yyyy-MM-dd HH\\:mm\\:ss"),
-                zoomToLocation = zoomToLocation
+                zoomToLocation
             };
 
             string js = string.Format(

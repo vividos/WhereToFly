@@ -140,7 +140,8 @@ namespace WhereToFly.Core.ViewModels
             {
                 await App.Current.MainPage.DisplayAlert(
                     Constants.AppTitle,
-                    "Couldn't load selected file", "OK");
+                    "Couldn't load selected file",
+                    "OK");
 
                 return;
             }
