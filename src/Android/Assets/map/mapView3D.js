@@ -184,7 +184,11 @@ MapView.prototype.updateMyLocation = function (options) {
     this.myLocationMarker.position = Cesium.Cartesian3.fromDegrees(options.longitude, options.latitude);
 
     var text = '<h2><img height="48em" width="48em" src="images/map-marker.svg" style="vertical-align:middle" />My Position</h2>' +
-        '<div>Latitude: ' + options.latitude + ', Longitude: ' + options.longitude + '</div><br/>';
+        '<div>Latitude: ' + options.displayLatitude + '<br/>' +
+        'Longitude: ' + options.displayLongitude + '<br/>' +
+        (options.altitude !== undefined && options.altitude != 0 ? ('Altitude: ' + options.altitude + 'm<br/>') : '') +
+        'Time: ' + options.displayTimestamp +
+        '</div>';
 
     text += '<img height="32em" width="32em" src="images/share-variant.svg" style="vertical-align:middle" />' +
         '<a href="javascript:parent.map.onShareMyLocation();">Share position</a></p>';

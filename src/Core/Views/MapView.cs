@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using WhereToFly.Logic;
 using WhereToFly.Logic.Model;
 using Xamarin.Forms;
 
@@ -96,6 +98,11 @@ namespace WhereToFly.Core.Views
         }
 
         /// <summary>
+        /// Coordinate display format to use for formatting coordinates
+        /// </summary>
+        public CoordinateDisplayFormat CoordinateDisplayFormat { get; set; }
+
+        /// <summary>
         /// Creates a new MapView C# object
         /// </summary>
         /// <param name="webView">web view to use</param>
@@ -144,14 +151,26 @@ namespace WhereToFly.Core.Views
         /// Updates the "my location" pin in the map
         /// </summary>
         /// <param name="position">new position to use</param>
+        /// <param name="altitudeInMeter">new altitide, in meter; when 0, it won't be used</param>
+        /// <param name="timestamp">timestamp of location</param>
         /// <param name="zoomToLocation">indicates if view should also zoom to the location</param>
-        public void UpdateMyLocation(MapPoint position, bool zoomToLocation)
+        public void UpdateMyLocation(MapPoint position, int altitudeInMeter, DateTimeOffset timestamp, bool zoomToLocation)
         {
+            var options = new
+            {
+                latitude = position.Latitude.ToString(CultureInfo.InvariantCulture),
+                longitude = position.Longitude.ToString(CultureInfo.InvariantCulture),
+                altitude = altitudeInMeter,
+                timestamp = timestamp,
+                displayLatitude = DataFormatter.FormatLatLong(position.Latitude, this.CoordinateDisplayFormat),
+                displayLongitude = DataFormatter.FormatLatLong(position.Longitude, this.CoordinateDisplayFormat),
+                displayTimestamp = timestamp.ToLocalTime().ToString("yyyy-MM-dd HH\\:mm\\:ss"),
+                zoomToLocation = zoomToLocation
+            };
+
             string js = string.Format(
-                "map.updateMyLocation({{latitude: {0}, longitude: {1}, zoomTo: {2}}});",
-                position.Latitude.ToString(CultureInfo.InvariantCulture),
-                position.Longitude.ToString(CultureInfo.InvariantCulture),
-                zoomToLocation ? "true" : "false");
+                "map.updateMyLocation({0});",
+                JsonConvert.SerializeObject(options));
 
             this.RunJavaScript(js);
         }

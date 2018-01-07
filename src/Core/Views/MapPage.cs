@@ -399,6 +399,7 @@ namespace WhereToFly.Core.Views
 
             this.mapView.MapOverlayType = this.appSettings.MapOverlayType;
             this.mapView.MapShadingMode = this.appSettings.ShadingMode;
+            this.mapView.CoordinateDisplayFormat = this.appSettings.CoordinateDisplayFormat;
 
             this.mapView.AddLocationList(this.locationList);
         }
@@ -501,6 +502,7 @@ namespace WhereToFly.Core.Views
 
                 this.mapView.MapOverlayType = this.appSettings.MapOverlayType;
                 this.mapView.MapShadingMode = this.appSettings.ShadingMode;
+                this.mapView.CoordinateDisplayFormat = this.appSettings.CoordinateDisplayFormat;
 
                 App.ShowToast("Settings were saved.");
             }
@@ -550,7 +552,10 @@ namespace WhereToFly.Core.Views
             if (this.mapView != null)
             {
                 this.mapView.UpdateMyLocation(
-                    new MapPoint(position.Latitude, position.Longitude), zoomToPosition);
+                    new MapPoint(position.Latitude, position.Longitude),
+                    (int)position.Altitude,
+                    position.Timestamp,
+                    zoomToPosition);
             }
 
             Task.Factory.StartNew(async () => await this.UpdateLastKnownPositionAsync(position));
