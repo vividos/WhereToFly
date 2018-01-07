@@ -12,7 +12,6 @@
 
             <Button Text="Import from storage"
                     Command="{Binding ImportFromStorageCommand}"
-                    IsVisible="False"
                     AutomationId="ImportFromStorageButton" />
 
             <Button Text="Clear locations list"

@@ -138,11 +138,6 @@ namespace WhereToFly.Core.ViewModels
             if (result == null ||
                 string.IsNullOrEmpty(result.FilePath))
             {
-                await App.Current.MainPage.DisplayAlert(
-                    Constants.AppTitle,
-                    "Couldn't load selected file",
-                    "OK");
-
                 return;
             }
 
