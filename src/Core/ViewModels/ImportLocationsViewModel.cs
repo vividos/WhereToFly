@@ -66,7 +66,7 @@ namespace WhereToFly.Core.ViewModels
         private async Task ImportIncludedAsync()
         {
             string result = await App.Current.MainPage.DisplayActionSheet(
-                Constants.AppTitle,
+                "Select a location list",
                 "Cancel",
                 null,
                 this.includedLocationsList.Keys.ToArray());
