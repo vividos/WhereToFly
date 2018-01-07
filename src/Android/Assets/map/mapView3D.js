@@ -187,7 +187,7 @@ MapView.prototype.updateMyLocation = function (options) {
     var text = '<h2><img height="48em" width="48em" src="images/map-marker.svg" style="vertical-align:middle" />My Position</h2>' +
         '<div>Latitude: ' + options.displayLatitude + '<br/>' +
         'Longitude: ' + options.displayLongitude + '<br/>' +
-        (options.altitude !== undefined && options.altitude != 0 ? ('Altitude: ' + options.altitude + 'm<br/>') : '') +
+        (options.altitude !== undefined && options.altitude !== 0 ? 'Altitude: ' + options.altitude + 'm<br/>' : '') +
         'Time: ' + options.displayTimestamp +
         '</div>';
 
