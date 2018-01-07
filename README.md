@@ -16,3 +16,7 @@ https://install.appcenter.ms/users/michael.fink/apps/wheretofly/distribution_gro
 
 Builds are occasionally checked with SonarCloud:
 [![Quality Gate](https://sonarcloud.io/api/badges/gate?key=WhereToFly)](https://sonarcloud.io/dashboard?id=WhereToFly)
+
+## License
+
+Licensed under the [LICENSE.md](LICENSE.md "BSD 2-clause license").
