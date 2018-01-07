@@ -275,7 +275,9 @@ MapView.prototype.addLocationList = function (locationList) {
         var location = locationList[index];
 
         var text = '<h2><img height="48em" width="48em" src="' + this.imageUrlFromLocationType(location.type) + '" style="vertical-align:middle" />' +
-            location.name + ' ' + location.elevation + 'm</h2>';
+            location.name +
+            (location.elevation !== 0 ? ' ' + location.elevation + 'm' : '') +
+            '</h2>';
 
         text += '<img height="32em" width="32em" src="images/navigation.svg" style="vertical-align:middle" />' +
             '<a href="javascript:parent.map.onNavigateToLocation(\'' + location.id + '\');">Navigate here</a></p>';
@@ -285,7 +287,7 @@ MapView.prototype.addLocationList = function (locationList) {
         var imagePath = '../' + this.imageUrlFromLocationType(location.type);
 
         var entity = this.createEntity(
-            location.name + ' ' + location.elevation + 'm',
+            location.name + (location.elevation !== 0 ? ' ' + location.elevation + 'm' : ''),
             text,
             Cesium.Color.BLUE,
             imagePath,
