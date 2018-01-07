@@ -34,6 +34,8 @@
             <option value="Ahead2Hours">Current time + 2 hours</option>
             <option value="None">No shading</option>
         </select>
+
+        <button onclick="map.zoomToLocation({latitude: 47.6764385, longitude: 11.8710533})">Fly to summit</button>
     </div>
 
     <div id="mapElement"></div>
@@ -47,7 +49,7 @@
 
         map = new MapView({
             id: 'mapElement',
-            initialCenterPoint: { latitude: 47.67, longitude: 11.88 },
+            initialCenterPoint: { latitude: 47.6764385, longitude: 11.8710533 },
             initialZoomLevel: 14
         });
 

@@ -70,19 +70,28 @@ function MapView(options) {
     console.log("#5 setView");
     var longitude = this.options.initialCenterPoint['longitude'];
     var latitude = this.options.initialCenterPoint['latitude'];
-    var altitude = this.options.initialCenterPoint['altitude'] || 500.0;
 
     if (longitude !== 0 && latitude !== 0) {
 
-        var initialCenter =
-            Cesium.Cartesian3.fromDegrees(longitude, latitude, altitude);
+        var initialHeading = 0.0; // north
+        var initialPitch = Cesium.Math.toRadians(-35);
 
-        this.viewer.camera.lookAt(
-            initialCenter,
-            new Cesium.HeadingPitchRange(
-                0.0, // heading: north
-                -Cesium.Math.PI_OVER_TWO, // pitch: 90 degrees
-                5000.0));
+        this.viewer.camera.setView({
+            destination: Cesium.Cartesian3.fromDegrees(longitude, latitude, 5000.0),
+            orientation: {
+                initialHeading,
+                initialPitch,
+                roll: 0.0
+            }
+        });
+
+        var altitude = this.options.initialCenterPoint['altitude'] || 0.0;
+
+        this.zoomToLocation({
+            longitude: longitude,
+            latitude: latitude,
+            altitude: altitude
+        });
     }
 
     console.log("#6 my location marker");
@@ -205,22 +214,32 @@ MapView.prototype.updateMyLocation = function (options) {
 /**
  * Zooms to given location
  * @param {object} options Options to use for zooming. The following object can be used:
- * { latitude: 123.45678, longitude: 9.87654 }
+ * { latitude: 123.45678, longitude: 9.87654, altitude: 500 }
  */
 MapView.prototype.zoomToLocation = function (options) {
 
-    console.log("zooming to: lat=" + options.latitude + ", long=" + options.longitude);
+    console.log("zooming to: latitude=" + options.latitude + ", longitude=" + options.longitude + ", altitude=" + options.altitude);
 
-    var cameraPos = Cesium.Cartesian3.fromDegrees(options.longitude, options.latitude, 5000.0);
+    var altitude = options.altitude || 0.0;
 
-    this.viewer.scene.camera.flyTo({
-        destination: cameraPos,
-        orientation: {
-            heading: Cesium.Math.toRadians(0), // north
-            pitch: Cesium.Math.toRadians(-35),
-            roll: 0.0
+    var positionToZoom = Cesium.Cartesian3.fromDegrees(options.longitude, options.latitude, altitude);
+
+    var tempEntity = new Cesium.Entity({
+        id: '',
+        position: positionToZoom,
+        point: {
+            heightReference: altitude === 0.0 ? Cesium.HeightReference.CLAMP_TO_GROUND : Cesium.HeightReference.NONE
         }
     });
+
+    this.viewer.zoomTo(
+        tempEntity,
+        {
+            offset: new Cesium.HeadingPitchRange(
+                this.viewer.camera.heading,
+                this.viewer.camera.pitch,
+                5000.0)
+        });
 };
 
 /**
