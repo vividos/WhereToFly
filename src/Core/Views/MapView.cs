@@ -33,6 +33,11 @@ namespace WhereToFly.Core.Views
         private MapShadingMode mapShadingMode = MapShadingMode.Fixed10Am;
 
         /// <summary>
+        /// Maximum number of locations that are imported in one JavaScript call
+        /// </summary>
+        private const int MaxLocationListCount = 100;
+
+        /// <summary>
         /// Delegate of function to call when navigation to location should be started
         /// </summary>
         /// <param name="locationId">location id of location to navigate to</param>
@@ -189,6 +194,12 @@ namespace WhereToFly.Core.Views
         /// <param name="locationList">list of locations to add</param>
         public void AddLocationList(List<Location> locationList)
         {
+            if (locationList.Count > MaxLocationListCount)
+            {
+                this.ImportLargeLocationList(locationList);
+                return;
+            }
+
             var jsonLocationList =
                 from location in locationList
                 select new
@@ -207,6 +218,21 @@ namespace WhereToFly.Core.Views
                 JsonConvert.SerializeObject(jsonLocationList));
 
             this.RunJavaScript(js);
+        }
+
+        /// <summary>
+        /// Imports large location list
+        /// </summary>
+        /// <param name="locationList">large location list to import</param>
+        private void ImportLargeLocationList(List<Location> locationList)
+        {
+            for (int i = 0; i < locationList.Count; i += MaxLocationListCount)
+            {
+                int remainingCount = Math.Min(MaxLocationListCount, locationList.Count - i);
+                var locationSubList = locationList.GetRange(i, remainingCount);
+
+                this.AddLocationList(locationSubList);
+            }
         }
 
         /// <summary>
