@@ -26,11 +26,6 @@ namespace WhereToFly.Core.Views
         private readonly IGeolocator geolocator;
 
         /// <summary>
-        /// Web view that displays the map
-        /// </summary>
-        private WebView webView;
-
-        /// <summary>
         /// Indicates if the next position update should also zoom to my position
         /// </summary>
         private bool zoomToMyPosition;
@@ -331,7 +326,7 @@ namespace WhereToFly.Core.Views
                 BaseUrl = platform.WebViewBasePath + "map/"
             };
 
-            this.webView = new WebView
+            var webView = new WebView
             {
                 Source = htmlSource,
 
@@ -339,17 +334,17 @@ namespace WhereToFly.Core.Views
                 HorizontalOptions = LayoutOptions.FillAndExpand
             };
 
-            this.webView.AutomationId = "ExploreMapWebView";
+            webView.AutomationId = "ExploreMapWebView";
 
-            this.webView.Navigating += this.OnNavigating_WebView;
-            this.webView.Navigated += this.OnNavigated_WebView;
+            webView.Navigating += this.OnNavigating_WebView;
+            webView.Navigated += this.OnNavigated_WebView;
 
-            this.mapView = new MapView(this.webView);
+            this.mapView = new MapView(webView);
 
             this.mapView.NavigateToLocation += this.OnMapView_NavigateToLocation;
             this.mapView.ShareMyLocation += async () => await this.OnMapView_ShareMyLocation();
 
-            this.Content = this.webView;
+            this.Content = webView;
 
             await this.taskCompletionSourcePageLoaded.Task;
         }
