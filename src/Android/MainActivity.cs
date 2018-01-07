@@ -1,8 +1,10 @@
 ﻿using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using Android.Widget;
 using Plugin.Permissions;
+using System.IO;
 using WhereToFly.Core;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
@@ -16,7 +18,32 @@ namespace WhereToFly.Android
         Name = "wheretofly.MainActivity",
         Icon = "@drawable/icon",
         Theme = "@style/MainTheme",
+        LaunchMode = LaunchMode.SingleTop,
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    //// Intent filter, case 1: mime type set
+    //// See https://stackoverflow.com/questions/39300649/android-intent-filter-not-working
+    [IntentFilter(
+        new[] { Intent.ActionView, Intent.ActionOpenDocument },
+        DataSchemes = new string[] { "file", "content", /*"http", "https"*/ },
+        DataMimeTypes = new string[]
+        {
+            "application/vnd.google-earth.kml+xml",
+            "application/vnd.google-earth.kmz"
+        },
+        Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
+        Icon = "@drawable/icon")]
+    //// Intent filter, case 2: mime type not set, but valid extensions
+    [IntentFilter(
+        new[] { Intent.ActionView, Intent.ActionOpenDocument },
+        DataSchemes = new string[] { "file", "content", /*"http", "https"*/ },
+        DataHost = "*",
+        DataPathPatterns = new string[]
+        {
+            @".*\\.kmz", @".*\\..*\\.kmz", ".*\\..*\\..*\\.kmz", ".*\\..*\\..*\\..*\\.kmz",
+            @".*\\.kml", @".*\\..*\\.kml", ".*\\..*\\..*\\.kml", ".*\\..*\\..*\\..*\\.kml",
+        },
+        Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
+        Icon = "@drawable/icon")]
     public class MainActivity : FormsAppCompatActivity
     {
         /// <summary>
@@ -37,6 +64,30 @@ namespace WhereToFly.Android
             MessagingCenter.Subscribe<App, string>(this, Constants.MessageShowToast, this.ShowToast);
 
             this.LoadApplication(new Core.App());
+        }
+
+        /// <summary>
+        /// Called when activity is called with a new intent, e.g. from the intent filter for file
+        /// extension (.kml, .kmz).
+        /// See: https://stackoverflow.com/questions/3760276/android-intent-filter-associate-app-with-file-extension
+        /// </summary>
+        /// <param name="intent">intent to be passed to the app</param>
+        protected override void OnNewIntent(Intent intent)
+        {
+            base.OnNewIntent(intent);
+
+            System.Diagnostics.Debug.WriteLine("received Intent: " + intent.ToString());
+
+            var helper = new IntentFilterHelper(this.ContentResolver);
+
+            bool isKml = Path.GetExtension(helper.GetFilenameFromIntent(intent)).ToLowerInvariant() == ".kml";
+            var stream = helper.GetStreamFromIntent(intent);
+
+            if (stream != null)
+            {
+                var app = App.Current as App;
+                App.RunOnUiThread(async () => await app.OpenLocationListAsync(stream, isKml));
+            }
         }
 
         /// <summary>
