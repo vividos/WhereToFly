@@ -2,10 +2,13 @@
 using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Distribute;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.Core.Services;
 using WhereToFly.Core.Views;
+using WhereToFly.Logic;
 using WhereToFly.Logic.Model;
 using Xamarin.Forms;
 
@@ -106,6 +109,64 @@ namespace WhereToFly.Core
             });
 
             return tcs.Task;
+        }
+
+        /// <summary>
+        /// Opens and load location list from given stream object
+        /// </summary>
+        /// <param name="stream">stream object</param>
+        /// <param name="isKml">indicates if the stream is a .kml stream or a .kmz stream</param>
+        /// <returns>task to wait on</returns>
+        public async Task OpenLocationListAsync(Stream stream, bool isKml)
+        {
+            List<Location> locationList = await LoadLocationListFromStreamAsync(stream, isKml);
+
+            if (locationList == null)
+            {
+                return;
+            }
+
+            bool appendToList = await ViewModels.ImportLocationsViewModel.AskAppendToList();
+
+            var dataService = DependencyService.Get<DataService>();
+
+            if (appendToList)
+            {
+                var currentList = await dataService.GetLocationListAsync(CancellationToken.None);
+                locationList.InsertRange(0, currentList);
+            }
+
+            await dataService.StoreLocationListAsync(locationList);
+
+            if (NavigationService.Instance.NavigationPage.CurrentPage is MapPage mapPage)
+            {
+                await mapPage.ReloadLocationListAsync();
+            }
+
+            App.ShowToast("Location list was loaded.");
+        }
+
+        /// <summary>
+        /// Loads location list from assets
+        /// </summary>
+        /// <param name="stream">stream to load from</param>
+        /// <param name="isKml">indicates if the stream is a .kml stream or a .kmz stream</param>
+        /// <returns>list of locations, or null when no location list could be loaded</returns>
+        private static async Task<List<Location>> LoadLocationListFromStreamAsync(Stream stream, bool isKml)
+        {
+            try
+            {
+                return GeoLoader.LoadLocationList(stream, isKml);
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert(
+                    Constants.AppTitle,
+                    "Error while loading location list: " + ex.Message,
+                    "OK");
+
+                return null;
+            }
         }
 
         /// <summary>

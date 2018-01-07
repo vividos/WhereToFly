@@ -511,13 +511,22 @@ namespace WhereToFly.Core.Views
             {
                 this.startedLocationListPage = false;
 
-                var dataService = DependencyService.Get<DataService>();
-
-                this.locationList = await dataService.GetLocationListAsync(CancellationToken.None);
-
-                this.mapView.ClearLocationList();
-                this.mapView.AddLocationList(this.locationList);
+                await this.ReloadLocationListAsync();
             }
+        }
+
+        /// <summary>
+        /// Reloads location list from data service
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        internal async Task ReloadLocationListAsync()
+        {
+            var dataService = DependencyService.Get<DataService>();
+
+            this.locationList = await dataService.GetLocationListAsync(CancellationToken.None);
+
+            this.mapView.ClearLocationList();
+            this.mapView.AddLocationList(this.locationList);
         }
 
         /// <summary>

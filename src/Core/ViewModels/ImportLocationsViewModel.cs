@@ -222,7 +222,7 @@ namespace WhereToFly.Core.ViewModels
         /// </summary>
         /// <returns>true when location list should be appended, false when it should be
         /// replaced</returns>
-        private static async Task<bool> AskAppendToList()
+        internal static async Task<bool> AskAppendToList()
         {
             bool appendToList = await App.Current.MainPage.DisplayAlert(
                 Constants.AppTitle,
