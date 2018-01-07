@@ -159,8 +159,11 @@ namespace WhereToFly.Core.Views
                 Math.Abs(position.Longitude) < 1e5 &&
                 this.mapView != null)
             {
-                this.mapView.ZoomToLocation(
-                    new MapPoint(position.Latitude, position.Longitude));
+                this.mapView.UpdateMyLocation(
+                    new MapPoint(position.Latitude, position.Longitude),
+                    (int)position.Altitude,
+                    position.Timestamp,
+                    zoomToLocation: true);
             }
             else
             {
