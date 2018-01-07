@@ -207,7 +207,14 @@ MapView.prototype.updateMyLocation = function (options) {
 
     if (options.zoomTo) {
         console.log("also zooming to my location");
-        this.map.zoomToLocation(options);
+        this.viewer.flyTo(
+            this.myLocationMarker,
+            {
+                offset: new Cesium.HeadingPitchRange(
+                    this.viewer.scene.camera.heading,
+                    this.viewer.scene.camera.pitch,
+                    5000.0)
+            });
     }
 };
 
