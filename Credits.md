@@ -23,6 +23,7 @@ The app uses the following [Xamarin Plugins](https://github.com/jamesmontemagno/
 - Plugin.CurrentActivity: Access to current Activity in Android
 - Xam.Plugin.ExternalMaps: External Navigation using Google Maps or Apple Maps
 - Xam.Plugin.Geolocator: Geo-location of user
+- pt.Xamarin.Plugin.FilePicker: File picker
 
 All plugins are licensed using the
 [MIT License](https://github.com/jamesmontemagno/GeolocatorPlugin/blob/master/LICENSE).
