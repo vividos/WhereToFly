@@ -101,6 +101,17 @@ function MapView(options) {
     myLocationEntity.show = false;
 
     this.myLocationMarker = this.viewer.entities.add(myLocationEntity);
+
+    // the zoom entity is invisible and transparent and is used for zoomToLocation() calls
+    this.zoomEntity = this.viewer.entities.add({
+        id: 'zoomEntity',
+        position: Cesium.Cartesian3.fromDegrees(0.0, 0.0),
+        point: {
+            color: Cesium.Color.TRANSPARENT,
+            heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
+        },
+        show: false
+    });
 }
 
 /**
@@ -219,33 +230,37 @@ MapView.prototype.updateMyLocation = function (options) {
 };
 
 /**
- * Zooms to given location
+ * Zooms to given location, by flying to the location
  * @param {object} options Options to use for zooming. The following object can be used:
  * { latitude: 123.45678, longitude: 9.87654, altitude: 500 }
  */
 MapView.prototype.zoomToLocation = function (options) {
 
+    if (this.zoomEntity === undefined)
+        return;
+
     console.log("zooming to: latitude=" + options.latitude + ", longitude=" + options.longitude + ", altitude=" + options.altitude);
 
     var altitude = options.altitude || 0.0;
 
-    var positionToZoom = Cesium.Cartesian3.fromDegrees(options.longitude, options.latitude, altitude);
+    // zooming works by assinging the zoom entity a new position, making it
+    // visible (but transparent), fly there and hiding it again
+    this.zoomEntity.position = Cesium.Cartesian3.fromDegrees(options.longitude, options.latitude, altitude);
 
-    var tempEntity = new Cesium.Entity({
-        id: '',
-        position: positionToZoom,
-        point: {
-            heightReference: altitude === 0.0 ? Cesium.HeightReference.CLAMP_TO_GROUND : Cesium.HeightReference.NONE
-        }
-    });
+    this.zoomEntity.point.heightReference =
+        altitude === 0.0 ? Cesium.HeightReference.CLAMP_TO_GROUND : Cesium.HeightReference.NONE;
 
-    this.viewer.zoomTo(
-        tempEntity,
+    this.zoomEntity.show = true;
+
+    this.viewer.flyTo(
+        this.zoomEntity,
         {
             offset: new Cesium.HeadingPitchRange(
                 this.viewer.camera.heading,
                 this.viewer.camera.pitch,
                 5000.0)
+        }).then(function () {
+            this.zoomEntity.show = false;
         });
 };
 
