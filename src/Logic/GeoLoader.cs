@@ -3,6 +3,7 @@ using SharpKml.Engine;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using WhereToFly.Logic.Model;
 
 namespace WhereToFly.Logic
@@ -79,7 +80,7 @@ namespace WhereToFly.Logic
                         Id = placemark.Id ?? Guid.NewGuid().ToString("B"),
                         Name = placemark.Name ?? "unknown",
                         Description = placemark.Description?.Text ?? string.Empty,
-                        Type = MapPlacemarkToType(placemark),
+                        Type = MapPlacemarkToType(kml, placemark),
                         MapLocation = new MapPoint(point.Coordinate.Latitude, point.Coordinate.Longitude),
                         Elevation = point.Coordinate.Altitude ?? 0
                     });
@@ -92,12 +93,77 @@ namespace WhereToFly.Logic
         /// <summary>
         /// Maps a placemark to a location type
         /// </summary>
+        /// <param name="kml">kml file where the placemark is in</param>
         /// <param name="placemark">placemark to use</param>
         /// <returns>location type</returns>
-        private static LocationType MapPlacemarkToType(Placemark placemark)
+        private static LocationType MapPlacemarkToType(KmlFile kml, Placemark placemark)
         {
-            // TODO check style and assign a more proper location type
+            string iconLink = GetPlacemarkStyleIcon(kml, placemark);
+
+            if (iconLink.Contains("parking"))
+            {
+                return LocationType.Parking;
+            }
+
+            if (iconLink.Contains("dining"))
+            {
+                return LocationType.Restaurant;
+            }
+
+            if (iconLink.Contains("bus"))
+            {
+                return LocationType.PublicTransportBus;
+            }
+
+            if (iconLink.Contains("rail"))
+            {
+                return LocationType.PublicTransportTrain;
+            }
+
             return LocationType.Waypoint;
+        }
+
+        /// <summary>
+        /// Retrieves style icon from a placemark
+        /// </summary>
+        /// <param name="kml">kml file where the placemark is in</param>
+        /// <param name="placemark">placemark to check</param>
+        /// <returns>style URL, or empty string when style couldn't be retrieved</returns>
+        private static string GetPlacemarkStyleIcon(KmlFile kml, Placemark placemark)
+        {
+            try
+            {
+                string styleUrl = placemark.StyleUrl.ToString();
+
+                if (styleUrl.StartsWith("#"))
+                {
+                    var style = kml.FindStyle(styleUrl.Substring(1));
+                    if (style != null &&
+                        style is StyleMapCollection styleMap)
+                    {
+                        var normalStyle = styleMap.First(x => x.State.HasValue && x.State.Value == StyleState.Normal);
+                        if (normalStyle != null)
+                        {
+                            string normalStyleUrl = normalStyle.StyleUrl.ToString();
+                            if (normalStyleUrl.StartsWith("#"))
+                            {
+                                var iconStyle = kml.FindStyle(normalStyleUrl.Substring(1));
+                                if (iconStyle != null &&
+                                    iconStyle is Style icon)
+                                {
+                                    return icon.Icon.Icon.Href.ToString();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                // ignore any errors while trying to parse
+            }
+
+            return string.Empty;
         }
     }
 }
