@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 
 namespace WhereToFly.Logic.Model
 {
@@ -28,6 +29,19 @@ namespace WhereToFly.Logic.Model
         /// Longitude, from west to east, 0.0 at Greenwich line; e.g. 11.575416
         /// </summary>
         public double Longitude { get; set; }
+
+        /// <summary>
+        /// Returns if map point is valid, e.g. when latitude and longitude are != 0
+        /// </summary>
+        public bool Valid
+        {
+            get
+            {
+                return
+                    Math.Abs(this.Latitude) > double.Epsilon &&
+                    Math.Abs(this.Longitude) > double.Epsilon;
+            }
+        }
 
         /// <summary>
         /// Returns a printable representation of this object
