@@ -169,10 +169,15 @@ namespace WhereToFly.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task UpdateLastKnownPositionAsync(Position position)
         {
-            this.appSettings.LastKnownPosition = new MapPoint(position.Latitude, position.Longitude);
+            var point = new MapPoint(position.Latitude, position.Longitude);
 
-            var dataService = DependencyService.Get<DataService>();
-            await dataService.StoreAppSettingsAsync(this.appSettings);
+            if (point.Valid)
+            {
+                this.appSettings.LastKnownPosition = point;
+
+                var dataService = DependencyService.Get<DataService>();
+                await dataService.StoreAppSettingsAsync(this.appSettings);
+            }
         }
 
         #region INotifyPropertyChanged implementation
