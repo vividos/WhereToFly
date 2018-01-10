@@ -154,6 +154,8 @@ namespace WhereToFly.Core.Views
                 Math.Abs(position.Longitude) < 1e5 &&
                 this.mapView != null)
             {
+                await this.UpdateLastKnownPositionAsync(position);
+
                 this.mapView.UpdateMyLocation(
                     new MapPoint(position.Latitude, position.Longitude),
                     (int)position.Altitude,
@@ -450,6 +452,8 @@ namespace WhereToFly.Core.Views
 
             if (position != null)
             {
+                await this.UpdateLastKnownPositionAsync(position);
+
                 var point = new MapPoint(position.Latitude, position.Longitude);
 
                 await CrossShare.Current.Share(
