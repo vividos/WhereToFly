@@ -95,7 +95,7 @@ namespace WhereToFly.Core.Services
                 displayPage = (Page)Activator.CreateInstance(pageType, parameter);
             }
 
-            await this.NavigationPage.PushAsync(displayPage, animated: true);
+            await this.NavigationPage.PushAsync(displayPage, animated);
         }
     }
 }
