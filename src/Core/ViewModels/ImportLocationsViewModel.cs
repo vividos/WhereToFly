@@ -28,6 +28,11 @@ namespace WhereToFly.Core.ViewModels
         public Command ImportFromStorageCommand { get; set; }
 
         /// <summary>
+        /// Command to execute a download from web
+        /// </summary>
+        public Command DownloadFromWebCommand { get; set; }
+
+        /// <summary>
         /// Command to clear location list
         /// </summary>
         public Command ClearLocationsCommand { get; set; }
@@ -39,6 +44,16 @@ namespace WhereToFly.Core.ViewModels
         {
             { "Paraglidingspots European Alps", "paraglidingspots_european_alps_2018_01_07.kmz" },
             { "Paraglidingspots NZL", "paraglidingspots_nzl_2017_12_20.kmz" }
+        };
+
+        /// <summary>
+        /// A mapping of display string to website address to open
+        /// </summary>
+        private readonly Dictionary<string, string> downloadWebSiteList = new Dictionary<string, string>
+        {
+            { "Paraglidingspots.com", "http://paraglidingspots.com/downloadselect.aspx" },
+            { "DHV Gelände-Datenbank",
+                "https://www.dhv.de/web/piloteninfos/gelaende-luftraum-natur/fluggelaendeflugbetrieb/gelaendedaten/gelaendedaten-download" }
         };
 
         /// <summary>
@@ -56,6 +71,7 @@ namespace WhereToFly.Core.ViewModels
         {
             this.ImportIncludedCommand = new Command(async () => await this.ImportIncludedAsync());
             this.ImportFromStorageCommand = new Command(async () => await this.ImportFromStorageAsync());
+            this.DownloadFromWebCommand = new Command(async () => await this.DownloadFromWebAsync());
             this.ClearLocationsCommand = new Command(async () => await this.ClearLocationsAsync());
         }
 
@@ -185,6 +201,29 @@ namespace WhereToFly.Core.ViewModels
 
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Presents a list of websites to download from and opens selected URL. Importing is then
+        /// done using the file extension association.
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task DownloadFromWebAsync()
+        {
+            string result = await App.Current.MainPage.DisplayActionSheet(
+                "Select a web page to open",
+                "Cancel",
+                null,
+                this.downloadWebSiteList.Keys.ToArray());
+
+            if (result == null)
+            {
+                return;
+            }
+
+            string webSiteToOpen = this.downloadWebSiteList[result];
+
+            Device.OpenUri(new Uri(webSiteToOpen));
         }
 
         /// <summary>

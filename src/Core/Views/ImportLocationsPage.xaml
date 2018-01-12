@@ -14,6 +14,10 @@
                     Command="{Binding ImportFromStorageCommand}"
                     AutomationId="ImportFromStorageButton" />
 
+            <Button Text="Download from web"
+                    Command="{Binding DownloadFromWebCommand}"
+                    AutomationId="DownloadFromWebButton" />
+
             <Button Text="Clear locations list"
                     Command="{Binding ClearLocationsCommand}"
                     AutomationId="ClearLocationsCommandButton" />
