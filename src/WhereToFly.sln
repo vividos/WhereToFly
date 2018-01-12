@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.0
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhereToFly.Android", "Android\WhereToFly.Android.csproj", "{B7C58A1E-E301-47C7-A9FB-D01B1719D043}"
 EndProject
@@ -14,6 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution 
 		..\Credits.md = ..\Credits.md
 		..\README.md = ..\README.md
 		Settings.StyleCop = Settings.StyleCop
+		..\TODO.md = ..\TODO.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhereToFly.UnitTest", "UnitTest\WhereToFly.UnitTest.csproj", "{BB6FBEF2-D8E4-417D-8CFE-2CF73245DD6D}"
