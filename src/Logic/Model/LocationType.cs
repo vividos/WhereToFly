@@ -91,14 +91,24 @@
         ViaFerrata = 100,
 
         /// <summary>
-        /// Hanggliding or Paragliding location
-        /// </summary>
-        Paragliding = 101,
-
-        /// <summary>
         /// Cable car station, either on top of the mountain, or in the valley
         /// </summary>
-        CableCar = 102,
+        CableCar = 101,
+
+        /// <summary>
+        /// Flying, Hanggliding or Paragliding takeoff location
+        /// </summary>
+        FlyingTakeoff = 150,
+
+        /// <summary>
+        /// Flying, Hanggliding or Paragliding landing place location
+        /// </summary>
+        FlyingLandingPlace = 151,
+
+        /// <summary>
+        /// Flying, Hanggliding or Paragliding winch towing location
+        /// </summary>
+        FlyingWinchTowing = 152,
 
         /// <summary>
         /// Live waypoint that is getting updated over the internet
