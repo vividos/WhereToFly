@@ -91,6 +91,29 @@ namespace WhereToFly.Logic
         }
 
         /// <summary>
+        /// Mapping from a text that can occur in a placemark icon link, to a LocationType
+        /// </summary>
+        private static Dictionary<string, LocationType> iconLinkToLocationTypeMap = new Dictionary<string, LocationType>
+        {
+            // paraglidingsports.com types
+            {"iconpg_sp.png", LocationType.FlyingTakeoff },
+            {"iconpg_spk.png", LocationType.FlyingTakeoff },
+            {"iconpg_spw.png", LocationType.FlyingWinchTowing },
+            {"iconpg_lp.png", LocationType.FlyingLandingPlace },
+
+            // DHV Geländedatenbank
+            {"windsack_rot", LocationType.FlyingTakeoff },
+            {"windsack_gruen", LocationType.FlyingLandingPlace },
+            {"windsack_blau", LocationType.FlyingWinchTowing },
+
+            // general Google Maps types
+            {"parking", LocationType.Parking },
+            {"dining", LocationType.Restaurant },
+            {"bus", LocationType.PublicTransportBus },
+            {"rail", LocationType.PublicTransportTrain },
+        };
+
+        /// <summary>
         /// Maps a placemark to a location type
         /// </summary>
         /// <param name="kml">kml file where the placemark is in</param>
@@ -100,24 +123,12 @@ namespace WhereToFly.Logic
         {
             string iconLink = GetPlacemarkStyleIcon(kml, placemark);
 
-            if (iconLink.Contains("parking"))
+            foreach (var iconLinkContentAndLocationType in iconLinkToLocationTypeMap)
             {
-                return LocationType.Parking;
-            }
-
-            if (iconLink.Contains("dining"))
-            {
-                return LocationType.Restaurant;
-            }
-
-            if (iconLink.Contains("bus"))
-            {
-                return LocationType.PublicTransportBus;
-            }
-
-            if (iconLink.Contains("rail"))
-            {
-                return LocationType.PublicTransportTrain;
+                if (iconLink.Contains(iconLinkContentAndLocationType.Key))
+                {
+                    return iconLinkContentAndLocationType.Value;
+                }
             }
 
             return LocationType.Waypoint;
