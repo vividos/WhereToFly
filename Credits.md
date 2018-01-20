@@ -42,23 +42,39 @@ The library is licensed using the
 
 ### Icons
 
-All icons in the App are from the Google Material Icons
-(https://materialdesignicons.com/), except for these custom icons:
+The following icons are from the Google Material icon set:
 
-ruler - distance.png - Austin Andrews @Templarian
-church - church.png - Austin Andrews @Templarian
-castle - castle.png - Austin Andrews @Templarian
-bridge - bridge.png - Austin Andrews @Templarian
-arrow-up - up.png - Austin Andrews @Templarian
-arrow-down - down.png - Austin Andrews @Templarian
+- bus
+- compass
+- crosshairs-gps
+- directions
+- information-outline
+- map-marker-plus
+- map-marker
+- navigation
+- parking
+- playlist-plus
+- settings
+- share-variant
+- train
 
 The Google Material Icons are licensed under the "Apache License 2.0":
 https://github.com/google/material-design-icons/blob/master/LICENSE
 
+The following icons in the App are from the Material Design Icons
+(https://materialdesignicons.com/) page:
+
+- ruler - distance.png - Austin Andrews @Templarian
+- church - church.png - Austin Andrews @Templarian
+- castle - castle.png - Austin Andrews @Templarian
+- bridge - bridge.png - Austin Andrews @Templarian
+- arrow-up - up.png - Austin Andrews @Templarian
+- arrow-down - down.png - Austin Andrews @Templarian
+
 All custom icons are licensed under the SIL Open Font License 1.1:
 http://scripts.sil.org/cms/scripts/page.php?item_id=OFL_web
 
-Some icons are used from the Mapbox Maki icon set:
+Some icons used in the App are used from the Mapbox Maki icon set:
 https://www.mapbox.com/maki-icons/
 
 The Maki icon set is licensed using the CC0 license:
