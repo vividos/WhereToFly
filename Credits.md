@@ -63,3 +63,9 @@ https://www.mapbox.com/maki-icons/
 
 The Maki icon set is licensed using the CC0 license:
 https://creativecommons.org/publicdomain/zero/1.0/
+
+The following icons are from the onlinewebfonts web page:
+
+Paragliding icon:
+Icon made from [http://www.onlinewebfonts.com/icon](http://www.onlinewebfonts.com/icon "Icon Fonts")
+is licensed by CC BY 3.0.

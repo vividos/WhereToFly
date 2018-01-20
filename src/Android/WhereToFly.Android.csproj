@@ -512,6 +512,8 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\playlist_plus.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\paragliding.svg" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

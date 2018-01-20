@@ -304,7 +304,7 @@ MapView.prototype.addLocationList = function (locationList) {
         var entity = this.createEntity(
             location.name + (location.elevation !== 0 ? ' ' + location.elevation + 'm' : ''),
             text,
-            Cesium.Color.BLUE,
+            this.pinColorFromLocationType(location.type),
             imagePath,
             location.longitude,
             location.latitude);
@@ -362,9 +362,27 @@ MapView.prototype.imageUrlFromLocationType = function (locationType) {
         case 'PublicTransportTrain': return 'images/train.svg';
         case 'Parking': return 'images/parking.svg';
         //case 'ViaFerrata': return '';
-        //case 'Paragliding': return '';
         case 'CableCar': return 'images/aerialway-15.svg';
+        case 'FlyingTakeoff': return 'images/paragliding.svg';
+        case 'FlyingLandingPlace': return 'images/paragliding.svg';
+        case 'FlyingWinchTowing': return 'images/paragliding.svg';
+        //case 'LiveWaypoint': return '';
         default: return 'images/map-marker.svg';
+    }
+};
+
+/**
+ * Returns a pin color for given location type
+ * @param {string} locationType location type
+ * @returns {string} Cesium.Color constant
+ */
+MapView.prototype.pinColorFromLocationType = function (locationType) {
+
+    switch (locationType) {
+        case 'FlyingTakeoff': return Cesium.Color.YELLOWGREEN;
+        case 'FlyingLandingPlace': return Cesium.Color.ORANGE;
+        case 'FlyingWinchTowing': return Cesium.Color.CORNFLOWERBLUE;
+        default: return Cesium.Color.BLUE;
     }
 };
 
