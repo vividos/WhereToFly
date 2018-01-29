@@ -96,21 +96,21 @@ namespace WhereToFly.Logic
         private static Dictionary<string, LocationType> iconLinkToLocationTypeMap = new Dictionary<string, LocationType>
         {
             // paraglidingsports.com types
-            {"iconpg_sp.png", LocationType.FlyingTakeoff },
-            {"iconpg_spk.png", LocationType.FlyingTakeoff },
-            {"iconpg_spw.png", LocationType.FlyingWinchTowing },
-            {"iconpg_lp.png", LocationType.FlyingLandingPlace },
+            { "iconpg_sp.png", LocationType.FlyingTakeoff },
+            { "iconpg_spk.png", LocationType.FlyingTakeoff },
+            { "iconpg_spw.png", LocationType.FlyingWinchTowing },
+            { "iconpg_lp.png", LocationType.FlyingLandingPlace },
 
             // DHV Geländedatenbank
-            {"windsack_rot", LocationType.FlyingTakeoff },
-            {"windsack_gruen", LocationType.FlyingLandingPlace },
-            {"windsack_blau", LocationType.FlyingWinchTowing },
+            { "windsack_rot", LocationType.FlyingTakeoff },
+            { "windsack_gruen", LocationType.FlyingLandingPlace },
+            { "windsack_blau", LocationType.FlyingWinchTowing },
 
             // general Google Maps types
-            {"parking", LocationType.Parking },
-            {"dining", LocationType.Restaurant },
-            {"bus", LocationType.PublicTransportBus },
-            {"rail", LocationType.PublicTransportTrain },
+            { "parking", LocationType.Parking },
+            { "dining", LocationType.Restaurant },
+            { "bus", LocationType.PublicTransportBus },
+            { "rail", LocationType.PublicTransportTrain },
         };
 
         /// <summary>
