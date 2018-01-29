@@ -2,7 +2,6 @@
 
 ## Bugs
 
-- [ ] fix zoom to my position distance from terrain
 - [ ] Share without location, show toast after x seconds
 
 ## Nice to have

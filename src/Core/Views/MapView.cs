@@ -163,8 +163,8 @@ namespace WhereToFly.Core.Views
         {
             var options = new
             {
-                latitude = position.Latitude.ToString(CultureInfo.InvariantCulture),
-                longitude = position.Longitude.ToString(CultureInfo.InvariantCulture),
+                latitude = position.Latitude,
+                longitude = position.Longitude,
                 altitude = altitudeInMeter,
                 timestamp,
                 displayLatitude = DataFormatter.FormatLatLong(position.Latitude, this.CoordinateDisplayFormat),

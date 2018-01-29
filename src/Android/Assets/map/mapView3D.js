@@ -192,7 +192,10 @@ MapView.prototype.setShadingMode = function (shadingMode) {
 /**
  * Updates the "my location" marker on the map
  * @param {object} options Options to use for updating my location. The following object can be used:
- * { latitude: 123.45678, longitude: 9.87654, zoomTo: true }
+ * { latitude: 123.45678, longitude: 9.87654, altitude:0.0, timestamp: '2018-01-29T21:06:00'
+ *   displayLatitude: "123° 45.231'", displayLongitude: "9° 89.654'",
+ *   displayTimestamp: "29.01.2018 21:06:00",
+ *   zoomToLocation: true }
  */
 MapView.prototype.updateMyLocation = function (options) {
 
@@ -216,7 +219,7 @@ MapView.prototype.updateMyLocation = function (options) {
 
     this.myLocationMarker.description = text;
 
-    if (options.zoomTo) {
+    if (options.zoomToLocation) {
         console.log("also zooming to my location");
         this.viewer.flyTo(
             this.myLocationMarker,
