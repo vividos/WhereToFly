@@ -35,6 +35,13 @@
             <option value="None">No shading</option>
         </select>
 
+        <select name="mapOverlayType" onChange="map.setMapOverlayType(this.value.toString())">
+            <option value="None">None</option>
+            <option value="SlopeAndContourLines">Slope + contour lines</option>
+            <option value="ThermalSkywaysKk7">kk7 thermal skyways</option>
+            <option value="BlackMarble">NASA Black Marble</option>
+        </select>
+
         <button onclick="map.updateMyLocation({latitude: 47.666283, longitude: 11.886159, zoomTo: true})">Fly to my position</button>
 
         <button onclick="map.zoomToLocation({latitude: 47.6764385, longitude: 11.8710533})">Fly to summit</button>
@@ -55,7 +62,8 @@
             initialZoomLevel: 14
         });
 
-        map.setOverlayType('OpenStreetMap');
+        map.setMapImageryType('OpenStreetMap');
+        map.setMapOverlayType('None');
         map.setShadingMode('Ahead2Hours');
 
         map.addLocationList([

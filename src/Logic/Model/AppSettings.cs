@@ -21,6 +21,12 @@
         public MapImageryType MapImageryType { get; set; }
 
         /// <summary>
+        /// Map overlay type; specifies the overlay display over the imagery layer; may be half
+        /// transparent
+        /// </summary>
+        public MapOverlayType MapOverlayType { get; set; }
+
+        /// <summary>
         /// Specifies the coordinate display format throughout the app
         /// </summary>
         public CoordinateDisplayFormat CoordinateDisplayFormat { get; set; }
@@ -33,6 +39,7 @@
             this.LastKnownPosition = new MapPoint(0.0, 0.0);
             this.ShadingMode = MapShadingMode.CurrentTime;
             this.MapImageryType = MapImageryType.OpenStreetMap;
+            this.MapOverlayType = MapOverlayType.None;
             this.CoordinateDisplayFormat = CoordinateDisplayFormat.Format_dd_mm_mmm;
         }
     }

@@ -29,6 +29,22 @@ namespace WhereToFly.Core.ViewModels
         }
 
         /// <summary>
+        /// View model for map overlay type
+        /// </summary>
+        public class MapOverlayTypeViewModel
+        {
+            /// <summary>
+            /// Display text for value
+            /// </summary>
+            public string Text { get; set; }
+
+            /// <summary>
+            /// Map overlay type value
+            /// </summary>
+            public MapOverlayType Value { get; set; }
+        }
+
+        /// <summary>
         /// View model for coordinate display format
         /// </summary>
         public class CoordinateDisplayFormatViewModel
@@ -89,6 +105,34 @@ namespace WhereToFly.Core.ViewModels
                 if (this.appSettings.MapImageryType != value.Value)
                 {
                     this.appSettings.MapImageryType = value.Value;
+                    Task.Factory.StartNew(async () => await this.SaveSettingsAsync());
+                }
+            }
+        }
+
+        /// <summary>
+        /// List of available map overlay types
+        /// </summary>
+        public List<MapOverlayTypeViewModel> MapOverlayTypeItems
+        {
+            get; private set;
+        }
+
+        /// <summary>
+        /// Currently selected map overlay type
+        /// </summary>
+        public MapOverlayTypeViewModel SelectedMapOverlayType
+        {
+            get
+            {
+                return this.MapOverlayTypeItems.Find(x => x.Value == this.appSettings.MapOverlayType);
+            }
+
+            set
+            {
+                if (this.appSettings.MapOverlayType != value.Value)
+                {
+                    this.appSettings.MapOverlayType = value.Value;
                     Task.Factory.StartNew(async () => await this.SaveSettingsAsync());
                 }
             }
@@ -169,6 +213,14 @@ namespace WhereToFly.Core.ViewModels
             this.MapImageryTypeItems = new List<MapImageryTypeViewModel>
             {
                 new MapImageryTypeViewModel { Text = "OpenStreetMap", Value = MapImageryType.OpenStreetMap },
+            };
+
+            this.MapOverlayTypeItems = new List<MapOverlayTypeViewModel>
+            {
+                new MapOverlayTypeViewModel { Text = "None", Value = MapOverlayType.None },
+                ////new MapOverlayTypeViewModel { Text = "kk7 thermal skyways", Value = MapOverlayType.ThermalSkywaysKk7 },
+                new MapOverlayTypeViewModel { Text = "Slope + contour lines", Value = MapOverlayType.SlopeAndContourLines },
+                new MapOverlayTypeViewModel { Text = "NASA Black Marble", Value = MapOverlayType.BlackMarble },
             };
 
             this.CoordinateDisplayFormatItems = new List<CoordinateDisplayFormatViewModel>

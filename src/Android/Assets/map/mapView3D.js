@@ -24,6 +24,14 @@ function MapView(options) {
         maximumLevel: 18
     });
 
+    this.slopeAndContourLinesMaterial = null;
+
+    this.blackMarbleOverlay = new Cesium.createTileMapServiceImageryProvider({
+        url: 'https://cesiumjs.org/tilesets/imagery/blackmarble',
+        maximumLevel: 8,
+        credit: 'Black Marble imagery courtesy NASA Earth Observatory'
+    });
+
     console.log("#2 terrain provider");
     var terrainProvider = new Cesium.CesiumTerrainProvider({
         url: 'https://assets.agi.com/stk-terrain/v1/tilesets/world/tiles',
@@ -128,6 +136,41 @@ MapView.prototype.setMapImageryType = function (imageryType) {
             break;
         default:
             console.log('invalid imagery type: ' + imageryType);
+    }
+};
+
+/**
+ * Sets new map overlay type
+ * @param {string} overlayType overlay type constant; the following constants currently can be
+ * used: 'None', 'SlopeAndContourLines', 'ThermalSkywaysKk7'.
+ */
+MapView.prototype.setMapOverlayType = function (overlayType) {
+
+    console.log("setting new map overlay type: " + overlayType);
+
+    var layers = this.viewer.scene.imageryLayers;
+    layers.removeAll(false);
+
+    switch (overlayType) {
+        case 'None':
+            break;
+
+        case 'SlopeAndContourLines':
+            this.viewer.scene.globe.material = this.slopeAndContourLinesMaterial;
+            break;
+
+        case 'ThermalSkywaysKk7':
+            // TODO
+            break;
+
+        case 'BlackMarble':
+            var blackMarble = layers.addImageryProvider(this.blackMarbleOverlay);
+            blackMarble.alpha = 0.5; // 0.0 is transparent.  1.0 is opaque.
+            blackMarble.brightness = 2.0; // > 1.0 increases brightness.  < 1.0 decreases.
+            break;
+
+        default:
+            console.log('invalid map overlay type: ' + overlayType);
     }
 };
 

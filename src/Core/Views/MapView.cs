@@ -28,6 +28,11 @@ namespace WhereToFly.Core.Views
         private MapImageryType mapImageryType = MapImageryType.OpenStreetMap;
 
         /// <summary>
+        /// Current map overlay type
+        /// </summary>
+        private MapOverlayType mapOverlayType = MapOverlayType.None;
+
+        /// <summary>
         /// Current map shading mode
         /// </summary>
         private MapShadingMode mapShadingMode = MapShadingMode.Fixed10Am;
@@ -75,6 +80,28 @@ namespace WhereToFly.Core.Views
                     this.mapImageryType = value;
 
                     string js = string.Format("map.setMapImageryType('{0}');", value);
+                    this.RunJavaScript(js);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets map overlay type
+        /// </summary>
+        public MapOverlayType MapOverlayType
+        {
+            get
+            {
+                return this.mapOverlayType;
+            }
+
+            set
+            {
+                if (this.mapOverlayType != value)
+                {
+                    this.mapOverlayType = value;
+
+                    string js = string.Format("map.setMapOverlayType('{0}');", value);
                     this.RunJavaScript(js);
                 }
             }
