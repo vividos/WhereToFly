@@ -117,7 +117,7 @@ namespace WhereToFly.Core.ViewModels
         {
             get
             {
-                return this.position == null ? false : true;
+                return this.position != null;
             }
         }
 
