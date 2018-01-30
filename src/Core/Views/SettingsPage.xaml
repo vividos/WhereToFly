@@ -33,19 +33,19 @@
                     ItemDisplayBinding="{Binding Text}"
                     SelectedItem="{Binding SelectedMapOverlayType, Mode=TwoWay}" />
 
-            <!-- Lat/long coordinates display format -->
-            <Label Grid.Row="2" Grid.Column="0" FontSize="Medium" Text="Coordinates display format" />
-            <Picker Grid.Row="2" Grid.Column="1" Title="Coordinates format"
-                    ItemsSource="{Binding CoordinateDisplayFormatItems, Mode=OneWay}"
-                    ItemDisplayBinding="{Binding Text}"
-                    SelectedItem="{Binding SelectedCoordinateDisplayFormatItem, Mode=TwoWay}" />
-
             <!-- Map shading mode -->
-            <Label Grid.Row="3" Grid.Column="0" FontSize="Medium" Text="Map shading" />
-            <Picker Grid.Row="3" Grid.Column="1" Title="Map shading"
+            <Label Grid.Row="2" Grid.Column="0" FontSize="Medium" Text="Map shading" />
+            <Picker Grid.Row="2" Grid.Column="1" Title="Map shading"
                     ItemsSource="{Binding MapShadingModeItems, Mode=OneWay}"
                     ItemDisplayBinding="{Binding Text}"
                     SelectedItem="{Binding SelectedMapShadingModeItem, Mode=TwoWay}" />
+
+            <!-- Lat/long coordinates display format -->
+            <Label Grid.Row="3" Grid.Column="0" FontSize="Medium" Text="Coordinates display format" />
+            <Picker Grid.Row="3" Grid.Column="1" Title="Coordinates format"
+                    ItemsSource="{Binding CoordinateDisplayFormatItems, Mode=OneWay}"
+                    ItemDisplayBinding="{Binding Text}"
+                    SelectedItem="{Binding SelectedCoordinateDisplayFormatItem, Mode=TwoWay}" />
         </Grid>
 
     </ContentPage.Content>
