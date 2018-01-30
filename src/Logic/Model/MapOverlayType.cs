@@ -11,18 +11,23 @@
         None = 0,
 
         /// <summary>
+        /// Displays contour lines (100m apart)
+        /// </summary>
+        ContourLines = 1,
+
+        /// <summary>
         /// Displays slope steepness and contour lines (100m apart)
         /// </summary>
-        SlopeAndContourLines = 1,
+        SlopeAndContourLines = 2,
 
         /// <summary>
         /// Displays thermal skyways from https://thermal.kk7.ch/
         /// </summary>
-        ThermalSkywaysKk7 = 2,
+        ThermalSkywaysKk7 = 3,
 
         /// <summary>
         /// Displays Black Marble imagery courtesy NASA Earth Observatory
         /// </summary>
-        BlackMarble = 3,
+        BlackMarble = 4,
     }
 }

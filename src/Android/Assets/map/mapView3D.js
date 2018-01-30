@@ -24,7 +24,7 @@ function MapView(options) {
         maximumLevel: 18
     });
 
-    this.slopeAndContourLinesMaterial = null;
+    this.setupSlopeAndContourLines();
 
     this.blackMarbleLayer = null;
     this.blackMarbleOverlay = new Cesium.createTileMapServiceImageryProvider({
@@ -140,10 +140,85 @@ MapView.prototype.setMapImageryType = function (imageryType) {
     }
 };
 
+var slopeRamp = [0.0, 0.29, 0.5, Math.sqrt(2) / 2, 0.87, 0.91, 1.0];
+
+/**
+ * Generates a color ramp canvas element and returns it. From
+ * https://cesiumjs.org/Cesium/Build/Apps/Sandcastle/index.html?src=Globe%20Materials.html
+ * @returns {object} generated canvas object
+ */
+function getColorRamp() {
+    var ramp = document.createElement('canvas');
+    ramp.width = 100;
+    ramp.height = 1;
+    var ctx = ramp.getContext('2d');
+
+    var values = slopeRamp;
+
+    var grd = ctx.createLinearGradient(0, 0, 100, 0);
+    grd.addColorStop(values[0], '#000000'); // black
+    grd.addColorStop(values[1], '#2747E0'); // blue
+    grd.addColorStop(values[2], '#D33B7D'); // pink
+    grd.addColorStop(values[3], '#D33038'); // red
+    grd.addColorStop(values[4], '#FF9742'); // orange
+    grd.addColorStop(values[5], '#ffd700'); // yellow
+    grd.addColorStop(values[6], '#ffffff'); // white
+
+    ctx.fillStyle = grd;
+    ctx.fillRect(0, 0, 100, 1);
+
+    return ramp;
+}
+
+/**
+ * Sets up slope and contour lines materials for overlay types 'ContourLines' and
+ * 'SlopeAndContourLines'. From
+ * https://cesiumjs.org/Cesium/Build/Apps/Sandcastle/index.html?src=Globe%20Materials.html
+ */
+MapView.prototype.setupSlopeAndContourLines = function () {
+
+    // Creates a material with contour lines only
+    this.contourLinesMaterial = Cesium.Material.fromType('ElevationContour');
+
+    this.contourLinesMaterial.uniforms.width = 1; // in pixels
+    this.contourLinesMaterial.uniforms.spacing = 100; // in meters
+    this.contourLinesMaterial.uniforms.color = Cesium.Color.BLUE.clone();
+
+    // Creates a composite material with both slope shading and contour lines
+    var material = new Cesium.Material({
+        fabric: {
+            type: 'SlopeColorContour',
+            materials: {
+                contourMaterial: {
+                    type: 'ElevationContour'
+                },
+                slopeRampMaterial: {
+                    type: 'SlopeRamp'
+                }
+            },
+            components: {
+                diffuse: 'contourMaterial.alpha == 0.0 ? slopeRampMaterial.diffuse : contourMaterial.diffuse',
+                alpha: 'max(contourMaterial.alpha, slopeRampMaterial.alpha)'
+            }
+        },
+        translucent: false
+    });
+
+    var contourUniforms = material.materials.contourMaterial.uniforms;
+    contourUniforms.width = 1; // in pixels
+    contourUniforms.spacing = 100; // in meters
+    contourUniforms.color = Cesium.Color.BLUE.clone();
+
+    var shadingUniforms = material.materials.slopeRampMaterial.uniforms;
+    shadingUniforms.image = getColorRamp();
+
+    this.slopeAndContourLinesMaterial = material;
+};
+
 /**
  * Sets new map overlay type
  * @param {string} overlayType overlay type constant; the following constants currently can be
- * used: 'None', 'SlopeAndContourLines', 'ThermalSkywaysKk7'.
+ * used: 'None', 'ContourLines', 'SlopeAndContourLines', 'ThermalSkywaysKk7', 'BlackMarble'.
  */
 MapView.prototype.setMapOverlayType = function (overlayType) {
 
@@ -154,8 +229,14 @@ MapView.prototype.setMapOverlayType = function (overlayType) {
     if (this.blackMarbleLayer !== null)
         layers.remove(this.blackMarbleLayer, false);
 
+    this.viewer.scene.globe.material = null;
+
     switch (overlayType) {
         case 'None':
+            break;
+
+        case 'ContourLines':
+            this.viewer.scene.globe.material = this.contourLinesMaterial;
             break;
 
         case 'SlopeAndContourLines':
