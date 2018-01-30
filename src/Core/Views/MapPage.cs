@@ -397,7 +397,7 @@ namespace WhereToFly.Core.Views
 
             this.mapView.Create(initialCenter, 14);
 
-            this.mapView.MapOverlayType = this.appSettings.MapOverlayType;
+            this.mapView.MapImageryType = this.appSettings.MapImageryType;
             this.mapView.MapShadingMode = this.appSettings.ShadingMode;
             this.mapView.CoordinateDisplayFormat = this.appSettings.CoordinateDisplayFormat;
 
@@ -502,7 +502,7 @@ namespace WhereToFly.Core.Views
 
                 this.appSettings = App.Settings;
 
-                this.mapView.MapOverlayType = this.appSettings.MapOverlayType;
+                this.mapView.MapImageryType = this.appSettings.MapImageryType;
                 this.mapView.MapShadingMode = this.appSettings.ShadingMode;
                 this.mapView.CoordinateDisplayFormat = this.appSettings.CoordinateDisplayFormat;
 

@@ -16,9 +16,9 @@
         public MapShadingMode ShadingMode { get; set; }
 
         /// <summary>
-        /// Map overlay type; specifies the layer used to display over the terrain data
+        /// Map imagery type; specifies the layer used to display over the terrain data
         /// </summary>
-        public MapOverlayType MapOverlayType { get; set; }
+        public MapImageryType MapImageryType { get; set; }
 
         /// <summary>
         /// Specifies the coordinate display format throughout the app
@@ -32,7 +32,7 @@
         {
             this.LastKnownPosition = new MapPoint(0.0, 0.0);
             this.ShadingMode = MapShadingMode.CurrentTime;
-            this.MapOverlayType = MapOverlayType.OpenStreetMap;
+            this.MapImageryType = MapImageryType.OpenStreetMap;
             this.CoordinateDisplayFormat = CoordinateDisplayFormat.Format_dd_mm_mmm;
         }
     }

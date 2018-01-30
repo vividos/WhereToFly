@@ -1,12 +1,12 @@
 ﻿namespace WhereToFly.Logic.Model
 {
     /// <summary>
-    /// Type of map overlay used to lay over the terrain
+    /// Type of map imagery used to lay over the terrain
     /// </summary>
-    public enum MapOverlayType
+    public enum MapImageryType
     {
         /// <summary>
-        /// OpenStreetMap overlay tiles are displayed; the OSM layer often contains many details
+        /// OpenStreetMap imagery tiles are displayed; the OSM layer often contains many details
         /// needed for hiking.
         /// </summary>
         OpenStreetMap = 0,

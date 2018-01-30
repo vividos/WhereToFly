@@ -13,9 +13,9 @@ namespace WhereToFly.Core.ViewModels
     public class SettingsViewModel : INotifyPropertyChanged
     {
         /// <summary>
-        /// View model for map overlay type
+        /// View model for map imagery type
         /// </summary>
-        public class MapOverlayTypeViewModel
+        public class MapImageryTypeViewModel
         {
             /// <summary>
             /// Display text for value
@@ -23,9 +23,9 @@ namespace WhereToFly.Core.ViewModels
             public string Text { get; set; }
 
             /// <summary>
-            /// Map overlay type value
+            /// Map imagery type value
             /// </summary>
-            public MapOverlayType Value { get; set; }
+            public MapImageryType Value { get; set; }
         }
 
         /// <summary>
@@ -67,28 +67,28 @@ namespace WhereToFly.Core.ViewModels
 
         #region Binding properties
         /// <summary>
-        /// List of available map overlay types
+        /// List of available map imagery types
         /// </summary>
-        public List<MapOverlayTypeViewModel> MapOverlayTypeItems
+        public List<MapImageryTypeViewModel> MapImageryTypeItems
         {
             get; private set;
         }
 
         /// <summary>
-        /// Currently selected map overlay type
+        /// Currently selected map imagery type
         /// </summary>
-        public MapOverlayTypeViewModel SelectedMapOverlayType
+        public MapImageryTypeViewModel SelectedMapImageryType
         {
             get
             {
-                return this.MapOverlayTypeItems.Find(x => x.Value == this.appSettings.MapOverlayType);
+                return this.MapImageryTypeItems.Find(x => x.Value == this.appSettings.MapImageryType);
             }
 
             set
             {
-                if (this.appSettings.MapOverlayType != value.Value)
+                if (this.appSettings.MapImageryType != value.Value)
                 {
-                    this.appSettings.MapOverlayType = value.Value;
+                    this.appSettings.MapImageryType = value.Value;
                     Task.Factory.StartNew(async () => await this.SaveSettingsAsync());
                 }
             }
@@ -166,9 +166,9 @@ namespace WhereToFly.Core.ViewModels
         /// </summary>
         private void SetupBindings()
         {
-            this.MapOverlayTypeItems = new List<MapOverlayTypeViewModel>
+            this.MapImageryTypeItems = new List<MapImageryTypeViewModel>
             {
-                new MapOverlayTypeViewModel { Text = "OpenStreetMap", Value = MapOverlayType.OpenStreetMap },
+                new MapImageryTypeViewModel { Text = "OpenStreetMap", Value = MapImageryType.OpenStreetMap },
             };
 
             this.CoordinateDisplayFormatItems = new List<CoordinateDisplayFormatViewModel>

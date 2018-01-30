@@ -18,12 +18,12 @@
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
 
-            <!-- Map overlay -->
-            <Label Grid.Row="0" Grid.Column="0" FontSize="Medium" Text="Map overlay" />
-            <Picker Grid.Row="0" Grid.Column="1" Title="Map overlay"
-                    ItemsSource="{Binding MapOverlayTypeItems, Mode=OneWay}"
+            <!-- Map imagery type -->
+            <Label Grid.Row="0" Grid.Column="0" FontSize="Medium" Text="Map imagery" />
+            <Picker Grid.Row="0" Grid.Column="1" Title="Map imagery"
+                    ItemsSource="{Binding MapImageryTypeItems, Mode=OneWay}"
                     ItemDisplayBinding="{Binding Text}"
-                    SelectedItem="{Binding SelectedMapOverlayType, Mode=TwoWay}" />
+                    SelectedItem="{Binding SelectedMapImageryType, Mode=TwoWay}" />
 
             <!-- Lat/long coordinates display format -->
             <Label Grid.Row="1" Grid.Column="0" FontSize="Medium" Text="Coordinates display format" />

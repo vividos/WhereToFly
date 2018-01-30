@@ -115,19 +115,19 @@ function MapView(options) {
 }
 
 /**
- * Sets new map overlay type
- * @param {string} overlayType overlay type constant; the following constants currently can be
+ * Sets new map imagery type
+ * @param {string} imageryType imagery type constant; the following constants currently can be
  * used: 'OpenStreetMap'.
  */
-MapView.prototype.setOverlayType = function (overlayType) {
+MapView.prototype.setMapImageryType = function (imageryType) {
 
-    console.log("setting new overlay type: " + overlayType);
+    console.log("setting new imagery type: " + imageryType);
 
-    switch (overlayType) {
+    switch (imageryType) {
         case 'OpenStreetMap':
             break;
         default:
-            console.log('invalid overlay type: ' + overlayType);
+            console.log('invalid imagery type: ' + imageryType);
     }
 };
 
@@ -180,7 +180,7 @@ MapView.prototype.setShadingMode = function (shadingMode) {
             break;
 
         default:
-            console.log('invalid overlay type: ' + overlayType);
+            console.log('invalid shading mode: ' + shadingMode);
     }
 
     this.viewer.scene.globe.enableLighting = shadingMode !== 'None';

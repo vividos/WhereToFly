@@ -23,9 +23,9 @@ namespace WhereToFly.Core.Views
         private readonly WebView webView;
 
         /// <summary>
-        /// Current map overlay type
+        /// Current map imagery type
         /// </summary>
-        private MapOverlayType mapOverlayType = MapOverlayType.OpenStreetMap;
+        private MapImageryType mapImageryType = MapImageryType.OpenStreetMap;
 
         /// <summary>
         /// Current map shading mode
@@ -59,22 +59,22 @@ namespace WhereToFly.Core.Views
         public event OnShareMyLocationCallback ShareMyLocation;
 
         /// <summary>
-        /// Gets or sets map overlay type
+        /// Gets or sets map imagery type
         /// </summary>
-        public MapOverlayType MapOverlayType
+        public MapImageryType MapImageryType
         {
             get
             {
-                return this.mapOverlayType;
+                return this.mapImageryType;
             }
 
             set
             {
-                if (this.mapOverlayType != value)
+                if (this.mapImageryType != value)
                 {
-                    this.mapOverlayType = value;
+                    this.mapImageryType = value;
 
-                    string js = string.Format("map.setOverlayType('{0}');", value);
+                    string js = string.Format("map.setMapImageryType('{0}');", value);
                     this.RunJavaScript(js);
                 }
             }
