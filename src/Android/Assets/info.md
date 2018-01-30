@@ -7,6 +7,7 @@ stations.
 
 ## Version infos
 
-%VERSION% - NZ "down under" edition
+Current version: %VERSION%
 
-For Jonas and Julian - happy landings!
+Releases:
+- 1.0 "NZ down under" edition, for Jonas and Julian
