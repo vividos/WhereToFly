@@ -26,6 +26,17 @@ function MapView(options) {
 
     this.setupSlopeAndContourLines();
 
+    this.thermalSkywaysLayer = null;
+    this.thermalSkywaysOverlay = Cesium.createOpenStreetMapImageryProvider({
+        url: 'https://thermal.kk7.ch/tiles/skyways_all/',
+        fileExtension: 'png?src=https://github.com/vividos/WhereToFly',
+        //minimumLevel: 8,
+        maximumLevel: 12,
+        credit: 'Skyways &copy; <a href="https://thermal.kk7.ch/">thermal.kk7.ch</a>'
+    });
+
+    console.log('thermal maps url: ' + this.thermalSkywaysOverlay.url);
+
     this.blackMarbleLayer = null;
     this.blackMarbleOverlay = new Cesium.createTileMapServiceImageryProvider({
         url: 'https://cesiumjs.org/tilesets/imagery/blackmarble',
@@ -226,6 +237,9 @@ MapView.prototype.setMapOverlayType = function (overlayType) {
 
     var layers = this.viewer.scene.imageryLayers;
 
+    if (this.thermalSkywaysLayer !== null)
+        layers.remove(this.thermalSkywaysLayer, false);
+
     if (this.blackMarbleLayer !== null)
         layers.remove(this.blackMarbleLayer, false);
 
@@ -244,7 +258,13 @@ MapView.prototype.setMapOverlayType = function (overlayType) {
             break;
 
         case 'ThermalSkywaysKk7':
-            // TODO
+            if (this.thermalSkywaysLayer === null) {
+                this.thermalSkywaysLayer = layers.addImageryProvider(this.thermalSkywaysOverlay);
+                this.thermalSkywaysLayer.alpha = 0.5; // 0.0 is transparent.  1.0 is opaque.
+                this.thermalSkywaysLayer.brightness = 2.0; // > 1.0 increases brightness.  < 1.0 decreases.
+            }
+            else
+                layers.add(this.thermalSkywaysLayer);
             break;
 
         case 'BlackMarble':
@@ -259,6 +279,7 @@ MapView.prototype.setMapOverlayType = function (overlayType) {
 
         default:
             console.log('invalid map overlay type: ' + overlayType);
+            break;
     }
 };
 

@@ -218,7 +218,7 @@ namespace WhereToFly.Core.ViewModels
             this.MapOverlayTypeItems = new List<MapOverlayTypeViewModel>
             {
                 new MapOverlayTypeViewModel { Text = "None", Value = MapOverlayType.None },
-                ////new MapOverlayTypeViewModel { Text = "kk7 thermal skyways", Value = MapOverlayType.ThermalSkywaysKk7 },
+                new MapOverlayTypeViewModel { Text = "Thermal Skyways (kk7)", Value = MapOverlayType.ThermalSkywaysKk7 },
                 new MapOverlayTypeViewModel { Text = "Contour lines", Value = MapOverlayType.ContourLines },
                 new MapOverlayTypeViewModel { Text = "Slope + contour lines", Value = MapOverlayType.SlopeAndContourLines },
                 new MapOverlayTypeViewModel { Text = "NASA Black Marble", Value = MapOverlayType.BlackMarble },

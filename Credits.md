@@ -38,6 +38,11 @@ load Google Earth .kml and .kmz files.
 The library is licensed using the
 [MIT License](https://github.com/samcragg/sharpkml/blob/master/LICENSE).
 
+## Services
+
+The app uses the Thermal Skyways from https://thermal.kk7.ch/, with kind
+permission from Michael of https://kk7.ch/.
+
 ## Resources
 
 ### Icons

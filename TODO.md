@@ -14,7 +14,7 @@
 
 ### Version 1.1
 
-- [ ] More imagery provider, kk7 thermal maps, skyways
+- [ ] More imagery provider, aerial maps
 - [ ] Import GPX files
 - [ ] Search for location and zoom to
 - [ ] Show location list
