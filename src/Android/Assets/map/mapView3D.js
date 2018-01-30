@@ -26,6 +26,7 @@ function MapView(options) {
 
     this.slopeAndContourLinesMaterial = null;
 
+    this.blackMarbleLayer = null;
     this.blackMarbleOverlay = new Cesium.createTileMapServiceImageryProvider({
         url: 'https://cesiumjs.org/tilesets/imagery/blackmarble',
         maximumLevel: 8,
@@ -149,7 +150,9 @@ MapView.prototype.setMapOverlayType = function (overlayType) {
     console.log("setting new map overlay type: " + overlayType);
 
     var layers = this.viewer.scene.imageryLayers;
-    layers.removeAll(false);
+
+    if (this.blackMarbleLayer !== null)
+        layers.remove(this.blackMarbleLayer, false);
 
     switch (overlayType) {
         case 'None':
@@ -164,9 +167,13 @@ MapView.prototype.setMapOverlayType = function (overlayType) {
             break;
 
         case 'BlackMarble':
-            var blackMarble = layers.addImageryProvider(this.blackMarbleOverlay);
-            blackMarble.alpha = 0.5; // 0.0 is transparent.  1.0 is opaque.
-            blackMarble.brightness = 2.0; // > 1.0 increases brightness.  < 1.0 decreases.
+            if (this.blackMarbleLayer === null) {
+                this.blackMarbleLayer = layers.addImageryProvider(this.blackMarbleOverlay);
+                this.blackMarbleLayer.alpha = 0.5; // 0.0 is transparent.  1.0 is opaque.
+                this.blackMarbleLayer.brightness = 2.0; // > 1.0 increases brightness.  < 1.0 decreases.
+            }
+            else
+                layers.add(this.blackMarbleLayer);
             break;
 
         default:
