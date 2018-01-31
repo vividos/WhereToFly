@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WhereToFly.Core.Views.LocationListPage">
+    <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+
+        <!-- Filter controls -->
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Filter" />
+            <Entry Text="{Binding Path=FilterText, Mode=TwoWay}" HorizontalOptions="FillAndExpand" />
+        </StackLayout>
+
+        <!-- Location list -->
+        <ListView x:Name="locationsListView"
+            ItemsSource="{Binding Path=LocationList, Mode=OneWay}"
+            CachingStrategy="RecycleElement">
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <!-- Templace for a single view cell -->
+                    <ViewCell>
+                        <StackLayout>
+                            <Label Text="{Binding Name}"
+                                   Style="{DynamicResource ListItemTextStyle}" />
+                            <Label Text="{Binding Description}"
+                                   Style="{DynamicResource ListItemDetailTextStyle}"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>

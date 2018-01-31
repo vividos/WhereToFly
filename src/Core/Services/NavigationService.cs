@@ -40,6 +40,10 @@ namespace WhereToFly.Core.Services
                     pageType = typeof(LocationDetailsPage);
                     break;
 
+                case Constants.PageKeyLocationListPage:
+                    pageType = typeof(LocationListPage);
+                    break;
+
                 case Constants.PageKeySettingsPage:
                     pageType = typeof(SettingsPage);
                     break;

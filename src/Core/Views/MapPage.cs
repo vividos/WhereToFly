@@ -100,6 +100,7 @@ namespace WhereToFly.Core.Views
         {
             this.AddLocateMeToolbarButton();
             this.AddLocationDetailsToolbarButton();
+            this.AddLocationListToolbarButton();
             this.AddSettingsToolbarButton();
             this.AddImportLocationsToolbarButton();
             this.AddInfoToolbarButton();
@@ -255,6 +256,33 @@ namespace WhereToFly.Core.Views
         {
             this.startedSettingsPage = true;
             await NavigationService.Instance.NavigateAsync(Constants.PageKeySettingsPage, animated: true);
+        }
+
+        /// <summary>
+        /// Adds "Location list" toolbar button
+        /// </summary>
+        private void AddLocationListToolbarButton()
+        {
+            ToolbarItem locationListButton = new ToolbarItem(
+                "Location list",
+                "playlist_plus.xml",
+                async () => await this.OnClicked_ToolbarButtonLocationList(),
+                ToolbarItemOrder.Secondary)
+            {
+                AutomationId = "LocationList"
+            };
+
+            this.ToolbarItems.Add(locationListButton);
+        }
+
+        /// <summary>
+        /// Called when toolbar button "Location list" was clicked
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task OnClicked_ToolbarButtonLocationList()
+        {
+            this.startedLocationListPage = true;
+            await NavigationService.Instance.NavigateAsync(Constants.PageKeyLocationListPage, animated: true);
         }
 
         /// <summary>
