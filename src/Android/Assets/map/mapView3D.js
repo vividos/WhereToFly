@@ -155,7 +155,7 @@ MapView.prototype.setMapImageryType = function (imageryType) {
 
     var layers = this.viewer.scene.imageryLayers;
 
-    if (openStreetMapImageryLayer !== null)
+    if (this.openStreetMapImageryLayer !== null)
         layers.remove(this.openStreetMapImageryLayer, false);
 
     if (this.bingMapsAerialWithLabelsImageryLayer !== null)
@@ -164,16 +164,16 @@ MapView.prototype.setMapImageryType = function (imageryType) {
     switch (imageryType) {
         case 'OpenStreetMap':
             if (this.openStreetMapImageryLayer === null)
-                this.openStreetMapImageryLayer = layers.addImageryProvider(this.openStreetMapImageryProvider, 0);
+                this.openStreetMapImageryLayer = layers.addImageryProvider(this.openStreetMapImageryProvider, 1);
             else
-                layers.add(this.openStreetMapImageryLayer, 0);
+                layers.add(this.openStreetMapImageryLayer, 1);
             break;
 
         case 'BingMapsAerialWithLabels':
             if (this.bingMapsAerialWithLabelsImageryLayer === null)
-                this.bingMapsAerialWithLabelsImageryLayer = layers.addImageryProvider(this.bingMapsAerialWithLabelsImageryProvider, 0);
+                this.bingMapsAerialWithLabelsImageryLayer = layers.addImageryProvider(this.bingMapsAerialWithLabelsImageryProvider, 1);
             else
-                layers.add(this.bingMapsAerialWithLabelsImageryLayer, 0);
+                layers.add(this.bingMapsAerialWithLabelsImageryLayer, 1);
             break;
 
         default:
