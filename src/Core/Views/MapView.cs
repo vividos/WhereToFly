@@ -38,6 +38,11 @@ namespace WhereToFly.Core.Views
         private MapShadingMode mapShadingMode = MapShadingMode.Fixed10Am;
 
         /// <summary>
+        /// Indicates if map control is already initialized
+        /// </summary>
+        private bool isInitialized;
+
+        /// <summary>
         /// Maximum number of locations that are imported in one JavaScript call
         /// </summary>
         private const int MaxLocationListCount = 100;
@@ -163,6 +168,8 @@ namespace WhereToFly.Core.Views
                 initialZoomLevel);
 
             this.RunJavaScript(js);
+
+            this.isInitialized = true;
         }
 
         /// <summary>
@@ -171,6 +178,11 @@ namespace WhereToFly.Core.Views
         /// <param name="position">position to zoom to</param>
         public void ZoomToLocation(MapPoint position)
         {
+            if (!this.isInitialized)
+            {
+                return;
+            }
+
             string js = string.Format(
                 "map.zoomToLocation({{latitude: {0}, longitude: {1}}});",
                 position.Latitude.ToString(CultureInfo.InvariantCulture),
@@ -188,6 +200,11 @@ namespace WhereToFly.Core.Views
         /// <param name="zoomToLocation">indicates if view should also zoom to the location</param>
         public void UpdateMyLocation(MapPoint position, int altitudeInMeter, DateTimeOffset timestamp, bool zoomToLocation)
         {
+            if (!this.isInitialized)
+            {
+                return;
+            }
+
             var options = new
             {
                 latitude = position.Latitude,
