@@ -35,6 +35,11 @@
             <option value="None">No shading</option>
         </select>
 
+        <select name="mapImageryType" onChange="map.setMapImageryType(this.value.toString())">
+            <option value="OpenStreetMap">OpenStreetMap</option>
+            <option value="BingMapsAerialWithLabels">Bing maps Aerial with labels</option>
+        </select>
+
         <select name="mapOverlayType" onChange="map.setMapOverlayType(this.value.toString())">
             <option value="None">None</option>
             <option value="ContourLines">Contour lines</option>

@@ -213,6 +213,7 @@ namespace WhereToFly.Core.ViewModels
             this.MapImageryTypeItems = new List<MapImageryTypeViewModel>
             {
                 new MapImageryTypeViewModel { Text = "OpenStreetMap", Value = MapImageryType.OpenStreetMap },
+                new MapImageryTypeViewModel { Text = "Aerials + Labels (Bing Maps)", Value = MapImageryType.BingMapsAerialWithLabels },
             };
 
             this.MapOverlayTypeItems = new List<MapOverlayTypeViewModel>

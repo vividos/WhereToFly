@@ -10,5 +10,10 @@
         /// needed for hiking.
         /// </summary>
         OpenStreetMap = 0,
+
+        /// <summary>
+        /// Bing Maps aerials with lames imagery tiles are displayed.
+        /// </summary>
+        BingMapsAerialWithLabels = 1,
     }
 }

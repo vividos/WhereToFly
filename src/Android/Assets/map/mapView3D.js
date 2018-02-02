@@ -18,10 +18,20 @@ function MapView(options) {
         this.options.callback = callAction;
 
     console.log("#1 imagery provider");
-    var imageryProvider = Cesium.createOpenStreetMapImageryProvider({
+
+    Cesium.BingMapsApi.defaultKey = 'AuuY8qZGx-LAeruvajcGMLnudadWlphUWdWb0k6N6lS2QUtURFk3ngCjIXqqFOoe';
+
+    this.openStreetMapImageryLayer = null;
+    this.openStreetMapImageryProvider = Cesium.createOpenStreetMapImageryProvider({
         url: 'https://{s}.tile.openstreetmap.org/',
         subdomains: 'abc',
         maximumLevel: 18
+    });
+
+    this.bingMapsAerialWithLabelsImageryLayer = null;
+    this.bingMapsAerialWithLabelsImageryProvider = new Cesium.BingMapsImageryProvider({
+        url: 'https://dev.virtualearth.net',
+        mapStyle: Cesium.BingMapsStyle.AERIAL_WITH_LABELS
     });
 
     this.setupSlopeAndContourLines();
@@ -66,7 +76,7 @@ function MapView(options) {
 
     console.log("#4 viewer");
     this.viewer = new Cesium.Viewer(this.options.id, {
-        imageryProvider: imageryProvider,
+        imageryProvider: this.openStreetMapImageryProvider,
         terrainProvider: terrainProvider,
         clockViewModel: new Cesium.ClockViewModel(clock),
         baseLayerPicker: false,
@@ -143,11 +153,32 @@ MapView.prototype.setMapImageryType = function (imageryType) {
 
     console.log("setting new imagery type: " + imageryType);
 
+    var layers = this.viewer.scene.imageryLayers;
+
+    if (openStreetMapImageryLayer !== null)
+        layers.remove(this.openStreetMapImageryLayer, false);
+
+    if (this.bingMapsAerialWithLabelsImageryLayer !== null)
+        layers.remove(this.bingMapsAerialWithLabelsImageryLayer, false);
+
     switch (imageryType) {
         case 'OpenStreetMap':
+            if (this.openStreetMapImageryLayer === null)
+                this.openStreetMapImageryLayer = layers.addImageryProvider(this.openStreetMapImageryProvider, 0);
+            else
+                layers.add(this.openStreetMapImageryLayer, 0);
             break;
+
+        case 'BingMapsAerialWithLabels':
+            if (this.bingMapsAerialWithLabelsImageryLayer === null)
+                this.bingMapsAerialWithLabelsImageryLayer = layers.addImageryProvider(this.bingMapsAerialWithLabelsImageryProvider, 0);
+            else
+                layers.add(this.bingMapsAerialWithLabelsImageryLayer, 0);
+            break;
+
         default:
             console.log('invalid imagery type: ' + imageryType);
+            break;
     }
 };
 
