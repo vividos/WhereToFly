@@ -37,13 +37,7 @@ function MapView(options) {
     this.setupSlopeAndContourLines();
 
     this.thermalSkywaysLayer = null;
-    this.thermalSkywaysOverlay = Cesium.createOpenStreetMapImageryProvider({
-        url: 'https://thermal.kk7.ch/tiles/skyways_all/',
-        fileExtension: 'png?src=https://github.com/vividos/WhereToFly',
-        //minimumLevel: 8,
-        maximumLevel: 12,
-        credit: 'Skyways &copy; <a href="https://thermal.kk7.ch/">thermal.kk7.ch</a>'
-    });
+    this.thermalSkywaysOverlay = this.createThermalImageryProvider();
 
     console.log('thermal maps url: ' + this.thermalSkywaysOverlay.url);
 
@@ -143,6 +137,30 @@ function MapView(options) {
         show: false
     });
 }
+
+/**
+ * Creates a new imagery provider that uses the Thermal Skyways from https://thermal.kk7.ch/.
+ * @returns {object} generated imagery provider object
+ */
+MapView.prototype.createThermalImageryProvider = function () {
+
+    var url = 'https://thermal.kk7.ch/tiles/skyways_all/{z}/{x}/{reverseY}.png?src=https://github.com/vividos/WhereToFly';
+
+    var credit = 'Skyways &copy; <a href="https://thermal.kk7.ch/">thermal.kk7.ch</a>';
+
+    var tilingScheme = new Cesium.WebMercatorTilingScheme();
+
+    return new Cesium.UrlTemplateImageryProvider({
+        url: Cesium.Resource.createIfNeeded(url),
+        credit: new Cesium.Credit({ text: credit }),
+        tilingScheme: tilingScheme,
+        tileWidth: 256,
+        tileHeight: 256,
+        minimumLevel: 0,
+        maximumLevel: 12,
+        rectangle: tilingScheme.rectangle
+    });
+};
 
 /**
  * Sets new map imagery type
