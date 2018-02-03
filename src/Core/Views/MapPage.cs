@@ -100,7 +100,7 @@ namespace WhereToFly.Core.Views
         {
             this.AddLocateMeToolbarButton();
             this.AddLocationDetailsToolbarButton();
-            this.AddLocationListToolbarButton();
+            ////this.AddLocationListToolbarButton();
             this.AddSettingsToolbarButton();
             this.AddImportLocationsToolbarButton();
             this.AddInfoToolbarButton();
