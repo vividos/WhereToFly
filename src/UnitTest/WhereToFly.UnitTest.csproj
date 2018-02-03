@@ -43,6 +43,9 @@
     <Compile Include="DataFormatterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GeoLoaderTest.cs" />
+    <Compile Include="MapPointTest.cs" />
+    <Compile Include="AppSettingsTest.cs" />
+    <Compile Include="HtmlConverterTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\tracks.kmz">

@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.IO;
 using System.Linq;
 using WhereToFly.Logic;
@@ -65,6 +66,19 @@ namespace WhereToFly.UnitTest
 
             // check
             Assert.IsFalse(locationList.Any(), "loaded location list must not contain locations");
+        }
+
+        /// <summary>
+        /// Tests loading location list, with invalid file extension
+        /// </summary>
+        [TestMethod]
+        public void TestLoadLocationList_InvalidFileExtension()
+        {
+            // set up
+            string filename = Path.Combine(this.TestAssetsPath, "waypoints.abc");
+
+            // run + check
+            Assert.ThrowsException<ArgumentException>(() => GeoLoader.LoadLocationList(filename), "must throw exception");
         }
     }
 }

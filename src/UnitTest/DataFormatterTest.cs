@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using WhereToFly.Logic;
 using WhereToFly.Logic.Model;
 
@@ -29,6 +29,23 @@ namespace WhereToFly.UnitTest
             Assert.AreEqual("47.676439", text1, "formatted text must match");
             Assert.AreEqual("47° 40.586'", text2, "formatted text must match");
             Assert.AreEqual("47° 40' 35\"", text3, "formatted text must match");
+        }
+
+        /// <summary>
+        /// Tests function FormatMyPositionShareText()
+        /// </summary>
+        [TestMethod]
+        public void TestFormatMyPositionShareText()
+        {
+            // set up
+            var mapPoint = new MapPoint(47.6764385, 11.8710533);
+            double altitude = 1685;
+
+            // run
+            string text = DataFormatter.FormatMyPositionShareText(mapPoint, altitude, DateTimeOffset.UtcNow);
+
+            // check
+            Assert.IsTrue(text.Length > 0, "formatted text must not be empty");
         }
     }
 }
