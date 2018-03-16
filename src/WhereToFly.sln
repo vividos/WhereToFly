@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhereToFly.UnitTest", "UnitTest\WhereToFly.UnitTest.csproj", "{BB6FBEF2-D8E4-417D-8CFE-2CF73245DD6D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhereToFly.Geo", "Geo\WhereToFly.Geo.csproj", "{F6B9C753-C5FF-4079-A92B-79911755B3C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{BB6FBEF2-D8E4-417D-8CFE-2CF73245DD6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB6FBEF2-D8E4-417D-8CFE-2CF73245DD6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB6FBEF2-D8E4-417D-8CFE-2CF73245DD6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6B9C753-C5FF-4079-A92B-79911755B3C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6B9C753-C5FF-4079-A92B-79911755B3C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6B9C753-C5FF-4079-A92B-79911755B3C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6B9C753-C5FF-4079-A92B-79911755B3C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
