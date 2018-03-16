@@ -87,7 +87,8 @@ namespace WhereToFly.Core.ViewModels
                 null,
                 this.includedLocationsList.Keys.ToArray());
 
-            if (result == null)
+            if (result == null ||
+                !this.includedLocationsList.ContainsKey(result))
             {
                 return;
             }
@@ -216,7 +217,8 @@ namespace WhereToFly.Core.ViewModels
                 null,
                 this.downloadWebSiteList.Keys.ToArray());
 
-            if (result == null)
+            if (result == null ||
+                !this.downloadWebSiteList.ContainsKey(result))
             {
                 return;
             }
