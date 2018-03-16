@@ -28,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Geo\WhereToFly.Geo.csproj" />
     <ProjectReference Include="..\Logic\WhereToFly.Logic.csproj" />
   </ItemGroup>
 

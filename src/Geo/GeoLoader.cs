@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using WhereToFly.Logic.Model;
 
-namespace WhereToFly.Logic
+namespace WhereToFly.Geo
 {
     /// <summary>
     /// Loader class for different geo objects, like location lists
@@ -18,7 +18,7 @@ namespace WhereToFly.Logic
         /// </summary>
         /// <param name="filename">filename of file to load</param>
         /// <returns>list of locations found in the file</returns>
-        public static List<Model.Location> LoadLocationList(string filename)
+        public static List<Logic.Model.Location> LoadLocationList(string filename)
         {
             string extension = Path.GetExtension(filename);
 
@@ -47,7 +47,7 @@ namespace WhereToFly.Logic
         /// <param name="stream">stream of file to load</param>
         /// <param name="isKml">indicates if the stream is a .kml stream or a .kmz stream</param>
         /// <returns>list of locations found in the file</returns>
-        public static List<Model.Location> LoadLocationList(Stream stream, bool isKml)
+        public static List<Logic.Model.Location> LoadLocationList(Stream stream, bool isKml)
         {
             if (isKml)
             {
@@ -66,16 +66,16 @@ namespace WhereToFly.Logic
         /// </summary>
         /// <param name="kml">kml file</param>
         /// <returns>list of locations found in the file</returns>
-        private static List<Model.Location> LoadFromKml(KmlFile kml)
+        private static List<Logic.Model.Location> LoadFromKml(KmlFile kml)
         {
-            var locationList = new List<Model.Location>();
+            var locationList = new List<Logic.Model.Location>();
 
             foreach (var element in kml.Root.Flatten())
             {
                 if (element is Placemark placemark &&
                     placemark.Geometry is Point point)
                 {
-                    locationList.Add(new Model.Location
+                    locationList.Add(new Logic.Model.Location
                     {
                         Id = placemark.Id ?? Guid.NewGuid().ToString("B"),
                         Name = placemark.Name ?? "unknown",

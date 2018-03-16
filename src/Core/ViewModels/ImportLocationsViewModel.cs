@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.Core.Services;
-using WhereToFly.Logic;
+using WhereToFly.Geo;
 using WhereToFly.Logic.Model;
 using Xamarin.Forms;
 
