@@ -43,7 +43,7 @@
     <Compile Include="DataFormatterTest.cs" />
     <Compile Include="Geo\LatLongAltTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GeoLoaderTest.cs" />
+    <Compile Include="Geo\GeoLoaderTest.cs" />
     <Compile Include="MapPointTest.cs" />
     <Compile Include="AppSettingsTest.cs" />
     <Compile Include="HtmlConverterTest.cs" />
