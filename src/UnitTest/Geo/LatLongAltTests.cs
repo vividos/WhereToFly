@@ -10,6 +10,21 @@ namespace WhereToFly.Geo.UnitTest
     public class LatLongAltTests
     {
         /// <summary>
+        /// Tests ctor, with invalid coordinates
+        /// </summary>
+        public void TestCtor()
+        {
+            // set up
+            var point = new LatLongAlt(0.0, 0.0);
+
+            // check
+            Assert.IsFalse(point.Valid, "coordinate must be invalid");
+            Assert.AreEqual(0.0, point.Latitude, double.Epsilon, "latitude must be 0.0");
+            Assert.AreEqual(0.0, point.Longitude, double.Epsilon, "longitude must be 0.0");
+            Assert.IsFalse(point.Altitude.HasValue, "altitude must not be set");
+        }
+
+        /// <summary>
         /// Tests CourseTo() method
         /// </summary>
         [TestMethod]
@@ -60,16 +75,16 @@ namespace WhereToFly.Geo.UnitTest
             // run
             var northPoint = centerPoint.PolarOffset(distanceInMeter, 0, 0.0);
             var eastPoint = centerPoint.PolarOffset(distanceInMeter, 90, 0.0);
-            var westPoint = centerPoint.PolarOffset(distanceInMeter, 270, 0.0);
             var southPoint = centerPoint.PolarOffset(distanceInMeter, 180, 0.0);
+            var westPoint = centerPoint.PolarOffset(distanceInMeter, 270, 0.0);
             var anglePoint = centerPoint.PolarOffset(distanceInMeter, 71, 0.0);
 
             // check
-            Assert.AreEqual(distanceInMeter, centerPoint.DistanceTo(northPoint), "distance must match");
-            Assert.AreEqual(distanceInMeter, centerPoint.DistanceTo(eastPoint), "distance must match");
-            Assert.AreEqual(distanceInMeter, centerPoint.DistanceTo(westPoint), "distance must match");
-            Assert.AreEqual(distanceInMeter, centerPoint.DistanceTo(southPoint), "distance must match");
-            Assert.AreEqual(distanceInMeter, centerPoint.DistanceTo(anglePoint), "distance must match");
+            Assert.AreEqual(distanceInMeter, centerPoint.DistanceTo(northPoint), 1e-6, "distance must match");
+            Assert.AreEqual(distanceInMeter, centerPoint.DistanceTo(eastPoint), 1e-6, "distance must match");
+            Assert.AreEqual(distanceInMeter, centerPoint.DistanceTo(southPoint), 1e-6, "distance must match");
+            Assert.AreEqual(distanceInMeter, centerPoint.DistanceTo(westPoint), 1e-6, "distance must match");
+            Assert.AreEqual(distanceInMeter, centerPoint.DistanceTo(anglePoint), 1e-6, "distance must match");
         }
     }
 }

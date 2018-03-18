@@ -133,7 +133,8 @@ namespace WhereToFly.Geo.Spatial
 
         /// <summary>
         /// Offsets the current latitude/longitude values by polar distance and bearing in degrees
-        /// and returns a new value.
+        /// and returns a new value. The bearing angle is expressed in degrees clockwise from
+        /// North, in the range [0,360).
         /// </summary>
         /// <param name="distanceInMeter">distance to move, in meter</param>
         /// <param name="bearingInDegrees">
@@ -157,11 +158,11 @@ namespace WhereToFly.Geo.Spatial
                 Math.Sin(trueCourseRadians) * Math.Sin(angularDistanceRadians) * Math.Cos(lat1),
                 Math.Cos(angularDistanceRadians) - (Math.Sin(lat1) * Math.Sin(newLat)));
 
-            double lon = ((long1 + deltaLong + Math.PI) % (2 * Math.PI)) - Math.PI;
+            double newLong = ((long1 - deltaLong + Math.PI) % (2 * Math.PI)) - Math.PI;
 
             return new LatLongAlt(
                 newLat.ToDegrees(),
-                lon.ToDegrees(),
+                newLong.ToDegrees(),
                 this.Altitude.HasValue ? this.Altitude + heightDistanceInMeters : heightDistanceInMeters);
         }
 
