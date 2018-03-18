@@ -99,7 +99,7 @@ namespace WhereToFly.Core.Views
         private void SetupToolbar()
         {
             this.AddLocateMeToolbarButton();
-            this.AddLocationDetailsToolbarButton();
+            this.AddCurrentPositionDetailsToolbarButton();
             ////this.AddLocationListToolbarButton();
             this.AddSettingsToolbarButton();
             this.AddImportLocationsToolbarButton();
@@ -206,29 +206,29 @@ namespace WhereToFly.Core.Views
         }
 
         /// <summary>
-        /// Adds "Location details" toolbar button
+        /// Adds "Current position details" toolbar button
         /// </summary>
-        private void AddLocationDetailsToolbarButton()
+        private void AddCurrentPositionDetailsToolbarButton()
         {
-            ToolbarItem locationDetailsButton = new ToolbarItem(
-                "Location Details",
+            ToolbarItem currentPositionDetailsButton = new ToolbarItem(
+                "Current Position",
                 "compass.xml",
-                async () => await this.OnClicked_ToolbarButtonLocationDetails(),
+                async () => await this.OnClicked_ToolbarButtonCurrentPositionDetails(),
                 ToolbarItemOrder.Primary)
             {
-                AutomationId = "LocationDetails"
+                AutomationId = "CurrentPosition"
             };
 
-            this.ToolbarItems.Add(locationDetailsButton);
+            this.ToolbarItems.Add(currentPositionDetailsButton);
         }
 
         /// <summary>
-        /// Called when toolbar button "Location details" was clicked
+        /// Called when toolbar button "Current position details" was clicked
         /// </summary>
         /// <returns>task to wait on</returns>
-        private async Task OnClicked_ToolbarButtonLocationDetails()
+        private async Task OnClicked_ToolbarButtonCurrentPositionDetails()
         {
-            await NavigationService.Instance.NavigateAsync(Constants.PageKeyLocationDetailsPage, animated: true);
+            await NavigationService.Instance.NavigateAsync(Constants.PageKeyCurrentPositionDetailsPage, animated: true);
         }
 
         /// <summary>

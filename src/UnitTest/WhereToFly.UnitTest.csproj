@@ -48,6 +48,7 @@
     <Compile Include="AppSettingsTest.cs" />
     <Compile Include="HtmlConverterTest.cs" />
     <Compile Include="ViewModels\LocationInfoViewModelTest.cs" />
+    <Compile Include="ViewModels\CurrentPositionDetailsViewModelTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\tracks.kmz">

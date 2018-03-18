@@ -36,8 +36,8 @@ namespace WhereToFly.Core.Services
             Type pageType = null;
             switch (pageKey)
             {
-                case Constants.PageKeyLocationDetailsPage:
-                    pageType = typeof(LocationDetailsPage);
+                case Constants.PageKeyCurrentPositionDetailsPage:
+                    pageType = typeof(CurrentPositionDetailsPage);
                     break;
 
                 case Constants.PageKeyLocationListPage:

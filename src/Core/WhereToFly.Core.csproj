@@ -36,8 +36,8 @@
     <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="App.xaml.cs">
       <DependentUpon>*.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\LocationDetailsPage.xaml.cs">
-      <DependentUpon>LocationDetailsPage.xaml</DependentUpon>
+    <Compile Update="Views\CurrentPositionDetailsPage.xaml.cs">
+      <DependentUpon>CurrentPositionDetailsPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -45,7 +45,7 @@
     <EmbeddedResource Update="Views\ImportLocationsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\LocationDetailsPage.xaml">
+    <EmbeddedResource Update="Views\CurrentPositionDetailsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\LocationListPage.xaml">

@@ -12,15 +12,15 @@ using Xamarin.Forms.Xaml;
 namespace WhereToFly.Core.Views
 {
     /// <summary>
-    /// Page to display location details, such as coordinates, speed, heading and accuracy
+    /// Page to display current position details, such as coordinates, speed, heading and accuracy
     /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class LocationDetailsPage : ContentPage
+    public partial class CurrentPositionDetailsPage : ContentPage
     {
         /// <summary>
-        /// View model for the location details page
+        /// View model for the current position details page
         /// </summary>
-        private readonly LocationDetailsViewModel viewModel;
+        private readonly CurrentPositionDetailsViewModel viewModel;
 
         /// <summary>
         /// Geo locator to use for position updates
@@ -28,17 +28,17 @@ namespace WhereToFly.Core.Views
         private readonly IGeolocator geolocator;
 
         /// <summary>
-        /// Creates new location details page
+        /// Creates new current position details page
         /// </summary>
-        public LocationDetailsPage()
+        public CurrentPositionDetailsPage()
         {
-            this.Title = "Location details";
+            this.Title = "Current position";
 
             this.InitializeComponent();
 
             this.geolocator = Plugin.Geolocator.CrossGeolocator.Current;
 
-            this.BindingContext = this.viewModel = new LocationDetailsViewModel();
+            this.BindingContext = this.viewModel = new CurrentPositionDetailsViewModel(App.Settings);
 
             this.SetupToolbar();
 
@@ -47,7 +47,7 @@ namespace WhereToFly.Core.Views
 
         /// <summary>
         /// Get initial position and show it. Waits for 1 second; when no position is found, just
-        /// wait for regular PositionChanged events from Geolocator.
+        /// waits for regular PositionChanged events from Geolocator.
         /// </summary>
         /// <returns>task to wait on</returns>
         private async Task InitPositionAsync()

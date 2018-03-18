@@ -10,9 +10,9 @@ using Xamarin.Forms;
 namespace WhereToFly.Core.ViewModels
 {
     /// <summary>
-    /// View model for the location details page
+    /// View model for the current position details page
     /// </summary>
-    public class LocationDetailsViewModel : INotifyPropertyChanged
+    public class CurrentPositionDetailsViewModel : INotifyPropertyChanged
     {
         /// <summary>
         /// App settings object
@@ -134,11 +134,12 @@ namespace WhereToFly.Core.ViewModels
         #endregion
 
         /// <summary>
-        /// Creates a new location details view model
+        /// Creates a new current position details view model
         /// </summary>
-        public LocationDetailsViewModel()
+        /// <param name="appSettings">app settings to use</param>
+        public CurrentPositionDetailsViewModel(AppSettings appSettings)
         {
-            this.appSettings = App.Settings;
+            this.appSettings = appSettings;
         }
 
         /// <summary>

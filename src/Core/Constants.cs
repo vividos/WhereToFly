@@ -23,9 +23,9 @@ namespace WhereToFly.Core
         public const string MessageShowToast = "ShowToast";
 
         /// <summary>
-        /// Page key for use in NavigationService, to navigate to settings page
+        /// Page key for use in NavigationService, to navigate to current position details page
         /// </summary>
-        public const string PageKeyLocationDetailsPage = "LocationDetailsPage";
+        public const string PageKeyCurrentPositionDetailsPage = "CurrentPositionDetailsPage";
 
         /// <summary>
         /// Page key for use in NavigationService, to navigate to location list page
