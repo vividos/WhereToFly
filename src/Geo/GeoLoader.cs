@@ -152,19 +152,10 @@ namespace WhereToFly.Geo
                     if (style != null &&
                         style is StyleMapCollection styleMap)
                     {
-                        var normalStyle = styleMap.First(x => x.State.HasValue && x.State.Value == StyleState.Normal);
-                        if (normalStyle != null)
+                        string link = GetStyleMapNormalStyleIconLink(kml, styleMap);
+                        if (!string.IsNullOrEmpty(link))
                         {
-                            string normalStyleUrl = normalStyle.StyleUrl.ToString();
-                            if (normalStyleUrl.StartsWith("#"))
-                            {
-                                var iconStyle = kml.FindStyle(normalStyleUrl.Substring(1));
-                                if (iconStyle != null &&
-                                    iconStyle is Style icon)
-                                {
-                                    return icon.Icon.Icon.Href.ToString();
-                                }
-                            }
+                            return link;
                         }
                     }
                 }
@@ -175,6 +166,32 @@ namespace WhereToFly.Geo
             }
 
             return string.Empty;
+        }
+
+        /// <summary>
+        /// Retrieves link for "normal" style icon, from given style map
+        /// </summary>
+        /// <param name="kml">kml file where the style map is in</param>
+        /// <param name="styleMap">style map to search</param>
+        /// <returns>style URL, or null when style couldn't be retrieved</returns>
+        private static string GetStyleMapNormalStyleIconLink(KmlFile kml, StyleMapCollection styleMap)
+        {
+            var normalStyle = styleMap.First(x => x.State.HasValue && x.State.Value == StyleState.Normal);
+            if (normalStyle != null)
+            {
+                string normalStyleUrl = normalStyle.StyleUrl.ToString();
+                if (normalStyleUrl.StartsWith("#"))
+                {
+                    var iconStyle = kml.FindStyle(normalStyleUrl.Substring(1));
+                    if (iconStyle != null &&
+                        iconStyle is Style icon)
+                    {
+                        return icon.Icon.Icon.Href.ToString();
+                    }
+                }
+            }
+
+            return null;
         }
     }
 }
