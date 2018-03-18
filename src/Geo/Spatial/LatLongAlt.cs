@@ -4,7 +4,9 @@ using System.Globalization;
 namespace WhereToFly.Geo.Spatial
 {
     /// <summary>
-    /// Latitude, longitude and altitude values in WGS84 coordinate system
+    /// Latitude, longitude and altitude values in WGS84 coordinate system.
+    /// Calculation formulas are used from Aviation Formulary, from Ed Williams:
+    /// http://www.edwilliams.org/avform.htm
     /// </summary>
     public class LatLongAlt
     {
@@ -51,7 +53,7 @@ namespace WhereToFly.Geo.Spatial
 
         /// <summary>
         /// Calculates distance to other lat/long pair, and returns it.
-        /// Uses the "great distance" formula.
+        /// Uses the more exact formula for small distances.
         /// </summary>
         /// <param name="other">other lat/long value</param>
         /// <returns>distance in menter</returns>
@@ -59,13 +61,15 @@ namespace WhereToFly.Geo.Spatial
         {
             var lat1 = this.Latitude.ToRadians();
             var lat2 = other.Latitude.ToRadians();
-            var deltaLong12 = (this.Longitude - other.Longitude).ToRadians();
+            var long1 = this.Longitude.ToRadians();
+            var long2 = other.Longitude.ToRadians();
+            double deltaLat12 = (this.Latitude - other.Latitude).ToRadians();
+            double deltaLong12 = (this.Longitude - other.Longitude).ToRadians();
 
-            double distanceArc =
-                (Math.Sin(lat1) * Math.Sin(lat2)) +
-                (Math.Cos(lat1) * Math.Cos(lat2) * Math.Cos(deltaLong12));
-
-            double distanceRadians = Math.Acos(distanceArc).ToDegrees();
+            double distanceRadians =
+                2 * Math.Asin(
+                    Math.Sqrt(Math.Pow((Math.Sin(deltaLat12 / 2)), 2) +
+                    Math.Cos(lat1) * Math.Cos(lat2) * Math.Pow(Math.Sin(deltaLong12 / 2), 2)));
 
             return distanceRadians * Constants.EarthRadiusInMeter;
         }
