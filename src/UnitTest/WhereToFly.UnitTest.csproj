@@ -47,6 +47,7 @@
     <Compile Include="MapPointTest.cs" />
     <Compile Include="AppSettingsTest.cs" />
     <Compile Include="HtmlConverterTest.cs" />
+    <Compile Include="ViewModels\LocationInfoViewModelTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\tracks.kmz">
@@ -60,6 +61,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Core\WhereToFly.Core.csproj">
+      <Project>{01CAFB32-C32B-4E04-B44C-490182F4F31E}</Project>
+      <Name>WhereToFly.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Geo\WhereToFly.Geo.csproj">
       <Project>{f6b9c753-c5ff-4079-a92b-79911755b3c5}</Project>
       <Name>WhereToFly.Geo</Name>
