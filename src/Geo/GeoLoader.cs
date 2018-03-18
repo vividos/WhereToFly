@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using WhereToFly.Logic;
 using WhereToFly.Logic.Model;
 
 namespace WhereToFly.Geo
@@ -79,7 +80,7 @@ namespace WhereToFly.Geo
                     {
                         Id = placemark.Id ?? Guid.NewGuid().ToString("B"),
                         Name = placemark.Name ?? "unknown",
-                        Description = placemark.Description?.Text ?? string.Empty,
+                        Description = HtmlConverter.Sanitize(placemark.Description?.Text ?? string.Empty),
                         Type = MapPlacemarkToType(kml, placemark),
                         MapLocation = new MapPoint(point.Coordinate.Latitude, point.Coordinate.Longitude),
                         Elevation = point.Coordinate.Altitude ?? 0
