@@ -75,6 +75,43 @@ namespace WhereToFly.Geo.Spatial
         }
 
         /// <summary>
+        /// Calculates the course to use to travel to other lat/long pair. The course angle is
+        /// expressed in degrees clockwise from North, in the range [0,360).
+        /// </summary>
+        /// <param name="other">other lat/long value</param>
+        /// <returns>course in degrees</returns>
+        public double CourseTo(LatLongAlt other)
+        {
+            double trueCourse;
+
+            var lat1 = this.Latitude.ToRadians();
+            if (Math.Abs(Math.Cos(lat1)) < 1e-6)
+            {
+                // starting from N or S pole
+                trueCourse = lat1 > 0 ? Math.PI : 0.0;
+            }
+            else
+            {
+                // Note: This delta is reversed from the Aviary formula, in order to get angles
+                // clockwise from North
+                double deltaLong21 = (other.Longitude - this.Longitude).ToRadians();
+                var lat2 = other.Latitude.ToRadians();
+
+                trueCourse = (Math.Atan2(
+                    Math.Sin(deltaLong21) * Math.Cos(lat2),
+                    Math.Cos(lat1) * Math.Sin(lat2) - Math.Sin(lat1) * Math.Cos(lat2) * Math.Cos(deltaLong21))
+                    ) % (2 * Math.PI);
+
+                if (trueCourse < 0.0)
+                {
+                    trueCourse += 2 * Math.PI;
+                }
+            }
+
+            return trueCourse.ToDegrees();
+        }
+
+        /// <summary>
         /// Offsets the current latitude/longitude values by given distances and returns a new
         /// value.
         /// </summary>

@@ -10,6 +10,44 @@ namespace WhereToFly.Geo.UnitTest
     public class LatLongAltTests
     {
         /// <summary>
+        /// Tests CourseTo() method
+        /// </summary>
+        [TestMethod]
+        public void TestCourseTo()
+        {
+            // set up
+            var centerPoint = new LatLongAlt(48.2, 11.5);
+            var northPoint = new LatLongAlt(48.2 + 0.1, 11.5);
+            var eastPoint = new LatLongAlt(48.2, 11.5 + 0.1);
+            var southPoint = new LatLongAlt(48.2 - 0.1, 11.5);
+            var westPoint = new LatLongAlt(48.2, 11.5 - 0.1);
+            var anglePoint = new LatLongAlt(48.2 - 0.05, 11.5 + 0.11);
+            var northPole = new LatLongAlt(90.0, 0.0);
+            var southPole = new LatLongAlt(-90.0, 0.0);
+
+            // run
+            double angleToSelf = centerPoint.CourseTo(centerPoint);
+            double angleToNorth = centerPoint.CourseTo(northPoint);
+            double angleToEast = centerPoint.CourseTo(eastPoint);
+            double angleToSouth = centerPoint.CourseTo(southPoint);
+            double angleToWest = centerPoint.CourseTo(westPoint);
+            double angleToOther = centerPoint.CourseTo(anglePoint);
+
+            double angleFromNorthPole = northPole.CourseTo(centerPoint);
+            double angleFromSouthPole = southPole.CourseTo(centerPoint);
+
+            // check
+            Assert.AreEqual(0.0, angleToSelf, 0.1, "angle to self must be 0.0 degrees");
+            Assert.AreEqual(0.0, angleToNorth, 0.1, "angle to north must be 0.0 degrees");
+            Assert.AreEqual(90.0, angleToEast, 0.1, "angle to east must be 90.0 degrees");
+            Assert.AreEqual(180.0, angleToSouth, 0.1, "angle to self must be 180.0 degrees");
+            Assert.AreEqual(270.0, angleToWest, 0.1, "angle to west must be 270.0 degrees");
+            Assert.AreEqual(124.2, angleToOther, 0.1, "angle to other must be 124.2 degrees");
+            Assert.AreEqual(180.0, angleFromNorthPole, 0.1, "angle from north pole must be 180.0 degrees");
+            Assert.AreEqual(0.0, angleFromSouthPole, 0.1, "angle from south pole must be 0.0 degrees");
+        }
+
+        /// <summary>
         /// Tests method PolarOffset()
         /// </summary>
         [TestMethod]
