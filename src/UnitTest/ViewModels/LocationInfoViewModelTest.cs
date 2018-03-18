@@ -11,6 +11,9 @@ namespace WhereToFly.UnitTest.ViewModels
     [TestClass]
     public class LocationInfoViewModelTest
     {
+        /// <summary>
+        /// Tests ctor
+        /// </summary>
         [TestMethod]
         public void TestCtor()
         {
