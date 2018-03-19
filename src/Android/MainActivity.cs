@@ -28,7 +28,8 @@ namespace WhereToFly.Android
         DataMimeTypes = new string[]
         {
             "application/vnd.google-earth.kml+xml",
-            "application/vnd.google-earth.kmz"
+            "application/vnd.google-earth.kmz",
+            "application/gpx+xml",
         },
         Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
         Icon = "@drawable/icon")]
@@ -41,6 +42,7 @@ namespace WhereToFly.Android
         {
             @".*\\.kmz", @".*\\..*\\.kmz", ".*\\..*\\..*\\.kmz", ".*\\..*\\..*\\..*\\.kmz",
             @".*\\.kml", @".*\\..*\\.kml", ".*\\..*\\..*\\.kml", ".*\\..*\\..*\\..*\\.kml",
+            @".*\\.gpx", @".*\\..*\\.gpx", ".*\\..*\\..*\\.gpx", ".*\\..*\\..*\\..*\\.gpx",
         },
         Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
         Icon = "@drawable/icon")]
@@ -68,7 +70,7 @@ namespace WhereToFly.Android
 
         /// <summary>
         /// Called when activity is called with a new intent, e.g. from the intent filter for file
-        /// extension (.kml, .kmz).
+        /// extension (.kml, .kmz, .gpx).
         /// See: https://stackoverflow.com/questions/3760276/android-intent-filter-associate-app-with-file-extension
         /// </summary>
         /// <param name="intent">intent to be passed to the app</param>

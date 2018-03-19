@@ -11,7 +11,7 @@ namespace WhereToFly.Geo.DataFormats
     public static class GeoLoader
     {
         /// <summary>
-        /// Loads a location list from given filename; must have .kml or .kmz extension.
+        /// Loads a location list from given filename; must have .kml, .kmz or .gpx extension.
         /// </summary>
         /// <param name="filename">filename of file to load</param>
         /// <returns>list of locations found in the file</returns>
@@ -44,8 +44,11 @@ namespace WhereToFly.Geo.DataFormats
                 case ".kmz":
                     return KmlFormatLoader.LoadLocationList(stream, isKml: false);
 
+                case ".gpx":
+                    return GpxFormatLoader.LoadLocationList(stream);
+
                 default:
-                    throw new ArgumentException("file is not a valid .kml or .kmz file");
+                    throw new ArgumentException("file is not a valid .kml, .kmz or .gpx file");
             }
         }
     }

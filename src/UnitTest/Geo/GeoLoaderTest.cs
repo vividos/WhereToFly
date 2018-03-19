@@ -55,6 +55,20 @@ namespace WhereToFly.UnitTest
         }
 
         /// <summary>
+        /// Tests loading location list, in .gpx format
+        /// </summary>
+        [TestMethod]
+        public void TestLoadLocationListGpx()
+        {
+            // run
+            string filename = Path.Combine(this.TestAssetsPath, "waypoints.gpx");
+            var locationList = GeoLoader.LoadLocationList(filename);
+
+            // check
+            Assert.IsTrue(locationList.Any(), "loaded location list must contain locations");
+        }
+
+        /// <summary>
         /// Tests loading a kmz file with only tracks in it, but no placemarks
         /// </summary>
         [TestMethod]
