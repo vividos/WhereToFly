@@ -32,6 +32,11 @@
         public CoordinateDisplayFormat CoordinateDisplayFormat { get; set; }
 
         /// <summary>
+        /// Last used filter text for location list
+        /// </summary>
+        public string LastLocationListFilterText { get; set; }
+
+        /// <summary>
         /// Creates a new default app settings object
         /// </summary>
         public AppSettings()
@@ -41,6 +46,7 @@
             this.MapImageryType = MapImageryType.OpenStreetMap;
             this.MapOverlayType = MapOverlayType.None;
             this.CoordinateDisplayFormat = CoordinateDisplayFormat.Format_dd_mm_mmm;
+            this.LastLocationListFilterText = string.Empty;
         }
     }
 }
