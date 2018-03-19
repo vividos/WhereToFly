@@ -100,9 +100,8 @@ namespace WhereToFly.Core.Views
         {
             this.AddLocateMeToolbarButton();
             this.AddCurrentPositionDetailsToolbarButton();
-            ////this.AddLocationListToolbarButton();
+            this.AddLocationListToolbarButton();
             this.AddSettingsToolbarButton();
-            this.AddImportLocationsToolbarButton();
             this.AddInfoToolbarButton();
         }
 
@@ -214,7 +213,7 @@ namespace WhereToFly.Core.Views
                 "Current Position",
                 "compass.xml",
                 async () => await this.OnClicked_ToolbarButtonCurrentPositionDetails(),
-                ToolbarItemOrder.Primary)
+                ToolbarItemOrder.Secondary)
             {
                 AutomationId = "CurrentPosition"
             };
@@ -265,9 +264,9 @@ namespace WhereToFly.Core.Views
         {
             ToolbarItem locationListButton = new ToolbarItem(
                 "Location list",
-                "playlist_plus.xml",
+                "format_list_bulleted.xml",
                 async () => await this.OnClicked_ToolbarButtonLocationList(),
-                ToolbarItemOrder.Secondary)
+                ToolbarItemOrder.Primary)
             {
                 AutomationId = "LocationList"
             };
@@ -283,33 +282,6 @@ namespace WhereToFly.Core.Views
         {
             this.startedLocationListPage = true;
             await NavigationService.Instance.NavigateAsync(Constants.PageKeyLocationListPage, animated: true);
-        }
-
-        /// <summary>
-        /// Adds "Import locations" toolbar button
-        /// </summary>
-        private void AddImportLocationsToolbarButton()
-        {
-            ToolbarItem importLocationsButton = new ToolbarItem(
-                "Import locations",
-                "playlist_plus.xml",
-                async () => await this.OnClicked_ToolbarButtonImportLocations(),
-                ToolbarItemOrder.Secondary)
-            {
-                AutomationId = "ImportLocations"
-            };
-
-            this.ToolbarItems.Add(importLocationsButton);
-        }
-
-        /// <summary>
-        /// Called when toolbar button "Import locations" was clicked
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task OnClicked_ToolbarButtonImportLocations()
-        {
-            this.startedLocationListPage = true;
-            await NavigationService.Instance.NavigateAsync(Constants.PageKeyImportLocationsPage, animated: true);
         }
 
         /// <summary>
