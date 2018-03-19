@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.Core.Services;
 using WhereToFly.Core.Views;
-using WhereToFly.Geo;
+using WhereToFly.Geo.DataFormats;
 using WhereToFly.Logic.Model;
 using Xamarin.Forms;
 
@@ -115,11 +115,13 @@ namespace WhereToFly.Core
         /// Opens and load location list from given stream object
         /// </summary>
         /// <param name="stream">stream object</param>
-        /// <param name="isKml">indicates if the stream is a .kml stream or a .kmz stream</param>
+        /// <param name="filename">
+        /// filename; extension of filename is used to determine file type
+        /// </param>
         /// <returns>task to wait on</returns>
-        public async Task OpenLocationListAsync(Stream stream, bool isKml)
+        public async Task OpenLocationListAsync(Stream stream, string filename)
         {
-            List<Location> locationList = await LoadLocationListFromStreamAsync(stream, isKml);
+            List<Location> locationList = await LoadLocationListFromStreamAsync(stream, filename);
 
             if (locationList == null)
             {
@@ -150,13 +152,15 @@ namespace WhereToFly.Core
         /// Loads location list from assets
         /// </summary>
         /// <param name="stream">stream to load from</param>
-        /// <param name="isKml">indicates if the stream is a .kml stream or a .kmz stream</param>
+        /// <param name="filename">
+        /// filename; extension of filename is used to determine file type
+        /// </param>
         /// <returns>list of locations, or null when no location list could be loaded</returns>
-        private static async Task<List<Location>> LoadLocationListFromStreamAsync(Stream stream, bool isKml)
+        private static async Task<List<Location>> LoadLocationListFromStreamAsync(Stream stream, string filename)
         {
             try
             {
-                return GeoLoader.LoadLocationList(stream, isKml);
+                return GeoLoader.LoadLocationList(stream, filename);
             }
             catch (Exception ex)
             {

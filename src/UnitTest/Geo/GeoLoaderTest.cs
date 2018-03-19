@@ -2,8 +2,7 @@
 using System;
 using System.IO;
 using System.Linq;
-using WhereToFly.Geo;
-using WhereToFly.Logic;
+using WhereToFly.Geo.DataFormats;
 
 namespace WhereToFly.UnitTest
 {

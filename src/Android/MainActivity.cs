@@ -80,13 +80,13 @@ namespace WhereToFly.Android
 
             var helper = new IntentFilterHelper(this.ContentResolver);
 
-            bool isKml = Path.GetExtension(helper.GetFilenameFromIntent(intent)).ToLowerInvariant() == ".kml";
+            string filename = Path.GetFileName(helper.GetFilenameFromIntent(intent));
             var stream = helper.GetStreamFromIntent(intent);
 
             if (stream != null)
             {
                 var app = App.Current as App;
-                App.RunOnUiThread(async () => await app.OpenLocationListAsync(stream, isKml));
+                App.RunOnUiThread(async () => await app.OpenLocationListAsync(stream, filename));
             }
         }
 

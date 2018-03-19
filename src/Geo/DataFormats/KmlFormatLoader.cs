@@ -7,41 +7,13 @@ using System.Linq;
 using WhereToFly.Logic;
 using WhereToFly.Logic.Model;
 
-namespace WhereToFly.Geo
+namespace WhereToFly.Geo.DataFormats
 {
     /// <summary>
-    /// Loader class for different geo objects, like location lists
+    /// Loader for .kml and .kmz files; uses the SharpKml library.
     /// </summary>
-    public static class GeoLoader
+    internal static class KmlFormatLoader
     {
-        /// <summary>
-        /// Loads a location list from given filename; must have .kml or .kmz extension.
-        /// </summary>
-        /// <param name="filename">filename of file to load</param>
-        /// <returns>list of locations found in the file</returns>
-        public static List<Logic.Model.Location> LoadLocationList(string filename)
-        {
-            string extension = Path.GetExtension(filename);
-
-            switch (extension)
-            {
-                case ".kml":
-                    using (Stream stream = new FileStream(filename, FileMode.Open))
-                    {
-                        return LoadLocationList(stream, isKml: true);
-                    }
-
-                case ".kmz":
-                    using (Stream stream = new FileStream(filename, FileMode.Open))
-                    {
-                        return LoadLocationList(stream, isKml: false);
-                    }
-
-                default:
-                    throw new ArgumentException("file is not a valid .kml or .kmz file");
-            }
-        }
-
         /// <summary>
         /// Loads a location list from given stream
         /// </summary>

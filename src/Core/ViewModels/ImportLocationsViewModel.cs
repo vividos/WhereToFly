@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.Core.Services;
-using WhereToFly.Geo;
+using WhereToFly.Geo.DataFormats;
 using WhereToFly.Logic.Model;
 using Xamarin.Forms;
 
@@ -131,7 +131,7 @@ namespace WhereToFly.Core.ViewModels
                 var platform = DependencyService.Get<IPlatform>();
                 using (var stream = platform.OpenAssetStream("locations/" + assetFilename))
                 {
-                    return GeoLoader.LoadLocationList(stream, isKml: false);
+                    return GeoLoader.LoadLocationList(stream, assetFilename);
                 }
             }
             catch (Exception ex)
