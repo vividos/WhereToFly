@@ -39,5 +39,10 @@
         /// Link to external internet page, for more infos about location
         /// </summary>
         public string InternetLink { get; set; }
+
+        /// <summary>
+        /// Distance to the current position
+        /// </summary>
+        public double Distance { get; set; } = 0.0;
     }
 }
