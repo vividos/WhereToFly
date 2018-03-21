@@ -151,10 +151,23 @@ namespace WhereToFly.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task ImportFromStorageAsync()
         {
-            FileData result = await CrossFilePicker.Current.PickFile();
-            if (result == null ||
-                string.IsNullOrEmpty(result.FilePath))
+            FileData result = null;
+            try
             {
+                result = await CrossFilePicker.Current.PickFile();
+                if (result == null ||
+                    string.IsNullOrEmpty(result.FilePath))
+                {
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert(
+                    Constants.AppTitle,
+                    "Error while picking a file: " + ex.Message,
+                    "OK");
+
                 return;
             }
 
