@@ -24,7 +24,7 @@
     <PackageReference Include="Xam.Plugin.ExternalMaps" Version="4.0.1" />
     <PackageReference Include="Xam.Plugin.Geolocator" Version="4.2.0" />
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.280555" />
-    <PackageReference Include="Xamarin.Plugin.FilePicker" Version="2.0.49-beta" />
+    <PackageReference Include="Xamarin.Plugin.FilePicker" Version="2.0.58-beta" />
   </ItemGroup>
 
   <ItemGroup>
