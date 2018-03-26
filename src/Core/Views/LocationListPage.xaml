@@ -1,30 +1,53 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
              x:Class="WhereToFly.Core.Views.LocationListPage">
     <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
 
         <!-- Filter controls -->
         <StackLayout Orientation="Horizontal">
-            <Label Text="Filter" />
-            <Entry Text="{Binding Path=FilterText, Mode=TwoWay}" HorizontalOptions="FillAndExpand" />
+            <Label Text="Filter" VerticalTextAlignment="Center" />
+            <Entry Text="{Binding Path=FilterText, Mode=TwoWay}"
+                   Placeholder="Type here to filter"
+                   HorizontalOptions="FillAndExpand"
+                   AutomationId="FilterText" />
+        </StackLayout>
+
+        <!-- Message to show when all locations were filtered out -->
+        <StackLayout Padding="8" BackgroundColor="Yellow"
+                     HorizontalOptions="FillAndExpand"
+                     IsVisible="{Binding Path=AreAllLocationsFilteredOut, Mode=OneWay}">
+            <Label Text="All locations filtered out" AutomationId="AllFilteredOutLabel" />
         </StackLayout>
 
         <!-- Location list -->
         <ListView x:Name="locationsListView"
-            ItemsSource="{Binding Path=LocationList, Mode=OneWay}"
-            CachingStrategy="RecycleElement">
+                  ItemsSource="{Binding Path=LocationList, Mode=OneWay}"
+                  RowHeight="100"
+                  ItemTapped="OnItemTapped_LocationsListView"
+                  IsPullToRefreshEnabled="False"
+                  android:ListView.IsFastScrollEnabled="true"
+                  CachingStrategy="RecycleElement"
+                  AutomationId="LocationList">
 
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <!-- Templace for a single view cell -->
-                    <ViewCell>
-                        <StackLayout>
-                            <Label Text="{Binding Name}"
-                                   Style="{DynamicResource ListItemTextStyle}" />
-                            <Label Text="{Binding Description}"
-                                   Style="{DynamicResource ListItemDetailTextStyle}"/>
-                        </StackLayout>
+                    <ViewCell Height="80">
+                        <ViewCell.View>
+                            <StackLayout Orientation="Vertical" Margin="8" BackgroundColor="#efefef">
+                                <Label Text="{Binding Name}"
+                                       Style="{DynamicResource ListItemTextStyle}"
+                                       LineBreakMode="TailTruncation" />
+                                <Label Text="{Binding DetailInfos}"
+                                       Style="{DynamicResource ListItemDetailTextStyle}"
+                                       LineBreakMode="TailTruncation" />
+                                <Label Text="{Binding Description}"
+                                       Style="{DynamicResource ListItemDetailTextStyle}"
+                                       LineBreakMode="TailTruncation" />
+                            </StackLayout>
+                        </ViewCell.View>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>

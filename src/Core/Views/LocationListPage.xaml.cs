@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using Plugin.Geolocator.Abstractions;
+using System;
+using System.Threading.Tasks;
 using WhereToFly.Core.Services;
 using WhereToFly.Core.ViewModels;
 using Xamarin.Forms;
@@ -14,6 +16,22 @@ namespace WhereToFly.Core.Views
     public partial class LocationListPage : ContentPage
     {
         /// <summary>
+        /// View model for the location list page
+        /// </summary>
+        private readonly LocationListViewModel viewModel;
+
+        /// <summary>
+        /// Geo locator to use for position updates
+        /// </summary>
+        private readonly IGeolocator geolocator;
+
+        /// <summary>
+        /// Indicates if import page was started; used to update location list when returning to
+        /// this page.
+        /// </summary>
+        private bool startedImportPage;
+
+        /// <summary>
         /// Creates a new location list page
         /// </summary>
         public LocationListPage()
@@ -22,9 +40,13 @@ namespace WhereToFly.Core.Views
 
             this.InitializeComponent();
 
-            this.BindingContext = new LocationListViewModel();
+            this.geolocator = Plugin.Geolocator.CrossGeolocator.Current;
+
+            this.BindingContext = this.viewModel = new LocationListViewModel(App.Settings);
 
             this.SetupToolbar();
+
+            Task.Factory.StartNew(this.InitPositionAsync);
         }
 
         /// <summary>
@@ -58,7 +80,81 @@ namespace WhereToFly.Core.Views
         /// <returns>task to wait on</returns>
         private async Task OnClicked_ToolbarButtonImportLocations()
         {
+            this.startedImportPage = true;
             await NavigationService.Instance.NavigateAsync(Constants.PageKeyImportLocationsPage, animated: true);
         }
+
+        /// <summary>
+        /// Get initial position and show it. Waits for 1 second; when no position is found, just
+        /// waits for regular PositionChanged events from Geolocator.
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task InitPositionAsync()
+        {
+            var position =
+                await this.geolocator.GetPositionAsync(timeout: TimeSpan.FromSeconds(1), includeHeading: false);
+
+            if (position != null)
+            {
+                this.viewModel.OnPositionChanged(
+                    this,
+                    new PositionEventArgs(position));
+            }
+        }
+
+        /// <summary>
+        /// Called when an item was tapped on the location list
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="args">event args</param>
+        private void OnItemTapped_LocationsListView(object sender, ItemTappedEventArgs args)
+        {
+            var viewModel = this.BindingContext as LocationListViewModel;
+
+            var locationInfoViewModel = args.Item as LocationInfoViewModel;
+            viewModel.ItemTappedCommand.Execute(locationInfoViewModel.Location);
+        }
+
+        #region Page lifecycle methods
+        /// <summary>
+        /// Called when page is appearing; start position updates
+        /// </summary>
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            if (this.startedImportPage)
+            {
+                this.startedImportPage = false;
+
+                Task.Factory.StartNew(this.viewModel.ReloadLocationListAsync);
+            }
+
+            Task.Factory.StartNew(async () =>
+            {
+                await this.geolocator.StartListeningAsync(
+                    Constants.GeoLocationMinimumTimeForUpdate,
+                    Constants.GeoLocationMinimumDistanceForUpdateInMeters,
+                    includeHeading: true);
+            });
+
+            this.geolocator.PositionChanged += this.viewModel.OnPositionChanged;
+        }
+
+        /// <summary>
+        /// Called when form is disappearing; stop position updates
+        /// </summary>
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            this.geolocator.PositionChanged -= this.viewModel.OnPositionChanged;
+
+            Task.Factory.StartNew(async () =>
+            {
+                await this.geolocator.StopListeningAsync();
+            });
+        }
+        #endregion
     }
 }
