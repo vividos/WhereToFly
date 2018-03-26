@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhereToFly.UnitTest", "Unit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.Geo", "Geo\WhereToFly.Geo.csproj", "{F6B9C753-C5FF-4079-A92B-79911755B3C5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{A443B9B2-B8C9-44F0-A7F5-DF2466E0E0FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,6 +54,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B7C58A1E-E301-47C7-A9FB-D01B1719D043} = {A443B9B2-B8C9-44F0-A7F5-DF2466E0E0FE}
+		{01CAFB32-C32B-4E04-B44C-490182F4F31E} = {A443B9B2-B8C9-44F0-A7F5-DF2466E0E0FE}
+		{D8B7A38E-6E38-4CC4-A254-80BFBAA262C0} = {A443B9B2-B8C9-44F0-A7F5-DF2466E0E0FE}
+		{BB6FBEF2-D8E4-417D-8CFE-2CF73245DD6D} = {A443B9B2-B8C9-44F0-A7F5-DF2466E0E0FE}
+		{F6B9C753-C5FF-4079-A92B-79911755B3C5} = {A443B9B2-B8C9-44F0-A7F5-DF2466E0E0FE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D13F3BD1-E396-49C7-BD98-2F3BC15F6E7C}
