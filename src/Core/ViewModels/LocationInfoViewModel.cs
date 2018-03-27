@@ -1,5 +1,7 @@
-﻿using WhereToFly.Logic;
+﻿using System.Threading.Tasks;
+using WhereToFly.Logic;
 using WhereToFly.Logic.Model;
+using Xamarin.Forms;
 
 namespace WhereToFly.Core.ViewModels
 {
@@ -8,6 +10,11 @@ namespace WhereToFly.Core.ViewModels
     /// </summary>
     public class LocationInfoViewModel
     {
+        /// <summary>
+        /// Parent view model
+        /// </summary>
+        private readonly LocationListViewModel parentViewModel;
+
         /// <summary>
         /// Location to show
         /// </summary>
@@ -50,13 +57,75 @@ namespace WhereToFly.Core.ViewModels
         public string Description { get; set; }
 
         /// <summary>
+        /// Command to execute when "show details" context action is selected on a location
+        /// </summary>
+        public Command ShowDetailsLocationContextAction { get; set; }
+
+        /// <summary>
+        /// Command to execute when "zoom to" context action is selected on a location
+        /// </summary>
+        public Command ZoomToLocationContextAction { get; set; }
+
+        /// <summary>
+        /// Command to execute when "delete" context action is selected on a location
+        /// </summary>
+        public Command DeleteLocationContextAction { get; set; }
+
+        /// <summary>
         /// Creates a new view model object based on the given location object
         /// </summary>
+        /// <param name="parentViewModel">parent view model</param>
         /// <param name="location">location object</param>
-        public LocationInfoViewModel(Location location)
+        public LocationInfoViewModel(LocationListViewModel parentViewModel, Location location)
         {
+            this.parentViewModel = parentViewModel;
             this.location = location;
+
+            this.SetupBindings();
+        }
+
+        /// <summary>
+        /// Sets up bindings for this view model
+        /// </summary>
+        private void SetupBindings()
+        {
             this.Description = HtmlConverter.StripAllTags(this.location.Description);
+
+            this.ShowDetailsLocationContextAction =
+                new Command(async () => await this.OnShowDetailsLocation());
+
+            this.ZoomToLocationContextAction =
+                new Command(async () => await this.OnZoomToLocationAsync());
+
+            this.DeleteLocationContextAction =
+                new Command(async () => await this.OnDeleteLocationAsync());
+        }
+
+        /// <summary>
+        /// Called when "show details" context action is selected
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task OnShowDetailsLocation()
+        {
+            await this.parentViewModel.NavigateToLocationDetails(this.location);
+        }
+
+        /// <summary>
+        /// Called when "zoom to" context action is selected
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task OnZoomToLocationAsync()
+        {
+            await this.parentViewModel.ZoomToLocation(this.location);
+        }
+
+        /// <summary>
+        /// Called when "delete" context action is selected
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task OnDeleteLocationAsync()
+        {
+            await this.parentViewModel.DeleteLocation(this.location);
         }
 
         /// <summary>

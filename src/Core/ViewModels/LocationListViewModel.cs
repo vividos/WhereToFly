@@ -133,7 +133,7 @@ namespace WhereToFly.Core.ViewModels
                 var locationViewModelList =
                     from location in this.locationList
                     orderby location.Distance
-                    select new LocationInfoViewModel(location);
+                    select new LocationInfoViewModel(this, location);
 
                 this.LocationList = new ObservableCollection<LocationInfoViewModel>(locationViewModelList);
             }
@@ -143,7 +143,7 @@ namespace WhereToFly.Core.ViewModels
                     from location in this.locationList
                     where this.IsFilterMatch(location)
                     orderby location.Distance
-                    select new LocationInfoViewModel(location);
+                    select new LocationInfoViewModel(this, location);
 
                 this.LocationList = new ObservableCollection<LocationInfoViewModel>(filteredLocationList);
             }
@@ -203,11 +203,33 @@ namespace WhereToFly.Core.ViewModels
         /// </summary>
         /// <param name="location">location to show</param>
         /// <returns>task to wait on</returns>
-        private async Task NavigateToLocationDetails(Location location)
+        internal async Task NavigateToLocationDetails(Location location)
         {
             await Task.CompletedTask;
             //// TODO implement
-            ////await NavigationService.Instance.NavigateAsync(Constants.PageKeyLocationInfoPage, true, location);
+            ////await NavigationService.Instance.NavigateAsync(Constants.PageKeyLocationDetailsPage, true, location);
+        }
+
+        /// <summary>
+        /// Returns to map view and zooms to the given location
+        /// </summary>
+        /// <param name="location">location to zoom to</param>
+        /// <returns>task to wait on</returns>
+        internal async Task ZoomToLocation(Location location)
+        {
+            await Task.CompletedTask;
+            //// TODO implement
+        }
+
+        /// <summary>
+        /// Deletes the given location from the location list
+        /// </summary>
+        /// <param name="location">location to delete</param>
+        /// <returns>task to wait on</returns>
+        internal async Task DeleteLocation(Location location)
+        {
+            await Task.CompletedTask;
+            //// TODO implement
         }
 
         /// <summary>

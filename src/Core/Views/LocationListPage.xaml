@@ -48,6 +48,17 @@
                                        LineBreakMode="TailTruncation" />
                             </StackLayout>
                         </ViewCell.View>
+                        <ViewCell.ContextActions>
+                            <MenuItem Text="Show Details"
+                                      Icon="information_outline.xml"
+                                      Command="{Binding ShowDetailsLocationContextAction}" />
+                            <MenuItem Text="Zoom to"
+                                      Icon="magnify_plus_outline.xml"
+                                      Command="{Binding ZoomToLocationContextAction}" />
+                            <MenuItem Text="Delete" IsDestructive="True"
+                                      Icon="delete.xml"
+                                      Command="{Binding DeleteLocationContextAction}" />
+                        </ViewCell.ContextActions>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
