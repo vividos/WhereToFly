@@ -66,7 +66,9 @@ namespace WhereToFly.Core.ViewModels
         {
             get
             {
-                return this.locationList.Any() &&
+                return this.locationList != null &&
+                    this.locationList.Any() &&
+                    this.LocationList != null &&
                     !this.LocationList.Any();
             }
         }
