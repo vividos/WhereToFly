@@ -38,6 +38,11 @@ load Google Earth .kml and .kmz files.
 The library is licensed using the
 [MIT License](https://github.com/samcragg/sharpkml/blob/master/LICENSE).
 
+The app uses the [Refit](https://paulcbetts.github.io/refit/) library to send
+REST based web service requests.
+The library is licensed using the
+[MIT License](https://github.com/paulcbetts/refit/blob/master/COPYING).
+
 ## Services
 
 The app uses the Thermal Skyways from https://thermal.kk7.ch/, with kind
