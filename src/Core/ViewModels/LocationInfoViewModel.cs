@@ -1,4 +1,5 @@
-﻿using WhereToFly.Logic.Model;
+﻿using WhereToFly.Logic;
+using WhereToFly.Logic.Model;
 
 namespace WhereToFly.Core.ViewModels
 {
@@ -46,13 +47,7 @@ namespace WhereToFly.Core.ViewModels
         /// <summary>
         /// Property containing location description
         /// </summary>
-        public string Description
-        {
-            get
-            {
-                return this.location.Description;
-            }
-        }
+        public string Description { get; set; }
 
         /// <summary>
         /// Creates a new view model object based on the given location object
@@ -61,6 +56,7 @@ namespace WhereToFly.Core.ViewModels
         public LocationInfoViewModel(Location location)
         {
             this.location = location;
+            this.Description = HtmlConverter.StripAllTags(this.location.Description);
         }
 
         /// <summary>
