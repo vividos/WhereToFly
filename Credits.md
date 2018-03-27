@@ -43,6 +43,11 @@ REST based web service requests.
 The library is licensed using the
 [MIT License](https://github.com/paulcbetts/refit/blob/master/COPYING).
 
+The app uses the [Html Agility Pack](http://html-agility-pack.net/) to parse
+HTML content.
+The library is licensed using the
+[MIT License](https://github.com/zzzprojects/html-agility-pack/blob/master/LICENSE).
+
 ## Services
 
 The app uses the Thermal Skyways from https://thermal.kk7.ch/, with kind

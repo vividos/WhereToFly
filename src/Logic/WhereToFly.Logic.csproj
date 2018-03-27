@@ -24,6 +24,7 @@
   
   <ItemGroup>
     <PackageReference Include="CommonMark.NET" Version="0.15.1" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.7.2" />
     <PackageReference Include="Plugin.Share" Version="7.1.1" />
   </ItemGroup>
 
