@@ -89,6 +89,7 @@ namespace WhereToFly.Core.ViewModels
 
             this.filterTextUpdateTimer.Elapsed += (sender, args) =>
             {
+                this.filterTextUpdateTimer.Stop();
                 App.RunOnUiThread(() => this.UpdateLocationList());
             };
 

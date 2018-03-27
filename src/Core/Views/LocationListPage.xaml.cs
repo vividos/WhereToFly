@@ -117,7 +117,7 @@ namespace WhereToFly.Core.Views
 
         #region Page lifecycle methods
         /// <summary>
-        /// Called when page is appearing; start position updates
+        /// Called when page is appearing; get current position
         /// </summary>
         protected override void OnAppearing()
         {
@@ -132,27 +132,11 @@ namespace WhereToFly.Core.Views
 
             Task.Factory.StartNew(async () =>
             {
-                await this.geolocator.StartListeningAsync(
-                    Constants.GeoLocationMinimumTimeForUpdate,
-                    Constants.GeoLocationMinimumDistanceForUpdateInMeters,
-                    includeHeading: true);
-            });
-
-            this.geolocator.PositionChanged += this.viewModel.OnPositionChanged;
-        }
-
-        /// <summary>
-        /// Called when form is disappearing; stop position updates
-        /// </summary>
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
-
-            this.geolocator.PositionChanged -= this.viewModel.OnPositionChanged;
-
-            Task.Factory.StartNew(async () =>
-            {
-                await this.geolocator.StopListeningAsync();
+                var position = await this.geolocator.GetPositionAsync(TimeSpan.FromSeconds(1));
+                if (position != null)
+                {
+                    this.viewModel.OnPositionChanged(this, new PositionEventArgs(position));
+                }
             });
         }
         #endregion
