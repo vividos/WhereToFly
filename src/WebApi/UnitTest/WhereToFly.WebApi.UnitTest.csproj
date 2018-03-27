@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Logic\WhereToFly.WebApi.Logic.csproj" />
     <ProjectReference Include="..\Model\WhereToFly.WebApi.Model.csproj" />
   </ItemGroup>
 
