@@ -206,9 +206,7 @@ namespace WhereToFly.Core.ViewModels
         /// <returns>task to wait on</returns>
         internal async Task NavigateToLocationDetails(Location location)
         {
-            await Task.CompletedTask;
-            //// TODO implement
-            ////await NavigationService.Instance.NavigateAsync(Constants.PageKeyLocationDetailsPage, true, location);
+            await NavigationService.Instance.NavigateAsync(Constants.PageKeyLocationDetailsPage, true, location);
         }
 
         /// <summary>

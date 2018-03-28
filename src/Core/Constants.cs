@@ -33,6 +33,12 @@ namespace WhereToFly.Core
         public const string PageKeyLocationListPage = "LocationListPage";
 
         /// <summary>
+        /// Page key for use in NavigationService, to navigate to location details page. The
+        /// location must be passed as parameter to the NavigationService.
+        /// </summary>
+        public const string PageKeyLocationDetailsPage = "LocationDetailsPage";
+
+        /// <summary>
         /// Page key for use in NavigationService, to navigate to settings page
         /// </summary>
         public const string PageKeySettingsPage = "SettingsPage";

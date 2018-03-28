@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WhereToFly.Core.Views.LocationDetailsPage">
+    <ContentPage.Content>
+
+        <ScrollView Orientation="Vertical">
+
+            <!-- stack layout with location details grid and details web view -->
+            <StackLayout Orientation="Vertical">
+
+                <!-- Grid with all location details -->
+                <Grid WidthRequest="350" MinimumWidthRequest="350"
+                      VerticalOptions="Start" ColumnSpacing="16" RowSpacing="16" Padding="8">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Name -->
+                    <Label Grid.Row="0" Grid.Column="0" Text="Name" />
+                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding Name, Mode=OneWay}" />
+
+                    <!-- Longitude -->
+                    <Label Grid.Row="1" Grid.Column="0" Text="Longitude" />
+                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Longitude, Mode=OneWay}" />
+
+                    <!-- Latitude -->
+                    <Label Grid.Row="2" Grid.Column="0" Text="Latitude" />
+                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding Latitude, Mode=OneWay}" />
+
+                    <!-- Altitude -->
+                    <Label Grid.Row="3" Grid.Column="0" Text="Altitude" />
+                    <Label Grid.Row="3" Grid.Column="1" Text="{Binding Altitude, Mode=OneWay}" />
+
+                    <!-- Current distance -->
+                    <Label Grid.Row="4" Grid.Column="0" Text="Distance" />
+                    <Label Grid.Row="4" Grid.Column="1" Text="{Binding Distance, Mode=OneWay}" />
+
+                    <!-- Internet link -->
+                    <Label Grid.Row="5" Grid.Column="0" Text="Internet link" />
+                    <Label Grid.Row="5" Grid.Column="1" Text="{Binding InternetLink, Mode=OneWay}" />
+                </Grid>
+
+                <!-- Description web view -->
+                <WebView HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"
+                         Source="{Binding DescriptionWebViewSource}" />
+
+            </StackLayout>
+
+        </ScrollView>
+
+    </ContentPage.Content>
+</ContentPage>
