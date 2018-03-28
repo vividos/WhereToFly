@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
+using WhereToFly.Logic;
 using WhereToFly.Logic.Model;
 
 namespace WhereToFly.Geo.DataFormats
@@ -80,7 +81,7 @@ namespace WhereToFly.Geo.DataFormats
                 Name = nameNode?.InnerText ?? "Waypoint",
                 Elevation = elevation,
                 MapLocation = new MapPoint(latitude, longitude),
-                Description = descNode?.InnerText ?? string.Empty,
+                Description = HtmlConverter.Sanitize(descNode?.InnerText ?? string.Empty),
                 Type = LocationTypeFromWaypointNode(nameNode),
                 InternetLink = linkHrefNode?.Value ?? string.Empty
             };
