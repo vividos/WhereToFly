@@ -47,7 +47,7 @@ namespace WhereToFly.Core.ViewModels
                     "Type: {0}; Elevation: {1} m; Distance: {2}",
                     this.location.Type,
                     this.location.Elevation,
-                    FormatDistance(this.location.Distance));
+                    DataFormatter.FormatDistance(this.location.Distance));
             }
         }
 
@@ -126,26 +126,6 @@ namespace WhereToFly.Core.ViewModels
         private async Task OnDeleteLocationAsync()
         {
             await this.parentViewModel.DeleteLocation(this.location);
-        }
-
-        /// <summary>
-        /// Formats distance value as displayable text
-        /// </summary>
-        /// <param name="distance">distance in meter</param>
-        /// <returns>displayable text</returns>
-        public static string FormatDistance(double distance)
-        {
-            if (distance < 1e-6)
-            {
-                return "-";
-            }
-
-            if (distance < 1000.0)
-            {
-                return string.Format("{0} m", (int)distance);
-            }
-
-            return string.Format("{0:F1} km", distance / 1000.0);
         }
     }
 }

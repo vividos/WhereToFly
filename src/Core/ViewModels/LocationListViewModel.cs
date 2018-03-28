@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.Core.Services;
 using WhereToFly.Geo.Spatial;
+using WhereToFly.Logic;
 using WhereToFly.Logic.Model;
 using Xamarin.Forms;
 
@@ -187,7 +188,7 @@ namespace WhereToFly.Core.ViewModels
 
             bool inDistance = !inElevation &&
                 Math.Abs(location.Distance) > 1e-6 &&
-                LocationInfoViewModel.FormatDistance(location.Distance).IndexOf(text, 0, StringComparison.OrdinalIgnoreCase) >= 0;
+                DataFormatter.FormatDistance(location.Distance).IndexOf(text, 0, StringComparison.OrdinalIgnoreCase) >= 0;
 
             return
                 inName ||

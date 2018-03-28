@@ -41,6 +41,26 @@ namespace WhereToFly.Logic
         }
 
         /// <summary>
+        /// Formats distance value as displayable text
+        /// </summary>
+        /// <param name="distance">distance in meter</param>
+        /// <returns>displayable text</returns>
+        public static string FormatDistance(double distance)
+        {
+            if (distance < 1e-6)
+            {
+                return "-";
+            }
+
+            if (distance < 1000.0)
+            {
+                return string.Format("{0} m", (int)distance);
+            }
+
+            return string.Format("{0:F1} km", distance / 1000.0);
+        }
+
+        /// <summary>
         /// Formats text for sharing the current position with another app
         /// </summary>
         /// <param name="point">location map point</param>
