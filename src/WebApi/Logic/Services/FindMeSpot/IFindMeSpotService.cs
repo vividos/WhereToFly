@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 /// <summary>
 /// Content classes for the Find Me SPOT REST web services call
+/// See: http://faq.findmespot.com/index.php?action=showEntry&data=69
 /// </summary>
 namespace WhereToFly.WebApi.Logic.Services.FindMeSpot
 {
