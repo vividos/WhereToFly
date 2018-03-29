@@ -37,6 +37,11 @@ namespace WhereToFly.Core.Views
         private bool startedSettingsPage;
 
         /// <summary>
+        /// Location to zoom to when this map page is appearing next time
+        /// </summary>
+        private MapPoint zoomToLocationOnAppearing;
+
+        /// <summary>
         /// Indicates if location list page was started; used to update location list when
         /// returning to this page.
         /// </summary>
@@ -63,10 +68,17 @@ namespace WhereToFly.Core.Views
         private TaskCompletionSource<bool> taskCompletionSourcePageLoaded;
 
         /// <summary>
+        /// Indicates if this page is currently visible (OnAppearing() but no OnDisappearing()
+        /// called).
+        /// </summary>
+        private bool pageIsVisible;
+
+        /// <summary>
         /// Creates a new maps page
         /// </summary>
         public MapPage()
         {
+            this.pageIsVisible = false;
             this.zoomToMyPosition = false;
             this.startedSettingsPage = false;
             this.startedLocationListPage = false;
@@ -74,6 +86,8 @@ namespace WhereToFly.Core.Views
             this.geolocator = Plugin.Geolocator.CrossGeolocator.Current;
 
             Task.Factory.StartNew(this.InitLayoutAsync);
+
+            MessagingCenter.Subscribe<App, MapPoint>(this, Constants.MessageZoomToLocation, this.OnMessageZoomToLocation);
         }
 
         /// <summary>
@@ -470,6 +484,18 @@ namespace WhereToFly.Core.Views
             }
         }
 
+        private void OnMessageZoomToLocation(App app, MapPoint location)
+        {
+            if (this.pageIsVisible)
+            {
+                this.mapView.ZoomToLocation(location);
+            }
+            else
+            {
+                this.zoomToLocationOnAppearing = location;
+            }
+        }
+
         #region Page lifecycle methods
         /// <summary>
         /// Called when page is appearing; start position updates
@@ -489,6 +515,8 @@ namespace WhereToFly.Core.Views
             this.geolocator.PositionChanged += this.OnPositionChanged;
 
             App.RunOnUiThread(async () => await this.CheckReloadData());
+
+            this.pageIsVisible = true;
         }
 
         /// <summary>
@@ -517,6 +545,13 @@ namespace WhereToFly.Core.Views
 
                 await this.ReloadLocationListAsync();
             }
+
+            if (this.zoomToLocationOnAppearing != null)
+            {
+                this.mapView.ZoomToLocation(this.zoomToLocationOnAppearing);
+
+                this.zoomToLocationOnAppearing = null;
+            }
         }
 
         /// <summary>
@@ -538,6 +573,8 @@ namespace WhereToFly.Core.Views
         /// </summary>
         protected override void OnDisappearing()
         {
+            this.pageIsVisible = false;
+
             base.OnDisappearing();
 
             this.geolocator.PositionChanged -= this.OnPositionChanged;

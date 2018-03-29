@@ -18,9 +18,14 @@ namespace WhereToFly.Core
         public const string AppCenterKeyAndroid = "dc3a41ea-d024-41a8-9940-4529a24086b1";
 
         /// <summary>
-        /// MessageCenter message constant to show toast message
+        /// MessagingCenter message constant to show toast message
         /// </summary>
         public const string MessageShowToast = "ShowToast";
+
+        /// <summary>
+        /// MessagingCenter message constant to zoom to a location on MapPage
+        /// </summary>
+        public const string MessageZoomToLocation = "ZoomToLocation";
 
         /// <summary>
         /// Page key for use in NavigationService, to navigate to current position details page

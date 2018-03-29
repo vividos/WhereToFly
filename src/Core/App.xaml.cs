@@ -184,6 +184,18 @@ namespace WhereToFly.Core
             MessagingCenter.Send<App, string>(app, Constants.MessageShowToast, message);
         }
 
+        /// <summary>
+        /// Zooms to location on opened MapPage; when the map page is currently invisible, the
+        /// zoom is carried out when the page appears.
+        /// </summary>
+        /// <param name="location">location to zoom to</param>
+        public static void ZoomToLocation(MapPoint location)
+        {
+            var app = Xamarin.Forms.Application.Current as App;
+
+            MessagingCenter.Send<App, MapPoint>(app, Constants.MessageZoomToLocation, location);
+        }
+
         #region App lifecycle methods
         /// <summary>
         /// Called when application is starting

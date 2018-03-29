@@ -216,8 +216,8 @@ namespace WhereToFly.Core.ViewModels
         /// <returns>task to wait on</returns>
         internal async Task ZoomToLocation(Location location)
         {
-            await Task.CompletedTask;
-            //// TODO implement
+            App.ZoomToLocation(location.MapLocation);
+            await NavigationService.Instance.GoBack();
         }
 
         /// <summary>
