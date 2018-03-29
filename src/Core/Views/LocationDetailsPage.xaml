@@ -2,6 +2,18 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="WhereToFly.Core.Views.LocationDetailsPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="Zoom to"
+                     Icon="magnify_plus_outline.xml"
+                     Command="{Binding ZoomToLocationCommand}"
+                     Order="Primary" Priority="0" />
+        <ToolbarItem Name="Delete"
+                     Icon="delete.xml"
+                     Command="{Binding DeleteLocationCommand}"
+                     Order="Primary" Priority="1" />
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Content>
 
         <ScrollView Orientation="Vertical">

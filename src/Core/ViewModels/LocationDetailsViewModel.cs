@@ -1,4 +1,7 @@
-﻿using WhereToFly.Logic;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using WhereToFly.Core.Services;
+using WhereToFly.Logic;
 using WhereToFly.Logic.Model;
 using Xamarin.Forms;
 
@@ -19,6 +22,7 @@ namespace WhereToFly.Core.ViewModels
         /// </summary>
         private readonly Location location;
 
+        #region Binding properties
         /// <summary>
         /// Property containing location name
         /// </summary>
@@ -96,6 +100,17 @@ namespace WhereToFly.Core.ViewModels
         }
 
         /// <summary>
+        /// Command to execute when "zoom to" menu item is selected on a location
+        /// </summary>
+        public Command ZoomToLocationCommand { get; set; }
+
+        /// <summary>
+        /// Command to execute when "delete" menu item is selected on a location
+        /// </summary>
+        public Command DeleteLocationCommand { get; set; }
+        #endregion
+
+        /// <summary>
         /// Creates a new view model object based on the given location object
         /// </summary>
         /// <param name="appSettings">app settings object</param>
@@ -118,6 +133,44 @@ namespace WhereToFly.Core.ViewModels
                 Html = this.location.Description,
                 BaseUrl = "about:blank"
             };
+
+            this.ZoomToLocationCommand =
+                new Command(async () => await this.OnZoomToLocationAsync());
+
+            this.DeleteLocationCommand =
+                new Command(async () => await this.OnDeleteLocationAsync());
+        }
+
+        /// <summary>
+        /// Called when "zoom to" menu item is selected
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task OnZoomToLocationAsync()
+        {
+            App.ZoomToLocation(location.MapLocation);
+
+            // navigate back 2x, since the details can only be viewed from the location list page
+            await NavigationService.Instance.GoBack();
+            await NavigationService.Instance.GoBack();
+        }
+
+        /// <summary>
+        /// Called when "delete" menu item is selected
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task OnDeleteLocationAsync()
+        {
+            var dataService = DependencyService.Get<DataService>();
+
+            var locationList = await dataService.GetLocationListAsync(CancellationToken.None);
+
+            locationList.Remove(this.location);
+
+            await dataService.StoreLocationListAsync(locationList);
+
+            App.ShowToast("Selected location was deleted.");
+
+            await NavigationService.Instance.GoBack();
         }
     }
 }
