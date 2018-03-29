@@ -7,7 +7,7 @@ namespace WhereToFly.Logic.Model
     /// A point on a map, in WGS84 decimal coordinates. Negative values are
     /// left of the GMT line and below the equator.
     /// </summary>
-    public class MapPoint
+    public class MapPoint : IEquatable<MapPoint>
     {
         /// <summary>
         /// Creates a new map point
@@ -43,6 +43,49 @@ namespace WhereToFly.Logic.Model
             }
         }
 
+        #region IEquatable implementation
+        /// <summary>
+        /// Compares this map point to another map point and returns if they are equal
+        /// </summary>
+        /// <param name="other">other map point</param>
+        /// <returns>true when equal, false when not</returns>
+        public bool Equals(MapPoint other)
+        {
+            return Math.Abs(this.Latitude - other.Latitude) < 1e-6 &&
+                Math.Abs(this.Longitude - other.Longitude) < 1e-6;
+        }
+        #endregion
+
+        #region object overridables implementation
+        /// <summary>
+        /// Compares this map point to another object and returns if they are equal
+        /// </summary>
+        /// <param name="obj">object to compare to</param>
+        /// <returns>true when equal, false when not</returns>
+        public override bool Equals(object obj)
+        {
+            var other = obj as MapPoint;
+
+            if (other == null)
+            {
+                return false;
+            }
+
+            return this.Equals(other);
+        }
+
+        /// <summary>
+        /// Calculates hash code for map point
+        /// </summary>
+        /// <returns>calculated hash code</returns>
+        public override int GetHashCode()
+        {
+            int hashCode = 487;
+            hashCode = (hashCode * 31) + this.Latitude.GetHashCode();
+            hashCode = (hashCode * 31) + this.Longitude.GetHashCode();
+            return hashCode;
+        }
+
         /// <summary>
         /// Returns a printable representation of this object
         /// </summary>
@@ -54,5 +97,6 @@ namespace WhereToFly.Logic.Model
                 this.Latitude.ToString("F6", CultureInfo.InvariantCulture),
                 this.Longitude.ToString("F6", CultureInfo.InvariantCulture));
         }
+        #endregion
     }
 }
