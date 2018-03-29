@@ -227,8 +227,14 @@ namespace WhereToFly.Core.ViewModels
         /// <returns>task to wait on</returns>
         internal async Task DeleteLocation(Location location)
         {
-            await Task.CompletedTask;
-            //// TODO implement
+            this.locationList.Remove(location);
+
+            var dataService = DependencyService.Get<DataService>();
+            await dataService.StoreLocationListAsync(this.locationList);
+
+            this.UpdateLocationList();
+
+            App.ShowToast("Selected location was deleted.");
         }
 
         /// <summary>
