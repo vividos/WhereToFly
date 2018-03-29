@@ -485,6 +485,11 @@ namespace WhereToFly.Core.Views
             }
         }
 
+        /// <summary>
+        /// Called when message arrives in order to zoom to a location
+        /// </summary>
+        /// <param name="app">app object</param>
+        /// <param name="location">location to zoom to</param>
         private void OnMessageZoomToLocation(App app, MapPoint location)
         {
             if (this.pageIsVisible)
