@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.Core.Services;
+using WhereToFly.Geo.Spatial;
 using WhereToFly.Logic;
 using WhereToFly.Logic.Model;
 using Xamarin.Forms;
@@ -21,6 +22,11 @@ namespace WhereToFly.Core.ViewModels
         /// Location to show
         /// </summary>
         private readonly Location location;
+
+        /// <summary>
+        /// Distance to the user's current location
+        /// </summary>
+        private readonly double distance;
 
         #region Binding properties
         /// <summary>
@@ -76,7 +82,7 @@ namespace WhereToFly.Core.ViewModels
         {
             get
             {
-                return DataFormatter.FormatDistance(this.location.Distance);
+                return DataFormatter.FormatDistance(this.distance);
             }
         }
 
@@ -115,10 +121,16 @@ namespace WhereToFly.Core.ViewModels
         /// </summary>
         /// <param name="appSettings">app settings object</param>
         /// <param name="location">location object</param>
-        public LocationDetailsViewModel(AppSettings appSettings, Location location)
+        /// <param name="myCurrentPosition">the user's current position; may be null</param>
+        public LocationDetailsViewModel(AppSettings appSettings, Location location, LatLongAlt myCurrentPosition)
         {
             this.appSettings = appSettings;
             this.location = location;
+
+            this.distance = myCurrentPosition != null ? myCurrentPosition.DistanceTo(
+                new LatLongAlt(
+                    this.location.MapLocation.Latitude,
+                    this.location.MapLocation.Longitude)) : 0.0;
 
             this.SetupBindings();
         }
@@ -147,7 +159,7 @@ namespace WhereToFly.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task OnZoomToLocationAsync()
         {
-            App.ZoomToLocation(location.MapLocation);
+            App.ZoomToLocation(this.location.MapLocation);
 
             // navigate back 2x, since the details can only be viewed from the location list page
             await NavigationService.Instance.GoBack();

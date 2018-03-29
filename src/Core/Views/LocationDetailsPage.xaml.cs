@@ -21,7 +21,7 @@ namespace WhereToFly.Core.Views
 
             this.InitializeComponent();
 
-            this.BindingContext = new LocationDetailsViewModel(App.Settings, location);
+            this.BindingContext = new LocationDetailsViewModel(App.Settings, location, null);
         }
     }
 }

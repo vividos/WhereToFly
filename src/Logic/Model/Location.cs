@@ -42,11 +42,6 @@ namespace WhereToFly.Logic.Model
         /// </summary>
         public string InternetLink { get; set; }
 
-        /// <summary>
-        /// Distance to the current position
-        /// </summary>
-        public double Distance { get; set; } = 0.0;
-
         #region IEquatable implementation
         /// <summary>
         /// Compares this location to another location and returns if they are equal

@@ -29,7 +29,7 @@ namespace WhereToFly.UnitTest.ViewModels
                 InternetLink = "https://de.wikipedia.org/wiki/Brecherspitz"
             };
 
-            var viewModel = new LocationInfoViewModel(location);
+            var viewModel = new LocationInfoViewModel(null, location, null);
 
             // check
             Assert.IsTrue(viewModel.Name.Length > 0, "name text must not be empty");

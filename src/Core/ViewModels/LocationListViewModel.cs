@@ -34,6 +34,11 @@ namespace WhereToFly.Core.ViewModels
         /// </summary>
         private System.Timers.Timer filterTextUpdateTimer = new System.Timers.Timer(1000.0);
 
+        /// <summary>
+        /// Current position of user; may be null when not retrieved yet
+        /// </summary>
+        private LatLongAlt currentPosition;
+
         #region Binding properties
         /// <summary>
         /// Current location list; may be filtered by filter text
@@ -129,36 +134,32 @@ namespace WhereToFly.Core.ViewModels
         /// </summary>
         private void UpdateLocationList()
         {
-            if (string.IsNullOrWhiteSpace(this.filterText))
-            {
-                var locationViewModelList =
-                    from location in this.locationList
-                    orderby location.Distance
-                    select new LocationInfoViewModel(this, location);
+            var newList = this.locationList
+                .Select(location => new LocationInfoViewModel(this, location, this.currentPosition));
 
-                this.LocationList = new ObservableCollection<LocationInfoViewModel>(locationViewModelList);
-            }
-            else
+            if (!string.IsNullOrWhiteSpace(this.filterText))
             {
-                var filteredLocationList =
-                    from location in this.locationList
-                    where this.IsFilterMatch(location)
-                    orderby location.Distance
-                    select new LocationInfoViewModel(this, location);
-
-                this.LocationList = new ObservableCollection<LocationInfoViewModel>(filteredLocationList);
+                newList = newList.Where(viewModel => this.IsFilterMatch(viewModel));
             }
+
+            if (this.currentPosition != null)
+            {
+                newList = newList.OrderBy(viewModel => viewModel.Distance);
+            }
+
+            this.LocationList = new ObservableCollection<LocationInfoViewModel>(newList);
 
             this.OnPropertyChanged(nameof(this.LocationList));
             this.OnPropertyChanged(nameof(this.AreAllLocationsFilteredOut));
         }
 
         /// <summary>
-        /// Checks if given location is a current filter match, based on the filter text
+        /// Checks if given location (represented by a view model) is a current filter match,
+        /// based on the filter text.
         /// </summary>
-        /// <param name="location">location to check</param>
+        /// <param name="viewModel">location view model to check</param>
         /// <returns>matching filter</returns>
-        private bool IsFilterMatch(Location location)
+        private bool IsFilterMatch(LocationInfoViewModel viewModel)
         {
             if (string.IsNullOrWhiteSpace(this.filterText))
             {
@@ -166,6 +167,7 @@ namespace WhereToFly.Core.ViewModels
             }
 
             string text = this.filterText;
+            var location = viewModel.Location;
 
             bool inName = location.Name != null &&
                 location.Name.IndexOf(text, 0, StringComparison.OrdinalIgnoreCase) >= 0;
@@ -187,8 +189,8 @@ namespace WhereToFly.Core.ViewModels
                 ((int)location.Elevation).ToString().IndexOf(text, 0, StringComparison.OrdinalIgnoreCase) >= 0;
 
             bool inDistance = !inElevation &&
-                Math.Abs(location.Distance) > 1e-6 &&
-                DataFormatter.FormatDistance(location.Distance).IndexOf(text, 0, StringComparison.OrdinalIgnoreCase) >= 0;
+                Math.Abs(viewModel.Distance) > 1e-6 &&
+                DataFormatter.FormatDistance(viewModel.Distance).IndexOf(text, 0, StringComparison.OrdinalIgnoreCase) >= 0;
 
             return
                 inName ||
@@ -255,14 +257,7 @@ namespace WhereToFly.Core.ViewModels
         /// <param name="args">event args, including position</param>
         public void OnPositionChanged(object sender, PositionEventArgs args)
         {
-            var myPosition = new LatLongAlt(args.Position.Latitude, args.Position.Longitude);
-
-            foreach (var location in this.locationList)
-            {
-                var locationPosition = new LatLongAlt(location.MapLocation.Latitude, location.MapLocation.Longitude);
-
-                location.Distance = locationPosition.DistanceTo(myPosition);
-            }
+            this.currentPosition = new LatLongAlt(args.Position.Latitude, args.Position.Longitude);
 
             this.UpdateLocationList();
         }

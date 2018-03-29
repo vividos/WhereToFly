@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using WhereToFly.Geo.Spatial;
 using WhereToFly.Logic;
 using WhereToFly.Logic.Model;
 using Xamarin.Forms;
@@ -47,7 +48,7 @@ namespace WhereToFly.Core.ViewModels
                     "Type: {0}; Elevation: {1} m; Distance: {2}",
                     this.location.Type,
                     this.location.Elevation,
-                    DataFormatter.FormatDistance(this.location.Distance));
+                    DataFormatter.FormatDistance(this.Distance));
             }
         }
 
@@ -55,6 +56,11 @@ namespace WhereToFly.Core.ViewModels
         /// Property containing location description
         /// </summary>
         public string Description { get; set; }
+
+        /// <summary>
+        /// Distance to the user's current location
+        /// </summary>
+        public double Distance { get; set; }
 
         /// <summary>
         /// Command to execute when "show details" context action is selected on a location
@@ -76,10 +82,16 @@ namespace WhereToFly.Core.ViewModels
         /// </summary>
         /// <param name="parentViewModel">parent view model</param>
         /// <param name="location">location object</param>
-        public LocationInfoViewModel(LocationListViewModel parentViewModel, Location location)
+        /// <param name="myCurrentPosition">the user's current position; may be null</param>
+        public LocationInfoViewModel(LocationListViewModel parentViewModel, Location location, LatLongAlt myCurrentPosition)
         {
             this.parentViewModel = parentViewModel;
             this.location = location;
+
+            this.Distance = myCurrentPosition != null ? myCurrentPosition.DistanceTo(
+                new LatLongAlt(
+                    this.location.MapLocation.Latitude,
+                    this.location.MapLocation.Longitude)) : 0.0;
 
             this.SetupBindings();
         }
