@@ -6,6 +6,7 @@ using Plugin.Share.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.Core.Services;
@@ -562,10 +563,15 @@ namespace WhereToFly.Core.Views
         {
             var dataService = DependencyService.Get<DataService>();
 
-            this.locationList = await dataService.GetLocationListAsync(CancellationToken.None);
+            var newLocationList = await dataService.GetLocationListAsync(CancellationToken.None);
 
-            this.mapView.ClearLocationList();
-            this.mapView.AddLocationList(this.locationList);
+            if (!Enumerable.SequenceEqual(this.locationList, newLocationList))
+            {
+                this.locationList = newLocationList;
+
+                this.mapView.ClearLocationList();
+                this.mapView.AddLocationList(this.locationList);
+            }
         }
 
         /// <summary>
