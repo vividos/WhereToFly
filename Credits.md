@@ -63,8 +63,11 @@ The following icons are from the Google Material icon set:
 - bus
 - compass
 - crosshairs-gps
+- delete
 - directions
+- format-list-bulleted
 - information-outline
+- magnify-plus-outline
 - map-marker-plus
 - map-marker
 - navigation
