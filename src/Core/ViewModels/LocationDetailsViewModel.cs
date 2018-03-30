@@ -111,6 +111,11 @@ namespace WhereToFly.Core.ViewModels
         public Command ZoomToLocationCommand { get; set; }
 
         /// <summary>
+        /// Command to execute when "navigate to" menu item is selected on a location
+        /// </summary>
+        public Command NavigateToLocationCommand { get; set; }
+
+        /// <summary>
         /// Command to execute when "delete" menu item is selected on a location
         /// </summary>
         public Command DeleteLocationCommand { get; set; }
@@ -149,12 +154,15 @@ namespace WhereToFly.Core.ViewModels
             this.ZoomToLocationCommand =
                 new Command(async () => await this.OnZoomToLocationAsync());
 
+            this.NavigateToLocationCommand =
+                new Command(this.OnNavigateToLocation);
+
             this.DeleteLocationCommand =
                 new Command(async () => await this.OnDeleteLocationAsync());
         }
 
         /// <summary>
-        /// Called when "zoom to" menu item is selected
+        /// Called when "Zoom to" menu item is selected
         /// </summary>
         /// <returns>task to wait on</returns>
         private async Task OnZoomToLocationAsync()
@@ -167,7 +175,19 @@ namespace WhereToFly.Core.ViewModels
         }
 
         /// <summary>
-        /// Called when "delete" menu item is selected
+        /// Called when "Navigate here" menu item is selected
+        /// </summary>
+        private void OnNavigateToLocation()
+        {
+            Plugin.ExternalMaps.CrossExternalMaps.Current.NavigateTo(
+                this.location.Name,
+                this.location.MapLocation.Latitude,
+                this.location.MapLocation.Longitude,
+                Plugin.ExternalMaps.Abstractions.NavigationType.Driving);
+        }
+
+        /// <summary>
+        /// Called when "Delete" menu item is selected
         /// </summary>
         /// <returns>task to wait on</returns>
         private async Task OnDeleteLocationAsync()
