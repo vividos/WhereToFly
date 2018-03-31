@@ -122,9 +122,17 @@ namespace WhereToFly.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task LoadDataAsync()
         {
-            var dataService = DependencyService.Get<DataService>();
+            DataService dataService = null;
+            try
+            {
+                dataService = DependencyService.Get<DataService>();
 
-            this.locationList = await dataService.GetLocationListAsync(CancellationToken.None);
+                this.locationList = await dataService.GetLocationListAsync(CancellationToken.None);
+            }
+            catch (Exception ex)
+            {
+                App.LogError(ex);
+            }
 
             this.UpdateLocationList();
         }
