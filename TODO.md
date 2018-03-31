@@ -13,11 +13,14 @@
 
 ### Version 1.2
 
-- [ ] Import GPX files
 - [ ] Search for location and zoom to
-- [ ] Show location list
-- [ ] Show location details
+- [ ] Show icon in location list
+- [ ] Show icon in location details
+
+### Version 1.3
+
 - [ ] Show polyline with path from last 1h
+- [ ] Use clustering to limit number of pins to show
 
 ### Version 2.0
 
