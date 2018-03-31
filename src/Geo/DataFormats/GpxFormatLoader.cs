@@ -13,6 +13,11 @@ namespace WhereToFly.Geo.DataFormats
     internal static class GpxFormatLoader
     {
         /// <summary>
+        /// GPX namespace to use
+        /// </summary>
+        private static string gpxNamespace = "http://www.topografix.com/GPX/1/1";
+
+        /// <summary>
         /// Loads location list from given stream containing a GPX file. The Waypoint items of the
         /// GPX file is returned.
         /// </summary>
@@ -24,7 +29,7 @@ namespace WhereToFly.Geo.DataFormats
             gpxDocument.Load(stream);
 
             XmlNamespaceManager namespaceManager = new XmlNamespaceManager(gpxDocument.NameTable);
-            namespaceManager.AddNamespace("x", "http://www.topografix.com/GPX/1/1");
+            namespaceManager.AddNamespace("x", gpxNamespace);
 
             XmlNodeList waypointNodeList = gpxDocument.SelectNodes("//x:wpt", namespaceManager);
 

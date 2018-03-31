@@ -109,10 +109,10 @@ namespace WhereToFly.Core.Views
         /// <param name="args">event args</param>
         private void OnItemTapped_LocationsListView(object sender, ItemTappedEventArgs args)
         {
-            var viewModel = this.BindingContext as LocationListViewModel;
+            var localViewModel = this.BindingContext as LocationListViewModel;
 
             var locationInfoViewModel = args.Item as LocationInfoViewModel;
-            viewModel.ItemTappedCommand.Execute(locationInfoViewModel.Location);
+            localViewModel.ItemTappedCommand.Execute(locationInfoViewModel.Location);
         }
 
         #region Page lifecycle methods

@@ -5,7 +5,7 @@ namespace WhereToFly.Logic.Model
     /// <summary>
     /// A location that can be used for tour planning, e.g. as intermediate stops.
     /// </summary>
-    public class Location : IEquatable<Location>
+    public sealed class Location : IEquatable<Location>
     {
         /// <summary>
         /// Location ID

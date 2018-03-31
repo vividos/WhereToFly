@@ -7,7 +7,7 @@ namespace WhereToFly.Logic.Model
     /// A point on a map, in WGS84 decimal coordinates. Negative values are
     /// left of the GMT line and below the equator.
     /// </summary>
-    public class MapPoint : IEquatable<MapPoint>
+    public sealed class MapPoint : IEquatable<MapPoint>
     {
         /// <summary>
         /// Creates a new map point

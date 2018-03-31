@@ -6,7 +6,7 @@ namespace LiveWaypoints
     /// <summary>
     /// Main program for WebAPI
     /// </summary>
-    public class Program
+    public static class Program
     {
         /// <summary>
         /// Main entry point for WebAPI

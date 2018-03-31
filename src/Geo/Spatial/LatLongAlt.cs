@@ -61,8 +61,6 @@ namespace WhereToFly.Geo.Spatial
         {
             var lat1 = this.Latitude.ToRadians();
             var lat2 = other.Latitude.ToRadians();
-            var long1 = this.Longitude.ToRadians();
-            var long2 = other.Longitude.ToRadians();
             double deltaLat12 = (this.Latitude - other.Latitude).ToRadians();
             double deltaLong12 = (this.Longitude - other.Longitude).ToRadians();
 

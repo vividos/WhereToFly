@@ -27,7 +27,7 @@ namespace WhereToFly.Core.ViewModels
         /// <summary>
         /// Backing store for FilterText property
         /// </summary>
-        private string filterText = string.Empty;
+        private string filterText;
 
         /// <summary>
         /// Timer that is triggered after filter text was updated and 
