@@ -68,8 +68,9 @@ namespace WhereToFly.Geo.Spatial
 
             double distanceRadians =
                 2 * Math.Asin(
-                    Math.Sqrt(Math.Pow((Math.Sin(deltaLat12 / 2)), 2) +
-                    Math.Cos(lat1) * Math.Cos(lat2) * Math.Pow(Math.Sin(deltaLong12 / 2), 2)));
+                    Math.Sqrt(
+                        Math.Pow(Math.Sin(deltaLat12 / 2), 2) +
+                        (Math.Cos(lat1) * Math.Cos(lat2) * Math.Pow(Math.Sin(deltaLong12 / 2), 2))));
 
             return distanceRadians * Constants.EarthRadiusInMeter;
         }
@@ -97,10 +98,10 @@ namespace WhereToFly.Geo.Spatial
                 double deltaLong21 = (other.Longitude - this.Longitude).ToRadians();
                 var lat2 = other.Latitude.ToRadians();
 
-                trueCourse = (Math.Atan2(
+                trueCourse = Math.Atan2(
                     Math.Sin(deltaLong21) * Math.Cos(lat2),
-                    Math.Cos(lat1) * Math.Sin(lat2) - Math.Sin(lat1) * Math.Cos(lat2) * Math.Cos(deltaLong21))
-                    ) % (2 * Math.PI);
+                    (Math.Cos(lat1) * Math.Sin(lat2)) - (Math.Sin(lat1) * Math.Cos(lat2) * Math.Cos(deltaLong21)))
+                    % (2 * Math.PI);
 
                 if (trueCourse < 0.0)
                 {

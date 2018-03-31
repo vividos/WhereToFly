@@ -12,8 +12,8 @@ namespace LiveWaypoints.Controllers
     [Produces("application/json")]
     public class LiveWaypointController : Controller
     {
-        // GET api/values/5
         /// <summary>
+        /// GET api/values/5
         /// Retrieves the current live waypoint infos for the given ID. The ID completely
         /// describes the live waypoint. The latest data for the waypoint is retrieved when
         /// necessary, or a cached copy of the data.
@@ -28,7 +28,7 @@ namespace LiveWaypoints.Controllers
         {
             if (string.IsNullOrEmpty(id))
             {
-                return BadRequest();
+                return this.BadRequest();
             }
 
             var service = new FindMeSpotTrackerDataService();

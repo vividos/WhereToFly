@@ -9,8 +9,11 @@ namespace WhereToFly.WebApi.UnitTest
     [TestClass]
     public class FindMeSpotTest
     {
+        /// <summary>
+        /// Test to get live waypoint data using data service
+        /// </summary>
         [TestMethod]
-        public void TestMethod1()
+        public void TestLiveWaypointData()
         {
             // set up
             var dataService = new FindMeSpotTrackerDataService();
