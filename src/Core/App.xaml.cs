@@ -78,6 +78,16 @@ namespace WhereToFly.Core
         }
 
         /// <summary>
+        /// Logs exception that is occured and was caught, but is not presented to the user. Send
+        /// it to AppCenter for further analysis.
+        /// </summary>
+        /// <param name="ex">exception to log</param>
+        public static void LogError(Exception ex)
+        {
+            Crashes.TrackError(ex);
+        }
+
+        /// <summary>
         /// Runs action on the UI thread
         /// </summary>
         /// <param name="action">action to run</param>
@@ -104,6 +114,7 @@ namespace WhereToFly.Core
                 }
                 catch (Exception ex)
                 {
+                    App.LogError(ex);
                     tcs.SetException(ex);
                 }
             });
@@ -164,6 +175,8 @@ namespace WhereToFly.Core
             }
             catch (Exception ex)
             {
+                App.LogError(ex);
+
                 await App.Current.MainPage.DisplayAlert(
                     Constants.AppTitle,
                     "Error while loading location list: " + ex.Message,

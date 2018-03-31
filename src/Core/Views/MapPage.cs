@@ -156,7 +156,7 @@ namespace WhereToFly.Core.Views
             catch (Exception ex)
             {
                 // no position service activated, or timeout reached
-                Debug.WriteLine(ex.ToString());
+                App.LogError(ex);
 
                 // zoom at next update
                 this.zoomToMyPosition = true;
@@ -214,7 +214,7 @@ namespace WhereToFly.Core.Views
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.ToString());
+                App.LogError(ex);
                 throw;
             }
         }

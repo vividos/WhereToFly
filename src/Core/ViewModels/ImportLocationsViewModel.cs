@@ -136,6 +136,8 @@ namespace WhereToFly.Core.ViewModels
             }
             catch (Exception ex)
             {
+                App.LogError(ex);
+
                 await App.Current.MainPage.DisplayAlert(
                     Constants.AppTitle,
                     "Error while loading location list: " + ex.Message,
@@ -163,6 +165,8 @@ namespace WhereToFly.Core.ViewModels
             }
             catch (Exception ex)
             {
+                App.LogError(ex);
+
                 await App.Current.MainPage.DisplayAlert(
                     Constants.AppTitle,
                     "Error while picking a file: " + ex.Message,
@@ -208,6 +212,8 @@ namespace WhereToFly.Core.ViewModels
             }
             catch (Exception ex)
             {
+                App.LogError(ex);
+
                 await App.Current.MainPage.DisplayAlert(
                     Constants.AppTitle,
                     "Error while loading location list: " + ex.Message,

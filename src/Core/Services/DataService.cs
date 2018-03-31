@@ -50,8 +50,9 @@ namespace WhereToFly.Core.Services
 
                 return await Task.FromResult(appSettings);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                App.LogError(ex);
                 return new AppSettings();
             }
         }
@@ -95,8 +96,9 @@ namespace WhereToFly.Core.Services
 
                 return await Task.FromResult(locationList);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                App.LogError(ex);
                 return this.GetDefaultLocationList();
             }
         }
