@@ -8,7 +8,6 @@
 
 - [ ] Semi-transparent navigation bar
 - [ ] Icon in Navigation bar
-- [ ] implement http/https stream downloading for intent filter
 
 ## New Features
 

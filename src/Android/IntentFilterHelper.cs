@@ -2,6 +2,7 @@
 using Android.Database;
 using Android.Net;
 using System.IO;
+using System.Net.Http;
 
 namespace WhereToFly.Android
 {
@@ -106,8 +107,9 @@ namespace WhereToFly.Android
         /// <returns>stream object, or null when download is not possible</returns>
         private Stream GetStreamFromInternetLink(string url)
         {
-            // TODO implement
-            return null;
+            var client = new HttpClient();
+
+            return client.GetStreamAsync(url).Result;
         }
     }
 }

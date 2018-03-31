@@ -24,7 +24,7 @@ namespace WhereToFly.Android
     //// See https://stackoverflow.com/questions/39300649/android-intent-filter-not-working
     [IntentFilter(
         new[] { Intent.ActionView, Intent.ActionOpenDocument },
-        DataSchemes = new string[] { "file", "content", /*"http", "https"*/ },
+        DataSchemes = new string[] { "file", "content", "http", "https" },
         DataMimeTypes = new string[]
         {
             "application/vnd.google-earth.kml+xml",
@@ -36,7 +36,7 @@ namespace WhereToFly.Android
     //// Intent filter, case 2: mime type not set, but valid extensions
     [IntentFilter(
         new[] { Intent.ActionView, Intent.ActionOpenDocument },
-        DataSchemes = new string[] { "file", "content", /*"http", "https"*/ },
+        DataSchemes = new string[] { "file", "content", "http", "https" },
         DataHost = "*",
         DataPathPatterns = new string[]
         {
@@ -83,6 +83,11 @@ namespace WhereToFly.Android
             var helper = new IntentFilterHelper(this.ContentResolver);
 
             string filename = Path.GetFileName(helper.GetFilenameFromIntent(intent));
+            if (filename == null)
+            {
+                return;
+            }
+
             var stream = helper.GetStreamFromIntent(intent);
 
             if (stream != null)
