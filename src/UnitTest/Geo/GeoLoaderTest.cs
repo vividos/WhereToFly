@@ -92,7 +92,7 @@ namespace WhereToFly.UnitTest
             string filename = Path.Combine(this.TestAssetsPath, "waypoints.abc");
 
             // run + check
-            Assert.ThrowsException<ArgumentException>(() => GeoLoader.LoadLocationList(filename), "must throw exception");
+            Assert.ThrowsException<FileNotFoundException>(() => GeoLoader.LoadLocationList(filename), "must throw exception");
         }
     }
 }
