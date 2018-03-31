@@ -1,7 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
+using System.Threading;
+using WhereToFly.Core.Services;
 using WhereToFly.Core.ViewModels;
 using WhereToFly.Logic.Model;
+using Xamarin.Forms;
 
 namespace WhereToFly.UnitTest.ViewModels
 {
@@ -12,6 +15,16 @@ namespace WhereToFly.UnitTest.ViewModels
     public class LocationListViewModelTest
     {
         /// <summary>
+        /// Called before each test method; initializes dependency service with DataService
+        /// instance.
+        /// </summary>
+        [TestInitialize]
+        public void SetUp()
+        {
+            DependencyService.Register<DataService>();
+        }
+
+        /// <summary>
         /// Tests ctor
         /// </summary>
         [TestMethod]
@@ -20,6 +33,18 @@ namespace WhereToFly.UnitTest.ViewModels
             // set up
             var appSettings = new AppSettings();
             var viewModel = new LocationListViewModel(appSettings);
+
+            var propertyChangedEvent = new ManualResetEvent(false);
+
+            viewModel.PropertyChanged += (sender, args) =>
+                {
+                    if (args.PropertyName == nameof(viewModel.LocationList))
+                    {
+                        propertyChangedEvent.Set();
+                    }
+                };
+
+            propertyChangedEvent.WaitOne();
 
             // check
             Assert.IsFalse(viewModel.LocationList.Any(), "location list is initially empty");
