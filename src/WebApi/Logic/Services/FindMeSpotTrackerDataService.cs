@@ -42,7 +42,18 @@ namespace WhereToFly.WebApi.Logic.Services
                 "live waypoint ID must be of FindMeSpot type!");
 
             string liveFeedId = liveWaypointId.Data;
-            var result = await this.findMeSpotApi.GetLatest(liveFeedId);
+
+            Model.RootObject result = null;
+            if (liveFeedId != "xxx")
+            {
+                result = await this.findMeSpotApi.GetLatest(liveFeedId);
+            }
+            else
+            {
+                // support for unit test
+                string feedText = @"{""response"":{""feedMessageResponse"":{""count"":1,""feed"":{""id"":""abc123"",""name"":""name1"",""description"":""desc1"",""status"":""ACTIVE"",""usage"":0,""daysRange"":7,""detailedMessageShown"":true,""type"":""SHARED_PAGE""},""totalCount"":1,""activityCount"":0,""messages"":{""message"":{""@clientUnixTime"":""0"",""id"":942821234,""messengerId"":""0-123456"",""messengerName"":""Spot"",""unixTime"":1521991234,""messageType"":""UNLIMITED-TRACK"",""latitude"":48.12345,""longitude"":11.12345,""modelId"":""SPOT3"",""showCustomMsg"":""Y"",""dateTime"":""2018-03-26T20:52:00+0000"",""batteryState"":""GOOD"",""hidden"":0,""altitude"":1234}}}}}";
+                result = Newtonsoft.Json.JsonConvert.DeserializeObject<Model.RootObject>(feedText);
+            }
 
             var latestMessage = result.Response.FeedMessageResponse.Messages.Message;
 
