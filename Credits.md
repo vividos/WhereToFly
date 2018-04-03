@@ -49,6 +49,11 @@ HTML content.
 The library is licensed using the
 [MIT License](https://github.com/zzzprojects/html-agility-pack/blob/master/LICENSE).
 
+The app uses the [Rg.Plugins.Popup](https://github.com/rotorgames/Rg.Plugins.Popup)
+library to show popup dialogs.
+The library is licensed using the
+[MIT License](https://github.com/rotorgames/Rg.Plugins.Popup/blob/master/LICENSE.md).
+
 ## Services
 
 The app uses the Thermal Skyways from https://thermal.kk7.ch/, with kind

@@ -60,12 +60,26 @@ namespace WhereToFly.Android
 
             base.OnCreate(savedInstanceState);
 
+            Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
+
             Forms.SetFlags("FastRenderers_Experimental");
             Forms.Init(this, savedInstanceState);
 
             MessagingCenter.Subscribe<App, string>(this, Constants.MessageShowToast, this.ShowToast);
 
             this.LoadApplication(new Core.App());
+        }
+
+        /// <summary>
+        /// Called when back button has been pressed; let the Rg.Plugins.Popup package handle back
+        /// navigation first.
+        /// </summary>
+        public override void OnBackPressed()
+        {
+            if (!Rg.Plugins.Popup.Popup.SendBackPressed(base.OnBackPressed))
+            {
+                base.OnBackPressed();
+            }
         }
 
         /// <summary>
