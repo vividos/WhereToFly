@@ -72,6 +72,7 @@ The following icons are from the Google Material icon set:
 - directions
 - format-list-bulleted
 - information-outline
+- magnify
 - magnify-plus-outline
 - map-marker-plus
 - map-marker

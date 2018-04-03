@@ -114,6 +114,7 @@ namespace WhereToFly.Core.Views
         private void SetupToolbar()
         {
             this.AddLocateMeToolbarButton();
+            this.AddFindLocationToolbarButton();
             this.AddCurrentPositionDetailsToolbarButton();
             this.AddLocationListToolbarButton();
             this.AddSettingsToolbarButton();
@@ -217,6 +218,33 @@ namespace WhereToFly.Core.Views
                 App.LogError(ex);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Adds "Find location" toolbar button
+        /// </summary>
+        private void AddFindLocationToolbarButton()
+        {
+            ToolbarItem currentPositionDetailsButton = new ToolbarItem(
+                "Find location",
+                "magnify.xml",
+                async () => await this.OnClicked_ToolbarButtonFindLocation(),
+                ToolbarItemOrder.Secondary)
+            {
+                AutomationId = "FindLocation"
+            };
+
+            this.ToolbarItems.Add(currentPositionDetailsButton);
+        }
+
+        /// <summary>
+        /// Called when toolbar button "Find location" was clicked
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task OnClicked_ToolbarButtonFindLocation()
+        {
+            string text = await FindLocationPopupPage.ShowAsync();
+            // TODO implement search
         }
 
         /// <summary>
