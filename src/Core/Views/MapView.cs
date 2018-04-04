@@ -69,6 +69,16 @@ namespace WhereToFly.Core.Views
         public event OnShareMyLocationCallback ShareMyLocation;
 
         /// <summary>
+        /// Delegate of function to call when find result should be added as waypoint
+        /// </summary>
+        public delegate void OnAddFindResultCallback(string name, MapPoint point);
+
+        /// <summary>
+        /// Event that is signaled when find result should be should be added as waypoint
+        /// </summary>
+        public event OnAddFindResultCallback AddFindResult;
+
+        /// <summary>
         /// Gets or sets map imagery type
         /// </summary>
         public MapImageryType MapImageryType
@@ -280,6 +290,29 @@ namespace WhereToFly.Core.Views
         }
 
         /// <summary>
+        /// Shows the find result pin and zooms to it
+        /// </summary>
+        /// <param name="text">text of find result</param>
+        /// <param name="point">find result map point</param>
+        public void ShowFindResult(string text, MapPoint point)
+        {
+            var options = new
+            {
+                name = text,
+                latitude = point.Latitude,
+                longitude = point.Longitude,
+                displayLatitude = DataFormatter.FormatLatLong(point.Latitude, this.CoordinateDisplayFormat),
+                displayLongitude = DataFormatter.FormatLatLong(point.Longitude, this.CoordinateDisplayFormat)
+            };
+
+            string js = string.Format(
+                "map.showFindResult({0});",
+                JsonConvert.SerializeObject(options));
+
+            this.RunJavaScript(js);
+        }
+
+        /// <summary>
         /// Runs JavaScript code, in main thread
         /// </summary>
         /// <param name="js">javascript code snippet</param>
@@ -332,10 +365,37 @@ namespace WhereToFly.Core.Views
 
                     break;
 
+                case "onAddFindResult":
+                    var parameters = JsonConvert.DeserializeObject<AddFindResultParameter>(jsonParameters);
+                    var point = new MapPoint(parameters.Latitude, parameters.Longitude);
+                    this.AddFindResult?.Invoke(parameters.Name, point);
+                    break;
+
                 default:
                     Debug.Assert(false, "invalid callback function name");
                     break;
             }
+        }
+
+        /// <summary>
+        /// Parameter for AddFindResult JavaScript event
+        /// </summary>
+        private class AddFindResultParameter
+        {
+            /// <summary>
+            /// Name of find result to add
+            /// </summary>
+            public string Name { get; set; }
+
+            /// <summary>
+            /// Latitude of map point to add
+            /// </summary>
+            public double Latitude { get; set; }
+
+            /// <summary>
+            /// Longitude of map point to add
+            /// </summary>
+            public double Longitude { get; set; }
         }
     }
 }

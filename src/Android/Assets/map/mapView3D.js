@@ -118,7 +118,7 @@ function MapView(options) {
         });
     }
 
-    console.log("#6 my location marker");
+    console.log("#6 location markers");
     this.pinBuilder = new Cesium.PinBuilder();
 
     var myLocationEntity = this.createEntity('My Position', '', Cesium.Color.GREEN, '../images/map-marker.svg', 0.0, 0.0);
@@ -136,6 +136,11 @@ function MapView(options) {
         },
         show: false
     });
+
+    // the find result entity is initially invisible
+    var findResultEntity = this.createEntity('Find result', '', Cesium.Color.ORANGE, '../images/magnify.svg', 0.0, 0.0);
+    findResultEntity.show = false;
+    this.findResultMarker = this.viewer.entities.add(findResultEntity);
 }
 
 /**
@@ -591,6 +596,47 @@ MapView.prototype.pinColorFromLocationType = function (locationType) {
 };
 
 /**
+ * Shows a find result pin, with a link to add a waypoint for this result.
+ * @param {Object} [options] An object with the following properties:
+ * @param {String} [options.name] Name of the find result
+ * @param {Number} [options.latitude] Latitude of the find result
+ * @param {Number} [options.longitude] Longitude of the find result
+ * @param {Number} [options.displayLatitude] Display text for latitude
+ * @param {Number} [options.displayLongitude] Display text for longitude
+ */
+MapView.prototype.showFindResult = function (options) {
+
+    if (this.findResultMarker === undefined)
+        return;
+
+    console.log("showing find result for \"" + options.name +
+        "\", at latitude " + options.latitude + ", longitude " + options.longitude);
+
+    var text = '<h2><img height="48em" width="48em" src="images/magnify.svg" style="vertical-align:middle" />' + options.name + '</h2>' +
+        '<div>Latitude: ' + options.displayLatitude + '<br/>' +
+        'Longitude: ' + options.displayLongitude +
+        '</div>';
+
+    var optionsText = '{ name: \'' + options.name + '\', latitude:' + options.latitude + ', longitude:' + options.longitude + '}';
+
+    text += '<img height="32em" width="32em" src="images/map-marker-plus.svg" style="vertical-align:middle" />' +
+        '<a href="javascript:parent.map.onAddFindResult(' + optionsText + ');">Add as waypoint</a></p>';
+
+    this.findResultMarker.description = text;
+    this.findResultMarker.position = Cesium.Cartesian3.fromDegrees(options.longitude, options.latitude);
+    this.findResultMarker.show = true;
+
+    this.viewer.flyTo(
+        this.findResultMarker,
+        {
+            offset: new Cesium.HeadingPitchRange(
+                this.viewer.camera.heading,
+                this.viewer.camera.pitch,
+                5000.0)
+        });
+};
+
+/**
  * Adds list of tracks to the map
  * @param {array} listOfTracks An array of tracks
  */
@@ -614,7 +660,7 @@ MapView.prototype.onNavigateToLocation = function (locationId) {
 };
 
 /**
- * Called by the "my position pin link, in order to share the current location.
+ * Called by the "my position" pin link, in order to share the current location.
  */
 MapView.prototype.onShareMyLocation = function () {
 
@@ -623,3 +669,21 @@ MapView.prototype.onShareMyLocation = function () {
     if (this.options.callback !== undefined)
         this.options.callback('onShareMyLocation');
 };
+
+/**
+ * Called by the "add find result" pin link, in order to add the find result as a waypoint.
+ * @param {Object} [options] An object with the following properties:
+ * @param {String} [options.name] Name of the find result
+ * @param {Number} [options.latitude] Latitude of the find result
+ * @param {Number} [options.longitude] Longitude of the find result
+ */
+MapView.prototype.onAddFindResult = function (options) {
+
+    console.log("adding find result as waypoint");
+
+    if (this.options.callback !== undefined)
+        this.options.callback('onAddFindResult', options);
+
+    this.findResultMarker.show = false;
+};
+

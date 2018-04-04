@@ -51,6 +51,8 @@
         <button onclick="map.updateMyLocation({latitude: 47.666283, longitude: 11.886159, zoomTo: true})">Fly to my position</button>
 
         <button onclick="map.zoomToLocation({latitude: 47.6764385, longitude: 11.8710533})">Fly to summit</button>
+
+        <button onclick="showFindResult()">Show find result</button>
     </div>
 
     <div id="mapElement"></div>
@@ -93,6 +95,16 @@
                 zoomTo: false
             });
         }, 2000);
+
+        showFindResult = function () {
+            map.showFindResult({
+                name: 'Bodenschneid',
+                latitude: 47.6717531,
+                longitude: 11.8381005,
+                displayLatitude: '47°40\'18.3"N',
+                displayLongitude: '11°50\'17.2"E'
+            });
+        }
 
     </script>
 
