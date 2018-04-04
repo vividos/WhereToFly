@@ -244,7 +244,23 @@ namespace WhereToFly.Core.Views
         private async Task OnClicked_ToolbarButtonFindLocation()
         {
             string text = await FindLocationPopupPage.ShowAsync();
-            // TODO implement search
+
+            var foundPositionsList = await this.geolocator.GetPositionsForAddressAsync(text);
+
+            if (!foundPositionsList.Any())
+            {
+                await this.DisplayAlert(
+                    Constants.AppTitle,
+                    "The location could not be found",
+                    "OK");
+
+                return;
+            }
+
+            var position = foundPositionsList.First();
+            var point = new MapPoint(position.Latitude, position.Longitude);
+
+            this.mapView.ShowFindResult(text, point);
         }
 
         /// <summary>
