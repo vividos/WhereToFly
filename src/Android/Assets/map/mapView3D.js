@@ -685,5 +685,7 @@ MapView.prototype.onAddFindResult = function (options) {
         this.options.callback('onAddFindResult', options);
 
     this.findResultMarker.show = false;
-};
 
+    // hide the info box
+    this.viewer.selectedEntity = undefined;
+};
