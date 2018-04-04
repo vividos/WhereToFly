@@ -4,7 +4,10 @@
              x:Class="WhereToFly.Core.App">
     <Application.Resources>
 
-        <!-- Application resource dictionary -->
+        <!-- application resource dictionary -->
+        <ResourceDictionary>
+            <Color x:Key="primaryColor">#2F299E</Color>
+        </ResourceDictionary>
 
     </Application.Resources>
 </Application>
