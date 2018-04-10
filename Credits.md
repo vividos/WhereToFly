@@ -54,6 +54,11 @@ library to show popup dialogs.
 The library is licensed using the
 [MIT License](https://github.com/rotorgames/Rg.Plugins.Popup/blob/master/LICENSE.md).
 
+The app uses the [SkiaSharp](https://github.com/mono/SkiaSharp)
+library to show SVG images.
+The library is licensed using the
+[MIT License](https://github.com/mono/SkiaSharp/blob/master/LICENSE.txt).
+
 ## Services
 
 The app uses the Thermal Skyways from https://thermal.kk7.ch/, with kind
