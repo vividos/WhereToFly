@@ -111,8 +111,8 @@ namespace WhereToFly.Core.Views
         {
             var localViewModel = this.BindingContext as LocationListViewModel;
 
-            var locationInfoViewModel = args.Item as LocationInfoViewModel;
-            localViewModel.ItemTappedCommand.Execute(locationInfoViewModel.Location);
+            var locationListEntryViewModel = args.Item as LocationListEntryViewModel;
+            localViewModel.ItemTappedCommand.Execute(locationListEntryViewModel.Location);
         }
 
         #region Page lifecycle methods

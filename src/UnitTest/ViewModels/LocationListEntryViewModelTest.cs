@@ -6,10 +6,10 @@ using WhereToFly.Logic.Model;
 namespace WhereToFly.UnitTest.ViewModels
 {
     /// <summary>
-    /// Tests LocationInfoViewModel class
+    /// Tests LocationListEntryViewModel class
     /// </summary>
     [TestClass]
-    public class LocationInfoViewModelTest
+    public class LocationListEntryViewModelTest
     {
         /// <summary>
         /// Tests ctor
@@ -29,7 +29,7 @@ namespace WhereToFly.UnitTest.ViewModels
                 InternetLink = "https://de.wikipedia.org/wiki/Brecherspitz"
             };
 
-            var viewModel = new LocationInfoViewModel(null, location, null);
+            var viewModel = new LocationListEntryViewModel(null, location, null);
 
             // check
             Assert.IsTrue(viewModel.Name.Length > 0, "name text must not be empty");

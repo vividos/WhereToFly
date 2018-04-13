@@ -43,7 +43,7 @@ namespace WhereToFly.Core.ViewModels
         /// <summary>
         /// Current location list; may be filtered by filter text
         /// </summary>
-        public ObservableCollection<LocationInfoViewModel> LocationList { get; set; }
+        public ObservableCollection<LocationListEntryViewModel> LocationList { get; set; }
 
         /// <summary>
         /// Filter text string that filters entries by text
@@ -143,7 +143,7 @@ namespace WhereToFly.Core.ViewModels
         private void UpdateLocationList()
         {
             var newList = this.locationList
-                .Select(location => new LocationInfoViewModel(this, location, this.currentPosition));
+                .Select(location => new LocationListEntryViewModel(this, location, this.currentPosition));
 
             if (!string.IsNullOrWhiteSpace(this.filterText))
             {
@@ -155,7 +155,7 @@ namespace WhereToFly.Core.ViewModels
                 newList = newList.OrderBy(viewModel => viewModel.Distance);
             }
 
-            this.LocationList = new ObservableCollection<LocationInfoViewModel>(newList);
+            this.LocationList = new ObservableCollection<LocationListEntryViewModel>(newList);
 
             this.OnPropertyChanged(nameof(this.LocationList));
             this.OnPropertyChanged(nameof(this.AreAllLocationsFilteredOut));
@@ -167,7 +167,7 @@ namespace WhereToFly.Core.ViewModels
         /// </summary>
         /// <param name="viewModel">location view model to check</param>
         /// <returns>matching filter</returns>
-        private bool IsFilterMatch(LocationInfoViewModel viewModel)
+        private bool IsFilterMatch(LocationListEntryViewModel viewModel)
         {
             if (string.IsNullOrWhiteSpace(this.filterText))
             {

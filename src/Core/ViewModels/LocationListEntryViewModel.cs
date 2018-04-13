@@ -9,9 +9,9 @@ using Xamarin.Forms;
 namespace WhereToFly.Core.ViewModels
 {
     /// <summary>
-    /// View model for a single location object
+    /// View model for a single location list entry
     /// </summary>
-    public class LocationInfoViewModel
+    public class LocationListEntryViewModel
     {
         /// <summary>
         /// Parent view model
@@ -100,7 +100,7 @@ namespace WhereToFly.Core.ViewModels
         /// <param name="parentViewModel">parent view model</param>
         /// <param name="location">location object</param>
         /// <param name="myCurrentPosition">the user's current position; may be null</param>
-        public LocationInfoViewModel(LocationListViewModel parentViewModel, Location location, LatLongAlt myCurrentPosition)
+        public LocationListEntryViewModel(LocationListViewModel parentViewModel, Location location, LatLongAlt myCurrentPosition)
         {
             this.parentViewModel = parentViewModel;
             this.location = location;
