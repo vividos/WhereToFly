@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:WhereToFly.Core.Controls"             
+             xmlns:local="clr-namespace:WhereToFly.Core"
              x:Class="WhereToFly.Core.Views.LocationDetailsPage">
 
     <ContentPage.ToolbarItems>
@@ -28,7 +30,8 @@
 
             <!-- Grid with all location details -->
             <Grid WidthRequest="350" MinimumWidthRequest="350"
-                    VerticalOptions="Start" ColumnSpacing="16" RowSpacing="16" Padding="8">
+                  HorizontalOptions="Center" Padding="8"
+                  ColumnSpacing="16" RowSpacing="16">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -41,9 +44,18 @@
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
 
-                <!-- Name -->
-                <Label Grid.Row="0" Grid.Column="0" Text="Name" />
-                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Name, Mode=OneWay}" />
+                <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+
+                    <!-- Type image -->
+                    <controls:SvgImage Source="{Binding TypeImageSource, Mode=OneWay}"
+                                       WidthRequest="64" HeightRequest="64"
+                                       HorizontalOptions="Start" VerticalOptions="Center" />
+
+                    <!-- Name -->
+                    <Label Text="{Binding Name, Mode=OneWay}"
+                           FontSize="Large" FontAttributes="Bold"
+                           VerticalOptions="Center" />
+                </StackLayout>
 
                 <!-- Longitude -->
                 <Label Grid.Row="1" Grid.Column="0" Text="Longitude" />
