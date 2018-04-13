@@ -59,6 +59,17 @@ namespace WhereToFly.Core.ViewModels
         }
 
         /// <summary>
+        /// Property containing location type
+        /// </summary>
+        public string Type
+        {
+            get
+            {
+                return this.location.Type.ToString();
+            }
+        }
+
+        /// <summary>
         /// Property containing location latitude
         /// </summary>
         public string Latitude

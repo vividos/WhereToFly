@@ -38,6 +38,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
@@ -57,25 +58,29 @@
                            VerticalOptions="Center" />
                 </StackLayout>
 
-                <!-- Longitude -->
-                <Label Grid.Row="1" Grid.Column="0" Text="Longitude" />
-                <Label Grid.Row="1" Grid.Column="1" Text="{Binding Longitude, Mode=OneWay}" />
+                <!-- Type -->
+                <Label Grid.Row="1" Grid.Column="0" Text="Type" />
+                <Label Grid.Row="1" Grid.Column="1" Text="{Binding Type, Mode=OneWay}" />
 
                 <!-- Latitude -->
                 <Label Grid.Row="2" Grid.Column="0" Text="Latitude" />
                 <Label Grid.Row="2" Grid.Column="1" Text="{Binding Latitude, Mode=OneWay}" />
 
+                <!-- Longitude -->
+                <Label Grid.Row="3" Grid.Column="0" Text="Longitude" />
+                <Label Grid.Row="3" Grid.Column="1" Text="{Binding Longitude, Mode=OneWay}" />
+
                 <!-- Altitude -->
-                <Label Grid.Row="3" Grid.Column="0" Text="Altitude" />
-                <Label Grid.Row="3" Grid.Column="1" Text="{Binding Altitude, Mode=OneWay}" />
+                <Label Grid.Row="4" Grid.Column="0" Text="Altitude" />
+                <Label Grid.Row="4" Grid.Column="1" Text="{Binding Altitude, Mode=OneWay}" />
 
                 <!-- Current distance -->
-                <Label Grid.Row="4" Grid.Column="0" Text="Distance" />
-                <Label Grid.Row="4" Grid.Column="1" Text="{Binding Distance, Mode=OneWay}" />
+                <Label Grid.Row="5" Grid.Column="0" Text="Distance" />
+                <Label Grid.Row="5" Grid.Column="1" Text="{Binding Distance, Mode=OneWay}" />
 
                 <!-- Internet link -->
-                <Label Grid.Row="5" Grid.Column="0" Text="Internet link" />
-                <Label Grid.Row="5" Grid.Column="1" Text="{Binding InternetLink, Mode=OneWay}" />
+                <Label Grid.Row="6" Grid.Column="0" Text="Internet link" />
+                <Label Grid.Row="6" Grid.Column="1" Text="{Binding InternetLink, Mode=OneWay}" />
             </Grid>
 
             <!-- Description web view -->

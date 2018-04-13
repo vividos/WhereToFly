@@ -63,8 +63,7 @@ namespace WhereToFly.Core.ViewModels
             get
             {
                 return string.Format(
-                    "Type: {0}; Elevation: {1} m; Distance: {2}",
-                    this.location.Type,
+                    "Elevation: {0} m; Distance: {1}",
                     this.location.Elevation,
                     DataFormatter.FormatDistance(this.Distance));
             }
