@@ -2,6 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:controls="clr-namespace:WhereToFly.Core.Controls"             
+             xmlns:local="clr-namespace:WhereToFly.Core"
              x:Class="WhereToFly.Core.Views.LocationListPage">
     <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
 
@@ -36,17 +38,38 @@
                     <!-- Templace for a single view cell -->
                     <ViewCell Height="80">
                         <ViewCell.View>
-                            <StackLayout Orientation="Vertical" Margin="8" BackgroundColor="#efefef">
+                            <Grid BackgroundColor="#efefef">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Type image -->
+                                <controls:SvgImage Source="{Binding TypeImageSource, Mode=OneWay}"
+                                                   WidthRequest="48" HeightRequest="48"
+                                                   HorizontalOptions="Start" VerticalOptions="Center"
+                                                   Grid.Column="0" Grid.RowSpan="3"/>
+
+                                <!-- Details -->
                                 <Label Text="{Binding Name}"
                                        Style="{DynamicResource ListItemTextStyle}"
-                                       LineBreakMode="TailTruncation" />
+                                       FontSize="Large"
+                                       LineBreakMode="TailTruncation"
+                                       Grid.Column="1" Grid.Row="0" />
                                 <Label Text="{Binding DetailInfos}"
                                        Style="{DynamicResource ListItemDetailTextStyle}"
-                                       LineBreakMode="TailTruncation" />
+                                       LineBreakMode="TailTruncation"
+                                       Grid.Column="1" Grid.Row="1" />
                                 <Label Text="{Binding Description}"
                                        Style="{DynamicResource ListItemDetailTextStyle}"
-                                       LineBreakMode="TailTruncation" />
-                            </StackLayout>
+                                       LineBreakMode="TailTruncation"
+                                       Grid.Column="1" Grid.Row="2" />
+                            </Grid>
                         </ViewCell.View>
                         <ViewCell.ContextActions>
                             <MenuItem Text="Show Details"
