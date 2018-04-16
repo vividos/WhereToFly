@@ -1,11 +1,9 @@
-﻿using System;
-
-namespace WhereToFly.Logic.Model
+﻿namespace WhereToFly.Logic.Model
 {
     /// <summary>
     /// A location that can be used for tour planning, e.g. as intermediate stops.
     /// </summary>
-    public sealed class Location : IEquatable<Location>
+    public class Location
     {
         /// <summary>
         /// Location ID
@@ -42,42 +40,7 @@ namespace WhereToFly.Logic.Model
         /// </summary>
         public string InternetLink { get; set; }
 
-        #region IEquatable implementation
-        /// <summary>
-        /// Compares this location to another location and returns if they are equal
-        /// </summary>
-        /// <param name="other">other location</param>
-        /// <returns>true when equal, false when not</returns>
-        public bool Equals(Location other)
-        {
-            return this.Id == other.Id &&
-                this.Name == other.Name &&
-                this.Type == other.Type &&
-                this.InternetLink == other.InternetLink &&
-                this.MapLocation.Equals(other.MapLocation) &&
-                Math.Abs(this.Elevation - other.Elevation) < 1e-6 &&
-                this.Description == other.Description;
-        }
-        #endregion
-
         #region object overridables implementation
-        /// <summary>
-        /// Compares this map point to another object and returns if they are equal
-        /// </summary>
-        /// <param name="obj">object to compare to</param>
-        /// <returns>true when equal, false when not</returns>
-        public override bool Equals(object obj)
-        {
-            var other = obj as MapPoint;
-
-            if (other == null)
-            {
-                return false;
-            }
-
-            return this.Equals(other);
-        }
-
         /// <summary>
         /// Calculates hash code for map point
         /// </summary>
