@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace WhereToFly.Geo.Spatial
+namespace WhereToFly.App.Geo.Spatial
 {
     /// <summary>
     /// Latitude, longitude and altitude values in WGS84 coordinate system.

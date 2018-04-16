@@ -3,7 +3,7 @@ using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 
-namespace WhereToFly.Android
+namespace WhereToFly.App.Android
 {
     /// <summary>
     /// Splash screen activity; is started first, and can't be navigated back on.

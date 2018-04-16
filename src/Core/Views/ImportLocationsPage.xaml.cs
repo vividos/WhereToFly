@@ -1,8 +1,8 @@
-﻿using WhereToFly.Core.ViewModels;
+﻿using WhereToFly.App.Core.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace WhereToFly.Core.Views
+namespace WhereToFly.App.Core.Views
 {
     /// <summary>
     /// Page that shows some buttons to import location lists or to clear it

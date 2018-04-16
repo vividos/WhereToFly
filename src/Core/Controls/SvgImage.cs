@@ -4,7 +4,7 @@ using System;
 using System.Threading;
 using Xamarin.Forms;
 
-namespace WhereToFly.Core.Controls
+namespace WhereToFly.App.Core.Controls
 {
     /// <summary>
     /// SVG image for Xamarin.Forms, using the SkiaSharp.Extended.Svg NuGet package. See also:

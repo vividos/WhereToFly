@@ -1,7 +1,7 @@
-﻿using WhereToFly.Logic;
+﻿using WhereToFly.App.Logic;
 using Xamarin.Forms;
 
-namespace WhereToFly.Core.Views
+namespace WhereToFly.App.Core.Views
 {
     /// <summary>
     /// Info page, showing markdown from the info.md in the Assets folder.

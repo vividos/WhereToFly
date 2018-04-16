@@ -6,8 +6,8 @@
     <ProjectGuid>{BB6FBEF2-D8E4-417D-8CFE-2CF73245DD6D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WhereToFly.UnitTest</RootNamespace>
-    <AssemblyName>WhereToFly.UnitTest</AssemblyName>
+    <RootNamespace>WhereToFly.App.UnitTest</RootNamespace>
+    <AssemblyName>WhereToFly.App.UnitTest</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -63,17 +63,17 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core\WhereToFly.Core.csproj">
+    <ProjectReference Include="..\Core\WhereToFly.App.Core.csproj">
       <Project>{01CAFB32-C32B-4E04-B44C-490182F4F31E}</Project>
-      <Name>WhereToFly.Core</Name>
+      <Name>WhereToFly.App.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Geo\WhereToFly.Geo.csproj">
+    <ProjectReference Include="..\Geo\WhereToFly.App.Geo.csproj">
       <Project>{f6b9c753-c5ff-4079-a92b-79911755b3c5}</Project>
-      <Name>WhereToFly.Geo</Name>
+      <Name>WhereToFly.App.Geo</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Logic\WhereToFly.Logic.csproj">
+    <ProjectReference Include="..\Logic\WhereToFly.App.Logic.csproj">
       <Project>{D8B7A38E-6E38-4CC4-A254-80BFBAA262C0}</Project>
-      <Name>WhereToFly.Logic</Name>
+      <Name>WhereToFly.App.Logic</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

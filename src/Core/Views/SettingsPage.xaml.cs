@@ -1,8 +1,8 @@
-﻿using WhereToFly.Core.ViewModels;
+﻿using WhereToFly.App.Core.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace WhereToFly.Core.Views
+namespace WhereToFly.App.Core.Views
 {
     /// <summary>
     /// Settings page to configure app settings

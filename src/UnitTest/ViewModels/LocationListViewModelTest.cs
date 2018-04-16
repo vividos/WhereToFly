@@ -1,12 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using System.Threading;
-using WhereToFly.Core.Services;
-using WhereToFly.Core.ViewModels;
-using WhereToFly.Logic.Model;
+using WhereToFly.App.Core.Services;
+using WhereToFly.App.Core.ViewModels;
+using WhereToFly.App.Logic.Model;
 using Xamarin.Forms;
 
-namespace WhereToFly.UnitTest.ViewModels
+namespace WhereToFly.App.UnitTest.ViewModels
 {
     /// <summary>
     /// Unit tests for LocationListViewModel

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using WhereToFly.Logic.Model;
+using WhereToFly.App.Logic.Model;
 using Xamarin.Forms;
 
-[assembly: Dependency(typeof(WhereToFly.Core.SvgImageCache))]
+[assembly: Dependency(typeof(WhereToFly.App.Core.SvgImageCache))]
 
-namespace WhereToFly.Core
+namespace WhereToFly.App.Core
 {
     /// <summary>
     /// Cache for SVG images

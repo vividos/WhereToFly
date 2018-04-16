@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using WhereToFly.Core.Services;
-using WhereToFly.Core.Views;
-using WhereToFly.Geo.DataFormats;
-using WhereToFly.Logic.Model;
+using WhereToFly.App.Core.Services;
+using WhereToFly.App.Core.Views;
+using WhereToFly.App.Geo.DataFormats;
+using WhereToFly.App.Logic.Model;
 using Xamarin.Forms;
 
-namespace WhereToFly.Core
+namespace WhereToFly.App.Core
 {
     /// <summary>
     /// Xamarin.Forms application for the WhereToFly app

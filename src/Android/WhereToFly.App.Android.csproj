@@ -6,8 +6,8 @@
     <ProjectGuid>{B7C58A1E-E301-47C7-A9FB-D01B1719D043}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>WhereToFly.Android</RootNamespace>
-    <AssemblyName>WhereToFly.Android</AssemblyName>
+    <RootNamespace>WhereToFly.App.Android</RootNamespace>
+    <AssemblyName>WhereToFly.App.Android</AssemblyName>
     <TargetFrameworkVersion>v8.1</TargetFrameworkVersion>
     <AndroidApplication>True</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
@@ -138,9 +138,9 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core\WhereToFly.Core.csproj">
+    <ProjectReference Include="..\Core\WhereToFly.App.Core.csproj">
       <Project>{01CAFB32-C32B-4E04-B44C-490182F4F31E}</Project>
-      <Name>WhereToFly.Core</Name>
+      <Name>WhereToFly.App.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

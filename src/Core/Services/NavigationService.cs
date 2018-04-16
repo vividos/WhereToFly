@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using WhereToFly.Core.Views;
+using WhereToFly.App.Core.Views;
 using Xamarin.Forms;
 
-namespace WhereToFly.Core.Services
+namespace WhereToFly.App.Core.Services
 {
     /// <summary>
     /// Navigation service for the app; manages navigating to pages from any place in the app.

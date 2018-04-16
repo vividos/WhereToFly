@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace WhereToFly.Core
+namespace WhereToFly.App.Core
 {
     /// <summary>
     /// Platform abstraction interface

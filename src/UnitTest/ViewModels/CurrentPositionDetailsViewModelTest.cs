@@ -1,8 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WhereToFly.Core.ViewModels;
-using WhereToFly.Logic.Model;
+using WhereToFly.App.Core.ViewModels;
+using WhereToFly.App.Logic.Model;
 
-namespace WhereToFly.UnitTest.ViewModels
+namespace WhereToFly.App.UnitTest.ViewModels
 {
     /// <summary>
     /// Tests CurrentPositionDetailsViewModel class

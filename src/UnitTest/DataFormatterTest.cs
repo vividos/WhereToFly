@@ -1,9 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using WhereToFly.Logic;
-using WhereToFly.Logic.Model;
+using WhereToFly.App.Logic;
+using WhereToFly.App.Logic.Model;
 
-namespace WhereToFly.UnitTest
+namespace WhereToFly.App.UnitTest
 {
     /// <summary>
     /// Tests class DataFormatter

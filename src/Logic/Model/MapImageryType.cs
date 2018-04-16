@@ -1,4 +1,4 @@
-﻿namespace WhereToFly.Logic.Model
+﻿namespace WhereToFly.App.Logic.Model
 {
     /// <summary>
     /// Type of map imagery used to lay over the terrain

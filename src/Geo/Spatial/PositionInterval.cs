@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace WhereToFly.Geo.Spatial
+namespace WhereToFly.App.Geo.Spatial
 {
     /// <summary>
     /// An interval of positions, limited by the interval time. Only positions in the specified

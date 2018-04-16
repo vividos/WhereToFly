@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WhereToFly.Geo.Spatial;
+using WhereToFly.App.Geo.Spatial;
 
-namespace WhereToFly.Geo.UnitTest
+namespace WhereToFly.App.Geo.UnitTest
 {
     /// <summary>
     /// Tests for class LatLongAlt

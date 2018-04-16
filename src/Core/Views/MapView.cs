@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using WhereToFly.Logic;
-using WhereToFly.Logic.Model;
+using WhereToFly.App.Logic;
+using WhereToFly.App.Logic.Model;
 using Xamarin.Forms;
 
-namespace WhereToFly.Core.Views
+namespace WhereToFly.App.Core.Views
 {
     /// <summary>
     /// MapView control; the control is actually implemented as JavsScript code, but can be

@@ -1,7 +1,7 @@
 using HtmlAgilityPack;
 using System.Collections.Generic;
 
-namespace WhereToFly.Logic
+namespace WhereToFly.App.Logic
 {
     /// <summary>
     /// HTML conversion methods

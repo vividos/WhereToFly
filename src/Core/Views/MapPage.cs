@@ -9,12 +9,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using WhereToFly.Core.Services;
-using WhereToFly.Logic;
-using WhereToFly.Logic.Model;
+using WhereToFly.App.Core.Services;
+using WhereToFly.App.Logic;
+using WhereToFly.App.Logic.Model;
 using Xamarin.Forms;
 
-namespace WhereToFly.Core.Views
+namespace WhereToFly.App.Core.Views
 {
     /// <summary>
     /// Page showing a map, with pins for locations loaded into the app.

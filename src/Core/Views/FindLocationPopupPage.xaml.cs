@@ -4,7 +4,7 @@ using System;
 using System.Threading.Tasks;
 using Xamarin.Forms.Xaml;
 
-namespace WhereToFly.Core.Views
+namespace WhereToFly.App.Core.Views
 {
     /// <summary>
     /// Popup page for "Find location" function in order to input a location name.

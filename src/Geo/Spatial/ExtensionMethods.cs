@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WhereToFly.Geo.Spatial
+namespace WhereToFly.App.Geo.Spatial
 {
     /// <summary>
     /// Extension methods for spatial classes

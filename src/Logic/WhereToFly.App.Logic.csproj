@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>WhereToFly.Logic</AssemblyName>
-    <RootNamespace>WhereToFly.Logic</RootNamespace>
+    <AssemblyName>WhereToFly.App.Logic</AssemblyName>
+    <RootNamespace>WhereToFly.App.Logic</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

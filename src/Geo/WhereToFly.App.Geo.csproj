@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Logic\WhereToFly.Logic.csproj" />
+    <ProjectReference Include="..\Logic\WhereToFly.App.Logic.csproj" />
   </ItemGroup>
 
 </Project>

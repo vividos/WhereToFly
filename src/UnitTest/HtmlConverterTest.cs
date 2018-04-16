@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WhereToFly.Logic;
+using WhereToFly.App.Logic;
 
-namespace WhereToFly.UnitTest
+namespace WhereToFly.App.UnitTest
 {
     /// <summary>
     /// Tests for class HtmlConverter

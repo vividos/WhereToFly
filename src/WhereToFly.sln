@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhereToFly.Android", "Android\WhereToFly.Android.csproj", "{B7C58A1E-E301-47C7-A9FB-D01B1719D043}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhereToFly.App.Android", "Android\WhereToFly.App.Android.csproj", "{B7C58A1E-E301-47C7-A9FB-D01B1719D043}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.Core", "Core\WhereToFly.Core.csproj", "{01CAFB32-C32B-4E04-B44C-490182F4F31E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.App.Core", "Core\WhereToFly.App.Core.csproj", "{01CAFB32-C32B-4E04-B44C-490182F4F31E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.Logic", "Logic\WhereToFly.Logic.csproj", "{D8B7A38E-6E38-4CC4-A254-80BFBAA262C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.App.Logic", "Logic\WhereToFly.App.Logic.csproj", "{D8B7A38E-6E38-4CC4-A254-80BFBAA262C0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{25BA9AB4-F4F3-4CDC-B13F-A4BB2A27FD41}"
 	ProjectSection(SolutionItems) = preProject
@@ -17,9 +17,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution 
 		..\TODO.md = ..\TODO.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhereToFly.UnitTest", "UnitTest\WhereToFly.UnitTest.csproj", "{BB6FBEF2-D8E4-417D-8CFE-2CF73245DD6D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhereToFly.App.UnitTest", "UnitTest\WhereToFly.App.UnitTest.csproj", "{BB6FBEF2-D8E4-417D-8CFE-2CF73245DD6D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.Geo", "Geo\WhereToFly.Geo.csproj", "{F6B9C753-C5FF-4079-A92B-79911755B3C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.App.Geo", "Geo\WhereToFly.App.Geo.csproj", "{F6B9C753-C5FF-4079-A92B-79911755B3C5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{A443B9B2-B8C9-44F0-A7F5-DF2466E0E0FE}"
 EndProject

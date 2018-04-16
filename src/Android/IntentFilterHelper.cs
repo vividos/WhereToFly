@@ -4,7 +4,7 @@ using Android.Net;
 using System.IO;
 using System.Net.Http;
 
-namespace WhereToFly.Android
+namespace WhereToFly.App.Android
 {
     /// <summary>
     /// Helper for intent filter functions

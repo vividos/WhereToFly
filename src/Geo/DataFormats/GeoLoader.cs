@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using WhereToFly.Logic.Model;
+using WhereToFly.App.Logic.Model;
 
-namespace WhereToFly.Geo.DataFormats
+namespace WhereToFly.App.Geo.DataFormats
 {
     /// <summary>
     /// Loader class for different geo objects, like location lists

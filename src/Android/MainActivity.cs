@@ -5,11 +5,11 @@ using Android.OS;
 using Android.Widget;
 using Plugin.Permissions;
 using System.IO;
-using WhereToFly.Core;
+using WhereToFly.App.Core;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
-namespace WhereToFly.Android
+namespace WhereToFly.App.Android
 {
     /// <summary>
     /// Main activity for the Android app

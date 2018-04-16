@@ -2,13 +2,13 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using WhereToFly.Core.Services;
-using WhereToFly.Geo.Spatial;
-using WhereToFly.Logic;
-using WhereToFly.Logic.Model;
+using WhereToFly.App.Core.Services;
+using WhereToFly.App.Geo.Spatial;
+using WhereToFly.App.Logic;
+using WhereToFly.App.Logic.Model;
 using Xamarin.Forms;
 
-namespace WhereToFly.Core.ViewModels
+namespace WhereToFly.App.Core.ViewModels
 {
     /// <summary>
     /// View model for the location details page

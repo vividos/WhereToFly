@@ -4,10 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using WhereToFly.Logic;
-using WhereToFly.Logic.Model;
+using WhereToFly.App.Logic;
+using WhereToFly.App.Logic.Model;
 
-namespace WhereToFly.Geo.DataFormats
+namespace WhereToFly.App.Geo.DataFormats
 {
     /// <summary>
     /// Loader for .kml and .kmz files; uses the SharpKml library.

@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WhereToFly.Logic.Model;
+using WhereToFly.App.Logic.Model;
 
-namespace WhereToFly.UnitTest
+namespace WhereToFly.App.UnitTest
 {
     /// <summary>
     /// Tests for class MapPoint

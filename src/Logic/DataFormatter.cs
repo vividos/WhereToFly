@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
-using WhereToFly.Logic.Model;
+using WhereToFly.App.Logic.Model;
 
-namespace WhereToFly.Logic
+namespace WhereToFly.App.Logic
 {
     /// <summary>
     /// Formatter for different data structures

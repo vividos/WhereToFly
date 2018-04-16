@@ -1,4 +1,4 @@
-﻿namespace WhereToFly.Logic.Model
+﻿namespace WhereToFly.App.Logic.Model
 {
     /// <summary>
     /// A location that can be used for tour planning, e.g. as intermediate stops.

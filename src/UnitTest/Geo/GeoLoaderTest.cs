@@ -2,9 +2,9 @@
 using System;
 using System.IO;
 using System.Linq;
-using WhereToFly.Geo.DataFormats;
+using WhereToFly.App.Geo.DataFormats;
 
-namespace WhereToFly.UnitTest
+namespace WhereToFly.App.UnitTest
 {
     /// <summary>
     /// Tests GeoLoader class

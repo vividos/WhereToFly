@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("WhereToFly.Android")]
+[assembly: AssemblyTitle("WhereToFly.App.Android")]
 [assembly: AssemblyDescription("Where-to-fly Android app")]
 [assembly: AssemblyConfiguration("armeabi-v7a")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("WhereToFly.Android")]
+[assembly: AssemblyProduct("WhereToFly.App.Android")]
 [assembly: AssemblyCopyright("Copyright © 2017-2018 Michael Fink")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

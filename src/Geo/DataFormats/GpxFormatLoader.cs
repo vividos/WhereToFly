@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
-using WhereToFly.Logic;
-using WhereToFly.Logic.Model;
+using WhereToFly.App.Logic;
+using WhereToFly.App.Logic.Model;
 
-namespace WhereToFly.Geo.DataFormats
+namespace WhereToFly.App.Geo.DataFormats
 {
     /// <summary>
     /// Loader for GPX format. See GPX specification: http://www.topografix.com/gpx.asp

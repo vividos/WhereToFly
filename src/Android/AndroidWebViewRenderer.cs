@@ -1,11 +1,11 @@
 using Android.Content;
-using WhereToFly.Core;
+using WhereToFly.App.Core;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
-[assembly: ExportRenderer(typeof(WebView), typeof(WhereToFly.Android.AndroidWebViewRenderer))]
+[assembly: ExportRenderer(typeof(WebView), typeof(WhereToFly.App.Android.AndroidWebViewRenderer))]
 
-namespace WhereToFly.Android
+namespace WhereToFly.App.Android
 {
     /// <summary>
     /// Android custom WebView renderer

@@ -5,10 +5,10 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using WhereToFly.Logic.Model;
+using WhereToFly.App.Logic.Model;
 using Xamarin.Forms;
 
-namespace WhereToFly.Core.Services
+namespace WhereToFly.App.Core.Services
 {
     /// <summary>
     /// Data service for the app; provides access to data storage. For now the data is stored and

@@ -1,12 +1,12 @@
 ﻿using Android.Content;
 using Plugin.CurrentActivity;
 using System.IO;
-using WhereToFly.Core;
+using WhereToFly.App.Core;
 using Xamarin.Forms;
 
-[assembly: Dependency(typeof(WhereToFly.Android.AndroidPlatform))]
+[assembly: Dependency(typeof(WhereToFly.App.Android.AndroidPlatform))]
 
-namespace WhereToFly.Android
+namespace WhereToFly.App.Android
 {
     /// <summary>
     /// Platform specific functions

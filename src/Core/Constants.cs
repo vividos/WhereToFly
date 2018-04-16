@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WhereToFly.Core
+namespace WhereToFly.App.Core
 {
     /// <summary>
     /// Constants for the app

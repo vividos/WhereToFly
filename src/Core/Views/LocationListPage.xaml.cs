@@ -1,12 +1,12 @@
 ﻿using Plugin.Geolocator.Abstractions;
 using System;
 using System.Threading.Tasks;
-using WhereToFly.Core.Services;
-using WhereToFly.Core.ViewModels;
+using WhereToFly.App.Core.Services;
+using WhereToFly.App.Core.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace WhereToFly.Core.Views
+namespace WhereToFly.App.Core.Views
 {
     /// <summary>
     /// Page to display location list; the list can be filtered by a filter text, and a single

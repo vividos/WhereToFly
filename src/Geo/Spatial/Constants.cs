@@ -1,4 +1,4 @@
-﻿namespace WhereToFly.Geo.Spatial
+﻿namespace WhereToFly.App.Geo.Spatial
 {
     /// <summary>
     /// Geospatial constants

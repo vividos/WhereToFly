@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace WhereToFly.Logic.Model
+namespace WhereToFly.App.Logic.Model
 {
     /// <summary>
     /// A point on a map, in WGS84 decimal coordinates. Negative values are

@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using WhereToFly.Core.Services;
-using WhereToFly.Geo.DataFormats;
-using WhereToFly.Logic.Model;
+using WhereToFly.App.Core.Services;
+using WhereToFly.App.Geo.DataFormats;
+using WhereToFly.App.Logic.Model;
 using Xamarin.Forms;
 
-namespace WhereToFly.Core.ViewModels
+namespace WhereToFly.App.Core.ViewModels
 {
     /// <summary>
     /// View model for the "Import locations" page
