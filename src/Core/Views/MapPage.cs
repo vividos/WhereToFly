@@ -245,9 +245,30 @@ namespace WhereToFly.Core.Views
         {
             string text = await FindLocationPopupPage.ShowAsync();
 
-            var foundPositionsList = await this.geolocator.GetPositionsForAddressAsync(text);
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                await this.DisplayAlert(
+                    Constants.AppTitle,
+                    "No location text was entered",
+                    "Cancel");
 
-            if (!foundPositionsList.Any())
+                return;
+            }
+
+            IEnumerable<Position> foundPositionsList = null;
+
+            try
+            {
+                foundPositionsList = await this.geolocator.GetPositionsForAddressAsync(text);
+            }
+            catch (Exception ex)
+            {
+                // ignore exceptions and just log; assume that no location was found
+                App.LogError(ex);
+            }
+
+            if (foundPositionsList == null ||
+                !foundPositionsList.Any())
             {
                 await this.DisplayAlert(
                     Constants.AppTitle,
