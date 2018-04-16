@@ -565,5 +565,23 @@
   <ItemGroup>
     <AndroidAsset Include="Assets\map\images\magnify.svg" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\earthAtNight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\blueMarble.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\sentinel-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\TerrainProviders\CesiumWorldTerrain.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\decodeDraco.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\map\Cesium\Widgets\HomeButton\" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
