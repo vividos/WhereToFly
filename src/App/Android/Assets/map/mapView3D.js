@@ -502,7 +502,7 @@ MapView.prototype.addLocationList = function (locationList) {
             (location.elevation !== 0 ? ' ' + location.elevation + 'm' : '') +
             '</h2>';
 
-        text += '<img height="32em" width="32em" src="images/navigation.svg" style="vertical-align:middle" />' +
+        text += '<img height="32em" width="32em" src="images/directions.svg" style="vertical-align:middle" />' +
             '<a href="javascript:parent.map.onNavigateToLocation(\'' + location.id + '\');">Navigate here</a></p>';
 
         text += "<p>" + location.description + "</p>";
