@@ -65,7 +65,7 @@ namespace WhereToFly.App.Android
             Forms.SetFlags("FastRenderers_Experimental");
             Forms.Init(this, savedInstanceState);
 
-            MessagingCenter.Subscribe<App, string>(this, Constants.MessageShowToast, this.ShowToast);
+            MessagingCenter.Subscribe<Core.App, string>(this, Constants.MessageShowToast, this.ShowToast);
 
             this.LoadApplication(new Core.App());
         }
@@ -106,8 +106,8 @@ namespace WhereToFly.App.Android
 
             if (stream != null)
             {
-                var app = App.Current as App;
-                App.RunOnUiThread(async () => await app.OpenLocationListAsync(stream, filename));
+                var app = Core.App.Current as Core.App;
+                Core.App.RunOnUiThread(async () => await app.OpenLocationListAsync(stream, filename));
             }
         }
 
@@ -133,7 +133,7 @@ namespace WhereToFly.App.Android
         /// </summary>
         /// <param name="app">app object; unused</param>
         /// <param name="message">toast message</param>
-        private void ShowToast(App app, string message)
+        private void ShowToast(Core.App app, string message)
         {
             Toast.MakeText(this, message, ToastLength.Short).Show();
         }
