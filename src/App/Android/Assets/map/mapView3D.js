@@ -150,13 +150,13 @@ MapView.prototype.createThermalImageryProvider = function () {
 
     var url = 'https://thermal.kk7.ch/tiles/skyways_all/{z}/{x}/{reverseY}.png?src=https://github.com/vividos/WhereToFly';
 
-    var credit = 'Skyways &copy; <a href="https://thermal.kk7.ch/">thermal.kk7.ch</a>';
+    var creditText = 'Skyways &copy; <a href="https://thermal.kk7.ch/">thermal.kk7.ch</a>';
 
     var tilingScheme = new Cesium.WebMercatorTilingScheme();
 
     return new Cesium.UrlTemplateImageryProvider({
         url: Cesium.Resource.createIfNeeded(url),
-        credit: new Cesium.Credit({ text: credit }),
+        credit: new Cesium.Credit(creditText, true),
         tilingScheme: tilingScheme,
         tileWidth: 256,
         tileHeight: 256,
