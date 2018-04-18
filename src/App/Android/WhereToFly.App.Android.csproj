@@ -80,6 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AndroidPlatform.cs" />
+    <Compile Include="AndroidWebViewClient.cs" />
     <Compile Include="AndroidWebViewRenderer.cs" />
     <Compile Include="IntentFilterHelper.cs" />
     <Compile Include="MainActivity.cs" />
