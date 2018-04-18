@@ -425,6 +425,7 @@ namespace WhereToFly.App.Core.Views
 
             this.mapView.NavigateToLocation += this.OnMapView_NavigateToLocation;
             this.mapView.ShareMyLocation += async () => await this.OnMapView_ShareMyLocation();
+            this.mapView.AddFindResult += async (name, point) => await this.OnMapView_AddFindResult(name, point);
 
             this.Content = webView;
 
@@ -548,6 +549,31 @@ namespace WhereToFly.App.Core.Views
                         ChooserTitle = "Share my position with..."
                     });
             }
+        }
+
+        /// <summary>
+        /// Called when the user clicked on the "Add find result" link in the "find result" pin
+        /// description.
+        /// </summary>
+        /// <param name="name">name of find result to add</param>
+        /// <param name="point">map point of find result</param>
+        /// <returns>task to wait on</returns>
+        private async Task OnMapView_AddFindResult(string name, MapPoint point)
+        {
+            var location = new Location
+            {
+                Id = Guid.NewGuid().ToString("B"),
+                Name = name ?? "Unknown",
+                Elevation = 0,
+                MapLocation = point,
+                Description = string.Empty,
+                Type = LocationType.Waypoint,
+                InternetLink = string.Empty,
+            };
+
+            this.locationList.Add(location);
+
+            await this.ReloadLocationListAsync();
         }
 
         /// <summary>
