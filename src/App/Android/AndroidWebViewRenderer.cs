@@ -42,6 +42,11 @@ namespace WhereToFly.App.Android
         /// </summary>
         private void SetupWebViewSettings()
         {
+            var webViewClient = new AndroidWebViewClient(this.Control.WebViewClient);
+            webViewClient.CorsWebsiteHosts.Add("thermal.kk7.ch");
+
+            this.Control.SetWebViewClient(webViewClient);
+
             // use this to debug WebView from Chrome running on PC
 #if DEBUG
             global::Android.Webkit.WebView.SetWebContentsDebuggingEnabled(true);
