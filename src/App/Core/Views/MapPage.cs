@@ -587,9 +587,11 @@ namespace WhereToFly.App.Core.Views
             var dataService = DependencyService.Get<DataService>();
             await dataService.StoreLocationListAsync(this.locationList);
 
-            ////await NavigationService.Instance.NavigateAsync(Constants.PageKeyEditLocationDetailsPage, animated: true, location);
-
-            await this.ReloadLocationListAsync();
+            this.startedLocationListPage = true;
+            await NavigationService.Instance.NavigateAsync(
+                Constants.PageKeyEditLocationDetailsPage,
+                animated: true,
+                parameter: location);
         }
 
         /// <summary>
@@ -654,9 +656,11 @@ namespace WhereToFly.App.Core.Views
             var dataService = DependencyService.Get<DataService>();
             await dataService.StoreLocationListAsync(this.locationList);
 
-            ////await NavigationService.Instance.NavigateAsync(Constants.PageKeyEditLocationDetailsPage, animated: true, location);
-
-            await this.ReloadLocationListAsync();
+            this.startedLocationListPage = true;
+            await NavigationService.Instance.NavigateAsync(
+                Constants.PageKeyEditLocationDetailsPage,
+                animated: true,
+                parameter: location);
         }
 
         /// <summary>

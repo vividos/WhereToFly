@@ -51,6 +51,13 @@ namespace WhereToFly.App.Core.Services
                     pageType = typeof(LocationDetailsPage);
                     break;
 
+                case Constants.PageKeyEditLocationDetailsPage:
+                    Debug.Assert(
+                        parameter != null && parameter is Logic.Model.Location,
+                        "location must have been passed as parameter");
+                    pageType = typeof(EditLocationDetailsPage);
+                    break;
+
                 case Constants.PageKeySettingsPage:
                     pageType = typeof(SettingsPage);
                     break;
