@@ -426,6 +426,7 @@ namespace WhereToFly.App.Core.Views
             this.mapView.NavigateToLocation += this.OnMapView_NavigateToLocation;
             this.mapView.ShareMyLocation += async () => await this.OnMapView_ShareMyLocation();
             this.mapView.AddFindResult += async (name, point) => await this.OnMapView_AddFindResult(name, point);
+            this.mapView.LongTap += async (point) => await this.OnMapView_LongTap(point);
 
             this.Content = webView;
 
@@ -488,7 +489,7 @@ namespace WhereToFly.App.Core.Views
 
         /// <summary>
         /// Called when user clicked on the "Navigate here" link in the pin description on the
-        /// map.
+        /// map. Starts route navigation to location.
         /// </summary>
         /// <param name="locationId">location id of location to navigate to</param>
         private void OnMapView_NavigateToLocation(string locationId)
@@ -501,10 +502,20 @@ namespace WhereToFly.App.Core.Views
                 return;
             }
 
+            NavigateToPoint(location.Name, location.MapLocation);
+        }
+
+        /// <summary>
+        /// Starts route navigation to given named point
+        /// </summary>
+        /// <param name="name">name of point on map to navigate to; may be empty</param>
+        /// <param name="point">map point to navigate to</param>
+        private static void NavigateToPoint(string name, MapPoint point)
+        {
             Plugin.ExternalMaps.CrossExternalMaps.Current.NavigateTo(
-                location.Name,
-                location.MapLocation.Latitude,
-                location.MapLocation.Longitude,
+                name,
+                point.Latitude,
+                point.Longitude,
                 Plugin.ExternalMaps.Abstractions.NavigationType.Driving);
         }
 
@@ -574,7 +585,76 @@ namespace WhereToFly.App.Core.Views
             this.locationList.Add(location);
 
             var dataService = DependencyService.Get<DataService>();
-            await dataService.StoreLocationListAsync(locationList);
+            await dataService.StoreLocationListAsync(this.locationList);
+
+            ////await NavigationService.Instance.NavigateAsync(Constants.PageKeyEditLocationDetailsPage, animated: true, location);
+
+            await this.ReloadLocationListAsync();
+        }
+
+        /// <summary>
+        /// Called when the user performed a long-tap on the map
+        /// </summary>
+        /// <param name="point">map point where long-tap occured</param>
+        /// <returns>task to wait on</returns>
+        private async Task OnMapView_LongTap(MapPoint point)
+        {
+            string latitudeText = DataFormatter.FormatLatLong(point.Latitude, this.appSettings.CoordinateDisplayFormat);
+            string longitudeText = DataFormatter.FormatLatLong(point.Longitude, this.appSettings.CoordinateDisplayFormat);
+
+            var longTapActions = new List<string> { "Add new waypoint", "Navigate here" };
+
+            string result = await App.Current.MainPage.DisplayActionSheet(
+                $"Selected point at Latitude: {latitudeText}, Longitude: {longitudeText}",
+                "Cancel",
+                null,
+                longTapActions.ToArray());
+
+            if (!string.IsNullOrEmpty(result))
+            {
+                int selectedIndex = longTapActions.IndexOf(result);
+
+                switch (selectedIndex)
+                {
+                    case 0:
+                        await this.AddNewWaypoint(point);
+                        break;
+
+                    case 1:
+                        NavigateToPoint(string.Empty, point);
+                        break;
+
+                    default:
+                        // ignore
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Adds new waypoint with given map point
+        /// </summary>
+        /// <param name="point">map point</param>
+        /// <returns>task to wait on</returns>
+        private async Task AddNewWaypoint(MapPoint point)
+        {
+            var location = new Location
+            {
+                Id = Guid.NewGuid().ToString("B"),
+                Name = string.Empty,
+                Elevation = 0,
+                MapLocation = point,
+                Description = string.Empty,
+                Type = LocationType.Waypoint,
+                InternetLink = string.Empty,
+            };
+
+            this.locationList.Add(location);
+
+            var dataService = DependencyService.Get<DataService>();
+            await dataService.StoreLocationListAsync(this.locationList);
+
+            ////await NavigationService.Instance.NavigateAsync(Constants.PageKeyEditLocationDetailsPage, animated: true, location);
 
             await this.ReloadLocationListAsync();
         }
