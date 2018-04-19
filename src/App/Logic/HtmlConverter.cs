@@ -41,7 +41,14 @@ namespace WhereToFly.App.Logic
         /// <param name="acceptableTags">list of acceptable tags</param>
         private static void ReplaceUnwantedTags(HtmlNode rootNode, List<string> acceptableTags)
         {
-            var nodes = new Queue<HtmlNode>(rootNode.SelectNodes("./*|./text()"));
+            var selectedNodes = rootNode.SelectNodes("./*|./text()");
+
+            if (selectedNodes == null)
+            {
+                return;
+            }
+
+            var nodes = new Queue<HtmlNode>(selectedNodes);
             while (nodes.Count > 0)
             {
                 var node = nodes.Dequeue();

@@ -68,5 +68,18 @@ https://github.com/vividos/WhereToFly
             Assert.IsTrue(html.Contains("Image Link"), "must contain image link text");
             Assert.IsTrue(html.Contains("CheckBox"), "must contain checkbox text");
         }
+
+        /// <summary>
+        /// Tests method Sanitize(), with empty text
+        /// </summary>
+        [TestMethod]
+        public void TestSanitize_EmptyText()
+        {
+            // run
+            string html = HtmlConverter.Sanitize(string.Empty);
+
+            // check
+            Assert.IsTrue(html.Length == 0, "sanitized html text must also be empty");
+        }
     }
 }
