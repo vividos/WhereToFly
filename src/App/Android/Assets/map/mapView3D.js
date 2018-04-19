@@ -313,7 +313,7 @@ MapView.prototype.setMapOverlayType = function (overlayType) {
         case 'ThermalSkywaysKk7':
             if (this.thermalSkywaysLayer === null) {
                 this.thermalSkywaysLayer = layers.addImageryProvider(this.thermalSkywaysOverlay);
-                this.thermalSkywaysLayer.alpha = 0.3; // 0.0 is transparent.  1.0 is opaque.
+                this.thermalSkywaysLayer.alpha = 0.2; // 0.0 is transparent.  1.0 is opaque.
                 this.thermalSkywaysLayer.brightness = 2.0; // > 1.0 increases brightness.  < 1.0 decreases.
             }
             else
