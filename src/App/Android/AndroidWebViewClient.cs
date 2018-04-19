@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using WhereToFly.App.Core;
 
 namespace WhereToFly.App.Android
 {
@@ -18,6 +19,21 @@ namespace WhereToFly.App.Android
         /// HTTP client to use to download content when intercepting content
         /// </summary>
         private readonly HttpClient httpClient = new HttpClient();
+
+        /// <summary>
+        /// Cache folder name for CORS content
+        /// </summary>
+        private readonly string cacheFolder;
+
+        /// <summary>
+        /// Number of cache hits
+        /// </summary>
+        private int numCacheHit;
+
+        /// <summary>
+        /// Number of cache misses
+        /// </summary>
+        private int numCacheMiss;
 
         /// <summary>
         /// Previous web view client in the chain
@@ -39,6 +55,7 @@ namespace WhereToFly.App.Android
         /// </param>
         public AndroidWebViewClient(WebViewClient previousClient)
         {
+            this.cacheFolder = GetCacheFolder();
             this.previousClient = previousClient;
         }
 
@@ -146,15 +163,7 @@ namespace WhereToFly.App.Android
                 { "Via", "1.1 vegur" },
             };
 
-            Stream stream = null;
-            try
-            {
-                stream = this.httpClient.GetStreamAsync(url).Result;
-            }
-            catch (Exception)
-            {
-                // ignore exceptions when fetching content (and use null stream)
-            }
+            Stream stream = this.GetUrlContentStream(url);
 
             return new WebResourceResponse(
                 "text/plain",
@@ -163,6 +172,71 @@ namespace WhereToFly.App.Android
                 "OK",
                 responseHeaders,
                 stream);
+        }
+
+        /// <summary>
+        /// Gets URL content stream, either from the network, or from the cache when already
+        /// downloaded. When fetching from the network, the content is also stored in the cache
+        /// folder.
+        /// </summary>
+        /// <param name="url">URL to fetch</param>
+        /// <returns>content stream</returns>
+        private Stream GetUrlContentStream(string url)
+        {
+            int hashCode = url.GetHashCode();
+
+            string cacheFilename = Path.Combine(this.cacheFolder, hashCode.ToString() + ".bin");
+
+            if (File.Exists(cacheFilename))
+            {
+                this.numCacheHit++;
+                Debug.WriteLine($"CORS cache hits vs misses: {this.numCacheHit}/{this.numCacheMiss}");
+
+                return new FileStream(cacheFilename, FileMode.Open);
+            }
+
+            try
+            {
+                var data = this.httpClient.GetByteArrayAsync(url).Result;
+
+                File.WriteAllBytes(cacheFilename, data);
+
+                this.numCacheMiss++;
+                Debug.WriteLine($"CORS cache hits vs misses: {this.numCacheHit}/{this.numCacheMiss}");
+
+                return new MemoryStream(data);
+            }
+            catch (Exception)
+            {
+                // ignore exceptions when fetching content (and use null stream)
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Retrieves cache folder and ensures it exists
+        /// </summary>
+        /// <returns>file name of cache folder</returns>
+        private static string GetCacheFolder()
+        {
+            var platform = Xamarin.Forms.DependencyService.Get<IPlatform>();
+
+            string cacheFolder = Path.Combine(platform.CacheDataFolder, "cors-cache");
+
+            if (!Directory.Exists(cacheFolder))
+            {
+                try
+                {
+                    Directory.CreateDirectory(cacheFolder);
+                }
+                catch (Exception)
+                {
+                    // ignore error
+                }
+            }
+
+            return cacheFolder;
         }
 
         /// <summary>
