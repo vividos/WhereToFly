@@ -3,6 +3,7 @@ using Android.Webkit;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 
@@ -145,7 +146,15 @@ namespace WhereToFly.App.Android
                 { "Via", "1.1 vegur" },
             };
 
-            var stream = this.httpClient.GetStreamAsync(url).Result;
+            Stream stream = null;
+            try
+            {
+                stream = this.httpClient.GetStreamAsync(url).Result;
+            }
+            catch (Exception)
+            {
+                // ignore exceptions when fetching content (and use null stream)
+            }
 
             return new WebResourceResponse(
                 "text/plain",
