@@ -573,6 +573,9 @@ namespace WhereToFly.App.Core.Views
 
             this.locationList.Add(location);
 
+            var dataService = DependencyService.Get<DataService>();
+            await dataService.StoreLocationListAsync(locationList);
+
             await this.ReloadLocationListAsync();
         }
 
