@@ -140,7 +140,51 @@ function MapView(options) {
     var findResultEntity = this.createEntity('Find result', '', Cesium.Color.ORANGE, '../images/magnify.svg', 0.0, 0.0);
     findResultEntity.show = false;
     this.findResultMarker = this.viewer.entities.add(findResultEntity);
+
+    console.log("#7 long tap handler");
+
+    this.pickingHandler = new Cesium.ScreenSpaceEventHandler(this.viewer.scene.canvas);
+
+    this.pickingHandler.setInputAction(this.onScreenTouchDown.bind(this), Cesium.ScreenSpaceEventType.LEFT_DOWN);
+    this.pickingHandler.setInputAction(this.onScreenTouchUp.bind(this), Cesium.ScreenSpaceEventType.LEFT_UP);
 }
+
+/**
+ * Called when the screen space event handler detected a touch-down event.
+ * @param {object} movement movement info object
+ */
+MapView.prototype.onScreenTouchDown = function (movement) {
+
+    this.currentLeftDownPosition = movement.position;
+    this.currentLeftDownTime = new Date().getTime();
+};
+
+/**
+ * Called when the screen space event handler detected a touch-up event.
+ * @param {object} movement movement info object
+ */
+MapView.prototype.onScreenTouchUp = function (movement) {
+
+    var deltaX = (this.currentLeftDownPosition.x - movement.position.x);
+    var deltaY = (this.currentLeftDownPosition.y - movement.position.y);
+    var deltaSquared = deltaX * deltaX + deltaY * deltaY;
+
+    var deltaTime = new Date().getTime() - this.currentLeftDownTime;
+
+    // when tap was longer than 1s and moved less than 10 pixels
+    if (deltaTime > 1000 && deltaSquared < 10 * 10) {
+
+        var cartesian = this.viewer.camera.pickEllipsoid(movement.position, this.viewer.scene.globe.ellipsoid);
+        if (cartesian) {
+            var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+
+            this.onLongTap({
+                latitude: Cesium.Math.toDegrees(cartographic.latitude),
+                longitude: Cesium.Math.toDegrees(cartographic.longitude)
+            });
+        }
+    }
+};
 
 /**
  * Creates a new imagery provider that uses the Thermal Skyways from https://thermal.kk7.ch/.
@@ -687,4 +731,17 @@ MapView.prototype.onAddFindResult = function (options) {
 
     // hide the info box
     this.viewer.selectedEntity = undefined;
+};
+
+/**
+ * Called when a long-tap occured on the map.
+ * @param {Object} [options] An object with the following properties:
+ * @param {Number} [options.latitude] Latitude of the long tap
+ * @param {Number} [options.longitude] Longitude of the long tap
+ */
+MapView.prototype.onLongTap = function (options) {
+    console.log("long-tap occured: lat=" + options.latitude + ", long=" + options.longitude);
+
+    if (this.options.callback !== undefined)
+        this.options.callback('onLongTap', options);
 };

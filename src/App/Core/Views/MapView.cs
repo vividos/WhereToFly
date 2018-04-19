@@ -79,6 +79,16 @@ namespace WhereToFly.App.Core.Views
         public event OnAddFindResultCallback AddFindResult;
 
         /// <summary>
+        /// Delegate of function to call when long tap occured on map
+        /// </summary>
+        public delegate void OnLongTapCallback(MapPoint point);
+
+        /// <summary>
+        /// Event that is signaled when long tap occured on map
+        /// </summary>
+        public event OnLongTapCallback LongTap;
+
+        /// <summary>
         /// Gets or sets map imagery type
         /// </summary>
         public MapImageryType MapImageryType
@@ -371,6 +381,12 @@ namespace WhereToFly.App.Core.Views
                     this.AddFindResult?.Invoke(parameters.Name, point);
                     break;
 
+                case "onLongTap":
+                    var longTapParameters = JsonConvert.DeserializeObject<LongTapParameter>(jsonParameters);
+                    var longTapPoint = new MapPoint(longTapParameters.Latitude, longTapParameters.Longitude);
+                    this.LongTap?.Invoke(longTapPoint);
+                    break;
+
                 default:
                     Debug.Assert(false, "invalid callback function name");
                     break;
@@ -394,6 +410,22 @@ namespace WhereToFly.App.Core.Views
 
             /// <summary>
             /// Longitude of map point to add
+            /// </summary>
+            public double Longitude { get; set; }
+        }
+
+        /// <summary>
+        /// Parameter for OnLongTap JavaScript event
+        /// </summary>
+        private class LongTapParameter
+        {
+            /// <summary>
+            /// Latitude of map point where long tap occured
+            /// </summary>
+            public double Latitude { get; set; }
+
+            /// <summary>
+            /// Longitude of map point where long tap occured
             /// </summary>
             public double Longitude { get; set; }
         }
