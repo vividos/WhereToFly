@@ -33,11 +33,6 @@ namespace WhereToFly.App.Core.ViewModels
         public Command DownloadFromWebCommand { get; set; }
 
         /// <summary>
-        /// Command to clear location list
-        /// </summary>
-        public Command ClearLocationsCommand { get; set; }
-
-        /// <summary>
         /// A mapping of display string to locations list filename, stored as Assets in the app
         /// </summary>
         private readonly Dictionary<string, string> includedLocationsList = new Dictionary<string, string>
@@ -72,7 +67,6 @@ namespace WhereToFly.App.Core.ViewModels
             this.ImportIncludedCommand = new Command(async () => await this.ImportIncludedAsync());
             this.ImportFromStorageCommand = new Command(async () => await this.ImportFromStorageAsync());
             this.DownloadFromWebCommand = new Command(async () => await this.DownloadFromWebAsync());
-            this.ClearLocationsCommand = new Command(async () => await this.ClearLocationsAsync());
         }
 
         /// <summary>
@@ -245,31 +239,6 @@ namespace WhereToFly.App.Core.ViewModels
             string webSiteToOpen = this.downloadWebSiteList[result];
 
             Device.OpenUri(new Uri(webSiteToOpen));
-        }
-
-        /// <summary>
-        /// Clears all locations
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task ClearLocationsAsync()
-        {
-            bool result = await App.Current.MainPage.DisplayAlert(
-                Constants.AppTitle,
-                "Really clear all locations?",
-                "Clear",
-                "Cancel");
-
-            if (!result)
-            {
-                return;
-            }
-
-            var dataService = DependencyService.Get<DataService>();
-            await dataService.StoreLocationListAsync(new List<Location>());
-
-            await NavigationService.Instance.GoBack();
-
-            App.ShowToast("Location list was cleared.");
         }
 
         /// <summary>

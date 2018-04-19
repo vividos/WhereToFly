@@ -74,6 +74,7 @@ The following icons are from the Google Material icon set:
 - compass
 - crosshairs-gps
 - delete
+- delete_forever
 - directions
 - format-list-bulleted
 - information-outline

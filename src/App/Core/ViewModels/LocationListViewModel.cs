@@ -248,6 +248,31 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
+        /// Clears all locations
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        public async Task ClearLocationsAsync()
+        {
+            bool result = await App.Current.MainPage.DisplayAlert(
+                Constants.AppTitle,
+                "Really clear all locations?",
+                "Clear",
+                "Cancel");
+
+            if (!result)
+            {
+                return;
+            }
+
+            var dataService = DependencyService.Get<DataService>();
+            await dataService.StoreLocationListAsync(new List<Location>());
+
+            await ReloadLocationListAsync();
+
+            App.ShowToast("Location list was cleared.");
+        }
+
+        /// <summary>
         /// Reloads location list and shows it on the page
         /// </summary>
         /// <returns>task to wait on</returns>

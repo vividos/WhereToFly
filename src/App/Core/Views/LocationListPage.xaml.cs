@@ -55,6 +55,7 @@ namespace WhereToFly.App.Core.Views
         private void SetupToolbar()
         {
             this.AddImportLocationsToolbarButton();
+            this.AddDeleteLocationListToolbarButton();
         }
 
         /// <summary>
@@ -82,6 +83,32 @@ namespace WhereToFly.App.Core.Views
         {
             this.startedImportPage = true;
             await NavigationService.Instance.NavigateAsync(Constants.PageKeyImportLocationsPage, animated: true);
+        }
+
+        /// <summary>
+        /// Adds "Delete location list" toolbar button
+        /// </summary>
+        private void AddDeleteLocationListToolbarButton()
+        {
+            ToolbarItem deleteLocationListButton = new ToolbarItem(
+                "Delete location list",
+                "delete_forever.xml",
+                async () => await this.OnClicked_ToolbarButtonDeleteLocationList(),
+                ToolbarItemOrder.Primary)
+            {
+                AutomationId = "DeleteLocationList"
+            };
+
+            this.ToolbarItems.Add(deleteLocationListButton);
+        }
+
+        /// <summary>
+        /// Called when toolbar button "Delete location list" was clicked
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task OnClicked_ToolbarButtonDeleteLocationList()
+        {
+            await this.viewModel.ClearLocationsAsync();
         }
 
         /// <summary>
