@@ -3,7 +3,71 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="WhereToFly.App.Core.Views.EditLocationDetailsPage">
     <ContentPage.Content>
-        <StackLayout>
+
+        <!-- stack layout with location details grid and details multiline edit control -->
+        <StackLayout Orientation="Vertical">
+
+            <!-- Grid with all location details -->
+            <Grid WidthRequest="350" MinimumWidthRequest="350"
+                  VerticalOptions="FillAndExpand" ColumnSpacing="16" RowSpacing="16" Padding="8">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Name -->
+                <Label Grid.Row="0" Grid.Column="0" Text="Name" />
+                <Entry Grid.Row="0" Grid.Column="1"
+                       x:Name="nameEntry"
+                       Text="{Binding Name}"
+                       Placeholder="enter a waypoint name" />
+
+                <!-- Type -->
+                <Label Grid.Row="1" Grid.Column="0" Text="Type" />
+                <Picker Grid.Row="1" Grid.Column="1"
+                        VerticalOptions="StartAndExpand"
+                        ItemsSource="{Binding LocationTypeList, Mode=OneWay}"
+                        SelectedItem="{Binding Type}" />
+
+                <!-- Latitude -->
+                <Label Grid.Row="2" Grid.Column="0" Text="Latitude" />
+                <Label Grid.Row="2" Grid.Column="1" Text="{Binding Latitude, Mode=OneWay}" />
+
+                <!-- Longitude -->
+                <Label Grid.Row="3" Grid.Column="0" Text="Longitude" />
+                <Label Grid.Row="3" Grid.Column="1" Text="{Binding Longitude, Mode=OneWay}" />
+
+                <!-- Altitude -->
+                <Label Grid.Row="4" Grid.Column="0" Text="Altitude" />
+                <Entry Grid.Row="4" Grid.Column="1"
+                       Text="{Binding Altitude}"
+                       Placeholder="enter a value in meter"
+                       Keyboard="Numeric" />
+
+                <!-- Internet link -->
+                <Label Grid.Row="5" Grid.Column="0" Text="Internet link" />
+                <Entry Grid.Row="5" Grid.Column="1"
+                       Text="{Binding InternetLink}"
+                       Placeholder="enter an internet link"
+                       Keyboard="Url" />
+
+            </Grid>
+
+            <!-- Description editor -->
+            <Label Text="Description" HorizontalOptions="Start" VerticalOptions="Start" />
+            <Editor HorizontalOptions="Fill" VerticalOptions="FillAndExpand"
+                    Text="{Binding Description}"
+                    BackgroundColor="#efefef" />
+
         </StackLayout>
+
     </ContentPage.Content>
 </ContentPage>
