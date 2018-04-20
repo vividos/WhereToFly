@@ -216,9 +216,10 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         /// <param name="position">new position to use</param>
         /// <param name="altitudeInMeter">new altitide, in meter; when 0, it won't be used</param>
+        /// <param name="positionAccuracyInMeter">position accuracy, in meter</param>
         /// <param name="timestamp">timestamp of location</param>
         /// <param name="zoomToLocation">indicates if view should also zoom to the location</param>
-        public void UpdateMyLocation(MapPoint position, int altitudeInMeter, DateTimeOffset timestamp, bool zoomToLocation)
+        public void UpdateMyLocation(MapPoint position, int altitudeInMeter, int positionAccuracyInMeter, DateTimeOffset timestamp, bool zoomToLocation)
         {
             if (!this.isInitialized)
             {
@@ -229,6 +230,8 @@ namespace WhereToFly.App.Core.Views
             {
                 latitude = position.Latitude,
                 longitude = position.Longitude,
+                positionAccuracy = positionAccuracyInMeter,
+                positionAccuracyColor = ColorFromPositionAccuracy(positionAccuracyInMeter),
                 altitude = altitudeInMeter,
                 timestamp,
                 displayLatitude = DataFormatter.FormatLatLong(position.Latitude, this.CoordinateDisplayFormat),
@@ -242,6 +245,31 @@ namespace WhereToFly.App.Core.Views
                 JsonConvert.SerializeObject(options));
 
             this.RunJavaScript(js);
+        }
+
+        /// <summary>
+        /// Returns an HTML color from a position accuracy value.
+        /// </summary>
+        /// <param name="positionAccuracyInMeter">position accuracy, in meter</param>
+        /// <returns>HTML color in format #rrggbb</returns>
+        private static string ColorFromPositionAccuracy(int positionAccuracyInMeter)
+        {
+            if (positionAccuracyInMeter < 40)
+            {
+                return "#00c000"; // green
+            }
+            else if (positionAccuracyInMeter < 120)
+            {
+                return "#e0e000"; // yellow
+            }
+            else if (positionAccuracyInMeter < 200)
+            {
+                return "#ff8000"; // orange
+            }
+            else
+            {
+                return "#c00000"; // red
+            }
         }
 
         /// <summary>

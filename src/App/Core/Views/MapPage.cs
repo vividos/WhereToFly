@@ -175,6 +175,7 @@ namespace WhereToFly.App.Core.Views
                 this.mapView.UpdateMyLocation(
                     new MapPoint(position.Latitude, position.Longitude),
                     (int)position.Altitude,
+                    (int)position.Accuracy,
                     position.Timestamp,
                     zoomToLocation: true);
             }
@@ -793,6 +794,7 @@ namespace WhereToFly.App.Core.Views
                 this.mapView.UpdateMyLocation(
                     new MapPoint(position.Latitude, position.Longitude),
                     (int)position.Altitude,
+                    (int)position.Accuracy,
                     position.Timestamp,
                     zoomToPosition);
             }
