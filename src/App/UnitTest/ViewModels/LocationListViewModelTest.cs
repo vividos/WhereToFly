@@ -21,7 +21,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
         [TestInitialize]
         public void SetUp()
         {
-            DependencyService.Register<DataService>();
+            DependencyService.Register<IDataService, DataService>();
         }
 
         /// <summary>

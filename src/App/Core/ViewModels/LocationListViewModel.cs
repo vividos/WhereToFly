@@ -122,10 +122,9 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task LoadDataAsync()
         {
-            DataService dataService = null;
             try
             {
-                dataService = DependencyService.Get<DataService>();
+                IDataService dataService = DependencyService.Get<IDataService>();
 
                 this.locationList = await dataService.GetLocationListAsync(CancellationToken.None);
             }
@@ -239,7 +238,7 @@ namespace WhereToFly.App.Core.ViewModels
         {
             this.locationList.Remove(location);
 
-            var dataService = DependencyService.Get<DataService>();
+            var dataService = DependencyService.Get<IDataService>();
             await dataService.StoreLocationListAsync(this.locationList);
 
             this.UpdateLocationList();
@@ -264,7 +263,7 @@ namespace WhereToFly.App.Core.ViewModels
                 return;
             }
 
-            var dataService = DependencyService.Get<DataService>();
+            var dataService = DependencyService.Get<IDataService>();
             await dataService.StoreLocationListAsync(new List<Location>());
 
             await ReloadLocationListAsync();

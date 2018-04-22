@@ -170,7 +170,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         public async Task SaveChangesAsync()
         {
-            var dataService = DependencyService.Get<DataService>();
+            var dataService = DependencyService.Get<IDataService>();
 
             var locationList = await dataService.GetLocationListAsync(CancellationToken.None);
 

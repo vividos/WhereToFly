@@ -248,7 +248,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task SaveSettingsAsync()
         {
-            var dataService = DependencyService.Get<DataService>();
+            var dataService = DependencyService.Get<IDataService>();
             await dataService.StoreAppSettingsAsync(this.appSettings);
         }
 

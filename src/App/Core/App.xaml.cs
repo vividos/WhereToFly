@@ -46,7 +46,7 @@ namespace WhereToFly.App.Core
         private void SetupDepencencyService()
         {
             DependencyService.Register<NavigationService>();
-            DependencyService.Register<DataService>();
+            DependencyService.Register<IDataService, DataService>();
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace WhereToFly.App.Core
         /// <returns>task to wait on</returns>
         private async Task LoadAppSettingsAsync()
         {
-            var dataService = DependencyService.Get<DataService>();
+            var dataService = DependencyService.Get<IDataService>();
 
             App.Settings = await dataService.GetAppSettingsAsync(CancellationToken.None);
         }
@@ -141,7 +141,7 @@ namespace WhereToFly.App.Core
 
             bool appendToList = await ViewModels.ImportLocationsViewModel.AskAppendToList();
 
-            var dataService = DependencyService.Get<DataService>();
+            var dataService = DependencyService.Get<IDataService>();
 
             if (appendToList)
             {

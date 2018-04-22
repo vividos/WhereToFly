@@ -465,7 +465,7 @@ namespace WhereToFly.App.Core.Views
         /// <returns>app info object</returns>
         private async Task LoadDataAsync()
         {
-            var dataService = DependencyService.Get<DataService>();
+            var dataService = DependencyService.Get<IDataService>();
 
             this.appSettings = await dataService.GetAppSettingsAsync(CancellationToken.None);
             this.locationList = await dataService.GetLocationListAsync(CancellationToken.None);
@@ -585,7 +585,7 @@ namespace WhereToFly.App.Core.Views
 
             this.locationList.Add(location);
 
-            var dataService = DependencyService.Get<DataService>();
+            var dataService = DependencyService.Get<IDataService>();
             await dataService.StoreLocationListAsync(this.locationList);
 
             this.startedLocationListPage = true;
@@ -654,7 +654,7 @@ namespace WhereToFly.App.Core.Views
 
             this.locationList.Add(location);
 
-            var dataService = DependencyService.Get<DataService>();
+            var dataService = DependencyService.Get<IDataService>();
             await dataService.StoreLocationListAsync(this.locationList);
 
             this.startedLocationListPage = true;
@@ -745,7 +745,7 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         internal async Task ReloadLocationListAsync()
         {
-            var dataService = DependencyService.Get<DataService>();
+            var dataService = DependencyService.Get<IDataService>();
 
             var newLocationList = await dataService.GetLocationListAsync(CancellationToken.None);
 
@@ -815,7 +815,7 @@ namespace WhereToFly.App.Core.Views
             {
                 this.appSettings.LastKnownPosition = point;
 
-                var dataService = DependencyService.Get<DataService>();
+                var dataService = DependencyService.Get<IDataService>();
                 await dataService.StoreAppSettingsAsync(this.appSettings);
             }
         }

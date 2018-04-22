@@ -176,7 +176,7 @@ namespace WhereToFly.App.Core.ViewModels
             {
                 this.appSettings.LastKnownPosition = point;
 
-                var dataService = DependencyService.Get<DataService>();
+                var dataService = DependencyService.Get<IDataService>();
                 await dataService.StoreAppSettingsAsync(this.appSettings);
             }
         }

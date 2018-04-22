@@ -14,7 +14,7 @@ namespace WhereToFly.App.Core.Services
     /// Data service for the app; provides access to data storage. For now the data is stored and
     /// retrieved from the Data directory and is saved in JSON format
     /// </summary>
-    public class DataService
+    public class DataService : IDataService
     {
         /// <summary>
         /// Filename for the app settings json file

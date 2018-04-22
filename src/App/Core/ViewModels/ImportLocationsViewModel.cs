@@ -98,7 +98,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             bool appendToList = await AskAppendToList();
 
-            var dataService = DependencyService.Get<DataService>();
+            var dataService = DependencyService.Get<IDataService>();
 
             if (appendToList)
             {
@@ -178,7 +178,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             bool appendToList = await AskAppendToList();
 
-            var dataService = DependencyService.Get<DataService>();
+            var dataService = DependencyService.Get<IDataService>();
 
             if (appendToList)
             {
