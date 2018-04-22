@@ -34,7 +34,7 @@ namespace WhereToFly.App.Core.Controls
             this.HasShadow = false;
             this.BackgroundColor = Color.Transparent;
 
-            this.Content = canvasView;
+            this.Content = this.canvasView;
             this.canvasView.PaintSurface += this.CanvasViewOnPaintSurface;
 
             this.svgImage = new Lazy<SkiaSharp.Extended.Svg.SKSvg>(() => this.LoadImage());
@@ -56,8 +56,8 @@ namespace WhereToFly.App.Core.Controls
         /// </summary>
         public ImageSource Source
         {
-            get => (ImageSource)base.GetValue(SourceProperty);
-            set => base.SetValue(SourceProperty, value);
+            get => (ImageSource)this.GetValue(SourceProperty);
+            set => this.SetValue(SourceProperty, value);
         }
         #endregion
 
@@ -80,7 +80,7 @@ namespace WhereToFly.App.Core.Controls
         {
             if (this.Source != null)
             {
-                BindableObject.SetInheritedBindingContext(this.Source, base.BindingContext);
+                BindableObject.SetInheritedBindingContext(this.Source, this.BindingContext);
             }
 
             base.OnBindingContextChanged();
@@ -123,9 +123,7 @@ namespace WhereToFly.App.Core.Controls
         /// <returns>loaded SVG image</returns>
         private SkiaSharp.Extended.Svg.SKSvg LoadImage()
         {
-            var streamSource = this.Source as StreamImageSource;
-
-            if (streamSource != null &&
+            if (this.Source is StreamImageSource streamSource &&
                 streamSource.Stream != null)
             {
                 var stream = streamSource.Stream.Invoke(CancellationToken.None).Result;

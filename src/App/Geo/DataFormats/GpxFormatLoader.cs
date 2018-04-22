@@ -49,6 +49,14 @@ namespace WhereToFly.App.Geo.DataFormats
         /// <param name="waypointNode">waypoint xml node</param>
         /// <param name="namespaceManager">xml namespace manager to use</param>
         /// <returns>location object</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.ReadabilityRules",
+            "SA1113:CommaMustBeOnSameLineAsPreviousParameter",
+            Justification = "False positive")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.ReadabilityRules",
+            "SA1117:ParametersMustBeOnSameLineOrSeparateLines",
+            Justification = "False positive")]
         private static Location GetLocationFromWaypointNode(XmlNode waypointNode, XmlNamespaceManager namespaceManager)
         {
             bool canParseLatitude = double.TryParse(

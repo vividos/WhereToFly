@@ -71,6 +71,8 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Delegate of function to call when find result should be added as waypoint
         /// </summary>
+        /// <param name="name">find result name</param>
+        /// <param name="point">map point</param>
         public delegate void OnAddFindResultCallback(string name, MapPoint point);
 
         /// <summary>
@@ -81,6 +83,7 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Delegate of function to call when long tap occured on map
         /// </summary>
+        /// <param name="point">map point of long tap</param>
         public delegate void OnLongTapCallback(MapPoint point);
 
         /// <summary>
