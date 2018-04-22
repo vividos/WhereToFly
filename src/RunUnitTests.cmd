@@ -24,9 +24,9 @@ call "%VSINSTALL%\Common7\Tools\VsDevCmd.bat"
 set VSTEST=%VSINSTALL%\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe
 
 REM
-REM Rebuild project
+REM Build project
 REM
-msbuild UnitTest\WhereToFly.UnitTest.csproj /m /property:Configuration=Release /target:Build
+msbuild App\UnitTest\WhereToFly.App.UnitTest.csproj /m /property:Configuration=Release /target:Build
 
 REM
 REM Run Unit-Tests
@@ -34,8 +34,8 @@ REM
 %OPENCOVER% ^
     -register:user ^
     -target:"%VSTEST%" ^
-    -targetargs:"\"%~dp0UnitTest\bin\Release\WhereToFly.UnitTest.dll\"" ^
-    -filter:"+[WhereToFly*]* -[WhereToFly.UnitTest]*" ^
+    -targetargs:"\"%~dp0App\UnitTest\bin\Release\WhereToFly.App.UnitTest.dll\"" ^
+    -filter:"+[WhereToFly*]* -[WhereToFly.App.UnitTest]*" ^
     -mergebyhash ^
     -skipautoprops ^
     -output:"%~dp0\TestResults\WhereToFly-CoverageReport.xml"
