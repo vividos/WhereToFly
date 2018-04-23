@@ -12,6 +12,7 @@ namespace WhereToFly.App.Geo.UnitTest
         /// <summary>
         /// Tests ctor, with invalid coordinates
         /// </summary>
+        [TestMethod]
         public void TestCtor()
         {
             // set up
@@ -22,6 +23,48 @@ namespace WhereToFly.App.Geo.UnitTest
             Assert.AreEqual(0.0, point.Latitude, double.Epsilon, "latitude must be 0.0");
             Assert.AreEqual(0.0, point.Longitude, double.Epsilon, "longitude must be 0.0");
             Assert.IsFalse(point.Altitude.HasValue, "altitude must not be set");
+            Assert.AreEqual("invalid", point.ToString(), "invalid point must return correct ToString() result");
+        }
+
+        /// <summary>
+        /// Tests ToString() method
+        /// </summary>
+        [TestMethod]
+        public void TestToString()
+        {
+            // set up
+            var point1 = new LatLongAlt(48.21231, 11.56078);
+            var point2 = new LatLongAlt(point1.Latitude, point1.Longitude, 1257.2);
+
+            // run
+            string text1 = point1.ToString();
+            string text2 = point2.ToString();
+
+            /// check
+            Assert.AreEqual("Lat=48.212310, Long=11.560780, Alt=N/A", text1, "ToString() text must be correct");
+            Assert.AreEqual("Lat=48.212310, Long=11.560780, Alt=1257.20", text2, "ToString() text must be correct");
+        }
+
+        /// <summary>
+        /// Tests DistanceTo() method
+        /// </summary>
+        [TestMethod]
+        public void TestDistanceTo()
+        {
+            // set up
+            var point1 = new LatLongAlt(48.2, 11.5);
+            var point2 = new LatLongAlt(48.2 + 0.1, 11.5);
+
+            var distanceInMeter = 1000;
+            var point3 = point2.PolarOffset(distanceInMeter, 321.0, 0.0);
+
+            // run
+            double distance12 = point1.DistanceTo(point2);
+            double distance23 = point2.DistanceTo(point3);
+
+            // check
+            Assert.AreEqual(11132.0, distance12, 1.0, "distance from point 1 to point 2 must be correct");
+            Assert.AreEqual(distanceInMeter, distance23, 0.1, "distance from point 2 to point 3 must be correct");
         }
 
         /// <summary>
@@ -85,6 +128,25 @@ namespace WhereToFly.App.Geo.UnitTest
             Assert.AreEqual(distanceInMeter, centerPoint.DistanceTo(southPoint), 1e-6, "distance must match");
             Assert.AreEqual(distanceInMeter, centerPoint.DistanceTo(westPoint), 1e-6, "distance must match");
             Assert.AreEqual(distanceInMeter, centerPoint.DistanceTo(anglePoint), 1e-6, "distance must match");
+        }
+
+        /// <summary>
+        /// Tests method Offset()
+        /// </summary>
+        [TestMethod]
+        public void TestOffset()
+        {
+            // set up
+            var point1 = new LatLongAlt(48.2, 11.5);
+            var distanceInMeterNorth = 3000;
+            var distanceInMeterEast = 4000;
+
+            // run
+            var point2 = point1.Offset(distanceInMeterNorth, distanceInMeterEast, 0.0);
+            double distance = point1.DistanceTo(point2);
+
+            // check
+            Assert.AreEqual(5000.0, distance, 0.1, "calculated distance must be correct");
         }
     }
 }
