@@ -77,7 +77,7 @@ namespace WhereToFly.App.Android
         /// <param name="errorCode">error code</param>
         /// <param name="description">error description</param>
         /// <param name="failingUrl">failing URL</param>
-        [Obsolete]
+        [Obsolete("replaced by OnReceivedError variant")]
         public override void OnReceivedError(WebView view, [GeneratedEnum] ClientError errorCode, string description, string failingUrl)
         {
             this.previousClient.OnReceivedError(view, errorCode, description, failingUrl);
@@ -108,7 +108,7 @@ namespace WhereToFly.App.Android
         /// <param name="view">web view</param>
         /// <param name="url">URL to be checked</param>
         /// <returns>what previous client returns</returns>
-        [Obsolete]
+        [Obsolete("replaced by ShouldOverrideUrlLoading variant")]
         public override bool ShouldOverrideUrlLoading(WebView view, string url)
         {
             return this.previousClient.ShouldOverrideUrlLoading(view, url);
