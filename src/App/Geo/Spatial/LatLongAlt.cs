@@ -171,7 +171,7 @@ namespace WhereToFly.App.Geo.Spatial
         /// <returns>printable text</returns>
         public override string ToString()
         {
-            return string.Format(
+            return !this.Valid ? "invalid" : string.Format(
                 "Lat={0}, Long={1}, Alt={2}",
                 this.Latitude.ToString("F6", CultureInfo.InvariantCulture),
                 this.Longitude.ToString("F6", CultureInfo.InvariantCulture),
