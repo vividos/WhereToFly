@@ -52,15 +52,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// List of all location types that can be selected
         /// </summary>
-        public string[] LocationTypeList
-        {
-            get
-            {
-                return
-                    (from locationType in this.allLocationTypes
-                     select locationType.ToString()).ToArray();
-            }
-        }
+        public string[] LocationTypeList { get; private set; }
 
         /// <summary>
         /// Property containing location type
@@ -146,6 +138,10 @@ namespace WhereToFly.App.Core.ViewModels
             this.appSettings = appSettings;
             this.location = location;
             this.allLocationTypes = new List<LocationType>();
+
+            this.LocationTypeList =
+                (from locationType in this.allLocationTypes
+                 select locationType.ToString()).ToArray();
 
             this.SetupBindings();
         }
