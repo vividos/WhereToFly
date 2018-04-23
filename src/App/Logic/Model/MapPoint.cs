@@ -51,6 +51,11 @@ namespace WhereToFly.App.Logic.Model
         /// <returns>true when equal, false when not</returns>
         public bool Equals(MapPoint other)
         {
+            if (other == null)
+            {
+                return false;
+            }
+
             return Math.Abs(this.Latitude - other.Latitude) < 1e-6 &&
                 Math.Abs(this.Longitude - other.Longitude) < 1e-6;
         }
