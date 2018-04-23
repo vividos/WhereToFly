@@ -222,13 +222,13 @@ namespace WhereToFly.App.Android
         {
             var platform = Xamarin.Forms.DependencyService.Get<IPlatform>();
 
-            string cacheFolder = Path.Combine(platform.CacheDataFolder, "cors-cache");
+            string corsCacheFolder = Path.Combine(platform.CacheDataFolder, "cors-cache");
 
-            if (!Directory.Exists(cacheFolder))
+            if (!Directory.Exists(corsCacheFolder))
             {
                 try
                 {
-                    Directory.CreateDirectory(cacheFolder);
+                    Directory.CreateDirectory(corsCacheFolder);
                 }
                 catch (Exception)
                 {
@@ -236,7 +236,7 @@ namespace WhereToFly.App.Android
                 }
             }
 
-            return cacheFolder;
+            return corsCacheFolder;
         }
 
         /// <summary>
