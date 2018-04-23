@@ -81,5 +81,19 @@ https://github.com/vividos/WhereToFly
             // check
             Assert.IsTrue(html.Length == 0, "sanitized html text must also be empty");
         }
+
+        /// <summary>
+        /// Tests method Sanitize(), with HTML containing unwanted tag
+        /// </summary>
+        [TestMethod]
+        public void TestSanitize_UnwantedTag()
+        {
+            // run
+            string text = "hello <script type=\"javascript\">alert(\"hello world\");</script>world";
+            string html = HtmlConverter.Sanitize(text);
+
+            // check
+            Assert.IsTrue(html.IndexOf("<script") == -1, "sanitized html text must not contain script tag");
+        }
     }
 }

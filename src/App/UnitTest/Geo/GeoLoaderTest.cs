@@ -83,16 +83,30 @@ namespace WhereToFly.App.UnitTest
         }
 
         /// <summary>
-        /// Tests loading location list, with invalid file extension
+        /// Tests loading location list, with non-existent file
         /// </summary>
         [TestMethod]
-        public void TestLoadLocationList_InvalidFileExtension()
+        public void TestLoadLocationList_NonExistentFile()
         {
             // set up
             string filename = Path.Combine(this.TestAssetsPath, "waypoints.abc");
 
             // run + check
             Assert.ThrowsException<FileNotFoundException>(() => GeoLoader.LoadLocationList(filename), "must throw exception");
+        }
+
+        /// <summary>
+        /// Tests loading location list, with invalid file extension
+        /// </summary>
+        [TestMethod]
+        public void TestLoadLocationList_InvalidFileExtension()
+        {
+            // set up
+            string filename = "waypoints.abc";
+            var stream = new MemoryStream(new byte[] { 42 });
+
+            // run + check
+            Assert.ThrowsException<ArgumentException>(() => GeoLoader.LoadLocationList(stream, filename), "must throw exception");
         }
     }
 }

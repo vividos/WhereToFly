@@ -47,6 +47,7 @@
     <Compile Include="MapPointTest.cs" />
     <Compile Include="AppSettingsTest.cs" />
     <Compile Include="HtmlConverterTest.cs" />
+    <Compile Include="LocationTest.cs" />
     <Compile Include="ViewModels\LocationListEntryViewModelTest.cs" />
     <Compile Include="ViewModels\CurrentPositionDetailsViewModelTest.cs" />
     <Compile Include="ViewModels\LocationListViewModelTest.cs" />
