@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using WhereToFly.App.Logic.Model;
 using Xamarin.Forms;
 
@@ -43,7 +44,16 @@ namespace WhereToFly.App.Core
             }
 
             var platform = DependencyService.Get<IPlatform>();
-            string svgText = platform.LoadAssetText(imagePath);
+
+            string svgText = null;
+            try
+            {
+                svgText = platform.LoadAssetText(imagePath);
+            }
+            catch (Exception)
+            {
+                // ignore load errors
+            }
 
             if (svgText != null && fill != null)
             {

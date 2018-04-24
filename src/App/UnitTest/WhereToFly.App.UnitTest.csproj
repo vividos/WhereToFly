@@ -52,7 +52,9 @@
     <Compile Include="ViewModels\LocationListEntryViewModelTest.cs" />
     <Compile Include="ViewModels\CurrentPositionDetailsViewModelTest.cs" />
     <Compile Include="ViewModels\LocationListViewModelTest.cs" />
+    <Compile Include="Views\EditLocationDetailsPageTest.cs" />
     <Compile Include="Views\InfoPageTest.cs" />
+    <Compile Include="Views\LocationDetailsPageTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\tracks.kmz">

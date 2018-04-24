@@ -12,6 +12,9 @@ using WhereToFly.App.Geo.DataFormats;
 using WhereToFly.App.Logic.Model;
 using Xamarin.Forms;
 
+// make Core internals visible to unit tests
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("WhereToFly.App.UnitTest")]
+
 namespace WhereToFly.App.Core
 {
     /// <summary>
