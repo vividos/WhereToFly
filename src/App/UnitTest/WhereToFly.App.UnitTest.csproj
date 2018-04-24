@@ -91,6 +91,9 @@
     <PackageReference Include="NETStandard.Library">
       <Version>2.0.1</Version>
     </PackageReference>
+    <PackageReference Include="SonarAnalyzer.CSharp">
+      <Version>6.8.2.4717</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Forms.Mocks">
       <Version>2.5.0.4</Version>
     </PackageReference>

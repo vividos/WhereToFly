@@ -26,6 +26,7 @@
     <PackageReference Include="CommonMark.NET" Version="0.15.1" />
     <PackageReference Include="HtmlAgilityPack" Version="1.8.0" />
     <PackageReference Include="Plugin.Share" Version="7.1.1" />
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="6.8.2.4717" />
   </ItemGroup>
 
 </Project>
