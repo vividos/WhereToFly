@@ -40,7 +40,7 @@ namespace WhereToFly.App.Geo.UnitTest
             string text1 = point1.ToString();
             string text2 = point2.ToString();
 
-            /// check
+            // check
             Assert.AreEqual("Lat=48.212310, Long=11.560780, Alt=N/A", text1, "ToString() text must be correct");
             Assert.AreEqual("Lat=48.212310, Long=11.560780, Alt=1257.20", text2, "ToString() text must be correct");
         }
