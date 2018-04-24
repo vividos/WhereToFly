@@ -48,9 +48,11 @@
     <Compile Include="AppSettingsTest.cs" />
     <Compile Include="HtmlConverterTest.cs" />
     <Compile Include="LocationTest.cs" />
+    <Compile Include="UnitTestPlatform.cs" />
     <Compile Include="ViewModels\LocationListEntryViewModelTest.cs" />
     <Compile Include="ViewModels\CurrentPositionDetailsViewModelTest.cs" />
     <Compile Include="ViewModels\LocationListViewModelTest.cs" />
+    <Compile Include="Views\InfoPageTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\tracks.kmz">
@@ -87,9 +89,17 @@
     <PackageReference Include="NETStandard.Library">
       <Version>2.0.1</Version>
     </PackageReference>
+    <PackageReference Include="Xamarin.Forms.Mocks">
+      <Version>2.5.0.4</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\waypoints.gpx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\info.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

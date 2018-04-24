@@ -16,12 +16,13 @@ namespace WhereToFly.App.UnitTest.ViewModels
     public class LocationListViewModelTest
     {
         /// <summary>
-        /// Called before each test method; initializes dependency service with DataService
-        /// instance.
+        /// Sets up tests by initializing Xamarin.Forms.Mocks and DependencyService with
+        /// DataService.
         /// </summary>
         [TestInitialize]
         public void SetUp()
         {
+            Xamarin.Forms.Mocks.MockForms.Init();
             DependencyService.Register<IDataService, DataService>();
         }
 

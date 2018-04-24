@@ -12,6 +12,15 @@ namespace WhereToFly.App.UnitTest.ViewModels
     public class LocationListEntryViewModelTest
     {
         /// <summary>
+        /// Sets up tests by initializing Xamarin.Forms.Mocks
+        /// </summary>
+        [TestInitialize]
+        public void SetUp()
+        {
+            Xamarin.Forms.Mocks.MockForms.Init();
+        }
+
+        /// <summary>
         /// Tests ctor
         /// </summary>
         [TestMethod]
