@@ -71,7 +71,8 @@ namespace LiveWaypoints
                 // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                    const string SwaggerUrl = "/swagger/v1/swagger.json";
+                    c.SwaggerEndpoint(SwaggerUrl, "My API V1");
                 });
             }
 

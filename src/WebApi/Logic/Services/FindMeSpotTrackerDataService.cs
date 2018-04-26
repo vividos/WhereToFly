@@ -11,10 +11,12 @@ namespace WhereToFly.WebApi.Logic.Services
     /// </summary>
     public class FindMeSpotTrackerDataService
     {
+#pragma warning disable S1075 // URIs should not be hardcoded
         /// <summary>
         /// Base URL for the Find Me SPOT REST web service
         /// </summary>
         private const string BaseUrl = "https://api.findmespot.com/spot-main-web/consumer/rest-api/2.0";
+#pragma warning restore S1075 // URIs should not be hardcoded
 
         /// <summary>
         /// Access to FindMeSpot REST API

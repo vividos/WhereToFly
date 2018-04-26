@@ -346,6 +346,7 @@ namespace WhereToFly.App.Core.ViewModels
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             this.Dispose(true);
+            GC.SuppressFinalize(this);
         }
         #endregion
     }

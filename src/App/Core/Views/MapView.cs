@@ -424,10 +424,11 @@ namespace WhereToFly.App.Core.Views
             }
         }
 
+#pragma warning disable S1144 // Unused private types or members should be removed
         /// <summary>
         /// Parameter for AddFindResult JavaScript event
         /// </summary>
-        private class AddFindResultParameter
+        internal class AddFindResultParameter
         {
             /// <summary>
             /// Name of find result to add
@@ -448,7 +449,7 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Parameter for OnLongTap JavaScript event
         /// </summary>
-        private class LongTapParameter
+        internal class LongTapParameter
         {
             /// <summary>
             /// Latitude of map point where long tap occured
@@ -460,5 +461,6 @@ namespace WhereToFly.App.Core.Views
             /// </summary>
             public double Longitude { get; set; }
         }
+#pragma warning restore S1144 // Unused private types or members should be removed
     }
 }
