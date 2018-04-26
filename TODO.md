@@ -13,20 +13,11 @@
 
 ## New Features
 
-### Version 1.2
-
-- [ ] Add new location based on find results
-
 ### Version 1.3
 
 - [ ] Show polyline with path from last 1h
 - [ ] Use clustering to limit number of pins to show
-- [ ] Add location based on map position
 - [ ] Follow location when "my location" icon is tapped, until user interacts with view
-
-#  Version 1.4
-
-- [ ] Thermal overlay map from kk7
 
 ### Version 2.0
 
