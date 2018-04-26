@@ -1,4 +1,8 @@
-﻿namespace WhereToFly.App.Logic.Model
+﻿// Note: We can't implement Equals() on Android, since deserializing List<Location> using
+// Newtonsoft.Json crashes on Android.
+#pragma warning disable S1206 // "Equals(Object)" and "GetHashCode()" should be overridden in pairs
+
+namespace WhereToFly.App.Logic.Model
 {
     /// <summary>
     /// A location that can be used for tour planning, e.g. as intermediate stops.

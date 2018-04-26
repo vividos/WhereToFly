@@ -47,7 +47,7 @@ namespace WhereToFly.App.UnitTest.Views
         /// Tests default ctor of EditLocationDetailsPage
         /// </summary>
         [TestMethod]
-        public async Task TestDefaultCtor()
+        public void TestDefaultCtor()
         {
             // set up
             var location = GetDefaultLocation();
