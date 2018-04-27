@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using WhereToFly.App.Core.Services;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Logic.Model;
 using Xamarin.Forms;
@@ -139,10 +138,6 @@ namespace WhereToFly.App.Core.ViewModels
             this.location = location;
             this.allLocationTypes = new List<LocationType>();
 
-            this.LocationTypeList =
-                (from locationType in this.allLocationTypes
-                 select locationType.ToString()).ToArray();
-
             this.SetupBindings();
         }
 
@@ -158,6 +153,11 @@ namespace WhereToFly.App.Core.ViewModels
                     this.allLocationTypes.Add(locationType);
                 }
             }
+
+            this.LocationTypeList =
+                (from locationType in this.allLocationTypes
+                 select locationType.ToString()).ToArray();
+
         }
 
         /// <summary>
