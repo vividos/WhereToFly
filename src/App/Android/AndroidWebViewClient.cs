@@ -127,11 +127,12 @@ namespace WhereToFly.App.Android
             Debug.WriteLine(
                 "ShouldInterceptRequest: method={0} url={1}",
                 request.Method,
-                request.Url.ToString());
+                request.Url?.ToString());
 
-            string host = request.Url.Host.ToLowerInvariant();
+            string host = request?.Url?.Host?.ToLowerInvariant();
 
-            if (this.CorsWebsiteHosts.Any(x => host.Contains(x)))
+            if (host != null &&
+                this.CorsWebsiteHosts.Any(x => host.Contains(x)))
             {
                 return this.BuildCorsResponse(request.Url.ToString());
             }
