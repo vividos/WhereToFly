@@ -5,11 +5,11 @@
     <ContentPage.Content>
 
         <!-- stack layout with location details grid and details multiline edit control -->
-        <StackLayout Orientation="Vertical">
+        <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand">
 
             <!-- Grid with all location details -->
             <Grid WidthRequest="350" MinimumWidthRequest="350"
-                  VerticalOptions="FillAndExpand" ColumnSpacing="16" RowSpacing="16" Padding="8">
+                  ColumnSpacing="16" RowSpacing="16" Padding="8">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
