@@ -505,6 +505,8 @@ MapView.prototype.zoomToLocation = function (options) {
 
     this.zoomEntity.show = true;
 
+    console.log("zooming to: start flying");
+
     this.viewer.flyTo(
         this.zoomEntity,
         {
@@ -514,6 +516,7 @@ MapView.prototype.zoomToLocation = function (options) {
                 5000.0)
         }).then(function () {
             this.zoomEntity.show = false;
+            console.log("zooming to: flying finished");
         });
 };
 
