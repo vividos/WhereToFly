@@ -749,7 +749,7 @@ namespace WhereToFly.App.Core.Views
 
             var newLocationList = await dataService.GetLocationListAsync(CancellationToken.None);
 
-            if (!Enumerable.SequenceEqual(this.locationList, newLocationList))
+            if (!Enumerable.SequenceEqual(this.locationList, newLocationList, new LocationEqualityComparer()))
             {
                 this.locationList = newLocationList;
 
