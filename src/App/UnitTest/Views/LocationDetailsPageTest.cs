@@ -2,7 +2,7 @@
 using System;
 using WhereToFly.App.Core;
 using WhereToFly.App.Core.Views;
-using WhereToFly.App.Logic.Model;
+using WhereToFly.App.Model;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest.Views

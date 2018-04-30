@@ -1,4 +1,4 @@
-﻿namespace WhereToFly.App.Logic.Model
+﻿namespace WhereToFly.App.Model
 {
     /// <summary>
     /// Specifies how the map is shaded in terms of clock hour

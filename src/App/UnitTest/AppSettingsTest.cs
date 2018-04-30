@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WhereToFly.App.Logic.Model;
+using WhereToFly.App.Model;
 
 namespace WhereToFly.App.UnitTest
 {

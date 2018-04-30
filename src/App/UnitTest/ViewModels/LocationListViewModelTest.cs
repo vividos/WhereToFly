@@ -4,7 +4,7 @@ using System.Threading;
 using WhereToFly.App.Core;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.ViewModels;
-using WhereToFly.App.Logic.Model;
+using WhereToFly.App.Model;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest.ViewModels
@@ -51,7 +51,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
             // check
             Assert.IsFalse(viewModel.LocationList.Any(), "location list is initially empty");
             Assert.AreEqual(0, viewModel.FilterText.Length, "filter text is initially empty");
-            Assert.IsFalse(viewModel.AreAllLocationsFilteredOut, "as there are no locations, no location was filtered out");            
+            Assert.IsFalse(viewModel.AreAllLocationsFilteredOut, "as there are no locations, no location was filtered out");
         }
     }
 }

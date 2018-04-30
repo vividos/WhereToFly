@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using WhereToFly.App.Logic.Model;
+using WhereToFly.App.Model;
 
 namespace WhereToFly.App.Geo.DataFormats
 {

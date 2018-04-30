@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using WhereToFly.App.Logic;
-using WhereToFly.App.Logic.Model;
+using WhereToFly.App.Model;
 
 namespace WhereToFly.App.Geo.DataFormats
 {

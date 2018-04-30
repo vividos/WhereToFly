@@ -11,7 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Logic;
-using WhereToFly.App.Logic.Model;
+using WhereToFly.App.Model;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.Views

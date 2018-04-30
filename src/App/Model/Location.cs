@@ -2,7 +2,7 @@
 // Newtonsoft.Json crashes on Android.
 #pragma warning disable S1206 // "Equals(Object)" and "GetHashCode()" should be overridden in pairs
 
-namespace WhereToFly.App.Logic.Model
+namespace WhereToFly.App.Model
 {
     /// <summary>
     /// A location that can be used for tour planning, e.g. as intermediate stops.

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Logic;
-using WhereToFly.App.Logic.Model;
+using WhereToFly.App.Model;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.ViewModels
@@ -157,7 +157,6 @@ namespace WhereToFly.App.Core.ViewModels
             this.LocationTypeList =
                 (from locationType in this.allLocationTypes
                  select locationType.ToString()).ToArray();
-
         }
 
         /// <summary>

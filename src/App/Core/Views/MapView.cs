@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using WhereToFly.App.Logic;
-using WhereToFly.App.Logic.Model;
+using WhereToFly.App.Model;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.Views

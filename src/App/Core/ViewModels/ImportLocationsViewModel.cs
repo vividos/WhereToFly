@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Geo.DataFormats;
-using WhereToFly.App.Logic.Model;
+using WhereToFly.App.Model;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.ViewModels

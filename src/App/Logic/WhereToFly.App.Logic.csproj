@@ -28,5 +28,9 @@
     <PackageReference Include="Plugin.Share" Version="7.1.1" />
     <PackageReference Include="SonarAnalyzer.CSharp" Version="6.8.2.4717" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Model\WhereToFly.App.Model.csproj" />
+  </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿namespace WhereToFly.App.Logic.Model
+﻿namespace WhereToFly.App.Model
 {
     /// <summary>
     /// Display format for longitude/latitude coordinates

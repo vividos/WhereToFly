@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using WhereToFly.App.Core.ViewModels;
-using WhereToFly.App.Logic.Model;
+using WhereToFly.App.Model;
 
 namespace WhereToFly.App.UnitTest.ViewModels
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using WhereToFly.App.Logic.Model;
+using WhereToFly.App.Model;
 
 namespace WhereToFly.App.Core
 {

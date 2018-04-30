@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using WhereToFly.App.Logic.Model;
+using WhereToFly.App.Model;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(WhereToFly.App.Core.SvgImageCache))]

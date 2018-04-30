@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using WhereToFly.App.Logic;
-using WhereToFly.App.Logic.Model;
+using WhereToFly.App.Model;
 
 namespace WhereToFly.App.Geo.DataFormats
 {
@@ -20,7 +20,7 @@ namespace WhereToFly.App.Geo.DataFormats
         /// <param name="stream">stream of file to load</param>
         /// <param name="isKml">indicates if the stream is a .kml stream or a .kmz stream</param>
         /// <returns>list of locations found in the file</returns>
-        public static List<Logic.Model.Location> LoadLocationList(Stream stream, bool isKml)
+        public static List<Model.Location> LoadLocationList(Stream stream, bool isKml)
         {
             if (isKml)
             {
@@ -39,16 +39,16 @@ namespace WhereToFly.App.Geo.DataFormats
         /// </summary>
         /// <param name="kml">kml file</param>
         /// <returns>list of locations found in the file</returns>
-        private static List<Logic.Model.Location> LoadFromKml(KmlFile kml)
+        private static List<Model.Location> LoadFromKml(KmlFile kml)
         {
-            var locationList = new List<Logic.Model.Location>();
+            var locationList = new List<Model.Location>();
 
             foreach (var element in kml.Root.Flatten())
             {
                 if (element is Placemark placemark &&
                     placemark.Geometry is Point point)
                 {
-                    locationList.Add(new Logic.Model.Location
+                    locationList.Add(new Model.Location
                     {
                         Id = placemark.Id ?? Guid.NewGuid().ToString("B"),
                         Name = placemark.Name ?? "unknown",

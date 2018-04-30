@@ -3,7 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using WhereToFly.App.Geo.Spatial;
 using WhereToFly.App.Logic;
-using WhereToFly.App.Logic.Model;
+using WhereToFly.App.Model;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.ViewModels

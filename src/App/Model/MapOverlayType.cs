@@ -1,4 +1,4 @@
-﻿namespace WhereToFly.App.Logic.Model
+﻿namespace WhereToFly.App.Model
 {
     /// <summary>
     /// Type of map overlay to display over the map imagery

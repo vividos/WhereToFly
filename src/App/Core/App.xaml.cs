@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.Views;
 using WhereToFly.App.Geo.DataFormats;
-using WhereToFly.App.Logic.Model;
+using WhereToFly.App.Model;
 using Xamarin.Forms;
 
 // make Core internals visible to unit tests
