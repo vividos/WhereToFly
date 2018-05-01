@@ -448,8 +448,10 @@ MapView.prototype.setShadingMode = function (shadingMode) {
  */
 MapView.prototype.updateMyLocation = function (options) {
 
-    if (this.myLocationMarker === null)
+    if (this.myLocationMarker === null) {
+        console.log("warning: myLocationMarker not initialized yet");
         return;
+    }
 
     console.log("updating my location: lat=" + options.latitude + ", long=" + options.longitude);
 
@@ -489,8 +491,10 @@ MapView.prototype.updateMyLocation = function (options) {
  */
 MapView.prototype.zoomToLocation = function (options) {
 
-    if (this.zoomEntity === undefined)
+    if (this.zoomEntity === undefined) {
+        console.log("warning: zoomEntity not initialized yet");
         return;
+    }
 
     console.log("zooming to: latitude=" + options.latitude + ", longitude=" + options.longitude + ", altitude=" + options.altitude);
 
@@ -528,8 +532,16 @@ MapView.prototype.clearLocationList = function () {
     console.log("clearing location list");
 
     this.viewer.entities.removeAll();
+
+    // re-add the special purpose entities
     if (this.myLocationMarker !== null)
         this.viewer.entities.add(this.myLocationMarker);
+
+    if (this.findResultMarker !== null)
+        this.viewer.entities.add(this.findResultMarker);
+
+    if (this.zoomEntity !== null)
+        this.viewer.entities.add(this.zoomEntity);
 };
 
 /**
@@ -653,8 +665,10 @@ MapView.prototype.pinColorFromLocationType = function (locationType) {
  */
 MapView.prototype.showFindResult = function (options) {
 
-    if (this.findResultMarker === undefined)
+    if (this.findResultMarker === undefined) {
+        console.log("warning: findResultMarker not initialized yet");
         return;
+    }
 
     console.log("showing find result for \"" + options.name +
         "\", at latitude " + options.latitude + ", longitude " + options.longitude);
