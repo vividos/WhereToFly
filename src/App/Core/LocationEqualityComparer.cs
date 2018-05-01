@@ -16,9 +16,19 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="x">first location to compare</param>
         /// <param name="y">second location to compare to first</param>
-        /// <returns></returns>
+        /// <returns>true when locations are equal, false when not</returns>
         public bool Equals(Location x, Location y)
         {
+            if (x == null && y == null)
+            {
+                return true;
+            }
+
+            if (x == null || y == null)
+            {
+                return false;
+            }
+
             return x.Id == y.Id &&
                 x.Name == y.Name &&
                 x.Type == y.Type &&
