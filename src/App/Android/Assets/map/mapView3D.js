@@ -174,7 +174,8 @@ MapView.prototype.onScreenTouchUp = function (movement) {
     // when tap was longer than 1s and moved less than 10 pixels
     if (deltaTime > 1000 && deltaSquared < 10 * 10) {
 
-        var cartesian = this.viewer.camera.pickEllipsoid(movement.position, this.viewer.scene.globe.ellipsoid);
+        var ray = this.viewer.camera.getPickRay(movement.position);
+        var cartesian = this.viewer.scene.globe.pick(ray, this.viewer.scene);
         if (cartesian) {
             var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
 
