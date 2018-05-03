@@ -809,6 +809,11 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task UpdateLastKnownPositionAsync(Position position)
         {
+            if (this.appSettings == null)
+            {
+                return; // appSettings not loaded yet
+            }
+
             var point = new MapPoint(position.Latitude, position.Longitude);
 
             if (point.Valid)
