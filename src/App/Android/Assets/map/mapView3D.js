@@ -1,7 +1,13 @@
 /**
  * Creates a new instance of MapView
  * @constructor
- * @param {object} options Options to use for initializing map view
+ * @param {object} [options] Options to use for initializing map view
+ * @param {Number} [options.id] DOM ID of the div element to create map view in
+ * @param {object} [options.initialCenterPoint] initial center point of map view
+ * @param {double} [options.initialCenterPoint.latitude] latitude of center point
+ * @param {double} [options.initialCenterPoint.longitude] longitude of center point
+ * @param {Number} [options.initialZoomLevel] initial zoom level
+ * @param {Function} [options.callback] callback function to use for calling back to C# code
  */
 function MapView(options) {
 
