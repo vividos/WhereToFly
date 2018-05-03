@@ -172,8 +172,8 @@ MapView.prototype.onScreenTouchUp = function (movement) {
 
     var deltaTime = new Date().getTime() - this.currentLeftDownTime;
 
-    // when tap was longer than 1s and moved less than 10 pixels
-    if (deltaTime > 1000 && deltaSquared < 10 * 10) {
+    // when tap was longer than 600ms and moved less than 10 pixels
+    if (deltaTime > 600 && deltaSquared < 10 * 10) {
 
         var ray = this.viewer.camera.getPickRay(movement.position);
         var cartesian = this.viewer.scene.globe.pick(ray, this.viewer.scene);
