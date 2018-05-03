@@ -57,8 +57,7 @@ function MapView(options) {
 
     console.log("#3 clock");
     var now = Cesium.JulianDate.now();
-    var end = new Cesium.JulianDate();
-    Cesium.JulianDate.addDays(now, 1, end);
+    var end = Cesium.JulianDate.addDays(now, 1, new Cesium.JulianDate());
 
     var clock = new Cesium.Clock({
         startTime: now,
@@ -405,30 +404,32 @@ MapView.prototype.setShadingMode = function (shadingMode) {
             this.viewer.clockViewModel.currentTime = fixedTime.clone();
             this.viewer.clockViewModel.endTime = fixedTime.clone();
             this.viewer.clockViewModel.clockStep = 0;
+            this.viewer.clockViewModel.shouldAnimate = false;
             break;
 
         case 'CurrentTime':
-            var end = new Cesium.JulianDate();
-            Cesium.JulianDate.addDays(now, 1, end);
+            var end = Cesium.JulianDate.addDays(now, 1, new Cesium.JulianDate());
+
             this.viewer.clockViewModel.startTime = now;
             this.viewer.clockViewModel.currentTime = now.clone();
             this.viewer.clockViewModel.endTime = end;
             this.viewer.clockViewModel.clockStep = Cesium.ClockStep.SYSTEM_CLOCK;
+            this.viewer.clockViewModel.shouldAnimate = true;
             break;
 
         case 'Ahead2Hours':
-            var ahead = new Cesium.JulianDate();
-            Cesium.JulianDate.addHours(now, 2, ahead);
-            var end2 = new Cesium.JulianDate();
-            Cesium.JulianDate.addDays(ahead, 1, end2);
+            var ahead = Cesium.JulianDate.addHours(now, 2, new Cesium.JulianDate());
+            var end2 = Cesium.JulianDate.addDays(ahead, 1, new Cesium.JulianDate());
 
             this.viewer.clockViewModel.startTime = ahead;
             this.viewer.clockViewModel.currentTime = ahead.clone();
             this.viewer.clockViewModel.endTime = end2;
             this.viewer.clockViewModel.clockStep = Cesium.ClockStep.SYSTEM_CLOCK;
+            this.viewer.clockViewModel.shouldAnimate = true;
             break;
 
         case 'None':
+            this.viewer.clockViewModel.shouldAnimate = false;
             break;
 
         default:
