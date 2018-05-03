@@ -49,7 +49,10 @@ namespace WhereToFly.App.Core.Views
         /// <returns>whatever the base class returns</returns>
         protected override bool OnBackgroundClicked()
         {
-            this.tcs.SetResult(null);
+            if (!this.tcs.Task.IsCompleted)
+            {
+                this.tcs.SetResult(null);
+            }
 
             return base.OnBackgroundClicked();
         }
@@ -60,7 +63,10 @@ namespace WhereToFly.App.Core.Views
         /// <returns>whatever the base class returns</returns>
         protected override bool OnBackButtonPressed()
         {
-            this.tcs.SetResult(null);
+            if (!this.tcs.Task.IsCompleted)
+            {
+                this.tcs.SetResult(null);
+            }
 
             return base.OnBackButtonPressed();
         }
@@ -72,7 +78,11 @@ namespace WhereToFly.App.Core.Views
         /// <param name="args">event args</param>
         private async void OnClickedFindButton(object sender, EventArgs args)
         {
-            this.tcs.SetResult(this.locationEntry.Text);
+            if (!this.tcs.Task.IsCompleted)
+            {
+                this.tcs.SetResult(this.locationEntry.Text);
+            }
+
             await this.Navigation.PopPopupAsync();
         }
 
