@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
-             xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"             
+             xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
              xmlns:local="clr-namespace:WhereToFly.App.Core"
              x:Class="WhereToFly.App.Core.Views.LocationListPage">
     <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
@@ -20,7 +20,8 @@
         <StackLayout Padding="8" BackgroundColor="Yellow"
                      HorizontalOptions="FillAndExpand"
                      IsVisible="{Binding Path=AreAllLocationsFilteredOut, Mode=OneWay}">
-            <Label Text="All locations filtered out" AutomationId="AllFilteredOutLabel" />
+            <Label Text="All locations filtered out" FontSize="Medium"
+                   AutomationId="AllFilteredOutLabel" />
         </StackLayout>
 
         <!-- Location list -->
