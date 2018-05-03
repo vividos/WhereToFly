@@ -84,7 +84,8 @@ namespace WhereToFly.App.Core.Views
         /// Delegate of function to call when long tap occured on map
         /// </summary>
         /// <param name="point">map point of long tap</param>
-        public delegate void OnLongTapCallback(MapPoint point);
+        /// <param name="altitude">altitude of long tap; may be 0</param>
+        public delegate void OnLongTapCallback(MapPoint point, int altitude);
 
         /// <summary>
         /// Event that is signaled when long tap occured on map
@@ -415,7 +416,7 @@ namespace WhereToFly.App.Core.Views
                 case "onLongTap":
                     var longTapParameters = JsonConvert.DeserializeObject<LongTapParameter>(jsonParameters);
                     var longTapPoint = new MapPoint(longTapParameters.Latitude, longTapParameters.Longitude);
-                    this.LongTap?.Invoke(longTapPoint);
+                    this.LongTap?.Invoke(longTapPoint, (int)longTapParameters.Altitude);
                     break;
 
                 default:
@@ -460,6 +461,11 @@ namespace WhereToFly.App.Core.Views
             /// Longitude of map point where long tap occured
             /// </summary>
             public double Longitude { get; set; }
+
+            /// <summary>
+            /// Altitude of map point where long tap occured
+            /// </summary>
+            public double Altitude { get; set; }
         }
 #pragma warning restore S1144 // Unused private types or members should be removed
     }

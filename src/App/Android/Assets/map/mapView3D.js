@@ -182,7 +182,8 @@ MapView.prototype.onScreenTouchUp = function (movement) {
 
             this.onLongTap({
                 latitude: Cesium.Math.toDegrees(cartographic.latitude),
-                longitude: Cesium.Math.toDegrees(cartographic.longitude)
+                longitude: Cesium.Math.toDegrees(cartographic.longitude),
+                altitude: cartographic.height
             });
         }
     }
@@ -758,9 +759,12 @@ MapView.prototype.onAddFindResult = function (options) {
  * @param {Object} [options] An object with the following properties:
  * @param {Number} [options.latitude] Latitude of the long tap
  * @param {Number} [options.longitude] Longitude of the long tap
+ * @param {Number} [options.altitude] Altitude of the long tap
  */
 MapView.prototype.onLongTap = function (options) {
-    console.log("long-tap occured: lat=" + options.latitude + ", long=" + options.longitude);
+    console.log("long-tap occured: lat=" + options.latitude +
+        ", long=" + options.longitude +
+        ", alt=" + options.altitude);
 
     if (this.options.callback !== undefined)
         this.options.callback('onLongTap', options);
