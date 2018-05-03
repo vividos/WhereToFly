@@ -35,7 +35,7 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Current map shading mode
         /// </summary>
-        private MapShadingMode mapShadingMode = MapShadingMode.Fixed10Am;
+        private MapShadingMode mapShadingMode = MapShadingMode.CurrentTime;
 
         /// <summary>
         /// Indicates if map control is already initialized
