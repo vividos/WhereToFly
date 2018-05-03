@@ -38,6 +38,12 @@ namespace WhereToFly.App.Core.Views
         private bool startedSettingsPage;
 
         /// <summary>
+        /// Indicates if locations list should be updated when the page re-appears, regardless if
+        /// the location list has changed.
+        /// </summary>
+        private bool updateLocationsListOnAppearing;
+
+        /// <summary>
         /// Location to zoom to when this map page is appearing next time
         /// </summary>
         private MapPoint zoomToLocationOnAppearing;
@@ -82,6 +88,7 @@ namespace WhereToFly.App.Core.Views
             this.pageIsVisible = false;
             this.zoomToMyPosition = false;
             this.startedSettingsPage = false;
+            this.updateLocationsListOnAppearing = false;
             this.startedLocationListPage = false;
 
             this.geolocator = Plugin.Geolocator.CrossGeolocator.Current;
@@ -588,7 +595,8 @@ namespace WhereToFly.App.Core.Views
             var dataService = DependencyService.Get<IDataService>();
             await dataService.StoreLocationListAsync(this.locationList);
 
-            this.startedLocationListPage = true;
+            this.updateLocationsListOnAppearing = true;
+
             await NavigationService.Instance.NavigateAsync(
                 Constants.PageKeyEditLocationDetailsPage,
                 animated: true,
@@ -657,7 +665,8 @@ namespace WhereToFly.App.Core.Views
             var dataService = DependencyService.Get<IDataService>();
             await dataService.StoreLocationListAsync(this.locationList);
 
-            this.startedLocationListPage = true;
+            this.updateLocationsListOnAppearing = true;
+
             await NavigationService.Instance.NavigateAsync(
                 Constants.PageKeyEditLocationDetailsPage,
                 animated: true,
@@ -724,7 +733,7 @@ namespace WhereToFly.App.Core.Views
                 App.ShowToast("Settings were saved.");
             }
 
-            if (this.startedLocationListPage)
+            if (this.startedLocationListPage || this.updateLocationsListOnAppearing)
             {
                 this.startedLocationListPage = false;
 
@@ -749,12 +758,16 @@ namespace WhereToFly.App.Core.Views
 
             var newLocationList = await dataService.GetLocationListAsync(CancellationToken.None);
 
-            if (!Enumerable.SequenceEqual(this.locationList, newLocationList, new LocationEqualityComparer()))
+            if (this.updateLocationsListOnAppearing ||
+                this.locationList.Count != newLocationList.Count ||
+                !Enumerable.SequenceEqual(this.locationList, newLocationList, new LocationEqualityComparer()))
             {
                 this.locationList = newLocationList;
 
                 this.mapView.ClearLocationList();
                 this.mapView.AddLocationList(this.locationList);
+
+                this.updateLocationsListOnAppearing = false;
             }
         }
 
