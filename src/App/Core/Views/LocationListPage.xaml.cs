@@ -46,7 +46,7 @@ namespace WhereToFly.App.Core.Views
 
             this.SetupToolbar();
 
-            Task.Factory.StartNew(this.InitPositionAsync);
+            Task.Run(this.InitPositionAsync);
         }
 
         /// <summary>
@@ -154,10 +154,10 @@ namespace WhereToFly.App.Core.Views
             {
                 this.startedImportPage = false;
 
-                Task.Factory.StartNew(this.viewModel.ReloadLocationListAsync);
+                Task.Run(this.viewModel.ReloadLocationListAsync);
             }
 
-            Task.Factory.StartNew(async () =>
+            Task.Run(async () =>
             {
                 var position = await this.geolocator.GetPositionAsync(TimeSpan.FromSeconds(1));
                 if (position != null)

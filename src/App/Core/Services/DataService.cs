@@ -69,7 +69,7 @@ namespace WhereToFly.App.Core.Services
             var platform = DependencyService.Get<IPlatform>();
             string filename = Path.Combine(platform.AppDataFolder, AppSettingsFilename);
 
-            await Task.Factory.StartNew(() => File.WriteAllText(filename, json, Encoding.UTF8));
+            await Task.Run(() => File.WriteAllText(filename, json, Encoding.UTF8));
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace WhereToFly.App.Core.Services
             var platform = DependencyService.Get<IPlatform>();
             string filename = Path.Combine(platform.AppDataFolder, LocationListFilename);
 
-            await Task.Factory.StartNew(() => File.WriteAllText(filename, json, Encoding.UTF8));
+            await Task.Run(() => File.WriteAllText(filename, json, Encoding.UTF8));
         }
     }
 }

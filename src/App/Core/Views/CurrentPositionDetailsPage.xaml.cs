@@ -42,7 +42,7 @@ namespace WhereToFly.App.Core.Views
 
             this.SetupToolbar();
 
-            Task.Factory.StartNew(this.InitPositionAsync);
+            Task.Run(this.InitPositionAsync);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace WhereToFly.App.Core.Views
         {
             base.OnAppearing();
 
-            Task.Factory.StartNew(async () =>
+            Task.Run(async () =>
             {
                 await this.geolocator.StartListeningAsync(
                     Constants.GeoLocationMinimumTimeForUpdate,
@@ -142,7 +142,7 @@ namespace WhereToFly.App.Core.Views
 
             this.geolocator.PositionChanged -= this.viewModel.OnPositionChanged;
 
-            Task.Factory.StartNew(async () =>
+            Task.Run(async () =>
             {
                 await this.geolocator.StopListeningAsync();
             });

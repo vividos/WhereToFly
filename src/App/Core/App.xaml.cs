@@ -40,7 +40,7 @@ namespace WhereToFly.App.Core
             this.InitializeComponent();
             this.SetupDepencencyService();
             this.SetupMainPage();
-            Task.Factory.StartNew(async () => await this.LoadAppSettingsAsync());
+            Task.Run(async () => await this.LoadAppSettingsAsync());
         }
 
         /// <summary>

@@ -104,7 +104,7 @@ namespace WhereToFly.App.Core.ViewModels
                 if (this.appSettings.MapImageryType != value.Value)
                 {
                     this.appSettings.MapImageryType = value.Value;
-                    Task.Factory.StartNew(async () => await this.SaveSettingsAsync());
+                    Task.Run(async () => await this.SaveSettingsAsync());
                 }
             }
         }
@@ -132,7 +132,7 @@ namespace WhereToFly.App.Core.ViewModels
                 if (this.appSettings.MapOverlayType != value.Value)
                 {
                     this.appSettings.MapOverlayType = value.Value;
-                    Task.Factory.StartNew(async () => await this.SaveSettingsAsync());
+                    Task.Run(async () => await this.SaveSettingsAsync());
                 }
             }
         }
@@ -160,7 +160,7 @@ namespace WhereToFly.App.Core.ViewModels
                 if (this.appSettings.CoordinateDisplayFormat != value.Value)
                 {
                     this.appSettings.CoordinateDisplayFormat = value.Value;
-                    Task.Factory.StartNew(async () => await this.SaveSettingsAsync());
+                    Task.Run(async () => await this.SaveSettingsAsync());
                 }
             }
         }
@@ -188,7 +188,7 @@ namespace WhereToFly.App.Core.ViewModels
                 if (this.appSettings.ShadingMode != value.Value)
                 {
                     this.appSettings.ShadingMode = value.Value;
-                    Task.Factory.StartNew(async () => await this.SaveSettingsAsync());
+                    Task.Run(async () => await this.SaveSettingsAsync());
                 }
             }
         }

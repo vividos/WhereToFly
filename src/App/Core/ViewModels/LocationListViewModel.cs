@@ -107,7 +107,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         private void SetupBindings()
         {
-            Task.Factory.StartNew(this.LoadDataAsync);
+            Task.Run(this.LoadDataAsync);
 
             this.ItemTappedCommand =
                 new Command<Location>(async (location) =>

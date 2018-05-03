@@ -46,7 +46,7 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         protected override void OnDisappearing()
         {
-            Task.Factory.StartNew(async () => await this.viewModel.SaveChangesAsync());
+            Task.Run(async () => await this.viewModel.SaveChangesAsync());
 
             base.OnDisappearing();
         }

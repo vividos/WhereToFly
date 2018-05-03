@@ -159,7 +159,7 @@ namespace WhereToFly.App.Core.ViewModels
             this.OnPropertyChanged(nameof(this.IsHeadingAvail));
             this.OnPropertyChanged(nameof(this.HeadingInDegrees));
 
-            Task.Factory.StartNew(async () => await this.UpdateLastKnownPositionAsync(this.position));
+            Task.Run(async () => await this.UpdateLastKnownPositionAsync(this.position));
         }
 
         /// <summary>

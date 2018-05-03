@@ -86,7 +86,7 @@ namespace WhereToFly.App.Core.Views
 
             this.geolocator = Plugin.Geolocator.CrossGeolocator.Current;
 
-            Task.Factory.StartNew(this.InitLayoutAsync);
+            Task.Run(this.InitLayoutAsync);
 
             MessagingCenter.Subscribe<App, MapPoint>(this, Constants.MessageZoomToLocation, this.OnMessageZoomToLocation);
         }
@@ -689,7 +689,7 @@ namespace WhereToFly.App.Core.Views
         {
             base.OnAppearing();
 
-            Task.Factory.StartNew(async () =>
+            Task.Run(async () =>
             {
                 await this.geolocator.StartListeningAsync(
                     Constants.GeoLocationMinimumTimeForUpdate,
@@ -769,7 +769,7 @@ namespace WhereToFly.App.Core.Views
 
             this.geolocator.PositionChanged -= this.OnPositionChanged;
 
-            Task.Factory.StartNew(async () =>
+            Task.Run(async () =>
             {
                 await this.geolocator.StopListeningAsync();
             });
@@ -799,7 +799,7 @@ namespace WhereToFly.App.Core.Views
                     zoomToPosition);
             }
 
-            Task.Factory.StartNew(async () => await this.UpdateLastKnownPositionAsync(position));
+            Task.Run(async () => await this.UpdateLastKnownPositionAsync(position));
         }
 
         /// <summary>
