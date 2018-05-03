@@ -30,7 +30,7 @@ namespace WhereToFly.App.Core.ViewModels
         private string filterText;
 
         /// <summary>
-        /// Timer that is triggered after filter text was updated and 
+        /// Timer that is triggered after filter text was updated
         /// </summary>
         private System.Timers.Timer filterTextUpdateTimer = new System.Timers.Timer(1000.0);
 
