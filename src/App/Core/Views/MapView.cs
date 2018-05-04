@@ -48,6 +48,17 @@ namespace WhereToFly.App.Core.Views
         private const int MaxLocationListCount = 100;
 
         /// <summary>
+        /// Delegate of function to call when location details should be shown
+        /// </summary>
+        /// <param name="locationId">location id of location to navigate to</param>
+        public delegate void OnShowLocationDetailsCallback(string locationId);
+
+        /// <summary>
+        /// Event that is signaled when location details should be shown
+        /// </summary>
+        public event OnShowLocationDetailsCallback ShowLocationDetails;
+
+        /// <summary>
         /// Delegate of function to call when navigation to location should be started
         /// </summary>
         /// <param name="locationId">location id of location to navigate to</param>
@@ -397,6 +408,11 @@ namespace WhereToFly.App.Core.Views
         {
             switch (functionName)
             {
+                case "onShowLocationDetails":
+                    this.ShowLocationDetails?.Invoke(jsonParameters.Trim('\"'));
+
+                    break;
+
                 case "onNavigateToLocation":
                     this.NavigateToLocation?.Invoke(jsonParameters.Trim('\"'));
 

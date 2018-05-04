@@ -431,6 +431,7 @@ namespace WhereToFly.App.Core.Views
 
             this.mapView = new MapView(webView);
 
+            this.mapView.ShowLocationDetails += async (locationId) => await this.OnMapView_ShowLocationDetails(locationId);
             this.mapView.NavigateToLocation += this.OnMapView_NavigateToLocation;
             this.mapView.ShareMyLocation += async () => await this.OnMapView_ShareMyLocation();
             this.mapView.AddFindResult += async (name, point) => await this.OnMapView_AddFindResult(name, point);
@@ -493,6 +494,28 @@ namespace WhereToFly.App.Core.Views
             this.mapView.CoordinateDisplayFormat = this.appSettings.CoordinateDisplayFormat;
 
             this.mapView.AddLocationList(this.locationList);
+        }
+
+        /// <summary>
+        /// Called when user clicked on the "Show details" link in the pin description on the
+        /// map. Starts the location details page.
+        /// </summary>
+        /// <param name="locationId">location id of location to show details for</param>
+        /// <returns>task to wait on</returns>
+        private async Task OnMapView_ShowLocationDetails(string locationId)
+        {
+            Location location = this.FindLocationById(locationId);
+
+            if (location == null)
+            {
+                Debug.WriteLine("couldn't find location with id=" + locationId);
+                return;
+            }
+
+            await NavigationService.Instance.NavigateAsync(
+                Constants.PageKeyLocationDetailsPage,
+                animated: true,
+                parameter: location);
         }
 
         /// <summary>

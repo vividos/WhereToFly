@@ -572,7 +572,10 @@ MapView.prototype.addLocationList = function (locationList) {
             (location.elevation !== 0 ? ' ' + location.elevation + 'm' : '') +
             '</h2>';
 
-        text += '<img height="32em" width="32em" src="images/directions.svg" style="vertical-align:middle" />' +
+        text += '<p><img height="32em" width="32em" src="images/information-outline.svg" style="vertical-align:middle" /> ' +
+            '<a href="javascript:parent.map.onShowLocationDetails(\'' + location.id + '\');">Show details</a> | ';
+
+        text += '<img height="32em" width="32em" src="images/directions.svg" style="vertical-align:middle" /> ' +
             '<a href="javascript:parent.map.onNavigateToLocation(\'' + location.id + '\');">Navigate here</a></p>';
 
         text += "<p>" + location.description + "</p>";
@@ -716,6 +719,18 @@ MapView.prototype.addTracksList = function (listOfTracks) {
     console.log("adding list of tracks, with " + listOfTracks.length + " entries");
 
     // TODO implement
+};
+
+/**
+ * Called by the marker pin link, in order to show details of the location.
+ * @param {string} locationId Location ID of location to show
+ */
+MapView.prototype.onShowLocationDetails = function (locationId) {
+
+    console.log("showing details to location: id=" + locationId);
+
+    if (this.options.callback !== undefined)
+        this.options.callback('onShowLocationDetails', locationId);
 };
 
 /**
