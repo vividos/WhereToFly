@@ -161,6 +161,32 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
+        /// Checks if reload is needed, e.g. when location list has changed.
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        public async Task CheckReloadNeeded()
+        {
+            try
+            {
+                IDataService dataService = DependencyService.Get<IDataService>();
+
+                var newLocationList = await dataService.GetLocationListAsync(CancellationToken.None);
+
+                if (this.locationList.Count != newLocationList.Count ||
+                    !Enumerable.SequenceEqual(this.locationList, newLocationList, new LocationEqualityComparer()))
+                {
+                    this.locationList = newLocationList;
+
+                    this.UpdateLocationList();
+                }
+            }
+            catch (Exception ex)
+            {
+                App.LogError(ex);
+            }
+        }
+
+        /// <summary>
         /// Checks if given location (represented by a view model) is a current filter match,
         /// based on the filter text.
         /// </summary>

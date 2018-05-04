@@ -29,7 +29,7 @@ namespace WhereToFly.App.Core.Views
         /// Indicates if import page was started; used to update location list when returning to
         /// this page.
         /// </summary>
-        private bool startedImportPage;
+        private bool reloadLocationListOnAppearing;
 
         /// <summary>
         /// Creates a new location list page
@@ -81,7 +81,7 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task OnClicked_ToolbarButtonImportLocations()
         {
-            this.startedImportPage = true;
+            this.reloadLocationListOnAppearing = true;
             await NavigationService.Instance.NavigateAsync(Constants.PageKeyImportLocationsPage, animated: true);
         }
 
@@ -150,11 +150,15 @@ namespace WhereToFly.App.Core.Views
         {
             base.OnAppearing();
 
-            if (this.startedImportPage)
+            if (this.reloadLocationListOnAppearing)
             {
-                this.startedImportPage = false;
+                this.reloadLocationListOnAppearing = false;
 
                 Task.Run(this.viewModel.ReloadLocationListAsync);
+            }
+            else
+            {
+                Task.Run(this.viewModel.CheckReloadNeeded);
             }
 
             Task.Run(async () =>
