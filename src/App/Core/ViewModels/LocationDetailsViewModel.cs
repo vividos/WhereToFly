@@ -227,7 +227,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             var locationList = await dataService.GetLocationListAsync(CancellationToken.None);
 
-            locationList.Remove(this.location);
+            locationList.RemoveAll(x => x.Id == this.location.Id);
 
             await dataService.StoreLocationListAsync(locationList);
 
