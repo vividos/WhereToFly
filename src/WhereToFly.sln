@@ -36,7 +36,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.WebApi.UnitTest"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.WebApi.Logic", "WebApi\Logic\WhereToFly.WebApi.Logic.csproj", "{BF7BBAC3-21D1-4765-96D9-94E39134303B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhereToFly.App.Model", "App\Model\WhereToFly.App.Model.csproj", "{6A01E52C-1CF1-48E2-AC01-045A7B82E4B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.App.Model", "App\Model\WhereToFly.App.Model.csproj", "{6A01E52C-1CF1-48E2-AC01-045A7B82E4B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
