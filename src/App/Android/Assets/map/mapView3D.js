@@ -573,7 +573,7 @@ MapView.prototype.addLocationList = function (locationList) {
             '</h2>';
 
         text += '<p><img height="32em" width="32em" src="images/information-outline.svg" style="vertical-align:middle" /> ' +
-            '<a href="javascript:parent.map.onShowLocationDetails(\'' + location.id + '\');">Show details</a> | ';
+            '<a href="javascript:parent.map.onShowLocationDetails(\'' + location.id + '\');">Show details</a> ';
 
         text += '<img height="32em" width="32em" src="images/directions.svg" style="vertical-align:middle" /> ' +
             '<a href="javascript:parent.map.onNavigateToLocation(\'' + location.id + '\');">Navigate here</a></p>';
