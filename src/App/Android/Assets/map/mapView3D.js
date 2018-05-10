@@ -456,6 +456,8 @@ MapView.prototype.setShadingMode = function (shadingMode) {
  * @param {double} [options.displayLatitude] Display text of latitude
  * @param {double} [options.displayLongitude] Display text of longitude
  * @param {double} [options.altitude] Altitude of position
+ * @param {double} [options.speed] Current speed, in km/h
+ * @param {double} [options.displaySpeed] Display text for current speed
  * @param {string} [options.timestamp] Timestamp of position, as parseable date string
  * @param {string} [options.displayTimestamp] Display text of timestamp
  * @param {Number} [options.positionAccuracy] Accuracy of position, in meter
@@ -479,6 +481,7 @@ MapView.prototype.updateMyLocation = function (options) {
         'Longitude: ' + options.displayLongitude + '<br/>' +
         'Accuracy: <span style="color:' + options.positionAccuracyColor + '">+/- ' + options.positionAccuracy + ' m</span><br/>' +
         (options.altitude !== undefined && options.altitude !== 0 ? 'Altitude: ' + options.altitude + 'm<br/>' : '') +
+        'Speed: ' + options.displaySpeed + "<br/>" +
         'Time: ' + options.displayTimestamp +
         '</div>';
 

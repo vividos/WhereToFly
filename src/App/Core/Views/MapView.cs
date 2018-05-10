@@ -232,9 +232,16 @@ namespace WhereToFly.App.Core.Views
         /// <param name="position">new position to use</param>
         /// <param name="altitudeInMeter">new altitide, in meter; when 0, it won't be used</param>
         /// <param name="positionAccuracyInMeter">position accuracy, in meter</param>
+        /// <param name="speedInKmh">current speed, in km/h</param>
         /// <param name="timestamp">timestamp of location</param>
         /// <param name="zoomToLocation">indicates if view should also zoom to the location</param>
-        public void UpdateMyLocation(MapPoint position, int altitudeInMeter, int positionAccuracyInMeter, DateTimeOffset timestamp, bool zoomToLocation)
+        public void UpdateMyLocation(
+            MapPoint position,
+            int altitudeInMeter,
+            int positionAccuracyInMeter,
+            double speedInKmh,
+            DateTimeOffset timestamp,
+            bool zoomToLocation)
         {
             if (!this.isInitialized)
             {
@@ -248,10 +255,12 @@ namespace WhereToFly.App.Core.Views
                 positionAccuracy = positionAccuracyInMeter,
                 positionAccuracyColor = ColorFromPositionAccuracy(positionAccuracyInMeter),
                 altitude = altitudeInMeter,
+                speed = speedInKmh,
                 timestamp,
                 displayLatitude = DataFormatter.FormatLatLong(position.Latitude, this.CoordinateDisplayFormat),
                 displayLongitude = DataFormatter.FormatLatLong(position.Longitude, this.CoordinateDisplayFormat),
                 displayTimestamp = timestamp.ToLocalTime().ToString("yyyy-MM-dd HH\\:mm\\:ss"),
+                displaySpeed = string.Format("{0:F1} km/h", speedInKmh),
                 zoomToLocation
             };
 

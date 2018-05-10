@@ -183,6 +183,7 @@ namespace WhereToFly.App.Core.Views
                     new MapPoint(position.Latitude, position.Longitude),
                     (int)position.Altitude,
                     (int)position.Accuracy,
+                    position.Speed * Geo.Spatial.Constants.FactorMeterPerSecondToKilometerPerHour,
                     position.Timestamp,
                     zoomToLocation: true);
             }
@@ -833,6 +834,7 @@ namespace WhereToFly.App.Core.Views
                     new MapPoint(position.Latitude, position.Longitude),
                     (int)position.Altitude,
                     (int)position.Accuracy,
+                    position.Speed * Geo.Spatial.Constants.FactorMeterPerSecondToKilometerPerHour,
                     position.Timestamp,
                     zoomToPosition);
             }
