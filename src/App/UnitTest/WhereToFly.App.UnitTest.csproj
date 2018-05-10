@@ -96,10 +96,10 @@
       <Version>2.0.1</Version>
     </PackageReference>
     <PackageReference Include="SonarAnalyzer.CSharp">
-      <Version>6.8.2.4717</Version>
+      <Version>7.1.0.5212</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms.Mocks">
-      <Version>2.5.0.4</Version>
+      <Version>3.0.0.2</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

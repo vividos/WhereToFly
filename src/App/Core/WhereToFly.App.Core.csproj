@@ -29,10 +29,10 @@
     <PackageReference Include="SkiaSharp.Extended" Version="1.60.0" />
     <PackageReference Include="SkiaSharp.Svg" Version="1.60.0" />
     <PackageReference Include="SkiaSharp.Views.Forms" Version="1.60.0" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="6.8.2.4717" />
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="7.1.0.5212" />
     <PackageReference Include="Xam.Plugin.ExternalMaps" Version="4.0.1" />
     <PackageReference Include="Xam.Plugin.Geolocator" Version="4.2.0" />
-    <PackageReference Include="Xamarin.Forms" Version="2.5.1.444934" />
+    <PackageReference Include="Xamarin.Forms" Version="3.0.0.446417" />
     <PackageReference Include="Xamarin.Plugin.FilePicker" Version="2.0.58-beta" />
   </ItemGroup>
 

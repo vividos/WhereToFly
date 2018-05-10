@@ -15,8 +15,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SharpKml.Core" Version="3.0.5" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="6.8.2.4717" />
+    <PackageReference Include="SharpKml.Core" Version="3.1.0" />
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="7.1.0.5212" />
   </ItemGroup>
 
   <ItemGroup>
