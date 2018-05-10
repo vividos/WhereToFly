@@ -450,11 +450,17 @@ MapView.prototype.setShadingMode = function (shadingMode) {
 
 /**
  * Updates the "my location" marker on the map
- * @param {object} options Options to use for updating my location. The following object can be used:
- * { latitude: 123.45678, longitude: 9.87654, altitude:0.0, timestamp: '2018-01-29T21:06:00'
- *   displayLatitude: "123° 45.231'", displayLongitude: "9° 89.654'",
- *   displayTimestamp: "29.01.2018 21:06:00",
- *   zoomToLocation: true }
+ * @param {object} [options] Options to use for updating "my location" pin.
+ * @param {double} [options.latitude] Latitude of position
+ * @param {double} [options.longitude] Longitude of position
+ * @param {double} [options.displayLatitude] Display text of latitude
+ * @param {double} [options.displayLongitude] Display text of longitude
+ * @param {double} [options.altitude] Altitude of position
+ * @param {string} [options.timestamp] Timestamp of position, as parseable date string
+ * @param {string} [options.displayTimestamp] Display text of timestamp
+ * @param {Number} [options.positionAccuracy] Accuracy of position, in meter
+ * @param {string} [options.positionAccuracyColor] Hex color in format #rrggbb for position accuracy
+ * @param {Boolean} [options.zoomToLocation] indicates if view should also zoom to this position
  */
 MapView.prototype.updateMyLocation = function (options) {
 
@@ -496,8 +502,10 @@ MapView.prototype.updateMyLocation = function (options) {
 
 /**
  * Zooms to given location, by flying to the location
- * @param {object} options Options to use for zooming. The following object can be used:
- * { latitude: 123.45678, longitude: 9.87654, altitude: 500 }
+ * @param {object} [options] Options to use for zooming
+ * @param {double} [options.latitude] Latitude of zoom target
+ * @param {double} [options.longitude] Longitude of zoom target
+ * @param {double} [options.altitude] Altitude of zoom target
  */
 MapView.prototype.zoomToLocation = function (options) {
 
