@@ -105,7 +105,9 @@ namespace WhereToFly.App.Core.ViewModels
         {
             get
             {
-                return this.position == null ? 0 : (int)this.position.Speed;
+                // the Geolocator plugin reports speed in m/s
+                return this.position == null ? 0 :
+                    (int)(this.position.Speed * Geo.Spatial.Constants.FactorMeterPerSecondToKilometerPerHour);
             }
         }
 
