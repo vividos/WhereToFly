@@ -10,6 +10,7 @@
 - [ ] Icon in Navigation bar
 - [ ] Implement switching themes/night mode using ResourceDictionary
 - [ ] Show ActivityIndicator overlay on long loading operations
+- [ ] Zoom to newly imported locations 
 
 ## New Features
 
