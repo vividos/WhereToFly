@@ -25,6 +25,7 @@
     <PackageReference Include="Microsoft.AppCenter.Distribute" Version="1.6.1" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="Plugin.Permissions" Version="2.2.1" />
+    <PackageReference Include="Plugin.Share" Version="7.1.1" />
     <PackageReference Include="Rg.Plugins.Popup" Version="1.1.4.145-pre" />
     <PackageReference Include="SkiaSharp.Extended" Version="1.60.0" />
     <PackageReference Include="SkiaSharp.Svg" Version="1.60.0" />
