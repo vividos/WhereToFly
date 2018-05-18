@@ -31,3 +31,8 @@ Current version: %VERSION%
     added importing GPX files for locations
     fixed crash when picking files from "Downloads" or other special folders
     many other bugfixes and minor changes
+
+1.2.1
+
+    fixed loading terrain height data
+    fixed displaying large number of pins when many locations are loaded
