@@ -398,7 +398,7 @@ MapView.prototype.setMapOverlayType = function (overlayType) {
 /**
  * Sets new map shading mode
  * @param {string} shadingMode shading mode constant; the following constants currently can be
- * used: 'Fixed10Am', 'Fixed3Pm', 'CurrentTime', 'Ahead2Hours' and 'None'.
+ * used: 'Fixed10Am', 'Fixed3Pm', 'CurrentTime', 'Ahead6Hours' and 'None'.
  */
 MapView.prototype.setShadingMode = function (shadingMode) {
 
@@ -430,8 +430,8 @@ MapView.prototype.setShadingMode = function (shadingMode) {
             this.viewer.clockViewModel.shouldAnimate = true;
             break;
 
-        case 'Ahead2Hours':
-            var ahead = Cesium.JulianDate.addHours(now, 2, new Cesium.JulianDate());
+        case 'Ahead6Hours':
+            var ahead = Cesium.JulianDate.addHours(now, 6, new Cesium.JulianDate());
             var end2 = Cesium.JulianDate.addDays(ahead, 1, new Cesium.JulianDate());
 
             this.viewer.clockViewModel.startTime = ahead;

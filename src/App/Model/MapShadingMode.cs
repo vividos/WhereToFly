@@ -21,9 +21,9 @@
         CurrentTime = 2,
 
         /// <summary>
-        /// Display map shading based on current time, but 2 hours ahead
+        /// Display map shading based on current time, but 6 hours ahead
         /// </summary>
-        Ahead2Hours = 3,
+        Ahead6Hours = 3,
 
         /// <summary>
         /// No map shading is used, all mountains are lit equally
