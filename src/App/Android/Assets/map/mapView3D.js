@@ -126,10 +126,13 @@ function MapView(options) {
     console.log("#6 location markers");
     this.pinBuilder = new Cesium.PinBuilder();
 
-    var myLocationEntity = this.createEntity('My Position', '', Cesium.Color.GREEN, '../images/map-marker.svg', 0.0, 0.0);
-    myLocationEntity.show = false;
-
-    this.myLocationMarker = this.viewer.entities.add(myLocationEntity);
+    var that = this;
+    Cesium.when(
+        this.createEntity('My Position', '', Cesium.Color.GREEN, '../images/map-marker.svg', 0.0, 0.0),
+        function (myLocationEntity) {
+            myLocationEntity.show = false;
+            that.myLocationMarker = that.viewer.entities.add(myLocationEntity);
+        });
 
     // the zoom entity is invisible and transparent and is used for zoomToLocation() calls
     this.zoomEntity = this.viewer.entities.add({
@@ -143,9 +146,12 @@ function MapView(options) {
     });
 
     // the find result entity is initially invisible
-    var findResultEntity = this.createEntity('Find result', '', Cesium.Color.ORANGE, '../images/magnify.svg', 0.0, 0.0);
-    findResultEntity.show = false;
-    this.findResultMarker = this.viewer.entities.add(findResultEntity);
+    Cesium.when(
+        this.createEntity('Find result', '', Cesium.Color.ORANGE, '../images/magnify.svg', 0.0, 0.0),
+        function (findResultEntity) {
+            findResultEntity.show = false;
+            that.findResultMarker = that.viewer.entities.add(findResultEntity);
+        });
 
     console.log("#7 long tap handler");
 
@@ -574,6 +580,7 @@ MapView.prototype.addLocationList = function (locationList) {
 
     console.log("adding location list, with " + locationList.length + " entries");
 
+    var that = this;
     for (var index in locationList) {
 
         var location = locationList[index];
@@ -593,14 +600,17 @@ MapView.prototype.addLocationList = function (locationList) {
 
         var imagePath = '../' + this.imageUrlFromLocationType(location.type);
 
-        var entity = this.createEntity(
-            location.name + (location.elevation !== 0 ? ' ' + location.elevation + 'm' : ''),
-            text,
-            this.pinColorFromLocationType(location.type),
-            imagePath,
-            location.longitude,
-            location.latitude);
-        this.viewer.entities.add(entity);
+        Cesium.when(
+            this.createEntity(
+                location.name + (location.elevation !== 0 ? ' ' + location.elevation + 'm' : ''),
+                text,
+                this.pinColorFromLocationType(location.type),
+                imagePath,
+                location.longitude,
+                location.latitude),
+            function (entity) {
+                that.viewer.entities.add(entity);
+            });
     }
 };
 
@@ -613,22 +623,26 @@ MapView.prototype.addLocationList = function (locationList) {
  * @param {string} pinImage Relative link URL to SVG image to use in pin
  * @param {double} longitude Longitude of entity
  * @param {double} latitude Latitude of entity
- * @returns {object} entity description, usable for viewer.entities.add()
+ * @returns {Promise<object>} entity description, usable for viewer.entities.add()
  */
 MapView.prototype.createEntity = function (name, description, pinColor, pinImage, longitude, latitude) {
 
     var url = Cesium.buildModuleUrl(pinImage);
 
-    return {
-        name: name,
-        description: description,
-        position: Cesium.Cartesian3.fromDegrees(longitude, latitude),
-        billboard: {
-            image: this.pinBuilder.fromUrl(url, pinColor, 48),
-            verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-            heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
-        }
-    };
+    return Cesium.when(
+        this.pinBuilder.fromUrl(url, pinColor, 48),
+        function (canvas) {
+            return {
+                name: name,
+                description: description,
+                position: Cesium.Cartesian3.fromDegrees(longitude, latitude),
+                billboard: {
+                    image: canvas.toDataURL(),
+                    verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+                    heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
+                }
+            };
+        });
 };
 
 /**
