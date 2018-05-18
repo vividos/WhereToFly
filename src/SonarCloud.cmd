@@ -37,7 +37,7 @@ rmdir .\bw-output /s /q 2> nul
 
 SonarQube.Scanner.MSBuild.exe begin ^
     /k:"WhereToFly" ^
-    /v:"1.2.1" ^
+    /v:"1.2.2" ^
     /d:"sonar.cfamily.build-wrapper-output=%CD%\bw-output" ^
     /d:"sonar.cs.opencover.reportsPaths=%CD%\TestResults\WhereToFly-CoverageReport.xml" ^
     /d:"sonar.host.url=https://sonarcloud.io" ^
