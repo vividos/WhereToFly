@@ -34,5 +34,6 @@ Current version: %VERSION%
 
 1.2.1
 
+    fixed crash at startup for some Android devices
     fixed loading terrain height data
     fixed displaying large number of pins when many locations are loaded
