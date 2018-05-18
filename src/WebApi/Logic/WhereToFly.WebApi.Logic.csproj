@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Refit" Version="4.3.0" />
+    <PackageReference Include="Refit" Version="4.4.17" />
     <PackageReference Include="SonarAnalyzer.CSharp" Version="7.1.0.5212" />
   </ItemGroup>
 
