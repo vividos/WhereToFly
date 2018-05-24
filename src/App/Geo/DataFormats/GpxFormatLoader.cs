@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Xml;
 using WhereToFly.App.Logic;
@@ -67,8 +68,8 @@ namespace WhereToFly.App.Geo.DataFormats
 
             bool canParseLongitude = double.TryParse(
                 waypointNode.Attributes["lon"].Value,
-                System.Globalization.NumberStyles.Float,
-                System.Globalization.NumberFormatInfo.InvariantInfo,
+                NumberStyles.Float,
+                NumberFormatInfo.InvariantInfo,
                 out double longitude);
 
             if (!canParseLatitude || !canParseLongitude)
@@ -76,13 +77,7 @@ namespace WhereToFly.App.Geo.DataFormats
                 throw new FormatException("missing lat or long attributes on wpt element in gpx file");
             }
 
-            double elevation = 0;
-            XmlNode elevationNode = waypointNode.SelectSingleNode("x:ele", namespaceManager);
-            if (elevationNode != null &&
-                !string.IsNullOrEmpty(elevationNode.InnerText))
-            {
-                double.TryParse(elevationNode.InnerText, out elevation);
-            }
+            double elevation = ParseElevation(waypointNode, namespaceManager);
 
             XmlNode nameNode = waypointNode.SelectSingleNode("x:name", namespaceManager);
             XmlNode descNode = waypointNode.SelectSingleNode("x:desc", namespaceManager);
@@ -100,6 +95,26 @@ namespace WhereToFly.App.Geo.DataFormats
             };
 
             return location;
+        }
+
+        /// <summary>
+        /// Parses elevation attribute in waypoint node, when available
+        /// </summary>
+        /// <param name="waypointNode">waypoint node to check</param>
+        /// <param name="namespaceManager">namespace manager</param>
+        /// <returns>parsed elevation value, or 0.0</returns>
+        private static double ParseElevation(XmlNode waypointNode, XmlNamespaceManager namespaceManager)
+        {
+            double elevation = 0.0;
+            XmlNode elevationNode = waypointNode.SelectSingleNode("x:ele", namespaceManager);
+            if (elevationNode != null &&
+                !string.IsNullOrEmpty(elevationNode.InnerText) &&
+                double.TryParse(elevationNode.InnerText, NumberStyles.Float, NumberFormatInfo.InvariantInfo, out elevation))
+            {
+                elevation = Math.Round(elevation, 1);
+            }
+
+            return elevation;
         }
 
         /// <summary>
