@@ -80,6 +80,7 @@ The following icons are from the Google Material icon set:
 - information-outline
 - magnify
 - magnify-plus-outline
+- map
 - map-marker-plus
 - map-marker
 - navigation

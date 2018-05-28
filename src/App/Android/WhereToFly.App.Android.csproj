@@ -610,5 +610,14 @@
   <ItemGroup>
     <AndroidAsset Include="Assets\map\Cesium\Assets\Images\ion-credit.png" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\icons\map.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\icons\settings.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\icons\format-list-bulleted.svg" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
