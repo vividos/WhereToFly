@@ -38,5 +38,5 @@ Current version: %VERSION%
     fixed loading terrain height data
     fixed displaying large number of pins when many locations are loaded
 
-1.2.2
+1.3.0
 
