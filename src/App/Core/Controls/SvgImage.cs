@@ -33,6 +33,7 @@ namespace WhereToFly.App.Core.Controls
             // Also it has a white background, which we might not want.
             this.HasShadow = false;
             this.BackgroundColor = Color.Transparent;
+            this.BorderColor = Color.Transparent;
 
             this.Content = this.canvasView;
             this.canvasView.PaintSurface += this.CanvasViewOnPaintSurface;
