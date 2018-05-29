@@ -108,6 +108,8 @@ namespace WhereToFly.App.Core.ViewModels
 
             await dataService.StoreLocationListAsync(locationList);
 
+            App.UpdateMapLocationsList();
+
             await NavigationService.Instance.GoBack();
 
             App.ShowToast("Location list was loaded.");
@@ -187,6 +189,8 @@ namespace WhereToFly.App.Core.ViewModels
             }
 
             await dataService.StoreLocationListAsync(locationList);
+
+            App.UpdateMapLocationsList();
 
             await NavigationService.Instance.GoBack();
 

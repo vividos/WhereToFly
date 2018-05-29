@@ -200,9 +200,7 @@ namespace WhereToFly.App.Core.ViewModels
         {
             App.ZoomToLocation(this.location.MapLocation);
 
-            // navigate back 2x, since the details can only be viewed from the location list page
-            await NavigationService.Instance.GoBack();
-            await NavigationService.Instance.GoBack();
+            await NavigationService.Instance.NavigateAsync(Constants.PageKeyMapPage, animated: true);
         }
 
         /// <summary>
@@ -231,9 +229,11 @@ namespace WhereToFly.App.Core.ViewModels
 
             await dataService.StoreLocationListAsync(locationList);
 
-            App.ShowToast("Selected location was deleted.");
+            App.UpdateMapLocationsList();
 
             await NavigationService.Instance.GoBack();
+
+            App.ShowToast("Selected location was deleted.");
         }
 
         /// <summary>

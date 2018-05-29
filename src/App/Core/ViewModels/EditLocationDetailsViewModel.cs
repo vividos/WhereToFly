@@ -188,6 +188,8 @@ namespace WhereToFly.App.Core.ViewModels
             locationToChange.InternetLink = this.location.InternetLink;
 
             await dataService.StoreLocationListAsync(locationList);
+
+            App.UpdateMapLocationsList();
         }
     }
 }

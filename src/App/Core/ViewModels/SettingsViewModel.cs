@@ -249,6 +249,8 @@ namespace WhereToFly.App.Core.ViewModels
         {
             var dataService = DependencyService.Get<IDataService>();
             await dataService.StoreAppSettingsAsync(this.appSettings);
+
+            App.UpdateMapSettings();
         }
 
         #region INotifyPropertyChanged implementation

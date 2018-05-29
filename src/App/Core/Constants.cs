@@ -28,6 +28,16 @@ namespace WhereToFly.App.Core
         public const string MessageZoomToLocation = "ZoomToLocation";
 
         /// <summary>
+        /// MessagingCenter message constant to update settings on MapPage
+        /// </summary>
+        public const string MessageUpdateMapSettings = "UpdateMapSettings";
+
+        /// <summary>
+        /// MessagingCenter message constant to update location list on MapPage
+        /// </summary>
+        public const string MessageUpdateMapLocations = "UpdateMapLocations";
+
+        /// <summary>
         /// Page key for use in NavigationService, to navigate to map page
         /// </summary>
         public const string PageKeyMapPage = "MapPage";

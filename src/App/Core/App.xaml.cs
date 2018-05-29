@@ -153,12 +153,9 @@ namespace WhereToFly.App.Core
 
             await dataService.StoreLocationListAsync(locationList);
 
-            if (NavigationService.Instance.NavigationPage.CurrentPage is MapPage mapPage)
-            {
-                await mapPage.ReloadLocationListAsync();
-            }
-
             App.ShowToast("Location list was loaded.");
+
+            App.UpdateMapLocationsList();
         }
 
         /// <summary>
@@ -209,6 +206,26 @@ namespace WhereToFly.App.Core
             var app = Xamarin.Forms.Application.Current as App;
 
             MessagingCenter.Send<App, MapPoint>(app, Constants.MessageZoomToLocation, location);
+        }
+
+        /// <summary>
+        /// Updates map settings on opened MapPage.
+        /// </summary>
+        public static void UpdateMapSettings()
+        {
+            var app = Xamarin.Forms.Application.Current as App;
+
+            MessagingCenter.Send<App>(app, Constants.MessageUpdateMapSettings);
+        }
+
+        /// <summary>
+        /// Updates locations list on opened MapPage.
+        /// </summary>
+        public static void UpdateMapLocationsList()
+        {
+            var app = Xamarin.Forms.Application.Current as App;
+
+            MessagingCenter.Send<App>(app, Constants.MessageUpdateMapLocations);
         }
 
         #region App lifecycle methods

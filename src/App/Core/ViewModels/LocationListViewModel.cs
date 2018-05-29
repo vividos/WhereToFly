@@ -252,7 +252,9 @@ namespace WhereToFly.App.Core.ViewModels
         internal async Task ZoomToLocation(Location location)
         {
             App.ZoomToLocation(location.MapLocation);
-            await NavigationService.Instance.GoBack();
+
+            App.UpdateMapLocationsList();
+            await NavigationService.Instance.NavigateAsync(Constants.PageKeyMapPage, animated: true);
         }
 
         /// <summary>
@@ -268,6 +270,8 @@ namespace WhereToFly.App.Core.ViewModels
             await dataService.StoreLocationListAsync(this.locationList);
 
             this.UpdateLocationList();
+
+            App.UpdateMapLocationsList();
 
             App.ShowToast("Selected location was deleted.");
         }
@@ -293,6 +297,8 @@ namespace WhereToFly.App.Core.ViewModels
             await dataService.StoreLocationListAsync(new List<Location>());
 
             await this.ReloadLocationListAsync();
+
+            App.UpdateMapLocationsList();
 
             App.ShowToast("Location list was cleared.");
         }
