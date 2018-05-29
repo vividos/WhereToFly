@@ -27,19 +27,20 @@
         <!-- Location list -->
         <ListView x:Name="locationsListView"
                   ItemsSource="{Binding Path=LocationList, Mode=OneWay}"
-                  RowHeight="100"
+                  RowHeight="85"
                   ItemTapped="OnItemTapped_LocationsListView"
                   IsPullToRefreshEnabled="False"
                   android:ListView.IsFastScrollEnabled="true"
                   CachingStrategy="RecycleElement"
+                  SeparatorVisibility="None"
                   AutomationId="LocationList">
 
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <!-- Templace for a single view cell -->
-                    <ViewCell Height="80">
+                    <ViewCell Height="85">
                         <ViewCell.View>
-                            <Grid BackgroundColor="#efefef">
+                            <Grid BackgroundColor="#efefef" Margin="8,4">
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
                                     <RowDefinition/>
@@ -52,22 +53,24 @@
 
                                 <!-- Type image -->
                                 <controls:SvgImage Source="{Binding TypeImageSource, Mode=OneWay}"
-                                                   WidthRequest="48" HeightRequest="48"
+                                                   WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
                                                    HorizontalOptions="Start" VerticalOptions="Center"
                                                    Grid.Column="0" Grid.RowSpan="3"/>
 
                                 <!-- Details -->
                                 <Label Text="{Binding Name}"
                                        Style="{DynamicResource ListItemTextStyle}"
-                                       FontSize="Large"
+                                       FontSize="Medium"
                                        LineBreakMode="TailTruncation"
                                        Grid.Column="1" Grid.Row="0" />
                                 <Label Text="{Binding DetailInfos}"
                                        Style="{DynamicResource ListItemDetailTextStyle}"
+                                       FontSize="Small"
                                        LineBreakMode="TailTruncation"
                                        Grid.Column="1" Grid.Row="1" />
                                 <Label Text="{Binding Description}"
                                        Style="{DynamicResource ListItemDetailTextStyle}"
+                                       FontSize="Small"
                                        LineBreakMode="TailTruncation"
                                        Grid.Column="1" Grid.Row="2" />
                             </Grid>
