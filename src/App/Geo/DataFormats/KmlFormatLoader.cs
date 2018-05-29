@@ -108,7 +108,9 @@ namespace WhereToFly.App.Geo.DataFormats
             }
 
             var name = placemark.Name ?? string.Empty;
-            if (name.StartsWith("SP "))
+
+            if (name.StartsWith("SP ") ||
+                name.StartsWith("SP-HG "))
             {
                 return LocationType.FlyingTakeoff;
             }
@@ -116,6 +118,11 @@ namespace WhereToFly.App.Geo.DataFormats
             if (name.StartsWith("LP "))
             {
                 return LocationType.FlyingLandingPlace;
+            }
+
+            if (name.StartsWith("P "))
+            {
+                return LocationType.Parking;
             }
 
             return LocationType.Waypoint;
