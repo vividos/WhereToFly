@@ -123,8 +123,6 @@ namespace WhereToFly.App.Core.Views
             this.AddLocateMeToolbarButton();
             this.AddFindLocationToolbarButton();
             this.AddCurrentPositionDetailsToolbarButton();
-            this.AddLocationListToolbarButton();
-            this.AddSettingsToolbarButton();
             this.AddInfoToolbarButton();
         }
 
@@ -317,60 +315,6 @@ namespace WhereToFly.App.Core.Views
         private async Task OnClicked_ToolbarButtonCurrentPositionDetails()
         {
             await NavigationService.Instance.NavigateAsync(Constants.PageKeyCurrentPositionDetailsPage, animated: true);
-        }
-
-        /// <summary>
-        /// Adds "Settings" toolbar button
-        /// </summary>
-        private void AddSettingsToolbarButton()
-        {
-            ToolbarItem settingsButton = new ToolbarItem(
-                "Settings",
-                "settings.xml",
-                async () => await this.OnClicked_ToolbarButtonSettings(),
-                ToolbarItemOrder.Secondary)
-            {
-                AutomationId = "Settings"
-            };
-
-            this.ToolbarItems.Add(settingsButton);
-        }
-
-        /// <summary>
-        /// Called when toolbar button "Settings" was clicked
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task OnClicked_ToolbarButtonSettings()
-        {
-            this.startedSettingsPage = true;
-            await NavigationService.Instance.NavigateAsync(Constants.PageKeySettingsPage, animated: true);
-        }
-
-        /// <summary>
-        /// Adds "Location list" toolbar button
-        /// </summary>
-        private void AddLocationListToolbarButton()
-        {
-            ToolbarItem locationListButton = new ToolbarItem(
-                "Location list",
-                "format_list_bulleted.xml",
-                async () => await this.OnClicked_ToolbarButtonLocationList(),
-                ToolbarItemOrder.Primary)
-            {
-                AutomationId = "LocationList"
-            };
-
-            this.ToolbarItems.Add(locationListButton);
-        }
-
-        /// <summary>
-        /// Called when toolbar button "Location list" was clicked
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task OnClicked_ToolbarButtonLocationList()
-        {
-            this.startedLocationListPage = true;
-            await NavigationService.Instance.NavigateAsync(Constants.PageKeyLocationListPage, animated: true);
         }
 
         /// <summary>

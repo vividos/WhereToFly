@@ -506,9 +506,6 @@
     <AndroidResource Include="Resources\drawable\information_outline.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\settings.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\compass.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -549,9 +546,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\map\Cesium\Workers\createVectorTilePolylines.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\format_list_bulleted.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\magnify_plus_outline.xml" />
