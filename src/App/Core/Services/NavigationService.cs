@@ -36,6 +36,10 @@ namespace WhereToFly.App.Core.Services
             Type pageType = null;
             switch (pageKey)
             {
+                case Constants.PageKeyMapPage:
+                    pageType = typeof(MapPage);
+                    break;
+
                 case Constants.PageKeyCurrentPositionDetailsPage:
                     pageType = typeof(CurrentPositionDetailsPage);
                     break;
@@ -103,8 +107,12 @@ namespace WhereToFly.App.Core.Services
         {
             Debug.Assert(this.NavigationPage != null, "NavigationPage property must have been set");
 
-            Page displayPage;
-            if (parameter == null)
+            Page displayPage = null;
+            if (pageType == typeof(MapPage))
+            {
+                await this.NavigationPage.Navigation.PopToRootAsync();
+            }
+            else if (parameter == null)
             {
                 displayPage = (Page)Activator.CreateInstance(pageType);
             }
@@ -113,7 +121,10 @@ namespace WhereToFly.App.Core.Services
                 displayPage = (Page)Activator.CreateInstance(pageType, parameter);
             }
 
-            await this.NavigationPage.PushAsync(displayPage, animated);
+            if (displayPage != null)
+            {
+                await this.NavigationPage.PushAsync(displayPage, animated);
+            }
         }
     }
 }

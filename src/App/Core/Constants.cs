@@ -28,6 +28,11 @@ namespace WhereToFly.App.Core
         public const string MessageZoomToLocation = "ZoomToLocation";
 
         /// <summary>
+        /// Page key for use in NavigationService, to navigate to map page
+        /// </summary>
+        public const string PageKeyMapPage = "MapPage";
+
+        /// <summary>
         /// Page key for use in NavigationService, to navigate to current position details page
         /// </summary>
         public const string PageKeyCurrentPositionDetailsPage = "CurrentPositionDetailsPage";
