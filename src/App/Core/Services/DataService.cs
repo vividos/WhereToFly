@@ -120,7 +120,40 @@ namespace WhereToFly.App.Core.Services
                     Description = "Herrliche Aussicht über die drei Seen Schliersee im Norden, Tegernsee im Westen und den Spitzingsee im Süden.",
                     Type = LocationType.Summit,
                     InternetLink = "https://de.wikipedia.org/wiki/Brecherspitz"
-                }
+                },
+
+                new Location
+                {
+                    Id = Guid.NewGuid().ToString("B"),
+                    Name = "Jägerkamp",
+                    Elevation = 1746,
+                    MapLocation = new MapPoint(47.673511, 11.9060494),
+                    Description = "Gipfel in den Schlierseer Bergen, mit Ausblick auf Schliersee und die umliegenden Berge.",
+                    Type = LocationType.Summit,
+                    InternetLink = "https://de.wikipedia.org/wiki/J%C3%A4gerkamp"
+                },
+
+                new Location
+                {
+                    Id = Guid.NewGuid().ToString("B"),
+                    Name = "Ankel-Alm",
+                    Elevation = 1311,
+                    MapLocation = new MapPoint(47.6838571, 11.8687695),
+                    Description = "Privat bewirtschaftete Alm; Montag Ruhetag",
+                    Type = LocationType.AlpineHut,
+                    InternetLink = string.Empty
+                },
+
+                new Location
+                {
+                    Id = Guid.NewGuid().ToString("B"),
+                    Name = "Schönfeldhütte",
+                    Elevation = 1410,
+                    MapLocation = new MapPoint(47.66508, 11.90612),
+                    Description = "Alpenvereinshütte der Sektion München des DAV",
+                    Type = LocationType.AlpineHut,
+                    InternetLink = "https://www.davplus.de/huetten__wege/bewirtschaftete_huetten/uebersicht/schoenfeldhuette"
+                },
             };
         }
 
