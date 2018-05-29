@@ -42,8 +42,7 @@ namespace WhereToFly.App.Android
                     version.Build,
                     version.Revision);
 
-                var packageInfo = this.CurrentContext.PackageManager.GetPackageInfo(this.CurrentContext.PackageName, 0);
-                return versionText + " " + packageInfo.VersionName;
+                return versionText;
             }
         }
 
