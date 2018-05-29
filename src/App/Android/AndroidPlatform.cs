@@ -17,7 +17,7 @@ namespace WhereToFly.App.Android
         /// Returns current context, either from current activity, or the global application
         /// context
         /// </summary>
-        private Context CurrentContext
+        private static Context CurrentContext
         {
             get
             {
@@ -54,7 +54,7 @@ namespace WhereToFly.App.Android
         {
             get
             {
-                return this.CurrentContext.FilesDir.AbsolutePath;
+                return CurrentContext.FilesDir.AbsolutePath;
             }
         }
 
@@ -65,7 +65,7 @@ namespace WhereToFly.App.Android
         {
             get
             {
-                return this.CurrentContext.CacheDir.AbsolutePath;
+                return CurrentContext.CacheDir.AbsolutePath;
             }
         }
 
@@ -84,7 +84,7 @@ namespace WhereToFly.App.Android
         /// <returns>stream to read from file</returns>
         public Stream OpenAssetStream(string assetFilename)
         {
-            var assetManager = this.CurrentContext.Assets;
+            var assetManager = CurrentContext.Assets;
 
             return assetManager.Open(assetFilename);
         }
