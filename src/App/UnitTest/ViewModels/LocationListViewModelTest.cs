@@ -24,6 +24,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
         {
             Xamarin.Forms.Mocks.MockForms.Init();
             DependencyService.Register<IDataService, DataService>();
+            DependencyService.Register<IPlatform, UnitTestPlatform>();
         }
 
         /// <summary>
@@ -49,9 +50,9 @@ namespace WhereToFly.App.UnitTest.ViewModels
             propertyChangedEvent.WaitOne();
 
             // check
-            Assert.IsFalse(viewModel.LocationList.Any(), "location list is initially empty");
+            Assert.IsTrue(viewModel.LocationList.Any(), "location list initially contains the default locations");
             Assert.AreEqual(0, viewModel.FilterText.Length, "filter text is initially empty");
-            Assert.IsFalse(viewModel.AreAllLocationsFilteredOut, "as there are no locations, no location was filtered out");
+            Assert.IsFalse(viewModel.AreAllLocationsFilteredOut, "as there is no filter text, no location was filtered out");
         }
     }
 }
