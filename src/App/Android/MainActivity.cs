@@ -46,6 +46,20 @@ namespace WhereToFly.App.Android
         },
         Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
         Icon = "@drawable/icon")]
+    //// Intent filter, case 3: application/octet-stream, and valid extension
+    [IntentFilter(
+        new[] { Intent.ActionView, Intent.ActionOpenDocument },
+        DataSchemes = new string[] { "file", "content", "http", "https" },
+        DataHost = "*",
+        DataMimeType = "application/octet-stream",
+        DataPathPatterns = new string[]
+        {
+            @".*\\.kmz", @".*\\..*\\.kmz", ".*\\..*\\..*\\.kmz", ".*\\..*\\..*\\..*\\.kmz",
+            @".*\\.kml", @".*\\..*\\.kml", ".*\\..*\\..*\\.kml", ".*\\..*\\..*\\..*\\.kml",
+            @".*\\.gpx", @".*\\..*\\.gpx", ".*\\..*\\..*\\.gpx", ".*\\..*\\..*\\..*\\.gpx",
+        },
+        Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
+        Icon = "@drawable/icon")]
     public class MainActivity : FormsAppCompatActivity
     {
         /// <summary>
