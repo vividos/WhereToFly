@@ -107,6 +107,14 @@ namespace WhereToFly.App.Core.Services
         {
             Debug.Assert(this.NavigationPage != null, "NavigationPage property must have been set");
 
+            // close drawer if necessary
+            var masterDetailPage = App.Current.MainPage as MasterDetailPage;
+            if (masterDetailPage != null &&
+                masterDetailPage.IsPresented)
+            {
+                masterDetailPage.IsPresented = false;
+            }
+
             Page displayPage = null;
             if (pageType == typeof(MapPage))
             {

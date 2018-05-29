@@ -28,6 +28,11 @@ namespace WhereToFly.App.Core
         public static AppSettings Settings { get; internal set; }
 
         /// <summary>
+        /// The one and only map page (displaying the map using CesiumJS)
+        /// </summary>
+        public MapPage MapPage { get; internal set; }
+
+        /// <summary>
         /// Creates a new app object
         /// </summary>
         public App()
@@ -57,16 +62,10 @@ namespace WhereToFly.App.Core
         /// </summary>
         private void SetupMainPage()
         {
-            var mapPage = new MapPage();
-            var navigationPage = new NavigationPage(mapPage)
-            {
-                BarBackgroundColor = Constants.PrimaryColor
-            };
+            this.MapPage = new MapPage();
 
-            NavigationPage.SetTitleIcon(mapPage, "icon.png");
-
-            this.MainPage = navigationPage;
-            NavigationService.Instance.NavigationPage = navigationPage;
+            var rootPage = new RootPage();
+            this.MainPage = rootPage;
         }
 
         /// <summary>

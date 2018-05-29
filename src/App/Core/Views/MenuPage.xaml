@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
+             x:Class="WhereToFly.App.Core.Views.MenuPage"
+             Padding="0,40,0,0"
+             Icon="icon.png"
+             Title="Where-to-fly">
+    <ContentPage.Content>
+        <StackLayout>
+            <!-- menu header -->
+            <StackLayout Orientation="Horizontal"
+                         HorizontalOptions="Start"
+                         Padding="16,0,0,16">
+                <!-- app icon -->
+                <Image Source="icon.png" WidthRequest="48" HeightRequest="48" VerticalOptions="Start" />
+
+                <!-- app name and version -->
+                <StackLayout>
+                    <Label Text="Where-to-fly" FontSize="36" TextColor="White" />
+                    <Label Text="{Binding VersionText, Mode=OneTime}" FontSize="Small" TextColor="LightGray" />
+                </StackLayout>
+            </StackLayout>
+
+            <!-- list view with all menu items -->
+            <ListView x:Name="listView" ItemsSource="{Binding MenuItemList, Mode=OneTime}"
+                      BackgroundColor="LightGray"
+                      VerticalOptions="StartAndExpand"
+                      HorizontalOptions="StartAndExpand"
+                      SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <!-- single view cell for menu items -->
+                        <ViewCell>
+                            <Grid Padding="5,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <!-- menu item icon -->
+                                <controls:SvgImage Source="{Binding ImageSource, Mode=OneTime}"
+                                       WidthRequest="32" HeightRequest="32"
+                                       HorizontalOptions="Center" VerticalOptions="Center" />
+
+                                <!-- title text -->
+                                <Label Grid.Column="1" Text="{Binding Title, Mode=OneTime}"
+                                       TextColor="Black" FontSize="Medium"
+                                       VerticalOptions="FillAndExpand"
+                                       VerticalTextAlignment="Center" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
