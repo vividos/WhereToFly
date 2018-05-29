@@ -96,12 +96,26 @@ namespace WhereToFly.App.Geo.DataFormats
         {
             string iconLink = GetPlacemarkStyleIcon(kml, placemark);
 
-            foreach (var iconLinkContentAndLocationType in iconLinkToLocationTypeMap)
+            if (!string.IsNullOrWhiteSpace(iconLink))
             {
-                if (iconLink.Contains(iconLinkContentAndLocationType.Key))
+                foreach (var iconLinkContentAndLocationType in iconLinkToLocationTypeMap)
                 {
-                    return iconLinkContentAndLocationType.Value;
+                    if (iconLink.Contains(iconLinkContentAndLocationType.Key))
+                    {
+                        return iconLinkContentAndLocationType.Value;
+                    }
                 }
+            }
+
+            var name = placemark.Name ?? string.Empty;
+            if (name.StartsWith("SP "))
+            {
+                return LocationType.FlyingTakeoff;
+            }
+
+            if (name.StartsWith("LP "))
+            {
+                return LocationType.FlyingLandingPlace;
             }
 
             return LocationType.Waypoint;
@@ -117,25 +131,45 @@ namespace WhereToFly.App.Geo.DataFormats
         {
             try
             {
-                string styleUrl = placemark.StyleUrl.ToString();
-
-                if (styleUrl.StartsWith("#"))
+                if (placemark.StyleUrl != null)
                 {
-                    var style = kml.FindStyle(styleUrl.Substring(1));
-                    if (style != null &&
-                        style is StyleMapCollection styleMap)
-                    {
-                        string link = GetStyleMapNormalStyleIconLink(kml, styleMap);
-                        if (!string.IsNullOrEmpty(link))
-                        {
-                            return link;
-                        }
-                    }
+                    return GetStyleIconFromStyleUrl(kml, placemark);
+                }
+                else if (placemark.Styles.Any())
+                {
+                    return GetStyleIconFromStyleCollection(placemark);
                 }
             }
             catch (Exception)
             {
                 // ignore any errors while trying to parse
+            }
+
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// Gets style icon from StyleUrl property of placemark
+        /// </summary>
+        /// <param name="kml">kml file where the placemark is in</param>
+        /// <param name="placemark">placemark to check</param>
+        /// <returns>style URL, or empty string when style couldn't be retrieved</returns>
+        private static string GetStyleIconFromStyleUrl(KmlFile kml, Placemark placemark)
+        {
+            string styleUrl = placemark.StyleUrl.ToString();
+
+            if (styleUrl.StartsWith("#"))
+            {
+                var style = kml.FindStyle(styleUrl.Substring(1));
+                if (style != null &&
+                    style is StyleMapCollection styleMap)
+                {
+                    string link = GetStyleMapNormalStyleIconLink(kml, styleMap);
+                    if (!string.IsNullOrEmpty(link))
+                    {
+                        return link;
+                    }
+                }
             }
 
             return string.Empty;
@@ -165,6 +199,25 @@ namespace WhereToFly.App.Geo.DataFormats
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Gets style icon from Styles collection property of placemark
+        /// </summary>
+        /// <param name="placemark">placemark to check</param>
+        /// <returns>style URL, or empty string when style couldn't be retrieved</returns>
+        private static string GetStyleIconFromStyleCollection(Placemark placemark)
+        {
+            var style = placemark.Styles.FirstOrDefault() as Style;
+            if (style != null &&
+                style.Icon != null &&
+                style.Icon.Icon != null &&
+                style.Icon.Icon.Href != null)
+            {
+                return style.Icon.Icon.Href.ToString();
+            }
+
+            return string.Empty;
         }
     }
 }
