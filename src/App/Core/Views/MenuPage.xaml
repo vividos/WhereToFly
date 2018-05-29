@@ -25,7 +25,7 @@
             <!-- list view with all menu items -->
             <ListView x:Name="listView" ItemsSource="{Binding MenuItemList, Mode=OneTime}"
                       BackgroundColor="LightGray"
-                      VerticalOptions="StartAndExpand"
+                      VerticalOptions="FillAndExpand"
                       HorizontalOptions="StartAndExpand"
                       SeparatorVisibility="None">
                 <ListView.ItemTemplate>
