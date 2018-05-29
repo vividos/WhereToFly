@@ -122,8 +122,6 @@ namespace WhereToFly.App.Core.Views
         {
             this.AddLocateMeToolbarButton();
             this.AddFindLocationToolbarButton();
-            this.AddCurrentPositionDetailsToolbarButton();
-            this.AddInfoToolbarButton();
         }
 
         /// <summary>
@@ -236,7 +234,7 @@ namespace WhereToFly.App.Core.Views
                 "Find location",
                 "magnify.xml",
                 async () => await this.OnClicked_ToolbarButtonFindLocation(),
-                ToolbarItemOrder.Secondary)
+                ToolbarItemOrder.Primary)
             {
                 AutomationId = "FindLocation"
             };
@@ -289,58 +287,6 @@ namespace WhereToFly.App.Core.Views
             var point = new MapPoint(position.Latitude, position.Longitude);
 
             this.mapView.ShowFindResult(text, point);
-        }
-
-        /// <summary>
-        /// Adds "Current position details" toolbar button
-        /// </summary>
-        private void AddCurrentPositionDetailsToolbarButton()
-        {
-            ToolbarItem currentPositionDetailsButton = new ToolbarItem(
-                "Current Position",
-                "compass.xml",
-                async () => await this.OnClicked_ToolbarButtonCurrentPositionDetails(),
-                ToolbarItemOrder.Secondary)
-            {
-                AutomationId = "CurrentPosition"
-            };
-
-            this.ToolbarItems.Add(currentPositionDetailsButton);
-        }
-
-        /// <summary>
-        /// Called when toolbar button "Current position details" was clicked
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task OnClicked_ToolbarButtonCurrentPositionDetails()
-        {
-            await NavigationService.Instance.NavigateAsync(Constants.PageKeyCurrentPositionDetailsPage, animated: true);
-        }
-
-        /// <summary>
-        /// Adds "Info" toolbar button
-        /// </summary>
-        private void AddInfoToolbarButton()
-        {
-            ToolbarItem infoButton = new ToolbarItem(
-                "Info",
-                "information_outline.xml",
-                async () => await this.OnClicked_ToolbarButtonInfo(),
-                ToolbarItemOrder.Secondary)
-            {
-                AutomationId = "Info"
-            };
-
-            this.ToolbarItems.Add(infoButton);
-        }
-
-        /// <summary>
-        /// Called when toolbar button "Info" was clicked
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task OnClicked_ToolbarButtonInfo()
-        {
-            await NavigationService.Instance.NavigateAsync(Constants.PageKeyInfoPage, animated: true);
         }
 
         /// <summary>

@@ -506,9 +506,6 @@
     <AndroidResource Include="Resources\drawable\information_outline.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\compass.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidAsset Include="Assets\map\Cesium\ThirdParty\Workers\deflate.js" />
   </ItemGroup>
   <ItemGroup>
