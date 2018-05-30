@@ -40,3 +40,5 @@ Current version: %VERSION%
 
 1.3.0
 
+    introduced hamburger menu with drawer to navigate between top-level pages
+    added weather dashboard, showing weather icons that can be links to external web pages or apps
