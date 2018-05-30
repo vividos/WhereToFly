@@ -102,6 +102,8 @@ The following icons in the App are from the Material Design Icons
 - bridge - bridge.png - Austin Andrews @Templarian
 - arrow-up - up.png - Austin Andrews @Templarian
 - arrow-down - down.png - Austin Andrews @Templarian
+- weather-partlycloudy - Austin Andrews @Templarian
+- border_none_variant - Austin Andrews @Templarian
 
 All custom icons are licensed under the SIL Open Font License 1.1:
 http://scripts.sil.org/cms/scripts/page.php?item_id=OFL_web
