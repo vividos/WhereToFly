@@ -35,7 +35,7 @@ REM
     -register:user ^
     -target:"%VSTEST%" ^
     -targetargs:"\"%~dp0App\UnitTest\bin\Release\WhereToFly.App.UnitTest.dll\"" ^
-    -filter:"+[WhereToFly*]* -[WhereToFly.App.UnitTest]*" ^
+    -filter:"+[WhereToFly*]* -[WhereToFly.App.Android]* -[WhereToFly.App.UnitTest]*" ^
     -mergebyhash ^
     -skipautoprops ^
     -output:"%~dp0\TestResults\WhereToFly-CoverageReport.xml"
