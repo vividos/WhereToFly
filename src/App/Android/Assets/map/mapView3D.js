@@ -178,8 +178,8 @@ MapView.prototype.onScreenTouchDown = function (movement) {
  */
 MapView.prototype.onScreenTouchUp = function (movement) {
 
-    var deltaX = (this.currentLeftDownPosition.x - movement.position.x);
-    var deltaY = (this.currentLeftDownPosition.y - movement.position.y);
+    var deltaX = this.currentLeftDownPosition.x - movement.position.x;
+    var deltaY = this.currentLeftDownPosition.y - movement.position.y;
     var deltaSquared = deltaX * deltaX + deltaY * deltaY;
 
     var deltaTime = new Date().getTime() - this.currentLeftDownTime;
