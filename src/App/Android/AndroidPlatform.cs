@@ -17,7 +17,7 @@ namespace WhereToFly.App.Android
         /// Returns current context, either from current activity, or the global application
         /// context
         /// </summary>
-        private static Context CurrentContext
+        internal static Context CurrentContext
         {
             get
             {
