@@ -55,6 +55,7 @@
     <Compile Include="Views\EditLocationDetailsPageTest.cs" />
     <Compile Include="Views\InfoPageTest.cs" />
     <Compile Include="Views\LocationDetailsPageTest.cs" />
+    <Compile Include="Views\MapViewTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\tracks.kmz">
