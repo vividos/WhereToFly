@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		..\Credits.md = ..\Credits.md
 		..\README.md = ..\README.md
+		..\Release-Checklist.md = ..\Release-Checklist.md
 		Settings.StyleCop = Settings.StyleCop
 		..\TestCases.md = ..\TestCases.md
 		..\TODO.md = ..\TODO.md
