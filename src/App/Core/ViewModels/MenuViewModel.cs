@@ -102,6 +102,7 @@ namespace WhereToFly.App.Core.ViewModels
                 new MenuItemViewModel("Map", "icons/map.svg", Constants.PageKeyMapPage),
                 new MenuItemViewModel("Location List", "icons/format-list-bulleted.svg", Constants.PageKeyLocationListPage),
                 new MenuItemViewModel("Current Position", "icons/compass.svg", Constants.PageKeyCurrentPositionDetailsPage),
+                new MenuItemViewModel("Weather", "icons/weather-partlycloudy.svg", Constants.PageKeyWeatherDashboardPage),
                 new MenuItemViewModel("Settings", "icons/settings.svg", Constants.PageKeySettingsPage),
                 new MenuItemViewModel("Info", "icons/information-outline.svg", Constants.PageKeyInfoPage),
             };

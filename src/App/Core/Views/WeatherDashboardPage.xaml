@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WhereToFly.App.Core.Views.WeatherDashboardPage">
+    <ContentPage.Content>
+        <!-- Scrollable flex layout containing all weather icons -->
+        <ScrollView Orientation="Vertical">
+            <FlexLayout x:Name="dashboardFlexLayout"
+                        Direction="Row"
+                        AlignItems="Start"
+                        AlignContent="Start"
+                        JustifyContent="Start"
+                        Wrap="Wrap"
+                        BackgroundColor="White">
+                <!-- Controls are added by page dynamically -->
+            </FlexLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

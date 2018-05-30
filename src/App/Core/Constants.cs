@@ -65,6 +65,11 @@ namespace WhereToFly.App.Core
         public const string PageKeyEditLocationDetailsPage = "EditLocationDetailsPage";
 
         /// <summary>
+        /// Page key for use in NavigationService, to navigate to weather dashboard page.
+        /// </summary>
+        public const string PageKeyWeatherDashboardPage = "WeatherDashboardPage";
+
+        /// <summary>
         /// Page key for use in NavigationService, to navigate to settings page
         /// </summary>
         public const string PageKeySettingsPage = "SettingsPage";

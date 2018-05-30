@@ -62,6 +62,10 @@ namespace WhereToFly.App.Core.Services
                     pageType = typeof(EditLocationDetailsPage);
                     break;
 
+                case Constants.PageKeyWeatherDashboardPage:
+                    pageType = typeof(WeatherDashboardPage);
+                    break;
+
                 case Constants.PageKeySettingsPage:
                     pageType = typeof(SettingsPage);
                     break;
