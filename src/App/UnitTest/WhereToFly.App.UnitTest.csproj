@@ -48,6 +48,11 @@
     <Compile Include="AppSettingsTest.cs" />
     <Compile Include="HtmlConverterTest.cs" />
     <Compile Include="LocationTest.cs" />
+    <Compile Include="UnitTestAppManager.cs" />
+    <Compile Include="ViewModels\WeatherIconViewModelTest.cs" />
+    <Compile Include="ViewModels\WeatherDashboardViewModelTest.cs" />
+    <Compile Include="Views\WeatherDashboardPageTest.cs" />
+    <Compile Include="WeatherImageCacheTest.cs" />
     <Compile Include="UnitTestPlatform.cs" />
     <Compile Include="ViewModels\LocationListEntryViewModelTest.cs" />
     <Compile Include="ViewModels\CurrentPositionDetailsViewModelTest.cs" />
