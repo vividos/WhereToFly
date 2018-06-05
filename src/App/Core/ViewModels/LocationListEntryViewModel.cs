@@ -63,7 +63,7 @@ namespace WhereToFly.App.Core.ViewModels
             get
             {
                 bool isElevationAvailable =
-                    Math.Abs(this.location.Elevation) < double.Epsilon;
+                    Math.Abs(this.location.Elevation) > 1e-6;
 
                 return string.Format(
                     isElevationAvailable ? "Elevation: {0} m; Distance: {1}" : "Distance: {1}",
