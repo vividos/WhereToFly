@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 x:Class="WhereToFly.App.Core.Views.WaitingPopupPage">
+
+    <!-- Popup page showing a waiting message and an activity indicator -->
+    <StackLayout VerticalOptions="Center"
+                 HorizontalOptions="Center"
+                 HeightRequest="80"
+                 WidthRequest="250"
+                 BackgroundColor="White"
+                 Padding="20">
+
+        <!-- Waiting message -->
+        <Label x:Name="waitingMessage"
+               Text="Waiting..."
+               FontSize="Medium"
+               VerticalOptions="Start"
+               HorizontalOptions="Center" />
+
+        <ActivityIndicator IsRunning="True"
+                           WidthRequest="40"
+                           HeightRequest="40"
+                           VerticalOptions="Start"
+                           HorizontalOptions="Center" />
+    </StackLayout>
+
+</pages:PopupPage>
