@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
 
@@ -52,7 +53,7 @@ namespace WhereToFly.App.Geo.DataFormats
                     {
                         Id = placemark.Id ?? Guid.NewGuid().ToString("B"),
                         Name = placemark.Name ?? "unknown",
-                        Description = HtmlConverter.Sanitize(placemark.Description?.Text ?? string.Empty),
+                        Description = GetDescriptionFromPlacemark(placemark),
                         Type = MapPlacemarkToType(kml, placemark),
                         MapLocation = new MapPoint(point.Coordinate.Latitude, point.Coordinate.Longitude),
                         Elevation = point.Coordinate.Altitude ?? 0
@@ -61,6 +62,27 @@ namespace WhereToFly.App.Geo.DataFormats
             }
 
             return locationList;
+        }
+
+        /// <summary>
+        /// Returns sanitized description HTML text from given placemark.
+        /// </summary>
+        /// <param name="placemark">placemark to use</param>
+        /// <returns>HTML description text</returns>
+        private static string GetDescriptionFromPlacemark(Placemark placemark)
+        {
+            string text = placemark.Description?.Text ?? string.Empty;
+
+            // no HTML tags? assume MarkDown
+            if (!text.Contains("<") &&
+                !text.Contains(">"))
+            {
+                text = HtmlConverter.FromMarkdown(text);
+            }
+
+            text = HtmlConverter.Sanitize(text);
+
+            return text;
         }
 
         /// <summary>
