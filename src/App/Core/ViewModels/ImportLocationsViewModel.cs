@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Services;
+using WhereToFly.App.Core.Views;
 using WhereToFly.App.Geo.DataFormats;
 using WhereToFly.App.Model;
 using Xamarin.Forms;
@@ -89,7 +90,12 @@ namespace WhereToFly.App.Core.ViewModels
 
             string assetFilename = this.includedLocationsList[result];
 
+            var waitingDialog = new WaitingPopupPage("Importing locations list...");
+            await waitingDialog.ShowAsync();
+
             List<Location> locationList = await LoadLocationListFromAssetsAsync(assetFilename);
+
+            await waitingDialog.HideAsync();
 
             if (locationList == null)
             {
@@ -171,7 +177,12 @@ namespace WhereToFly.App.Core.ViewModels
                 return;
             }
 
+            var waitingDialog = new WaitingPopupPage("Importing locations list...");
+            await waitingDialog.ShowAsync();
+
             List<Location> locationList = await LoadLocationListFromStorageAsync(result.FilePath);
+
+            await waitingDialog.HideAsync();
 
             if (locationList == null)
             {
