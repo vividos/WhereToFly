@@ -57,9 +57,11 @@
     <Compile Include="ViewModels\LocationListEntryViewModelTest.cs" />
     <Compile Include="ViewModels\CurrentPositionDetailsViewModelTest.cs" />
     <Compile Include="ViewModels\LocationListViewModelTest.cs" />
+    <Compile Include="Views\CurrentPositionDetailsPageTest.cs" />
     <Compile Include="Views\EditLocationDetailsPageTest.cs" />
     <Compile Include="Views\InfoPageTest.cs" />
     <Compile Include="Views\LocationDetailsPageTest.cs" />
+    <Compile Include="Views\MapPageTest.cs" />
     <Compile Include="Views\MapViewTest.cs" />
   </ItemGroup>
   <ItemGroup>
