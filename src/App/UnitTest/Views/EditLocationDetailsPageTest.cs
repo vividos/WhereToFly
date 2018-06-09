@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Threading.Tasks;
 using WhereToFly.App.Core;
 using WhereToFly.App.Core.Views;
 using WhereToFly.App.Model;
@@ -45,14 +46,18 @@ namespace WhereToFly.App.UnitTest.Views
         /// <summary>
         /// Tests default ctor of EditLocationDetailsPage
         /// </summary>
+        /// <returns>task to wait on</returns>
         [TestMethod]
-        public void TestDefaultCtor()
+        public async Task TestDefaultCtor()
         {
             // set up
             var location = GetDefaultLocation();
 
             // run
+            var root = new ContentPage();
             var page = new EditLocationDetailsPage(location);
+
+            await root.Navigation.PushAsync(page);
 
             // check
             Assert.IsTrue(page.Title.Length > 0, "page title must have been set");
