@@ -27,6 +27,11 @@ namespace WhereToFly.App.Core.Services
         private const string LocationListFilename = "locationList.json";
 
         /// <summary>
+        /// Filename for the weather icon list json file
+        /// </summary>
+        private const string WeatherIconListFilename = "weatherIconList.json";
+
+        /// <summary>
         /// Gets the current app settings object
         /// </summary>
         /// <param name="token">cancellation token</param>
@@ -170,6 +175,82 @@ namespace WhereToFly.App.Core.Services
             string filename = Path.Combine(platform.AppDataFolder, LocationListFilename);
 
             await Task.Run(() => File.WriteAllText(filename, json, Encoding.UTF8));
+        }
+
+        /// <summary>
+        /// Retrieves list of weather icon descriptions
+        /// </summary>
+        /// <returns>list with current weather icon descriptions</returns>
+        public async Task<List<WeatherIconDescription>> GetWeatherIconDescriptionListAsync()
+        {
+            var platform = DependencyService.Get<IPlatform>();
+
+            string filename = Path.Combine(platform.AppDataFolder, WeatherIconListFilename);
+
+            if (!File.Exists(filename))
+            {
+                return await Task.FromResult(new List<WeatherIconDescription>());
+            }
+
+            try
+            {
+                string json = File.ReadAllText(filename, Encoding.UTF8);
+
+                var weatherIconList = JsonConvert.DeserializeObject<List<WeatherIconDescription>>(json);
+
+                return await Task.FromResult(weatherIconList);
+            }
+            catch (Exception ex)
+            {
+                App.LogError(ex);
+                return await Task.FromResult(new List<WeatherIconDescription>());
+            }
+        }
+
+        /// <summary>
+        /// Stores new weather icon list
+        /// </summary>
+        /// <param name="weatherIconList">weather icon list to store</param>
+        /// <returns>task to wait on</returns>
+        public async Task StoreWeatherIconDescriptionListAsync(List<WeatherIconDescription> weatherIconList)
+        {
+            string json = JsonConvert.SerializeObject(weatherIconList);
+
+            var platform = DependencyService.Get<IPlatform>();
+            string filename = Path.Combine(platform.AppDataFolder, WeatherIconListFilename);
+
+            await Task.Run(() => File.WriteAllText(filename, json, Encoding.UTF8));
+        }
+
+        /// <summary>
+        /// Returns the repository of all available weather icon descriptions that can be used
+        /// to select weather icons for the customized list
+        /// </summary>
+        /// <returns>repository of all weather icons</returns>
+        public List<WeatherIconDescription> GetWeatherIconDescriptionRepository()
+        {
+            try
+            {
+                var platform = DependencyService.Get<IPlatform>();
+
+                string json = platform.LoadAssetText("weathericons.json");
+
+                var weatherIconList = JsonConvert.DeserializeObject<List<WeatherIconDescription>>(json);
+                return weatherIconList;
+            }
+            catch (Exception ex)
+            {
+                App.LogError(ex);
+
+                return new List<WeatherIconDescription>
+                {
+                    new WeatherIconDescription
+                    {
+                        Name = "Add new...",
+                        Type = WeatherIconDescription.IconType.IconPlaceholder,
+                    },
+                };
+            }
         }
     }
 }

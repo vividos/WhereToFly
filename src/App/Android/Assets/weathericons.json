@@ -1,0 +1,26 @@
+﻿[
+  {
+    "Name": "DHV Wetter",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://www.dhv.de/wetter/"
+  },
+  {
+    "Name": "Lightningmaps.org",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://www.lightningmaps.org/"
+  },
+  {
+    "Name": "Windy",
+    "Type": 1,
+    "Icon": null,
+    "WebLink": "com.windyty.android"
+  },
+  {
+    "Name": "WetterOnline",
+    "Type": 1,
+    "Icon": null,
+    "WebLink": "de.wetteronline.wetterapp"
+  }
+]

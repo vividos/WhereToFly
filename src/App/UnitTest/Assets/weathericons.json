@@ -1,0 +1,14 @@
+﻿[
+  {
+    "Name": "DHV Wetter",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://www.dhv.de/wetter/"
+  },
+  {
+    "Name": "Windy",
+    "Type": 1,
+    "Icon": null,
+    "WebLink": "com.windyty.android"
+  }
+]

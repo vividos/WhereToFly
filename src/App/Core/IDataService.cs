@@ -37,5 +37,25 @@ namespace WhereToFly.App.Core
         /// <param name="locationList">location list to store</param>
         /// <returns>task to wait on</returns>
         Task StoreLocationListAsync(List<Location> locationList);
+
+        /// <summary>
+        /// Retrieves list of weather icon descriptions
+        /// </summary>
+        /// <returns>list with current weather icon descriptions</returns>
+        Task<List<WeatherIconDescription>> GetWeatherIconDescriptionListAsync();
+
+        /// <summary>
+        /// Stores new weather icon list
+        /// </summary>
+        /// <param name="weatherIconList">weather icon list to store</param>
+        /// <returns>task to wait on</returns>
+        Task StoreWeatherIconDescriptionListAsync(List<WeatherIconDescription> weatherIconList);
+
+        /// <summary>
+        /// Returns the repository of all available weather icon descriptions that can be used
+        /// to select weather icons for the customized list
+        /// </summary>
+        /// <returns>repository of all weather icons</returns>
+        List<WeatherIconDescription> GetWeatherIconDescriptionRepository();
     }
 }
