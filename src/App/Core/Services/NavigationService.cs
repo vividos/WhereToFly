@@ -66,6 +66,13 @@ namespace WhereToFly.App.Core.Services
                     pageType = typeof(WeatherDashboardPage);
                     break;
 
+                case Constants.PageKeySelectWeatherIconPage:
+                    Debug.Assert(
+                        parameter != null && parameter is Action<Model.WeatherIconDescription>,
+                        "action must have been passed as parameter");
+                    pageType = typeof(SelectWeatherIconPage);
+                    break;
+
                 case Constants.PageKeySettingsPage:
                     pageType = typeof(SettingsPage);
                     break;

@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+             x:Class="WhereToFly.App.Core.Views.SelectWeatherIconPage">
+    <ContentPage.Content>
+
+        <!-- List showing all weather icons that can be added -->
+        <ListView ItemsSource="{Binding Path=WeatherIconList, Mode=OneWay}"
+                  ItemTapped="OnItemTapped_WeatherIconListView"
+                  IsPullToRefreshEnabled="False"
+                  android:ListView.IsFastScrollEnabled="true"
+                  CachingStrategy="RecycleElement"
+                  SeparatorVisibility="None"
+                  AutomationId="WeatherIconList">
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <!-- Templace for a single view cell -->
+                    <ViewCell Height="75">
+                        <ViewCell.View>
+                            <StackLayout Orientation="Horizontal" BackgroundColor="#efefef" Margin="8,4">
+                                <!-- Weather icon -->
+                                <Image Source="{Binding Icon, Mode=OneWay}"
+                                       WidthRequest="32" HeightRequest="32" Margin="4"
+                                       HorizontalOptions="Start" VerticalOptions="Center" />
+
+                                <!-- Title -->
+                                <Label Text="{Binding Title, Mode=OneWay}"
+                                       Style="{DynamicResource ListItemTextStyle}"
+                                       FontSize="Medium"
+                                       LineBreakMode="TailTruncation"
+                                       HorizontalOptions="FillAndExpand" VerticalOptions="Center" />
+
+                            </StackLayout>
+                        </ViewCell.View>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </ContentPage.Content>
+</ContentPage>
