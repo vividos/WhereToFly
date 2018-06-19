@@ -19,6 +19,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         private readonly WeatherIconDescription iconDescription;
 
+        #region Binding properties
         /// <summary>
         /// Title of weather icon
         /// </summary>
@@ -33,6 +34,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// Command that is carried out when weather icon has been tapped.
         /// </summary>
         public ICommand Tapped { get; internal set; }
+        #endregion
 
         /// <summary>
         /// Creates a new weather icon view model from weather icon description
@@ -50,7 +52,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         private void SetupBindings()
         {
-            this.Tapped = new Command(() => this.OpenWeatherIconTarget());
+            this.Tapped = new Command(async () => await this.OpenWeatherIconTargetAsync());
 
             Task.Run(async () =>
             {
@@ -65,7 +67,8 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Called in order to open weather icon target
         /// </summary>
-        private void OpenWeatherIconTarget()
+        /// <returns>task to wait on</returns>
+        private async Task OpenWeatherIconTargetAsync()
         {
             switch (this.iconDescription.Type)
             {
@@ -79,13 +82,37 @@ namespace WhereToFly.App.Core.ViewModels
                     break;
 
                 case WeatherIconDescription.IconType.IconPlaceholder:
-                    // TODO implement
+                    await this.OpenSelectionPageAsync();
                     break;
 
                 default:
                     Debug.Assert(false, "invalid weather icon type");
                     break;
             }
+        }
+
+        /// <summary>
+        /// Opens weather icon selection page
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task OpenSelectionPageAsync()
+        {
+            Action<WeatherIconDescription> parameter = this.OnSelectedWeatherIcon;
+
+            await NavigationService.Instance.NavigateAsync(
+                Constants.PageKeySelectWeatherIconPage,
+                animated: true,
+                parameter: parameter);
+        }
+
+        /// <summary>
+        /// Called from SelectWeatherIconPage when a weather icon was selected by the user.
+        /// </summary>
+        /// <param name="weatherIcon">selected weather icon</param>
+        private void OnSelectedWeatherIcon(WeatherIconDescription weatherIcon)
+        {
+            WeatherDashboardViewModel.AddWeatherIcon(this, weatherIcon);
+            App.RunOnUiThread(async () => await NavigationService.Instance.GoBack());
         }
 
         #region INotifyPropertyChanged implementation

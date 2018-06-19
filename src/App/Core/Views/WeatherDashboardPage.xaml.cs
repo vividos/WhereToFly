@@ -23,22 +23,32 @@ namespace WhereToFly.App.Core.Views
         {
             this.Title = "Weather";
 
-            this.BindingContext = this.viewModel = new WeatherDashboardViewModel();
-
             this.InitializeComponent();
 
-            this.SetupBindings();
+            this.BindingContext = this.viewModel = new WeatherDashboardViewModel();
+            this.viewModel.PropertyChanged += this.ViewModel_PropertyChanged;
         }
 
         /// <summary>
-        /// Sets up property bindings; adds weather icon views for all weather icon descriptions.
+        /// Called when one of the properties of the view model has changed. Adds weather icon
+        /// views for all weather icon descriptions when the list has changed
         /// </summary>
-        private void SetupBindings()
+        /// <param name="sender">sender object</param>
+        /// <param name="args">event args</param>
+        private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs args)
         {
-            foreach (var iconDescription in this.viewModel.WeatherIconDescriptionList)
+            if (args.PropertyName == nameof(this.viewModel.WeatherIconDescriptionList))
             {
-                var weatherIcon = new WeatherIcon(iconDescription);
-                this.dashboardFlexLayout.Children.Add(weatherIcon);
+                App.RunOnUiThread(() =>
+                {
+                    this.dashboardFlexLayout.Children.Clear();
+
+                    foreach (var iconDescription in this.viewModel.WeatherIconDescriptionList)
+                    {
+                        var weatherIcon = new WeatherIcon(iconDescription);
+                        this.dashboardFlexLayout.Children.Add(weatherIcon);
+                    }
+                });
             }
         }
     }
