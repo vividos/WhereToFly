@@ -352,6 +352,24 @@ namespace WhereToFly.App.Core.Views
         }
 
         /// <summary>
+        /// Adds new track with given name and map points
+        /// </summary>
+        /// <param name="trackName">track name to add</param>
+        /// <param name="mapPoints">map points</param>
+        public void AddTrack(string trackName, List<MapPoint> mapPoints)
+        {
+            var trackPointsList =
+                mapPoints.SelectMany(x => new double[] { x.Longitude, x.Latitude });
+
+            string js = string.Format(
+                "map.addTrack('{0}', {1});",
+                trackName,
+                JsonConvert.SerializeObject(trackPointsList));
+
+            this.RunJavaScript(js);
+        }
+
+        /// <summary>
         /// Shows the find result pin and zooms to it
         /// </summary>
         /// <param name="text">text of find result</param>

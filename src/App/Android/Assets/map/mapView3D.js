@@ -738,13 +738,21 @@ MapView.prototype.showFindResult = function (options) {
 
 /**
  * Adds list of tracks to the map
- * @param {array} listOfTracks An array of tracks
+ * @param {string} trackName track name to add
+ * @param {array} listOfTrackPoints An array of track points in long, lat, long, lat, ... order
  */
-MapView.prototype.addTracksList = function (listOfTracks) {
+MapView.prototype.addTrack = function (trackName, listOfTrackPoints) {
 
-    console.log("adding list of tracks, with " + listOfTracks.length + " entries");
+    console.log("adding list of track points, with " + listOfTrackPoints.length + " entries");
 
-    // TODO implement
+    var track = this.viewer.entities.add({
+        name: trackName,
+        polyline: {
+            positions: Cesium.Cartesian3.fromDegreesArray(listOfTrackPoints),
+            width: 5,
+            material: Cesium.Color.RED
+        }
+    });
 };
 
 /**

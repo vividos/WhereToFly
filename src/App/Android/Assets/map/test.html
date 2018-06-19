@@ -53,6 +53,8 @@
         <button onclick="map.zoomToLocation({latitude: 47.6764385, longitude: 11.8710533})">Fly to summit</button>
 
         <button onclick="showFindResult()">Show find result</button>
+		
+		<button onclick="addTrack()">Add track</button>
     </div>
 
     <div id="mapElement"></div>
@@ -105,6 +107,10 @@
                 displayLongitude: '11°50\'17.2"E'
             });
         }
+		
+		addTrack = function () {
+			map.addTrack('Crossing the Alps 2018', [12.352277,47.754076,12.432716,47.630431,12.29676,47.285013,12.183008,47.090525,11.958434,46.738669,11.787137,46.296141,11.904684,46.017666]);
+		}
 
     </script>
 
