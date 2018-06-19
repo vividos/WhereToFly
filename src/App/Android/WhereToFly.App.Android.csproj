@@ -130,10 +130,11 @@
     <AndroidAsset Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_9.json" />
     <AndroidAsset Include="Assets\map\Cesium\Assets\approximateTerrainHeights.json" />
     <AndroidAsset Include="Assets\info.md" />
-    <AndroidAsset Include="Assets\locations\paraglidingspots_nzl_2017_12_20.kmz" />
     <AndroidAsset Include="Assets\locations\paraglidingspots_european_alps_2018_01_07.kmz" />
     <AndroidAsset Include="Assets\map\Cesium\ThirdParty\draco_decoder.wasm" />
     <AndroidAsset Include="Assets\weathericons.json" />
+    <AndroidAsset Include="Assets\locations\paraglidingspots_crossing_the_alps_2018_06_19.kmz" />
+    <AndroidAsset Include="Assets\locations\crossing_the_alps_2018.kmz" />
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
