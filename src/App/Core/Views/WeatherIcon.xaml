@@ -15,11 +15,14 @@
 
             <!-- Controls -->
             <Image Source="{Binding Icon, Mode=OneWay}"
-                   WidthRequest="60" HeightRequest="60" />
+                   WidthRequest="50" HeightRequest="50" Margin="4,4,0,0" />
 
-            <Label Text="{Binding Title, Mode=OneTime}" FontSize="Medium"
-                   HorizontalTextAlignment="Center"
-                   TextColor="Black"/>
+            <Label Text="{Binding Title, Mode=OneTime}"
+                   FontSize="Medium" TextColor="Black"
+                   LineBreakMode="WordWrap"
+                   HorizontalTextAlignment="Center" VerticalTextAlignment="Start"
+                   HeightRequest="48" Margin="4,0,4,4"
+                   VerticalOptions="FillAndExpand" />
         </StackLayout>
     </ContentView.Content>
 </ContentView>
