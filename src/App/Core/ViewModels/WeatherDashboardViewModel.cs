@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using WhereToFly.App.Core.Services;
 using WhereToFly.App.Model;
 using Xamarin.Forms;
 
@@ -18,6 +19,16 @@ namespace WhereToFly.App.Core.ViewModels
         /// List of weather icon descriptions for all weather icons to display
         /// </summary>
         public List<WeatherIconDescription> WeatherIconDescriptionList { get; set; }
+
+        /// <summary>
+        /// Command to execute when "add new" menu item is selected
+        /// </summary>
+        public Command AddNewCommand { get; set; }
+
+        /// <summary>
+        /// Command to execute when "clear all" menu item is selected
+        /// </summary>
+        public Command ClearAllCommand { get; set; }
         #endregion
 
         /// <summary>
@@ -86,6 +97,18 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         private void SetupBindings()
         {
+            this.AddNewCommand = new Command(async () =>
+            {
+                Action<WeatherIconDescription> parameter = this.OnSelectedWeatherIcon;
+
+                await NavigationService.Instance.NavigateAsync(
+                    Constants.PageKeySelectWeatherIconPage,
+                    animated: true,
+                    parameter: parameter);
+            });
+
+            this.ClearAllCommand = new Command(async () => await this.ClearAllWeatherIcons());
+
             Task.Run(async () =>
             {
                 var dataService = DependencyService.Get<IDataService>();
@@ -101,6 +124,36 @@ namespace WhereToFly.App.Core.ViewModels
 
                 this.OnPropertyChanged(nameof(this.WeatherIconDescriptionList));
             });
+        }
+
+        /// <summary>
+        /// Called from SelectWeatherIconPage when a weather icon was selected by the user.
+        /// </summary>
+        /// <param name="weatherIcon">selected weather icon</param>
+        private void OnSelectedWeatherIcon(WeatherIconDescription weatherIcon)
+        {
+            AddWeatherIcon(this, weatherIcon);
+            App.RunOnUiThread(async () => await NavigationService.Instance.GoBack());
+        }
+
+        /// <summary>
+        /// Clears all weather icons
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task ClearAllWeatherIcons()
+        {
+            this.WeatherIconDescriptionList.Clear();
+
+            this.WeatherIconDescriptionList.Add(
+                new WeatherIconDescription
+                {
+                    Name = "Add new...",
+                    Type = WeatherIconDescription.IconType.IconPlaceholder,
+                });
+
+            this.OnPropertyChanged(nameof(this.WeatherIconDescriptionList));
+
+            await this.SaveWeatherIconListAsync();
         }
 
         #region INotifyPropertyChanged implementation

@@ -2,6 +2,20 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="WhereToFly.App.Core.Views.WeatherDashboardPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="Add new"
+                     Icon="playlist_plus.xml"
+                     Command="{Binding AddNewCommand}"
+                     Order="Primary" Priority="0" />
+
+        <ToolbarItem Name="Clear all"
+                     Icon="delete.xml"
+                     Command="{Binding ClearAllCommand}"
+                     IsDestructive="True"
+                     Order="Primary" Priority="1" />
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Content>
         <!-- Scrollable flex layout containing all weather icons -->
         <ScrollView Orientation="Vertical">
