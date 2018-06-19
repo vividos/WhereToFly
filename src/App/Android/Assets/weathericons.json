@@ -1,24 +1,28 @@
 ﻿[
   {
     "Name": "DHV Wetter",
+    "Group": "Weather forecast",
     "Type": 0,
     "Icon": null,
     "WebLink": "https://www.dhv.de/wetter/"
   },
   {
     "Name": "Lightningmaps.org",
+    "Group": "Current weather",
     "Type": 0,
     "Icon": null,
     "WebLink": "https://www.lightningmaps.org/"
   },
   {
     "Name": "Windy",
+    "Group": "Android app",
     "Type": 1,
     "Icon": null,
     "WebLink": "com.windyty.android"
   },
   {
     "Name": "WetterOnline",
+    "Group": "Android app",
     "Type": 1,
     "Icon": null,
     "WebLink": "de.wetteronline.wetterapp"

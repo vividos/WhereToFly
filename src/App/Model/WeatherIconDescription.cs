@@ -11,6 +11,11 @@
         public string Name { get; set; }
 
         /// <summary>
+        /// Group of weather icon; can be used to group icons
+        /// </summary>
+        public string Group { get; set; }
+
+        /// <summary>
         /// Weather icon type
         /// </summary>
         public enum IconType
