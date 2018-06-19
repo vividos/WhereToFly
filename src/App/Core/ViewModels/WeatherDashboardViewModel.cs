@@ -52,6 +52,10 @@ namespace WhereToFly.App.Core.ViewModels
         /// <param name="iconDescription">weather icon description</param>
         private void OnAddWeatherIcon(object sender, WeatherIconDescription iconDescription)
         {
+            // remove it when it's already in the list, in order to move it to the end
+            this.WeatherIconDescriptionList.RemoveAll(
+                x => x.Type == iconDescription.Type && x.WebLink == iconDescription.WebLink);
+
             int insertIndex = this.WeatherIconDescriptionList.Any() ? this.WeatherIconDescriptionList.Count - 1 : 0;
             this.WeatherIconDescriptionList.Insert(insertIndex, iconDescription);
 
