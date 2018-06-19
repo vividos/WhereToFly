@@ -379,6 +379,8 @@ namespace WhereToFly.App.Core.Views
             this.mapView.MapShadingMode = this.appSettings.ShadingMode;
             this.mapView.CoordinateDisplayFormat = this.appSettings.CoordinateDisplayFormat;
 
+            this.mapView.AddLocationList(this.locationList);
+
             this.mapView.AddTrack("Crossing the Alps 2018",
                 new List<MapPoint>
                 {
@@ -390,8 +392,6 @@ namespace WhereToFly.App.Core.Views
                     new MapPoint(46.296141, 11.787137), // Passo Rolle
                     new MapPoint(46.017666, 11.904684), // Feltre
                 });
-
-            this.mapView.AddLocationList(this.locationList);
         }
 
         /// <summary>
