@@ -54,7 +54,8 @@
                              Padding="4"
                              BackgroundColor="#efefef">
                     <Label Text="Accuracy [m]" />
-                    <Label Text="{Binding Accuracy, Mode=OneWay}" FontSize="32" />
+                    <Label Text="{Binding Accuracy, Mode=OneWay}" FontSize="32"
+                           TextColor="{Binding PositionAccuracyColor, Mode=OneWay}" />
                 </StackLayout>
 
                 <!-- Last position fix -->

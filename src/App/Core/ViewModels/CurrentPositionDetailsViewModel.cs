@@ -71,6 +71,17 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
+        /// Color for position accuracy
+        /// </summary>
+        public Color PositionAccuracyColor
+        {
+            get
+            {
+                return this.position == null ? Color.Black : Color.FromHex(ColorFromPositionAccuracy((int)this.position.Accuracy));
+            }
+        }
+
+        /// <summary>
         /// Last position fix
         /// </summary>
         public string LastPositionFix
@@ -156,6 +167,7 @@ namespace WhereToFly.App.Core.ViewModels
             this.OnPropertyChanged(nameof(this.Latitude));
             this.OnPropertyChanged(nameof(this.Altitude));
             this.OnPropertyChanged(nameof(this.Accuracy));
+            this.OnPropertyChanged(nameof(this.PositionAccuracyColor));
             this.OnPropertyChanged(nameof(this.LastPositionFix));
             this.OnPropertyChanged(nameof(this.SpeedInKmh));
             this.OnPropertyChanged(nameof(this.IsHeadingAvail));
@@ -179,6 +191,31 @@ namespace WhereToFly.App.Core.ViewModels
 
                 var dataService = DependencyService.Get<IDataService>();
                 await dataService.StoreAppSettingsAsync(this.appSettings);
+            }
+        }
+
+        /// <summary>
+        /// Returns an HTML color from a position accuracy value.
+        /// </summary>
+        /// <param name="positionAccuracyInMeter">position accuracy, in meter</param>
+        /// <returns>HTML color in format #rrggbb</returns>
+        private static string ColorFromPositionAccuracy(int positionAccuracyInMeter)
+        {
+            if (positionAccuracyInMeter < 40)
+            {
+                return "#00c000"; // green
+            }
+            else if (positionAccuracyInMeter < 120)
+            {
+                return "#e0e000"; // yellow
+            }
+            else if (positionAccuracyInMeter < 200)
+            {
+                return "#ff8000"; // orange
+            }
+            else
+            {
+                return "#c00000"; // red
             }
         }
 
