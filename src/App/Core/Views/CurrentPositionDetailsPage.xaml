@@ -4,53 +4,92 @@
              x:Class="WhereToFly.App.Core.Views.CurrentPositionDetailsPage">
     <ContentPage.Content>
 
-        <!-- Grid with all current position details -->
-        <Grid WidthRequest="350" MinimumWidthRequest="350"
-              VerticalOptions="FillAndExpand" ColumnSpacing="16" RowSpacing="16" Padding="8">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-            </Grid.ColumnDefinitions>
+        <ScrollView Orientation="Vertical">
 
-            <!-- Longitude -->
-            <Label Grid.Row="0" Grid.Column="0" Text="Longitude" />
-            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Longitude, Mode=OneWay}" />
+            <!-- Flex layout with all current position details -->
+            <FlexLayout
+                Direction="Row"
+                AlignItems="Start"
+                AlignContent="Start"
+                JustifyContent="Start"
+                Wrap="Wrap"
+                BackgroundColor="White">
 
-            <!-- Latitude -->
-            <Label Grid.Row="1" Grid.Column="0" Text="Latitude" />
-            <Label Grid.Row="1" Grid.Column="1" Text="{Binding Latitude, Mode=OneWay}" />
+                <!-- Latitude / Longitude -->
+                <Grid WidthRequest="300" HeightRequest="100"
+                      Margin="16,16,0,0"
+                      Padding="4"
+                      BackgroundColor="#efefef">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
 
-            <!-- Altitude -->
-            <Label Grid.Row="2" Grid.Column="0" Text="Altitude [m]" />
-            <Label Grid.Row="2" Grid.Column="1" Text="{Binding Altitude, Mode=OneWay}" />
+                    <Label Grid.Row="0" Grid.Column="0" Text="Longitude" />
+                    <Label Grid.Row="1" Grid.Column="0" Text="{Binding Longitude, Mode=OneWay}" FontSize="24" />
 
-            <!-- Accuracy -->
-            <Label Grid.Row="3" Grid.Column="0" Text="Accuracy [m]" />
-            <Label Grid.Row="3" Grid.Column="1" Text="{Binding Accuracy, Mode=OneWay}" />
+                    <!-- Latitude -->
+                    <Label Grid.Row="0" Grid.Column="1" Text="Latitude" />
+                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Latitude, Mode=OneWay}" FontSize="24" />
+                </Grid>
 
-            <!-- Last position fix -->
-            <Label Grid.Row="4" Grid.Column="0" Text="Last position fix" />
-            <Label Grid.Row="4" Grid.Column="1" Text="{Binding LastPositionFix, Mode=OneWay}" />
+                <!-- Altitude -->
+                <StackLayout WidthRequest="100" HeightRequest="100"
+                             Orientation="Vertical"
+                             Margin="16,16,0,0"
+                             Padding="4"
+                             BackgroundColor="#efefef">
+                    <Label Text="Altitude [m]" />
+                    <Label Text="{Binding Altitude, Mode=OneWay}" FontSize="32" />
+                </StackLayout>
 
-            <!-- Speed -->
-            <Label Grid.Row="5" Grid.Column="0" Text="Speed [km/h]" />
-            <Label Grid.Row="5" Grid.Column="1" Text="{Binding SpeedInKmh, Mode=OneWay}" />
+                <!-- Accuracy -->
+                <StackLayout WidthRequest="100" HeightRequest="100"
+                             Orientation="Vertical"
+                             Margin="16,16,0,0"
+                             Padding="4"
+                             BackgroundColor="#efefef">
+                    <Label Text="Accuracy [m]" />
+                    <Label Text="{Binding Accuracy, Mode=OneWay}" FontSize="32" />
+                </StackLayout>
 
-            <!-- Heading -->
-            <Label Grid.Row="6" Grid.Column="0" Text="Heading [°]"
-                   IsVisible="{Binding IsHeadingAvail, Mode=OneWay}" />
-            <Label Grid.Row="6" Grid.Column="1" Text="{Binding HeadingInDegrees, Mode=OneWay}"
-                   IsVisible="{Binding IsHeadingAvail, Mode=OneWay}" />
-        </Grid>
+                <!-- Last position fix -->
+                <StackLayout WidthRequest="100" HeightRequest="100"
+                             Orientation="Vertical"
+                             Margin="16,16,0,0"
+                             Padding="4"
+                             BackgroundColor="#efefef">
+                    <Label Text="Last position fix" />
+                    <Label Text="{Binding LastPositionFix, Mode=OneWay}" FontSize="24" />
+                </StackLayout>
+
+                <!-- Speed -->
+                <StackLayout WidthRequest="100" HeightRequest="100"
+                             Orientation="Vertical"
+                             Margin="16,16,0,0"
+                             Padding="4"
+                             BackgroundColor="#efefef">
+                    <Label Text="Speed [km/h]" />
+                    <Label Text="{Binding SpeedInKmh, Mode=OneWay}" FontSize="32" />
+                </StackLayout>
+
+                <!-- Heading -->
+                <StackLayout WidthRequest="100" HeightRequest="100"
+                             Orientation="Vertical"
+                             Margin="16,16,0,0"
+                             Padding="4"
+                             IsVisible="{Binding IsHeadingAvail, Mode=OneWay}"
+                             BackgroundColor="#efefef">
+                    <Label Text="Heading [°]" />
+                    <Label Text="{Binding HeadingInDegrees, Mode=OneWay}" FontSize="32" />
+                </StackLayout>
+
+            </FlexLayout>
+        </ScrollView>
 
     </ContentPage.Content>
 </ContentPage>
