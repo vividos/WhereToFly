@@ -85,8 +85,7 @@ namespace WhereToFly.App.Core
         {
             var url = new Uri(webLink);
 
-            const string FaviconFilename = "/favicon.ico";
-            return new UriBuilder(url.Scheme, url.Host, url.Port, FaviconFilename).Uri.ToString();
+            return $"http://www.google.com/s2/favicons?domain={url.Host}";
         }
 
         /// <summary>
