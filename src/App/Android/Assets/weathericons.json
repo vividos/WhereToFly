@@ -1,5 +1,12 @@
 ﻿[
   {
+    "Name": "vividos.de Wetter",
+    "Group": "Weather forecast",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "http://www.vividos.de/wetter/"
+  },
+  {
     "Name": "DHV Wetter",
     "Group": "Weather forecast",
     "Type": 0,
@@ -7,11 +14,158 @@
     "WebLink": "https://www.dhv.de/wetter/"
   },
   {
+    "Name": "DWD Segelflugwetter",
+    "Group": "Weather forecast",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://www.dwd.de/DE/fachnutzer/luftfahrt/teaser/gafor/node_84"
+  },
+  {
+    "Name": "Alptherm Segelflugwetter",
+    "Group": "Weather forecast",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://www.austrocontrol.at/flugwetter/index.php?id=557&lang=de"
+  },
+  {
+    "Name": "Alptherm östl. Bayern",
+    "Group": "Weather forecast",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://www.austrocontrol.at/flugwetter/index.php?id=560&lang=de&tag=heute&region=84"
+  },
+  {
+    "Name": "Alptherm Pustertal",
+    "Group": "Weather forecast",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://www.austrocontrol.at/flugwetter/index.php?id=560&lang=de&tag=heute&region=118"
+  },
+  {
+    "Name": "Meteo Parapente",
+    "Group": "Weather forecast",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://www.meteo-parapente.com/?lang=en#/"
+  },
+  {
+    "Name": "soarGFS",
+    "Group": "Weather forecast",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://soaringmeteo.org/GFSw/googleMap.html"
+  },
+  {
+    "Name": "Velivole.fr",
+    "Group": "Weather forecast",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://www.velivole.fr/"
+  },
+  {
+    "Name": "Föhnprognose",
+    "Group": "Weather forecast",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "http://www.wetteralarm.at/de/wetter/foehndiagramme.html"
+  },
+  {
+    "Name": "BR Bergwetter Alpen",
+    "Group": "Weather forecast",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "http://www.br.de/wetter/action/reisewetter/bergwetter.do"
+  },
+  {
+    "Name": "Unwetterzentrale.de",
+    "Group": "Weather forecast",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "http://www.unwetterzentrale.de/uwz/lagebericht.html"
+  },
+  {
+    "Name": "Dust forecast",
+    "Group": "Weather forecast",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "http://forecast.uoa.gr/dustindx.php"
+  },
+  {
+    "Name": "Regenradar Bayern",
+    "Group": "Current weather",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://www.wetteronline.de/regenradar/bayern"
+  },
+  {
+    "Name": "Wind Lawinendienst Bayern",
+    "Group": "Current weather",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "http://www.lawinenwarndienst-bayern.de/res/daten_meldungen/messdaten/"
+  },
+  {
     "Name": "Lightningmaps.org",
     "Group": "Current weather",
     "Type": 0,
     "Icon": null,
     "WebLink": "https://www.lightningmaps.org/"
+  },
+  {
+    "Name": "Hochries Wetterdaten",
+    "Group": "Current weather",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "http://www.foto-webcam.eu/webcam/hochries/wetter/"
+  },
+  {
+    "Name": "Sat24 Alpen",
+    "Group": "Current weather",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://de.sat24.com/de"
+  },
+  {
+    "Name": "Patscherkofel Wind",
+    "Group": "Current weather",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://www.wetteronline.de/wetter-aktuell/patscherkofel?frequency=hourly&parameter=wind"
+  },
+  {
+    "Name": "Foto-Webcam Karte",
+    "Group": "Webcams",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "http://www.foto-webcam.eu/webcam/include/map.php"
+  },
+  {
+    "Name": "Foto-Webcam Hochries W",
+    "Group": "Webcams",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "http://www.foto-webcam.eu/webcam/hochries/"
+  },
+  {
+    "Name": "Foto-Webcam Sonnblick",
+    "Group": "Webcams",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "http://www.foto-webcam.eu/webcam/sonnblick/"
+  },
+  {
+    "Name": "Foto-Webcam Kronplatz",
+    "Group": "Webcams",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "http://www.foto-webcam.eu/webcam/kronplatz/"
+  },
+  {
+    "Name": "Webcam Col Rodella",
+    "Group": "Webcams",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://colrodella.panomax.com/"
   },
   {
     "Name": "Windy",
