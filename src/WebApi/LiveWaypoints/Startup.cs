@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.IO;
 
-namespace LiveWaypoints
+namespace WhereToFly.WebApi.LiveWaypoints
 {
     /// <summary>
     /// Startup class for WebAPI project
