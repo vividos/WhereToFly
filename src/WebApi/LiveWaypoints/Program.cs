@@ -14,17 +14,16 @@ namespace LiveWaypoints
         /// <param name="args">command line args</param>
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            CreateWebHostBuilder(args).Build().Run();
         }
 
         /// <summary>
-        /// Builds web host object
+        /// Returns a web host builder object
         /// </summary>
         /// <param name="args">command line args</param>
         /// <returns>built web host object</returns>
-        public static IWebHost BuildWebHost(string[] args) =>
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .Build();
+                .UseStartup<Startup>();
     }
 }
