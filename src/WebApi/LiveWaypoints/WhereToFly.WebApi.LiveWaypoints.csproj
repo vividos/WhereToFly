@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="7.1.0.5212" />
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="7.2.0.5463" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="2.4.0" />
   </ItemGroup>
 
