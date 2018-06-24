@@ -38,7 +38,13 @@ Current version: %VERSION%
     fixed loading terrain height data
     fixed displaying large number of pins when many locations are loaded
 
-1.3.0
+1.3.0 "Crossing the alps 2018" edition
 
     introduced hamburger menu with drawer to navigate between top-level pages
     added weather dashboard, showing weather icons that can be links to external web pages or apps
+    redesigned "current position" page to use tiles
+    added waiting dialogs when importing locations
+    crossing the alps: added waypoints and a fixed red polyline with the planned route
+    fixed opening downloaded .kml, .kmz and .gpx files
+    fixed crash on Android before 8.0; the "Skyways" overlay is not available on these devices
+    other small bugfixes and improvements
