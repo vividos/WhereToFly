@@ -381,7 +381,8 @@ namespace WhereToFly.App.Core.Views
 
             this.mapView.AddLocationList(this.locationList);
 
-            this.mapView.AddTrack("Crossing the Alps 2018",
+            this.mapView.AddTrack(
+                "Crossing the Alps 2018",
                 new List<MapPoint>
                 {
                     new MapPoint(47.754076, 12.352277), // Kampenwand
