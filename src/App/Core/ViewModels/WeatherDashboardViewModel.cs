@@ -97,6 +97,8 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         private void SetupBindings()
         {
+            this.WeatherIconDescriptionList = new List<WeatherIconDescription>();
+
             this.AddNewCommand = new Command(async () =>
             {
                 Action<WeatherIconDescription> parameter = this.OnSelectedWeatherIcon;
