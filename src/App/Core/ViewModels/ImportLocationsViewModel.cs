@@ -77,6 +77,27 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task ImportIncludedAsync()
         {
+            string assetFilename = await this.AskIncludedLocationListAsync();
+            if (assetFilename == null)
+            {
+                return;
+            }
+
+            List<Location> locationList = await LoadLocationListFromAssetsAsync(assetFilename);
+            if (locationList == null)
+            {
+                return;
+            }
+
+            await this.AppendOrReplaceLocationListAsync(locationList);
+        }
+
+        /// <summary>
+        /// Asks user for included location list and returns the asset filename.
+        /// </summary>
+        /// <returns>asset filename, or null when no location list was selected</returns>
+        private async Task<string> AskIncludedLocationListAsync()
+        {
             string result = await App.Current.MainPage.DisplayActionSheet(
                 "Select a location list",
                 "Cancel",
@@ -86,40 +107,10 @@ namespace WhereToFly.App.Core.ViewModels
             if (result == null ||
                 !this.includedLocationsList.ContainsKey(result))
             {
-                return;
+                return null;
             }
 
-            string assetFilename = this.includedLocationsList[result];
-
-            var waitingDialog = new WaitingPopupPage("Importing locations list...");
-            await waitingDialog.ShowAsync();
-
-            List<Location> locationList = await LoadLocationListFromAssetsAsync(assetFilename);
-
-            await waitingDialog.HideAsync();
-
-            if (locationList == null)
-            {
-                return;
-            }
-
-            bool appendToList = await AskAppendToList();
-
-            var dataService = DependencyService.Get<IDataService>();
-
-            if (appendToList)
-            {
-                var currentList = await dataService.GetLocationListAsync(CancellationToken.None);
-                locationList.InsertRange(0, currentList);
-            }
-
-            await dataService.StoreLocationListAsync(locationList);
-
-            App.UpdateMapLocationsList();
-
-            await NavigationService.Instance.GoBack();
-
-            App.ShowToast("Location list was loaded.");
+            return this.includedLocationsList[result];
         }
 
         /// <summary>
@@ -129,8 +120,12 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>list of locations, or null when no location list could be loaded</returns>
         private static async Task<List<Location>> LoadLocationListFromAssetsAsync(string assetFilename)
         {
+            var waitingDialog = new WaitingPopupPage("Importing locations list...");
+
             try
             {
+                await waitingDialog.ShowAsync();
+
                 var platform = DependencyService.Get<IPlatform>();
                 using (var stream = platform.OpenAssetStream("locations/" + assetFilename))
                 {
@@ -148,6 +143,36 @@ namespace WhereToFly.App.Core.ViewModels
 
                 return null;
             }
+            finally
+            {
+                await waitingDialog.HideAsync();
+            }
+        }
+
+        /// <summary>
+        /// Appends or replaces location list
+        /// </summary>
+        /// <param name="locationList">location list to append or replace</param>
+        /// <returns>task to wait on</returns>
+        private async Task AppendOrReplaceLocationListAsync(List<Location> locationList)
+        {
+            bool appendToList = await AskAppendToList();
+
+            var dataService = DependencyService.Get<IDataService>();
+
+            if (appendToList)
+            {
+                var currentList = await dataService.GetLocationListAsync(CancellationToken.None);
+                locationList.InsertRange(0, currentList);
+            }
+
+            await dataService.StoreLocationListAsync(locationList);
+
+            App.UpdateMapLocationsList();
+
+            await NavigationService.Instance.GoBack();
+
+            App.ShowToast("Location list was loaded.");
         }
 
         /// <summary>
@@ -178,35 +203,13 @@ namespace WhereToFly.App.Core.ViewModels
                 return;
             }
 
-            var waitingDialog = new WaitingPopupPage("Importing locations list...");
-            await waitingDialog.ShowAsync();
-
             List<Location> locationList = await LoadLocationListFromStorageAsync(result.FilePath);
-
-            await waitingDialog.HideAsync();
-
             if (locationList == null)
             {
                 return;
             }
 
-            bool appendToList = await AskAppendToList();
-
-            var dataService = DependencyService.Get<IDataService>();
-
-            if (appendToList)
-            {
-                var currentList = await dataService.GetLocationListAsync(CancellationToken.None);
-                locationList.InsertRange(0, currentList);
-            }
-
-            await dataService.StoreLocationListAsync(locationList);
-
-            App.UpdateMapLocationsList();
-
-            await NavigationService.Instance.GoBack();
-
-            App.ShowToast("Location list was loaded.");
+            await this.AppendOrReplaceLocationListAsync(locationList);
         }
 
         /// <summary>
@@ -216,8 +219,12 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>list of locations, or null when no location list could be loaded</returns>
         private static async Task<List<Location>> LoadLocationListFromStorageAsync(string storageFilename)
         {
+            var waitingDialog = new WaitingPopupPage("Importing locations list...");
+
             try
             {
+                await waitingDialog.ShowAsync();
+
                 return GeoLoader.LoadLocationList(storageFilename);
             }
             catch (Exception ex)
@@ -230,6 +237,10 @@ namespace WhereToFly.App.Core.ViewModels
                     "OK");
 
                 return null;
+            }
+            finally
+            {
+                await waitingDialog.HideAsync();
             }
         }
 
