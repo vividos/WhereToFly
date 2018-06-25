@@ -56,8 +56,7 @@ function MapView(options) {
     });
 
     console.log("#2 terrain provider");
-    var terrainProvider = new Cesium.CesiumTerrainProvider({
-        url: 'https://assets.agi.com/stk-terrain/v1/tilesets/world/tiles',
+    var terrainProvider = Cesium.createWorldTerrain({
         requestWaterMask: false,
         requestVertexNormals: true
     });
