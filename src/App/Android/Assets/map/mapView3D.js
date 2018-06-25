@@ -570,6 +570,9 @@ MapView.prototype.clearLocationList = function () {
 
     if (this.zoomEntity !== null)
         this.viewer.entities.add(this.zoomEntity);
+
+    if (this.trackEntity !== null)
+        this.viewer.entities.add(this.trackEntity);
 };
 
 /**
@@ -737,7 +740,7 @@ MapView.prototype.showFindResult = function (options) {
 };
 
 /**
- * Adds list of tracks to the map
+ * Adds a track to the map
  * @param {string} trackName track name to add
  * @param {array} listOfTrackPoints An array of track points in long, lat, long, lat, ... order
  */
@@ -745,7 +748,7 @@ MapView.prototype.addTrack = function (trackName, listOfTrackPoints) {
 
     console.log("adding list of track points, with " + listOfTrackPoints.length + " entries");
 
-    var track = this.viewer.entities.add({
+    this.trackEntity = this.viewer.entities.add({
         name: trackName,
         polyline: {
             positions: Cesium.Cartesian3.fromDegreesArray(listOfTrackPoints),
