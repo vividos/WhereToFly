@@ -25,6 +25,12 @@ version.
 - [ ] Delete single location waypoint
 - [ ] Delete all location waypoints
 
+# Weather dashboard
+
+- [ ] Add one or more weather icons to dashboard
+- [ ] Open weblink dashboard icon
+- [ ] Open app dashboard icon
+
 # Settings
 
 - [ ] Change map imagery and check map
