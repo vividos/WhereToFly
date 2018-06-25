@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Linq;
 using WhereToFly.App.Core;
 using WhereToFly.App.Core.Services;
@@ -32,10 +33,16 @@ namespace WhereToFly.App.UnitTest.ViewModels
         public void TestCtor()
         {
             // set up + run
-            var viewModel = new SelectWeatherIconViewModel();
+            var viewModel = new SelectWeatherIconViewModel((iconDescription) => { });
+
+            Assert.IsTrue(
+                viewModel.WaitForPropertyChange(
+                    nameof(viewModel.WeatherIconList),
+                    TimeSpan.FromSeconds(10)),
+                "waiting for property change must succeed");
 
             // check
-            Assert.IsTrue(viewModel.WeatherIconList.Any(), "weather icon list initially contains the default locations");
+            Assert.IsTrue(viewModel.WeatherIconList.Any(), "weather icon description list must not be empty");
         }
     }
 }

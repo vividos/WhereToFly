@@ -1,6 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Linq;
+using WhereToFly.App.Core;
+using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.ViewModels;
+using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest.ViewModels
 {
@@ -17,6 +21,8 @@ namespace WhereToFly.App.UnitTest.ViewModels
         public void SetUp()
         {
             Xamarin.Forms.Mocks.MockForms.Init();
+            DependencyService.Register<IDataService, DataService>();
+            DependencyService.Register<IPlatform, UnitTestPlatform>();
         }
 
         /// <summary>
@@ -28,8 +34,14 @@ namespace WhereToFly.App.UnitTest.ViewModels
             // run
             var viewModel = new WeatherDashboardViewModel();
 
+            Assert.IsTrue(
+                viewModel.WaitForPropertyChange(
+                    nameof(viewModel.WeatherIconDescriptionList),
+                    TimeSpan.FromSeconds(10)),
+                "waiting for property change must succeed");
+
             // check
-            Assert.IsTrue(viewModel.WeatherIconDescriptionList.Any(), "weather icon description list must not be empty");
+            Assert.IsTrue(viewModel.WeatherIconDescriptionList.Any(), "weather icon list must contain placeholder icon");
         }
     }
 }

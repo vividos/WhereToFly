@@ -1,7 +1,5 @@
-﻿using System;
-using System.ComponentModel;
-using System.Threading;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using WhereToFly.App.Core;
 using WhereToFly.App.Core.ViewModels;
 using WhereToFly.App.Model;
@@ -43,34 +41,16 @@ namespace WhereToFly.App.UnitTest.ViewModels
             // run
             var viewModel = new WeatherIconViewModel(description);
 
-            ////Assert.IsTrue(WaitForPropertyChange(viewModel, nameof(viewModel.Icon)));
+            ////Assert.IsTrue(
+            ////    viewModel.WaitForPropertyChange(
+            ////        nameof(viewModel.Icon),
+            ////        TimeSpan.FromSeconds(10)),
+            ////    "waiting for property change must succeed");
 
             // check
             Assert.AreEqual(description.Name, viewModel.Title, "title must match name of description");
             ////Assert.IsNotNull(viewModel.Icon, "icon image source must not be null");
             Assert.IsNotNull(viewModel.Tapped, "Tapped command must not be null");
-        }
-
-        /// <summary>
-        /// Waits for a PropertyChanged event from view model implementing INotifyPropertyChanged.
-        /// Waits 10 seconds before returning.
-        /// </summary>
-        /// <param name="viewModel">view model to wait on</param>
-        /// <param name="propertyName">name of property that has to change</param>
-        /// <returns>true when property was changed, or false when not</returns>
-        private static bool WaitForPropertyChange(INotifyPropertyChanged viewModel, string propertyName)
-        {
-            var propertyChangedEvent = new ManualResetEvent(false);
-
-            viewModel.PropertyChanged += (sender, args) =>
-            {
-                if (args.PropertyName == propertyName)
-                {
-                    propertyChangedEvent.Set();
-                }
-            };
-
-            return propertyChangedEvent.WaitOne(10 * 1000); // wait maximum number of seconds
         }
 
         /// <summary>
