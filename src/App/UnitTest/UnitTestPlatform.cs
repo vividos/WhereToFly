@@ -36,8 +36,8 @@ namespace WhereToFly.App.UnitTest
         public string LoadAssetText(string assetFilename)
         {
             using (var stream = this.OpenAssetStream(assetFilename))
-            using (var streamReader = new StreamReader(stream))
             {
+                var streamReader = new StreamReader(stream);
                 return streamReader.ReadToEnd();
             }
         }
