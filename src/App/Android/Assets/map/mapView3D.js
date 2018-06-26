@@ -676,6 +676,7 @@ MapView.prototype.imageUrlFromLocationType = function (locationType) {
         case 'FlyingLandingPlace': return 'images/paragliding.svg';
         case 'FlyingWinchTowing': return 'images/paragliding.svg';
         //case 'LiveWaypoint': return '';
+        //case 'Turnpoint': return '';
         default: return 'images/map-marker.svg';
     }
 };
@@ -691,6 +692,7 @@ MapView.prototype.pinColorFromLocationType = function (locationType) {
         case 'FlyingTakeoff': return Cesium.Color.YELLOWGREEN;
         case 'FlyingLandingPlace': return Cesium.Color.ORANGE;
         case 'FlyingWinchTowing': return Cesium.Color.CORNFLOWERBLUE;
+        case 'Turnpoint': return Cesium.Color.RED;
         default: return Cesium.Color.BLUE;
     }
 };

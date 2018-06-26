@@ -111,6 +111,11 @@
         FlyingWinchTowing = 152,
 
         /// <summary>
+        /// Turnpoint, e.g. for planned flying tracks
+        /// </summary>
+        Turnpoint = 153,
+
+        /// <summary>
         /// Live waypoint that is getting updated over the internet
         /// </summary>
         LiveWaypoint = 200,

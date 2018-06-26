@@ -137,6 +137,12 @@ namespace WhereToFly.App.Geo.DataFormats
                 {
                     return LocationType.FlyingLandingPlace;
                 }
+
+                if (nameNode.InnerText.StartsWith("TP") ||
+                    nameNode.InnerText.StartsWith("XCP"))
+                {
+                    return LocationType.Turnpoint;
+                }
             }
 
             return LocationType.Waypoint;

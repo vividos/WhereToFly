@@ -106,6 +106,9 @@ namespace WhereToFly.App.Geo.DataFormats
             { "dining", LocationType.Restaurant },
             { "bus", LocationType.PublicTransportBus },
             { "rail", LocationType.PublicTransportTrain },
+
+            // special cases
+            { "red-bull-x-alps.appspot.com/tp", LocationType.Turnpoint },
         };
 
         /// <summary>
@@ -145,6 +148,12 @@ namespace WhereToFly.App.Geo.DataFormats
             if (name.StartsWith("P "))
             {
                 return LocationType.Parking;
+            }
+
+            if (name.StartsWith("TP") ||
+                name.StartsWith("XCP"))
+            {
+                return LocationType.Turnpoint;
             }
 
             return LocationType.Waypoint;
