@@ -6,7 +6,7 @@ version.
 ## Map view
 
 - [ ] Move around the map, zooming, rotating, tilting
-- [ ] View current location details
+- [ ] View current position details
 - [ ] Adding new location to map using long tap
 - [ ] Find location on the map
 - [ ] Add found location as new waypoint
@@ -24,6 +24,7 @@ version.
 - [ ] Filter locations list by text
 - [ ] Delete single location waypoint
 - [ ] Delete all location waypoints
+- [ ] Share a location with WhatsApp
 
 # Weather dashboard
 
