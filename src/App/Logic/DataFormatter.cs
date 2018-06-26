@@ -81,5 +81,19 @@ namespace WhereToFly.App.Logic
                 dateTime.ToLocalTime().ToString("yyyy-MM-dd HH\\:mm\\:ss"),
                 mapsLink);
         }
+
+        /// <summary>
+        /// Formats text for sharing a location with another app
+        /// </summary>
+        /// <param name="location">location to share</param>
+        /// <returns>displayable text for sharing</returns>
+        public static string FormatLocationShareText(Location location)
+        {
+            return string.Format(
+                "Here is a location named \"{0}\", at coordinates {1} and altitude of {2} m.",
+                location.Name,
+                location.MapLocation.ToString(),
+                (int)location.Elevation);
+        }
     }
 }

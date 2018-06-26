@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Plugin.Share;
+using Plugin.Share.Abstractions;
+using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -145,6 +147,11 @@ namespace WhereToFly.App.Core.ViewModels
         public Command NavigateToLocationCommand { get; set; }
 
         /// <summary>
+        /// Command to execute when "share" menu item is selected on a location
+        /// </summary>
+        public Command ShareLocationCommand { get; set; }
+
+        /// <summary>
         /// Command to execute when "delete" menu item is selected on a location
         /// </summary>
         public Command DeleteLocationCommand { get; set; }
@@ -188,6 +195,9 @@ namespace WhereToFly.App.Core.ViewModels
             this.NavigateToLocationCommand =
                 new Command(this.OnNavigateToLocation);
 
+            this.ShareLocationCommand =
+                new Command(async () => await this.OnShareLocationAsync());
+
             this.DeleteLocationCommand =
                 new Command(async () => await this.OnDeleteLocationAsync());
         }
@@ -213,6 +223,24 @@ namespace WhereToFly.App.Core.ViewModels
                 this.location.MapLocation.Latitude,
                 this.location.MapLocation.Longitude,
                 Plugin.ExternalMaps.Abstractions.NavigationType.Driving);
+        }
+
+        /// <summary>
+        /// Called when "Share" menu item is selected
+        /// </summary>
+        /// <returns>task to wait for</returns>
+        private async Task OnShareLocationAsync()
+        {
+            await CrossShare.Current.Share(
+                new ShareMessage
+                {
+                    Title = Constants.AppTitle,
+                    Text = DataFormatter.FormatLocationShareText(this.location)
+                },
+                new ShareOptions
+                {
+                    ChooserTitle = "Share this location with..."
+                });
         }
 
         /// <summary>

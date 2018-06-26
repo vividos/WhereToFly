@@ -16,11 +16,16 @@
                      Command="{Binding NavigateToLocationCommand}"
                      Order="Primary" Priority="1" />
 
+        <ToolbarItem Name="Share"
+                     Icon="share_variant.xml"
+                     Command="{Binding ShareLocationCommand}"
+                     Order="Primary" Priority="2" />
+
         <ToolbarItem Name="Delete"
                      Icon="delete.xml"
                      Command="{Binding DeleteLocationCommand}"
                      IsDestructive="True"
-                     Order="Primary" Priority="2" />
+                     Order="Primary" Priority="3" />
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>

@@ -43,6 +43,7 @@ Current version: %VERSION%
     introduced hamburger menu with drawer to navigate between top-level pages
     added weather dashboard, showing weather icons that can be links to external web pages or apps
     redesigned "current position" page to use tiles
+    added sharing a location on the "location details" page
     added waiting dialogs when importing locations
     crossing the alps: added waypoints and a fixed red polyline with the planned route
     fixed opening downloaded .kml, .kmz and .gpx files
