@@ -521,6 +521,8 @@ namespace WhereToFly.App.Core.Views
                 Constants.PageKeyEditLocationDetailsPage,
                 animated: true,
                 parameter: location);
+
+            this.updateLocationsList = true;
         }
 
         /// <summary>
@@ -591,6 +593,8 @@ namespace WhereToFly.App.Core.Views
                 Constants.PageKeyEditLocationDetailsPage,
                 animated: true,
                 parameter: location);
+
+            this.updateLocationsList = true;
         }
 
         /// <summary>

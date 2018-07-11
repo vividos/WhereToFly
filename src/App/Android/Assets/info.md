@@ -13,6 +13,8 @@ Current version: %VERSION%
 
 1.3.1 "Crossing the alps 2018" bugfix edition
 
+- fixed bug where a newly added location (using find or long-tap to add) wasn't shown on map
+
 1.3.0 "Crossing the alps 2018" edition
 
 - introduced hamburger menu with drawer to navigate between top-level pages
