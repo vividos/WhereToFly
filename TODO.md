@@ -3,7 +3,6 @@
 ## Bugs
 
 - [ ] Share without location, show toast after x seconds
-- [ ] Adding pins with long-tap or find function doesn't add pin right away
 
 ## Nice to have
 
