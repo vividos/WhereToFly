@@ -386,12 +386,13 @@ namespace WhereToFly.App.Core.Views
                 new List<MapPoint>
                 {
                     new MapPoint(47.754076, 12.352277), // Kampenwand
-                    new MapPoint(47.630431, 12.432716), // Kössen
-                    new MapPoint(47.285013, 12.296760), // Wildkogel
+                    new MapPoint(47.631745, 12.431815), // Kössen
+                    new MapPoint(47.285720, 12.297016), // Wildkogel
                     new MapPoint(47.090525, 12.183008), // Alpenhauptkamm
                     new MapPoint(46.738669, 11.958434), // Kronplatz
-                    new MapPoint(46.296141, 11.787137), // Passo Rolle
-                    new MapPoint(46.017666, 11.904684), // Feltre
+                    new MapPoint(46.508371, 11.828376), // Sellastock
+                    new MapPoint(46.251668, 11.870709), // Pala
+                    new MapPoint(46.017779, 11.900711), // Feltre
                 });
         }
 

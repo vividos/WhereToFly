@@ -15,6 +15,7 @@ Current version: %VERSION%
 
 - fixed bug where a newly added location (using find or long-tap to add) wasn't shown on map
 - fixed bug displaying distances with many fractional digits
+- updated waypoints for Crossing the alps 2018
 
 1.3.0 "Crossing the alps 2018" edition
 
