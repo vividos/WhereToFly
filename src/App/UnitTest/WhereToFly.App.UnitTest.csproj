@@ -51,7 +51,10 @@
     <Compile Include="HtmlConverterTest.cs" />
     <Compile Include="LocationTest.cs" />
     <Compile Include="UnitTestAppManager.cs" />
+    <Compile Include="ViewModels\ImportLocationsViewModelTest.cs" />
+    <Compile Include="ViewModels\MenuViewModelTest.cs" />
     <Compile Include="ViewModels\SelectWeatherIconViewModelTest.cs" />
+    <Compile Include="ViewModels\SettingsViewModelTest.cs" />
     <Compile Include="ViewModels\WeatherIconViewModelTest.cs" />
     <Compile Include="ViewModels\WeatherDashboardViewModelTest.cs" />
     <Compile Include="Views\WeatherDashboardPageTest.cs" />
