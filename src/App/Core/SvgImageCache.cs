@@ -60,9 +60,19 @@ namespace WhereToFly.App.Core
                 svgText = this.ReplaceSvgPathFillValue(svgText, fill);
             }
 
-            this.allImages[imagePath] = svgText;
+            this.AddImage(imagePath, svgText);
 
             return svgText;
+        }
+
+        /// <summary>
+        /// Adds SVG image text to image cache
+        /// </summary>
+        /// <param name="imagePath">path of image to add</param>
+        /// <param name="svgText">SVG image text</param>
+        internal void AddImage(string imagePath, string svgText)
+        {
+            this.allImages[imagePath] = svgText;
         }
 
         /// <summary>
