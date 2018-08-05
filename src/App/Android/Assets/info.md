@@ -11,6 +11,8 @@ Current version: %VERSION%
 
 ### Releases
 
+1.4.0
+
 1.3.1 "Crossing the alps 2018" bugfix edition
 
 - fixed bug where a newly added location (using find or long-tap to add) wasn't shown on map
