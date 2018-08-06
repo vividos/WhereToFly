@@ -49,6 +49,9 @@
     <Compile Update="Views\CurrentPositionDetailsPage.xaml.cs">
       <DependentUpon>CurrentPositionDetailsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\SelectWeatherIconPopupPage.xaml.cs">
+      <DependentUpon>SelectWeatherIconPopupPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -82,9 +85,8 @@
     <EmbeddedResource Update="Views\WaitingPopupPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controls\" />
+    <EmbeddedResource Update="Views\SelectWeatherIconPopupPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

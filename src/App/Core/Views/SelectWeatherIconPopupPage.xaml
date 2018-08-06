@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+                 xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+                 x:Class="WhereToFly.App.Core.Views.SelectWeatherIconPopupPage">
+
+    <!-- animate popup page-->
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8"
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True" />
+    </pages:PopupPage.Animation>
+
+    <!-- popup content -->
+    <StackLayout
+        VerticalOptions="Center"
+        HorizontalOptions="Center"
+        WidthRequest="300"
+        HeightRequest="400"
+        BackgroundColor="White"
+        Padding="20">
+
+        <!-- text, entry control to enter location text and button -->
+        <!-- List showing all weather icons that can be added -->
+        <ListView ItemsSource="{Binding Path=WeatherIconList, Mode=OneWay}"
+                  ItemTapped="OnItemTapped_WeatherIconListView"
+                  IsPullToRefreshEnabled="False"
+                  android:ListView.IsFastScrollEnabled="true"
+                  CachingStrategy="RecycleElement"
+                  SeparatorVisibility="None"
+                  AutomationId="WeatherIconList">
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <!-- Templace for a single view cell -->
+                    <ViewCell Height="75">
+                        <ViewCell.View>
+                            <StackLayout Orientation="Horizontal" BackgroundColor="#efefef" Margin="8,4">
+                                <!-- Weather icon -->
+                                <Image Source="{Binding Icon, Mode=OneWay}"
+                                       WidthRequest="32" HeightRequest="32" Margin="4"
+                                       HorizontalOptions="Start" VerticalOptions="Center" />
+
+                                <!-- Title -->
+                                <Label Text="{Binding Title, Mode=OneWay}"
+                                       Style="{DynamicResource ListItemTextStyle}"
+                                       FontSize="Medium"
+                                       LineBreakMode="TailTruncation"
+                                       HorizontalOptions="FillAndExpand" VerticalOptions="Center" />
+
+                            </StackLayout>
+                        </ViewCell.View>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </StackLayout>
+</pages:PopupPage>

@@ -10,7 +10,8 @@ using Xamarin.Forms;
 namespace WhereToFly.App.Core.ViewModels
 {
     /// <summary>
-    /// View model for the weather icon selection page
+    /// View model for the weather icon selection page. Used by SelectWeatherIconPage and
+    /// SelectWeatherIconPopupPage.
     /// </summary>
     public partial class SelectWeatherIconViewModel : INotifyPropertyChanged
     {
@@ -30,18 +31,20 @@ namespace WhereToFly.App.Core.ViewModels
         /// Creates a new select weather icon view model
         /// </summary>
         /// <param name="selectAction">action to call when a weather icon description was selected</param>
-        public SelectWeatherIconViewModel(Action<WeatherIconDescription> selectAction)
+        /// <param name="group">group to filter by, or null to show all groups</param>
+        public SelectWeatherIconViewModel(Action<WeatherIconDescription> selectAction, string group = null)
         {
             Debug.Assert(selectAction != null, "selectAction must not be null");
 
-            this.SetupBindings(selectAction);
+            this.SetupBindings(selectAction, group);
         }
 
         /// <summary>
         /// Sets up bindings properties
         /// </summary>
         /// <param name="selectAction">action to call when a weather icon description was selected</param>
-        private void SetupBindings(Action<WeatherIconDescription> selectAction)
+        /// <param name="group">group to filter by, or null to show all groups</param>
+        private void SetupBindings(Action<WeatherIconDescription> selectAction, string group)
         {
             this.ItemTappedCommand = new Command<WeatherIconDescription>(selectAction);
 
@@ -53,6 +56,7 @@ namespace WhereToFly.App.Core.ViewModels
 
                 this.WeatherIconList = new ObservableCollection<WeatherIconListEntryViewModel>(
                     from weatherIcon in weatherIconList
+                    where @group == null || @group == weatherIcon.Group
                     select new WeatherIconListEntryViewModel(weatherIcon));
 
                 this.OnPropertyChanged(nameof(this.WeatherIconList));
