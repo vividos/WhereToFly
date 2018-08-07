@@ -1,4 +1,5 @@
-﻿using WhereToFly.App.Core.ViewModels;
+﻿using WhereToFly.App.Core.Controls;
+using WhereToFly.App.Core.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
