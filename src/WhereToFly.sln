@@ -29,7 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{9CB3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{60BE5B8E-A229-488F-A893-379E323EBB3E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.WebApi.LiveWaypoints", "WebApi\LiveWaypoints\WhereToFly.WebApi.LiveWaypoints.csproj", "{426F479B-5751-4453-BBCC-0E48D0E815F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.WebApi.Core", "WebApi\Core\WhereToFly.WebApi.Core.csproj", "{426F479B-5751-4453-BBCC-0E48D0E815F9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.WebApi.Model", "WebApi\Model\WhereToFly.WebApi.Model.csproj", "{2B1CC76F-1A78-4279-86B5-6EF96881F984}"
 EndProject

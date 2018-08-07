@@ -44,13 +44,13 @@ namespace WhereToFly.WebApi.LiveWaypoints
                     "v1",
                     new Swashbuckle.AspNetCore.Swagger.Info
                     {
-                        Title = "WhereToFly Live Waypoints API",
+                        Title = "WhereToFly Web API",
                         Version = "v1"
                     });
 
                 // Set the comments path for the Swagger JSON and UI.
                 var basePath = AppContext.BaseDirectory;
-                var xmlPath = Path.Combine(basePath, "WhereToFly.WebApi.LiveWaypoints.xml");
+                var xmlPath = Path.Combine(basePath, "WhereToFly.WebApi.Core.xml");
                 c.IncludeXmlComments(xmlPath);
             });
         }
@@ -74,7 +74,7 @@ namespace WhereToFly.WebApi.LiveWaypoints
                 app.UseSwaggerUI(c =>
                 {
                     const string SwaggerUrl = "/swagger/v1/swagger.json";
-                    c.SwaggerEndpoint(SwaggerUrl, "My API V1");
+                    c.SwaggerEndpoint(SwaggerUrl, "WhereToFly Web API V1");
                 });
             }
             else
