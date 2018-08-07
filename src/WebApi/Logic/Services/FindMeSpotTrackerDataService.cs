@@ -1,16 +1,19 @@
 ﻿using Refit;
 using System;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using WhereToFly.Shared.Model;
 using WhereToFly.WebApi.Logic.Services.FindMeSpot;
+
+[assembly: InternalsVisibleTo("WhereToFly.WebApi.UnitTest")]
 
 namespace WhereToFly.WebApi.Logic.Services
 {
     /// <summary>
     /// Data service for the Find Me SPOT REST web service
     /// </summary>
-    public class FindMeSpotTrackerDataService
+    internal class FindMeSpotTrackerDataService
     {
 #pragma warning disable S1075 // URIs should not be hardcoded
         /// <summary>
