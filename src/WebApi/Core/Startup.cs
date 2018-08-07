@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.IO;
+using WhereToFly.WebApi.Logic;
 
 namespace WhereToFly.WebApi.LiveWaypoints
 {
@@ -53,6 +54,8 @@ namespace WhereToFly.WebApi.LiveWaypoints
                 var xmlPath = Path.Combine(basePath, "WhereToFly.WebApi.Core.xml");
                 c.IncludeXmlComments(xmlPath);
             });
+
+            services.AddSingleton<LiveWaypointCacheManager>();
         }
 
         /// <summary>
