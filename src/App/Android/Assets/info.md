@@ -14,6 +14,7 @@ Current version: %VERSION%
 1.4.0
 
 - weather links are now shown on  a dedicated page with icons to change to other weather pages
+- added new map imagery type: OpenTopoMap
 
 1.3.1 "Crossing the alps 2018" bugfix edition
 

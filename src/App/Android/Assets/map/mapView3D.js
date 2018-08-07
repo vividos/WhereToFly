@@ -41,6 +41,14 @@ function MapView(options) {
         mapStyle: Cesium.BingMapsStyle.AERIAL_WITH_LABELS
     });
 
+    this.openTopoMapImageryLayer = null;
+    this.openTopoMapImageryProvider = Cesium.createOpenStreetMapImageryProvider({
+        url: 'https://{s}.tile.opentopomap.org/',
+        subdomains: 'abc',
+        maximumLevel: 18,
+        credits: '<code>Kartendaten: &copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, SRTM | Kartendarstellung: &copy; <a href="http://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)</code>'
+    });
+
     this.setupSlopeAndContourLines();
 
     this.thermalSkywaysLayer = null;
@@ -241,6 +249,9 @@ MapView.prototype.setMapImageryType = function (imageryType) {
     if (this.bingMapsAerialWithLabelsImageryLayer !== null)
         layers.remove(this.bingMapsAerialWithLabelsImageryLayer, false);
 
+    if (this.openTopoMapImageryLayer !== null)
+        layers.remove(this.openTopoMapImageryLayer, false);
+
     switch (imageryType) {
         case 'OpenStreetMap':
             if (this.openStreetMapImageryLayer === null)
@@ -254,6 +265,13 @@ MapView.prototype.setMapImageryType = function (imageryType) {
                 this.bingMapsAerialWithLabelsImageryLayer = layers.addImageryProvider(this.bingMapsAerialWithLabelsImageryProvider, 1);
             else
                 layers.add(this.bingMapsAerialWithLabelsImageryLayer, 1);
+            break;
+
+        case 'OpenTopoMap':
+            if (this.openTopoMapImageryLayer === null)
+                this.openTopoMapImageryLayer = layers.addImageryProvider(this.openTopoMapImageryProvider, 1);
+            else
+                layers.add(this.openTopoMapImageryLayer, 1);
             break;
 
         default:

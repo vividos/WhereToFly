@@ -15,5 +15,10 @@
         /// Bing Maps aerials with lames imagery tiles are displayed.
         /// </summary>
         BingMapsAerialWithLabels = 1,
+
+        /// <summary>
+        /// OpenTopoMap imagery tiles are displayed
+        /// </summary>
+        OpenTopoMap = 2,
     }
 }
