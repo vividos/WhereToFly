@@ -89,6 +89,8 @@ The following icons are from the Google Material icon set:
 - settings
 - share-variant
 - train
+- camera
+- refresh
 
 The Google Material Icons are licensed under the "Apache License 2.0":
 https://github.com/google/material-design-icons/blob/master/LICENSE
@@ -104,6 +106,7 @@ The following icons in the App are from the Material Design Icons
 - arrow-down - down.png - Austin Andrews @Templarian
 - weather-partlycloudy - Austin Andrews @Templarian
 - border_none_variant - Austin Andrews @Templarian
+- calendar_clock - Austin Andrews @Templarian
 
 All custom icons are licensed under the SIL Open Font License 1.1:
 http://scripts.sil.org/cms/scripts/page.php?item_id=OFL_web
