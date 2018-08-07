@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WhereToFly.WebApi.Logic
+namespace WhereToFly.Shared.Model
 {
     /// <summary>
     /// Data for a Live Waypoint
@@ -46,5 +46,10 @@ namespace WhereToFly.WebApi.Logic
         /// Details link, e.g. to external website
         /// </summary>
         public string DetailsLink { get; set; }
+
+        /// <summary>
+        /// Date where next request for this specific live waypoint may result in new data
+        /// </summary>
+        public DateTimeOffset NextRequestDate { get; }
     }
 }

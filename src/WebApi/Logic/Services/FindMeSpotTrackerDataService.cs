@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using WhereToFly.Shared.Model;
 using WhereToFly.WebApi.Logic.Services.FindMeSpot;
 
 namespace WhereToFly.WebApi.Logic.Services

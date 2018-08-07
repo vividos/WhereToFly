@@ -39,6 +39,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.WebApi.Logic", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.App.Model", "App\Model\WhereToFly.App.Model.csproj", "{6A01E52C-1CF1-48E2-AC01-045A7B82E4B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhereToFly.Shared.Model", "Shared\Model\WhereToFly.Shared.Model.csproj", "{552D3E32-9F57-42F8-B144-699492F73536}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{6A01E52C-1CF1-48E2-AC01-045A7B82E4B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A01E52C-1CF1-48E2-AC01-045A7B82E4B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A01E52C-1CF1-48E2-AC01-045A7B82E4B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{552D3E32-9F57-42F8-B144-699492F73536}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{552D3E32-9F57-42F8-B144-699492F73536}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{552D3E32-9F57-42F8-B144-699492F73536}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{552D3E32-9F57-42F8-B144-699492F73536}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -102,6 +108,7 @@ Global
 		{99D23D89-4557-4624-82EE-9D73551FAB47} = {9CB3A709-CD99-4DBF-B9EE-26705DBDC0CF}
 		{BF7BBAC3-21D1-4765-96D9-94E39134303B} = {9CB3A709-CD99-4DBF-B9EE-26705DBDC0CF}
 		{6A01E52C-1CF1-48E2-AC01-045A7B82E4B7} = {A443B9B2-B8C9-44F0-A7F5-DF2466E0E0FE}
+		{552D3E32-9F57-42F8-B144-699492F73536} = {60BE5B8E-A229-488F-A893-379E323EBB3E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D13F3BD1-E396-49C7-BD98-2F3BC15F6E7C}
