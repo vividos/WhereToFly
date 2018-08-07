@@ -47,7 +47,7 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Creates a new web link selection popup page
         /// </summary>
-        /// <returns>selected weather icon description, or null when user canceled the popup dialog</returns>
+        /// <param name="group">weather icon group to filter by; may be null to show all groups</param>
         public SelectWeatherIconPopupPage(string group)
         {
             this.group = group;
