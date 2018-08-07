@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Views;
+using WhereToFly.App.Model;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.Services
@@ -64,6 +65,13 @@ namespace WhereToFly.App.Core.Services
 
                 case Constants.PageKeyWeatherDashboardPage:
                     pageType = typeof(WeatherDashboardPage);
+                    break;
+
+                case Constants.PageKeyWeatherDetailsPage:
+                    Debug.Assert(
+                        parameter != null && parameter is WeatherIconDescription,
+                        "weather icon description must have been passed as parameter");
+                    pageType = typeof(WeatherDetailsPage);
                     break;
 
                 case Constants.PageKeySelectWeatherIconPage:

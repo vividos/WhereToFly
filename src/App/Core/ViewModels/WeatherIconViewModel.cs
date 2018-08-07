@@ -73,7 +73,10 @@ namespace WhereToFly.App.Core.ViewModels
             switch (this.iconDescription.Type)
             {
                 case WeatherIconDescription.IconType.IconLink:
-                    Device.OpenUri(new Uri(this.iconDescription.WebLink));
+                    await NavigationService.Instance.NavigateAsync(
+                        Constants.PageKeyWeatherDetailsPage,
+                        animated: true,
+                        parameter: this.iconDescription);
                     break;
 
                 case WeatherIconDescription.IconType.IconApp:
