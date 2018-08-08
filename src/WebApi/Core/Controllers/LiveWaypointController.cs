@@ -50,13 +50,13 @@ namespace LiveWaypoints.Controllers
         {
             if (string.IsNullOrEmpty(id))
             {
-                logger.LogWarning($"invalid live waypoint ID: {id}");
+                this.logger.LogWarning($"invalid live waypoint ID: {id}");
                 return this.BadRequest();
             }
 
-            logger.LogDebug($"getting live waypoint with ID: {id}");
+            this.logger.LogDebug($"getting live waypoint with ID: {id}");
 
-            var liveWaypointData = cacheManager.GetLiveWaypointData(id);
+            var liveWaypointData = this.cacheManager.GetLiveWaypointData(id);
 
             return new JsonResult(liveWaypointData.Result);
         }
