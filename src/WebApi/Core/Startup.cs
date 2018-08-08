@@ -52,7 +52,11 @@ namespace WhereToFly.WebApi.LiveWaypoints
                 // Set the comments path for the Swagger JSON and UI.
                 var basePath = AppContext.BaseDirectory;
                 var xmlPath = Path.Combine(basePath, "WhereToFly.WebApi.Core.xml");
-                c.IncludeXmlComments(xmlPath);
+
+                if (File.Exists(xmlPath))
+                {
+                    c.IncludeXmlComments(xmlPath);
+                }
             });
 
             services.AddSingleton<LiveWaypointCacheManager>();
