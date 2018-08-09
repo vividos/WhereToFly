@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Services;
+using WhereToFly.App.Geo;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
 using Xamarin.Forms;
@@ -382,18 +383,22 @@ namespace WhereToFly.App.Core.Views
             this.mapView.AddLocationList(this.locationList);
 
             this.mapView.AddTrack(
-                "Crossing the Alps 2018",
-                new List<MapPoint>
+                new Track
                 {
-                    new MapPoint(47.754076, 12.352277), // Kampenwand
-                    new MapPoint(47.631745, 12.431815), // Kössen
-                    new MapPoint(47.285720, 12.297016), // Wildkogel
-                    new MapPoint(47.090525, 12.183008), // Alpenhauptkamm
-                    new MapPoint(46.738669, 11.958434), // Kronplatz
-                    new MapPoint(46.508371, 11.828376), // Sellastock
-                    new MapPoint(46.251668, 11.870709), // Pala
-                    new MapPoint(46.017779, 11.900711), // Feltre
-                });
+                    Name = "Crossing the Alps 2018",
+                    TrackPoints = new List<TrackPoint>
+                        {
+                            new TrackPoint(47.754076, 12.352277, null, null), // Kampenwand
+                            new TrackPoint(47.631745, 12.431815, null, null), // Kössen
+                            new TrackPoint(47.285720, 12.297016, null, null), // Wildkogel
+                            new TrackPoint(47.090525, 12.183008, null, null), // Alpenhauptkamm
+                            new TrackPoint(46.738669, 11.958434, null, null), // Kronplatz
+                            new TrackPoint(46.508371, 11.828376, null, null), // Sellastock
+                            new TrackPoint(46.251668, 11.870709, null, null), // Pala
+                            new TrackPoint(46.017779, 11.900711, null, null), // Feltre
+                        }
+                },
+                "FF0000");
         }
 
         /// <summary>

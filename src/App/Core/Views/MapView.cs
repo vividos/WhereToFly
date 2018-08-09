@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using WhereToFly.App.Geo;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
 using Xamarin.Forms;
@@ -354,17 +355,24 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Adds new track with given name and map points
         /// </summary>
-        /// <param name="trackName">track name to add</param>
-        /// <param name="mapPoints">map points</param>
-        public void AddTrack(string trackName, List<MapPoint> mapPoints)
+        /// <param name="track">track to add</param>
+        /// <param name="color">color to use for track; when null, the track will be colored using
+        /// climb and sink rate values</param>
+        public void AddTrack(Track track, string color = null)
         {
             var trackPointsList =
-                mapPoints.SelectMany(x => new double[] { x.Longitude, x.Latitude });
+                track.TrackPoints.SelectMany(x => new double[]
+                {
+                    x.Longitude,
+                    x.Latitude,
+                    x.Altitude.HasValue ? x.Altitude.Value : 0.0
+                });
 
             string js = string.Format(
-                "map.addTrack('{0}', {1});",
-                trackName,
-                JsonConvert.SerializeObject(trackPointsList));
+                "map.addTrack('{0}', {1}, {2});",
+                track.Name,
+                JsonConvert.SerializeObject(trackPointsList),
+                color != null ? "'" + color + "'" : "undefined");
 
             this.RunJavaScript(js);
         }

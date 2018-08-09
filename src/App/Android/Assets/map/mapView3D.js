@@ -759,22 +759,91 @@ MapView.prototype.showFindResult = function (options) {
 };
 
 /**
+ * Calculates track color from given variometer climb/sink rate value.
+ * @param {double} varioValue variometer value, in m/s
+ * @returns {Cesium.Color} Track color
+ */
+MapView.prototype.trackColorFromVarioValue = function (varioValue) {
+
+    var varioColorMapping = [
+        3.0, Cesium.Color.RED,
+        2.0, Cesium.Color.fromBytes(255, 55, 0),
+        1.5, Cesium.Color.fromBytes(255, 105, 0),
+        1.0, Cesium.Color.fromBytes(255, 155, 0),
+        0.5, Cesium.Color.fromBytes(255, 205, 0),
+        0.0, Cesium.Color.YELLOW,
+        -0.5, Cesium.Color.CYAN,
+        -1.0, Cesium.Color.fromBytes(0, 205, 255),
+        -1.5, Cesium.Color.fromBytes(0, 165, 255),
+        -2.0, Cesium.Color.fromBytes(0, 125, 255),
+        -3.0, Cesium.Color.fromBytes(0, 65, 255),
+    ];
+
+    for (var mappingIndex = 0; mappingIndex < varioColorMapping.length; mappingIndex += 2) {
+        if (varioValue >= varioColorMapping[mappingIndex])
+            return varioColorMapping[mappingIndex + 1];
+    }
+
+    return Cesium.Color.BLUE; // smaller than -3.0
+};
+
+/**
+ * Calculates an array of track colors based on the altitude changes of the given track points.
+ * @param {array} listOfTrackPoints An array of track points in long, lat, alt, long, lat, alt ... order
+ * @returns {array} Array with same number of entries as track points in the given list
+ */
+MapView.prototype.calcTrackColors = function (listOfTrackPoints) {
+
+    var trackColors = [];
+
+    trackColors[0] = this.trackColorFromVarioValue(0.0);
+
+    for (var index = 3; index < listOfTrackPoints.length; index += 3) {
+
+        var altitudeDiff = listOfTrackPoints[index + 2] - listOfTrackPoints[index - 1];
+        var timeDiff = 1.0;
+        var varioValue = altitudeDiff / timeDiff;
+
+        var varioColor = this.trackColorFromVarioValue(varioValue);
+        trackColors[index / 3] = varioColor;
+    }
+
+    return trackColors;
+};
+
+/**
  * Adds a track to the map
  * @param {string} trackName track name to add
- * @param {array} listOfTrackPoints An array of track points in long, lat, long, lat, ... order
+ * @param {array} listOfTrackPoints An array of track points in long, lat, alt, long, lat, alt ... order
+ * @param {string} color Color as "RRGGBB" string value, or undefined when track should be colored
+ *                       according to climb and sink rate.
  */
-MapView.prototype.addTrack = function (trackName, listOfTrackPoints) {
+MapView.prototype.addTrack = function (trackName, listOfTrackPoints, color) {
 
     console.log("adding list of track points, with " + listOfTrackPoints.length + " entries");
 
-    this.trackEntity = this.viewer.entities.add({
-        name: trackName,
-        polyline: {
-            positions: Cesium.Cartesian3.fromDegreesArray(listOfTrackPoints),
-            width: 5,
-            material: Cesium.Color.RED
+    var trackColors = this.calcTrackColors(listOfTrackPoints);
+
+    var trackPolyline = new Cesium.PolylineGeometry({
+        positions: Cesium.Cartesian3.fromDegreesArrayHeights(listOfTrackPoints),
+        width: 5,
+        vertexFormat: color === undefined ? Cesium.PolylineColorAppearance.VERTEX_FORMAT : undefined,
+        colors: color === undefined ? trackColors : undefined,
+        colorsPerVertex: false,
+    });
+
+    var primitive = new Cesium.Primitive({
+        geometryInstances: new Cesium.GeometryInstance({
+            geometry: trackPolyline
+        }),
+        appearance: new Cesium.PolylineColorAppearance({ translucent: false }),
+        attributes: {
+            color: color === undefined ? undefined : Cesium.ColorGeometryInstanceAttribute.fromColor(
+                Cesium.Color.fromCssColorString('#' + color))
         }
     });
+
+    this.viewer.scene.primitives.add(primitive);
 };
 
 /**
