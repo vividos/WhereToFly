@@ -13,6 +13,6 @@
         /// <summary>
         /// API key for Bing maps
         /// </summary>
-        public string BingMapsApiKey { get; set;}
+        public string BingMapsApiKey { get; set; }
     }
 }
