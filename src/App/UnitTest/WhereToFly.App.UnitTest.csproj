@@ -44,6 +44,7 @@
     <Compile Include="DataFormatterTest.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Geo\LatLongAltTests.cs" />
+    <Compile Include="Geo\IgcFormatLoaderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Geo\GeoLoaderTest.cs" />
     <Compile Include="MapPointTest.cs" />
@@ -128,6 +129,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\weathericons.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\85QA3ET1.igc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

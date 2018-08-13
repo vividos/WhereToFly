@@ -28,9 +28,9 @@ namespace WhereToFly.App.Geo
         public int? Heading { get; set; }
 
         /// <summary>
-        /// Time offset from start of track
+        /// Date and time of track point
         /// </summary>
-        public TimeSpan TimeOffset { get; set; }
+        public DateTimeOffset? Time { get; set; }
 
         /// <summary>
         /// Creates a new track point from given data
@@ -45,7 +45,6 @@ namespace WhereToFly.App.Geo
             this.Longitude = longitude;
             this.Altitude = altitude;
             this.Heading = heading;
-            this.TimeOffset = TimeSpan.Zero;
         }
     }
 }

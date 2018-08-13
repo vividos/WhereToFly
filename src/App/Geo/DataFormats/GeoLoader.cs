@@ -51,5 +51,27 @@ namespace WhereToFly.App.Geo.DataFormats
                     throw new ArgumentException("file is not a valid .kml, .kmz or .gpx file");
             }
         }
+
+        /// <summary>
+        /// Loads a track from stream with given filename, and track index, in case the file
+        /// contains multiple tracks
+        /// </summary>
+        /// <param name="stream">stream to load from</param>
+        /// <param name="filename">filename part of stream</param>
+        /// <param name="trackIndex">track index</param>
+        /// <returns>loaded track</returns>
+        public static Track LoadTrack(Stream stream, string filename, int trackIndex)
+        {
+            string extension = Path.GetExtension(filename);
+
+            switch (extension)
+            {
+                case ".igc":
+                    return IgcFormatLoader.LoadTrack(stream, trackIndex);
+
+                default:
+                    throw new ArgumentException("file is not a valid .igc file");
+            }
+        }
     }
 }
