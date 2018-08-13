@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using WhereToFly.App.Geo;
 using WhereToFly.App.Model;
 using Xamarin.Forms;
 
@@ -25,6 +26,11 @@ namespace WhereToFly.App.Core.Services
         /// Filename for the location list json file
         /// </summary>
         private const string LocationListFilename = "locationList.json";
+
+        /// <summary>
+        /// Filename for the track list json file
+        /// </summary>
+        private const string TrackListFilename = "trackList.json";
 
         /// <summary>
         /// Filename for the weather icon list json file
@@ -173,6 +179,52 @@ namespace WhereToFly.App.Core.Services
 
             var platform = DependencyService.Get<IPlatform>();
             string filename = Path.Combine(platform.AppDataFolder, LocationListFilename);
+
+            await Task.Run(() => File.WriteAllText(filename, json, Encoding.UTF8));
+        }
+
+        /// <summary>
+        /// Gets list of tracks
+        /// </summary>
+        /// <param name="token">cancellation token</param>
+        /// <returns>list of tracks</returns>
+        public async Task<List<Track>> GetTrackListAsync(CancellationToken token)
+        {
+            var platform = DependencyService.Get<IPlatform>();
+
+            string filename = Path.Combine(platform.AppDataFolder, TrackListFilename);
+
+            if (!File.Exists(filename))
+            {
+                return new List<Track>();
+            }
+
+            try
+            {
+                string json = File.ReadAllText(filename, Encoding.UTF8);
+
+                var trackList = JsonConvert.DeserializeObject<List<Track>>(json);
+
+                return await Task.FromResult(trackList);
+            }
+            catch (Exception ex)
+            {
+                App.LogError(ex);
+                return new List<Track>();
+            }
+        }
+
+        /// <summary>
+        /// Stores new track list
+        /// </summary>
+        /// <param name="trackList">track list to store</param>
+        /// <returns>task to wait on</returns>
+        public async Task StoreTrackListAsync(List<Track> trackList)
+        {
+            string json = JsonConvert.SerializeObject(trackList);
+
+            var platform = DependencyService.Get<IPlatform>();
+            string filename = Path.Combine(platform.AppDataFolder, TrackListFilename);
 
             await Task.Run(() => File.WriteAllText(filename, json, Encoding.UTF8));
         }

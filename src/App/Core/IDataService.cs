@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using WhereToFly.App.Geo;
 using WhereToFly.App.Model;
 
 namespace WhereToFly.App.Core
@@ -37,6 +38,20 @@ namespace WhereToFly.App.Core
         /// <param name="locationList">location list to store</param>
         /// <returns>task to wait on</returns>
         Task StoreLocationListAsync(List<Location> locationList);
+
+        /// <summary>
+        /// Gets list of tracks
+        /// </summary>
+        /// <param name="token">cancellation token</param>
+        /// <returns>list of tracks</returns>
+        Task<List<Track>> GetTrackListAsync(CancellationToken token);
+
+        /// <summary>
+        /// Stores new track list
+        /// </summary>
+        /// <param name="trackList">track list to store</param>
+        /// <returns>task to wait on</returns>
+        Task StoreTrackListAsync(List<Track> trackList);
 
         /// <summary>
         /// Retrieves list of weather icon descriptions
