@@ -8,6 +8,11 @@ namespace WhereToFly.App.Geo
     public class Track
     {
         /// <summary>
+        /// ID for the track; e.g. generated at import time
+        /// </summary>
+        public string Id { get; set; }
+
+        /// <summary>
         /// Track name
         /// </summary>
         public string Name { get; set; }

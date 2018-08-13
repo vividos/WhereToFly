@@ -385,6 +385,7 @@ namespace WhereToFly.App.Core.Views
             this.mapView.AddTrack(
                 new Track
                 {
+                    Id = "crossingthealps2018",
                     Name = "Crossing the Alps 2018",
                     TrackPoints = new List<TrackPoint>
                         {
