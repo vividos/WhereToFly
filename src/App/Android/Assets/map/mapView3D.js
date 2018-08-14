@@ -167,6 +167,10 @@ function MapView(options) {
 
     this.pickingHandler.setInputAction(this.onScreenTouchDown.bind(this), Cesium.ScreenSpaceEventType.LEFT_DOWN);
     this.pickingHandler.setInputAction(this.onScreenTouchUp.bind(this), Cesium.ScreenSpaceEventType.LEFT_UP);
+
+    console.log("#8 other stuff");
+
+    this.trackIdToTrackDataMap = {};
 }
 
 /**
@@ -813,19 +817,24 @@ MapView.prototype.calcTrackColors = function (listOfTrackPoints) {
 
 /**
  * Adds a track to the map
+ * @param {string} trackId unique ID of the track
  * @param {string} trackName track name to add
  * @param {array} listOfTrackPoints An array of track points in long, lat, alt, long, lat, alt ... order
  * @param {string} color Color as "RRGGBB" string value, or undefined when track should be colored
  *                       according to climb and sink rate.
  */
-MapView.prototype.addTrack = function (trackName, listOfTrackPoints, color) {
+MapView.prototype.addTrack = function (trackId, trackName, listOfTrackPoints, color) {
 
-    console.log("adding list of track points, with " + listOfTrackPoints.length + " entries");
+    this.removeTrack(trackId);
+
+    console.log("adding list of track points, with ID " + trackId + " and " + listOfTrackPoints.length + " track points");
 
     var trackColors = this.calcTrackColors(listOfTrackPoints);
 
+    var trackPointArray = Cesium.Cartesian3.fromDegreesArrayHeights(listOfTrackPoints);
+
     var trackPolyline = new Cesium.PolylineGeometry({
-        positions: Cesium.Cartesian3.fromDegreesArrayHeights(listOfTrackPoints),
+        positions: trackPointArray,
         width: 5,
         vertexFormat: color === undefined ? Cesium.PolylineColorAppearance.VERTEX_FORMAT : undefined,
         colors: color === undefined ? trackColors : undefined,
@@ -844,6 +853,59 @@ MapView.prototype.addTrack = function (trackName, listOfTrackPoints, color) {
     });
 
     this.viewer.scene.primitives.add(primitive);
+
+    var boundingSphere = Cesium.BoundingSphere.fromPoints(trackPointArray, null)
+
+    this.trackIdToTrackDataMap[trackId] = {
+        primitive: primitive,
+        boundingSphere: boundingSphere
+    };
+};
+
+/**
+ * Zooms to a track on the map
+ * @param {string} trackId unique ID of the track to zoom to
+ */
+MapView.prototype.zoomToTrack = function (trackId) {
+
+    var trackData = this.trackIdToTrackDataMap[trackId];
+
+    if (trackData !== undefined) {
+
+        console.log("zooming to track with ID: " + trackId);
+
+        this.viewer.camera.flyToBoundingSphere(trackData.boundingSphere);
+    }
+};
+
+/**
+ * Removes a track from the map
+ * @param {string} trackId unique ID of the track
+ */
+MapView.prototype.removeTrack = function (trackId) {
+
+    var trackData = this.trackIdToTrackDataMap[trackId];
+
+    if (trackData !== undefined) {
+
+        console.log("removing track with ID: " + trackId);
+
+        this.viewer.scene.primitives.remove(trackData.primitive);
+
+        this.trackIdToTrackDataMap[trackId] = undefined;
+    }
+};
+
+/**
+ * Clears all tracks from the map
+ */
+MapView.prototype.clearAllTracks = function () {
+
+    console.log("clearing all tracks");
+
+    this.viewer.scene.primitives.remove(primitive);
+
+    this.trackIdToTrackDataMap = {};
 };
 
 /**

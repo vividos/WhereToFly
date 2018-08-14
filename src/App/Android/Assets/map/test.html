@@ -56,6 +56,8 @@
         <button onclick="showFindResult()">Show find result</button>
 
         <button onclick="addTrack()">Add track</button>
+
+        <button onclick="zoomToTrack()">Zoom to track</button>
     </div>
 
     <div id="mapElement"></div>
@@ -111,9 +113,14 @@
 
         addTrack = function () {
             map.addTrack(
+                'crossingthealps2018',
                 'Crossing the Alps 2018',
                 [12.352277, 47.754076, 0, 12.432716, 47.630431, 0, 12.29676, 47.285013, 0, 12.183008, 47.090525, 0, 11.958434, 46.738669, 0, 11.787137, 46.296141, 0, 11.904684, 46.017666, 0],
                 "FF0000");
+        }
+
+        zoomToTrack = function () {
+            map.zoomToTrack('crossingthealps2018');
         }
 
     </script>

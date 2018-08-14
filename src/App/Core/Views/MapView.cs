@@ -369,12 +369,41 @@ namespace WhereToFly.App.Core.Views
                 });
 
             string js = string.Format(
-                "map.addTrack('{0}', {1}, {2});",
+                "map.addTrack('{0}', '{1}', {2}, {3});",
+                track.Id,
                 track.Name,
                 JsonConvert.SerializeObject(trackPointsList),
                 color != null ? "'" + color + "'" : "undefined");
 
             this.RunJavaScript(js);
+        }
+
+        /// <summary>
+        /// Zooms to track on map
+        /// </summary>
+        /// <param name="track">track to zoom to</param>
+        public void ZoomToTrack(Track track)
+        {
+            string js = $"map.zoomToTrack('{track.Id}');";
+            this.RunJavaScript(js);
+        }
+
+        /// <summary>
+        /// Removes track from map
+        /// </summary>
+        /// <param name="track">track to remove</param>
+        public void RemoveTrack(Track track)
+        {
+            string js = $"map.removeTrack('{track.Id}');";
+            this.RunJavaScript(js);
+        }
+
+        /// <summary>
+        /// Clears all tracks from map
+        /// </summary>
+        public void ClearAllTracks()
+        {
+            this.RunJavaScript("map.clearAllTracks();");
         }
 
         /// <summary>
