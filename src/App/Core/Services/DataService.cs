@@ -38,6 +38,16 @@ namespace WhereToFly.App.Core.Services
         private const string WeatherIconListFilename = "weatherIconList.json";
 
         /// <summary>
+        /// Location list storage
+        /// </summary>
+        private List<Location> locationList;
+
+        /// <summary>
+        /// Track list storage
+        /// </summary>
+        private List<Track> trackList;
+
+        /// <summary>
         /// Gets the current app settings object
         /// </summary>
         /// <param name="token">cancellation token</param>
@@ -90,27 +100,41 @@ namespace WhereToFly.App.Core.Services
         /// <returns>list of locations</returns>
         public async Task<List<Location>> GetLocationListAsync(CancellationToken token)
         {
+            if (this.locationList != null)
+            {
+                return this.locationList;
+            }
+
+            await Task.Run(() => this.LoadLocationList());
+
+            return this.locationList;
+        }
+
+        /// <summary>
+        /// Loads location list and stores it in the private field
+        /// </summary>
+        private void LoadLocationList()
+        {
             var platform = DependencyService.Get<IPlatform>();
 
             string filename = Path.Combine(platform.AppDataFolder, LocationListFilename);
 
             if (!File.Exists(filename))
             {
-                return this.GetDefaultLocationList();
+                this.locationList = this.GetDefaultLocationList();
+                return;
             }
 
             try
             {
                 string json = File.ReadAllText(filename, Encoding.UTF8);
 
-                var locationList = JsonConvert.DeserializeObject<List<Location>>(json);
-
-                return await Task.FromResult(locationList);
+                this.locationList = JsonConvert.DeserializeObject<List<Location>>(json);
             }
             catch (Exception ex)
             {
                 App.LogError(ex);
-                return this.GetDefaultLocationList();
+                this.locationList = this.GetDefaultLocationList();
             }
         }
 
@@ -175,6 +199,8 @@ namespace WhereToFly.App.Core.Services
         /// <returns>task to wait on</returns>
         public async Task StoreLocationListAsync(List<Location> locationList)
         {
+            this.locationList = locationList;
+
             string json = JsonConvert.SerializeObject(locationList);
 
             var platform = DependencyService.Get<IPlatform>();
@@ -190,27 +216,41 @@ namespace WhereToFly.App.Core.Services
         /// <returns>list of tracks</returns>
         public async Task<List<Track>> GetTrackListAsync(CancellationToken token)
         {
+            if (this.trackList != null)
+            {
+                return this.trackList;
+            }
+
+            await Task.Run(() => this.LoadTrackList());
+
+            return await Task.FromResult(this.trackList);
+        }
+
+        /// <summary>
+        /// Loads track list and stores it in the private field
+        /// </summary>
+        private void LoadTrackList()
+        {
             var platform = DependencyService.Get<IPlatform>();
 
             string filename = Path.Combine(platform.AppDataFolder, TrackListFilename);
 
             if (!File.Exists(filename))
             {
-                return new List<Track>();
+                this.trackList = new List<Track>();
+                return;
             }
 
             try
             {
                 string json = File.ReadAllText(filename, Encoding.UTF8);
 
-                var trackList = JsonConvert.DeserializeObject<List<Track>>(json);
-
-                return await Task.FromResult(trackList);
+                this.trackList = JsonConvert.DeserializeObject<List<Track>>(json);
             }
             catch (Exception ex)
             {
                 App.LogError(ex);
-                return new List<Track>();
+                this.trackList = new List<Track>();
             }
         }
 
@@ -221,6 +261,8 @@ namespace WhereToFly.App.Core.Services
         /// <returns>task to wait on</returns>
         public async Task StoreTrackListAsync(List<Track> trackList)
         {
+            this.trackList = trackList;
+
             string json = JsonConvert.SerializeObject(trackList);
 
             var platform = DependencyService.Get<IPlatform>();
