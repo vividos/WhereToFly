@@ -640,5 +640,8 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\refresh.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\icons\map-marker-distance.svg" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

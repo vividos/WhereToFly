@@ -107,6 +107,7 @@ The following icons in the App are from the Material Design Icons
 - weather-partlycloudy - Austin Andrews @Templarian
 - border_none_variant - Austin Andrews @Templarian
 - calendar_clock - Austin Andrews @Templarian
+- map-marker-distance - Michael Richins @MrGrigri
 
 All custom icons are licensed under the SIL Open Font License 1.1:
 http://scripts.sil.org/cms/scripts/page.php?item_id=OFL_web
