@@ -45,9 +45,20 @@ namespace WhereToFly.App.Core.Views
         private bool updateLocationsList;
 
         /// <summary>
+        /// Indicates if track list was changed while this page was invisible; used to update
+        /// track list when returning to this page.
+        /// </summary>
+        private bool updateTrackList;
+
+        /// <summary>
         /// Location to zoom to when this map page is appearing next time
         /// </summary>
         private MapPoint zoomToLocationOnAppearing;
+
+        /// <summary>
+        /// Track to zoom to when this map page is appearing next time
+        /// </summary>
+        private Track zoomToTrackOnAppearing;
 
         /// <summary>
         /// Map view control on C# side
@@ -63,6 +74,11 @@ namespace WhereToFly.App.Core.Views
         /// List of locations on the map
         /// </summary>
         private List<Location> locationList;
+
+        /// <summary>
+        /// List of tracks on the map
+        /// </summary>
+        private List<Track> trackList;
 
         /// <summary>
         /// Task completion source to signal that the web page has been loaded
@@ -84,14 +100,18 @@ namespace WhereToFly.App.Core.Views
             this.zoomToMyPosition = false;
             this.updateMapSettings = false;
             this.updateLocationsList = false;
+            this.updateTrackList = false;
 
             this.geolocator = Plugin.Geolocator.CrossGeolocator.Current;
 
             Task.Run(this.InitLayoutAsync);
 
+            MessagingCenter.Subscribe<App, Track>(this, Constants.MessageAddTrack, this.OnMessageAddTrack);
             MessagingCenter.Subscribe<App, MapPoint>(this, Constants.MessageZoomToLocation, this.OnMessageZoomToLocation);
+            MessagingCenter.Subscribe<App, Track>(this, Constants.MessageZoomToTrack, this.OnMessageZoomToTrack);
             MessagingCenter.Subscribe<App>(this, Constants.MessageUpdateMapSettings, this.OnMessageUpdateMapSettings);
             MessagingCenter.Subscribe<App>(this, Constants.MessageUpdateMapLocations, this.OnMessageUpdateMapLocations);
+            MessagingCenter.Subscribe<App>(this, Constants.MessageUpdateMapTracks, this.OnMessageUpdateMapTracks);
         }
 
         /// <summary>
@@ -364,6 +384,7 @@ namespace WhereToFly.App.Core.Views
 
             this.appSettings = await dataService.GetAppSettingsAsync(CancellationToken.None);
             this.locationList = await dataService.GetLocationListAsync(CancellationToken.None);
+            this.trackList = await dataService.GetTrackListAsync(CancellationToken.None);
         }
 
         /// <summary>
@@ -400,6 +421,11 @@ namespace WhereToFly.App.Core.Views
                         }
                 },
                 "FF0000");
+
+            foreach (var track in this.trackList)
+            {
+                this.mapView.AddTrack(track);
+            }
         }
 
         /// <summary>
@@ -605,6 +631,23 @@ namespace WhereToFly.App.Core.Views
         }
 
         /// <summary>
+        /// Called when message arrives in order to add a new track to map
+        /// </summary>
+        /// <param name="app">app object</param>
+        /// <param name="track">track to add</param>
+        private void OnMessageAddTrack(App app, Track track)
+        {
+            if (this.pageIsVisible)
+            {
+                App.RunOnUiThread(() => this.mapView.AddTrack(track));
+            }
+            else
+            {
+                this.updateTrackList = true;
+            }
+        }
+
+        /// <summary>
         /// Called when message arrives in order to zoom to a location
         /// </summary>
         /// <param name="app">app object</param>
@@ -618,6 +661,23 @@ namespace WhereToFly.App.Core.Views
             else
             {
                 this.zoomToLocationOnAppearing = location;
+            }
+        }
+
+        /// <summary>
+        /// Called when message arrives in order to zoom to a track
+        /// </summary>
+        /// <param name="app">app object</param>
+        /// <param name="track">track to zoom to</param>
+        private void OnMessageZoomToTrack(App app, Track track)
+        {
+            if (this.pageIsVisible)
+            {
+                this.mapView.ZoomToTrack(track);
+            }
+            else
+            {
+                this.zoomToTrackOnAppearing = track;
             }
         }
 
@@ -650,6 +710,22 @@ namespace WhereToFly.App.Core.Views
             else
             {
                 this.updateLocationsList = true;
+            }
+        }
+
+        /// <summary>
+        /// Called when message arrives in order to update track list on map
+        /// </summary>
+        /// <param name="app">app object</param>
+        private void OnMessageUpdateMapTracks(App app)
+        {
+            if (this.pageIsVisible)
+            {
+                App.RunOnUiThread(async () => await this.ReloadTrackListAsync());
+            }
+            else
+            {
+                this.updateTrackList = true;
             }
         }
 
@@ -694,11 +770,23 @@ namespace WhereToFly.App.Core.Views
                 await this.ReloadLocationListAsync();
             }
 
+            if (this.updateTrackList)
+            {
+                await this.ReloadTrackListAsync();
+            }
+
             if (this.zoomToLocationOnAppearing != null)
             {
                 this.mapView.ZoomToLocation(this.zoomToLocationOnAppearing);
 
                 this.zoomToLocationOnAppearing = null;
+            }
+
+            if (this.zoomToTrackOnAppearing != null)
+            {
+                this.mapView.ZoomToTrack(this.zoomToTrackOnAppearing);
+
+                this.zoomToTrackOnAppearing = null;
             }
         }
 
@@ -737,6 +825,33 @@ namespace WhereToFly.App.Core.Views
                 this.mapView.AddLocationList(this.locationList);
 
                 this.updateLocationsList = false;
+            }
+        }
+
+        /// <summary>
+        /// Reloads track list from data service
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task ReloadTrackListAsync()
+        {
+            var dataService = DependencyService.Get<IDataService>();
+
+            var newTrackList = await dataService.GetTrackListAsync(CancellationToken.None);
+
+            if (this.updateTrackList ||
+                this.trackList.Count != newTrackList.Count ||
+                !Enumerable.SequenceEqual(this.trackList, newTrackList, new TrackEqualityComparer()))
+            {
+                this.trackList = newTrackList;
+
+                this.mapView.ClearLocationList();
+
+                foreach (var track in this.trackList)
+                {
+                    this.mapView.AddTrack(track);
+                }
+
+                this.updateTrackList = false;
             }
         }
 

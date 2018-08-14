@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.Views;
+using WhereToFly.App.Geo;
 using WhereToFly.App.Geo.DataFormats;
 using WhereToFly.App.Model;
 using Xamarin.Forms;
@@ -186,6 +187,52 @@ namespace WhereToFly.App.Core
         }
 
         /// <summary>
+        /// Opens and loads track from given stream object
+        /// </summary>
+        /// <param name="stream">stream object</param>
+        /// <param name="filename">
+        /// filename; extension of filename is used to determine file type
+        /// </param>
+        /// <returns>task to wait on</returns>
+        public async Task OpenTrackAsync(Stream stream, string filename)
+        {
+            Track track = await LoadTrackFromStreamAsync(stream, filename, 0);
+
+            if (track == null)
+            {
+                return;
+            }
+
+            App.AddMapTrack(track);
+        }
+
+        /// <summary>
+        /// Loads track from given stream
+        /// </summary>
+        /// <param name="stream">open stream to read from</param>
+        /// <param name="filename">complete storage filename</param>
+        /// <param name="trackIndex">track index of track to load</param>
+        /// <returns>track, or null when no track could be loaded</returns>
+        private static async Task<Track> LoadTrackFromStreamAsync(Stream stream, string filename, int trackIndex)
+        {
+            try
+            {
+                return GeoLoader.LoadTrack(stream, filename, trackIndex);
+            }
+            catch (Exception ex)
+            {
+                App.LogError(ex);
+
+                await App.Current.MainPage.DisplayAlert(
+                    Constants.AppTitle,
+                    "Error while loading track: " + ex.Message,
+                    "OK");
+
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Shows toast message with given text
         /// </summary>
         /// <param name="message">toast message text</param>
@@ -194,6 +241,18 @@ namespace WhereToFly.App.Core
             var app = Xamarin.Forms.Application.Current as App;
 
             MessagingCenter.Send<App, string>(app, Constants.MessageShowToast, message);
+        }
+
+        /// <summary>
+        /// Adds a track to the map view; when the map page is currently invisible, the add is
+        /// carried out when the page appears.
+        /// </summary>
+        /// <param name="track">track to add</param>
+        public static void AddMapTrack(Track track)
+        {
+            var app = Xamarin.Forms.Application.Current as App;
+
+            MessagingCenter.Send<App, Track>(app, Constants.MessageAddTrack, track);
         }
 
         /// <summary>
@@ -206,6 +265,18 @@ namespace WhereToFly.App.Core
             var app = Xamarin.Forms.Application.Current as App;
 
             MessagingCenter.Send<App, MapPoint>(app, Constants.MessageZoomToLocation, location);
+        }
+
+        /// <summary>
+        /// Zooms to track on opened MapPage; when the map page is currently invisible, the zoom
+        /// is carried out when the page appears.
+        /// </summary>
+        /// <param name="track">track to zoom to</param>
+        public static void ZoomToTrack(Track track)
+        {
+            var app = Xamarin.Forms.Application.Current as App;
+
+            MessagingCenter.Send<App, Track>(app, Constants.MessageZoomToTrack, track);
         }
 
         /// <summary>
@@ -226,6 +297,16 @@ namespace WhereToFly.App.Core
             var app = Xamarin.Forms.Application.Current as App;
 
             MessagingCenter.Send<App>(app, Constants.MessageUpdateMapLocations);
+        }
+
+        /// <summary>
+        /// Updates tracks list on opened MapPage.
+        /// </summary>
+        public static void UpdateMapTracksList()
+        {
+            var app = Xamarin.Forms.Application.Current as App;
+
+            MessagingCenter.Send<App>(app, Constants.MessageUpdateMapTracks);
         }
 
         #region App lifecycle methods

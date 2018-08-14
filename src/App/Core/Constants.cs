@@ -23,9 +23,19 @@ namespace WhereToFly.App.Core
         public const string MessageShowToast = "ShowToast";
 
         /// <summary>
+        /// MessagingCenter message constant to add track to MapPage
+        /// </summary>
+        public const string MessageAddTrack = "AddTrack";
+
+        /// <summary>
         /// MessagingCenter message constant to zoom to a location on MapPage
         /// </summary>
         public const string MessageZoomToLocation = "ZoomToLocation";
+
+        /// <summary>
+        /// MessagingCenter message constant to zoom to a track on MapPage
+        /// </summary>
+        public const string MessageZoomToTrack = "ZoomToTrack";
 
         /// <summary>
         /// MessagingCenter message constant to update settings on MapPage
@@ -36,6 +46,11 @@ namespace WhereToFly.App.Core
         /// MessagingCenter message constant to update location list on MapPage
         /// </summary>
         public const string MessageUpdateMapLocations = "UpdateMapLocations";
+
+        /// <summary>
+        /// MessagingCenter message constant to update track list on MapPage
+        /// </summary>
+        public const string MessageUpdateMapTracks = "UpdateMapTracks";
 
         /// <summary>
         /// Page key for use in NavigationService, to navigate to map page
