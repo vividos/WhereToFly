@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WhereToFly.App.Core.Views.TrackDetailsPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="Zoom to"
+                     Icon="magnify_plus_outline.xml"
+                     Command="{Binding ZoomToTrackCommand}"
+                     Order="Primary" Priority="0" />
+
+        <ToolbarItem Name="Delete"
+                     Icon="delete.xml"
+                     Command="{Binding DeleteTrackCommand}"
+                     IsDestructive="True"
+                     Order="Primary" Priority="1" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+
+        <!-- stack layout with track details grid -->
+        <StackLayout Orientation="Vertical">
+
+            <!-- Grid with all location details -->
+            <Grid WidthRequest="350" MinimumWidthRequest="350"
+                  HorizontalOptions="Center" Padding="8"
+                  ColumnSpacing="16" RowSpacing="16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Name -->
+                <Label Grid.Row="0" Grid.Column="0" Text="Name" />
+                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Name, Mode=OneWay}" />
+
+                <!-- TODO do more properties -->
+
+            </Grid>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
