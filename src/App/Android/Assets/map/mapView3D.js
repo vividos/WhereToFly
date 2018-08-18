@@ -903,7 +903,7 @@ MapView.prototype.clearAllTracks = function () {
 
     console.log("clearing all tracks");
 
-    this.viewer.scene.primitives.remove(primitive);
+    this.viewer.scene.primitives.removeAll();
 
     this.trackIdToTrackDataMap = {};
 };
