@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using WhereToFly.App.Geo;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
@@ -24,6 +25,11 @@ namespace WhereToFly.App.Core.Views
         private readonly WebView webView;
 
         /// <summary>
+        /// Task completion source for when map is fully initialized
+        /// </summary>
+        private readonly TaskCompletionSource<bool> taskCompletionSourceMapInitialized = new TaskCompletionSource<bool>();
+
+        /// <summary>
         /// Current map imagery type
         /// </summary>
         private MapImageryType mapImageryType = MapImageryType.OpenStreetMap;
@@ -41,12 +47,17 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Indicates if map control is already initialized
         /// </summary>
-        private bool isInitialized;
+        private bool IsInitialized => this.taskCompletionSourceMapInitialized.Task.IsCompleted;
 
         /// <summary>
         /// Maximum number of locations that are imported in one JavaScript call
         /// </summary>
         private const int MaxLocationListCount = 100;
+
+        /// <summary>
+        /// Task that is in "finished" state when map is initialized
+        /// </summary>
+        public Task MapInitializedTask { get => this.taskCompletionSourceMapInitialized.Task; }
 
         /// <summary>
         /// Delegate of function to call when location details should be shown
@@ -204,8 +215,6 @@ namespace WhereToFly.App.Core.Views
                 initialZoomLevel);
 
             this.RunJavaScript(js);
-
-            this.isInitialized = true;
         }
 
         /// <summary>
@@ -214,7 +223,7 @@ namespace WhereToFly.App.Core.Views
         /// <param name="position">position to zoom to</param>
         public void ZoomToLocation(MapPoint position)
         {
-            if (!this.isInitialized)
+            if (!this.IsInitialized)
             {
                 return;
             }
@@ -244,7 +253,7 @@ namespace WhereToFly.App.Core.Views
             DateTimeOffset timestamp,
             bool zoomToLocation)
         {
-            if (!this.isInitialized)
+            if (!this.IsInitialized)
             {
                 return;
             }
@@ -472,6 +481,10 @@ namespace WhereToFly.App.Core.Views
         {
             switch (functionName)
             {
+                case "onMapInitialized":
+                    this.taskCompletionSourceMapInitialized.SetResult(true);
+                    break;
+
                 case "onShowLocationDetails":
                     this.ShowLocationDetails?.Invoke(jsonParameters.Trim('\"'));
 

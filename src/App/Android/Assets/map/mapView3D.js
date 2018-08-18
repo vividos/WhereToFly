@@ -171,6 +171,8 @@ function MapView(options) {
     console.log("#8 other stuff");
 
     this.trackIdToTrackDataMap = {};
+
+    this.onMapInitialized();
 }
 
 /**
@@ -906,6 +908,17 @@ MapView.prototype.clearAllTracks = function () {
     this.viewer.scene.primitives.removeAll();
 
     this.trackIdToTrackDataMap = {};
+};
+
+/**
+ * Called by the map ctor when the map is initialized and ready.
+ */
+MapView.prototype.onMapInitialized = function () {
+
+    console.log("map is initialized");
+
+    if (this.options.callback !== undefined)
+        this.options.callback('onMapInitialized');
 };
 
 /**
