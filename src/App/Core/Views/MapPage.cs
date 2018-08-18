@@ -854,7 +854,7 @@ namespace WhereToFly.App.Core.Views
             {
                 this.trackList = newTrackList;
 
-                this.mapView.ClearLocationList();
+                this.mapView.ClearAllTracks();
 
                 foreach (var track in this.trackList)
                 {
