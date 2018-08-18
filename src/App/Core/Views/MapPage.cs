@@ -132,6 +132,16 @@ namespace WhereToFly.App.Core.Views
         }
 
         /// <summary>
+        /// Reloads map by re-creating map view
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        public async Task ReloadMapAsync()
+        {
+            this.CreateMapView();
+        }
+
+
+        /// <summary>
         /// Sets up toolbar for this page
         /// </summary>
         private void SetupToolbar()

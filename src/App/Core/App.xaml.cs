@@ -244,6 +244,18 @@ namespace WhereToFly.App.Core
         }
 
         /// <summary>
+        /// Clears cache of WebView used for map view and reloads map
+        /// </summary>
+        public static void ClearWebViewCache()
+        {
+            var app = Xamarin.Forms.Application.Current as App;
+
+            MessagingCenter.Send(app, Constants.MessageWebViewClearCache);
+
+            Task.Run(() => app.MapPage.ReloadMapAsync());
+        }
+
+        /// <summary>
         /// Adds a track to the map view; when the map page is currently invisible, the add is
         /// carried out when the page appears.
         /// </summary>

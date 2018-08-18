@@ -35,6 +35,8 @@ namespace WhereToFly.App.Android
                 e.NewElement != null)
             {
                 this.SetupWebViewSettings();
+
+                MessagingCenter.Subscribe<Core.App>(this, Constants.MessageWebViewClearCache, this.ClearCache);
             }
         }
 
@@ -74,6 +76,17 @@ namespace WhereToFly.App.Android
             this.Control.Settings.SetAppCachePath(platform.CacheDataFolder);
             this.Control.Settings.SetAppCacheEnabled(true);
             this.Control.Settings.CacheMode = global::Android.Webkit.CacheModes.CacheElseNetwork;
+        }
+
+        /// <summary>
+        /// Clears cache of the web view control
+        /// </summary>
+        /// <param name="app">app object; unused</param>
+        private void ClearCache(Core.App app)
+        {
+            this.Control.ClearHistory();
+            this.Control.ClearFormData();
+            this.Control.ClearCache(true);
         }
     }
 }
