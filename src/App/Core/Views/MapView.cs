@@ -365,7 +365,7 @@ namespace WhereToFly.App.Core.Views
                 {
                     x.Longitude,
                     x.Latitude,
-                    x.Altitude.HasValue ? x.Altitude.Value : 0.0
+                    x.Altitude ?? 0.0
                 });
 
             string js = string.Format(
