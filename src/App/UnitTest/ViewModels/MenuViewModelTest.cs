@@ -26,6 +26,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
             var imageCache = DependencyService.Get<SvgImageCache>();
             imageCache.AddImage("icons/map.svg", string.Empty);
             imageCache.AddImage("icons/format-list-bulleted.svg", string.Empty);
+            imageCache.AddImage("icons/map-marker-distance.svg", string.Empty);
             imageCache.AddImage("icons/compass.svg", string.Empty);
             imageCache.AddImage("icons/weather-partlycloudy.svg", string.Empty);
             imageCache.AddImage("icons/settings.svg", string.Empty);
