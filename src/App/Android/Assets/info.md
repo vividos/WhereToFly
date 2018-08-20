@@ -13,6 +13,8 @@ Current version: %VERSION%
 
 1.4.0
 
+- added showing tracks on map and new track list and track details page
+- added opening .igc files as tracks
 - weather links are now shown on  a dedicated page with icons to change to other weather pages
 - added new map imagery type: OpenTopoMap
 - added button on settings page to clear cache used for map view
