@@ -43,6 +43,7 @@ namespace WhereToFly.App.Android
             @".*\\.kmz", @".*\\..*\\.kmz", ".*\\..*\\..*\\.kmz", ".*\\..*\\..*\\..*\\.kmz",
             @".*\\.kml", @".*\\..*\\.kml", ".*\\..*\\..*\\.kml", ".*\\..*\\..*\\..*\\.kml",
             @".*\\.gpx", @".*\\..*\\.gpx", ".*\\..*\\..*\\.gpx", ".*\\..*\\..*\\..*\\.gpx",
+            @".*\\.igc", @".*\\..*\\.igc", ".*\\..*\\..*\\.igc", ".*\\..*\\..*\\..*\\.igc",
         },
         Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
         Icon = "@drawable/icon")]
@@ -57,6 +58,7 @@ namespace WhereToFly.App.Android
             @".*\\.kmz", @".*\\..*\\.kmz", ".*\\..*\\..*\\.kmz", ".*\\..*\\..*\\..*\\.kmz",
             @".*\\.kml", @".*\\..*\\.kml", ".*\\..*\\..*\\.kml", ".*\\..*\\..*\\..*\\.kml",
             @".*\\.gpx", @".*\\..*\\.gpx", ".*\\..*\\..*\\.gpx", ".*\\..*\\..*\\..*\\.gpx",
+            @".*\\.igc", @".*\\..*\\.igc", ".*\\..*\\..*\\.igc", ".*\\..*\\..*\\..*\\.igc",
         },
         Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
         Icon = "@drawable/icon")]
@@ -98,7 +100,7 @@ namespace WhereToFly.App.Android
 
         /// <summary>
         /// Called when activity is called with a new intent, e.g. from the intent filter for file
-        /// extension (.kml, .kmz, .gpx).
+        /// extension (.kml, .kmz, .gpx, .igc).
         /// See: https://stackoverflow.com/questions/3760276/android-intent-filter-associate-app-with-file-extension
         /// </summary>
         /// <param name="intent">intent to be passed to the app</param>
@@ -108,6 +110,17 @@ namespace WhereToFly.App.Android
 
             System.Diagnostics.Debug.WriteLine("received Intent: " + intent.ToString());
 
+            this.Intent = intent;
+
+            this.ProcessIntent(intent);
+        }
+
+        /// <summary>
+        /// Processes the given intent, loading files passed using content resolver.
+        /// </summary>
+        /// <param name="intent">intent to process</param>
+        private void ProcessIntent(Intent intent)
+        {
             var helper = new IntentFilterHelper(this.ContentResolver);
 
             string filename = Path.GetFileName(helper.GetFilenameFromIntent(intent));
@@ -116,12 +129,22 @@ namespace WhereToFly.App.Android
                 return;
             }
 
+            bool isTrack = Path.GetExtension(filename).ToLowerInvariant() == ".igc";
+
             var stream = helper.GetStreamFromIntent(intent);
 
             if (stream != null)
             {
                 var app = Core.App.Current as Core.App;
-                Core.App.RunOnUiThread(async () => await app.OpenLocationListAsync(stream, filename));
+
+                if (isTrack)
+                {
+                    Core.App.RunOnUiThread(async () => await app.OpenTrackAsync(stream, filename));
+                }
+                else
+                {
+                    Core.App.RunOnUiThread(async () => await app.OpenLocationListAsync(stream, filename));
+                }
             }
         }
 
