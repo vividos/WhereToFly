@@ -12,7 +12,7 @@ namespace WhereToFly.App.Core.Services
         /// <summary>
         /// Returns current geolocator instance
         /// </summary>
-        public IGeolocator Geolocator { get => Plugin.Geolocator.CrossGeolocator.Current; }
+        public virtual IGeolocator Geolocator { get => Plugin.Geolocator.CrossGeolocator.Current; }
 
         /// <summary>
         /// Returns current position
