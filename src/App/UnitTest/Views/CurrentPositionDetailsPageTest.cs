@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WhereToFly.App.Core;
+using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.Views;
 using WhereToFly.App.Model;
 using Xamarin.Forms;
@@ -20,6 +21,7 @@ namespace WhereToFly.App.UnitTest.Views
         {
             Xamarin.Forms.Mocks.MockForms.Init();
             DependencyService.Register<IPlatform, UnitTestPlatform>();
+            DependencyService.Register<GeolocationService, UnitTestGeolocationService>();
             Core.App.Settings = new AppSettings();
         }
 
@@ -27,7 +29,6 @@ namespace WhereToFly.App.UnitTest.Views
         /// Tests default ctor of CurrentPositionDetailsPage
         /// </summary>
         [TestMethod]
-        [Ignore("MapPage uses CrossGeoLocator.Current, which is not available in unit tests")]
         public void TestDefaultCtor()
         {
             // run

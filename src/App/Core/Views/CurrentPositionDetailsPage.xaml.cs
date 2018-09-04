@@ -3,6 +3,7 @@ using Plugin.Share;
 using Plugin.Share.Abstractions;
 using System;
 using System.Threading.Tasks;
+using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.ViewModels;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
@@ -36,7 +37,7 @@ namespace WhereToFly.App.Core.Views
 
             this.InitializeComponent();
 
-            this.geolocator = Plugin.Geolocator.CrossGeolocator.Current;
+            this.geolocator = DependencyService.Get<GeolocationService>().Geolocator;
 
             this.BindingContext = this.viewModel = new CurrentPositionDetailsViewModel(App.Settings);
 

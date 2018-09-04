@@ -102,7 +102,7 @@ namespace WhereToFly.App.Core.Views
             this.updateLocationsList = false;
             this.updateTrackList = false;
 
-            this.geolocator = Plugin.Geolocator.CrossGeolocator.Current;
+            this.geolocator = DependencyService.Get<GeolocationService>().Geolocator;
 
             Task.Run(this.InitLayoutAsync);
 

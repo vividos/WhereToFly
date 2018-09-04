@@ -40,7 +40,7 @@ namespace WhereToFly.App.Core.Views
 
             this.InitializeComponent();
 
-            this.geolocator = Plugin.Geolocator.CrossGeolocator.Current;
+            this.geolocator = DependencyService.Get<GeolocationService>().Geolocator;
 
             this.BindingContext = this.viewModel = new LocationListViewModel(App.Settings);
 
