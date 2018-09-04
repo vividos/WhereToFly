@@ -203,7 +203,8 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         /// <param name="initialCenterPoint">initial center point to be used for map view</param>
         /// <param name="initialZoomLevel">initial zoom level, in 2D zoom level steps</param>
-        public void Create(MapPoint initialCenterPoint, int initialZoomLevel)
+        /// <returns>task to wait on</returns>
+        public async Task CreateAsync(MapPoint initialCenterPoint, int initialZoomLevel)
         {
             this.taskCompletionSourceMapInitialized = new TaskCompletionSource<bool>();
 
@@ -218,6 +219,8 @@ namespace WhereToFly.App.Core.Views
                 initialZoomLevel);
 
             this.RunJavaScript(js);
+
+            await this.MapInitializedTask;
         }
 
         /// <summary>

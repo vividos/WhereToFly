@@ -128,7 +128,7 @@ namespace WhereToFly.App.Core.Views
 
             await this.LoadDataAsync();
 
-            this.CreateMapView();
+            await this.CreateMapViewAsync();
         }
 
         /// <summary>
@@ -137,9 +137,8 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         public async Task ReloadMapAsync()
         {
-            this.CreateMapView();
+            await this.CreateMapViewAsync();
         }
-
 
         /// <summary>
         /// Sets up toolbar for this page
@@ -400,11 +399,12 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Creates the map view
         /// </summary>
-        private void CreateMapView()
+        /// <returns>task to wait on</returns>
+        private async Task CreateMapViewAsync()
         {
             MapPoint initialCenter = this.appSettings.LastKnownPosition ?? new MapPoint(0.0, 0.0);
 
-            this.mapView.Create(initialCenter, 14);
+            await this.mapView.CreateAsync(initialCenter, 14);
 
             this.mapView.MapImageryType = this.appSettings.MapImageryType;
             this.mapView.MapOverlayType = this.appSettings.MapOverlayType;
