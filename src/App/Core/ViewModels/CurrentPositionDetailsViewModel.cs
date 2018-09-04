@@ -1,6 +1,7 @@
 ﻿using Plugin.Geolocator.Abstractions;
 using System;
 using System.Threading.Tasks;
+using System.Timers;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
 using Xamarin.Forms;
@@ -16,6 +17,11 @@ namespace WhereToFly.App.Core.ViewModels
         /// App settings object
         /// </summary>
         private readonly AppSettings appSettings;
+
+        /// <summary>
+        /// Timer to update LastPositionFix property
+        /// </summary>
+        private readonly Timer timerUpdateLastPositionFix = new Timer();
 
         /// <summary>
         /// Current position
@@ -151,6 +157,29 @@ namespace WhereToFly.App.Core.ViewModels
         public CurrentPositionDetailsViewModel(AppSettings appSettings)
         {
             this.appSettings = appSettings;
+
+            this.SetupTimer();
+        }
+
+        /// <summary>
+        /// Sets up timer for updating LastPositionFix; the timer takes care of continuously
+        /// displaying the elapsed time since last position
+        /// </summary>
+        private void SetupTimer()
+        {
+            this.timerUpdateLastPositionFix.Interval = TimeSpan.FromSeconds(0.2).TotalMilliseconds;
+            this.timerUpdateLastPositionFix.Elapsed += this.OnElapsed_TimerUpdateLastPositionFix;
+            this.timerUpdateLastPositionFix.Start();
+        }
+
+        /// <summary>
+        /// Called when the timer to update LastPositionFix has elapsed
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="args">event args</param>
+        private void OnElapsed_TimerUpdateLastPositionFix(object sender, ElapsedEventArgs args)
+        {
+            this.OnPropertyChanged(nameof(this.LastPositionFix));
         }
 
         /// <summary>
