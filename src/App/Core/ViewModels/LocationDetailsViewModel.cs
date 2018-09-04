@@ -15,7 +15,7 @@ namespace WhereToFly.App.Core.ViewModels
     /// <summary>
     /// View model for the location details page
     /// </summary>
-    public class LocationDetailsViewModel
+    public class LocationDetailsViewModel : ViewModelBase
     {
         /// <summary>
         /// App settings object
@@ -28,14 +28,14 @@ namespace WhereToFly.App.Core.ViewModels
         private readonly Location location;
 
         /// <summary>
-        /// Distance to the user's current location
-        /// </summary>
-        private readonly double distance;
-
-        /// <summary>
         /// Lazy-loading backing store for type image source
         /// </summary>
         private readonly Lazy<ImageSource> typeImageSource;
+
+        /// <summary>
+        /// Distance to the user's current location
+        /// </summary>
+        private double distance;
 
         #region Binding properties
         /// <summary>
@@ -162,16 +162,12 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         /// <param name="appSettings">app settings object</param>
         /// <param name="location">location object</param>
-        /// <param name="myCurrentPosition">the user's current position; may be null</param>
-        public LocationDetailsViewModel(AppSettings appSettings, Location location, LatLongAlt myCurrentPosition)
+        public LocationDetailsViewModel(AppSettings appSettings, Location location)
         {
             this.appSettings = appSettings;
             this.location = location;
 
-            this.distance = myCurrentPosition != null ? myCurrentPosition.DistanceTo(
-                new LatLongAlt(
-                    this.location.MapLocation.Latitude,
-                    this.location.MapLocation.Longitude)) : 0.0;
+            this.distance = 0.0;
 
             this.typeImageSource = new Lazy<ImageSource>(this.GetTypeImageSource);
 
@@ -200,6 +196,28 @@ namespace WhereToFly.App.Core.ViewModels
 
             this.DeleteLocationCommand =
                 new Command(async () => await this.OnDeleteLocationAsync());
+
+            Task.Run(this.UpdateDistance);
+        }
+
+        /// <summary>
+        /// Updates distance to current position
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task UpdateDistance()
+        {
+            var geolocationService = DependencyService.Get<GeolocationService>();
+            var position = await geolocationService.GetCurrentPositionAsync();
+
+            if (position != null)
+            {
+                this.distance = position.DistanceTo(
+                    new LatLongAlt(
+                        this.location.MapLocation.Latitude,
+                        this.location.MapLocation.Longitude));
+
+                this.OnPropertyChanged(nameof(this.Distance));
+            }
         }
 
         /// <summary>
