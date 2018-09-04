@@ -56,6 +56,7 @@ namespace WhereToFly.App.Core
         {
             DependencyService.Register<NavigationService>();
             DependencyService.Register<IDataService, DataService>();
+            DependencyService.Register<GeolocationService>();
         }
 
         /// <summary>
