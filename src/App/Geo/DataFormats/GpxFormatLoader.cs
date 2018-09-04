@@ -19,6 +19,35 @@ namespace WhereToFly.App.Geo.DataFormats
         private static readonly string GpxNamespace = "http://www.topografix.com/GPX/1/1";
 
         /// <summary>
+        /// Returns a list of tracks contained in the given gpx file stream.
+        /// </summary>
+        /// <param name="stream">stream containing GPX file</param>
+        /// <returns>list of tracks found in the file</returns>
+        public static List<string> GetTrackList(Stream stream)
+        {
+            XmlDocument gpxDocument = new XmlDocument();
+            gpxDocument.Load(stream);
+
+            XmlNamespaceManager namespaceManager = new XmlNamespaceManager(gpxDocument.NameTable);
+            namespaceManager.AddNamespace("x", GpxNamespace);
+
+            XmlNodeList trackNodeList = gpxDocument.SelectNodes("//x:trk", namespaceManager);
+
+            var trackList = new List<string>();
+
+            foreach (XmlNode trackNode in trackNodeList)
+            {
+                XmlNode nameNode = trackNode.SelectSingleNode("x:name", namespaceManager);
+
+                string name = nameNode?.InnerText ?? "Track";
+
+                trackList.Add(name);
+            }
+
+            return trackList;
+        }
+
+        /// <summary>
         /// Loads location list from given stream containing a GPX file. The Waypoint items of the
         /// GPX file is returned.
         /// </summary>

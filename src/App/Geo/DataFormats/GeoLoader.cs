@@ -53,6 +53,48 @@ namespace WhereToFly.App.Geo.DataFormats
         }
 
         /// <summary>
+        /// Gets a list of tracks that are contained in the file specified by filename.
+        /// </summary>
+        /// <param name="filename">filename to check</param>
+        /// <returns>list of track names, or empty list when there are no tracks in the file</returns>
+        public static List<string> GetTrackList(string filename)
+        {
+            using (Stream stream = new FileStream(filename, FileMode.Open))
+            {
+                return GetTrackList(stream, filename);
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of tracks that are contained in the file specified by stream.
+        /// </summary>
+        /// <param name="stream">stream to check</param>
+        /// <param name="filename">filename to check</param>
+        /// <returns>list of track names, or empty list when there are no tracks in the file</returns>
+        public static List<string> GetTrackList(Stream stream, string filename)
+        {
+            string extension = Path.GetExtension(filename);
+
+            switch (extension)
+            {
+                case ".kml":
+                    return KmlFormatLoader.GetTrackList(stream, isKml: true);
+
+                case ".kmz":
+                    return KmlFormatLoader.GetTrackList(stream, isKml: false);
+
+                case ".gpx":
+                    return GpxFormatLoader.GetTrackList(stream);
+
+                case ".igc":
+                    return new List<string> { "IGC File" };
+
+                default:
+                    throw new ArgumentException("file is not a valid .kml, .kmz, .gpx or .igc file");
+            }
+        }
+
+        /// <summary>
         /// Loads a track from stream with given filename, and track index, in case the file
         /// contains multiple tracks
         /// </summary>

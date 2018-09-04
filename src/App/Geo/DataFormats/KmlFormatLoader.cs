@@ -1,10 +1,10 @@
 ﻿using SharpKml.Dom;
+using SharpKml.Dom.GX;
 using SharpKml.Engine;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
 
@@ -15,6 +15,59 @@ namespace WhereToFly.App.Geo.DataFormats
     /// </summary>
     internal static class KmlFormatLoader
     {
+        /// <summary>
+        /// Returns a list of tracks contained in the kml or kmz file in the given stream.
+        /// </summary>
+        /// <param name="stream">kml or kmz stream</param>
+        /// <param name="isKml">indicates if the stream is a .kml stream or a .kmz stream</param>
+        /// <returns>list of tracks found in the file</returns>
+        public static List<string> GetTrackList(Stream stream, bool isKml)
+        {
+            if (isKml)
+            {
+                var kml = KmlFile.Load(stream);
+                return GetTrackListFromKml(kml);
+            }
+            else
+            {
+                var kmz = KmzFile.Open(stream);
+                return GetTrackListFromKml(kmz.GetDefaultKmlFile());
+            }
+        }
+
+        /// <summary>
+        /// Returns a list of tracks contained in the given kml file.
+        /// </summary>
+        /// <param name="kml">kml file</param>
+        /// <returns>list of tracks found in the file</returns>
+        private static List<string> GetTrackListFromKml(KmlFile kml)
+        {
+            var trackList = new List<string>();
+
+            foreach (var element in kml.Root.Flatten())
+            {
+                if (element is Placemark placemark &&
+                    placemark.Geometry is LineString linestring)
+                {
+                    trackList.Add(placemark.Name);
+                }
+
+                if (element is Placemark placemark2 &&
+                    placemark2.Geometry is SharpKml.Dom.GX.Track track)
+                {
+                    trackList.Add(placemark2.Name);
+                }
+
+                if (element is Placemark placemark3 &&
+                    placemark3.Geometry is MultipleTrack multiTrack)
+                {
+                    trackList.Add(placemark3.Name);
+                }
+            }
+
+            return trackList;
+        }
+
         /// <summary>
         /// Loads a location list from given stream
         /// </summary>

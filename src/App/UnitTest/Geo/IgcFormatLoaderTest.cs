@@ -28,6 +28,23 @@ namespace WhereToFly.App.UnitTest.Geo
         }
 
         /// <summary>
+        /// Tests method GetTrackList()
+        /// </summary>
+        [TestMethod]
+        public void TestGetTrackList()
+        {
+            // run
+            string filename = Path.Combine(this.TestAssetsPath, "85QA3ET1.igc");
+            using (var stream = new FileStream(filename, FileMode.Open))
+            {
+                var trackList = IgcFormatLoader.GetTrackList(stream);
+
+                // check
+                Assert.AreEqual(1, trackList.Count, "track list must contain exactly one track");
+            }
+        }
+
+        /// <summary>
         /// Tests method LoadTrack()
         /// </summary>
         [TestMethod]

@@ -27,6 +27,20 @@ namespace WhereToFly.App.UnitTest.Geo
         }
 
         /// <summary>
+        /// Tests getting track list, in .kml format
+        /// </summary>
+        [TestMethod]
+        public void TestGetTrackListKml()
+        {
+            // run
+            string filename = Path.Combine(this.TestAssetsPath, "track_linestring.kmz");
+            var trackList = GeoLoader.GetTrackList(filename);
+
+            // check
+            Assert.IsTrue(trackList.Any(), "track list must contain any tracks");
+        }
+
+        /// <summary>
         /// Tests loading location list, in .kml format
         /// </summary>
         [TestMethod]
@@ -52,6 +66,20 @@ namespace WhereToFly.App.UnitTest.Geo
 
             // check
             Assert.IsTrue(locationList.Any(), "loaded location list must contain locations");
+        }
+
+        /// <summary>
+        /// Tests getting track list, in .gpx format
+        /// </summary>
+        [TestMethod]
+        public void TestGetTrackListGpx()
+        {
+            // run
+            string filename = Path.Combine(this.TestAssetsPath, "tracks.gpx");
+            var trackList = GeoLoader.GetTrackList(filename);
+
+            // check
+            Assert.IsTrue(trackList.Any(), "track list list must at least one track");
         }
 
         /// <summary>
