@@ -84,6 +84,11 @@ namespace WhereToFly.App.Android
         /// <param name="app">app object; unused</param>
         private void ClearCache(Core.App app)
         {
+            if (this.Control == null)
+            {
+                return;
+            }
+
             this.Control.ClearHistory();
             this.Control.ClearFormData();
             this.Control.ClearCache(true);
