@@ -3,7 +3,6 @@ using Plugin.FilePicker.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -19,7 +18,7 @@ namespace WhereToFly.App.Core.ViewModels
     /// <summary>
     /// View model for track list page
     /// </summary>
-    public class TrackListViewModel : INotifyPropertyChanged
+    public class TrackListViewModel : ViewModelBase
     {
         /// <summary>
         /// Location list
@@ -296,23 +295,5 @@ namespace WhereToFly.App.Core.ViewModels
                 await waitingDialog.HideAsync();
             }
         }
-
-        #region INotifyPropertyChanged implementation
-        /// <summary>
-        /// Event that gets signaled when a property has changed
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// Call this method to signal that a property has changed
-        /// </summary>
-        /// <param name="propertyName">property name; use C# 6 nameof() operator</param>
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            this.PropertyChanged?.Invoke(
-                this,
-                new PropertyChangedEventArgs(propertyName));
-        }
-        #endregion
     }
 }

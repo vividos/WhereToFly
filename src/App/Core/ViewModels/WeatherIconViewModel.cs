@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -12,7 +11,7 @@ namespace WhereToFly.App.Core.ViewModels
     /// <summary>
     /// View model for a single weather icon
     /// </summary>
-    public class WeatherIconViewModel : INotifyPropertyChanged
+    public class WeatherIconViewModel : ViewModelBase
     {
         /// <summary>
         /// Weather icon description object
@@ -117,23 +116,5 @@ namespace WhereToFly.App.Core.ViewModels
             WeatherDashboardViewModel.AddWeatherIcon(this, weatherIcon);
             App.RunOnUiThread(async () => await NavigationService.Instance.GoBack());
         }
-
-        #region INotifyPropertyChanged implementation
-        /// <summary>
-        /// Event that gets signaled when a property has changed
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// Call this method to signal that a property has changed
-        /// </summary>
-        /// <param name="propertyName">property name; use C# 6 nameof() operator</param>
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            this.PropertyChanged?.Invoke(
-                this,
-                new PropertyChangedEventArgs(propertyName));
-        }
-        #endregion
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Plugin.Geolocator.Abstractions;
 using System;
-using System.ComponentModel;
 using System.Threading.Tasks;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
@@ -11,7 +10,7 @@ namespace WhereToFly.App.Core.ViewModels
     /// <summary>
     /// View model for the current position details page
     /// </summary>
-    public class CurrentPositionDetailsViewModel : INotifyPropertyChanged
+    public class CurrentPositionDetailsViewModel : ViewModelBase
     {
         /// <summary>
         /// App settings object
@@ -218,23 +217,5 @@ namespace WhereToFly.App.Core.ViewModels
                 return "#c00000"; // red
             }
         }
-
-        #region INotifyPropertyChanged implementation
-        /// <summary>
-        /// Event that gets signaled when a property has changed
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// Call this method to signal that a property has changed
-        /// </summary>
-        /// <param name="propertyName">property name; use C# 6 nameof() operator</param>
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            this.PropertyChanged?.Invoke(
-                this,
-                new PropertyChangedEventArgs(propertyName));
-        }
-        #endregion
     }
 }
