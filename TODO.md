@@ -17,7 +17,7 @@
 - [ ] Show polyline with path from last 1h
 - [ ] Follow location when "my location" icon is tapped, until user interacts with view
 
-### Version 2.0
+### Backlog
 
 - [ ] Spot location background service
 - [ ] Weather background service
