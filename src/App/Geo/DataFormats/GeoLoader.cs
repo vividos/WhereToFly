@@ -108,6 +108,12 @@ namespace WhereToFly.App.Geo.DataFormats
 
             switch (extension)
             {
+                case ".kml":
+                    return KmlFormatLoader.LoadTrack(stream, trackIndex, isKml: true);
+
+                case ".kmz":
+                    return KmlFormatLoader.LoadTrack(stream, trackIndex, isKml: false);
+
                 case ".gpx":
                     return GpxFormatLoader.LoadTrack(stream, trackIndex);
 
@@ -115,7 +121,7 @@ namespace WhereToFly.App.Geo.DataFormats
                     return IgcFormatLoader.LoadTrack(stream, trackIndex);
 
                 default:
-                    throw new ArgumentException("file is not a valid .igc file");
+                    throw new ArgumentException("file is not a valid .kml, .kmz, .gpx or .igc file");
             }
         }
     }

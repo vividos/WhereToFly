@@ -3,6 +3,7 @@ using SharpKml.Dom.GX;
 using SharpKml.Engine;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using WhereToFly.App.Logic;
@@ -69,6 +70,173 @@ namespace WhereToFly.App.Geo.DataFormats
         }
 
         /// <summary>
+        /// Loads track from the kml or kmz file in the given stream.
+        /// </summary>
+        /// <param name="stream">kml or kmz stream</param>
+        /// <param name="trackIndex">index of track to load</param>
+        /// <param name="isKml">indicates if the stream is a .kml stream or a .kmz stream</param>
+        /// <returns>loaded track</returns>
+        public static Track LoadTrack(Stream stream, int trackIndex, bool isKml)
+        {
+            if (isKml)
+            {
+                var kml = KmlFile.Load(stream);
+                return LoadTrackFromKml(kml, trackIndex);
+            }
+            else
+            {
+                var kmz = KmzFile.Open(stream);
+                return LoadTrackFromKml(kmz.GetDefaultKmlFile(), trackIndex);
+            }
+        }
+
+        /// <summary>
+        /// Loads track from the kml file object.
+        /// </summary>
+        /// <param name="kml">kml file</param>
+        /// <param name="trackIndex">index of track to load</param>
+        /// <returns>loaded track</returns>
+        private static Track LoadTrackFromKml(KmlFile kml, int trackIndex)
+        {
+            Debug.Assert(kml != null, "kml file must not be null");
+
+            int currentTrackIndex = 0;
+            foreach (var element in kml.Root.Flatten())
+            {
+                if (element is Placemark placemark &&
+                    placemark.Geometry is LineString lineString)
+                {
+                    if (trackIndex == currentTrackIndex)
+                    {
+                        return LoadTrackFromLineString(lineString);
+                    }
+
+                    currentTrackIndex++;
+                }
+
+                if (element is Placemark placemark2 &&
+                    placemark2.Geometry is SharpKml.Dom.GX.Track track)
+                {
+                    if (trackIndex == currentTrackIndex)
+                    {
+                        return LoadTrackFromGXTrack(track);
+                    }
+
+                    currentTrackIndex++;
+                }
+
+                if (element is Placemark placemark3 &&
+                    placemark3.Geometry is MultipleTrack multiTrack)
+                {
+                    if (trackIndex == currentTrackIndex)
+                    {
+                        return LoadTrackFromGXMultiTrack(multiTrack);
+                    }
+
+                    currentTrackIndex++;
+                }
+            }
+
+            throw new FormatException("track number was not found in kml/kmz file");
+        }
+
+        /// <summary>
+        /// Loads track from LineString object
+        /// </summary>
+        /// <param name="lineString">line string object</param>
+        /// <returns>loaded track</returns>
+        private static Track LoadTrackFromLineString(LineString lineString)
+        {
+            var track = CreateTrackFromPlacemark(lineString.Parent as Placemark);
+
+            foreach (var vector in lineString.Coordinates)
+            {
+                TrackPoint trackPoint = GetTrackPointFromVector(vector);
+
+                track.TrackPoints.Add(trackPoint);
+            }
+
+            return track;
+        }
+
+        /// <summary>
+        /// Creates track point object from SharpKml Vector object
+        /// </summary>
+        /// <param name="vector">vector object</param>
+        /// <returns>track point object</returns>
+        private static TrackPoint GetTrackPointFromVector(SharpKml.Base.Vector vector)
+        {
+            int? altitude = null;
+            if (vector.Altitude.HasValue)
+            {
+                altitude = (int)vector.Altitude;
+            }
+
+            return new TrackPoint(vector.Latitude, vector.Longitude, altitude, heading: null);
+        }
+
+        /// <summary>
+        /// Loads track from given GX.Track object.
+        /// </summary>
+        /// <param name="gxtrack">track object</param>
+        /// <returns>loaded track </returns>
+        private static Track LoadTrackFromGXTrack(SharpKml.Dom.GX.Track gxtrack)
+        {
+            var track = CreateTrackFromPlacemark(gxtrack.Parent as Placemark);
+
+            AddGxTrackPointsToTrack(track, gxtrack);
+
+            return track;
+        }
+
+        /// <summary>
+        /// Loads track from given GX.MultiTrack object, containing one or several GX.Track
+        /// objects.
+        /// </summary>
+        /// <param name="multiTrack">multi track object</param>
+        /// <returns>loaded track </returns>
+        private static Track LoadTrackFromGXMultiTrack(MultipleTrack multiTrack)
+        {
+            var track = CreateTrackFromPlacemark(multiTrack.Parent as Placemark);
+
+            foreach (var gxtrack in multiTrack.Tracks)
+            {
+                AddGxTrackPointsToTrack(track, gxtrack);
+            }
+
+            return track;
+        }
+
+        /// <summary>
+        /// Creates empty Track object from given KML placemark object
+        /// </summary>
+        /// <param name="placemark">placemark object</param>
+        /// <returns>newly created track object</returns>
+        private static Track CreateTrackFromPlacemark(Placemark placemark)
+        {
+            return new Track
+            {
+                Id = placemark.Id ?? Guid.NewGuid().ToString("B"),
+                Name = placemark.Name ?? "Track",
+            };
+        }
+
+        /// <summary>
+        /// Adds GX.Track points to given Track object
+        /// </summary>
+        /// <param name="track">track object to add points to</param>
+        /// <param name="gxtrack">GX.Track object to use</param>
+        private static void AddGxTrackPointsToTrack(Track track, SharpKml.Dom.GX.Track gxtrack)
+        {
+            foreach (var vector in gxtrack.Coordinates)
+            {
+                TrackPoint trackPoint = GetTrackPointFromVector(vector);
+
+                track.TrackPoints.Add(trackPoint);
+            }
+        }
+
+        /// <summary>
         /// Loads a location list from given stream
         /// </summary>
         /// <param name="stream">stream of file to load</param>
@@ -79,12 +247,12 @@ namespace WhereToFly.App.Geo.DataFormats
             if (isKml)
             {
                 var kml = KmlFile.Load(stream);
-                return LoadFromKml(kml);
+                return LoadLocationsFromKml(kml);
             }
             else
             {
                 var kmz = KmzFile.Open(stream);
-                return LoadFromKml(kmz.GetDefaultKmlFile());
+                return LoadLocationsFromKml(kmz.GetDefaultKmlFile());
             }
         }
 
@@ -93,7 +261,7 @@ namespace WhereToFly.App.Geo.DataFormats
         /// </summary>
         /// <param name="kml">kml file</param>
         /// <returns>list of locations found in the file</returns>
-        private static List<Model.Location> LoadFromKml(KmlFile kml)
+        private static List<Model.Location> LoadLocationsFromKml(KmlFile kml)
         {
             var locationList = new List<Model.Location>();
 

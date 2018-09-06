@@ -27,10 +27,10 @@ namespace WhereToFly.App.UnitTest.Geo
         }
 
         /// <summary>
-        /// Tests getting track list, in .kml format
+        /// Tests getting track list, in .kmz format
         /// </summary>
         [TestMethod]
-        public void TestGetTrackListKml()
+        public void TestGetTrackListKmz()
         {
             // run
             string filename = Path.Combine(this.TestAssetsPath, "track_linestring.kmz");
@@ -38,6 +38,26 @@ namespace WhereToFly.App.UnitTest.Geo
 
             // check
             Assert.IsTrue(trackList.Any(), "track list must contain any tracks");
+        }
+
+        /// <summary>
+        /// Tests loading track, in .kmz format
+        /// </summary>
+        [TestMethod]
+        public void TestLoadTrackKmz()
+        {
+            // run
+            string filename = Path.Combine(this.TestAssetsPath, "track_linestring.kmz");
+            using (var stream = new FileStream(filename, FileMode.Open))
+            {
+                var track0 = GeoLoader.LoadTrack(stream, filename, 0);
+                stream.Seek(0, SeekOrigin.Begin);
+                var track1 = GeoLoader.LoadTrack(stream, filename, 1);
+
+                // check
+                Assert.IsTrue(track0.TrackPoints.Any(), "track points list must not be empty");
+                Assert.IsTrue(track1.TrackPoints.Any(), "track points list must not be empty");
+            }
         }
 
         /// <summary>
