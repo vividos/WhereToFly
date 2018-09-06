@@ -83,6 +83,23 @@ namespace WhereToFly.App.UnitTest.Geo
         }
 
         /// <summary>
+        /// Tests loading track, in .gpx format
+        /// </summary>
+        [TestMethod]
+        public void TestLoadTrackGpx()
+        {
+            // run
+            string filename = Path.Combine(this.TestAssetsPath, "tracks.gpx");
+            using (var stream = new FileStream(filename, FileMode.Open))
+            {
+                var track = GeoLoader.LoadTrack(stream, filename, 0);
+
+                // check
+                Assert.IsTrue(track.TrackPoints.Any(), "track points list must not be empty");
+            }
+        }
+
+        /// <summary>
         /// Tests loading location list, in .gpx format
         /// </summary>
         [TestMethod]

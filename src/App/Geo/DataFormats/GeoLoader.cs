@@ -108,6 +108,9 @@ namespace WhereToFly.App.Geo.DataFormats
 
             switch (extension)
             {
+                case ".gpx":
+                    return GpxFormatLoader.LoadTrack(stream, trackIndex);
+
                 case ".igc":
                     return IgcFormatLoader.LoadTrack(stream, trackIndex);
 
