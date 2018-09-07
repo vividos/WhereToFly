@@ -172,7 +172,8 @@ namespace WhereToFly.App.Core
         {
             try
             {
-                return GeoLoader.LoadLocationList(stream, filename);
+                var geoDataFile = GeoLoader.LoadGeoDataFile(stream, filename);
+                return geoDataFile.LoadLocationList();
             }
             catch (Exception ex)
             {
@@ -218,7 +219,8 @@ namespace WhereToFly.App.Core
         {
             try
             {
-                return GeoLoader.LoadTrack(stream, filename, trackIndex);
+                var geoDataFile = GeoLoader.LoadGeoDataFile(stream, filename);
+                return geoDataFile.LoadTrack(trackIndex);
             }
             catch (Exception ex)
             {

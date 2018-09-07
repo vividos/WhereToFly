@@ -129,7 +129,8 @@ namespace WhereToFly.App.Core.ViewModels
                 var platform = DependencyService.Get<IPlatform>();
                 using (var stream = platform.OpenAssetStream("locations/" + assetFilename))
                 {
-                    return GeoLoader.LoadLocationList(stream, assetFilename);
+                    var geoDataFile = GeoLoader.LoadGeoDataFile(stream, assetFilename);
+                    return geoDataFile.LoadLocationList();
                 }
             }
             catch (Exception ex)
@@ -225,7 +226,8 @@ namespace WhereToFly.App.Core.ViewModels
             {
                 await waitingDialog.ShowAsync();
 
-                return GeoLoader.LoadLocationList(storageFilename);
+                var geoDataFile = GeoLoader.LoadGeoDataFile(storageFilename);
+                return geoDataFile.LoadLocationList();
             }
             catch (Exception ex)
             {

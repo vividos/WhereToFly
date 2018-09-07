@@ -277,7 +277,8 @@ namespace WhereToFly.App.Core.ViewModels
             {
                 await waitingDialog.ShowAsync();
 
-                return GeoLoader.LoadTrack(stream, storageFilename, 0);
+                var geoDataFile = GeoLoader.LoadGeoDataFile(stream, storageFilename);
+                return geoDataFile.LoadTrack(0);
             }
             catch (Exception ex)
             {

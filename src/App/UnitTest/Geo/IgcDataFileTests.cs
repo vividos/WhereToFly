@@ -1,17 +1,16 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WhereToFly.App.Geo;
 using WhereToFly.App.Geo.DataFormats;
 
 namespace WhereToFly.App.UnitTest.Geo
 {
     /// <summary>
-    /// Tests class IgcFormatLoader
+    /// Tests class IgcDataFile
     /// </summary>
     [TestClass]
-    public class IgcFormatLoaderTest
+    public class IgcDataFileTests
     {
         /// <summary>
         /// Returns the Assets path for all unit tests; place your test files in the Assets folder
@@ -37,7 +36,8 @@ namespace WhereToFly.App.UnitTest.Geo
             string filename = Path.Combine(this.TestAssetsPath, "85QA3ET1.igc");
             using (var stream = new FileStream(filename, FileMode.Open))
             {
-                var trackList = IgcFormatLoader.GetTrackList(stream);
+                var igcFile = new IgcDataFile(stream);
+                var trackList = igcFile.GetTrackList();
 
                 // check
                 Assert.AreEqual(1, trackList.Count, "track list must contain exactly one track");
@@ -56,7 +56,8 @@ namespace WhereToFly.App.UnitTest.Geo
             Track track = null;
             using (var stream = new FileStream(filename, FileMode.Open))
             {
-                track = IgcFormatLoader.LoadTrack(stream, 0);
+                var igcFile = new IgcDataFile(stream);
+                track = igcFile.LoadTrack(0);
             }
 
             // check

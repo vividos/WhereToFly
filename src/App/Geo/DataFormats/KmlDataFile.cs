@@ -12,40 +12,60 @@ using WhereToFly.App.Model;
 namespace WhereToFly.App.Geo.DataFormats
 {
     /// <summary>
-    /// Loader for .kml and .kmz files; uses the SharpKml library.
+    /// Geo data file for .kml and .kmz files; uses the SharpKml library.
     /// </summary>
-    internal static class KmlFormatLoader
+    internal class KmlDataFile : IGeoDataFile
     {
         /// <summary>
-        /// Returns a list of tracks contained in the kml or kmz file in the given stream.
+        /// Opened KML file
         /// </summary>
-        /// <param name="stream">kml or kmz stream</param>
-        /// <param name="isKml">indicates if the stream is a .kml stream or a .kmz stream</param>
-        /// <returns>list of tracks found in the file</returns>
-        public static List<string> GetTrackList(Stream stream, bool isKml)
+        private readonly KmlFile kml;
+
+        /// <summary>
+        /// Creates a new KML data file from stream
+        /// </summary>
+        /// <param name="stream">stream to read from</param>
+        /// <param name="isKml">indicates if stream contains a kml or a kmz file</param>
+        public KmlDataFile(Stream stream, bool isKml)
         {
             if (isKml)
             {
-                var kml = KmlFile.Load(stream);
-                return GetTrackListFromKml(kml);
+                this.kml = KmlFile.Load(stream);
             }
             else
             {
                 var kmz = KmzFile.Open(stream);
-                return GetTrackListFromKml(kmz.GetDefaultKmlFile());
+                this.kml = kmz.GetDefaultKmlFile();
             }
         }
 
         /// <summary>
-        /// Returns a list of tracks contained in the given kml file.
+        /// Returns if the opened file contains any locations
         /// </summary>
-        /// <param name="kml">kml file</param>
+        /// <returns>true when the file contains locations, false when not</returns>
+        public bool HasLocations()
+        {
+            foreach (var element in this.kml.Root.Flatten())
+            {
+                if (element is Placemark placemark &&
+                    placemark.Geometry is Point point)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Returns a list of tracks contained in the kml or kmz file.
+        /// </summary>
         /// <returns>list of tracks found in the file</returns>
-        private static List<string> GetTrackListFromKml(KmlFile kml)
+        public List<string> GetTrackList()
         {
             var trackList = new List<string>();
 
-            foreach (var element in kml.Root.Flatten())
+            foreach (var element in this.kml.Root.Flatten())
             {
                 if (element is Placemark placemark &&
                     placemark.Geometry is LineString linestring)
@@ -70,38 +90,14 @@ namespace WhereToFly.App.Geo.DataFormats
         }
 
         /// <summary>
-        /// Loads track from the kml or kmz file in the given stream.
+        /// Loads track from the kml or kmz file.
         /// </summary>
-        /// <param name="stream">kml or kmz stream</param>
-        /// <param name="trackIndex">index of track to load</param>
-        /// <param name="isKml">indicates if the stream is a .kml stream or a .kmz stream</param>
-        /// <returns>loaded track</returns>
-        public static Track LoadTrack(Stream stream, int trackIndex, bool isKml)
-        {
-            if (isKml)
-            {
-                var kml = KmlFile.Load(stream);
-                return LoadTrackFromKml(kml, trackIndex);
-            }
-            else
-            {
-                var kmz = KmzFile.Open(stream);
-                return LoadTrackFromKml(kmz.GetDefaultKmlFile(), trackIndex);
-            }
-        }
-
-        /// <summary>
-        /// Loads track from the kml file object.
-        /// </summary>
-        /// <param name="kml">kml file</param>
         /// <param name="trackIndex">index of track to load</param>
         /// <returns>loaded track</returns>
-        private static Track LoadTrackFromKml(KmlFile kml, int trackIndex)
+        public Track LoadTrack(int trackIndex)
         {
-            Debug.Assert(kml != null, "kml file must not be null");
-
             int currentTrackIndex = 0;
-            foreach (var element in kml.Root.Flatten())
+            foreach (var element in this.kml.Root.Flatten())
             {
                 if (element is Placemark placemark &&
                     placemark.Geometry is LineString lineString)
@@ -237,35 +233,14 @@ namespace WhereToFly.App.Geo.DataFormats
         }
 
         /// <summary>
-        /// Loads a location list from given stream
+        /// Loads location list from kml or kmz file
         /// </summary>
-        /// <param name="stream">stream of file to load</param>
-        /// <param name="isKml">indicates if the stream is a .kml stream or a .kmz stream</param>
         /// <returns>list of locations found in the file</returns>
-        public static List<Model.Location> LoadLocationList(Stream stream, bool isKml)
-        {
-            if (isKml)
-            {
-                var kml = KmlFile.Load(stream);
-                return LoadLocationsFromKml(kml);
-            }
-            else
-            {
-                var kmz = KmzFile.Open(stream);
-                return LoadLocationsFromKml(kmz.GetDefaultKmlFile());
-            }
-        }
-
-        /// <summary>
-        /// Loads list of locations, from .kml file.
-        /// </summary>
-        /// <param name="kml">kml file</param>
-        /// <returns>list of locations found in the file</returns>
-        private static List<Model.Location> LoadLocationsFromKml(KmlFile kml)
+        public List<Model.Location> LoadLocationList()
         {
             var locationList = new List<Model.Location>();
 
-            foreach (var element in kml.Root.Flatten())
+            foreach (var element in this.kml.Root.Flatten())
             {
                 if (element is Placemark placemark &&
                     placemark.Geometry is Point point)
@@ -275,7 +250,7 @@ namespace WhereToFly.App.Geo.DataFormats
                         Id = placemark.Id ?? Guid.NewGuid().ToString("B"),
                         Name = placemark.Name ?? "unknown",
                         Description = GetDescriptionFromPlacemark(placemark),
-                        Type = MapPlacemarkToType(kml, placemark),
+                        Type = MapPlacemarkToType(this.kml, placemark),
                         MapLocation = new MapPoint(point.Coordinate.Latitude, point.Coordinate.Longitude),
                         Elevation = point.Coordinate.Altitude ?? 0
                     });

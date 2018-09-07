@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
-using System.Linq;
 using WhereToFly.App.Geo.DataFormats;
 
 namespace WhereToFly.App.UnitTest.Geo
@@ -27,151 +26,94 @@ namespace WhereToFly.App.UnitTest.Geo
         }
 
         /// <summary>
-        /// Tests getting track list, in .kmz format
+        /// Tests method GeoLoader.LoadGeoDataFile() to load .kml file
         /// </summary>
         [TestMethod]
-        public void TestGetTrackListKmz()
+        public void TestLoadGetDataFileKml()
         {
-            // run
-            string filename = Path.Combine(this.TestAssetsPath, "track_linestring.kmz");
-            var trackList = GeoLoader.GetTrackList(filename);
-
-            // check
-            Assert.IsTrue(trackList.Any(), "track list must contain any tracks");
-        }
-
-        /// <summary>
-        /// Tests loading track, in .kmz format
-        /// </summary>
-        [TestMethod]
-        public void TestLoadTrackKmz()
-        {
-            // run
-            string filename = Path.Combine(this.TestAssetsPath, "track_linestring.kmz");
-            using (var stream = new FileStream(filename, FileMode.Open))
-            {
-                var track0 = GeoLoader.LoadTrack(stream, filename, 0);
-                stream.Seek(0, SeekOrigin.Begin);
-                var track1 = GeoLoader.LoadTrack(stream, filename, 1);
-
-                // check
-                Assert.IsTrue(track0.TrackPoints.Any(), "track points list must not be empty");
-                Assert.IsTrue(track1.TrackPoints.Any(), "track points list must not be empty");
-            }
-        }
-
-        /// <summary>
-        /// Tests loading location list, in .kml format
-        /// </summary>
-        [TestMethod]
-        public void TestLoadLocationListKml()
-        {
-            // run
+            // set up
             string filename = Path.Combine(this.TestAssetsPath, "waypoints.kml");
-            var locationList = GeoLoader.LoadLocationList(filename);
+
+            // run
+            var kmlFile = GeoLoader.LoadGeoDataFile(filename);
 
             // check
-            Assert.IsTrue(locationList.Any(), "loaded location list must contain locations");
+            Assert.IsNotNull(kmlFile, "loaded geo data file must not be null");
         }
 
         /// <summary>
-        /// Tests loading location list, in zipped .kmz format
+        /// Tests method GeoLoader.LoadGeoDataFile() to load .kmz file
         /// </summary>
         [TestMethod]
-        public void TestLoadLocationListKmz()
+        public void TestLoadGetDataFileKmz()
         {
+            // set up
+            string filename = Path.Combine(this.TestAssetsPath, "track_linestring.kmz");
+
             // run
-            string filename = Path.Combine(this.TestAssetsPath, "waypoints.kmz");
-            var locationList = GeoLoader.LoadLocationList(filename);
+            var kmlFile = GeoLoader.LoadGeoDataFile(filename);
 
             // check
-            Assert.IsTrue(locationList.Any(), "loaded location list must contain locations");
+            Assert.IsNotNull(kmlFile, "loaded geo data file must not be null");
         }
 
         /// <summary>
-        /// Tests getting track list, in .gpx format
+        /// Tests method GeoLoader.LoadGeoDataFile() to load .gpx file
         /// </summary>
         [TestMethod]
-        public void TestGetTrackListGpx()
+        public void TestLoadGetDataFileGpx()
         {
-            // run
+            // set up
             string filename = Path.Combine(this.TestAssetsPath, "tracks.gpx");
-            var trackList = GeoLoader.GetTrackList(filename);
+
+            // run
+            var gpxFile = GeoLoader.LoadGeoDataFile(filename);
 
             // check
-            Assert.IsTrue(trackList.Any(), "track list list must at least one track");
+            Assert.IsNotNull(gpxFile, "loaded geo data file must not be null");
         }
 
         /// <summary>
-        /// Tests loading track, in .gpx format
+        /// Tests method GeoLoader.LoadGeoDataFile() to load .igc file
         /// </summary>
         [TestMethod]
-        public void TestLoadTrackGpx()
+        public void TestLoadGetDataFileIgc()
         {
-            // run
-            string filename = Path.Combine(this.TestAssetsPath, "tracks.gpx");
-            using (var stream = new FileStream(filename, FileMode.Open))
-            {
-                var track = GeoLoader.LoadTrack(stream, filename, 0);
+            // set up
+            string filename = Path.Combine(this.TestAssetsPath, "85QA3ET1.igc");
 
-                // check
-                Assert.IsTrue(track.TrackPoints.Any(), "track points list must not be empty");
-            }
-        }
-
-        /// <summary>
-        /// Tests loading location list, in .gpx format
-        /// </summary>
-        [TestMethod]
-        public void TestLoadLocationListGpx()
-        {
             // run
-            string filename = Path.Combine(this.TestAssetsPath, "waypoints.gpx");
-            var locationList = GeoLoader.LoadLocationList(filename);
+            var igcFile = GeoLoader.LoadGeoDataFile(filename);
 
             // check
-            Assert.IsTrue(locationList.Any(), "loaded location list must contain locations");
+            Assert.IsNotNull(igcFile, "loaded geo data file must not be null");
         }
 
         /// <summary>
-        /// Tests loading a kmz file with only tracks in it, but no placemarks
+        /// Tests loading geo data file, with non-existent file
         /// </summary>
         [TestMethod]
-        public void TestTrackKmzWithoutPlacemarksKmz()
-        {
-            // run
-            string filename = Path.Combine(this.TestAssetsPath, "tracks.kmz");
-            var locationList = GeoLoader.LoadLocationList(filename);
-
-            // check
-            Assert.IsFalse(locationList.Any(), "loaded location list must not contain locations");
-        }
-
-        /// <summary>
-        /// Tests loading location list, with non-existent file
-        /// </summary>
-        [TestMethod]
-        public void TestLoadLocationList_NonExistentFile()
+        public void TestLoadGeoDataFile_NonExistentFile()
         {
             // set up
             string filename = Path.Combine(this.TestAssetsPath, "waypoints.abc");
 
             // run + check
-            Assert.ThrowsException<FileNotFoundException>(() => GeoLoader.LoadLocationList(filename), "must throw exception");
+            Assert.ThrowsException<FileNotFoundException>(() => GeoLoader.LoadGeoDataFile(filename), "must throw exception");
         }
 
         /// <summary>
-        /// Tests loading location list, with invalid file extension
+        /// Tests loading geo data file, with invalid file extension
         /// </summary>
         [TestMethod]
-        public void TestLoadLocationList_InvalidFileExtension()
+        public void TestLoadGeoDataFile_InvalidFileExtension()
         {
             // set up
             string filename = "waypoints.abc";
             var stream = new MemoryStream(new byte[] { 42 });
 
             // run + check
-            Assert.ThrowsException<ArgumentException>(() => GeoLoader.LoadLocationList(stream, filename), "must throw exception");
+            Assert.ThrowsException<ArgumentException>(() => GeoLoader.LoadGeoDataFile(stream, filename), "must throw exception");
         }
     }
 }

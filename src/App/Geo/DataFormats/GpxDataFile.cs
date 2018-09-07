@@ -9,9 +9,10 @@ using WhereToFly.App.Model;
 namespace WhereToFly.App.Geo.DataFormats
 {
     /// <summary>
-    /// Loader for GPX format. See GPX specification: http://www.topografix.com/gpx.asp
+    /// Data file for loading content from GPX file. See GPX specification:
+    /// http://www.topografix.com/gpx.asp
     /// </summary>
-    internal static class GpxFormatLoader
+    internal class GpxDataFile : IGeoDataFile
     {
         /// <summary>
         /// GPX namespace to use
@@ -19,25 +20,52 @@ namespace WhereToFly.App.Geo.DataFormats
         private static readonly string GpxNamespace = "http://www.topografix.com/GPX/1/1";
 
         /// <summary>
-        /// Returns a list of tracks contained in the given gpx file stream.
+        /// GPX xml document
+        /// </summary>
+        private readonly XmlDocument gpxDocument;
+
+        /// <summary>
+        /// Namespace manager for GPX namespace
+        /// </summary>
+        private readonly XmlNamespaceManager namespaceManager;
+
+        /// <summary>
+        /// Creates a new GPX data file
         /// </summary>
         /// <param name="stream">stream containing GPX file</param>
-        /// <returns>list of tracks found in the file</returns>
-        public static List<string> GetTrackList(Stream stream)
+        public GpxDataFile(Stream stream)
         {
-            XmlDocument gpxDocument = new XmlDocument();
-            gpxDocument.Load(stream);
+            this.gpxDocument = new XmlDocument();
+            this.gpxDocument.Load(stream);
 
-            XmlNamespaceManager namespaceManager = new XmlNamespaceManager(gpxDocument.NameTable);
-            namespaceManager.AddNamespace("x", GpxNamespace);
+            this.namespaceManager = new XmlNamespaceManager(this.gpxDocument.NameTable);
+            this.namespaceManager.AddNamespace("x", GpxNamespace);
+        }
 
-            XmlNodeList trackNodeList = gpxDocument.SelectNodes("//x:trk", namespaceManager);
+        /// <summary>
+        /// Returns if the opened file contains any locations
+        /// </summary>
+        /// <returns>true when the file contains locations, false when not</returns>
+        public bool HasLocations()
+        {
+            XmlNodeList waypointNodeList = this.gpxDocument.SelectNodes("//x:wpt", this.namespaceManager);
+
+            return waypointNodeList.Count > 0;
+        }
+
+        /// <summary>
+        /// Returns a list of tracks contained in the gpx file
+        /// </summary>
+        /// <returns>list of tracks found in the file</returns>
+        public List<string> GetTrackList()
+        {
+            XmlNodeList trackNodeList = this.gpxDocument.SelectNodes("//x:trk", this.namespaceManager);
 
             var trackList = new List<string>();
 
             foreach (XmlNode trackNode in trackNodeList)
             {
-                XmlNode nameNode = trackNode.SelectSingleNode("x:name", namespaceManager);
+                XmlNode nameNode = trackNode.SelectSingleNode("x:name", this.namespaceManager);
 
                 string name = nameNode?.InnerText ?? "Track";
 
@@ -48,38 +76,30 @@ namespace WhereToFly.App.Geo.DataFormats
         }
 
         /// <summary>
-        /// Loads track with given index from GPX file specified by stream
+        /// Loads track with given index from GPX file
         /// </summary>
-        /// <param name="stream">stream containing GPX file</param>
         /// <param name="trackIndex">index of track to load</param>
         /// <returns>loaded track</returns>
-        public static Track LoadTrack(Stream stream, int trackIndex)
+        public Track LoadTrack(int trackIndex)
         {
-            XmlDocument gpxDocument = new XmlDocument();
-            gpxDocument.Load(stream);
-
-            XmlNamespaceManager namespaceManager = new XmlNamespaceManager(gpxDocument.NameTable);
-            namespaceManager.AddNamespace("x", GpxNamespace);
-
-            XmlNodeList trackNodeList = gpxDocument.SelectNodes("//x:trk", namespaceManager);
+            XmlNodeList trackNodeList = this.gpxDocument.SelectNodes("//x:trk", this.namespaceManager);
 
             if (trackIndex >= trackNodeList.Count)
             {
                 throw new FormatException("invalid track index in GPX file");
             }
 
-            return LoadTrackFromTrackNode(trackNodeList[trackIndex], namespaceManager);
+            return this.LoadTrackFromTrackNode(trackNodeList[trackIndex]);
         }
 
         /// <summary>
         /// Loads track from given track node
         /// </summary>
         /// <param name="trackNode">track xml node</param>
-        /// <param name="namespaceManager">xml namespace manager to use</param>
         /// <returns>loaded track</returns>
-        private static Track LoadTrackFromTrackNode(XmlNode trackNode, XmlNamespaceManager namespaceManager)
+        private Track LoadTrackFromTrackNode(XmlNode trackNode)
         {
-            XmlNode nameNode = trackNode.SelectSingleNode("x:name", namespaceManager);
+            XmlNode nameNode = trackNode.SelectSingleNode("x:name", this.namespaceManager);
 
             string name = nameNode?.InnerText ?? "Track";
 
@@ -89,11 +109,11 @@ namespace WhereToFly.App.Geo.DataFormats
                 Name = name
             };
 
-            foreach (XmlNode trackSegmentNode in trackNode.SelectNodes("x:trkseg", namespaceManager))
+            foreach (XmlNode trackSegmentNode in trackNode.SelectNodes("x:trkseg", this.namespaceManager))
             {
-                foreach (XmlNode trackPointNode in trackSegmentNode.SelectNodes("x:trkpt", namespaceManager))
+                foreach (XmlNode trackPointNode in trackSegmentNode.SelectNodes("x:trkpt", this.namespaceManager))
                 {
-                    track.TrackPoints.Add(GetTrackPointFromTrackPointNode(trackPointNode, namespaceManager));
+                    track.TrackPoints.Add(GetTrackPointFromTrackPointNode(trackPointNode, this.namespaceManager));
                 }
             }
 
@@ -126,26 +146,18 @@ namespace WhereToFly.App.Geo.DataFormats
         }
 
         /// <summary>
-        /// Loads location list from given stream containing a GPX file. The Waypoint items of the
-        /// GPX file is returned.
+        /// Loads location list from GPX file. The Waypoint items of the GPX file are returned.
         /// </summary>
-        /// <param name="stream">stream containing GPX file</param>
         /// <returns>list of waypoint locations in file</returns>
-        public static List<Location> LoadLocationList(Stream stream)
+        public List<Location> LoadLocationList()
         {
-            XmlDocument gpxDocument = new XmlDocument();
-            gpxDocument.Load(stream);
-
-            XmlNamespaceManager namespaceManager = new XmlNamespaceManager(gpxDocument.NameTable);
-            namespaceManager.AddNamespace("x", GpxNamespace);
-
-            XmlNodeList waypointNodeList = gpxDocument.SelectNodes("//x:wpt", namespaceManager);
+            XmlNodeList waypointNodeList = this.gpxDocument.SelectNodes("//x:wpt", this.namespaceManager);
 
             var locationList = new List<Location>();
 
             foreach (XmlNode waypointNode in waypointNodeList)
             {
-                locationList.Add(GetLocationFromWaypointNode(waypointNode, namespaceManager));
+                locationList.Add(GetLocationFromWaypointNode(waypointNode, this.namespaceManager));
             }
 
             return locationList;
