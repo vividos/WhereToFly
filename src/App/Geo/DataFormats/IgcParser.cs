@@ -36,6 +36,7 @@ namespace WhereToFly.App.Geo.DataFormats
         public IgcParser(Stream stream)
         {
             this.Track.Id = Guid.NewGuid().ToString("B");
+            this.Track.IsFlightTrack = true;
             this.Parse(stream);
         }
 

@@ -18,6 +18,17 @@ namespace WhereToFly.App.Geo
         public string Name { get; set; }
 
         /// <summary>
+        /// Indicates if track is a flight track and will be colored depending on climb and sink
+        /// rates.
+        /// </summary>
+        public bool IsFlightTrack { get; set; }
+
+        /// <summary>
+        /// Color to use for the track; used when not a flight track; format is RRGGBB in hex.
+        /// </summary>
+        public string Color { get; set; }
+
+        /// <summary>
         /// List of track points
         /// </summary>
         public List<TrackPoint> TrackPoints { get; set; }
@@ -28,6 +39,8 @@ namespace WhereToFly.App.Geo
         public Track()
         {
             this.Name = string.Empty;
+            this.IsFlightTrack = false;
+            this.Color = "0000FF";
             this.TrackPoints = new List<TrackPoint>();
         }
     }

@@ -371,9 +371,7 @@ namespace WhereToFly.App.Core.Views
         /// Adds new track with given name and map points
         /// </summary>
         /// <param name="track">track to add</param>
-        /// <param name="color">color to use for track; when null, the track will be colored using
-        /// climb and sink rate values</param>
-        public void AddTrack(Track track, string color = null)
+        public void AddTrack(Track track)
         {
             var trackPointsList =
                 track.TrackPoints.SelectMany(x => new double[]
@@ -388,7 +386,7 @@ namespace WhereToFly.App.Core.Views
                 track.Id,
                 track.Name,
                 JsonConvert.SerializeObject(trackPointsList),
-                color != null ? "'" + color + "'" : "undefined");
+                track.IsFlightTrack ? "undefined" : $"'#{track.Color}'");
 
             this.RunJavaScript(js);
         }
