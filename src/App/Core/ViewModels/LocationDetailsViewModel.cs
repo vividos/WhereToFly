@@ -1,6 +1,4 @@
-﻿using Plugin.Share;
-using Plugin.Share.Abstractions;
-using System;
+﻿using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -249,16 +247,10 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait for</returns>
         private async Task OnShareLocationAsync()
         {
-            await CrossShare.Current.Share(
-                new ShareMessage
-                {
-                    Title = Constants.AppTitle,
-                    Text = DataFormatter.FormatLocationShareText(this.location)
-                },
-                new ShareOptions
-                {
-                    ChooserTitle = "Share this location with..."
-                });
+            string text = "Share this location with...";
+            string message = DataFormatter.FormatLocationShareText(this.location);
+
+            await App.ShareMessageAsync(text, message);
         }
 
         /// <summary>

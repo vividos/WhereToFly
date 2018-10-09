@@ -1,8 +1,6 @@
 ﻿using Plugin.Geolocator.Abstractions;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
-using Plugin.Share;
-using Plugin.Share.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -522,16 +520,9 @@ namespace WhereToFly.App.Core.Views
 
                 var point = new MapPoint(position.Latitude, position.Longitude);
 
-                await CrossShare.Current.Share(
-                    new ShareMessage
-                    {
-                        Title = Constants.AppTitle,
-                        Text = DataFormatter.FormatMyPositionShareText(point, position.Altitude, position.Timestamp)
-                    },
-                    new ShareOptions
-                    {
-                        ChooserTitle = "Share my position with..."
-                    });
+                await App.ShareMessageAsync(
+                    "Share my position with...",
+                    DataFormatter.FormatMyPositionShareText(point, position.Altitude, position.Timestamp));
             }
         }
 

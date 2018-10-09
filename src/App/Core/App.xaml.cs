@@ -1,6 +1,8 @@
 ﻿using Microsoft.AppCenter;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Distribute;
+using Plugin.Share;
+using Plugin.Share.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -244,6 +246,26 @@ namespace WhereToFly.App.Core
             var app = Xamarin.Forms.Application.Current as App;
 
             MessagingCenter.Send<App, string>(app, Constants.MessageShowToast, message);
+        }
+
+        /// <summary>
+        /// Shares a message with other apps
+        /// </summary>
+        /// <param name="title">title of the share dialog</param>
+        /// <param name="message">message text to share</param>
+        /// <returns>task to wait on</returns>
+        public static async Task ShareMessageAsync(string title, string message)
+        {
+            await CrossShare.Current.Share(
+                new ShareMessage
+                {
+                    Title = Constants.AppTitle,
+                    Text = message
+                },
+                new ShareOptions
+                {
+                    ChooserTitle = title
+                });
         }
 
         /// <summary>
