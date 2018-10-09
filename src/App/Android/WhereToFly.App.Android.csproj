@@ -133,6 +133,7 @@
     <AndroidAsset Include="Assets\weathericons.json" />
     <AndroidAsset Include="Assets\locations\paraglidingspots_crossing_the_alps_2018_06_19.kmz" />
     <AndroidAsset Include="Assets\locations\crossing_the_alps_2018.kmz" />
+    <ProguardConfiguration Include="proguard.cfg" />
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
