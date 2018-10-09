@@ -237,7 +237,7 @@ namespace WhereToFly.App.Core.Services
 
             if (!File.Exists(filename))
             {
-                this.trackList = new List<Track>();
+                this.trackList = GetDefaultTrackList();
                 return;
             }
 
@@ -252,6 +252,35 @@ namespace WhereToFly.App.Core.Services
                 App.LogError(ex);
                 this.trackList = new List<Track>();
             }
+        }
+
+        /// <summary>
+        /// Returns a default track list; used when no stored track list is available
+        /// </summary>
+        /// <returns>default track list</returns>
+        private static List<Track> GetDefaultTrackList()
+        {
+            return new List<Track>
+            {
+                new Track
+                {
+                    Id = "crossingthealps2018",
+                    Name = "Crossing the Alps 2018",
+                    IsFlightTrack = false,
+                    Color = "FF0000",
+                    TrackPoints = new List<TrackPoint>
+                        {
+                            new TrackPoint(47.754076, 12.352277, null, null), // Kampenwand
+                            new TrackPoint(47.631745, 12.431815, null, null), // Kössen
+                            new TrackPoint(47.285720, 12.297016, null, null), // Wildkogel
+                            new TrackPoint(47.090525, 12.183008, null, null), // Alpenhauptkamm
+                            new TrackPoint(46.738669, 11.958434, null, null), // Kronplatz
+                            new TrackPoint(46.508371, 11.828376, null, null), // Sellastock
+                            new TrackPoint(46.251668, 11.870709, null, null), // Pala
+                            new TrackPoint(46.017779, 11.900711, null, null), // Feltre
+                        }
+                }
+            };
         }
 
         /// <summary>
