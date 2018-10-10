@@ -386,7 +386,7 @@ namespace WhereToFly.App.Core.Views
                 track.Id,
                 track.Name,
                 JsonConvert.SerializeObject(trackPointsList),
-                track.IsFlightTrack ? "undefined" : $"'#{track.Color}'");
+                track.IsFlightTrack ? "undefined" : $"'{track.Color}'");
 
             this.RunJavaScript(js);
         }

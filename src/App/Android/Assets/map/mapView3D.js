@@ -170,6 +170,14 @@ function MapView(options) {
 
     console.log("#8 other stuff");
 
+    // add a dedicated track primitives collection, as we can't call viewer.scene.primitives.removeAll()
+    this.trackPrimitivesCollection = new Cesium.PrimitiveCollection({
+        show: true,
+        destroyPrimitives: true
+    });
+
+    this.viewer.scene.primitives.add(this.trackPrimitivesCollection);
+
     this.trackIdToTrackDataMap = {};
 
     this.onMapInitialized();
@@ -811,6 +819,10 @@ MapView.prototype.calcTrackColors = function (listOfTrackPoints) {
         var varioValue = altitudeDiff / timeDiff;
 
         var varioColor = this.trackColorFromVarioValue(varioValue);
+
+        if (varioColor === undefined)
+            console.log("undefined color vor vario value " + varioValue);
+
         trackColors[index / 3] = varioColor;
     }
 
@@ -835,26 +847,28 @@ MapView.prototype.addTrack = function (trackId, trackName, listOfTrackPoints, co
 
     var trackPointArray = Cesium.Cartesian3.fromDegreesArrayHeights(listOfTrackPoints);
 
+    var hasColor = color !== undefined;
+
     var trackPolyline = new Cesium.PolylineGeometry({
         positions: trackPointArray,
         width: 5,
-        vertexFormat: color === undefined ? Cesium.PolylineColorAppearance.VERTEX_FORMAT : undefined,
-        colors: color === undefined ? trackColors : undefined,
-        colorsPerVertex: false,
+        vertexFormat: hasColor ? undefined : Cesium.PolylineColorAppearance.VERTEX_FORMAT,
+        colors: hasColor ? undefined : trackColors,
+        colorsPerVertex: false
     });
 
     var primitive = new Cesium.Primitive({
         geometryInstances: new Cesium.GeometryInstance({
-            geometry: trackPolyline
+            geometry: trackPolyline,
+            attributes: {
+                color: hasColor ? Cesium.ColorGeometryInstanceAttribute.fromColor(
+                    Cesium.Color.fromCssColorString('#' + color)) : undefined
+            }
         }),
-        appearance: new Cesium.PolylineColorAppearance({ translucent: false }),
-        attributes: {
-            color: color === undefined ? undefined : Cesium.ColorGeometryInstanceAttribute.fromColor(
-                Cesium.Color.fromCssColorString('#' + color))
-        }
+        appearance: new Cesium.PolylineColorAppearance({ translucent: false })
     });
 
-    this.viewer.scene.primitives.add(primitive);
+    this.trackPrimitivesCollection.add(primitive);
 
     var boundingSphere = Cesium.BoundingSphere.fromPoints(trackPointArray, null)
 
@@ -892,7 +906,7 @@ MapView.prototype.removeTrack = function (trackId) {
 
         console.log("removing track with ID: " + trackId);
 
-        this.viewer.scene.primitives.remove(trackData.primitive);
+        this.trackPrimitivesCollection.remove(trackData.primitive);
 
         this.trackIdToTrackDataMap[trackId] = undefined;
     }
@@ -905,7 +919,7 @@ MapView.prototype.clearAllTracks = function () {
 
     console.log("clearing all tracks");
 
-    this.viewer.scene.primitives.removeAll();
+    this.trackPrimitivesCollection.removeAll();
 
     this.trackIdToTrackDataMap = {};
 };
