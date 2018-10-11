@@ -220,81 +220,12 @@ namespace WhereToFly.App.Core.ViewModels
                 return;
             }
 
-            Track track = await LoadTrackFromStorageAsync(result.FilePath);
-            if (track == null)
+            using (var stream = new FileStream(result.FilePath, FileMode.Open))
             {
-                return;
+                await OpenFileHelper.OpenTrackAsync(stream, result.FilePath);
             }
-
-            await this.AppendTrackAsync(track);
-        }
-
-        /// <summary>
-        /// Appends track to track list and navigates back to map
-        /// </summary>
-        /// <param name="track">track to append</param>
-        /// <returns>task to wait on</returns>
-        private async Task AppendTrackAsync(Track track)
-        {
-            var dataService = DependencyService.Get<IDataService>();
-
-            var currentList = await dataService.GetTrackListAsync(CancellationToken.None);
-            currentList.Add(track);
-
-            await dataService.StoreTrackListAsync(currentList);
-
-            App.AddMapTrack(track);
 
             await NavigationService.Instance.GoBack();
-
-            App.ShowToast("Track was loaded.");
-        }
-
-        /// <summary>
-        /// Loads track from storage
-        /// </summary>
-        /// <param name="storageFilename">complete storage filename</param>
-        /// <returns>track, or null when no track could be loaded</returns>
-        private static async Task<Track> LoadTrackFromStorageAsync(string storageFilename)
-        {
-            using (var stream = new FileStream(storageFilename, FileMode.Open))
-            {
-                return await LoadTrackFromStreamAsync(stream, storageFilename);
-            }
-        }
-
-        /// <summary>
-        /// Loads track from stream
-        /// </summary>
-        /// <param name="stream">open stream to read from</param>
-        /// <param name="storageFilename">complete storage filename</param>
-        /// <returns>track, or null when no track could be loaded</returns>
-        private static async Task<Track> LoadTrackFromStreamAsync(Stream stream, string storageFilename)
-        {
-            var waitingDialog = new WaitingPopupPage("Importing track...");
-
-            try
-            {
-                await waitingDialog.ShowAsync();
-
-                var geoDataFile = GeoLoader.LoadGeoDataFile(stream, storageFilename);
-                return geoDataFile.LoadTrack(0);
-            }
-            catch (Exception ex)
-            {
-                App.LogError(ex);
-
-                await App.Current.MainPage.DisplayAlert(
-                    Constants.AppTitle,
-                    "Error while loading track: " + ex.Message,
-                    "OK");
-
-                return null;
-            }
-            finally
-            {
-                await waitingDialog.HideAsync();
-            }
         }
     }
 }

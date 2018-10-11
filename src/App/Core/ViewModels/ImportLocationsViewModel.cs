@@ -2,13 +2,9 @@
 using Plugin.FilePicker.Abstractions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using WhereToFly.App.Core.Services;
-using WhereToFly.App.Core.Views;
-using WhereToFly.App.Geo.DataFormats;
-using WhereToFly.App.Model;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.ViewModels
@@ -83,13 +79,11 @@ namespace WhereToFly.App.Core.ViewModels
                 return;
             }
 
-            List<Location> locationList = await LoadLocationListFromAssetsAsync(assetFilename);
-            if (locationList == null)
+            var platform = DependencyService.Get<IPlatform>();
+            using (var stream = platform.OpenAssetStream("locations/" + assetFilename))
             {
-                return;
+                await OpenFileHelper.OpenLocationListAsync(stream, assetFilename);
             }
-
-            await this.AppendOrReplaceLocationListAsync(locationList);
         }
 
         /// <summary>
@@ -111,69 +105,6 @@ namespace WhereToFly.App.Core.ViewModels
             }
 
             return this.includedLocationsList[result];
-        }
-
-        /// <summary>
-        /// Loads location list from assets
-        /// </summary>
-        /// <param name="assetFilename">asset base filename</param>
-        /// <returns>list of locations, or null when no location list could be loaded</returns>
-        private static async Task<List<Location>> LoadLocationListFromAssetsAsync(string assetFilename)
-        {
-            var waitingDialog = new WaitingPopupPage("Importing locations list...");
-
-            try
-            {
-                await waitingDialog.ShowAsync();
-
-                var platform = DependencyService.Get<IPlatform>();
-                using (var stream = platform.OpenAssetStream("locations/" + assetFilename))
-                {
-                    var geoDataFile = GeoLoader.LoadGeoDataFile(stream, assetFilename);
-                    return geoDataFile.LoadLocationList();
-                }
-            }
-            catch (Exception ex)
-            {
-                App.LogError(ex);
-
-                await App.Current.MainPage.DisplayAlert(
-                    Constants.AppTitle,
-                    "Error while loading location list: " + ex.Message,
-                    "OK");
-
-                return null;
-            }
-            finally
-            {
-                await waitingDialog.HideAsync();
-            }
-        }
-
-        /// <summary>
-        /// Appends or replaces location list
-        /// </summary>
-        /// <param name="locationList">location list to append or replace</param>
-        /// <returns>task to wait on</returns>
-        private async Task AppendOrReplaceLocationListAsync(List<Location> locationList)
-        {
-            bool appendToList = await AskAppendToList();
-
-            var dataService = DependencyService.Get<IDataService>();
-
-            if (appendToList)
-            {
-                var currentList = await dataService.GetLocationListAsync(CancellationToken.None);
-                locationList.InsertRange(0, currentList);
-            }
-
-            await dataService.StoreLocationListAsync(locationList);
-
-            App.UpdateMapLocationsList();
-
-            await NavigationService.Instance.GoBack();
-
-            App.ShowToast("Location list was loaded.");
         }
 
         /// <summary>
@@ -204,45 +135,9 @@ namespace WhereToFly.App.Core.ViewModels
                 return;
             }
 
-            List<Location> locationList = await LoadLocationListFromStorageAsync(result.FilePath);
-            if (locationList == null)
+            using (var stream = new FileStream(result.FilePath, FileMode.Open))
             {
-                return;
-            }
-
-            await this.AppendOrReplaceLocationListAsync(locationList);
-        }
-
-        /// <summary>
-        /// Loads location list from storage
-        /// </summary>
-        /// <param name="storageFilename">complete storage filename</param>
-        /// <returns>list of locations, or null when no location list could be loaded</returns>
-        private static async Task<List<Location>> LoadLocationListFromStorageAsync(string storageFilename)
-        {
-            var waitingDialog = new WaitingPopupPage("Importing locations list...");
-
-            try
-            {
-                await waitingDialog.ShowAsync();
-
-                var geoDataFile = GeoLoader.LoadGeoDataFile(storageFilename);
-                return geoDataFile.LoadLocationList();
-            }
-            catch (Exception ex)
-            {
-                App.LogError(ex);
-
-                await App.Current.MainPage.DisplayAlert(
-                    Constants.AppTitle,
-                    "Error while loading location list: " + ex.Message,
-                    "OK");
-
-                return null;
-            }
-            finally
-            {
-                await waitingDialog.HideAsync();
+                await OpenFileHelper.OpenLocationListAsync(stream, result.FilePath);
             }
         }
 
@@ -268,22 +163,6 @@ namespace WhereToFly.App.Core.ViewModels
             string webSiteToOpen = this.downloadWebSiteList[result];
 
             Device.OpenUri(new Uri(webSiteToOpen));
-        }
-
-        /// <summary>
-        /// Asks user if location list should be appended or replaced
-        /// </summary>
-        /// <returns>true when location list should be appended, false when it should be
-        /// replaced</returns>
-        internal static async Task<bool> AskAppendToList()
-        {
-            bool appendToList = await App.Current.MainPage.DisplayAlert(
-                Constants.AppTitle,
-                "Append to current location list or replace list?",
-                "Append",
-                "Replace");
-
-            return appendToList;
         }
     }
 }

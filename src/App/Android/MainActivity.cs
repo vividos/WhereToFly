@@ -129,22 +129,13 @@ namespace WhereToFly.App.Android
                 return;
             }
 
-            bool isTrack = Path.GetExtension(filename).ToLowerInvariant() == ".igc";
-
             var stream = helper.GetStreamFromIntent(intent);
 
             if (stream != null)
             {
                 var app = Core.App.Current as Core.App;
 
-                if (isTrack)
-                {
-                    Core.App.RunOnUiThread(async () => await app.OpenTrackAsync(stream, filename));
-                }
-                else
-                {
-                    Core.App.RunOnUiThread(async () => await app.OpenLocationListAsync(stream, filename));
-                }
+                Core.App.RunOnUiThread(async () => await app.OpenFileAsync(stream, filename));
             }
         }
 

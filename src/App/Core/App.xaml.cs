@@ -4,14 +4,12 @@ using Microsoft.AppCenter.Distribute;
 using Plugin.Share;
 using Plugin.Share.Abstractions;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.Views;
 using WhereToFly.App.Geo;
-using WhereToFly.App.Geo.DataFormats;
 using WhereToFly.App.Model;
 using Xamarin.Forms;
 
@@ -129,115 +127,6 @@ namespace WhereToFly.App.Core
         }
 
         /// <summary>
-        /// Opens and load location list from given stream object
-        /// </summary>
-        /// <param name="stream">stream object</param>
-        /// <param name="filename">
-        /// filename; extension of filename is used to determine file type
-        /// </param>
-        /// <returns>task to wait on</returns>
-        public async Task OpenLocationListAsync(Stream stream, string filename)
-        {
-            List<Location> locationList = await LoadLocationListFromStreamAsync(stream, filename);
-
-            if (locationList == null)
-            {
-                return;
-            }
-
-            bool appendToList = await ViewModels.ImportLocationsViewModel.AskAppendToList();
-
-            var dataService = DependencyService.Get<IDataService>();
-
-            if (appendToList)
-            {
-                var currentList = await dataService.GetLocationListAsync(CancellationToken.None);
-                locationList.InsertRange(0, currentList);
-            }
-
-            await dataService.StoreLocationListAsync(locationList);
-
-            App.ShowToast("Location list was loaded.");
-
-            App.UpdateMapLocationsList();
-        }
-
-        /// <summary>
-        /// Loads location list from assets
-        /// </summary>
-        /// <param name="stream">stream to load from</param>
-        /// <param name="filename">
-        /// filename; extension of filename is used to determine file type
-        /// </param>
-        /// <returns>list of locations, or null when no location list could be loaded</returns>
-        private static async Task<List<Location>> LoadLocationListFromStreamAsync(Stream stream, string filename)
-        {
-            try
-            {
-                var geoDataFile = GeoLoader.LoadGeoDataFile(stream, filename);
-                return geoDataFile.LoadLocationList();
-            }
-            catch (Exception ex)
-            {
-                App.LogError(ex);
-
-                await App.Current.MainPage.DisplayAlert(
-                    Constants.AppTitle,
-                    "Error while loading location list: " + ex.Message,
-                    "OK");
-
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Opens and loads track from given stream object
-        /// </summary>
-        /// <param name="stream">stream object</param>
-        /// <param name="filename">
-        /// filename; extension of filename is used to determine file type
-        /// </param>
-        /// <returns>task to wait on</returns>
-        public async Task OpenTrackAsync(Stream stream, string filename)
-        {
-            Track track = await LoadTrackFromStreamAsync(stream, filename, 0);
-
-            if (track == null)
-            {
-                return;
-            }
-
-            App.AddMapTrack(track);
-        }
-
-        /// <summary>
-        /// Loads track from given stream
-        /// </summary>
-        /// <param name="stream">open stream to read from</param>
-        /// <param name="filename">complete storage filename</param>
-        /// <param name="trackIndex">track index of track to load</param>
-        /// <returns>track, or null when no track could be loaded</returns>
-        private static async Task<Track> LoadTrackFromStreamAsync(Stream stream, string filename, int trackIndex)
-        {
-            try
-            {
-                var geoDataFile = GeoLoader.LoadGeoDataFile(stream, filename);
-                return geoDataFile.LoadTrack(trackIndex);
-            }
-            catch (Exception ex)
-            {
-                App.LogError(ex);
-
-                await App.Current.MainPage.DisplayAlert(
-                    Constants.AppTitle,
-                    "Error while loading track: " + ex.Message,
-                    "OK");
-
-                return null;
-            }
-        }
-
-        /// <summary>
         /// Shows toast message with given text
         /// </summary>
         /// <param name="message">toast message text</param>
@@ -344,6 +233,17 @@ namespace WhereToFly.App.Core
             var app = Xamarin.Forms.Application.Current as App;
 
             MessagingCenter.Send<App>(app, Constants.MessageUpdateMapTracks);
+        }
+
+        /// <summary>
+        /// Opens file for importing data
+        /// </summary>
+        /// <param name="stream">stream to import</param>
+        /// <param name="filename">filename of stream</param>
+        /// <returns>task to wait on</returns>
+        public async Task OpenFileAsync(Stream stream, string filename)
+        {
+            await OpenFileHelper.OpenFileAsync(stream, filename);
         }
 
         #region App lifecycle methods
