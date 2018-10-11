@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace WhereToFly.App.Geo
 {
@@ -29,6 +30,21 @@ namespace WhereToFly.App.Geo
         public string Color { get; set; }
 
         /// <summary>
+        /// Duration of track
+        /// </summary>
+        public TimeSpan Duration { get; set; }
+
+        /// <summary>
+        /// Length of track, in meter
+        /// </summary>
+        public double LengthInMeter { get; set; }
+
+        /// <summary>
+        /// Max. climb rate, in m/s
+        /// </summary>
+        public double MaxClimbRate { get; set; }
+
+        /// <summary>
         /// List of track points
         /// </summary>
         public List<TrackPoint> TrackPoints { get; set; }
@@ -41,6 +57,9 @@ namespace WhereToFly.App.Geo
             this.Name = string.Empty;
             this.IsFlightTrack = false;
             this.Color = "0000FF";
+            this.Duration = TimeSpan.Zero;
+            this.LengthInMeter = 0.0;
+            this.MaxClimbRate = 0.0;
             this.TrackPoints = new List<TrackPoint>();
         }
     }
