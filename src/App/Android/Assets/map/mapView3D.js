@@ -790,7 +790,7 @@ MapView.prototype.trackColorFromVarioValue = function (varioValue) {
         -1.0, Cesium.Color.fromBytes(0, 205, 255),
         -1.5, Cesium.Color.fromBytes(0, 165, 255),
         -2.0, Cesium.Color.fromBytes(0, 125, 255),
-        -3.0, Cesium.Color.fromBytes(0, 65, 255),
+        -3.0, Cesium.Color.fromBytes(0, 65, 255)
     ];
 
     for (var mappingIndex = 0; mappingIndex < varioColorMapping.length; mappingIndex += 2) {
@@ -870,7 +870,7 @@ MapView.prototype.addTrack = function (trackId, trackName, listOfTrackPoints, co
 
     this.trackPrimitivesCollection.add(primitive);
 
-    var boundingSphere = Cesium.BoundingSphere.fromPoints(trackPointArray, null)
+    var boundingSphere = Cesium.BoundingSphere.fromPoints(trackPointArray, null);
 
     this.trackIdToTrackDataMap[trackId] = {
         primitive: primitive,
