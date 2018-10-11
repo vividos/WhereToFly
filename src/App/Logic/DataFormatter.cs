@@ -43,21 +43,31 @@ namespace WhereToFly.App.Logic
         /// <summary>
         /// Formats distance value as displayable text
         /// </summary>
-        /// <param name="distance">distance in meter</param>
+        /// <param name="distanceInMeter">distance in meter</param>
         /// <returns>displayable text</returns>
-        public static string FormatDistance(double distance)
+        public static string FormatDistance(double distanceInMeter)
         {
-            if (distance < 1e-6)
+            if (distanceInMeter < 1e-6)
             {
                 return "-";
             }
 
-            if (distance < 1000.0)
+            if (distanceInMeter < 1000.0)
             {
-                return string.Format("{0} m", (int)distance);
+                return string.Format("{0} m", (int)distanceInMeter);
             }
 
-            return string.Format("{0:F1} km", distance / 1000.0);
+            return string.Format("{0:F1} km", distanceInMeter / 1000.0);
+        }
+
+        /// <summary>
+        /// Formats duration, for display
+        /// </summary>
+        /// <param name="duration">duration to format</param>
+        /// <returns>formatted duration</returns>
+        public static string FormatDuration(TimeSpan duration)
+        {
+            return string.Format("{0:mm\\:ss} s", duration);
         }
 
         /// <summary>

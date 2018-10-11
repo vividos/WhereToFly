@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
              x:Class="WhereToFly.App.Core.Views.TrackListPage">
 
     <ContentPage.ToolbarItems>
@@ -23,7 +24,7 @@
             <!-- Track list -->
             <ListView x:Name="trackListView"
                   ItemsSource="{Binding Path=TrackList, Mode=OneWay}"
-                  RowHeight="85"
+                  RowHeight="65"
                   ItemTapped="OnItemTapped_TrackListView"
                   IsPullToRefreshEnabled="False"
                   android:ListView.IsFastScrollEnabled="true"
@@ -34,11 +35,10 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <!-- Templace for a single view cell -->
-                        <ViewCell Height="85">
+                        <ViewCell Height="65">
                             <ViewCell.View>
                                 <Grid BackgroundColor="#efefef" Margin="8,4">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition/>
                                         <RowDefinition/>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
@@ -47,11 +47,11 @@
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
 
-                                    <!-- image -->
-                                    <!--<controls:SvgImage Source="{Binding TypeImageSource, Mode=OneWay}"
+                                    <!-- Track type image -->
+                                    <controls:SvgImage Source="{Binding TypeImageSource, Mode=OneWay}"
                                                    WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
                                                    HorizontalOptions="Start" VerticalOptions="Center"
-                                                   Grid.Column="0" Grid.RowSpan="3"/>-->
+                                                   Grid.Column="0" Grid.RowSpan="2"/>
 
                                     <!-- Details -->
                                     <Label Text="{Binding Name}"
@@ -59,16 +59,11 @@
                                        FontSize="Medium"
                                        LineBreakMode="TailTruncation"
                                        Grid.Column="1" Grid.Row="0" />
-                                    <!--<Label Text="{Binding DetailInfos}"
+                                    <Label Text="{Binding DetailInfos}"
                                        Style="{DynamicResource ListItemDetailTextStyle}"
                                        FontSize="Small"
                                        LineBreakMode="TailTruncation"
                                        Grid.Column="1" Grid.Row="1" />
-                                    <Label Text="{Binding Description}"
-                                       Style="{DynamicResource ListItemDetailTextStyle}"
-                                       FontSize="Small"
-                                       LineBreakMode="TailTruncation"
-                                       Grid.Column="1" Grid.Row="2" />-->
                                 </Grid>
                             </ViewCell.View>
                             <ViewCell.ContextActions>
