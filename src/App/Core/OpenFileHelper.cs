@@ -288,7 +288,7 @@ namespace WhereToFly.App.Core
         /// <returns>task to wait on</returns>
         private static async Task AskUserImportLocationsOrTracks(IGeoDataFile geoDataFile)
         {
-            string question = "The file to import has both waypoints and tracks; what do you want to import?";
+            string question = "What do you want to import?";
 
             var choices = new string[2]
                 {
@@ -297,8 +297,9 @@ namespace WhereToFly.App.Core
                 };
 
             string choice = await App.Current.MainPage.DisplayActionSheet(
-                Constants.AppTitle,
                 question,
+                null,
+                null,
                 choices[0],
                 choices[1]);
 
