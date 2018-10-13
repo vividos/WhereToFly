@@ -12,13 +12,17 @@ using Xamarin.Forms.Platform.Android;
 namespace WhereToFly.App.Android
 {
     /// <summary>
-    /// Main activity for the Android app
+    /// Main activity for the Android app.
+    /// The attributes specify startup behavior. LaunchMode.SingleTask is used when the activity
+    /// is started again with an intent to open files. See
+    /// http://www.helloandroid.com/tutorials/communicating-between-running-activities
+    /// The intent filters are used to open various combinations of files.
     /// </summary>
     [Activity(Label = Constants.AppTitle,
         Name = "wheretofly.MainActivity",
         Icon = "@drawable/icon",
         Theme = "@style/MainTheme",
-        LaunchMode = LaunchMode.SingleTop,
+        LaunchMode = LaunchMode.SingleTask,
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     //// Intent filter, case 1: mime type set
     //// See https://stackoverflow.com/questions/39300649/android-intent-filter-not-working
@@ -52,6 +56,20 @@ namespace WhereToFly.App.Android
         new[] { Intent.ActionView, Intent.ActionOpenDocument },
         DataSchemes = new string[] { "file", "content", "http", "https" },
         DataHost = "*",
+        DataMimeType = "application/octet-stream",
+        DataPathPatterns = new string[]
+        {
+            @".*\\.kmz", @".*\\..*\\.kmz", ".*\\..*\\..*\\.kmz", ".*\\..*\\..*\\..*\\.kmz",
+            @".*\\.kml", @".*\\..*\\.kml", ".*\\..*\\..*\\.kml", ".*\\..*\\..*\\..*\\.kml",
+            @".*\\.gpx", @".*\\..*\\.gpx", ".*\\..*\\..*\\.gpx", ".*\\..*\\..*\\..*\\.gpx",
+            @".*\\.igc", @".*\\..*\\.igc", ".*\\..*\\..*\\.igc", ".*\\..*\\..*\\..*\\.igc",
+        },
+        Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
+        Icon = "@drawable/icon")]
+    //// Intent filter, case 4: application/octet-stream, and valid extension, but not data host
+    [IntentFilter(
+        new[] { Intent.ActionView, Intent.ActionOpenDocument, Intent.ActionDefault },
+        DataSchemes = new string[] { "content" },
         DataMimeType = "application/octet-stream",
         DataPathPatterns = new string[]
         {
@@ -111,8 +129,21 @@ namespace WhereToFly.App.Android
             System.Diagnostics.Debug.WriteLine("received Intent: " + intent.ToString());
 
             this.Intent = intent;
+        }
 
-            this.ProcessIntent(intent);
+        /// <summary>
+        /// Called when activity is about to be resumed; this is called after OnCreate or
+        /// OnNewIntent in order to check for a new file to open.
+        /// </summary>
+        protected override void OnResume()
+        {
+            base.OnResume();
+
+            if (this.Intent != null)
+            {
+                this.ProcessIntent(this.Intent);
+                this.Intent = null;
+            }
         }
 
         /// <summary>
