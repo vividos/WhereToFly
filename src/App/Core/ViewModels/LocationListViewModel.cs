@@ -98,6 +98,15 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
+        /// Indicates if the track list is empty.
+        /// </summary>
+        public bool IsListEmpty
+        {
+            get => !this.isListRefreshActive &&
+                (this.locationList == null || !this.locationList.Any());
+        }
+
+        /// <summary>
         /// Command to execute when an item in the location list has been tapped
         /// </summary>
         public Command<Location> ItemTappedCommand { get; private set; }
@@ -182,6 +191,7 @@ namespace WhereToFly.App.Core.ViewModels
 
                 this.OnPropertyChanged(nameof(this.LocationList));
                 this.OnPropertyChanged(nameof(this.AreAllLocationsFilteredOut));
+                this.OnPropertyChanged(nameof(this.IsListEmpty));
 
                 this.IsListRefreshActive = false;
             });
