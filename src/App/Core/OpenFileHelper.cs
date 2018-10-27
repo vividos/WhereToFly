@@ -269,6 +269,12 @@ namespace WhereToFly.App.Core
                 return;
             }
 
+            track = await AddTrackPopupPage.ShowAsync(track);
+            if (track == null)
+            {
+                return; // user canceled editing track properties
+            }
+
             var dataService = DependencyService.Get<IDataService>();
 
             var currentList = await dataService.GetTrackListAsync(CancellationToken.None);

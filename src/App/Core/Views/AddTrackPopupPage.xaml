@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+                 x:Class="WhereToFly.App.Core.Views.AddTrackPopupPage">
+
+    <!-- animate popup page-->
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8"
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True" />
+    </pages:PopupPage.Animation>
+
+    <!-- popup content -->
+    <StackLayout
+        VerticalOptions="Center"
+        HorizontalOptions="Center"
+        HeightRequest="300"
+        WidthRequest="300"
+        BackgroundColor="White"
+        Padding="20">
+
+        <!-- Entry for track name -->
+        <Label Text="Name" FontSize="Medium" />
+        <Entry Placeholder="enter track name" Text="{Binding Path=TrackName, Mode=TwoWay}" />
+
+        <!-- Switch to select if it's a flight track -->
+        <StackLayout Orientation="Horizontal">
+            <Switch IsToggled="{Binding IsFlightTrack, Mode=TwoWay}"
+                    AutomationId="IsFlightTrackSwitch" />
+            <Label Text="Track is a flight" Font="Medium" />
+        </StackLayout>
+
+        <!-- Colors to choose from -->
+        <!-- TODO -->
+
+        <!-- Button to add track -->
+        <Button Text="Add track"
+                Clicked="OnClickedAddTrackButton"
+                AutomationId="AddTrackButton" />
+    </StackLayout>
+
+</pages:PopupPage>
