@@ -21,6 +21,16 @@
     <ContentPage.Content>
         <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
 
+            <!-- Activity indicator to show while refreshing list -->
+            <StackLayout Padding="4" BackgroundColor="LightBlue"
+                         HeightRequest="32"
+                         HorizontalOptions="FillAndExpand"
+                         Orientation="Horizontal"
+                         IsVisible="{Binding IsListRefreshActive, Mode=OneWay}" >
+                <ActivityIndicator IsRunning="True" WidthRequest="20" />
+                <Label Text="List is being refreshed" VerticalTextAlignment="Center" FontSize="Medium" />
+            </StackLayout>
+
             <!-- Track list -->
             <ListView x:Name="trackListView"
                   ItemsSource="{Binding Path=TrackList, Mode=OneWay}"

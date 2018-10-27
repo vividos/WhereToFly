@@ -3,14 +3,11 @@ using Plugin.FilePicker.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Services;
-using WhereToFly.App.Core.Views;
 using WhereToFly.App.Geo;
-using WhereToFly.App.Geo.DataFormats;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.ViewModels
@@ -25,11 +22,30 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         private List<Track> trackList = new List<Track>();
 
+        /// <summary>
+        /// Backing field for "IsListRefreshActive" property
+        /// </summary>
+        private bool isListRefreshActive;
+
         #region Binding properties
         /// <summary>
         /// Current track list
         /// </summary>
         public ObservableCollection<TrackListEntryViewModel> TrackList { get; set; }
+
+        /// <summary>
+        /// Indicates if the refreshing of the track list is currently active, in order to show an
+        /// activity indicator.
+        /// </summary>
+        public bool IsListRefreshActive
+        {
+            get => this.isListRefreshActive;
+            private set
+            {
+                this.isListRefreshActive = value;
+                this.OnPropertyChanged(nameof(this.IsListRefreshActive));
+            }
+        }
 
         /// <summary>
         /// Command to execute when toolbar button "import track" has been tapped
@@ -52,6 +68,8 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         public TrackListViewModel()
         {
+            this.isListRefreshActive = false;
+
             this.SetupBindings();
         }
 
@@ -106,12 +124,16 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         private void UpdateTrackList()
         {
+            this.IsListRefreshActive = true;
+
             var newList = this.trackList
                 .Select(track => new TrackListEntryViewModel(this, track));
 
             this.TrackList = new ObservableCollection<TrackListEntryViewModel>(newList);
 
             this.OnPropertyChanged(nameof(this.TrackList));
+
+            this.IsListRefreshActive = false;
         }
 
         /// <summary>
