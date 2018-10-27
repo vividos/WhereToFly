@@ -16,6 +16,16 @@
                    AutomationId="FilterText" />
         </StackLayout>
 
+        <!-- activity indicator to show while refreshing list -->
+        <StackLayout Padding="4" BackgroundColor="LightBlue"
+                     HeightRequest="32"
+                     HorizontalOptions="FillAndExpand"
+                     Orientation="Horizontal"
+                     IsVisible="{Binding IsListRefreshActive, Mode=OneWay}" >
+            <ActivityIndicator IsRunning="True" WidthRequest="20" />
+            <Label Text="List is being refreshed" VerticalTextAlignment="Center" FontSize="Medium" />
+        </StackLayout>
+
         <!-- Message to show when all locations were filtered out -->
         <StackLayout Padding="8" BackgroundColor="Yellow"
                      HorizontalOptions="FillAndExpand"
@@ -37,7 +47,7 @@
 
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <!-- Templace for a single view cell -->
+                    <!-- Template for a single view cell -->
                     <ViewCell Height="85">
                         <ViewCell.View>
                             <Grid BackgroundColor="#efefef" Margin="8,4">
@@ -90,5 +100,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
     </StackLayout>
 </ContentPage>

@@ -34,6 +34,11 @@ namespace WhereToFly.App.Core.ViewModels
         private System.Timers.Timer filterTextUpdateTimer = new System.Timers.Timer(1000.0);
 
         /// <summary>
+        /// Backing field for "IsListRefreshActive" property
+        /// </summary>
+        private bool isListRefreshActive;
+
+        /// <summary>
         /// Current position of user; may be null when not retrieved yet
         /// </summary>
         private LatLongAlt currentPosition;
@@ -79,6 +84,20 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
+        /// Indicates if the refreshing of the location list is currently active, in order to show
+        /// an activity indicator.
+        /// </summary>
+        public bool IsListRefreshActive
+        {
+            get => this.isListRefreshActive;
+            private set
+            {
+                this.isListRefreshActive = value;
+                this.OnPropertyChanged(nameof(this.IsListRefreshActive));
+            }
+        }
+
+        /// <summary>
         /// Command to execute when an item in the location list has been tapped
         /// </summary>
         public Command<Location> ItemTappedCommand { get; private set; }
@@ -95,8 +114,10 @@ namespace WhereToFly.App.Core.ViewModels
             this.filterTextUpdateTimer.Elapsed += (sender, args) =>
             {
                 this.filterTextUpdateTimer.Stop();
-                App.RunOnUiThread(() => this.UpdateLocationList());
+                this.UpdateLocationList();
             };
+
+            this.isListRefreshActive = false;
 
             this.SetupBindings();
         }
@@ -140,23 +161,30 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         private void UpdateLocationList()
         {
-            var newList = this.locationList
-                .Select(location => new LocationListEntryViewModel(this, location, this.currentPosition));
-
-            if (!string.IsNullOrWhiteSpace(this.filterText))
+            Task.Run(() =>
             {
-                newList = newList.Where(viewModel => this.IsFilterMatch(viewModel));
-            }
+                this.IsListRefreshActive = true;
 
-            if (this.currentPosition != null)
-            {
-                newList = newList.OrderBy(viewModel => viewModel.Distance);
-            }
+                var newList = this.locationList
+                    .Select(location => new LocationListEntryViewModel(this, location, this.currentPosition));
 
-            this.LocationList = new ObservableCollection<LocationListEntryViewModel>(newList);
+                if (!string.IsNullOrWhiteSpace(this.filterText))
+                {
+                    newList = newList.Where(viewModel => this.IsFilterMatch(viewModel));
+                }
 
-            this.OnPropertyChanged(nameof(this.LocationList));
-            this.OnPropertyChanged(nameof(this.AreAllLocationsFilteredOut));
+                if (this.currentPosition != null)
+                {
+                    newList = newList.OrderBy(viewModel => viewModel.Distance);
+                }
+
+                this.LocationList = new ObservableCollection<LocationListEntryViewModel>(newList);
+
+                this.OnPropertyChanged(nameof(this.LocationList));
+                this.OnPropertyChanged(nameof(this.AreAllLocationsFilteredOut));
+
+                this.IsListRefreshActive = false;
+            });
         }
 
         /// <summary>
