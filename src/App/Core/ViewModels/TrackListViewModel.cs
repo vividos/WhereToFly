@@ -48,6 +48,15 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
+        /// Indicates if the track list is empty.
+        /// </summary>
+        public bool IsListEmpty
+        {
+            get => !this.isListRefreshActive &&
+                (this.trackList == null || !this.trackList.Any());
+        }
+
+        /// <summary>
         /// Command to execute when toolbar button "import track" has been tapped
         /// </summary>
         public Command ImportTrackCommand { get; private set; }
@@ -132,6 +141,7 @@ namespace WhereToFly.App.Core.ViewModels
             this.TrackList = new ObservableCollection<TrackListEntryViewModel>(newList);
 
             this.OnPropertyChanged(nameof(this.TrackList));
+            this.OnPropertyChanged(nameof(this.IsListEmpty));
 
             this.IsListRefreshActive = false;
         }

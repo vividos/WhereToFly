@@ -31,6 +31,15 @@
                 <Label Text="List is being refreshed" VerticalTextAlignment="Center" FontSize="Medium" />
             </StackLayout>
 
+            <!-- Message to show when list is empty -->
+            <StackLayout Padding="4" BackgroundColor="LightGreen"
+                         HeightRequest="32"
+                         HorizontalOptions="FillAndExpand"
+                         Orientation="Horizontal"
+                         IsVisible="{Binding IsListEmpty, Mode=OneWay}" >
+                <Label Text="There are no tracks in the list." VerticalTextAlignment="Center" FontSize="Medium" />
+            </StackLayout>
+
             <!-- Track list -->
             <ListView x:Name="trackListView"
                   ItemsSource="{Binding Path=TrackList, Mode=OneWay}"
