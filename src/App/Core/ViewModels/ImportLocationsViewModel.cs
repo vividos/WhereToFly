@@ -135,9 +135,9 @@ namespace WhereToFly.App.Core.ViewModels
                 return;
             }
 
-            using (var stream = new FileStream(result.FilePath, FileMode.Open))
+            using (var stream = result.GetStream())
             {
-                await OpenFileHelper.OpenLocationListAsync(stream, result.FilePath);
+                await OpenFileHelper.OpenLocationListAsync(stream, result.FileName);
             }
         }
 

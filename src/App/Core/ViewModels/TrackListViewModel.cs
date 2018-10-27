@@ -220,9 +220,9 @@ namespace WhereToFly.App.Core.ViewModels
                 return;
             }
 
-            using (var stream = new FileStream(result.FilePath, FileMode.Open))
+            using (var stream = result.GetStream())
             {
-                await OpenFileHelper.OpenTrackAsync(stream, result.FilePath);
+                await OpenFileHelper.OpenTrackAsync(stream, result.FileName);
             }
 
             await NavigationService.Instance.GoBack();
