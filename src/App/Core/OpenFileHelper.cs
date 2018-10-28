@@ -288,6 +288,7 @@ namespace WhereToFly.App.Core
             await dataService.StoreTrackListAsync(currentList);
 
             App.AddMapTrack(track);
+            App.ZoomToTrack(track);
 
             App.ShowToast("Track was loaded.");
         }
