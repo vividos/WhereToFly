@@ -28,6 +28,13 @@
     "WebLink": "https://www.austrocontrol.at/flugwetter/index.php?id=557&lang=de"
   },
   {
+    "Name": "Alptherm Übersicht",
+    "Group": "Weather forecast",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://www.austrocontrol.at/flugwetter/index.php?id=560&lang=de"
+  },
+  {
     "Name": "Alptherm östl. Bayern",
     "Group": "Weather forecast",
     "Type": 0,
@@ -70,6 +77,13 @@
     "WebLink": "http://www.wetteralarm.at/de/wetter/foehndiagramme.html"
   },
   {
+    "Name": "Wetterzentrale Top Karten",
+    "Group": "Weather forecast",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "http://www.wetterzentrale.de/topkarten/"
+  },
+  {
     "Name": "BR Bergwetter Alpen",
     "Group": "Weather forecast",
     "Type": 0,
@@ -89,6 +103,27 @@
     "Type": 0,
     "Icon": null,
     "WebLink": "http://forecast.uoa.gr/dustindx.php"
+  },
+  {
+    "Name": "Wetter3 Vertikalschnitt Europa",
+    "Group": "Weather forecast",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "http://www.wetter3.de/vertikal.html"
+  },
+  {
+    "Name": "Wetterkarte ZAMG",
+    "Group": "Weather forecast",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://www.zamg.ac.at/cms/de/wetter/wetterkarte"
+  },
+  {
+    "Name": "Lawinenlagebericht Tirol",
+    "Group": "Weather forecast",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://lawine.tirol.gv.at/home/uebersicht/"
   },
   {
     "Name": "Regenradar Bayern",
@@ -119,11 +154,18 @@
     "WebLink": "http://www.foto-webcam.eu/webcam/hochries/wetter/"
   },
   {
+    "Name": "Wallberg Wetterstation",
+    "Group": "Current weather",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://dgctt.kittel.it/"
+  },
+  {
     "Name": "Sat24 Alpen",
     "Group": "Current weather",
     "Type": 0,
     "Icon": null,
-    "WebLink": "https://de.sat24.com/de"
+    "WebLink": "https://de.sat24.com/de/alps"
   },
   {
     "Name": "Patscherkofel Wind",
@@ -131,6 +173,48 @@
     "Type": 0,
     "Icon": null,
     "WebLink": "https://www.wetteronline.de/wetter-aktuell/patscherkofel?frequency=hourly&parameter=wind"
+  },
+  {
+    "Name": "DWD Zugspitze Wetter",
+    "Group": "Current weather",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://www.dwd.de/DE/wetter/wetterundklima_vorort/bayern/zugspitze/_node.html"
+  },
+  {
+    "Name": "Vogelsang Wind",
+    "Group": "Current weather",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://holfuy.com/de/weather/672"
+  },
+  {
+    "Name": "Wendelstein Wind",
+    "Group": "Current weather",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "http://www.lawinenwarndienst-bayern.de/res/daten_meldungen/messdaten/messstation.php?rid=16"
+  },
+  {
+    "Name": "Brauneck Wind",
+    "Group": "Current weather",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "http://www.lawinenwarndienst-bayern.de/res/daten_meldungen/messdaten/messstation.php?rid=9"
+  },
+  {
+    "Name": "Windfinder Neubiberg",
+    "Group": "Current weather",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://www.windfinder.com/report/neubiberg"
+  },
+  {
+    "Name": "Windfinder Forecast Sulzberg",
+    "Group": "Current weather",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://www.windfinder.com/weatherforecast/sulzberg"
   },
   {
     "Name": "Foto-Webcam Karte",
@@ -147,6 +231,27 @@
     "WebLink": "http://www.foto-webcam.eu/webcam/hochries/"
   },
   {
+    "Name": "Foto-Webcam Wendelstein SW",
+    "Group": "Webcams",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "http://www.foto-webcam.eu/webcam/wendelstein-west/"
+  },
+  {
+    "Name": "Foto-Webcam Wallberg",
+    "Group": "Webcams",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "http://www.foto-webcam.org/webcam/wallberg/"
+  },
+  {
+    "Name": "Foto-Webcam Kampenwand",
+    "Group": "Webcams",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "http://www.foto-webcam.eu/webcam/kampenwand/"
+  },
+  {
     "Name": "Foto-Webcam Sonnblick",
     "Group": "Webcams",
     "Type": 0,
@@ -159,6 +264,41 @@
     "Type": 0,
     "Icon": null,
     "WebLink": "http://www.foto-webcam.eu/webcam/kronplatz/"
+  },
+  {
+    "Name": "Foto-Webcam Zugspitze Süd",
+    "Group": "Webcams",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://www.foto-webcam.eu/webcam/zugspitze-sued/"
+  },
+  {
+    "Name": "Webcam Hochfelln",
+    "Group": "Webcams",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://www.bergfex.de/hochfelln/webcams/c12251/"
+  },
+  {
+    "Name": "Webcam Blomberg",
+    "Group": "Webcams",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "http://www.blomberghaus.de/1/webcam/blombergturm.jpg"
+  },
+  {
+    "Name": "Webcam Achensee",
+    "Group": "Webcams",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://www.achensee.com/wetter-webcams/"
+  },
+  {
+    "Name": "Webcam Hohe Salve Video",
+    "Group": "Webcams",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "http://webtv.feratel.com/webtv/?cam=5687"
   },
   {
     "Name": "Webcam Col Rodella",
