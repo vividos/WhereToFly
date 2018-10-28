@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rg.Plugins.Popup.Extensions;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -149,7 +150,8 @@ namespace WhereToFly.App.Core
 
                 var geoDataFile = GeoLoader.LoadGeoDataFile(stream, filename);
 
-                if (!geoDataFile.GetTrackList().Any())
+                bool hasTracks = geoDataFile.GetTrackList().Any();
+                if (!hasTracks)
                 {
                     await App.Current.MainPage.DisplayAlert(
                         Constants.AppTitle,
@@ -268,6 +270,9 @@ namespace WhereToFly.App.Core
             {
                 return;
             }
+
+            // this removes waiting dialog
+            await Xamarin.Forms.Application.Current.MainPage.Navigation.PopPopupAsync();
 
             track = await AddTrackPopupPage.ShowAsync(track);
             if (track == null)
