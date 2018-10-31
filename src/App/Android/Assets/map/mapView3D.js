@@ -811,9 +811,10 @@ MapView.prototype.trackColorFromVarioValue = function (varioValue) {
 /**
  * Calculates an array of track colors based on the altitude changes of the given track points.
  * @param {array} listOfTrackPoints An array of track points in long, lat, alt, long, lat, alt ... order
+ * @param {array} listOfTimePoints An array of time points in seconds; same length as listOfTrackPoints; may be null
  * @returns {array} Array with same number of entries as track points in the given list
  */
-MapView.prototype.calcTrackColors = function (listOfTrackPoints) {
+MapView.prototype.calcTrackColors = function (listOfTrackPoints, listOfTimePoints) {
 
     var trackColors = [];
 
@@ -822,7 +823,11 @@ MapView.prototype.calcTrackColors = function (listOfTrackPoints) {
     for (var index = 3; index < listOfTrackPoints.length; index += 3) {
 
         var altitudeDiff = listOfTrackPoints[index + 2] - listOfTrackPoints[index - 1];
+
         var timeDiff = 1.0;
+        if (listOfTimePoints !== null)
+            timeDiff = listOfTimePoints[index / 3] - listOfTimePoints[(index / 3) - 1];
+
         var varioValue = altitudeDiff / timeDiff;
 
         var varioColor = this.trackColorFromVarioValue(varioValue);
@@ -841,16 +846,17 @@ MapView.prototype.calcTrackColors = function (listOfTrackPoints) {
  * @param {string} trackId unique ID of the track
  * @param {string} trackName track name to add
  * @param {array} listOfTrackPoints An array of track points in long, lat, alt, long, lat, alt ... order
+ * @param {array} listOfTimePoints An array of time points in seconds; same length as listOfTrackPoints; may be null
  * @param {string} color Color as "RRGGBB" string value, or undefined when track should be colored
  *                       according to climb and sink rate.
  */
-MapView.prototype.addTrack = function (trackId, trackName, listOfTrackPoints, color) {
+MapView.prototype.addTrack = function (trackId, trackName, listOfTrackPoints, listOfTimePoints, color) {
 
     this.removeTrack(trackId);
 
     console.log("adding list of track points, with ID " + trackId + " and " + listOfTrackPoints.length + " track points");
 
-    var trackColors = this.calcTrackColors(listOfTrackPoints);
+    var trackColors = this.calcTrackColors(listOfTrackPoints, listOfTimePoints);
 
     var trackPointArray = Cesium.Cartesian3.fromDegreesArrayHeights(listOfTrackPoints);
 
