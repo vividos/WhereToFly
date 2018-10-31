@@ -780,17 +780,24 @@ MapView.prototype.showFindResult = function (options) {
 MapView.prototype.trackColorFromVarioValue = function (varioValue) {
 
     var varioColorMapping = [
-        3.0, Cesium.Color.RED,
-        2.0, Cesium.Color.fromBytes(255, 55, 0),
-        1.5, Cesium.Color.fromBytes(255, 105, 0),
-        1.0, Cesium.Color.fromBytes(255, 155, 0),
-        0.5, Cesium.Color.fromBytes(255, 205, 0),
-        0.0, Cesium.Color.YELLOW,
-        -0.5, Cesium.Color.CYAN,
-        -1.0, Cesium.Color.fromBytes(0, 205, 255),
-        -1.5, Cesium.Color.fromBytes(0, 165, 255),
-        -2.0, Cesium.Color.fromBytes(0, 125, 255),
-        -3.0, Cesium.Color.fromBytes(0, 65, 255)
+        5.0, Cesium.Color.RED,
+        4.5, Cesium.Color.fromBytes(255, 64, 0),
+        4.0, Cesium.Color.fromBytes(255, 128, 0),
+        3.5, Cesium.Color.fromBytes(255, 192, 0),
+        3.0, Cesium.Color.YELLOW,
+        2.5, Cesium.Color.fromBytes(192, 255, 0),
+        2.0, Cesium.Color.fromBytes(128, 255, 0),
+        1.5, Cesium.Color.fromBytes(64, 255, 128),
+        1.0, Cesium.Color.CYAN,
+        0.5, Cesium.Color.fromBytes(0, 224, 255),
+        0.0, Cesium.Color.fromBytes(0, 192, 255),
+        -0.5, Cesium.Color.fromBytes(0, 160, 255),
+        -1.0, Cesium.Color.fromBytes(0, 128, 255),
+        -1.5, Cesium.Color.fromBytes(0, 96, 224),
+        -2.0, Cesium.Color.fromBytes(0, 64, 192),
+        -3.0, Cesium.Color.fromBytes(0, 32, 160),
+        -3.5, Cesium.Color.fromBytes(0, 0, 128),
+        -4.0, Cesium.Color.fromBytes(64, 0, 128)
     ];
 
     for (var mappingIndex = 0; mappingIndex < varioColorMapping.length; mappingIndex += 2) {
@@ -798,7 +805,7 @@ MapView.prototype.trackColorFromVarioValue = function (varioValue) {
             return varioColorMapping[mappingIndex + 1];
     }
 
-    return Cesium.Color.BLUE; // smaller than -3.0
+    return Cesium.Color.fromBytes(128, 0, 128); // smaller than -4.0
 };
 
 /**
