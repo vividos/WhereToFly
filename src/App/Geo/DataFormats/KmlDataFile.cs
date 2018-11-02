@@ -45,6 +45,11 @@ namespace WhereToFly.App.Geo.DataFormats
         /// <returns>true when the file contains locations, false when not</returns>
         public bool HasLocations()
         {
+            if (this.kml.Root == null)
+            {
+                return false;
+            }
+
             foreach (var element in this.kml.Root.Flatten())
             {
                 if (element is Placemark placemark &&
@@ -64,6 +69,11 @@ namespace WhereToFly.App.Geo.DataFormats
         public List<string> GetTrackList()
         {
             var trackList = new List<string>();
+
+            if (this.kml.Root == null)
+            {
+                return new List<string>();
+            }
 
             foreach (var element in this.kml.Root.Flatten())
             {
@@ -239,6 +249,11 @@ namespace WhereToFly.App.Geo.DataFormats
         public List<Model.Location> LoadLocationList()
         {
             var locationList = new List<Model.Location>();
+
+            if (this.kml.Root == null)
+            {
+                return locationList;
+            }
 
             foreach (var element in this.kml.Root.Flatten())
             {
