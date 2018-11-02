@@ -252,12 +252,17 @@ namespace WhereToFly.App.Core.ViewModels
                 return;
             }
 
+            bool success = false;
+
             using (var stream = result.GetStream())
             {
-                await OpenFileHelper.OpenTrackAsync(stream, result.FileName);
+                success = await OpenFileHelper.OpenTrackAsync(stream, result.FileName);
             }
 
-            await NavigationService.Instance.GoBack();
+            if (success)
+            {
+                await NavigationService.Instance.GoBack();
+            }
         }
     }
 }

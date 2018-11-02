@@ -139,8 +139,8 @@ namespace WhereToFly.App.Core
         /// <param name="filename">
         /// filename; extension of filename is used to determine file type
         /// </param>
-        /// <returns>task to wait on</returns>
-        public static async Task OpenTrackAsync(Stream stream, string filename)
+        /// <returns>true when loading track was successful, false when not</returns>
+        public static async Task<bool> OpenTrackAsync(Stream stream, string filename)
         {
             var waitingDialog = new WaitingPopupPage("Importing track...");
 
@@ -158,10 +158,10 @@ namespace WhereToFly.App.Core
                         "No tracks were found in the file",
                         "OK");
 
-                    return;
+                    return false;
                 }
 
-                await SelectAndImportTrackAsync(geoDataFile);
+                return await SelectAndImportTrackAsync(geoDataFile);
             }
             catch (Exception ex)
             {
@@ -176,6 +176,8 @@ namespace WhereToFly.App.Core
             {
                 await waitingDialog.HideAsync();
             }
+
+            return false;
         }
 
         /// <summary>
@@ -222,15 +224,14 @@ namespace WhereToFly.App.Core
         /// Selects a single file in the track list and imports the track
         /// </summary>
         /// <param name="geoDataFile">geo data file to import from</param>
-        /// <returns>task to wait on</returns>
-        private static async Task SelectAndImportTrackAsync(IGeoDataFile geoDataFile)
+        /// <returns>true when loading track was successful, false when not</returns>
+        private static async Task<bool> SelectAndImportTrackAsync(IGeoDataFile geoDataFile)
         {
             var trackList = geoDataFile.GetTrackList();
 
             if (trackList.Count == 1)
             {
-                await ImportTrackAsync(geoDataFile, 0);
-                return;
+                return await ImportTrackAsync(geoDataFile, 0);
             }
 
             string question = "Select track to import";
@@ -252,8 +253,10 @@ namespace WhereToFly.App.Core
             int index = choices.IndexOf(choice);
             if (index != -1)
             {
-                await ImportTrackAsync(geoDataFile, index);
+                return await ImportTrackAsync(geoDataFile, index);
             }
+
+            return false;
         }
 
         /// <summary>
@@ -261,14 +264,14 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="geoDataFile">geo data file to import track from</param>
         /// <param name="trackIndex">track index</param>
-        /// <returns>task to wait on</returns>
-        private static async Task ImportTrackAsync(IGeoDataFile geoDataFile, int trackIndex)
+        /// <returns>true when loading track was successful, false when not</returns>
+        private static async Task<bool> ImportTrackAsync(IGeoDataFile geoDataFile, int trackIndex)
         {
             var track = geoDataFile.LoadTrack(trackIndex);
 
             if (track == null)
             {
-                return;
+                return false;
             }
 
             // this removes waiting dialog
@@ -277,7 +280,7 @@ namespace WhereToFly.App.Core
             track = await AddTrackPopupPage.ShowAsync(track);
             if (track == null)
             {
-                return; // user canceled editing track properties
+                return false; // user canceled editing track properties
             }
 
             var dataService = DependencyService.Get<IDataService>();
@@ -291,6 +294,8 @@ namespace WhereToFly.App.Core
             App.ZoomToTrack(track);
 
             App.ShowToast("Track was loaded.");
+
+            return true;
         }
 
         /// <summary>
