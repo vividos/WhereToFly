@@ -16,7 +16,10 @@
 
   <ItemGroup>
     <PackageReference Include="SharpKml.Core" Version="4.0.0" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="7.*" />
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="7.*">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
