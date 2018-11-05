@@ -94,6 +94,8 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         public MapPage()
         {
+            this.Title = Constants.AppTitle;
+
             this.pageIsVisible = false;
             this.zoomToMyPosition = false;
             this.updateMapSettings = false;
@@ -118,8 +120,6 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task InitLayoutAsync()
         {
-            this.Title = Constants.AppTitle;
-
             App.RunOnUiThread(() => this.SetupToolbar());
 
             await this.SetupWebViewAsync();
