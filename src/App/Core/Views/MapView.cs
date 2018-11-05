@@ -108,8 +108,7 @@ namespace WhereToFly.App.Core.Views
         /// Delegate of function to call when long tap occured on map
         /// </summary>
         /// <param name="point">map point of long tap</param>
-        /// <param name="altitude">altitude of long tap; may be 0</param>
-        public delegate void OnLongTapCallback(MapPoint point, int altitude);
+        public delegate void OnLongTapCallback(MapPoint point);
 
         /// <summary>
         /// Event that is signaled when long tap occured on map
@@ -246,14 +245,12 @@ namespace WhereToFly.App.Core.Views
         /// Updates the "my location" pin in the map
         /// </summary>
         /// <param name="position">new position to use</param>
-        /// <param name="altitudeInMeter">new altitide, in meter; when 0, it won't be used</param>
         /// <param name="positionAccuracyInMeter">position accuracy, in meter</param>
         /// <param name="speedInKmh">current speed, in km/h</param>
         /// <param name="timestamp">timestamp of location</param>
         /// <param name="zoomToLocation">indicates if view should also zoom to the location</param>
         public void UpdateMyLocation(
             MapPoint position,
-            int altitudeInMeter,
             int positionAccuracyInMeter,
             double speedInKmh,
             DateTimeOffset timestamp,
@@ -270,7 +267,7 @@ namespace WhereToFly.App.Core.Views
                 longitude = position.Longitude,
                 positionAccuracy = positionAccuracyInMeter,
                 positionAccuracyColor = ColorFromPositionAccuracy(positionAccuracyInMeter),
-                altitude = altitudeInMeter,
+                altitude = position.Altitude.GetValueOrDefault(0.0),
                 speed = speedInKmh,
                 timestamp,
                 displayLatitude = DataFormatter.FormatLatLong(position.Latitude, this.CoordinateDisplayFormat),
@@ -342,7 +339,7 @@ namespace WhereToFly.App.Core.Views
                     type = location.Type.ToString(),
                     latitude = location.MapLocation.Latitude,
                     longitude = location.MapLocation.Longitude,
-                    elevation = (int)location.Elevation
+                    altitude = location.MapLocation.Altitude.GetValueOrDefault(0.0)
                 };
 
             string js = string.Format(
@@ -528,8 +525,8 @@ namespace WhereToFly.App.Core.Views
 
                 case "onLongTap":
                     var longTapParameters = JsonConvert.DeserializeObject<LongTapParameter>(jsonParameters);
-                    var longTapPoint = new MapPoint(longTapParameters.Latitude, longTapParameters.Longitude);
-                    this.LongTap?.Invoke(longTapPoint, (int)longTapParameters.Altitude);
+                    var longTapPoint = new MapPoint(longTapParameters.Latitude, longTapParameters.Longitude, longTapParameters.Altitude);
+                    this.LongTap?.Invoke(longTapPoint);
                     break;
 
                 default:

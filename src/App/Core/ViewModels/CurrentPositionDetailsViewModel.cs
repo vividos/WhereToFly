@@ -211,7 +211,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task UpdateLastKnownPositionAsync(Position position)
         {
-            var point = new MapPoint(position.Latitude, position.Longitude);
+            var point = new MapPoint(position.Latitude, position.Longitude, position.Altitude);
 
             if (point.Valid)
             {

@@ -101,14 +101,14 @@ namespace WhereToFly.App.Core.ViewModels
         {
             get
             {
-                return this.location.Elevation.ToString();
+                return this.location.MapLocation.Altitude.GetValueOrDefault(0.0).ToString();
             }
 
             set
             {
                 try
                 {
-                    this.location.Elevation = (double)System.Convert.ToInt32(value);
+                    this.location.MapLocation.Altitude = (double)System.Convert.ToInt32(value);
                 }
                 catch (Exception)
                 {
@@ -184,7 +184,7 @@ namespace WhereToFly.App.Core.ViewModels
             locationToChange.Name = this.location.Name;
             locationToChange.Type = this.location.Type;
             locationToChange.Description = this.location.Description;
-            locationToChange.Elevation = this.location.Elevation;
+            locationToChange.MapLocation.Altitude = this.location.MapLocation.Altitude;
             locationToChange.InternetLink = this.location.InternetLink;
 
             await dataService.StoreLocationListAsync(locationList);

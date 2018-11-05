@@ -14,10 +14,12 @@ namespace WhereToFly.App.Model
         /// </summary>
         /// <param name="latitude">latitude in decimal degrees</param>
         /// <param name="longitude">longitude in decimal degrees</param>
-        public MapPoint(double latitude, double longitude)
+        /// <param name="altitude">altitude in meters; optional</param>
+        public MapPoint(double latitude, double longitude, double? altitude = null)
         {
             this.Latitude = latitude;
             this.Longitude = longitude;
+            this.Altitude = altitude;
         }
 
         /// <summary>
@@ -29,6 +31,11 @@ namespace WhereToFly.App.Model
         /// Longitude, from west to east, 0.0 at Greenwich line; e.g. 11.575416
         /// </summary>
         public double Longitude { get; set; }
+
+        /// <summary>
+        /// Altitude above mean sea level, in meters; optional
+        /// </summary>
+        public double? Altitude { get; set; }
 
         /// <summary>
         /// Returns if map point is valid, e.g. when latitude and longitude are != 0
@@ -56,8 +63,13 @@ namespace WhereToFly.App.Model
                 return false;
             }
 
+            bool altitudeIsEqual =
+                (this.Altitude == null && other.Altitude == null) ||
+                (this.Altitude.HasValue == other.Altitude.HasValue && Math.Abs(this.Altitude.Value - other.Altitude.Value) < 1e-2);
+
             return Math.Abs(this.Latitude - other.Latitude) < 1e-6 &&
-                Math.Abs(this.Longitude - other.Longitude) < 1e-6;
+                Math.Abs(this.Longitude - other.Longitude) < 1e-6 &&
+                altitudeIsEqual;
         }
         #endregion
 
@@ -88,6 +100,7 @@ namespace WhereToFly.App.Model
             int hashCode = 487;
             hashCode = (hashCode * 31) + this.Latitude.GetHashCode();
             hashCode = (hashCode * 31) + this.Longitude.GetHashCode();
+            hashCode = (hashCode * 31) + this.Altitude.GetHashCode();
             return hashCode;
         }
 
@@ -97,10 +110,16 @@ namespace WhereToFly.App.Model
         /// <returns>printable text</returns>
         public override string ToString()
         {
+            if (!this.Valid)
+            {
+                return "invalid";
+            }
+
             return string.Format(
-                "Lat={0}, Long={1}",
+                "Lat={0}, Long={1}, Alt={2}",
                 this.Latitude.ToString("F6", CultureInfo.InvariantCulture),
-                this.Longitude.ToString("F6", CultureInfo.InvariantCulture));
+                this.Longitude.ToString("F6", CultureInfo.InvariantCulture),
+                this.Altitude.HasValue ? this.Altitude.Value.ToString("F2", CultureInfo.InvariantCulture) : "N/A");
         }
         #endregion
     }

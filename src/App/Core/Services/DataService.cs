@@ -150,8 +150,7 @@ namespace WhereToFly.App.Core.Services
                 {
                     Id = Guid.NewGuid().ToString("B"),
                     Name = "Brecherspitz",
-                    Elevation = 1685,
-                    MapLocation = new MapPoint(47.6764385, 11.8710533),
+                    MapLocation = new MapPoint(47.6764385, 11.8710533, 1685.0),
                     Description = "Herrliche Aussicht über die drei Seen Schliersee im Norden, Tegernsee im Westen und den Spitzingsee im Süden.",
                     Type = LocationType.Summit,
                     InternetLink = "https://de.wikipedia.org/wiki/Brecherspitz"
@@ -161,8 +160,7 @@ namespace WhereToFly.App.Core.Services
                 {
                     Id = Guid.NewGuid().ToString("B"),
                     Name = "Jägerkamp",
-                    Elevation = 1746,
-                    MapLocation = new MapPoint(47.673511, 11.9060494),
+                    MapLocation = new MapPoint(47.673511, 11.9060494, 1746.0),
                     Description = "Gipfel in den Schlierseer Bergen, mit Ausblick auf Schliersee und die umliegenden Berge.",
                     Type = LocationType.Summit,
                     InternetLink = "https://de.wikipedia.org/wiki/J%C3%A4gerkamp"
@@ -172,8 +170,7 @@ namespace WhereToFly.App.Core.Services
                 {
                     Id = Guid.NewGuid().ToString("B"),
                     Name = "Ankel-Alm",
-                    Elevation = 1311,
-                    MapLocation = new MapPoint(47.6838571, 11.8687695),
+                    MapLocation = new MapPoint(47.6838571, 11.8687695, 1311.0),
                     Description = "Privat bewirtschaftete Alm; Montag Ruhetag",
                     Type = LocationType.AlpineHut,
                     InternetLink = string.Empty
@@ -183,8 +180,7 @@ namespace WhereToFly.App.Core.Services
                 {
                     Id = Guid.NewGuid().ToString("B"),
                     Name = "Schönfeldhütte",
-                    Elevation = 1410,
-                    MapLocation = new MapPoint(47.66508, 11.90612),
+                    MapLocation = new MapPoint(47.66508, 11.90612, 1410.0),
                     Description = "Alpenvereinshütte der Sektion München des DAV",
                     Type = LocationType.AlpineHut,
                     InternetLink = "https://www.davplus.de/huetten__wege/bewirtschaftete_huetten/uebersicht/schoenfeldhuette"

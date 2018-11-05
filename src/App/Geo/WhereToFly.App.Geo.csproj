@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Logic\WhereToFly.App.Logic.csproj" />
+    <ProjectReference Include="..\Model\WhereToFly.App.Model.csproj" />
   </ItemGroup>
 
 </Project>

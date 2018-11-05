@@ -20,11 +20,6 @@ namespace WhereToFly.App.Model
         public string Name { get; set; }
 
         /// <summary>
-        /// Elevation of location, in meter above sea level
-        /// </summary>
-        public double Elevation { get; set; }
-
-        /// <summary>
         /// Location on map
         /// </summary>
         public MapPoint MapLocation { get; set; }
@@ -58,7 +53,6 @@ namespace WhereToFly.App.Model
             hashCode = (hashCode * 31) + this.Type.GetHashCode();
             hashCode = (hashCode * 31) + this.InternetLink.GetHashCode();
             hashCode = (hashCode * 31) + this.MapLocation.GetHashCode();
-            hashCode = (hashCode * 31) + this.Elevation.GetHashCode();
             hashCode = (hashCode * 31) + this.Description.GetHashCode();
 
             return hashCode;
@@ -70,7 +64,7 @@ namespace WhereToFly.App.Model
         /// <returns>printable text</returns>
         public override string ToString()
         {
-            return $"Name={this.Name}, Type={this.Type}, MapLocation={this.MapLocation}, Elevation={this.Elevation}";
+            return $"Name={this.Name}, Type={this.Type}, MapLocation={this.MapLocation}";
         }
         #endregion
     }

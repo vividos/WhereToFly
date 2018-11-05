@@ -34,7 +34,6 @@ namespace WhereToFly.App.Core
                 x.Type == y.Type &&
                 x.InternetLink == y.InternetLink &&
                 x.MapLocation.Equals(y.MapLocation) &&
-                Math.Abs(x.Elevation - y.Elevation) < 1e-6 &&
                 x.Description == y.Description;
         }
 

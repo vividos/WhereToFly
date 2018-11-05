@@ -58,11 +58,10 @@ namespace WhereToFly.App.UnitTest
         public void TestFormatMyPositionShareText()
         {
             // set up
-            var mapPoint = new MapPoint(47.6764385, 11.8710533);
-            double altitude = 1685;
+            var mapPoint = new MapPoint(47.6764385, 11.8710533, 1685.0);
 
             // run
-            string text = DataFormatter.FormatMyPositionShareText(mapPoint, altitude, DateTimeOffset.UtcNow);
+            string text = DataFormatter.FormatMyPositionShareText(mapPoint, DateTimeOffset.UtcNow);
 
             // check
             Assert.IsTrue(text.Length > 0, "formatted text must not be empty");

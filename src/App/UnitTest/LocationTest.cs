@@ -22,8 +22,7 @@ namespace WhereToFly.App.UnitTest
             {
                 Id = Guid.NewGuid().ToString("B"),
                 Name = "Brecherspitz",
-                Elevation = 1685,
-                MapLocation = new MapPoint(47.6764385, 11.8710533),
+                MapLocation = new MapPoint(47.6764385, 11.8710533, 1685.0),
                 Description = "Herrliche Aussicht über die drei Seen Schliersee im Norden, Tegernsee im Westen und den Spitzingsee im Süden.",
                 Type = LocationType.Summit,
                 InternetLink = "https://de.wikipedia.org/wiki/Brecherspitz"

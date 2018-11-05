@@ -98,11 +98,11 @@ namespace WhereToFly.App.Core.Views
 
             if (position != null)
             {
-                var point = new MapPoint(position.Latitude, position.Longitude);
+                var point = new MapPoint(position.Latitude, position.Longitude, position.Altitude);
 
                 await App.ShareMessageAsync(
                     "Share my position with...",
-                    DataFormatter.FormatMyPositionShareText(point, position.Altitude, position.Timestamp));
+                    DataFormatter.FormatMyPositionShareText(point, position.Timestamp));
             }
         }
 

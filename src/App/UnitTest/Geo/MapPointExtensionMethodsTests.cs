@@ -1,50 +1,15 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WhereToFly.App.Geo.Spatial;
+using WhereToFly.App.Model;
 
 namespace WhereToFly.App.UnitTest.Geo
 {
     /// <summary>
-    /// Tests for class LatLongAlt
+    /// Tests for class MapPoint extension methods
     /// </summary>
     [TestClass]
-    public class LatLongAltTests
+    public class MapPointExtensionMethodsTests
     {
-        /// <summary>
-        /// Tests ctor, with invalid coordinates
-        /// </summary>
-        [TestMethod]
-        public void TestCtor()
-        {
-            // set up
-            var point = new LatLongAlt(0.0, 0.0);
-
-            // check
-            Assert.IsFalse(point.Valid, "coordinate must be invalid");
-            Assert.AreEqual(0.0, point.Latitude, double.Epsilon, "latitude must be 0.0");
-            Assert.AreEqual(0.0, point.Longitude, double.Epsilon, "longitude must be 0.0");
-            Assert.IsFalse(point.Altitude.HasValue, "altitude must not be set");
-            Assert.AreEqual("invalid", point.ToString(), "invalid point must return correct ToString() result");
-        }
-
-        /// <summary>
-        /// Tests ToString() method
-        /// </summary>
-        [TestMethod]
-        public void TestToString()
-        {
-            // set up
-            var point1 = new LatLongAlt(48.21231, 11.56078);
-            var point2 = new LatLongAlt(point1.Latitude, point1.Longitude, 1257.2);
-
-            // run
-            string text1 = point1.ToString();
-            string text2 = point2.ToString();
-
-            // check
-            Assert.AreEqual("Lat=48.212310, Long=11.560780, Alt=N/A", text1, "ToString() text must be correct");
-            Assert.AreEqual("Lat=48.212310, Long=11.560780, Alt=1257.20", text2, "ToString() text must be correct");
-        }
-
         /// <summary>
         /// Tests DistanceTo() method
         /// </summary>
@@ -52,8 +17,8 @@ namespace WhereToFly.App.UnitTest.Geo
         public void TestDistanceTo()
         {
             // set up
-            var point1 = new LatLongAlt(48.2, 11.5);
-            var point2 = new LatLongAlt(48.2 + 0.1, 11.5);
+            var point1 = new MapPoint(48.2, 11.5);
+            var point2 = new MapPoint(48.2 + 0.1, 11.5);
 
             var distanceInMeter = 1000;
             var point3 = point2.PolarOffset(distanceInMeter, 321.0, 0.0);
@@ -74,14 +39,14 @@ namespace WhereToFly.App.UnitTest.Geo
         public void TestCourseTo()
         {
             // set up
-            var centerPoint = new LatLongAlt(48.2, 11.5);
-            var northPoint = new LatLongAlt(48.2 + 0.1, 11.5);
-            var eastPoint = new LatLongAlt(48.2, 11.5 + 0.1);
-            var southPoint = new LatLongAlt(48.2 - 0.1, 11.5);
-            var westPoint = new LatLongAlt(48.2, 11.5 - 0.1);
-            var anglePoint = new LatLongAlt(48.2 - 0.05, 11.5 + 0.11);
-            var northPole = new LatLongAlt(90.0, 0.0);
-            var southPole = new LatLongAlt(-90.0, 0.0);
+            var centerPoint = new MapPoint(48.2, 11.5);
+            var northPoint = new MapPoint(48.2 + 0.1, 11.5);
+            var eastPoint = new MapPoint(48.2, 11.5 + 0.1);
+            var southPoint = new MapPoint(48.2 - 0.1, 11.5);
+            var westPoint = new MapPoint(48.2, 11.5 - 0.1);
+            var anglePoint = new MapPoint(48.2 - 0.05, 11.5 + 0.11);
+            var northPole = new MapPoint(90.0, 0.0);
+            var southPole = new MapPoint(-90.0, 0.0);
 
             // run
             double angleToSelf = centerPoint.CourseTo(centerPoint);
@@ -112,7 +77,7 @@ namespace WhereToFly.App.UnitTest.Geo
         public void TestPolarOffset()
         {
             // set up
-            var centerPoint = new LatLongAlt(48.2, 11.5);
+            var centerPoint = new MapPoint(48.2, 11.5);
             var distanceInMeter = 1000;
 
             // run
@@ -137,7 +102,7 @@ namespace WhereToFly.App.UnitTest.Geo
         public void TestOffset()
         {
             // set up
-            var point1 = new LatLongAlt(48.2, 11.5);
+            var point1 = new MapPoint(48.2, 11.5);
             var distanceInMeterNorth = 3000;
             var distanceInMeterEast = 4000;
 

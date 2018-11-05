@@ -62,12 +62,13 @@ namespace WhereToFly.App.Core.ViewModels
         {
             get
             {
-                bool isElevationAvailable =
-                    Math.Abs(this.location.Elevation) > 1e-6;
+                double altitude = this.location.MapLocation.Altitude.GetValueOrDefault(0.0);
+
+                bool isAltitudeAvailable = Math.Abs(altitude) > 1e-6;
 
                 return string.Format(
-                    isElevationAvailable ? "Elevation: {0:F1} m; Distance: {1}" : "Distance: {1}",
-                    this.location.Elevation,
+                    isAltitudeAvailable ? "Elevation: {0:F1} m; Distance: {1}" : "Distance: {1}",
+                    altitude,
                     DataFormatter.FormatDistance(this.Distance));
             }
         }
@@ -103,15 +104,12 @@ namespace WhereToFly.App.Core.ViewModels
         /// <param name="parentViewModel">parent view model</param>
         /// <param name="location">location object</param>
         /// <param name="myCurrentPosition">the user's current position; may be null</param>
-        public LocationListEntryViewModel(LocationListViewModel parentViewModel, Location location, LatLongAlt myCurrentPosition)
+        public LocationListEntryViewModel(LocationListViewModel parentViewModel, Location location, MapPoint myCurrentPosition)
         {
             this.parentViewModel = parentViewModel;
             this.location = location;
 
-            this.Distance = myCurrentPosition != null ? myCurrentPosition.DistanceTo(
-                new LatLongAlt(
-                    this.location.MapLocation.Latitude,
-                    this.location.MapLocation.Longitude)) : 0.0;
+            this.Distance = myCurrentPosition != null ? myCurrentPosition.DistanceTo(this.location.MapLocation) : 0.0;
 
             this.typeImageSource = new Lazy<ImageSource>(this.GetTypeImageSource);
 

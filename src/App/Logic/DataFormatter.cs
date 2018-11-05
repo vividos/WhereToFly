@@ -74,10 +74,9 @@ namespace WhereToFly.App.Logic
         /// Formats text for sharing the current position with another app
         /// </summary>
         /// <param name="point">location map point</param>
-        /// <param name="altitude">altitude in meters</param>
         /// <param name="dateTime">date time of position fix</param>
         /// <returns>displayable text for sharing</returns>
-        public static string FormatMyPositionShareText(MapPoint point, double altitude, DateTimeOffset dateTime)
+        public static string FormatMyPositionShareText(MapPoint point, DateTimeOffset dateTime)
         {
             string mapsLink = string.Format(
                 "https://www.google.com/maps/?q={0},{1}&z=15",
@@ -85,9 +84,10 @@ namespace WhereToFly.App.Logic
                 point.Longitude.ToString("F6", CultureInfo.InvariantCulture));
 
             return string.Format(
-                "My current position is {0}, at an altitude of {1} m, as of {2} local time. {3}",
-                point.ToString(),
-                (int)altitude,
+                "My current position is Lat={0}, Long={1}, at an altitude of {2} m, as of {3} local time. {4}",
+                point.Latitude.ToString("F6", CultureInfo.InvariantCulture),
+                point.Longitude.ToString("F6", CultureInfo.InvariantCulture),
+                (int)point.Altitude.GetValueOrDefault(0.0),
                 dateTime.ToLocalTime().ToString("yyyy-MM-dd HH\\:mm\\:ss"),
                 mapsLink);
         }
@@ -100,10 +100,11 @@ namespace WhereToFly.App.Logic
         public static string FormatLocationShareText(Location location)
         {
             return string.Format(
-                "Here is a location named \"{0}\", at coordinates {1} and altitude of {2} m.",
+                "Here is a location named \"{0}\", at coordinates Lat={1}, Long={2} and altitude of {3} m.",
                 location.Name,
-                location.MapLocation.ToString(),
-                (int)location.Elevation);
+                location.MapLocation.Latitude.ToString("F6", CultureInfo.InvariantCulture),
+                location.MapLocation.Longitude.ToString("F6", CultureInfo.InvariantCulture),
+                (int)location.MapLocation.Altitude.GetValueOrDefault(0.0));
         }
     }
 }

@@ -199,8 +199,7 @@ namespace WhereToFly.App.Core.Views
                 await this.UpdateLastKnownPositionAsync(position);
 
                 this.mapView.UpdateMyLocation(
-                    new MapPoint(position.Latitude, position.Longitude),
-                    (int)position.Altitude,
+                    new MapPoint(position.Latitude, position.Longitude, position.Altitude),
                     (int)position.Accuracy,
                     position.Speed * Geo.Spatial.Constants.FactorMeterPerSecondToKilometerPerHour,
                     position.Timestamp,
@@ -307,7 +306,7 @@ namespace WhereToFly.App.Core.Views
             }
 
             var position = foundPositionsList.First();
-            var point = new MapPoint(position.Latitude, position.Longitude);
+            var point = new MapPoint(position.Latitude, position.Longitude, position.Altitude);
 
             this.mapView.ShowFindResult(text, point);
         }
@@ -349,7 +348,7 @@ namespace WhereToFly.App.Core.Views
             this.mapView.NavigateToLocation += this.OnMapView_NavigateToLocation;
             this.mapView.ShareMyLocation += async () => await this.OnMapView_ShareMyLocation();
             this.mapView.AddFindResult += async (name, point) => await this.OnMapView_AddFindResult(name, point);
-            this.mapView.LongTap += async (point, altitude) => await this.OnMapView_LongTap(point, altitude);
+            this.mapView.LongTap += async (point) => await this.OnMapView_LongTap(point);
 
             this.Content = webView;
 
@@ -499,11 +498,11 @@ namespace WhereToFly.App.Core.Views
             {
                 await this.UpdateLastKnownPositionAsync(position);
 
-                var point = new MapPoint(position.Latitude, position.Longitude);
+                var point = new MapPoint(position.Latitude, position.Longitude, position.Altitude);
 
                 await App.ShareMessageAsync(
                     "Share my position with...",
-                    DataFormatter.FormatMyPositionShareText(point, position.Altitude, position.Timestamp));
+                    DataFormatter.FormatMyPositionShareText(point, position.Timestamp));
             }
         }
 
@@ -520,7 +519,6 @@ namespace WhereToFly.App.Core.Views
             {
                 Id = Guid.NewGuid().ToString("B"),
                 Name = name ?? "Unknown",
-                Elevation = 0,
                 MapLocation = point,
                 Description = string.Empty,
                 Type = LocationType.Waypoint,
@@ -544,9 +542,8 @@ namespace WhereToFly.App.Core.Views
         /// Called when the user performed a long-tap on the map
         /// </summary>
         /// <param name="point">map point where long-tap occured</param>
-        /// <param name="altitude">altitude where long-tap occured; may be 0</param>
         /// <returns>task to wait on</returns>
-        private async Task OnMapView_LongTap(MapPoint point, int altitude)
+        private async Task OnMapView_LongTap(MapPoint point)
         {
             string latitudeText = DataFormatter.FormatLatLong(point.Latitude, this.appSettings.CoordinateDisplayFormat);
             string longitudeText = DataFormatter.FormatLatLong(point.Longitude, this.appSettings.CoordinateDisplayFormat);
@@ -554,7 +551,7 @@ namespace WhereToFly.App.Core.Views
             var longTapActions = new List<string> { "Add new waypoint", "Navigate here" };
 
             string result = await App.Current.MainPage.DisplayActionSheet(
-                $"Selected point at Latitude: {latitudeText}, Longitude: {longitudeText}, Altitude {altitude} m",
+                $"Selected point at Latitude: {latitudeText}, Longitude: {longitudeText}, Altitude {point.Altitude.GetValueOrDefault(0.0)} m",
                 "Cancel",
                 null,
                 longTapActions.ToArray());
@@ -566,7 +563,7 @@ namespace WhereToFly.App.Core.Views
                 switch (selectedIndex)
                 {
                     case 0:
-                        await this.AddNewWaypoint(point, altitude);
+                        await this.AddNewWaypoint(point);
                         break;
 
                     case 1:
@@ -584,15 +581,13 @@ namespace WhereToFly.App.Core.Views
         /// Adds new waypoint with given map point
         /// </summary>
         /// <param name="point">map point</param>
-        /// <param name="altitude">altitude of waypoint to add</param>
         /// <returns>task to wait on</returns>
-        private async Task AddNewWaypoint(MapPoint point, int altitude)
+        private async Task AddNewWaypoint(MapPoint point)
         {
             var location = new Location
             {
                 Id = Guid.NewGuid().ToString("B"),
                 Name = string.Empty,
-                Elevation = altitude,
                 MapLocation = point,
                 Description = string.Empty,
                 Type = LocationType.Waypoint,
@@ -871,8 +866,7 @@ namespace WhereToFly.App.Core.Views
             if (this.mapView != null)
             {
                 this.mapView.UpdateMyLocation(
-                    new MapPoint(position.Latitude, position.Longitude),
-                    (int)position.Altitude,
+                    new MapPoint(position.Latitude, position.Longitude, position.Altitude),
                     (int)position.Accuracy,
                     position.Speed * Geo.Spatial.Constants.FactorMeterPerSecondToKilometerPerHour,
                     position.Timestamp,
@@ -894,7 +888,7 @@ namespace WhereToFly.App.Core.Views
                 return; // appSettings not loaded yet
             }
 
-            var point = new MapPoint(position.Latitude, position.Longitude);
+            var point = new MapPoint(position.Latitude, position.Longitude, position.Altitude);
 
             if (point.Valid)
             {

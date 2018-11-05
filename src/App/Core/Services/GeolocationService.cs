@@ -1,6 +1,7 @@
 ﻿using Plugin.Geolocator.Abstractions;
 using System.Threading.Tasks;
 using WhereToFly.App.Geo.Spatial;
+using WhereToFly.App.Model;
 
 namespace WhereToFly.App.Core.Services
 {
@@ -18,7 +19,7 @@ namespace WhereToFly.App.Core.Services
         /// Returns current position
         /// </summary>
         /// <returns>current position, or null when none could be retrieved</returns>
-        public async Task<LatLongAlt> GetCurrentPositionAsync()
+        public async Task<MapPoint> GetCurrentPositionAsync()
         {
             var position = await this.Geolocator.GetLastKnownLocationAsync();
             if (position == null)
@@ -26,7 +27,7 @@ namespace WhereToFly.App.Core.Services
                 return null;
             }
 
-            return new LatLongAlt(position.Latitude, position.Longitude, position.Altitude);
+            return new MapPoint(position.Latitude, position.Longitude, position.Altitude);
         }
     }
 }

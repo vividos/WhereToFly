@@ -1,4 +1,5 @@
 ﻿using System;
+using WhereToFly.App.Model;
 
 namespace WhereToFly.App.Geo.Spatial
 {
@@ -10,7 +11,7 @@ namespace WhereToFly.App.Geo.Spatial
         /// <summary>
         /// Location of pilot in WGS84 coordinates
         /// </summary>
-        public LatLongAlt Location { get; set; }
+        public MapPoint Location { get; set; }
 
         /// <summary>
         /// Timestamp of location

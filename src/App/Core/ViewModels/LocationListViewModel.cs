@@ -41,7 +41,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Current position of user; may be null when not retrieved yet
         /// </summary>
-        private LatLongAlt currentPosition;
+        private MapPoint currentPosition;
 
         #region Binding properties
         /// <summary>
@@ -254,11 +254,7 @@ namespace WhereToFly.App.Core.ViewModels
                 location.MapLocation != null &&
                 location.MapLocation.ToString().IndexOf(text, 0, StringComparison.OrdinalIgnoreCase) >= 0;
 
-            bool inElevation = !inMapLocation &&
-                location.Elevation != 0 &&
-                ((int)location.Elevation).ToString().IndexOf(text, 0, StringComparison.OrdinalIgnoreCase) >= 0;
-
-            bool inDistance = !inElevation &&
+            bool inDistance = !inMapLocation &&
                 Math.Abs(viewModel.Distance) > 1e-6 &&
                 DataFormatter.FormatDistance(viewModel.Distance).IndexOf(text, 0, StringComparison.OrdinalIgnoreCase) >= 0;
 
@@ -267,7 +263,6 @@ namespace WhereToFly.App.Core.ViewModels
                 inDescription ||
                 inInternetLink ||
                 inMapLocation ||
-                inElevation ||
                 inDistance;
         }
 
@@ -358,7 +353,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <param name="args">event args, including position</param>
         public void OnPositionChanged(object sender, PositionEventArgs args)
         {
-            this.currentPosition = new LatLongAlt(args.Position.Latitude, args.Position.Longitude);
+            this.currentPosition = new MapPoint(args.Position.Latitude, args.Position.Longitude, args.Position.Altitude);
 
             this.UpdateLocationList();
         }

@@ -609,7 +609,7 @@ MapView.prototype.clearLocationList = function () {
 /**
  * Adds list of locations to the map, as marker pins
  * @param {array} locationList An array of location, each with the following object layout:
- * { id:"location-id", name:"Location Name", type:"LocationType", latitude: 123.45678, longitude: 9.87654, elevation:1234 }
+ * { id:"location-id", name:"Location Name", type:"LocationType", latitude: 123.45678, longitude: 9.87654, altitude:1234.5 }
  */
 MapView.prototype.addLocationList = function (locationList) {
 
@@ -622,7 +622,7 @@ MapView.prototype.addLocationList = function (locationList) {
 
         var text = '<h2><img height="48em" width="48em" src="' + this.imageUrlFromLocationType(location.type) + '" style="vertical-align:middle" />' +
             location.name +
-            (location.elevation !== 0 ? ' ' + location.elevation + 'm' : '') +
+            (location.altitude !== 0 ? ' ' + location.altitude + 'm' : '') +
             '</h2>';
 
         text += '<p><img height="32em" width="32em" src="images/information-outline.svg" style="vertical-align:middle" /> ' +
@@ -637,7 +637,7 @@ MapView.prototype.addLocationList = function (locationList) {
 
         Cesium.when(
             this.createEntity(
-                location.name + (location.elevation !== 0 ? ' ' + location.elevation + 'm' : ''),
+                location.name + (location.altitude !== 0 ? ' ' + location.altitude + 'm' : ''),
                 text,
                 this.pinColorFromLocationType(location.type),
                 imagePath,

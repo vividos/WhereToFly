@@ -30,34 +30,39 @@ namespace WhereToFly.App.UnitTest
         }
 
         /// <summary>
-        /// Tests property Valid, with invalid coordinates
+        /// Tests ctor, with invalid coordinates
         /// </summary>
         [TestMethod]
         public void TestInvalid()
         {
-            // run
-            var mapPoint = new MapPoint(0.0, 0.0);
+            // set up
+            var point = new MapPoint(0.0, 0.0);
 
             // check
-            Assert.IsFalse(mapPoint.Valid, "map point must be invalid");
+            Assert.IsFalse(point.Valid, "coordinate must be invalid");
+            Assert.AreEqual(0.0, point.Latitude, double.Epsilon, "latitude must be 0.0");
+            Assert.AreEqual(0.0, point.Longitude, double.Epsilon, "longitude must be 0.0");
+            Assert.IsFalse(point.Altitude.HasValue, "altitude must not be set");
+            Assert.AreEqual("invalid", point.ToString(), "invalid point must return correct ToString() result");
         }
 
         /// <summary>
-        /// Tests method ToString()
+        /// Tests ToString() method
         /// </summary>
         [TestMethod]
         public void TestToString()
         {
             // set up
-            double latitude = 47.6764385;
-            double longitude = 11.8710533;
+            var point1 = new MapPoint(48.21231, 11.56078);
+            var point2 = new MapPoint(point1.Latitude, point1.Longitude, 1257.2);
 
             // run
-            var mapPoint = new MapPoint(latitude, longitude);
-            string text = mapPoint.ToString();
+            string text1 = point1.ToString();
+            string text2 = point2.ToString();
 
             // check
-            Assert.IsTrue(text.Length > 0, "map point text must contain characters");
+            Assert.AreEqual("Lat=48.212310, Long=11.560780, Alt=N/A", text1, "ToString() text must be correct");
+            Assert.AreEqual("Lat=48.212310, Long=11.560780, Alt=1257.20", text2, "ToString() text must be correct");
         }
 
         /// <summary>

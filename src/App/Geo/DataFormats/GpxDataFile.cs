@@ -183,8 +183,7 @@ namespace WhereToFly.App.Geo.DataFormats
             {
                 Id = Guid.NewGuid().ToString("B"),
                 Name = nameNode?.InnerText ?? "Waypoint",
-                Elevation = elevation,
-                MapLocation = new MapPoint(latitude, longitude),
+                MapLocation = new MapPoint(latitude, longitude, elevation),
                 Description = HtmlConverter.Sanitize(descNode?.InnerText ?? string.Empty),
                 Type = LocationTypeFromWaypointNode(nameNode),
                 InternetLink = linkHrefNode?.Value ?? string.Empty

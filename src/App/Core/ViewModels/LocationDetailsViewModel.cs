@@ -94,13 +94,13 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
-        /// Property containing location longitude
+        /// Property containing location altitude
         /// </summary>
         public string Altitude
         {
             get
             {
-                return string.Format("{0} m", (int)this.location.Elevation);
+                return string.Format("{0} m", (int)this.location.MapLocation.Altitude.GetValueOrDefault(0.0));
             }
         }
 
@@ -209,10 +209,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             if (position != null)
             {
-                this.distance = position.DistanceTo(
-                    new LatLongAlt(
-                        this.location.MapLocation.Latitude,
-                        this.location.MapLocation.Longitude));
+                this.distance = position.DistanceTo(this.location.MapLocation);
 
                 this.OnPropertyChanged(nameof(this.Distance));
             }

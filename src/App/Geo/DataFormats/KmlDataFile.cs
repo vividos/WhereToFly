@@ -3,7 +3,6 @@ using SharpKml.Dom.GX;
 using SharpKml.Engine;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using WhereToFly.App.Logic;
@@ -266,8 +265,7 @@ namespace WhereToFly.App.Geo.DataFormats
                         Name = placemark.Name ?? "unknown",
                         Description = GetDescriptionFromPlacemark(placemark),
                         Type = MapPlacemarkToType(this.kml, placemark),
-                        MapLocation = new MapPoint(point.Coordinate.Latitude, point.Coordinate.Longitude),
-                        Elevation = point.Coordinate.Altitude ?? 0
+                        MapLocation = new MapPoint(point.Coordinate.Latitude, point.Coordinate.Longitude, point.Coordinate.Altitude)
                     });
                 }
             }
