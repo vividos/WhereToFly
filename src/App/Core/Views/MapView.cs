@@ -390,7 +390,7 @@ namespace WhereToFly.App.Core.Views
             }
 
             string js = string.Format(
-                "map.addTrack('{0}', '{1}', {2}, {3});",
+                "map.addTrack('{0}', '{1}', {2}, {3}, {4});",
                 track.Id,
                 track.Name,
                 JsonConvert.SerializeObject(trackPointsList),
