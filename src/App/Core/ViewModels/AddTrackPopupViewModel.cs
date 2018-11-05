@@ -36,6 +36,28 @@ namespace WhereToFly.App.Core.ViewModels
             {
                 this.Track.IsFlightTrack = value;
                 this.OnPropertyChanged(nameof(this.IsFlightTrack));
+                this.OnPropertyChanged(nameof(this.IsColorPickerVisible));
+            }
+        }
+
+        /// <summary>
+        /// Property containing flag if the color picker controls are visible
+        /// </summary>
+        public bool IsColorPickerVisible
+        {
+            get => !this.Track.IsFlightTrack;
+        }
+
+        /// <summary>
+        /// Propertiy containing the color of the track, in format RRGGBB
+        /// </summary>
+        public string SelectedTrackColor
+        {
+            get => this.Track.Color;
+            set
+            {
+                this.Track.Color = value;
+                this.OnPropertyChanged(nameof(this.SelectedTrackColor));
             }
         }
         #endregion
