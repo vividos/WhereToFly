@@ -1,0 +1,601 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CBBB5ED6-F0D9-49C1-BB4E-D54757483953}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TemplateGuid>{9ef11e43-1701-4396-8835-8392d57abb70}</TemplateGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WhereToFly.App.Resources.Android</RootNamespace>
+    <AssemblyName>WhereToFly.App.Resources.Android</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
+    <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Mono.Android" />
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="27.0.2.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\weathericons.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\icons\compass.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\icons\format-list-bulleted.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\icons\information-outline.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\icons\map-marker-distance.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\icons\map.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\icons\settings.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\icons\weather-partlycloudy.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\locations\crossing_the_alps_2018.kmz" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\locations\paraglidingspots_crossing_the_alps_2018_06_19.kmz" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\locations\paraglidingspots_european_alps_2018_01_07.kmz" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\map3D.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\mapView3D.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Cesium.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\approximateTerrainHeights.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_0.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_1.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_10.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_11.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_12.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_13.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_14.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_15.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_16.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_17.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_18.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_19.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_2.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_20.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_21.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_22.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_23.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_24.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_25.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_26.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_27.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_3.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_4.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_5.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_6.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_7.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_8.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_9.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\Images\bing_maps_credit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\Images\cesium_credit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\Images\google_earth_credit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Assets\Images\ion-credit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\ThirdParty\draco_decoder.wasm" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\ThirdParty\Workers\deflate.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\ThirdParty\Workers\draco_decoder.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\ThirdParty\Workers\draco_wasm_wrapper.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\ThirdParty\Workers\inflate.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\lighter.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\lighterShared.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\shared.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\widgets.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Animation\Animation.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Animation\lighter.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\BaseLayerPicker\BaseLayerPicker.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\BaseLayerPicker\lighter.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Cesium3DTilesInspector\Cesium3DTilesInspector.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\CesiumInspector\CesiumInspector.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\CesiumWidget\CesiumWidget.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\CesiumWidget\lighter.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\FullscreenButton\FullscreenButton.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Geocoder\Geocoder.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Geocoder\lighter.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\info-loading.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\TimelineIcons.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\bingAerial.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\bingAerialLabels.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\bingRoads.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\blackMarble.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\blueMarble.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\earthAtNight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\esriNationalGeographic.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\esriWorldImagery.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\esriWorldStreetMap.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\mapboxSatellite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\mapboxStreets.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\mapboxTerrain.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\mapQuestOpenStreetMap.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\naturalEarthII.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\openStreetMap.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\sentinel-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\stamenToner.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\stamenWatercolor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\NavigationHelp\Mouse.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\NavigationHelp\MouseLeft.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\NavigationHelp\MouseMiddle.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\NavigationHelp\MouseRight.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\NavigationHelp\Touch.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\NavigationHelp\TouchDrag.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\NavigationHelp\TouchRotate.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\NavigationHelp\TouchTilt.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\NavigationHelp\TouchZoom.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\TerrainProviders\CesiumWorldTerrain.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\TerrainProviders\Ellipsoid.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\TerrainProviders\STK.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\InfoBox\InfoBox.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\InfoBox\InfoBoxDescription.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\NavigationHelpButton\lighter.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\NavigationHelpButton\NavigationHelpButton.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\PerformanceWatchdog\PerformanceWatchdog.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\ProjectionPicker\ProjectionPicker.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\SceneModePicker\SceneModePicker.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\SelectionIndicator\SelectionIndicator.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Timeline\lighter.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Timeline\Timeline.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\Viewer\Viewer.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Widgets\VRButton\VRButton.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\cesiumWorkerBootstrapper.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\combineGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createBoxGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createBoxOutlineGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createCircleGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createCircleOutlineGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createCoplanarPolygonGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createCoplanarPolygonOutlineGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createCorridorGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createCorridorOutlineGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createCylinderGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createCylinderOutlineGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createEllipseGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createEllipseOutlineGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createEllipsoidGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createEllipsoidOutlineGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createFrustumGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createFrustumOutlineGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createGroundPolylineGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createPlaneGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createPlaneOutlineGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createPolygonGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createPolygonOutlineGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createPolylineGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createPolylineVolumeGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createPolylineVolumeOutlineGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createRectangleGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createRectangleOutlineGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createSimplePolylineGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createSphereGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createSphereOutlineGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createVectorTileGeometries.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createVectorTilePoints.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createVectorTilePolygons.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createVectorTilePolylines.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createVerticesFromGoogleEarthEnterpriseBuffer.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createVerticesFromHeightmap.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createVerticesFromQuantizedTerrainMesh.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createWallGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\createWallOutlineGeometry.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\decodeDraco.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\decodeGoogleEarthEnterprisePacket.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\transcodeCRNToDXT.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\transferTypedArrayTest.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Cesium\Workers\upsampleQuantizedTerrainMesh.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\aerialway-15.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\attraction-15.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\bridge.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\bus.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\castle.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\church.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\directions.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\home-15.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\information-outline.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\magnify.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\map-marker-plus.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\map-marker.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\mountain-15.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\navigation.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\paragliding.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\parking.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\playlist-plus.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\restaurant-15.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\share-variant.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\train.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\water-15.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\map\Cesium\Widgets\HomeButton\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
