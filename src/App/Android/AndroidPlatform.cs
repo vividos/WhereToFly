@@ -14,6 +14,29 @@ namespace WhereToFly.App.Android
     public class AndroidPlatform : IPlatform
     {
         /// <summary>
+        /// Creates a new Android platform object
+        /// </summary>
+        public AndroidPlatform()
+        {
+            // ProvidersToUse actually contains all providers NOT to use, so add "network" here
+            // in order to ignore positions from mobile networks.
+            // See https://github.com/jamesmontemagno/GeolocatorPlugin/pull/236
+            var providersToIgnore = new string[]
+            {
+                global::Android.Locations.LocationManager.NetworkProvider
+            };
+
+            Plugin.Geolocator.GeolocatorImplementation.ProvidersToUse = providersToIgnore;
+
+            var providersToUse = new string[]
+            {
+                global::Android.Locations.LocationManager.GpsProvider
+            };
+
+            Plugin.Geolocator.GeolocatorImplementation.ProvidersToUseWhileListening = providersToUse;
+        }
+
+        /// <summary>
         /// Returns current context, either from current activity, or the global application
         /// context
         /// </summary>
