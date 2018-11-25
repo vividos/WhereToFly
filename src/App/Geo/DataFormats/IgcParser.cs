@@ -170,7 +170,7 @@ namespace WhereToFly.App.Geo.DataFormats
             double latitude = ParseLatLong("0" + line.Substring(7, 8));
             double longitude = ParseLatLong(line.Substring(15, 9));
 
-            int altitude = Convert.ToInt32(line.Substring(30, 5));
+            double altitude = Convert.ToDouble(line.Substring(30, 5));
 
             var trackPoint = new TrackPoint(latitude, longitude, altitude, null);
 

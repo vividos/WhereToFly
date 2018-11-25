@@ -137,9 +137,8 @@ namespace WhereToFly.App.Geo.DataFormats
             ParseLatLongAttributes(trackPointNode, out double latitude, out double longitude);
 
             double elevation = ParseElevation(trackPointNode, namespaceManager);
-            int altitude = (int)elevation;
 
-            return new TrackPoint(latitude, longitude, altitude, heading: null)
+            return new TrackPoint(latitude, longitude, elevation, heading: null)
             {
                 Time = ParseTime(trackPointNode, namespaceManager)
             };

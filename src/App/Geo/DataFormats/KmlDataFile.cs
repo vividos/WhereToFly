@@ -171,10 +171,10 @@ namespace WhereToFly.App.Geo.DataFormats
         /// <returns>track point object</returns>
         private static TrackPoint GetTrackPointFromVector(SharpKml.Base.Vector vector)
         {
-            int? altitude = null;
+            double? altitude = null;
             if (vector.Altitude.HasValue)
             {
-                altitude = (int)vector.Altitude;
+                altitude = vector.Altitude;
             }
 
             return new TrackPoint(vector.Latitude, vector.Longitude, altitude, heading: null);

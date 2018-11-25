@@ -20,7 +20,7 @@ namespace WhereToFly.App.Geo
         /// <summary>
         /// Altitude, in meters; optional
         /// </summary>
-        public int? Altitude { get; set; }
+        public double? Altitude { get; set; }
 
         /// <summary>
         /// Heading, in degrees; optional
@@ -39,7 +39,7 @@ namespace WhereToFly.App.Geo
         /// <param name="longitude">longitude value</param>
         /// <param name="altitude">altitude value; optional</param>
         /// <param name="heading">heading; optional</param>
-        public TrackPoint(double latitude, double longitude, int? altitude, int? heading)
+        public TrackPoint(double latitude, double longitude, double? altitude, int? heading)
         {
             this.Latitude = latitude;
             this.Longitude = longitude;
