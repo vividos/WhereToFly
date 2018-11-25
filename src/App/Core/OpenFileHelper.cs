@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Views;
 using WhereToFly.App.Geo.DataFormats;
+using WhereToFly.App.Geo.Spatial;
 using WhereToFly.App.Model;
 using Xamarin.Forms;
 
@@ -273,6 +274,8 @@ namespace WhereToFly.App.Core
             {
                 return false;
             }
+
+            track.CalculateStatistics();
 
             // this removes waiting dialog
             await Xamarin.Forms.Application.Current.MainPage.Navigation.PopPopupAsync();
