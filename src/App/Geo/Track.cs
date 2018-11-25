@@ -40,9 +40,44 @@ namespace WhereToFly.App.Geo
         public double LengthInMeter { get; set; }
 
         /// <summary>
+        /// Height gain, in meter
+        /// </summary>
+        public double HeightGain { get; set; }
+
+        /// <summary>
+        /// Height gain, in meter
+        /// </summary>
+        public double HeightLoss { get; set; }
+
+        /// <summary>
+        /// Max. height, in meter
+        /// </summary>
+        public double MaxHeight { get; set; }
+
+        /// <summary>
+        /// Min. height, in meter
+        /// </summary>
+        public double MinHeight { get; set; }
+
+        /// <summary>
         /// Max. climb rate, in m/s
         /// </summary>
         public double MaxClimbRate { get; set; }
+
+        /// <summary>
+        /// Max. sink rate (or min. negative climb rate), in m/s
+        /// </summary>
+        public double MaxSinkRate { get; set; }
+
+        /// <summary>
+        /// Maximum speed, in km/h
+        /// </summary>
+        public double MaxSpeed { get; set; }
+
+        /// <summary>
+        /// Average speed, in km/h
+        /// </summary>
+        public double AverageSpeed { get; set; }
 
         /// <summary>
         /// List of track points
@@ -59,7 +94,14 @@ namespace WhereToFly.App.Geo
             this.Color = "0000FF";
             this.Duration = TimeSpan.Zero;
             this.LengthInMeter = 0.0;
+            this.HeightGain = 0.0;
+            this.HeightLoss = 0.0;
+            this.MaxHeight = 0.0;
+            this.MinHeight = 0.0;
+            this.MaxSpeed = 0.0;
+            this.AverageSpeed = 0.0;
             this.MaxClimbRate = 0.0;
+            this.MaxSinkRate = 0.0;
             this.TrackPoints = new List<TrackPoint>();
         }
     }
