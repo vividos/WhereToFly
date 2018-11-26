@@ -12,27 +12,13 @@ namespace WhereToFly.App.UnitTest.Geo
     public class GeoLoaderTest
     {
         /// <summary>
-        /// Returns the Assets path for all unit tests; place your test files in the Assets folder
-        /// and mark them with "Content" and "Copy if newer".
-        /// </summary>
-        public string TestAssetsPath
-        {
-            get
-            {
-                return Path.Combine(
-                    Path.GetDirectoryName(this.GetType().Assembly.Location),
-                    "Assets");
-            }
-        }
-
-        /// <summary>
         /// Tests method GeoLoader.LoadGeoDataFile() to load .kml file
         /// </summary>
         [TestMethod]
         public void TestLoadGetDataFileKml()
         {
             // set up
-            string filename = Path.Combine(this.TestAssetsPath, "waypoints.kml");
+            string filename = Path.Combine(UnitTestHelper.TestAssetsPath, "waypoints.kml");
 
             // run
             var kmlFile = GeoLoader.LoadGeoDataFile(filename);
@@ -48,7 +34,7 @@ namespace WhereToFly.App.UnitTest.Geo
         public void TestLoadGetDataFileKmz()
         {
             // set up
-            string filename = Path.Combine(this.TestAssetsPath, "track_linestring.kmz");
+            string filename = Path.Combine(UnitTestHelper.TestAssetsPath, "track_linestring.kmz");
 
             // run
             var kmlFile = GeoLoader.LoadGeoDataFile(filename);
@@ -64,7 +50,7 @@ namespace WhereToFly.App.UnitTest.Geo
         public void TestLoadGetDataFileGpx()
         {
             // set up
-            string filename = Path.Combine(this.TestAssetsPath, "tracks.gpx");
+            string filename = Path.Combine(UnitTestHelper.TestAssetsPath, "tracks.gpx");
 
             // run
             var gpxFile = GeoLoader.LoadGeoDataFile(filename);
@@ -80,7 +66,7 @@ namespace WhereToFly.App.UnitTest.Geo
         public void TestLoadGetDataFileIgc()
         {
             // set up
-            string filename = Path.Combine(this.TestAssetsPath, "85QA3ET1.igc");
+            string filename = Path.Combine(UnitTestHelper.TestAssetsPath, "85QA3ET1.igc");
 
             // run
             var igcFile = GeoLoader.LoadGeoDataFile(filename);
@@ -96,7 +82,7 @@ namespace WhereToFly.App.UnitTest.Geo
         public void TestLoadGeoDataFile_NonExistentFile()
         {
             // set up
-            string filename = Path.Combine(this.TestAssetsPath, "waypoints.abc");
+            string filename = Path.Combine(UnitTestHelper.TestAssetsPath, "waypoints.abc");
 
             // run + check
             Assert.ThrowsException<FileNotFoundException>(() => GeoLoader.LoadGeoDataFile(filename), "must throw exception");

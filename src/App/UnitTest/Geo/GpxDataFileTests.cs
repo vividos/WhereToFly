@@ -12,27 +12,13 @@ namespace WhereToFly.App.UnitTest.Geo
     public class GpxDataFileTests
     {
         /// <summary>
-        /// Returns the Assets path for all unit tests; place your test files in the Assets folder
-        /// and mark them with "Content" and "Copy if newer".
-        /// </summary>
-        public string TestAssetsPath
-        {
-            get
-            {
-                return Path.Combine(
-                    Path.GetDirectoryName(this.GetType().Assembly.Location),
-                    "Assets");
-            }
-        }
-
-        /// <summary>
         /// Tests getting track list, in .gpx format
         /// </summary>
         [TestMethod]
         public void TestGetTrackList()
         {
             // run
-            string filename = Path.Combine(this.TestAssetsPath, "tracks.gpx");
+            string filename = Path.Combine(UnitTestHelper.TestAssetsPath, "tracks.gpx");
             using (var stream = new FileStream(filename, FileMode.Open))
             {
                 var gpxFile = new GpxDataFile(stream);
@@ -50,7 +36,7 @@ namespace WhereToFly.App.UnitTest.Geo
         public void TestLoadTrack()
         {
             // run
-            string filename = Path.Combine(this.TestAssetsPath, "tracks.gpx");
+            string filename = Path.Combine(UnitTestHelper.TestAssetsPath, "tracks.gpx");
             using (var stream = new FileStream(filename, FileMode.Open))
             {
                 var gpxFile = new GpxDataFile(stream);
@@ -69,7 +55,7 @@ namespace WhereToFly.App.UnitTest.Geo
         public void TestLoadLocationList()
         {
             // run
-            string filename = Path.Combine(this.TestAssetsPath, "waypoints.gpx");
+            string filename = Path.Combine(UnitTestHelper.TestAssetsPath, "waypoints.gpx");
             using (var stream = new FileStream(filename, FileMode.Open))
             {
                 var gpxFile = new GpxDataFile(stream);

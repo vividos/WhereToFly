@@ -13,20 +13,6 @@ namespace WhereToFly.App.UnitTest.Geo
     public class TrackExtensionMethodsTest
     {
         /// <summary>
-        /// Returns the Assets path for all unit tests; place your test files in the Assets folder
-        /// and mark them with "Content" and "Copy if newer".
-        /// </summary>
-        public string TestAssetsPath
-        {
-            get
-            {
-                return Path.Combine(
-                    Path.GetDirectoryName(this.GetType().Assembly.Location),
-                    "Assets");
-            }
-        }
-
-        /// <summary>
         /// Tests calculating statistics on an empty track
         /// </summary>
         [TestMethod]
@@ -60,7 +46,7 @@ namespace WhereToFly.App.UnitTest.Geo
             // run
             foreach (string trackFilename in trackFilenames)
             {
-                string filename = Path.Combine(this.TestAssetsPath, trackFilename);
+                string filename = Path.Combine(UnitTestHelper.TestAssetsPath, trackFilename);
                 var geoDataFile = GeoLoader.LoadGeoDataFile(filename);
 
                 var trackList = geoDataFile.GetTrackList();

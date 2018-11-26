@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using WhereToFly.App.Model;
 
@@ -13,30 +12,13 @@ namespace WhereToFly.App.UnitTest
     public class LocationTest
     {
         /// <summary>
-        /// Returns default location for tests
-        /// </summary>
-        /// <returns>default location</returns>
-        private static Location GetDefaultLocation()
-        {
-            return new Location
-            {
-                Id = Guid.NewGuid().ToString("B"),
-                Name = "Brecherspitz",
-                MapLocation = new MapPoint(47.6764385, 11.8710533, 1685.0),
-                Description = "Herrliche Aussicht über die drei Seen Schliersee im Norden, Tegernsee im Westen und den Spitzingsee im Süden.",
-                Type = LocationType.Summit,
-                InternetLink = "https://de.wikipedia.org/wiki/Brecherspitz"
-            };
-        }
-
-        /// <summary>
         /// Tests ToString() method
         /// </summary>
         [TestMethod]
         public void TestToString()
         {
             // set up
-            var location = GetDefaultLocation();
+            var location = UnitTestHelper.GetDefaultLocation();
 
             // run
             string text = location.ToString();
@@ -52,11 +34,11 @@ namespace WhereToFly.App.UnitTest
         public void TestGetHashCode()
         {
             // set up
-            var location1 = GetDefaultLocation();
-            var location2 = GetDefaultLocation();
+            var location1 = UnitTestHelper.GetDefaultLocation();
+            var location2 = UnitTestHelper.GetDefaultLocation();
             location2.Id = location1.Id;
 
-            var location3 = GetDefaultLocation();
+            var location3 = UnitTestHelper.GetDefaultLocation();
 
             // run + check
             var dict = new Dictionary<Location, bool>();
@@ -81,7 +63,7 @@ namespace WhereToFly.App.UnitTest
             // set up
             var locationList = new List<Location>
             {
-                GetDefaultLocation()
+                UnitTestHelper.GetDefaultLocation()
             };
 
             // run

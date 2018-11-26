@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using WhereToFly.App.Core;
 using WhereToFly.App.Core.Views;
 using WhereToFly.App.Model;
@@ -26,30 +25,13 @@ namespace WhereToFly.App.UnitTest.Views
         }
 
         /// <summary>
-        /// Returns default location for tests
-        /// </summary>
-        /// <returns>default location</returns>
-        private static Location GetDefaultLocation()
-        {
-            return new Location
-            {
-                Id = Guid.NewGuid().ToString("B"),
-                Name = "Brecherspitz",
-                MapLocation = new MapPoint(47.6764385, 11.8710533, 1685.0),
-                Description = "Herrliche Aussicht über die drei Seen Schliersee im Norden, Tegernsee im Westen und den Spitzingsee im Süden.",
-                Type = LocationType.Summit,
-                InternetLink = "https://de.wikipedia.org/wiki/Brecherspitz"
-            };
-        }
-
-        /// <summary>
         /// Tests default ctor of LocationDetailsPage
         /// </summary>
         [TestMethod]
         public void TestDefaultCtor()
         {
             // set up
-            var location = GetDefaultLocation();
+            var location = UnitTestHelper.GetDefaultLocation();
             var page = new LocationDetailsPage(location);
 
             // check

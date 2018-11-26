@@ -13,27 +13,13 @@ namespace WhereToFly.App.UnitTest.Geo
     public class IgcDataFileTests
     {
         /// <summary>
-        /// Returns the Assets path for all unit tests; place your test files in the Assets folder
-        /// and mark them with "Content" and "Copy if newer".
-        /// </summary>
-        public string TestAssetsPath
-        {
-            get
-            {
-                return Path.Combine(
-                    Path.GetDirectoryName(this.GetType().Assembly.Location),
-                    "Assets");
-            }
-        }
-
-        /// <summary>
         /// Tests method GetTrackList()
         /// </summary>
         [TestMethod]
         public void TestGetTrackList()
         {
             // run
-            string filename = Path.Combine(this.TestAssetsPath, "85QA3ET1.igc");
+            string filename = Path.Combine(UnitTestHelper.TestAssetsPath, "85QA3ET1.igc");
             using (var stream = new FileStream(filename, FileMode.Open))
             {
                 var igcFile = new IgcDataFile(stream);
@@ -51,7 +37,7 @@ namespace WhereToFly.App.UnitTest.Geo
         public void TestLoadTrack()
         {
             // run
-            string filename = Path.Combine(this.TestAssetsPath, "85QA3ET1.igc");
+            string filename = Path.Combine(UnitTestHelper.TestAssetsPath, "85QA3ET1.igc");
 
             Track track = null;
             using (var stream = new FileStream(filename, FileMode.Open))

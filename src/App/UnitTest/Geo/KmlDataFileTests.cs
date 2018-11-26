@@ -12,27 +12,13 @@ namespace WhereToFly.App.UnitTest.Geo
     public class KmlDataFileTests
     {
         /// <summary>
-        /// Returns the Assets path for all unit tests; place your test files in the Assets folder
-        /// and mark them with "Content" and "Copy if newer".
-        /// </summary>
-        public string TestAssetsPath
-        {
-            get
-            {
-                return Path.Combine(
-                    Path.GetDirectoryName(this.GetType().Assembly.Location),
-                    "Assets");
-            }
-        }
-
-        /// <summary>
         /// Tests getting track list, in .kmz format
         /// </summary>
         [TestMethod]
         public void TestGetTrackList()
         {
             // set up
-            string filename = Path.Combine(this.TestAssetsPath, "track_linestring.kmz");
+            string filename = Path.Combine(UnitTestHelper.TestAssetsPath, "track_linestring.kmz");
             var kmlFile = GeoLoader.LoadGeoDataFile(filename);
 
             // run
@@ -49,7 +35,7 @@ namespace WhereToFly.App.UnitTest.Geo
         public void TestLoadTrack()
         {
             // set up
-            string filename = Path.Combine(this.TestAssetsPath, "track_linestring.kmz");
+            string filename = Path.Combine(UnitTestHelper.TestAssetsPath, "track_linestring.kmz");
 
             var kmlFile = GeoLoader.LoadGeoDataFile(filename);
 
@@ -69,7 +55,7 @@ namespace WhereToFly.App.UnitTest.Geo
         public void TestLoadLocationList()
         {
             // set up
-            string filename = Path.Combine(this.TestAssetsPath, "waypoints.kml");
+            string filename = Path.Combine(UnitTestHelper.TestAssetsPath, "waypoints.kml");
 
             var kmlFile = GeoLoader.LoadGeoDataFile(filename);
 
@@ -87,7 +73,7 @@ namespace WhereToFly.App.UnitTest.Geo
         public void TestLoadLocationListKmz()
         {
             // set up
-            string filename = Path.Combine(this.TestAssetsPath, "waypoints.kmz");
+            string filename = Path.Combine(UnitTestHelper.TestAssetsPath, "waypoints.kmz");
             var kmlFile = GeoLoader.LoadGeoDataFile(filename);
 
             // run
@@ -105,7 +91,7 @@ namespace WhereToFly.App.UnitTest.Geo
         public void TestFileWithoutPlacemarks()
         {
             // set up
-            string filename = Path.Combine(this.TestAssetsPath, "tracks.kmz");
+            string filename = Path.Combine(UnitTestHelper.TestAssetsPath, "tracks.kmz");
             var kmlFile = GeoLoader.LoadGeoDataFile(filename);
 
             // run
