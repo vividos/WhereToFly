@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using WhereToFly.App.Geo;
 using WhereToFly.App.Model;
 
 namespace WhereToFly.App.UnitTest
@@ -37,6 +39,32 @@ namespace WhereToFly.App.UnitTest
                 Description = "Herrliche Aussicht über die drei Seen Schliersee im Norden, Tegernsee im Westen und den Spitzingsee im Süden.",
                 Type = LocationType.Summit,
                 InternetLink = "https://de.wikipedia.org/wiki/Brecherspitz"
+            };
+        }
+
+        /// <summary>
+        /// Returns default track for unit tests
+        /// </summary>
+        /// <returns></returns>
+        public static Track GetDefaultTrack()
+        {
+            return new Track
+            {
+                Id = "track1",
+                Name = "Track1",
+                IsFlightTrack = false,
+                Color = "FF0000",
+                TrackPoints = new List<TrackPoint>
+                {
+                    new TrackPoint(47.754076, 12.352277, 1234.0, null)
+                    {
+                        Time = DateTime.Today + TimeSpan.FromHours(1.0)
+                    },
+                    new TrackPoint(46.017779, 11.900711, 778.2, null)
+                    {
+                        Time = DateTime.Today + TimeSpan.FromHours(2.0)
+                    },
+                }
             };
         }
     }

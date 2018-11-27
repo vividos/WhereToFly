@@ -57,10 +57,14 @@
     <Compile Include="UnitTestAppManager.cs" />
     <Compile Include="UnitTestGeolocationService.cs" />
     <Compile Include="UnitTestHelper.cs" />
+    <Compile Include="ViewModels\AddTrackPopupViewModelTest.cs" />
     <Compile Include="ViewModels\ImportLocationsViewModelTest.cs" />
     <Compile Include="ViewModels\MenuViewModelTest.cs" />
     <Compile Include="ViewModels\SelectWeatherIconViewModelTest.cs" />
     <Compile Include="ViewModels\SettingsViewModelTest.cs" />
+    <Compile Include="ViewModels\TrackDetailsViewModelTest.cs" />
+    <Compile Include="ViewModels\TrackListEntryViewModelTest.cs" />
+    <Compile Include="ViewModels\TrackListViewModelTest.cs" />
     <Compile Include="ViewModels\WeatherIconViewModelTest.cs" />
     <Compile Include="ViewModels\WeatherDashboardViewModelTest.cs" />
     <Compile Include="Views\WeatherDashboardPageTest.cs" />

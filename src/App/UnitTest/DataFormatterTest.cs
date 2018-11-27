@@ -12,7 +12,7 @@ namespace WhereToFly.App.UnitTest
     public class DataFormatterTest
     {
         /// <summary>
-        /// Tests function FormatLatLong()
+        /// Tests method FormatLatLong()
         /// </summary>
         [TestMethod]
         public void TestFormatLatLong()
@@ -32,7 +32,7 @@ namespace WhereToFly.App.UnitTest
         }
 
         /// <summary>
-        /// Tests function FormatLatLong() with negative value
+        /// Tests method FormatLatLong() with negative value
         /// </summary>
         [TestMethod]
         public void TestFormatNegativeLatLong()
@@ -52,7 +52,7 @@ namespace WhereToFly.App.UnitTest
         }
 
         /// <summary>
-        /// Tests function FormatMyPositionShareText()
+        /// Tests method FormatMyPositionShareText()
         /// </summary>
         [TestMethod]
         public void TestFormatMyPositionShareText()
@@ -68,7 +68,23 @@ namespace WhereToFly.App.UnitTest
         }
 
         /// <summary>
-        /// Tests function FormatDistance()
+        /// Tests method FormatLocationShareText()
+        /// </summary>
+        [TestMethod]
+        public void TestFormatLocationShareText()
+        {
+            // set up
+            var location = UnitTestHelper.GetDefaultLocation();
+
+            // run
+            string text = DataFormatter.FormatLocationShareText(location);
+
+            // check
+            Assert.IsTrue(text.Length > 0, "formatted text must not be empty");
+        }
+
+        /// <summary>
+        /// Tests method FormatDistance()
         /// </summary>
         [TestMethod]
         public void TestFormatDistance()
@@ -87,6 +103,23 @@ namespace WhereToFly.App.UnitTest
             Assert.AreEqual("42 m", text1, "formatted text must match");
             Assert.AreEqual("4.2 km", text2, "formatted text must match");
             Assert.AreEqual("-", text3, "formatted text must match");
+        }
+
+        /// <summary>
+        /// Tests method FormatDuration()
+        /// </summary>
+        [TestMethod]
+        public void TestFormatDuration()
+        {
+            // run
+            string text1 = DataFormatter.FormatDuration(TimeSpan.Zero);
+            string text2 = DataFormatter.FormatDuration(TimeSpan.FromHours(1.42));
+            string text3 = DataFormatter.FormatDuration(TimeSpan.FromDays(1.42));
+
+            // check
+            Assert.AreEqual("00:00 s", text1, "formatted text must match");
+            Assert.AreEqual("25:12 s", text2, "formatted text must match");
+            Assert.AreEqual("1.04:48 s", text3, "formatted text must match");
         }
     }
 }
