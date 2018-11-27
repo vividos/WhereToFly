@@ -41,7 +41,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
             Assert.IsNotNull(viewModel.DeleteTrackListCommand, "delete track list command must not be null");
 
             viewModel.ItemTappedCommand.Execute(null);
-            viewModel.ImportTrackCommand.Execute(null);
+            ////viewModel.ImportTrackCommand.Execute(null); // don't execute import; opens a file picker
             viewModel.DeleteTrackListCommand.Execute(null);
         }
     }
