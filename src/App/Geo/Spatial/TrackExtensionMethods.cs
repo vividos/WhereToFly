@@ -24,7 +24,6 @@ namespace WhereToFly.App.Geo.Spatial
 
             CalcTrackDuration(track);
 
-            double? previousHeight = null;
             TrackPoint previousPoint = null;
             int averageSpeedTrackPointCount = 0;
 
@@ -33,8 +32,6 @@ namespace WhereToFly.App.Geo.Spatial
                 if (trackPoint.Altitude.HasValue)
                 {
                     CalcAltitudeStatistics(track, trackPoint, previousPoint);
-
-                    previousHeight = trackPoint.Altitude;
                 }
 
                 if (previousPoint != null)
