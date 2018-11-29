@@ -59,7 +59,17 @@ namespace WhereToFly.App.Geo.DataFormats
                 }
             }
 
-            this.Track.Name = this.headerFields.GetValueOrDefault("PILOT", "???");
+            this.Track.Name = this.FormatTrackName();
+        }
+
+        /// <summary>
+        /// Formats a track name consisting of the date of flight and the pilot's name
+        /// </summary>
+        /// <returns>formatted track name</returns>
+        private string FormatTrackName()
+        {
+            string date = this.currentDate.HasValue ? this.currentDate.Value.ToString("yyyy'-'MM'-'dd") : string.Empty;
+            return $"{date} {this.headerFields.GetValueOrDefault("PILOT", "???")}";
         }
 
         /// <summary>
