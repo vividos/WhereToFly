@@ -457,7 +457,7 @@ namespace WhereToFly.App.Core.Views
         /// <param name="js">javascript code snippet</param>
         private void RunJavaScript(string js)
         {
-            Debug.WriteLine("run js: " + js);
+            Debug.WriteLine("run js: " + js.Substring(0, Math.Min(80, js.Length)));
 
             Device.BeginInvokeOnMainThread(() => this.webView.Eval(js));
         }
