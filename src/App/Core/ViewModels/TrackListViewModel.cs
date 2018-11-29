@@ -96,7 +96,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         private void SetupBindings()
         {
-            Task.Run(this.LoadDataAsync);
+            Task.Run(this.ReloadTrackListAsync);
 
             this.ImportTrackCommand =
                 new Command(async () =>
@@ -134,8 +134,6 @@ namespace WhereToFly.App.Core.ViewModels
             {
                 App.LogError(ex);
             }
-
-            this.UpdateTrackList();
         }
 
         /// <summary>
