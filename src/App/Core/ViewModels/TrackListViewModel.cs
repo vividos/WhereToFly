@@ -57,6 +57,15 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
+        /// Indicates if the "delete track" button is enabled.
+        /// </summary>
+        public bool IsDeleteTrackEnabled
+        {
+            get => !this.isListRefreshActive &&
+                (this.trackList != null && this.trackList.Any());
+        }
+
+        /// <summary>
         /// Command to execute when toolbar button "import track" has been tapped
         /// </summary>
         public Command ImportTrackCommand { get; private set; }
@@ -99,7 +108,8 @@ namespace WhereToFly.App.Core.ViewModels
                 new Command(async () =>
                 {
                     await this.ClearTracksAsync();
-                });
+                },
+                () => this.IsDeleteTrackEnabled);
 
             this.ItemTappedCommand =
                 new Command<Track>(async (track) =>
@@ -135,6 +145,8 @@ namespace WhereToFly.App.Core.ViewModels
         {
             this.IsListRefreshActive = true;
 
+            this.DeleteTrackListCommand.ChangeCanExecute();
+
             var newList = this.trackList
                 .Select(track => new TrackListEntryViewModel(this, track));
 
@@ -144,6 +156,8 @@ namespace WhereToFly.App.Core.ViewModels
             this.OnPropertyChanged(nameof(this.IsListEmpty));
 
             this.IsListRefreshActive = false;
+
+            this.DeleteTrackListCommand.ChangeCanExecute();
         }
 
         /// <summary>
