@@ -1,4 +1,5 @@
-﻿using SharpKml.Dom;
+﻿using SharpKml.Base;
+using SharpKml.Dom;
 using SharpKml.Dom.GX;
 using SharpKml.Engine;
 using System;
@@ -29,7 +30,18 @@ namespace WhereToFly.App.Geo.DataFormats
         {
             if (isKml)
             {
-                this.kml = KmlFile.Load(stream);
+                using (var reader = new StreamReader(stream))
+                {
+                    this.kml = KmlFile.Load(reader);
+
+                    if (this.kml.Root == null &&
+                        stream.CanSeek)
+                    {
+                        stream.Seek(0, SeekOrigin.Begin);
+
+                        this.kml = this.ReadLegacyKmlStream(stream, isKml);
+                    }
+                }
             }
             else
             {
@@ -39,12 +51,38 @@ namespace WhereToFly.App.Geo.DataFormats
         }
 
         /// <summary>
+        /// Tries to read a legacy kml stream by using SharpKml Parser class directly.
+        /// </summary>
+        /// <param name="stream">stream to read</param>
+        /// <param name="isKml">indicates if stream contains a kml or a kmz file</param>
+        /// <returns>parsed kml file, or null when file couldn't be loaded</returns>
+        private KmlFile ReadLegacyKmlStream(Stream stream, bool isKml)
+        {
+            if (isKml)
+            {
+                var parser = new Parser();
+                using (var reader = new StreamReader(stream))
+                {
+                    string xml = reader.ReadToEnd();
+                    parser.ParseString(xml, false); // ignore the namespaces
+                }
+
+                return KmlFile.Create(parser.Root, true);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Returns if the opened file contains any locations
         /// </summary>
         /// <returns>true when the file contains locations, false when not</returns>
         public bool HasLocations()
         {
-            if (this.kml.Root == null)
+            if (this.kml == null ||
+                this.kml.Root == null)
             {
                 return false;
             }
@@ -69,9 +107,10 @@ namespace WhereToFly.App.Geo.DataFormats
         {
             var trackList = new List<string>();
 
-            if (this.kml.Root == null)
+            if (this.kml == null ||
+                this.kml.Root == null)
             {
-                return new List<string>();
+                return trackList;
             }
 
             foreach (var element in this.kml.Root.Flatten())

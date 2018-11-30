@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<kml xmlns="http://earth.google.com/kml/2.1">
+<Document>
+<name>Billing</name><description>Billing</description>
+<open>1</open>
+<Placemark>
+  <name><![CDATA[Billing]]></name>
+  <description><![CDATA[<table cellpadding=0 cellspacing=0 width=300><tr bgcolor="#D7E1EE"><td>Region: Bir - <a href='/leonardo/index.php?op=list_flights&takeoffID=0&year=0&season=0&country=IN'>India</a></td></tr><tr bgcolor="#CCCCCC"><td><a href='/leonardo/index.php?op=list_flights&takeoffID=9518&year=0&season=0'>Flüge in der Nähe dieses Punktes anzeigen [ 49 ]</a></td></tr><tr ><td>Fluggebietsrekord : <a href='/leonardo/index.php?op=show_flight&flightID=36339'>77.4&nbsp;km</a></td></tr><tr bgcolor="#CCCCCC"><td>Link für mehr Information : -</td></tr><tr ><td></td></tr><tr ><td></td></tr></table>	
+    ]]>
+ </description>
+  <LookAt>
+    <longitude>76.7406</longitude>
+    <latitude>32.0511</latitude>
+    <range>10000</range>
+    <tilt>0</tilt>
+    <heading>0</heading>
+  </LookAt>
+    
+  <styleUrl>root://styleMaps#default+nicon=0x307+hicon=0x317</styleUrl>
+  <Style>
+    <IconStyle>
+      <scale>0.8</scale>
+      <Icon>
+        <href>root://icons/palette-4.png</href>
+        <x>160</x>
+        <y>128</y>
+        <w>32</w>
+        <h>32</h>
+      </Icon>
+    </IconStyle>
+    <LabelStyle>
+      <scale>0.8</scale>
+    </LabelStyle>
+  </Style>
+  
+  <Point>
+    <coordinates>76.7406,32.0511,0</coordinates>
+  </Point>
+</Placemark></Document>
+</kml>

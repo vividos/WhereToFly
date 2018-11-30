@@ -101,5 +101,21 @@ namespace WhereToFly.App.UnitTest.Geo
             Assert.IsFalse(kmlFile.HasLocations(), "kml file must not contain locations");
             Assert.IsFalse(locationList.Any(), "loaded location list must not contain locations");
         }
+
+        /// <summary>
+        /// Tests loading .kml file with version kml 2.1
+        /// </summary>
+        [TestMethod]
+        public void TestKml21File()
+        {
+            // set up
+            string filename = Path.Combine(UnitTestHelper.TestAssetsPath, "kml21.kml");
+
+            // run
+            var kmlFile = GeoLoader.LoadGeoDataFile(filename);
+
+            // check
+            Assert.IsTrue(kmlFile.HasLocations(), "file must have a location");
+        }
     }
 }
