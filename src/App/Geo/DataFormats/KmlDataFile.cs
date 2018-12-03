@@ -336,7 +336,7 @@ namespace WhereToFly.App.Geo.DataFormats
         /// <summary>
         /// Mapping from a text that can occur in a placemark icon link, to a LocationType
         /// </summary>
-        private static Dictionary<string, LocationType> iconLinkToLocationTypeMap = new Dictionary<string, LocationType>
+        private static readonly Dictionary<string, LocationType> iconLinkToLocationTypeMap = new Dictionary<string, LocationType>
         {
             // paraglidingsports.com types
             { "iconpg_sp.png", LocationType.FlyingTakeoff },
@@ -494,11 +494,8 @@ namespace WhereToFly.App.Geo.DataFormats
         /// <returns>style URL, or empty string when style couldn't be retrieved</returns>
         private static string GetStyleIconFromStyleCollection(Placemark placemark)
         {
-            var style = placemark.Styles.FirstOrDefault() as Style;
-            if (style != null &&
-                style.Icon != null &&
-                style.Icon.Icon != null &&
-                style.Icon.Icon.Href != null)
+            if (placemark.Styles.FirstOrDefault() is Style style &&
+                style?.Icon?.Icon?.Href != null)
             {
                 return style.Icon.Icon.Href.ToString();
             }
