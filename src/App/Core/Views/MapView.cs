@@ -525,7 +525,10 @@ namespace WhereToFly.App.Core.Views
 
                 case "onLongTap":
                     var longTapParameters = JsonConvert.DeserializeObject<LongTapParameter>(jsonParameters);
-                    var longTapPoint = new MapPoint(longTapParameters.Latitude, longTapParameters.Longitude, longTapParameters.Altitude);
+                    var longTapPoint = new MapPoint(
+                        longTapParameters.Latitude,
+                        longTapParameters.Longitude,
+                        Math.Round(longTapParameters.Altitude));
                     this.LongTap?.Invoke(longTapPoint);
                     break;
 
