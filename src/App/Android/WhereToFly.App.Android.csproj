@@ -58,6 +58,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
+    <Reference Include="Mono.Android.Export" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
@@ -89,6 +90,7 @@
     <Compile Include="AndroidWebViewClient.cs" />
     <Compile Include="AndroidWebViewRenderer.cs" />
     <Compile Include="IntentFilterHelper.cs" />
+    <Compile Include="JavaScriptCallbackHandler.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

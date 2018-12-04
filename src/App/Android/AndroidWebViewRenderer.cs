@@ -38,6 +38,11 @@ namespace WhereToFly.App.Android
 
                 MessagingCenter.Subscribe<Core.App>(this, Constants.MessageWebViewClearCache, this.ClearCache);
             }
+
+            if (e.OldElement != null)
+            {
+                this.Control.RemoveJavascriptInterface(JavaScriptCallbackHandler.ObjectName);
+            }
         }
 
         /// <summary>
@@ -61,6 +66,7 @@ namespace WhereToFly.App.Android
             global::Android.Webkit.WebView.SetWebContentsDebuggingEnabled(true);
 #endif
             this.Control.Settings.JavaScriptEnabled = true;
+            this.Control.AddJavascriptInterface(new JavaScriptCallbackHandler(this), JavaScriptCallbackHandler.ObjectName);
 
             // enable this to ensure CesiumJS web worker are able to function
             // https://stackoverflow.com/questions/32020039/using-a-web-worker-in-a-local-file-webview
