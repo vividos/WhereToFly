@@ -35,7 +35,7 @@ REM Build using SonarQube scanner for MSBuild
 REM
 rmdir .\bw-output /s /q 2> nul
 
-SonarQube.Scanner.MSBuild.exe begin ^
+SonarScanner.MSBuild.exe begin ^
     /k:"WhereToFly" ^
     /v:"1.4.0" ^
     /d:"sonar.cfamily.build-wrapper-output=%CD%\bw-output" ^
@@ -65,6 +65,6 @@ REM
     -reports:"%~dp0\TestResults\WhereToFly-CoverageReport.xml" ^
     -targetdir:"%~dp0\TestResults\CoverageReport"
 
-SonarQube.Scanner.MSBuild.exe end /d:"sonar.login=%SONARLOGIN%"
+SonarScanner.MSBuild.exe end /d:"sonar.login=%SONARLOGIN%"
 
 pause
