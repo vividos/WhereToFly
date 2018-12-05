@@ -26,6 +26,16 @@ version.
 - [ ] Delete all location waypoints
 - [ ] Share a location with WhatsApp
 
+## Track list
+
+- [ ] Import track from .kml, .kmz, .gpx and .igc file
+- [ ] Import flight track and check colors of track in map
+- [ ] Import non-flight track and check track in map
+- [ ] View track list and details
+- [ ] Navigate to track
+- [ ] Delete single track
+- [ ] Delete all tracks
+
 # Weather dashboard
 
 - [ ] Add one or more weather icons to dashboard
