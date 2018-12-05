@@ -45,7 +45,7 @@ namespace WhereToFly.App.UnitTest
         /// <summary>
         /// Returns default track for unit tests
         /// </summary>
-        /// <returns></returns>
+        /// <returns>default track</returns>
         public static Track GetDefaultTrack()
         {
             return new Track

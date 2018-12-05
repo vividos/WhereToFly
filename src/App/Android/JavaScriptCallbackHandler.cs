@@ -37,9 +37,8 @@ namespace WhereToFly.App.Android
         [Java.Interop.Export("call")]
         public void Call(string action, string args)
         {
-            WebViewRenderer renderer = null;
-            if (webViewRenderer != null &&
-                webViewRenderer.TryGetTarget(out renderer))
+            if (this.webViewRenderer != null &&
+                this.webViewRenderer.TryGetTarget(out WebViewRenderer renderer))
             {
                 string url = $"callback://{action}/{args}";
 

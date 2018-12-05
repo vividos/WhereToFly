@@ -336,7 +336,7 @@ namespace WhereToFly.App.Geo.DataFormats
         /// <summary>
         /// Mapping from a text that can occur in a placemark icon link, to a LocationType
         /// </summary>
-        private static readonly Dictionary<string, LocationType> iconLinkToLocationTypeMap = new Dictionary<string, LocationType>
+        private static readonly Dictionary<string, LocationType> IconLinkToLocationTypeMap = new Dictionary<string, LocationType>
         {
             // paraglidingsports.com types
             { "iconpg_sp.png", LocationType.FlyingTakeoff },
@@ -371,7 +371,7 @@ namespace WhereToFly.App.Geo.DataFormats
 
             if (!string.IsNullOrWhiteSpace(iconLink))
             {
-                foreach (var iconLinkContentAndLocationType in iconLinkToLocationTypeMap)
+                foreach (var iconLinkContentAndLocationType in IconLinkToLocationTypeMap)
                 {
                     if (iconLink.Contains(iconLinkContentAndLocationType.Key))
                     {

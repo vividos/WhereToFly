@@ -35,13 +35,12 @@ namespace WhereToFly.App.UnitTest.ViewModels
             Assert.IsTrue(viewModel.IsListEmpty, "list must be empty");
             Assert.IsFalse(viewModel.IsListRefreshActive, "refresh must not be active");
 
-            // TODO
             Assert.IsNotNull(viewModel.ItemTappedCommand, "item tapped command must not be null");
             Assert.IsNotNull(viewModel.ImportTrackCommand, "import track command must not be null");
             Assert.IsNotNull(viewModel.DeleteTrackListCommand, "delete track list command must not be null");
 
             viewModel.ItemTappedCommand.Execute(null);
-            ////viewModel.ImportTrackCommand.Execute(null); // don't execute import; opens a file picker
+            ////viewModel.ImportTrackCommand.Execute(null); // don't execute import; it opens a file picker
             viewModel.DeleteTrackListCommand.Execute(null);
         }
     }

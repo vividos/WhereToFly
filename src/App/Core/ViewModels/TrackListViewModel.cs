@@ -104,8 +104,8 @@ namespace WhereToFly.App.Core.ViewModels
                     await this.ImportTrackAsync();
                 });
 
-            this.DeleteTrackListCommand =
-                new Command(async () =>
+            this.DeleteTrackListCommand = new Command(
+                async () =>
                 {
                     await this.ClearTracksAsync();
                 },
