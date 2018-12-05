@@ -18,7 +18,7 @@ namespace WhereToFly.App.Core.ViewModels
     public class TrackListViewModel : ViewModelBase
     {
         /// <summary>
-        /// Location list
+        /// Track list
         /// </summary>
         private List<Track> trackList = new List<Track>();
 
@@ -169,9 +169,9 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
-        /// Returns to map view and zooms to the given location
+        /// Returns to map view and zooms to the given track
         /// </summary>
-        /// <param name="track">location to zoom to</param>
+        /// <param name="track">track to zoom to</param>
         /// <returns>task to wait on</returns>
         internal async Task ZoomToTrack(Track track)
         {
@@ -200,7 +200,7 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
-        /// Clears all locations
+        /// Clears all tracks
         /// </summary>
         /// <returns>task to wait on</returns>
         public async Task ClearTracksAsync()
