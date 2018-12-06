@@ -389,13 +389,17 @@ namespace WhereToFly.App.Core.Views
                 timePointsList = track.TrackPoints.Select(x => (x.Time.Value - startTime).TotalSeconds).ToList();
             }
 
-            string js = string.Format(
-                "map.addTrack('{0}', '{1}', {2}, {3}, {4});",
-                track.Id,
-                track.Name,
-                JsonConvert.SerializeObject(trackPointsList),
-                timePointsList == null ? "null" : JsonConvert.SerializeObject(timePointsList),
-                track.IsFlightTrack ? "undefined" : $"'{track.Color}'");
+            var trackJsonObject = new
+            {
+                id = track.Id,
+                name = track.Name,
+                isFlightTrack = track.IsFlightTrack,
+                listOfTrackPoints = trackPointsList,
+                listOfTimePoints = timePointsList == null ? null : timePointsList,
+                color = track.IsFlightTrack ? null : track.Color
+            };
+
+            string js = $"map.addTrack({JsonConvert.SerializeObject(trackJsonObject)});";
 
             this.RunJavaScript(js);
         }

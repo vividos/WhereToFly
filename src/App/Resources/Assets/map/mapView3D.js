@@ -843,24 +843,26 @@ MapView.prototype.calcTrackColors = function (listOfTrackPoints, listOfTimePoint
 
 /**
  * Adds a track to the map
- * @param {string} trackId unique ID of the track
- * @param {string} trackName track name to add
- * @param {array} listOfTrackPoints An array of track points in long, lat, alt, long, lat, alt ... order
- * @param {array} listOfTimePoints An array of time points in seconds; same length as listOfTrackPoints; may be null
- * @param {string} color Color as "RRGGBB" string value, or undefined when track should be colored
+ * @param {object} [track] Track object to add
+ * @param {string} [track.id] unique ID of the track
+ * @param {string} [track.name] track name to add
+ * @param {boolean} [track.isFlightTrack] indicates if track is a flight
+ * @param {array} [track.listOfTrackPoints] An array of track points in long, lat, alt, long, lat, alt ... order
+ * @param {array} [track.listOfTimePoints] An array of time points in seconds; same length as listOfTrackPoints; may be null
+ * @param {string} [track.color] Color as "RRGGBB" string value, or undefined when track should be colored
  *                       according to climb and sink rate.
  */
-MapView.prototype.addTrack = function (trackId, trackName, listOfTrackPoints, listOfTimePoints, color) {
+MapView.prototype.addTrack = function (track) {
 
-    this.removeTrack(trackId);
+    this.removeTrack(track.id);
 
-    console.log("adding list of track points, with ID " + trackId + " and " + listOfTrackPoints.length + " track points");
+    console.log("adding list of track points, with ID " + track.id + " and " + track.listOfTrackPoints.length + " track points");
 
-    var trackColors = this.calcTrackColors(listOfTrackPoints, listOfTimePoints);
+    var trackColors = this.calcTrackColors(track.listOfTrackPoints, track.listOfTimePoints);
 
-    var trackPointArray = Cesium.Cartesian3.fromDegreesArrayHeights(listOfTrackPoints);
+    var trackPointArray = Cesium.Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints);
 
-    var hasColor = color !== undefined;
+    var hasColor = !track.isFlightTrack;
 
     var trackPolyline = new Cesium.PolylineGeometry({
         positions: trackPointArray,
@@ -885,7 +887,7 @@ MapView.prototype.addTrack = function (trackId, trackName, listOfTrackPoints, li
 
     var boundingSphere = Cesium.BoundingSphere.fromPoints(trackPointArray, null);
 
-    this.trackIdToTrackDataMap[trackId] = {
+    this.trackIdToTrackDataMap[track.id] = {
         primitive: primitive,
         boundingSphere: boundingSphere
     };
