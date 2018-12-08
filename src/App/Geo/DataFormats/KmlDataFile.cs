@@ -260,7 +260,7 @@ namespace WhereToFly.App.Geo.DataFormats
         {
             return new Track
             {
-                Id = placemark.Id ?? Guid.NewGuid().ToString("B"),
+                Id = Guid.NewGuid().ToString("B"),
                 Name = placemark.Name ?? "Track",
             };
         }
