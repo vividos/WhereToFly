@@ -835,7 +835,7 @@ MapView.prototype.calcTrackColors = function (listOfTrackPoints, listOfTimePoint
 
         var timeDiff = 1.0;
         if (listOfTimePoints !== null)
-            timeDiff = listOfTimePoints[index / 3] - listOfTimePoints[(index / 3) - 1];
+            timeDiff = listOfTimePoints[index / 3] - listOfTimePoints[index / 3 - 1];
 
         var varioValue = altitudeDiff / timeDiff;
 
@@ -907,7 +907,7 @@ MapView.prototype.addTrack = function (track) {
 
         wallPrimitive = new Cesium.Primitive({
             geometryInstances: new Cesium.GeometryInstance({
-                geometry: Cesium.WallGeometry.createGeometry(wallGeometry),
+                geometry: Cesium.WallGeometry.createGeometry(wallGeometry)
             }),
             appearance: new Cesium.MaterialAppearance({
                 translucent: true,
