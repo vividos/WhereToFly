@@ -139,6 +139,8 @@ function MapView(options) {
     }
 
     console.log("#6 location markers");
+    this.myLocationMarker = null;
+
     this.pinBuilder = new Cesium.PinBuilder();
 
     var that = this;
