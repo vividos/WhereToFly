@@ -98,6 +98,9 @@ function MapView(options) {
 
     this.viewer.scene.globe.enableLighting = true;
 
+    // clip walls against terrain
+    this.viewer.scene.globe.depthTestAgainstTerrain = true;
+
     // increase resolution for all image layer
     // https://github.com/AnalyticalGraphicsInc/cesium/issues/3279
     this.viewer.scene.globe.maximumScreenSpaceError = 1.666;
@@ -891,8 +894,32 @@ MapView.prototype.addTrack = function (track) {
 
     var boundingSphere = Cesium.BoundingSphere.fromPoints(trackPointArray, null);
 
+    var wallPrimitive = undefined;
+    if (track.isFlightTrack) {
+        var wallGeometry = new Cesium.WallGeometry({
+            positions: trackPointArray
+        });
+
+        var wallMaterial = Cesium.Material.fromType('Color');
+        wallMaterial.uniforms.color = new Cesium.Color(0.5, 0.5, 1, 0.4);
+
+        wallPrimitive = new Cesium.Primitive({
+            geometryInstances: new Cesium.GeometryInstance({
+                geometry: Cesium.WallGeometry.createGeometry(wallGeometry),
+            }),
+            appearance: new Cesium.MaterialAppearance({
+                translucent: true,
+                material: wallMaterial,
+                faceForward: true
+            })
+        });
+
+        this.trackPrimitivesCollection.add(wallPrimitive);
+    }
+
     this.trackIdToTrackDataMap[track.id] = {
         primitive: primitive,
+        wallPrimitive: wallPrimitive,
         boundingSphere: boundingSphere
     };
 };
@@ -926,6 +953,8 @@ MapView.prototype.removeTrack = function (trackId) {
         console.log("removing track with ID: " + trackId);
 
         this.trackPrimitivesCollection.remove(trackData.primitive);
+        if (trackData.wallPrimitive !== undefined)
+            this.trackPrimitivesCollection.remove(trackData.wallPrimitive);
 
         this.trackIdToTrackDataMap[trackId] = undefined;
     }
