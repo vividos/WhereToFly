@@ -11,20 +11,19 @@ version.
 - [ ] Find location on the map
 - [ ] Add found location as new waypoint
 - [ ] Try finding non-existent location
-- [ ] Share location with WhatsApp
+- [ ] Share current location with another app
 
 ## Location list
 
 - [ ] Import locations from included lists
-- [ ] Import Locations using file picker
-- [ ] Import Locations from .kml file
-- [ ] Import locations from .gpx file
+- [ ] Import locations from .kml, .kmz and .gpx files using file picker
+- [ ] Import locations by opening them via app
 - [ ] View locations list and details
 - [ ] Navigate to location
 - [ ] Filter locations list by text
 - [ ] Delete single location waypoint
 - [ ] Delete all location waypoints
-- [ ] Share a location with WhatsApp
+- [ ] Share a location with another app
 
 ## Track list
 
@@ -41,6 +40,8 @@ version.
 - [ ] Add one or more weather icons to dashboard
 - [ ] Open weblink dashboard icon
 - [ ] Open app dashboard icon
+- [ ] Reopen different link from website view
+- [ ] Refresh page in website view
 
 # Settings
 
