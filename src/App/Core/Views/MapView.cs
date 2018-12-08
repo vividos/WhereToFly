@@ -395,7 +395,7 @@ namespace WhereToFly.App.Core.Views
                 name = track.Name,
                 isFlightTrack = track.IsFlightTrack,
                 listOfTrackPoints = trackPointsList,
-                listOfTimePoints = timePointsList == null ? null : timePointsList,
+                listOfTimePoints = timePointsList ?? null,
                 color = track.IsFlightTrack ? null : track.Color
             };
 
