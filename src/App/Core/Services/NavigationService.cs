@@ -34,7 +34,25 @@ namespace WhereToFly.App.Core.Services
         /// <returns>task to wait on</returns>
         public async Task NavigateAsync(string pageKey, bool animated, object parameter = null)
         {
+            Type pageType = GetPageTypeFromPageKey(pageKey, parameter);
+
+            if (pageType != null)
+            {
+                Device.BeginInvokeOnMainThread(async () => await this.NavigateAsync(pageType, animated, parameter));
+            }
+        }
+
+        /// <summary>
+        /// Returns Xamarin.Forms page type from given page key; also checks if needed parameters
+        /// were passed.
+        /// </summary>
+        /// <param name="pageKey">page key</param>
+        /// <param name="parameter">parameter; mandatory for some pages</param>
+        /// <returns>page type</returns>
+        private static Type GetPageTypeFromPageKey(string pageKey, object parameter)
+        {
             Type pageType = null;
+
             switch (pageKey)
             {
                 case Constants.PageKeyMapPage:
@@ -109,10 +127,7 @@ namespace WhereToFly.App.Core.Services
                     break;
             }
 
-            if (pageType != null)
-            {
-                Device.BeginInvokeOnMainThread(async () => await this.NavigateAsync(pageType, animated, parameter));
-            }
+            return pageType;
         }
 
         /// <summary>
