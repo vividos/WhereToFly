@@ -884,7 +884,7 @@ MapView.prototype.addTrack = function (track) {
             geometry: trackPolyline,
             attributes: {
                 color: hasColor ? Cesium.ColorGeometryInstanceAttribute.fromColor(
-                    Cesium.Color.fromCssColorString('#' + color)) : undefined
+                    Cesium.Color.fromCssColorString('#' + track.color)) : undefined
             }
         }),
         appearance: new Cesium.PolylineColorAppearance({ translucent: false })
