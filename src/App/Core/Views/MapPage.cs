@@ -26,6 +26,11 @@ namespace WhereToFly.App.Core.Views
         private readonly IGeolocator geolocator;
 
         /// <summary>
+        /// List of track IDs currently being displayed
+        /// </summary>
+        private readonly HashSet<Track> displayedTracks = new HashSet<Track>();
+
+        /// <summary>
         /// Indicates if the next position update should also zoom to my position
         /// </summary>
         private bool zoomToMyPosition;
@@ -413,6 +418,7 @@ namespace WhereToFly.App.Core.Views
             foreach (var track in this.trackList)
             {
                 this.mapView.AddTrack(track);
+                this.displayedTracks.Add(track);
             }
         }
 
@@ -819,16 +825,42 @@ namespace WhereToFly.App.Core.Views
                 this.trackList.Count != newTrackList.Count ||
                 !Enumerable.SequenceEqual(this.trackList, newTrackList, new TrackEqualityComparer()))
             {
+                this.AddAndRemoveDisplayedTracks(newTrackList);
+
                 this.trackList = newTrackList;
 
-                this.mapView.ClearAllTracks();
-
-                foreach (var track in this.trackList)
-                {
-                    this.mapView.AddTrack(track);
-                }
-
                 this.updateTrackList = false;
+            }
+        }
+
+        /// <summary>
+        /// Adds new and removes old tracks from map view
+        /// </summary>
+        /// <param name="newTrackList">new track list</param>
+        private void AddAndRemoveDisplayedTracks(List<Track> newTrackList)
+        {
+            var tracksToRemove = new HashSet<Track>();
+            foreach (var oldTrack in this.displayedTracks)
+            {
+                if (!newTrackList.Contains(oldTrack))
+                {
+                    tracksToRemove.Add(oldTrack);
+                }
+            }
+
+            foreach (var trackToRemove in tracksToRemove)
+            {
+                this.mapView.RemoveTrack(trackToRemove);
+                this.displayedTracks.Remove(trackToRemove);
+            }
+
+            foreach (var newTrack in newTrackList)
+            {
+                if (!this.displayedTracks.Contains(newTrack))
+                {
+                    this.mapView.AddTrack(newTrack);
+                    this.displayedTracks.Add(newTrack);
+                }
             }
         }
 
