@@ -6,13 +6,12 @@
 
 ## Nice to have
 
-- [ ] Semi-transparent navigation bar
 - [ ] Implement switching themes/night mode using ResourceDictionary
-- [ ] Zoom to newly imported locations 
+- [ ] Zoom to newly imported locations
 
 ## New Features
 
-### Version 1.4
+### Version 1.5
 
 - [ ] Show polyline with path from last 1h
 - [ ] Follow location when "my location" icon is tapped, until user interacts with view
