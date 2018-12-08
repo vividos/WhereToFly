@@ -98,6 +98,10 @@ function MapView(options) {
 
     this.viewer.scene.globe.enableLighting = true;
 
+    // increase resolution for all image layer
+    // https://github.com/AnalyticalGraphicsInc/cesium/issues/3279
+    this.viewer.scene.globe.maximumScreenSpaceError = 1.666;
+
     // allow scripts to run in info box
     this.viewer.infoBox.frame.sandbox = this.viewer.infoBox.frame.sandbox + " allow-scripts";
 
