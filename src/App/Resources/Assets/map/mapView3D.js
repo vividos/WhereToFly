@@ -243,7 +243,7 @@ MapView.prototype.createThermalImageryProvider = function () {
 
     return new Cesium.UrlTemplateImageryProvider({
         url: Cesium.Resource.createIfNeeded(url),
-        credit: new Cesium.Credit(creditText, true),
+        credit: new Cesium.Credit(creditText, false),
         tilingScheme: tilingScheme,
         tileWidth: 256,
         tileHeight: 256,
