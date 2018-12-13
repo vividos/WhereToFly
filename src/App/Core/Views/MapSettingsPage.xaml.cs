@@ -15,7 +15,7 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         public MapSettingsPage()
         {
-            this.Title = "Map Settings";
+            this.Title = "Map";
             this.BindingContext = new MapSettingsViewModel();
 
             this.InitializeComponent();
