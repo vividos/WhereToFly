@@ -8,7 +8,7 @@ namespace WhereToFly.App.Core.ViewModels
     /// <summary>
     /// View model for the settings page
     /// </summary>
-    public class SettingsViewModel : ViewModelBase
+    public class MapSettingsViewModel : ViewModelBase
     {
         /// <summary>
         /// View model for map imagery type
@@ -199,9 +199,9 @@ namespace WhereToFly.App.Core.ViewModels
         #endregion
 
         /// <summary>
-        /// Creates new settings view model
+        /// Creates new map settings view model
         /// </summary>
-        public SettingsViewModel()
+        public MapSettingsViewModel()
         {
             this.appSettings = App.Settings;
 

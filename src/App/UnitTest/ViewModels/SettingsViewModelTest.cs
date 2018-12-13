@@ -28,7 +28,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
         public void TestDefaultCtor()
         {
             // run
-            var viewModel = new SettingsViewModel();
+            var viewModel = new MapSettingsViewModel();
 
             Debug.WriteLine($"SelectedMapImageryType = {viewModel.SelectedMapImageryType}");
             Debug.WriteLine($"SelectedMapOverlayType = {viewModel.SelectedMapOverlayType}");

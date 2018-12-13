@@ -5,18 +5,18 @@ using Xamarin.Forms.Xaml;
 namespace WhereToFly.App.Core.Views
 {
     /// <summary>
-    /// Settings page to configure app settings
+    /// Settings page to configure app map settings
     /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class SettingsPage : ContentPage
+    public partial class MapSettingsPage : ContentPage
     {
         /// <summary>
-        /// Creates new settings page
+        /// Creates new map settings page
         /// </summary>
-        public SettingsPage()
+        public MapSettingsPage()
         {
-            this.Title = "Settings";
-            this.BindingContext = new SettingsViewModel();
+            this.Title = "Map Settings";
+            this.BindingContext = new MapSettingsViewModel();
 
             this.InitializeComponent();
         }
