@@ -382,7 +382,10 @@ namespace WhereToFly.App.Core.Views
         /// <param name="args">event args</param>
         private void OnNavigated_WebView(object sender, WebNavigatedEventArgs args)
         {
-            this.taskCompletionSourcePageLoaded.SetResult(true);
+            if (!this.taskCompletionSourcePageLoaded.Task.IsCompleted)
+            {
+                this.taskCompletionSourcePageLoaded.SetResult(true);
+            }
         }
 
         /// <summary>

@@ -1,5 +1,4 @@
 using Android.Content;
-using Android.OS;
 using WhereToFly.App.Core;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
@@ -46,21 +45,23 @@ namespace WhereToFly.App.Android
         }
 
         /// <summary>
+        /// Returns web view client to use for WebView control; this is used to configure the web
+        /// view client to use.
+        /// </summary>
+        /// <returns>created web view client</returns>
+        protected override global::Android.Webkit.WebViewClient GetWebViewClient()
+        {
+            var webViewClient = new AndroidWebViewClient(this);
+            webViewClient.CorsWebsiteHosts.Add("thermal.kk7.ch");
+
+            return webViewClient;
+        }
+
+        /// <summary>
         /// Sets up settings for WebView element
         /// </summary>
         private void SetupWebViewSettings()
         {
-            // can only get WebViewClient on Android 8.0 (API Level 26) or higher
-            if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
-            {
-                var previousWebViewClient = this.Control.WebViewClient;
-
-                var webViewClient = new AndroidWebViewClient(previousWebViewClient);
-                webViewClient.CorsWebsiteHosts.Add("thermal.kk7.ch");
-
-                this.Control.SetWebViewClient(webViewClient);
-            }
-
             // use this to debug WebView from Chrome running on PC
 #if DEBUG
             global::Android.Webkit.WebView.SetWebContentsDebuggingEnabled(true);

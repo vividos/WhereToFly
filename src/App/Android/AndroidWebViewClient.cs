@@ -1,5 +1,4 @@
-﻿using Android.Runtime;
-using Android.Webkit;
+﻿using Android.Webkit;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,13 +6,14 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using WhereToFly.App.Core;
+using Xamarin.Forms.Platform.Android;
 
 namespace WhereToFly.App.Android
 {
     /// <summary>
     /// WebViewClient implementation for Android
     /// </summary>
-    internal class AndroidWebViewClient : WebViewClient
+    internal class AndroidWebViewClient : FormsWebViewClient
     {
         /// <summary>
         /// HTTP client to use to download content when intercepting content
@@ -36,11 +36,6 @@ namespace WhereToFly.App.Android
         private int numCacheMiss;
 
         /// <summary>
-        /// Previous web view client in the chain
-        /// </summary>
-        private WebViewClient previousClient;
-
-        /// <summary>
         /// List of website host addresses (or parts) where CORS headers should be replaced in
         /// order for the WebView to correctly receive content. This must be used in some cases,
         /// since the default Base URL of the WebView is file://
@@ -53,34 +48,10 @@ namespace WhereToFly.App.Android
         /// <param name="previousClient">
         /// previous web view client; calls are forwarded to this client
         /// </param>
-        public AndroidWebViewClient(WebViewClient previousClient)
+        public AndroidWebViewClient(WebViewRenderer renderer)
+            : base(renderer)
         {
             this.cacheFolder = GetCacheFolder();
-            this.previousClient = previousClient;
-        }
-
-        /// <summary>
-        /// Called when the page has finished loading
-        /// </summary>
-        /// <param name="view">web view</param>
-        /// <param name="url">page URL</param>
-        public override void OnPageFinished(WebView view, string url)
-        {
-            this.previousClient.OnPageFinished(view, url);
-        }
-
-        /// <summary>
-        /// Called when an error occured when receiving an URL; just forwards call to previous
-        /// client.
-        /// </summary>
-        /// <param name="view">web view</param>
-        /// <param name="errorCode">error code</param>
-        /// <param name="description">error description</param>
-        /// <param name="failingUrl">failing URL</param>
-        [Obsolete("replaced by OnReceivedError variant")]
-        public override void OnReceivedError(WebView view, [GeneratedEnum] ClientError errorCode, string description, string failingUrl)
-        {
-            this.previousClient.OnReceivedError(view, errorCode, description, failingUrl);
         }
 
         /// <summary>
@@ -98,20 +69,7 @@ namespace WhereToFly.App.Android
                 request.Url.ToString(),
                 error.DescriptionFormatted.ToString());
 
-            this.previousClient.OnReceivedError(view, request, error);
-        }
-
-        /// <summary>
-        /// Called in order to check if loading a resource from an URL should be overridden; just
-        /// forwards call to previous client.
-        /// </summary>
-        /// <param name="view">web view</param>
-        /// <param name="url">URL to be checked</param>
-        /// <returns>what previous client returns</returns>
-        [Obsolete("replaced by ShouldOverrideUrlLoading variant")]
-        public override bool ShouldOverrideUrlLoading(WebView view, string url)
-        {
-            return this.previousClient.ShouldOverrideUrlLoading(view, url);
+            base.OnReceivedError(view, request, error);
         }
 
         /// <summary>
@@ -137,7 +95,7 @@ namespace WhereToFly.App.Android
                 return this.BuildCorsResponse(request.Url.ToString());
             }
 
-            return this.previousClient.ShouldInterceptRequest(view, request);
+            return base.ShouldInterceptRequest(view, request);
         }
 
         /// <summary>
@@ -250,14 +208,9 @@ namespace WhereToFly.App.Android
         {
             base.Dispose(disposing);
 
-            if (disposing)
+            if (disposing && this.httpClient != null)
             {
-                this.previousClient = null;
-
-                if (this.httpClient != null)
-                {
-                    this.httpClient.Dispose();
-                }
+                this.httpClient.Dispose();
             }
         }
     }

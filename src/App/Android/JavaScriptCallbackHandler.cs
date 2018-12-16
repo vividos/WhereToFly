@@ -43,11 +43,14 @@ namespace WhereToFly.App.Android
                 string url = $"callback://{action}/{args}";
 
                 // send event via public (but hidden from Intellisense) method
-                renderer.Element.SendNavigating(
-                    new WebNavigatingEventArgs(
-                        WebNavigationEvent.NewPage,
-                        new UrlWebViewSource { Url = url },
-                        url));
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    renderer.Element.SendNavigating(
+                        new WebNavigatingEventArgs(
+                            WebNavigationEvent.NewPage,
+                            new UrlWebViewSource { Url = url },
+                            url));
+                });
             }
         }
     }
