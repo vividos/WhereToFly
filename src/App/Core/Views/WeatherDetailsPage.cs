@@ -81,7 +81,7 @@ namespace WhereToFly.App.Core.Views
         private void OnClicked_ToolbarButtonRefresh()
         {
             var webView = this.Content as WebView;
-            webView.Source = (webView.Source as UrlWebViewSource).Url;
+            webView.Reload();
         }
 
         /// <summary>
