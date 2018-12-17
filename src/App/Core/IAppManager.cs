@@ -18,7 +18,7 @@ namespace WhereToFly.App.Core
         /// Retrieves an icon for an app with given package name
         /// </summary>
         /// <param name="packageName">package name of app to get icon</param>
-        /// <returns>image source object, or null when no icon could be retrieved</returns>
-        ImageSource GetAppIcon(string packageName);
+        /// <returns>image data bytes, or null when no image could be retrieved</returns>
+        byte[] GetAppIcon(string packageName);
     }
 }

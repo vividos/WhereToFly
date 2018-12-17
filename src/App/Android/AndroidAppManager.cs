@@ -50,13 +50,11 @@ namespace WhereToFly.App.Android
         /// Retrieves an icon for an Android app
         /// </summary>
         /// <param name="packageName">package name of app to get icon</param>
-        /// <returns>image source object, or null when no icon could be retrieved</returns>
-        public ImageSource GetAppIcon(string packageName)
+        /// <returns>image data bytes, or null when no image could be retrieved</returns>
+        public byte[] GetAppIcon(string packageName)
         {
-            return ImageSource.FromStream(() =>
-            {
-                return this.LoadAppIcon(packageName);
-            });
+            var stream = this.LoadAppIcon(packageName);
+            return stream.ToArray();
         }
 
         /// <summary>
@@ -64,7 +62,7 @@ namespace WhereToFly.App.Android
         /// </summary>
         /// <param name="packageName">package name of app icon to load</param>
         /// <returns>stream containing a PNG image, or null when no bitmap could be loaded</returns>
-        private Stream LoadAppIcon(string packageName)
+        private MemoryStream LoadAppIcon(string packageName)
         {
             var context = AndroidPlatform.CurrentContext;
 

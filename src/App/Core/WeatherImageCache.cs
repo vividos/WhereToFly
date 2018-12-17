@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net.Http;
 using System.Threading.Tasks;
 using WhereToFly.App.Model;
 using Xamarin.Forms;
@@ -14,6 +16,51 @@ namespace WhereToFly.App.Core
     public class WeatherImageCache
     {
         /// <summary>
+        /// Entry in the image cache
+        /// </summary>
+        internal class ImageCacheEntry
+        {
+            /// <summary>
+            /// Image source for displaying image
+            /// </summary>
+            public Lazy<ImageSource> Source { get; private set; }
+
+            /// <summary>
+            /// Image data bytes
+            /// </summary>
+            public byte[] ImageData { get; private set; }
+
+            /// <summary>
+            /// Creates a new image cache entry by using given factory function
+            /// </summary>
+            /// <param name="imageSourceFactory">factory function</param>
+            public ImageCacheEntry(Func<ImageSource> imageSourceFactory)
+            {
+                this.ImageData = new byte[0];
+                this.Source = new Lazy<ImageSource>(imageSourceFactory);
+            }
+
+            /// <summary>
+            /// Creates a new image cache entry by using image data bytes
+            /// </summary>
+            /// <param name="imageData">image data bytes</param>
+            public ImageCacheEntry(byte[] imageData)
+            {
+                this.ImageData = imageData;
+                this.Source = new Lazy<ImageSource>(this.CreateImageSource);
+            }
+
+            /// <summary>
+            /// Creates an image resource from stored image data bytes
+            /// </summary>
+            /// <returns>created image source</returns>
+            private ImageSource CreateImageSource()
+            {
+                return ImageSource.FromStream(() => new MemoryStream(this.ImageData));
+            }
+        }
+
+        /// <summary>
         /// Lock for access to image cache dictionary
         /// </summary>
         private readonly object imageCacheLock = new object();
@@ -21,7 +68,12 @@ namespace WhereToFly.App.Core
         /// <summary>
         /// Image cache dictionary
         /// </summary>
-        private readonly Dictionary<string, ImageSource> imageCache = new Dictionary<string, ImageSource>();
+        private readonly Dictionary<string, ImageCacheEntry> imageCache = new Dictionary<string, ImageCacheEntry>();
+
+        /// <summary>
+        /// HTTP client to download images from the internet
+        /// </summary>
+        private readonly HttpClient client = new HttpClient();
 
         /// <summary>
         /// Returns an image from image cache
@@ -30,7 +82,7 @@ namespace WhereToFly.App.Core
         /// <returns>image source, or null when no image was found or could be loaded</returns>
         public async Task<ImageSource> GetImageAsync(WeatherIconDescription iconDescription)
         {
-            string imageId = GetImageIdentifier(iconDescription);
+            string imageId = await GetImageIdentifierAsync(iconDescription);
 
             bool containsImage;
             lock (this.imageCacheLock)
@@ -43,7 +95,7 @@ namespace WhereToFly.App.Core
                 await this.LoadImageAsync(imageId, iconDescription);
             }
 
-            return this.imageCache[imageId] ?? null;
+            return this.imageCache[imageId].Source.Value ?? null;
         }
 
         /// <summary>
@@ -51,14 +103,14 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="iconDescription">weather icon description</param>
         /// <returns>image identifier string</returns>
-        private static string GetImageIdentifier(WeatherIconDescription iconDescription)
+        private static async Task<string> GetImageIdentifierAsync(WeatherIconDescription iconDescription)
         {
             string identifier = iconDescription.Type + "|";
 
             switch (iconDescription.Type)
             {
                 case WeatherIconDescription.IconType.IconLink:
-                    identifier += GetFaviconFromLink(iconDescription.WebLink);
+                    identifier += await GetFaviconFromLinkAsync(iconDescription.WebLink);
                     break;
 
                 case WeatherIconDescription.IconType.IconApp:
@@ -81,11 +133,11 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="webLink">web link</param>
         /// <returns>link with hostname and favicon.ico prefixed</returns>
-        private static string GetFaviconFromLink(string webLink)
+        private static async Task<string> GetFaviconFromLinkAsync(string webLink)
         {
-            var url = new Uri(webLink);
+            var dataService = DependencyService.Get<IDataService>();
 
-            return $"http://www.google.com/s2/favicons?domain={url.Host}";
+            return await dataService.GetFaviconUrlAsync(webLink);
         }
 
         /// <summary>
@@ -94,39 +146,40 @@ namespace WhereToFly.App.Core
         /// <param name="imageId">image ID to load</param>
         /// <param name="iconDescription">icon description for image to load</param>
         /// <returns>task to wait on</returns>
-        private Task LoadImageAsync(string imageId, WeatherIconDescription iconDescription)
+        private async Task LoadImageAsync(string imageId, WeatherIconDescription iconDescription)
         {
-            ImageSource imageSource = null;
+            ImageCacheEntry entry = null;
 
             switch (iconDescription.Type)
             {
                 case WeatherIconDescription.IconType.IconLink:
-                    string faviconLink = GetFaviconFromLink(iconDescription.WebLink);
-                    imageSource = ImageSource.FromUri(new Uri(faviconLink));
+                    string faviconLink = await GetFaviconFromLinkAsync(iconDescription.WebLink);
+
+                    byte[] data = await this.client.GetByteArrayAsync(faviconLink);
+
+                    entry = new ImageCacheEntry(data);
                     break;
 
                 case WeatherIconDescription.IconType.IconApp:
                     var appManager = DependencyService.Get<IAppManager>();
-                    imageSource = appManager.GetAppIcon(iconDescription.WebLink);
+                    entry = new ImageCacheEntry(appManager.GetAppIcon(iconDescription.WebLink));
                     break;
 
                 case WeatherIconDescription.IconType.IconPlaceholder:
-                    imageSource = ImageSource.FromFile("border_none_variant.xml");
+                    entry = new ImageCacheEntry(() => ImageSource.FromFile("border_none_variant.xml"));
                     break;
 
                 default:
                     break;
             }
 
-            if (imageSource != null)
+            if (entry != null)
             {
                 lock (this.imageCacheLock)
                 {
-                    this.imageCache[imageId] = imageSource;
+                    this.imageCache[imageId] = entry;
                 }
             }
-
-            return Task.CompletedTask;
         }
     }
 }

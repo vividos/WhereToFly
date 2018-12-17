@@ -20,11 +20,11 @@ namespace WhereToFly.App.UnitTest
         public bool AppHasBeenOpened { get; internal set; }
 
         /// <inheritdoc />
-        public ImageSource GetAppIcon(string packageName)
+        public byte[] GetAppIcon(string packageName)
         {
             Debug.WriteLine("unit test: getting app icon for app " + packageName);
 
-            return this.AppExists ? new FileImageSource { File = "dummy.png" } : null;
+            return this.AppExists ? new byte[] { 0x12, 0x34 } : null;
         }
 
         /// <inheritdoc />
