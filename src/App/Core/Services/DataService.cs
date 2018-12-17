@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Geo;
+using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
 using Xamarin.Forms;
 
@@ -36,6 +37,16 @@ namespace WhereToFly.App.Core.Services
         /// Filename for the weather icon list json file
         /// </summary>
         private const string WeatherIconListFilename = "weatherIconList.json";
+
+        /// <summary>
+        /// Data service to access backend
+        /// </summary>
+        private readonly BackendDataService backendDataService = new BackendDataService();
+
+        /// <summary>
+        /// Cache for favicon URLs
+        /// </summary>
+        private readonly Dictionary<string, string> faviconUrlCache = new Dictionary<string, string>();
 
         /// <summary>
         /// Location list storage
@@ -369,6 +380,35 @@ namespace WhereToFly.App.Core.Services
                         Type = WeatherIconDescription.IconType.IconPlaceholder,
                     },
                 };
+            }
+        }
+
+        /// <summary>
+        /// Retrieves a favicon URL for the given website URL
+        /// </summary>
+        /// <param name="websiteUrl">website URL</param>
+        /// <returns>favicon URL or empty string when none was found</returns>
+        public async Task<string> GetFaviconUrlAsync(string websiteUrl)
+        {
+            var uri = new Uri(websiteUrl);
+            string baseUri = $"{uri.Scheme}://{uri.Host}/";
+
+            if (this.faviconUrlCache.ContainsKey(baseUri))
+            {
+                return this.faviconUrlCache[baseUri];
+            }
+
+            try
+            {
+                string faviconUrl = await this.backendDataService.GetFaviconUrlAsync(websiteUrl);
+
+                this.faviconUrlCache[baseUri] = faviconUrl;
+
+                return faviconUrl;
+            }
+            catch (Exception ex)
+            {
+                return string.Empty;
             }
         }
     }

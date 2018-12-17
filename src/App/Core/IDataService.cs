@@ -72,5 +72,12 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <returns>repository of all weather icons</returns>
         List<WeatherIconDescription> GetWeatherIconDescriptionRepository();
+
+        /// <summary>
+        /// Retrieves a favicon URL for the given website URL
+        /// </summary>
+        /// <param name="websiteUrl">website URL</param>
+        /// <returns>favicon URL or empty string when none was found</returns>
+        Task<string> GetFaviconUrlAsync(string websiteUrl);
     }
 }
