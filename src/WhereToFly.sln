@@ -43,6 +43,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.Shared.Model", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhereToFly.App.Resources.Android", "App\Resources\WhereToFly.App.Resources.Android.csproj", "{CBBB5ED6-F0D9-49C1-BB4E-D54757483953}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhereToFly.App.UITest", "App\UITest\WhereToFly.App.UITest.csproj", "{B19C892E-2628-4CA7-AD27-08D406A3B14B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,10 @@ Global
 		{CBBB5ED6-F0D9-49C1-BB4E-D54757483953}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBBB5ED6-F0D9-49C1-BB4E-D54757483953}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBBB5ED6-F0D9-49C1-BB4E-D54757483953}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B19C892E-2628-4CA7-AD27-08D406A3B14B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B19C892E-2628-4CA7-AD27-08D406A3B14B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B19C892E-2628-4CA7-AD27-08D406A3B14B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B19C892E-2628-4CA7-AD27-08D406A3B14B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -116,6 +122,7 @@ Global
 		{6A01E52C-1CF1-48E2-AC01-045A7B82E4B7} = {A443B9B2-B8C9-44F0-A7F5-DF2466E0E0FE}
 		{552D3E32-9F57-42F8-B144-699492F73536} = {60BE5B8E-A229-488F-A893-379E323EBB3E}
 		{CBBB5ED6-F0D9-49C1-BB4E-D54757483953} = {A443B9B2-B8C9-44F0-A7F5-DF2466E0E0FE}
+		{B19C892E-2628-4CA7-AD27-08D406A3B14B} = {A443B9B2-B8C9-44F0-A7F5-DF2466E0E0FE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D13F3BD1-E396-49C7-BD98-2F3BC15F6E7C}
