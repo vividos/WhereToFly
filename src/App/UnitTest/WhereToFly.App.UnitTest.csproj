@@ -54,6 +54,7 @@
     <Compile Include="AppSettingsTest.cs" />
     <Compile Include="HtmlConverterTest.cs" />
     <Compile Include="LocationTest.cs" />
+    <Compile Include="Shared\AppResourceUriTest.cs" />
     <Compile Include="UnitTestAppManager.cs" />
     <Compile Include="UnitTestGeolocationService.cs" />
     <Compile Include="UnitTestHelper.cs" />
@@ -93,6 +94,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Shared\Model\WhereToFly.Shared.Model.csproj">
+      <Project>{552d3e32-9f57-42f8-b144-699492f73536}</Project>
+      <Name>WhereToFly.Shared.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Core\WhereToFly.App.Core.csproj">
       <Project>{01CAFB32-C32B-4E04-B44C-490182F4F31E}</Project>
       <Name>WhereToFly.App.Core</Name>
