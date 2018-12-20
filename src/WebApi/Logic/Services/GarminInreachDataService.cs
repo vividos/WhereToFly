@@ -85,14 +85,13 @@ namespace WhereToFly.WebApi.Logic.Services
         }
 
         /// <summary>
-        /// Formats Live Waypoint ID from MapShare identifier
+        /// Formats app resource URI from MapShare identifier
         /// </summary>
         /// <param name="mapShareIdentifier">MapShare identifier to use</param>
         /// <returns>Live Waypoint ID</returns>
         private static string FormatLiveWaypointId(string mapShareIdentifier)
         {
-            // TODO use LiveWaypointID class
-            return "wheretofly-inreach-" + mapShareIdentifier;
+            return new AppResourceUri(AppResourceUri.ResourceType.GarminInreachPos, mapShareIdentifier).ToString();
         }
 
         /// <summary>

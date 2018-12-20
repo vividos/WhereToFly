@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WhereToFly.Shared.Model;
 using WhereToFly.WebApi.Logic.Services;
 
 namespace WhereToFly.WebApi.UnitTest
@@ -17,13 +18,13 @@ namespace WhereToFly.WebApi.UnitTest
         {
             // set up
             var dataService = new FindMeSpotTrackerDataService();
-            string liveWaypointID = "wheretofly-findmespot-xxx";
+            string uri = new AppResourceUri(AppResourceUri.ResourceType.FindMeSpotPos, "xxx").ToString();
 
             // run
-            var liveWaypointData = dataService.GetDataAsync(liveWaypointID).Result;
+            var liveWaypointData = dataService.GetDataAsync(uri).Result;
 
             // check
-            Assert.AreEqual(liveWaypointID, liveWaypointData.ID, "live waypoint IDs must match");
+            Assert.AreEqual(uri, liveWaypointData.ID, "requested ID and app resource URI");
         }
     }
 }
