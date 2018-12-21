@@ -26,7 +26,6 @@ The library is licensed using the
 The app uses the following [Xamarin Plugins](https://github.com/jamesmontemagno/Xamarin.Plugins):
 - Plugin.Permissions: Checking and acquiring Android permissions
 - Plugin.CurrentActivity: Access to current Activity in Android
-- Xam.Plugin.ExternalMaps: External Navigation using Google Maps or Apple Maps
 - Xam.Plugin.Geolocator: Geo-location of user
 - Xamarin.Plugin.FilePicker: File picker
 

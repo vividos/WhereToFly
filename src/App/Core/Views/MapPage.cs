@@ -350,7 +350,7 @@ namespace WhereToFly.App.Core.Views
             this.mapView = new MapView(webView);
 
             this.mapView.ShowLocationDetails += async (locationId) => await this.OnMapView_ShowLocationDetails(locationId);
-            this.mapView.NavigateToLocation += this.OnMapView_NavigateToLocation;
+            this.mapView.NavigateToLocation += async (locationId) => await this.OnMapView_NavigateToLocation(locationId);
             this.mapView.ShareMyLocation += async () => await this.OnMapView_ShareMyLocation();
             this.mapView.AddFindResult += async (name, point) => await this.OnMapView_AddFindResult(name, point);
             this.mapView.LongTap += async (point) => await this.OnMapView_LongTap(point);
@@ -452,7 +452,8 @@ namespace WhereToFly.App.Core.Views
         /// map. Starts route navigation to location.
         /// </summary>
         /// <param name="locationId">location id of location to navigate to</param>
-        private void OnMapView_NavigateToLocation(string locationId)
+        /// <returns>task to wait on</returns>
+        private async Task OnMapView_NavigateToLocation(string locationId)
         {
             Location location = this.FindLocationById(locationId);
 
@@ -462,7 +463,7 @@ namespace WhereToFly.App.Core.Views
                 return;
             }
 
-            NavigateToPoint(location.Name, location.MapLocation);
+            await NavigateToPointAsync(location.Name, location.MapLocation);
         }
 
         /// <summary>
@@ -470,13 +471,20 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         /// <param name="name">name of point on map to navigate to; may be empty</param>
         /// <param name="point">map point to navigate to</param>
-        private static void NavigateToPoint(string name, MapPoint point)
+        /// <returns>task to wait on</returns>
+        private async static Task NavigateToPointAsync(string name, MapPoint point)
         {
-            Plugin.ExternalMaps.CrossExternalMaps.Current.NavigateTo(
-                name,
-                point.Latitude,
-                point.Longitude,
-                Plugin.ExternalMaps.Abstractions.NavigationType.Driving);
+            var navigateLocation = new Xamarin.Essentials.Location(
+                latitude: point.Latitude,
+                longitude: point.Longitude);
+
+            var options = new Xamarin.Essentials.MapLaunchOptions
+            {
+                Name = name,
+                NavigationMode = Xamarin.Essentials.NavigationMode.Driving,
+            };
+
+            await Xamarin.Essentials.Map.OpenAsync(navigateLocation, options);
         }
 
         /// <summary>
@@ -576,7 +584,7 @@ namespace WhereToFly.App.Core.Views
                         break;
 
                     case 1:
-                        NavigateToPoint(string.Empty, point);
+                        await NavigateToPointAsync(string.Empty, point);
                         break;
 
                     default:

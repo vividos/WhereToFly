@@ -187,7 +187,7 @@ namespace WhereToFly.App.Core.ViewModels
                 new Command(async () => await this.OnZoomToLocationAsync());
 
             this.NavigateToLocationCommand =
-                new Command(this.OnNavigateToLocation);
+                new Command(async () => await this.OnNavigateToLocationAsync());
 
             this.ShareLocationCommand =
                 new Command(async () => await this.OnShareLocationAsync());
@@ -229,13 +229,20 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Called when "Navigate here" menu item is selected
         /// </summary>
-        private void OnNavigateToLocation()
+        /// <returns>task to wait on</returns>
+        private async Task OnNavigateToLocationAsync()
         {
-            Plugin.ExternalMaps.CrossExternalMaps.Current.NavigateTo(
-                this.location.Name,
-                this.location.MapLocation.Latitude,
-                this.location.MapLocation.Longitude,
-                Plugin.ExternalMaps.Abstractions.NavigationType.Driving);
+            var navigateLocation = new Xamarin.Essentials.Location(
+                latitude: this.location.MapLocation.Latitude,
+                longitude: this.location.MapLocation.Longitude);
+
+            var options = new Xamarin.Essentials.MapLaunchOptions
+            {
+                Name = this.location.Name,
+                NavigationMode = Xamarin.Essentials.NavigationMode.Driving,
+            };
+
+            await Xamarin.Essentials.Map.OpenAsync(navigateLocation, options);
         }
 
         /// <summary>
