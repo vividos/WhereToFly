@@ -27,6 +27,8 @@ namespace WhereToFly.App.Android
         {
             base.OnCreate(savedInstanceState);
 
+            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+
             var intent = new Intent(this, typeof(MainActivity));
             intent.AddFlags(ActivityFlags.ClearTop);
             intent.AddFlags(ActivityFlags.SingleTop);

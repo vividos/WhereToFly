@@ -18,6 +18,11 @@ format and parse JSON objects.
 The component is licensed using the
 [MIT License](https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md).
 
+The app uses the [Xamarin.Essentials](https://github.com/xamarin/Essentials) library to
+access all sorts of platform specific APIs.
+The library is licensed using the
+[MIT License](https://github.com/xamarin/Essentials/blob/master/LICENSE).
+
 The app uses the following [Xamarin Plugins](https://github.com/jamesmontemagno/Xamarin.Plugins):
 - Plugin.Permissions: Checking and acquiring Android permissions
 - Plugin.CurrentActivity: Access to current Activity in Android

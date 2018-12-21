@@ -94,6 +94,8 @@ namespace WhereToFly.App.Android
 
             base.OnCreate(savedInstanceState);
 
+            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+
             Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
 
             Forms.SetFlags("FastRenderers_Experimental");
@@ -181,6 +183,8 @@ namespace WhereToFly.App.Android
             string[] permissions,
             global::Android.Content.PM.Permission[] grantResults)
         {
+            Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             // let Plugin.Permissions handle the request
