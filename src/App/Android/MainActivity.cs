@@ -80,6 +80,12 @@ namespace WhereToFly.App.Android
         },
         Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
         Icon = "@drawable/icon")]
+    //// Intent filter, case 5: URI with where-to-fly scheme
+    [IntentFilter(
+        new[] { Intent.ActionView },
+        DataScheme = WhereToFly.Shared.Model.AppResourceUri.DefaultScheme,
+        Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
+        Icon = "@drawable/icon")]
     public class MainActivity : FormsAppCompatActivity
     {
         /// <summary>
@@ -162,12 +168,18 @@ namespace WhereToFly.App.Android
                 return;
             }
 
+            var app = Core.App.Current as Core.App;
+
+            if (filename.StartsWith(WhereToFly.Shared.Model.AppResourceUri.DefaultScheme))
+            {
+                Core.App.RunOnUiThread(async () => await app.OpenAppResourceUriAsync(filename));
+                return;
+            }
+
             var stream = helper.GetStreamFromIntent(intent);
 
             if (stream != null)
             {
-                var app = Core.App.Current as Core.App;
-
                 Core.App.RunOnUiThread(async () => await app.OpenFileAsync(stream, filename));
             }
         }

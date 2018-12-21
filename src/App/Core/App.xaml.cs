@@ -235,6 +235,16 @@ namespace WhereToFly.App.Core
             await OpenFileHelper.OpenFileAsync(stream, filename);
         }
 
+        /// <summary>
+        /// Opens app resource URI, e.g. a live waypoint
+        /// </summary>
+        /// <param name="uri">app resource URI to open</param>
+        /// <returns>task to wait on</returns>
+        public async Task OpenAppResourceUriAsync(string uri)
+        {
+            // TODO implement
+        }
+
         #region App lifecycle methods
         /// <summary>
         /// Called when application is starting

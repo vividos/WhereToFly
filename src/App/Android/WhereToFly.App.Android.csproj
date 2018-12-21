@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -115,6 +115,10 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Shared\Model\WhereToFly.Shared.Model.csproj">
+      <Project>{552D3E32-9F57-42F8-B144-699492F73536}</Project>
+      <Name>WhereToFly.Shared.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Core\WhereToFly.App.Core.csproj">
       <Project>{01CAFB32-C32B-4E04-B44C-490182F4F31E}</Project>
       <Name>WhereToFly.App.Core</Name>

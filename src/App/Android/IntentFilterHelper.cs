@@ -48,6 +48,9 @@ namespace WhereToFly.App.Android
                     case "https":
                         return intent.Data.LastPathSegment;
 
+                    case WhereToFly.Shared.Model.AppResourceUri.DefaultScheme:
+                        return intent.Data.ToString();
+
                     default:
                         System.Diagnostics.Debug.Assert(false, "invalid scheme");
                         break;
