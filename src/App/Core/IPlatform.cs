@@ -8,11 +8,6 @@ namespace WhereToFly.App.Core
     public interface IPlatform
     {
         /// <summary>
-        /// Property containing the app version number
-        /// </summary>
-        string AppVersionNumber { get; }
-
-        /// <summary>
         /// Property containing the folder where the app can place its data files.
         /// </summary>
         string AppDataFolder { get; }

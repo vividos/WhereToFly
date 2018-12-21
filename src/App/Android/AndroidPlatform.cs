@@ -26,27 +26,6 @@ namespace WhereToFly.App.Android
         }
 
         /// <summary>
-        /// Property containing the app version number
-        /// </summary>
-        public string AppVersionNumber
-        {
-            get
-            {
-                var assembly = System.Reflection.Assembly.GetExecutingAssembly();
-                var version = assembly.GetName().Version;
-
-                string versionText = string.Format(
-                    "{0}.{1}.{2} (Build {3})",
-                    version.Major,
-                    version.Minor,
-                    version.Build,
-                    version.Revision);
-
-                return versionText;
-            }
-        }
-
-        /// <summary>
         /// Property containing the Android app data folder
         /// </summary>
         public string AppDataFolder

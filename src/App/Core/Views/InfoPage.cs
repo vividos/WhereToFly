@@ -1,4 +1,5 @@
 ﻿using WhereToFly.App.Logic;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.Views
@@ -27,7 +28,9 @@ namespace WhereToFly.App.Core.Views
 
             string markdownText = platform.LoadAssetText("info.md");
 
-            markdownText = markdownText.Replace("%VERSION%", platform.AppVersionNumber);
+            markdownText = markdownText.Replace(
+                "%VERSION%",
+                $"{AppInfo.VersionString} (Build {AppInfo.BuildString})");
 
             string htmlText = HtmlConverter.FromMarkdown(markdownText);
 

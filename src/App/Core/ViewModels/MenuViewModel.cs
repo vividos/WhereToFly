@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.ViewModels
@@ -95,7 +96,7 @@ namespace WhereToFly.App.Core.ViewModels
         public MenuViewModel()
         {
             var platform = DependencyService.Get<IPlatform>();
-            this.VersionText = "Version " + platform.AppVersionNumber;
+            this.VersionText = $"Version {AppInfo.VersionString} (Build {AppInfo.BuildString})";
 
             this.MenuItemList = new MenuItemViewModel[]
             {

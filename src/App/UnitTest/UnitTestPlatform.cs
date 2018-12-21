@@ -9,11 +9,6 @@ namespace WhereToFly.App.UnitTest
     internal class UnitTestPlatform : IPlatform
     {
         /// <summary>
-        /// Property containing app version number; fixed number for unit tests
-        /// </summary>
-        public string AppVersionNumber => "42.64.128";
-
-        /// <summary>
         /// Property containing app data folder
         /// </summary>
         public string AppDataFolder => Path.GetDirectoryName(this.GetType().Assembly.Location);
