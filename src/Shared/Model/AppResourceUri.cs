@@ -12,7 +12,7 @@ namespace WhereToFly.Shared.Model
         /// <summary>
         /// Default URI scheme for App URIs
         /// </summary>
-        public static readonly string DefaultScheme = "where-to-fly";
+        public const string DefaultScheme = "where-to-fly";
 
         /// <summary>
         /// Stores the actual URI
@@ -173,6 +173,22 @@ namespace WhereToFly.Shared.Model
         /// <param name="other">other URI to compare to</param>
         /// <returns>true when equal URIs, false when not</returns>
         public bool Equals(AppResourceUri other) => this.uri == other.uri;
+
+        /// <summary>
+        /// Equality operator
+        /// </summary>
+        /// <param name="left">left operator argument</param>
+        /// <param name="right">right operator argument</param>
+        /// <returns>true when objects are equal, false when not</returns>
+        public static bool operator ==(AppResourceUri left, AppResourceUri right) => Equals(left, right);
+
+        /// <summary>
+        /// Inequality operator
+        /// </summary>
+        /// <param name="left">left operator argument</param>
+        /// <param name="right">right operator argument</param>
+        /// <returns>true when objects are inequal, false when not</returns>
+        public static bool operator !=(AppResourceUri left, AppResourceUri right) => !Equals(left, right);
 
         /// <summary>
         /// Nested JSON converter class for app resource URI
