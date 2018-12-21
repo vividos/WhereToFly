@@ -1,8 +1,6 @@
 ﻿using Microsoft.AppCenter;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Distribute;
-using Plugin.Share;
-using Plugin.Share.Abstractions;
 using System;
 using System.IO;
 using System.Threading;
@@ -145,16 +143,7 @@ namespace WhereToFly.App.Core
         /// <returns>task to wait on</returns>
         public static async Task ShareMessageAsync(string title, string message)
         {
-            await CrossShare.Current.Share(
-                new ShareMessage
-                {
-                    Title = Constants.AppTitle,
-                    Text = message
-                },
-                new ShareOptions
-                {
-                    ChooserTitle = title
-                });
+            await Xamarin.Essentials.Share.RequestAsync(message, title);
         }
 
         /// <summary>
