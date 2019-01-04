@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WhereToFly.Shared.Model;
@@ -45,19 +46,18 @@ namespace WhereToFly.WebApi.Logic
         /// data is not readily available and must be fetched.
         /// </summary>
         /// <param name="id">live waypoint ID</param>
-        /// <returns>live waypoint data</returns>
-        /// <exception cref="LiveWaypointCacheDelayException">
-        /// Thrown when the live waypoint data is not readily available and the queue must be used
-        /// to get the necessary data. The exception also contains a date when the next query
-        /// might be successful.
-        /// </exception>
-        public async Task<LiveWaypointData> GetLiveWaypointData(string id)
+        /// <returns>live waypoint query result</returns>
+        public async Task<LiveWaypointQueryResult> GetLiveWaypointData(string id)
         {
             var service = new FindMeSpotTrackerDataService();
 
             var liveWaypointData = await service.GetDataAsync(id);
 
-            return liveWaypointData;
+            return new LiveWaypointQueryResult
+            {
+                Data = liveWaypointData,
+                NextRequestDate = DateTimeOffset.Now + TimeSpan.FromMinutes(1.0) // TODO
+            };
         }
 
         /// <summary>

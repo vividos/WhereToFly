@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Threading.Tasks;
+using WhereToFly.Shared.Model;
 using WhereToFly.WebApi.Logic;
 
 namespace LiveWaypoints.Controllers
@@ -35,30 +38,26 @@ namespace LiveWaypoints.Controllers
         }
 
         /// <summary>
-        /// GET api/livewaypoint/id
+        /// GET api/LiveWaypoint/id
         /// Retrieves the current live waypoint infos for the given ID. The ID completely
         /// describes the live waypoint. The latest data for the waypoint is retrieved when
         /// necessary, or a cached copy of the data.
         /// </summary>
-        /// <param name="id">the Live Waypoint ID</param>
-        /// <returns>live waypoint data</returns>
-        /// <response code="400">An invalid live waypoint ID was passed</response>
+        /// <param name="id">live waypoint ID</param>
+        /// <returns>live waypoint query result</returns>
+        /// <exception cref="ArgumentException">thrown when invalid live waypoint ID was passed</exception>
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(string), 200)]
-        [ProducesResponseType(typeof(string), 400)]
-        public IActionResult Get(string id)
+        public async Task<LiveWaypointQueryResult> Get(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
                 this.logger.LogWarning($"invalid live waypoint ID: {id}");
-                return this.BadRequest();
+                throw new ArgumentException(nameof(id));
             }
 
             this.logger.LogDebug($"getting live waypoint with ID: {id}");
 
-            var liveWaypointData = this.cacheManager.GetLiveWaypointData(id);
-
-            return new JsonResult(liveWaypointData.Result);
+            return await this.cacheManager.GetLiveWaypointData(id);
         }
     }
 }

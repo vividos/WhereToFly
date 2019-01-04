@@ -8,7 +8,7 @@ namespace WhereToFly.Shared.Model
     public class LiveWaypointData
     {
         /// <summary>
-        ///  Live Waypoint ID
+        /// Live Waypoint ID
         /// </summary>
         public string ID { get; set; }
 
@@ -30,7 +30,7 @@ namespace WhereToFly.Shared.Model
         /// <summary>
         /// Altitude value, if available; 0 means "clamp to ground"
         /// </summary>
-        public int Altitude { get; set; }
+        public double Altitude { get; set; }
 
         /// <summary>
         /// Name of live waypoint
@@ -46,10 +46,5 @@ namespace WhereToFly.Shared.Model
         /// Details link, e.g. to external website
         /// </summary>
         public string DetailsLink { get; set; }
-
-        /// <summary>
-        /// Date where next request for this specific live waypoint may result in new data
-        /// </summary>
-        public DateTimeOffset NextRequestDate { get; }
     }
 }
