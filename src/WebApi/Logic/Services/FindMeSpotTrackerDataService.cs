@@ -28,6 +28,11 @@ namespace WhereToFly.WebApi.Logic.Services
         private readonly IFindMeSpotService findMeSpotApi;
 
         /// <summary>
+        /// Date/time of last request, or null when no request was made yet
+        /// </summary>
+        private DateTimeOffset? lastRequest = null;
+
+        /// <summary>
         /// Creates a new data service object
         /// </summary>
         public FindMeSpotTrackerDataService()
@@ -36,9 +41,19 @@ namespace WhereToFly.WebApi.Logic.Services
         }
 
         /// <summary>
+        /// Returns next possible request date for given MapShare identifier
+        /// </summary>
+        /// <param name="uri">live waypoint ID (App Resource Uri)</param>
+        /// <returns>next possible request date</returns>
+        public DateTimeOffset GetNextRequestDate(string uri)
+        {
+            return this.lastRequest.HasValue ? this.lastRequest.Value + TimeSpan.FromMinutes(1.0) : DateTimeOffset.Now;
+        }
+
+        /// <summary>
         /// Returns data for live waypoint with given app resource URI
         /// </summary>
-        /// <param name="id">live waypoint ID</param>
+        /// <param name="uri">live waypoint ID (App Resource Uri)</param>
         /// <returns>live waypoint data</returns>
         public async Task<LiveWaypointData> GetDataAsync(string uri)
         {
@@ -53,6 +68,8 @@ namespace WhereToFly.WebApi.Logic.Services
             if (liveFeedId != "xxx")
             {
                 result = await this.findMeSpotApi.GetLatest(liveFeedId);
+
+                this.lastRequest = DateTimeOffset.Now;
             }
             else
             {

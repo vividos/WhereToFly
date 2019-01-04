@@ -36,6 +36,21 @@ namespace WhereToFly.WebApi.Logic.Services
         private readonly HttpClient client = new HttpClient();
 
         /// <summary>
+        /// Date/time of last request, or null when no request was made yet
+        /// </summary>
+        private DateTimeOffset? lastRequest = null;
+
+        /// <summary>
+        /// Returns next possible request date for given MapShare identifier
+        /// </summary>
+        /// <param name="mapShareIdentifier">MapShare identifier</param>
+        /// <returns>next possible request date</returns>
+        public DateTimeOffset GetNextRequestDate(string mapShareIdentifier)
+        {
+            return this.lastRequest.HasValue ? this.lastRequest.Value + System.TimeSpan.FromMinutes(1.0) : DateTimeOffset.Now;
+        }
+
+        /// <summary>
         /// Gets live waypoint data for Garmin inREach device, using the MapShare identifier given
         /// </summary>
         /// <param name="mapShareIdentifier">MapShare identifier</param>
@@ -45,6 +60,8 @@ namespace WhereToFly.WebApi.Logic.Services
             string requestUrl = string.Format(InreachServiceUrl, mapShareIdentifier);
 
             var stream = await this.client.GetStreamAsync(requestUrl);
+
+            this.lastRequest = DateTimeOffset.Now;
 
             return this.ParseRawKmlDataFile(stream, mapShareIdentifier);
         }

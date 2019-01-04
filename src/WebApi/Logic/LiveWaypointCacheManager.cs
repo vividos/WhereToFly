@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using WhereToFly.Shared.Model;
 using WhereToFly.WebApi.Logic.Services;
@@ -33,6 +34,16 @@ namespace WhereToFly.WebApi.Logic
         private readonly object lockCacheAndQueue = new object();
 
         /// <summary>
+        /// Data service for querying Find Me SPOT service
+        /// </summary>
+        private readonly FindMeSpotTrackerDataService findMeSpotTrackerService = new FindMeSpotTrackerDataService();
+
+        /// <summary>
+        /// Data service for querying Garmin inReach services
+        /// </summary>
+        private readonly GarminInreachDataService garminInreachService = new GarminInreachDataService();
+
+        /// <summary>
         /// Creates a new live waypoint cache manager object
         /// </summary>
         /// <param name="logger">logger instance to use</param>
@@ -49,14 +60,57 @@ namespace WhereToFly.WebApi.Logic
         /// <returns>live waypoint query result</returns>
         public async Task<LiveWaypointQueryResult> GetLiveWaypointData(string id)
         {
-            var service = new FindMeSpotTrackerDataService();
+            var uri = new AppResourceUri(id);
+            if (!uri.IsValid)
+            {
+                throw new ArgumentException("invalid live waypoint ID", nameof(id));
+            }
 
-            var liveWaypointData = await service.GetDataAsync(id);
+            switch (uri.Type)
+            {
+                case AppResourceUri.ResourceType.FindMeSpotPos:
+                    return await this.GetFindMeSpotPosResult(id);
+
+                case AppResourceUri.ResourceType.GarminInreachPos:
+                    return await this.GetGarminInreachPosResult(uri.Data);
+
+                default:
+                    Debug.Assert(false, "invalid app resource URI type");
+                    return null;
+            }
+        }
+
+        /// <summary>
+        /// Gets query result for a Find Me SPOT live waypoint ID
+        /// </summary>
+        /// <param name="id">live waypoint ID</param>
+        /// <returns>live waypoint query result</returns>
+        private async Task<LiveWaypointQueryResult> GetFindMeSpotPosResult(string id)
+        {
+            var liveWaypointData = await this.findMeSpotTrackerService.GetDataAsync(id);
 
             return new LiveWaypointQueryResult
             {
                 Data = liveWaypointData,
-                NextRequestDate = DateTimeOffset.Now + TimeSpan.FromMinutes(1.0) // TODO
+                NextRequestDate = this.findMeSpotTrackerService.GetNextRequestDate(id)
+            };
+        }
+
+        /// <summary>
+        /// Gets query result for a Garmin inReach live waypoint ID
+        /// </summary>
+        /// <param name="mapShareIdentifier">
+        /// Garmin inReach MapShare identifier, part from AppResource URL
+        /// </param>
+        /// <returns>live waypoint query result</returns>
+        private async Task<LiveWaypointQueryResult> GetGarminInreachPosResult(string mapShareIdentifier)
+        {
+            var liveWaypointData = await this.garminInreachService.GetDataAsync(mapShareIdentifier);
+
+            return new LiveWaypointQueryResult
+            {
+                Data = liveWaypointData,
+                NextRequestDate = this.garminInreachService.GetNextRequestDate(mapShareIdentifier)
             };
         }
 
