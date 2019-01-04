@@ -56,14 +56,15 @@ namespace WhereToFly.WebApi.Logic
         /// Returns live waypoint data for given live waypoint ID. May throw an exception when the
         /// data is not readily available and must be fetched.
         /// </summary>
-        /// <param name="id">live waypoint ID</param>
+        /// <param name="rawId">live waypoint ID (maybe urlencoded)</param>
         /// <returns>live waypoint query result</returns>
-        public async Task<LiveWaypointQueryResult> GetLiveWaypointData(string id)
+        public async Task<LiveWaypointQueryResult> GetLiveWaypointData(string rawId)
         {
+            string id = System.Net.WebUtility.UrlDecode(rawId);
             var uri = new AppResourceUri(id);
             if (!uri.IsValid)
             {
-                throw new ArgumentException("invalid live waypoint ID", nameof(id));
+                throw new ArgumentException("invalid live waypoint ID", nameof(rawId));
             }
 
             switch (uri.Type)
