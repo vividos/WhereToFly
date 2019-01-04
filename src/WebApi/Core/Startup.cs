@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.IO;
 using WhereToFly.WebApi.Logic;
+using WhereToFly.WebApi.Logic.TourPlanning;
 
 namespace WhereToFly.WebApi.LiveWaypoints
 {
@@ -59,7 +60,25 @@ namespace WhereToFly.WebApi.LiveWaypoints
                 }
             });
 
+            AddLogicServices(services);
+        }
+
+        /// <summary>
+        /// Adds business logic objects to service collection
+        /// </summary>
+        /// <param name="services">service collection</param>
+        private static void AddLogicServices(IServiceCollection services)
+        {
             services.AddSingleton<LiveWaypointCacheManager>();
+
+            // confiugre and add tour planning engine
+            var logicAssembly = typeof(PlanTourEngine).Assembly;
+            var kmlStream = logicAssembly.GetManifestResourceStream("WhereToFly.WebApi.Logic.Assets.PlanTourPaths.kml");
+
+            var engine = new PlanTourEngine();
+            engine.LoadGraph(kmlStream);
+
+            services.AddSingleton(engine);
         }
 
         /// <summary>
