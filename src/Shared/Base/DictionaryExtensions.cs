@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WhereToFly.App.Logic
+namespace WhereToFly.Shared.Base
 {
     /// <summary>
     /// Extension methods for generic dictionaries

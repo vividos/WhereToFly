@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using WhereToFly.App.Logic;
+using WhereToFly.Shared.Base;
 
 namespace WhereToFly.App.Geo.DataFormats
 {
