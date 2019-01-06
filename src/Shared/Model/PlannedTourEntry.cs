@@ -28,7 +28,7 @@ namespace WhereToFly.Shared.Model
         public TimeSpan Duration { get; set; } = TimeSpan.Zero;
 
         /// <summary>
-        /// Index of track points in the PlannedTour object, LatLongCoordList list
+        /// Index of track points in the PlannedTour object, MapPointList list
         /// </summary>
         public int TrackStartIndex { get; set; } = 0;
     }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using WhereToFly.Shared.Model;
 
 namespace WhereToFly.WebApi.Logic.TourPlanning
 {
@@ -132,14 +133,14 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
 
                     if (trackInfoTuple.Item1 != null)
                     {
-                        trackInfoTuple.Item1.LatLongCoordList = LoadTrackFromPlacemarkGeometry(placemark.Geometry);
+                        trackInfoTuple.Item1.MapPointList = LoadTrackFromPlacemarkGeometry(placemark.Geometry);
 
                         this.tourEngine.AddTrack(trackInfoTuple.Item1);
 
                         if (trackInfoTuple.Item2 != null)
                         {
-                            trackInfoTuple.Item2.LatLongCoordList = new List<Tuple<double, double>>(trackInfoTuple.Item1.LatLongCoordList);
-                            trackInfoTuple.Item2.LatLongCoordList.Reverse();
+                            trackInfoTuple.Item2.MapPointList = new List<MapPoint>(trackInfoTuple.Item1.MapPointList);
+                            trackInfoTuple.Item2.MapPointList.Reverse();
 
                             this.tourEngine.AddTrack(trackInfoTuple.Item2);
                         }
@@ -219,60 +220,60 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
         /// contain a LineString, a Track or a MultipleTrack object.
         /// </summary>
         /// <param name="geometry">geometry to load from</param>
-        /// <returns>lat/long coordinates list</returns>
-        private static List<Tuple<double, double>> LoadTrackFromPlacemarkGeometry(Geometry geometry)
+        /// <returns>map points list</returns>
+        private static List<MapPoint> LoadTrackFromPlacemarkGeometry(Geometry geometry)
         {
-            var latLongCoordList = new List<Tuple<double, double>>();
+            var mapPointList = new List<MapPoint>();
 
-            AddGeometryPointsToTrack(geometry, latLongCoordList);
+            AddGeometryPointsToTrack(geometry, mapPointList);
 
-            return latLongCoordList;
+            return mapPointList;
         }
 
         /// <summary>
-        /// Adds geometry points to coordinates track list
+        /// Adds geometry points to the map point list
         /// </summary>
         /// <param name="geometry">geometry to check</param>
-        /// <param name="latLongCoordList">lat/long coordinates list</param>
-        private static void AddGeometryPointsToTrack(Geometry geometry, List<Tuple<double, double>> latLongCoordList)
+        /// <param name="mapPointList">map point list</param>
+        private static void AddGeometryPointsToTrack(Geometry geometry, List<MapPoint> mapPointList)
         {
             if (geometry is LineString lineString)
             {
                 foreach (var vector in lineString.Coordinates)
                 {
-                    latLongCoordList.Add(new Tuple<double, double>(vector.Latitude, vector.Longitude));
+                    mapPointList.Add(new MapPoint(vector.Latitude, vector.Longitude, vector.Altitude));
                 }
             }
             else if (geometry is Track track)
             {
-                AddGxTrackPointsToTrack(track, latLongCoordList);
+                AddGxTrackPointsToTrack(track, mapPointList);
             }
             else if (geometry is MultipleTrack multiTrack)
             {
                 foreach (var gxtrack in multiTrack.Tracks)
                 {
-                    AddGxTrackPointsToTrack(gxtrack, latLongCoordList);
+                    AddGxTrackPointsToTrack(gxtrack, mapPointList);
                 }
             }
             else if (geometry is MultipleGeometry multiGeometry)
             {
                 foreach (var subGeometry in multiGeometry.Geometry)
                 {
-                    AddGeometryPointsToTrack(subGeometry, latLongCoordList);
+                    AddGeometryPointsToTrack(subGeometry, mapPointList);
                 }
             }
         }
 
         /// <summary>
-        /// Adds all track points from a GX.Track to the lat/long coordinates list
+        /// Adds all track points from a GX.Track to the map point list
         /// </summary>
         /// <param name="gxtrack">track to use</param>
-        /// <param name="latLongCoordList">lat/long coordinates list</param>
-        private static void AddGxTrackPointsToTrack(Track gxtrack, List<Tuple<double, double>> latLongCoordList)
+        /// <param name="mapPointList">map point list</param>
+        private static void AddGxTrackPointsToTrack(Track gxtrack, List<MapPoint> mapPointList)
         {
             foreach (var vector in gxtrack.Coordinates)
             {
-                latLongCoordList.Add(new Tuple<double, double>(vector.Latitude, vector.Longitude));
+                mapPointList.Add(new MapPoint(vector.Latitude, vector.Longitude, vector.Altitude));
             }
         }
 

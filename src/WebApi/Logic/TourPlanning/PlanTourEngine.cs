@@ -146,11 +146,11 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
                         {
                             StartWaypointId = edge.Source.Id,
                             EndWaypointId = edge.Target.Id,
-                            TrackStartIndex = tour.LatLongCoordList.Count,
+                            TrackStartIndex = tour.MapPointList.Count,
                             Duration = edge.Duration,
                         });
 
-                    tour.LatLongCoordList.AddRange(edge.LatLongCoordList);
+                    tour.MapPointList.AddRange(edge.MapPointList);
 
                     if (!string.IsNullOrEmpty(edge.Source.Description))
                     {

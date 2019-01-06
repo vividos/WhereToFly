@@ -67,7 +67,7 @@ namespace WhereToFly.WebApi.UnitTest
             Assert.IsTrue(tour.Description.Any(), "description must contain text");
             Assert.IsTrue(tour.TotalDuration.TotalMinutes > 0, "total duration must contain value");
             Assert.IsTrue(tour.TourEntriesList.Any(), "tour entries list must be filled");
-            Assert.IsTrue(tour.LatLongCoordList.Any(), "coord list must be filled");
+            Assert.IsTrue(tour.MapPointList.Any(), "map point list must be filled");
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace WhereToFly.WebApi.UnitTest
             Assert.IsTrue(tour.Description.Any(), "description must contain text");
             Assert.IsTrue(tour.TotalDuration.TotalMinutes > 0, "total duration must contain value");
             Assert.IsTrue(tour.TourEntriesList.Any(), "tour entries list must be filled");
-            Assert.IsTrue(tour.LatLongCoordList.Any(), "coord list must be filled");
+            Assert.IsTrue(tour.MapPointList.Any(), "map point list must be filled");
         }
     }
 }

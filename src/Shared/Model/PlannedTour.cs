@@ -14,9 +14,9 @@ namespace WhereToFly.Shared.Model
         public List<PlannedTourEntry> TourEntriesList { get; set; } = new List<PlannedTourEntry>();
 
         /// <summary>
-        /// List of latitude/longitude coordinates for the whole tour
+        /// List of map points for the whole tour
         /// </summary>
-        public List<Tuple<double, double>> LatLongCoordList { get; set; } = new List<Tuple<double, double>>();
+        public List<MapPoint> MapPointList { get; set; } = new List<MapPoint>();
 
         /// <summary>
         /// Total duration for all tour entires

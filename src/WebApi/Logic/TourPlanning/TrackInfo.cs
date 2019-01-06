@@ -1,6 +1,7 @@
 ﻿using QuickGraph;
 using System;
 using System.Collections.Generic;
+using WhereToFly.Shared.Model;
 
 namespace WhereToFly.WebApi.Logic.TourPlanning
 {
@@ -20,9 +21,9 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
         public TimeSpan Duration { get; set; }
 
         /// <summary>
-        /// List of latitude/longitude coordinates for this track
+        /// List of map points for this track
         /// </summary>
-        public List<Tuple<double, double>> LatLongCoordList { get; set; } = new List<Tuple<double, double>>();
+        public List<MapPoint> MapPointList { get; set; } = new List<MapPoint>();
 
         #region IEdge implementation
         /// <summary>
