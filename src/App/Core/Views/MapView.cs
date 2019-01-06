@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using WhereToFly.App.Geo;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
+using WhereToFly.Shared.Model;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.Views

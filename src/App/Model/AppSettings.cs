@@ -1,4 +1,6 @@
-﻿namespace WhereToFly.App.Model
+﻿using WhereToFly.Shared.Model;
+
+namespace WhereToFly.App.Model
 {
     /// <summary>
     /// Settings for the app

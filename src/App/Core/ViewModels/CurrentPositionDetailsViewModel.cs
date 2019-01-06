@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
+using WhereToFly.Shared.Model;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.ViewModels

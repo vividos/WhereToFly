@@ -2,6 +2,8 @@
 // Newtonsoft.Json crashes on Android.
 #pragma warning disable S1206 // "Equals(Object)" and "GetHashCode()" should be overridden in pairs
 
+using WhereToFly.Shared.Model;
+
 namespace WhereToFly.App.Model
 {
     /// <summary>

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
+using WhereToFly.Shared.Model;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.ViewModels

@@ -5,6 +5,7 @@ using System.IO;
 using System.Xml;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
+using WhereToFly.Shared.Model;
 
 namespace WhereToFly.App.Geo.DataFormats
 {

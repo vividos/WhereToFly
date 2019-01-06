@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using WhereToFly.App.Model;
+using WhereToFly.Shared.Model;
 
 namespace WhereToFly.App.UnitTest
 {

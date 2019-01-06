@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using WhereToFly.App.Model;
+using WhereToFly.Shared.Model;
 
 namespace WhereToFly.App.Geo.Spatial
 {

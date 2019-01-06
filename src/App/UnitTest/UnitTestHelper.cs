@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using WhereToFly.App.Geo;
 using WhereToFly.App.Model;
+using WhereToFly.Shared.Model;
 
 namespace WhereToFly.App.UnitTest
 {

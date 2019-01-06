@@ -1,7 +1,6 @@
 ﻿using Plugin.Geolocator.Abstractions;
 using System.Threading.Tasks;
-using WhereToFly.App.Geo.Spatial;
-using WhereToFly.App.Model;
+using WhereToFly.Shared.Model;
 
 namespace WhereToFly.App.Core.Services
 {
