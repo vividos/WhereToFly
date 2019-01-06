@@ -45,9 +45,7 @@ namespace WhereToFly.App.Android
         /// <summary>
         /// Creates a new web view client
         /// </summary>
-        /// <param name="previousClient">
-        /// previous web view client; calls are forwarded to this client
-        /// </param>
+        /// <param name="renderer">web view renderer</param>
         public AndroidWebViewClient(WebViewRenderer renderer)
             : base(renderer)
         {

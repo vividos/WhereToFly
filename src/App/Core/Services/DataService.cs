@@ -406,7 +406,7 @@ namespace WhereToFly.App.Core.Services
 
                 return faviconUrl;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return string.Empty;
             }

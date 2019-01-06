@@ -180,7 +180,7 @@ namespace WhereToFly.Shared.Model
         /// <param name="left">left operator argument</param>
         /// <param name="right">right operator argument</param>
         /// <returns>true when objects are equal, false when not</returns>
-        public static bool operator ==(AppResourceUri left, AppResourceUri right) => Equals(left, right);
+        public static bool operator ==(AppResourceUri left, AppResourceUri right) => AppResourceUri.Equals(left, right);
 
         /// <summary>
         /// Inequality operator
@@ -188,7 +188,7 @@ namespace WhereToFly.Shared.Model
         /// <param name="left">left operator argument</param>
         /// <param name="right">right operator argument</param>
         /// <returns>true when objects are inequal, false when not</returns>
-        public static bool operator !=(AppResourceUri left, AppResourceUri right) => !Equals(left, right);
+        public static bool operator !=(AppResourceUri left, AppResourceUri right) => !AppResourceUri.Equals(left, right);
 
         /// <summary>
         /// Nested JSON converter class for app resource URI

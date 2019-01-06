@@ -193,7 +193,7 @@ namespace WhereToFly.App.Android
         public override void OnRequestPermissionsResult(
             int requestCode,
             string[] permissions,
-            global::Android.Content.PM.Permission[] grantResults)
+            Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 

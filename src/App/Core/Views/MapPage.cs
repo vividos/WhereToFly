@@ -472,7 +472,7 @@ namespace WhereToFly.App.Core.Views
         /// <param name="name">name of point on map to navigate to; may be empty</param>
         /// <param name="point">map point to navigate to</param>
         /// <returns>task to wait on</returns>
-        private async static Task NavigateToPointAsync(string name, MapPoint point)
+        private static async Task NavigateToPointAsync(string name, MapPoint point)
         {
             var navigateLocation = new Xamarin.Essentials.Location(
                 latitude: point.Latitude,
