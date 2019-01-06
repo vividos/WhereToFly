@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Globalization;
 
 namespace WhereToFly.Shared.Model
@@ -7,6 +8,7 @@ namespace WhereToFly.Shared.Model
     /// A point on a map, in WGS84 decimal coordinates. Negative values are
     /// left of the GMT line and below the equator.
     /// </summary>
+    [JsonConverter(typeof(MapPoint.Converter))]
     public sealed class MapPoint : IEquatable<MapPoint>
     {
         /// <summary>
@@ -122,5 +124,75 @@ namespace WhereToFly.Shared.Model
                 this.Altitude.HasValue ? this.Altitude.Value.ToString("F2", CultureInfo.InvariantCulture) : "N/A");
         }
         #endregion
+
+        /// <summary>
+        /// Nested JSON converter class for map point. Map point properties are stored as JSON
+        /// array, either with two (without altitude) or three elements (with altitude).
+        /// </summary>
+        private class Converter : JsonConverter
+        {
+            /// <summary>
+            /// Determines if given type can be converted to an app resource URI
+            /// </summary>
+            /// <param name="objectType">object type to convert to</param>
+            /// <returns>true when type can be converted to, false when not</returns>
+            public override bool CanConvert(Type objectType) => typeof(MapPoint).IsAssignableFrom(objectType);
+
+            /// <summary>
+            /// Reads map point from JSON
+            /// </summary>
+            /// <param name="reader">json reader</param>
+            /// <param name="objectType">type of object to read/return</param>
+            /// <param name="existingValue">existing value; unused</param>
+            /// <param name="serializer">json serializer</param>
+            /// <returns>created map point object, or null when reading failed</returns>
+            public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+            {
+                var elements = serializer.Deserialize<double[]>(reader);
+
+                if (elements == null)
+                {
+                    return null;
+                }
+                
+                if (elements.Length != 2 && elements.Length != 3)
+                {
+                    return new MapPoint(0.0, 0.0);
+                }
+
+                return elements.Length == 2
+                    ? new MapPoint(elements[0], elements[1])
+                    : new MapPoint(elements[0], elements[1], elements[2]);
+            }
+
+            /// <summary>
+            /// Writes map point to JSON
+            /// </summary>
+            /// <param name="writer">json writer</param>
+            /// <param name="value">map point object to write</param>
+            /// <param name="serializer">json serializer</param>
+            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+            {
+                var point = value as MapPoint;
+
+                if (point == null)
+                {
+                    serializer.Serialize(writer, null);
+                }
+                else if (!point.Valid)
+                {
+                    writer.WriteStartArray();
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    var array = point.Altitude.HasValue
+                        ? new double[3] { point.Latitude, point.Longitude, point.Altitude.Value }
+                        : new double[2] { point.Latitude, point.Longitude };
+
+                    serializer.Serialize(writer, array);
+                }
+            }
+        }
     }
 }

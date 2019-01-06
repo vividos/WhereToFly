@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using WhereToFly.Shared.Model;
 
@@ -124,6 +125,43 @@ namespace WhereToFly.App.UnitTest
             dict.Remove(mapPoint2);
             Assert.IsFalse(dict.ContainsKey(mapPoint1), "map point must not be in dictionary now");
             Assert.IsFalse(dict.ContainsKey(mapPoint2), "map point in different reference must also not be found in dict");
+        }
+
+        /// <summary>
+        /// Tests custom JSON serializer
+        /// </summary>
+        [TestMethod]
+        public void TestJsonSerializer()
+        {
+            // set up
+            double latitude = 47.6764385;
+            double longitude = 11.8710533;
+            double altitude = 1786.1;
+
+            var mapPoint1 = new MapPoint(latitude, longitude);
+            var mapPoint2 = new MapPoint(latitude, longitude, altitude);
+            var mapPoint3 = new MapPoint(0.0, 0.0);
+
+            // run
+            string json1 = JsonConvert.SerializeObject(mapPoint1);
+            string json2 = JsonConvert.SerializeObject(mapPoint2);
+            string json3 = JsonConvert.SerializeObject(mapPoint3);
+
+            var mapPoint1a = JsonConvert.DeserializeObject<MapPoint>(json1);
+            var mapPoint2a = JsonConvert.DeserializeObject<MapPoint>(json2);
+            var mapPoint3a = JsonConvert.DeserializeObject<MapPoint>(json3);
+
+            // check
+            Assert.AreEqual(mapPoint1.Latitude, mapPoint1a.Latitude, 1e-6, "latitude of map point 1 must match");
+            Assert.AreEqual(mapPoint1.Longitude, mapPoint1a.Longitude, 1e-6, "longitude of map point 1 must match");
+            Assert.AreEqual(mapPoint1.Altitude.HasValue, mapPoint1a.Altitude.HasValue, "altitude of map point 1 must be set");
+
+            Assert.AreEqual(mapPoint2.Latitude, mapPoint2a.Latitude, 1e-6, "latitude of map point 2 must match");
+            Assert.AreEqual(mapPoint2.Longitude, mapPoint2a.Longitude, 1e-6, "longitude of map point 2 must match");
+            Assert.AreEqual(mapPoint2.Altitude.HasValue, mapPoint2a.Altitude.HasValue, "altitude of map point 2 must be set");
+            Assert.AreEqual(mapPoint2.Altitude.Value, mapPoint2a.Altitude.Value, 1e-6, "altitude of map point 2 must match");
+
+            Assert.AreEqual(mapPoint3.Valid, mapPoint3a.Valid, "valid property of map point 3 must match");
         }
     }
 }
