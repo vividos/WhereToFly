@@ -3,51 +3,33 @@
 <Document>
 	<name>PlanTourPaths.kml</name>
 	<open>1</open>
-	<StyleMap id="stylemap_id4">
-		<Pair>
-			<key>normal</key>
-			<styleUrl>#style3</styleUrl>
-		</Pair>
-		<Pair>
-			<key>highlight</key>
-			<styleUrl>#style0</styleUrl>
-		</Pair>
-	</StyleMap>
-	<Style id="style">
-		<IconStyle>
-			<scale>0.9</scale>
-			<Icon>
-				<href>http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png</href>
-			</Icon>
-		</IconStyle>
-	</Style>
-	<StyleMap id="stylemap_id1">
-		<Pair>
-			<key>normal</key>
-			<styleUrl>#style5</styleUrl>
-		</Pair>
-		<Pair>
-			<key>highlight</key>
-			<styleUrl>#style4</styleUrl>
-		</Pair>
-	</StyleMap>
 	<StyleMap id="stylemap_id3">
 		<Pair>
 			<key>normal</key>
-			<styleUrl>#style1</styleUrl>
+			<styleUrl>#style0</styleUrl>
 		</Pair>
 		<Pair>
 			<key>highlight</key>
 			<styleUrl>#style8</styleUrl>
 		</Pair>
 	</StyleMap>
-	<Style id="style0">
+	<StyleMap id="stylemap_id1">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#style4</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#style17</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="style3">
 		<LineStyle>
 			<color>ffff4040</color>
 			<width>4</width>
 		</LineStyle>
 	</Style>
-	<Style id="style1">
+	<Style id="style">
 		<IconStyle>
 			<scale>0.9</scale>
 			<Icon>
@@ -58,24 +40,14 @@
 	<StyleMap id="stylemap_id2">
 		<Pair>
 			<key>normal</key>
-			<styleUrl>#style6</styleUrl>
+			<styleUrl>#style60</styleUrl>
 		</Pair>
 		<Pair>
 			<key>highlight</key>
-			<styleUrl>#style</styleUrl>
+			<styleUrl>#style22</styleUrl>
 		</Pair>
 	</StyleMap>
-	<StyleMap id="stylemap_id40">
-		<Pair>
-			<key>normal</key>
-			<styleUrl>#style7</styleUrl>
-		</Pair>
-		<Pair>
-			<key>highlight</key>
-			<styleUrl>#style2</styleUrl>
-		</Pair>
-	</StyleMap>
-	<Style id="style2">
+	<Style id="style0">
 		<IconStyle>
 			<scale>0.9</scale>
 			<Icon>
@@ -83,11 +55,31 @@
 			</Icon>
 		</IconStyle>
 	</Style>
-	<Style id="style3">
-		<LineStyle>
-			<color>ffff4040</color>
-			<width>4</width>
-		</LineStyle>
+	<StyleMap id="stylemap_id6">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#style14</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#style23</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="style1">
+		<IconStyle>
+			<scale>0.9</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<Style id="style2">
+		<IconStyle>
+			<scale>0.9</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png</href>
+			</Icon>
+		</IconStyle>
 	</Style>
 	<Style id="style4">
 		<IconStyle>
@@ -98,6 +90,12 @@
 		</IconStyle>
 	</Style>
 	<Style id="style5">
+		<LineStyle>
+			<color>ffff4040</color>
+			<width>4</width>
+		</LineStyle>
+	</Style>
+	<Style id="style40">
 		<IconStyle>
 			<scale>0.9</scale>
 			<Icon>
@@ -105,6 +103,16 @@
 			</Icon>
 		</IconStyle>
 	</Style>
+	<StyleMap id="stylemap_id4">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#style12</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#style9</styleUrl>
+		</Pair>
+	</StyleMap>
 	<Style id="style6">
 		<IconStyle>
 			<scale>0.9</scale>
@@ -114,12 +122,10 @@
 		</IconStyle>
 	</Style>
 	<Style id="style7">
-		<IconStyle>
-			<scale>0.9</scale>
-			<Icon>
-				<href>http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png</href>
-			</Icon>
-		</IconStyle>
+		<LineStyle>
+			<color>ffff4040</color>
+			<width>4</width>
+		</LineStyle>
 	</Style>
 	<Style id="style8">
 		<IconStyle>
@@ -129,8 +135,406 @@
 			</Icon>
 		</IconStyle>
 	</Style>
+	<Style id="style20">
+		<IconStyle>
+			<scale>0.9</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<Style id="style9">
+		<IconStyle>
+			<scale>0.9</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<Style id="style10">
+		<IconStyle>
+			<scale>0.9</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<StyleMap id="stylemap_id10">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#style13</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#style5</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="style11">
+		<IconStyle>
+			<scale>0.9</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<Style id="style12">
+		<IconStyle>
+			<scale>0.9</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<StyleMap id="stylemap_id9">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#style2</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#style15</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="style13">
+		<LineStyle>
+			<color>ffff4040</color>
+			<width>4</width>
+		</LineStyle>
+	</Style>
+	<Style id="style00">
+		<LineStyle>
+			<color>ffff4040</color>
+			<width>4</width>
+		</LineStyle>
+	</Style>
+	<Style id="style14">
+		<IconStyle>
+			<scale>0.9</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<Style id="style15">
+		<IconStyle>
+			<scale>0.9</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<StyleMap id="stylemap_id20">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#style1</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#style11</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="stylemap_id5">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#style10</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#style</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="style50">
+		<IconStyle>
+			<scale>0.9</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<Style id="style60">
+		<IconStyle>
+			<scale>0.9</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<Style id="style16">
+		<IconStyle>
+			<scale>0.9</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<Style id="style17">
+		<IconStyle>
+			<scale>0.9</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<Style id="style70">
+		<IconStyle>
+			<scale>0.9</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<StyleMap id="stylemap_id90">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#style26</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#style25</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="stylemap_id8">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#style6</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#style19</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="style18">
+		<IconStyle>
+			<scale>0.9</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<Style id="style19">
+		<IconStyle>
+			<scale>0.9</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<Style id="style21">
+		<LineStyle>
+			<color>ffff4040</color>
+			<width>4</width>
+		</LineStyle>
+	</Style>
+	<Style id="style22">
+		<IconStyle>
+			<scale>0.9</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<StyleMap id="stylemap_id40">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#style3</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#style00</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="stylemap_id400">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#style70</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#style20</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="style23">
+		<IconStyle>
+			<scale>0.9</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<StyleMap id="stylemap_id30">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#style16</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#style80</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="style80">
+		<IconStyle>
+			<scale>0.9</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<StyleMap id="stylemap_id11">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#style21</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#style7</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="stylemap_id12">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#style50</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#style40</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="style24">
+		<IconStyle>
+			<scale>0.9</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<Style id="style25">
+		<IconStyle>
+			<scale>0.9</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<Style id="style26">
+		<IconStyle>
+			<scale>0.9</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<StyleMap id="stylemap_id7">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#style24</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#style18</styleUrl>
+		</Pair>
+	</StyleMap>
 	<Folder>
 		<name>Wegpunkte</name>
+		<Placemark>
+			<name>Aiplspitz 1759m</name>
+			<description>ID: wheretofly-path-aiplspitz
+DESC: Gipfel der Aiplspitz, auf 1759m.</description>
+			<styleUrl>#stylemap_id1</styleUrl>
+			<Point>
+				<coordinates>11.92370653152466,47.67317533493042,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Benzingspitz 1735m</name>
+			<description>ID: wheretofly-path-benzingspitz
+DESC: Gipfel der Benzingspitz 1735m</description>
+			<styleUrl>#stylemap_id20</styleUrl>
+			<Point>
+				<coordinates>11.91235542297363,47.67317533493042,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Blecksteinhaus 1022m</name>
+			<description>ID: wheretofly-path-blecksteinhaus
+DESC: Blecksteinhaus 1022m, Restaurant</description>
+			<styleUrl>#stylemap_id3</styleUrl>
+			<Point>
+				<coordinates>11.89059734344482,47.64806985855103,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Hochmiesing 1883m</name>
+			<description>ID: wheretofly-path-hochmiesing
+DESC: Hochmiesing 1883m</description>
+			<styleUrl>#stylemap_id4</styleUrl>
+			<Point>
+				<coordinates>11.94140911102295,47.65785455703735,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Lempersberg 1811m</name>
+			<description>ID: wheretofly-path-lempersberg
+DESC: Lempersberg 1811m</description>
+			<styleUrl>#stylemap_id5</styleUrl>
+			<Point>
+				<coordinates>11.92518711090088,47.65272617340088,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Rotwand 1884m</name>
+			<description>ID: wheretofly-path-rotwand
+DESC: Rotwand 1884m</description>
+			<styleUrl>#stylemap_id6</styleUrl>
+			<Point>
+				<coordinates>11.93449974060059,47.65023708343506,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Rotwandhaus 1737m</name>
+			<description>ID: wheretofly-path-rotwandhaus
+DESC: Rotwandhaus 1737m</description>
+			<styleUrl>#stylemap_id7</styleUrl>
+			<Point>
+				<coordinates>11.93512201309204,47.64611721038818,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Taubensteinhaus</name>
+			<description>ID: wheretofly-path-taubensteinhaus
+DESC: Taubensteinhaus</description>
+			<LookAt>
+				<longitude>11.92689186494475</longitude>
+				<latitude>47.66059900361262</latitude>
+				<altitude>0</altitude>
+				<heading>-0.2232843051653201</heading>
+				<tilt>30.71307906917231</tilt>
+				<range>388.4151784979632</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#stylemap_id9</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>11.92561643511852,47.66069912439797,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Taubenstein 1692m</name>
+			<description>ID: wheretofly-path-taubenstein
+DESC: Taubenstein 1692m</description>
+			<styleUrl>#stylemap_id8</styleUrl>
+			<Point>
+				<coordinates>11.92115306854248,47.6585841178894,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>Taubensteinbahn Bergstation</name>
+			<description>ID: wheretofly-path-taubensteinbahn-bergstation
+DESC: Taubensteinbahn Bergstation</description>
+			<styleUrl>#stylemap_id90</styleUrl>
+			<Point>
+				<coordinates>11.92024162039161,47.65976269729435,0</coordinates>
+			</Point>
+		</Placemark>
 		<Placemark>
 			<name>Bahnhof Neuhaus</name>
 			<description>ID: wheretofly-path-bahnhof-neuhaus
@@ -151,7 +555,7 @@ DESC: Bahnhof in Neuhaus, Anschluss an die BOB</description>
 			<name>Jägerkamp</name>
 			<description>ID: wheretofly-path-jagerkamp
 DESC: Jägerkamp-Gipfel</description>
-			<styleUrl>#stylemap_id1</styleUrl>
+			<styleUrl>#stylemap_id12</styleUrl>
 			<Point>
 				<coordinates>11.90596179105341,47.67345738597214,0</coordinates>
 			</Point>
@@ -169,16 +573,16 @@ DESC: Rauhkopf Gipfel</description>
 			<name>Spitzingsattel</name>
 			<description>ID: wheretofly-path-spitzingsattel
 DESC: Spitzingsattel; Möglichkeit Busanschluss zum Bahnhof Neuhaus</description>
-			<styleUrl>#stylemap_id3</styleUrl>
+			<styleUrl>#stylemap_id30</styleUrl>
 			<Point>
 				<coordinates>11.8866491317749,47.67251014709473,0</coordinates>
 			</Point>
 		</Placemark>
 		<Placemark>
-			<name>Tanzeck</name>
+			<name>Tanzeck 1703m</name>
 			<description>ID: wheretofly-path-tanzeck
-DESC: Gipfel Tanzeck</description>
-			<styleUrl>#stylemap_id40</styleUrl>
+DESC: Gipfel Tanzeck 1703m</description>
+			<styleUrl>#stylemap_id400</styleUrl>
 			<Point>
 				<coordinates>11.92069835029542,47.67193464562297,0</coordinates>
 			</Point>
@@ -186,18 +590,18 @@ DESC: Gipfel Tanzeck</description>
 	</Folder>
 	<Folder>
 		<name>Tracks</name>
+		<open>1</open>
 		<Folder>
 			<name>01 Bahnhof Neuhaus - Spitzingsattel</name>
-			<open>1</open>
 			<description>FROM: wheretofly-path-bahnhof-neuhaus
 TO: wheretofly-path-spitzingsattel
 DURATION: 60m
-DESC: Vom Bahnhof aus bis zum Spitzingsattel gehen.
-REVDESC: Abwärts geht es vom Spitzingsattel durch einen kleinen Wald.
+DESC: Vom Bahnhof in Neuhaus folgen wir den Wegweisern zum Spitzingsattel über die Josefstaler Wasserfälle und durch einen Wald, bis wir kurz vor dem Spitzingsattel wieder ins Freie treten.
+REVDESC: Abwärts geht es vom Spitzingsattel durch einen kleinen Wald, vorbei an den Josefstaler Wasserfällen und über die Beschilderung zum Bahnhof in Neuhaus.
 REVDURATION: 60m</description>
 			<Placemark>
 				<name>01 Bahnhof Neuhaus - Spitzingsattel</name>
-				<styleUrl>#stylemap_id4</styleUrl>
+				<styleUrl>#stylemap_id40</styleUrl>
 				<MultiGeometry>
 					<LineString>
 						<coordinates>
@@ -209,12 +613,11 @@ REVDURATION: 60m</description>
 		</Folder>
 		<Folder>
 			<name>02 Spitzingsattel - Sattel Taubensteinbahn</name>
-			<open>1</open>
 			<description>FROM: wheretofly-path-spitzingsattel
 TO: wheretofly-path-sattel-taubensteinbahn
 DURATION: 60m
-DESC: Vom Spitzingsattel aus führt der Weg der Beschilderung SB123 folgend erst durch den Wald, kurz über die Piste und weiter entlang der Seilbahnstützen der Taubensteinbahn. Nach Aufstieg über die Piste verzweigt sich der Weg an einem Sattel in alle 4 Himmelsrichtungen.
-REVDESC: Vom Sattel zwischen Rauhkopf und Taubensteinbahn geht es abwärts über die Skipiste durch den Wald und schließlich über den Weg SB123 zum Spitzingsattel.
+DESC: Vom Spitzingsattel aus führt der Weg der Beschilderung folgend erst durch den Wald, kurz über die Piste und weiter entlang der Seilbahnstützen der Taubensteinbahn. Nach Aufstieg über die Piste verzweigt sich der Weg an einem Sattel in alle 4 Himmelsrichtungen.
+REVDESC: Vom Sattel zwischen Rauhkopf und Taubensteinbahn geht es abwärts über die Skipiste durch den Wald und schließlich über einen Weg zum Spitzingsattel.
 REVDURATION: 60m</description>
 			<Placemark>
 				<name>02 Spitzingsattel - Sattel Taubensteinbahn</name>
@@ -235,7 +638,6 @@ REVDURATION: 60m</description>
 		</Folder>
 		<Folder>
 			<name>03 Sattel Taubensteinbahn - Rauhkopf</name>
-			<open>1</open>
 			<description>FROM: wheretofly-path-sattel-taubensteinbahn
 TO: wheretofly-path-rauhkopf
 DURATION: 20m
@@ -261,12 +663,11 @@ REVDURATION: 15m</description>
 		</Folder>
 		<Folder>
 			<name>04 Rauhkopf - Schnittlauchmossalm Süd</name>
-			<open>1</open>
 			<description>FROM: wheretofly-path-rauhkopf
 TO: wheretofly-path-schnittlauchmoos-süd
 DURATION: 20m
-DESC: xxx
-REVDESC: xxx
+DESC: Wir steigen vom Rauhkopf nach Norden den Weg hinab und folgen dem Weg in Richtung Schnittlauchmoosalm.
+REVDESC: Wir folgen dem Weg nach Süden, der Rauhkopf-Gipfel ist bereits zu sehen.
 REVDURATION: 20m</description>
 			<Placemark>
 				<name>04 Rauhkopf - Schnittlauchmossalm Süd</name>
@@ -287,7 +688,6 @@ REVDURATION: 20m</description>
 		</Folder>
 		<Folder>
 			<name>05 Schnittlauchmoosalm Süd - Schnittlauchmoosalm West</name>
-			<open>1</open>
 			<description>FROM: wheretofly-path-schnittlauchmoos-süd
 TO: wheretofly-path-schnittlauchmoos-west
 DURATION: 10m
@@ -313,7 +713,6 @@ REVDURATION: 5m</description>
 		</Folder>
 		<Folder>
 			<name>05a Schnittlauchmoosalm Süd - Tanzeck</name>
-			<open>1</open>
 			<description>FROM: wheretofly-path-schnittlauchmoos-süd
 TO: wheretofly-path-tanzeck
 DURATION: 10m
@@ -339,7 +738,6 @@ REVDURATION: 10m</description>
 		</Folder>
 		<Folder>
 			<name>05b Tanzeck - Schnittlauchmoosalm West</name>
-			<open>1</open>
 			<description>FROM: wheretofly-path-tanzeck
 TO: wheretofly-path-schnittlauchmoos-west
 DURATION: 10m
@@ -365,7 +763,6 @@ REVDURATION: 10m</description>
 		</Folder>
 		<Folder>
 			<name>06 Schnittlauchmoosalm West - Jägerkamp</name>
-			<open>1</open>
 			<description>FROM: wheretofly-path-schnittlauchmoos-west
 TO: wheretofly-path-jagerkamp
 DURATION: 45m
@@ -391,12 +788,11 @@ REVDURATION: 45m</description>
 		</Folder>
 		<Folder>
 			<name>07 Jägerkamp - Jägerbauernalm</name>
-			<open>1</open>
 			<description>FROM: wheretofly-path-jagerkamp
 TO: wheretofly-path-jagerbauernalm
 DURATION: 30m
 DESC: Vom Gipfel aus steigen wir nach Norden durch Latschenfelder ab. Nach einiger Zeit verlassen wir die Latschen, und die Alm ist bereits zu sehen. Es folgt noch ein steiler steiniger Weg, bis die Alm erreicht ist.
-REVDESC: xxx
+REVDESC: Wir nehmen den Weg hinter der Alm, der zuerst steinig und steil bergan geht. Weiter geht es durch die Latschen den Grat folgend bis zum Gipfel der Jägerkamp.
 REVDURATION: 45m</description>
 			<Placemark>
 				<name>07 Jägerkamp - Jägerbauernalm</name>
@@ -417,12 +813,11 @@ REVDURATION: 45m</description>
 		</Folder>
 		<Folder>
 			<name>08 Jägerbauernalm - Parkplatz Spitzingseestraße</name>
-			<open>1</open>
 			<description>FROM: wheretofly-path-jagerbauernalm
 TO: wheretofly-path-parkplatz-spitzingseestraße
 DURATION: 60m
-DESC: xxx
-REVDESC: xxx
+DESC: Von der Alm aus folgen wir den Weg nach Westen, der zuerst geradeaus geht und nach einem Gatter steil nach unten führt. Immer durch den Wald geht es über Stock und Stein nach unten, bis wir auf einen Parkplatz im Wald treffen. Wenige Meter weiter unten treffen wir auf die geteerte Spitzingseestraße.
+REVDESC: Von dem Parkplatz an der Spitzingseestraße geht es beschildert den Pfad hinauf, vorbei an einem weiteren kleinen Parkplatz im Wald und dann auf einen Pfad in den Wald. Jetzt geht es teils steil bergan, bis wir schließlich auf ein Gatter treffen. Hier erkennt man den Talkessel der Alm, und wenig später hat man die Jägerbauernalm erreicht.
 REVDURATION: 60m</description>
 			<Placemark>
 				<name>08 Jägerbauernalm - Parkplatz Spitzingseestraße</name>
@@ -443,12 +838,11 @@ REVDURATION: 60m</description>
 		</Folder>
 		<Folder>
 			<name>09 Parkplatz Spitzingseestraße - Bahnhof Neuhaus</name>
-			<open>1</open>
 			<description>FROM: wheretofly-path-parkplatz-spitzingseestraße
 TO: wheretofly-path-bahnhof-neuhaus
 DURATION: 30m
-DESC: xxx
-REVDESC: xxx
+DESC: Vom Parkplatz an der Straße folgt man die geteerte Spitzingseestraße etwa 100m, dann geht es linkerhand in den Wald und auf einen ungefährlicheren Weg. Wir passieren die Stocker-Alm und der Wanderweg enden im kleinen Stadtteil Josefsthal, das wir jetzt noch anhand der Beschilderung bis zum Bahnhof in Neuhaus folgen.
+REVDESC: Vom Bahnhof in Neuhaus folgen wir zuerst etwas der Hauptstraße, nach wenigen 100m treffen wir auf eine Abzweigung nach Josefsthal. Der Straße folgen wir bis zum Ende. Dort beginnt dann ein Wanderweg (beschildert), der durch den Wald, vorbei an der Stocker-Alm, auf die geteerte Spitzingseestraße trifft. Wir folgen der Straße ca. 100m, und auf der linken Seite erkennt man bereits einen Wanderparkplatz direkt an der Straße.
 REVDURATION: 45m</description>
 			<Placemark>
 				<name>09 Parkplatz Spitzingseestraße - Bahnhof Neuhaus</name>
@@ -462,6 +856,671 @@ REVDURATION: 45m</description>
 					<LineString>
 						<coordinates>
 							11.88976803794503,47.68157877959311,1093.64 11.88973962329328,47.6816189289093,1093.16 11.8896471709013,47.68177441321313,1092.2 11.88962152227759,47.68198764882982,1091.71 11.88962328247726,47.68216794356704,1091.23 11.88962663523853,47.68237841315568,1090.75 11.88963468186557,47.6824046485126,1090.75 11.88964272849262,47.6824202388525,1090.75 11.88964943401516,47.68243457190692,1090.75 11.88965396024287,47.68244932405651,1090.75 11.88966359943152,47.68246667459607,1090.75 11.88967038877308,47.68247958272696,1090.75 11.88979301601648,47.68269608728588,1086.43 11.88994850032032,47.68289607949555,1084.5 11.89007649198175,47.68309816718102,1084.5 11.89007640816271,47.6831163559109,1084.5 11.8900840356946,47.68313362263143,1084.5 11.89018889330328,47.68327041529119,1084.5 11.89023164100945,47.68339530564845,1084.02 11.89022644422948,47.68341089598835,1084.02 11.89021613448858,47.68342522904277,1084.02 11.89020884223282,47.68343947827816,1084.02 11.89020339399576,47.68345456570387,1084.02 11.89019836485386,47.68346831202507,1083.54 11.89013801515102,47.68349287100136,1084.02 11.89014145173132,47.68347342498601,1084.02 11.89013374038041,47.68346596509218,1083.54 11.89012980088592,47.68345800228417,1083.06 11.89012560993433,47.68344668671489,1082.1 11.89024329185486,47.68318500369787,1059.51 11.89023851417005,47.68311576917768,1057.59 11.89013374038041,47.68289985135198,1055.18 11.89012125134468,47.68288007006049,1055.18 11.89011278562248,47.68286867067218,1055.18 11.89002527855337,47.68276163376868,1054.22 11.89002326689661,47.68274545669556,1054.22 11.89001429826021,47.68272668123245,1053.74 11.89000180922449,47.68270807340741,1053.74 11.88997590914369,47.68268552608788,1053.74 11.889952942729,47.68267177976668,1053.74 11.88992243260145,47.68262358382344,1053.74 11.88990357331932,47.68258888274431,1053.74 11.88988412730396,47.68256926909089,1053.74 11.88986275345087,47.68254538066685,1053.74 11.88984431326389,47.6825275272131,1053.74 11.88981874845922,47.68249944783747,1053.74 11.88978119753301,47.68247505649924,1054.22 11.88969151116908,47.68230766989291,1053.74 11.88966787420213,47.68229057081044,1053.74 11.88950618728995,47.68221203237772,1053.74 11.88915674574673,47.68207884393632,1054.7 11.88891207799316,47.68219283781946,1054.22 11.88881258480251,47.6822595577687,1053.74 11.88874536193907,47.68228646367788,1053.74 11.8886402528733,47.68233901821077,1053.74 11.88857395201922,47.68238754943013,1052.78 11.88844277523458,47.68246809951961,1051.34 11.88815879635513,47.68247882835567,1048.94 11.88812141306698,47.68248285166919,1048.45 11.88807673752308,47.68248913809657,1047.97 11.88800456933677,47.68245234154165,1047.01 11.88793642446399,47.682413617149,1046.53 11.88781346194446,47.68221815116704,1043.17 11.8877424672246,47.68215537071228,1043.65 11.88750601373613,47.68196367658675,1041.25 11.88738531433046,47.68180861137807,1038.36 11.88721340149641,47.68167533911765,1038.36 11.88708574511111,47.68166461028159,1038.36 11.88706872984767,47.68167542293668,1038.84 11.88697468489409,47.68187030218542,1034.04 11.88689338043332,47.68209049478173,1028.27 11.88681651838124,47.68235888332129,1024.9 11.88666564412415,47.68292072229087,999.9099999999999 11.88667511567473,47.68320520408452,992.22 11.88667670823634,47.68337577581406,989.81 11.886689029634,47.68338893540204,989.81 11.88670260831714,47.68340276554227,989.81 11.88671384006739,47.68341332674027,989.81 11.88672649674118,47.68345238640904,985.49 11.88674166798592,47.68347677774727,984.05 11.88676614314318,47.6834995765239,983.09 11.88678609207273,47.68352681770921,981.64 11.88680042512715,47.6835566572845,980.2000000000001 11.88681878149509,47.68357828259468,977.7999999999998 11.88683521002531,47.68359378911555,976.3599999999999 11.88685306347907,47.68361222930253,975.3899999999999 11.88686253502965,47.68362304195762,974.91 11.88699228689075,47.68373854458332,969.6300000000001 11.88700368627906,47.68375036306679,969.1499999999999 11.88703478313983,47.6837707310915,968.67 11.88724575564265,47.68387927673757,966.74 11.88734826631844,47.68398027867079,965.2999999999998 11.88735865987837,47.68399385735393,965.2999999999998 11.88737232238054,47.68400760367513,965.2999999999998 11.88737416639924,47.6840226072818,965.2999999999998 11.88737860880792,47.68403794616461,965.2999999999998 11.8874229490757,47.68422042019665,962.9 11.88745521940291,47.6843040715903,960.0099999999999 11.88746343366802,47.68432326614857,959.53 11.8874678760767,47.68434128724039,959.05 11.88748179003596,47.684361403808,958.5700000000001 11.8874956201762,47.68438009545207,958.5700000000001 11.88750458881259,47.68439702689648,958.09 11.88749805092812,47.6844129525125,958.09 11.88750366680324,47.6844266988337,957.1299999999999 11.88751355744898,47.684440696612,956.65 11.88752763904631,47.68445536494255,955.6899999999999 11.88755303621292,47.6844718772918,955.21 11.8876058422029,47.68450825475156,953.2799999999999 11.88761849887669,47.68452325835824,952.8 11.88763182610273,47.6845355797559,952.3200000000001 11.88766376115382,47.68459073267877,951.36 11.88765856437385,47.6846740487963,950.4000000000001 11.88764599151909,47.68467840738595,949.9199999999999 11.88762973062694,47.6846756413579,949.9199999999999 11.88761472702026,47.68467304296792,949.4400000000001 11.88758723437786,47.68466860055924,949.4400000000001 11.88756837509573,47.68466482870281,948.9599999999999 11.88754658214748,47.68466457724571,948.9599999999999 11.8875143956393,47.68466751091182,948.9599999999999 11.88748296350241,47.68467086367309,948.9599999999999 11.88746368512511,47.68467119894922,948.9599999999999 11.88744633458555,47.68467589281499,948.9599999999999 11.88736762851477,47.68485660664737,948.9599999999999 11.887341812253,47.68505450338125,948 11.88734357245266,47.68511015921831,947.0399999999999 11.88734449446201,47.68512315116823,947.0399999999999 11.88735446892679,47.68513966351748,947.0399999999999 11.88736813142896,47.68515517003834,946.56 11.88738590106368,47.68517185002565,946.56 11.88740953803062,47.68519984558225,946.0700000000001 11.8874435685575,47.6852438505739,945.59 11.88746158964932,47.68527251668274,945.1099999999999 11.88748514279723,47.68529606983066,944.15 11.88750165514648,47.68531484529376,944.15 11.88759326934815,47.68540687859058,942.71 11.88760282471776,47.6854161825031,942.2300000000001 11.88764699734747,47.6855977345258,939.83 11.88764699734747,47.68561533652246,939.83 11.88764699734747,47.68563059158623,939.35 11.88765177503228,47.68564433790743,939.35 11.88765361905098,47.68565917387605,939.35 11.88766208477318,47.68567308783531,938.86 11.88770717941225,47.68575514666736,937.8999999999999 11.88776979222894,47.68587534315884,935.98 11.8877768330276,47.6858860719949,935.98 11.88779133372009,47.685910128057,935.98 11.88779703341425,47.685925969854,935.98 11.88780809752643,47.68594449386001,935.98 11.88781932927668,47.68596729263663,935.98 11.88782569952309,47.6859880797565,935.98 11.8878341652453,47.68600350245833,935.98 11.88784179277718,47.68602630123496,935.98 11.88784372061491,47.68604700453579,935.98 11.88784724101424,47.68606787547469,936.4599999999999 11.88785159960389,47.68608338199556,936.4599999999999 11.88788294792175,47.68620248883963,936.4599999999999 11.88787582330406,47.68624951131642,933.1 11.8878682795912,47.68640474416316,914.3499999999999 11.88785654492676,47.68641572445631,914.3499999999999 11.88780684024096,47.68647381104529,912.4299999999998 11.88780415803194,47.68647104501724,911.9500000000001 11.88783475197852,47.68646375276148,910.51 11.88782653771341,47.68645939417183,910.03 11.88780323602259,47.68643785268068,909.06 11.88772008754313,47.68634288571775,907.14 11.88771061599255,47.68633274361491,907.14 11.88767214305699,47.68629753962159,907.6199999999999 11.88745530322194,47.686219336465,906.18 11.88743929378688,47.68622880801559,905.7000000000001 11.88737818971276,47.68624984659255,905.22 11.88714232295752,47.68630667589605,905.7000000000001 11.88702967017889,47.68633131869137,906.66 11.88673378899694,47.68653893843293,903.3 11.88665776513517,47.68673381768167,901.37 11.88660026527941,47.68686482682824,899.93 11.88657101243734,47.68716674298048,896.0899999999999 11.88653505407274,47.68726665526629,894.16 11.88655743375421,47.68731736578047,886.47 11.8862363230437,47.68743856810033,872.53 11.88584497198463,47.68754091113806,870.61 11.88550969585776,47.68759455531836,871.5699999999999 11.88510552048683,47.68768734298647,871.09 11.88474040478468,47.68790191970766,865.3200000000001 11.88441736623645,47.68814164213836,857.6299999999999 11.88429758884013,47.68839695490897,850.8999999999999 11.8842507340014,47.68846702761948,849.4599999999999 11.88424193300307,47.68848672509193,848.98 11.88422894105315,47.68850767984986,848.0200000000001 11.8842161167413,47.68852226436138,847.5399999999999 11.88420136459172,47.68853517249227,847.5399999999999 11.88419239595532,47.68854766152799,847.5399999999999 11.88419449143112,47.68856199458242,847.06 11.88420128077269,47.68857699818909,847.06 11.88420689664781,47.68859040923417,846.5799999999999 11.88421326689422,47.68860591575503,846.5799999999999 11.88421896658838,47.68862351775169,846.1 11.88431619666517,47.68870373256505,846.1 11.88448618166149,47.68885628320277,845.14 11.88457410782576,47.68913112580776,840.33 11.88473420217633,47.68946514464915,828.7900000000001 11.88485096208751,47.68974266946316,821.1 11.88503041863442,47.68993469886482,820.1399999999999 11.88526435755193,47.69016603939235,822.06 11.88535664230585,47.69035806879401,822.5499999999998 11.88544431701303,47.69054037518799,821.1 11.8853871524334,47.69071237184107,818.22 11.88524122349918,47.69092778675258,814.37 11.88509537838399,47.69115124829114,814.37 11.8849101383239,47.69135241396725,812.4500000000002 11.88473906368017,47.69155223853886,811.01 11.88457846641541,47.69174234010279,810.0499999999998 11.88437830656767,47.69200921989977,809.5700000000001 11.88421368598938,47.692213319242,808.13 11.88402098603547,47.69243208691478,808.61 11.8839124403894,47.69256007857621,807.64 11.88389810733497,47.69257851876319,807.64 11.88380775041878,47.69268270581961,808.61 11.88379777595401,47.69269603304565,808.61 11.88378411345184,47.69270994700491,808.61 11.88376860693097,47.69272386096418,809.0899999999999 11.88375410623848,47.69273861311376,809.0899999999999 11.88357909210026,47.69295352511108,809.0899999999999 11.88339829444885,47.69315351732075,808.61 11.88318321481347,47.69337438046932,808.61 11.88298389315605,47.69361938349903,807.64 11.88279094174504,47.69383731298149,807.64 11.88263026066124,47.69406043924391,805.72 11.88240260817111,47.69433754496276,803.3200000000001 11.88219088129699,47.69456813111901,802.3600000000001 11.88196339644492,47.69480751827359,802.84 11.88178570009768,47.69509602338076,800.92 11.88173222355545,47.69543725065887,795.63 11.88177689909935,47.69572198390961,795.1499999999999 11.88184889964759,47.69597293809056,794.1900000000002 11.88190581277013,47.69622364081442,795.1499999999999 11.88195015303791,47.69649085588753,796.11 11.88200966455042,47.69675538875163,798.0299999999999 11.88199818134308,47.69704406149685,798.0299999999999 11.8819382507354,47.69719300791621,798.51 11.88193615525961,47.69720641896129,798.51 11.88192836008966,47.69721949473023,798.51 11.88191704452038,47.6972331572324,798.51 11.88190581277013,47.69724790938199,798.0299999999999 11.88189583830535,47.69726165570319,798.0299999999999 11.88188653439283,47.69727355800569,798.0299999999999 11.88171185553074,47.69752040505409,798.0299999999999 11.88158453442156,47.69775115884841,798.51 11.8814326543361,47.6979295257479,800.4400000000001 11.88137800432742,47.69808400422335,804.76 11.88126065768302,47.69827276468277,806.2000000000001 11.88125135377049,47.69829304888845,806.2000000000001 11.88110022805631,47.69853838719428,807.16 11.88093770295382,47.69879487343133,803.3200000000001 11.88081759028137,47.69899846985936,803.8 11.88070686534047,47.69916191697121,802.3600000000001 11.88059010542929,47.69937548786402,802.3600000000001 11.88049396499991,47.69956064410508,803.3200000000001 11.88033194281161,47.69984395243228,802.84 11.88027704134584,47.69994084723294,802.3600000000001 11.88027092255652,47.69995735958219,802.3600000000001 11.88026882708073,47.69997462630272,802.3600000000001 11.880266899243,47.69999113865197,802.3600000000001 11.88025918789208,47.7000065613538,802.3600000000001 11.88024778850377,47.7000189665705,802.3600000000001 11.88010395504534,47.70020948722959,802.84 11.8800562620163,47.70022264681757,802.84 11.88004167750478,47.70023739896715,802.84 11.88002985902131,47.70025315694511,802.84 11.87991368584335,47.70051115192473,803.8 11.87981469556689,47.70069060847163,806.68 11.87977437861264,47.70073503255844,807.64 11.87976012937725,47.70074618048966,807.64 11.87968695536256,47.70089671947062,809.5700000000001 11.87967731617391,47.70091029815376,810.0499999999998 11.87966809608042,47.70092790015042,810.5299999999999 11.87966072000563,47.70094617269933,810.5299999999999 11.87965543940663,47.70096385851502,810.5299999999999 11.87951588071883,47.70122897811234,809.5700000000001 11.87937305308878,47.70147942937911,810.5299999999999 11.87933122739196,47.70151832140982,810.5299999999999 11.87932016327977,47.70153550431132,810.5299999999999 11.87930909916759,47.70155092701316,810.5299999999999 11.87930138781667,47.70156634971499,811.01 11.8792945984751,47.70158235915005,811.01 11.87928546220064,47.70159769803286,811.01 11.87927657738328,47.70161370746791,811.01 11.87921077944338,47.70170867443085,810.5299999999999 11.87921061180532,47.70172116346657,810.5299999999999 11.87920365482569,47.70173214375973,810.5299999999999 11.87919024378061,47.70174153149128,810.5299999999999 11.87917549163103,47.70175091922283,810.5299999999999 11.87916073948145,47.70176215097308,810.5299999999999 11.87914649024606,47.70177313126624,810.5299999999999 11.8791373539716,47.70178536884487,810.5299999999999 11.87912930734456,47.70180045627058,810.5299999999999 11.87911908142269,47.70181747153401,811.01 11.87900475226343,47.70197798497975,811.9699999999999 11.87896175310016,47.70203146152198,813.4099999999999 11.87894884496927,47.70203984342516,813.89 11.87893685884774,47.70205199718475,813.89 11.87892872840166,47.70206700079143,813.89 11.87883644364774,47.70218619145453,815.34 11.8788112141192,47.7022881153971,817.2599999999999 11.87886930070818,47.70266580395401,811.01 11.87886360101402,47.70291457884014,811.01 11.87877533957362,47.70306285470724,812.93 11.87872932292521,47.70313292741776,813.4099999999999 11.87872613780201,47.70314885303378,813.4099999999999 11.87871976755559,47.70316385664046,813.4099999999999 11.87864952720702,47.70324046723545,813.89 11.87862848863006,47.70326117053628,813.89 11.87844978645444,47.70341782830656,815.8200000000001 11.87843260355294,47.70342897623777,815.8200000000001 11.87841131351888,47.70344247110188,815.8200000000001 11.8783360440284,47.70348379388452,816.78 11.87832271680236,47.70351095125079,817.2599999999999 11.87823546119034,47.70363869145513,818.7000000000001 11.87822624109685,47.70364556461573,819.18 11.87820193357766,47.70365973003209,819.18 11.87817972153425,47.70367758348584,819.66 11.87816563993692,47.70369065925479,819.66 11.87814887613058,47.70369878970087,819.66 11.87791778706014,47.70388897508383,820.6200000000001 11.8775643222034,47.70411268807948,821.1 11.87726240605116,47.70433271303773,819.18 11.87720071524382,47.70437462255359,818.22 11.87718252651393,47.70437822677195,818.22 11.87716836109757,47.70438065752387,818.22 11.87715805135667,47.70437713712454,818.7000000000001 11.87716165557504,47.70434847101569,821.1 11.87710407190025,47.70437981933355,820.6200000000001 11.87680869363248,47.70466832444072,820.1399999999999 11.87671515159309,47.7047713380307,818.7000000000001 11.87633218243718,47.70504986867309,818.7000000000001 11.87605616636574,47.70525773987174,819.18 11.87576891854405,47.70546385087073,818.7000000000001 11.87558870762587,47.70558446645737,819.18 11.87517086975277,47.70563702099025,816.78 
+						</coordinates>
+					</LineString>
+				</MultiGeometry>
+			</Placemark>
+		</Folder>
+		<Folder>
+			<name>10 Tanzeck - Aiplspitz</name>
+			<description>FROM: wheretofly-path-tanzeck
+TO: wheretofly-path-aiplspitz
+DURATION: 20m
+DESC: Vorbei am Tanzeck-Gipfel geht es etwas ausgesetzt über einen Felsgrad zum Aiplspitz-Gipfel.
+REVDESC: Von der Aiplspitz geht es etwas ausgesetzt über einen Felsgrad zum Tanzeck-Gipfel, der etwas versteckt in den Latschen zu finden ist.
+REVDURATION: 20m</description>
+			<Placemark>
+				<name>10 Tanzeck - Aiplspitz</name>
+				<Style>
+					<LineStyle>
+						<color>ffff4040</color>
+						<width>4</width>
+					</LineStyle>
+				</Style>
+				<MultiGeometry>
+					<LineString>
+						<coordinates>
+							11.92032711580396,47.67178452573717,1693.5 11.92032351158559,47.67173004336655,1692.54 11.92032200284302,47.6716981921345,1690.62 11.92020256072283,47.67169031314552,1688.21 11.920171296224,47.67169995233417,1687.73 11.92008747719228,47.67175745218992,1684.37 11.92009267397225,47.67176499590278,1683.89 11.92015009000897,47.67182819545269,1681.96 11.92017682828009,47.67185166478157,1680.52 11.92031663842499,47.67195283435285,1679.56 11.92037187516689,47.67196448519826,1678.6 11.9203940872103,47.67196875996888,1678.12 11.92053532227874,47.67198510468006,1679.08 11.92070027813315,47.67196549102664,1680.52 11.92078283987939,47.67193984240294,1681.48 11.92086045630276,47.67194118350744,1683.41 11.92093748599291,47.67193732783198,1686.29 11.92103706300259,47.67193422652781,1688.69 11.92109506577253,47.67192039638758,1687.25 11.92111107520759,47.67191897146404,1687.25 11.92112582735717,47.67191612161696,1687.25 11.9211605284363,47.67192349769175,1687.73 11.92120025865734,47.67192525789142,1688.21 11.92123454064131,47.67194302752614,1689.17 11.92127661779523,47.67196130007505,1690.14 11.92134099081159,47.6719764713198,1691.1 11.92141483537853,47.67202919349074,1693.98 11.92146169021726,47.67206481657922,1695.42 11.92152380011976,47.67205241136253,1693.5 11.92157275043428,47.67205584794283,1686.77 11.92165581509471,47.67208158038557,1688.69 11.92179017700255,47.67210219986737,1691.58 11.92191422916949,47.67209935002029,1693.5 11.92194012925029,47.67208920791745,1693.5 11.92204817198217,47.67209574580193,1693.5 11.92208086140454,47.67209440469742,1693.5 11.92213274538517,47.67210035584867,1693.98 11.92225445061922,47.67215400002897,1693.98 11.9223019760102,47.67218903638423,1695.42 11.9223106931895,47.67220093868673,1695.42 11.92231957800686,47.67220915295184,1695.42 11.92241856828332,47.67225734889507,1696.86 11.92244648002088,47.67228819429874,1699.75 11.92254966124892,47.67230194061995,1703.11 11.92258779890835,47.67231920734048,1705.04 11.92264831624925,47.67233513295651,1706.48 11.92268637008965,47.6723819039762,1707.44 11.9227338116616,47.67240193672478,1707.92 11.92277932539582,47.67244795337319,1710.32 11.92283187992871,47.6724770385772,1711.28 11.92288870923221,47.67248357646167,1712.73 11.92294009029865,47.67251735553145,1713.69 11.922996500507,47.67255993559957,1715.13 11.92303497344255,47.67255784012377,1716.57 11.92308652214706,47.67259270884097,1718.49 11.92311451770365,47.67264367081225,1721.38 11.92313346080482,47.67263679765165,1722.34 11.92315667867661,47.6726237218827,1723.3 11.92320596426725,47.67265867441893,1724.74 11.92323555238545,47.6726620271802,1725.7 11.92329581826925,47.67266370356083,1726.67 11.92332406528294,47.67270779237151,1728.59 11.92335625179112,47.67272690311074,1730.03 11.92338273860514,47.67275967635214,1730.51 11.9234386458993,47.67280887812376,1732.43 11.92346043884754,47.67282036133111,1733.88 11.92348424345255,47.67286428250372,1735.8 11.923514502123,47.67289269715548,1738.2 11.92356931976974,47.67293016426265,1740.6 11.92358633503318,47.67294952645898,1743.97 11.92362455651164,47.67299445345998,1746.37 11.92364324815571,47.67300794832408,1747.33 11.92364760674536,47.67304893583059,1748.78 11.92372061312199,47.67310475930572,1751.18 11.92371474578977,47.67316041514278,1754.54 11.92368105053902,47.67317768186331,1755.02 11.92372203804553,47.67319000326097,1754.54 
+						</coordinates>
+					</LineString>
+				</MultiGeometry>
+			</Placemark>
+		</Folder>
+		<Folder>
+			<name>11 Abstecher Benzingspitz</name>
+			<description>FROM: wheretofly-path-abzweig-benzingspitz-höhenweg-jägerkamp
+TO: wheretofly-path-benzingspitz
+DURATION: 10m
+DESC: Vom Weg aus geht ein unscheinbarer Weg nach Norden, zu den Latschen, in der sich der Gipfel der Benzingspitz befindet.
+REVDESC: Zurück vom Gipfel geht es durch die Latschen wieder zum Weg zwischen Jägerkamp und Schnittlauchmoosalm.
+REVDURATION: 10m</description>
+			<Placemark>
+				<name>11 Abstecher Benzingspitz</name>
+				<styleUrl>#stylemap_id10</styleUrl>
+				<MultiGeometry>
+					<LineString>
+						<coordinates>
+							11.91036153584719,47.67236539162695,1688.21 11.91041409038007,47.67243227921426,1690.62 11.91042875871062,47.67243378795683,1691.1 11.9105870090425,47.67246966250241,1693.02 11.91066806204617,47.67252389341593,1695.9 11.9107976462692,47.6725912000984,1698.79 11.91092060878873,47.67263939604163,1701.19 11.9109496101737,47.67266957089305,1703.59 11.9110101275146,47.6727135758847,1705.52 11.91114599816501,47.67274064943194,1707.44 11.91118254326284,47.67273562029004,1707.44 11.91131145693362,47.67274090088904,1709.36 11.91134288907051,47.67277618870139,1710.8 11.91132168285549,47.67284039407969,1714.17 11.91140181384981,47.67288004048169,1715.61 11.91140474751592,47.67295246012509,1718.01 11.91142218187451,47.67301473766565,1719.94 11.91142947413027,47.67304901964963,1720.42 11.91147188656032,47.67304030247033,1720.9 11.91151572391391,47.67304927110672,1720.9 11.91165436059237,47.67307349480689,1721.38 11.91172820515931,47.67306176014245,1722.34 11.9118785765022,47.67306167632341,1723.78 11.9119028840214,47.67306871712208,1724.26 11.91192115657032,47.6731435675174,1725.22 11.91197161562741,47.67314490862191,1725.22 11.91209650598466,47.67313065938652,1726.18 11.91215509548783,47.67313275486231,1727.15 11.91221653483808,47.67318044789136,1728.11 11.91221125423908,47.67322612926364,1728.59 11.91221661865711,47.6732315775007,1729.07 11.91222533583641,47.67323601990938,1729.07 11.9122139364481,47.67323132604361,1729.07 
+						</coordinates>
+					</LineString>
+				</MultiGeometry>
+			</Placemark>
+		</Folder>
+		<Folder>
+			<name>12a Sattel Taubensteinbahn - Taubensteinbahn</name>
+			<description>FROM: wheretofly-path-sattel-taubensteinbahn
+TO: wheretofly-path-taubensteinbahn-bergstation
+DURATION: 5m
+DESC: Ein kleines Stück Weg noch nach Süden, schon ist auch die Taubenstein-Bergstation erreicht.
+REVDESC: Vorbei an der Bergstation der Taubensteinbahn geht es nach Norden Richtung Rauhkopf zu einem Sattel mit Wegweiser.
+REVDURATION: 5m</description>
+			<Placemark>
+				<name>12a Sattel Taubensteinbahn Taubensteinbahn</name>
+				<Style>
+					<LineStyle>
+						<color>ffff4040</color>
+						<width>4</width>
+					</LineStyle>
+				</Style>
+				<MultiGeometry>
+					<LineString>
+						<coordinates>
+							11.92022435367107,47.6607031468302,1588.24 11.9202230963856,47.66068629920483,1588.72 11.92021873779595,47.66066978685558,1588.72 11.92021764814854,47.66065402887762,1588.72 11.92022586241365,47.66064589843154,1589.2 11.92023986019194,47.66047046519816,1592.08 11.92023675888777,47.66045210883021,1592.56 11.92023231647909,47.66043626703322,1593.04 11.92022619768977,47.66042444854975,1593.52 11.92021538503468,47.6604129653424,1594.48 11.92019040696323,47.6603630091995,1595.93 11.92021672613919,47.66023635864258,1598.33 11.92021706141532,47.66022261232138,1598.33 11.92023835144937,47.66012529842556,1601.69 11.9202365912497,47.66010920517147,1602.17 11.9201366789639,47.65991541557014,1609.38 11.92015344277024,47.65990116633475,1610.35 11.92031336948276,47.65975708141923,1613.23 
+						</coordinates>
+					</LineString>
+				</MultiGeometry>
+			</Placemark>
+		</Folder>
+		<Folder>
+			<name>12b Taubensteinbahn - Taubenstein Gipfelfuß</name>
+			<description>FROM: wheretofly-path-taubensteinbahn-bergstation
+TO: wheretofly-path-taubenstein-gipfelfuss
+DURATION: 20m
+DESC: An der Bergstation geht der Weg an einem Gatter beim Spielplatz los. Etwas bergan und seilgesichert an einem Felsen vorbei, kommt man bald am Gipfelfuß des Taubenstein an.
+REVDESC: Vom Gipfelfuß des Taubenstein geht es seilgesichert vorbei an einem Felsen, bergab zu einem Gatter und der Taubensteinbahn.
+REVDURATION: 20m</description>
+			<Placemark>
+				<name>12b Taubensteinbahn - Taubenstein Gipfelfuß</name>
+				<styleUrl>#stylemap_id11</styleUrl>
+				<MultiGeometry>
+					<LineString>
+						<coordinates>
+							11.92031336948276,47.65975708141923,1613.23 11.92026768811047,47.65953211113811,1616.59 11.92026316188276,47.6595151796937,1616.59 11.92032124847174,47.65934276394546,1618.52 11.92032887600362,47.65932893380523,1618.52 11.92033021710813,47.65931569039822,1618.52 11.92033072002232,47.65930018387735,1618.52 11.92033482715488,47.65928543172777,1618.52 11.9203406944871,47.65927093103528,1618.52 11.92034362815321,47.65925634652376,1618.52 11.92034848965704,47.65924117527902,1619 11.92035377025604,47.65922223217785,1619.48 11.92036600783467,47.65920295380056,1620.44 11.92051336169243,47.65914193354547,1623.32 11.9205357413739,47.65913916751742,1623.8 11.92055208608508,47.65913757495582,1624.28 11.92057136446238,47.65913204289973,1624.77 11.92059114575386,47.6591333001852,1625.25 11.92071092315018,47.65933681279421,1631.01 11.92072651349008,47.65934678725898,1631.49 11.92074352875352,47.65935550443828,1631.49 11.92076238803566,47.65936288051307,1631.98 11.92078250460327,47.65936547890306,1632.46 11.92085928283632,47.65917973592877,1637.26 11.92086338996887,47.65917118638754,1637.74 11.92096346989274,47.65916297212243,1639.67 11.92105466499925,47.65919574536383,1641.11 11.92108576186001,47.65919054858387,1641.59 11.92112876102328,47.65913045033813,1641.59 11.92112750373781,47.65911947004497,1641.59 11.92118626087904,47.65907110646367,1643.03 11.92130226641893,47.65909130685031,1643.99 11.9213560782373,47.65904914587736,1645.43 11.9214440882206,47.65905492939055,1647.84 11.92143344320357,47.65902131795883,1649.76 11.92140083760023,47.6589882094413,1651.2 11.92137896083295,47.65895233489573,1653.12 11.92142489366233,47.65893205069006,1653.12 11.92146361805499,47.6589472219348,1653.6 11.92148834466934,47.65893858857453,1655.53 11.92155883647502,47.65891302376986,1657.45 11.92157132551074,47.65890514478087,1657.93 11.92157870158553,47.65889190137386,1658.89 11.92163460887969,47.6588864531368,1660.33 11.921675093472,47.65886549837887,1659.85 11.9217030890286,47.65883842483163,1660.33 11.92177902907133,47.65876290388405,1656.97 11.9217773526907,47.65875561162829,1656.97 11.92176972515881,47.65872518531978,1656.97 11.9217583257705,47.65870406292379,1656.97 11.92175564356148,47.65868989750743,1656.49 11.92176000215113,47.65867589972913,1656.49 11.92176888696849,47.6586636621505,1656.49 11.92178011871874,47.65865167602897,1656.49 11.92178799770773,47.658635918051,1656.49 11.92178749479353,47.65861806459725,1656.49 11.92178640514612,47.65860113315284,1656.97 11.92178573459387,47.65858755446971,1656.97 11.92178523167968,47.65856944955885,1656.97 
+						</coordinates>
+					</LineString>
+				</MultiGeometry>
+			</Placemark>
+		</Folder>
+		<Folder>
+			<name>12c Taubenstein Gipfelfuß - Taubenstein</name>
+			<description>FROM: wheretofly-path-taubenstein-gipfelfuss
+TO: wheretofly-path-taubenstein
+DURATION: 5m
+DESC: Mit etwas Kraxelei kommt man durch die Felsrinnen des Taubenstein in wenigen Minuten zum Gipfel.
+REVDESC: Der Rückweg erfolgt entweder auf gleichem Wege, oder durch einen ähnlich beschaffenen Weg etwas südlich des Gipfels.
+REVDURATION: 5m</description>
+			<Placemark>
+				<name>12c Taubenstein Gipfelfuß - Taubenstein</name>
+				<Style>
+					<LineStyle>
+						<color>ffff4040</color>
+						<width>4</width>
+					</LineStyle>
+				</Style>
+				<MultiGeometry>
+					<LineString>
+						<coordinates>
+							11.92178523167968,47.65856944955885,1656.97 11.92177743650973,47.65855587087572,1657.45 11.9217667914927,47.65853567048907,1657.45 11.92173829302192,47.65850423835218,1657.93 11.92168850451708,47.65849677845836,1658.41 11.92167836241424,47.65850616618991,1658.41 11.92167107015848,47.65851773321629,1658.41 11.92166025750339,47.65852938406169,1658.89 11.92162203602493,47.65857598744333,1660.33 11.92160041071475,47.65855729579926,1660.81 11.92158465273678,47.65854380093515,1662.26 11.92157392390072,47.65853055752814,1663.22 11.92152832634747,47.65851530246437,1664.18 11.92148809321225,47.65850348398089,1665.62 11.92144970409572,47.65851563774049,1667.54 11.92142120562494,47.65854438766837,1668.99 11.92141667939723,47.65855528414249,1670.43 11.92139983177185,47.65857447870076,1671.87 11.9213957246393,47.65860222280026,1673.79 11.92136756144464,47.65863533131778,1673.79 11.92133688367903,47.65862753614783,1677.16 11.9213214609772,47.65861244872212,1677.64 11.92128139548004,47.65861068852246,1678.12 11.92126027308404,47.65860197134316,1679.08 11.92124443128705,47.65859191305935,1681 11.92121903412044,47.65859300270677,1683.41 11.92118542268872,47.65857984311879,1687.73 
+						</coordinates>
+					</LineString>
+				</MultiGeometry>
+			</Placemark>
+		</Folder>
+		<Folder>
+			<name>12d Taubenstein Gipfelfuß - Abzweig Lempersberg Nord</name>
+			<description>FROM: wheretofly-path-taubenstein-gipfelfuss
+TO: wheretofly-path-abzweig-lempersberg-nord
+DURATION: 20m
+DESC: Steil geht es nun bergan, durch ein kleines Wäldchen und vorbei an einem DAV-Schild.
+REVDESC: Vom DAV-Schild an geht es zuerst durch ein kleines Wäldchen, dann steil bergab zum Gipfelfuß des Taubenstein.
+REVDURATION: 20m</description>
+			<Placemark>
+				<name>12d Taubenstein Gipfelfuß - Abzweig Lempersberg Nord</name>
+				<Style>
+					<LineStyle>
+						<color>ffff4040</color>
+						<width>4</width>
+					</LineStyle>
+				</Style>
+				<MultiGeometry>
+					<LineString>
+						<coordinates>
+							11.92178523167968,47.65856944955885,1656.97 11.92178615368903,47.6582133024931,1660.81 11.9218550529331,47.65812386758626,1660.81 11.92187676206231,47.65808413736522,1660.81 11.92197935655713,47.65801900997758,1662.26 11.92202378064394,47.65796226449311,1663.7 11.92218731157482,47.65796578489244,1665.62 11.92226358689368,47.65792462974787,1668.02 11.92229728214443,47.65788674354553,1671.39 11.92233516834676,47.65786687843502,1673.79 11.92237724550068,47.65781776048243,1674.75 11.92244832403958,47.65776076354086,1677.16 11.92245201207697,47.65767610631883,1680.04 11.92246240563691,47.65761030837894,1681 11.92254044115543,47.65750746242702,1681.96 11.9224922452122,47.65749027952552,1682.44 11.9223868008703,47.65745096839964,1683.41 11.92238487303257,47.65744510106742,1683.89 11.92238923162222,47.65743345022202,1685.33 11.92237858660519,47.65742615796626,1685.81 11.92234220914543,47.65735541470349,1686.29 11.92231379449368,47.65723077580333,1685.33 11.92231102846563,47.65720789320767,1684.85 11.92221019417048,47.65707210637629,1684.37 11.92220114171505,47.65702374279499,1685.81 11.9221518561244,47.65694134868681,1688.69 11.92216333933175,47.65679374337196,1688.21 11.92218161188066,47.65670154243708,1687.73 11.92222511395812,47.65666122548282,1688.21 11.92227758467197,47.65664152801037,1688.21 11.92238269373775,47.65663063153625,1688.69 11.92265879362822,47.65660800039768,1688.69 11.92286993376911,47.65655871480703,1689.65 11.92311879247427,47.65646483749151,1689.65 11.92344660870731,47.65630432404578,1692.06 11.92355867475271,47.65624531544745,1693.02 11.92367694340646,47.65606359578669,1693.98 11.92384365946055,47.65585916116834,1701.19 11.9238702300936,47.65581448562443,1703.11 11.92393024452031,47.65571298077703,1707.44 11.92397031001747,47.65567123889923,1708.88 11.92405111156404,47.65562656335533,1711.76 11.92413115873933,47.65557451173663,1714.65 11.92417013458908,47.65546755865216,1718.01 11.92416007630527,47.65544098801911,1718.97 11.92411297000945,47.65533143654466,1720.9 11.92411104217172,47.65524099580944,1724.74 11.92413560114801,47.65516673214734,1728.11 11.92414155229926,47.65507134608924,1730.51 11.92412847653031,47.65500479377806,1731.95 11.92413476295769,47.65490320511162,1734.36 11.92412529140711,47.65487764030695,1735.8 11.92414976656437,47.65481318347156,1739.16 11.92418522201479,47.65475643798709,1739.16 11.92417323589325,47.65472056344152,1741.08 11.92418580874801,47.65468527562916,1742.53 11.9241548795253,47.6546383369714,1744.45 11.92414230667055,47.65461436472833,1744.93 11.92411246709526,47.65458066947758,1746.37 11.92406301386654,47.65448494814336,1747.33 11.92405010573566,47.65447053126991,1747.81 11.92406452260912,47.65442744828761,1749.74 11.92404071800411,47.65438411384821,1752.14 11.92401884123683,47.65434094704688,1752.14 11.92395547404885,47.65428235754371,1753.1 11.92397844046354,47.65423248521984,1755.99 
+						</coordinates>
+					</LineString>
+				</MultiGeometry>
+			</Placemark>
+		</Folder>
+		<Folder>
+			<name>12e Abzweig Lempersberg Nord - Lempersberg</name>
+			<description>FROM: wheretofly-path-abzweig-lempersberg-nord
+TO: wheretofly-path-lempersberg
+DURATION: 10m
+DESC: Vom DAV-Schild an geht es weglos den Bergrücken nach Norden hinauf. Entlang der Felskante erreicht man bald den unscheinbaren und nicht markierten Lempersberg-Gipfel.
+REVDESC: Es geht weiter die Felskante entlang, bis man auf eine Wiese trifft. Diese geht man weglos nach unten und trifft auf ein DAV-Schild.
+REVDURATION: 10m</description>
+			<Placemark>
+				<name>12e Abzweig Lempersberg Nord - Lempersberg</name>
+				<Style>
+					<LineStyle>
+						<color>ffff4040</color>
+						<width>4</width>
+					</LineStyle>
+				</Style>
+				<MultiGeometry>
+					<LineString>
+						<coordinates>
+							11.92397844046354,47.65423248521984,1755.99 11.92405429668725,47.65423441305757,1757.43 11.92418170161545,47.65424388460815,1761.27 11.92429209128022,47.65427439473569,1764.64 11.92435688339174,47.65425595454872,1768 11.92443667910993,47.65420792624354,1771.37 11.92453323863447,47.654211781919,1774.25 11.92458587698638,47.6541343331337,1777.13 11.9246802572161,47.65411170199513,1781.46 11.92473775707185,47.65404573641717,1784.82 11.92481436766684,47.65398773364723,1788.19 11.92489533685148,47.65394833870232,1791.55 11.92495233379304,47.65387139283121,1795.4 11.92501494660974,47.65383451245725,1797.8 11.92500782199204,47.65379352495074,1798.28 11.92502961494029,47.6537765096873,1798.28 11.92506884224713,47.65377961099148,1799.24 11.92509725689888,47.6537921000272,1800.21 11.92509851418436,47.65378698706627,1801.65 11.9251099973917,47.65378656797111,1801.17 11.92507269792259,47.65378564596176,1800.69 11.92496188916266,47.65368221327663,1797.8 11.92495778203011,47.65366218052805,1797.8 11.92490933462977,47.653569560498,1797.8 11.9248581212014,47.65339236706495,1797.32 11.92487639375031,47.65324719250202,1799.73 11.92492953501642,47.65312221832573,1803.09 11.92495836876333,47.65299531631172,1804.53 11.92502114921808,47.65287268906832,1807.42 11.9251324608922,47.65277143567801,1811.26 11.92515743896365,47.65276028774679,1812.22 
+						</coordinates>
+					</LineString>
+				</MultiGeometry>
+			</Placemark>
+		</Folder>
+		<Folder>
+			<name>12f Lempersberg - Abzweig Lempersberg Süd</name>
+			<description>FROM: wheretofly-path-lempersberg
+TO: wheretofly-path-abzweig-lempersberg-süd
+DURATION: 20m
+DESC: Weiter geht es an der Felskante und an dem Stacheldrahtzaun entlang. Es kommt ein Geländeeinschnitt, den man hinab zum eigentlichen Weg steigt.
+REVDESC: Unscheinbar in einem Geländeeinschnitt geht es weglos hinauf zu einem Stacheldrahtzaun, den man bis zum unscheinbaren und unmarkierten Lempersberg-Gipfel folgt.
+REVDURATION: 20m</description>
+			<Placemark>
+				<name>12f Lempersberg - Abzweig Lempersberg Süd</name>
+				<Style>
+					<LineStyle>
+						<color>ffff4040</color>
+						<width>4</width>
+					</LineStyle>
+				</Style>
+				<MultiGeometry>
+					<LineString>
+						<coordinates>
+							11.92516439594328,47.65276104211807,1813.66 11.92512072622776,47.65276967547834,1811.74 11.92508443258703,47.65274377539754,1809.82 11.92510094493628,47.65266297385097,1809.34 11.92518325522542,47.65254101715982,1810.3 11.92527285777032,47.6525007840246,1812.7 11.9253068882972,47.65250019729137,1813.66 11.92525709979236,47.65249877236784,1812.22 11.92524963989854,47.65244822949171,1810.78 11.925253495574,47.65241160057485,1809.82 11.92533538676798,47.65228369273245,1808.86 11.92536707036197,47.65217883512378,1806.45 11.92537704482675,47.65216441825032,1805.97 11.92546304315329,47.65209836885333,1804.53 11.92554510198534,47.65205369330943,1804.53 11.92570653744042,47.65194850042462,1804.05 11.92574509419501,47.65194380655885,1804.53 11.92578105255961,47.65193995088339,1805.49 11.92582572810352,47.65192394144833,1806.45 11.92588951438665,47.65187985263765,1805.49 11.92600107751787,47.65182428061962,1805.01 11.92606268450618,47.65176460146904,1801.65 11.92623442970216,47.6516923494637,1799.73 11.92626686766744,47.65167659148574,1799.24 11.92644355818629,47.65159537084401,1796.84 11.92652142606676,47.65156368725002,1796.36 11.92651622928679,47.65157097950578,1796.36 11.92652276717126,47.65153560787439,1794.92 11.92654313519597,47.65146528370678,1792.52 11.92654975689948,47.65146436169744,1792.52 11.92660432308912,47.65141658484936,1791.07 11.92668780684471,47.65134366229177,1788.19 11.92675586789846,47.65132321044803,1787.23 11.92687380127609,47.6513279043138,1788.19 11.92690992727876,47.65131876803935,1788.19 11.9269198179245,47.65131197869778,1787.71 11.92693800665438,47.65129588544369,1787.71 11.92703104577959,47.65125473029912,1786.27 11.92719633691013,47.6511828135699,1785.31 11.92733195610344,47.65113352797926,1783.86 11.92751501686871,47.65106680803001,1782.9 11.92754376679659,47.65103931538761,1784.34 11.92755005322397,47.65103789046407,1784.34 11.92762842401862,47.65099195763469,1783.86 11.92764602601528,47.65097712166607,1782.9 11.92768382839859,47.65094242058694,1782.42 11.92769975401461,47.65091744251549,1781.46 11.92775239236653,47.65087695792317,1778.58 11.92782782949507,47.65081895515323,1775.21 11.92788323387504,47.6507736928761,1773.29 11.92795389331877,47.6507255807519,1771.85 11.92797996103764,47.65072926878929,1771.85 11.92801985889673,47.65071258880198,1770.41 11.92808791995049,47.65066212974489,1767.52 11.92818967625499,47.65060882084072,1765.12 11.92830224521458,47.65058057382703,1763.68 11.92833325825632,47.65056682750583,1763.2 11.92830341868103,47.65048619359732,1760.79 11.92829679697752,47.65044813975692,1760.31 11.9282201025635,47.65042760409415,1757.91 11.9281701464206,47.65043472871184,1756.95 11.92809311673045,47.65041679143906,1755.5 11.92798431962729,47.6503920648247,1754.06 11.92790150642395,47.65036733821034,1751.18 11.9278506282717,47.65036482363939,1750.22 11.92779203876853,47.65034755691886,1747.81 
+						</coordinates>
+					</LineString>
+				</MultiGeometry>
+			</Placemark>
+		</Folder>
+		<Folder>
+			<name>12g Abzweig Lempersberg Süd - Sattel Kirchstein</name>
+			<description>FROM: wheretofly-path-abzweig-lempersberg-süd
+TO: wheretofly-path-sattel-kirchstein
+DURATION: 10m
+DESC: Weiter dem Weg folgend trifft man auf einen Sattel mit Drehkreuz und Schildern und dem Kirchstein-Felsen.
+REVDESC: Vom Drehkreuz an geht man den Weg bergab und folgt dem auf gleicher Höhe bleibendem Weg.
+REVDURATION: 5m</description>
+			<Placemark>
+				<name>12g Abzweig Lempersberg Süd - Pass Kirchstein</name>
+				<Style>
+					<LineStyle>
+						<color>ffff4040</color>
+						<width>4</width>
+					</LineStyle>
+				</Style>
+				<MultiGeometry>
+					<LineString>
+						<coordinates>
+							11.92516439594328,47.65276104211807,1813.66 11.92512072622776,47.65276967547834,1811.74 11.92508443258703,47.65274377539754,1809.82 11.92510094493628,47.65266297385097,1809.34 11.92518325522542,47.65254101715982,1810.3 11.92527285777032,47.6525007840246,1812.7 11.9253068882972,47.65250019729137,1813.66 11.92525709979236,47.65249877236784,1812.22 11.92524963989854,47.65244822949171,1810.78 11.925253495574,47.65241160057485,1809.82 11.92533538676798,47.65228369273245,1808.86 11.92536707036197,47.65217883512378,1806.45 11.92537704482675,47.65216441825032,1805.97 11.92546304315329,47.65209836885333,1804.53 11.92554510198534,47.65205369330943,1804.53 11.92570653744042,47.65194850042462,1804.05 11.92574509419501,47.65194380655885,1804.53 11.92578105255961,47.65193995088339,1805.49 11.92582572810352,47.65192394144833,1806.45 11.92588951438665,47.65187985263765,1805.49 11.92600107751787,47.65182428061962,1805.01 11.92606268450618,47.65176460146904,1801.65 11.92623442970216,47.6516923494637,1799.73 11.92626686766744,47.65167659148574,1799.24 11.92644355818629,47.65159537084401,1796.84 11.92652142606676,47.65156368725002,1796.36 11.92651622928679,47.65157097950578,1796.36 11.92652276717126,47.65153560787439,1794.92 11.92654313519597,47.65146528370678,1792.52 11.92654975689948,47.65146436169744,1792.52 11.92660432308912,47.65141658484936,1791.07 11.92668780684471,47.65134366229177,1788.19 11.92675586789846,47.65132321044803,1787.23 11.92687380127609,47.6513279043138,1788.19 11.92690992727876,47.65131876803935,1788.19 11.9269198179245,47.65131197869778,1787.71 11.92693800665438,47.65129588544369,1787.71 11.92703104577959,47.65125473029912,1786.27 11.92719633691013,47.6511828135699,1785.31 11.92733195610344,47.65113352797926,1783.86 11.92751501686871,47.65106680803001,1782.9 11.92754376679659,47.65103931538761,1784.34 11.92755005322397,47.65103789046407,1784.34 11.92762842401862,47.65099195763469,1783.86 11.92764602601528,47.65097712166607,1782.9 11.92768382839859,47.65094242058694,1782.42 11.92769975401461,47.65091744251549,1781.46 11.92775239236653,47.65087695792317,1778.58 11.92782782949507,47.65081895515323,1775.21 11.92788323387504,47.6507736928761,1773.29 11.92795389331877,47.6507255807519,1771.85 11.92797996103764,47.65072926878929,1771.85 11.92801985889673,47.65071258880198,1770.41 11.92808791995049,47.65066212974489,1767.52 11.92818967625499,47.65060882084072,1765.12 11.92830224521458,47.65058057382703,1763.68 11.92833325825632,47.65056682750583,1763.2 11.92830341868103,47.65048619359732,1760.79 11.92829679697752,47.65044813975692,1760.31 11.9282201025635,47.65042760409415,1757.91 11.9281701464206,47.65043472871184,1756.95 11.92809311673045,47.65041679143906,1755.5 11.92798431962729,47.6503920648247,1754.06 11.92790150642395,47.65036733821034,1751.18 11.9278506282717,47.65036482363939,1750.22 11.92779203876853,47.65034755691886,1747.81 11.92779212258756,47.65032819472253,1747.33 11.92775214090943,47.65027966350317,1745.41 11.92774719558656,47.65026809647679,1744.93 11.92770134657621,47.6502107642591,1742.53 11.92769279703498,47.65019894577563,1742.53 11.92765784449875,47.65016047284007,1739.64 11.92763437516987,47.65015494078398,1738.68 11.92757980898023,47.65007581561804,1739.16 11.92749280482531,47.64985285699368,1741.08 11.92723799496889,47.649613218382,1743.49 11.92708661779761,47.649438790977,1746.37 11.92703037522733,47.64925313182175,1751.18 11.92700497806072,47.64899522066116,1756.47 11.92700531333685,47.64898038469255,1756.95 11.92696122452617,47.64894643798471,1757.91 11.9267401099205,47.64876530505717,1762.71 11.92662636749446,47.64867980964482,1765.6 11.92647088319063,47.64853170141578,1768.48 11.9263843819499,47.64843447133899,1771.37 11.92622638307512,47.64828812330961,1776.65 11.92621900700033,47.64827731065452,1777.13 11.92621607333422,47.64826373197138,1777.61 
+						</coordinates>
+					</LineString>
+				</MultiGeometry>
+			</Placemark>
+		</Folder>
+		<Folder>
+			<name>13a Sattel Kirchstein - Rotwand Abzweig oben</name>
+			<description>FROM: wheretofly-path-sattel-kirchstein
+TO: wheretofly-path-abzweig-rotwand-oben
+DURATION: 20m
+DESC: Wählt man den oberen der beiden Wege, so geht man auf einem meist in gleicher Höhe verlaufenden Weg in Richtung Rotwand-Gipfel. Nach einiger Zeit trifft der Weg mit dem normalen Wanderweg vom Rotwandhaus zusammen.
+REVDESC: Beim Abstieg biegt man in der ersten Kehre den meist in gleicher Höhe verlaufenden Weg ein. Nach einiger Zeit kommt man an einem Sattel mit Drehkreuz, Schildern und dem Kirchstein-Felsen an.
+REVDURATION: 20m</description>
+			<Placemark>
+				<name>13a Kirchstein - Rotwand Abzweig oben</name>
+				<Style>
+					<LineStyle>
+						<color>ffff4040</color>
+						<width>4</width>
+					</LineStyle>
+				</Style>
+				<MultiGeometry>
+					<LineString>
+						<coordinates>
+							11.92623686045408,47.64824386686087,1778.58 11.92626443691552,47.64824721962214,1778.58 11.92629008553922,47.64825065620244,1779.06 11.92631623707712,47.64824847690761,1779.54 11.92664857953787,47.64829181134701,1783.38 11.926992489025,47.64835467562079,1787.71 11.92707605659962,47.6483425218612,1789.15 11.92747185006738,47.64848593622446,1795.4 11.92768340930343,47.64857620932162,1798.76 11.92770377732813,47.64858601614833,1799.24 11.92772707901895,47.64859230257571,1799.73 11.9277470279485,47.6485996786505,1799.73 11.92806235514581,47.64874074608088,1804.53 11.9281133171171,47.64876656234264,1806.45 11.92820585332811,47.64873839914799,1807.9 11.92822932265699,47.6487254910171,1807.9 11.92830442450941,47.64872943051159,1807.42 11.92849670536816,47.64877142384648,1807.9 11.92863970063627,47.64880025759339,1807.9 11.92864917218685,47.64878533780575,1808.38 11.92865654826164,47.64878340996802,1808.38 11.92895008251071,47.64882808551192,1807.42 11.92895025014877,47.64885951764882,1806.94 11.92897112108767,47.64883504249156,1808.86 11.92897497676313,47.64882976189256,1809.34 11.92896232008934,47.64881484210491,1811.26 11.9289939198643,47.64879992231727,1814.15 11.9291234202683,47.64883831143379,1818.95 11.92940178327262,47.64889664947987,1820.87 11.92947579547763,47.6489242259413,1818.47 11.92948979325593,47.64892699196935,1817.99 11.92972624674439,47.64895481988788,1817.51 11.9297431781888,47.64895959757268,1817.51 11.92983655259013,47.64895054511726,1816.07 11.92985616624355,47.64894677326083,1816.07 11.92987712100148,47.64894266612828,1816.07 11.92989606410265,47.6489382237196,1816.07 11.92991467192769,47.64893881045282,1816.07 11.92993462085724,47.64893922954798,1816.07 11.92995456978679,47.6489414088428,1816.07 11.92997359670699,47.64894467778504,1816.55 11.92999161779881,47.64894945546985,1817.03 11.93000687286258,47.64895398169756,1817.03 11.93002028390765,47.64895750209689,1817.51 11.9300352036953,47.64895825646818,1817.51 11.93005372770131,47.64896295033395,1817.99 11.93017249926925,47.64897451736033,1822.32 11.93019093945622,47.64897518791258,1821.84 11.93022245541215,47.64897753484547,1821.35 11.93025925196707,47.64897636137903,1820.39 11.93035681731999,47.64903017319739,1817.99 11.93046745844185,47.64908373355866,1815.11 11.93048598244786,47.64908750541508,1815.11 11.93060995079577,47.64911667443812,1814.63 11.9306272175163,47.64912086538971,1814.15 11.93064372986555,47.64912966638804,1813.66 11.93065982311964,47.64913620427251,1813.66 11.9306723959744,47.64914064668119,1813.66 11.93073760718107,47.64916143380106,1812.7 11.9309971947223,47.64920669607818,1815.11 11.93101580254734,47.6492093782872,1814.63 11.93112795241177,47.64923511072993,1812.22 11.93115502595902,47.64924776740372,1811.26 11.93116709589958,47.64925413765013,1811.26 11.93128469400108,47.64926411211491,1812.22 11.93150530569255,47.64928531832993,1809.82 11.93152617663145,47.64928598888218,1809.34 11.9315445329994,47.6492868270725,1809.34 11.93156808614731,47.64928506687284,1808.86 11.93158971145749,47.64928540214896,1808.86 11.93160681053996,47.64928942546248,1808.38 11.93162189796567,47.64929537661374,1807.9 11.93163279443979,47.64930535107851,1807.9 11.93164167925715,47.64931675046682,1807.9 11.93193001672626,47.64930945821106,1806.45 11.9319520611316,47.64930979348719,1806.45 11.932233273983,47.64930501580238,1808.86 11.93243645131588,47.64931892976165,1810.78 11.93245246075094,47.64931557700038,1810.3 11.93246805109084,47.64931264333427,1810.3 11.932486994192,47.6493095420301,1810.3 11.93250375799835,47.6493108831346,1810.3 11.93251708522439,47.6493164151907,1810.3 11.93253049626946,47.64932094141841,1810.3 11.93254642188549,47.64932337217033,1810.3 11.93256343714893,47.64932689256966,1810.3 11.93275605328381,47.649314571172,1810.78 11.93277759477496,47.64931532554328,1811.26 11.93280265666544,47.64931834302843,1811.26 11.93282713182271,47.64932094141841,1811.74 11.93285319954157,47.64932555146515,1811.74 11.93291421979666,47.64932848513126,1812.22 
+						</coordinates>
+					</LineString>
+				</MultiGeometry>
+			</Placemark>
+		</Folder>
+		<Folder>
+			<name>13b Rotwand Abzweig oben - Rotwand</name>
+			<description>FROM: wheretofly-path-abzweig-rotwand-oben
+TO: wheretofly-path-rotwand
+DURATION: 5m
+DESC: Irgendwann enden die Serpentinen und es ist ein wenig unschwierige Kraxelei nötig, bis man dann endlich auf dem Rotwand-Gipfel mit Kreuz und Navigations-Tafel steht.
+REVDESC: Vom Kreuz aus geht es nach Süden, einige Felsen in unschwieriger Kraxelei hinunter. Der Weg wird breiter und geht in Serpentinen über.
+REVDURATION: 5m</description>
+			<Placemark>
+				<name>13b Rotwand Abzweig oben - Rotwand</name>
+				<Style>
+					<LineStyle>
+						<color>ffff4040</color>
+						<width>4</width>
+					</LineStyle>
+				</Style>
+				<MultiGeometry>
+					<LineString>
+						<coordinates>
+							11.92623686045408,47.64824386686087,1778.58 11.92626443691552,47.64824721962214,1778.58 11.92629008553922,47.64825065620244,1779.06 11.92631623707712,47.64824847690761,1779.54 11.92664857953787,47.64829181134701,1783.38 11.926992489025,47.64835467562079,1787.71 11.92707605659962,47.6483425218612,1789.15 11.92747185006738,47.64848593622446,1795.4 11.92768340930343,47.64857620932162,1798.76 11.92770377732813,47.64858601614833,1799.24 11.92772707901895,47.64859230257571,1799.73 11.9277470279485,47.6485996786505,1799.73 11.92806235514581,47.64874074608088,1804.53 11.9281133171171,47.64876656234264,1806.45 11.92820585332811,47.64873839914799,1807.9 11.92822932265699,47.6487254910171,1807.9 11.92830442450941,47.64872943051159,1807.42 11.92849670536816,47.64877142384648,1807.9 11.92863970063627,47.64880025759339,1807.9 11.92864917218685,47.64878533780575,1808.38 11.92865654826164,47.64878340996802,1808.38 11.92895008251071,47.64882808551192,1807.42 11.92895025014877,47.64885951764882,1806.94 11.92897112108767,47.64883504249156,1808.86 11.92897497676313,47.64882976189256,1809.34 11.92896232008934,47.64881484210491,1811.26 11.9289939198643,47.64879992231727,1814.15 11.9291234202683,47.64883831143379,1818.95 11.92940178327262,47.64889664947987,1820.87 11.92947579547763,47.6489242259413,1818.47 11.92948979325593,47.64892699196935,1817.99 11.92972624674439,47.64895481988788,1817.51 11.9297431781888,47.64895959757268,1817.51 11.92983655259013,47.64895054511726,1816.07 11.92985616624355,47.64894677326083,1816.07 11.92987712100148,47.64894266612828,1816.07 11.92989606410265,47.6489382237196,1816.07 11.92991467192769,47.64893881045282,1816.07 11.92993462085724,47.64893922954798,1816.07 11.92995456978679,47.6489414088428,1816.07 11.92997359670699,47.64894467778504,1816.55 11.92999161779881,47.64894945546985,1817.03 11.93000687286258,47.64895398169756,1817.03 11.93002028390765,47.64895750209689,1817.51 11.9300352036953,47.64895825646818,1817.51 11.93005372770131,47.64896295033395,1817.99 11.93017249926925,47.64897451736033,1822.32 11.93019093945622,47.64897518791258,1821.84 11.93022245541215,47.64897753484547,1821.35 11.93025925196707,47.64897636137903,1820.39 11.93035681731999,47.64903017319739,1817.99 11.93046745844185,47.64908373355866,1815.11 11.93048598244786,47.64908750541508,1815.11 11.93060995079577,47.64911667443812,1814.63 11.9306272175163,47.64912086538971,1814.15 11.93064372986555,47.64912966638804,1813.66 11.93065982311964,47.64913620427251,1813.66 11.9306723959744,47.64914064668119,1813.66 11.93073760718107,47.64916143380106,1812.7 11.9309971947223,47.64920669607818,1815.11 11.93101580254734,47.6492093782872,1814.63 11.93112795241177,47.64923511072993,1812.22 11.93115502595902,47.64924776740372,1811.26 11.93116709589958,47.64925413765013,1811.26 11.93128469400108,47.64926411211491,1812.22 11.93150530569255,47.64928531832993,1809.82 11.93152617663145,47.64928598888218,1809.34 11.9315445329994,47.6492868270725,1809.34 11.93156808614731,47.64928506687284,1808.86 11.93158971145749,47.64928540214896,1808.86 11.93160681053996,47.64928942546248,1808.38 11.93162189796567,47.64929537661374,1807.9 11.93163279443979,47.64930535107851,1807.9 11.93164167925715,47.64931675046682,1807.9 11.93193001672626,47.64930945821106,1806.45 11.9319520611316,47.64930979348719,1806.45 11.932233273983,47.64930501580238,1808.86 11.93243645131588,47.64931892976165,1810.78 11.93245246075094,47.64931557700038,1810.3 11.93246805109084,47.64931264333427,1810.3 11.932486994192,47.6493095420301,1810.3 11.93250375799835,47.6493108831346,1810.3 11.93251708522439,47.6493164151907,1810.3 11.93253049626946,47.64932094141841,1810.3 11.93254642188549,47.64932337217033,1810.3 11.93256343714893,47.64932689256966,1810.3 11.93275605328381,47.649314571172,1810.78 11.93277759477496,47.64931532554328,1811.26 11.93280265666544,47.64931834302843,1811.26 11.93282713182271,47.64932094141841,1811.74 11.93285319954157,47.64932555146515,1811.74 11.93291421979666,47.64932848513126,1812.22 11.9331677723676,47.64940056949854,1815.59 11.93364411592484,47.64949964359403,1820.39 11.93409271538258,47.64954943209887,1827.12 11.93416119553149,47.64954574406147,1828.08 11.93419086746872,47.64954046346247,1829.05 11.93422104232013,47.649539206177,1830.01 11.93425172008574,47.6495426427573,1830.49 11.93427996709943,47.64954658225179,1830.97 11.93430561572313,47.64954892918468,1831.45 11.93432732485235,47.64954515732825,1831.93 11.93433721549809,47.6495426427573,1831.45 11.93438817746937,47.64955538325012,1830.97 11.93464214913547,47.64954440295696,1834.81 11.93480115383863,47.64953543432057,1837.22 11.93480777554214,47.64952403493226,1838.66 11.93507733754814,47.64949964359403,1844.43 11.935108685866,47.64949888922274,1844.91 11.93513651378453,47.64949629083276,1844.91 11.93516132421792,47.64949377626181,1844.91 11.93518353626132,47.64949151314795,1845.39 11.93520675413311,47.64948665164411,1845.39 11.93523642607033,47.64948220923543,1845.39 11.93525847047567,47.64948338270187,1845.39 11.9352707080543,47.64949075877667,1845.39 11.93524028174579,47.6495098695159,1845.87 11.93521924316883,47.64952269382775,1846.35 11.9350946880877,47.64964926056564,1851.64 11.93485077470541,47.64984707348049,1860.77 11.93483342416585,47.64986056834459,1861.25 11.93481540307403,47.64987221919,1862.21 11.93479268811643,47.64988294802606,1862.69 11.93476787768304,47.64989317394793,1863.17 11.93465505726636,47.64999191276729,1866.54 11.93458548747003,47.65003122389317,1869.42 11.93453050218523,47.65009048394859,1872.79 11.93455849774182,47.650131219998,1873.75 11.93459034897387,47.6501367520541,1873.75 11.93465748801827,47.65012669377029,1874.71 11.93462999537587,47.65015033073723,1875.67 11.93454500287771,47.65016047284007,1877.11 11.93453427404165,47.65016508288682,1877.59 11.93451055325568,47.65015871264041,1878.07 11.93436831235886,47.65018218196929,1878.55 11.93440510891378,47.65020506456494,1880 11.93448280915618,47.65022249892354,1880.96 11.9344886764884,47.65021814033389,1880.96 11.9344627764076,47.65021403320134,1880.48 11.93445146083832,47.65021889470518,1880 
+						</coordinates>
+					</LineString>
+				</MultiGeometry>
+			</Placemark>
+		</Folder>
+		<Folder>
+			<name>13c Sattel Hochmiesing - Rotwand</name>
+			<description>FROM: wheretofly-path-sattel-hochmiesing
+TO: wheretofly-path-rotwand
+DURATION: 45m
+DESC: Vom Sattel mit dem Steinwall geht es auf der westlichen Seite direkt einen unscheinbaren Weg in die Latschen hinein, auf dem man wenig später wieder auf Wiesen tritt. Nun geht es steil bergan, mit kleinen Tritten und am Schluß auch mit etwas Kraxelei zum Gipfel der Rotwand, mit Kreuz und Navigationstafel.
+REVDESC: Vom Gipfel aus geht es einen unscheinbaren Weg nach Norden. Gleich muss man etwas nach unten kraxeln, der Weg geht dann in einen Pfad mit engen Tritten über. Weiter unten durchquert man ein Latschenfeld und kommt an einem Sattel mit Wegweiser und einem Steinwall heraus.
+REVDURATION: 45m</description>
+			<Placemark>
+				<name>13c Sattel Hochmiesing - Rotwand</name>
+				<Style>
+					<LineStyle>
+						<color>ffff4040</color>
+						<width>4</width>
+					</LineStyle>
+				</Style>
+				<MultiGeometry>
+					<LineString>
+						<coordinates>
+							11.93519175052643,47.65356654301286,1696.86 11.93513567559421,47.65348901040852,1699.75 11.9350983761251,47.65336294658482,1702.63 11.9351861346513,47.65329957939684,1705.52 11.93515101447702,47.65325314365327,1707.92 11.93501623347402,47.65309732407332,1713.69 11.93487047217786,47.65297503210604,1718.49 11.93482680246234,47.65294997021556,1719.46 11.934804758057,47.65280521474779,1724.26 11.93475731648505,47.65270345844328,1726.67 11.93458070978522,47.65260161831975,1727.15 11.93452698178589,47.65251050703228,1730.51 11.93448297679424,47.65241947956383,1732.91 11.93447560071945,47.6523969322443,1733.88 11.93443385884166,47.65228168107569,1737.72 11.93439161404967,47.65220314264298,1742.05 11.93426043726504,47.65205939300358,1745.89 11.93425423465669,47.65203843824565,1746.37 11.934231268242,47.65185713768005,1750.7 11.93427057936788,47.65181489288807,1755.02 11.93427233956754,47.65173769555986,1755.5 11.93426379002631,47.65167432837188,1757.43 11.93425616249442,47.65165253542364,1758.87 11.93419254384935,47.65159939415753,1763.68 11.93417510949075,47.65154792927206,1765.12 11.93414635956287,47.65152948908508,1765.12 11.93414258770645,47.65148037113249,1766.56 11.93409556522965,47.65137643553317,1770.41 11.93406941369176,47.65129161067307,1773.77 11.93407519720495,47.65126478858292,1774.73 11.93403555080295,47.65124433673918,1775.69 11.93405063822866,47.6512055285275,1778.1 11.93407762795687,47.65114224515855,1780.5 11.93402188830078,47.65111399814487,1783.86 11.93401861935854,47.65106219798327,1789.15 11.9340156018734,47.65100562013686,1793 11.93412465043366,47.65096547082067,1801.65 11.934157256037,47.65096622519195,1803.09 11.93422012031078,47.65100142918527,1802.61 11.93427342921495,47.65102213248611,1804.05 11.9342674780637,47.65105507336557,1805.49 11.93434459157288,47.65101383440197,1806.45 11.93436965346336,47.65096622519195,1808.86 11.93442220799625,47.65098424628377,1809.34 11.93447350524366,47.65101995319128,1811.26 11.93448557518423,47.65098919160664,1813.66 11.93449613638222,47.65094895847142,1814.63 11.93452136591077,47.65091618523002,1817.03 11.93459806032479,47.6508928835392,1820.39 11.93465036340058,47.65092154964805,1820.87 11.93468355573714,47.65091408975422,1823.28 11.9346942845732,47.65087276697159,1826.16 11.93464575335383,47.65083119273186,1829.53 11.93466461263597,47.65082096680999,1830.97 11.93463410250843,47.65077277086675,1833.37 11.93466318771243,47.65078148804605,1835.29 11.93463326431811,47.6507633831352,1838.18 11.93465488962829,47.65072801150382,1839.14 11.93460778333247,47.65071694739163,1842.98 11.93463770672679,47.65067864209414,1844.43 11.93466922268271,47.65066187828779,1846.35 11.93467793986201,47.65065249055624,1848.27 11.93461038172245,47.65064293518663,1850.68 11.93459068425,47.65060915611684,1854.52 11.93463670089841,47.65058283694089,1854.52 11.9346562307328,47.65058644115925,1856.44 11.93454558961093,47.65056892298162,1859.81 11.9345217011869,47.65048275701702,1865.09 11.93457283079624,47.65043833293021,1866.06 11.93456738255918,47.65044797211886,1867.02 11.93456185050309,47.65044746920466,1868.46 11.93453226238489,47.65045702457428,1867.5 11.93451097235084,47.65037789940834,1870.86 11.93449865095317,47.65034923329949,1872.3 11.9344937056303,47.65033288858831,1872.79 11.93445615470409,47.65027530491352,1876.15 11.93447752855718,47.65025326050818,1876.63 11.93440896458924,47.65023917891085,1876.63 11.93440142087638,47.65023716725409,1876.63 
+						</coordinates>
+					</LineString>
+				</MultiGeometry>
+			</Placemark>
+		</Folder>
+		<Folder>
+			<name>13d Rotwandhaus Kreuzung - Rotwand Abzweig oben</name>
+			<description>FROM: wheretofly-path-kreuzung-rotwandhaus
+TO: wheretofly-path-abzweig-rotwand-oben
+DURATION: 15m
+DESC: Von den Wegweisern an folgt man den Wanderpfad direkt nach Norden zur bereits sichtbaren Rotwand. Der Weg geht irgendwann in Serpentinen über.
+REVDESC: Man folgt dem Weg bis kurz vor dem Rotwandhaus, wo Wegweiser stehen und mehrere Wege zusammentreffen.
+REVDURATION: 10m</description>
+			<Placemark>
+				<name>13d Rotwandhaus Kreuzung - Rotwand Abzweig oben</name>
+				<Style>
+					<LineStyle>
+						<color>ffff4040</color>
+						<width>4</width>
+					</LineStyle>
+				</Style>
+				<MultiGeometry>
+					<LineString>
+						<coordinates>
+							11.93292100913823,47.64930518344045,1805.01 11.9328189175576,47.6492281537503,1802.61 11.93277751095593,47.64913243241608,1800.21 11.93285454064608,47.64912664890289,1796.84 11.93297632969916,47.64912597835064,1792.52 11.93314044736326,47.64905833639205,1788.67 11.93326257169247,47.64904081821442,1787.23 11.93336986005306,47.6489728409797,1783.86 11.93339710123837,47.64894811436534,1783.38 11.93354554474354,47.64889019541442,1780.98 11.93372500129044,47.64881475828588,1777.61 11.93378258496523,47.64879212714732,1776.65 11.93390923552215,47.64872264117003,1772.81 11.93398458883166,47.64866212382913,1771.85 11.9340880215168,47.64852977357805,1770.41 11.93419237621129,47.64842793345451,1767.52 11.93434710614383,47.64831963926554,1763.68 11.93447090685368,47.64819382689893,1760.79 11.93448431789875,47.64817605726421,1759.83 11.93458255380392,47.64804571866989,1754.54 11.93463502451778,47.64798528514803,1753.58 11.9347579870373,47.64788864180446,1751.66 11.93487248383462,47.64773852191865,1747.81 11.93497189320624,47.64757440425456,1742.53 11.93499955348671,47.64751045033336,1742.53 11.93505839444697,47.64736259356141,1741.08 11.93509334698319,47.64723493717611,1736.76 11.93518747575581,47.64707174152136,1731.47 11.93518378771842,47.64707081951201,1731.95 11.93520155735314,47.64695975929499,1730.51 11.93522879853845,47.64684207737446,1728.11 11.93525964394212,47.64668868854642,1724.26 
+						</coordinates>
+					</LineString>
+				</MultiGeometry>
+			</Placemark>
+		</Folder>
+		<Folder>
+			<name>13e Rotwandhaus Kreuzung - Rotwandhaus</name>
+			<description>FROM: wheretofly-path-kreuzung-rotwandhaus
+TO: wheretofly-path-rotwandhaus
+DURATION: 1m
+DESC: Jetzt sind es nur noch wenige Meter bis zum Rotwandhaus.
+REVDESC: Zurück vom Rotwandhaus geht es wieder zur Kreuzung mehrerer Wege.
+REVDURATION: 1m</description>
+			<Placemark>
+				<name>13e Rotwandhaus Kreuzung - Rotwandhaus</name>
+				<Style>
+					<LineStyle>
+						<color>ffff4040</color>
+						<width>4</width>
+					</LineStyle>
+				</Style>
+				<MultiGeometry>
+					<LineString>
+						<coordinates>
+							11.93525779992342,47.64662766829133,1722.82 11.93523240275681,47.64643019065261,1725.22 11.9352003838867,47.64637880958617,1725.7 11.93517347797751,47.64630689285696,1727.15 11.93519216962159,47.6462718565017,1727.15 
+						</coordinates>
+					</LineString>
+				</MultiGeometry>
+			</Placemark>
+		</Folder>
+		<Folder>
+			<name>13f Rotwandhaus Kreuzung - Abzweig Auerspitz</name>
+			<description>FROM: wheretofly-path-kreuzung-rotwandhaus
+TO: wheretofly-path-abzweig-auerspitz
+DURATION: 5m
+DESC: Wir nehmen den Weg in Richtung Osten, auf dem wir gleich wieder auf Wegweiser treffen.
+REVDESC: Von den Wegweisern gehen wir nach Westen, wo wir unterhalb des Rotwandhauses auf eine Kreuzung mit Wegweiser treffen.
+REVDURATION: 5m</description>
+			<Placemark>
+				<name>13f Rotwandhaus Kreuzung - Abzweig Auerspitz</name>
+				<Style>
+					<LineStyle>
+						<color>ffff4040</color>
+						<width>4</width>
+					</LineStyle>
+				</Style>
+				<MultiGeometry>
+					<LineString>
+						<coordinates>
+							11.93525779992342,47.64662766829133,1722.82 11.93535880185664,47.64665717259049,1727.63 11.93544656038284,47.64674166217446,1727.63 11.93558628670871,47.64677309431136,1729.07 11.93565987981856,47.64678197912872,1733.88 11.9357923977077,47.64680008403957,1736.28 11.93596330471337,47.64684174209833,1735.8 11.93598367273808,47.64686085283756,1735.32 11.93601728416979,47.64686495997012,1734.84 11.9361031986773,47.64684719033539,1734.36 11.93624937906861,47.64686395414174,1733.88 11.93626027554274,47.64687568880618,1733.88 11.93633797578514,47.64688448980451,1732.91 11.93639958277345,47.64689287170768,1730.03 11.93650553002954,47.64692799188197,1728.11 11.93657065741718,47.64694693498313,1726.67 11.93667517974973,47.64694668352604,1726.67 11.93688087165356,47.6469246391207,1724.74 11.93693602457643,47.64694215729833,1723.3 11.93703945726156,47.64699286781251,1721.38 11.93704398348928,47.64703653752804,1720.42 11.93707407452166,47.64707232825458,1719.46 11.93719678558409,47.64708783477545,1716.57 11.93722788244486,47.64707786031067,1716.57 11.93725445307791,47.64708456583321,1716.57 11.93730533123016,47.64710325747728,1716.09 11.93731823936105,47.64709806069732,1715.13 11.93737003952265,47.64710443094373,1710.8 11.93743977695704,47.6470422372222,1708.4 11.93759894929826,47.64695070683956,1708.88 11.93772543221712,47.64693000353873,1708.4 11.93796951323748,47.64689831994474,1701.19 11.93808895535767,47.64689245261252,1701.19 11.93825793452561,47.64686546288431,1699.27 11.93826254457235,47.64686898328364,1698.79 11.93836807273328,47.64683394692838,1695.42 11.93841115571559,47.64683562330902,1695.9 
+						</coordinates>
+					</LineString>
+				</MultiGeometry>
+			</Placemark>
+		</Folder>
+		<Folder>
+			<name>13g Abzweig Auerspitz - Waitzinger Alm</name>
+			<description>FROM: wheretofly-path-abzweig-auerspitz
+TO: wheretofly-path-waitzinger-alm
+DURATION: 2h
+DESC: Wir folgend dem Wegweiser zur Waitzinger Alm und passieren zuerst eine Almwiese, später geht es wieder in den Wald. Weiter unten folgt der Weg dann einem Flusslauf, und schließlich kommen wir an der Waitzinger Alm (keine Einkehrmöglichkeit) an der Valeppstraße an. Hier gibt es auch eine Bushaltestelle.
+REVDESC: Von der Waitzinger Alm geht es zunächst an einem Flußlauf entlang, dann bergauf im Wald und schließlich auf eine Almwiese. Nach ein paar Serpentinen stoßen wir auf einen Wegweiser.
+REVDURATION: 3h</description>
+			<Placemark>
+				<name>13g Abzweig Auerspitz - Waitzinger Alm</name>
+				<Style>
+					<LineStyle>
+						<color>ffff4040</color>
+						<width>4</width>
+					</LineStyle>
+				</Style>
+				<MultiGeometry>
+					<LineString>
+						<coordinates>
+							11.93841115571559,47.64683562330902,1695.9 11.9384553283453,47.64677963219583,1694.46 11.93853470496833,47.64667795971036,1693.02 11.93854711018503,47.64667100273073,1692.54 11.93856865167618,47.64661249704659,1691.1 11.93867543712258,47.64657720923424,1687.73 11.93875774741173,47.64650713652372,1686.77 11.93884869106114,47.64644703827798,1684.85 11.93884827196598,47.64642164111137,1684.37 11.93879119120538,47.64635592699051,1682.44 11.93868708796799,47.64628023840487,1680.52 11.9386881776154,47.64627680182457,1680.04 11.93864794448018,47.64623682014644,1677.64 11.9386868365109,47.64615149237216,1673.31 11.93876218982041,47.64610924758017,1669.47 11.93879948928952,47.6460318826139,1668.51 11.93885263055563,47.64592291787267,1666.1 11.93889973685145,47.64587539248169,1665.62 11.9389817956835,47.64583264477551,1662.74 11.93910241127014,47.64575930312276,1659.37 11.93912143819034,47.6457086764276,1657.93 11.93915563635528,47.64567850157619,1657.45 11.93918933160603,47.64561245217919,1656.01 11.93914264440537,47.64551513828337,1653.6 11.93911389447749,47.64546317048371,1651.68 11.93911707960069,47.64535613358021,1649.28 11.93903367966414,47.64524105004966,1645.43 11.93900543265045,47.64520978555083,1644.95 11.93888640962541,47.64507282525301,1645.91 11.93887626752257,47.64506603591144,1645.43 11.93886537104845,47.64498883858323,1643.51 11.93895732052624,47.64491206035018,1641.59 11.93897249177098,47.6449023373425,1643.03 11.93901331163943,47.64487006701529,1642.55 11.93897207267582,47.64484936371446,1639.67 11.93890183232725,47.64482136815786,1639.19 11.93880493752658,47.64478515833616,1638.7 11.93873276934028,47.64474844560027,1640.15 11.93865305744112,47.64470921829343,1638.7 11.93858432583511,47.64467284083366,1636.78 11.93848877213895,47.64463914558291,1632.46 11.93841492757201,47.644586507231,1630.53 11.93831375800073,47.6445431727916,1628.61 11.93826413713396,47.64449154026806,1629.09 11.9381960760802,47.64445725828409,1624.77 11.9380993489176,47.64440596103668,1622.36 11.93803086876869,47.64439104124904,1621.4 11.93795786239207,47.64433957636356,1622.84 11.93790849298239,47.64431426301599,1621.88 11.93781084381044,47.64429003931582,1619.48 11.93770808167756,47.64425760135055,1613.71 11.93755586631596,47.64423279091716,1606.98 11.93754438310862,47.64422256499529,1606.98 11.93754505366087,47.64421376399696,1602.17 11.93753340281546,47.64417721889913,1600.73 11.93763432092965,47.64411695301533,1599.29 11.9377211574465,47.64406397938728,1598.33 11.93782274611294,47.64402005821466,1596.41 11.93790338002145,47.64397102408111,1594.48 11.93801402114332,47.64393858611584,1590.16 11.93810597062111,47.64393305405974,1589.2 11.93810974247754,47.64392014592886,1585.35 11.93814746104181,47.64389952644706,1584.87 11.93824108690023,47.64387127943337,1583.43 11.93831317126751,47.64382752589881,1581.03 11.93840721622109,47.64380070380867,1578.14 11.93850142881274,47.64374596998096,1575.26 11.93859530612826,47.64370816759765,1571.89 11.93866370245814,47.64370322227478,1568.05 11.93869169801474,47.64365376904607,1563.72 11.93875028751791,47.64357481151819,1558.43 11.93877694196999,47.64354011043906,1555.55 11.93881164304912,47.64349543489516,1553.63 11.93880745209754,47.64346919953823,1553.63 11.93884005770087,47.64342620037496,1551.22 11.93888339214027,47.64336216263473,1549.78 11.93885372020304,47.64333978295326,1548.82 11.93880376406014,47.64328714460135,1547.38 11.93883318454027,47.64323718845844,1544.98 11.93884341046214,47.64324682764709,1543.05 11.93881591781974,47.64325646683574,1544.5 11.9388023391366,47.64316108077765,1543.53 11.93881826475263,47.64307768084109,1542.09 11.9388559833169,47.6430063508451,1540.17 11.93883075378835,47.64288037084043,1538.25 11.93886310793459,47.64276017434895,1536.32 11.93891859613359,47.64269856736064,1533.44 11.93895162083209,47.64259471558034,1530.08 11.93903694860637,47.64244669117034,1529.11 11.93907206878066,47.6423675660044,1528.15 11.93916242569685,47.64225969091058,1525.75 11.93916041404009,47.64214418828487,1522.87 11.93912093527615,47.64208551496267,1519.5 11.93902404047549,47.64196531847119,1517.1 11.93895229138434,47.64187856577337,1514.69 11.93892429582775,47.64179483056068,1513.73 11.93890468217433,47.6417214050889,1511.33 11.93887325003743,47.64170480892062,1511.33 11.93877342157066,47.64156801626086,1509.89 11.93884047679603,47.64145787805319,1510.85 11.93880963139236,47.64142259024084,1510.85 11.93877861835063,47.64135570265353,1508.45 11.93875950761139,47.64130264520645,1507.97 11.93873503245413,47.64120700769126,1507 11.93877954035997,47.64114229939878,1506.52 11.93879010155797,47.64107566326857,1505.08 11.93877509795129,47.64099611900747,1504.12 11.93869060836732,47.64093643985689,1497.39 11.93861114792526,47.64090517535806,1496.91 11.93856353871524,47.64085764996707,1491.62 11.93851727060974,47.64079721644521,1491.14 11.93849899806082,47.64068682678044,1490.66 11.93848852068186,47.6406801212579,1491.14 11.93849329836667,47.64058783650398,1487.78 11.93841853179038,47.64049873687327,1483.45 11.93846421316266,47.64040879905224,1482.01 11.93847343325615,47.64030343852937,1482.01 11.93848240189254,47.64023923315108,1481.53 11.93847787566483,47.64021517708898,1481.53 11.93850117735565,47.6401153486222,1478.65 11.9384690746665,47.63998936861754,1475.76 11.93847075104713,47.63993740081787,1474.8 11.93846966139972,47.63984109275043,1470.47 11.93840788677335,47.63974050991237,1467.11 11.9384431745857,47.63964973390102,1464.23 11.93841962143779,47.63956331647933,1460.38 11.93839623592794,47.63947354629636,1459.9 11.93843755871058,47.6393489073962,1457.5 11.93846530281007,47.63925301842392,1455.09 11.93842833861709,47.63918277807534,1453.17 11.93832205608487,47.63908370397985,1452.21 11.93828827701509,47.63906677253544,1452.21 11.938232537359,47.6390222646296,1449.81 11.93820739164949,47.63894850388169,1447.88 11.93804888986051,47.63887834735215,1444.52 11.93805693648756,47.63879151083529,1442.11 11.93798393011093,47.63872671872377,1440.67 11.93789608776569,47.63865320943296,1436.35 11.93781495094299,47.63856436125934,1435.87 11.93778980523348,47.63848640955985,1435.87 11.93775200285018,47.63843435794115,1434.42 11.93761722184718,47.63835489749908,1435.87 11.9375953450799,47.63828893192112,1431.06 11.93756885826588,47.63822673819959,1425.29 11.93746844306588,47.63816077262163,1422.41 11.9374137930572,47.63807846233249,1422.41 11.9373136293143,47.63795684091747,1424.33 11.93725730292499,47.6378829125315,1422.89 11.93723324686289,47.63781510293484,1420.97 11.93721405230463,47.63773689977825,1418.08 11.93713936954737,47.63765098527074,1413.76 11.93705454468727,47.63758040964603,1410.87 11.93698204122484,47.63755291700363,1410.39 11.93700718693435,47.63752232305706,1413.28 11.93698883056641,47.63750270940363,1410.87 11.93705077283084,47.63750916346908,1413.28 11.93700794130564,47.63745853677392,1412.31 11.9370186701417,47.63749265111983,1411.35 11.93703392520547,47.63751729391515,1411.83 11.937027387321,47.63749893754721,1407.99 11.93701037205756,47.63748217374086,1409.43 11.93702856078744,47.63747957535088,1408.47 11.93705094046891,47.63748644851148,1411.83 11.93696837872267,47.63756238855422,1422.41 11.93696888163686,47.63753372244537,1423.85 11.93700760602951,47.63751301914454,1422.89 11.93699302151799,47.63751528225839,1417.6 11.93692127242684,47.63751301914454,1416.16 11.93681934848428,47.63746147044003,1415.68 11.93671482615173,47.63741126284003,1408.47 11.93657954223454,47.63738318346441,1403.66 11.93657794967294,47.63733834028244,1401.26 11.93656219169498,47.63725670054555,1400.78 11.93654316477478,47.63722049072385,1401.74 11.93651617504656,47.63716332614422,1401.26 11.93639572709799,47.6370831951499,1399.34 11.93626463413239,47.63704095035791,1396.45 11.93613270297647,47.63695998117328,1395.01 11.93603312596679,47.63686995953322,1392.13 11.93591552786529,47.63674196787179,1390.2 11.93577253259718,47.63665529899299,1389.24 11.93574956618249,47.63658899813891,1390.68 11.93568041548133,47.63647961430252,1386.84 11.93559416569769,47.63640719465911,1382.99 11.93551730364561,47.63636092655361,1378.67 11.93545837886632,47.63633200898767,1381.55 11.93536173552275,47.63620276004076,1381.07 11.93520977161825,47.63614475727081,1379.15 11.93512285128236,47.6361677236855,1376.75 11.93509544245899,47.63618038035929,1376.26 11.93501623347402,47.63618096709251,1373.86 11.93490265868604,47.63611055910587,1372.42 11.93488488905132,47.63605121523142,1371.46 11.93486980162561,47.63595691882074,1370.98 11.93483778275549,47.63588441535831,1370.5 11.93470526486635,47.63579992577434,1367.61 11.93460744805634,47.63578861020505,1363.29 11.93449890241027,47.63579925522208,1357.52 11.93430352024734,47.63576237484813,1358 11.93409564904869,47.63571786694229,1355.12 11.93404762074351,47.63568727299571,1353.19 11.93392474204302,47.63569942675531,1348.87 11.93382977508009,47.63568073511124,1346.46 11.93379473872483,47.63566816225648,1345.98 11.93365719169378,47.63565936125815,1343.58 11.93352651782334,47.63567863963544,1342.14 11.93350011482835,47.63567972928286,1342.14 11.93340372294188,47.63567998073995,1338.29 11.93333951756358,47.63567067682743,1334.93 11.93321513012052,47.63565014116466,1331.56 11.93311513401568,47.63559138402343,1330.12 11.93308361805975,47.63556841760874,1330.6 11.93295294418931,47.63553002849221,1330.12 11.93290080875158,47.63550421223044,1327.24 11.93286124616861,47.63540832325816,1321.95 11.93283802829683,47.63541117310524,1320.99 11.93274012766779,47.63543631881475,1319.07 11.93261045962572,47.63546188361943,1319.07 11.93256570026279,47.63543481007218,1315.22 11.9325284846127,47.63535602018237,1314.74 11.93251851014793,47.63533422723413,1314.74 11.93250987678766,47.63526080176234,1313.78 11.93250644020736,47.63515192084014,1312.82 11.93252982571721,47.63508453033865,1311.86 11.9325218629092,47.63509115204215,1310.9 11.93249462172389,47.63508721254766,1310.41 11.93249319680035,47.6350852008909,1308.97 11.93248003721237,47.63508008792996,1308.49 11.93240116350353,47.63506944291294,1308.01 11.93233620375395,47.6350487396121,1308.49 11.93227652460337,47.63496047817171,1308.01 11.93223805166781,47.63481982983649,1306.57 11.9322348665446,47.63481488451362,1306.57 11.93221366032958,47.63478906825185,1305.61 11.9321331102401,47.63475160114467,1303.2 11.93203093484044,47.63471111655235,1300.8 11.93189330399036,47.63472335413098,1295.51 11.93175810389221,47.63474573381245,1289.75 11.93172122351825,47.63472209684551,1285.42 11.93171376362443,47.63468446210027,1283.98 11.93167923018336,47.63462780043483,1282.06 11.93154327571392,47.63463500887156,1278.21 11.93139877170324,47.63469971716404,1274.36 11.93132769316435,47.6346861384809,1272.44 11.9312990270555,47.63469091616571,1271.96 11.93114111199975,47.63472285121679,1271.48 11.9311227556318,47.63471698388457,1270.52 11.93109501153231,47.63464096002281,1269.56 11.9310899823904,47.6346102822572,1269.08 11.93107254803181,47.63456921093166,1269.08 11.93105117417872,47.63451422564685,1267.64 11.93104572594166,47.63443577103317,1265.23 11.93100264295936,47.63435329310596,1265.23 11.93099903874099,47.63434633612633,1265.23 11.93096903152764,47.63426436111331,1263.31 11.93095805123448,47.63417115435004,1259.94 11.93096836097539,47.63408876024187,1256.58 11.93091547116637,47.63409311883152,1254.18 11.93075822666287,47.63415455818176,1252.25 11.93065186031163,47.63417542912066,1251.77 11.93048992194235,47.63420074246824,1249.37 11.93041381426156,47.63420610688627,1248.89 11.93038892000914,47.63420996256173,1247.93 11.93034541793168,47.63421381823719,1247.93 11.93026386201382,47.63420501723886,1248.41 11.93016855977476,47.6342233736068,1246.97 11.93009136244655,47.63428288511932,1245.53 11.93008842878044,47.63434449210763,1242.64 11.93010460585356,47.63446242548525,1240.24 11.93011600524187,47.63453291729093,1240.72 11.93014735355973,47.6346139702946,1241.2 11.93011650815606,47.63462159782648,1241.2 11.92994551733136,47.63461078517139,1239.76 11.92983973771334,47.63460366055369,1239.76 11.929688192904,47.63456309214234,1238.32 11.92948845215142,47.63457432389259,1237.83 11.92943346686661,47.63468345627189,1238.32 11.9293322134763,47.6346966996789,1237.83 11.92920019850135,47.6346861384809,1232.07 11.92908813245595,47.63469024561346,1223.42 11.92896525375545,47.63470139354467,1218.13 11.92890205420554,47.63472704216838,1217.65 11.92884522490203,47.63477750122547,1214.76 11.92880909889936,47.63487934134901,1213.8 11.92874967120588,47.6350159663707,1212.84 11.92867088131607,47.63506148010492,1210.44 11.92860122770071,47.63504748232663,1209 11.92850047722459,47.6350521761924,1208.03 11.92838690243661,47.63503566384316,1207.55 11.9283823762089,47.63498629443348,1207.07 11.92838371731341,47.63497028499842,1207.07 11.92836846224964,47.63487598858774,1206.59 11.92828196100891,47.63476551510394,1206.59 11.92818841896951,47.63465110212565,1206.11 11.92804626189172,47.63454020954669,1205.63 11.92797233350575,47.63446711935103,1203.71 11.92793771624565,47.63436393812299,1202.75 11.9278300087899,47.63426159508526,1201.79 11.92774367518723,47.63419018127024,1198.42 11.92758601158857,47.63413318432868,1196.5 11.92746573127806,47.63409932143986,1193.61 11.92734469659627,47.63408775441349,1191.69 11.92727889865637,47.63410929590464,1187.85 11.92719860002399,47.63414056040347,1187.37 11.92710245959461,47.63413276523352,1187.37 11.92700296640396,47.63409831561148,1187.37 11.92696055397391,47.63408238999546,1186.88 11.9269441254437,47.63407442718744,1186.88 11.92680322565138,47.6340264827013,1187.37 11.92670255899429,47.63398004695773,1185.92 11.92665486596525,47.63396915048361,1186.4 11.92662737332285,47.63396445661783,1186.4 11.92659828811884,47.63395733200014,1186.4 11.92657163366675,47.63395288959146,1186.4 11.92655202001333,47.6339559070766,1186.4 11.92640575580299,47.63394593261182,1185.44 11.92631405778229,47.63395087793469,1185.44 11.92629494704306,47.63393696397543,1185.44 11.92615807056427,47.63389731757343,1187.37 11.92613669671118,47.63389128260315,1187.37 11.92611331120133,47.63387619517744,1187.85 11.92583251744509,47.63384367339313,1178.71 11.92580904811621,47.63383897952735,1178.23 11.92578725516796,47.63383998535574,1178.23 11.92572891712189,47.63384375721216,1178.23 11.92570796236396,47.633848618716,1177.75 11.92565482109785,47.6338658016175,1177.75 11.92563621327281,47.6338779553771,1177.75 11.92561492323875,47.63388927094638,1177.27 11.92550503648818,47.63388675637543,1176.79 11.92546823993325,47.6338985748589,1176.79 11.92539028823376,47.63393989764154,1176.31 11.92525207065046,47.63388038612902,1175.35 11.92520420998335,47.63380696065724,1174.39 11.92519851028919,47.63378868810833,1173.91 11.92509164102376,47.63372272253037,1173.43 11.92499700933695,47.63363546691835,1172.95 11.92488502711058,47.63361744582653,1175.35 11.92492878064513,47.63364770449698,1182.56 11.92536941729486,47.63349750079215,1171.98 11.92464211955667,47.63354343362153,1152.76 11.92455008625984,47.6335052959621,1151.8 11.92438940517604,47.63343371450901,1151.32 11.92426141351461,47.63332240283489,1150.35 11.9242468290031,47.63331393711269,1150.35 11.92414943128824,47.63329725712538,1149.87 11.92403082735837,47.63323749415577,1148.43 11.92401280626655,47.63323078863323,1148.43 11.92399386316538,47.6332254242152,1148.43 11.92397282458842,47.63322492130101,1148.43 11.92395304329693,47.63322425074875,1148.43 11.92389822565019,47.63322492130101,1148.43 11.92387970164418,47.63322601094842,1148.43 11.92386201582849,47.6332201436162,1148.43 11.92384231835604,47.63321720995009,1148.43 11.92381935194135,47.6332132704556,1147.95 11.92376838997006,47.63321788050234,1147.95 11.92375179380179,47.63322123326361,1147.95 11.92373435944319,47.63322441838682,1147.95 11.92371466197074,47.63322617858648,1147.95 11.92369504831731,47.6332307048142,1147.47 11.92367786541581,47.63323380611837,1147.47 11.92366051487625,47.6332320459187,1147.47 11.92364249378443,47.63323154300451,1147.47 11.92362212575972,47.63323196209967,1146.99 11.9235628657043,47.63323707506061,1146.99 11.92352841608226,47.63323422521353,1146.99 11.92350461147726,47.63323087245226,1146.51 11.92348566837609,47.63322324492037,1146.51 11.92336287349463,47.63321612030268,1146.03 11.92334066145122,47.63321461156011,1146.03 11.92332272417843,47.6332164555788,1146.03 11.92320638336241,47.63323724269867,1145.07 11.92318693734705,47.63324084691703,1145.07 11.92316388711333,47.63324302621186,1145.07 11.92313656210899,47.63324378058314,1144.59 11.92311166785657,47.6332444511354,1144.59 11.92308828234673,47.63324855826795,1144.59 11.92305182106793,47.63325400650501,1144.59 11.92303195595741,47.63325434178114,1144.59 11.92301259376109,47.63325626961887,1144.11 11.92287085577846,47.63333044946194,1143.63 11.92285166122019,47.6333356462419,1143.63 11.92283313721418,47.63333464041352,1143.63 11.92281536757946,47.63333547860384,1143.63 11.92279600538313,47.63333505950868,1143.14 11.92277412861586,47.633335897699,1143.14 11.92275334149599,47.63334201648831,1143.14 11.92269927822053,47.63333983719349,1142.66 11.92267991602421,47.63333665207028,1142.66 11.92266097292304,47.63333112001419,1142.18 11.92264202982187,47.63332349248231,1142.18 11.92261562682688,47.63331762515008,1142.18 11.92258914001286,47.63331251218915,1142.18 11.92256432957947,47.63330823741853,1142.18 11.92254018969834,47.6333063095808,1142.18 11.92251906730235,47.63330806978047,1142.18 11.92249936982989,47.63331209309399,1142.18 11.92248076200485,47.63331402093172,1141.7 11.92238059826195,47.63333204202354,1141.22 11.92235545255244,47.63333262875676,1141.22 11.92232930101454,47.63333288021386,1141.22 11.9223054125905,47.63333707116544,1141.22 11.92228420637548,47.63334411196411,1140.74 11.92226425744593,47.63335064984858,1140.74 11.92224145866931,47.63335475698113,1140.74 11.92221840843558,47.63335785828531,1140.74 11.92219560965896,47.63336464762688,1140.74 11.92217566072941,47.6333757955581,1140.74 11.9221399538219,47.63338887132704,1140.26 11.92212184891105,47.63339289464057,1140.26 11.92210449837148,47.63340068981051,1140.26 11.92207013256848,47.63340940698981,1139.78 11.9220516923815,47.63340840116143,1139.78 11.92203341983259,47.6334032882005,1139.78 11.92194792442024,47.63342298567295,1139.78 11.92192847840488,47.63342767953873,1139.78 11.92191121168435,47.63343388214707,1139.78 11.9218931067735,47.63344544917345,1139.78 11.92176352255046,47.63349238783121,1139.3 11.92171775735915,47.63355089351535,1138.82 11.92170266993344,47.63355852104724,1138.82 11.92167107015848,47.63356857933104,1138.82 11.92159563302994,47.63356765732169,1138.34 11.92157367244363,47.63356313109398,1138.34 11.9215511251241,47.63356170617044,1137.86 11.9215233810246,47.63355826959014,1137.38 11.92149731330574,47.63355433009565,1137.38 11.92131609655917,47.63356774114072,1135.94 11.92129463888705,47.63357268646359,1135.94 11.92127200774849,47.63357729651034,1135.94 11.92124761641026,47.63358014635742,1135.94 11.92122372798622,47.6335811521858,1135.94 11.9212006777525,47.63358048163354,1135.45 11.92116882652044,47.63358727097511,1135.45 11.92115164361894,47.6335914619267,1135.45 11.92113605327904,47.63359028846026,1134.97 11.92110311239958,47.63358903117478,1134.97 11.9210865162313,47.63359355740249,1134.97 11.92106983624399,47.63359531760216,1134.97 11.92088610492647,47.63362473808229,1134.49 11.92085601389408,47.63363588601351,1134.49 11.92082391120493,47.63364401645958,1134.49 11.9207913056016,47.63365415856242,1134.49 11.92064386792481,47.63371526263654,1134.01 11.92059525288642,47.63372666202486,1133.53 11.92035209387541,47.63377686962485,1133.05 11.92033113911748,47.63378751464188,1133.05 11.92022787407041,47.63380670920014,1132.57 11.92020800895989,47.63380830176175,1132.57 11.92004162818193,47.63384660705924,1132.09 11.92002260126174,47.63385381549597,1132.09 11.92000483162701,47.63386144302785,1132.09 11.91991154104471,47.63382246717811,1131.13 11.91989846527576,47.63380687683821,1130.65 11.91984079778194,47.63367653824389,1129.21 11.91977114416659,47.63364309445024,1128.73 11.91974398680031,47.63364016078413,1128.73 11.91971917636693,47.63363689184189,1128.73 11.9196961261332,47.63363404199481,1128.73 11.91967265680432,47.63363420963287,1128.73 11.91965019330382,47.63363907113671,1128.24 11.91963141784072,47.63364594429731,1128.24 11.91961574368179,47.63365508057177,1128.24 11.91960074007511,47.6336657255888,1128.24 11.9195824675262,47.63367410749197,1127.76 11.9195600040257,47.63368324376643,1127.76 11.91953686997294,47.63369338586927,1127.76 11.91951599903405,47.63369933702052,1127.76 11.91949663683772,47.63370646163821,1127.76 11.91947509534657,47.63370914384723,1127.28 11.91942119970918,47.63372154906392,1127.28 11.91932547837496,47.633764045313,1126.8 11.91930175758898,47.63376957736909,1126.8 11.91927921026945,47.6337656378746,1126.8 11.91920662298799,47.63377770781517,1126.32 11.91918558441103,47.6337833236903,1126.8 11.9191659707576,47.63379002921283,1126.32 11.91914677619934,47.63379631564021,1126.32 11.91912439651787,47.63379715383053,1126.32 11.91910126246512,47.63379556126893,1126.32 11.91908357664943,47.63379631564021,1126.32 11.91904569044709,47.63380293734372,1126.32 11.9189867656678,47.63381735421717,1125.84 11.91885433159769,47.63377494178712,1123.92 11.91885215230286,47.63370260596275,1123.44 11.91883019171655,47.63367058709264,1122.96 11.91881803795695,47.63365935534239,1122.96 11.91879104822874,47.63365667313337,1122.48 11.9187774695456,47.63366036117077,1122.48 11.91875852644444,47.63366262428463,1122.48 11.91873975098133,47.63366631232202,1122.48 11.91872290335596,47.6336725987494,1122.48 11.91870857030153,47.63368424959481,1122.48 11.91869423724711,47.6336950622499,1122.48 11.91867873072624,47.63370227068663,1122.48 11.91857990808785,47.6337159331888,1122.48 11.91856029443443,47.63372372835875,1122.48 11.91854009404779,47.63372657820582,1122.48 11.91851796582341,47.63372825458646,1122.48 11.91849793307483,47.63373227789998,1122 11.91840841434896,47.63379715383053,1122 11.91836843267083,47.63385725207627,1121.03 11.91836105659604,47.63387376442552,1121.03 11.91834915429354,47.63389673084021,1121.03 11.91831964999437,47.63390268199146,1120.55 11.91816257312894,47.63399957679212,1120.55 11.91814916208386,47.63401147909463,1120.55 11.918133655563,47.63401969335973,1120.55 11.9181075040251,47.63403721153736,1120.07 11.91809711046517,47.63410896062851,1119.59 11.91809786483645,47.63412949629128,1119.59 11.91809794865549,47.63415036723018,1119.59 11.91809778101742,47.63416922651231,1119.59 11.91810146905482,47.63418766669929,1119.59 11.91810180433095,47.63420375995338,1119.11 11.91809870302677,47.63421767391264,1119.11 11.91809266805649,47.634231839329,1119.11 11.91808361560106,47.63424625620246,1119.11 11.91807347349823,47.63425908051431,1118.63 11.91805972717702,47.63427081517875,1118.63 11.91804405301809,47.63428162783384,1118.63 11.91797993145883,47.6343047618866,1118.63 11.91795855760574,47.63431532308459,1118.63 11.91794095560908,47.63432395644486,1118.63 11.91792771220207,47.63433166779578,1118.63 11.91791187040508,47.63434390537441,1118.63 11.91789443604648,47.63435823842883,1118.63 11.9178609084338,47.63436008244753,1118.63 11.91782930865884,47.63436486013234,1118.15 11.91781011410058,47.63436770997942,1118.15 11.91779234446585,47.63437659479678,1118.15 11.9177208468318,47.63439947739244,1117.67 11.91770927980542,47.63442143797875,1117.67 11.91766636446118,47.63444934971631,1117.67 11.91765613853931,47.63446485623717,1117.67 11.91764398477972,47.63448128476739,1117.67 11.91760408692062,47.63451665639877,1117.19 11.91748447716236,47.6345566380769,1116.71 11.91733251325786,47.63468856923282,1116.71 11.91727618686855,47.63470415957272,1116.71 11.91726109944284,47.63470256701112,1116.71 11.91721617244184,47.63470390811563,1116.71 11.91719655878842,47.63471933081746,1116.71 11.91714157350361,47.63478605076671,1117.19 11.91712380386889,47.63479476794601,1117.19 11.91693730652332,47.63485562056303,1117.19 11.91692020744085,47.63486601412296,1117.19 11.91690352745354,47.63487288728356,1117.19 11.91688877530396,47.63488051481545,1117.19 11.91687335260212,47.63488495722413,1116.71 11.91684661433101,47.63490666635335,1117.19 11.91671141423285,47.63505301438272,1118.63 11.91669942811132,47.63506382703781,1119.11 11.91668978892267,47.63507723808289,1119.11 11.9166742824018,47.63509014621377,1119.59 11.91665458492935,47.63509928248823,1119.59 11.91663186997175,47.63510095886886,1119.59 11.91644688136876,47.63509433716536,1120.07 11.91641989164054,47.63509492389858,1120.07 11.91639726050198,47.63509291224182,1120.55 11.91637136042118,47.63509400188923,1120.55 11.91634378395975,47.63509333133698,1120.55 11.91631595604122,47.63509475626051,1120.55 11.91614328883588,47.63512057252228,1120.55 11.91597850061953,47.63513532467187,1122 11.91593860276043,47.63513230718672,1122.48 11.9158351700753,47.63512543402612,1123.44 11.91569142043591,47.63512560166419,1123.92 11.91565923392773,47.63513021171093,1123.92 11.91564548760653,47.63513926416636,1123.92 11.91563241183758,47.63514697551727,1123.92 11.91561279818416,47.63515057973564,1123.92 11.91558941267431,47.635154183954,1124.4 11.9155708886683,47.63515896163881,1124.88 11.91555295139551,47.63516181148589,1125.36 11.91553660668433,47.63516223058105,1125.36 11.91556451842189,47.63518595136702,1132.57 11.91550433635712,47.63520564883947,1132.57 11.91548757255077,47.6352147012949,1132.09 11.91547340713441,47.63522450812161,1132.09 11.9154535420239,47.63523356057704,1131.61 11.91542856395245,47.6352390088141,1130.65 11.91540501080453,47.63524152338505,1130.17 11.915377182886,47.6352421939373,1129.21 11.91523510962725,47.63524571433663,1122.48 11.91521390341222,47.63524898327887,1121.03 11.91505741328001,47.63525971211493,1116.23 11.91480159759522,47.63530162163079,1098.92 11.91465575248003,47.63529089279473,1098.92 11.91463027149439,47.63529885560274,1098.92 11.91460755653679,47.63531059026718,1098.92 11.91459028981626,47.63532274402678,1098.92 11.91456975415349,47.6353304553777,1098.92 11.91455123014748,47.63533464632928,1098.92 11.91453396342695,47.63533649034798,1098.92 11.91450605168939,47.63533716090024,1098.92 11.91447696648538,47.63533632270992,1098.92 11.914317375049,47.63534814119339,1098.92 11.91413473337889,47.63536557555199,1098.44 11.91411570645869,47.635368257761,1098.44 11.91408880054951,47.63537504710257,1098.44 11.91407664678991,47.63538326136768,1098.44 11.91406046971679,47.63538669794798,1098.44 11.91402912139893,47.63538653030992,1098.44 11.91401269286871,47.63539206236601,1098.44 11.91399827599526,47.63540153391659,1098.44 11.9138509221375,47.63548702932894,1098.92 11.91387112252414,47.63564326800406,1099.4 11.91387405619025,47.6356499735266,1099.4 11.91382971592248,47.63574091717601,1099.4 11.91381940618157,47.63575533404946,1098.92 11.91381404176354,47.63576723635197,1098.92 11.9138075876981,47.63577980920672,1098.92 11.91379551775754,47.63579447753727,1098.92 11.91376442089677,47.63581132516265,1098.92 11.91360885277391,47.63577662408352,1099.89 11.91349594853818,47.63564561493695,1094.6 11.91339427605271,47.63558006845415,1091.23 11.91339863464236,47.63553849421442,1090.27 11.91341917030513,47.635468672961,1089.31 11.91336980089545,47.63537345454097,1088.83 11.91325974650681,47.63534897938371,1088.35 11.91305858083069,47.63548677787185,1088.83 11.91304567269981,47.63549608178437,1088.83 11.91303293220699,47.63550697825849,1088.83 11.91301876679063,47.63551980257034,1088.35 11.91300225444138,47.63553019613028,1088.35 11.91298280842602,47.63553623110056,1088.35 11.91296193748713,47.63554302044213,1088.35 11.91294014453888,47.63555081561208,1088.35 11.91291768103838,47.63555760495365,1088.35 11.91289974376559,47.63557009398937,1088.35 11.91280469298363,47.6356185413897,1087.87 11.91279086284339,47.63563228771091,1088.35 11.91271542571485,47.63584049418569,1087.87 11.91256547346711,47.63592339120805,1087.39 11.91253563389182,47.63593235984445,1087.39 11.9125054590404,47.63593814335764,1087.39 11.91248240880668,47.63593931682408,1086.91 11.91243228502572,47.63595457188785,1086.91 11.91233304329217,47.63596228323877,1086.91 11.91205903887749,47.63605859130621,1085.95 11.91199030727148,47.63608625158668,1085.95 11.91173784434795,47.63616386801004,1086.91 11.91146870143712,47.6362197753042,1085.95 11.91144808195531,47.63622312806547,1085.95 11.91117684356868,47.63632362708449,1085.95 11.91091298125684,47.63646259903908,1084.99 11.91077786497772,47.63650031760335,1082.58 11.91046840511262,47.63650165870786,1082.58 11.91035566851497,47.63651548884809,1081.14 11.91028249450028,47.63651808723807,1081.14 11.91007889807224,47.63653426431119,1080.18 11.90991008654237,47.63654105365276,1079.7 11.90983791835606,47.63653686270118,1079.7 11.90955385565758,47.63658455573022,1079.7 11.90927859395742,47.63656368479133,1079.7 11.90915672108531,47.63654708862305,1080.18 11.90890048630536,47.63666292652488,1080.18 11.90880803391337,47.63667449355125,1080.18 11.90877291373909,47.63668505474925,1079.7 11.90850963816047,47.63666988350451,1080.18 11.90828617662191,47.63673819601536,1076.33 11.90816572867334,47.6367155648768,1074.41 11.90775191411376,47.6365736592561,1089.79 11.90743004903197,47.63649495318532,1086.91 11.9072731398046,47.63643317855895,1085.47 11.90701397135854,47.63639135286212,1084.02 11.90694431774318,47.63636746443808,1083.54 11.90675287507474,47.63633167371154,1083.06 11.90661457367241,47.63621231541038,1083.54 11.90641189925373,47.63610091991723,1084.99 11.90638801082969,47.63609647750855,1084.99 11.90614032559097,47.63598684221506,1083.54 11.90594754181802,47.63593034818769,1080.18 11.90581359900534,47.63587100431323,1072.97 11.90556289628148,47.63582037761807,1060.47 11.90548251383007,47.63578123413026,1057.11 11.90544370561838,47.63573354110122,1053.74 11.90540498122573,47.63567889109254,1046.53 11.9052146282047,47.63554243370891,1034.04 11.90519249998033,47.63552659191191,1032.59 11.90515989437699,47.63550027273595,1029.23 11.9051337428391,47.63549557887018,1029.23 11.90510826185346,47.63549650087953,1029.23 11.90508588217199,47.63550253584981,1029.23 11.90493165515363,47.63562558218837,1029.23 11.90491321496666,47.63563203625381,1029.23 11.9048935174942,47.63563815504313,1029.23 11.90456754527986,47.63558467850089,1028.75 11.90445715561509,47.63552072457969,1028.75 11.9043530523777,47.63554964214563,1027.31 11.90431851893663,47.63553329743445,1027.31 11.90426403656602,47.6354943215847,1026.83 11.90413696691394,47.63553832657635,1026.34 11.90411198884249,47.63555039651692,1026.34 11.90409732051194,47.63555341400206,1026.83 11.90408105961978,47.63556305319071,1026.83 11.904057841748,47.63556900434196,1026.83 11.90403210930526,47.63557059690356,1026.83 11.90401266328991,47.6355809904635,1026.83 11.90376112237573,47.63553405180574,1025.38 11.90367001108825,47.63553027994931,1024.9 11.90360052511096,47.63557679951191,1024.42 11.90359398722649,47.63559088110924,1024.42 11.90342282876372,47.63570143841207,1024.42 11.90336365252733,47.63570629991591,1024.42 11.90334990620613,47.63572013005614,1024.42 11.90332945436239,47.63572985306382,1024.42 11.90330464392901,47.63573412783444,1024.42 11.90327094867826,47.635727673769,1024.42 11.90323851071298,47.63571769930422,1024.42 11.90320573747158,47.63571652583778,1024.42 11.90318637527525,47.63573463074863,1024.42 11.90317371860147,47.63574887998402,1024.42 11.90301697701216,47.63590386137366,1024.9 11.90301337279379,47.63592179864645,1024.9 11.90301110967994,47.6359449326992,1024.9 11.90301639027894,47.63616219162941,1024.9 11.9030702020973,47.6363614294678,1023.46 11.90306073054671,47.63637500815094,1022.98 11.90300750546157,47.63638414442539,1022.5 11.90285051241517,47.6364356931299,1021.06 11.90279946662486,47.63652261346579,1020.58 11.90271204337478,47.63659226708114,1020.1 11.90252537839115,47.63671388849616,1020.1 11.90250534564257,47.63671782799065,1020.1 11.90248858183622,47.63672051019967,1020.1 11.9024657830596,47.63672151602805,1020.1 11.90243829041719,47.63671933673322,1020.1 11.9023310020566,47.63682503253222,1019.62 11.90219043754041,47.63697741553187,1019.62 11.9021737575531,47.63699216768146,1019.62 11.90216017886996,47.63700633309782,1019.62 11.90215112641454,47.63702049851418,1019.62 11.9021428283304,47.63703189790249,1019.62 11.90213184803724,47.6370417047292,1019.62 11.90209907479584,47.63703508302569,1019.62 11.90203646197915,47.63700415380299,1019.62 11.90195339731872,47.63695444911718,1019.62 11.90190570428968,47.6369412895292,1019.62 11.90187217667699,47.63694346882403,1019.62 11.90183714032173,47.63694045133889,1019.62 11.90181157551706,47.63701605610549,1019.62 11.9016988389194,47.63724680989981,1019.13 11.90158057026565,47.63740656897426,1019.13 11.90157311037183,47.63742165639997,1019.13 11.90156439319253,47.63743808493018,1019.13 11.90155408345163,47.63745644129813,1019.13 11.90154662355781,47.63747387565672,1019.13 11.90154377371073,47.63749097473919,1019.13 11.90153866074979,47.63750614598393,1018.65 11.90152583643794,47.63751620426774,1018.65 11.90150856971741,47.63751922175288,1018.65 11.90148225054145,47.63751653954387,1018.65 11.90145123749971,47.63751343823969,1018.17 11.90140974707902,47.63749952428043,1018.17 11.90128142014146,47.63755937106907,1017.21 11.90113658085465,47.63762634247541,1016.73 11.90093784593046,47.63774796389043,1016.25 11.90077414736152,47.63789313845336,1015.29 11.90065294504166,47.63804694637656,1014.33 11.9006401207298,47.63807016424835,1014.33 11.90042621456087,47.63821206986904,1012.41 11.90040609799326,47.63822615146637,1011.93 11.90038807690144,47.6382399816066,1011.44 11.90037659369409,47.63825423084199,1010.96 11.90036318264902,47.63826940208674,1010 11.90026134252548,47.63833134435117,1007.12 11.90024424344301,47.63834131881595,1007.12 11.90006671473384,47.63837601989508,1006.16 11.89988072030246,47.6384025067091,1004.72 11.89967092126608,47.63849026523531,1002.79 11.89953991211951,47.63861465267837,999.43 11.89952851273119,47.6386200170964,999.43 11.89933514222503,47.63854608871043,1000.39 11.89932801760733,47.63853594660759,1000.39 11.89930832013488,47.63852463103831,1000.39 11.89911453053355,47.63855882920325,997.99 11.89909500069916,47.63855882920325,997.51 11.89891177229583,47.63854709453881,996.0600000000001 11.89869677647948,47.63862387277186,994.6199999999999 11.89867422915995,47.63862387277186,994.6199999999999 11.89840391278267,47.63859638012946,994.14 11.89839133992791,47.63859587721527,993.66 11.89837717451155,47.63859260827303,993.66 11.89826066605747,47.63859654776752,992.7000000000001 11.89803812652826,47.63859948143363,991.26 11.89799697138369,47.63858607038856,991.26 11.89776261337102,47.63855354860425,993.18 11.89743211492896,47.63851993717253,995.58 11.89721250906587,47.638537036255,1002.31 11.89705291762948,47.63850434683263,1001.35 11.89697060734034,47.63851691968739,1000.39 11.89688796177506,47.63858766295016,995.1 11.89679894596338,47.63868615031242,987.4099999999999 11.89670708030462,47.63883534818888,980.2000000000001 11.89667288213968,47.63886384665966,979.2399999999999 11.89665025100112,47.63892243616283,978.28 11.89668620936573,47.6390864700079,976.84 11.89671504311264,47.63922887854278,974.43 11.89671454019845,47.63924128375948,974.43 11.8967257719487,47.63926399871707,973.9499999999999 11.89673759043217,47.63929199427366,974.91 11.8967704474926,47.63931906782091,977.3200000000001 11.89681579358876,47.63938251882792,984.05 11.89683012664318,47.63939073309302,984.05 11.89684253185988,47.63939995318651,984.05 11.89686097204685,47.63940380886197,984.05 11.89687488600612,47.6394142024219,984.05 11.89688016660512,47.63942694291472,984.05 11.89678838476539,47.63957178220153,983.09 11.89669056795538,47.63971284963191,985.01 11.8966858740896,47.63972542248666,985.01 11.89668126404285,47.63973724097014,985.01 11.89667631871998,47.63975165784359,985.01 11.89666651189327,47.63976255431771,985.49 11.89665863290429,47.6397736184299,985.49 11.8966113589704,47.63989951461554,985.49 11.89658378250897,47.64005768112838,985.97 11.8964749854058,47.64020260423422,985.97 11.89638873562217,47.64034895226359,988.37 11.89631153829396,47.64038776047528,985.97 11.89623861573637,47.64038457535207,987.4099999999999 11.89605656079948,47.64038625173271,987.8900000000001 11.89598715864122,47.64039790257812,987.8900000000001 11.89589177258313,47.64025398530066,984.5299999999999 11.89587903209031,47.64023596420884,984.5299999999999 11.89587593078613,47.6402210444212,984.5299999999999 11.89587073400617,47.64020327478647,984.5299999999999 11.89586352556944,47.64018852263689,985.01 11.89585422165692,47.6401742734015,985.01 11.89583016559482,47.64014929533005,985.01 11.89560536295176,47.63994486071169,987.8900000000001 11.89564333297312,47.63971217907965,975.88 11.89564316533506,47.63956247828901,964.3399999999999 11.89563486725092,47.63940137811005,961.4600000000002 11.89553353004158,47.63938402757049,966.26 
+						</coordinates>
+					</LineString>
+				</MultiGeometry>
+			</Placemark>
+		</Folder>
+		<Folder>
+			<name>14a Sattel Hochmiesing - Hochmiesing</name>
+			<description>FROM: wheretofly-path-sattel-hochmiesing
+TO: wheretofly-path-hochmiesing
+DURATION: 1h
+DESC: Vom Sattel aus folgen wir den Weg nach Norden auf den mit Latschen übersäten Hochmiesing zu. In Serpentinen geht es steil nach oben, wo es dann flach wird und man durch Latschen am Gipfelkreuz ankommt.
+REVDESC: Zurück vom Gipfel geht es den selben Weg bis zum Sattel mit dem Steinwall.
+REVDURATION: 45m</description>
+			<Placemark>
+				<name>14a Sattel Hochmiesing - Hochmiesing</name>
+				<Style>
+					<LineStyle>
+						<color>ffff4040</color>
+						<width>4</width>
+					</LineStyle>
+				</Style>
+				<MultiGeometry>
+					<LineString>
+						<coordinates>
+							11.93522561341524,47.65358431264758,1701.67 11.93534312769771,47.65363493934274,1704.07 11.93539224565029,47.65368766151369,1704.55 11.93540113046765,47.65369914472103,1704.55 11.93540909327567,47.65371113084257,1705.04 11.93541957065463,47.65372546389699,1705.04 11.93543231114745,47.65374331735075,1705.04 11.93549743853509,47.65381758101285,1706 11.93550716154277,47.6538335904479,1706.48 11.93551646545529,47.6538512762636,1706.48 11.935526272282,47.653873488307,1706.96 11.93553406745195,47.65389662235975,1706.96 11.9355437066406,47.65391908586025,1707.44 11.93555736914277,47.65394045971334,1707.92 11.93557212129235,47.65395889990032,1707.92 11.93558326922357,47.65397675335407,1708.4 11.93571235053241,47.65409938059747,1711.76 11.93572492338717,47.65411077998579,1711.76 11.93573456257582,47.654121927917,1712.25 11.93574269302189,47.65413374640048,1712.73 11.93575241602957,47.65414187684655,1713.21 11.93576825782657,47.65414665453136,1713.21 11.93578175269067,47.65415243804455,1713.21 11.93580044433475,47.65420599840581,1714.17 11.9358167052269,47.65421488322318,1711.28 11.93581595085561,47.65421714633703,1711.28 11.93581636995077,47.65421454794705,1711.28 11.93581704050303,47.654222343117,1719.46 11.93583397194743,47.65426022931933,1723.78 11.93594813346863,47.65431596897543,1730.51 11.9360379036516,47.65437497757375,1734.36 11.93616966716945,47.65441789291799,1735.32 11.93633680231869,47.65444572083652,1737.24 11.93650561384857,47.65444873832166,1740.6 11.93652397021651,47.6544520072639,1741.08 11.9365435000509,47.65445158816874,1741.08 11.93656336516142,47.65445116907358,1741.57 11.93658566102386,47.65445343218744,1741.57 11.93660452030599,47.65445686876774,1742.05 11.93662136793137,47.65445753931999,1742.05 11.9366383831948,47.6544586289674,1742.05 11.93668364547193,47.65446843579412,1743.01 11.93669999018312,47.65447413548827,1743.97 11.93671189248562,47.65448193065822,1744.45 11.93674759939313,47.65449827536941,1745.89 11.93684625439346,47.65454898588359,1747.81 11.93686041980982,47.65455409884453,1747.81 11.93686218000948,47.654560636729,1748.78 11.93686561658979,47.65460145659745,1749.74 11.93687081336975,47.65464873053134,1749.74 11.93685363046825,47.65470128506422,1752.62 11.93685522302985,47.65475115738809,1754.06 11.93684508092701,47.65480999834836,1758.39 11.93684407509863,47.65488141216338,1761.27 11.93687282502651,47.655009906739,1768.96 11.93694817833602,47.65506623312831,1771.85 11.93696066737175,47.65507771633565,1771.85 11.93708304315805,47.65513278543949,1770.89 11.93709729239345,47.65513823367655,1770.89 11.93719393573701,47.65518441796303,1773.77 11.93722360767424,47.65519799664617,1773.77 11.93740063346922,47.65527041628957,1775.69 11.93741362541914,47.65527695417404,1775.69 11.9374830275774,47.65532498247922,1775.69 11.93749040365219,47.65533336438239,1776.17 11.93750356324017,47.65535607933998,1778.1 11.93750599399209,47.65535633079708,1778.1 11.93744086660445,47.65535582788289,1781.94 11.93732611835003,47.65537099912763,1785.31 11.93730893544853,47.65537820756435,1785.31 11.93729150108993,47.65538650564849,1785.79 11.93725654855371,47.65542916953564,1788.19 11.93726945668459,47.65546512790024,1788.19 11.93739728070796,47.6555398106575,1790.59 11.93749048747122,47.65558490529656,1793 11.93757623434067,47.65561440959573,1794.92 11.93773339502513,47.65564374625683,1796.84 11.93776080384851,47.65566009096801,1797.8 11.93760104477406,47.65566989779472,1799.24 11.93758461624384,47.65567366965115,1799.73 11.93756910972297,47.65569160692394,1800.21 11.93755301646888,47.65569537878037,1800.69 11.93750666454434,47.6557089574635,1801.17 11.93749652244151,47.65571733936667,1801.65 11.93740658462048,47.65575313009322,1804.53 11.93739283829927,47.65575782395899,1804.53 11.93738722242415,47.65579059720039,1805.01 11.93743072450161,47.65592621639371,1810.3 11.93744924850762,47.65594566240907,1810.78 11.93754178471863,47.65599017031491,1813.66 11.9376127794385,47.65600861050189,1815.59 11.93764446303248,47.65600894577801,1816.55 11.93776113912463,47.65600358135998,1819.43 11.93789089098573,47.65600299462676,1821.84 11.93792265839875,47.65599695965648,1822.32 11.93812977522612,47.65600718557835,1827.6 11.93829003721476,47.65602520667017,1831.45 11.93844418041408,47.65604264102876,1833.85 11.93857024423778,47.65606594271958,1836.26 11.93858583457768,47.65606787055731,1836.26 11.9386485312134,47.65607901848853,1836.74 11.93876353092492,47.65610097907484,1838.66 11.93877903744578,47.6561029907316,1838.66 11.93879370577633,47.65610408037901,1839.14 11.93882203660905,47.65612629242241,1842.98 11.93880007602274,47.65614490024746,1843.47 11.93860452622175,47.65624355524778,1843.95 11.93854786455631,47.65628286637366,1845.39 11.93853663280606,47.65629569068551,1845.87 11.93852598778904,47.65630792826414,1846.35 11.9385124091059,47.65631765127182,1846.35 11.93850092589855,47.65632779337466,1846.83 11.93848868831992,47.65633726492524,1846.83 11.93847427144647,47.65634933486581,1847.31 11.93845734000206,47.65636115334928,1847.79 11.93844107910991,47.65636911615729,1847.79 11.9384257402271,47.65638814307749,1848.27 11.93841601721942,47.65640071593225,1848.75 11.93840805441141,47.65641161240637,1848.75 11.93840268999338,47.6564225088805,1849.23 11.93839975632727,47.65643399208784,1849.71 11.93839615210891,47.65644723549485,1850.19 11.93839388899505,47.65645712614059,1850.68 11.93828316405416,47.65664597041905,1853.56 11.93828953430057,47.65667396597564,1853.08 11.93827771581709,47.65667580999434,1856.44 11.93829791620374,47.65665728598833,1855.96 11.93841283209622,47.65663482248783,1857.4 11.93843035027385,47.65662903897464,1857.89 11.93844418041408,47.65662292018533,1857.89 11.93846002221108,47.65661680139601,1858.37 11.93863126449287,47.65662090852857,1861.25 11.93866051733494,47.65662426128984,1861.73 11.93870343267918,47.65664613805711,1863.17 11.93875229917467,47.65671000815928,1866.54 11.93878959864378,47.65677195042372,1867.98 11.93881918676198,47.65677857212722,1868.46 11.93885715678334,47.65679919160903,1869.9 11.93888381123543,47.65684143640101,1870.86 11.93889085203409,47.65685660764575,1871.34 11.93889638409019,47.65687102451921,1871.34 11.93891272880137,47.6568903028965,1871.34 11.93892228417099,47.65689826570451,1871.34 11.93893116898835,47.65692517161369,1874.23 11.93896821700037,47.65694352798164,1875.67 11.93914021365345,47.65700982883573,1876.63 11.93915588781238,47.65701686963439,1876.15 11.93940156139433,47.65704033896327,1879.03 11.93942092359066,47.65704260207713,1879.03 11.93944053724408,47.65704528428614,1878.55 11.93946082144976,47.65704612247646,1878.55 11.93948118947446,47.65704821795225,1878.07 11.93953005596995,47.65706866979599,1878.07 11.93954790942371,47.65707621350884,1877.59 11.93956299684942,47.65708459541202,1877.59 11.93958126939833,47.65709423460066,1877.11 11.93960004486144,47.65710202977061,1877.11 11.93961664102972,47.65710731036961,1877.11 11.93963265046477,47.65711409971118,1877.11 11.93971479311585,47.65714477747679,1875.67 11.93976206704974,47.65715223737061,1875.19 11.93977899849415,47.65715475194156,1875.19 11.93981118500233,47.65716363675892,1875.19 11.93982702679932,47.65716824680567,1874.71 11.93984379060566,47.65717193484306,1874.71 11.93985803984106,47.65717838890851,1874.71 11.93987438455224,47.65718517825007,1874.71 11.93994957022369,47.65718777664006,1874.71 11.93996985442936,47.65719003975391,1875.19 11.93998938426375,47.65719288960099,1875.19 11.9400079920888,47.65719808638096,1875.19 11.94002525880933,47.65720571391285,1875.19 11.94004286080599,47.65721459873021,1875.19 11.94006230682135,47.6572182867676,1875.19 11.94008208811283,47.65721845440567,1875.19 11.94010094739497,47.65722054988146,1875.19 11.94011787883937,47.65722566284239,1875.19 11.94013715721667,47.6572304405272,1875.19 11.94015928544104,47.65723345801234,1875.19 11.94017940200865,47.65723739750683,1875.19 11.94019507616758,47.65724267810583,1875.19 11.94021058268845,47.65724997036159,1875.19 11.94022885523737,47.65725969336927,1875.67 11.94024494849145,47.65726815909147,1875.67 11.94026154465973,47.65727519989014,1875.67 11.94027906283736,47.65727997757494,1875.19 11.94029842503369,47.6572859287262,1875.19 11.94032155908644,47.65729682520032,1874.71 11.94036036729813,47.6573308557272,1874.23 11.94038869813085,47.65734745189548,1874.71 11.94042147137225,47.65735935419798,1874.71 11.94045390933752,47.65737117268145,1874.71 11.94048391655088,47.6573842484504,1875.19 11.94051132537425,47.65739698894322,1875.19 11.94053772836924,47.65740704722703,1875.67 11.94056387990713,47.65741609968245,1875.67 11.94064250215888,47.65748977661133,1876.63 11.94065515883267,47.65750788152218,1876.63 11.94067502394319,47.6575309317559,1876.63 11.94069966673851,47.65754979103804,1877.11 11.94072338752449,47.65756152570248,1877.59 11.9407453481108,47.65756756067276,1878.07 11.94076638668776,47.65757158398628,1878.55 11.94078809581697,47.65757200308144,1879.03 11.9408074580133,47.65757191926241,1879.03 11.94082489237189,47.65757577493787,1879.51 11.94083922542632,47.65758072026074,1880 11.94087015464902,47.65760762616992,1879.51 11.94096051156521,47.65771717764437,1880 11.94096570834518,47.65773410908878,1880 11.9409834779799,47.65775363892317,1880.48 11.94099814631045,47.65776042826474,1880.96 11.94101583212614,47.65776285901666,1880.96 11.94103427231312,47.65776436775923,1880.96 11.94105103611946,47.65776780433953,1881.44 11.94106863811612,47.65777174383402,1881.92 11.94108875468373,47.65777518041432,1881.92 11.94111658260226,47.65778264030814,1881.92 11.94114382378757,47.65779445879161,1882.4 11.94116964004934,47.65781633555889,1882.4 11.94120937027037,47.65786109492183,1883.36 11.94122822955251,47.65786847099662,1883.36 11.94141296669841,47.6578760985285,1882.4 
+						</coordinates>
+					</LineString>
+				</MultiGeometry>
+			</Placemark>
+		</Folder>
+		<Folder>
+			<name>14b Sattel Hochmiesing - Abzweig Taubensteinhaus Süd</name>
+			<description>FROM: wheretofly-path-sattel-hochmiesing
+TO: wheretofly-path-abzweig-taubensteinhaus-süd
+DURATION: 20m
+DESC: Vom Steinwall geht es nach Westen hinab, zuerst einen Pfad, dann später auf den Fahrweg einer nahegelegenen Alm. Wir folgend dem Weg weiter bergab.
+REVDESC: Es geht den Fahrweg entlang, an der Alm wird der Weg zum Pfad, der in einigen wenigen Serpentinen ansteigt und schließlich an einem Sattel auf Wegweiser und einen Steinwall trifft.
+REVDURATION: 30m</description>
+			<Placemark>
+				<name>14b Sattel Hochmiesing - Abzweig Taubensteinhaus Süd</name>
+				<Style>
+					<LineStyle>
+						<color>ffff4040</color>
+						<width>4</width>
+					</LineStyle>
+				</Style>
+				<MultiGeometry>
+					<LineString>
+						<coordinates>
+							11.93520608358085,47.65360224992037,1702.15 11.93506568670273,47.65363334678114,1700.71 11.9349620025605,47.65366620384157,1698.79 11.93495219573379,47.65366494655609,1699.27 11.93490726873279,47.65372487716377,1696.38 11.93478858098388,47.65378539450467,1693.5 11.93471557460725,47.65383861958981,1691.1 11.93470903672278,47.65385555103421,1690.62 11.93468003533781,47.65386552549899,1690.14 11.93460585549474,47.65384029597044,1689.17 11.93457274697721,47.65379587188363,1686.77 11.93454056046903,47.65372110530734,1684.37 11.93451097235084,47.65367525629699,1682.93 11.93443436175585,47.65362890437245,1681.96 11.93442606367171,47.65362429432571,1681.96 11.9343642052263,47.65360610559583,1681.48 11.93432229571044,47.65360644087195,1681.96 11.93421701900661,47.65358691103756,1679.08 11.93406882695854,47.65355195850134,1677.16 11.93392273038626,47.65353460796177,1674.75 11.93391786888242,47.65354667790234,1674.27 11.93406287580729,47.6536768488586,1671.39 11.93406974896789,47.65371238812804,1670.43 11.93400277756155,47.65377005562186,1668.99 11.93392566405237,47.65387281775475,1666.58 11.93387797102332,47.65395353548229,1664.18 11.93384016864002,47.65402679331601,1662.26 11.9337304495275,47.6539908349514,1660.81 11.93364344537258,47.65390047803521,1657.93 11.93360002711415,47.6538423076272,1656.01 11.93358602933586,47.65382286161184,1655.05 11.93353791721165,47.65374407172203,1652.64 11.9335145317018,47.65376008115709,1652.16 11.93347798660398,47.65379151329398,1650.72 11.93339735269547,47.65383266843855,1649.76 11.93338167853653,47.65381707809866,1648.32 11.93334630690515,47.65381339006126,1647.36 11.93327883258462,47.65373577363789,1644.95 11.93314698524773,47.65365891158581,1643.51 11.93309267051518,47.65362127684057,1642.55 11.93304958753288,47.65352664515376,1639.19 11.9330483302474,47.65351993963122,1639.19 11.93300608545542,47.65348079614341,1637.74 11.93292503245175,47.65346218831837,1636.3 11.93286141380668,47.65340125188232,1634.86 11.93280366249383,47.65336462296546,1631.49 11.9327705539763,47.65332397073507,1629.57 11.93268992006779,47.65327082946897,1627.17 11.93258615210652,47.65320243313909,1625.73 11.93252605386078,47.65313336625695,1624.77 11.93251700140536,47.6531168539077,1624.77 11.93247945047915,47.65308232046664,1623.32 11.93243251182139,47.65302968211472,1622.84 11.9324148260057,47.65301174484193,1622.36 11.93237392231822,47.65296530909836,1621.4 11.9323611818254,47.65295038931072,1621.4 11.93227459676564,47.65292926691473,1620.44 11.93225062452257,47.65294343233109,1618.52 11.93223151378334,47.65302591025829,1616.11 11.93220787681639,47.65309187583625,1612.75 11.93222573027015,47.65313822776079,1612.75 11.9322264008224,47.65323411673307,1609.86 11.93223344162107,47.65325155109167,1609.38 11.93223059177399,47.65327527187765,1609.86 11.9322367105633,47.65336093492806,1606.02 11.9322298374027,47.65339110977948,1605.54 11.9322401471436,47.65342002734542,1604.58 11.93223369307816,47.65352002345026,1603.14 11.93226386792958,47.65357609838247,1603.14 11.93222941830754,47.65363074839115,1605.54 11.93220796063542,47.65364248305559,1605.54 11.93213973194361,47.65367978252471,1604.58 11.93205742165446,47.65375413000584,1602.66 11.93199112080038,47.65381439588964,1602.66 11.93192808888853,47.65387751162052,1598.33 11.93186287768185,47.65393249690533,1595.45 11.93179397843778,47.65396728180349,1594.48 11.93170110695064,47.65402570366859,1591.6 11.93160731345415,47.6541702914983,1588.24 11.93155677057803,47.65424413606525,1586.79 11.93155760876834,47.65425989404321,1586.31 11.93154495209456,47.65428235754371,1585.83 11.93155014887452,47.65436919406056,1582.95 11.93155735731125,47.65441110357642,1582.95 11.93155417218804,47.6544591318816,1582.47 11.93153464235365,47.6545072440058,1581.03 11.93143649026752,47.65461754985154,1578.62 11.93142433650792,47.65463749878109,1578.14 11.93140824325383,47.65465619042516,1577.66 11.93139852024615,47.65467245131731,1577.66 11.93136507645249,47.65471318736672,1576.7 11.93129709921777,47.65481209382415,1573.82 11.93127983249724,47.65483816154301,1574.3 11.93118142895401,47.65491468831897,1572.37 11.93098671734333,47.65498979017139,1569.49 11.93078664131463,47.65510755591095,1566.61 11.93061741068959,47.65526982955635,1565.64 11.93044792860746,47.65540913678706,1563.72 11.93043627776206,47.65541844069958,1563.72 11.93027878180146,47.65555422753096,1562.28 11.93017937242985,47.65565824694932,1560.36 11.93011701107025,47.65564173460007,1559.88 11.93009069189429,47.6555107254535,1557.95 11.9302128162235,47.65532104298472,1553.63 11.93019144237042,47.65529355034232,1553.15 11.9299554079771,47.65540645457804,1550.26 11.92987745627761,47.65542916953564,1549.3 11.92971820011735,47.65556864440441,1547.38 11.92965089343488,47.65562337823212,1545.94 11.92963756620884,47.65564257279038,1545.94 11.9295912142843,47.65569462440908,1544.98 11.92956883460283,47.6557110529393,1543.05 11.92950488068163,47.65580300241709,1541.13 11.92947001196444,47.65583694912493,1539.69 11.92946213297546,47.65585555694997,1539.69 11.92942374385893,47.65589402988553,1538.25 11.92941511049867,47.65591305680573,1537.77 11.92940094508231,47.65592730604112,1537.29 11.92937018349767,47.65596779063344,1536.32 11.92932626232505,47.65601389110088,1535.36 11.92931938916445,47.65602202154696,1535.36 
+						</coordinates>
+					</LineString>
+				</MultiGeometry>
+			</Placemark>
+		</Folder>
+		<Folder>
+			<name>14c Abzweig Taubensteinhaus Süd - Abzweig Taubensteinhaus West</name>
+			<description>FROM: wheretofly-path-abzweig-taubensteinhaus-süd
+TO: wheretofly-path-abzweig-taubensteinhaus-west
+DURATION: 10m
+DESC: Wir folgen weiter dem Fahrweg nach unten.
+REVDESC: Wir folgen weiter dem Fahrweg nach oben.
+REVDURATION: 10m</description>
+			<Placemark>
+				<name>14c Abzweig Taubensteinhaus Süd - Abzweig Taubensteinhaus West</name>
+				<Style>
+					<LineStyle>
+						<color>ffff4040</color>
+						<width>4</width>
+					</LineStyle>
+				</Style>
+				<MultiGeometry>
+					<LineString>
+						<coordinates>
+							11.92931938916445,47.65602202154696,1535.36 11.92930513992906,47.65609662048519,1533.92 11.92939482629299,47.6562753226608,1533.44 11.92947093397379,47.65637825243175,1532.96 11.9295618776232,47.6564655918628,1532.48 11.92957964725792,47.65648160129786,1532 11.9295893702656,47.65650012530386,1532 11.92961057648063,47.65652334317565,1531.52 11.92966690286994,47.65656449832022,1528.15 11.92970319651067,47.65659190714359,1527.67 11.9298208784312,47.65666633844376,1524.79 11.92991693504155,47.65674772672355,1524.31 11.9299329444766,47.65676759183407,1521.9 11.9300436694175,47.65691067092121,1519.5 11.93012170493603,47.6571408379823,1517.1 11.93011717870832,47.65738290734589,1515.18 11.93010929971933,47.65761701390147,1513.25 11.93015129305422,47.6578282378614,1511.33 11.93022631108761,47.65794793143868,1510.85 11.93031289614737,47.65801129862666,1508.93 11.93039244040847,47.65807743184269,1507.97 11.9303996488452,47.65810090117157,1507.97 11.93035145290196,47.65828303992748,1505.56 11.93034516647458,47.6583253685385,1505.56 11.93032597191632,47.65848848037422,1502.68 11.93033292889595,47.65863097272813,1499.31 11.93024022504687,47.65882551670075,1498.83 11.93022647872567,47.65905224718154,1496.43 11.9302249699831,47.6592249982059,1494.51 11.93030577152968,47.65941585414112,1493.06 11.93037584424019,47.65946254134178,1492.58 11.93040107376874,47.65947285108268,1492.58 11.93049964495003,47.65951886773109,1490.18 11.93061263300479,47.65959740616381,1486.34 11.93065211176872,47.6596343703568,1486.34 11.93067189306021,47.6596430875361,1485.37 11.9308069255203,47.65970419161022,1483.45 11.93092209286988,47.65977183356881,1480.09 11.93103927187622,47.65983302146196,1477.68 11.93115360103548,47.65989345498383,1475.76 11.93125871010125,47.65996009111404,1471.92 11.93133029155433,47.6600334327668,1469.99 11.93135124631226,47.66004541888833,1469.99 11.93137622438371,47.66007198952138,1469.99 11.93147538229823,47.6601782720536,1468.07 11.93157973699272,47.6602800283581,1466.63 11.93159893155098,47.66029813326895,1466.63 11.93162759765983,47.66032612882555,1466.63 11.9316375721246,47.66035806387663,1465.67 11.93166179582477,47.6604235265404,1464.23 11.93165559321642,47.66048454679549,1459.9 11.93167143501341,47.66050390899181,1462.78 11.93164737895131,47.66063164919615,1460.86 
+						</coordinates>
+					</LineString>
+				</MultiGeometry>
+			</Placemark>
+		</Folder>
+		<Folder>
+			<name>14d Abzweig Taubensteinhaus Süd - Taubensteinhaus</name>
+			<description>FROM: wheretofly-path-abzweig-taubensteinhaus-süd
+TO: wheretofly-path-taubensteinhaus
+DURATION: 15m
+DESC: Vom Fahrweg geht 100m von der Alm entfernt ein schmaler Pfad nach Westen, wo man nach kurzer Zeit schon das Taubensteinhaus erkennen kann.
+REVDESC: Vom Taubensteinhaus geht ein schmaler Pfad erst nach Süden, dann nach Südwesten bergab. Nach kurzer Zeit trifft man auf einen Fahrweg und eine Alm ist bergan zu sehen.
+REVDURATION: 10m</description>
+			<Placemark>
+				<name>14d Abzweig Taubensteinhaus Süd - Taubenstein</name>
+				<Style>
+					<LineStyle>
+						<color>ffff4040</color>
+						<width>4</width>
+					</LineStyle>
+				</Style>
+				<MultiGeometry>
+					<LineString>
+						<coordinates>
+							11.92556303925812,47.66070465557277,1558.92 11.925507215783,47.66065729781985,1558.43 11.925412081182,47.66049284487963,1557.95 11.9253002665937,47.66028195619583,1563.24 11.92527461796999,47.66022713854909,1560.84 11.9253068882972,47.66016511246562,1558.92 11.92534519359469,47.6601195987314,1556.03 11.92540403455496,47.66008037142456,1551.22 11.92547997459769,47.66000761650503,1547.86 11.92558106034994,47.65992530621588,1546.42 11.92565800622106,47.65983243472874,1545.94 11.92565783858299,47.6597704924643,1542.57 11.92571341060102,47.65969480387867,1539.21 11.92582790739834,47.65959003008902,1537.29 11.92588649690151,47.65953856520355,1535.84 11.92589689046145,47.65952096320689,1535.84 11.92591776140034,47.65949690714479,1535.36 11.92594014108181,47.65946061350405,1534.88 11.9259578268975,47.65944234095514,1534.88 11.92610149271786,47.65934276394546,1533.44 11.92612571641803,47.65933337621391,1533.44 11.92627902142704,47.65926791355014,1532.96 11.9263066817075,47.65925500541925,1532.96 11.92629645578563,47.65926313586533,1536.32 11.92630525678396,47.65917747281492,1540.65 11.92630986683071,47.65909625217319,1544.5 11.92639938555658,47.65895174816251,1545.46 11.92646509967744,47.65889843925834,1543.53 11.92653240635991,47.65888745896518,1542.57 11.92659476771951,47.65883599407971,1541.61 11.92668680101633,47.65879726968706,1539.69 11.92669593729079,47.6587878819555,1539.21 11.92681135609746,47.65871328301728,1533.92 11.92689785733819,47.65864455141127,1531.52 11.92692099139094,47.65862091444433,1530.56 11.92697362974286,47.65857950784266,1526.71 11.92699785344303,47.65849174931645,1524.31 11.92699718289077,47.65842704102397,1521.9 11.92703666165471,47.65840080566704,1520.46 11.92708586342633,47.65836509875953,1519.5 11.92709206603468,47.65834984369576,1519.02 11.92713439464569,47.65833090059459,1518.54 11.92718317732215,47.65829033218324,1517.58 11.92727562971413,47.65824171714485,1516.62 11.92737981677055,47.65818388201296,1515.18 11.92743614315987,47.65816016122699,1516.14 11.92749070934951,47.65811590477824,1516.62 11.92751434631646,47.65802848152816,1516.14 11.92754116840661,47.65796670690179,1515.66 11.92762515507639,47.65793535858393,1517.1 11.92774082534015,47.65788565389812,1517.1 11.92798499017954,47.6578279864043,1523.83 11.9281284045428,47.65783653594554,1526.23 11.92816553637385,47.65778205357492,1524.79 11.92813611589372,47.65773117542267,1521.9 11.92815966904163,47.6576723344624,1519.5 11.92818749696016,47.65760628506541,1515.66 11.92829662933946,47.65754518099129,1512.29 11.92854280583561,47.65747007913888,1515.18 11.92859401926398,47.65747083351016,1514.21 11.92862679250538,47.65739095397294,1515.18 11.92856216803193,47.65730378217995,1516.62 11.92855068482459,47.65729422681034,1516.14 11.92849393934012,47.65713404864073,1514.21 11.92849528044462,47.65707705169916,1514.21 11.92846929654479,47.6569405104965,1511.33 11.92850785329938,47.65683255158365,1509.89 11.92855370230973,47.65679298900068,1510.37 11.92868370562792,47.65670430846512,1510.85 11.92870725877583,47.65663725323975,1510.37 11.92870809696615,47.65657941810787,1510.85 11.92867733538151,47.65649903565645,1513.73 11.92868563346565,47.65647414140403,1514.21 11.92867289297283,47.65637707896531,1520.46 11.92867482081056,47.65632804483175,1522.87 11.9286913331598,47.65628906898201,1520.94 11.92879493348301,47.65620089136064,1519.5 11.92886693403125,47.65618245117366,1519.5 11.92893910221756,47.65615118667483,1519.98 11.92900029011071,47.65611162409186,1520.46 11.92900439724326,47.65610156580806,1520.94 11.92909676581621,47.65602973289788,1524.79 11.92913624458015,47.65610131435096,1525.27 11.92916264757514,47.6560525316745,1525.75 11.92918444052339,47.65603895299137,1527.19 11.92925015464425,47.65600274316967,1530.08 11.92929348908365,47.65603568404913,1531.52 
+						</coordinates>
+					</LineString>
+				</MultiGeometry>
+			</Placemark>
+		</Folder>
+		<Folder>
+			<name>14e Sattel Taubensteinbahn - Taubensteinhaus</name>
+			<description>FROM: wheretofly-path-sattel-taubensteinbahn
+TO: wheretofly-path-taubensteinhaus
+DURATION: 5m
+DESC: Am Sattel kann man bereits das Taubensteinhaus etwas weiter östlich erkennen. Wenig später ist man auch schon dort angekommen.
+REVDESC: Vom Taubensteinhaus geht es einen Pfad nach Westen, der an einem Sattel mit Wegweiser auf mehrere andere Wege trifft.
+REVDURATION: 5m</description>
+			<Placemark>
+				<name>14e Sattel Taubensteinbahn - Taubensteinhaus</name>
+				<Style>
+					<LineStyle>
+						<color>ffff4040</color>
+						<width>4</width>
+					</LineStyle>
+				</Style>
+				<MultiGeometry>
+					<LineString>
+						<coordinates>
+							11.92021052353084,47.66068914905191,1589.2 11.92018806003034,47.6606236025691,1593.04 11.92020172253251,47.66060574911535,1593.52 11.92030892707408,47.66048731282353,1595.45 11.920335162431,47.6604615803808,1595.93 11.92046969197691,47.66038463450968,1596.89 11.9205701071769,47.66034222207964,1597.85 11.92078242078424,47.66027784906328,1601.21 11.92121501080692,47.66020249575377,1611.31 11.92128910683096,47.66019101254642,1612.27 11.92156931385398,47.66017818823457,1612.75 11.92159932106733,47.66017550602555,1612.75 11.92180174402893,47.6601938623935,1612.27 11.92209024913609,47.66019394621253,1616.11 11.92216099239886,47.66018967144191,1616.59 11.92242032848299,47.66017776913941,1618.04 11.92254614084959,47.66016812995076,1618.52 11.92272199317813,47.66013292595744,1618.04 11.92298811860383,47.66010417602956,1617.56 11.92315139807761,47.66010685823858,1617.56 11.92319766618311,47.66009646467865,1617.56 11.92342774942517,47.66004240140319,1618.04 11.92345951683819,47.66004131175578,1617.56 11.92350712604821,47.66003795899451,1617.07 11.92360511049628,47.6600279007107,1615.63 11.92375942133367,47.66003075055778,1609.38 11.92394885234535,47.66005581244826,1601.21 11.92416451871395,47.66012261621654,1592.56 11.92419913597405,47.66013099811971,1591.6 11.9242550432682,47.66015446744859,1589.68 11.92446677014232,47.66020609997213,1580.54 11.92469249479473,47.66029268503189,1573.33 11.92476742900908,47.66033342108131,1571.41 11.92485879175365,47.66037935391069,1569.01 11.92496314644814,47.66046652570367,1566.12 11.92498242482543,47.66048764809966,1565.64 11.92510538734496,47.66055939719081,1562.76 11.92517520859838,47.66060348600149,1561.32 11.92519783973694,47.660604827106,1560.36 11.92546497099102,47.66066526062787,1558.92 11.92546530626714,47.66068051569164,1558.43 11.92555415444076,47.66068018041551,1556.99 11.92554468289018,47.6607102714479,1557.47 
+						</coordinates>
+					</LineString>
+				</MultiGeometry>
+			</Placemark>
+		</Folder>
+		<Folder>
+			<name>15a Blecksteinhaus Abzweig - Blecksteinhaus</name>
+			<description>FROM: wheretofly-path-abzweig-blecksteinhaus
+TO: wheretofly-path-blecksteinhaus
+DURATION: 1m
+DESC: Noch ein paar Schritte, und man ist am Blecksteinhaus angekommen.
+REVDESC: Vom Blecksteinhaus aus trifft man gleic wieder auf den Fahrweg.
+REVDURATION: 1m</description>
+			<Placemark>
+				<name>15a Blecksteinhaus Abzweig - Blecksteinhaus</name>
+				<Style>
+					<LineStyle>
+						<color>ffff4040</color>
+						<width>4</width>
+					</LineStyle>
+				</Style>
+				<MultiGeometry>
+					<LineString>
+						<coordinates>
+							11.89121408388019,47.64838468283415,1052.3 11.89110738225281,47.64837990514934,1047.97 11.8908509798348,47.64828694984317,1040.28 11.89079641364515,47.64824671670795,1036.44 11.89075970090926,47.64823766425252,1033.07 11.89072298817337,47.64820883050561,1028.27 11.89067663624883,47.6481678429991,1027.79 11.89071142114699,47.64811185188592,1023.94 11.8907283525914,47.64810539782047,1023.46 
+						</coordinates>
+					</LineString>
+				</MultiGeometry>
+			</Placemark>
+		</Folder>
+		<Folder>
+			<name>15a Blecksteinhaus Abzweig - Waitzinger Alm</name>
+			<description>FROM: wheretofly-path-abzweig-blecksteinhaus
+TO: wheretofly-path-waitzinger-alm
+DURATION: 20m
+DESC: Vom Abzweig zum Blecksteinhaus gehen wir den Weg nach Süden weiter, der der Valeppstraße folgt. Schließlich kommen wir an der Waitzinger Alm (keine Einkehrmöglichkeit) an.
+REVDESC: Von der Alm ans folgen wir der Valeppstraße nach Norden, bis wir auf den Abzweig zum Blecksteinhaus treffen.
+REVDURATION: 20m</description>
+			<Placemark>
+				<name>15a Blecksteinhaus Abzweig - Waitzinger Alm</name>
+				<Style>
+					<LineStyle>
+						<color>ffff4040</color>
+						<width>4</width>
+					</LineStyle>
+				</Style>
+				<MultiGeometry>
+					<LineString>
+						<coordinates>
+							11.89121408388019,47.64838468283415,1052.3 11.89125305972993,47.64840262010694,1050.86 11.89127217046917,47.64836163260043,1051.82 11.89129002392292,47.64835895039141,1049.42 11.89131894148886,47.64820531010628,1050.38 11.89137451350689,47.64803105033934,1049.9 11.89139203168452,47.64799173921347,1050.38 11.89155195839703,47.64790926128626,1053.26 11.89159638248384,47.64785687439144,1056.15 11.89165840856731,47.6477087661624,1062.87 11.89170819707215,47.64764565043151,1067.2 11.89183082431555,47.64752821996808,1067.2 11.89188614487648,47.64745806343854,1067.2 11.89199661836028,47.64742118306458,1067.2 11.89204464666545,47.64740726910532,1066.72 11.89214397221804,47.64736753888428,1066.24 11.89222846180201,47.64734138734639,1065.76 11.8924670945853,47.64718154445291,1064.8 11.89265493303537,47.64702044427395,1064.8 11.89275241456926,47.64698029495776,1064.8 11.89295785501599,47.64669723808765,1063.36 11.89309255219996,47.64651861973107,1060.95 11.8932824023068,47.64642080292106,1059.03 11.89335431903601,47.64641317538917,1059.03 11.89351835288107,47.64631552621722,1057.11 11.89375950023532,47.64621326699853,1056.63 11.8939867336303,47.64612877741456,1056.15 11.89403333701193,47.64610145241022,1055.67 11.89424590207636,47.64606943354011,1055.18 11.89432888291776,47.64603280462325,1055.18 11.89438135363162,47.64591998420656,1055.18 11.89460179768503,47.64572971500456,1055.67 11.89474806189537,47.64569979161024,1055.67 11.895035142079,47.64555553905666,1053.74 11.89511016011238,47.64552469365299,1053.26 11.89511837437749,47.64521716162562,1049.42 11.8951022811234,47.64514029957354,1048.45 11.89504369162023,47.64512378722429,1046.53 11.895058946684,47.64501851052046,1035.96 11.89504654146731,47.64486202038825,1034.52 11.89508543349803,47.6446639560163,1033.07 11.89525047317147,47.64452205039561,1032.11 11.89532264135778,47.64448232017458,1032.11 11.89538257196546,47.64440755359829,1031.63 11.89548256807029,47.64438324607909,1031.63 11.89582966268063,47.64401226304472,1013.37 11.89597525633872,47.6437918189913,1010 11.89600358717144,47.64368570409715,1009.52 11.89603845588863,47.64363390393555,1009.04 11.89603745006025,47.64353348873556,1005.68 11.89607265405357,47.6434519328177,1005.68 11.89610559493303,47.64339032582939,1005.68 11.89614490605891,47.64333986677229,1005.2 11.89625957049429,47.64307667501271,1005.2 11.89635244198144,47.64290828257799,1004.72 11.89639016054571,47.64280535280705,1004.72 11.89639820717275,47.64276520349085,1004.23 11.89640558324754,47.64273779466748,1004.23 11.8964007217437,47.64271482825279,1004.23 11.89637423492968,47.64254626818001,1004.23 11.89638286828995,47.64252573251724,1004.23 11.89639518968761,47.64228047803044,1004.23 11.89629544503987,47.64210563153029,1004.23 11.89619461074472,47.64195065014064,1004.23 11.89615647308528,47.64190320856869,1003.75 11.89608279615641,47.6418146956712,1003.75 11.89606946893036,47.64180539175868,1003.75 11.89600174315274,47.64169500209391,1003.27 11.89600652083755,47.64150749891996,1003.27 11.89607642591,47.64133466407657,1002.79 11.89609662629664,47.6411862205714,1002.79 11.89609159715474,47.64114229939878,1002.31 11.89608614891768,47.64109594747424,1002.79 11.89607692882419,47.64108094386756,1002.79 11.89606175757945,47.64106602407992,1002.31 11.89604490995407,47.64105009846389,1002.31 11.89603066071868,47.64102989807725,1002.31 11.8960177525878,47.64100760221481,1002.79 11.89585598185659,47.64077441766858,1002.31 11.89570426940918,47.64057920314372,1001.83 11.8955769483,47.64037753455341,1001.35 11.89550846815109,47.64026136137545,1000.87 11.89549782313407,47.6402517221868,1000.87 11.895497655496,47.64023604802787,1000.87 11.89549748785794,47.64021459035575,1000.87 11.89549916423857,47.64019589871168,1000.87 11.89550050534308,47.64017670415342,1001.35 11.89549623057246,47.64015985652804,1000.87 11.89550075680018,47.63999992981553,1001.35 11.89558994024992,47.6397614646703,1001.35 11.89565850421786,47.63966079801321,1001.35 11.89553353004158,47.63938402757049,966.26 11.8955618608743,47.63938277028501,966.26 
+						</coordinates>
+					</LineString>
+				</MultiGeometry>
+			</Placemark>
+		</Folder>
+		<Folder>
+			<name>15c Blecksteinhaus Abzweig - Albert-Link-Hütte Kreuzung West</name>
+			<description>FROM: wheretofly-path-abzweig-blecksteinhaus
+TO: wheretofly-path-albert-link-hütte-kreuzung-west
+DURATION: 20m
+DESC: Vom Abzweig zum Blecksteinhaus folgen wir den Weg nach Norden und biegen gleich nach links in den Wald ab, dem wir etwas folgen. Eine Wegschleife kann durch einen Pfad abgekürzt werden. Man tritt wieder auf freie Wiese und erkennt bereits die Albert-Link-Hütte, doch zunächst trifft man auf ein Wegkreuzung.
+REVDESC: Von der Wegkreuzung aus gehen wir nach Südwesten, treten in den Wald und können eine Wegschleife durch einen Pfad abkürzen. Wenig später treffen wir auf den Fahrweg, dem wir nach rechts folgen, und gleich am Abzweig zum Blecksteinhaus ankommen.
+REVDURATION: 20m</description>
+			<Placemark>
+				<name>15c Blecksteinhaus Abzweig - Albert-Link-Hütte Kreuzung West</name>
+				<Style>
+					<LineStyle>
+						<color>ffff4040</color>
+						<width>4</width>
+					</LineStyle>
+				</Style>
+				<MultiGeometry>
+					<LineString>
+						<coordinates>
+							11.89119891263545,47.6484527438879,1053.74 11.89121106639504,47.64846447855234,1053.74 11.89122347161174,47.64848015271127,1053.74 11.89123830758035,47.64849381521344,1053.26 11.89124895259738,47.64850588515401,1053.26 11.89125951379538,47.64851686544716,1052.78 11.89127518795431,47.64852608554065,1052.78 11.89129463396967,47.64853304252029,1052.78 11.89131801947951,47.64853949658573,1053.26 11.89134987071157,47.64855961315334,1054.7 11.89136847853661,47.64859984628856,1057.59 11.89141600392759,47.6488000061363,1059.03 11.89141223207116,47.64882599003613,1059.51 11.89140711911023,47.64885247685015,1059.51 11.89139169640839,47.64892330393195,1060.47 11.89139002002776,47.64895607717335,1060.95 11.89138918183744,47.6489897724241,1060.95 11.89138448797166,47.64900058507919,1061.43 11.89110302366316,47.64908423647285,1070.08 11.89093597233295,47.6490452606231,1073.45 11.89091711305082,47.64904794283211,1073.93 11.89089330844581,47.649050289765,1073.93 11.89087042585015,47.64905355870724,1073.93 11.89084603451192,47.6490539778024,1074.41 11.89082524739206,47.64905766583979,1074.41 11.89080663956702,47.6490677241236,1074.41 11.89078954048455,47.64907426200807,1074.41 11.89077696762979,47.64908038079739,1074.41 11.89077001065016,47.6490901876241,1074.41 11.89067026600242,47.64915305189788,1075.85 11.89065509475768,47.64916193671525,1076.33 11.89063774421811,47.64916897751391,1076.33 11.89061787910759,47.64917115680873,1076.81 11.89060262404382,47.64917551539838,1076.81 11.89058242365718,47.64917962253094,1076.81 11.89056431874633,47.64918314293027,1077.29 11.89055191352963,47.64918792061508,1077.29 11.89054193906486,47.64919915236533,1077.78 11.890515871346,47.6492128148675,1077.78 11.89044093713164,47.6492400560528,1078.26 11.89030967652798,47.64922957867384,1078.26 11.88998722471297,47.64922563917935,1079.7 11.88968405127525,47.64924231916666,1080.18 11.88946880400181,47.64926553703845,1079.7 11.88925045542419,47.64934943988919,1075.37 11.88923494890332,47.64935639686883,1074.89 11.88902012072504,47.64943627640605,1071.05 11.88871786929667,47.64944021590054,1073.45 11.88864888623357,47.6494718156755,1075.37 11.88823155127466,47.64939788728952,1082.1 11.88791354186833,47.64932018704712,1084.02 11.88757625408471,47.64927224256098,1084.02 11.88750995323062,47.64927375130355,1084.5 11.88744331710041,47.64927844516933,1084.5 11.88708934932947,47.64928431250155,1084.02 11.88689715228975,47.64922756701708,1080.18 11.88665516674519,47.64920468442142,1080.18 11.88665290363133,47.64922605827451,1080.18 11.88654678873718,47.64932278543711,1081.14 11.88654377125204,47.64933108352125,1081.62 11.88653899356723,47.64935153536499,1083.06 11.88653295859695,47.64936603605747,1083.06 11.88653002493084,47.64937735162675,1083.06 11.88653153367341,47.64938891865313,1083.54 11.88674435019493,47.64956041239202,1083.06 11.88676245510578,47.64957482926548,1083.06 11.88678164966404,47.64958580955863,1083.54 11.88681492581964,47.64965537935495,1083.06 11.88682272098959,47.64966996386647,1083.06 11.88682640902698,47.64968840405345,1083.06 11.8868272472173,47.64970826916397,1083.06 11.88682741485536,47.64973408542574,1083.06 11.88682649284601,47.64976375736296,1083.54 11.88682121224701,47.64979242347181,1083.54 11.88681710511446,47.64981681481004,1083.54 11.88675524666905,47.64986165799201,1083.54 11.88674359582365,47.64987900853157,1083.54 11.88673320226371,47.64990046620369,1083.54 11.88671727664769,47.64991622418165,1083.06 11.88669883646071,47.64993214979768,1082.58 11.88667628914118,47.64994732104242,1083.06 11.88665919005871,47.64995930716395,1082.58 11.88664443790913,47.64997364021838,1082.58 11.88662733882666,47.64998830854893,1082.58 11.8866113293916,47.65000180341303,1082.58 11.88660328276455,47.65001789666712,1082.58 11.88659682869911,47.65002929605544,1082.1 11.88657897524536,47.65003382228315,1082.1 11.8864456191659,47.65011143870652,1080.66 11.88642030581832,47.65012476593256,1081.14 11.88640303909779,47.65012334100902,1081.14 11.88627228140831,47.65017463825643,1078.74 11.88625266775489,47.65018008649349,1078.74 11.88623414374888,47.65019089914858,1078.26 11.88601629808545,47.65034847892821,1076.81 11.88600271940231,47.65036700293422,1076.81 11.88599140383303,47.65038661658764,1076.81 11.88598176464438,47.65040966682136,1076.81 11.88597371801734,47.650435147807,1077.29 11.88595888204873,47.65045568346977,1077.29 11.88594253733754,47.65046892687678,1077.29 11.88592753373087,47.65047831460834,1077.78 11.88588880933821,47.65052994713187,1077.78 11.8858755659312,47.65055140480399,1078.26 11.88580867834389,47.65060404315591,1077.78 11.88566911965609,47.65078500844538,1075.37 11.88560617156327,47.65102716162801,1073.93 11.88559653237462,47.6510414108634,1073.93 11.88559041358531,47.65105817466974,1073.93 11.88558203168213,47.65107451938093,1073.93 11.88557256013155,47.65109086409211,1073.93 11.88549226149917,47.65112305060029,1072.49 11.88524457626045,47.65132145024836,1071.05 11.88493729569018,47.65150610357523,1071.05 11.88456287607551,47.65168773941696,1071.53 11.88422944396734,47.65183366835117,1071.53 11.88399919308722,47.65207263641059,1072.01 11.88389240764082,47.65226877294481,1072.97 11.88387698493898,47.6522883027792,1072.97 11.88362695276737,47.652427861467,1076.81 11.8832678720355,47.65255635604262,1079.7 11.88294248655438,47.65269155614078,1083.06 11.88262573443353,47.65280219726265,1088.83 11.88259832561016,47.65281032770872,1089.31 11.88257292844355,47.65281644649804,1089.79 11.88254568725824,47.65282382257283,1089.79 11.88251995481551,47.65283362939954,1090.27 11.88249439001083,47.65284318476915,1090.27 11.88246882520616,47.65284804627299,1090.75 
+						</coordinates>
+					</LineString>
+				</MultiGeometry>
+			</Placemark>
+		</Folder>
+		<Folder>
+			<name>16a Schwarzenkopfhütte - Abzweig Untere Schönfeldalm</name>
+			<description>FROM: wheretofly-path-schwarzenkopfhütte
+TO: wheretofly-path-abzweig-untere-schönfeldalm
+DURATION: 5m
+DESC: Vom An der Schwarzenkopfhütte folgen wir den Weg nach Osten, der nach kurzer Zeit auf die Fahrstraße vom Tal herauf trifft.
+REVDESC: Von der Kreuzung der Talstraße gehen wir nach Süden, dem Weg zur Schwarzenkopfhütte folgend.
+REVDURATION: 5m</description>
+			<Placemark>
+				<name>16a Schwarzenkopfhütte - Abzweig Untere Schönfeldalm</name>
+				<Style>
+					<LineStyle>
+						<color>ffff4040</color>
+						<width>4</width>
+					</LineStyle>
+				</Style>
+				<MultiGeometry>
+					<LineString>
+						<coordinates>
+							11.9077240023762,47.66131963580847,1322.43 11.90795584581792,47.66130622476339,1324.83 11.90797847695649,47.66135903075337,1322.43 11.90810604952276,47.6612887904048,1323.39 11.90841450355947,47.66137965023518,1323.39 11.90859655849636,47.66142792999744,1325.31 11.90876360982657,47.66147453337908,1325.31 11.90893401391804,47.66145735047758,1324.83 11.90912352874875,47.66144301742315,1321.95 11.90927239134908,47.66147545538843,1317.62 11.9095147959888,47.66157989390194,1314.26 11.90962191671133,47.66163454391062,1312.82 11.90982635132968,47.66179949976504,1320.03 11.91000840626657,47.66198038123548,1326.28 11.91009817644954,47.66203603707254,1328.68 11.91012751311064,47.66204810701311,1329.64 11.91042548976839,47.66214516945183,1336.37 11.91066579893231,47.66229646280408,1339.73 11.91086922772229,47.66242981888354,1343.1 11.91115991212428,47.66255621798337,1345.02 11.91118564456701,47.66257247887552,1345.5 11.91134967841208,47.66273693181574,1345.98 11.91132151521742,47.66293692402542,1347.91 11.91120953299105,47.66314454376698,1348.39 11.91116544418037,47.66320313327014,1350.79 11.91107123158872,47.66324437223375,1351.27 
+						</coordinates>
+					</LineString>
+				</MultiGeometry>
+			</Placemark>
+		</Folder>
+		<Folder>
+			<name>16b Abzweig Untere Schönfeldalm - Abzweig Schönfeldhütte</name>
+			<description>FROM: wheretofly-path-abzweig-untere-schönfeldalm
+TO: wheretofly-path-abzweig-schönfeldhütte
+DURATION: 5m
+DESC: Wir folgen weiter der Fahrstraße und treffen auf eine Abzweigung, bei der wir geradeaus bereits die Schönfeldhütte erkennen.
+REVDESC: Vom Abzweig zur Schönfeldhötte folgen wir der Fahrstraße bergab und kommen zu einer Kreuzung.
+REVDURATION: 5m</description>
+			<Placemark>
+				<name>16b Abzweig Untere Schönfeldalm - Abzweig Schönfeldhütte</name>
+				<Style>
+					<LineStyle>
+						<color>ffff4040</color>
+						<width>4</width>
+					</LineStyle>
+				</Style>
+				<MultiGeometry>
+					<LineString>
+						<coordinates>
+							11.91107123158872,47.66324437223375,1351.27 11.91083930432797,47.66339692287147,1353.19 11.9105629529804,47.66364360228181,1354.15 11.91039665602148,47.66372842714191,1354.63 11.91016606986523,47.66380235552788,1353.19 11.90988854505122,47.66386924311519,1351.27 11.90949585288763,47.66390419565141,1363.29 11.90932578407228,47.6640016771853,1363.77 11.90918094478548,47.66417224891484,1365.69 11.90917935222387,47.6642173435539,1366.65 11.90929099917412,47.66452806070447,1368.57 11.90934782847762,47.6647681184113,1370.98 11.90934254787862,47.66495863907039,1371.46 11.90936702303588,47.66524965874851,1372.42 11.90941748209298,47.66552575863898,1375.3 11.90935931168497,47.665676465258,1375.3 11.90933911129832,47.6656991802156,1376.75 11.90909905359149,47.66576053574681,1381.07 11.90872270613909,47.66573270782828,1381.55 11.90845582634211,47.66570496372879,1382.51 11.90843897871673,47.66569901257753,1382.99 11.90842397511005,47.66569515690208,1382.99 11.9081537425518,47.6656574383378,1386.36 11.90813052468002,47.66566481441259,1386.84 
+						</coordinates>
+					</LineString>
+				</MultiGeometry>
+			</Placemark>
+		</Folder>
+		<Folder>
+			<name>16c Abzweig Schönfeldhütte - Abzweig Schönfeldalm Hochweg Jägerkamp</name>
+			<description>FROM: wheretofly-path-abzweig-schönfeldhütte
+TO: wheretofly-path-abzweigung-schönfeldalm-hochweg-jägerkamp
+DURATION: 60m
+DESC: Vom Abzweig zur Schönfeldhütte gehen wir nach Norden in den Kessel, vorbei an ein paar Privathäusern. Hinter diesen wird es steiler, und in Serpentinen geht es hoch zu einem nach Süden ausgerichteten Hochweg.
+REVDESC: Vom Hochweg aus biegen wir noch vor dem Sattel nach Süden ab und laufen in Serpentinen in den Kessel hinein. Von dort sehen wir schon die Schönfeldhütte und stoßen auf den Fahrweg und den Abzweig zur Hütte.
+REVDURATION: 60m</description>
+			<Placemark>
+				<name>16c Abzweig Schönfeldhütte - Abzweig Schönfeldalm Hochweg Jägerkamp</name>
+				<Style>
+					<LineStyle>
+						<color>ffff4040</color>
+						<width>4</width>
+					</LineStyle>
+				</Style>
+				<MultiGeometry>
+					<LineString>
+						<coordinates>
+							11.90810303203762,47.66567822545767,1387.32 11.90786716528237,47.66582507640123,1390.68 11.90766683779657,47.6659927982837,1393.57 11.90754630602896,47.66621558927,1393.57 11.9075099285692,47.66643913462758,1395.01 11.90767463296652,47.66662336885929,1397.41 11.90792768262327,47.66676284372807,1399.82 11.90800303593278,47.66679553315043,1399.82 11.90811417996883,47.66678304411471,1401.26 11.90818601287901,47.66679880209267,1401.26 11.90820277668536,47.6668144762516,1401.26 11.90839614719153,47.66694179736078,1401.74 11.90868532285094,47.6671131234616,1406.07 11.9089674577117,47.66727204434574,1408.95 11.90928714349866,47.66737782396376,1415.68 11.90934422425926,47.66751914285123,1417.6 11.90903233364224,47.66747195273638,1418.08 11.90870954655111,47.66749114729464,1422.89 11.90842640586197,47.66760296188295,1428.18 11.908193891868,47.6677400059998,1432.5 11.90821157768369,47.66790420748293,1436.83 11.90840645693243,47.6680439338088,1438.75 11.90857216715813,47.66818391159177,1442.11 11.90873946994543,47.66833797097206,1445 11.90896125510335,47.66843704506755,1449.32 11.90907147713006,47.6685397233814,1451.73 11.90904155373573,47.66869612969458,1452.21 11.90905110910535,47.66870736144483,1452.21 11.90906334668398,47.66871607862413,1452.21 11.90923769026995,47.66886544413865,1453.17 11.9092885684222,47.66899888403714,1456.05 11.9094180688262,47.66911966726184,1456.05 11.90950339660049,47.66920935362577,1458.94 11.90964077599347,47.66925411298871,1464.23 11.90965779125691,47.66935243271291,1468.07 11.90968411043286,47.66938487067819,1469.03 11.90984227694571,47.66952057369053,1471.92 11.90996783785522,47.66949869692326,1475.76 11.91009574569762,47.66956734471023,1478.65 11.91019356250763,47.66962476074696,1481.53 11.91022851504386,47.6696468051523,1481.53 11.91032239235938,47.66976063139737,1485.85 11.91029464825988,47.66979399137199,1493.06 11.91023195162416,47.66986515372992,1496.91 11.91021502017975,47.66992064192891,1499.79 11.910236813128,47.6699092425406,1499.31 11.91021644510329,47.66994654200971,1498.35 11.91005392000079,47.67007964663208,1496.43 11.9099479727447,47.67022415064275,1498.83 11.90983825363219,47.67029464244843,1501.72 11.90980506129563,47.67037343233824,1504.6 11.90995627082884,47.67039782367647,1508.93 11.9100774731487,47.6704269926995,1510.37 11.91019800491631,47.67037586309016,1512.77 11.91023027524352,47.67035541124642,1513.73 11.91025651060045,47.67034342512488,1513.73 11.91041744314134,47.67030352726579,1515.18 11.91063302569091,47.67030143178999,1516.62 11.91077308729291,47.67030537128449,1516.62 11.91088289022446,47.67029925249517,1518.54 11.91102974116802,47.67027963884175,1522.39 11.91121866926551,47.67021928913891,1530.08 11.91138220019639,47.67020545899868,1536.8 11.91151035949588,47.67017587088049,1540.65 11.91162267699838,47.67015676014125,1543.05 11.91176290623844,47.67016120254993,1548.34 11.91182727925479,47.67014536075294,1554.11 11.91191570833325,47.67015248537064,1554.59 11.91203858703375,47.67010604962707,1555.07 11.91211142577231,47.6700678281486,1558.43 11.91209047101438,47.67014452256262,1560.36 11.9121032115072,47.67018282786012,1566.12 11.91208460368216,47.67023814842105,1570.45 11.91204814240336,47.67035222612321,1570.93 11.91209550015628,47.67036228440702,1577.18 11.91224905662239,47.6703511364758,1579.1 11.91229205578566,47.67038784921169,1581.03 11.91236346960068,47.67039019614458,1583.91 11.91243681125343,47.67040704376996,1584.87 11.91233145073056,47.67050368711352,1587.75 11.91246153786779,47.67049555666745,1591.12 11.91250177100301,47.67044652253389,1594 11.91257980652154,47.67049086280167,1598.33 11.91271726973355,47.67050670459867,1602.17 11.91280603408814,47.67049974761903,1603.14 11.91290494054556,47.67050536349416,1604.58 11.91300300881267,47.6705239713192,1607.94 11.91310334019363,47.67053344286978,1609.86 11.91322957165539,47.67052154056728,1610.35 11.91339243203402,47.6704563293606,1609.38 11.91350240260363,47.67047870904207,1612.27 11.91352562047541,47.67045339569449,1611.79 11.9135208427906,47.67045599408448,1612.27 11.91362947225571,47.67049605958164,1613.71 11.91359384916723,47.67057359218597,1616.59 11.91357063129544,47.67070066183806,1622.36 11.91353173926473,47.6707261428237,1624.28 11.91354481503367,47.67074785195291,1626.69 11.91353433765471,47.67081163823605,1629.09 11.91346074454486,47.6709195971489,1632.94 11.91339578479528,47.67095597460866,1636.3 11.91330584697425,47.67106016166508,1637.74 11.91318707540631,47.67114540562034,1640.15 11.91311264410615,47.67120500095189,1644.47 11.91297316923738,47.67130114138126,1646.4 11.91291667521,47.67136383801699,1649.76 11.91285213455558,47.67140591517091,1652.64 11.91271928139031,47.67151278443635,1655.05 11.91258450038731,47.67156743444502,1657.93 11.91260989755392,47.67157908529043,1659.37 11.91252063028514,47.67161730676889,1660.81 
 						</coordinates>
 					</LineString>
 				</MultiGeometry>
