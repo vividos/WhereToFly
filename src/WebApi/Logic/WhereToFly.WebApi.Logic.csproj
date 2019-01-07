@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Shared\Base\WhereToFly.Shared.Base.csproj" />
     <ProjectReference Include="..\..\Shared\Model\WhereToFly.Shared.Model.csproj" />
     <ProjectReference Include="..\Model\WhereToFly.WebApi.Model.csproj" />
   </ItemGroup>

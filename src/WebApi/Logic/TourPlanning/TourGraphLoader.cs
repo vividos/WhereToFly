@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using WhereToFly.Shared.Base;
 using WhereToFly.Shared.Model;
 
 namespace WhereToFly.WebApi.Logic.TourPlanning
@@ -18,6 +19,41 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
     /// </summary>
     internal class TourGraphLoader
     {
+        /// <summary>
+        /// Key for ID field of waypoint and track
+        /// </summary>
+        private const string KeyId = "ID";
+
+        /// <summary>
+        /// Key for description field of waypoint and track
+        /// </summary>
+        private const string KeyDescription = "DESC";
+
+        /// <summary>
+        /// Key for FROM field of track
+        /// </summary>
+        private const string KeyFrom = "FROM";
+
+        /// <summary>
+        /// Key for TO field of track
+        /// </summary>
+        private const string KeyTo = "TO";
+
+        /// <summary>
+        /// Key for reverse description field of track
+        /// </summary>
+        private const string KeyReverseDesc = "REVDESC";
+
+        /// <summary>
+        /// Key for duration field of track
+        /// </summary>
+        private const string KeyDuration = "DURATION";
+
+        /// <summary>
+        /// Key for reverse duration field of track
+        /// </summary>
+        private const string KeyReverseDuration = "REVDURATION";
+
         /// <summary>
         /// Tour engine to fill graph
         /// </summary>
@@ -101,8 +137,8 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
         {
             var dict = ParseItemList(placemarkDescription);
 
-            string waypointId = dict.ContainsKey("ID") ? dict["ID"] : null;
-            string description = dict.ContainsKey("DESC") ? dict["DESC"] : null;
+            string waypointId = dict.GetValueOrDefault(KeyId, null);
+            string description = dict.GetValueOrDefault(KeyDescription, null);
 
             if (waypointId != null)
             {
@@ -159,13 +195,13 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
         {
             var dict = ParseItemList(placemarkDescription);
 
-            string fromId = dict.ContainsKey("FROM") ? dict["FROM"] : null;
-            string toId = dict.ContainsKey("TO") ? dict["TO"] : null;
-            string description = dict.ContainsKey("DESC") ? dict["DESC"] : null;
-            string reverseDescription = dict.ContainsKey("REVDESC") ? dict["REVDESC"] : null;
+            string fromId = dict.GetValueOrDefault(KeyFrom, null);
+            string toId = dict.GetValueOrDefault(KeyTo, null);
+            string description = dict.GetValueOrDefault(KeyDescription, null);
+            string reverseDescription = dict.GetValueOrDefault(KeyReverseDesc, null);
 
-            string durationText = dict.ContainsKey("DURATION") ? dict["DURATION"] : null;
-            string reverseDurationText = dict.ContainsKey("REVDURATION") ? dict["REVDURATION"] : null;
+            string durationText = dict.GetValueOrDefault(KeyDuration, null);
+            string reverseDurationText = dict.GetValueOrDefault(KeyReverseDuration, null);
 
             var source = this.tourEngine.FindOrCreateWaypointInfo(fromId);
             var target = this.tourEngine.FindOrCreateWaypointInfo(toId);
@@ -282,13 +318,13 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
         /// </summary>
         private static readonly string[] ItemTitlesList = new string[]
         {
-            "ID",
-            "DESC",
-            "FROM",
-            "TO",
-            "REVDESC",
-            "DURATION",
-            "REVDURATION",
+            KeyId,
+            KeyDescription,
+            KeyFrom,
+            KeyTo,
+            KeyReverseDesc,
+            KeyDuration,
+            KeyReverseDuration,
         };
 
         /// <summary>
