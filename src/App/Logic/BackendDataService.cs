@@ -1,5 +1,6 @@
 ﻿using Refit;
 using System.Threading.Tasks;
+using WhereToFly.Shared.Model;
 
 namespace WhereToFly.App.Logic
 {
@@ -15,12 +16,38 @@ namespace WhereToFly.App.Logic
         internal interface IBackendWebApi
         {
             /// <summary>
+            /// Returns the current app configuration to be used.
+            /// </summary>
+            /// <param name="appVersion">app version requesting the app configuration</param>
+            /// <returns>app configuration</returns>
+            [Get("/api/AppConfig?appVersion={appVersion}")]
+            Task<AppConfig> GetAppConfigAsync(string appVersion);
+
+            /// <summary>
             /// Returns a favicon URL representing the icon for a given website.
             /// </summary>
             /// <param name="websiteUrl">website to get favicon URL</param>
             /// <returns>favicon URL</returns>
             [Get("/api/FaviconUrl?websiteUrl={websiteUrl}")]
             Task<string> GetFaviconUrlAsync(string websiteUrl);
+
+            /// <summary>
+            /// Retrieves latest info about a live waypoint, including new coordinates and
+            /// description.
+            /// </summary>
+            /// <param name="liveWaypointId">live waypoint ID</param>
+            /// <returns>query result for live waypoint</returns>
+            [Get("/api/LiveWaypoint/{id}")]
+            Task<LiveWaypointQueryResult> GetLiveWaypointDataAsync([AliasAs("id")]string liveWaypointId);
+
+            /// <summary>
+            /// Plans a tour with given parameters and returns a planned tour, including
+            /// description and a track.
+            /// </summary>
+            /// <param name="planTourParameters">tour planning parameters</param>
+            /// <returns>planned tour</returns>
+            [Post("/api/PlanTour")]
+            Task<PlannedTour> PlanTourAsync([Body]PlanTourParameters planTourParameters);
         }
 
 #pragma warning disable S1075 // URIs should not be hardcoded
@@ -44,6 +71,16 @@ namespace WhereToFly.App.Logic
         }
 
         /// <summary>
+        /// Returns the current app configuration to be used.
+        /// </summary>
+        /// <param name="appVersion">app version requesting the app configuration</param>
+        /// <returns>app configuration</returns>
+        public async Task<AppConfig> GetAppConfigAsync(string appVersion)
+        {
+            return await this.backendWebApi.GetAppConfigAsync(appVersion);
+        }
+
+        /// <summary>
         /// Returns a favicon URL representing the icon for a given website.
         /// </summary>
         /// <param name="websiteUrl">website to get favicon URL</param>
@@ -51,6 +88,28 @@ namespace WhereToFly.App.Logic
         public async Task<string> GetFaviconUrlAsync(string websiteUrl)
         {
             return await this.backendWebApi.GetFaviconUrlAsync(websiteUrl);
+        }
+
+        /// <summary>
+        /// Retrieves latest info about a live waypoint, including new coordinates and
+        /// description.
+        /// </summary>
+        /// <param name="liveWaypointId">live waypoint ID</param>
+        /// <returns>query result for live waypoint</returns>
+        public async Task<LiveWaypointQueryResult> GetLiveWaypointDataAsync(string liveWaypointId)
+        {
+            return await this.backendWebApi.GetLiveWaypointDataAsync(liveWaypointId);
+        }
+
+        /// <summary>
+        /// Plans a tour with given parameters and returns a planned tour, including description
+        /// and a track.
+        /// </summary>
+        /// <param name="planTourParameters">tour planning parameters</param>
+        /// <returns>planned tour</returns>
+        public async Task<PlannedTour> PlanTourAsync(PlanTourParameters planTourParameters)
+        {
+            return await this.backendWebApi.PlanTourAsync(planTourParameters);
         }
     }
 }

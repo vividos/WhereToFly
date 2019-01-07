@@ -412,5 +412,15 @@ namespace WhereToFly.App.Core.Services
                 return string.Empty;
             }
         }
+
+        /// <summary>
+        /// Plans a tour with given tour planning parameters and returns the planned tour.
+        /// </summary>
+        /// <param name="planTourParameters">tour planning parameters</param>
+        /// <returns>planned tour</returns>
+        public async Task<PlannedTour> PlanTourAsync(PlanTourParameters planTourParameters)
+        {
+            return await this.backendDataService.PlanTourAsync(planTourParameters);
+        }
     }
 }
