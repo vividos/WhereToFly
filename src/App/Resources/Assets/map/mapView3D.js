@@ -640,6 +640,11 @@ MapView.prototype.addLocationList = function (locationList) {
         text += '<img height="32em" width="32em" src="images/directions.svg" style="vertical-align:middle" /> ' +
             '<a href="javascript:parent.map.onNavigateToLocation(\'' + location.id + '\');">Navigate here</a></p>';
 
+        if (location.isPlanTourLocation === true) {
+            text += '<img height="32em" width="32em" src="images/map-marker-plus.svg" style="vertical-align:middle" /> ' +
+                '<a href="javascript:parent.map.onAddTourPlanLocation(\'' + location.id + '\');">Plan tour</a></p>';
+        }
+
         text += "<p>" + location.description + "</p>";
 
         var imagePath = '../' + this.imageUrlFromLocationType(location.type);
@@ -1054,4 +1059,16 @@ MapView.prototype.onLongTap = function (options) {
 
     if (this.options.callback !== undefined)
         this.options.callback('onLongTap', options);
+};
+
+/**
+ * Called by the marker pin link, in order to add the location to tour planning.
+ * @param {string} locationId Location ID of location to add
+ */
+MapView.prototype.onAddTourPlanLocation = function (locationId) {
+
+    console.log("adding tour planning location: id=" + locationId);
+
+    if (this.options.callback !== undefined)
+        this.options.callback('onAddTourPlanLocation', locationId);
 };

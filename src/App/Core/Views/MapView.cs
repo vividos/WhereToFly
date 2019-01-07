@@ -115,6 +115,17 @@ namespace WhereToFly.App.Core.Views
         /// Event that is signaled when long tap occured on map
         /// </summary>
         public event OnLongTapCallback LongTap;
+        
+        /// <summary>
+        /// Delegate of function to call when adding a location to tour planning
+        /// </summary>
+        /// <param name="locationId">location id of location to add</param>
+        public delegate void OnAddTourPlanLocationCallback(string locationId);
+
+        /// <summary>
+        /// Event that is signaled when adding a location to tour planning
+        /// </summary>
+        public event OnAddTourPlanLocationCallback AddTourPlanLocation;
 
         /// <summary>
         /// Gets or sets map imagery type
@@ -340,7 +351,8 @@ namespace WhereToFly.App.Core.Views
                     type = location.Type.ToString(),
                     latitude = location.MapLocation.Latitude,
                     longitude = location.MapLocation.Longitude,
-                    altitude = location.MapLocation.Altitude.GetValueOrDefault(0.0)
+                    altitude = location.MapLocation.Altitude.GetValueOrDefault(0.0),
+                    isPlanTourLocation = location.IsPlanTourLocation,
                 };
 
             string js = string.Format(
@@ -535,6 +547,10 @@ namespace WhereToFly.App.Core.Views
                         longTapParameters.Longitude,
                         Math.Round(longTapParameters.Altitude));
                     this.LongTap?.Invoke(longTapPoint);
+                    break;
+
+                case "onAddTourPlanLocation":
+                    this.AddTourPlanLocation?.Invoke(jsonParameters.Trim('\"'));
                     break;
 
                 default:

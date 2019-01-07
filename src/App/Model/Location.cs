@@ -41,6 +41,11 @@ namespace WhereToFly.App.Model
         /// </summary>
         public string InternetLink { get; set; }
 
+        /// <summary>
+        /// Indicates if this location is a start/stop location for planning tours
+        /// </summary>
+        public bool IsPlanTourLocation { get; set; } = false;
+
         #region object overridables implementation
         /// <summary>
         /// Calculates hash code for map point
@@ -56,6 +61,7 @@ namespace WhereToFly.App.Model
             hashCode = (hashCode * 31) + this.InternetLink.GetHashCode();
             hashCode = (hashCode * 31) + this.MapLocation.GetHashCode();
             hashCode = (hashCode * 31) + this.Description.GetHashCode();
+            hashCode = (hashCode * 31) + this.IsPlanTourLocation.GetHashCode();
 
             return hashCode;
         }
