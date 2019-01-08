@@ -32,6 +32,11 @@ namespace WhereToFly.App.Core.Views
         private readonly HashSet<Track> displayedTracks = new HashSet<Track>();
 
         /// <summary>
+        /// Tour planning parameters for the map page
+        /// </summary>
+        private readonly PlanTourParameters planTourParameters = new PlanTourParameters();
+
+        /// <summary>
         /// Indicates if the next position update should also zoom to my position
         /// </summary>
         private bool zoomToMyPosition;
@@ -355,6 +360,7 @@ namespace WhereToFly.App.Core.Views
             this.mapView.ShareMyLocation += async () => await this.OnMapView_ShareMyLocation();
             this.mapView.AddFindResult += async (name, point) => await this.OnMapView_AddFindResult(name, point);
             this.mapView.LongTap += async (point) => await this.OnMapView_LongTap(point);
+            this.mapView.AddTourPlanLocation += async (locationId) => await this.OnMapView_AddTourPlanLocation(locationId);
 
             this.Content = webView;
 
@@ -623,6 +629,35 @@ namespace WhereToFly.App.Core.Views
                 parameter: location);
 
             this.updateLocationsList = true;
+        }
+
+        /// <summary>
+        /// Called when user clicked on the "Plan tour" link in the pin description on the
+        /// map. Shows popup dialog for tour planning.
+        /// </summary>
+        /// <param name="locationId">location id of location to add to tour planning</param>
+        /// <returns>task to wait on</returns>
+        private async Task OnMapView_AddTourPlanLocation(string locationId)
+        {
+            Location location = this.FindLocationById(locationId);
+
+            if (location == null)
+            {
+                Debug.WriteLine("couldn't add location with id=" + locationId);
+                return;
+            }
+
+            await this.AddTourPlanningLocationAsync(location);
+        }
+
+        /// <summary>
+        /// Called to add a location to tour planning
+        /// </summary>
+        /// <param name="location">location to add</param>
+        /// <returns>task to wait on</returns>
+        private async Task AddTourPlanningLocationAsync(Location location)
+        {
+            this.planTourParameters.WaypointIdList.Add(location.Id);
         }
 
         /// <summary>
