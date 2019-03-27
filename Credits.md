@@ -62,6 +62,11 @@ library to show SVG images.
 The library is licensed using the
 [MIT License](https://github.com/mono/SkiaSharp/blob/master/LICENSE.txt).
 
+The backend uses the [QuickGraph](https://github.com/oldrev/Sandwych.QuickGraph)
+library for tour planning.
+The library is licensed using the
+[Microsoft Pulbic License](https://github.com/oldrev/Sandwych.QuickGraph/blob/master/LICENSE.md).
+
 ## Services
 
 The app uses the Thermal Skyways from https://thermal.kk7.ch/, with kind
