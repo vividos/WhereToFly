@@ -170,12 +170,24 @@ namespace WhereToFly.App.Core.Services
 
                 new Location
                 {
-                    Id = Guid.NewGuid().ToString("B"),
+                    Id = "wheretofly-path-jagerkamp",
                     Name = "Jägerkamp",
                     MapLocation = new MapPoint(47.673511, 11.9060494, 1746.0),
                     Description = "Gipfel in den Schlierseer Bergen, mit Ausblick auf Schliersee und die umliegenden Berge.",
                     Type = LocationType.Summit,
-                    InternetLink = "https://de.wikipedia.org/wiki/J%C3%A4gerkamp"
+                    InternetLink = "https://de.wikipedia.org/wiki/J%C3%A4gerkamp",
+                    IsPlanTourLocation = true,
+                },
+
+                new Location
+                {
+                    Id = "wheretofly-path-rotwand",
+                    Name = "Rotwand",
+                    MapLocation = new MapPoint(47.6502332, 11.9345058, 1884),
+                    Description = "Beliebter Ausflugsgipfel.",
+                    Type = LocationType.Summit,
+                    InternetLink = "https://de.wikipedia.org/wiki/Rotwand_(Bayern)",
+                    IsPlanTourLocation = true,
                 },
 
                 new Location
