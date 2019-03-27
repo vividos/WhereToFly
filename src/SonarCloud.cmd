@@ -39,13 +39,13 @@ SonarScanner.MSBuild.exe begin ^
     /k:"WhereToFly" ^
     /v:"1.4.0" ^
     /d:"sonar.cfamily.build-wrapper-output=%CD%\bw-output" ^
-    /d:"sonar.cs.opencover.reportsPaths=%CD%\TestResults\WhereToFly-CoverageReport.xml" ^
+    /d:"sonar.cs.opencover.reportsPaths=%CD%\TestResults\WhereToFly-*-CoverageReport.xml" ^
     /d:"sonar.host.url=https://sonarcloud.io" ^
     /d:"sonar.organization=vividos-github" ^
     /d:"sonar.login=%SONARLOGIN%"
 
 REM
-REM Rebuild project
+REM Rebuild projects
 REM
 build-wrapper-win-x86-64.exe --out-dir bw-output msbuild WhereToFly.sln /m /property:Configuration=Release /target:Rebuild
 
@@ -59,10 +59,20 @@ REM
     -filter:"+[WhereToFly*]* -[WhereToFly.App.Android]* -[WhereToFly.App.UnitTest]*" ^
     -mergebyhash ^
     -skipautoprops ^
-    -output:"%~dp0\TestResults\WhereToFly-CoverageReport.xml"
+    -output:"%~dp0\TestResults\WhereToFly-App-CoverageReport.xml"
 
+%OPENCOVER% ^
+    -register:user ^
+    -target:"c:\Program Files\dotnet\dotnet.exe" ^
+    -targetdir:"%~dp0WebApi\UnitTest\\" ^
+    -targetargs:"test -c Release" ^
+    -filter:"+[WhereToFly*]* -[WhereToFly.WebApi.UnitTest]*" ^
+    -mergebyhash ^
+    -skipautoprops ^
+    -output:"%~dp0\TestResults\WhereToFly-WebApi-CoverageReport.xml"
+	
 %REPORTGENERATOR% ^
-    -reports:"%~dp0\TestResults\WhereToFly-CoverageReport.xml" ^
+    -reports:"%~dp0\TestResults\WhereToFly-*-CoverageReport.xml" ^
     -targetdir:"%~dp0\TestResults\CoverageReport"
 
 SonarScanner.MSBuild.exe end /d:"sonar.login=%SONARLOGIN%"
