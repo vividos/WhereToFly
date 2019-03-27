@@ -2,8 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <UserSecretsId>a7ca5669-43ec-44c5-9d53-bfd5c070632e</UserSecretsId>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <AspNetCoreModuleName>AspNetCoreModule</AspNetCoreModuleName>
+    <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
+  
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\netcoreapp2.2\WhereToFly.WebApi.Core.xml</DocumentationFile>
   </PropertyGroup>
