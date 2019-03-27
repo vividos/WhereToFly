@@ -15,7 +15,7 @@ Test versions are available here:
 https://install.appcenter.ms/users/michael.fink/apps/wheretofly/distribution_groups/beta%20tester
 
 Builds are occasionally checked with SonarCloud:
-[![Quality Gate](https://sonarcloud.io/api/badges/gate?key=WhereToFly)](https://sonarcloud.io/dashboard?id=WhereToFly)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=WhereToFly&metric=alert_status)](https://sonarcloud.io/dashboard?id=WhereToFly)
 
 ## License
 
