@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Geo;
 using WhereToFly.App.Model;
+using WhereToFly.Shared.Model;
 
 namespace WhereToFly.App.Core
 {
@@ -79,5 +80,12 @@ namespace WhereToFly.App.Core
         /// <param name="websiteUrl">website URL</param>
         /// <returns>favicon URL or empty string when none was found</returns>
         Task<string> GetFaviconUrlAsync(string websiteUrl);
+
+        /// <summary>
+        /// Plans a tour with given tour planning parameters and returns the planned tour.
+        /// </summary>
+        /// <param name="planTourParameters">tour planning parameters</param>
+        /// <returns>planned tour</returns>
+        Task<PlannedTour> PlanTourAsync(PlanTourParameters planTourParameters);
     }
 }
