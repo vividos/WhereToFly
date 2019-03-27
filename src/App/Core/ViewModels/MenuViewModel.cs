@@ -95,7 +95,6 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         public MenuViewModel()
         {
-            var platform = DependencyService.Get<IPlatform>();
             this.VersionText = $"Version {AppInfo.VersionString} (Build {AppInfo.BuildString})";
 
             this.MenuItemList = new MenuItemViewModel[]
