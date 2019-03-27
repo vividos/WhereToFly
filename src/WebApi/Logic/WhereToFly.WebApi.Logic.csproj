@@ -23,11 +23,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.8.11" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Refit" Version="4.6.58" />
+    <PackageReference Include="Refit" Version="4.6.99" />
     <PackageReference Include="Sandwych.QuickGraph.Core" Version="1.0.0" />
-    <PackageReference Include="SharpKml.Core" Version="4.0.1" />
+    <PackageReference Include="SharpKml.Core" Version="5.0.0" />
     <PackageReference Include="SonarAnalyzer.CSharp" Version="7.*" />
   </ItemGroup>
 
