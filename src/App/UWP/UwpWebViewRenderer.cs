@@ -50,6 +50,18 @@ namespace WhereToFly.App.UWP
                     sender.ToString(),
                     args.CallingUri,
                     args.Value));
+
+            string url = args.Value;
+
+            // send event via public (but hidden from Intellisense) method
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                this.Element.SendNavigating(
+                    new WebNavigatingEventArgs(
+                        WebNavigationEvent.NewPage,
+                        new UrlWebViewSource { Url = url },
+                        url));
+            });
         }
     }
 }

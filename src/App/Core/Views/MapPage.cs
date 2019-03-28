@@ -332,17 +332,29 @@ namespace WhereToFly.App.Core.Views
 
             var platform = DependencyService.Get<IPlatform>();
 
-            string htmlText = platform.LoadAssetText("map/map3D.html");
-
-            var htmlSource = new HtmlWebViewSource
+            WebViewSource webViewSource = null;
+            if (Device.RuntimePlatform == Device.Android)
             {
-                Html = htmlText,
-                BaseUrl = platform.WebViewBasePath + "map/"
-            };
+                string htmlText = platform.LoadAssetText("map/map3D.html");
+
+                webViewSource = new HtmlWebViewSource
+                {
+                    Html = htmlText,
+                    BaseUrl = platform.WebViewBasePath + "map/"
+                };
+            }
+
+            if (Device.RuntimePlatform == Device.UWP)
+            {
+                webViewSource = new UrlWebViewSource
+                {
+                    Url = platform.WebViewBasePath + "map/map3D.html"
+                };
+            }
 
             var webView = new WebView
             {
-                Source = htmlSource,
+                Source = webViewSource,
 
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HorizontalOptions = LayoutOptions.FillAndExpand
