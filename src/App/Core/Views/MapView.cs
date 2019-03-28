@@ -115,7 +115,7 @@ namespace WhereToFly.App.Core.Views
         /// Event that is signaled when long tap occured on map
         /// </summary>
         public event OnLongTapCallback LongTap;
-        
+
         /// <summary>
         /// Delegate of function to call when adding a location to tour planning
         /// </summary>
@@ -486,11 +486,12 @@ namespace WhereToFly.App.Core.Views
         /// <param name="args">event args</param>
         private void OnNavigating_WebView(object sender, WebNavigatingEventArgs args)
         {
-            if (args.Url.ToString().StartsWith("callback://"))
+            const string CallbackSchema = "callback://";
+            if (args.Url.ToString().StartsWith(CallbackSchema))
             {
                 args.Cancel = true;
 
-                string callbackParams = args.Url.ToString().Substring(11);
+                string callbackParams = args.Url.ToString().Substring(CallbackSchema.Length);
 
                 int pos = callbackParams.IndexOf('/');
                 Debug.Assert(pos > 0, "callback Uri must contain a slash after the function name");
