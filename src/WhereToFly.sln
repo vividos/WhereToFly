@@ -45,7 +45,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhereToFly.App.Resources.An
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhereToFly.App.UITest", "App\UITest\WhereToFly.App.UITest.csproj", "{B19C892E-2628-4CA7-AD27-08D406A3B14B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhereToFly.Shared.Base", "Shared\Base\WhereToFly.Shared.Base.csproj", "{96AC92EA-4F83-4A23-80D1-8EE5740D20DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.Shared.Base", "Shared\Base\WhereToFly.Shared.Base.csproj", "{96AC92EA-4F83-4A23-80D1-8EE5740D20DF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhereToFly.App.UWP", "App\UWP\WhereToFly.App.UWP.csproj", "{1D3C03EF-701F-4FAB-80B2-1FBEFBC7C8CD}"
 EndProject
