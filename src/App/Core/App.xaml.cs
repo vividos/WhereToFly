@@ -37,10 +37,13 @@ namespace WhereToFly.App.Core
         /// </summary>
         public App()
         {
-            AppCenter.Start(
-                "android=" + Constants.AppCenterKeyAndroid,
-                typeof(Distribute),
-                typeof(Crashes));
+            if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android)
+            {
+                AppCenter.Start(
+                    "android=" + Constants.AppCenterKeyAndroid,
+                    typeof(Distribute),
+                    typeof(Crashes));
+            }
 
             this.InitializeComponent();
             this.SetupDepencencyService();
