@@ -3,26 +3,37 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
              xmlns:local="clr-namespace:WhereToFly.App.Core"
+             xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
              x:Class="WhereToFly.App.Core.Views.LocationDetailsPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:ImagePathConverter x:Key="ImagePathConverter" />
+            <x:String x:Key="ZoomToImageBaseName">magnify_plus_outline</x:String>
+            <x:String x:Key="DirectionsImageBaseName">directions</x:String>
+            <x:String x:Key="ShareImageBaseName">share_variant</x:String>
+            <x:String x:Key="DeleteImageBaseName">delete</x:String>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="Zoom to"
-                     Icon="magnify_plus_outline.xml"
+                     Icon="{Binding Source={StaticResource ZoomToImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                      Command="{Binding ZoomToLocationCommand}"
                      Order="Primary" Priority="0" />
 
         <ToolbarItem Name="Navigate here"
-                     Icon="directions.xml"
+                     Icon="{Binding Source={StaticResource DirectionsImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                      Command="{Binding NavigateToLocationCommand}"
                      Order="Primary" Priority="1" />
 
         <ToolbarItem Name="Share"
-                     Icon="share_variant.xml"
+                     Icon="{Binding Source={StaticResource ShareImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                      Command="{Binding ShareLocationCommand}"
                      Order="Primary" Priority="2" />
 
         <ToolbarItem Name="Delete"
-                     Icon="delete.xml"
+                     Icon="{Binding Source={StaticResource DeleteImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                      Command="{Binding DeleteLocationCommand}"
                      IsDestructive="True"
                      Order="Primary" Priority="3" />

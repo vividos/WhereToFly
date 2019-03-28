@@ -4,7 +4,18 @@
              xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
              xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
              xmlns:local="clr-namespace:WhereToFly.App.Core"
+             xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
              x:Class="WhereToFly.App.Core.Views.LocationListPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:ImagePathConverter x:Key="ImagePathConverter" />
+            <x:String x:Key="ShowDetailsImageBaseName">information_outline</x:String>
+            <x:String x:Key="ZoomToImageBaseName">magnify_plus_outline</x:String>
+            <x:String x:Key="DeleteImageBaseName">delete</x:String>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
 
         <!-- Filter controls -->
@@ -96,13 +107,13 @@
                         </ViewCell.View>
                         <ViewCell.ContextActions>
                             <MenuItem Text="Show Details"
-                                      Icon="information_outline.xml"
+                                      Icon="{Binding Source={StaticResource ShowDetailsImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                                       Command="{Binding ShowDetailsLocationContextAction}" />
                             <MenuItem Text="Zoom to"
-                                      Icon="magnify_plus_outline.xml"
+                                      Icon="{Binding Source={StaticResource ZoomToImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                                       Command="{Binding ZoomToLocationContextAction}" />
                             <MenuItem Text="Delete" IsDestructive="True"
-                                      Icon="delete.xml"
+                                      Icon="{Binding Source={StaticResource DeleteImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                                       Command="{Binding DeleteLocationContextAction}" />
                         </ViewCell.ContextActions>
                     </ViewCell>

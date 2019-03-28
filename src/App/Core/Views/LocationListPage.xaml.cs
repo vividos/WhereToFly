@@ -65,7 +65,7 @@ namespace WhereToFly.App.Core.Views
         {
             ToolbarItem importLocationsButton = new ToolbarItem(
                 "Import locations",
-                "playlist_plus.xml",
+                Converter.ImagePathConverter.GetDeviceDependentImage("playlist_plus"),
                 async () => await this.OnClicked_ToolbarButtonImportLocations(),
                 ToolbarItemOrder.Primary)
             {
@@ -92,7 +92,7 @@ namespace WhereToFly.App.Core.Views
         {
             ToolbarItem deleteLocationListButton = new ToolbarItem(
                 "Delete location list",
-                "delete_forever.xml",
+                Converter.ImagePathConverter.GetDeviceDependentImage("delete_forever"),
                 async () => await this.OnClicked_ToolbarButtonDeleteLocationList(),
                 ToolbarItemOrder.Primary)
             {

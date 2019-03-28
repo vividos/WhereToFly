@@ -166,7 +166,8 @@ namespace WhereToFly.App.Core
                     break;
 
                 case WeatherIconDescription.IconType.IconPlaceholder:
-                    entry = new ImageCacheEntry(() => ImageSource.FromFile("border_none_variant.xml"));
+                    string imagePath = Converter.ImagePathConverter.GetDeviceDependentImage("border_none_variant");
+                    entry = new ImageCacheEntry(() => ImageSource.FromFile(imagePath));
                     break;
 
                 default:

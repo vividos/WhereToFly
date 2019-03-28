@@ -165,7 +165,7 @@ namespace WhereToFly.App.Core.Views
         {
             ToolbarItem locateMeButton = new ToolbarItem(
                 "Locate me",
-                "crosshairs_gps.xml",
+                Core.Converter.ImagePathConverter.GetDeviceDependentImage("crosshairs_gps"),
                 async () => await this.OnClicked_ToolbarButtonLocateMe(),
                 ToolbarItemOrder.Primary)
             {
@@ -265,7 +265,7 @@ namespace WhereToFly.App.Core.Views
         {
             ToolbarItem currentPositionDetailsButton = new ToolbarItem(
                 "Find location",
-                "magnify.xml",
+                Converter.ImagePathConverter.GetDeviceDependentImage("magnify"),
                 async () => await this.OnClicked_ToolbarButtonFindLocation(),
                 ToolbarItemOrder.Primary)
             {

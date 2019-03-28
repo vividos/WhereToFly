@@ -1,16 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
              x:Class="WhereToFly.App.Core.Views.WeatherDashboardPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:ImagePathConverter x:Key="ImagePathConverter" />
+            <x:String x:Key="AddNewImageBaseName">playlist_plus</x:String>
+            <x:String x:Key="ClearAllImageBaseName">delete</x:String>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="Add new"
-                     Icon="playlist_plus.xml"
+                     Icon="{Binding Source={StaticResource AddNewImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                      Command="{Binding AddNewCommand}"
                      Order="Primary" Priority="0" />
 
         <ToolbarItem Name="Clear all"
-                     Icon="delete.xml"
+                     Icon="{Binding Source={StaticResource ClearAllImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                      Command="{Binding ClearAllCommand}"
                      IsDestructive="True"
                      Order="Primary" Priority="1" />

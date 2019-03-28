@@ -65,7 +65,7 @@ namespace WhereToFly.App.Core.Views
         {
             ToolbarItem refreshButton = new ToolbarItem(
                 "Refresh",
-                "refresh.xml",
+                Converter.ImagePathConverter.GetDeviceDependentImage("refresh"),
                 () => this.OnClicked_ToolbarButtonRefresh(),
                 ToolbarItemOrder.Primary)
             {
@@ -92,7 +92,7 @@ namespace WhereToFly.App.Core.Views
         {
             ToolbarItem forecastButton = new ToolbarItem(
                 "Forecast",
-                "calendar_clock.xml",
+                Converter.ImagePathConverter.GetDeviceDependentImage("calendar_clock"),
                 async () => await this.OnClicked_ToolbarButtonWeatherForecast(),
                 ToolbarItemOrder.Primary)
             {
@@ -118,7 +118,7 @@ namespace WhereToFly.App.Core.Views
         {
             ToolbarItem weatherButton = new ToolbarItem(
                 "Weather",
-                "weather_partlycloudy.xml",
+                Converter.ImagePathConverter.GetDeviceDependentImage("weather_partlycloudy"),
                 async () => await this.OnClicked_ToolbarButtonCurrentWeather(),
                 ToolbarItemOrder.Primary)
             {
@@ -144,7 +144,7 @@ namespace WhereToFly.App.Core.Views
         {
             ToolbarItem webcamsButton = new ToolbarItem(
                 "Webcams",
-                "camera.xml",
+                Converter.ImagePathConverter.GetDeviceDependentImage("camera"),
                 async () => await this.OnClicked_ToolbarButtonWebcams(),
                 ToolbarItemOrder.Primary)
             {

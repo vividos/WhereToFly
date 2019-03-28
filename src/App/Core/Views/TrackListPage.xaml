@@ -3,16 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
              xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
+             xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
              x:Class="WhereToFly.App.Core.Views.TrackListPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:ImagePathConverter x:Key="ImagePathConverter" />
+            <x:String x:Key="ImportTrackImageBaseName">playlist_plus</x:String>
+            <x:String x:Key="DeleteTrackListImageBaseName">delete_forever</x:String>
+            <x:String x:Key="ShowDetailsImageBaseName">information_outline</x:String>
+            <x:String x:Key="ZoomToImageBaseName">magnify_plus_outline</x:String>
+            <x:String x:Key="DeleteImageBaseName">delete</x:String>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="Import track"
-                     Icon="playlist_plus.xml"
+                     Icon="{Binding Source={StaticResource ImportTrackImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                      Command="{Binding ImportTrackCommand}"
                      Order="Primary" Priority="0" />
 
         <ToolbarItem Name="Delete track list"
-                     Icon="delete_forever.xml"
+                     Icon="{Binding Source={StaticResource DeleteTrackListImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                      Command="{Binding DeleteTrackListCommand}"
                      IsDestructive="True"
                      Order="Primary" Priority="1" />
@@ -87,13 +99,13 @@
                             </ViewCell.View>
                             <ViewCell.ContextActions>
                                 <MenuItem Text="Show Details"
-                                      Icon="information_outline.xml"
+                                      Icon="{Binding Source={StaticResource ShowDetailsImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                                       Command="{Binding ShowTrackDetailsContextAction}" />
                                 <MenuItem Text="Zoom to"
-                                      Icon="magnify_plus_outline.xml"
+                                      Icon="{Binding Source={StaticResource ZoomToImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                                       Command="{Binding ZoomToTrackContextAction}" />
                                 <MenuItem Text="Delete" IsDestructive="True"
-                                      Icon="delete.xml"
+                                      Icon="{Binding Source={StaticResource DeleteImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                                       Command="{Binding DeleteTrackContextAction}" />
                             </ViewCell.ContextActions>
                         </ViewCell>

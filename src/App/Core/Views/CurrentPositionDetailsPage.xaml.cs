@@ -77,7 +77,7 @@ namespace WhereToFly.App.Core.Views
         {
             ToolbarItem sharePositionButton = new ToolbarItem(
                 "Share position",
-                "share_variant.xml",
+                Converter.ImagePathConverter.GetDeviceDependentImage("share_variant"),
                 async () => await this.OnClicked_ToolbarButtonSharePosition(),
                 ToolbarItemOrder.Primary)
             {

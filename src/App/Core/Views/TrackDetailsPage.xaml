@@ -2,16 +2,25 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
+             xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
              x:Class="WhereToFly.App.Core.Views.TrackDetailsPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:ImagePathConverter x:Key="ImagePathConverter" />
+            <x:String x:Key="ZoomToImageBaseName">magnify_plus_outline</x:String>
+            <x:String x:Key="DeleteImageBaseName">delete</x:String>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="Zoom to"
-                     Icon="magnify_plus_outline.xml"
+                     Icon="{Binding Source={StaticResource ZoomToImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                      Command="{Binding ZoomToTrackCommand}"
                      Order="Primary" Priority="0" />
 
         <ToolbarItem Name="Delete"
-                     Icon="delete.xml"
+                     Icon="{Binding Source={StaticResource DeleteImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                      Command="{Binding DeleteTrackCommand}"
                      IsDestructive="True"
                      Order="Primary" Priority="1" />
