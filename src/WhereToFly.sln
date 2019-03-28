@@ -47,6 +47,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhereToFly.App.UITest", "Ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhereToFly.Shared.Base", "Shared\Base\WhereToFly.Shared.Base.csproj", "{96AC92EA-4F83-4A23-80D1-8EE5740D20DF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhereToFly.App.Resources.UWP", "App\Resources\WhereToFly.App.Resources.UWP.csproj", "{EBFA2CAF-D0B4-4A36-91AA-24D393BCD3CF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,10 @@ Global
 		{96AC92EA-4F83-4A23-80D1-8EE5740D20DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96AC92EA-4F83-4A23-80D1-8EE5740D20DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96AC92EA-4F83-4A23-80D1-8EE5740D20DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBFA2CAF-D0B4-4A36-91AA-24D393BCD3CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBFA2CAF-D0B4-4A36-91AA-24D393BCD3CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBFA2CAF-D0B4-4A36-91AA-24D393BCD3CF}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBFA2CAF-D0B4-4A36-91AA-24D393BCD3CF}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -130,6 +136,7 @@ Global
 		{CBBB5ED6-F0D9-49C1-BB4E-D54757483953} = {A443B9B2-B8C9-44F0-A7F5-DF2466E0E0FE}
 		{B19C892E-2628-4CA7-AD27-08D406A3B14B} = {A443B9B2-B8C9-44F0-A7F5-DF2466E0E0FE}
 		{96AC92EA-4F83-4A23-80D1-8EE5740D20DF} = {60BE5B8E-A229-488F-A893-379E323EBB3E}
+		{EBFA2CAF-D0B4-4A36-91AA-24D393BCD3CF} = {A443B9B2-B8C9-44F0-A7F5-DF2466E0E0FE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D13F3BD1-E396-49C7-BD98-2F3BC15F6E7C}

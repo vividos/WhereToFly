@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("WhereToFly.App.Resources")]
-[assembly: AssemblyCopyright("Copyright © 2017-2018 Michael Fink")]
+[assembly: AssemblyCopyright("Copyright © 2017-2019 Michael Fink")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]

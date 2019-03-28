@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EBFA2CAF-D0B4-4A36-91AA-24D393BCD3CF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WhereToFly.App.Resources.UWP</RootNamespace>
+    <AssemblyName>WhereToFly.App.Resources.UWP</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.16299.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
+    <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\UWP\Debug\</OutputPath>
+    <BaseIntermediateOutputPath>obj\UWP\Debug</BaseIntermediateOutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\UWP\Release\</OutputPath>
+    <BaseIntermediateOutputPath>obj\UWP\Release</BaseIntermediateOutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <ItemGroup>
+    <Content Include="Properties\WhereToFly.App.Resources.UWP.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>6.2.3</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\info.md" />
+    <Content Include="Assets\locations\crossing_the_alps_2018.kmz" />
+    <Content Include="Assets\locations\paraglidingspots_crossing_the_alps_2018_06_19.kmz" />
+    <Content Include="Assets\locations\paraglidingspots_european_alps_2018_01_07.kmz" />
+    <Content Include="Assets\map\Cesium\Assets\approximateTerrainHeights.json" />
+    <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_0.json" />
+    <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_1.json" />
+    <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_10.json" />
+    <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_11.json" />
+    <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_12.json" />
+    <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_13.json" />
+    <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_14.json" />
+    <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_15.json" />
+    <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_16.json" />
+    <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_17.json" />
+    <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_18.json" />
+    <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_19.json" />
+    <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_2.json" />
+    <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_20.json" />
+    <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_21.json" />
+    <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_22.json" />
+    <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_23.json" />
+    <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_24.json" />
+    <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_25.json" />
+    <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_26.json" />
+    <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_27.json" />
+    <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_3.json" />
+    <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_4.json" />
+    <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_5.json" />
+    <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_6.json" />
+    <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_7.json" />
+    <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_8.json" />
+    <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_9.json" />
+    <Content Include="Assets\map\Cesium\ThirdParty\draco_decoder.wasm" />
+    <Content Include="Assets\weathericons.json" />
+    <Content Include="Assets\icons\compass.svg" />
+    <Content Include="Assets\icons\format-list-bulleted.svg" />
+    <Content Include="Assets\icons\information-outline.svg" />
+    <Content Include="Assets\icons\map-marker-distance.svg" />
+    <Content Include="Assets\icons\map.svg" />
+    <Content Include="Assets\icons\settings.svg" />
+    <Content Include="Assets\icons\weather-partlycloudy.svg" />
+    <Content Include="Assets\map\Cesium\Assets\Images\bing_maps_credit.png" />
+    <Content Include="Assets\map\Cesium\Assets\Images\cesium_credit.png" />
+    <Content Include="Assets\map\Cesium\Assets\Images\google_earth_credit.png" />
+    <Content Include="Assets\map\Cesium\Assets\Images\ion-credit.png" />
+    <Content Include="Assets\map\Cesium\Cesium.js" />
+    <Content Include="Assets\map\Cesium\ThirdParty\google-earth-dbroot-parser.js" />
+    <Content Include="Assets\map\Cesium\ThirdParty\Workers\deflate.js" />
+    <Content Include="Assets\map\Cesium\ThirdParty\Workers\draco_decoder.js" />
+    <Content Include="Assets\map\Cesium\ThirdParty\Workers\draco_wasm_wrapper.js" />
+    <Content Include="Assets\map\Cesium\ThirdParty\Workers\inflate.js" />
+    <Content Include="Assets\map\Cesium\Widgets\Animation\Animation.css" />
+    <Content Include="Assets\map\Cesium\Widgets\Animation\lighter.css" />
+    <Content Include="Assets\map\Cesium\Widgets\BaseLayerPicker\BaseLayerPicker.css" />
+    <Content Include="Assets\map\Cesium\Widgets\BaseLayerPicker\lighter.css" />
+    <Content Include="Assets\map\Cesium\Widgets\Cesium3DTilesInspector\Cesium3DTilesInspector.css" />
+    <Content Include="Assets\map\Cesium\Widgets\CesiumInspector\CesiumInspector.css" />
+    <Content Include="Assets\map\Cesium\Widgets\CesiumWidget\CesiumWidget.css" />
+    <Content Include="Assets\map\Cesium\Widgets\CesiumWidget\lighter.css" />
+    <Content Include="Assets\map\Cesium\Widgets\FullscreenButton\FullscreenButton.css" />
+    <Content Include="Assets\map\Cesium\Widgets\Geocoder\Geocoder.css" />
+    <Content Include="Assets\map\Cesium\Widgets\Geocoder\lighter.css" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\bingAerial.png" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\bingAerialLabels.png" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\bingRoads.png" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\blackMarble.png" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\blueMarble.png" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\earthAtNight.png" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\esriNationalGeographic.png" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\esriWorldImagery.png" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\esriWorldStreetMap.png" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\mapboxSatellite.png" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\mapboxStreets.png" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\mapboxTerrain.png" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\mapQuestOpenStreetMap.png" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\naturalEarthII.png" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\openStreetMap.png" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\sentinel-2.png" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\stamenToner.png" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\stamenWatercolor.png" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\info-loading.gif" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\NavigationHelp\Mouse.svg" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\NavigationHelp\MouseLeft.svg" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\NavigationHelp\MouseMiddle.svg" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\NavigationHelp\MouseRight.svg" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\NavigationHelp\Touch.svg" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\NavigationHelp\TouchDrag.svg" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\NavigationHelp\TouchRotate.svg" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\NavigationHelp\TouchTilt.svg" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\NavigationHelp\TouchZoom.svg" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\TerrainProviders\CesiumWorldTerrain.png" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\TerrainProviders\Ellipsoid.png" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\TerrainProviders\STK.png" />
+    <Content Include="Assets\map\Cesium\Widgets\Images\TimelineIcons.png" />
+    <Content Include="Assets\map\Cesium\Widgets\InfoBox\InfoBox.css" />
+    <Content Include="Assets\map\Cesium\Widgets\InfoBox\InfoBoxDescription.css" />
+    <Content Include="Assets\map\Cesium\Widgets\lighter.css" />
+    <Content Include="Assets\map\Cesium\Widgets\lighterShared.css" />
+    <Content Include="Assets\map\Cesium\Widgets\NavigationHelpButton\lighter.css" />
+    <Content Include="Assets\map\Cesium\Widgets\NavigationHelpButton\NavigationHelpButton.css" />
+    <Content Include="Assets\map\Cesium\Widgets\PerformanceWatchdog\PerformanceWatchdog.css" />
+    <Content Include="Assets\map\Cesium\Widgets\ProjectionPicker\ProjectionPicker.css" />
+    <Content Include="Assets\map\Cesium\Widgets\SceneModePicker\SceneModePicker.css" />
+    <Content Include="Assets\map\Cesium\Widgets\SelectionIndicator\SelectionIndicator.css" />
+    <Content Include="Assets\map\Cesium\Widgets\shared.css" />
+    <Content Include="Assets\map\Cesium\Widgets\Timeline\lighter.css" />
+    <Content Include="Assets\map\Cesium\Widgets\Timeline\Timeline.css" />
+    <Content Include="Assets\map\Cesium\Widgets\Viewer\Viewer.css" />
+    <Content Include="Assets\map\Cesium\Widgets\VRButton\VRButton.css" />
+    <Content Include="Assets\map\Cesium\Widgets\widgets.css" />
+    <Content Include="Assets\map\Cesium\Workers\cesiumWorkerBootstrapper.js" />
+    <Content Include="Assets\map\Cesium\Workers\combineGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createBoxGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createBoxOutlineGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createCircleGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createCircleOutlineGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createCoplanarPolygonGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createCoplanarPolygonOutlineGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createCorridorGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createCorridorOutlineGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createCylinderGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createCylinderOutlineGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createEllipseGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createEllipseOutlineGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createEllipsoidGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createEllipsoidOutlineGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createFrustumGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createFrustumOutlineGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createGroundPolylineGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createPlaneGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createPlaneOutlineGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createPolygonGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createPolygonOutlineGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createPolylineGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createPolylineVolumeGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createPolylineVolumeOutlineGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createRectangleGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createRectangleOutlineGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createSimplePolylineGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createSphereGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createSphereOutlineGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createVectorTileGeometries.js" />
+    <Content Include="Assets\map\Cesium\Workers\createVectorTilePoints.js" />
+    <Content Include="Assets\map\Cesium\Workers\createVectorTilePolygons.js" />
+    <Content Include="Assets\map\Cesium\Workers\createVectorTilePolylines.js" />
+    <Content Include="Assets\map\Cesium\Workers\createVerticesFromGoogleEarthEnterpriseBuffer.js" />
+    <Content Include="Assets\map\Cesium\Workers\createVerticesFromHeightmap.js" />
+    <Content Include="Assets\map\Cesium\Workers\createVerticesFromQuantizedTerrainMesh.js" />
+    <Content Include="Assets\map\Cesium\Workers\createWallGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\createWallOutlineGeometry.js" />
+    <Content Include="Assets\map\Cesium\Workers\decodeDraco.js" />
+    <Content Include="Assets\map\Cesium\Workers\decodeGoogleEarthEnterprisePacket.js" />
+    <Content Include="Assets\map\Cesium\Workers\transcodeCRNToDXT.js" />
+    <Content Include="Assets\map\Cesium\Workers\transferTypedArrayTest.js" />
+    <Content Include="Assets\map\Cesium\Workers\upsampleQuantizedTerrainMesh.js" />
+    <Content Include="Assets\map\images\aerialway-15.svg" />
+    <Content Include="Assets\map\images\attraction-15.svg" />
+    <Content Include="Assets\map\images\bridge.svg" />
+    <Content Include="Assets\map\images\bus.svg" />
+    <Content Include="Assets\map\images\castle.svg" />
+    <Content Include="Assets\map\images\church.svg" />
+    <Content Include="Assets\map\images\directions.svg" />
+    <Content Include="Assets\map\images\home-15.svg" />
+    <Content Include="Assets\map\images\information-outline.svg" />
+    <Content Include="Assets\map\images\magnify.svg" />
+    <Content Include="Assets\map\images\map-marker-plus.svg" />
+    <Content Include="Assets\map\images\map-marker.svg" />
+    <Content Include="Assets\map\images\mountain-15.svg" />
+    <Content Include="Assets\map\images\navigation.svg" />
+    <Content Include="Assets\map\images\paragliding.svg" />
+    <Content Include="Assets\map\images\parking.svg" />
+    <Content Include="Assets\map\images\playlist-plus.svg" />
+    <Content Include="Assets\map\images\restaurant-15.svg" />
+    <Content Include="Assets\map\images\share-variant.svg" />
+    <Content Include="Assets\map\images\train.svg" />
+    <Content Include="Assets\map\images\water-15.svg" />
+    <Content Include="Assets\map\map3D.html" />
+    <Content Include="Assets\map\mapView3D.js" />
+    <None Include="Assets\map\test.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
+    <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
