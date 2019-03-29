@@ -38,6 +38,9 @@ namespace WhereToFly.App.Core.Converter
                 case Device.UWP:
                     return $"Assets/images/{imageBaseName}.png";
 
+                case "Test": // returned by Xamarin.Forms.Mocks
+                    return imageBaseName;
+
                 default:
                     Debug.Assert(false, "invalid runtime platform");
                     return string.Empty;
