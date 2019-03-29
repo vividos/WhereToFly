@@ -1,5 +1,4 @@
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("WhereToFly.UnitTest")]
@@ -7,7 +6,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("Any CPU")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("WhereToFly.UnitTest")]
-[assembly: AssemblyCopyright("Copyright © 2017-2018 Michael Fink")]
+[assembly: AssemblyCopyright("Copyright © 2017-2019 Michael Fink")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -15,5 +14,5 @@ using System.Runtime.InteropServices;
 
 [assembly: Guid("bb6fbef2-d8e4-417d-8cfe-2cf73245dd6d")]
 
-[assembly: AssemblyVersion("1.1.0.0")]
-[assembly: AssemblyFileVersion("1.1.0.0")]
+[assembly: AssemblyVersion("1.5.0.0")]
+[assembly: AssemblyFileVersion("1.5.0.0")]

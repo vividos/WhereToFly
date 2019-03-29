@@ -1,7 +1,7 @@
 @echo off
 REM
 REM Where-to-fly - an app to decide where to (hike up and) fly with a paraglider
-REM Copyright (C) 2017-2018 Michael Fink
+REM Copyright (C) 2017-2019 Michael Fink
 REM
 REM Runs SonarCloud analysis build
 REM
@@ -37,7 +37,7 @@ rmdir .\bw-output /s /q 2> nul
 
 SonarScanner.MSBuild.exe begin ^
     /k:"WhereToFly" ^
-    /v:"1.4.0" ^
+    /v:"1.5.0" ^
     /d:"sonar.cfamily.build-wrapper-output=%CD%\bw-output" ^
     /d:"sonar.cs.opencover.reportsPaths=%CD%\TestResults\WhereToFly-*-CoverageReport.xml" ^
     /d:"sonar.host.url=https://sonarcloud.io" ^
@@ -70,7 +70,7 @@ REM
     -mergebyhash ^
     -skipautoprops ^
     -output:"%~dp0\TestResults\WhereToFly-WebApi-CoverageReport.xml"
-	
+
 %REPORTGENERATOR% ^
     -reports:"%~dp0\TestResults\WhereToFly-*-CoverageReport.xml" ^
     -targetdir:"%~dp0\TestResults\CoverageReport"

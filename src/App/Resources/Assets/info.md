@@ -11,6 +11,13 @@ Current version: %VERSION%
 
 ### Releases
 
+1.5.0
+
+- added support for where-to-fly:// URLs for adding live waypoints
+- improved retrieving and caching of weather dashboard icons
+- added hiking tour planning support for some selected location waypoints in
+  the Schliersee area.
+
 1.4.0
 
 - added importing and showing tracks on map, new track list and track details page
