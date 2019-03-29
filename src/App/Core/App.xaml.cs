@@ -37,10 +37,12 @@ namespace WhereToFly.App.Core
         /// </summary>
         public App()
         {
-            if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android)
+            if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android ||
+                Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.UWP)
             {
                 AppCenter.Start(
-                    "android=" + Constants.AppCenterKeyAndroid,
+                    $"android={Constants.AppCenterKeyAndroid};" +
+                    $"uwp={Constants.AppCenterKeyUwp}",
                     typeof(Distribute),
                     typeof(Crashes));
             }

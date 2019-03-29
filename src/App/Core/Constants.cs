@@ -18,6 +18,11 @@ namespace WhereToFly.App.Core
         public const string AppCenterKeyAndroid = "dc3a41ea-d024-41a8-9940-4529a24086b1";
 
         /// <summary>
+        /// Visual Studio App Center key for UWP app
+        /// </summary>
+        public const string AppCenterKeyUwp = "74bfda82-7b61-4490-ac61-b28ec404c1fc";
+
+        /// <summary>
         /// MessagingCenter message constant to show toast message
         /// </summary>
         public const string MessageShowToast = "ShowToast";
