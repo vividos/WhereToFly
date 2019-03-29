@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Views;
 using WhereToFly.App.Model;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.Services
@@ -38,7 +39,7 @@ namespace WhereToFly.App.Core.Services
 
             if (pageType != null)
             {
-                Device.BeginInvokeOnMainThread(async () => await this.NavigateAsync(pageType, animated, parameter));
+                await this.NavigateAsync(pageType, animated, parameter);
             }
         }
 
@@ -151,6 +152,12 @@ namespace WhereToFly.App.Core.Services
         public async Task NavigateAsync(Type pageType, bool animated, object parameter = null)
         {
             Debug.Assert(this.NavigationPage != null, "NavigationPage property must have been set");
+
+            if (!MainThread.IsMainThread)
+            {
+                MainThread.BeginInvokeOnMainThread(async () => await this.NavigateAsync(pageType, animated, parameter));
+                return;
+            }
 
             // close drawer if necessary
             if (App.Current.MainPage is MasterDetailPage masterDetailPage &&
