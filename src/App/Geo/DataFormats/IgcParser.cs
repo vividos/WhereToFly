@@ -220,7 +220,7 @@ namespace WhereToFly.App.Geo.DataFormats
 
             double value = (double)decimalValue + ((minuteValue + (minuteFractional / 1000.0)) / 60.0);
 
-            char direction = latLong[7];
+            char direction = latLong[8];
             if (direction == 'S' || direction == 'W')
             {
                 value = -value;
