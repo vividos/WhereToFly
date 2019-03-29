@@ -70,6 +70,22 @@ namespace WhereToFly.App.UWP
         }
 
         /// <summary>
+        /// Called when the UWP app is activated, e.g. by a Protocol link.
+        /// </summary>
+        /// <param name="args"></param>
+        protected override void OnActivated(IActivatedEventArgs args)
+        {
+            if (args.Kind == ActivationKind.Protocol)
+            {
+                ProtocolActivatedEventArgs eventArgs = args as ProtocolActivatedEventArgs;
+
+                var app = Core.App.Current as Core.App;
+
+                Core.App.RunOnUiThread(async () => await app.OpenAppResourceUriAsync(eventArgs.Uri.AbsoluteUri));
+            }
+        }
+
+        /// <summary>
         /// Invoked when Navigation to a certain page fails
         /// </summary>
         /// <param name="sender">The Frame which failed navigation</param>
