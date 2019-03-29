@@ -91,6 +91,7 @@ function MapView(options) {
         animation: false,
         geocoder: false,
         homeButton: false,
+        fullscreenButton: false,
         timeline: false,
         skyBox: false,
         scene3DOnly: true
