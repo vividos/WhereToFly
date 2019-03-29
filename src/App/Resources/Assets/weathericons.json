@@ -63,11 +63,18 @@
     "WebLink": "https://soaringmeteo.org/GFSw/googleMap.html"
   },
   {
-    "Name": "Velivole.fr",
+    "Name": "Paraglidable Alpen",
     "Group": "Weather forecast",
     "Type": 0,
     "Icon": null,
-    "WebLink": "https://www.velivole.fr/"
+    "WebLink": "http://www.paraglidable.com/?lat=47.036&lon=11.805&zoom=8"
+  },
+  {
+    "Name": "Meteo.guru (Velivole.fr)",
+    "Group": "Weather forecast",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://www.meteo.guru/"
   },
   {
     "Name": "Föhnprognose",
