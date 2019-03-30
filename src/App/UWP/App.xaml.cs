@@ -46,7 +46,7 @@ namespace WhereToFly.App.UWP
 
                 Xamarin.Forms.Forms.SetFlags("FastRenderers_Experimental");
 
-                Xamarin.Forms.Forms.Init(e);
+                Xamarin.Forms.Forms.Init(e, Rg.Plugins.Popup.Popup.GetExtraAssemblies());
 
                 //// TODO MessagingCenter.Subscribe<Core.App, string>(this, Constants.MessageShowToast, this.ShowToast);
 
