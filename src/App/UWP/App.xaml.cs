@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -82,6 +84,28 @@ namespace WhereToFly.App.UWP
                 var app = Core.App.Current as Core.App;
 
                 Core.App.RunOnUiThread(async () => await app.OpenAppResourceUriAsync(eventArgs.Uri.AbsoluteUri));
+            }
+        }
+
+        /// <summary>
+        /// Called when a file associated with the UWP app is opened.
+        /// </summary>
+        /// <param name="args">file activation event args</param>
+        protected override void OnFileActivated(FileActivatedEventArgs args)
+        {
+            if (args.Files.Count > 0)
+            {
+                var file = args.Files[0] as StorageFile;
+
+                var app = Core.App.Current as Core.App;
+
+                Core.App.RunOnUiThread(async () =>
+                {
+                    using (var stream = await file.OpenStreamForReadAsync())
+                    {
+                        await app.OpenFileAsync(stream, file.Name);
+                    }
+                });
             }
         }
 

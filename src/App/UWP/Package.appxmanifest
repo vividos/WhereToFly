@@ -32,6 +32,20 @@
             <uap:DisplayName>Where-to-fly Weblink</uap:DisplayName>
           </uap:Protocol>
         </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="wheretofly">
+            <uap:DisplayName>Where-to-fly file</uap:DisplayName>
+            <uap:Logo>Assets\Square44x44Logo.png</uap:Logo>
+            <uap:InfoTip>Opens the file with Where-to-fly</uap:InfoTip>
+            <uap:EditFlags OpenIsSafe="true" />
+            <uap:SupportedFileTypes>
+              <uap:FileType>.kml</uap:FileType>
+              <uap:FileType>.kmz</uap:FileType>
+              <uap:FileType>.gpx</uap:FileType>
+              <uap:FileType>.igc</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
       </Extensions>
     </Application>
   </Applications>
