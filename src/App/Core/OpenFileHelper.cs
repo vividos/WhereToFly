@@ -277,8 +277,7 @@ namespace WhereToFly.App.Core
 
             track.CalculateStatistics();
 
-            // this removes waiting dialog
-            await Xamarin.Forms.Application.Current.MainPage.Navigation.PopPopupAsync();
+            await CloseWaitingPopupPageAsync();
 
             track = await AddTrackPopupPage.ShowAsync(track);
             if (track == null)
@@ -330,6 +329,21 @@ namespace WhereToFly.App.Core
             else if (choice == choices[1])
             {
                 await SelectAndImportTrackAsync(geoDataFile);
+            }
+        }
+
+        /// <summary>
+        /// Closes waiting popup page when on stack (actually removes any popup page).
+        /// </summary>
+        private static async Task CloseWaitingPopupPageAsync()
+        {
+            try
+            {
+                await Application.Current.MainPage.Navigation.PopPopupAsync();
+            }
+            catch (Exception)
+            {
+                // ignore when there's no popup page on stack
             }
         }
     }
