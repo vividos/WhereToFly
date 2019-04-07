@@ -182,6 +182,10 @@ function MapView(options) {
     this.pickingHandler.setInputAction(this.onScreenTouchDown.bind(this), Cesium.ScreenSpaceEventType.LEFT_DOWN);
     this.pickingHandler.setInputAction(this.onScreenTouchUp.bind(this), Cesium.ScreenSpaceEventType.LEFT_UP);
 
+    if (options.hasMouse) {
+        this.pickingHandler.setInputAction(this.onScreenRightClick.bind(this), Cesium.ScreenSpaceEventType.RIGHT_CLICK);
+    }
+
     console.log("#8 other stuff");
 
     // add a dedicated track primitives collection, as we can't call viewer.scene.primitives.removeAll()
@@ -233,6 +237,25 @@ MapView.prototype.onScreenTouchUp = function (movement) {
                 altitude: cartographic.height
             });
         }
+    }
+};
+
+/**
+ * Called when the screen space event handler detected a right-click event.
+ * @param {object} movement movement info object
+ */
+MapView.prototype.onScreenRightClick = function (movement) {
+
+    var ray = this.viewer.camera.getPickRay(movement.position);
+    var cartesian = this.viewer.scene.globe.pick(ray, this.viewer.scene);
+    if (cartesian) {
+        var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+
+        this.onLongTap({
+            latitude: Cesium.Math.toDegrees(cartographic.latitude),
+            longitude: Cesium.Math.toDegrees(cartographic.longitude),
+            altitude: cartographic.height
+        });
     }
 };
 
