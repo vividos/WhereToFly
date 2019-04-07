@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhereToFly.App.Android", "App\Android\WhereToFly.App.Android.csproj", "{B7C58A1E-E301-47C7-A9FB-D01B1719D043}"
 EndProject
@@ -44,6 +44,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhereToFly.App.Resources.Android", "App\Resources\WhereToFly.App.Resources.Android.csproj", "{CBBB5ED6-F0D9-49C1-BB4E-D54757483953}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhereToFly.App.UITest", "App\UITest\WhereToFly.App.UITest.csproj", "{B19C892E-2628-4CA7-AD27-08D406A3B14B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B7C58A1E-E301-47C7-A9FB-D01B1719D043} = {B7C58A1E-E301-47C7-A9FB-D01B1719D043}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.Shared.Base", "Shared\Base\WhereToFly.Shared.Base.csproj", "{96AC92EA-4F83-4A23-80D1-8EE5740D20DF}"
 EndProject
