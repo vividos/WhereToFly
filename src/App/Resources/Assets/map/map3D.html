@@ -23,8 +23,7 @@
             max-width: 80%;
         }
 
-        /* only for Android/Chrome based WebView */
-        .selector:not(*:root) {
+        @media (any-hover: none) {
             /* hide the left "mouse" navigation button */
             .cesium-navigation-button-left {
                 display: none
