@@ -45,10 +45,10 @@
 
         // function used to call to C#
         function callAction(funcName, params) {
-            if (window.external !== undefined)
-                window.external.notify('callback://' + funcName + '/' + JSON.stringify(params));
-            else
+            if (typeof callback === "object")
                 callback.call(funcName, JSON.stringify(params));
+            else
+                window.external.notify('callback://' + funcName + '/' + JSON.stringify(params));
         }
 
     </script>
