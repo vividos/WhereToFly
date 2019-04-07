@@ -224,10 +224,13 @@ namespace WhereToFly.App.Core.Views
                 initialCenterPoint.Latitude.ToString(CultureInfo.InvariantCulture),
                 initialCenterPoint.Longitude.ToString(CultureInfo.InvariantCulture));
 
+            bool hasMouse = Device.RuntimePlatform == Device.UWP;
+
             string js = string.Format(
-                "map = new MapView({{id: 'mapElement', initialCenterPoint: {0}, initialZoomLevel: {1}}});",
+                "map = new MapView({{id: 'mapElement', initialCenterPoint: {0}, initialZoomLevel: {1}, hasMouse: {2}}});",
                 initialCenterJs,
-                initialZoomLevel);
+                initialZoomLevel,
+                hasMouse ? "true" : "false");
 
             this.RunJavaScript(js);
 

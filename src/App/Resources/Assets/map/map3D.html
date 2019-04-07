@@ -23,16 +23,19 @@
             max-width: 80%;
         }
 
-        /* hide the left "mouse" navigation button */
-        .cesium-navigation-button-left {
-            display: none
-        }
+        /* only for Android/Chrome based WebView */
+        .selector:not(*:root) {
+            /* hide the left "mouse" navigation button */
+            .cesium-navigation-button-left {
+                display: none
+            }
 
-        /* make right "touch" navigation button bigger */
-        .cesium-navigation-button-right {
-            border-radius: 10px 10px 0 0;
-            border-left: 1px solid #444;
-            width: 100%;
+            /* make right "touch" navigation button bigger */
+            .cesium-navigation-button-right {
+                border-radius: 10px 10px 0 0;
+                border-left: 1px solid #444;
+                width: 100%;
+            }
         }
     </style>
 </head>

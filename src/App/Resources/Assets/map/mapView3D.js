@@ -7,6 +7,7 @@
  * @param {double} [options.initialCenterPoint.latitude] latitude of center point
  * @param {double} [options.initialCenterPoint.longitude] longitude of center point
  * @param {Number} [options.initialZoomLevel] initial zoom level
+ * @param {Boolean} [options.hasMouse] indicates if the device this is running supports a mouse
  * @param {Function} [options.callback] callback function to use for calling back to C# code
  */
 function MapView(options) {
@@ -17,6 +18,7 @@ function MapView(options) {
         id: 'mapElement',
         initialCenterPoint: { latitude: 47.67, longitude: 11.88 },
         initialZoomLevel: 14,
+        hasMouse: false,
         callback: {}
     };
 
@@ -109,8 +111,10 @@ function MapView(options) {
     // allow scripts to run in info box
     this.viewer.infoBox.frame.sandbox = this.viewer.infoBox.frame.sandbox + " allow-scripts";
 
-    // switch to Touch instructions, as the control is mainly used on touch devices
-    this.viewer.navigationHelpButton.viewModel.showTouch();
+    if (options.hasMouse) {
+        // switch to Touch instructions, as the control is mainly used on touch devices
+        this.viewer.navigationHelpButton.viewModel.showTouch();
+    }
 
     console.log("#5 setView");
     var longitude = this.options.initialCenterPoint['longitude'];
