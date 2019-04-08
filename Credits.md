@@ -89,7 +89,6 @@ The following icons are from the Google Material icon set:
 - magnify
 - magnify-plus-outline
 - map
-- map-marker-plus
 - map-marker
 - navigation
 - parking
@@ -113,9 +112,10 @@ The following icons in the App are from the Material Design Icons
 - arrow-up - up.png - Austin Andrews @Templarian
 - arrow-down - down.png - Austin Andrews @Templarian
 - weather-partlycloudy - Austin Andrews @Templarian
-- border_none_variant - Austin Andrews @Templarian
-- calendar_clock - Austin Andrews @Templarian
+- border-none-variant - Austin Andrews @Templarian
+- calendar-clock - Austin Andrews @Templarian
 - map-marker-distance - Michael Richins @MrGrigri
+- map-marker-plus - Cody @XT3000
 
 All custom icons are licensed under the SIL Open Font License 1.1:
 http://scripts.sil.org/cms/scripts/page.php?item_id=OFL_web

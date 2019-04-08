@@ -123,6 +123,7 @@
     <Content Include="Assets\images\information_outline.png" />
     <Content Include="Assets\images\magnify.png" />
     <Content Include="Assets\images\magnify_plus_outline.png" />
+    <Content Include="Assets\images\map_marker_plus.png" />
     <Content Include="Assets\images\navigation.png" />
     <Content Include="Assets\images\playlist_plus.png" />
     <Content Include="Assets\images\refresh.png" />
