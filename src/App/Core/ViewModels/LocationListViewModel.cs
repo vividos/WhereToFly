@@ -110,6 +110,11 @@ namespace WhereToFly.App.Core.ViewModels
         /// Command to execute when an item in the location list has been tapped
         /// </summary>
         public Command<Location> ItemTappedCommand { get; private set; }
+
+        /// <summary>
+        /// Command to execute when "add tour plan location" conext action is selected
+        /// </summary>
+        public Command AddTourPlanLocationCommand { get; set; }
         #endregion
 
         /// <summary>
@@ -143,6 +148,9 @@ namespace WhereToFly.App.Core.ViewModels
                 {
                     await this.NavigateToLocationDetails(location);
                 });
+
+            this.AddTourPlanLocationCommand =
+                new Command<Location>((location) => App.AddTourPlanLocation(location));
         }
 
         /// <summary>

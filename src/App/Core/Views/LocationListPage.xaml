@@ -68,7 +68,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <!-- Template for a single view cell -->
-                    <ViewCell Height="85">
+                    <ViewCell Height="85" BindingContextChanged="OnViewCellBindingContextChanged">
                         <ViewCell.View>
                             <Grid BackgroundColor="#efefef" Margin="8,4">
                                 <Grid.RowDefinitions>
