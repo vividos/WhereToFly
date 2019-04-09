@@ -12,6 +12,11 @@ namespace WhereToFly.App.Core.Views
     public partial class LocationDetailsPage : ContentPage
     {
         /// <summary>
+        /// View model for this page
+        /// </summary>
+        private readonly LocationDetailsViewModel viewModel;
+
+        /// <summary>
         /// Creates new location details page
         /// </summary>
         /// <param name="location">location to display</param>
@@ -21,7 +26,37 @@ namespace WhereToFly.App.Core.Views
 
             this.InitializeComponent();
 
-            this.BindingContext = new LocationDetailsViewModel(App.Settings, location);
+            this.BindingContext = this.viewModel = new LocationDetailsViewModel(App.Settings, location);
+
+            if (location.IsPlanTourLocation)
+            {
+                this.AddTourPlanLocationToolbarButton();
+            }
+        }
+
+        /// <summary>
+        /// Adds a "Add tour plan location" button to the toolbar
+        /// </summary>
+        private void AddTourPlanLocationToolbarButton()
+        {
+            ToolbarItem addTourPlanLocationButton = new ToolbarItem(
+                "Add tour plan location position",
+                Converter.ImagePathConverter.GetDeviceDependentImage("map_marker_plus"),
+                this.OnClicked_ToolbarButtonAddTourPlanLocation,
+                ToolbarItemOrder.Secondary)
+            {
+                AutomationId = "AddTourPlanLocation"
+            };
+
+            this.ToolbarItems.Add(addTourPlanLocationButton);
+        }
+
+        /// <summary>
+        /// Called when user clicked on the "add plan tour location" toolbar button.
+        /// </summary>
+        private void OnClicked_ToolbarButtonAddTourPlanLocation()
+        {
+            this.viewModel.AddTourPlanLocationCommand.Execute(null);
         }
     }
 }

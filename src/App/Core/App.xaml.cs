@@ -177,6 +177,18 @@ namespace WhereToFly.App.Core
         }
 
         /// <summary>
+        /// Adds a tour planning location to the current list of locations and opens the planning
+        /// dialog.
+        /// </summary>
+        /// <param name="location">location to add</param>
+        public static void AddTourPlanLocation(Location location)
+        {
+            var app = Current as App;
+
+            MessagingCenter.Send<App, Location>(app, Constants.MessageAddTourPlanLocation, location);
+        }
+
+        /// <summary>
         /// Zooms to location on opened MapPage; when the map page is currently invisible, the
         /// zoom is carried out when the page appears.
         /// </summary>

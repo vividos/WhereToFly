@@ -135,6 +135,11 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
+        /// Command to execute when "add tour plan location" toolbar item is selected
+        /// </summary>
+        public Command AddTourPlanLocationCommand { get; set; }
+
+        /// <summary>
         /// Command to execute when "zoom to" menu item is selected on a location
         /// </summary>
         public Command ZoomToLocationCommand { get; set; }
@@ -183,6 +188,9 @@ namespace WhereToFly.App.Core.ViewModels
                 BaseUrl = "about:blank"
             };
 
+            this.AddTourPlanLocationCommand =
+                new Command(this.OnAddTourPlanLocation);
+
             this.ZoomToLocationCommand =
                 new Command(async () => await this.OnZoomToLocationAsync());
 
@@ -213,6 +221,14 @@ namespace WhereToFly.App.Core.ViewModels
 
                 this.OnPropertyChanged(nameof(this.Distance));
             }
+        }
+
+        /// <summary>
+        /// Called when "Add tour plan location" toolbar button is selected
+        /// </summary>
+        private void OnAddTourPlanLocation()
+        {
+            App.AddTourPlanLocation(this.location);
         }
 
         /// <summary>

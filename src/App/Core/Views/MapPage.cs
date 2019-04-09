@@ -118,6 +118,12 @@ namespace WhereToFly.App.Core.Views
             Task.Run(this.InitLayoutAsync);
 
             MessagingCenter.Subscribe<App, Track>(this, Constants.MessageAddTrack, this.OnMessageAddTrack);
+
+            MessagingCenter.Subscribe<App, Location>(
+                this,
+                Constants.MessageAddTourPlanLocation,
+                async (app, location) => await this.OnMessageAddTourPlanLocation(app, location));
+
             MessagingCenter.Subscribe<App, MapPoint>(this, Constants.MessageZoomToLocation, this.OnMessageZoomToLocation);
             MessagingCenter.Subscribe<App, Track>(this, Constants.MessageZoomToTrack, this.OnMessageZoomToTrack);
             MessagingCenter.Subscribe<App>(this, Constants.MessageUpdateMapSettings, this.OnMessageUpdateMapSettings);
@@ -687,6 +693,17 @@ namespace WhereToFly.App.Core.Views
             {
                 this.updateTrackList = true;
             }
+        }
+
+        /// <summary>
+        /// Called when message arrives in order to add tour plan location
+        /// </summary>
+        /// <param name="app">app object</param>
+        /// <param name="location">location to add</param>
+        /// <returns>task to wait on</returns>
+        private async Task OnMessageAddTourPlanLocation(App app, Location location)
+        {
+            this.planTourParameters.WaypointIdList.Add(location.Id);
         }
 
         /// <summary>

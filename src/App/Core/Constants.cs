@@ -38,6 +38,11 @@ namespace WhereToFly.App.Core
         public const string MessageAddTrack = "AddTrack";
 
         /// <summary>
+        /// MessagingCenter message constant to add tour plan location
+        /// </summary>
+        public const string MessageAddTourPlanLocation = "AddTourPlanLocation";
+
+        /// <summary>
         /// MessagingCenter message constant to zoom to a location on MapPage
         /// </summary>
         public const string MessageZoomToLocation = "ZoomToLocation";
