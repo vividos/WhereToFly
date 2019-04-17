@@ -91,7 +91,7 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
                 kmlRoot.Feature is Document kmlDocument)
             {
                 // the file must have two folders at its root, with waypoints and tracks
-                var waypointsFolder = kmlDocument.Children.First(
+                var waypointsFolder = kmlDocument.Features.First(
                     x => x is Folder folder && (folder.Name == "Wegpunkte" || folder.Name == "Waypoints"));
 
                 if (waypointsFolder != null)
@@ -99,7 +99,7 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
                     this.LoadWaypoints(waypointsFolder as Folder);
                 }
 
-                var trackFolder = kmlDocument.Children.First(x => x is Folder folder && folder.Name == "Tracks");
+                var trackFolder = kmlDocument.Features.First(x => x is Folder folder && folder.Name == "Tracks");
 
                 if (trackFolder != null)
                 {
