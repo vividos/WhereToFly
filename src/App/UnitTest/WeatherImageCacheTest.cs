@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 using WhereToFly.App.Core;
+using WhereToFly.App.Core.Services;
 using WhereToFly.App.Model;
 using Xamarin.Forms;
 
@@ -20,6 +21,7 @@ namespace WhereToFly.App.UnitTest
         {
             Xamarin.Forms.Mocks.MockForms.Init();
             DependencyService.Register<IAppManager, UnitTestAppManager>();
+            DependencyService.Register<IDataService, DataService>();
         }
 
         /// <summary>
@@ -96,7 +98,7 @@ namespace WhereToFly.App.UnitTest
         }
 
         /// <summary>
-        /// Tests weather icon type IconApp
+        /// Tests weather icon type IconLink
         /// </summary>
         /// <returns>task to wait for</returns>
         [TestMethod]
