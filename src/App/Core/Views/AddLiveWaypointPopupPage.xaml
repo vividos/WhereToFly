@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+                 x:Class="WhereToFly.App.Core.Views.AddLiveWaypointPopupPage">
+
+    <!-- animate popup page-->
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8"
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True" />
+    </pages:PopupPage.Animation>
+
+    <!-- popup content -->
+    <StackLayout
+        VerticalOptions="CenterAndExpand"
+        HorizontalOptions="Center"
+        WidthRequest="320"
+        BackgroundColor="White"
+        Padding="20">
+
+        <!-- Entry for live waypoint name -->
+        <Label Text="Name" FontSize="Medium" />
+        <Entry Placeholder="enter live waypoint name" Text="{Binding Path=Name, Mode=TwoWay}" />
+
+        <Label Text="Type" FontSize="Medium" />
+        <Label Text="{Binding Type, Mode=OneTime}" />
+
+        <!-- Button to add live waypoint -->
+        <Button Text="Add live waypoint"
+                Clicked="OnClickedAddLiveWaypointButton"
+                AutomationId="AddLiveWaypointButton" />
+    </StackLayout>
+
+</pages:PopupPage>

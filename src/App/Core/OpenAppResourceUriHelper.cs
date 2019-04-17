@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using WhereToFly.App.Core.Views;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Model;
 using Xamarin.Forms;
@@ -43,7 +44,10 @@ namespace WhereToFly.App.Core
 
                 var liveWaypoint = await GetLiveWaypointLocation(waypointName, appResourceUri);
 
-                await ShowAddLiveWaypointDialog(liveWaypoint);
+                if (!await ShowAddLiveWaypointDialog(liveWaypoint))
+                {
+                    return;
+                }
 
                 await StoreLiveWaypoint(liveWaypoint);
 
@@ -92,11 +96,10 @@ namespace WhereToFly.App.Core
         /// Shows "add live waypoint" dialog to edit live waypoint data.
         /// </summary>
         /// <param name="liveWaypoint">live waypoint</param>
-        /// <returns>task to wait on</returns>
-        private static async Task ShowAddLiveWaypointDialog(Location liveWaypoint)
+        /// <returns>true when live waypoint should be added, false when not</returns>
+        private static async Task<bool> ShowAddLiveWaypointDialog(Location liveWaypoint)
         {
-            // TODO implement
-            await Task.Delay(1);
+            return await AddLiveWaypointPopupPage.ShowAsync(liveWaypoint);
         }
 
         /// <summary>
