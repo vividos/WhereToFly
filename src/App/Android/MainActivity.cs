@@ -160,19 +160,19 @@ namespace WhereToFly.App.Android
         /// <param name="intent">intent to process</param>
         private void ProcessIntent(Intent intent)
         {
+            var app = Core.App.Current as Core.App;
+            if (intent.DataString != null &&
+                intent.DataString.StartsWith(Shared.Model.AppResourceUri.DefaultScheme))
+            {
+                Core.App.RunOnUiThread(async () => await app.OpenAppResourceUriAsync(intent.DataString));
+                return;
+            }
+
             var helper = new IntentFilterHelper(this.ContentResolver);
 
             string filename = Path.GetFileName(helper.GetFilenameFromIntent(intent));
             if (filename == null)
             {
-                return;
-            }
-
-            var app = Core.App.Current as Core.App;
-
-            if (filename.StartsWith(WhereToFly.Shared.Model.AppResourceUri.DefaultScheme))
-            {
-                Core.App.RunOnUiThread(async () => await app.OpenAppResourceUriAsync(filename));
                 return;
             }
 
