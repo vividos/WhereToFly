@@ -37,7 +37,7 @@ namespace WhereToFly.App.Logic
             /// </summary>
             /// <param name="liveWaypointId">live waypoint ID</param>
             /// <returns>query result for live waypoint</returns>
-            [Get("/api/LiveWaypoint/{id}")]
+            [Get("/api/LiveWaypoint?id={id}")]
             Task<LiveWaypointQueryResult> GetLiveWaypointDataAsync([AliasAs("id")]string liveWaypointId);
 
             /// <summary>

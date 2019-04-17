@@ -14,6 +14,7 @@ namespace LiveWaypoints.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [Produces("application/json")]
+    [ApiController]
     public class LiveWaypointController : Controller
     {
         /// <summary>
@@ -46,7 +47,7 @@ namespace LiveWaypoints.Controllers
         /// <param name="id">live waypoint ID</param>
         /// <returns>live waypoint query result</returns>
         /// <exception cref="ArgumentException">thrown when invalid live waypoint ID was passed</exception>
-        [HttpGet("{id}")]
+        [HttpGet]
         public async Task<LiveWaypointQueryResult> Get(string id)
         {
             if (string.IsNullOrEmpty(id))
