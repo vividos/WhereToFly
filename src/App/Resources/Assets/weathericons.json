@@ -147,6 +147,13 @@
     "WebLink": "http://www.lawinenwarndienst-bayern.de/res/daten_meldungen/messdaten/"
   },
   {
+    "Name": "Holfuy Map Alpen",
+    "Group": "Current weather",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://holfuy.com/en/map/wind&la=46.91884&lo=11.81213&z=7.2"
+  },
+  {
     "Name": "Lightningmaps.org",
     "Group": "Current weather",
     "Type": 0,
