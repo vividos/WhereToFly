@@ -32,6 +32,17 @@ namespace WhereToFly.App.UITest
         }
 
         /// <summary>
+        /// Taps on the menu button, showing the menu from anywhere in the app
+        /// </summary>
+        private void TapMenuButton()
+        {
+            if (this.platform == Platform.Android)
+            {
+                this.app.Tap(x => x.Class("AppCompatImageButton"));
+            }
+        }
+
+        /// <summary>
         /// Sets up test by starting app
         /// </summary>
         [SetUp]
@@ -50,6 +61,49 @@ namespace WhereToFly.App.UITest
             this.app.Screenshot("Map screen.");
 
             Assert.IsTrue(results.Any());
+        }
+
+        /// <summary>
+        /// A test that visits all pages by using the menu navigation
+        /// </summary>
+        [Test]
+        public void VisitAllPages()
+        {
+            // wait for map
+            this.app.WaitForElement(c => c.Marked("ExploreMapWebView"));
+
+            string[] markedList = new string[]
+            {
+                "Info",
+                "Settings",
+                "Locations",
+                "Tracks",
+                "Current Position",
+                "Weather",
+                "Map",
+            };
+
+            foreach (var markedItem in markedList)
+            {
+                bool showsMap = markedItem == "Map";
+
+                this.TapMenuButton();
+                this.app.Tap(x => x.Marked(markedItem));
+
+                if (!showsMap)
+                {
+                    this.app.WaitForNoElement(c => c.Marked("ExploreMapWebView"));
+                }
+
+                System.Threading.Thread.Sleep(100);
+
+                this.app.Screenshot($"Screen: {markedItem}");
+
+                if (!showsMap)
+                {
+                    this.app.Back();
+                }
+            }
         }
     }
 }
