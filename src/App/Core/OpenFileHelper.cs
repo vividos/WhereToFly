@@ -335,6 +335,7 @@ namespace WhereToFly.App.Core
         /// <summary>
         /// Closes waiting popup page when on stack (actually removes any popup page).
         /// </summary>
+        /// <returns>task to wait on</returns>
         private static async Task CloseWaitingPopupPageAsync()
         {
             try
