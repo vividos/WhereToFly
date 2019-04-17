@@ -82,6 +82,14 @@ namespace WhereToFly.App.Core
         Task<string> GetFaviconUrlAsync(string websiteUrl);
 
         /// <summary>
+        /// Retrieves latest info about a live waypoint, including new coordinates and
+        /// description.
+        /// </summary>
+        /// <param name="liveWaypointId">live waypoint ID</param>
+        /// <returns>query result for live waypoint</returns>
+        Task<LiveWaypointQueryResult> GetLiveWaypointDataAsync(string liveWaypointId);
+
+        /// <summary>
         /// Plans a tour with given tour planning parameters and returns the planned tour.
         /// </summary>
         /// <param name="planTourParameters">tour planning parameters</param>

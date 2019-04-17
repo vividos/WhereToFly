@@ -426,6 +426,17 @@ namespace WhereToFly.App.Core.Services
         }
 
         /// <summary>
+        /// Retrieves latest info about a live waypoint, including new coordinates and
+        /// description.
+        /// </summary>
+        /// <param name="liveWaypointId">live waypoint ID</param>
+        /// <returns>query result for live waypoint</returns>
+        public async Task<LiveWaypointQueryResult> GetLiveWaypointDataAsync(string liveWaypointId)
+        {
+            return await this.backendDataService.GetLiveWaypointDataAsync(liveWaypointId);
+        }
+
+        /// <summary>
         /// Plans a tour with given tour planning parameters and returns the planned tour.
         /// </summary>
         /// <param name="planTourParameters">tour planning parameters</param>
