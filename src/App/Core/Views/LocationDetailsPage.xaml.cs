@@ -28,10 +28,40 @@ namespace WhereToFly.App.Core.Views
 
             this.BindingContext = this.viewModel = new LocationDetailsViewModel(App.Settings, location);
 
+            if (location.Type == LocationType.LiveWaypoint)
+            {
+                this.AddLiveWaypointRefreshToolbarButton();
+            }
+
             if (location.IsPlanTourLocation)
             {
                 this.AddTourPlanLocationToolbarButton();
             }
+        }
+
+        /// <summary>
+        /// Adds a "refresh live waypoint" button to the toolbar
+        /// </summary>
+        private void AddLiveWaypointRefreshToolbarButton()
+        {
+            ToolbarItem refreshLiveWaypointButton = new ToolbarItem(
+                "Refresh live waypoint",
+                Converter.ImagePathConverter.GetDeviceDependentImage("refresh"),
+                this.OnClicked_ToolbarButtonRefreshLiveWaypoint,
+                ToolbarItemOrder.Primary)
+            {
+                AutomationId = "RefreshLiveWaypoint"
+            };
+
+            this.ToolbarItems.Add(refreshLiveWaypointButton);
+        }
+
+        /// <summary>
+        /// Called when user clicked on the "refresh live waypoint" toolbar button.
+        /// </summary>
+        private void OnClicked_ToolbarButtonRefreshLiveWaypoint()
+        {
+            this.viewModel.RefreshLiveWaypointCommand.Execute(null);
         }
 
         /// <summary>

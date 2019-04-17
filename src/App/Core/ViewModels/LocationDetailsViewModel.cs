@@ -6,6 +6,7 @@ using WhereToFly.App.Core.Services;
 using WhereToFly.App.Geo.Spatial;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
+using WhereToFly.Shared.Model;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.ViewModels
@@ -135,6 +136,11 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
+        /// Command to execute when "refresh live waypoint" toolbar item is selected
+        /// </summary>
+        public Command RefreshLiveWaypointCommand { get; set; }
+
+        /// <summary>
         /// Command to execute when "add tour plan location" toolbar item is selected
         /// </summary>
         public Command AddTourPlanLocationCommand { get; set; }
@@ -188,6 +194,9 @@ namespace WhereToFly.App.Core.ViewModels
                 BaseUrl = "about:blank"
             };
 
+            this.RefreshLiveWaypointCommand =
+                new Command(async () => await this.OnRefreshLiveWaypoint());
+
             this.AddTourPlanLocationCommand =
                 new Command(this.OnAddTourPlanLocation);
 
@@ -220,6 +229,54 @@ namespace WhereToFly.App.Core.ViewModels
                 this.distance = position.DistanceTo(this.location.MapLocation);
 
                 this.OnPropertyChanged(nameof(this.Distance));
+            }
+        }
+
+        /// <summary>
+        /// Called when "Refresh live waypoint" toolbar button is selected
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task OnRefreshLiveWaypoint()
+        {
+            try
+            {
+                var dataService = DependencyService.Get<IDataService>();
+                var result = await dataService.GetLiveWaypointDataAsync(this.location.InternetLink);
+
+                this.location.MapLocation =
+                    new MapPoint(result.Data.Latitude, result.Data.Longitude, result.Data.Altitude);
+
+                this.location.Description = result.Data.Description.Replace("\n", "<br/>");
+
+                this.DescriptionWebViewSource = new HtmlWebViewSource
+                {
+                    Html = this.location.Description,
+                    BaseUrl = "about:blank"
+                };
+
+                this.OnPropertyChanged(nameof(this.Latitude));
+                this.OnPropertyChanged(nameof(this.Longitude));
+                this.OnPropertyChanged(nameof(this.Altitude));
+                this.OnPropertyChanged(nameof(this.Distance));
+                this.OnPropertyChanged(nameof(this.DescriptionWebViewSource));
+
+                // store new infos in location list
+                var locationList = await dataService.GetLocationListAsync(CancellationToken.None);
+
+                var locationInList = locationList.Find(locationToCheck => locationToCheck.Id == this.location.Id);
+                locationInList.MapLocation = this.location.MapLocation;
+                locationInList.Description = this.location.Description;
+
+                await dataService.StoreLocationListAsync(locationList);
+            }
+            catch (Exception ex)
+            {
+                App.LogError(ex);
+
+                await App.Current.MainPage.DisplayAlert(
+                    Constants.AppTitle,
+                    "Error while refreshing live waypoint: " + ex.Message,
+                    "OK");
             }
         }
 
