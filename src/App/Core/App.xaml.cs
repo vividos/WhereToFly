@@ -260,8 +260,7 @@ namespace WhereToFly.App.Core
         /// <returns>task to wait on</returns>
         public async Task OpenAppResourceUriAsync(string uri)
         {
-            //// TODO implement
-            await Task.Delay(0);
+            await OpenAppResourceUriHelper.Open(uri);
         }
 
         #region App lifecycle methods
