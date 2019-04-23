@@ -142,7 +142,16 @@ namespace WhereToFly.App.Geo.DataFormats
             string key = line.Substring(5, pos - 5).Trim();
             string text = line.Substring(pos + 1).Trim();
 
-            this.headerFields.Add(key, text);
+            if (pos == 5)
+            {
+                key = line.Substring(1, 4);
+            }
+
+            if (!string.IsNullOrEmpty(key) &&
+                !this.headerFields.ContainsKey(key))
+            {
+                this.headerFields.Add(key, text);
+            }
         }
 
         /// <summary>
