@@ -815,6 +815,63 @@ MapView.prototype.showFindResult = function (options) {
 };
 
 /**
+ * Samples track point heights from actual map and adjusts the track when it goes below terrain
+ * height.
+ * @param {object} [track] Track object to add
+ * @param {string} [track.id] unique ID of the track
+ * @param {array} [track.listOfTrackPoints] An array of track points in long, lat, alt, long, lat, alt ... order
+ * @param {number} [offsetInMeters] offset in meters to apply to track
+ */
+MapView.prototype.sampleTrackHeights = function (track, offsetInMeters) {
+
+    if (!Cesium.Entity.supportsPolylinesOnTerrain(this.viewer.scene)) {
+        return;
+    }
+
+    offsetInMeters = offsetInMeters || 0.0;
+
+    var trackPointArray = Cesium.Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints);
+
+    var cartographicArray = [];
+    for (var trackPointIndex = 0; trackPointIndex < trackPointArray.length; ++trackPointIndex) {
+        cartographicArray.push(Cesium.Cartographic.fromCartesian(trackPointArray[trackPointIndex]));
+    }
+
+    var that = this;
+    Cesium.when(Cesium.sampleTerrainMostDetailed(
+        this.viewer.terrainProvider,
+        cartographicArray),
+        function (samples) {
+            var trackPointHeightArray = [];
+
+            for (var trackPointIndex = 0; trackPointIndex < trackPointArray.length; ++trackPointIndex) {
+
+                var trackPointHeight = track.listOfTrackPoints[trackPointIndex * 3 + 2] + offsetInMeters;
+                var sampledHeight = samples[trackPointIndex].height;
+
+                if (sampledHeight > trackPointHeight)
+                    trackPointHeight = sampledHeight;
+
+                trackPointHeightArray.push(trackPointHeight);
+            }
+
+            that.onSampledTrackHeights(trackPointHeightArray);
+        });
+};
+
+/**
+ * Called when sampling track points has finished.
+ * @param {array} [listOfTrackPointHeights] An array of track point heights for all track points
+ * that were passed to sampleTrackHeights().
+ */
+MapView.prototype.onSampledTrackHeights = function (listOfTrackPointHeights) {
+    console.log("sampling track heights has finished");
+
+    if (this.options.callback !== undefined)
+        this.options.callback('onSampledTrackHeights', listOfTrackPointHeights);
+};
+
+/**
  * Calculates track color from given variometer climb/sink rate value.
  * @param {double} varioValue variometer value, in m/s
  * @returns {Cesium.Color} Track color
