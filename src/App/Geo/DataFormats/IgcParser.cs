@@ -54,7 +54,14 @@ namespace WhereToFly.App.Geo.DataFormats
 
                     if (line.Length > 0)
                     {
-                        this.ParseLine(line);
+                        try
+                        {
+                            this.ParseLine(line);
+                        }
+                        catch (Exception)
+                        {
+                            // ignore line parsing errors
+                        }
                     }
                 }
             }
