@@ -1,5 +1,6 @@
 ﻿using Rg.Plugins.Popup.Extensions;
 using Rg.Plugins.Popup.Pages;
+using System;
 using System.Threading.Tasks;
 using Xamarin.Forms.Xaml;
 
@@ -13,6 +14,11 @@ namespace WhereToFly.App.Core.Views
     public partial class WaitingPopupPage : PopupPage
     {
         /// <summary>
+        /// Indicates if the popup page is currently shown
+        /// </summary>
+        private bool isShown;
+
+        /// <summary>
         /// Creates a new waiting popup page
         /// </summary>
         /// <param name="waitingMessage">waiting message to display</param>
@@ -23,6 +29,7 @@ namespace WhereToFly.App.Core.Views
             this.InitializeComponent();
 
             this.waitingMessage.Text = waitingMessage;
+            this.isShown = false;
         }
 
         /// <summary>
@@ -32,6 +39,8 @@ namespace WhereToFly.App.Core.Views
         public async Task ShowAsync()
         {
             await this.Navigation.PushPopupAsync(this);
+
+            this.isShown = true;
         }
 
         /// <summary>
@@ -40,7 +49,19 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         public async Task HideAsync()
         {
-            await this.Navigation.PopPopupAsync();
+            try
+            {
+                if (this.isShown)
+                {
+                    await this.Navigation.PopPopupAsync();
+                }
+            }
+            catch (IndexOutOfRangeException)
+            {
+                // ignore when the waiting popup was already closed
+            }
+
+            this.isShown = false;
         }
     }
 }

@@ -19,6 +19,11 @@ namespace WhereToFly.App.Core
     public static class OpenFileHelper
     {
         /// <summary>
+        /// Waiting dialog that is currently shown; else it's set to null
+        /// </summary>
+        private static WaitingPopupPage waitingDialog;
+
+        /// <summary>
         /// Opens file from given stream
         /// </summary>
         /// <param name="stream">stream object</param>
@@ -80,7 +85,8 @@ namespace WhereToFly.App.Core
         /// <returns>task to wait on</returns>
         public static async Task OpenLocationListAsync(Stream stream, string filename)
         {
-            var waitingDialog = new WaitingPopupPage("Importing locations...");
+            await CloseWaitingPopupPageAsync();
+            waitingDialog = new WaitingPopupPage("Importing locations...");
 
             try
             {
@@ -129,7 +135,7 @@ namespace WhereToFly.App.Core
             }
             finally
             {
-                await waitingDialog.HideAsync();
+                await CloseWaitingPopupPageAsync();
             }
         }
 
@@ -143,7 +149,7 @@ namespace WhereToFly.App.Core
         /// <returns>true when loading track was successful, false when not</returns>
         public static async Task<bool> OpenTrackAsync(Stream stream, string filename)
         {
-            var waitingDialog = new WaitingPopupPage("Importing track...");
+            waitingDialog = new WaitingPopupPage("Importing track...");
 
             try
             {
@@ -175,7 +181,7 @@ namespace WhereToFly.App.Core
             }
             finally
             {
-                await waitingDialog.HideAsync();
+                await CloseWaitingPopupPageAsync();
             }
 
             return false;
@@ -340,7 +346,11 @@ namespace WhereToFly.App.Core
         {
             try
             {
-                await Application.Current.MainPage.Navigation.PopPopupAsync();
+                if (waitingDialog != null)
+                {
+                    await waitingDialog.HideAsync();
+                    waitingDialog = null;
+                }
             }
             catch (Exception)
             {
