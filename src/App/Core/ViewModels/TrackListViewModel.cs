@@ -245,7 +245,14 @@ namespace WhereToFly.App.Core.ViewModels
             FileData result = null;
             try
             {
-                result = await CrossFilePicker.Current.PickFile();
+                string[] fileTypes = null;
+
+                if (Device.RuntimePlatform == Device.UWP)
+                {
+                    fileTypes = new string[] { ".kml", ".kmz", ".gpx", ".igc" };
+                }
+
+                result = await CrossFilePicker.Current.PickFile(fileTypes);
                 if (result == null ||
                     string.IsNullOrEmpty(result.FilePath))
                 {
