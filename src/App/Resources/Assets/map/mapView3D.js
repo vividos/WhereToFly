@@ -119,8 +119,8 @@ function MapView(options) {
     // allow scripts to run in info box
     this.viewer.infoBox.frame.sandbox = this.viewer.infoBox.frame.sandbox + " allow-scripts";
 
-    if (options.hasMouse) {
-        // switch to Touch instructions, as the control is mainly used on touch devices
+    if (!options.hasMouse) {
+        // switch to Touch instructions, as the control is only used on touch devices
         this.viewer.navigationHelpButton.viewModel.showTouch();
     }
 
