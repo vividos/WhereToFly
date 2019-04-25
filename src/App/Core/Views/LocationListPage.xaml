@@ -57,7 +57,7 @@
         <!-- Location list -->
         <ListView x:Name="locationsListView"
                   ItemsSource="{Binding Path=LocationList, Mode=OneWay}"
-                  RowHeight="85"
+                  RowHeight="{OnPlatform Android=85, UWP=105}"
                   ItemTapped="OnItemTapped_LocationsListView"
                   IsPullToRefreshEnabled="False"
                   android:ListView.IsFastScrollEnabled="true"
