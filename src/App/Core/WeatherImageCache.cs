@@ -46,6 +46,8 @@ namespace WhereToFly.App.Core
             /// <param name="imageData">image data bytes</param>
             public ImageCacheEntry(byte[] imageData)
             {
+                Debug.Assert(imageData != null, "imageData must not be null");
+
                 this.ImageData = imageData;
                 this.Source = new Lazy<ImageSource>(this.CreateImageSource);
             }
