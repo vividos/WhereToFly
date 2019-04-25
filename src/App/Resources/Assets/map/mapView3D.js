@@ -51,6 +51,14 @@ function MapView(options) {
         credits: '<code>Kartendaten: &copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, SRTM | Kartendarstellung: &copy; <a href="http://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)</code>'
     });
 
+    this.openFlightMapsImageryLayer = null;
+    var airacId = calcCurrentAiracId();
+    this.openFlightMapsImageryProvider = Cesium.createOpenStreetMapImageryProvider({
+        url: 'https://snapshots.openflightmaps.org/live/' + airacId + '/tiles/world/noninteractive/epsg3857/merged/512/latest/',
+        credit: '(c) <a href="https://openflightmaps.org/" target="_blank">Open Flightmaps association</a>, (c) OpenStreetMap contributors, NASA elevation data',
+        maximumLevel: 11
+    });
+
     this.setupSlopeAndContourLines();
 
     this.thermalSkywaysLayer = null;
@@ -303,6 +311,9 @@ MapView.prototype.setMapImageryType = function (imageryType) {
     if (this.openTopoMapImageryLayer !== null)
         layers.remove(this.openTopoMapImageryLayer, false);
 
+    if (this.openFlightMapsImageryLayer !== null)
+        layers.remove(this.openFlightMapsImageryLayer, false);
+
     switch (imageryType) {
         case 'OpenStreetMap':
             if (this.openStreetMapImageryLayer === null)
@@ -323,6 +334,13 @@ MapView.prototype.setMapImageryType = function (imageryType) {
                 this.openTopoMapImageryLayer = layers.addImageryProvider(this.openTopoMapImageryProvider, 1);
             else
                 layers.add(this.openTopoMapImageryLayer, 1);
+            break;
+
+        case 'OpenFlightMaps':
+            if (this.openFlightMapsImageryLayer === null)
+                this.openFlightMapsImageryLayer = layers.addImageryProvider(this.openFlightMapsImageryProvider, 1);
+            else
+                layers.add(this.openFlightMapsImageryLayer, 1);
             break;
 
         default:
@@ -1157,3 +1175,14 @@ MapView.prototype.onAddTourPlanLocation = function (locationId) {
     if (this.options.callback !== undefined)
         this.options.callback('onAddTourPlanLocation', locationId);
 };
+
+/**
+ * Calculates the current airac ID, based on the current date, which is good enough for our
+ * purposes.
+ * @returns {number} current airac ID
+ */
+function calcCurrentAiracId() {
+    var baseAirac = new Date("2019-01-31"); // 1902 began on that day
+    var diffInDays = Math.abs(new Date() - baseAirac) / 86400000;
+    return 1902 + Math.floor(diffInDays / 28);
+}

@@ -20,5 +20,10 @@
         /// OpenTopoMap imagery tiles are displayed
         /// </summary>
         OpenTopoMap = 2,
+
+        /// <summary>
+        /// OpenFlightmaps.org maps with current flight map data
+        /// </summary>
+        OpenFlightMaps = 3,
     }
 }
