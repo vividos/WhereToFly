@@ -23,6 +23,11 @@ namespace WhereToFly.App.Core
     public partial class App : Application
     {
         /// <summary>
+        /// Filename for the weather image cache file
+        /// </summary>
+        private const string WeatherImageCacheFilename = "weatherImageCache.json";
+
+        /// <summary>
         /// Application settings
         /// </summary>
         public static AppSettings Settings { get; internal set; }
@@ -83,6 +88,8 @@ namespace WhereToFly.App.Core
             var dataService = DependencyService.Get<IDataService>();
 
             App.Settings = await dataService.GetAppSettingsAsync(CancellationToken.None);
+
+            LoadWeatherImageCache();
         }
 
         /// <summary>
@@ -263,6 +270,40 @@ namespace WhereToFly.App.Core
             await OpenAppResourceUriHelper.Open(uri);
         }
 
+        /// <summary>
+        /// Loads the contents of the weather image cache
+        /// </summary>
+        private static void LoadWeatherImageCache()
+        {
+            var platform = DependencyService.Get<IPlatform>();
+            string cacheFilename = Path.Combine(platform.CacheDataFolder, WeatherImageCacheFilename);
+
+            if (File.Exists(cacheFilename))
+            {
+                try
+                {
+                    var imageCache = DependencyService.Get<WeatherImageCache>();
+                    imageCache.LoadCache(cacheFilename);
+                }
+                catch (Exception ex)
+                {
+                    App.LogError(ex);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Stores the contents of the weather image cache in the cache folder
+        /// </summary>
+        private static void StoreWeatherImageCache()
+        {
+            var platform = DependencyService.Get<IPlatform>();
+            string cacheFilename = Path.Combine(platform.CacheDataFolder, WeatherImageCacheFilename);
+
+            var imageCache = DependencyService.Get<WeatherImageCache>();
+            imageCache.StoreCache(cacheFilename);
+        }
+
         #region App lifecycle methods
         /// <summary>
         /// Called when application is starting
@@ -278,6 +319,7 @@ namespace WhereToFly.App.Core
         protected override void OnSleep()
         {
             // Handle when your app sleeps
+            StoreWeatherImageCache();
         }
 
         /// <summary>

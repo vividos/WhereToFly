@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -23,12 +25,13 @@ namespace WhereToFly.App.Core
             /// <summary>
             /// Image source for displaying image
             /// </summary>
+            [JsonIgnore]
             public Lazy<ImageSource> Source { get; private set; }
 
             /// <summary>
             /// Image data bytes
             /// </summary>
-            public byte[] ImageData { get; private set; }
+            public byte[] ImageData { get; set; }
 
             /// <summary>
             /// Creates a new image cache entry by using given factory function
@@ -49,6 +52,16 @@ namespace WhereToFly.App.Core
                 Debug.Assert(imageData != null, "imageData must not be null");
 
                 this.ImageData = imageData;
+                this.Source = new Lazy<ImageSource>(this.CreateImageSource);
+            }
+
+            /// <summary>
+            /// Creates a new image cache entry object that is used when deserializing; only sets
+            /// the Source attribute, since the Image attribute is deserialized.
+            /// </summary>
+            [JsonConstructor]
+            public ImageCacheEntry()
+            {
                 this.Source = new Lazy<ImageSource>(this.CreateImageSource);
             }
 
@@ -76,6 +89,47 @@ namespace WhereToFly.App.Core
         /// HTTP client to download images from the internet
         /// </summary>
         private readonly HttpClient client = new HttpClient();
+
+        /// <summary>
+        /// Loads weather image cache from given filename; file must exist
+        /// </summary>
+        /// <param name="cacheFilename">cache filename</param>
+        public void LoadCache(string cacheFilename)
+        {
+            string json = File.ReadAllText(cacheFilename);
+            var localCache = JsonConvert.DeserializeObject<Dictionary<string, ImageCacheEntry>>(json);
+
+            lock (this.imageCacheLock)
+            {
+                foreach (var item in localCache)
+                {
+                    if (!this.imageCache.ContainsKey(item.Key) &&
+                        item.Value.ImageData != null &&
+                        item.Value.ImageData.Length > 0)
+                    {
+                        this.imageCache.Add(item.Key, item.Value);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Stores weather image cache to given filename
+        /// </summary>
+        /// <param name="cacheFilename">cache filename</param>
+        public void StoreCache(string cacheFilename)
+        {
+            string json;
+            lock (this.imageCacheLock)
+            {
+                json = JsonConvert.SerializeObject(this.imageCache);
+            }
+
+            if (!string.IsNullOrEmpty(json))
+            {
+                File.WriteAllText(cacheFilename, json);
+            }
+        }
 
         /// <summary>
         /// Returns an image from image cache
