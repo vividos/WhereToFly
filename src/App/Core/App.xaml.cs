@@ -293,6 +293,19 @@ namespace WhereToFly.App.Core
         }
 
         /// <summary>
+        /// Samples track heights for given track, updating track point altitudes in-place
+        /// </summary>
+        /// <param name="track">track to sample heights</param>
+        /// <param name="offsetInMeters">offset in meters to add to track</param>
+        /// <returns>task to wait on</returns>
+        public static async Task SampleTrackHeightsAsync(Track track, double offsetInMeters)
+        {
+            var app = Current as App;
+
+            await app.MapPage.SampleTrackHeightsAsync(track, offsetInMeters);
+        }
+
+        /// <summary>
         /// Stores the contents of the weather image cache in the cache folder
         /// </summary>
         private static void StoreWeatherImageCache()

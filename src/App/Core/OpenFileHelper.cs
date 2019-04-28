@@ -1,5 +1,4 @@
-﻿using Rg.Plugins.Popup.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -290,6 +289,8 @@ namespace WhereToFly.App.Core
             {
                 return false; // user canceled editing track properties
             }
+
+            await App.SampleTrackHeightsAsync(track, 0.0);
 
             var dataService = DependencyService.Get<IDataService>();
 
