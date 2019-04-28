@@ -432,7 +432,11 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task CreateMapViewAsync()
         {
-            MapPoint initialCenter = this.appSettings.LastKnownPosition ?? new MapPoint(0.0, 0.0);
+            MapPoint initialCenter = this.appSettings.LastKnownPosition ?? Constants.InitialCenterPoint;
+            if (!initialCenter.Valid)
+            {
+                initialCenter = Constants.InitialCenterPoint;
+            }
 
             await this.mapView.CreateAsync(initialCenter, 14);
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using WhereToFly.Shared.Model;
 
 namespace WhereToFly.App.Core
 {
@@ -151,5 +152,11 @@ namespace WhereToFly.App.Core
         /// GeoLocation: Minimum distance to travel to send the next update
         /// </summary>
         public const double GeoLocationMinimumDistanceForUpdateInMeters = 2;
+
+        /// <summary>
+        /// Initial center point for the map when no last know position is available
+        /// </summary>
+        public static readonly MapPoint InitialCenterPoint = new MapPoint(47.67, 11.88);
+
     }
 }
