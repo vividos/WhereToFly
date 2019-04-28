@@ -1,4 +1,5 @@
 ﻿using Refit;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using WhereToFly.Shared.Model;
 
@@ -87,6 +88,7 @@ namespace WhereToFly.App.Logic
         /// <returns>favicon URL</returns>
         public async Task<string> GetFaviconUrlAsync(string websiteUrl)
         {
+            Debug.WriteLine($"Backend: Retrieving favicon for URL {websiteUrl}");
             return await this.backendWebApi.GetFaviconUrlAsync(websiteUrl);
         }
 
