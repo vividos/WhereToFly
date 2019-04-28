@@ -515,6 +515,34 @@ namespace WhereToFly.App.Core.Views
         }
 
         /// <summary>
+        /// Shows flying range by displaying a half transparent cone on the given point and using
+        /// some flying range parameters
+        /// </summary>
+        /// <param name="point">map point to display cone at</param>
+        /// <param name="parameters">flying range parameters</param>
+        public void ShowFlyingRange(MapPoint point, FlyingRangeParameters parameters)
+        {
+            var options = new
+            {
+                latitude = point.Latitude,
+                longitude = point.Longitude,
+                displayLatitude = DataFormatter.FormatLatLong(point.Latitude, this.CoordinateDisplayFormat),
+                displayLongitude = DataFormatter.FormatLatLong(point.Longitude, this.CoordinateDisplayFormat),
+                altitude = point.Altitude ?? 0.0,
+                glideRatio = parameters.GlideRatio,
+                gliderSpeed = parameters.GliderSpeed,
+                windDirection = parameters.WindDirection,
+                windSpeed = parameters.WindSpeed,
+            };
+
+            string js = string.Format(
+                "map.showFlyingRange({0});",
+                JsonConvert.SerializeObject(options));
+
+            this.RunJavaScript(js);
+        }
+
+        /// <summary>
         /// Runs JavaScript code, in main thread
         /// </summary>
         /// <param name="js">javascript code snippet</param>

@@ -590,7 +590,7 @@ namespace WhereToFly.App.Core.Views
             string latitudeText = DataFormatter.FormatLatLong(point.Latitude, this.appSettings.CoordinateDisplayFormat);
             string longitudeText = DataFormatter.FormatLatLong(point.Longitude, this.appSettings.CoordinateDisplayFormat);
 
-            var longTapActions = new List<string> { "Add new waypoint", "Navigate here" };
+            var longTapActions = new List<string> { "Add new waypoint", "Navigate here", "Show flying range" };
 
             string result = await App.Current.MainPage.DisplayActionSheet(
                 $"Selected point at Latitude: {latitudeText}, Longitude: {longitudeText}, Altitude {point.Altitude.GetValueOrDefault(0.0)} m",
@@ -610,6 +610,10 @@ namespace WhereToFly.App.Core.Views
 
                     case 1:
                         await NavigateToPointAsync(string.Empty, point);
+                        break;
+
+                    case 2:
+                        await this.ShowFlyingRange(point);
                         break;
 
                     default:
@@ -647,6 +651,22 @@ namespace WhereToFly.App.Core.Views
                 parameter: location);
 
             this.updateLocationsList = true;
+        }
+
+        /// <summary>
+        /// Shows flying range from given point; shows a half transparent cone on the map that is
+        /// created with some flying parameters like gliding ratio, wind spee and direction.
+        /// </summary>
+        /// <param name="point">point to calculate flying range for</param>
+        /// <returns>task to wait on</returns>
+        private async Task ShowFlyingRange(MapPoint point)
+        {
+            FlyingRangeParameters parameters = await FlyingRangePopupPage.ShowAsync();
+
+            if (parameters != null)
+            {
+                this.mapView.ShowFlyingRange(point, parameters);
+            }
         }
 
         /// <summary>

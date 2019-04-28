@@ -659,6 +659,9 @@ MapView.prototype.clearLocationList = function () {
 
     if (this.trackEntity !== null)
         this.viewer.entities.add(this.trackEntity);
+
+    if (this.flyingRangeCone !== null)
+        this.viewer.entities.add(this.flyingRangeCone);
 };
 
 /**
@@ -829,6 +832,79 @@ MapView.prototype.showFindResult = function (options) {
                 this.viewer.camera.heading,
                 this.viewer.camera.pitch,
                 5000.0)
+        });
+};
+
+/**
+ * Shows flying range for a given map point and using flying range parameters.
+ * @param {Object} [options] Options for showing flying range:
+ * @param {Number} [options.latitude] Latitude of the point to show flying range
+ * @param {Number} [options.longitude] Longitude of the point to show flying range
+ * @param {double} [options.displayLatitude] Display text of latitude
+ * @param {double} [options.displayLongitude] Display text of longitude
+ * @param {Number} [options.altitude] Altitude of the point to show flying range
+ * @param {Number} [options.glideRatio] Glide ratio, in km flying per 1000m sink
+ * @param {Number} [options.gliderSpeed] Glider speed, in km/h; must be above wind speed
+ * @param {Number} [options.windDirection] Wind direction, in degrees
+ * @param {Number} [options.windSpeed] Wind speed, in km/h
+ */
+MapView.prototype.showFlyingRange = function (options) {
+
+    if (this.flyingRangeCone !== null)
+        this.viewer.entities.remove(this.flyingRangeCone);
+
+    // limit wind speed so that we don't get a negative glide angle
+    if (options.windSpeed > options.gliderSpeed - 1)
+        options.windSpeed = options.gliderSpeed - 1;
+
+    // use wind speed to calculate the angle to pitch the cone
+    var glideAngle = Math.atan(options.glideRatio);
+    var glideRatioWithWind = options.glideRatio * (options.gliderSpeed - options.windSpeed) / options.gliderSpeed;
+    var glideAngleWithWind = Math.atan(glideRatioWithWind);
+    var conePitch = glideAngle - glideAngleWithWind;
+
+    var quat = Cesium.Transforms.headingPitchRollQuaternion(
+        Cesium.Cartesian3.fromDegrees(options.longitude, options.latitude, options.altitude / 2.0),
+        new Cesium.HeadingPitchRoll(
+            Cesium.Math.toRadians(options.windDirection + 90.0),
+            conePitch, 0.0)
+    );
+
+    var text ='<p>Flying range for map point at<br/>Latitude: ' + options.displayLatitude + '<br/>' +
+        'Longitude: ' + options.displayLongitude + '<br/>' +
+        'Altitude: ' + options.altitude + 'm</p>';
+
+    text += '<p>' +
+        'Glide ratio: ' + options.glideRatio + '<br/>' +
+        'Glide angle: ' + (90.0 - Cesium.Math.toDegrees(glideAngle)).toFixed(1) + ' degrees<br/>' +
+        //'Glider speed: ' + options.gliderSpeed + ' km/h<br/>' +
+        //'Glide ratio with wind: ' + glideRatioWithWind.toFixed(1) + '<br/>' +
+        //'Glide angle with wind: ' + (90.0 - Cesium.Math.toDegrees(glideAngleWithWind)).toFixed(1) + ' degrees<br/>' +
+        //'Wind: ' + options.windSpeed + ' km/h from ' + options.windDirection + ' degrees' +
+        '</p>';
+
+    this.flyingRangeCone = this.viewer.entities.add({
+        name: 'Flying range',
+        description: text,
+        position: Cesium.Cartesian3.fromDegrees(options.longitude, options.latitude, options.altitude / 2.0),
+        orientation: quat,
+        cylinder: {
+            length: options.altitude,
+            topRadius: 0.0,
+            bottomRadius: options.altitude * options.glideRatio,
+            numberOfVerticalLines: 18,
+            material: Cesium.Color.BLUE.withAlpha(0.4),
+            outline: true,
+            outlineColor: Cesium.Color.WHITE
+        }
+    });
+
+    this.viewer.flyTo(this.flyingRangeCone,
+        {
+            offset: new Cesium.HeadingPitchRange(
+                this.viewer.camera.heading,
+                this.viewer.camera.pitch,
+                20 * 1000.0)
         });
 };
 
