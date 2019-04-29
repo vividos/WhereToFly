@@ -870,7 +870,7 @@ MapView.prototype.showFlyingRange = function (options) {
             conePitch, 0.0)
     );
 
-    var text ='<p>Flying range for map point at<br/>Latitude: ' + options.displayLatitude + '<br/>' +
+    var text = '<p>Flying range for map point at<br/>Latitude: ' + options.displayLatitude + '<br/>' +
         'Longitude: ' + options.displayLongitude + '<br/>' +
         'Altitude: ' + options.altitude + 'm</p>';
 
@@ -1035,6 +1035,92 @@ MapView.prototype.calcTrackColors = function (listOfTrackPoints, listOfTimePoint
 };
 
 /**
+ * Creates a primitive for a flight track
+ * @param {object} [track] Track object to add
+ * @param {array} [track.listOfTrackPoints] An array of track points in long, lat, alt, long, lat, alt ... order
+ * @param {array} [track.listOfTimePoints] An array of time points in seconds; same length as listOfTrackPoints; may be null
+ * @param {array} [trackPointArray] An array of track points to use
+ * @returns {Cesium.Primitive} created primitive object
+ */
+MapView.prototype.getFlightTrackPrimitive = function (track, trackPointArray) {
+
+    var trackColors = this.calcTrackColors(track.listOfTrackPoints, track.listOfTimePoints);
+
+    var trackPolyline = new Cesium.PolylineGeometry({
+        positions: trackPointArray,
+        width: 5,
+        vertexFormat: Cesium.PolylineColorAppearance.VERTEX_FORMAT,
+        colors: trackColors,
+        colorsPerVertex: false
+    });
+
+    var primitive = new Cesium.Primitive({
+        geometryInstances: new Cesium.GeometryInstance({
+            geometry: trackPolyline
+        }),
+        appearance: new Cesium.PolylineColorAppearance({ translucent: false })
+    });
+
+    return primitive;
+};
+
+/**
+ * Creates a wall primitive for a flight track to display relation to ground
+ * @param {array} [trackPointArray] An array of track points to use
+ * @returns {Cesium.Primitive} created wall primitive object
+ */
+MapView.prototype.getFlightTrackWallPrimitive = function (trackPointArray) {
+
+    var wallGeometry = new Cesium.WallGeometry({
+        positions: trackPointArray
+    });
+
+    var wallMaterial = Cesium.Material.fromType('Color');
+
+    wallMaterial.uniforms.color = new Cesium.Color(0.5, 0.5, 1, 0.4);
+
+    var wallPrimitive = new Cesium.Primitive({
+        geometryInstances: new Cesium.GeometryInstance({
+            geometry: Cesium.WallGeometry.createGeometry(wallGeometry)
+        }),
+        appearance: new Cesium.MaterialAppearance({
+            translucent: true,
+            material: wallMaterial,
+            faceForward: true
+        })
+    });
+
+    return wallPrimitive;
+};
+
+/**
+ * Creates a ground primitive for a non-flight track
+ * @param {object} [track] Track object to add
+ * @param {string} [track.color] Color as "RRGGBB" string value
+ * @param {array} [trackPointArray] An array of track points to use
+ * @returns {Cesium.Primitive} created primitive object
+ */
+MapView.prototype.getGroundTrackPrimitive = function (track, trackPointArray) {
+
+    var groundTrackPolyline = new Cesium.GroundPolylineGeometry({
+        positions: trackPointArray,
+        width: 5
+    });
+
+    var primitive = new Cesium.GroundPolylinePrimitive({
+        geometryInstances: new Cesium.GeometryInstance({
+            geometry: groundTrackPolyline,
+            attributes: {
+                color: Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.fromCssColorString('#' + track.color))
+            }
+        }),
+        appearance: new Cesium.PolylineColorAppearance({ translucent: false })
+    });
+
+    return primitive;
+}
+
+/**
  * Adds a track to the map
  * @param {object} [track] Track object to add
  * @param {string} [track.id] unique ID of the track
@@ -1051,57 +1137,24 @@ MapView.prototype.addTrack = function (track) {
 
     console.log("adding list of track points, with ID " + track.id + " and " + track.listOfTrackPoints.length + " track points");
 
-    var trackColors = this.calcTrackColors(track.listOfTrackPoints, track.listOfTimePoints);
-
     var trackPointArray = Cesium.Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints);
 
-    var hasColor = !track.isFlightTrack;
+    var primitive = undefined;
+    var wallPrimitive = undefined;
 
-    var trackPolyline = new Cesium.PolylineGeometry({
-        positions: trackPointArray,
-        width: 5,
-        vertexFormat: hasColor ? undefined : Cesium.PolylineColorAppearance.VERTEX_FORMAT,
-        colors: hasColor ? undefined : trackColors,
-        colorsPerVertex: false
-    });
+    if (track.isFlightTrack) {
+        primitive = this.getFlightTrackPrimitive(track, trackPointArray);
+        wallPrimitive = this.getFlightTrackWallPrimitive(trackPointArray);
 
-    var primitive = new Cesium.Primitive({
-        geometryInstances: new Cesium.GeometryInstance({
-            geometry: trackPolyline,
-            attributes: {
-                color: hasColor ? Cesium.ColorGeometryInstanceAttribute.fromColor(
-                    Cesium.Color.fromCssColorString('#' + track.color)) : undefined
-            }
-        }),
-        appearance: new Cesium.PolylineColorAppearance({ translucent: false })
-    });
+        this.trackPrimitivesCollection.add(wallPrimitive);
+
+    } else {
+        primitive = this.getGroundTrackPrimitive(track, trackPointArray);
+    }
 
     this.trackPrimitivesCollection.add(primitive);
 
     var boundingSphere = Cesium.BoundingSphere.fromPoints(trackPointArray, null);
-
-    var wallPrimitive = undefined;
-    if (track.isFlightTrack) {
-        var wallGeometry = new Cesium.WallGeometry({
-            positions: trackPointArray
-        });
-
-        var wallMaterial = Cesium.Material.fromType('Color');
-        wallMaterial.uniforms.color = new Cesium.Color(0.5, 0.5, 1, 0.4);
-
-        wallPrimitive = new Cesium.Primitive({
-            geometryInstances: new Cesium.GeometryInstance({
-                geometry: Cesium.WallGeometry.createGeometry(wallGeometry)
-            }),
-            appearance: new Cesium.MaterialAppearance({
-                translucent: true,
-                material: wallMaterial,
-                faceForward: true
-            })
-        });
-
-        this.trackPrimitivesCollection.add(wallPrimitive);
-    }
 
     this.trackIdToTrackDataMap[track.id] = {
         primitive: primitive,

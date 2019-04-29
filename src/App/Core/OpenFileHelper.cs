@@ -290,7 +290,12 @@ namespace WhereToFly.App.Core
                 return false; // user canceled editing track properties
             }
 
-            await App.SampleTrackHeightsAsync(track, 0.0);
+            // sample track heights only when it's a flight; non-flight tracks are draped onto
+            // the ground
+            if (track.IsFlightTrack)
+            {
+                await App.SampleTrackHeightsAsync(track, 0.0);
+            }
 
             var dataService = DependencyService.Get<IDataService>();
 
