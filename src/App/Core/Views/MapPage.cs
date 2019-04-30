@@ -314,7 +314,8 @@ namespace WhereToFly.App.Core.Views
 
             try
             {
-                foundPositionsList = await this.geolocator.GetPositionsForAddressAsync(text);
+                string mapKey = Device.RuntimePlatform == Device.UWP ? Constants.BingMapsKey : null;
+                foundPositionsList = await this.geolocator.GetPositionsForAddressAsync(text, mapKey);
             }
             catch (Exception ex)
             {

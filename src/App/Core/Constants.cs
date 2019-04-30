@@ -158,5 +158,9 @@ namespace WhereToFly.App.Core
         /// </summary>
         public static readonly MapPoint InitialCenterPoint = new MapPoint(47.67, 11.88);
 
+        /// <summary>
+        /// Bing maps API key; used for geocoding
+        /// </summary>
+        public static readonly string BingMapsKey = "AuuY8qZGx-LAeruvajcGMLnudadWlphUWdWb0k6N6lS2QUtURFk3ngCjIXqqFOoe";
     }
 }
