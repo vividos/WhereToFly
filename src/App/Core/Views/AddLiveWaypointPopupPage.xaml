@@ -27,6 +27,9 @@
         BackgroundColor="White"
         Padding="20">
 
+        <!-- caption -->
+        <Label Text="Add live waypoint" FontSize="Large" />
+
         <!-- Entry for live waypoint name -->
         <Label Text="Name" FontSize="Medium" />
         <Entry Placeholder="enter live waypoint name" Text="{Binding Path=Name, Mode=TwoWay}" />

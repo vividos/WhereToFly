@@ -27,6 +27,9 @@
         BackgroundColor="White"
         Padding="20">
 
+        <!-- caption -->
+        <Label Text="Add track" FontSize="Large" />
+
         <!-- Entry for track name -->
         <Label Text="Name" FontSize="Medium" />
         <Entry Placeholder="enter track name" Text="{Binding Path=TrackName, Mode=TwoWay}" />

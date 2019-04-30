@@ -29,7 +29,7 @@
         Padding="20">
 
         <!-- text, entry control to enter location text and button -->
-        <Label Text="Find location..." FontSize="Large" />
+        <Label Text="Find location" FontSize="Large" />
         <Entry Placeholder="enter location" x:Name="locationEntry" />
         <Button Text="Find" Clicked="OnClickedFindButton" />
     </StackLayout>

@@ -27,6 +27,9 @@
         BackgroundColor="White"
         Padding="20">
 
+        <!-- caption -->
+        <Label Text="Flying range" FontSize="Large" />
+
         <!-- Entry and Stepper for glide ratio -->
         <Label Text="Glide ratio" FontSize="Medium" />
 

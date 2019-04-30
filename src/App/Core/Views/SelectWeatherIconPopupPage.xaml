@@ -29,7 +29,9 @@
         BackgroundColor="White"
         Padding="20">
 
-        <!-- text, entry control to enter location text and button -->
+        <!-- caption -->
+        <Label Text="Select weather icon" FontSize="Large" />
+
         <!-- List showing all weather icons that can be added -->
         <ListView ItemsSource="{Binding Path=WeatherIconList, Mode=OneWay}"
                   ItemTapped="OnItemTapped_WeatherIconListView"
