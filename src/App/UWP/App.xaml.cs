@@ -74,7 +74,7 @@ namespace WhereToFly.App.UWP
         /// <summary>
         /// Called when the UWP app is activated, e.g. by a Protocol link.
         /// </summary>
-        /// <param name="args"></param>
+        /// <param name="args">event args</param>
         protected override void OnActivated(IActivatedEventArgs args)
         {
             if (args.Kind == ActivationKind.Protocol)
