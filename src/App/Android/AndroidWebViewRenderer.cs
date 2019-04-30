@@ -1,4 +1,5 @@
 using Android.Content;
+using System;
 using WhereToFly.App.Core;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
@@ -96,9 +97,16 @@ namespace WhereToFly.App.Android
                 return;
             }
 
-            this.Control.ClearHistory();
-            this.Control.ClearFormData();
-            this.Control.ClearCache(true);
+            try
+            {
+                this.Control.ClearHistory();
+                this.Control.ClearFormData();
+                this.Control.ClearCache(true);
+            }
+            catch (Exception)
+            {
+                // ignore exception when clearing cache
+            }
         }
     }
 }
