@@ -55,6 +55,12 @@ namespace WhereToFly.WebApi.Logic
                 iconUrl = faviconUri.AbsoluteUri;
             }
 
+            int pos = iconUrl.IndexOf(";jsessionid=");
+            if (pos != -1)
+            {
+                iconUrl = iconUrl.Substring(0, pos);
+            }
+
             this.urlCache[baseUri] = iconUrl;
 
             return iconUrl;

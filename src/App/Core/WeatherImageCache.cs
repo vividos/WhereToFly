@@ -191,6 +191,12 @@ namespace WhereToFly.App.Core
         /// <returns>link with hostname and favicon.ico prefixed</returns>
         private static async Task<string> GetFaviconFromLinkAsync(string webLink)
         {
+            int pos = webLink.IndexOf(";jsessionid=");
+            if (pos != -1)
+            {
+                webLink = webLink.Substring(0, pos);
+            }
+
             var dataService = DependencyService.Get<IDataService>();
 
             return await dataService.GetFaviconUrlAsync(webLink);
