@@ -1118,7 +1118,7 @@ MapView.prototype.getGroundTrackPrimitive = function (track, trackPointArray) {
     });
 
     return primitive;
-}
+};
 
 /**
  * Adds a track to the map
