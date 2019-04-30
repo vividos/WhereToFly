@@ -90,6 +90,7 @@ namespace WhereToFly.App.Core
             App.Settings = await dataService.GetAppSettingsAsync(CancellationToken.None);
 
             LoadWeatherImageCache();
+            LoadFaviconUrlCache();
         }
 
         /// <summary>
@@ -293,6 +294,22 @@ namespace WhereToFly.App.Core
         }
 
         /// <summary>
+        /// Loads the favicon url cache
+        /// </summary>
+        private static void LoadFaviconUrlCache()
+        {
+            try
+            {
+                var dataService = DependencyService.Get<IDataService>();
+                (dataService as DataService).LoadFaviconUrlCache();
+            }
+            catch (Exception ex)
+            {
+                App.LogError(ex);
+            }
+        }
+
+        /// <summary>
         /// Samples track heights for given track, updating track point altitudes in-place
         /// </summary>
         /// <param name="track">track to sample heights</param>
@@ -317,6 +334,22 @@ namespace WhereToFly.App.Core
             imageCache.StoreCache(cacheFilename);
         }
 
+        /// <summary>
+        /// Stores the contents of the favicon url cache in the cache folder
+        /// </summary>
+        private static void StoreFaviconUrlCache()
+        {
+            try
+            {
+                var dataService = DependencyService.Get<IDataService>();
+                (dataService as DataService).StoreFaviconUrlCache();
+            }
+            catch (Exception ex)
+            {
+                App.LogError(ex);
+            }
+        }
+
         #region App lifecycle methods
         /// <summary>
         /// Called when application is starting
@@ -333,6 +366,7 @@ namespace WhereToFly.App.Core
         {
             // Handle when your app sleeps
             StoreWeatherImageCache();
+            StoreFaviconUrlCache();
         }
 
         /// <summary>

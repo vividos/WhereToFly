@@ -40,6 +40,11 @@ namespace WhereToFly.App.Core.Services
         private const string WeatherIconListFilename = "weatherIconList.json";
 
         /// <summary>
+        /// Filename for the favicon url cache file
+        /// </summary>
+        private const string FaviconUrlCacheFilename = "faviconUrlCache.json";
+
+        /// <summary>
         /// Data service to access backend
         /// </summary>
         private readonly BackendDataService backendDataService = new BackendDataService();
@@ -58,6 +63,45 @@ namespace WhereToFly.App.Core.Services
         /// Track list storage
         /// </summary>
         private List<Track> trackList;
+
+        /// <summary>
+        /// Loads the favicon url cache from cache data folder
+        /// </summary>
+        public void LoadFaviconUrlCache()
+        {
+            var platform = DependencyService.Get<IPlatform>();
+            string cacheFilename = Path.Combine(platform.CacheDataFolder, FaviconUrlCacheFilename);
+
+            if (File.Exists(cacheFilename))
+            {
+                string json = File.ReadAllText(cacheFilename);
+                var localCache = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+
+                foreach (var item in localCache)
+                {
+                    if (!this.faviconUrlCache.ContainsKey(item.Key))
+                    {
+                        this.faviconUrlCache.Add(item.Key, item.Value);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Stores the favicon url cache to the cache data folder
+        /// </summary>
+        public void StoreFaviconUrlCache()
+        {
+            var platform = DependencyService.Get<IPlatform>();
+            string cacheFilename = Path.Combine(platform.CacheDataFolder, FaviconUrlCacheFilename);
+
+            string json = JsonConvert.SerializeObject(this.faviconUrlCache);
+
+            if (!string.IsNullOrEmpty(json))
+            {
+                File.WriteAllText(cacheFilename, json);
+            }
+        }
 
         /// <summary>
         /// Gets the current app settings object
