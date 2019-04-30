@@ -217,9 +217,13 @@ namespace WhereToFly.App.Core
                 case WeatherIconDescription.IconType.IconLink:
                     string faviconLink = await GetFaviconFromLinkAsync(iconDescription.WebLink);
 
-                    byte[] data = await this.client.GetByteArrayAsync(faviconLink);
+                    if (!string.IsNullOrEmpty(faviconLink))
+                    {
+                        byte[] data = await this.client.GetByteArrayAsync(faviconLink);
 
-                    entry = new ImageCacheEntry(data);
+                        entry = new ImageCacheEntry(data);
+                    }
+
                     break;
 
                 case WeatherIconDescription.IconType.IconApp:
