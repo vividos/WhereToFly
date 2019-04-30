@@ -24,7 +24,7 @@ namespace WhereToFly.App.Core.ViewModels
             set
             {
                 this.Parameters.GlideRatio = value;
-                this.OnPropertyChanged(nameof(GlideRatio));
+                this.OnPropertyChanged(nameof(this.GlideRatio));
             }
         }
 
