@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Views;
+using WhereToFly.App.Geo;
 using WhereToFly.App.Geo.DataFormats;
 using WhereToFly.App.Geo.Spatial;
 using WhereToFly.App.Model;
@@ -294,7 +295,7 @@ namespace WhereToFly.App.Core
             // the ground
             if (track.IsFlightTrack)
             {
-                await App.SampleTrackHeightsAsync(track, 0.0);
+                await SampleTrackHeightsAsync(track);
             }
 
             var dataService = DependencyService.Get<IDataService>();
@@ -310,6 +311,27 @@ namespace WhereToFly.App.Core
             App.ShowToast("Track was loaded.");
 
             return true;
+        }
+
+        /// <summary>
+        /// Samples track point heights and adjust track
+        /// </summary>
+        /// <param name="track">track to sample point heights</param>
+        /// <returns>task to wait on</returns>
+        private static async Task SampleTrackHeightsAsync(Track track)
+        {
+            waitingDialog = new WaitingPopupPage("Sampling track point heights...");
+            await waitingDialog.ShowAsync();
+
+            try
+            {
+                await App.SampleTrackHeightsAsync(track, 0.0);
+            }
+            finally
+            {
+                await waitingDialog.HideAsync();
+                waitingDialog = null;
+            }
         }
 
         /// <summary>
