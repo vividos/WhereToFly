@@ -918,6 +918,8 @@ MapView.prototype.showFlyingRange = function (options) {
  */
 MapView.prototype.sampleTrackHeights = function (track, offsetInMeters) {
 
+    console.log("start sampling track point heights for " + track.listOfTrackPoints.length + " points...");
+
     if (!Cesium.Entity.supportsPolylinesOnTerrain(this.viewer.scene)) {
         return;
     }
@@ -936,6 +938,7 @@ MapView.prototype.sampleTrackHeights = function (track, offsetInMeters) {
         this.viewer.terrainProvider,
         cartographicArray),
         function (samples) {
+
             var trackPointHeightArray = [];
 
             for (var trackPointIndex = 0; trackPointIndex < trackPointArray.length; ++trackPointIndex) {
@@ -949,8 +952,12 @@ MapView.prototype.sampleTrackHeights = function (track, offsetInMeters) {
                 trackPointHeightArray.push(trackPointHeight);
             }
 
+            console.log("sampling track point heights finished.");
+
             that.onSampledTrackHeights(trackPointHeightArray);
         });
+
+    console.log("call to sampleTrackHeights() returns.");
 };
 
 /**
