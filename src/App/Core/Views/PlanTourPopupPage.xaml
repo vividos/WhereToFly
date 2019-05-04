@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+                 x:Class="WhereToFly.App.Core.Views.PlanTourPopupPage">
+
+    <!-- animate popup page-->
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8"
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True" />
+    </pages:PopupPage.Animation>
+
+    <!-- popup content -->
+    <StackLayout
+        VerticalOptions="CenterAndExpand"
+        HorizontalOptions="Center"
+        WidthRequest="320"
+        HeightRequest="400"
+        BackgroundColor="White"
+        Padding="20">
+
+        <!-- caption -->
+        <Label Text="Plan tour" FontSize="Large" VerticalOptions="Start" />
+
+        <!-- Message to show that more locations are needed for tour planning -->
+        <StackLayout Padding="8" Margin="0" BackgroundColor="Yellow"
+                     HorizontalOptions="FillAndExpand"
+                     IsVisible="{Binding Path=ShowWarningForMoreLocations, Mode=OneWay}">
+            <Label Text="At least two locations are needed for tour planning" FontSize="Medium"
+                   AutomationId="ShowWarningForMoreLocationsLabel" />
+        </StackLayout>
+
+        <!-- Location list -->
+        <ListView ItemsSource="{Binding Path=PlanTourList, Mode=OneWay}"
+                  RowHeight="90"
+                  IsPullToRefreshEnabled="False"
+                  CachingStrategy="RecycleElement"
+                  SeparatorVisibility="None"
+                  VerticalOptions="FillAndExpand"
+                  BackgroundColor="#efefef"
+                  AutomationId="PlanTourList">
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <!-- Template for a single entry -->
+                    <ViewCell Height="90">
+                        <ViewCell.View>
+                            <Grid BackgroundColor="#f7f7f7" Margin="8,4">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Type image -->
+                                <controls:SvgImage Source="{Binding TypeImageSource, Mode=OneWay}"
+                                                   WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
+                                                   HorizontalOptions="Start" VerticalOptions="Center"
+                                                   Grid.Row="0" Grid.Column="0" />
+
+                                <!-- Name -->
+                                <Label Text="{Binding Name, Mode=OneTime}"
+                                       Style="{DynamicResource ListItemTextStyle}"
+                                       FontSize="Medium"
+                                       LineBreakMode="TailTruncation"
+                                       HorizontalOptions="Fill" VerticalOptions="Center"
+                                       Grid.Row="0" Grid.Column="1" />
+
+                                <!-- Buttons -->
+                                <StackLayout Orientation="Horizontal"
+                                             HorizontalOptions="Fill" VerticalOptions="Center"
+                                             Grid.Row="1" Grid.Column="1">
+                                    <Button Text="Up" WidthRequest="80" Command="{Binding MoveUpCommand}" />
+                                    <Button Text="Down" WidthRequest="80" Command="{Binding MoveDownCommand}" />
+                                    <Button Text="X" WidthRequest="60" Command="{Binding RemoveCommand}" />
+                                </StackLayout>
+                            </Grid>
+                        </ViewCell.View>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!-- Buttons -->
+        <StackLayout Orientation="Horizontal">
+            <Button Text="Close" Command="{Binding CloseCommand}"
+                    HorizontalOptions="FillAndExpand" VerticalOptions="Center" />
+            <Button Text="Plan Tour" Command="{Binding PlanTourCommand}"
+                    HorizontalOptions="FillAndExpand" VerticalOptions="Center" />
+        </StackLayout>
+
+    </StackLayout>
+
+</pages:PopupPage>

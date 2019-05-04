@@ -1,0 +1,425 @@
+﻿using Rg.Plugins.Popup.Extensions;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using WhereToFly.App.Core.Views;
+using WhereToFly.App.Geo;
+using WhereToFly.App.Geo.Spatial;
+using WhereToFly.App.Model;
+using WhereToFly.Shared.Model;
+using Xamarin.Forms;
+
+namespace WhereToFly.App.Core.ViewModels
+{
+    /// <summary>
+    /// View model for the "plan tour" popup page
+    /// </summary>
+    public class PlanTourPopupViewModel : ViewModelBase
+    {
+        /// <summary>
+        /// View model for list entries for the tour planning list
+        /// </summary>
+        public class PlanTourListEntryViewModel : ViewModelBase
+        {
+            /// <summary>
+            /// Parent view model
+            /// </summary>
+            private readonly PlanTourPopupViewModel parent;
+
+            /// <summary>
+            /// Unique ID for view model, in order to find and compare them
+            /// </summary>
+            public string Id { get; private set; }
+
+            /// <summary>
+            /// Location for tour planning
+            /// </summary>
+            public Location Location { get; private set; }
+
+            /// <summary>
+            /// Lazy-loading backing store for type image source
+            /// </summary>
+            private readonly Lazy<ImageSource> typeImageSource;
+
+            #region Binding properties
+            /// <summary>
+            /// Returns image source for SvgImage in order to display the type image
+            /// </summary>
+            public ImageSource TypeImageSource
+            {
+                get
+                {
+                    return this.typeImageSource.Value;
+                }
+            }
+
+            /// <summary>
+            /// Location name
+            /// </summary>
+            public string Name { get => this.Location.Name; }
+
+            /// <summary>
+            /// Command to move up location in the list
+            /// </summary>
+            public ICommand MoveUpCommand { get; set; }
+
+            /// <summary>
+            /// Command to move down location in the list
+            /// </summary>
+            public ICommand MoveDownCommand { get; set; }
+
+            /// <summary>
+            /// Command to remove location from the list
+            /// </summary>
+            public ICommand RemoveCommand { get; set; }
+            #endregion
+
+            /// <summary>
+            /// Creates a new view model for a list entry
+            /// </summary>
+            /// <param name="location">location object</param>
+            /// <param name="parent">parent view model</param>
+            public PlanTourListEntryViewModel(Location location, PlanTourPopupViewModel parent)
+            {
+                this.Id = Guid.NewGuid().ToString("B");
+                this.Location = location;
+                this.parent = parent;
+
+                this.typeImageSource = new Lazy<ImageSource>(this.GetTypeImageSource);
+
+                this.MoveUpCommand = new Command(
+                    (obj) => this.parent.MoveUpLocation(this),
+                    (obj) => !this.parent.IsFirstLocation(this));
+
+                this.MoveDownCommand = new Command(
+                    (obj) => this.parent.MoveDownLocation(this),
+                    (obj) => !this.parent.IsLastLocation(this));
+
+                this.RemoveCommand = new Command(
+                    (obj) => this.parent.RemoveLocation(this));
+            }
+
+            /// <summary>
+            /// Updates binding properties, e.g. when list position has changed
+            /// </summary>
+            public void Update()
+            {
+                this.OnPropertyChanged(nameof(this.MoveUpCommand));
+                this.OnPropertyChanged(nameof(this.MoveDownCommand));
+                this.OnPropertyChanged(nameof(this.RemoveCommand));
+            }
+
+            /// <summary>
+            /// Returns type icon from location type
+            /// </summary>
+            /// <returns>image source, or null when no icon could be found</returns>
+            private ImageSource GetTypeImageSource()
+            {
+                string svgText = DependencyService.Get<SvgImageCache>()
+                    .GetSvgImageByLocationType(this.Location.Type, "#000000");
+
+                if (svgText != null)
+                {
+                    return ImageSource.FromStream(() => new MemoryStream(System.Text.Encoding.UTF8.GetBytes(svgText)));
+                }
+
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Tour planning parameters
+        /// </summary>
+        private readonly PlanTourParameters planTourParameters;
+
+        #region Binding properties
+        /// <summary>
+        /// List of locations to plan a tour for
+        /// </summary>
+        public ObservableCollection<PlanTourListEntryViewModel> PlanTourList { get; private set; } =
+            new ObservableCollection<PlanTourListEntryViewModel>();
+
+        /// <summary>
+        /// Command to start tour planning
+        /// </summary>
+        public Command PlanTourCommand { get; set; }
+
+        /// <summary>
+        /// Command to close popup page
+        /// </summary>
+        public ICommand CloseCommand { get; set; }
+
+        /// <summary>
+        /// Property that returns if tour planning is possible
+        /// </summary>
+        public bool IsTourPlanningPossible { get => this.PlanTourList.Count > 1; }
+
+        /// <summary>
+        /// Property that returns true when a warning should be shown that more locations have to
+        /// be added for tour planning.
+        /// </summary>
+        public bool ShowWarningForMoreLocations { get => !this.IsTourPlanningPossible; }
+        #endregion
+
+        /// <summary>
+        /// Creates a view model for the "plan tour" popup page
+        /// </summary>
+        /// <param name="planTourParameters">tour planning parameters</param>
+        public PlanTourPopupViewModel(PlanTourParameters planTourParameters)
+        {
+            this.planTourParameters = planTourParameters;
+
+            this.PlanTourCommand = new Command(
+                async (obj) => await this.PlanTourAsync(),
+                (obj) => this.IsTourPlanningPossible);
+
+            this.CloseCommand = new Command(async () => await this.ClosePageAsync());
+
+            Task.Run(async () => await this.LoadDataAsync(planTourParameters.WaypointIdList));
+        }
+
+        /// <summary>
+        /// Loads data for tour planning
+        /// </summary>
+        /// <param name="waypointIdList">list of waypoint IDs</param>
+        /// <returns>task to wait for</returns>
+        private async Task LoadDataAsync(List<string> waypointIdList)
+        {
+            var dataService = DependencyService.Get<IDataService>();
+            var locationList = await dataService.GetLocationListAsync(CancellationToken.None);
+
+            var viewModelList =
+                from waypointId in waypointIdList
+                let location = locationList.FirstOrDefault(locationToCheck => locationToCheck.Id == waypointId)
+                select new PlanTourListEntryViewModel(location, this);
+
+            this.PlanTourList = new ObservableCollection<PlanTourListEntryViewModel>(viewModelList);
+            this.OnPropertyChanged(nameof(this.PlanTourList));
+            this.OnPropertyChanged(nameof(this.ShowWarningForMoreLocations));
+        }
+
+        /// <summary>
+        /// Returns if given location is the first location in the list
+        /// </summary>
+        /// <param name="viewModel">location view model to check</param>
+        /// <returns>true when it's the first location, false when not</returns>
+        private bool IsFirstLocation(PlanTourListEntryViewModel viewModel)
+        {
+            return this.PlanTourList.FirstOrDefault()?.Id == viewModel.Id;
+        }
+
+        /// <summary>
+        /// Returns if given location is the last location in the list
+        /// </summary>
+        /// <param name="viewModel">location view model to check</param>
+        /// <returns>true when it's the last location, false when not</returns>
+        private bool IsLastLocation(PlanTourListEntryViewModel viewModel)
+        {
+            return this.PlanTourList.LastOrDefault()?.Id == viewModel.Id;
+        }
+
+        /// <summary>
+        /// Moves location down one entry in the list
+        /// </summary>
+        /// <param name="viewModel">location view model to move</param>
+        private void MoveDownLocation(PlanTourListEntryViewModel viewModel)
+        {
+            Debug.Assert(!this.IsFirstLocation(viewModel), "must not be called with the last location");
+
+            var locationViewModel = this.PlanTourList.FirstOrDefault(viewModelToCheck => viewModelToCheck.Id == viewModel.Id);
+            if (locationViewModel != null)
+            {
+                int index = this.PlanTourList.IndexOf(locationViewModel);
+                Debug.Assert(index + 1 < this.PlanTourList.Count, "invalid index for moving location");
+
+                this.PlanTourList.Move(index, index + 1);
+                this.OnPropertyChanged(nameof(this.PlanTourList));
+
+                foreach (PlanTourListEntryViewModel entryViewModel in this.PlanTourList)
+                {
+                    entryViewModel.Update();
+                }
+
+                this.UpdatePlanTourParameters();
+            }
+        }
+
+        /// <summary>
+        /// Moves location up one entry in the list
+        /// </summary>
+        /// <param name="viewModel">location view model to move</param>
+        private void MoveUpLocation(PlanTourListEntryViewModel viewModel)
+        {
+            Debug.Assert(!this.IsFirstLocation(viewModel), "must not be called with the first location");
+
+            var locationViewModel = this.PlanTourList.FirstOrDefault(viewModelToCheck => viewModelToCheck.Id == viewModel.Id);
+            if (locationViewModel != null)
+            {
+                int index = this.PlanTourList.IndexOf(locationViewModel);
+                Debug.Assert(index > 0, "invalid index for moving location");
+
+                this.PlanTourList.Move(index, index - 1);
+                this.OnPropertyChanged(nameof(this.PlanTourList));
+
+                foreach (PlanTourListEntryViewModel entryViewModel in this.PlanTourList)
+                {
+                    entryViewModel.Update();
+                }
+
+                this.UpdatePlanTourParameters();
+            }
+        }
+
+        /// <summary>
+        /// Removes location from list
+        /// </summary>
+        /// <param name="viewModel">location view model to remove</param>
+        private void RemoveLocation(PlanTourListEntryViewModel viewModel)
+        {
+            var locationViewModel = this.PlanTourList.FirstOrDefault(viewModelToCheck => viewModelToCheck.Id == viewModel.Id);
+
+            this.PlanTourList.Remove(locationViewModel);
+            this.OnPropertyChanged(nameof(this.PlanTourList));
+            this.OnPropertyChanged(nameof(this.ShowWarningForMoreLocations));
+
+            this.UpdatePlanTourParameters();
+
+            foreach (PlanTourListEntryViewModel entryViewModel in this.PlanTourList)
+            {
+                entryViewModel.Update();
+            }
+
+            this.PlanTourCommand.ChangeCanExecute();
+        }
+
+        /// <summary>
+        /// Updates tour planning parameters from binding properties
+        /// </summary>
+        private void UpdatePlanTourParameters()
+        {
+            this.planTourParameters.WaypointIdList =
+                (from location in this.PlanTourList
+                 select location.Location.Id)
+                 .ToList();
+        }
+
+        /// <summary>
+        /// Closes popup page
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task ClosePageAsync()
+        {
+            // TODO ugly: move to page?
+            await Xamarin.Forms.Application.Current.MainPage.Navigation.PopPopupAsync();
+        }
+
+        /// <summary>
+        /// Plans tour with the current tour planning parameters
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task PlanTourAsync()
+        {
+            await this.ClosePageAsync();
+
+            PlannedTour plannedTour = await this.CalculateTourAsync();
+            if (plannedTour == null)
+            {
+                return;
+            }
+
+            var track = TrackFromPlannedTour(plannedTour);
+
+            await AddTrack(track);
+            ShowTrack(track);
+        }
+
+        /// <summary>
+        /// Calculates tour by calling backend. Shows waiting dialog while planning and shows
+        /// error message when failed.
+        /// </summary>
+        /// <returns>planned tour, or null when tour couldn't be planned</returns>
+        private async Task<PlannedTour> CalculateTourAsync()
+        {
+            var waitingDialog = new WaitingPopupPage("Planning tour...");
+
+            try
+            {
+                await waitingDialog.ShowAsync();
+
+                var dataService = DependencyService.Get<IDataService>();
+                return await dataService.PlanTourAsync(this.planTourParameters);
+            }
+            catch (Exception ex)
+            {
+                App.LogError(ex);
+
+                await App.Current.MainPage.DisplayAlert(
+                    Constants.AppTitle,
+                    "Error while planning tour: " + ex.Message,
+                    "OK");
+            }
+            finally
+            {
+                await waitingDialog.HideAsync();
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Creates track from planned tour
+        /// </summary>
+        /// <param name="plannedTour">planned tour</param>
+        /// <returns>created track</returns>
+        private static Track TrackFromPlannedTour(PlannedTour plannedTour)
+        {
+            var trackPoints = from mapPoint in plannedTour.MapPointList
+                              select new TrackPoint(mapPoint.Latitude, mapPoint.Longitude, mapPoint.Altitude, null);
+
+            var track = new Track
+            {
+                Id = Guid.NewGuid().ToString("B"),
+                Name = "Planned Tour",
+                IsFlightTrack = false,
+                TrackPoints = trackPoints.ToList()
+            };
+
+            track.CalculateStatistics();
+
+            return track;
+        }
+
+        /// <summary>
+        /// Adds track to data service
+        /// </summary>
+        /// <param name="track">track to add</param>
+        /// <returns>task to wait on</returns>
+        private static async Task AddTrack(Track track)
+        {
+            var dataService = DependencyService.Get<IDataService>();
+
+            var currentList = await dataService.GetTrackListAsync(CancellationToken.None);
+            currentList.Add(track);
+
+            await dataService.StoreTrackListAsync(currentList);
+        }
+
+        /// <summary>
+        /// Shows track on map
+        /// </summary>
+        /// <param name="track">track to show</param>
+        private static void ShowTrack(Track track)
+        {
+            App.AddMapTrack(track);
+            App.ZoomToTrack(track);
+
+            App.ShowToast("Track was added.");
+        }
+    }
+}
