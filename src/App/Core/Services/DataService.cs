@@ -253,6 +253,28 @@ namespace WhereToFly.App.Core.Services
                     Type = LocationType.AlpineHut,
                     InternetLink = "https://www.davplus.de/huetten__wege/bewirtschaftete_huetten/uebersicht/schoenfeldhuette"
                 },
+
+                new Location
+                {
+                    Id = "wheretofly-path-bahnhof-neuhaus",
+                    Name = "Bahnhof Neuhaus (Schliersee)",
+                    MapLocation = new MapPoint(47.70599, 11.87451, 809.0),
+                    Description = "Anschlussmöglichkeiten zum RBO Bus 9562 zum Spitzingsattel",
+                    Type = LocationType.PublicTransportTrain,
+                    InternetLink = "http://www.bayerischeoberlandbahn.de/strecken-fahrplaene/linie/3-munchen-hbf-holzkirchen-bayrischzell",
+                    IsPlanTourLocation = true
+                },
+
+                new Location
+                {
+                    Id = Guid.NewGuid().ToString("B"),
+                    Name = "Spitzingsattel",
+                    MapLocation = new MapPoint(47.672138, 11.8862728, 1129.0),
+                    Description = "Sattel auf halbem Wege zwischen Schliersee und Spitzingsee",
+                    Type = LocationType.Pass,
+                    InternetLink = string.Empty,
+                    IsPlanTourLocation = true
+                },
             };
         }
 
