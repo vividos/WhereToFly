@@ -9,7 +9,7 @@ namespace WhereToFly.App.UITest
     public class AppInitializer
     {
         /// <summary>
-        /// Starts app
+        /// Starts up app for the given platform
         /// </summary>
         /// <param name="platform">platform to start app for</param>
         /// <returns>started app</returns>

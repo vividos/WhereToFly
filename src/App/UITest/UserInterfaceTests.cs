@@ -6,7 +6,7 @@ using Xamarin.UITest.Queries;
 namespace WhereToFly.App.UITest
 {
     /// <summary>
-    /// User Interface tests for WhereToFly app
+    /// User Interface tests for the WhereToFly app
     /// </summary>
     [TestFixture(Platform.Android)]
     ////[TestFixture(Platform.iOS)]
@@ -52,7 +52,7 @@ namespace WhereToFly.App.UITest
         }
 
         /// <summary>
-        /// A quick smoke test that the app starts up on the device.
+        /// A quick smoke test that the app starts up on the device; takes a screenshot as proof.
         /// </summary>
         [Test]
         public void AppStartsUp()
