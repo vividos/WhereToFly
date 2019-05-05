@@ -138,6 +138,11 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         private readonly PlanTourParameters planTourParameters;
 
+        /// <summary>
+        /// Function to call to close popup page
+        /// </summary>
+        private readonly Func<Task> closePopupPage;
+
         #region Binding properties
         /// <summary>
         /// List of locations to plan a tour for
@@ -171,9 +176,11 @@ namespace WhereToFly.App.Core.ViewModels
         /// Creates a view model for the "plan tour" popup page
         /// </summary>
         /// <param name="planTourParameters">tour planning parameters</param>
-        public PlanTourPopupViewModel(PlanTourParameters planTourParameters)
+        /// <param name="closePopupPage">function to call to close popup page</param>
+        public PlanTourPopupViewModel(PlanTourParameters planTourParameters, Func<Task> closePopupPage)
         {
             this.planTourParameters = planTourParameters;
+            this.closePopupPage = closePopupPage;
 
             this.PlanTourCommand = new Command(
                 async (obj) => await this.PlanTourAsync(),
@@ -315,8 +322,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task ClosePageAsync()
         {
-            // TODO ugly: move to page?
-            await Xamarin.Forms.Application.Current.MainPage.Navigation.PopPopupAsync();
+            await this.closePopupPage.Invoke();
         }
 
         /// <summary>
