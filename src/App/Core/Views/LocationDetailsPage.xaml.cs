@@ -70,7 +70,7 @@ namespace WhereToFly.App.Core.Views
         private void AddTourPlanLocationToolbarButton()
         {
             ToolbarItem addTourPlanLocationButton = new ToolbarItem(
-                "Add tour plan location position",
+                "Add tour plan location",
                 Converter.ImagePathConverter.GetDeviceDependentImage("map_marker_plus"),
                 this.OnClicked_ToolbarButtonAddTourPlanLocation,
                 ToolbarItemOrder.Secondary)
