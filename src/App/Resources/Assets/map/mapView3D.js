@@ -51,6 +51,9 @@ function MapView(options) {
         credits: '<code>Kartendaten: &copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, SRTM | Kartendarstellung: &copy; <a href="http://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)</code>'
     });
 
+    this.sentinel2ImageryLayer = null;
+    this.sentinel2ImageryProvider = new Cesium.IonImageryProvider({ assetId: 3954 });
+
     this.openFlightMapsImageryLayer = null;
     var airacId = calcCurrentAiracId();
     this.openFlightMapsImageryProvider = Cesium.createOpenStreetMapImageryProvider({
@@ -311,6 +314,9 @@ MapView.prototype.setMapImageryType = function (imageryType) {
     if (this.openTopoMapImageryLayer !== null)
         layers.remove(this.openTopoMapImageryLayer, false);
 
+    if (this.sentinel2ImageryLayer !== null)
+        layers.remove(this.sentinel2ImageryLayer, false);
+
     if (this.openFlightMapsImageryLayer !== null)
         layers.remove(this.openFlightMapsImageryLayer, false);
 
@@ -334,6 +340,13 @@ MapView.prototype.setMapImageryType = function (imageryType) {
                 this.openTopoMapImageryLayer = layers.addImageryProvider(this.openTopoMapImageryProvider, 1);
             else
                 layers.add(this.openTopoMapImageryLayer, 1);
+            break;
+
+        case 'Sentinel2':
+            if (this.sentinel2ImageryLayer === null)
+                this.sentinel2ImageryLayer = layers.addImageryProvider(this.sentinel2ImageryProvider, 1);
+            else
+                layers.add(this.sentinel2ImageryLayer, 1);
             break;
 
         case 'OpenFlightMaps':

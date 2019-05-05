@@ -22,8 +22,13 @@
         OpenTopoMap = 2,
 
         /// <summary>
+        /// Sentinel-2 (mostly) cloudless imagery tiles are displayed
+        /// </summary>
+        Sentinel2 = 3,
+
+        /// <summary>
         /// OpenFlightmaps.org maps with current flight map data
         /// </summary>
-        OpenFlightMaps = 3,
+        OpenFlightMaps = 4,
     }
 }

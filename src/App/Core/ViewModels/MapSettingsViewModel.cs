@@ -217,6 +217,7 @@ namespace WhereToFly.App.Core.ViewModels
             {
                 new MapImageryTypeViewModel { Text = "OpenStreetMap", Value = MapImageryType.OpenStreetMap },
                 new MapImageryTypeViewModel { Text = "Aerials + Labels (Bing Maps)", Value = MapImageryType.BingMapsAerialWithLabels },
+                new MapImageryTypeViewModel { Text = "Sentinel-2 cloudless", Value = MapImageryType.Sentinel2 },
                 new MapImageryTypeViewModel { Text = "OpenTopoMap", Value = MapImageryType.OpenTopoMap },
                 new MapImageryTypeViewModel { Text = "OpenFlightMaps", Value = MapImageryType.OpenFlightMaps },
             };
