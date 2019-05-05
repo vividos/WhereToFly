@@ -115,10 +115,6 @@ namespace WhereToFly.App.Core.Services
                     pageType = typeof(SettingsPage);
                     break;
 
-                case Constants.PageKeyImportLocationsPage:
-                    pageType = typeof(ImportLocationsPage);
-                    break;
-
                 case Constants.PageKeyInfoPage:
                     pageType = typeof(InfoPage);
                     break;

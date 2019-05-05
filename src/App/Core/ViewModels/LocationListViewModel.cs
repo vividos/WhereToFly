@@ -1,4 +1,6 @@
-﻿using Plugin.Geolocator.Abstractions;
+﻿using Plugin.FilePicker;
+using Plugin.FilePicker.Abstractions;
+using Plugin.Geolocator.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -42,6 +44,26 @@ namespace WhereToFly.App.Core.ViewModels
         /// Current position of user; may be null when not retrieved yet
         /// </summary>
         private MapPoint currentPosition;
+
+        /// <summary>
+        /// A mapping of display string to locations list filename, stored as Assets in the app
+        /// </summary>
+        private readonly Dictionary<string, string> includedLocationsList = new Dictionary<string, string>
+        {
+            { "Paraglidingspots European Alps", "paraglidingspots_european_alps_2018_01_07.kmz" },
+            { "Crossing the Alps 2018 Waypoints", "crossing_the_alps_2018.kmz" },
+            { "Paraglidingspots Crossing the Alps 2018", "paraglidingspots_crossing_the_alps_2018_06_19.kmz" }
+        };
+
+        /// <summary>
+        /// A mapping of display string to website address to open
+        /// </summary>
+        private readonly Dictionary<string, string> downloadWebSiteList = new Dictionary<string, string>
+        {
+            { "Paraglidingspots.com", "http://paraglidingspots.com/downloadselect.aspx" },
+            { "DHV Gelände-Datenbank",
+                "https://www.dhv.de/web/piloteninfos/gelaende-luftraum-natur/fluggelaendeflugbetrieb/gelaendedaten/gelaendedaten-download" }
+        };
 
         #region Binding properties
         /// <summary>
@@ -112,6 +134,11 @@ namespace WhereToFly.App.Core.ViewModels
         public Command<Location> ItemTappedCommand { get; private set; }
 
         /// <summary>
+        /// Command to execute when "import locations" context action is selected
+        /// </summary>
+        public Command ImportLocationsCommand { get; set; }
+
+        /// <summary>
         /// Command to execute when "add tour plan location" conext action is selected
         /// </summary>
         public Command AddTourPlanLocationCommand { get; set; }
@@ -148,6 +175,9 @@ namespace WhereToFly.App.Core.ViewModels
                 {
                     await this.NavigateToLocationDetails(location);
                 });
+
+            this.ImportLocationsCommand =
+                new Command(async () => await this.ImportLocationsAsync());
 
             this.AddTourPlanLocationCommand =
                 new Command<Location>((location) => App.AddTourPlanLocation(location));
@@ -295,6 +325,159 @@ namespace WhereToFly.App.Core.ViewModels
 
             App.UpdateMapLocationsList();
             await NavigationService.Instance.NavigateAsync(Constants.PageKeyMapPage, animated: true);
+        }
+
+        /// <summary>
+        /// Shows menu to import location lists
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task ImportLocationsAsync()
+        {
+            var importActions = new List<string>
+            {
+                "Import included",
+                "Import from storage",
+                "Download from web"
+            };
+
+            string result = await App.Current.MainPage.DisplayActionSheet(
+                $"Import location",
+                "Cancel",
+                null,
+                importActions.ToArray());
+
+            if (!string.IsNullOrEmpty(result))
+            {
+                int selectedIndex = importActions.IndexOf(result);
+
+                switch (selectedIndex)
+                {
+                    case 0:
+                        await this.ImportIncludedAsync();
+                        break;
+
+                    case 1:
+                        await this.ImportFromStorageAsync();
+                        break;
+
+                    case 2:
+                        await this.DownloadFromWebAsync();
+                        break;
+
+                    default:
+                        // ignore
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Presents a list of included location lists and imports it
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task ImportIncludedAsync()
+        {
+            string assetFilename = await this.AskIncludedLocationListAsync();
+            if (assetFilename == null)
+            {
+                return;
+            }
+
+            var platform = DependencyService.Get<IPlatform>();
+            using (var stream = platform.OpenAssetStream("locations/" + assetFilename))
+            {
+                await OpenFileHelper.OpenLocationListAsync(stream, assetFilename);
+            }
+
+            await this.ReloadLocationListAsync();
+        }
+
+        /// <summary>
+        /// Asks user for included location list and returns the asset filename.
+        /// </summary>
+        /// <returns>asset filename, or null when no location list was selected</returns>
+        private async Task<string> AskIncludedLocationListAsync()
+        {
+            string result = await App.Current.MainPage.DisplayActionSheet(
+                "Select a location list",
+                "Cancel",
+                null,
+                this.includedLocationsList.Keys.ToArray());
+
+            if (result == null ||
+                !this.includedLocationsList.ContainsKey(result))
+            {
+                return null;
+            }
+
+            return this.includedLocationsList[result];
+        }
+
+        /// <summary>
+        /// Opens a file requester and imports the selected file
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task ImportFromStorageAsync()
+        {
+            FileData result;
+            try
+            {
+                string[] fileTypes = null;
+
+                if (Device.RuntimePlatform == Device.UWP)
+                {
+                    fileTypes = new string[] { ".kml", ".kmz", ".gpx" };
+                }
+
+                result = await CrossFilePicker.Current.PickFile(fileTypes);
+                if (result == null ||
+                    string.IsNullOrEmpty(result.FilePath))
+                {
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                App.LogError(ex);
+
+                await App.Current.MainPage.DisplayAlert(
+                    Constants.AppTitle,
+                    "Error while picking a file: " + ex.Message,
+                    "OK");
+
+                return;
+            }
+
+            using (var stream = result.GetStream())
+            {
+                await OpenFileHelper.OpenLocationListAsync(stream, result.FileName);
+            }
+
+            await this.ReloadLocationListAsync();
+        }
+
+        /// <summary>
+        /// Presents a list of websites to download from and opens selected URL. Importing is then
+        /// done using the file extension association.
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task DownloadFromWebAsync()
+        {
+            string result = await App.Current.MainPage.DisplayActionSheet(
+                "Select a web page to open",
+                "Cancel",
+                null,
+                this.downloadWebSiteList.Keys.ToArray());
+
+            if (result == null ||
+                !this.downloadWebSiteList.ContainsKey(result))
+            {
+                return;
+            }
+
+            string webSiteToOpen = this.downloadWebSiteList[result];
+
+            Device.OpenUri(new Uri(webSiteToOpen));
         }
 
         /// <summary>

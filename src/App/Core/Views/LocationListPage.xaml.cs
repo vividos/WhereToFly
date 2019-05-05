@@ -66,7 +66,7 @@ namespace WhereToFly.App.Core.Views
             ToolbarItem importLocationsButton = new ToolbarItem(
                 "Import locations",
                 Converter.ImagePathConverter.GetDeviceDependentImage("playlist_plus"),
-                async () => await this.OnClicked_ToolbarButtonImportLocations(),
+                this.OnClicked_ToolbarButtonImportLocations,
                 ToolbarItemOrder.Primary)
             {
                 AutomationId = "ImportLocations"
@@ -78,11 +78,9 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Called when toolbar button "Import locations" was clicked
         /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task OnClicked_ToolbarButtonImportLocations()
+        private void OnClicked_ToolbarButtonImportLocations()
         {
-            this.reloadLocationListOnAppearing = true;
-            await NavigationService.Instance.NavigateAsync(Constants.PageKeyImportLocationsPage, animated: true);
+            this.viewModel.ImportLocationsCommand.Execute(null);
         }
 
         /// <summary>

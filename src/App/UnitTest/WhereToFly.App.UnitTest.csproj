@@ -59,7 +59,6 @@
     <Compile Include="UnitTestGeolocationService.cs" />
     <Compile Include="UnitTestHelper.cs" />
     <Compile Include="ViewModels\AddTrackPopupViewModelTest.cs" />
-    <Compile Include="ViewModels\ImportLocationsViewModelTest.cs" />
     <Compile Include="ViewModels\MenuViewModelTest.cs" />
     <Compile Include="ViewModels\SelectWeatherIconViewModelTest.cs" />
     <Compile Include="ViewModels\SettingsViewModelTest.cs" />

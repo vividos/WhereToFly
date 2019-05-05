@@ -129,11 +129,6 @@ namespace WhereToFly.App.Core
         public const string PageKeySettingsPage = "SettingsPage";
 
         /// <summary>
-        /// Page key for use in NavigationService, to navigate to import locations page
-        /// </summary>
-        public const string PageKeyImportLocationsPage = "ImportLocationsPage";
-
-        /// <summary>
         /// Page key for use in NavigationService, to navigate to info page
         /// </summary>
         public const string PageKeyInfoPage = "InfoPage";
