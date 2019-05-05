@@ -106,21 +106,7 @@ namespace WhereToFly.App.Core
                     return;
                 }
 
-                bool appendToList = await AskAppendToList();
-
-                var dataService = DependencyService.Get<IDataService>();
-
-                if (appendToList)
-                {
-                    var currentList = await dataService.GetLocationListAsync(CancellationToken.None);
-                    locationList.InsertRange(0, currentList);
-                }
-
-                await dataService.StoreLocationListAsync(locationList);
-
-                App.ShowToast("Locations were loaded.");
-
-                App.UpdateMapLocationsList();
+                await ImportLocationListAsync(locationList);
             }
             catch (Exception ex)
             {
@@ -210,14 +196,18 @@ namespace WhereToFly.App.Core
         /// <returns>task to wait on</returns>
         private static async Task ImportLocationListAsync(List<Location> locationList)
         {
-            bool appendToList = await AskAppendToList();
-
             var dataService = DependencyService.Get<IDataService>();
 
-            if (appendToList)
+            var currentList = await dataService.GetLocationListAsync(CancellationToken.None);
+
+            if (currentList.Any())
             {
-                var currentList = await dataService.GetLocationListAsync(CancellationToken.None);
-                locationList.InsertRange(0, currentList);
+                bool appendToList = await AskAppendToList();
+
+                if (appendToList)
+                {
+                    locationList.InsertRange(0, currentList);
+                }
             }
 
             await dataService.StoreLocationListAsync(locationList);
