@@ -48,6 +48,8 @@ namespace WhereToFly.App.UWP
 
                 Xamarin.Forms.Forms.Init(e, Rg.Plugins.Popup.Popup.GetExtraAssemblies());
 
+                Xamarin.Essentials.Platform.MapServiceToken = Core.Constants.BingMapsKey;
+
                 //// TODO MessagingCenter.Subscribe<Core.App, string>(this, Constants.MessageShowToast, this.ShowToast);
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
