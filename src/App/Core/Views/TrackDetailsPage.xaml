@@ -62,6 +62,15 @@
                                        WidthRequest="64" HeightRequest="64"
                                        HorizontalOptions="Start" VerticalOptions="Center" />
 
+                    <Frame IsVisible="{Binding IsColorBoxVisible, Mode=OneWay}"
+                           BackgroundColor="{Binding TrackColor, Mode=OneTime}"
+                           WidthRequest="16" HeightRequest="48"
+                           VerticalOptions="Center"
+                           Padding="5"
+                           BorderColor="White"
+                           CornerRadius="3"
+                           HasShadow="False" />
+
                     <!-- Name -->
                     <Label Text="{Binding Name, Mode=OneTime}"
                            FontSize="Large" FontAttributes="Bold"
