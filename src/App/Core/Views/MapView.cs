@@ -391,6 +391,32 @@ namespace WhereToFly.App.Core.Views
         }
 
         /// <summary>
+        /// Updates position and other infos of a single location
+        /// </summary>
+        /// <param name="location">location to update</param>
+        public void UpdateLocation(Location location)
+        {
+            var jsonLocation =
+                new
+                {
+                    id = location.Id,
+                    name = location.Name,
+                    description = location.Description,
+                    type = location.Type.ToString(),
+                    latitude = location.MapLocation.Latitude,
+                    longitude = location.MapLocation.Longitude,
+                    altitude = location.MapLocation.Altitude.GetValueOrDefault(0.0),
+                    isPlanTourLocation = location.IsPlanTourLocation,
+                };
+
+            string js = string.Format(
+                "map.updateLocation({0});",
+                JsonConvert.SerializeObject(jsonLocation));
+
+            this.RunJavaScript(js);
+        }
+
+        /// <summary>
         /// Samples track point heights from actual map and adjusts the track when it goes below
         /// terrain height.
         /// </summary>

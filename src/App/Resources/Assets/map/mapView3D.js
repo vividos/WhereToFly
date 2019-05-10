@@ -827,6 +827,33 @@ MapView.prototype.pinColorFromLocationType = function (locationType) {
 };
 
 /**
+ * Updates a single location
+ * @param {Object} [location] An object with the following properties:
+ * @param {String} [location.id] ID of the location to update
+ * @param {string} [location.name] Location name
+ * @param {string} [location.type] Location type
+ * @param {Number} [location.latitude] Latitude of the location to update
+ * @param {Number} [location.longitude] Longitude of the location to update
+ * @param {Number} [location.altitude] Altitude of the location to update
+ * @param {string} [location.description] Location description text
+ * @param {boolean} [location.isPlanTourLocation] Indicates if it's a tour planning location
+ */
+MapView.prototype.updateLocation = function (location) {
+
+    console.log("updating location \"" + location.id +
+        "\", new position at at latitude " + location.latitude +
+        ", longitude " + location.longitude +
+        ", altitude " + location.altitude);
+
+    var entity = this.viewer.entities.getById(location.id);
+
+    entity.position = Cesium.Cartesian3.fromDegrees(location.longitude, location.latitude, location.altitude);
+
+    entity.name = location.name;
+    entity.description = this.formatLocationText(location);
+};
+
+/**
  * Shows a find result pin, with a link to add a waypoint for this result.
  * @param {Object} [options] An object with the following properties:
  * @param {String} [options.name] Name of the find result
