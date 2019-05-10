@@ -678,6 +678,40 @@ MapView.prototype.clearLocationList = function () {
 };
 
 /**
+ * Formats description text for a location
+ * @param {string} [location] Location to format text for
+ * @param {string} [location.id] Location ID
+ * @param {string} [location.type] Location type
+ * @param {string} [location.name] Location name
+ * @param {string} [location.description] Location description text
+ * @param {Number} [location.altitude] Altitude of the location
+ * @param {boolean} [location.isPlanTourLocation] Indicates if it's a tour planning location
+ * @returns {string} formatted location text
+ */
+MapView.prototype.formatLocationText = function (location) {
+
+    var text = '<h2><img height="48em" width="48em" src="' + this.imageUrlFromLocationType(location.type) + '" style="vertical-align:middle" />' +
+        location.name +
+        (location.altitude !== 0 ? ' ' + location.altitude + 'm' : '') +
+        '</h2>';
+
+    text += '<p><img height="32em" width="32em" src="images/information-outline.svg" style="vertical-align:middle" /> ' +
+        '<a href="javascript:parent.map.onShowLocationDetails(\'' + location.id + '\');">Show details</a> ';
+
+    text += '<img height="32em" width="32em" src="images/directions.svg" style="vertical-align:middle" /> ' +
+        '<a href="javascript:parent.map.onNavigateToLocation(\'' + location.id + '\');">Navigate here</a></p>';
+
+    if (location.isPlanTourLocation === true) {
+        text += '<img height="32em" width="32em" src="images/map-marker-plus.svg" style="vertical-align:middle" /> ' +
+            '<a href="javascript:parent.map.onAddTourPlanLocation(\'' + location.id + '\');">Plan tour</a></p>';
+    }
+
+    text += "<p>" + location.description + "</p>";
+
+    return text;
+};
+
+/**
  * Adds list of locations to the map, as marker pins
  * @param {array} locationList An array of location, each with the following object layout:
  * { id:"location-id", name:"Location Name", type:"LocationType", latitude: 123.45678, longitude: 9.87654, altitude:1234.5 }
@@ -691,23 +725,7 @@ MapView.prototype.addLocationList = function (locationList) {
 
         var location = locationList[index];
 
-        var text = '<h2><img height="48em" width="48em" src="' + this.imageUrlFromLocationType(location.type) + '" style="vertical-align:middle" />' +
-            location.name +
-            (location.altitude !== 0 ? ' ' + location.altitude + 'm' : '') +
-            '</h2>';
-
-        text += '<p><img height="32em" width="32em" src="images/information-outline.svg" style="vertical-align:middle" /> ' +
-            '<a href="javascript:parent.map.onShowLocationDetails(\'' + location.id + '\');">Show details</a> ';
-
-        text += '<img height="32em" width="32em" src="images/directions.svg" style="vertical-align:middle" /> ' +
-            '<a href="javascript:parent.map.onNavigateToLocation(\'' + location.id + '\');">Navigate here</a></p>';
-
-        if (location.isPlanTourLocation === true) {
-            text += '<img height="32em" width="32em" src="images/map-marker-plus.svg" style="vertical-align:middle" /> ' +
-                '<a href="javascript:parent.map.onAddTourPlanLocation(\'' + location.id + '\');">Plan tour</a></p>';
-        }
-
-        text += "<p>" + location.description + "</p>";
+        var text = this.formatLocationText(location);
 
         var imagePath = '../' + this.imageUrlFromLocationType(location.type);
 
