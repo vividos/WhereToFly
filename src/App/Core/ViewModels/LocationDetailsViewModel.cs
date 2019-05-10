@@ -268,6 +268,9 @@ namespace WhereToFly.App.Core.ViewModels
                 locationInList.Description = this.location.Description;
 
                 await dataService.StoreLocationListAsync(locationList);
+
+                var liveWaypointRefreshService = DependencyService.Get<LiveWaypointRefreshService>();
+                liveWaypointRefreshService.UpdateLiveWaypointList(locationList);
             }
             catch (Exception ex)
             {
@@ -343,6 +346,9 @@ namespace WhereToFly.App.Core.ViewModels
             locationList.RemoveAll(x => x.Id == this.location.Id);
 
             await dataService.StoreLocationListAsync(locationList);
+
+            var liveWaypointRefreshService = DependencyService.Get<LiveWaypointRefreshService>();
+            liveWaypointRefreshService.UpdateLiveWaypointList(locationList);
 
             App.UpdateMapLocationsList();
 

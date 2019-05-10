@@ -55,7 +55,7 @@ namespace WhereToFly.App.Core
             this.InitializeComponent();
             this.SetupDepencencyService();
             this.SetupMainPage();
-            Task.Run(async () => await this.LoadAppSettingsAsync());
+            Task.Run(async () => await this.LoadAppDataAsync());
         }
 
         /// <summary>
@@ -66,6 +66,7 @@ namespace WhereToFly.App.Core
             DependencyService.Register<NavigationService>();
             DependencyService.Register<IDataService, DataService>();
             DependencyService.Register<GeolocationService>();
+            DependencyService.Register<LiveWaypointRefreshService>();
         }
 
         /// <summary>
@@ -80,10 +81,11 @@ namespace WhereToFly.App.Core
         }
 
         /// <summary>
-        /// Loads app settings and stores it in App.Settings static property
+        /// Loads app data needed for running, e.g. app settings, caches and location list for
+        /// live waypoint refresh services.
         /// </summary>
         /// <returns>task to wait on</returns>
-        private async Task LoadAppSettingsAsync()
+        private async Task LoadAppDataAsync()
         {
             var dataService = DependencyService.Get<IDataService>();
 
@@ -91,6 +93,7 @@ namespace WhereToFly.App.Core
 
             LoadWeatherImageCache();
             LoadFaviconUrlCache();
+            await InitLiveWaypointRefreshService();
         }
 
         /// <summary>
@@ -307,6 +310,22 @@ namespace WhereToFly.App.Core
             {
                 App.LogError(ex);
             }
+        }
+
+        /// <summary>
+        /// Initializes live waypoint refresh service with current location list
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private static async Task InitLiveWaypointRefreshService()
+        {
+            var dataService = DependencyService.Get<IDataService>();
+
+            var locationList = await dataService.GetLocationListAsync(CancellationToken.None);
+
+            var liveWaypointRefreshService = DependencyService.Get<LiveWaypointRefreshService>();
+            liveWaypointRefreshService.DataService = dataService;
+
+            liveWaypointRefreshService.UpdateLiveWaypointList(locationList);
         }
 
         /// <summary>

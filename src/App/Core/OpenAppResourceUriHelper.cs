@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.Views;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Model;
@@ -115,6 +116,9 @@ namespace WhereToFly.App.Core
             locationList.Add(liveWaypoint);
 
             await dataService.StoreLocationListAsync(locationList);
+
+            var liveWaypointRefreshService = DependencyService.Get<LiveWaypointRefreshService>();
+            liveWaypointRefreshService.UpdateLiveWaypointList(locationList);
         }
     }
 }
