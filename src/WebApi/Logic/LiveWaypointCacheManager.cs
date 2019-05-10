@@ -75,6 +75,9 @@ namespace WhereToFly.WebApi.Logic
                 case AppResourceUri.ResourceType.GarminInreachPos:
                     return await this.GetGarminInreachPosResult(uri.Data);
 
+                case AppResourceUri.ResourceType.TestPos:
+                    return await this.GetTestPosResult(id);
+
                 default:
                     Debug.Assert(false, "invalid app resource URI type");
                     return null;
@@ -113,6 +116,41 @@ namespace WhereToFly.WebApi.Logic
                 Data = liveWaypointData,
                 NextRequestDate = this.garminInreachService.GetNextRequestDate(mapShareIdentifier)
             };
+        }
+
+        /// <summary>
+        /// Returns a test position, based on the current time
+        /// </summary>
+        /// <param name="liveWaypointId">live waypoint ID to use</param>
+        /// <returns>live waypoint query result</returns>
+        private Task<LiveWaypointQueryResult> GetTestPosResult(string liveWaypointId)
+        {
+            DateTimeOffset nextRequestDate = DateTimeOffset.Now + TimeSpan.FromMinutes(1.0);
+
+            var mapPoint = new MapPoint(47.664601, 11.885455, 0.0);
+
+            double timeAngleInDegrees = (DateTimeOffset.Now.TimeOfDay.TotalMinutes * 6.0) % 360;
+            double timeAngle = timeAngleInDegrees / 180.0 * Math.PI;
+            mapPoint.Latitude += 0.025 * Math.Sin(timeAngle);
+            mapPoint.Longitude -= 0.025 * Math.Cos(timeAngle);
+
+            return Task.FromResult(
+                new LiveWaypointQueryResult
+                {
+                    Data = new LiveWaypointData
+                    {
+                        ID = liveWaypointId,
+                        TimeStamp = DateTimeOffset.Now,
+                        Longitude = mapPoint.Longitude,
+                        Latitude = mapPoint.Latitude,
+                        Altitude = mapPoint.Altitude.Value,
+                        Name = "Live waypoint test position",
+                        Description = "Hello from the Where-to-fly backend services!<br/>" +
+                            $"Next request date is {nextRequestDate.ToString()}",
+                        DetailsLink = string.Empty
+                    },
+                    NextRequestDate = nextRequestDate
+                });
         }
 
         /// <summary>

@@ -40,6 +40,11 @@ namespace WhereToFly.Shared.Model
             /// identifier.
             /// </summary>
             GarminInreachPos = 1,
+
+            /// <summary>
+            /// Specifies a position for testing
+            /// </summary>
+            TestPos = 100,
         }
 
         /// <summary>
