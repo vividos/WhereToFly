@@ -161,7 +161,7 @@ function MapView(options) {
 
     var that = this;
     Cesium.when(
-        this.createEntity('My Position', '', Cesium.Color.GREEN, '../images/map-marker.svg', 0.0, 0.0),
+        this.createEntity(undefined, 'My Position', '', Cesium.Color.GREEN, '../images/map-marker.svg', 0.0, 0.0),
         function (myLocationEntity) {
             myLocationEntity.show = false;
             that.myLocationMarker = that.viewer.entities.add(myLocationEntity);
@@ -180,7 +180,7 @@ function MapView(options) {
 
     // the find result entity is initially invisible
     Cesium.when(
-        this.createEntity('Find result', '', Cesium.Color.ORANGE, '../images/magnify.svg', 0.0, 0.0),
+        this.createEntity(undefined, 'Find result', '', Cesium.Color.ORANGE, '../images/magnify.svg', 0.0, 0.0),
         function (findResultEntity) {
             findResultEntity.show = false;
             that.findResultMarker = that.viewer.entities.add(findResultEntity);
@@ -713,6 +713,7 @@ MapView.prototype.addLocationList = function (locationList) {
 
         Cesium.when(
             this.createEntity(
+                location.id,
                 location.name + (location.altitude !== 0 ? ' ' + location.altitude + 'm' : ''),
                 text,
                 this.pinColorFromLocationType(location.type),
@@ -728,6 +729,7 @@ MapView.prototype.addLocationList = function (locationList) {
 /**
  * Creates an entity object with given informations that can be placed into
  * the entities list.
+ * @param {string} id Unique ID of the entity; may be 'undefined'
  * @param {string} name Name of the entity
  * @param {string} description Longer description text
  * @param {string} pinColor Pin color, one of the Cesium.Color.Xxx constants
@@ -736,7 +738,7 @@ MapView.prototype.addLocationList = function (locationList) {
  * @param {double} latitude Latitude of entity
  * @returns {Promise<object>} entity description, usable for viewer.entities.add()
  */
-MapView.prototype.createEntity = function (name, description, pinColor, pinImage, longitude, latitude) {
+MapView.prototype.createEntity = function (id, name, description, pinColor, pinImage, longitude, latitude) {
 
     var url = Cesium.buildModuleUrl(pinImage);
 
@@ -744,6 +746,7 @@ MapView.prototype.createEntity = function (name, description, pinColor, pinImage
         this.pinBuilder.fromUrl(url, pinColor, 48),
         function (canvas) {
             return {
+                id: id,
                 name: name,
                 description: description,
                 position: Cesium.Cartesian3.fromDegrees(longitude, latitude),
