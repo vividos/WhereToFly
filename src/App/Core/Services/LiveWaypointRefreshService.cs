@@ -187,6 +187,12 @@ namespace WhereToFly.App.Core.Services
         {
             TimeSpan dueTimeSpan = nextUpdateTime - DateTimeOffset.Now;
 
+            if (dueTimeSpan < TimeSpan.Zero)
+            {
+                Task.Run(this.CheckLiveWaypointsAsync);
+                return;
+            }
+
             this.timer = new Timer(
                 async (state) =>
                 {
