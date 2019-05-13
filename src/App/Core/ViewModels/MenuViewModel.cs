@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Text;
-using Xamarin.Essentials;
+﻿using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.ViewModels
@@ -17,11 +14,6 @@ namespace WhereToFly.App.Core.ViewModels
         public class MenuItemViewModel
         {
             /// <summary>
-            /// Lazy-loading backing store for type image source
-            /// </summary>
-            private readonly Lazy<ImageSource> imageSource;
-
-            /// <summary>
             /// Title text of the menu item
             /// </summary>
             public string Title { get; private set; }
@@ -32,20 +24,9 @@ namespace WhereToFly.App.Core.ViewModels
             public string PageKey { get; private set; }
 
             /// <summary>
-            /// Image name of SVG image
-            /// </summary>
-            private readonly string svgImageName;
-
-            /// <summary>
             /// Returns image source for SvgImage in order to display the type image
             /// </summary>
-            public ImageSource ImageSource
-            {
-                get
-                {
-                    return this.imageSource.Value;
-                }
-            }
+            public ImageSource ImageSource { get; }
 
             /// <summary>
             /// Creates a new menu item view model object
@@ -56,27 +37,9 @@ namespace WhereToFly.App.Core.ViewModels
             public MenuItemViewModel(string title, string svgImageName, string pageKey)
             {
                 this.Title = title;
-                this.svgImageName = svgImageName;
                 this.PageKey = pageKey;
 
-                this.imageSource = new Lazy<ImageSource>(this.GetImageSource);
-            }
-
-            /// <summary>
-            /// Returns image source for SVG image
-            /// </summary>
-            /// <returns>image source, or null when no icon could be found</returns>
-            private ImageSource GetImageSource()
-            {
-                string svgText = DependencyService.Get<SvgImageCache>()
-                    .GetSvgImage(this.svgImageName, "#000000");
-
-                if (svgText != null)
-                {
-                    return ImageSource.FromStream(() => new MemoryStream(Encoding.UTF8.GetBytes(svgText)));
-                }
-
-                return null;
+                this.ImageSource = SvgImageCache.GetImageSource(svgImageName, "#000000");
             }
         }
 

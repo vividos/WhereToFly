@@ -19,11 +19,6 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         private readonly Track track;
 
-        /// <summary>
-        /// Lazy-loading backing store for type image source
-        /// </summary>
-        private readonly Lazy<ImageSource> typeImageSource;
-
         #region Binding properties
         /// <summary>
         /// Property containing track name
@@ -39,13 +34,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Returns image source for SvgImage in order to display the type image
         /// </summary>
-        public ImageSource TypeImageSource
-        {
-            get
-            {
-                return this.typeImageSource.Value;
-            }
-        }
+        public ImageSource TypeImageSource { get; }
 
         /// <summary>
         /// Property that specifies if the color box is visible
@@ -197,7 +186,7 @@ namespace WhereToFly.App.Core.ViewModels
         {
             this.track = track;
 
-            this.typeImageSource = new Lazy<ImageSource>(this.GetTypeImageSource);
+            this.TypeImageSource = SvgImageCache.GetImageSource(track, "#000000");
 
             this.SetupBindings();
         }
@@ -244,25 +233,6 @@ namespace WhereToFly.App.Core.ViewModels
             await NavigationService.Instance.GoBack();
 
             App.ShowToast("Selected track was deleted.");
-        }
-
-        /// <summary>
-        /// Returns type icon from location type
-        /// </summary>
-        /// <returns>image source, or null when no icon could be found</returns>
-        private ImageSource GetTypeImageSource()
-        {
-            string svgImagePath = this.track.IsFlightTrack ? "map/images/paragliding.svg" : "icons/map-marker-distance.svg";
-
-            string svgText = DependencyService.Get<SvgImageCache>()
-                .GetSvgImage(svgImagePath, "#000000");
-
-            if (svgText != null)
-            {
-                return ImageSource.FromStream(() => new MemoryStream(System.Text.Encoding.UTF8.GetBytes(svgText)));
-            }
-
-            return null;
         }
     }
 }

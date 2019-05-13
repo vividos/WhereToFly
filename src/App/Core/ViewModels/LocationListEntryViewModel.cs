@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Threading.Tasks;
 using WhereToFly.App.Geo.Spatial;
 using WhereToFly.App.Logic;
@@ -25,11 +24,6 @@ namespace WhereToFly.App.Core.ViewModels
         private readonly Location location;
 
         /// <summary>
-        /// Lazy-loading backing store for type image source
-        /// </summary>
-        private readonly Lazy<ImageSource> typeImageSource;
-
-        /// <summary>
         /// Property containing the location object
         /// </summary>
         public Location Location => this.location;
@@ -48,13 +42,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Returns image source for SvgImage in order to display the type image
         /// </summary>
-        public ImageSource TypeImageSource
-        {
-            get
-            {
-                return this.typeImageSource.Value;
-            }
-        }
+        public ImageSource TypeImageSource { get; }
 
         /// <summary>
         /// Property containing detail infos for location
@@ -112,7 +100,8 @@ namespace WhereToFly.App.Core.ViewModels
 
             this.Distance = myCurrentPosition != null ? myCurrentPosition.DistanceTo(this.location.MapLocation) : 0.0;
 
-            this.typeImageSource = new Lazy<ImageSource>(this.GetTypeImageSource);
+            this.TypeImageSource =
+                SvgImageCache.GetImageSource(this.location, "#000000");
 
             this.SetupBindings();
         }
@@ -159,23 +148,6 @@ namespace WhereToFly.App.Core.ViewModels
         private async Task OnDeleteLocationAsync()
         {
             await this.parentViewModel.DeleteLocation(this.location);
-        }
-
-        /// <summary>
-        /// Returns type icon from location type
-        /// </summary>
-        /// <returns>image source, or null when no icon could be found</returns>
-        private ImageSource GetTypeImageSource()
-        {
-            string svgText = DependencyService.Get<SvgImageCache>()
-                .GetSvgImageByLocationType(this.location.Type, "#000000");
-
-            if (svgText != null)
-            {
-                return ImageSource.FromStream(() => new MemoryStream(System.Text.Encoding.UTF8.GetBytes(svgText)));
-            }
-
-            return null;
         }
     }
 }

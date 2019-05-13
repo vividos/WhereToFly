@@ -1,9 +1,7 @@
-﻿using Rg.Plugins.Popup.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -42,22 +40,11 @@ namespace WhereToFly.App.Core.ViewModels
             /// </summary>
             public Location Location { get; private set; }
 
-            /// <summary>
-            /// Lazy-loading backing store for type image source
-            /// </summary>
-            private readonly Lazy<ImageSource> typeImageSource;
-
             #region Binding properties
             /// <summary>
             /// Returns image source for SvgImage in order to display the type image
             /// </summary>
-            public ImageSource TypeImageSource
-            {
-                get
-                {
-                    return this.typeImageSource.Value;
-                }
-            }
+            public ImageSource TypeImageSource { get; }
 
             /// <summary>
             /// Location name
@@ -91,7 +78,8 @@ namespace WhereToFly.App.Core.ViewModels
                 this.Location = location;
                 this.parent = parent;
 
-                this.typeImageSource = new Lazy<ImageSource>(this.GetTypeImageSource);
+                this.TypeImageSource =
+                    SvgImageCache.GetImageSource(this.Location, "#000000");
 
                 this.MoveUpCommand = new Command(
                     (obj) => this.parent.MoveUpLocation(this),
@@ -113,23 +101,6 @@ namespace WhereToFly.App.Core.ViewModels
                 this.OnPropertyChanged(nameof(this.MoveUpCommand));
                 this.OnPropertyChanged(nameof(this.MoveDownCommand));
                 this.OnPropertyChanged(nameof(this.RemoveCommand));
-            }
-
-            /// <summary>
-            /// Returns type icon from location type
-            /// </summary>
-            /// <returns>image source, or null when no icon could be found</returns>
-            private ImageSource GetTypeImageSource()
-            {
-                string svgText = DependencyService.Get<SvgImageCache>()
-                    .GetSvgImageByLocationType(this.Location.Type, "#000000");
-
-                if (svgText != null)
-                {
-                    return ImageSource.FromStream(() => new MemoryStream(System.Text.Encoding.UTF8.GetBytes(svgText)));
-                }
-
-                return null;
             }
         }
 

@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using WhereToFly.App.Geo;
 using WhereToFly.App.Model;
 using Xamarin.Forms;
 
@@ -18,16 +21,55 @@ namespace WhereToFly.App.Core
         private readonly Dictionary<string, string> allImages = new Dictionary<string, string>();
 
         /// <summary>
-        /// Returns an SVG image xml text based on the location type
+        /// Returns an image source for SvgImage that loads an image based on the location's type.
         /// </summary>
-        /// <param name="type">location type</param>
+        /// <param name="location">location to use</param>
         /// <param name="fill">when not null, an alternative fill color for SVG path elements</param>
-        /// <returns>SVG image xml text, or </returns>
-        public string GetSvgImageByLocationType(LocationType type, string fill = null)
+        /// <returns>image source</returns>
+        public static ImageSource GetImageSource(Location location, string fill = null)
         {
-            string imagePath = SvgImagePathFromLocationType(type);
+            return GetImageSource(
+                SvgImagePathFromLocationType(location.Type),
+                fill);
+        }
 
-            return this.GetSvgImage(imagePath, fill);
+        /// <summary>
+        /// Returns an image source for SvgImage that loads an image based on the track.
+        /// </summary>
+        /// <param name="track">track to use</param>
+        /// <param name="fill">when not null, an alternative fill color for SVG path elements</param>
+        /// <returns>image source</returns>
+        public static ImageSource GetImageSource(Track track, string fill = null)
+        {
+            string svgImagePath = track.IsFlightTrack ? "map/images/paragliding.svg" : "icons/map-marker-distance.svg";
+
+            return GetImageSource(svgImagePath, fill);
+        }
+
+        /// <summary>
+        /// Returns an image source for SvgImage that loads an image from given SVG image path and
+        /// name.
+        /// </summary>
+        /// <param name="svgImageName">relative path to the SVG image file</param>
+        /// <param name="fill">when not null, an alternative fill color for SVG path elements</param>
+        /// <returns>image source</returns>
+        public static ImageSource GetImageSource(string svgImageName, string fill = null)
+        {
+            return ImageSource.FromStream(
+                () =>
+                {
+                    var cache = DependencyService.Get<SvgImageCache>();
+                    Debug.Assert(cache != null, "cache object must exist");
+
+                    string svgText = cache.GetSvgImage(svgImageName, fill);
+
+                    if (svgText != null)
+                    {
+                        return new MemoryStream(System.Text.Encoding.UTF8.GetBytes(svgText));
+                    }
+
+                    return null;
+                });
         }
 
         /// <summary>

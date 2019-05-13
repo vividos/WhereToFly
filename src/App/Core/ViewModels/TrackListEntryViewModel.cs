@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using WhereToFly.App.Geo;
 using WhereToFly.App.Logic;
 using Xamarin.Forms;
@@ -23,11 +21,6 @@ namespace WhereToFly.App.Core.ViewModels
         private readonly Track track;
 
         /// <summary>
-        /// Lazy-loading backing store for type image source
-        /// </summary>
-        private readonly Lazy<ImageSource> typeImageSource;
-
-        /// <summary>
         /// Property containing the track object
         /// </summary>
         public Track Track => this.track;
@@ -46,13 +39,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Returns image source for SvgImage in order to display the type image
         /// </summary>
-        public ImageSource TypeImageSource
-        {
-            get
-            {
-                return this.typeImageSource.Value;
-            }
-        }
+        public ImageSource TypeImageSource { get; }
 
         /// <summary>
         /// Property that specifies if the color box is visible
@@ -104,7 +91,7 @@ namespace WhereToFly.App.Core.ViewModels
             this.parentViewModel = parentViewModel;
             this.track = track;
 
-            this.typeImageSource = new Lazy<ImageSource>(this.GetTypeImageSource);
+            this.TypeImageSource = SvgImageCache.GetImageSource(track, "#000000");
 
             this.SetupBindings();
         }
@@ -149,25 +136,6 @@ namespace WhereToFly.App.Core.ViewModels
         private async Task OnDeleteTrackAsync()
         {
             await this.parentViewModel.DeleteTrack(this.track);
-        }
-
-        /// <summary>
-        /// Returns type icon from track type
-        /// </summary>
-        /// <returns>image source, or null when no icon could be found</returns>
-        private ImageSource GetTypeImageSource()
-        {
-            string svgImagePath = this.track.IsFlightTrack ? "map/images/paragliding.svg" : "icons/map-marker-distance.svg";
-
-            string svgText = DependencyService.Get<SvgImageCache>()
-                .GetSvgImage(svgImagePath, "#000000");
-
-            if (svgText != null)
-            {
-                return ImageSource.FromStream(() => new MemoryStream(System.Text.Encoding.UTF8.GetBytes(svgText)));
-            }
-
-            return null;
         }
     }
 }
