@@ -191,6 +191,11 @@ namespace WhereToFly.App.Core
         /// <returns>link with hostname and favicon.ico prefixed</returns>
         private static async Task<string> GetFaviconFromLinkAsync(string webLink)
         {
+            if (webLink.StartsWith("https://www.austrocontrol.at"))
+            {
+                return "https://www.austrocontrol.at/favicon.ico";
+            }
+
             int pos = webLink.IndexOf(";jsessionid=");
             if (pos != -1)
             {
@@ -215,6 +220,14 @@ namespace WhereToFly.App.Core
             switch (iconDescription.Type)
             {
                 case WeatherIconDescription.IconType.IconLink:
+                    if (iconDescription.WebLink.StartsWith("https://www.austrocontrol.at"))
+                    {
+                        var platform = DependencyService.Get<IPlatform>();
+                        byte[] data = platform.LoadAssetBinaryData("alptherm-favicon.png");
+                        entry = new ImageCacheEntry(data);
+                        break;
+                    }
+
                     string faviconLink = await GetFaviconFromLinkAsync(iconDescription.WebLink);
 
                     if (!string.IsNullOrEmpty(faviconLink))
