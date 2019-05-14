@@ -2,6 +2,7 @@
 using SkiaSharp.Views.Forms;
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.Controls
@@ -20,7 +21,7 @@ namespace WhereToFly.App.Core.Controls
         /// <summary>
         /// Lazy-initialized SVG image instance
         /// </summary>
-        private readonly Lazy<SkiaSharp.Extended.Svg.SKSvg> svgImage;
+        private SkiaSharp.Extended.Svg.SKSvg svgImage;
 
         /// <summary>
         /// Creates a new SVG image control
@@ -37,8 +38,6 @@ namespace WhereToFly.App.Core.Controls
 
             this.Content = this.canvasView;
             this.canvasView.PaintSurface += this.CanvasViewOnPaintSurface;
-
-            this.svgImage = new Lazy<SkiaSharp.Extended.Svg.SKSvg>(() => this.LoadImage());
         }
 
         #region Bindable properties
@@ -70,8 +69,16 @@ namespace WhereToFly.App.Core.Controls
         /// <param name="newvalue">newly bound value</param>
         private static void OnSourcePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
-            SvgImage image = bindable as SvgImage;
-            image?.canvasView.InvalidateSurface();
+            var image = bindable as SvgImage;
+
+            if (image != null)
+            {
+                Task.Run(async () =>
+                {
+                    image.svgImage = await image.LoadImageAsync();
+                    image.canvasView.InvalidateSurface();
+                });
+            }
         }
 
         /// <summary>
@@ -97,7 +104,7 @@ namespace WhereToFly.App.Core.Controls
             SKCanvas canvas = args.Surface.Canvas;
             canvas.Clear();
 
-            SkiaSharp.Extended.Svg.SKSvg svg = this.svgImage.Value;
+            SkiaSharp.Extended.Svg.SKSvg svg = this.svgImage;
             if (svg == null)
             {
                 return;
@@ -122,12 +129,12 @@ namespace WhereToFly.App.Core.Controls
         /// Loads SVG image from Source property and returns it.
         /// </summary>
         /// <returns>loaded SVG image</returns>
-        private SkiaSharp.Extended.Svg.SKSvg LoadImage()
+        private async Task<SkiaSharp.Extended.Svg.SKSvg> LoadImageAsync()
         {
             if (this.Source is StreamImageSource streamSource &&
                 streamSource.Stream != null)
             {
-                var stream = streamSource.Stream.Invoke(CancellationToken.None).Result;
+                var stream = await streamSource.Stream(CancellationToken.None);
 
                 if (stream != null)
                 {
