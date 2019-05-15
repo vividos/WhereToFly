@@ -26,7 +26,7 @@ namespace WhereToFly.App.Core
             /// Image source for displaying image
             /// </summary>
             [JsonIgnore]
-            public Lazy<ImageSource> Source { get; private set; }
+            public ImageSource Source { get; private set; }
 
             /// <summary>
             /// Image data bytes
@@ -36,11 +36,11 @@ namespace WhereToFly.App.Core
             /// <summary>
             /// Creates a new image cache entry by using given factory function
             /// </summary>
-            /// <param name="imageSourceFactory">factory function</param>
-            public ImageCacheEntry(Func<ImageSource> imageSourceFactory)
+            /// <param name="imageSource">image source to use</param>
+            public ImageCacheEntry(ImageSource imageSource)
             {
                 this.ImageData = new byte[0];
-                this.Source = new Lazy<ImageSource>(imageSourceFactory);
+                this.Source = imageSource;
             }
 
             /// <summary>
@@ -52,7 +52,7 @@ namespace WhereToFly.App.Core
                 Debug.Assert(imageData != null, "imageData must not be null");
 
                 this.ImageData = imageData;
-                this.Source = new Lazy<ImageSource>(this.CreateImageSource);
+                this.Source = this.CreateImageSource();
             }
 
             /// <summary>
@@ -62,7 +62,7 @@ namespace WhereToFly.App.Core
             [JsonConstructor]
             public ImageCacheEntry()
             {
-                this.Source = new Lazy<ImageSource>(this.CreateImageSource);
+                this.Source = this.CreateImageSource();
             }
 
             /// <summary>
@@ -151,7 +151,10 @@ namespace WhereToFly.App.Core
                 await this.LoadImageAsync(imageId, iconDescription);
             }
 
-            return this.imageCache[imageId].Source.Value ?? null;
+            lock (this.imageCacheLock)
+            {
+                return this.imageCache.ContainsKey(imageId) ? this.imageCache[imageId].Source ?? null : null;
+            }
         }
 
         /// <summary>
@@ -246,7 +249,7 @@ namespace WhereToFly.App.Core
 
                 case WeatherIconDescription.IconType.IconPlaceholder:
                     string imagePath = Converter.ImagePathConverter.GetDeviceDependentImage("border_none_variant");
-                    entry = new ImageCacheEntry(() => ImageSource.FromFile(imagePath));
+                    entry = new ImageCacheEntry(ImageSource.FromFile(imagePath));
                     break;
 
                 default:
