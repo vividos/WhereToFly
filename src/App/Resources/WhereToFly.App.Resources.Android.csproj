@@ -81,12 +81,6 @@
     <AndroidAsset Include="Assets\locations\crossing_the_alps_2018.kmz" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\locations\paraglidingspots_crossing_the_alps_2018_06_19.kmz" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\locations\paraglidingspots_european_alps_2018_01_07.kmz" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidAsset Include="Assets\map\map3D.html" />
   </ItemGroup>
   <ItemGroup>
@@ -595,6 +589,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\alptherm-favicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\locations\paraglidingspots_crossing_the_alps_2019_05_15.kmz" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\locations\paraglidingspots_european_alps_2019_05_15.kmz" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

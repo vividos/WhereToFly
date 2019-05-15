@@ -53,8 +53,6 @@
   <ItemGroup>
     <Content Include="Assets\info.md" />
     <Content Include="Assets\locations\crossing_the_alps_2018.kmz" />
-    <Content Include="Assets\locations\paraglidingspots_crossing_the_alps_2018_06_19.kmz" />
-    <Content Include="Assets\locations\paraglidingspots_european_alps_2018_01_07.kmz" />
     <Content Include="Assets\map\Cesium\Assets\approximateTerrainHeights.json" />
     <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_0.json" />
     <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_1.json" />
@@ -231,6 +229,8 @@
     <Content Include="Assets\map\images\water-15.svg" />
     <Content Include="Assets\map\map3D.html" />
     <Content Include="Assets\map\mapView3D.js" />
+    <None Include="Assets\locations\paraglidingspots_crossing_the_alps_2019_05_15.kmz" />
+    <None Include="Assets\locations\paraglidingspots_european_alps_2019_05_15.kmz" />
     <None Include="Assets\map\test.html" />
   </ItemGroup>
   <ItemGroup>
