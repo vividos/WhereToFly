@@ -13,10 +13,19 @@ Current version: %VERSION%
 
 1.5.0
 
+- added support for live waypoints that update themselves periodically;
+  supported are live waypoints to Garmin inReach and SPOT devices
 - added support for where-to-fly:// URLs for adding live waypoints
-- improved retrieving and caching of weather dashboard icons
+- added long-tap menu entry "show flying range" to display a half transparent
+  cone that shows the flying range, based on the glide ratio
+- when adding a flying track, terrain height is sampled so that track is never
+  "under ground"; non-flying tracks are clamped to terrain now
+- added Sentinel-2 and OpenFlightMaps.org imagery layer
 - added hiking tour planning support for some selected location waypoints in
   the Schliersee area.
+- improved retrieving and caching of weather dashboard icons
+- fixed opening .igc files from with negative latitudes or longitudes
+- added Where-to-fly Windows app (beta)
 
 1.4.0
 
