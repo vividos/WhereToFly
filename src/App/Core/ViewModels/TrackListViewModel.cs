@@ -283,5 +283,32 @@ namespace WhereToFly.App.Core.ViewModels
                 await NavigationService.Instance.GoBack();
             }
         }
+
+        /// <summary>
+        /// Checks if reload is needed, e.g. when track list has changed.
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        public async Task CheckReloadNeeded()
+        {
+            try
+            {
+                IDataService dataService = DependencyService.Get<IDataService>();
+
+                var newTrackList = await dataService.GetTrackListAsync(CancellationToken.None);
+
+                if (this.trackList.Count != newTrackList.Count ||
+                    this.TrackList == null ||
+                    this.TrackList.Count != newTrackList.Count)
+                {
+                    this.trackList = newTrackList;
+
+                    await App.RunOnUiThreadAsync(this.UpdateTrackList);
+                }
+            }
+            catch (Exception ex)
+            {
+                App.LogError(ex);
+            }
+        }
     }
 }

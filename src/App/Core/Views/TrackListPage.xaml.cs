@@ -1,4 +1,5 @@
-﻿using WhereToFly.App.Core.ViewModels;
+﻿using System.Threading.Tasks;
+using WhereToFly.App.Core.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,6 +12,11 @@ namespace WhereToFly.App.Core.Views
     public partial class TrackListPage : ContentPage
     {
         /// <summary>
+        /// View model for this page
+        /// </summary>
+        private readonly TrackListViewModel viewModel;
+
+        /// <summary>
         /// Creates a new track list page
         /// </summary>
         public TrackListPage()
@@ -19,7 +25,7 @@ namespace WhereToFly.App.Core.Views
 
             this.InitializeComponent();
 
-            this.BindingContext = new TrackListViewModel();
+            this.BindingContext = this.viewModel = new TrackListViewModel();
         }
 
         /// <summary>
@@ -29,10 +35,20 @@ namespace WhereToFly.App.Core.Views
         /// <param name="args">event args</param>
         private void OnItemTapped_TrackListView(object sender, ItemTappedEventArgs args)
         {
-            var localViewModel = this.BindingContext as TrackListViewModel;
-
             var trackListEntryViewModel = args.Item as TrackListEntryViewModel;
-            localViewModel.ItemTappedCommand.Execute(trackListEntryViewModel.Track);
+            this.viewModel.ItemTappedCommand.Execute(trackListEntryViewModel.Track);
         }
+
+        #region Page lifecycle methods
+        /// <summary>
+        /// Called when page is appearing; get current position
+        /// </summary>
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            Task.Run(this.viewModel.CheckReloadNeeded);
+        }
+        #endregion
     }
 }
