@@ -50,9 +50,9 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         private readonly Dictionary<string, string> includedLocationsList = new Dictionary<string, string>
         {
-            { "Paraglidingspots European Alps", "paraglidingspots_european_alps_2018_01_07.kmz" },
+            { "Paraglidingspots European Alps Mai 2019", "paraglidingspots_european_alps_2019_05_15.kmz" },
             { "Crossing the Alps 2018 Waypoints", "crossing_the_alps_2018.kmz" },
-            { "Paraglidingspots Crossing the Alps 2018", "paraglidingspots_crossing_the_alps_2018_06_19.kmz" }
+            { "Paraglidingspots Crossing the Alps 2019", "paraglidingspots_crossing_the_alps_2019_05_15.kmz" }
         };
 
         /// <summary>
