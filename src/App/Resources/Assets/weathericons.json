@@ -287,6 +287,13 @@
     "WebLink": "https://www.foto-webcam.eu/webcam/zugspitze-sued/"
   },
   {
+    "Name": "Webcam Zugspitze Panomax",
+    "Group": "Webcams",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://zugspitze.panomax.com/?_ga=2.65108654.1817056362.1539838421-934710830.1539838421"
+  },
+  {
     "Name": "Webcam Hochfelln",
     "Group": "Webcams",
     "Type": 0,
