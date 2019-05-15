@@ -107,7 +107,8 @@ function MapView(options) {
         fullscreenButton: false,
         timeline: false,
         skyBox: false,
-        scene3DOnly: true
+        scene3DOnly: true,
+        requestRenderMode: true
     });
 
     this.viewer.scene.globe.enableLighting = true;
