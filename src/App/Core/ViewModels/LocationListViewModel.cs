@@ -60,6 +60,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         private readonly Dictionary<string, string> downloadWebSiteList = new Dictionary<string, string>
         {
+            { "vividos' Where-to-fly resources", "http://www.vividos.de/wheretofly.html" },
             { "Paraglidingspots.com", "http://paraglidingspots.com/downloadselect.aspx" },
             { "DHV Gelände-Datenbank",
                 "https://www.dhv.de/web/piloteninfos/gelaende-luftraum-natur/fluggelaendeflugbetrieb/gelaendedaten/gelaendedaten-download" }
