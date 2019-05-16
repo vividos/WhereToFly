@@ -50,15 +50,24 @@ namespace LiveWaypoints.Controllers
         [HttpGet]
         public async Task<LiveWaypointQueryResult> Get(string id)
         {
+            this.CheckLiveWaypointId(id);
+
+            this.logger.LogDebug($"getting live waypoint with ID: {id}");
+
+            return await this.cacheManager.GetLiveWaypointData(id);
+        }
+
+        /// <summary>
+        /// Checks live waypoint ID parameter and throws exception when invalid
+        /// </summary>
+        /// <param name="id">live waypoint ID to check</param>
+        private void CheckLiveWaypointId(string id)
+        {
             if (string.IsNullOrEmpty(id))
             {
                 this.logger.LogWarning($"invalid live waypoint ID: {id}");
                 throw new ArgumentException(nameof(id));
             }
-
-            this.logger.LogDebug($"getting live waypoint with ID: {id}");
-
-            return await this.cacheManager.GetLiveWaypointData(id);
         }
     }
 }

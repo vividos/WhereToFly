@@ -24,11 +24,6 @@ namespace WhereToFly.WebApi.Logic
         private readonly Dictionary<string, LiveWaypointData> liveWaypointCache = new Dictionary<string, LiveWaypointData>();
 
         /// <summary>
-        /// Queue of live waypoints to process
-        /// </summary>
-        private readonly Queue<string> liveWaypointQueue = new Queue<string>();
-
-        /// <summary>
         /// Lock object for cache and queue
         /// </summary>
         private readonly object lockCacheAndQueue = new object();
@@ -52,6 +47,7 @@ namespace WhereToFly.WebApi.Logic
             this.logger = logger;
         }
 
+#pragma warning disable S4457 // Parameter validation in "async"/"await" methods should be wrapped
         /// <summary>
         /// Returns live waypoint data for given live waypoint ID. May throw an exception when the
         /// data is not readily available and must be fetched.
@@ -83,6 +79,7 @@ namespace WhereToFly.WebApi.Logic
                     return null;
             }
         }
+#pragma warning restore S4457 // Parameter validation in "async"/"await" methods should be wrapped
 
         /// <summary>
         /// Gets query result for a Find Me SPOT live waypoint ID

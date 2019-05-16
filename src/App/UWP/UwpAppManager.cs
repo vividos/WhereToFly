@@ -1,5 +1,4 @@
-﻿using System.IO;
-using WhereToFly.App.Core;
+﻿using WhereToFly.App.Core;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(WhereToFly.App.UWP.UwpAppManager))]
@@ -29,16 +28,6 @@ namespace WhereToFly.App.UWP
         public byte[] GetAppIcon(string packageName)
         {
             return new byte[0];
-        }
-
-        /// <summary>
-        /// Loads app icon for package name and returns a stream
-        /// </summary>
-        /// <param name="packageName">package name of app icon to load</param>
-        /// <returns>stream containing a PNG image, or null when no bitmap could be loaded</returns>
-        private MemoryStream LoadAppIcon(string packageName)
-        {
-            return null;
         }
     }
 }

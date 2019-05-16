@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using WhereToFly.App.Core;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Storage;
@@ -28,14 +29,12 @@ namespace WhereToFly.App.UWP
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
-        /// <param name="e">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        /// <param name="args">Details about the launch request and process.</param>
+        protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
-            Frame rootFrame = Window.Current.Content as Frame;
-
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
-            if (rootFrame == null)
+            if (!(Window.Current.Content is Frame rootFrame))
             {
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
@@ -46,16 +45,14 @@ namespace WhereToFly.App.UWP
 
                 Xamarin.Forms.Forms.SetFlags("FastRenderers_Experimental");
 
-                Xamarin.Forms.Forms.Init(e, Rg.Plugins.Popup.Popup.GetExtraAssemblies());
+                Xamarin.Forms.Forms.Init(args, Rg.Plugins.Popup.Popup.GetExtraAssemblies());
 
-                Xamarin.Essentials.Platform.MapServiceToken = Core.Constants.BingMapsKey;
+                Xamarin.Essentials.Platform.MapServiceToken = Constants.BingMapsKey;
 
-                //// TODO MessagingCenter.Subscribe<Core.App, string>(this, Constants.MessageShowToast, this.ShowToast);
+                Xamarin.Forms.MessagingCenter.Subscribe<Core.App, string>(this, Constants.MessageShowToast, this.ShowToast);
 
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-                {
-                    //// TODO: Load state from previously suspended application
-                }
+                //// Note: When needed, use this check and restore state
+                //// if (args.PreviousExecutionState == ApplicationExecutionState.Terminated)
 
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
@@ -66,7 +63,7 @@ namespace WhereToFly.App.UWP
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                rootFrame.Navigate(typeof(MainPage), args.Arguments);
             }
 
             // Ensure the current window is active
@@ -81,7 +78,7 @@ namespace WhereToFly.App.UWP
         {
             if (args.Kind == ActivationKind.Protocol)
             {
-                ProtocolActivatedEventArgs eventArgs = args as ProtocolActivatedEventArgs;
+                var eventArgs = args as ProtocolActivatedEventArgs;
 
                 var app = Core.App.Current as Core.App;
 
@@ -131,8 +128,19 @@ namespace WhereToFly.App.UWP
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-            //// TODO: Save application state and stop any background activity
+
+            // Note: When needed, save application state and stop any background activity
             deferral.Complete();
+        }
+
+        /// <summary>
+        /// Shows toast message with given text
+        /// </summary>
+        /// <param name="app">app object; unused</param>
+        /// <param name="message">toast message</param>
+        private void ShowToast(Core.App app, string message)
+        {
+            // TODO implement
         }
     }
 }

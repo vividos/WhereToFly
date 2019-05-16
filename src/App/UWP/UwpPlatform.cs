@@ -14,6 +14,11 @@ namespace WhereToFly.App.UWP
     public class UwpPlatform : IPlatform
     {
         /// <summary>
+        /// Path URL for assets files
+        /// </summary>
+        private const string AppxAssetsPathUrl = "ms-appx:///WhereToFly.App.Resources.UWP/Assets/";
+
+        /// <summary>
         /// Property containing the UWP app data folder
         /// </summary>
         public string AppDataFolder => ApplicationData.Current.LocalFolder.Path;
@@ -35,7 +40,7 @@ namespace WhereToFly.App.UWP
         /// <returns>stream to read from file</returns>
         public Stream OpenAssetStream(string assetFilename)
         {
-            string fullAssetPath = "ms-appx:///WhereToFly.App.Resources.UWP/Assets/" + assetFilename;
+            string fullAssetPath = AppxAssetsPathUrl + assetFilename;
             var uri = new Uri(fullAssetPath);
 
             var file = StorageFile.GetFileFromApplicationUriAsync(uri).AsTask().Result;
