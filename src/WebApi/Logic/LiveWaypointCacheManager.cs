@@ -66,13 +66,13 @@ namespace WhereToFly.WebApi.Logic
             switch (uri.Type)
             {
                 case AppResourceUri.ResourceType.FindMeSpotPos:
-                    return await this.GetFindMeSpotPosResult(id);
+                    return await this.GetFindMeSpotPosResult(uri);
 
                 case AppResourceUri.ResourceType.GarminInreachPos:
-                    return await this.GetGarminInreachPosResult(uri.Data);
+                    return await this.GetGarminInreachPosResult(uri);
 
                 case AppResourceUri.ResourceType.TestPos:
-                    return await this.GetTestPosResult(id);
+                    return await this.GetTestPosResult(uri);
 
                 default:
                     Debug.Assert(false, "invalid app resource URI type");
@@ -84,28 +84,28 @@ namespace WhereToFly.WebApi.Logic
         /// <summary>
         /// Gets query result for a Find Me SPOT live waypoint ID
         /// </summary>
-        /// <param name="id">live waypoint ID</param>
+        /// <param name="uri">live waypoint ID</param>
         /// <returns>live waypoint query result</returns>
-        private async Task<LiveWaypointQueryResult> GetFindMeSpotPosResult(string id)
+        private async Task<LiveWaypointQueryResult> GetFindMeSpotPosResult(AppResourceUri uri)
         {
-            var liveWaypointData = await this.findMeSpotTrackerService.GetDataAsync(id);
+            var liveWaypointData = await this.findMeSpotTrackerService.GetDataAsync(uri);
 
             return new LiveWaypointQueryResult
             {
                 Data = liveWaypointData,
-                NextRequestDate = this.findMeSpotTrackerService.GetNextRequestDate(id)
+                NextRequestDate = this.findMeSpotTrackerService.GetNextRequestDate(uri)
             };
         }
 
         /// <summary>
         /// Gets query result for a Garmin inReach live waypoint ID
         /// </summary>
-        /// <param name="mapShareIdentifier">
-        /// Garmin inReach MapShare identifier, part from AppResource URL
-        /// </param>
+        /// <param name="uri">live waypoint Id</param>
         /// <returns>live waypoint query result</returns>
-        private async Task<LiveWaypointQueryResult> GetGarminInreachPosResult(string mapShareIdentifier)
+        private async Task<LiveWaypointQueryResult> GetGarminInreachPosResult(AppResourceUri uri)
         {
+            string mapShareIdentifier = uri.Data;
+
             var liveWaypointData = await this.garminInreachService.GetDataAsync(mapShareIdentifier);
 
             return new LiveWaypointQueryResult
@@ -118,9 +118,9 @@ namespace WhereToFly.WebApi.Logic
         /// <summary>
         /// Returns a test position, based on the current time
         /// </summary>
-        /// <param name="liveWaypointId">live waypoint ID to use</param>
+        /// <param name="uri">live waypoint ID to use</param>
         /// <returns>live waypoint query result</returns>
-        private Task<LiveWaypointQueryResult> GetTestPosResult(string liveWaypointId)
+        private Task<LiveWaypointQueryResult> GetTestPosResult(AppResourceUri uri)
         {
             DateTimeOffset nextRequestDate = DateTimeOffset.Now + TimeSpan.FromMinutes(1.0);
 
@@ -136,7 +136,7 @@ namespace WhereToFly.WebApi.Logic
                 {
                     Data = new LiveWaypointData
                     {
-                        ID = liveWaypointId,
+                        ID = uri.ToString(),
                         TimeStamp = DateTimeOffset.Now,
                         Longitude = mapPoint.Longitude,
                         Latitude = mapPoint.Latitude,

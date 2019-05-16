@@ -18,13 +18,13 @@ namespace WhereToFly.WebApi.UnitTest
         {
             // set up
             var dataService = new FindMeSpotTrackerDataService();
-            string uri = new AppResourceUri(AppResourceUri.ResourceType.FindMeSpotPos, "xxx").ToString();
+            var uri = new AppResourceUri(AppResourceUri.ResourceType.FindMeSpotPos, "xxx");
 
             // run
             var liveWaypointData = dataService.GetDataAsync(uri).Result;
 
             // check
-            Assert.AreEqual(uri, liveWaypointData.ID, "requested ID and app resource URI");
+            Assert.AreEqual(uri.ToString(), liveWaypointData.ID, "requested ID and app resource URI");
         }
     }
 }

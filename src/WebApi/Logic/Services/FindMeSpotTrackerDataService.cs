@@ -43,9 +43,9 @@ namespace WhereToFly.WebApi.Logic.Services
         /// <summary>
         /// Returns next possible request date for given MapShare identifier
         /// </summary>
-        /// <param name="uri">live waypoint ID (App Resource Uri)</param>
+        /// <param name="uri">live waypoint ID</param>
         /// <returns>next possible request date</returns>
-        public DateTimeOffset GetNextRequestDate(string uri)
+        public DateTimeOffset GetNextRequestDate(AppResourceUri uri)
         {
             return this.lastRequest.HasValue ? this.lastRequest.Value + TimeSpan.FromMinutes(1.0) : DateTimeOffset.Now;
         }
@@ -53,16 +53,15 @@ namespace WhereToFly.WebApi.Logic.Services
         /// <summary>
         /// Returns data for live waypoint with given app resource URI
         /// </summary>
-        /// <param name="uri">live waypoint ID (App Resource Uri)</param>
+        /// <param name="uri">live waypoint ID</param>
         /// <returns>live waypoint data</returns>
-        public async Task<LiveWaypointData> GetDataAsync(string uri)
+        public async Task<LiveWaypointData> GetDataAsync(AppResourceUri uri)
         {
-            var spotUri = new AppResourceUri(uri);
             Debug.Assert(
-                spotUri.Type == AppResourceUri.ResourceType.FindMeSpotPos,
+                uri.Type == AppResourceUri.ResourceType.FindMeSpotPos,
                 "app resource URI must be of FindMeSpotPos type!");
 
-            string liveFeedId = spotUri.Data;
+            string liveFeedId = uri.Data;
 
             Model.RootObject result = null;
             if (liveFeedId != "xxx")
@@ -82,7 +81,7 @@ namespace WhereToFly.WebApi.Logic.Services
 
             return new LiveWaypointData
             {
-                ID = uri,
+                ID = uri.ToString(),
                 TimeStamp = new DateTimeOffset(latestMessage.DateTime),
                 Latitude = latestMessage.Latitude,
                 Longitude = latestMessage.Longitude,
