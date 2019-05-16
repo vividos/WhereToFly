@@ -158,14 +158,14 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
         /// <param name="trackFolder">folder to load from</param>
         private void LoadTracks(Folder trackFolder)
         {
-            foreach (var element in trackFolder.Children)
+            foreach (var element in trackFolder.Features)
             {
                 if (element is Folder singleTrackFolder)
                 {
                     // use description from track folder, not the track itself
                     var trackInfoTuple = this.TrackInfoFromDescription(singleTrackFolder.Description.Text);
 
-                    var placemark = element.Children.First(x => x is Placemark) as Placemark;
+                    var placemark = singleTrackFolder.Features.First(x => x is Placemark) as Placemark;
 
                     if (trackInfoTuple.Item1 != null)
                     {
