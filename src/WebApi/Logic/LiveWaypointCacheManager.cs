@@ -47,7 +47,6 @@ namespace WhereToFly.WebApi.Logic
             this.logger = logger;
         }
 
-#pragma warning disable S4457 // Parameter validation in "async"/"await" methods should be wrapped
         /// <summary>
         /// Returns live waypoint data for given live waypoint ID. May throw an exception when the
         /// data is not readily available and must be fetched.
@@ -56,6 +55,31 @@ namespace WhereToFly.WebApi.Logic
         /// <returns>live waypoint query result</returns>
         public async Task<LiveWaypointQueryResult> GetLiveWaypointData(string rawId)
         {
+            AppResourceUri uri = GetAndCheckLiveWaypointId(rawId);
+
+            LiveWaypointQueryResult result = this.CheckCache(uri);
+            if (result != null)
+            {
+                return result;
+            }
+
+            result = await this.GetLiveWaypointQueryResult(uri);
+
+            if (result != null)
+            {
+                this.CacheLiveWaypointData(result.Data);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Parses a raw live waypoint ID and returns an AppResourceId object from it
+        /// </summary>
+        /// <param name="rawId">raw live waypoint ID</param>
+        /// <returns>live waypoint ID as AppResourceUri object</returns>
+        private static AppResourceUri GetAndCheckLiveWaypointId(string rawId)
+        {
             string id = System.Net.WebUtility.UrlDecode(rawId);
             var uri = new AppResourceUri(id);
             if (!uri.IsValid)
@@ -63,6 +87,78 @@ namespace WhereToFly.WebApi.Logic
                 throw new ArgumentException("invalid live waypoint ID", nameof(rawId));
             }
 
+            return uri;
+        }
+
+        /// <summary>
+        /// Checks next request date if a new request can be made; when not, returns cache entry
+        /// when available.
+        /// </summary>
+        /// <param name="uri">live waypoint ID</param>
+        /// <returns>
+        /// query result from cache, or null when there's no request in cache or when a request
+        /// can be made online
+        /// </returns>
+        private LiveWaypointQueryResult CheckCache(AppResourceUri uri)
+        {
+            DateTimeOffset nextRequestDate = this.GetNextRequestDate(uri);
+            if (nextRequestDate <= DateTimeOffset.Now)
+            {
+                return null;
+            }
+
+            // ask cache
+            string id = uri.ToString();
+
+            LiveWaypointData cachedData;
+            lock (this.lockCacheAndQueue)
+            {
+                cachedData = this.liveWaypointCache.ContainsKey(id) ? this.liveWaypointCache[id] : null;
+            }
+
+            if (cachedData == null)
+            {
+                return null;
+            }
+
+            return new LiveWaypointQueryResult
+            {
+                Data = cachedData,
+                NextRequestDate = nextRequestDate
+            };
+        }
+
+        /// <summary>
+        /// Returns next request date for live waypoint in given ID
+        /// </summary>
+        /// <param name="uri">live waypoint ID</param>
+        /// <returns>date time offset of next possible request for this ID</returns>
+        private DateTimeOffset GetNextRequestDate(AppResourceUri uri)
+        {
+            switch (uri.Type)
+            {
+                case AppResourceUri.ResourceType.FindMeSpotPos:
+                    return this.findMeSpotTrackerService.GetNextRequestDate(uri);
+
+                case AppResourceUri.ResourceType.GarminInreachPos:
+                    return this.garminInreachService.GetNextRequestDate(uri.Data);
+
+                case AppResourceUri.ResourceType.TestPos:
+                    return DateTimeOffset.Now + TimeSpan.FromMinutes(1.0);
+
+                default:
+                    Debug.Assert(false, "invalid app resource URI type");
+                    return DateTimeOffset.MaxValue;
+            }
+        }
+
+        /// <summary>
+        /// Gets actual live waypoint query result from web services
+        /// </summary>
+        /// <param name="uri">live waypoint ID</param>
+        /// <returns>query result</returns>
+        private async Task<LiveWaypointQueryResult> GetLiveWaypointQueryResult(AppResourceUri uri)
+        {
             switch (uri.Type)
             {
                 case AppResourceUri.ResourceType.FindMeSpotPos:
@@ -79,7 +175,6 @@ namespace WhereToFly.WebApi.Logic
                     return null;
             }
         }
-#pragma warning restore S4457 // Parameter validation in "async"/"await" methods should be wrapped
 
         /// <summary>
         /// Gets query result for a Find Me SPOT live waypoint ID
