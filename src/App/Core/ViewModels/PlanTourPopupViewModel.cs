@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.Views;
 using WhereToFly.App.Geo;
 using WhereToFly.App.Geo.Spatial;
@@ -311,8 +312,14 @@ namespace WhereToFly.App.Core.ViewModels
             }
 
             var track = TrackFromPlannedTour(plannedTour);
-
             await AddTrack(track);
+
+            var location = StartWaypointFromPlannedTour(plannedTour);
+            await this.AddLocation(location);
+            App.UpdateMapLocationsList();
+
+            await NavigationService.Instance.NavigateAsync(Constants.PageKeyMapPage, animated: true);
+
             ShowTrack(track);
         }
 
@@ -397,6 +404,41 @@ namespace WhereToFly.App.Core.ViewModels
             App.ZoomToTrack(track);
 
             App.ShowToast("Track was added.");
+        }
+
+        /// <summary>
+        /// Creates a starting waypoint from planned tour, including description
+        /// </summary>
+        /// <param name="plannedTour">planned tour</param>
+        /// <returns>newly created start location</returns>
+        private static Location StartWaypointFromPlannedTour(PlannedTour plannedTour)
+        {
+            var startPoint = plannedTour.MapPointList.FirstOrDefault();
+
+            return new Location
+            {
+                Id = Guid.NewGuid().ToString("B"),
+                Name = "Planned tour start",
+                MapLocation = startPoint,
+                Description = plannedTour.Description,
+                Type = LocationType.Waypoint,
+                InternetLink = string.Empty
+            };
+        }
+
+        /// <summary>
+        /// Adds location to the location list
+        /// </summary>
+        /// <param name="location">location to add</param>
+        /// <returns>task to wait on</returns>
+        private async Task AddLocation(Location location)
+        {
+            var dataService = DependencyService.Get<IDataService>();
+
+            var locationList = await dataService.GetLocationListAsync(CancellationToken.None);
+            locationList.Add(location);
+
+            await dataService.StoreLocationListAsync(locationList);
         }
     }
 }
