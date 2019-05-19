@@ -33,7 +33,7 @@ namespace WhereToFly.App.Geo.DataFormats
         {
             string extension = Path.GetExtension(filename);
 
-            switch (extension)
+            switch (extension.ToLowerInvariant())
             {
                 case ".kml":
                     return new KmlDataFile(stream, isKml: true);
