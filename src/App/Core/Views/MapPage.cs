@@ -313,12 +313,11 @@ namespace WhereToFly.App.Core.Views
                 return;
             }
 
-            IEnumerable<Position> foundPositionsList = null;
+            IEnumerable<Xamarin.Essentials.Location> foundLocationsList = null;
 
             try
             {
-                string mapKey = Device.RuntimePlatform == Device.UWP ? Constants.BingMapsKey : null;
-                foundPositionsList = await this.geolocator.GetPositionsForAddressAsync(text, mapKey);
+                foundLocationsList = await Xamarin.Essentials.Geocoding.GetLocationsAsync(text);
             }
             catch (Exception ex)
             {
@@ -326,8 +325,8 @@ namespace WhereToFly.App.Core.Views
                 App.LogError(ex);
             }
 
-            if (foundPositionsList == null ||
-                !foundPositionsList.Any())
+            if (foundLocationsList == null ||
+                !foundLocationsList.Any())
             {
                 await this.DisplayAlert(
                     Constants.AppTitle,
@@ -337,8 +336,8 @@ namespace WhereToFly.App.Core.Views
                 return;
             }
 
-            var position = foundPositionsList.First();
-            var point = new MapPoint(position.Latitude, position.Longitude, position.Altitude);
+            var location = foundLocationsList.First();
+            var point = new MapPoint(location.Latitude, location.Longitude, location.Altitude);
 
             this.mapView.ShowFindResult(text, point);
         }
