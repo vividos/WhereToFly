@@ -39,6 +39,11 @@ namespace WhereToFly.App.Model
         public string LastLocationListFilterText { get; set; }
 
         /// <summary>
+        /// Last used flying range parameters
+        /// </summary>
+        public FlyingRangeParameters LastFlyingRangeParameters { get; set; }
+
+        /// <summary>
         /// Creates a new default app settings object
         /// </summary>
         public AppSettings()
@@ -49,6 +54,7 @@ namespace WhereToFly.App.Model
             this.MapOverlayType = MapOverlayType.None;
             this.CoordinateDisplayFormat = CoordinateDisplayFormat.Format_dd_mm_mmm;
             this.LastLocationListFilterText = string.Empty;
+            this.LastFlyingRangeParameters = new FlyingRangeParameters();
         }
     }
 }

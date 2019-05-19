@@ -63,6 +63,8 @@ namespace WhereToFly.App.Core.Views
                 this.tcs.SetResult(null);
             }
 
+            Task.Run(this.viewModel.StoreFlyingRangeParameters);
+
             return base.OnBackgroundClicked();
         }
 
@@ -76,6 +78,8 @@ namespace WhereToFly.App.Core.Views
             {
                 this.tcs.SetResult(null);
             }
+
+            Task.Run(this.viewModel.StoreFlyingRangeParameters);
 
             return base.OnBackButtonPressed();
         }
@@ -91,6 +95,8 @@ namespace WhereToFly.App.Core.Views
             {
                 this.tcs.SetResult(this.viewModel.Parameters);
             }
+
+            await this.viewModel.StoreFlyingRangeParameters();
 
             await this.Navigation.PopPopupAsync();
         }

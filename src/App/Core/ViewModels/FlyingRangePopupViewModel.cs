@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using WhereToFly.App.Model;
+using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.ViewModels
 {
@@ -74,6 +76,11 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         public FlyingRangePopupViewModel()
         {
+            if (App.Settings.LastFlyingRangeParameters != null)
+            {
+                this.Parameters = App.Settings.LastFlyingRangeParameters;
+            }
+
             // the wind direction list is specified so that the direction angle can directly be
             // calculated from the entries index
             this.WindDirectionList = new List<string>
@@ -87,6 +94,18 @@ namespace WhereToFly.App.Core.ViewModels
                 "W",
                 "NW",
             };
+        }
+
+        /// <summary>
+        /// Stores current filying range parameters in the app settings.
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        public async Task StoreFlyingRangeParameters()
+        {
+            App.Settings.LastFlyingRangeParameters = this.Parameters;
+
+            var dataService = DependencyService.Get<IDataService>();
+            await dataService.StoreAppSettingsAsync(App.Settings);
         }
     }
 }
