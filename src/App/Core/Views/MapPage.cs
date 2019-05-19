@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Geo;
+using WhereToFly.App.Geo.Spatial;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Model;
@@ -124,8 +125,8 @@ namespace WhereToFly.App.Core.Views
                 Constants.MessageAddTourPlanLocation,
                 async (app, location) => await this.OnMessageAddTourPlanLocation(location));
 
-            MessagingCenter.Subscribe<App, MapPoint>(this, Constants.MessageZoomToLocation, this.OnMessageZoomToLocation);
-            MessagingCenter.Subscribe<App, Track>(this, Constants.MessageZoomToTrack, this.OnMessageZoomToTrack);
+            MessagingCenter.Subscribe<App, MapPoint>(this, Constants.MessageZoomToLocation, async (app, location) => await this.OnMessageZoomToLocation(location));
+            MessagingCenter.Subscribe<App, Track>(this, Constants.MessageZoomToTrack, async (app, track) => await this.OnMessageZoomToTrack(track));
             MessagingCenter.Subscribe<App>(this, Constants.MessageUpdateMapSettings, this.OnMessageUpdateMapSettings);
             MessagingCenter.Subscribe<App>(this, Constants.MessageUpdateMapLocations, this.OnMessageUpdateMapLocations);
             MessagingCenter.Subscribe<App>(this, Constants.MessageUpdateMapTracks, this.OnMessageUpdateMapTracks);
@@ -203,7 +204,7 @@ namespace WhereToFly.App.Core.Views
                 return;
             }
 
-            Position position = null;
+            Plugin.Geolocator.Abstractions.Position position = null;
             try
             {
                 position = await this.geolocator.GetPositionAsync(timeout: TimeSpan.FromMilliseconds(100), includeHeading: false);
@@ -224,10 +225,12 @@ namespace WhereToFly.App.Core.Views
                 Math.Abs(position.Longitude) < 1e5 &&
                 this.mapView != null)
             {
-                await this.UpdateLastKnownPositionAsync(position);
+                var point = new MapPoint(position.Latitude, position.Longitude, position.Altitude);
+
+                await this.UpdateLastShownPositionAsync(point);
 
                 this.mapView.UpdateMyLocation(
-                    new MapPoint(position.Latitude, position.Longitude, position.Altitude),
+                    point,
                     (int)position.Accuracy,
                     position.Speed * Geo.Spatial.Constants.FactorMeterPerSecondToKilometerPerHour,
                     position.Timestamp,
@@ -444,7 +447,7 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task CreateMapViewAsync()
         {
-            MapPoint initialCenter = this.appSettings.LastKnownPosition ?? Constants.InitialCenterPoint;
+            MapPoint initialCenter = this.appSettings.LastShownPosition ?? Constants.InitialCenterPoint;
             if (!initialCenter.Valid)
             {
                 initialCenter = Constants.InitialCenterPoint;
@@ -578,9 +581,9 @@ namespace WhereToFly.App.Core.Views
 
             if (position != null)
             {
-                await this.UpdateLastKnownPositionAsync(position);
-
                 var point = new MapPoint(position.Latitude, position.Longitude, position.Altitude);
+
+                await this.UpdateLastShownPositionAsync(point);
 
                 await App.ShareMessageAsync(
                     "Share my position with...",
@@ -770,10 +773,12 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Called when message arrives in order to zoom to a location
         /// </summary>
-        /// <param name="app">app object</param>
         /// <param name="location">location to zoom to</param>
-        private void OnMessageZoomToLocation(App app, MapPoint location)
+        /// <returns>task to wait on</returns>
+        private async Task OnMessageZoomToLocation(MapPoint location)
         {
+            await this.UpdateLastShownPositionAsync(location);
+
             if (this.pageIsVisible)
             {
                 this.mapView.ZoomToLocation(location);
@@ -787,10 +792,17 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Called when message arrives in order to zoom to a track
         /// </summary>
-        /// <param name="app">app object</param>
         /// <param name="track">track to zoom to</param>
-        private void OnMessageZoomToTrack(App app, Track track)
+        /// <returns>task to wait on</returns>
+        private async Task OnMessageZoomToTrack(Track track)
         {
+            var point = track.CalculateCenterPoint();
+
+            if (point.Valid)
+            {
+                await this.UpdateLastShownPositionAsync(point);
+            }
+
             if (this.pageIsVisible)
             {
                 this.mapView.ZoomToTrack(track);
@@ -1032,36 +1044,36 @@ namespace WhereToFly.App.Core.Views
 
             this.zoomToMyPosition = false;
 
+            var point = new MapPoint(position.Latitude, position.Longitude, position.Altitude);
+
             if (this.mapView != null)
             {
                 this.mapView.UpdateMyLocation(
-                    new MapPoint(position.Latitude, position.Longitude, position.Altitude),
+                    point,
                     (int)position.Accuracy,
                     position.Speed * Geo.Spatial.Constants.FactorMeterPerSecondToKilometerPerHour,
                     position.Timestamp,
                     zoomToPosition);
             }
 
-            Task.Run(async () => await this.UpdateLastKnownPositionAsync(position));
+            Task.Run(async () => await this.UpdateLastShownPositionAsync(point));
         }
 
         /// <summary>
-        /// Updates last known position in data service
+        /// Updates last shown position in data service
         /// </summary>
-        /// <param name="position">current position</param>
+        /// <param name="point">position to store</param>
         /// <returns>task to wait on</returns>
-        private async Task UpdateLastKnownPositionAsync(Position position)
+        private async Task UpdateLastShownPositionAsync(MapPoint point)
         {
             if (this.appSettings == null)
             {
                 return; // appSettings not loaded yet
             }
 
-            var point = new MapPoint(position.Latitude, position.Longitude, position.Altitude);
-
             if (point.Valid)
             {
-                this.appSettings.LastKnownPosition = point;
+                this.appSettings.LastShownPosition = point;
 
                 var dataService = DependencyService.Get<IDataService>();
                 await dataService.StoreAppSettingsAsync(this.appSettings);

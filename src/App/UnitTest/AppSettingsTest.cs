@@ -19,7 +19,7 @@ namespace WhereToFly.App.UnitTest
             var appSettings = new AppSettings();
 
             // check
-            Assert.IsFalse(appSettings.LastKnownPosition.Valid, "last known position must be invalid");
+            Assert.IsFalse(appSettings.LastShownPosition.Valid, "last known position must be invalid");
         }
     }
 }

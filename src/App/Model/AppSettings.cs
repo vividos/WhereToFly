@@ -8,9 +8,9 @@ namespace WhereToFly.App.Model
     public class AppSettings
     {
         /// <summary>
-        /// Last known position of app user
+        /// Last position shown in the app
         /// </summary>
-        public MapPoint LastKnownPosition { get; set; }
+        public MapPoint LastShownPosition { get; set; }
 
         /// <summary>
         /// Map shading mode; determines at which hour in the day the sun shading is simulated
@@ -43,7 +43,7 @@ namespace WhereToFly.App.Model
         /// </summary>
         public AppSettings()
         {
-            this.LastKnownPosition = new MapPoint(0.0, 0.0);
+            this.LastShownPosition = new MapPoint(0.0, 0.0);
             this.ShadingMode = MapShadingMode.CurrentTime;
             this.MapImageryType = MapImageryType.OpenStreetMap;
             this.MapOverlayType = MapOverlayType.None;
