@@ -76,7 +76,14 @@ namespace WhereToFly.App.Geo.DataFormats
         private string FormatTrackName()
         {
             string date = this.currentDate.HasValue ? this.currentDate.Value.ToString("yyyy'-'MM'-'dd") : string.Empty;
-            return $"{date} {this.headerFields.GetValueOrDefault("PILOT", "???")}";
+
+            string pilotName = this.headerFields.GetValueOrDefault("PILOT", null);
+            if (pilotName == null)
+            {
+                pilotName = this.headerFields.GetValueOrDefault("PILOTINCHARGE", "???");
+            }
+
+            return $"{date} {pilotName}";
         }
 
         /// <summary>
