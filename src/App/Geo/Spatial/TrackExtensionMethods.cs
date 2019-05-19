@@ -15,6 +15,37 @@ namespace WhereToFly.App.Geo.Spatial
         private const int MaxHeightLimit = 10000;
 
         /// <summary>
+        /// Calculates center point of all track points
+        /// </summary>
+        /// <param name="track">track touse</param>
+        /// <returns>map center point</returns>
+        public static MapPoint CalculateCenterPoint(this Track track)
+        {
+            double latitude = 0.0;
+            double longitude = 0.0;
+            double altitude = 0.0;
+
+            int numAltitudePoints = 0;
+            foreach (var trackPoint in track.TrackPoints)
+            {
+                latitude += trackPoint.Latitude;
+                longitude += trackPoint.Longitude;
+                if (trackPoint.Altitude.HasValue)
+                {
+                    altitude += trackPoint.Altitude.Value;
+                    numAltitudePoints++;
+                }
+            }
+
+            int numTrackPoint = track.TrackPoints.Count;
+
+            return new MapPoint(
+                numTrackPoint > 0 ? latitude / numTrackPoint : 0.0,
+                numTrackPoint > 0 ? longitude / numTrackPoint : 0.0,
+                numAltitudePoints > 0 ? new double?(altitude / numAltitudePoints) : null);
+        }
+
+        /// <summary>
         /// Calculates statistics for track
         /// </summary>
         /// <param name="track">track to use</param>
