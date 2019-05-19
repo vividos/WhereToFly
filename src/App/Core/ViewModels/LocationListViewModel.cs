@@ -21,6 +21,11 @@ namespace WhereToFly.App.Core.ViewModels
     public class LocationListViewModel : ViewModelBase, IDisposable
     {
         /// <summary>
+        /// App settings to store last used filter text
+        /// </summary>
+        private readonly AppSettings appSettings;
+
+        /// <summary>
         /// Location list
         /// </summary>
         private List<Location> locationList = new List<Location>();
@@ -151,17 +156,35 @@ namespace WhereToFly.App.Core.ViewModels
         /// <param name="appSettings">app settings to use</param>
         public LocationListViewModel(AppSettings appSettings)
         {
+            this.appSettings = appSettings;
+
             this.filterText = appSettings.LastLocationListFilterText;
 
-            this.filterTextUpdateTimer.Elapsed += (sender, args) =>
+            this.filterTextUpdateTimer.Elapsed += async (sender, args) =>
             {
                 this.filterTextUpdateTimer.Stop();
+
+                await StoreLastLocationListFilterText(this.FilterText);
+
                 this.UpdateLocationList();
             };
 
             this.isListRefreshActive = false;
 
             this.SetupBindings();
+        }
+
+        /// <summary>
+        /// Stores last location list filter text
+        /// </summary>
+        /// <param name="filterText">filter text to store</param>
+        /// <returns>task to wait on</returns>
+        private async Task StoreLastLocationListFilterText(string filterText)
+        {
+            this.appSettings.LastLocationListFilterText = filterText;
+
+            var dataService = DependencyService.Get<IDataService>();
+            await dataService.StoreAppSettingsAsync(this.appSettings);
         }
 
         /// <summary>
