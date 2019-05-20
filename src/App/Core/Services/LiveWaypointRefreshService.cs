@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -84,6 +85,8 @@ namespace WhereToFly.App.Core.Services
         /// <param name="locationList">location list</param>
         public void UpdateLiveWaypointList(List<Location> locationList)
         {
+            Debug.WriteLine("LiveWaypointRefreshService: updating list of live waypoints");
+
             var addedIds = new HashSet<string>();
 
             lock (this.dataLock)
@@ -123,7 +126,10 @@ namespace WhereToFly.App.Core.Services
         /// <param name="liveWaypointLocation">live waypoint location to add</param>
         private void AddLiveWaypoint(Location liveWaypointLocation)
         {
-            this.liveWaypointMap.Add(liveWaypointLocation.Id, liveWaypointLocation);
+            lock (this.dataLock)
+            {
+                this.liveWaypointMap.Add(liveWaypointLocation.Id, liveWaypointLocation);
+            }
         }
 
         /// <summary>
@@ -132,8 +138,11 @@ namespace WhereToFly.App.Core.Services
         /// <param name="liveWaypointLocationId">live waypoint ID to remove</param>
         private void RemoveLiveWaypoint(string liveWaypointLocationId)
         {
-            this.liveWaypointMap.Remove(liveWaypointLocationId);
-            this.nextPossibleUpdateMap.Remove(liveWaypointLocationId);
+            lock (this.dataLock)
+            {
+                this.liveWaypointMap.Remove(liveWaypointLocationId);
+                this.nextPossibleUpdateMap.Remove(liveWaypointLocationId);
+            }
         }
 
         /// <summary>
@@ -142,45 +151,52 @@ namespace WhereToFly.App.Core.Services
         /// </summary>
         private void ScheduleUpdates()
         {
-            DateTimeOffset nextUpdateTime = DateTimeOffset.MaxValue;
-            string nextLocationId = null;
-            foreach (var item in this.nextPossibleUpdateMap)
+            Debug.WriteLine("LiveWaypointRefreshService: scheduling updates");
+
+            lock (this.dataLock)
             {
-                if (item.Value < nextUpdateTime)
+                DateTimeOffset nextUpdateTime = DateTimeOffset.MaxValue;
+                string nextLocationId = null;
+                foreach (var item in this.nextPossibleUpdateMap)
                 {
-                    nextUpdateTime = item.Value;
-                    nextLocationId = item.Key;
+                    if (item.Value < nextUpdateTime)
+                    {
+                        nextUpdateTime = item.Value;
+                        nextLocationId = item.Key;
+                    }
                 }
-            }
 
-            if (nextLocationId != null)
-            {
-                this.nextUpdateQueue.Enqueue(new LiveWaypointUpdateInfo
-                {
-                    LocationId = nextLocationId,
-                    UpdateTime = nextUpdateTime
-                });
-
-                this.StartTimer(nextUpdateTime);
-            }
-            else if (this.liveWaypointMap.Any())
-            {
-                // no locations in the map; update all
-                foreach (var liveWaypointId in this.liveWaypointMap.Keys)
+                if (nextLocationId != null)
                 {
                     this.nextUpdateQueue.Enqueue(new LiveWaypointUpdateInfo
                     {
-                        LocationId = liveWaypointId,
-                        UpdateTime = DateTimeOffset.Now
+                        LocationId = nextLocationId,
+                        UpdateTime = nextUpdateTime
                     });
-                }
 
-                Task.Run(this.CheckLiveWaypointsAsync);
-            }
-            else
-            {
-                nextUpdateTime = DateTimeOffset.Now + TimeSpan.FromMinutes(1.0);
-                this.StartTimer(nextUpdateTime);
+                    this.StartTimer(nextUpdateTime);
+                }
+                else if (this.liveWaypointMap.Any())
+                {
+                    // no locations in the map; update all
+                    Debug.WriteLine("LiveWaypointRefreshService: schedule update for all live waypoints");
+
+                    foreach (var liveWaypointId in this.liveWaypointMap.Keys)
+                    {
+                        this.nextUpdateQueue.Enqueue(new LiveWaypointUpdateInfo
+                        {
+                            LocationId = liveWaypointId,
+                            UpdateTime = DateTimeOffset.Now
+                        });
+                    }
+
+                    Task.Run(this.CheckLiveWaypointsAsync);
+                }
+                else
+                {
+                    nextUpdateTime = DateTimeOffset.Now + TimeSpan.FromMinutes(1.0);
+                    this.StartTimer(nextUpdateTime);
+                }
             }
         }
 
@@ -190,6 +206,8 @@ namespace WhereToFly.App.Core.Services
         /// <param name="nextUpdateTime">next time an update should be carried out</param>
         private void StartTimer(DateTimeOffset nextUpdateTime)
         {
+            Debug.WriteLine($"LiveWaypointRefreshService: starting timer for next update on {nextUpdateTime}");
+
             TimeSpan dueTimeSpan = nextUpdateTime - DateTimeOffset.Now;
 
             if (dueTimeSpan < TimeSpan.Zero)
@@ -242,6 +260,8 @@ namespace WhereToFly.App.Core.Services
         {
             this.StopTimer();
 
+            Debug.WriteLine("LiveWaypointRefreshService: checking all live waypoints in queue");
+
             LiveWaypointUpdateInfo updateInfo;
             while ((updateInfo = this.GetNextUpdateInfo()) != null)
             {
@@ -277,20 +297,27 @@ namespace WhereToFly.App.Core.Services
         /// <returns>task to wait on</returns>
         private async Task UpdateLiveWaypointAsync(string liveWaypointId)
         {
+            Debug.WriteLine($"LiveWaypointRefreshService: updating live waypoint for {liveWaypointId}");
+
             LiveWaypointQueryResult data = null;
             try
             {
                 data = await this.DataService.GetLiveWaypointDataAsync(liveWaypointId);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 // ignore exception
+                Debug.WriteLine($"LiveWaypointRefreshService: exception occured: {ex.ToString()}");
             }
 
             if (data == null)
             {
                 // try again in a minute
-                this.nextPossibleUpdateMap[liveWaypointId] = DateTimeOffset.Now + TimeSpan.FromMinutes(1.0);
+                lock (this.dataLock)
+                {
+                    this.nextPossibleUpdateMap[liveWaypointId] = DateTimeOffset.Now + TimeSpan.FromMinutes(1.0);
+                }
+
                 return;
             }
 
@@ -305,7 +332,10 @@ namespace WhereToFly.App.Core.Services
             }
 
             var nextUpdate = data.NextRequestDate;
-            this.nextPossibleUpdateMap[liveWaypointId] = nextUpdate;
+            lock (this.dataLock)
+            {
+                this.nextPossibleUpdateMap[liveWaypointId] = nextUpdate;
+            }
         }
     }
 }
