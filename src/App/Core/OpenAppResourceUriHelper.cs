@@ -84,7 +84,7 @@ namespace WhereToFly.App.Core
 
             return new Location
             {
-                Id = result.Data.ID + "-" + Guid.NewGuid().ToString("B"),
+                Id = result.Data.ID,
                 Name = waypointName ?? result.Data.Name,
                 MapLocation = mapPoint,
                 Description = result.Data.Description.Replace("\n", "<br/>"),
@@ -113,6 +113,10 @@ namespace WhereToFly.App.Core
             var dataService = DependencyService.Get<IDataService>();
 
             var locationList = await dataService.GetLocationListAsync(CancellationToken.None);
+
+            // remove when the live waypoint was already in the list
+            locationList.RemoveAll(location => location.Id == liveWaypoint.Id);
+
             locationList.Add(liveWaypoint);
 
             await dataService.StoreLocationListAsync(locationList);
