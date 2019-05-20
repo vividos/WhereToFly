@@ -100,7 +100,11 @@ namespace WhereToFly.App.Logic
         /// <returns>query result for live waypoint</returns>
         public async Task<LiveWaypointQueryResult> GetLiveWaypointDataAsync(string liveWaypointId)
         {
-            return await this.backendWebApi.GetLiveWaypointDataAsync(liveWaypointId);
+            LiveWaypointQueryResult result = await this.backendWebApi.GetLiveWaypointDataAsync(liveWaypointId);
+
+            result.Data.ID = System.Net.WebUtility.UrlDecode(result.Data.ID);
+
+            return result;
         }
 
         /// <summary>
