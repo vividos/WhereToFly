@@ -163,7 +163,7 @@ namespace WhereToFly.App.Core.Services
 
                 this.StartTimer(nextUpdateTime);
             }
-            else
+            else if (this.liveWaypointMap.Any())
             {
                 // no locations in the map; update all
                 foreach (var liveWaypointId in this.liveWaypointMap.Keys)
@@ -176,6 +176,11 @@ namespace WhereToFly.App.Core.Services
                 }
 
                 Task.Run(this.CheckLiveWaypointsAsync);
+            }
+            else
+            {
+                nextUpdateTime = DateTimeOffset.Now + TimeSpan.FromMinutes(1.0);
+                this.StartTimer(nextUpdateTime);
             }
         }
 
