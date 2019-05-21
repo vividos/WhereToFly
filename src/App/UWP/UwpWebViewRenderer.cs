@@ -15,12 +15,12 @@ namespace WhereToFly.App.UWP
         /// <summary>
         /// Called when web view element has been changed
         /// </summary>
-        /// <param name="args">event args for web view change</param>
-        protected override void OnElementChanged(ElementChangedEventArgs<WebView> args)
+        /// <param name="e">event args for web view change</param>
+        protected override void OnElementChanged(ElementChangedEventArgs<WebView> e)
         {
-            base.OnElementChanged(args);
+            base.OnElementChanged(e);
 
-            if (args.NewElement != null &&
+            if (e.NewElement != null &&
                 this.Control != null)
             {
                 this.SetupWebViewSettings();

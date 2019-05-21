@@ -13,10 +13,12 @@ namespace WhereToFly.App.UWP
     /// </summary>
     public class UwpPlatform : IPlatform
     {
+#pragma warning disable S1075 // URIs should not be hardcoded
         /// <summary>
         /// Path URL for assets files
         /// </summary>
         private const string AppxAssetsPathUrl = "ms-appx:///WhereToFly.App.Resources.UWP/Assets/";
+#pragma warning restore S1075 // URIs should not be hardcoded
 
         /// <summary>
         /// Property containing the UWP app data folder

@@ -12,6 +12,10 @@ namespace WhereToFly.WebApi.LiveWaypoints
         /// Main entry point for WebAPI
         /// </summary>
         /// <param name="args">command line args</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Sonar Code Smell",
+            "S4823:Using command line arguments is security-sensitive",
+            Justification = "ASP.NET Core boilerplate code")]
         public static void Main(string[] args)
         {
             CreateWebHostBuilder(args).Build().Run();
