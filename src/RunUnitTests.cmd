@@ -7,7 +7,7 @@ REM Runs Unit tests and coverage analysis
 REM
 
 REM set this to your Visual Studio installation folder
-set VSINSTALL=%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Community
+set VSINSTALL=%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community
 
 REM set this to your OpenCover executable
 set OPENCOVER="d:\devel\tools\OpenCover\OpenCover.Console.exe"

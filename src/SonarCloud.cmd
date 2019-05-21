@@ -7,7 +7,7 @@ REM Runs SonarCloud analysis build
 REM
 
 REM set this to your Visual Studio installation folder
-set VSINSTALL=%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Community
+set VSINSTALL=%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community
 
 REM set this to your SonarQube tools folder
 set SONARQUBE=D:\devel\tools\SonarQube
@@ -41,7 +41,7 @@ SonarScanner.MSBuild.exe begin ^
     /d:"sonar.cfamily.build-wrapper-output=%CD%\bw-output" ^
     /d:"sonar.cs.opencover.reportsPaths=%CD%\TestResults\WhereToFly-*-CoverageReport.xml" ^
     /d:"sonar.host.url=https://sonarcloud.io" ^
-    /d:"sonar.organization=vividos-github" ^
+    /o:"vividos-github" ^
     /d:"sonar.login=%SONARLOGIN%"
 
 REM
