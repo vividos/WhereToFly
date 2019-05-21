@@ -233,7 +233,7 @@ namespace WhereToFly.App.Core.ViewModels
         public async Task ReloadTrackListAsync()
         {
             await this.LoadDataAsync();
-            this.UpdateTrackList();
+            await App.RunOnUiThreadAsync(this.UpdateTrackList);
         }
 
         /// <summary>
