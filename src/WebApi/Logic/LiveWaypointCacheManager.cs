@@ -101,8 +101,7 @@ namespace WhereToFly.WebApi.Logic
         /// </returns>
         private LiveWaypointQueryResult CheckCache(AppResourceUri uri)
         {
-            DateTimeOffset nextRequestDate = this.GetNextRequestDate(uri);
-            if (nextRequestDate <= DateTimeOffset.Now)
+            if (this.IsNextRequestPossible(uri))
             {
                 return null;
             }
@@ -124,8 +123,33 @@ namespace WhereToFly.WebApi.Logic
             return new LiveWaypointQueryResult
             {
                 Data = cachedData,
-                NextRequestDate = nextRequestDate
+                NextRequestDate = this.GetNextRequestDate(uri)
             };
+        }
+
+        /// <summary>
+        /// Returns if next request is possible for the given app resource URI
+        /// </summary>
+        /// <param name="uri">live waypoint ID</param>
+        /// <returns>
+        /// true when web service request is possible, false when cache should be used
+        /// </returns>
+        private bool IsNextRequestPossible(AppResourceUri uri)
+        {
+            switch (uri.Type)
+            {
+                case AppResourceUri.ResourceType.FindMeSpotPos:
+                case AppResourceUri.ResourceType.GarminInreachPos:
+                    DateTimeOffset nextRequestDate = this.GetNextRequestDate(uri);
+                    return nextRequestDate <= DateTimeOffset.Now;
+
+                case AppResourceUri.ResourceType.TestPos:
+                    return true; // request is always possible
+
+                default:
+                    Debug.Assert(false, "invalid app resource URI type");
+                    return false;
+            }
         }
 
         /// <summary>
