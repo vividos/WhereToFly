@@ -54,6 +54,8 @@ namespace WhereToFly.App.Core
 
                 App.ShowToast("Live waypoint was loaded.");
 
+                await NavigationService.Instance.NavigateAsync(Constants.PageKeyMapPage, animated: true);
+
                 App.ZoomToLocation(liveWaypoint.MapLocation);
                 App.UpdateMapLocationsList();
             }
