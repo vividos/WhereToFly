@@ -108,7 +108,11 @@ function MapView(options) {
         timeline: false,
         skyBox: false,
         scene3DOnly: true,
-        requestRenderMode: true
+        requestRenderMode: true,
+        // Temporary fix for issue with displaying transparent track walls and
+        // flying range cones; starting from Chrome 74. See also:
+        // https://github.com/AnalyticalGraphicsInc/cesium/issues/7798
+        orderIndependentTranslucency: false
     });
 
     this.viewer.scene.globe.enableLighting = true;
