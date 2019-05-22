@@ -126,6 +126,13 @@
     "WebLink": "https://www.zamg.ac.at/cms/de/wetter/wetterkarte"
   },
   {
+    "Name": "meteoblue Wetterkarte Alpen",
+    "Group": "Weather forecast",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://www.meteoblue.com/de/wetter/webmap/index/47.597N11.744E1025_Europe%2FBerlin?variable=wind_streamlines&level=850mb&lines=none&mapcenter=47.3612N11.9751&zoom=8"
+  },
+  {
     "Name": "Lawinenlagebericht Tirol",
     "Group": "Weather forecast",
     "Type": 0,
