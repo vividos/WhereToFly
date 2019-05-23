@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using WhereToFly.Shared.Base;
 using WhereToFly.Shared.Model;
 
 namespace WhereToFly.WebApi.Logic.Services
@@ -127,36 +128,24 @@ namespace WhereToFly.WebApi.Logic.Services
 
             inEmergency = inEmergency.Replace("False", "no")
                 .Replace("false", "no")
-                .Replace("True", "YES!")
-                .Replace("true", "YES");
+                .Replace("True", "<b style='color: red'>YES!</b>")
+                .Replace("true", "<b style='color: red'>YES!</b>");
 
             return string.Format(
-                "In Emergency: {0}\n" +
-                "Time in UTC: {1}\n" +
-                "Device type: {2}\n" +
-                "Velocity: {3}\n" +
-                "Course: {4}\n" +
-                "Event: {5}\n" +
+                "In Emergency: {0}<br/>" +
+                "Time in UTC: {1}<br/>" +
+                "Device type: {2}<br/>" +
+                "Velocity: {3}<br/>" +
+                "Course: {4}<br/>" +
+                "Event: {5}<br/>" +
                 "Text: {6}",
                 inEmergency,
-                ValueOrDefault(extendedData, "Time UTC", "N/A"),
-                ValueOrDefault(extendedData, "Device Type", "N/A"),
-                ValueOrDefault(extendedData, "Velocity", "N/A"),
-                ValueOrDefault(extendedData, "Course", "N/A"),
-                ValueOrDefault(extendedData, "Event", "N/A"),
-                ValueOrDefault(extendedData, "Text", "N/A"));
-        }
-
-        /// <summary>
-        /// Gets value from dictionary or default value, when key doesn't exist
-        /// </summary>
-        /// <param name="dict">dictionary to use</param>
-        /// <param name="key">key to find</param>
-        /// <param name="defaultValue">default value to return</param>
-        /// <returns>value in the dictionary, or default value</returns>
-        private static string ValueOrDefault(Dictionary<string, string> dict, string key, string defaultValue)
-        {
-            return dict.ContainsKey(key) ? dict[key] : defaultValue;
+                extendedData.GetValueOrDefault("Time UTC", "N/A"),
+                extendedData.GetValueOrDefault("Device Type", "N/A"),
+                extendedData.GetValueOrDefault("Velocity", "N/A"),
+                extendedData.GetValueOrDefault("Course", "N/A"),
+                extendedData.GetValueOrDefault("Event", "N/A"),
+                extendedData.GetValueOrDefault("Text", "N/A"));
         }
     }
 }
