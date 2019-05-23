@@ -32,9 +32,24 @@ namespace WhereToFly.WebApi.Logic.Services
 #pragma warning restore S1075 // URIs should not be hardcoded
 
         /// <summary>
+        /// Minimum distance in time span between two requests to web service
+        /// </summary>
+        private static System.TimeSpan MinRequestDistance = System.TimeSpan.FromMinutes(1.0);
+
+        /// <summary>
+        /// The minimum tracking time that a Garmin inReach user can have
+        /// </summary>
+        private static System.TimeSpan MinTrackingInterval = System.TimeSpan.FromMinutes(10.0);
+
+        /// <summary>
         /// HTTP client used for requests
         /// </summary>
         private readonly HttpClient client = new HttpClient();
+
+        /// <summary>
+        /// Mapping of MapShare identifier to Date/time of last request
+        /// </summary>
+        private readonly Dictionary<string, DateTimeOffset> lastRequestByMapShareIdentifier = new Dictionary<string, DateTimeOffset>();
 
         /// <summary>
         /// Date/time of last request, or null when no request was made yet
@@ -48,7 +63,17 @@ namespace WhereToFly.WebApi.Logic.Services
         /// <returns>next possible request date</returns>
         public DateTimeOffset GetNextRequestDate(string mapShareIdentifier)
         {
-            return this.lastRequest.HasValue ? this.lastRequest.Value + System.TimeSpan.FromMinutes(1.0) : DateTimeOffset.Now;
+            DateTimeOffset nextSystemWideRequest = this.lastRequest.HasValue
+                ? this.lastRequest.Value + MinRequestDistance
+                : DateTimeOffset.Now;
+
+            if (this.lastRequestByMapShareIdentifier.ContainsKey(mapShareIdentifier))
+            {
+                var nextUserRequest = this.lastRequestByMapShareIdentifier[mapShareIdentifier] + MinTrackingInterval;
+                return nextUserRequest < nextSystemWideRequest ? nextSystemWideRequest: nextUserRequest;
+            }
+
+            return nextSystemWideRequest;
         }
 
         /// <summary>
@@ -62,7 +87,9 @@ namespace WhereToFly.WebApi.Logic.Services
 
             var stream = await this.client.GetStreamAsync(requestUrl);
 
-            this.lastRequest = DateTimeOffset.Now;
+            var thisRequestTime = DateTimeOffset.Now;
+            this.lastRequest = thisRequestTime;
+            this.lastRequestByMapShareIdentifier[mapShareIdentifier] = thisRequestTime;
 
             return this.ParseRawKmlDataFile(stream, mapShareIdentifier);
         }
@@ -88,6 +115,11 @@ namespace WhereToFly.WebApi.Logic.Services
             var point = placemark.Geometry as Point;
 
             var when = (placemark.Time as Timestamp).When;
+
+            if (when.HasValue)
+            {
+                this.lastRequestByMapShareIdentifier[mapShareIdentifier] = new DateTimeOffset(when.Value);
+            }
 
             return new LiveWaypointData
             {
