@@ -12,12 +12,14 @@ version.
 - [ ] Add found location as new waypoint
 - [ ] Try finding non-existent location
 - [ ] Share current location with another app
+- [ ] Show flying range for a point on the map
 
 ## Location list
 
 - [ ] Import locations from included lists
 - [ ] Import locations from .kml, .kmz and .gpx files using file picker
 - [ ] Import locations by opening them via app
+- [ ] Add live waypoints using where-to-fly:// links
 - [ ] View locations list and details
 - [ ] Navigate to location
 - [ ] Filter locations list by text
@@ -53,3 +55,4 @@ version.
 # Miscellaneous
 
 - [ ] Show info page
+- [ ] Plan tour using tour planning locations
