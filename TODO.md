@@ -11,15 +11,10 @@
 
 ## New Features
 
-### Version 1.5
+### Map
 
 - [ ] Show polyline with path from last 1h
 - [ ] Follow location when "my location" icon is tapped, until user interacts with view
-
-### Backlog
-
-- [ ] Spot location background service
-- [ ] Weather background service
 - [ ] Thermal placemarks
 - [ ] Wind field overlay from GFS weather model
-- [ ] Flying mode with wind direction measurement
+
