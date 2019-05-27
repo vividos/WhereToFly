@@ -58,8 +58,10 @@ namespace WhereToFly.App.Core.Converter
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             Debug.Assert(
-                targetType == typeof(string) || targetType == typeof(FileImageSource),
-                "convert target must be string or FileImageSource");
+                targetType == typeof(string) ||
+                targetType == typeof(FileImageSource) ||
+                targetType == typeof(ImageSource),
+                "convert target must be string, FileImageSource or ImageSource");
 
             string imageBaseName = (string)value;
 
