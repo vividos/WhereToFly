@@ -4,6 +4,7 @@ using SharpKml.Dom.GX;
 using SharpKml.Engine;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using WhereToFly.App.Logic;
@@ -133,6 +134,12 @@ namespace WhereToFly.App.Geo.DataFormats
                 {
                     trackList.Add(placemark3.Name);
                 }
+
+                if (element is Placemark placemark4 &&
+                    placemark4.Geometry is MultipleGeometry multiGeometry)
+                {
+                    trackList.Add(placemark4.Name);
+                }
             }
 
             return trackList;
@@ -176,6 +183,17 @@ namespace WhereToFly.App.Geo.DataFormats
                     if (trackIndex == currentTrackIndex)
                     {
                         return LoadTrackFromGXMultiTrack(multiTrack);
+                    }
+
+                    currentTrackIndex++;
+                }
+
+                if (element is Placemark placemark4 &&
+                    placemark4.Geometry is MultipleGeometry multiGeometry)
+                {
+                    if (trackIndex == currentTrackIndex)
+                    {
+                        return LoadTrackFromMultipleGeometry(multiGeometry);
                     }
 
                     currentTrackIndex++;
@@ -247,6 +265,46 @@ namespace WhereToFly.App.Geo.DataFormats
             foreach (var gxtrack in multiTrack.Tracks)
             {
                 AddGxTrackPointsToTrack(track, gxtrack);
+            }
+
+            return track;
+        }
+
+        /// <summary>
+        /// Loads track from given MultiGeometry object, containing multiple geometry objects.
+        /// </summary>
+        /// <param name="multiGeometry">multi geometry object</param>
+        /// <returns>loaded track </returns>
+        private Track LoadTrackFromMultipleGeometry(MultipleGeometry multiGeometry)
+        {
+            var track = CreateTrackFromPlacemark(multiGeometry.Parent as Placemark);
+
+            foreach (var geometry in multiGeometry.Geometry)
+            {
+                if (geometry is LineString lineString)
+                {
+                    foreach (var vector in lineString.Coordinates)
+                    {
+                        TrackPoint trackPoint = GetTrackPointFromVector(vector);
+
+                        track.TrackPoints.Add(trackPoint);
+                    }
+                }
+                else if (geometry is SharpKml.Dom.GX.Track gxtrack)
+                {
+                    AddGxTrackPointsToTrack(track, gxtrack);
+                }
+                else if (geometry is MultipleTrack multiTrack)
+                {
+                    foreach (var gxtrack2 in multiTrack.Tracks)
+                    {
+                        AddGxTrackPointsToTrack(track, gxtrack2);
+                    }
+                }
+                else
+                {
+                    Debug.WriteLine($"unhandled geometry type: {geometry.GetType().FullName}");
+                }
             }
 
             return track;
