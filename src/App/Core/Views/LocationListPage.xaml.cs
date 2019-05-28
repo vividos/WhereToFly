@@ -159,7 +159,7 @@ namespace WhereToFly.App.Core.Views
                     new MenuItem
                     {
                         Text = "Add tour plan location",
-                        Icon = new FileImageSource
+                        IconImageSource = new FileImageSource
                         {
                             File = Converter.ImagePathConverter.GetDeviceDependentImage("map_marker_plus")
                         },

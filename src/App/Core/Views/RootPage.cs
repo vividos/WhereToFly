@@ -35,7 +35,7 @@ namespace WhereToFly.App.Core.Views
             navigationPage.BarBackgroundColor = Constants.PrimaryColor;
             navigationPage.BarTextColor = Color.White;
 
-            NavigationPage.SetTitleIcon(navigationPage, "icon.png");
+            NavigationPage.SetTitleIconImageSource(navigationPage, "icon.png");
 
             this.Detail = navigationPage;
 
