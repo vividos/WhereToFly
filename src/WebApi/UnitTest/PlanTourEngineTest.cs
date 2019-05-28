@@ -39,6 +39,9 @@ namespace WhereToFly.WebApi.UnitTest
 
             var graphLoader = new TourGraphLoader(engine);
             graphLoader.Load(kmlStream);
+
+            // check
+            Assert.IsNotNull(engine.FindWaypointInfo("wheretofly-path-rauhkopf"), "waypoint info must be found after loading");
         }
 
         /// <summary>

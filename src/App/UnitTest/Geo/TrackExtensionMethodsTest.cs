@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.IO;
 using WhereToFly.App.Geo;
 using WhereToFly.App.Geo.DataFormats;
@@ -25,6 +26,7 @@ namespace WhereToFly.App.UnitTest.Geo
             track.CalculateStatistics();
 
             // check
+            Assert.AreEqual(TimeSpan.Zero, track.Duration, "duration must be zero");
         }
 
         /// <summary>
@@ -56,6 +58,9 @@ namespace WhereToFly.App.UnitTest.Geo
                     if (track != null)
                     {
                         track.CalculateStatistics();
+
+                        // check
+                        Assert.IsNotNull(track.Id, "track ID must not be null");
                     }
                 }
             }
