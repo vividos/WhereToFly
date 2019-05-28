@@ -28,9 +28,17 @@ namespace WhereToFly.App.Core.Views
 
             string markdownText = platform.LoadAssetText("info.md");
 
-            markdownText = markdownText.Replace(
-                "%VERSION%",
-                $"{AppInfo.VersionString} (Build {AppInfo.BuildString})");
+            string versionText;
+            try
+            {
+                versionText = $"{AppInfo.VersionString} (Build {AppInfo.BuildString})";
+            }
+            catch (System.Exception)
+            {
+                versionText = "Unknown version";
+            }
+
+            markdownText = markdownText.Replace("%VERSION%", versionText);
 
             string htmlText = HtmlConverter.FromMarkdown(markdownText);
 
