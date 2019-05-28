@@ -107,13 +107,17 @@ namespace WhereToFly.App.UnitTest
             // set up
             var cache = new WeatherImageCache();
 
-            // run
-            var imageSource = await cache.GetImageAsync(new WeatherIconDescription
+            var desc = new WeatherIconDescription
             {
                 Name = "hello world",
                 Type = WeatherIconDescription.IconType.IconLink,
                 WebLink = "https://localhost/test/123/",
-            });
+            };
+
+            await cache.AddImageAsync(desc, new byte[1] { 42 });
+
+            // run
+            var imageSource = await cache.GetImageAsync(desc);
 
             // check
             Assert.IsNotNull(imageSource, "returned image source must not be null");

@@ -132,6 +132,22 @@ namespace WhereToFly.App.Core
         }
 
         /// <summary>
+        /// Adds image to cache
+        /// </summary>
+        /// <param name="iconDescription">weather icon description to store image for</param>
+        /// <param name="imageData">image data to store</param>
+        /// <returns>task to wait on</returns>
+        public async Task AddImageAsync(WeatherIconDescription iconDescription, byte[] imageData)
+        {
+            string imageId = await GetImageIdentifierAsync(iconDescription);
+
+            lock (this.imageCacheLock)
+            {
+                this.imageCache[imageId] = new ImageCacheEntry(imageData);
+            }
+        }
+
+        /// <summary>
         /// Returns an image from image cache
         /// </summary>
         /// <param name="iconDescription">weather icon description to load image for</param>
