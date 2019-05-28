@@ -42,6 +42,13 @@ namespace WhereToFly.Shared.Model
             GarminInreachPos = 1,
 
             /// <summary>
+            /// Specifies a position from a device in the "Open Glider Network"
+            /// (https://www.glidernet.org/); the data property contains the device ID of the
+            /// device.
+            /// </summary>
+            OpenGliderNetworkPos = 2,
+
+            /// <summary>
             /// Specifies a position for testing
             /// </summary>
             TestPos = 100,
