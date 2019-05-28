@@ -488,7 +488,7 @@ namespace WhereToFly.App.Core.Views
                 this.mapView.UpdateLocation(location);
 
                 var dataService = DependencyService.Get<IDataService>();
-                Task.Run(async() => await dataService.StoreLocationListAsync(this.locationList));
+                Task.Run(async () => await dataService.StoreLocationListAsync(this.locationList));
             }
         }
 

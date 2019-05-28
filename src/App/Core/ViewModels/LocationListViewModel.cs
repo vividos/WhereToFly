@@ -21,6 +21,27 @@ namespace WhereToFly.App.Core.ViewModels
     public class LocationListViewModel : ViewModelBase, IDisposable
     {
         /// <summary>
+        /// A mapping of display string to locations list filename, stored as Assets in the app
+        /// </summary>
+        private readonly Dictionary<string, string> includedLocationsList = new Dictionary<string, string>
+        {
+            { "Paraglidingspots European Alps Mai 2019", "paraglidingspots_european_alps_2019_05_15.kmz" },
+            { "Crossing the Alps 2018 Waypoints", "crossing_the_alps_2018.kmz" },
+            { "Paraglidingspots Crossing the Alps 2019", "paraglidingspots_crossing_the_alps_2019_05_15.kmz" }
+        };
+
+        /// <summary>
+        /// A mapping of display string to website address to open
+        /// </summary>
+        private readonly Dictionary<string, string> downloadWebSiteList = new Dictionary<string, string>
+        {
+            { "vividos' Where-to-fly resources", "http://www.vividos.de/wheretofly.html" },
+            { "Paraglidingspots.com", "http://paraglidingspots.com/downloadselect.aspx" },
+            { "DHV Gelände-Datenbank",
+                "https://www.dhv.de/web/piloteninfos/gelaende-luftraum-natur/fluggelaendeflugbetrieb/gelaendedaten/gelaendedaten-download" }
+        };
+
+        /// <summary>
         /// App settings to store last used filter text
         /// </summary>
         private readonly AppSettings appSettings;
@@ -49,27 +70,6 @@ namespace WhereToFly.App.Core.ViewModels
         /// Current position of user; may be null when not retrieved yet
         /// </summary>
         private MapPoint currentPosition;
-
-        /// <summary>
-        /// A mapping of display string to locations list filename, stored as Assets in the app
-        /// </summary>
-        private readonly Dictionary<string, string> includedLocationsList = new Dictionary<string, string>
-        {
-            { "Paraglidingspots European Alps Mai 2019", "paraglidingspots_european_alps_2019_05_15.kmz" },
-            { "Crossing the Alps 2018 Waypoints", "crossing_the_alps_2018.kmz" },
-            { "Paraglidingspots Crossing the Alps 2019", "paraglidingspots_crossing_the_alps_2019_05_15.kmz" }
-        };
-
-        /// <summary>
-        /// A mapping of display string to website address to open
-        /// </summary>
-        private readonly Dictionary<string, string> downloadWebSiteList = new Dictionary<string, string>
-        {
-            { "vividos' Where-to-fly resources", "http://www.vividos.de/wheretofly.html" },
-            { "Paraglidingspots.com", "http://paraglidingspots.com/downloadselect.aspx" },
-            { "DHV Gelände-Datenbank",
-                "https://www.dhv.de/web/piloteninfos/gelaende-luftraum-natur/fluggelaendeflugbetrieb/gelaendedaten/gelaendedaten-download" }
-        };
 
         #region Binding properties
         /// <summary>
@@ -517,7 +517,7 @@ namespace WhereToFly.App.Core.ViewModels
             await dataService.StoreLocationListAsync(this.locationList);
 
             var liveWaypointRefreshService = DependencyService.Get<LiveWaypointRefreshService>();
-            liveWaypointRefreshService.UpdateLiveWaypointList(locationList);
+            liveWaypointRefreshService.UpdateLiveWaypointList(this.locationList);
 
             this.UpdateLocationList();
 

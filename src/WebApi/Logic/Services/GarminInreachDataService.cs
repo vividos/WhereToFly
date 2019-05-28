@@ -34,12 +34,12 @@ namespace WhereToFly.WebApi.Logic.Services
         /// <summary>
         /// Minimum distance in time span between two requests to web service
         /// </summary>
-        private static System.TimeSpan MinRequestDistance = System.TimeSpan.FromMinutes(1.0);
+        private static System.TimeSpan minRequestDistance = System.TimeSpan.FromMinutes(1.0);
 
         /// <summary>
         /// The minimum tracking time that a Garmin inReach user can have
         /// </summary>
-        private static System.TimeSpan MinTrackingInterval = System.TimeSpan.FromMinutes(10.0);
+        private static System.TimeSpan minTrackingInterval = System.TimeSpan.FromMinutes(10.0);
 
         /// <summary>
         /// HTTP client used for requests
@@ -64,13 +64,13 @@ namespace WhereToFly.WebApi.Logic.Services
         public DateTimeOffset GetNextRequestDate(string mapShareIdentifier)
         {
             DateTimeOffset nextSystemWideRequest = this.lastRequest.HasValue
-                ? this.lastRequest.Value + MinRequestDistance
+                ? this.lastRequest.Value + minRequestDistance
                 : DateTimeOffset.Now;
 
             if (this.lastRequestByMapShareIdentifier.ContainsKey(mapShareIdentifier))
             {
-                var nextUserRequest = this.lastRequestByMapShareIdentifier[mapShareIdentifier] + MinTrackingInterval;
-                return nextUserRequest < nextSystemWideRequest ? nextSystemWideRequest: nextUserRequest;
+                var nextUserRequest = this.lastRequestByMapShareIdentifier[mapShareIdentifier] + minTrackingInterval;
+                return nextUserRequest < nextSystemWideRequest ? nextSystemWideRequest : nextUserRequest;
             }
 
             return nextSystemWideRequest;

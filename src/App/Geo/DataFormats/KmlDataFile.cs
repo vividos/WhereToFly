@@ -193,7 +193,7 @@ namespace WhereToFly.App.Geo.DataFormats
                 {
                     if (trackIndex == currentTrackIndex)
                     {
-                        return LoadTrackFromMultipleGeometry(multiGeometry);
+                        return this.LoadTrackFromMultipleGeometry(multiGeometry);
                     }
 
                     currentTrackIndex++;
