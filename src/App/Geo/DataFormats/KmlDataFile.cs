@@ -24,6 +24,16 @@ namespace WhereToFly.App.Geo.DataFormats
         private readonly KmlFile kml;
 
         /// <summary>
+        /// List of track placemarks
+        /// </summary>
+        private readonly List<Placemark> trackPlacemarkList = new List<Placemark>();
+
+        /// <summary>
+        /// List of location placemarks
+        /// </summary>
+        private readonly List<Placemark> locationPlacemarkList = new List<Placemark>();
+
+        /// <summary>
         /// Creates a new KML data file from stream
         /// </summary>
         /// <param name="stream">stream to read from</param>
@@ -49,6 +59,11 @@ namespace WhereToFly.App.Geo.DataFormats
             {
                 var kmz = KmzFile.Open(stream);
                 this.kml = kmz.GetDefaultKmlFile();
+            }
+
+            if (this.kml != null)
+            {
+                this.ScanKml();
             }
         }
 
@@ -78,28 +93,40 @@ namespace WhereToFly.App.Geo.DataFormats
         }
 
         /// <summary>
-        /// Returns if the opened file contains any locations
+        /// Scans loaded KmlFile for track and location placemarks.
         /// </summary>
-        /// <returns>true when the file contains locations, false when not</returns>
-        public bool HasLocations()
+        private void ScanKml()
         {
-            if (this.kml == null ||
-                this.kml.Root == null)
+            if (this.kml?.Root == null)
             {
-                return false;
+                return;
             }
 
             foreach (var element in this.kml.Root.Flatten())
             {
-                if (element is Placemark placemark &&
-                    placemark.Geometry is Point point)
+                if (element is Placemark placemark)
                 {
-                    return true;
+                    if (placemark.Geometry is LineString linestring ||
+                        placemark.Geometry is SharpKml.Dom.GX.Track track ||
+                        placemark.Geometry is MultipleTrack multiTrack ||
+                        placemark.Geometry is MultipleGeometry multiGeometry)
+                    {
+                        this.trackPlacemarkList.Add(placemark);
+                    }
+
+                    if (placemark.Geometry is Point point)
+                    {
+                        this.locationPlacemarkList.Add(placemark);
+                    }
                 }
             }
-
-            return false;
         }
+
+        /// <summary>
+        /// Returns if the opened file contains any locations
+        /// </summary>
+        /// <returns>true when the file contains locations, false when not</returns>
+        public bool HasLocations() => this.locationPlacemarkList.Any();
 
         /// <summary>
         /// Returns a list of tracks contained in the kml or kmz file.
@@ -107,42 +134,9 @@ namespace WhereToFly.App.Geo.DataFormats
         /// <returns>list of tracks found in the file</returns>
         public List<string> GetTrackList()
         {
-            var trackList = new List<string>();
-
-            if (this.kml == null ||
-                this.kml.Root == null)
-            {
-                return trackList;
-            }
-
-            foreach (var element in this.kml.Root.Flatten())
-            {
-                if (element is Placemark placemark &&
-                    placemark.Geometry is LineString linestring)
-                {
-                    trackList.Add(placemark.Name);
-                }
-
-                if (element is Placemark placemark2 &&
-                    placemark2.Geometry is SharpKml.Dom.GX.Track track)
-                {
-                    trackList.Add(placemark2.Name);
-                }
-
-                if (element is Placemark placemark3 &&
-                    placemark3.Geometry is MultipleTrack multiTrack)
-                {
-                    trackList.Add(placemark3.Name);
-                }
-
-                if (element is Placemark placemark4 &&
-                    placemark4.Geometry is MultipleGeometry multiGeometry)
-                {
-                    trackList.Add(placemark4.Name);
-                }
-            }
-
-            return trackList;
+            return
+                (from trackPlacemark in this.trackPlacemarkList
+                 select trackPlacemark.Name).ToList();
         }
 
         /// <summary>
@@ -152,55 +146,33 @@ namespace WhereToFly.App.Geo.DataFormats
         /// <returns>loaded track</returns>
         public Track LoadTrack(int trackIndex)
         {
-            int currentTrackIndex = 0;
-            foreach (var element in this.kml.Root.Flatten())
+            if (trackIndex >= this.trackPlacemarkList.Count)
             {
-                if (element is Placemark placemark &&
-                    placemark.Geometry is LineString lineString)
-                {
-                    if (trackIndex == currentTrackIndex)
-                    {
-                        return LoadTrackFromLineString(lineString);
-                    }
-
-                    currentTrackIndex++;
-                }
-
-                if (element is Placemark placemark2 &&
-                    placemark2.Geometry is SharpKml.Dom.GX.Track track)
-                {
-                    if (trackIndex == currentTrackIndex)
-                    {
-                        return LoadTrackFromGXTrack(track);
-                    }
-
-                    currentTrackIndex++;
-                }
-
-                if (element is Placemark placemark3 &&
-                    placemark3.Geometry is MultipleTrack multiTrack)
-                {
-                    if (trackIndex == currentTrackIndex)
-                    {
-                        return LoadTrackFromGXMultiTrack(multiTrack);
-                    }
-
-                    currentTrackIndex++;
-                }
-
-                if (element is Placemark placemark4 &&
-                    placemark4.Geometry is MultipleGeometry multiGeometry)
-                {
-                    if (trackIndex == currentTrackIndex)
-                    {
-                        return this.LoadTrackFromMultipleGeometry(multiGeometry);
-                    }
-
-                    currentTrackIndex++;
-                }
+                throw new ArgumentOutOfRangeException(nameof(trackIndex));
             }
 
-            throw new FormatException("track number was not found in kml/kmz file");
+            var placemark = this.trackPlacemarkList[trackIndex];
+
+            if (placemark.Geometry is LineString lineString)
+            {
+                return LoadTrackFromLineString(lineString);
+            }
+            else if (placemark.Geometry is SharpKml.Dom.GX.Track track)
+            {
+                return LoadTrackFromGXTrack(track);
+            }
+            else if (placemark.Geometry is MultipleTrack multiTrack)
+            {
+                return LoadTrackFromGXMultiTrack(multiTrack);
+            }
+            else if (placemark.Geometry is MultipleGeometry multiGeometry)
+            {
+                return this.LoadTrackFromMultipleGeometry(multiGeometry);
+            }
+            else
+            {
+                throw new FormatException("track number was not found in kml/kmz file");
+            }
         }
 
         /// <summary>
@@ -345,30 +317,17 @@ namespace WhereToFly.App.Geo.DataFormats
         /// <returns>list of locations found in the file</returns>
         public List<Model.Location> LoadLocationList()
         {
-            var locationList = new List<Model.Location>();
-
-            if (this.kml.Root == null)
-            {
-                return locationList;
-            }
-
-            foreach (var element in this.kml.Root.Flatten())
-            {
-                if (element is Placemark placemark &&
-                    placemark.Geometry is Point point)
-                {
-                    locationList.Add(new Model.Location
-                    {
-                        Id = placemark.Id ?? Guid.NewGuid().ToString("B"),
-                        Name = placemark.Name ?? "unknown",
-                        Description = GetDescriptionFromPlacemark(placemark),
-                        Type = MapPlacemarkToType(this.kml, placemark),
-                        MapLocation = new MapPoint(point.Coordinate.Latitude, point.Coordinate.Longitude, point.Coordinate.Altitude)
-                    });
-                }
-            }
-
-            return locationList;
+            return
+                (from placemark in this.locationPlacemarkList
+                 let point = placemark.Geometry as Point
+                 select new Model.Location
+                 {
+                     Id = placemark.Id ?? Guid.NewGuid().ToString("B"),
+                     Name = placemark.Name ?? "unknown",
+                     Description = GetDescriptionFromPlacemark(placemark),
+                     Type = MapPlacemarkToType(this.kml, placemark),
+                     MapLocation = new MapPoint(point.Coordinate.Latitude, point.Coordinate.Longitude, point.Coordinate.Altitude)
+                 }).ToList();
         }
 
         /// <summary>
