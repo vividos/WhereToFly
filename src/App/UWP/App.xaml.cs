@@ -47,7 +47,7 @@ namespace WhereToFly.App.UWP
 
                 Xamarin.Forms.Forms.Init(args, Rg.Plugins.Popup.Popup.GetExtraAssemblies());
 
-                Xamarin.Essentials.Platform.MapServiceToken = Constants.BingMapsKey;
+                Xamarin.Essentials.Platform.MapServiceToken = Constants.BingMapsKeyUwp;
 
                 Xamarin.Forms.MessagingCenter.Subscribe<Core.App, string>(this, Constants.MessageShowToast, this.ShowToast);
 
