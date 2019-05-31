@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
-             xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
+             xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
              x:Class="WhereToFly.App.Core.Views.TrackListPage">
 
@@ -80,7 +80,7 @@
                                     </Grid.ColumnDefinitions>
 
                                     <!-- Track type image -->
-                                    <controls:SvgImage Source="{Binding TypeImageSource, Mode=OneWay}"
+                                    <ffimageloadingsvg:SvgCachedImage Source="{Binding TypeImageSource, Mode=OneWay}"
                                                    WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
                                                    HorizontalOptions="Start" VerticalOptions="Center"
                                                    Grid.Column="0" Grid.RowSpan="2" />

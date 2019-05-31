@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
+             xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              xmlns:local="clr-namespace:WhereToFly.App.Core"
              xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
              x:Class="WhereToFly.App.Core.Views.LocationDetailsPage">
@@ -64,7 +64,7 @@
                 <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
 
                     <!-- Type image -->
-                    <controls:SvgImage Source="{Binding TypeImageSource, Mode=OneWay}"
+                    <ffimageloadingsvg:SvgCachedImage Source="{Binding TypeImageSource, Mode=OneWay}"
                                        WidthRequest="64" HeightRequest="64"
                                        HorizontalOptions="Start" VerticalOptions="Center" />
 

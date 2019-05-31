@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                 xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
+                 xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                  xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
                  xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
                  x:Class="WhereToFly.App.Core.Views.PlanTourPopupPage">
@@ -66,7 +66,7 @@
                                 </Grid.ColumnDefinitions>
 
                                 <!-- Type image -->
-                                <controls:SvgImage Source="{Binding TypeImageSource, Mode=OneWay}"
+                                <ffimageloadingsvg:SvgCachedImage Source="{Binding TypeImageSource, Mode=OneWay}"
                                                    WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
                                                    HorizontalOptions="Start" VerticalOptions="Center"
                                                    Grid.Row="0" Grid.Column="0" />

@@ -1,7 +1,7 @@
-﻿using System;
+﻿using FFImageLoading.Svg.Forms;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using WhereToFly.App.Geo;
 using WhereToFly.App.Model;
 using Xamarin.Forms;
@@ -55,21 +55,12 @@ namespace WhereToFly.App.Core
         /// <returns>image source</returns>
         public static ImageSource GetImageSource(string svgImageName, string fill = null)
         {
-            return ImageSource.FromStream(
-                () =>
-                {
-                    var cache = DependencyService.Get<SvgImageCache>();
-                    Debug.Assert(cache != null, "cache object must exist");
+            var cache = DependencyService.Get<SvgImageCache>();
+            Debug.Assert(cache != null, "cache object must exist");
 
-                    string svgText = cache.GetSvgImage(svgImageName, fill);
+            string svgText = cache.GetSvgImage(svgImageName, fill);
 
-                    if (svgText != null)
-                    {
-                        return new MemoryStream(System.Text.Encoding.UTF8.GetBytes(svgText));
-                    }
-
-                    return null;
-                });
+            return SvgImageSource.FromSvgString(svgText);
         }
 
         /// <summary>
