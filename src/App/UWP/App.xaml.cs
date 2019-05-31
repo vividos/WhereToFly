@@ -4,6 +4,7 @@ using WhereToFly.App.Core;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Storage;
+using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -143,7 +144,16 @@ namespace WhereToFly.App.UWP
         /// <param name="message">toast message</param>
         private void ShowToast(Core.App app, string message)
         {
-            // TODO implement
+            ToastNotifier toastNotifier = ToastNotificationManager.CreateToastNotifier();
+
+            Windows.Data.Xml.Dom.XmlDocument toastXml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText02);
+            Windows.Data.Xml.Dom.XmlNodeList toastNodeList = toastXml.GetElementsByTagName("text");
+            toastNodeList.Item(0).AppendChild(toastXml.CreateTextNode(Constants.AppTitle));
+            toastNodeList.Item(1).AppendChild(toastXml.CreateTextNode(message));
+
+            var toast = new ToastNotification(toastXml);
+            toast.ExpirationTime = DateTime.Now.AddSeconds(4);
+            toastNotifier.Show(toast);
         }
     }
 }
