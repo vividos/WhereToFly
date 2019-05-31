@@ -47,6 +47,9 @@
           </uap:FileTypeAssociation>
         </uap:Extension>
       </Extensions>
+      <uap:ApplicationContentUriRules>
+        <uap:Rule Type="include" Match="ms-appx-web://" WindowsRuntimeAccess="all"/>
+      </uap:ApplicationContentUriRules>
     </Application>
   </Applications>
   <Capabilities>
