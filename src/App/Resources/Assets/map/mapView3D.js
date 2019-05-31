@@ -936,7 +936,10 @@ MapView.prototype.showFlyingRange = function (options) {
             conePitch, 0.0)
     );
 
-    var text = '<p>Flying range for map point at<br/>Latitude: ' + options.displayLatitude + '<br/>' +
+    var text = '<p><img height="32em" width="32em" src="images/close-circle-outline.svg" style="vertical-align:middle" />' +
+        '<a href="javascript:parent.map.hideFlyingRangeCone();">Hide</a></p>';
+
+    text += '<p>Flying range for map point at<br/>Latitude: ' + options.displayLatitude + '<br/>' +
         'Longitude: ' + options.displayLongitude + '<br/>' +
         'Altitude: ' + options.altitude + 'm</p>';
 
@@ -1358,6 +1361,7 @@ MapView.prototype.onAddFindResult = function (options) {
  * @param {Number} [options.altitude] Altitude of the long tap
  */
 MapView.prototype.onLongTap = function (options) {
+
     console.log("long-tap occured: lat=" + options.latitude +
         ", long=" + options.longitude +
         ", alt=" + options.altitude);
@@ -1376,6 +1380,16 @@ MapView.prototype.onAddTourPlanLocation = function (locationId) {
 
     if (this.options.callback !== undefined)
         this.options.callback('onAddTourPlanLocation', locationId);
+};
+
+/**
+ * Called by the "hide" link in the info text are of the flying range cone.
+ */
+MapView.prototype.hideFlyingRangeCone = function () {
+
+    console.log("hiding flying range cone");
+
+    this.viewer.entities.remove(this.flyingRangeCone);
 };
 
 /**
