@@ -107,6 +107,9 @@ namespace WhereToFly.App.Android
             Forms.SetFlags("FastRenderers_Experimental");
             Forms.Init(this, savedInstanceState);
 
+            FFImageLoading.ImageService.Instance.Initialize();
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init(enableFastRenderer: true);
+
             MessagingCenter.Subscribe<Core.App, string>(this, Constants.MessageShowToast, this.ShowToast);
 
             this.LoadApplication(new Core.App());

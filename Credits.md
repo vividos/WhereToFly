@@ -62,6 +62,11 @@ library to show SVG images.
 The library is licensed using the
 [MIT License](https://github.com/mono/SkiaSharp/blob/master/LICENSE.txt).
 
+The app uses the [Xamarin.FFImageLoading](https://github.com/luberda-molinet/FFImageLoading)
+library to show and cache SVG images.
+The library is licensed using the
+[MIT License](https://github.com/luberda-molinet/FFImageLoading/blob/master/LICENSE.md).
+
 The backend uses the [QuickGraph](https://github.com/oldrev/Sandwych.QuickGraph)
 library for tour planning.
 The library is licensed using the
