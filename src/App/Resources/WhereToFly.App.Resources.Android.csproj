@@ -599,6 +599,9 @@
   <ItemGroup>
     <AndroidAsset Include="Assets\locations\paraglidingspots_european_alps_2019_05_15.kmz" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\close-circle-outline.svg" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

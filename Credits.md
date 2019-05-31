@@ -79,6 +79,7 @@ permission from Michael of https://kk7.ch/.
 The following icons are from the Google Material icon set:
 
 - bus
+- close-circle-outline
 - compass
 - crosshairs-gps
 - delete

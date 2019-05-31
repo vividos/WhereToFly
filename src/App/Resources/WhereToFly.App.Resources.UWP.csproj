@@ -46,6 +46,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <ItemGroup>
     <Content Include="Assets\alptherm-favicon.png" />
+    <Content Include="Assets\map\images\close-circle-outline.svg" />
     <Content Include="Properties\WhereToFly.App.Resources.UWP.rd.xml" />
   </ItemGroup>
   <ItemGroup>
