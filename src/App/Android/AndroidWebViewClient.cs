@@ -88,6 +88,7 @@ namespace WhereToFly.App.Android
             string host = request?.Url?.Host?.ToLowerInvariant();
 
             if (host != null &&
+                this.CorsWebsiteHosts != null &&
                 this.CorsWebsiteHosts.Any(x => host.Contains(x)))
             {
                 return this.BuildCorsResponse(request.Url.ToString());
