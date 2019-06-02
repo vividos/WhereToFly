@@ -46,6 +46,23 @@ namespace WhereToFly.App.Geo.Spatial
         }
 
         /// <summary>
+        /// Generates Time values for every track point in time, with given start date and track
+        /// point interval
+        /// </summary>
+        /// <param name="track">track to modify</param>
+        /// <param name="startDate">start date/time</param>
+        /// <param name="trackPointInterval">track point interval</param>
+        public static void GenerateTrackPointTimeValues(this Track track, DateTimeOffset startDate, TimeSpan trackPointInterval)
+        {
+            for (int trackPointIndex = 0; trackPointIndex < track.TrackPoints.Count; trackPointIndex++)
+            {
+                TrackPoint trackPoint = track.TrackPoints[trackPointIndex];
+
+                trackPoint.Time = startDate + TimeSpan.FromSeconds(trackPointIndex * trackPointInterval.TotalSeconds);
+            }
+        }
+
+        /// <summary>
         /// Calculates statistics for track
         /// </summary>
         /// <param name="track">track to use</param>
