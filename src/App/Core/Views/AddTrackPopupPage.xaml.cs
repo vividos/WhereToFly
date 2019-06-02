@@ -169,6 +169,8 @@ namespace WhereToFly.App.Core.Views
         /// <param name="args">event args</param>
         private async void OnClickedAddTrackButton(object sender, EventArgs args)
         {
+            this.viewModel.UpdateTrack();
+
             if (!this.tcs.Task.IsCompleted)
             {
                 this.tcs.SetResult(this.viewModel.Track);

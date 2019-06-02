@@ -34,6 +34,14 @@
         <Label Text="Name" FontSize="Medium" />
         <Entry Placeholder="enter track name" Text="{Binding Path=TrackName, Mode=TwoWay}" />
 
+        <!-- Picker for track point interval -->
+        <Label Text="Track point time interval" FontSize="Medium"
+               IsVisible="{Binding IsTrackPointIntervalPickerVisible, Mode=OneWay}" />
+        <Picker Title="Select a time interval"
+                IsVisible="{Binding IsTrackPointIntervalPickerVisible, Mode=OneWay}"
+                ItemsSource="{Binding Path=TrackPointIntervalList, Mode=OneTime}"
+                SelectedItem="{Binding Path=TrackPointIntervalText, Mode=TwoWay}" />
+
         <!-- Switch to select if it's a flight track -->
         <StackLayout Orientation="Horizontal" Margin="0, 10, 0, 0" >
             <Switch IsToggled="{Binding IsFlightTrack, Mode=TwoWay}"
