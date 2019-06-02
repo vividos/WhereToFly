@@ -75,6 +75,11 @@ namespace WhereToFly.App.Core.Converter
                 };
             }
 
+            if (targetType == typeof(ImageSource))
+            {
+                return ImageSource.FromFile(imagePath);
+            }
+
             return imagePath;
         }
 
