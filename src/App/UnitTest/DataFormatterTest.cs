@@ -118,9 +118,9 @@ namespace WhereToFly.App.UnitTest
             string text3 = DataFormatter.FormatDuration(TimeSpan.FromDays(1.42));
 
             // check
-            Assert.AreEqual("00:00 s", text1, "formatted text must match");
-            Assert.AreEqual("25:12 s", text2, "formatted text must match");
-            Assert.AreEqual("1.04:48 s", text3, "formatted text must match");
+            Assert.AreEqual("0:00:00", text1, "formatted text must match");
+            Assert.AreEqual("1:25:12", text2, "formatted text must match");
+            Assert.AreEqual("1.10:04:48", text3, "formatted text must match");
         }
     }
 }

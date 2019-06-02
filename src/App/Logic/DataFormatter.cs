@@ -68,7 +68,7 @@ namespace WhereToFly.App.Logic
         /// <returns>formatted duration</returns>
         public static string FormatDuration(TimeSpan duration)
         {
-            return string.Format(duration >= TimeSpan.FromDays(1) ? "{0:d\\.mm\\:ss} s" : "{0:mm\\:ss} s", duration);
+            return string.Format(duration >= TimeSpan.FromDays(1) ? "{0:d\\.hh\\:mm\\:ss}" : "{0:h\\:mm\\:ss}", duration);
         }
 
         /// <summary>
