@@ -11,6 +11,11 @@ Current version: %VERSION%
 
 ### Releases
 
+1.6.0 "Crossing the alps 2019" edition
+
+- Added specifying "track point interval" when imported track has no time data
+  (e.g. for KML LineStrings); useful for .kml files from XC Tracer II GPS.
+
 1.5.0
 
 - added support for live waypoints that update themselves periodically;
@@ -59,7 +64,6 @@ Current version: %VERSION%
 - fixed crash at startup for some Android devices
 - fixed loading terrain height data
 - fixed displaying large number of pins when many locations are loaded
-
 
 1.2.0
 
