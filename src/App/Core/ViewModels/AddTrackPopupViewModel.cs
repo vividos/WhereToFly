@@ -53,7 +53,11 @@ namespace WhereToFly.App.Core.ViewModels
             get => $"{(int)this.trackPointInterval.TotalSeconds} s";
             set
             {
-                if (double.TryParse(value.Replace(" s", string.Empty), out double trackPointIntervalInSeconds))
+                if (double.TryParse(
+                    value.Replace(" s", string.Empty),
+                    System.Globalization.NumberStyles.AllowDecimalPoint,
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    out double trackPointIntervalInSeconds))
                 {
                     this.trackPointInterval = TimeSpan.FromSeconds(trackPointIntervalInSeconds);
                 }
