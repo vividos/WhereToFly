@@ -657,6 +657,26 @@ MapView.prototype.zoomToLocation = function (options) {
 };
 
 /**
+ * Adds a new layer to the map
+ * @param {object} [layer] Layer object to add
+ * @param {string} [layer.id] ID of layer
+ * @param {string} [layer.name] Layer name
+ * @param {string} [layer.type] Layer type
+ * @param {boolean} [layer.isVisible] Indicates if layer is visible
+ * @param {string} [layer.data] CZML data of layer
+ */
+MapView.prototype.addLayer = function (layer) {
+
+    console.log("adding layer " + layer.name + ", with data length " + layer.data.length + " bytes");
+
+    czml = JSON.parse(layer.data);
+
+    var dataSourcePromise = Cesium.CzmlDataSource.load(czml);
+    this.viewer.dataSources.add(dataSourcePromise);
+    this.viewer.zoomTo(dataSourcePromise);
+};
+
+/**
  * Clears list of locations
  */
 MapView.prototype.clearLocationList = function () {

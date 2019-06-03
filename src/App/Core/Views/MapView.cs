@@ -335,6 +335,28 @@ namespace WhereToFly.App.Core.Views
         }
 
         /// <summary>
+        /// Adds layer to map
+        /// </summary>
+        /// <param name="layer">layer to add</param>
+        public void AddLayer(Layer layer)
+        {
+            var layerObject = new
+            {
+                id = layer.Id,
+                name = layer.Name,
+                type = layer.LayerType,
+                isVisible = layer.IsVisible,
+                data = layer.Data,
+            };
+
+            string js = string.Format(
+                "map.addLayer({0});",
+                JsonConvert.SerializeObject(layerObject));
+
+            this.RunJavaScript(js);
+        }
+
+        /// <summary>
         /// Clears location list
         /// </summary>
         public void ClearLocationList()

@@ -176,6 +176,17 @@ namespace WhereToFly.App.Core
         }
 
         /// <summary>
+        /// Adds new map layer
+        /// </summary>
+        /// <param name="layer">layer to add</param>
+        internal static void AddMapLayer(Layer layer)
+        {
+            var app = Current as App;
+
+            MessagingCenter.Send<App, Layer>(app, Constants.MessageAddLayer, layer);
+        }
+
+        /// <summary>
         /// Adds a track to the map view; when the map page is currently invisible, the add is
         /// carried out when the page appears.
         /// </summary>

@@ -118,6 +118,7 @@ namespace WhereToFly.App.Core.Views
 
             Task.Run(this.InitLayoutAsync);
 
+            MessagingCenter.Subscribe<App, Layer>(this, Constants.MessageAddLayer, this.OnMessageAddLayer);
             MessagingCenter.Subscribe<App, Track>(this, Constants.MessageAddTrack, this.OnMessageAddTrack);
 
             MessagingCenter.Subscribe<App, Location>(
@@ -740,6 +741,16 @@ namespace WhereToFly.App.Core.Views
             this.planTourParameters.WaypointIdList.Add(location.Id);
 
             await PlanTourPopupPage.ShowAsync(this.planTourParameters);
+        }
+
+        /// <summary>
+        /// Called when message arrives in order to add a new layer to map
+        /// </summary>
+        /// <param name="app">app object</param>
+        /// <param name="layer">layer to add</param>
+        private void OnMessageAddLayer(App app, Layer layer)
+        {
+            App.RunOnUiThread(() => this.mapView.AddLayer(layer));
         }
 
         /// <summary>

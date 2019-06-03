@@ -34,6 +34,11 @@ namespace WhereToFly.App.Core
         public const string MessageWebViewClearCache = "WebViewClearCache";
 
         /// <summary>
+        /// MessagingCenter message constant to add layer to MapPage
+        /// </summary>
+        public const string MessageAddLayer = "AddLayer";
+
+        /// <summary>
         /// MessagingCenter message constant to add track to MapPage
         /// </summary>
         public const string MessageAddTrack = "AddTrack";
