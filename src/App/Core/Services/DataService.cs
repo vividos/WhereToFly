@@ -20,6 +20,11 @@ namespace WhereToFly.App.Core.Services
     public class DataService : IDataService
     {
         /// <summary>
+        /// Lock for app settings json file
+        /// </summary>
+        private readonly object appSettingsLock = new object();
+
+        /// <summary>
         /// Filename for the app settings json file
         /// </summary>
         private const string AppSettingsFilename = "appSettings.json";
@@ -121,7 +126,11 @@ namespace WhereToFly.App.Core.Services
 
             try
             {
-                string json = File.ReadAllText(filename, Encoding.UTF8);
+                string json;
+                lock (this.appSettingsLock)
+                {
+                    json = File.ReadAllText(filename, Encoding.UTF8);
+                }
 
                 var appSettings = JsonConvert.DeserializeObject<AppSettings>(json);
 
@@ -146,7 +155,13 @@ namespace WhereToFly.App.Core.Services
             var platform = DependencyService.Get<IPlatform>();
             string filename = Path.Combine(platform.AppDataFolder, AppSettingsFilename);
 
-            await Task.Run(() => File.WriteAllText(filename, json, Encoding.UTF8));
+            await Task.Run(() =>
+            {
+                lock (this.appSettingsLock)
+                {
+                    File.WriteAllText(filename, json, Encoding.UTF8);
+                }
+            });
         }
 
         /// <summary>
