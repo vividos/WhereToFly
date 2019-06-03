@@ -10,6 +10,7 @@ using WhereToFly.App.Geo;
 using WhereToFly.App.Geo.DataFormats;
 using WhereToFly.App.Geo.Spatial;
 using WhereToFly.App.Model;
+using WhereToFly.Shared.Model;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core
@@ -34,6 +35,12 @@ namespace WhereToFly.App.Core
         /// <returns>task to wait on</returns>
         public static async Task OpenFileAsync(Stream stream, string filename)
         {
+            if (Path.GetExtension(filename).ToLowerInvariant() == ".czml")
+            {
+                await ImportLayerFile(stream, filename);
+                return;
+            }
+
             try
             {
                 var geoDataFile = GeoLoader.LoadGeoDataFile(stream, filename);
@@ -358,6 +365,38 @@ namespace WhereToFly.App.Core
             {
                 await SelectAndImportTrackAsync(geoDataFile);
             }
+        }
+
+        /// <summary>
+        /// Imports a layer file
+        /// </summary>
+        /// <param name="stream">stream to read from</param>
+        /// <param name="filename">filename of file</param>
+        /// <returns>task to wait on</returns>
+        private static async Task ImportLayerFile(Stream stream, string filename)
+        {
+            string czml;
+            using (var streamReader = new StreamReader(stream))
+            {
+                czml = streamReader.ReadToEnd();
+            }
+
+            var layer = new Layer
+            {
+                Id = Guid.NewGuid().ToString("B"),
+                Name = Path.GetFileNameWithoutExtension(filename),
+                IsVisible = true,
+                LayerType = LayerType.CzmlLayer,
+                Data = czml
+            };
+
+            layer = await AddLayerPopupPage.ShowAsync(layer);
+
+            await NavigationService.Instance.NavigateAsync(Constants.PageKeyMapPage, animated: true);
+
+            App.AddMapLayer(layer);
+
+            App.ShowToast("Layer was loaded.");
         }
 
         /// <summary>
