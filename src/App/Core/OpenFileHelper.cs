@@ -392,6 +392,12 @@ namespace WhereToFly.App.Core
 
             layer = await AddLayerPopupPage.ShowAsync(layer);
 
+            var dataService = DependencyService.Get<IDataService>();
+
+            var layerList = await dataService.GetLayerListAsync(CancellationToken.None);
+            layerList.Add(layer);
+            await dataService.StoreLayerListAsync(layerList);
+
             await NavigationService.Instance.NavigateAsync(Constants.PageKeyMapPage, animated: true);
 
             App.AddMapLayer(layer);
