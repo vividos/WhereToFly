@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using WhereToFly.App.Geo;
 using WhereToFly.App.Model;
+using WhereToFly.Shared.Model;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(WhereToFly.App.Core.SvgImageCache))]
@@ -42,6 +43,36 @@ namespace WhereToFly.App.Core
         public static ImageSource GetImageSource(Track track, string fill = null)
         {
             string svgImagePath = track.IsFlightTrack ? "map/images/paragliding.svg" : "icons/map-marker-distance.svg";
+
+            return GetImageSource(svgImagePath, fill);
+        }
+
+        /// <summary>
+        /// Returns an image source for SvgImage that loads an image based on the given layer.
+        /// </summary>
+        /// <param name="layer">layer to use</param>
+        /// <param name="fill">when not null, an alternative fill color for SVG path elements</param>
+        /// <returns>image source</returns>
+        public static ImageSource GetImageSource(Layer layer, string fill = null)
+        {
+            string svgImagePath =
+                layer.LayerType == LayerType.LocationLayer ? "icons/format-list-bulleted.svg" :
+                layer.LayerType == LayerType.LocationLayer ? "icons/map-marker-distance.svg" :
+                "icons/layers-outline.svg";
+
+            return GetImageSource(svgImagePath, fill);
+        }
+
+        /// <summary>
+        /// Returns an image source for the visibility of the given layer.
+        /// </summary>
+        /// <param name="layer">layer to use</param>
+        /// <param name="fill">when not null, an alternative fill color for SVG path elements</param>
+        /// <returns>image source</returns>
+        public static ImageSource GetLayerVisibilityImageSource(Layer layer, string fill = null)
+        {
+            string svgImagePath =
+                layer.IsVisible ? "icons/eye.svg" : "icons/eye-off-outline.svg";
 
             return GetImageSource(svgImagePath, fill);
         }
