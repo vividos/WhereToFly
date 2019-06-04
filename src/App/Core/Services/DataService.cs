@@ -40,6 +40,11 @@ namespace WhereToFly.App.Core.Services
         private const string TrackListFilename = "trackList.json";
 
         /// <summary>
+        /// Filename for the layer list json file
+        /// </summary>
+        private const string LayerListFilename = "layerList.json";
+
+        /// <summary>
         /// Filename for the weather icon list json file
         /// </summary>
         private const string WeatherIconListFilename = "weatherIconList.json";
@@ -68,6 +73,11 @@ namespace WhereToFly.App.Core.Services
         /// Track list storage
         /// </summary>
         private List<Track> trackList;
+
+        /// <summary>
+        /// Layer list storage
+        /// </summary>
+        private List<Layer> layerList;
 
         /// <summary>
         /// Loads the favicon url cache from cache data folder
@@ -397,6 +407,68 @@ namespace WhereToFly.App.Core.Services
 
             var platform = DependencyService.Get<IPlatform>();
             string filename = Path.Combine(platform.AppDataFolder, TrackListFilename);
+
+            await Task.Run(() => File.WriteAllText(filename, json, Encoding.UTF8));
+        }
+
+        /// <summary>
+        /// Gets list of layers
+        /// </summary>
+        /// <param name="token">cancellation token</param>
+        /// <returns>list of layers</returns>
+        public async Task<List<Layer>> GetLayerListAsync(CancellationToken token)
+        {
+            if (this.layerList != null)
+            {
+                return this.layerList;
+            }
+
+            await Task.Run(() => this.LoadLayerList());
+
+            return await Task.FromResult(this.layerList);
+        }
+
+        /// <summary>
+        /// Loads layer list and stores it in the private field
+        /// </summary>
+        private void LoadLayerList()
+        {
+            var platform = DependencyService.Get<IPlatform>();
+
+            string filename = Path.Combine(platform.AppDataFolder, LayerListFilename);
+
+            if (!File.Exists(filename))
+            {
+                this.layerList = new List<Layer>();
+                return;
+            }
+
+            try
+            {
+                string json = File.ReadAllText(filename, Encoding.UTF8);
+
+                this.layerList = JsonConvert.DeserializeObject<List<Layer>>(json);
+            }
+            catch (Exception ex)
+            {
+                App.LogError(ex);
+                this.layerList = new List<Layer>();
+            }
+        }
+
+        /// <summary>
+        /// Stores new layer list
+        /// </summary>
+        /// <param name="layerList">layer list to store</param>
+        /// <returns>task to wait on</returns>
+        public async Task StoreLayerListAsync(List<Layer> layerList)
+        {
+            this.layerList = layerList;
+
+            string json = JsonConvert.SerializeObject(layerList);
+
+            var platform = DependencyService.Get<IPlatform>();
+            string filename = Path.Combine(platform.AppDataFolder, LayerListFilename);
 
             await Task.Run(() => File.WriteAllText(filename, json, Encoding.UTF8));
         }

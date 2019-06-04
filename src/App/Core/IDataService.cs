@@ -55,6 +55,20 @@ namespace WhereToFly.App.Core
         Task StoreTrackListAsync(List<Track> trackList);
 
         /// <summary>
+        /// Gets list of layers
+        /// </summary>
+        /// <param name="token">cancellation token</param>
+        /// <returns>list of layers</returns>
+        Task<List<Layer>> GetLayerListAsync(CancellationToken token);
+
+        /// <summary>
+        /// Stores new layer list
+        /// </summary>
+        /// <param name="layerList">layer list to store</param>
+        /// <returns>task to wait on</returns>
+        Task StoreLayerListAsync(List<Layer> layerList);
+
+        /// <summary>
         /// Retrieves list of weather icon descriptions
         /// </summary>
         /// <returns>list with current weather icon descriptions</returns>
