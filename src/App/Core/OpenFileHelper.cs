@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -381,6 +383,16 @@ namespace WhereToFly.App.Core
                 czml = streamReader.ReadToEnd();
             }
 
+            if (!IsValidJson(czml))
+            {
+                await App.Current.MainPage.DisplayAlert(
+                    Constants.AppTitle,
+                    "The file contained no valid CZML layer data",
+                    "OK");
+
+                return;
+            }
+
             var layer = new Layer
             {
                 Id = Guid.NewGuid().ToString("B"),
@@ -404,6 +416,37 @@ namespace WhereToFly.App.Core
             App.ZoomToLayer(layer);
 
             App.ShowToast("Layer was loaded.");
+        }
+
+        /// <summary>
+        /// Checks if given JSON string is actually valid JSON.
+        /// </summary>
+        /// <param name="json">JSON string to check</param>
+        /// <returns>true when valid JSON, false when not</returns>
+        private static bool IsValidJson(string json)
+        {
+            json = json.Trim();
+            if ((!json.StartsWith("{") || !json.EndsWith("}")) && // for object
+                (!json.StartsWith("[") || !json.EndsWith("]"))) // for array
+            {
+                return false;
+            }
+
+            try
+            {
+                JToken.Parse(json);
+                return true;
+            }
+            catch (JsonReaderException jex)
+            {
+                App.LogError(jex);
+                return false;
+            }
+            catch (Exception ex)
+            {
+                App.LogError(ex);
+                return false;
+            }
         }
 
         /// <summary>
