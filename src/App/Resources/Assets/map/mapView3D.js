@@ -214,6 +214,8 @@ function MapView(options) {
 
     this.trackIdToTrackDataMap = {};
 
+    this.dataSourceMap = {};
+
     this.onMapInitialized();
 }
 
@@ -672,10 +674,14 @@ MapView.prototype.addLayer = function (layer) {
     czml = JSON.parse(layer.data);
 
     var dataSourcePromise = Cesium.CzmlDataSource.load(czml);
-    this.viewer.dataSources.add(dataSourcePromise);
 
-    // TODO move
-    this.viewer.zoomTo(dataSourcePromise);
+    var that = this;
+
+    Cesium.when(dataSourcePromise,
+        function (dataSource) {
+            that.viewer.dataSources.add(dataSource);
+            that.dataSourceMap[layer.id] = dataSource;
+        });
 };
 
 /**
@@ -686,7 +692,9 @@ MapView.prototype.zoomToLayer = function (layerId) {
 
     console.log("zooming to layer with id " + layerId);
 
-    // TODO implement
+    var dataSource = this.dataSourceMap[layerId];
+    if (dataSource !== undefined)
+        this.viewer.flyTo(dataSource);
 };
 
 /**
@@ -700,7 +708,9 @@ MapView.prototype.setLayerVisibility = function (layer) {
     console.log("setting new visibility for layer with id " + layerId +
         ", visibility: " + layer.isVisible);
 
-    // TODO implement
+    var dataSource = this.dataSourceMap[layerId];
+    if (dataSource !== undefined)
+        dataSource.show = layer.isVisible;
 };
 
 /**
@@ -711,7 +721,11 @@ MapView.prototype.removeLayer = function (layerId) {
 
     console.log("removing layer with id " + layerId);
 
-    // TODO implement
+    var dataSource = this.dataSourceMap[layerId];
+    if (dataSource !== undefined) {
+        this.viewer.dataSources.remove(dataSource);
+        this.dataSourceMap[layerId] = undefined;
+    }
 };
 
 /**
@@ -721,7 +735,13 @@ MapView.prototype.clearLayerList = function () {
 
     console.log("clearing layer list");
 
-    // TODO implement
+    for (var layerId in this.dataSourceMap) {
+        var dataSource = this.dataSourceMap[layerId];
+        if (dataSource !== undefined)
+            this.viewer.dataSources.remove(dataSource);
+    }
+
+    this.dataSourceMap = {};
 };
 
 /**
