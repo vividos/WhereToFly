@@ -121,6 +121,7 @@
     <Content Include="Assets\images\delete_forever.png" />
     <Content Include="Assets\images\directions.png" />
     <Content Include="Assets\images\information_outline.png" />
+    <Content Include="Assets\images\layers_plus.png" />
     <Content Include="Assets\images\magnify.png" />
     <Content Include="Assets\images\magnify_plus_outline.png" />
     <Content Include="Assets\images\map_marker_plus.png" />

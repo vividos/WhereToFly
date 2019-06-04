@@ -85,8 +85,10 @@ The following icons are from the Google Material icon set:
 - delete
 - delete_forever
 - directions
+- eye
 - format-list-bulleted
 - information-outline
+- layers-outline
 - magnify
 - magnify-plus-outline
 - map
@@ -117,6 +119,8 @@ The following icons in the App are from the Material Design Icons
 - calendar-clock - Austin Andrews @Templarian
 - map-marker-distance - Michael Richins @MrGrigri
 - map-marker-plus - Cody @XT3000
+- eye-off-outline - Austin Andrews @Templarian
+- layers-plus - Austin Andrews @Templarian
 
 All custom icons are licensed under the SIL Open Font License 1.1:
 http://scripts.sil.org/cms/scripts/page.php?item_id=OFL_web
