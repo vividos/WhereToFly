@@ -60,6 +60,10 @@ namespace WhereToFly.App.Core.Services
                     pageType = typeof(MapPage);
                     break;
 
+                case Constants.PageKeyLayerListPage:
+                    pageType = typeof(LayerListPage);
+                    break;
+
                 case Constants.PageKeyCurrentPositionDetailsPage:
                     pageType = typeof(CurrentPositionDetailsPage);
                     break;

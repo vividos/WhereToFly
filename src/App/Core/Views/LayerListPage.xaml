@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
+             x:Class="WhereToFly.App.Core.Views.LayerListPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:ImagePathConverter x:Key="ImagePathConverter" />
+            <x:String x:Key="ImportLayerImageBaseName">layers_plus</x:String>
+            <x:String x:Key="DeleteLayerListImageBaseName">delete_forever</x:String>
+            <x:String x:Key="ZoomToLayerImageBaseName">magnify_plus_outline</x:String>
+            <x:String x:Key="DeleteLayerImageBaseName">delete</x:String>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="Import layer"
+                     Icon="{Binding Source={StaticResource ImportLayerImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+                     Command="{Binding ImportLayerCommand}"
+                     Order="Primary" Priority="0" />
+
+        <ToolbarItem Name="Delete layer list"
+                     Icon="{Binding Source={StaticResource DeleteLayerListImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+                     Command="{Binding DeleteLayerListCommand}"
+                     IsDestructive="True"
+                     Order="Primary" Priority="1" />
+    </ContentPage.ToolbarItems>
+
+
+    <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+
+        <!-- Message to show when list is empty -->
+        <StackLayout Padding="4" BackgroundColor="LightGreen"
+                     HeightRequest="32"
+                     HorizontalOptions="FillAndExpand"
+                     Orientation="Horizontal"
+                     IsVisible="{Binding IsListEmpty, Mode=OneWay}" >
+            <Label Text="There are no layers in the list." VerticalTextAlignment="Center" FontSize="Medium" />
+        </StackLayout>
+
+        <!-- Layer list -->
+        <ListView x:Name="layerListView"
+                  ItemsSource="{Binding Path=LayerList, Mode=OneWay}"
+                  RowHeight="{OnPlatform Android=65, UWP=85}"
+                  IsPullToRefreshEnabled="False"
+                  CachingStrategy="RecycleElement"
+                  SeparatorVisibility="None"
+                  AutomationId="LayerList">
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <!-- Template for a single view cell -->
+                    <ViewCell Height="65">
+                        <ViewCell.View>
+                            <Grid BackgroundColor="#efefef" Margin="8,4">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Layer type image -->
+                                <ffimageloadingsvg:SvgCachedImage Source="{Binding TypeImageSource, Mode=OneWay}"
+                                                   WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
+                                                   HorizontalOptions="Start" VerticalOptions="Center"
+                                                   Grid.Column="0"/>
+
+                                <ffimageloadingsvg:SvgCachedImage Source="{Binding VisibilityImageSource, Mode=OneWay}"
+                                                   WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
+                                                   HorizontalOptions="Start" VerticalOptions="Center"
+                                                   Grid.Column="1" />
+
+                                <!-- Name -->
+                                <Label Text="{Binding Name}"
+                                       VerticalOptions="Center"
+                                       Style="{DynamicResource ListItemTextStyle}"
+                                       FontSize="Medium"
+                                       LineBreakMode="TailTruncation"
+                                       Grid.Column="2" />
+                            </Grid>
+                        </ViewCell.View>
+
+                        <ViewCell.ContextActions>
+                            <MenuItem Text="Zoom to"
+                                      Icon="{Binding Source={StaticResource ZoomToLayerImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+                                      Command="{Binding ZoomToLayerContextAction}" />
+                            <MenuItem Text="Delete" IsDestructive="True"
+                                      Icon="{Binding Source={StaticResource DeleteLayerImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+                                      Command="{Binding DeleteLocationContextAction}" />
+                        </ViewCell.ContextActions>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </StackLayout>
+</ContentPage>
