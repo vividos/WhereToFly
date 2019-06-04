@@ -71,6 +71,7 @@ namespace WhereToFly.App.Core.ViewModels
             this.MenuItemList = new MenuItemViewModel[]
             {
                 new MenuItemViewModel("Map", "icons/map.svg", Constants.PageKeyMapPage),
+                new MenuItemViewModel("Layers", "icons/layers-outline.svg", Constants.PageKeyLayerListPage),
                 new MenuItemViewModel("Locations", "icons/format-list-bulleted.svg", Constants.PageKeyLocationListPage),
                 new MenuItemViewModel("Tracks", "icons/map-marker-distance.svg", Constants.PageKeyTrackListPage),
                 new MenuItemViewModel("Current Position", "icons/compass.svg", Constants.PageKeyCurrentPositionDetailsPage),
