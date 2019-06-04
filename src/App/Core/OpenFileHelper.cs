@@ -401,6 +401,7 @@ namespace WhereToFly.App.Core
             await NavigationService.Instance.NavigateAsync(Constants.PageKeyMapPage, animated: true);
 
             App.AddMapLayer(layer);
+            App.ZoomToLayer(layer);
 
             App.ShowToast("Layer was loaded.");
         }

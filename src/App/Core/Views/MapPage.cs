@@ -124,6 +124,11 @@ namespace WhereToFly.App.Core.Views
             Task.Run(this.InitLayoutAsync);
 
             MessagingCenter.Subscribe<App, Layer>(this, Constants.MessageAddLayer, this.OnMessageAddLayer);
+            MessagingCenter.Subscribe<App, Layer>(this, Constants.MessageZoomToLayer, (app, layer) => this.OnMessageZoomToLayer(layer));
+            MessagingCenter.Subscribe<App, Layer>(this, Constants.MessageSetLayerVisibility, (app, layer) => this.OnMessageSetLayerVisibility(layer));
+            MessagingCenter.Subscribe<App, Layer>(this, Constants.MessageRemoveLayer, (app, layer) => this.OnMessageRemoveLayer(layer));
+            MessagingCenter.Subscribe<App>(this, Constants.MessageClearLayerList, (app) => this.OnMessageClearLayerList());
+
             MessagingCenter.Subscribe<App, Track>(this, Constants.MessageAddTrack, this.OnMessageAddTrack);
 
             MessagingCenter.Subscribe<App, Location>(
@@ -762,6 +767,41 @@ namespace WhereToFly.App.Core.Views
         private void OnMessageAddLayer(App app, Layer layer)
         {
             App.RunOnUiThread(() => this.mapView.AddLayer(layer));
+        }
+
+        /// <summary>
+        /// Called when message arrives in order to zoom to layer on map
+        /// </summary>
+        /// <param name="layer">layer to zoom to</param>
+        private void OnMessageZoomToLayer(Layer layer)
+        {
+            App.RunOnUiThread(() => this.mapView.ZoomToLayer(layer));
+        }
+
+        /// <summary>
+        /// Called when message arrives in order to set layer visibility
+        /// </summary>
+        /// <param name="layer">layer to set new visibility</param>
+        private void OnMessageSetLayerVisibility(Layer layer)
+        {
+            App.RunOnUiThread(() => this.mapView.SetLayerVisibility(layer));
+        }
+
+        /// <summary>
+        /// Called when message arrives in order to remove layer
+        /// </summary>
+        /// <param name="layer">layer to remove</param>
+        private void OnMessageRemoveLayer(Layer layer)
+        {
+            App.RunOnUiThread(() => this.mapView.RemoveLayer(layer));
+        }
+
+        /// <summary>
+        /// Called when message arrives in order to clear layer list
+        /// </summary>
+        private void OnMessageClearLayerList()
+        {
+            App.RunOnUiThread(() => this.mapView.ClearLayerList());
         }
 
         /// <summary>

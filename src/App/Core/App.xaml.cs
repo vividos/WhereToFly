@@ -179,11 +179,54 @@ namespace WhereToFly.App.Core
         /// Adds new map layer
         /// </summary>
         /// <param name="layer">layer to add</param>
-        internal static void AddMapLayer(Layer layer)
+        public static void AddMapLayer(Layer layer)
         {
             var app = Current as App;
 
             MessagingCenter.Send<App, Layer>(app, Constants.MessageAddLayer, layer);
+        }
+
+        /// <summary>
+        /// Zooms to given layer
+        /// </summary>
+        /// <param name="layer">layer to zoom to</param>
+        public static void ZoomToLayer(Layer layer)
+        {
+            var app = Current as App;
+
+            MessagingCenter.Send<App, Layer>(app, Constants.MessageZoomToLayer, layer);
+        }
+
+        /// <summary>
+        /// Sets new layer visibility
+        /// </summary>
+        /// <param name="layer">layer to set visibility</param>
+        public static void SetLayerVisibility(Layer layer)
+        {
+            var app = Current as App;
+
+            MessagingCenter.Send<App, Layer>(app, Constants.MessageSetLayerVisibility, layer);
+        }
+
+        /// <summary>
+        /// removes given layer from the map
+        /// </summary>
+        /// <param name="layer">layer to remove</param>
+        public static void RemoveLayer(Layer layer)
+        {
+            var app = Current as App;
+
+            MessagingCenter.Send<App, Layer>(app, Constants.MessageRemoveLayer, layer);
+        }
+
+        /// <summary>
+        /// Clears all layers on the map
+        /// </summary>
+        public static void ClearLayerList()
+        {
+            var app = Current as App;
+
+            MessagingCenter.Send<App>(app, Constants.MessageClearLayerList);
         }
 
         /// <summary>

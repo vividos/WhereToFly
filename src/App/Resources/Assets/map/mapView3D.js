@@ -673,7 +673,55 @@ MapView.prototype.addLayer = function (layer) {
 
     var dataSourcePromise = Cesium.CzmlDataSource.load(czml);
     this.viewer.dataSources.add(dataSourcePromise);
+
+    // TODO move
     this.viewer.zoomTo(dataSourcePromise);
+};
+
+/**
+ * Zooms to layer with given layer ID
+ * @param {string} [layerId] ID of layer
+ */
+MapView.prototype.zoomToLayer = function (layerId) {
+
+    console.log("zooming to layer with id " + layerId);
+
+    // TODO implement
+};
+
+/**
+ * Sets layer visibility
+ * @param {object} [layer] Layer object to set visibility for
+ * @param {string} [layer.id] ID of layer
+ * @param {boolean} [layer.isVisible] Indicates if layer is visible
+ */
+MapView.prototype.setLayerVisibility = function (layer) {
+
+    console.log("setting new visibility for layer with id " + layerId +
+        ", visibility: " + layer.isVisible);
+
+    // TODO implement
+};
+
+/**
+ * Removes layer with given layer ID
+ * @param {string} [layerId] ID of layer
+ */
+MapView.prototype.removeLayer = function (layerId) {
+
+    console.log("removing layer with id " + layerId);
+
+    // TODO implement
+};
+
+/**
+ * Clears list of layers
+ */
+MapView.prototype.clearLayerList = function () {
+
+    console.log("clearing layer list");
+
+    // TODO implement
 };
 
 /**

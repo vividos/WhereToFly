@@ -357,6 +357,55 @@ namespace WhereToFly.App.Core.Views
         }
 
         /// <summary>
+        /// Zooms to given layer on map
+        /// </summary>
+        /// <param name="layer">layer to zoom to</param>
+        public void ZoomToLayer(Layer layer)
+        {
+            string js = $"map.zoomToLayer(\"{layer.Id}\");";
+
+            this.RunJavaScript(js);
+        }
+
+        /// <summary>
+        /// Sets new visibility of given layer; IsVisible property of layer is used.
+        /// </summary>
+        /// <param name="layer">layer to set visibility</param>
+        public void SetLayerVisibility(Layer layer)
+        {
+            var options = new
+            {
+                id = layer.Id,
+                isVisible = layer.IsVisible
+            };
+
+            string js = string.Format(
+                "map.setLayerVisibility({0});",
+                JsonConvert.SerializeObject(options));
+
+            this.RunJavaScript(js);
+        }
+
+        /// <summary>
+        /// Removes layer; built-in layers can't be removed.
+        /// </summary>
+        /// <param name="layer">layer to remove</param>
+        public void RemoveLayer(Layer layer)
+        {
+            string js = $"map.removeLayer(\"{layer.Id}\");";
+
+            this.RunJavaScript(js);
+        }
+
+        /// <summary>
+        /// Clears layer list; built-in layers can't be removed.
+        /// </summary>
+        public void ClearLayerList()
+        {
+            this.RunJavaScript("map.clearLayerList();");
+        }
+
+        /// <summary>
         /// Clears location list
         /// </summary>
         public void ClearLocationList()

@@ -39,6 +39,26 @@ namespace WhereToFly.App.Core
         public const string MessageAddLayer = "AddLayer";
 
         /// <summary>
+        /// MessagingCenter message constant to zoom to layer on MapPage
+        /// </summary>
+        public const string MessageZoomToLayer = "ZoomToLayer";
+
+        /// <summary>
+        /// MessagingCenter message constant to set layer visibility
+        /// </summary>
+        public const string MessageSetLayerVisibility = "SetLayerVisibility";
+
+        /// <summary>
+        /// MessagingCenter message constant to remove layer
+        /// </summary>
+        public const string MessageRemoveLayer = "RemoveLayer";
+
+        /// <summary>
+        /// MessagingCenter message constant to clear all layers
+        /// </summary>
+        public const string MessageClearLayerList = "ClearLayerList";
+
+        /// <summary>
         /// MessagingCenter message constant to add track to MapPage
         /// </summary>
         public const string MessageAddTrack = "AddTrack";
