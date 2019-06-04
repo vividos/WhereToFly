@@ -91,6 +91,11 @@ namespace WhereToFly.App.Core.Views
         private List<Track> trackList;
 
         /// <summary>
+        /// List of layers on the map
+        /// </summary>
+        private List<Layer> layerList;
+
+        /// <summary>
         /// Task completion source to signal that the web page has been loaded
         /// </summary>
         private TaskCompletionSource<bool> taskCompletionSourcePageLoaded;
@@ -439,6 +444,7 @@ namespace WhereToFly.App.Core.Views
             this.appSettings = await dataService.GetAppSettingsAsync(CancellationToken.None);
             this.locationList = await dataService.GetLocationListAsync(CancellationToken.None);
             this.trackList = await dataService.GetTrackListAsync(CancellationToken.None);
+            this.layerList = await dataService.GetLayerListAsync(CancellationToken.None);
         }
 
         /// <summary>
@@ -466,6 +472,11 @@ namespace WhereToFly.App.Core.Views
             {
                 this.mapView.AddTrack(track);
                 this.displayedTracks.Add(track);
+            }
+
+            foreach (var layer in this.layerList)
+            {
+                this.mapView.AddLayer(layer);
             }
 
             var liveWaypointRefreshService = DependencyService.Get<LiveWaypointRefreshService>();
