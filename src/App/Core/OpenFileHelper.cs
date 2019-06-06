@@ -370,6 +370,27 @@ namespace WhereToFly.App.Core
         }
 
         /// <summary>
+        /// Checks for file extension and then imports layer file
+        /// </summary>
+        /// <param name="stream">stream to read from</param>
+        /// <param name="filename">filename of file</param>
+        /// <returns>task to wait on</returns>
+        public static async Task OpenLayerFileAsync(Stream stream, string filename)
+        {
+            if (Path.GetExtension(filename).ToLowerInvariant() != ".czml")
+            {
+                await App.Current.MainPage.DisplayAlert(
+                    Constants.AppTitle,
+                    "The file is not a CZML layer data file",
+                    "OK");
+
+                return;
+            }
+
+            await ImportLayerFile(stream, filename);
+        }
+
+        /// <summary>
         /// Imports a layer file
         /// </summary>
         /// <param name="stream">stream to read from</param>

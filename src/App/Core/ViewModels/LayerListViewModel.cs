@@ -167,7 +167,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             using (var stream = result.GetStream())
             {
-                await OpenFileHelper.OpenFileAsync(stream, result.FileName);
+                await OpenFileHelper.OpenLayerFileAsync(stream, result.FileName);
             }
 
             await this.ReloadLayerListAsync();
