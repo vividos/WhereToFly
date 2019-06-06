@@ -91,7 +91,7 @@
                                       Command="{Binding ZoomToLayerContextAction}" />
                             <MenuItem Text="Delete" IsDestructive="True"
                                       Icon="{Binding Source={StaticResource DeleteLayerImageBaseName}, Converter={StaticResource ImagePathConverter}}"
-                                      Command="{Binding DeleteLocationContextAction}" />
+                                      Command="{Binding DeleteLayerContextAction}" />
                         </ViewCell.ContextActions>
                     </ViewCell>
                 </DataTemplate>
