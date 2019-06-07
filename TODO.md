@@ -15,6 +15,5 @@
 
 - [ ] Show polyline with path from last 1h
 - [ ] Follow location when "my location" icon is tapped, until user interacts with view
-- [ ] Thermal placemarks
 - [ ] Wind field overlay from GFS weather model
 
