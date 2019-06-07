@@ -425,6 +425,11 @@ namespace WhereToFly.App.Core
 
             layer = await AddLayerPopupPage.ShowAsync(layer);
 
+            if (layer == null)
+            {
+                return;
+            }
+
             var dataService = DependencyService.Get<IDataService>();
 
             var layerList = await dataService.GetLayerListAsync(CancellationToken.None);
