@@ -11,7 +11,7 @@ Current version: %VERSION%
 
 ### Releases
 
-1.6.0 "Crossing the alps 2019" edition
+1.6.0
 
 - added new "layer" menu where CesiumJS .czml files can be loaded as layers
   displayed on the map
