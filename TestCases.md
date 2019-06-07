@@ -14,6 +14,16 @@ version.
 - [ ] Share current location with another app
 - [ ] Show flying range for a point on the map
 
+## Layer list
+
+- [ ] Import layer from .czml files using file picker
+- [ ] Import layer by opening .czml file via app
+- [ ] View layer list
+- [ ] Show and hide layers via the visibility icon
+- [ ] Zoom to layers
+- [ ] Delete single layer
+- [ ] Delete all layers
+
 ## Location list
 
 - [ ] Import locations from included lists
