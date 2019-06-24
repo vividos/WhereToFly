@@ -107,6 +107,11 @@ namespace WhereToFly.App.Core.Views
         private bool pageIsVisible;
 
         /// <summary>
+        /// Access to the map view instance
+        /// </summary>
+        internal IMapView MapView => this.mapView;
+
+        /// <summary>
         /// Creates a new maps page
         /// </summary>
         public MapPage()

@@ -38,6 +38,11 @@ namespace WhereToFly.App.Core
         public MapPage MapPage { get; internal set; }
 
         /// <summary>
+        /// Access to the map view instance
+        /// </summary>
+        public static IMapView MapView => (Current as App).MapPage.MapView;
+
+        /// <summary>
         /// Creates a new app object
         /// </summary>
         public App()

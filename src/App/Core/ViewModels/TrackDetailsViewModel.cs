@@ -209,7 +209,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task OnZoomToTrackAsync()
         {
-            App.ZoomToTrack(this.track);
+            App.MapView.ZoomToTrack(this.track);
 
             await NavigationService.Instance.NavigateAsync(Constants.PageKeyMapPage, animated: true);
         }

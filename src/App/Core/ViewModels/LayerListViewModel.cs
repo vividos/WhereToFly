@@ -125,7 +125,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         internal async Task ZoomToLayer(Layer layer)
         {
-            App.ZoomToLayer(layer);
+            App.MapView.ZoomToLayer(layer);
 
             await NavigationService.Instance.NavigateAsync(Constants.PageKeyMapPage, animated: true);
         }
@@ -195,7 +195,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             await this.ReloadLayerListAsync();
 
-            App.ClearLayerList();
+            App.MapView.ClearLayerList();
 
             App.ShowToast("Layer list was cleared.");
         }
@@ -214,7 +214,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             this.UpdateLayerList();
 
-            App.RemoveLayer(layer);
+            App.MapView.RemoveLayer(layer);
 
             App.ShowToast("Selected layer was deleted.");
         }

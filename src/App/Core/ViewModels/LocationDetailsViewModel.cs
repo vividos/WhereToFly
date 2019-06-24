@@ -286,7 +286,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task OnZoomToLocationAsync()
         {
-            App.ZoomToLocation(this.location.MapLocation);
+            App.MapView.ZoomToLocation(this.location.MapLocation);
 
             await NavigationService.Instance.NavigateAsync(Constants.PageKeyMapPage, animated: true);
         }

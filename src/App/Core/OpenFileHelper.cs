@@ -308,8 +308,8 @@ namespace WhereToFly.App.Core
 
             await dataService.StoreTrackListAsync(currentList);
 
-            App.AddMapTrack(track);
-            App.ZoomToTrack(track);
+            App.MapView.AddTrack(track);
+            App.MapView.ZoomToTrack(track);
 
             App.ShowToast("Track was loaded.");
 
@@ -328,7 +328,7 @@ namespace WhereToFly.App.Core
 
             try
             {
-                await App.SampleTrackHeightsAsync(track, 0.0);
+                await App.MapView.SampleTrackHeights(track, 0.0);
             }
             finally
             {
@@ -438,8 +438,8 @@ namespace WhereToFly.App.Core
 
             await NavigationService.Instance.NavigateAsync(Constants.PageKeyMapPage, animated: true);
 
-            App.AddMapLayer(layer);
-            App.ZoomToLayer(layer);
+            App.MapView.AddLayer(layer);
+            App.MapView.ZoomToLayer(layer);
 
             App.ShowToast("Layer was loaded.");
         }

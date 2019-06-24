@@ -400,8 +400,8 @@ namespace WhereToFly.App.Core.ViewModels
         /// <param name="track">track to show</param>
         private static void ShowTrack(Track track)
         {
-            App.AddMapTrack(track);
-            App.ZoomToTrack(track);
+            App.MapView.AddTrack(track);
+            App.MapView.ZoomToTrack(track);
 
             App.ShowToast("Track was added.");
         }
