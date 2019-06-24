@@ -107,7 +107,6 @@ namespace WhereToFly.App.Android
 
             Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
 
-            Forms.SetFlags("FastRenderers_Experimental");
             Forms.Init(this, savedInstanceState);
 
             FFImageLoading.ImageService.Instance.Initialize();
