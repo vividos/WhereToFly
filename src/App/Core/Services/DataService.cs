@@ -87,17 +87,19 @@ namespace WhereToFly.App.Core.Services
             var platform = DependencyService.Get<IPlatform>();
             string cacheFilename = Path.Combine(platform.CacheDataFolder, FaviconUrlCacheFilename);
 
-            if (File.Exists(cacheFilename))
+            if (!File.Exists(cacheFilename))
             {
-                string json = File.ReadAllText(cacheFilename);
-                var localCache = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+                return;
+            }
 
-                foreach (var item in localCache)
+            string json = File.ReadAllText(cacheFilename);
+            var localCache = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+
+            foreach (var item in localCache)
+            {
+                if (!this.faviconUrlCache.ContainsKey(item.Key))
                 {
-                    if (!this.faviconUrlCache.ContainsKey(item.Key))
-                    {
-                        this.faviconUrlCache.Add(item.Key, item.Value);
-                    }
+                    this.faviconUrlCache.Add(item.Key, item.Value);
                 }
             }
         }
