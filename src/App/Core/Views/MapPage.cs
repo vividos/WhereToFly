@@ -43,34 +43,6 @@ namespace WhereToFly.App.Core.Views
         private bool zoomToMyPosition;
 
         /// <summary>
-        /// Indicates if settings were updated while this page was invisible; used to update map
-        /// view when returning to this page.
-        /// </summary>
-        private bool updateMapSettings;
-
-        /// <summary>
-        /// Indicates if locations list was changed while this page was invisible, used to update
-        /// location list when returning to this page.
-        /// </summary>
-        private bool updateLocationsList;
-
-        /// <summary>
-        /// Indicates if track list was changed while this page was invisible; used to update
-        /// track list when returning to this page.
-        /// </summary>
-        private bool updateTrackList;
-
-        /// <summary>
-        /// Location to zoom to when this map page is appearing next time
-        /// </summary>
-        private MapPoint zoomToLocationOnAppearing;
-
-        /// <summary>
-        /// Track to zoom to when this map page is appearing next time
-        /// </summary>
-        private Track zoomToTrackOnAppearing;
-
-        /// <summary>
         /// Map view control on C# side
         /// </summary>
         private MapView mapView;
@@ -101,12 +73,6 @@ namespace WhereToFly.App.Core.Views
         private TaskCompletionSource<bool> taskCompletionSourcePageLoaded;
 
         /// <summary>
-        /// Indicates if this page is currently visible (OnAppearing() but no OnDisappearing()
-        /// called).
-        /// </summary>
-        private bool pageIsVisible;
-
-        /// <summary>
         /// Access to the map view instance
         /// </summary>
         internal IMapView MapView => this.mapView;
@@ -118,11 +84,7 @@ namespace WhereToFly.App.Core.Views
         {
             this.Title = Constants.AppTitle;
 
-            this.pageIsVisible = false;
             this.zoomToMyPosition = false;
-            this.updateMapSettings = false;
-            this.updateLocationsList = false;
-            this.updateTrackList = false;
 
             this.geolocator = DependencyService.Get<GeolocationService>().Geolocator;
 
@@ -133,7 +95,7 @@ namespace WhereToFly.App.Core.Views
                 Constants.MessageAddTourPlanLocation,
                 async (app, location) => await this.AddTourPlanningLocationAsync(location));
 
-            MessagingCenter.Subscribe<App>(this, Constants.MessageUpdateMapSettings, this.OnMessageUpdateMapSettings);
+            MessagingCenter.Subscribe<App>(this, Constants.MessageUpdateMapSettings, (app) => this.OnMessageUpdateMapSettings());
             MessagingCenter.Subscribe<App>(this, Constants.MessageUpdateMapLocations, (app) => this.OnMessageUpdateMapLocations());
             MessagingCenter.Subscribe<App>(this, Constants.MessageUpdateMapTracks, (app) => this.OnMessageUpdateMapTracks());
         }
@@ -631,7 +593,7 @@ namespace WhereToFly.App.Core.Views
                 animated: true,
                 parameter: location);
 
-            this.updateLocationsList = true;
+            this.OnMessageUpdateMapLocations();
         }
 
         /// <summary>
@@ -704,7 +666,7 @@ namespace WhereToFly.App.Core.Views
                 animated: true,
                 parameter: location);
 
-            this.updateLocationsList = true;
+            this.OnMessageUpdateMapLocations();
         }
 
         /// <summary>
@@ -768,30 +730,15 @@ namespace WhereToFly.App.Core.Views
                 await this.UpdateLastShownPositionAsync(point);
             }
 
-            if (this.pageIsVisible)
-            {
-                this.mapView.ZoomToTrack(track);
-            }
-            else
-            {
-                this.zoomToTrackOnAppearing = track;
-            }
+            this.mapView.ZoomToTrack(track);
         }
 
         /// <summary>
         /// Called when message arrives in order to update map settings
         /// </summary>
-        /// <param name="app">app object</param>
-        private void OnMessageUpdateMapSettings(App app)
+        private void OnMessageUpdateMapSettings()
         {
-            if (this.pageIsVisible)
-            {
-                App.RunOnUiThread(() => this.ReloadMapViewAppSettings());
-            }
-            else
-            {
-                this.updateMapSettings = true;
-            }
+            this.ReloadMapViewAppSettings();
         }
 
         /// <summary>
@@ -799,14 +746,7 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         private void OnMessageUpdateMapLocations()
         {
-            if (this.pageIsVisible)
-            {
-                App.RunOnUiThread(async () => await this.ReloadLocationListAsync());
-            }
-            else
-            {
-                this.updateLocationsList = true;
-            }
+            App.RunOnUiThread(async () => await this.ReloadLocationListAsync());
         }
 
         /// <summary>
@@ -814,14 +754,7 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         private void OnMessageUpdateMapTracks()
         {
-            if (this.pageIsVisible)
-            {
-                App.RunOnUiThread(async () => await this.ReloadTrackListAsync());
-            }
-            else
-            {
-                this.updateTrackList = true;
-            }
+            App.RunOnUiThread(async () => await this.ReloadTrackListAsync());
         }
 
         #region Page lifecycle methods
@@ -841,48 +774,6 @@ namespace WhereToFly.App.Core.Views
             });
 
             this.geolocator.PositionChanged += this.OnPositionChanged;
-
-            App.RunOnUiThread(async () => await this.CheckReloadData());
-
-            this.pageIsVisible = true;
-        }
-
-        /// <summary>
-        /// Checks if a reload of data into the map view is necessary
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task CheckReloadData()
-        {
-            if (this.updateMapSettings)
-            {
-                this.updateMapSettings = false;
-
-                this.ReloadMapViewAppSettings();
-            }
-
-            if (this.updateLocationsList)
-            {
-                await this.ReloadLocationListAsync();
-            }
-
-            if (this.updateTrackList)
-            {
-                await this.ReloadTrackListAsync();
-            }
-
-            if (this.zoomToLocationOnAppearing != null)
-            {
-                this.mapView.ZoomToLocation(this.zoomToLocationOnAppearing);
-
-                this.zoomToLocationOnAppearing = null;
-            }
-
-            if (this.zoomToTrackOnAppearing != null)
-            {
-                this.mapView.ZoomToTrack(this.zoomToTrackOnAppearing);
-
-                this.zoomToTrackOnAppearing = null;
-            }
         }
 
         /// <summary>
@@ -910,17 +801,22 @@ namespace WhereToFly.App.Core.Views
 
             var newLocationList = await dataService.GetLocationListAsync(CancellationToken.None);
 
-            if (this.updateLocationsList ||
-                this.locationList.Count != newLocationList.Count ||
+            if (this.locationList.Count != newLocationList.Count ||
                 !Enumerable.SequenceEqual(this.locationList, newLocationList, new LocationEqualityComparer()))
             {
+                this.AddAndRemoveLocations(newLocationList);
+
                 this.locationList = newLocationList;
-
-                this.mapView.ClearLocationList();
-                this.mapView.AddLocationList(this.locationList);
-
-                this.updateLocationsList = false;
             }
+        }
+
+        /// <summary>
+        /// Adds new and removes old locations from current location list
+        /// </summary>
+        private void AddAndRemoveLocations(List<Location> newLocationList)
+        {
+            this.mapView.ClearLocationList();
+            this.mapView.AddLocationList(newLocationList);
         }
 
         /// <summary>
@@ -933,15 +829,12 @@ namespace WhereToFly.App.Core.Views
 
             var newTrackList = await dataService.GetTrackListAsync(CancellationToken.None);
 
-            if (this.updateTrackList ||
-                this.trackList.Count != newTrackList.Count ||
+            if (this.trackList.Count != newTrackList.Count ||
                 !Enumerable.SequenceEqual(this.trackList, newTrackList, new TrackEqualityComparer()))
             {
                 this.AddAndRemoveDisplayedTracks(newTrackList);
 
                 this.trackList = newTrackList;
-
-                this.updateTrackList = false;
             }
         }
 
@@ -981,8 +874,6 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         protected override void OnDisappearing()
         {
-            this.pageIsVisible = false;
-
             base.OnDisappearing();
 
             this.geolocator.PositionChanged -= this.OnPositionChanged;
