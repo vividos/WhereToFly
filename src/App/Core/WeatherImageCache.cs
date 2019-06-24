@@ -234,43 +234,7 @@ namespace WhereToFly.App.Core
         /// <returns>task to wait on</returns>
         private async Task LoadImageAsync(string imageId, WeatherIconDescription iconDescription)
         {
-            ImageCacheEntry entry = null;
-
-            switch (iconDescription.Type)
-            {
-                case WeatherIconDescription.IconType.IconLink:
-                    if (iconDescription.WebLink.StartsWith("https://www.austrocontrol.at"))
-                    {
-                        var platform = DependencyService.Get<IPlatform>();
-                        byte[] data = platform.LoadAssetBinaryData("alptherm-favicon.png");
-                        entry = new ImageCacheEntry(data);
-                        break;
-                    }
-
-                    string faviconLink = await GetFaviconFromLinkAsync(iconDescription.WebLink);
-
-                    if (!string.IsNullOrEmpty(faviconLink))
-                    {
-                        byte[] data = await this.client.GetByteArrayAsync(faviconLink);
-
-                        entry = new ImageCacheEntry(data);
-                    }
-
-                    break;
-
-                case WeatherIconDescription.IconType.IconApp:
-                    var appManager = DependencyService.Get<IAppManager>();
-                    entry = new ImageCacheEntry(appManager.GetAppIcon(iconDescription.WebLink));
-                    break;
-
-                case WeatherIconDescription.IconType.IconPlaceholder:
-                    string imagePath = Converter.ImagePathConverter.GetDeviceDependentImage("border_none_variant");
-                    entry = new ImageCacheEntry(ImageSource.FromFile(imagePath));
-                    break;
-
-                default:
-                    break;
-            }
+            ImageCacheEntry entry = await this.GetImageCacheEntryByDescription(iconDescription);
 
             if (entry != null)
             {
@@ -279,6 +243,49 @@ namespace WhereToFly.App.Core
                     this.imageCache[imageId] = entry;
                 }
             }
+        }
+
+        /// <summary>
+        /// Gets image cache entry by given weather icon description
+        /// </summary>
+        /// <param name="iconDescription">weather icon description</param>
+        /// <returns>image cache entry, or null when entry couldn't be created</returns>
+        private async Task<ImageCacheEntry> GetImageCacheEntryByDescription(WeatherIconDescription iconDescription)
+        {
+            switch (iconDescription.Type)
+            {
+                case WeatherIconDescription.IconType.IconLink:
+                    if (iconDescription.WebLink.StartsWith("https://www.austrocontrol.at"))
+                    {
+                        var platform = DependencyService.Get<IPlatform>();
+                        byte[] data = platform.LoadAssetBinaryData("alptherm-favicon.png");
+                        return new ImageCacheEntry(data);
+                    }
+
+                    string faviconLink = await GetFaviconFromLinkAsync(iconDescription.WebLink);
+
+                    if (!string.IsNullOrEmpty(faviconLink))
+                    {
+                        byte[] data = await this.client.GetByteArrayAsync(faviconLink);
+
+                        return new ImageCacheEntry(data);
+                    }
+
+                    break;
+
+                case WeatherIconDescription.IconType.IconApp:
+                    var appManager = DependencyService.Get<IAppManager>();
+                    return new ImageCacheEntry(appManager.GetAppIcon(iconDescription.WebLink));
+
+                case WeatherIconDescription.IconType.IconPlaceholder:
+                    string imagePath = Converter.ImagePathConverter.GetDeviceDependentImage("border_none_variant");
+                    return new ImageCacheEntry(ImageSource.FromFile(imagePath));
+
+                default:
+                    break;
+            }
+
+            return null;
         }
     }
 }
