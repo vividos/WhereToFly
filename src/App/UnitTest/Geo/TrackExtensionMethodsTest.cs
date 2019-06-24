@@ -42,7 +42,7 @@ namespace WhereToFly.App.UnitTest.Geo
                 "track_linestring.kmz",
                 "tracks.gpx",
                 "tracks.kmz",
-                ////"85QA3ET1.igc", // TODO causes exception
+                "85QA3ET1.igc",
             };
 
             // run

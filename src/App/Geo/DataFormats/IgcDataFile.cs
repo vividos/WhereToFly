@@ -24,7 +24,9 @@ namespace WhereToFly.App.Geo.DataFormats
         /// <param name="stream">stream to read from</param>
         public IgcDataFile(Stream stream)
         {
-            this.stream = stream;
+            this.stream = new MemoryStream();
+            stream.CopyTo(this.stream);
+            this.stream.Seek(0, SeekOrigin.Begin);
         }
 
         /// <summary>
