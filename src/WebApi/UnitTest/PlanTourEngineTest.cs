@@ -59,8 +59,8 @@ namespace WhereToFly.WebApi.UnitTest
             {
                 WaypointIdList = new List<string>
                 {
-                "wheretofly-path-bahnhof-neuhaus",
-                "wheretofly-path-rauhkopf",
+                    "wheretofly-path-bahnhof-neuhaus",
+                    "wheretofly-path-rauhkopf",
                 }
             };
 
