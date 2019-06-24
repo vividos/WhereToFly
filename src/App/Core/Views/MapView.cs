@@ -18,7 +18,7 @@ namespace WhereToFly.App.Core.Views
     /// controlled using this class. JavaScript code is generated for function calls, and callback
     /// functions are called from JavaScript to C#.
     /// </summary>
-    public class MapView
+    public class MapView : IMapView
     {
         /// <summary>
         /// Web view where MapView control is used
