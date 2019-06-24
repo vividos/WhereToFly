@@ -34,49 +34,9 @@ namespace WhereToFly.App.Core
         public const string MessageWebViewClearCache = "WebViewClearCache";
 
         /// <summary>
-        /// MessagingCenter message constant to add layer to MapPage
-        /// </summary>
-        public const string MessageAddLayer = "AddLayer";
-
-        /// <summary>
-        /// MessagingCenter message constant to zoom to layer on MapPage
-        /// </summary>
-        public const string MessageZoomToLayer = "ZoomToLayer";
-
-        /// <summary>
-        /// MessagingCenter message constant to set layer visibility
-        /// </summary>
-        public const string MessageSetLayerVisibility = "SetLayerVisibility";
-
-        /// <summary>
-        /// MessagingCenter message constant to remove layer
-        /// </summary>
-        public const string MessageRemoveLayer = "RemoveLayer";
-
-        /// <summary>
-        /// MessagingCenter message constant to clear all layers
-        /// </summary>
-        public const string MessageClearLayerList = "ClearLayerList";
-
-        /// <summary>
-        /// MessagingCenter message constant to add track to MapPage
-        /// </summary>
-        public const string MessageAddTrack = "AddTrack";
-
-        /// <summary>
         /// MessagingCenter message constant to add tour plan location
         /// </summary>
         public const string MessageAddTourPlanLocation = "AddTourPlanLocation";
-
-        /// <summary>
-        /// MessagingCenter message constant to zoom to a location on MapPage
-        /// </summary>
-        public const string MessageZoomToLocation = "ZoomToLocation";
-
-        /// <summary>
-        /// MessagingCenter message constant to zoom to a track on MapPage
-        /// </summary>
-        public const string MessageZoomToTrack = "ZoomToTrack";
 
         /// <summary>
         /// MessagingCenter message constant to update settings on MapPage

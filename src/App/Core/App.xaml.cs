@@ -181,72 +181,6 @@ namespace WhereToFly.App.Core
         }
 
         /// <summary>
-        /// Adds new map layer
-        /// </summary>
-        /// <param name="layer">layer to add</param>
-        public static void AddMapLayer(Layer layer)
-        {
-            var app = Current as App;
-
-            MessagingCenter.Send<App, Layer>(app, Constants.MessageAddLayer, layer);
-        }
-
-        /// <summary>
-        /// Zooms to given layer
-        /// </summary>
-        /// <param name="layer">layer to zoom to</param>
-        public static void ZoomToLayer(Layer layer)
-        {
-            var app = Current as App;
-
-            MessagingCenter.Send<App, Layer>(app, Constants.MessageZoomToLayer, layer);
-        }
-
-        /// <summary>
-        /// Sets new layer visibility
-        /// </summary>
-        /// <param name="layer">layer to set visibility</param>
-        public static void SetLayerVisibility(Layer layer)
-        {
-            var app = Current as App;
-
-            MessagingCenter.Send<App, Layer>(app, Constants.MessageSetLayerVisibility, layer);
-        }
-
-        /// <summary>
-        /// removes given layer from the map
-        /// </summary>
-        /// <param name="layer">layer to remove</param>
-        public static void RemoveLayer(Layer layer)
-        {
-            var app = Current as App;
-
-            MessagingCenter.Send<App, Layer>(app, Constants.MessageRemoveLayer, layer);
-        }
-
-        /// <summary>
-        /// Clears all layers on the map
-        /// </summary>
-        public static void ClearLayerList()
-        {
-            var app = Current as App;
-
-            MessagingCenter.Send<App>(app, Constants.MessageClearLayerList);
-        }
-
-        /// <summary>
-        /// Adds a track to the map view; when the map page is currently invisible, the add is
-        /// carried out when the page appears.
-        /// </summary>
-        /// <param name="track">track to add</param>
-        public static void AddMapTrack(Track track)
-        {
-            var app = Xamarin.Forms.Application.Current as App;
-
-            MessagingCenter.Send<App, Track>(app, Constants.MessageAddTrack, track);
-        }
-
-        /// <summary>
         /// Adds a tour planning location to the current list of locations and opens the planning
         /// dialog.
         /// </summary>
@@ -256,30 +190,6 @@ namespace WhereToFly.App.Core
             var app = Current as App;
 
             MessagingCenter.Send<App, Location>(app, Constants.MessageAddTourPlanLocation, location);
-        }
-
-        /// <summary>
-        /// Zooms to location on opened MapPage; when the map page is currently invisible, the
-        /// zoom is carried out when the page appears.
-        /// </summary>
-        /// <param name="location">location to zoom to</param>
-        public static void ZoomToLocation(MapPoint location)
-        {
-            var app = Xamarin.Forms.Application.Current as App;
-
-            MessagingCenter.Send<App, MapPoint>(app, Constants.MessageZoomToLocation, location);
-        }
-
-        /// <summary>
-        /// Zooms to track on opened MapPage; when the map page is currently invisible, the zoom
-        /// is carried out when the page appears.
-        /// </summary>
-        /// <param name="track">track to zoom to</param>
-        public static void ZoomToTrack(Track track)
-        {
-            var app = Xamarin.Forms.Application.Current as App;
-
-            MessagingCenter.Send<App, Track>(app, Constants.MessageZoomToTrack, track);
         }
 
         /// <summary>
@@ -385,19 +295,6 @@ namespace WhereToFly.App.Core
             liveWaypointRefreshService.DataService = dataService;
 
             liveWaypointRefreshService.UpdateLiveWaypointList(locationList);
-        }
-
-        /// <summary>
-        /// Samples track heights for given track, updating track point altitudes in-place
-        /// </summary>
-        /// <param name="track">track to sample heights</param>
-        /// <param name="offsetInMeters">offset in meters to add to track</param>
-        /// <returns>task to wait on</returns>
-        public static async Task SampleTrackHeightsAsync(Track track, double offsetInMeters)
-        {
-            var app = Current as App;
-
-            await app.MapPage.SampleTrackHeightsAsync(track, offsetInMeters);
         }
 
         /// <summary>

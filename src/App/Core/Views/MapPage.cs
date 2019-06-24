@@ -128,24 +128,14 @@ namespace WhereToFly.App.Core.Views
 
             Task.Run(this.InitLayoutAsync);
 
-            MessagingCenter.Subscribe<App, Layer>(this, Constants.MessageAddLayer, this.OnMessageAddLayer);
-            MessagingCenter.Subscribe<App, Layer>(this, Constants.MessageZoomToLayer, (app, layer) => this.OnMessageZoomToLayer(layer));
-            MessagingCenter.Subscribe<App, Layer>(this, Constants.MessageSetLayerVisibility, (app, layer) => this.OnMessageSetLayerVisibility(layer));
-            MessagingCenter.Subscribe<App, Layer>(this, Constants.MessageRemoveLayer, (app, layer) => this.OnMessageRemoveLayer(layer));
-            MessagingCenter.Subscribe<App>(this, Constants.MessageClearLayerList, (app) => this.OnMessageClearLayerList());
-
-            MessagingCenter.Subscribe<App, Track>(this, Constants.MessageAddTrack, this.OnMessageAddTrack);
-
             MessagingCenter.Subscribe<App, Location>(
                 this,
                 Constants.MessageAddTourPlanLocation,
-                async (app, location) => await this.OnMessageAddTourPlanLocation(location));
+                async (app, location) => await this.AddTourPlanningLocationAsync(location));
 
-            MessagingCenter.Subscribe<App, MapPoint>(this, Constants.MessageZoomToLocation, async (app, location) => await this.OnMessageZoomToLocation(location));
-            MessagingCenter.Subscribe<App, Track>(this, Constants.MessageZoomToTrack, async (app, track) => await this.OnMessageZoomToTrack(track));
             MessagingCenter.Subscribe<App>(this, Constants.MessageUpdateMapSettings, this.OnMessageUpdateMapSettings);
-            MessagingCenter.Subscribe<App>(this, Constants.MessageUpdateMapLocations, this.OnMessageUpdateMapLocations);
-            MessagingCenter.Subscribe<App>(this, Constants.MessageUpdateMapTracks, this.OnMessageUpdateMapTracks);
+            MessagingCenter.Subscribe<App>(this, Constants.MessageUpdateMapLocations, (app) => this.OnMessageUpdateMapLocations());
+            MessagingCenter.Subscribe<App>(this, Constants.MessageUpdateMapTracks, (app) => this.OnMessageUpdateMapTracks());
         }
 
         /// <summary>
@@ -765,97 +755,6 @@ namespace WhereToFly.App.Core.Views
         }
 
         /// <summary>
-        /// Called when message arrives in order to add a new layer to map
-        /// </summary>
-        /// <param name="app">app object</param>
-        /// <param name="layer">layer to add</param>
-        private void OnMessageAddLayer(App app, Layer layer)
-        {
-            App.RunOnUiThread(() => this.mapView.AddLayer(layer));
-        }
-
-        /// <summary>
-        /// Called when message arrives in order to zoom to layer on map
-        /// </summary>
-        /// <param name="layer">layer to zoom to</param>
-        private void OnMessageZoomToLayer(Layer layer)
-        {
-            App.RunOnUiThread(() => this.mapView.ZoomToLayer(layer));
-        }
-
-        /// <summary>
-        /// Called when message arrives in order to set layer visibility
-        /// </summary>
-        /// <param name="layer">layer to set new visibility</param>
-        private void OnMessageSetLayerVisibility(Layer layer)
-        {
-            App.RunOnUiThread(() => this.mapView.SetLayerVisibility(layer));
-        }
-
-        /// <summary>
-        /// Called when message arrives in order to remove layer
-        /// </summary>
-        /// <param name="layer">layer to remove</param>
-        private void OnMessageRemoveLayer(Layer layer)
-        {
-            App.RunOnUiThread(() => this.mapView.RemoveLayer(layer));
-        }
-
-        /// <summary>
-        /// Called when message arrives in order to clear layer list
-        /// </summary>
-        private void OnMessageClearLayerList()
-        {
-            App.RunOnUiThread(() => this.mapView.ClearLayerList());
-        }
-
-        /// <summary>
-        /// Called when message arrives in order to add a new track to map
-        /// </summary>
-        /// <param name="app">app object</param>
-        /// <param name="track">track to add</param>
-        private void OnMessageAddTrack(App app, Track track)
-        {
-            if (this.pageIsVisible)
-            {
-                App.RunOnUiThread(() => this.mapView.AddTrack(track));
-            }
-            else
-            {
-                this.updateTrackList = true;
-            }
-        }
-
-        /// <summary>
-        /// Called when message arrives in order to add tour plan location
-        /// </summary>
-        /// <param name="location">location to add</param>
-        /// <returns>task to wait on</returns>
-        private async Task OnMessageAddTourPlanLocation(Location location)
-        {
-            await this.AddTourPlanningLocationAsync(location);
-        }
-
-        /// <summary>
-        /// Called when message arrives in order to zoom to a location
-        /// </summary>
-        /// <param name="location">location to zoom to</param>
-        /// <returns>task to wait on</returns>
-        private async Task OnMessageZoomToLocation(MapPoint location)
-        {
-            await this.UpdateLastShownPositionAsync(location);
-
-            if (this.pageIsVisible)
-            {
-                this.mapView.ZoomToLocation(location);
-            }
-            else
-            {
-                this.zoomToLocationOnAppearing = location;
-            }
-        }
-
-        /// <summary>
         /// Called when message arrives in order to zoom to a track
         /// </summary>
         /// <param name="track">track to zoom to</param>
@@ -898,8 +797,7 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Called when message arrives in order to update location list on map
         /// </summary>
-        /// <param name="app">app object</param>
-        private void OnMessageUpdateMapLocations(App app)
+        private void OnMessageUpdateMapLocations()
         {
             if (this.pageIsVisible)
             {
@@ -914,8 +812,7 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Called when message arrives in order to update track list on map
         /// </summary>
-        /// <param name="app">app object</param>
-        private void OnMessageUpdateMapTracks(App app)
+        private void OnMessageUpdateMapTracks()
         {
             if (this.pageIsVisible)
             {
