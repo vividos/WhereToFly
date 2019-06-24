@@ -152,7 +152,7 @@ namespace WhereToFly.App.Core
         /// <param name="message">toast message text</param>
         public static void ShowToast(string message)
         {
-            var app = Xamarin.Forms.Application.Current as App;
+            var app = Current as App;
 
             MessagingCenter.Send<App, string>(app, Constants.MessageShowToast, message);
         }
@@ -173,7 +173,7 @@ namespace WhereToFly.App.Core
         /// </summary>
         public static void ClearWebViewCache()
         {
-            var app = Xamarin.Forms.Application.Current as App;
+            var app = Current as App;
 
             MessagingCenter.Send(app, Constants.MessageWebViewClearCache);
 
@@ -287,7 +287,7 @@ namespace WhereToFly.App.Core
         /// </summary>
         public static void UpdateMapSettings()
         {
-            var app = Xamarin.Forms.Application.Current as App;
+            var app = Current as App;
 
             MessagingCenter.Send<App>(app, Constants.MessageUpdateMapSettings);
         }
@@ -297,7 +297,7 @@ namespace WhereToFly.App.Core
         /// </summary>
         public static void UpdateMapLocationsList()
         {
-            var app = Xamarin.Forms.Application.Current as App;
+            var app = Current as App;
 
             MessagingCenter.Send<App>(app, Constants.MessageUpdateMapLocations);
         }
@@ -307,7 +307,7 @@ namespace WhereToFly.App.Core
         /// </summary>
         public static void UpdateMapTracksList()
         {
-            var app = Xamarin.Forms.Application.Current as App;
+            var app = Current as App;
 
             MessagingCenter.Send<App>(app, Constants.MessageUpdateMapTracks);
         }
