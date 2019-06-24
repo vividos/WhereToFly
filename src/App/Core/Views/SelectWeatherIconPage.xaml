@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              x:Class="WhereToFly.App.Core.Views.SelectWeatherIconPage">
     <ContentPage.Content>
 
@@ -21,9 +22,9 @@
                         <ViewCell.View>
                             <StackLayout Orientation="Horizontal" BackgroundColor="#efefef" Margin="8,4">
                                 <!-- Weather icon -->
-                                <Image Source="{Binding Icon, Mode=OneWay}"
-                                       WidthRequest="32" HeightRequest="32" Margin="4"
-                                       HorizontalOptions="Start" VerticalOptions="Center" />
+                                <ffimageloadingsvg:SvgCachedImage Source="{Binding Icon, Mode=OneWay}"
+                                                                  WidthRequest="32" HeightRequest="32" Margin="4"
+                                                                  HorizontalOptions="Start" VerticalOptions="Center" />
 
                                 <!-- Title -->
                                 <Label Text="{Binding Title, Mode=OneWay}"

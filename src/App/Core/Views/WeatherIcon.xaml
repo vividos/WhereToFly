@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              x:Class="WhereToFly.App.Core.Views.WeatherIcon">
     <ContentView.Content>
         <!-- Square/rectangular layout -->
@@ -15,8 +16,8 @@
             </StackLayout.GestureRecognizers>
 
             <!-- Controls -->
-            <Image Source="{Binding Icon, Mode=OneWay}"
-                   WidthRequest="50" HeightRequest="50" Margin="4,4,0,0" />
+            <ffimageloadingsvg:SvgCachedImage Source="{Binding Icon, Mode=OneWay}"
+                                              WidthRequest="50" HeightRequest="50" Margin="4,4,0,0" />
 
             <Label Text="{Binding Title, Mode=OneTime}"
                    FontSize="{OnPlatform Android=Medium, UWP=Small}" TextColor="Black"

@@ -4,6 +4,7 @@
                  xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
                  xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
                  xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+                 xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                  x:Class="WhereToFly.App.Core.Views.SelectWeatherIconPopupPage">
 
     <!-- animate popup page-->
@@ -48,9 +49,9 @@
                         <ViewCell.View>
                             <StackLayout Orientation="Horizontal" BackgroundColor="#efefef" Margin="8,4">
                                 <!-- Weather icon -->
-                                <Image Source="{Binding Icon, Mode=OneWay}"
-                                       WidthRequest="32" HeightRequest="32" Margin="4"
-                                       HorizontalOptions="Start" VerticalOptions="Center" />
+                                <ffimageloadingsvg:SvgCachedImage Source="{Binding Icon, Mode=OneWay}"
+                                                                  WidthRequest="32" HeightRequest="32" Margin="4"
+                                                                  HorizontalOptions="Start" VerticalOptions="Center" />
 
                                 <!-- Title -->
                                 <Label Text="{Binding Title, Mode=OneWay}"

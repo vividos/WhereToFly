@@ -266,9 +266,7 @@ namespace WhereToFly.App.Core
 
                     if (!string.IsNullOrEmpty(faviconLink))
                     {
-                        byte[] data = await this.client.GetByteArrayAsync(faviconLink);
-
-                        return new ImageCacheEntry(data);
+                        return new ImageCacheEntry(new UriImageSource { Uri = new Uri(faviconLink) });
                     }
 
                     break;
