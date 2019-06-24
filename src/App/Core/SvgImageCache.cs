@@ -55,12 +55,27 @@ namespace WhereToFly.App.Core
         /// <returns>image source</returns>
         public static ImageSource GetImageSource(Layer layer, string fill = null)
         {
-            string svgImagePath =
-                layer.LayerType == LayerType.LocationLayer ? "icons/format-list-bulleted.svg" :
-                layer.LayerType == LayerType.LocationLayer ? "icons/map-marker-distance.svg" :
-                "icons/layers-outline.svg";
+            string svgImagePath = ImagePathFromLayerType(layer.LayerType);
 
             return GetImageSource(svgImagePath, fill);
+        }
+
+        /// <summary>
+        /// Returns SVG image path from layer type
+        /// </summary>
+        /// <param name="layerType">layer type</param>
+        /// <returns>SVG image path</returns>
+        private static string ImagePathFromLayerType(LayerType layerType)
+        {
+            switch (layerType)
+            {
+                case LayerType.LocationLayer:
+                    return "icons/format-list-bulleted.svg";
+                case LayerType.TrackLayer:
+                    return "icons/map-marker-distance.svg";
+                default:
+                    return "icons/layers-outline.svg";
+            }
         }
 
         /// <summary>
