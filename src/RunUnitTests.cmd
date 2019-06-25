@@ -53,6 +53,7 @@ REM
     -filter:"+[WhereToFly*]* -[WhereToFly.WebApi.UnitTest]*" ^
     -mergebyhash ^
     -skipautoprops ^
+    -oldstyle ^
     -output:"%~dp0\TestResults\WhereToFly-WebApi-CoverageReport.xml"
 
 %REPORTGENERATOR% ^
