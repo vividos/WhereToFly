@@ -20,6 +20,7 @@ REM Preparations
 REM
 call "%VSINSTALL%\Common7\Tools\VsDevCmd.bat"
 
+set DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 set VSTEST=%VSINSTALL%\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe
 

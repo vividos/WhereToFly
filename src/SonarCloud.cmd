@@ -23,6 +23,8 @@ REM Preparations
 REM
 call "%VSINSTALL%\Common7\Tools\VsDevCmd.bat"
 
+set DOTNET_CLI_TELEMETRY_OPTOUT=1
+
 set PATH=%PATH%;%SONARQUBE%\build-wrapper-win-x86;%SONARQUBE%\sonar-scanner-msbuild
 
 if "%SONARLOGIN%" == "" echo "Environment variable SONARLOGIN is not set! Obtain a new token and set the environment variable!"
