@@ -27,6 +27,22 @@ namespace WhereToFly.App.UnitTest
         }
 
         /// <summary>
+        /// Returns default layer for unit tests
+        /// </summary>
+        /// <returns>default layer</returns>
+        public static Layer GetDefaultLayer()
+        {
+            return new Layer
+            {
+                Id = Guid.NewGuid().ToString("B"),
+                Name = "DefaultLayer",
+                LayerType = LayerType.CzmlLayer,
+                IsVisible = true,
+                Data = "abc123xyz"
+            };
+        }
+
+        /// <summary>
         /// Returns default location for unit tests
         /// </summary>
         /// <returns>default location</returns>

@@ -58,8 +58,12 @@
     <Compile Include="UnitTestAppManager.cs" />
     <Compile Include="UnitTestGeolocationService.cs" />
     <Compile Include="UnitTestHelper.cs" />
+    <Compile Include="ViewModels\AddLayerPopupViewModelTest.cs" />
+    <Compile Include="ViewModels\AddLiveWaypointViewModelTest.cs" />
     <Compile Include="ViewModels\AddTrackPopupViewModelTest.cs" />
+    <Compile Include="ViewModels\FlyingRangePopupViewModelTest.cs" />
     <Compile Include="ViewModels\MenuViewModelTest.cs" />
+    <Compile Include="ViewModels\PlanTourPopupViewModelTest.cs" />
     <Compile Include="ViewModels\SelectWeatherIconViewModelTest.cs" />
     <Compile Include="ViewModels\SettingsViewModelTest.cs" />
     <Compile Include="ViewModels\TrackDetailsViewModelTest.cs" />
