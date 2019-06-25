@@ -29,6 +29,11 @@ namespace WhereToFly.App.Core
         /// <returns>image source</returns>
         public static ImageSource GetImageSource(Location location, string fill = null)
         {
+            if (location == null)
+            {
+                return null;
+            }
+
             return GetImageSource(
                 SvgImagePathFromLocationType(location.Type),
                 fill);
