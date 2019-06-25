@@ -62,6 +62,7 @@
     <Compile Include="ViewModels\AddLiveWaypointViewModelTest.cs" />
     <Compile Include="ViewModels\AddTrackPopupViewModelTest.cs" />
     <Compile Include="ViewModels\FlyingRangePopupViewModelTest.cs" />
+    <Compile Include="ViewModels\LayerListViewModelTest.cs" />
     <Compile Include="ViewModels\MenuViewModelTest.cs" />
     <Compile Include="ViewModels\PlanTourPopupViewModelTest.cs" />
     <Compile Include="ViewModels\SelectWeatherIconViewModelTest.cs" />
