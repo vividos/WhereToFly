@@ -12,6 +12,11 @@ namespace WhereToFly.App.Core.ViewModels
     public class FlyingRangePopupViewModel : ViewModelBase
     {
         /// <summary>
+        /// App settings to use for storing flying parameters
+        /// </summary>
+        private readonly AppSettings appSettings;
+
+        /// <summary>
         /// Flying range parameters
         /// </summary>
         public FlyingRangeParameters Parameters { get; private set; } = new FlyingRangeParameters();
@@ -74,11 +79,14 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Creates a new "flying range" popup page view model
         /// </summary>
-        public FlyingRangePopupViewModel()
+        /// <param name="appSettings">app settings to use</param>
+        public FlyingRangePopupViewModel(AppSettings appSettings)
         {
-            if (App.Settings.LastFlyingRangeParameters != null)
+            this.appSettings = appSettings;
+
+            if (appSettings?.LastFlyingRangeParameters != null)
             {
-                this.Parameters = App.Settings.LastFlyingRangeParameters;
+                this.Parameters = appSettings.LastFlyingRangeParameters;
             }
 
             // the wind direction list is specified so that the direction angle can directly be
@@ -102,10 +110,10 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         public async Task StoreFlyingRangeParameters()
         {
-            App.Settings.LastFlyingRangeParameters = this.Parameters;
+            this.appSettings.LastFlyingRangeParameters = this.Parameters;
 
             var dataService = DependencyService.Get<IDataService>();
-            await dataService.StoreAppSettingsAsync(App.Settings);
+            await dataService.StoreAppSettingsAsync(this.appSettings);
         }
     }
 }

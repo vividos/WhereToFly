@@ -33,7 +33,7 @@ namespace WhereToFly.App.Core.Views
 
             this.InitializeComponent();
 
-            this.BindingContext = this.viewModel = new FlyingRangePopupViewModel();
+            this.BindingContext = this.viewModel = new FlyingRangePopupViewModel(App.Settings);
         }
 
         /// <summary>
