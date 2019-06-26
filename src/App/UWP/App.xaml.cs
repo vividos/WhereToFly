@@ -42,16 +42,7 @@ namespace WhereToFly.App.UWP
 
                 rootFrame.NavigationFailed += this.OnNavigationFailed;
 
-                Rg.Plugins.Popup.Popup.Init();
-
-                Xamarin.Forms.Forms.Init(args, Rg.Plugins.Popup.Popup.GetExtraAssemblies());
-
-                FFImageLoading.ImageService.Instance.Initialize();
-                FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
-
-                Xamarin.Essentials.Platform.MapServiceToken = Constants.BingMapsKeyUwp;
-
-                Xamarin.Forms.MessagingCenter.Subscribe<Core.App, string>(this, Constants.MessageShowToast, this.ShowToast);
+                this.SetupApp(args);
 
                 //// Note: When needed, use this check and restore state
                 //// if (args.PreviousExecutionState == ApplicationExecutionState.Terminated)
@@ -70,6 +61,24 @@ namespace WhereToFly.App.UWP
 
             // Ensure the current window is active
             Window.Current.Activate();
+        }
+
+        /// <summary>
+        /// Sets up Xamarin app and all plugins
+        /// </summary>
+        /// <param name="args">event args for activation event</param>
+        private void SetupApp(IActivatedEventArgs args)
+        {
+            Rg.Plugins.Popup.Popup.Init();
+
+            Xamarin.Forms.Forms.Init(args, Rg.Plugins.Popup.Popup.GetExtraAssemblies());
+
+            FFImageLoading.ImageService.Instance.Initialize();
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
+
+            Xamarin.Essentials.Platform.MapServiceToken = Constants.BingMapsKeyUwp;
+
+            Xamarin.Forms.MessagingCenter.Subscribe<Core.App, string>(this, Constants.MessageShowToast, this.ShowToast);
         }
 
         /// <summary>
