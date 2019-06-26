@@ -33,6 +33,16 @@ namespace WhereToFly.App.UWP
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
+            this.SetupRootFrame(args, args.Arguments);
+        }
+
+        /// <summary>
+        /// Sets up root frame, if not already existing
+        /// </summary>
+        /// <param name="args">event args for activation event</param>
+        /// <param name="parameters">page parameters</param>
+        private void SetupRootFrame(IActivatedEventArgs args, object parameters)
+        {
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
             if (!(Window.Current.Content is Frame rootFrame))
@@ -56,7 +66,7 @@ namespace WhereToFly.App.UWP
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                rootFrame.Navigate(typeof(MainPage), args.Arguments);
+                rootFrame.Navigate(typeof(MainPage), parameters);
             }
 
             // Ensure the current window is active
@@ -103,6 +113,8 @@ namespace WhereToFly.App.UWP
         /// <param name="args">file activation event args</param>
         protected override void OnFileActivated(FileActivatedEventArgs args)
         {
+            this.SetupRootFrame(args, null);
+
             if (args.Files.Count > 0)
             {
                 var file = args.Files[0] as StorageFile;
