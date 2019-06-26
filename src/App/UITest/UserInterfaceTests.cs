@@ -76,6 +76,7 @@ namespace WhereToFly.App.UITest
             {
                 "Info",
                 "Settings",
+                "Layers",
                 "Locations",
                 "Tracks",
                 "Current Position",
