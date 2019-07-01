@@ -21,8 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="2.0.0" />
-    <PackageReference Include="Microsoft.AppCenter.Distribute" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AppCenter.Distribute" Version="2.1.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="Plugin.Permissions" Version="3.0.0.12" />
     <PackageReference Include="Rg.Plugins.Popup" Version="1.1.5.188" />
@@ -32,8 +32,8 @@
     </PackageReference>
     <PackageReference Include="Xam.Plugin.Geolocator" Version="4.5.0.6" />
     <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms" Version="2.4.11.982" />
-    <PackageReference Include="Xamarin.Forms" Version="4.0.0.497661" />
-    <PackageReference Include="Xamarin.Plugin.FilePicker" Version="2.1.14-beta" />
+    <PackageReference Include="Xamarin.Forms" Version="4.0.0.540366" />
+    <PackageReference Include="Xamarin.Plugin.FilePicker" Version="2.1.17-beta" />
   </ItemGroup>
 
   <ItemGroup>
