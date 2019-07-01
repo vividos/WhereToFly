@@ -25,17 +25,14 @@ namespace WhereToFly.App.UnitTest
         }
 
         /// <summary>
-        /// Tests empty cache instance
+        /// Tests weather icon type IconPlaceholder
         /// </summary>
         /// <returns>task to wait for</returns>
         [TestMethod]
-        public async Task TestEmptyCache()
+        public async Task TestIconTypePlaceholder()
         {
-            // set up
-            var cache = new WeatherImageCache();
-
             // run
-            var imageSource = await cache.GetImageAsync(new WeatherIconDescription
+            var imageSource = await WeatherImageCache.GetImageAsync(new WeatherIconDescription
             {
                 Name = "placeholder",
                 Type = WeatherIconDescription.IconType.IconPlaceholder,
@@ -46,47 +43,14 @@ namespace WhereToFly.App.UnitTest
         }
 
         /// <summary>
-        /// Tests returning same image source instance
-        /// </summary>
-        /// <returns>task to wait for</returns>
-        [TestMethod]
-        public async Task TestCacheSameImageSource()
-        {
-            // set up
-            var cache = new WeatherImageCache();
-
-            // run
-            var imageSource1 = await cache.GetImageAsync(new WeatherIconDescription
-            {
-                Name = "placeholder1",
-                Type = WeatherIconDescription.IconType.IconPlaceholder,
-            });
-
-            var imageSource2 = await cache.GetImageAsync(new WeatherIconDescription
-            {
-                Name = "placeholder2",
-                Type = WeatherIconDescription.IconType.IconPlaceholder,
-            });
-
-            // check
-            Assert.IsNotNull(imageSource1, "returned image source 1 must not be null");
-            Assert.IsNotNull(imageSource2, "returned image source 2 must not be null");
-
-            Assert.AreEqual(imageSource1, imageSource2, "returned image sources must be equal");
-        }
-
-        /// <summary>
         /// Tests weather icon type IconApp
         /// </summary>
         /// <returns>task to wait for</returns>
         [TestMethod]
         public async Task TestIconTypeIconApp()
         {
-            // set up
-            var cache = new WeatherImageCache();
-
             // run
-            var imageSource = await cache.GetImageAsync(new WeatherIconDescription
+            var imageSource = await WeatherImageCache.GetImageAsync(new WeatherIconDescription
             {
                 Name = "My App",
                 Type = WeatherIconDescription.IconType.IconApp,
@@ -105,8 +69,7 @@ namespace WhereToFly.App.UnitTest
         public async Task TestIconTypeIconLink()
         {
             // set up
-            var cache = new WeatherImageCache();
-
+            // TODO
             var desc = new WeatherIconDescription
             {
                 Name = "hello world",
@@ -114,13 +77,34 @@ namespace WhereToFly.App.UnitTest
                 WebLink = "https://localhost/test/123/",
             };
 
-            await cache.AddImageAsync(desc, new byte[1] { 42 });
-
             // run
-            var imageSource = await cache.GetImageAsync(desc);
+            var imageSource = await WeatherImageCache.GetImageAsync(desc);
 
             // check
             Assert.IsNotNull(imageSource, "returned image source must not be null");
         }
+
+        /// <summary>
+        /// Tests built-in icon for weather icon type IconLink
+        /// </summary>
+        /// <returns>task to wait for</returns>
+        [TestMethod]
+        public async Task TestBuiltInIconLink()
+        {
+            // set up
+            var desc = new WeatherIconDescription
+            {
+                Name = "austrocontrol",
+                Type = WeatherIconDescription.IconType.IconLink,
+                WebLink = "https://www.austrocontrol.at",
+            };
+
+            // run
+            var imageSource = await WeatherImageCache.GetImageAsync(desc);
+
+            // check
+            Assert.IsNotNull(imageSource, "returned image source must not be null");
+        }
+        //
     }
 }

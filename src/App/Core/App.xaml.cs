@@ -96,7 +96,7 @@ namespace WhereToFly.App.Core
 
             App.Settings = await dataService.GetAppSettingsAsync(CancellationToken.None);
 
-            LoadWeatherImageCache();
+            CleanupWeatherImageCache();
             LoadFaviconUrlCache();
             await InitLiveWaypointRefreshService();
         }
@@ -244,9 +244,9 @@ namespace WhereToFly.App.Core
         }
 
         /// <summary>
-        /// Loads the contents of the weather image cache
+        /// Cleans up the weather image cache
         /// </summary>
-        private static void LoadWeatherImageCache()
+        private static void CleanupWeatherImageCache()
         {
             var platform = DependencyService.Get<IPlatform>();
             string cacheFilename = Path.Combine(platform.CacheDataFolder, WeatherImageCacheFilename);
@@ -255,12 +255,11 @@ namespace WhereToFly.App.Core
             {
                 try
                 {
-                    var imageCache = DependencyService.Get<WeatherImageCache>();
-                    imageCache.LoadCache(cacheFilename);
+                    File.Delete(cacheFilename);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    App.LogError(ex);
+                    // ignore errors
                 }
             }
         }
@@ -298,18 +297,6 @@ namespace WhereToFly.App.Core
         }
 
         /// <summary>
-        /// Stores the contents of the weather image cache in the cache folder
-        /// </summary>
-        private static void StoreWeatherImageCache()
-        {
-            var platform = DependencyService.Get<IPlatform>();
-            string cacheFilename = Path.Combine(platform.CacheDataFolder, WeatherImageCacheFilename);
-
-            var imageCache = DependencyService.Get<WeatherImageCache>();
-            imageCache.StoreCache(cacheFilename);
-        }
-
-        /// <summary>
         /// Stores the contents of the favicon url cache in the cache folder
         /// </summary>
         private static void StoreFaviconUrlCache()
@@ -340,7 +327,6 @@ namespace WhereToFly.App.Core
         protected override void OnSleep()
         {
             // Handle when your app sleeps
-            StoreWeatherImageCache();
             StoreFaviconUrlCache();
         }
 

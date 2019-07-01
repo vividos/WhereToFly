@@ -21,7 +21,6 @@ namespace WhereToFly.App.UnitTest.ViewModels
         {
             Xamarin.Forms.Mocks.MockForms.Init();
             DependencyService.Register<IAppManager, UnitTestAppManager>();
-            DependencyService.Register<WeatherImageCache>();
         }
 
         /// <summary>

@@ -1,206 +1,70 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System;
 using System.IO;
-using System.Net.Http;
 using System.Threading.Tasks;
 using WhereToFly.App.Model;
 using Xamarin.Forms;
-
-[assembly: Dependency(typeof(WhereToFly.App.Core.WeatherImageCache))]
 
 namespace WhereToFly.App.Core
 {
     /// <summary>
     /// Image cache for weather images
     /// </summary>
-    public class WeatherImageCache
+    public static class WeatherImageCache
     {
-        /// <summary>
-        /// Entry in the image cache
-        /// </summary>
-        internal class ImageCacheEntry
-        {
-            /// <summary>
-            /// Image source for displaying image
-            /// </summary>
-            [JsonIgnore]
-            public ImageSource Source { get; private set; }
-
-            /// <summary>
-            /// Image data bytes
-            /// </summary>
-            public byte[] ImageData { get; set; }
-
-            /// <summary>
-            /// Creates a new image cache entry by using given factory function
-            /// </summary>
-            /// <param name="imageSource">image source to use</param>
-            public ImageCacheEntry(ImageSource imageSource)
-            {
-                this.ImageData = new byte[0];
-                this.Source = imageSource;
-            }
-
-            /// <summary>
-            /// Creates a new image cache entry by using image data bytes
-            /// </summary>
-            /// <param name="imageData">image data bytes</param>
-            public ImageCacheEntry(byte[] imageData)
-            {
-                Debug.Assert(imageData != null, "imageData must not be null");
-
-                this.ImageData = imageData;
-                this.Source = this.CreateImageSource();
-            }
-
-            /// <summary>
-            /// Creates a new image cache entry object that is used when deserializing; only sets
-            /// the Source attribute, since the Image attribute is deserialized.
-            /// </summary>
-            [JsonConstructor]
-            public ImageCacheEntry()
-            {
-                this.Source = this.CreateImageSource();
-            }
-
-            /// <summary>
-            /// Creates an image resource from stored image data bytes
-            /// </summary>
-            /// <returns>created image source</returns>
-            private ImageSource CreateImageSource()
-            {
-                return ImageSource.FromStream(() => new MemoryStream(this.ImageData));
-            }
-        }
-
-        /// <summary>
-        /// Lock for access to image cache dictionary
-        /// </summary>
-        private readonly object imageCacheLock = new object();
-
-        /// <summary>
-        /// Image cache dictionary
-        /// </summary>
-        private readonly Dictionary<string, ImageCacheEntry> imageCache = new Dictionary<string, ImageCacheEntry>();
-
-        /// <summary>
-        /// HTTP client to download images from the internet
-        /// </summary>
-        private readonly HttpClient client = new HttpClient();
-
-        /// <summary>
-        /// Loads weather image cache from given filename; file must exist
-        /// </summary>
-        /// <param name="cacheFilename">cache filename</param>
-        public void LoadCache(string cacheFilename)
-        {
-            string json = File.ReadAllText(cacheFilename);
-            var localCache = JsonConvert.DeserializeObject<Dictionary<string, ImageCacheEntry>>(json);
-
-            lock (this.imageCacheLock)
-            {
-                foreach (var item in localCache)
-                {
-                    if (!this.imageCache.ContainsKey(item.Key) &&
-                        item.Value.ImageData != null &&
-                        item.Value.ImageData.Length > 0)
-                    {
-                        this.imageCache.Add(item.Key, item.Value);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Stores weather image cache to given filename
-        /// </summary>
-        /// <param name="cacheFilename">cache filename</param>
-        public void StoreCache(string cacheFilename)
-        {
-            string json;
-            lock (this.imageCacheLock)
-            {
-                json = JsonConvert.SerializeObject(this.imageCache);
-            }
-
-            if (!string.IsNullOrEmpty(json))
-            {
-                File.WriteAllText(cacheFilename, json);
-            }
-        }
-
-        /// <summary>
-        /// Adds image to cache
-        /// </summary>
-        /// <param name="iconDescription">weather icon description to store image for</param>
-        /// <param name="imageData">image data to store</param>
-        /// <returns>task to wait on</returns>
-        public async Task AddImageAsync(WeatherIconDescription iconDescription, byte[] imageData)
-        {
-            string imageId = await GetImageIdentifierAsync(iconDescription);
-
-            lock (this.imageCacheLock)
-            {
-                this.imageCache[imageId] = new ImageCacheEntry(imageData);
-            }
-        }
-
         /// <summary>
         /// Returns an image from image cache
         /// </summary>
         /// <param name="iconDescription">weather icon description to load image for</param>
         /// <returns>image source, or null when no image was found or could be loaded</returns>
-        public async Task<ImageSource> GetImageAsync(WeatherIconDescription iconDescription)
+        public static async Task<ImageSource> GetImageAsync(WeatherIconDescription iconDescription)
         {
-            string imageId = await GetImageIdentifierAsync(iconDescription);
-
-            bool containsImage;
-            lock (this.imageCacheLock)
-            {
-                containsImage = this.imageCache.ContainsKey(imageId);
-            }
-
-            if (!containsImage)
-            {
-                await this.LoadImageAsync(imageId, iconDescription);
-            }
-
-            lock (this.imageCacheLock)
-            {
-                return this.imageCache.ContainsKey(imageId) ? this.imageCache[imageId].Source ?? null : null;
-            }
-        }
-
-        /// <summary>
-        /// Gets image identifier for given weather icon description
-        /// </summary>
-        /// <param name="iconDescription">weather icon description</param>
-        /// <returns>image identifier string</returns>
-        private static async Task<string> GetImageIdentifierAsync(WeatherIconDescription iconDescription)
-        {
-            string identifier = iconDescription.Type + "|";
-
             switch (iconDescription.Type)
             {
                 case WeatherIconDescription.IconType.IconLink:
-                    identifier += await GetFaviconFromLinkAsync(iconDescription.WebLink);
+                    if (iconDescription.WebLink.StartsWith("https://www.austrocontrol.at"))
+                    {
+                        return new StreamImageSource()
+                        {
+                            Stream = (cancellationToken) =>
+                            {
+                                var platform = DependencyService.Get<IPlatform>();
+                                byte[] data = platform.LoadAssetBinaryData("alptherm-favicon.png");
+
+                                return Task.FromResult<Stream>(new MemoryStream(data));
+                            }
+                        };
+                    }
+
+                    string faviconLink = await GetFaviconFromLinkAsync(iconDescription.WebLink);
+
+                    if (!string.IsNullOrEmpty(faviconLink))
+                    {
+                        return new UriImageSource { Uri = new Uri(faviconLink) };
+                    }
+
                     break;
 
                 case WeatherIconDescription.IconType.IconApp:
-                    identifier += iconDescription.WebLink;
-                    break;
+                    return new StreamImageSource()
+                    {
+                        Stream = (cancellationToken) =>
+                        {
+                            var appManager = DependencyService.Get<IAppManager>();
+                            byte[] appIconData = appManager.GetAppIcon(iconDescription.WebLink);
+
+                            return Task.FromResult<Stream>(new MemoryStream(appIconData));
+                        }
+                    };
 
                 case WeatherIconDescription.IconType.IconPlaceholder:
-                    identifier += "placeholder";
-                    break;
+                    string imagePath = Converter.ImagePathConverter.GetDeviceDependentImage("border_none_variant");
+                    return ImageSource.FromFile(imagePath);
 
                 default:
                     break;
             }
 
-            return identifier;
+            return null;
         }
 
         /// <summary>
@@ -224,66 +88,6 @@ namespace WhereToFly.App.Core
             var dataService = DependencyService.Get<IDataService>();
 
             return await dataService.GetFaviconUrlAsync(webLink);
-        }
-
-        /// <summary>
-        /// Loads image with given image ID and weather icon description
-        /// </summary>
-        /// <param name="imageId">image ID to load</param>
-        /// <param name="iconDescription">icon description for image to load</param>
-        /// <returns>task to wait on</returns>
-        private async Task LoadImageAsync(string imageId, WeatherIconDescription iconDescription)
-        {
-            ImageCacheEntry entry = await this.GetImageCacheEntryByDescription(iconDescription);
-
-            if (entry != null)
-            {
-                lock (this.imageCacheLock)
-                {
-                    this.imageCache[imageId] = entry;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets image cache entry by given weather icon description
-        /// </summary>
-        /// <param name="iconDescription">weather icon description</param>
-        /// <returns>image cache entry, or null when entry couldn't be created</returns>
-        private async Task<ImageCacheEntry> GetImageCacheEntryByDescription(WeatherIconDescription iconDescription)
-        {
-            switch (iconDescription.Type)
-            {
-                case WeatherIconDescription.IconType.IconLink:
-                    if (iconDescription.WebLink.StartsWith("https://www.austrocontrol.at"))
-                    {
-                        var platform = DependencyService.Get<IPlatform>();
-                        byte[] data = platform.LoadAssetBinaryData("alptherm-favicon.png");
-                        return new ImageCacheEntry(data);
-                    }
-
-                    string faviconLink = await GetFaviconFromLinkAsync(iconDescription.WebLink);
-
-                    if (!string.IsNullOrEmpty(faviconLink))
-                    {
-                        return new ImageCacheEntry(new UriImageSource { Uri = new Uri(faviconLink) });
-                    }
-
-                    break;
-
-                case WeatherIconDescription.IconType.IconApp:
-                    var appManager = DependencyService.Get<IAppManager>();
-                    return new ImageCacheEntry(appManager.GetAppIcon(iconDescription.WebLink));
-
-                case WeatherIconDescription.IconType.IconPlaceholder:
-                    string imagePath = Converter.ImagePathConverter.GetDeviceDependentImage("border_none_variant");
-                    return new ImageCacheEntry(ImageSource.FromFile(imagePath));
-
-                default:
-                    break;
-            }
-
-            return null;
         }
     }
 }

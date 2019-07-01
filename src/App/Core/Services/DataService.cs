@@ -561,6 +561,11 @@ namespace WhereToFly.App.Core.Services
             var uri = new Uri(websiteUrl);
             string baseUri = $"{uri.Scheme}://{uri.Host}/";
 
+            if (uri.Host.ToLowerInvariant() == "localhost")
+            {
+                return $"{uri.Scheme}://{uri.Host}/favicon.ico";
+            }
+
             if (this.faviconUrlCache.ContainsKey(baseUri))
             {
                 return this.faviconUrlCache[baseUri];

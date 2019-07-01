@@ -55,9 +55,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             Task.Run(async () =>
             {
-                var imageCache = DependencyService.Get<WeatherImageCache>();
-
-                this.Icon = await imageCache.GetImageAsync(this.iconDescription);
+                this.Icon = await WeatherImageCache.GetImageAsync(this.iconDescription);
 
                 this.OnPropertyChanged(nameof(this.Icon));
             });
