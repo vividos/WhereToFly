@@ -40,7 +40,7 @@ function MapView(options) {
     this.bingMapsAerialWithLabelsImageryLayer = null;
     this.bingMapsAerialWithLabelsImageryProvider = new Cesium.BingMapsImageryProvider({
         url: 'https://dev.virtualearth.net',
-        mapStyle: Cesium.BingMapsStyle.AERIAL_WITH_LABELS
+        mapStyle: Cesium.BingMapsStyle.AERIAL_WITH_LABELS_ON_DEMAND
     });
 
     this.openTopoMapImageryLayer = null;
