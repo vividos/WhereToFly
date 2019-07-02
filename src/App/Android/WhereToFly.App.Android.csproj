@@ -180,9 +180,6 @@
     <AndroidResource Include="Resources\drawable\delete_forever.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\border_none_variant.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\calendar_clock.xml" />
   </ItemGroup>
   <ItemGroup>

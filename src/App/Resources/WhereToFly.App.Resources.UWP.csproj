@@ -46,6 +46,7 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <ItemGroup>
     <Content Include="Assets\alptherm-favicon.png" />
+    <Content Include="Assets\icons\border-none-variant.svg" />
     <Content Include="Assets\icons\eye-off-outline.svg" />
     <Content Include="Assets\icons\eye.svg" />
     <Content Include="Assets\icons\layers-outline.svg" />

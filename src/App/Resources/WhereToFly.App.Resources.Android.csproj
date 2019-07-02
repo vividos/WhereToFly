@@ -614,6 +614,9 @@
   <ItemGroup>
     <AndroidAsset Include="Assets\defaultFaviconUrlCache.json" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\icons\border-none-variant.svg" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

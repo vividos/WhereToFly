@@ -57,8 +57,7 @@ namespace WhereToFly.App.Core
                     };
 
                 case WeatherIconDescription.IconType.IconPlaceholder:
-                    string imagePath = Converter.ImagePathConverter.GetDeviceDependentImage("border_none_variant");
-                    return ImageSource.FromFile(imagePath);
+                    return SvgImageCache.GetImageSource("icons/border-none-variant.svg");
 
                 default:
                     break;
