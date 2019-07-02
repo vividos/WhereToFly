@@ -87,12 +87,17 @@ namespace WhereToFly.App.Core.Services
             var platform = DependencyService.Get<IPlatform>();
             string cacheFilename = Path.Combine(platform.CacheDataFolder, FaviconUrlCacheFilename);
 
-            if (!File.Exists(cacheFilename))
+            string json;
+            if (File.Exists(cacheFilename))
             {
-                return;
+                json = File.ReadAllText(cacheFilename);
+            }
+            else
+            {
+                json = platform.LoadAssetText("defaultFaviconUrlCache.json");
+                File.WriteAllText(cacheFilename, json);
             }
 
-            string json = File.ReadAllText(cacheFilename);
             var localCache = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
 
             foreach (var item in localCache)

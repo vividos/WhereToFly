@@ -238,6 +238,7 @@
     <Content Include="Assets\map\mapView3D.js" />
     <Content Include="Assets\locations\paraglidingspots_crossing_the_alps_2019_05_15.kmz" />
     <Content Include="Assets\locations\paraglidingspots_european_alps_2019_05_15.kmz" />
+    <Content Include="Assets\defaultFaviconUrlCache.json" />
     <None Include="Assets\map\test.html" />
   </ItemGroup>
   <ItemGroup>
