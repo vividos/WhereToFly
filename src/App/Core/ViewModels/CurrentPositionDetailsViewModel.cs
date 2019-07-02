@@ -202,25 +202,8 @@ namespace WhereToFly.App.Core.ViewModels
             this.OnPropertyChanged(nameof(this.IsHeadingAvail));
             this.OnPropertyChanged(nameof(this.HeadingInDegrees));
 
-            Task.Run(async () => await this.UpdateLastShownPositionAsync(this.position));
-        }
-
-        /// <summary>
-        /// Updates last shown position in data service
-        /// </summary>
-        /// <param name="position">current position</param>
-        /// <returns>task to wait on</returns>
-        private async Task UpdateLastShownPositionAsync(Position position)
-        {
             var point = new MapPoint(position.Latitude, position.Longitude, position.Altitude);
-
-            if (point.Valid)
-            {
-                this.appSettings.LastShownPosition = point;
-
-                var dataService = DependencyService.Get<IDataService>();
-                await dataService.StoreAppSettingsAsync(this.appSettings);
-            }
+            Task.Run(async () => await App.UpdateLastShownPositionAsync(point));
         }
 
         /// <summary>

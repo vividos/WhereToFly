@@ -195,7 +195,7 @@ namespace WhereToFly.App.Core.Views
             {
                 var point = new MapPoint(position.Latitude, position.Longitude, position.Altitude);
 
-                await this.UpdateLastShownPositionAsync(point);
+                await App.UpdateLastShownPositionAsync(point);
 
                 this.mapView.UpdateMyLocation(
                     point,
@@ -555,8 +555,7 @@ namespace WhereToFly.App.Core.Views
             if (position != null)
             {
                 var point = new MapPoint(position.Latitude, position.Longitude, position.Altitude);
-
-                await this.UpdateLastShownPositionAsync(point);
+                await App.UpdateLastShownPositionAsync(point);
 
                 await App.ShareMessageAsync(
                     "Share my position with...",
@@ -714,23 +713,6 @@ namespace WhereToFly.App.Core.Views
             this.planTourParameters.WaypointIdList.Add(location.Id);
 
             await PlanTourPopupPage.ShowAsync(this.planTourParameters);
-        }
-
-        /// <summary>
-        /// Called when message arrives in order to zoom to a track
-        /// </summary>
-        /// <param name="track">track to zoom to</param>
-        /// <returns>task to wait on</returns>
-        private async Task OnMessageZoomToTrack(Track track)
-        {
-            var point = track.CalculateCenterPoint();
-
-            if (point.Valid)
-            {
-                await this.UpdateLastShownPositionAsync(point);
-            }
-
-            this.mapView.ZoomToTrack(track);
         }
 
         /// <summary>
@@ -910,28 +892,7 @@ namespace WhereToFly.App.Core.Views
                     zoomToPosition);
             }
 
-            Task.Run(async () => await this.UpdateLastShownPositionAsync(point));
-        }
-
-        /// <summary>
-        /// Updates last shown position in data service
-        /// </summary>
-        /// <param name="point">position to store</param>
-        /// <returns>task to wait on</returns>
-        private async Task UpdateLastShownPositionAsync(MapPoint point)
-        {
-            if (this.appSettings == null)
-            {
-                return; // appSettings not loaded yet
-            }
-
-            if (point.Valid)
-            {
-                this.appSettings.LastShownPosition = point;
-
-                var dataService = DependencyService.Get<IDataService>();
-                await dataService.StoreAppSettingsAsync(this.appSettings);
-            }
+            Task.Run(async () => await App.UpdateLastShownPositionAsync(point));
         }
     }
 }

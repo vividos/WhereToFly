@@ -223,6 +223,27 @@ namespace WhereToFly.App.Core
         }
 
         /// <summary>
+        /// Updates last shown position in app settings
+        /// </summary>
+        /// <param name="point">current position</param>
+        /// <returns>task to wait on</returns>
+        public static async Task UpdateLastShownPositionAsync(MapPoint point)
+        {
+            if (Settings == null)
+            {
+                return; // app settings not loaded yet
+            }
+
+            if (point.Valid)
+            {
+                Settings.LastShownPosition = point;
+
+                var dataService = DependencyService.Get<IDataService>();
+                await dataService.StoreAppSettingsAsync(Settings);
+            }
+        }
+
+        /// <summary>
         /// Opens file for importing data
         /// </summary>
         /// <param name="stream">stream to import</param>
