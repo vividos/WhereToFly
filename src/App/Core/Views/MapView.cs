@@ -414,6 +414,31 @@ namespace WhereToFly.App.Core.Views
         }
 
         /// <summary>
+        /// Adds a single locations to the map, to be displayed as pin.
+        /// </summary>
+        /// <param name="location">location to add</param>
+        public void AddLocation(Location location)
+        {
+            var jsonLocation = new
+            {
+                id = location.Id,
+                name = location.Name,
+                description = location.Description,
+                type = location.Type.ToString(),
+                latitude = location.MapLocation.Latitude,
+                longitude = location.MapLocation.Longitude,
+                altitude = location.MapLocation.Altitude.GetValueOrDefault(0.0),
+                isPlanTourLocation = location.IsPlanTourLocation,
+            };
+
+            string js = string.Format(
+                "map.addLocationList([{0}]);",
+                JsonConvert.SerializeObject(jsonLocation));
+
+            this.RunJavaScript(js);
+        }
+
+        /// <summary>
         /// Adds a list of locations to the map, to be displayed as pins.
         /// </summary>
         /// <param name="locationList">list of locations to add</param>
@@ -484,6 +509,16 @@ namespace WhereToFly.App.Core.Views
                 "map.updateLocation({0});",
                 JsonConvert.SerializeObject(jsonLocation));
 
+            this.RunJavaScript(js);
+        }
+
+        /// <summary>
+        /// Removes a single location from the map view
+        /// </summary>
+        /// <param name="locationId">location ID of location to remove</param>
+        public void RemoveLocation(string locationId)
+        {
+            string js = $"map.removeLocation(\"{locationId}\");";
             this.RunJavaScript(js);
         }
 

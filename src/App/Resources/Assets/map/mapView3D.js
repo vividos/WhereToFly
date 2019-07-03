@@ -943,6 +943,19 @@ MapView.prototype.updateLocation = function (location) {
 };
 
 /**
+ * Removes a single location from map
+ * @param {String} [locationId] ID of the location to remove
+ */
+MapView.prototype.removeLocation = function (locationId) {
+
+    console.log("removing location with ID \"" + location.id);
+
+    var entity = this.viewer.entities.getById(locationId);
+
+    this.viewer.entities.remove(entity);
+};
+
+/**
  * Shows a find result pin, with a link to add a waypoint for this result.
  * @param {Object} [options] An object with the following properties:
  * @param {String} [options.name] Name of the find result

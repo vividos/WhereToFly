@@ -84,6 +84,11 @@ namespace WhereToFly.App.Core
         #endregion
 
         #region Location list methods
+        /// <summary>
+        /// Adds a single locations to the map, to be displayed as pin.
+        /// </summary>
+        /// <param name="location">location to add</param>
+        void AddLocation(Location location);
 
         /// <summary>
         /// Adds a list of locations to the map, to be displayed as pins.
@@ -96,6 +101,12 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="location">location to update</param>
         void UpdateLocation(Location location);
+
+        /// <summary>
+        /// Removes a single location from the map view
+        /// </summary>
+        /// <param name="locationId">location ID of location to remove</param>
+        void RemoveLocation(string locationId);
 
         /// <summary>
         /// Clears location list
