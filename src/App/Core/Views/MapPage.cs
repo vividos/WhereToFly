@@ -9,7 +9,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Geo;
-using WhereToFly.App.Geo.Spatial;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Model;
@@ -36,6 +35,11 @@ namespace WhereToFly.App.Core.Views
         /// Tour planning parameters for the map page
         /// </summary>
         private readonly PlanTourParameters planTourParameters = new PlanTourParameters();
+
+        /// <summary>
+        /// List of location IDs currently being displayed
+        /// </summary>
+        private HashSet<string> displayedLocationIds = new HashSet<string>();
 
         /// <summary>
         /// Indicates if the next position update should also zoom to my position
@@ -429,6 +433,8 @@ namespace WhereToFly.App.Core.Views
             this.mapView.CoordinateDisplayFormat = this.appSettings.CoordinateDisplayFormat;
 
             this.mapView.AddLocationList(this.locationList);
+            this.displayedLocationIds = new HashSet<string>(
+                this.locationList.Select(location => location.Id));
 
             foreach (var track in this.trackList)
             {
@@ -783,22 +789,64 @@ namespace WhereToFly.App.Core.Views
 
             var newLocationList = await dataService.GetLocationListAsync(CancellationToken.None);
 
-            if (this.locationList.Count != newLocationList.Count ||
-                !Enumerable.SequenceEqual(this.locationList, newLocationList, new LocationEqualityComparer()))
-            {
-                this.AddAndRemoveLocations(newLocationList);
+            this.AddAndRemoveDisplayedLocations(newLocationList);
 
-                this.locationList = newLocationList;
-            }
+            this.locationList = newLocationList;
         }
 
         /// <summary>
         /// Adds new and removes old locations from current location list
         /// </summary>
-        private void AddAndRemoveLocations(List<Location> newLocationList)
+        /// <param name="newLocationList">list of new locations</param>
+        private void AddAndRemoveDisplayedLocations(List<Location> newLocationList)
         {
-            this.mapView.ClearLocationList();
+            if (!this.locationList.Any() ||
+                Math.Abs(newLocationList.Count - this.locationList.Count) > 10)
+            {
+                this.ReplaceLocationList(newLocationList);
+                return;
+            }
+
+            var locationIdsToRemove = new HashSet<string>();
+            foreach (string oldLocationId in this.displayedLocationIds)
+            {
+                if (newLocationList.Find(locationToCheck => locationToCheck.Id == oldLocationId) == null)
+                {
+                    locationIdsToRemove.Add(oldLocationId);
+                }
+            }
+
+            foreach (string locationIdToRemove in locationIdsToRemove)
+            {
+                this.mapView.RemoveLocation(locationIdToRemove);
+                this.displayedLocationIds.Remove(locationIdToRemove);
+            }
+
+            foreach (var newLocation in newLocationList)
+            {
+                if (!this.displayedLocationIds.Contains(newLocation.Id))
+                {
+                    this.mapView.AddLocation(newLocation);
+                    this.displayedLocationIds.Add(newLocation.Id);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Replaces location list in map view
+        /// </summary>
+        /// <param name="newLocationList">new location list to use</param>
+        private void ReplaceLocationList(List<Location> newLocationList)
+        {
+            if (this.locationList.Any())
+            {
+                this.mapView.ClearLocationList();
+            }
+
             this.mapView.AddLocationList(newLocationList);
+
+            this.displayedLocationIds = new HashSet<string>(
+                this.locationList.Select(location => location.Id));
         }
 
         /// <summary>
