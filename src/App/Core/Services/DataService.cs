@@ -87,12 +87,14 @@ namespace WhereToFly.App.Core.Services
             var platform = DependencyService.Get<IPlatform>();
             string cacheFilename = Path.Combine(platform.CacheDataFolder, FaviconUrlCacheFilename);
 
-            string json;
+            string json = null;
             if (File.Exists(cacheFilename))
             {
                 json = File.ReadAllText(cacheFilename);
             }
-            else
+
+            if (string.IsNullOrEmpty(json) ||
+                json == "{}")
             {
                 json = platform.LoadAssetText("defaultFaviconUrlCache.json");
                 File.WriteAllText(cacheFilename, json);
