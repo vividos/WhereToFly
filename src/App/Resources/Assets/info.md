@@ -11,13 +11,14 @@ Current version: %VERSION%
 
 ### Releases
 
-1.6.0
+1.6.0 "Crossing the Alps 2019" edition
 
 - added new "layer" menu where CesiumJS .czml files can be loaded as layers
   displayed on the map
 - added specifying "track point interval" when imported track has no time data
   (e.g. for KML LineStrings); useful for .kml files from XC Tracer II GPS
 - flying range cones can now be hidden using an icon in the description
+- updated waypoints for Crossing the Alps 2019
 
 1.5.0
 

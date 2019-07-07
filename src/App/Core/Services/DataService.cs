@@ -384,8 +384,8 @@ namespace WhereToFly.App.Core.Services
             {
                 new Track
                 {
-                    Id = "crossingthealps2018",
-                    Name = "Crossing the Alps 2018",
+                    Id = "crossingthealps2019",
+                    Name = "Crossing the Alps 2019",
                     IsFlightTrack = false,
                     Color = "FF0000",
                     TrackPoints = new List<TrackPoint>

@@ -60,7 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\info.md" />
-    <Content Include="Assets\locations\crossing_the_alps_2018.kmz" />
+    <Content Include="Assets\locations\crossing_the_alps_2019.kmz" />
     <Content Include="Assets\map\Cesium\Assets\approximateTerrainHeights.json" />
     <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_0.json" />
     <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_1.json" />
