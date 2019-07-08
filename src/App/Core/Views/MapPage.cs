@@ -216,6 +216,16 @@ namespace WhereToFly.App.Core.Views
         }
 
         /// <summary>
+        /// Adds track to map view
+        /// </summary>
+        /// <param name="track">track to add</param>
+        public void AddTrack(Track track)
+        {
+            this.MapView.AddTrack(track);
+            this.displayedTracks.Add(track);
+        }
+
+        /// <summary>
         /// Checks for permission to use geolocator. See
         /// https://github.com/jamesmontemagno/PermissionsPlugin
         /// </summary>
@@ -438,8 +448,7 @@ namespace WhereToFly.App.Core.Views
 
             foreach (var track in this.trackList)
             {
-                this.mapView.AddTrack(track);
-                this.displayedTracks.Add(track);
+                this.AddTrack(track);
             }
 
             foreach (var layer in this.layerList)
@@ -859,13 +868,9 @@ namespace WhereToFly.App.Core.Views
 
             var newTrackList = await dataService.GetTrackListAsync(CancellationToken.None);
 
-            if (this.trackList.Count != newTrackList.Count ||
-                !Enumerable.SequenceEqual(this.trackList, newTrackList, new TrackEqualityComparer()))
-            {
-                this.AddAndRemoveDisplayedTracks(newTrackList);
+            this.AddAndRemoveDisplayedTracks(newTrackList);
 
-                this.trackList = newTrackList;
-            }
+            this.trackList = newTrackList;
         }
 
         /// <summary>
@@ -893,8 +898,7 @@ namespace WhereToFly.App.Core.Views
             {
                 if (!this.displayedTracks.Contains(newTrack))
                 {
-                    this.mapView.AddTrack(newTrack);
-                    this.displayedTracks.Add(newTrack);
+                    this.AddTrack(newTrack);
                 }
             }
         }

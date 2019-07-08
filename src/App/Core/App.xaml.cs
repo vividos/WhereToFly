@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.Views;
 using WhereToFly.App.Geo;
+using WhereToFly.App.Geo.Spatial;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Model;
 using Xamarin.Forms;
@@ -190,6 +191,20 @@ namespace WhereToFly.App.Core
             var app = Current as App;
 
             MessagingCenter.Send<App, Location>(app, Constants.MessageAddTourPlanLocation, location);
+        }
+
+        /// <summary>
+        /// Adds track to map view
+        /// </summary>
+        /// <param name="track">track to add</param>
+        /// <returns>task to wait on</returns>
+        public static async Task AddTrack(Track track)
+        {
+            var point = track.CalculateCenterPoint();
+            await UpdateLastShownPositionAsync(point);
+
+            var app = Current as App;
+            app.MapPage.AddTrack(track);
         }
 
         /// <summary>

@@ -308,10 +308,7 @@ namespace WhereToFly.App.Core
 
             await dataService.StoreTrackListAsync(currentList);
 
-            var point = track.CalculateCenterPoint();
-            await App.UpdateLastShownPositionAsync(point);
-
-            App.MapView.AddTrack(track);
+            await App.AddTrack(track);
             App.MapView.ZoomToTrack(track);
 
             App.ShowToast("Track was loaded.");
