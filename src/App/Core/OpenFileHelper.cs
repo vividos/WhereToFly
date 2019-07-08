@@ -455,8 +455,10 @@ namespace WhereToFly.App.Core
         private static bool IsValidJson(string json)
         {
             json = json.Trim();
-            if ((!json.StartsWith("{") || !json.EndsWith("}")) && // for object
-                (!json.StartsWith("[") || !json.EndsWith("]"))) // for array
+
+            // check for object or array syntax
+            if ((!json.StartsWith("{") || !json.EndsWith("}")) &&
+                (!json.StartsWith("[") || !json.EndsWith("]")))
             {
                 return false;
             }

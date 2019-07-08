@@ -105,6 +105,5 @@ namespace WhereToFly.App.UnitTest
             // check
             Assert.IsNotNull(imageSource, "returned image source must not be null");
         }
-        //
     }
 }

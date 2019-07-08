@@ -202,7 +202,7 @@ namespace WhereToFly.App.Core.ViewModels
             this.OnPropertyChanged(nameof(this.IsHeadingAvail));
             this.OnPropertyChanged(nameof(this.HeadingInDegrees));
 
-            var point = new MapPoint(position.Latitude, position.Longitude, position.Altitude);
+            var point = new MapPoint(this.position.Latitude, this.position.Longitude, this.position.Altitude);
             Task.Run(async () => await App.UpdateLastShownPositionAsync(point));
         }
 
