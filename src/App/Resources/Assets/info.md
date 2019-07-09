@@ -18,6 +18,7 @@ Current version: %VERSION%
 - added specifying "track point interval" when imported track has no time data
   (e.g. for KML LineStrings); useful for .kml files from XC Tracer II GPS
 - flying range cones can now be hidden using an icon in the description
+- supported opening .igc files downloaded from xcontest
 - updated waypoints for Crossing the Alps 2019
 
 1.5.0
