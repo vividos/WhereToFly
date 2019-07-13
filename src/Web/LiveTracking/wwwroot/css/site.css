@@ -1,6 +1,9 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+.bg-dark {
+    background-color: #2F299E !important;
+}
 a.navbar-brand {
   white-space: normal;
   text-align: center;
@@ -39,4 +42,31 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#mapElement {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 40px;
+}
+
+@media (min-width: 768px) {
+    #mapElement {
+        top: 56px !important;
+    }
+}
+
+/* set size of infobox to fill 80% of the whole mobile screen */
+.cesium-infoBox {
+    width: 80%;
+    max-width: 80%;
 }
