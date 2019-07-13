@@ -54,6 +54,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhereToFly.App.UWP", "App\U
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhereToFly.App.Resources.UWP", "App\Resources\WhereToFly.App.Resources.UWP.csproj", "{EBFA2CAF-D0B4-4A36-91AA-24D393BCD3CF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{30B9CDF1-6001-4E25-94F4-8B105BE6F2FB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.Web.LiveTracking", "Web\LiveTracking\WhereToFly.Web.LiveTracking.csproj", "{A53C81A5-250A-483C-BF68-D9C565C2305F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -128,6 +132,10 @@ Global
 		{EBFA2CAF-D0B4-4A36-91AA-24D393BCD3CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBFA2CAF-D0B4-4A36-91AA-24D393BCD3CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBFA2CAF-D0B4-4A36-91AA-24D393BCD3CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A53C81A5-250A-483C-BF68-D9C565C2305F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A53C81A5-250A-483C-BF68-D9C565C2305F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A53C81A5-250A-483C-BF68-D9C565C2305F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A53C81A5-250A-483C-BF68-D9C565C2305F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -149,6 +157,7 @@ Global
 		{96AC92EA-4F83-4A23-80D1-8EE5740D20DF} = {60BE5B8E-A229-488F-A893-379E323EBB3E}
 		{1D3C03EF-701F-4FAB-80B2-1FBEFBC7C8CD} = {A443B9B2-B8C9-44F0-A7F5-DF2466E0E0FE}
 		{EBFA2CAF-D0B4-4A36-91AA-24D393BCD3CF} = {A443B9B2-B8C9-44F0-A7F5-DF2466E0E0FE}
+		{A53C81A5-250A-483C-BF68-D9C565C2305F} = {30B9CDF1-6001-4E25-94F4-8B105BE6F2FB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D13F3BD1-E396-49C7-BD98-2F3BC15F6E7C}
