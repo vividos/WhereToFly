@@ -38,7 +38,8 @@ namespace WhereToFly.App.Core.ViewModels
             { "vividos' Where-to-fly resources", "http://www.vividos.de/wheretofly/index.html" },
             { "Paraglidingspots.com", "http://paraglidingspots.com/downloadselect.aspx" },
             { "DHV Gelände-Datenbank",
-                "https://www.dhv.de/web/piloteninfos/gelaende-luftraum-natur/fluggelaendeflugbetrieb/gelaendedaten/gelaendedaten-download" }
+                "https://www.dhv.de/web/piloteninfos/gelaende-luftraum-natur/fluggelaendeflugbetrieb/gelaendedaten/gelaendedaten-download" },
+            { "Tourenwelt.info Jo's Hüttenliste", "http://www.tourenwelt.info/huettenliste/map.php" }
         };
 
         /// <summary>
