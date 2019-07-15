@@ -965,6 +965,7 @@ MapView.prototype.removeLocation = function (locationId) {
  * Shows a find result pin, with a link to add a waypoint for this result.
  * @param {Object} [options] An object with the following properties:
  * @param {String} [options.name] Name of the find result
+ * @param {String} [options.description] Description text of the find result
  * @param {Number} [options.latitude] Latitude of the find result
  * @param {Number} [options.longitude] Longitude of the find result
  * @param {Number} [options.displayLatitude] Display text for latitude
@@ -989,6 +990,9 @@ MapView.prototype.showFindResult = function (options) {
 
     text += '<img height="32em" width="32em" src="images/map-marker-plus.svg" style="vertical-align:middle" />' +
         '<a href="javascript:parent.map.onAddFindResult(' + optionsText + ');">Add as waypoint</a></p>';
+
+    if (options.description !== undefined)
+        text += '<div>' + options.description + '</div>';
 
     this.findResultMarker.description = text;
     this.findResultMarker.position = Cesium.Cartesian3.fromDegrees(options.longitude, options.latitude);
