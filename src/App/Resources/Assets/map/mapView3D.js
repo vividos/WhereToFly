@@ -162,7 +162,7 @@ function MapView(options) {
 
     var that = this;
     Cesium.when(
-        this.createEntity(undefined, 'My Position', '', Cesium.Color.GREEN, '../images/map-marker.svg', 0.0, 0.0),
+        this.createEntity(undefined, 'My Position', '', Cesium.Color.GREEN, 'images/map-marker.svg', 0.0, 0.0),
         function (myLocationEntity) {
             myLocationEntity.show = false;
             that.myLocationMarker = that.viewer.entities.add(myLocationEntity);
@@ -181,7 +181,7 @@ function MapView(options) {
 
     // the find result entity is initially invisible
     Cesium.when(
-        this.createEntity(undefined, 'Find result', '', Cesium.Color.ORANGE, '../images/magnify.svg', 0.0, 0.0),
+        this.createEntity(undefined, 'Find result', '', Cesium.Color.ORANGE, 'images/magnify.svg', 0.0, 0.0),
         function (findResultEntity) {
             findResultEntity.show = false;
             that.findResultMarker = that.viewer.entities.add(findResultEntity);
@@ -816,7 +816,7 @@ MapView.prototype.addLocationList = function (locationList) {
 
         var text = this.formatLocationText(location);
 
-        var imagePath = '../' + this.imageUrlFromLocationType(location.type);
+        var imagePath = this.imageUrlFromLocationType(location.type);
 
         Cesium.when(
             this.createEntity(
@@ -847,7 +847,7 @@ MapView.prototype.addLocationList = function (locationList) {
  */
 MapView.prototype.createEntity = function (id, name, description, pinColor, pinImage, longitude, latitude) {
 
-    var url = Cesium.buildModuleUrl(pinImage);
+    var url = Cesium.getAbsoluteUri(pinImage, window.location.href);
 
     return Cesium.when(
         this.pinBuilder.fromUrl(url, pinColor, 48),
