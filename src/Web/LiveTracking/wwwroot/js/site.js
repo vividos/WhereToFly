@@ -51,3 +51,39 @@ map.addTrack({
         11.900711, 46.017779, 0.0 // Feltre
     ]
 });
+
+$('#findForm').submit(function (event) {
+
+    event.preventDefault();
+
+    geocodeAndShow($('#findValue')[0].value);
+
+});
+
+function geocodeAndShow(input) {
+
+    console.log("geocoding find text: " + input);
+
+    var endpoint = 'https://nominatim.openstreetmap.org/search';
+    var resource = new Cesium.Resource({
+        url: endpoint,
+        queryParameters: {
+            format: 'json',
+            q: input
+        }
+    });
+
+    return resource.fetchJson()
+        .then(function (results) {
+            return results.map(function (resultObject) {
+                map.showFindResult({
+                    name: input,
+                    description: resultObject.display_name,
+                    latitude: resultObject.lat,
+                    longitude: resultObject.lon,
+                    displayLatitude: resultObject.lat,
+                    displayLongitude: resultObject.lon
+                });
+            });
+        });
+};
