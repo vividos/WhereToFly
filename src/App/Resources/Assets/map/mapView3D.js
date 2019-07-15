@@ -363,6 +363,8 @@ MapView.prototype.setMapImageryType = function (imageryType) {
             console.log('invalid imagery type: ' + imageryType);
             break;
     }
+
+    this.viewer.scene.requestRender();
 };
 
 var slopeRamp = [0.0, 0.29, 0.5, Math.sqrt(2) / 2, 0.87, 0.91, 1.0];
@@ -495,6 +497,8 @@ MapView.prototype.setMapOverlayType = function (overlayType) {
             console.log('invalid map overlay type: ' + overlayType);
             break;
     }
+
+    this.viewer.scene.requestRender();
 };
 
 /**
@@ -555,6 +559,8 @@ MapView.prototype.setShadingMode = function (shadingMode) {
 
     this.viewer.terrainShadows =
         shadingMode === 'None' ? Cesium.ShadowMode.DISABLED : Cesium.ShadowMode.RECEIVE_ONLY;
+
+    this.viewer.scene.requestRender();
 };
 
 /**
