@@ -137,8 +137,10 @@ function MapView(options) {
         var initialHeading = 0.0; // north
         var initialPitch = Cesium.Math.toRadians(-35);
 
+        var distance = 600000 - 40000 * this.options.initialZoomLevel;
+
         this.viewer.camera.setView({
-            destination: Cesium.Cartesian3.fromDegrees(longitude, latitude, 5000.0),
+            destination: Cesium.Cartesian3.fromDegrees(longitude, latitude, distance),
             orientation: {
                 initialHeading,
                 initialPitch,
