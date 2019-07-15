@@ -12,6 +12,33 @@
         <div class="sidebar-header">
             <h5>Settings</h5>
         </div>
+
+        <div class="sidebar-content">
+            <label for="mapImageryType">Map imagery</label>
+            <select class="form-control" id="mapImageryType" name="mapImageryType"
+                    onChange="map.setMapImageryType(this.value.toString())">
+                <option selected value="OpenStreetMap">OpenStreetMap</option>
+                <option value="BingMapsAerialWithLabels">Bing maps Aerial with labels</option>
+                <option value="OpenTopoMap">OpenTopoMap</option>
+            </select>
+
+            <label for="mapShadingMode">Map shading mode</label>
+            <select class="form-control" id="mapShadingMode" name="mapShadingMode"
+                    onChange="map.setShadingMode(this.value.toString())">
+                <option value="Fixed10Am">Fixed at 10 am.</option>
+                <option value="Fixed3Pm">Fixed at 3 pm.</option>
+                <option selected value="CurrentTime">Current time</option>
+                <option value="Ahead2Hours">Current time + 2 hours</option>
+                <option value="None">No shading</option>
+            </select>
+
+            <label for="mapOverlayType">Map overlay</label>
+            <select class="form-control" id="mapOverlayType" name="mapOverlayType"
+                    onChange="map.setMapOverlayType(this.value.toString())">
+                <option selected value="None">None</option>
+                <option value="ContourLines">Contour lines</option>
+            </select>
+        </div>
     </nav>
 
     <div id="content">

@@ -84,7 +84,7 @@ body {
     max-width: 250px;
     min-height: 100vh;
     background: #cfcfcf;
-    color: #fff;
+    color: #000;
     transition: all 0.3s;
 }
 
@@ -93,6 +93,11 @@ body {
 }
 
 #sidebar .sidebar-header {
-    padding: 20px;
     background: #2F299E;
+    color: #fff;
+    padding: 10px;
+}
+
+#sidebar .sidebar-content {
+    padding: 10px;
 }

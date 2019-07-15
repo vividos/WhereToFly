@@ -22,6 +22,8 @@ map = new MapView({
     hasMouse: true
 });
 
+map.setShadingMode('CurrentTime');
+
 map.addLocationList([{
     id: 'abc',
     name: 'Start',
