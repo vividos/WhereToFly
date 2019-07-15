@@ -10,6 +10,32 @@
 
     <nav id="sidebar" class="sidebar-hidden">
         <div class="sidebar-header">
+            <h5>Pilots</h5>
+        </div>
+
+        <div class="sidebar-content" id="livetracking-list">
+            <div class="list-group">
+                <div class="list-group-item">
+                    <h5 class="mb-1">
+                        <img src="~/images/paragliding.svg" width="30" height="30" alt="paraglider" class="img-invert" /> Schliersee TestPos
+                    </h5>
+                    <p class="mb-1">
+                        <div id="testposDescription">
+                            Position: Lat/Long
+                        </div>
+                    </p>
+                    <div class="d-flex w-100 justify-content-between">
+                        <small id="testposLastUpdate">Last update: N/A</small>
+                        <button type="button" class="btn btn-primary btn-sm"
+                                onclick="javascript: updateLiveWaypoint('where-to-fly://TestPos/data');">
+                            Update
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-header">
             <h5>Settings</h5>
         </div>
 

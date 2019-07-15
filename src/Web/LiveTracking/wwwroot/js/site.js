@@ -63,6 +63,24 @@ map.addTrack({
     ]
 });
 
+mapping = [];
+timeoutMapping = [];
+
+mapping['where-to-fly://TestPos/data'] = 'testpos';
+
+map.addLocationList([{
+    id: 'where-to-fly://TestPos/data',
+    name: 'Live Waypoint',
+    description: '',
+    type: 'LiveWaypoint',
+    latitude: 0.0,
+    longitude: 0.0,
+    altitude: 0.0,
+    isPlanTourLocation: false
+}]);
+
+updateLiveWaypoint('where-to-fly://TestPos/data');
+
 $('#findForm').submit(function (event) {
 
     event.preventDefault();
@@ -97,4 +115,70 @@ function geocodeAndShow(input) {
                 });
             });
         });
+}
+
+function updateLiveWaypoint(liveWaypointUri) {
+
+    console.log('updating live waypoint ' + liveWaypointUri);
+    $.ajax({
+        url: '/?handler=UpdateLiveWaypoint',
+        data: {
+            Uri: liveWaypointUri
+        }
+    })
+        .done(function (result) {
+
+            console.log('update result: ' + JSON.stringify(result));
+
+            if (result.data !== undefined) {
+                result.data.id = liveWaypointUri;
+                map.updateLocation(result.data);
+
+                if (mapping[liveWaypointUri] !== undefined) {
+                    var idDesc = '#' + mapping[liveWaypointUri] + 'Description';
+
+                    $(idDesc)[0].textContent = result.data.description;
+
+                    var idLastUpdate = '#' + mapping[liveWaypointUri] + 'LastUpdate';
+
+                    $(idLastUpdate)[0].textContent = 'Last update: ' + new Date().toLocaleTimeString();
+                }
+            }
+
+            if (typeof result === 'string') {
+
+                if (mapping[liveWaypointUri] !== undefined) {
+                    var idDesc2 = '#' + mapping[liveWaypointUri] + 'Description';
+
+                    $(idDesc2)[0].textContent = 'Error: ' + result;
+                }
+            }
+
+            // schedule next update based on reported date
+            if (result.nextRequestDate !== undefined)
+                scheduleNextUpdate(liveWaypointUri, result.nextRequestDate);
+        });
+}
+
+function scheduleNextUpdate(liveWaypointUri, nextRequestDate) {
+    console.log('scheduling next update for live waypoint ' + liveWaypointUri);
+
+    if (timeoutMapping[liveWaypointUri] !== undefined)
+        clearTimeout(timeoutMapping[liveWaypointUri]);
+
+    var now = new Date();
+    var nextRequest = new Date(nextRequestDate);
+
+    var millisTillUpdate = nextRequest - now;
+    if (millisTillUpdate < 0)
+        millisTillUpdate = 10 * 1000; // schedule in 10 seconds
+
+    console.log("scheduling update in " + millisTillUpdate + " milliseconds");
+
+    var myTimeout = setTimeout(function () {
+        console.log("next update for " + liveWaypointUri + " is due!");
+        updateLiveWaypoint(liveWaypointUri);
+    }, millisTillUpdate);
+
+    timeoutMapping[liveWaypointUri] = myTimeout;
 }

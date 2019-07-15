@@ -10,6 +10,11 @@ a.navbar-brand {
   word-break: break-all;
 }
 
+/* inverts images; used for SVGs with wrong fill value */
+img.img-invert {
+    filter: invert(1);
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
