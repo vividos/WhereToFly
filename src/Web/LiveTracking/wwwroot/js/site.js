@@ -25,12 +25,23 @@ map = new MapView({
 map.setShadingMode('CurrentTime');
 
 map.addLocationList([{
-    id: 'abc',
-    name: 'Start',
-    description: 'Start point of the tour',
+    id: 'crossingthealps2019-start',
+    name: 'Start: Kampenwand',
+    description: 'Start of the Crossing the Alps 2019 tour',
     type: 'Turnpoint',
     latitude: 47.754076,
     longitude: 12.352277,
+    altitude: 0.0,
+    isPlanTourLocation: false
+}]);
+
+map.addLocationList([{
+    id: 'crossingthealps2019-end',
+    name: 'End: Feltre',
+    description: 'End of the Crossing the Alps 2019 tour',
+    type: 'Turnpoint',
+    latitude: 46.017779,
+    longitude: 11.900711,
     altitude: 0.0,
     isPlanTourLocation: false
 }]);
@@ -86,4 +97,4 @@ function geocodeAndShow(input) {
                 });
             });
         });
-};
+}
