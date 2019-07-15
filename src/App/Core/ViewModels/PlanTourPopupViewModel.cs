@@ -181,6 +181,7 @@ namespace WhereToFly.App.Core.ViewModels
             this.PlanTourList = new ObservableCollection<PlanTourListEntryViewModel>(viewModelList);
             this.OnPropertyChanged(nameof(this.PlanTourList));
             this.OnPropertyChanged(nameof(this.ShowWarningForMoreLocations));
+            this.PlanTourCommand.ChangeCanExecute();
         }
 
         /// <summary>
