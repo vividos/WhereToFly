@@ -22,19 +22,17 @@
 </head>
 <body>
     <header style="height:56px">
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
-            <a class="navbar-brand" asp-area="" asp-page="/Index">Where-to-fly Live Tracking</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark mb-3">
+            <a class="navbar-brand" asp-area="" asp-page="/Index">
+                <img src="/favicon.png" width="30" height="30" alt="logo">
+                Where-to-fly Live Tracking
+            </a>
+
+            <button type="button" id="sidebarCollapse" class="btn btn-outline-dark btn-sm"
+                    data-toggle="collapse" data-target=".navbar-collapse"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                <ul class="navbar-nav flex-grow-1">
-                    @*<li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>*@
-                </ul>
-            </div>
         </nav>
     </header>
 
