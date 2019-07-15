@@ -1,112 +1,139 @@
 ﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
 
-// sidebar
-$(document).ready(function () {
 
-    $('#sidebarCollapse').on('click', function () {
-        $('#sidebar').toggleClass('sidebar-hidden');
+function LiveTracking() {
+
+    console.log("initializing live tracking site");
+
+    this.liveWaypointToIdMapping = [];
+    this.updateTimeoutMapping = [];
+
+    this.initPage();
+
+    this.map = new MapView({
+        id: 'mapElement',
+        initialCenterPoint: { latitude: 47.083, longitude: 12.178 },
+        initialZoomLevel: 5,
+        hasMouse: true,
+        callback: this.callMapAction
     });
 
-});
+    this.map.setShadingMode('CurrentTime');
 
-// function used to call to C#
-function callAction(funcName, params) {
-    console.log('call action: ' + funcName + ', params:' + JSON.stringify(params));
+    this.addDefaultLocationListsAndTracks();
+
+    this.addLiveWaypoint('where-to-fly://TestPos/data', 'TestPos Schliersee', 'testpos');
+
 }
 
-map = new MapView({
-    id: 'mapElement',
-    initialCenterPoint: { latitude: 47.083, longitude: 12.178 },
-    initialZoomLevel: 5,
-    hasMouse: true
-});
+/**
+ * Initializes find box and sidebar
+ */
+LiveTracking.prototype.initPage = function () {
 
-map.setShadingMode('CurrentTime');
+    $('#findForm').submit(function (event) {
 
-map.addLocationList([{
-    id: 'crossingthealps2019-start',
-    name: 'Start: Kampenwand',
-    description: 'Start of the Crossing the Alps 2019 tour',
-    type: 'Turnpoint',
-    latitude: 47.754076,
-    longitude: 12.352277,
-    altitude: 0.0,
-    isPlanTourLocation: false
-}]);
+        event.preventDefault();
 
-map.addLocationList([{
-    id: 'crossingthealps2019-end',
-    name: 'End: Feltre',
-    description: 'End of the Crossing the Alps 2019 tour',
-    type: 'Turnpoint',
-    latitude: 46.017779,
-    longitude: 11.900711,
-    altitude: 0.0,
-    isPlanTourLocation: false
-}]);
+        this.geocodeAndShow($('#findValue')[0].value);
+    });
 
-map.addTrack({
-    id: 'crossingthealps2019',
-    name: 'Crossing the Alps 2019',
-    isFlightTrack: false,
-    color: 'FF0000',
-    listOfTrackPoints: [
-        12.352277, 47.754076, 0.0, // Kampenwand
-        12.431815, 47.631745, 0.0, // Kössen
-        12.297016, 47.285720, 0.0, // Wildkogel
-        12.183008, 47.090525, 0.0, // Alpenhauptkamm
-        11.958434, 46.738669, 0.0, // Kronplatz
-        11.828376, 46.508371, 0.0, // Sellastock
-        11.870709, 46.251668, 0.0, // Pala
-        11.900711, 46.017779, 0.0 // Feltre
-    ]
-});
+    $(document).ready(function () {
 
-mapping = [];
-timeoutMapping = [];
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('sidebar-hidden');
+        });
+    });
+};
 
-mapping['where-to-fly://TestPos/data'] = 'testpos';
+/**
+ * Function for MapView for map actions
+ * @param {String} funcName function name of action
+ * @param {object} params action params
+ */
+LiveTracking.prototype.callMapAction = function (funcName, params) {
+    console.log('call action: ' + funcName + ', params:' + JSON.stringify(params));
+};
 
-map.addLocationList([{
-    id: 'where-to-fly://TestPos/data',
-    name: 'Live Waypoint',
-    description: '',
-    type: 'LiveWaypoint',
-    latitude: 0.0,
-    longitude: 0.0,
-    altitude: 0.0,
-    isPlanTourLocation: false
-}]);
+LiveTracking.prototype.addDefaultLocationListsAndTracks = function () {
 
-updateLiveWaypoint('where-to-fly://TestPos/data');
+    this.map.addLocationList([{
+        id: 'crossingthealps2019-start',
+        name: 'Start: Kampenwand',
+        description: 'Start of the Crossing the Alps 2019 tour',
+        type: 'Turnpoint',
+        latitude: 47.754076,
+        longitude: 12.352277,
+        altitude: 0.0,
+        isPlanTourLocation: false
+    }]);
 
-$('#findForm').submit(function (event) {
+    this.map.addLocationList([{
+        id: 'crossingthealps2019-end',
+        name: 'End: Feltre',
+        description: 'End of the Crossing the Alps 2019 tour',
+        type: 'Turnpoint',
+        latitude: 46.017779,
+        longitude: 11.900711,
+        altitude: 0.0,
+        isPlanTourLocation: false
+    }]);
 
-    event.preventDefault();
+    this.map.addTrack({
+        id: 'crossingthealps2019',
+        name: 'Crossing the Alps 2019',
+        isFlightTrack: false,
+        color: 'FF0000',
+        listOfTrackPoints: [
+            12.352277, 47.754076, 0.0, // Kampenwand
+            12.431815, 47.631745, 0.0, // Kössen
+            12.297016, 47.285720, 0.0, // Wildkogel
+            12.183008, 47.090525, 0.0, // Alpenhauptkamm
+            11.958434, 46.738669, 0.0, // Kronplatz
+            11.828376, 46.508371, 0.0, // Sellastock
+            11.870709, 46.251668, 0.0, // Pala
+            11.900711, 46.017779, 0.0 // Feltre
+        ]
+    });
+};
 
-    geocodeAndShow($('#findValue')[0].value);
+LiveTracking.prototype.addLiveWaypoint = function (liveWaypointId, name, pageIdPrefix) {
 
-});
+    this.liveWaypointToIdMapping[liveWaypointId] = pageIdPrefix;
 
-function geocodeAndShow(input) {
+    this.map.addLocationList([{
+        id: liveWaypointId,
+        name: name,
+        description: '',
+        type: 'LiveWaypoint',
+        latitude: 0.0,
+        longitude: 0.0,
+        altitude: 0.0,
+        isPlanTourLocation: false
+    }]);
 
-    console.log("geocoding find text: " + input);
+    this.updateLiveWaypoint(liveWaypointId);
+};
+
+LiveTracking.prototype.geocodeAndShow = function (address) {
+
+    console.log("geocoding find text: " + address);
 
     var endpoint = 'https://nominatim.openstreetmap.org/search';
     var resource = new Cesium.Resource({
         url: endpoint,
         queryParameters: {
             format: 'json',
-            q: input
+            q: address
         }
     });
 
     return resource.fetchJson()
         .then(function (results) {
             return results.map(function (resultObject) {
-                map.showFindResult({
-                    name: input,
+                this.map.showFindResult({
+                    name: address,
                     description: resultObject.display_name,
                     latitude: resultObject.lat,
                     longitude: resultObject.lon,
@@ -115,11 +142,13 @@ function geocodeAndShow(input) {
                 });
             });
         });
-}
+};
 
-function updateLiveWaypoint(liveWaypointUri) {
+LiveTracking.prototype.updateLiveWaypoint = function (liveWaypointUri) {
 
     console.log('updating live waypoint ' + liveWaypointUri);
+
+    var that = this;
     $.ajax({
         url: '/?handler=UpdateLiveWaypoint',
         data: {
@@ -127,44 +156,49 @@ function updateLiveWaypoint(liveWaypointUri) {
         }
     })
         .done(function (result) {
-
-            console.log('update result: ' + JSON.stringify(result));
-
-            if (result.data !== undefined) {
-                result.data.id = liveWaypointUri;
-                map.updateLocation(result.data);
-
-                if (mapping[liveWaypointUri] !== undefined) {
-                    var idDesc = '#' + mapping[liveWaypointUri] + 'Description';
-
-                    $(idDesc)[0].textContent = result.data.description;
-
-                    var idLastUpdate = '#' + mapping[liveWaypointUri] + 'LastUpdate';
-
-                    $(idLastUpdate)[0].textContent = 'Last update: ' + new Date().toLocaleTimeString();
-                }
-            }
-
-            if (typeof result === 'string') {
-
-                if (mapping[liveWaypointUri] !== undefined) {
-                    var idDesc2 = '#' + mapping[liveWaypointUri] + 'Description';
-
-                    $(idDesc2)[0].textContent = 'Error: ' + result;
-                }
-            }
-
-            // schedule next update based on reported date
-            if (result.nextRequestDate !== undefined)
-                scheduleNextUpdate(liveWaypointUri, result.nextRequestDate);
+            that.onUpdateLiveWaypointResult(liveWaypointUri, result);
         });
-}
+};
 
-function scheduleNextUpdate(liveWaypointUri, nextRequestDate) {
+LiveTracking.prototype.onUpdateLiveWaypointResult = function (liveWaypointUri, result) {
+
+    console.log('update result: ' + JSON.stringify(result));
+
+    if (result.data !== undefined) {
+        result.data.id = liveWaypointUri;
+        this.map.updateLocation(result.data);
+
+        if (this.liveWaypointToIdMapping[liveWaypointUri] !== undefined) {
+            var idDesc = '#' + this.liveWaypointToIdMapping[liveWaypointUri] + 'Description';
+
+            $(idDesc)[0].textContent = result.data.description;
+
+            var idLastUpdate = '#' + this.liveWaypointToIdMapping[liveWaypointUri] + 'LastUpdate';
+
+            $(idLastUpdate)[0].textContent = 'Last update: ' + new Date().toLocaleTimeString();
+        }
+    }
+
+    if (typeof result === 'string') {
+
+        if (this.liveWaypointToIdMapping[liveWaypointUri] !== undefined) {
+            var idDesc2 = '#' + this.liveWaypointToIdMapping[liveWaypointUri] + 'Description';
+
+            $(idDesc2)[0].textContent = 'Error: ' + result;
+        }
+    }
+
+    // schedule next update based on reported date
+    if (result.nextRequestDate !== undefined)
+        this.scheduleNextUpdate(liveWaypointUri, result.nextRequestDate);
+};
+
+LiveTracking.prototype.scheduleNextUpdate = function (liveWaypointUri, nextRequestDate) {
+
     console.log('scheduling next update for live waypoint ' + liveWaypointUri);
 
-    if (timeoutMapping[liveWaypointUri] !== undefined)
-        clearTimeout(timeoutMapping[liveWaypointUri]);
+    if (this.updateTimeoutMapping[liveWaypointUri] !== undefined)
+        clearTimeout(this.updateTimeoutMapping[liveWaypointUri]);
 
     var now = new Date();
     var nextRequest = new Date(nextRequestDate);
@@ -175,10 +209,13 @@ function scheduleNextUpdate(liveWaypointUri, nextRequestDate) {
 
     console.log("scheduling update in " + millisTillUpdate + " milliseconds");
 
+    var that = this;
     var myTimeout = setTimeout(function () {
         console.log("next update for " + liveWaypointUri + " is due!");
-        updateLiveWaypoint(liveWaypointUri);
+        that.updateLiveWaypoint(liveWaypointUri);
     }, millisTillUpdate);
 
-    timeoutMapping[liveWaypointUri] = myTimeout;
-}
+    this.updateTimeoutMapping[liveWaypointUri] = myTimeout;
+};
+
+liveTracking = new LiveTracking();

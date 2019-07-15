@@ -13,8 +13,8 @@
             <h5>Pilots</h5>
         </div>
 
-        <div class="sidebar-content" id="livetracking-list">
-            <div class="list-group">
+        <div class="sidebar-content">
+            <div class="list-group" id="livetracking-list">
                 <div class="list-group-item">
                     <h5 class="mb-1">
                         <img src="~/images/paragliding.svg" width="30" height="30" alt="paraglider" class="img-invert" /> Schliersee TestPos
@@ -27,7 +27,7 @@
                     <div class="d-flex w-100 justify-content-between">
                         <small id="testposLastUpdate">Last update: N/A</small>
                         <button type="button" class="btn btn-primary btn-sm"
-                                onclick="javascript: updateLiveWaypoint('where-to-fly://TestPos/data');">
+                                onclick="javascript: liveTracking.updateLiveWaypoint('where-to-fly://TestPos/data');">
                             Update
                         </button>
                     </div>
@@ -42,7 +42,7 @@
         <div class="sidebar-content">
             <label for="mapImageryType">Map imagery</label>
             <select class="form-control" id="mapImageryType" name="mapImageryType"
-                    onChange="map.setMapImageryType(this.value.toString())">
+                    onChange="javascript: liveTracking.map.setMapImageryType(this.value.toString())">
                 <option selected value="OpenStreetMap">OpenStreetMap</option>
                 <option value="BingMapsAerialWithLabels">Bing maps Aerial with labels</option>
                 <option value="OpenTopoMap">OpenTopoMap</option>
@@ -50,7 +50,7 @@
 
             <label for="mapShadingMode">Map shading mode</label>
             <select class="form-control" id="mapShadingMode" name="mapShadingMode"
-                    onChange="map.setShadingMode(this.value.toString())">
+                    onChange="javascript: liveTracking.map.setShadingMode(this.value.toString())">
                 <option value="Fixed10Am">Fixed at 10 am.</option>
                 <option value="Fixed3Pm">Fixed at 3 pm.</option>
                 <option selected value="CurrentTime">Current time</option>
@@ -60,7 +60,7 @@
 
             <label for="mapOverlayType">Map overlay</label>
             <select class="form-control" id="mapOverlayType" name="mapOverlayType"
-                    onChange="map.setMapOverlayType(this.value.toString())">
+                    onChange="javascript: liveTracking.map.setMapOverlayType(this.value.toString())">
                 <option selected value="None">None</option>
                 <option value="ContourLines">Contour lines</option>
             </select>
