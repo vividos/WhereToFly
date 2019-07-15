@@ -1,22 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 
 namespace WhereToFly.Web.LiveTracking
 {
+    /// <summary>
+    /// Program for the LiveTracking web page
+    /// </summary>
     public class Program
     {
+        /// <summary>
+        /// Main entry point
+        /// </summary>
+        /// <param name="args">command line args</param>
         public static void Main(string[] args)
         {
             CreateWebHostBuilder(args).Build().Run();
         }
 
+        /// <summary>
+        /// Creates web host builder for given command line args
+        /// </summary>
+        /// <param name="args">command line args</param>
+        /// <returns>web host builder</returns>
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>();
