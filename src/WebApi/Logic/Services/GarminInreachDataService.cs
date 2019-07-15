@@ -105,11 +105,11 @@ namespace WhereToFly.WebApi.Logic.Services
         {
             var file = KmlFile.Load(stream);
 
-            var placemark = file.Root.Flatten().First(x => x is Placemark) as Placemark;
+            var placemark = file.Root.Flatten().FirstOrDefault(x => x is Placemark) as Placemark;
 
             if (placemark == null)
             {
-                throw new FormatException("Garmin inReach Raw KML Data contains no Placemark");
+                throw new FormatException("No Garmin inReach position/placemark returned from the server");
             }
 
             var point = placemark.Geometry as Point;
