@@ -229,13 +229,21 @@ namespace WhereToFly.App.Core.Services
         /// <summary>
         /// Stops timer to update live waypoints
         /// </summary>
-        private void StopTimer()
+        public void StopTimer()
         {
             if (this.timer != null)
             {
                 this.timer.Dispose();
                 this.timer = null;
             }
+        }
+
+        /// <summary>
+        /// Resumes timer (by just scheduling the next timer update)
+        /// </summary>
+        public void ResumeTimer()
+        {
+            this.ScheduleUpdates();
         }
 
         /// <summary>

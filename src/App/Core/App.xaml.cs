@@ -364,6 +364,9 @@ namespace WhereToFly.App.Core
         {
             // Handle when your app sleeps
             StoreFaviconUrlCache();
+
+            var liveWaypointRefreshService = DependencyService.Get<LiveWaypointRefreshService>();
+            liveWaypointRefreshService.StopTimer();
         }
 
         /// <summary>
@@ -372,6 +375,8 @@ namespace WhereToFly.App.Core
         protected override void OnResume()
         {
             // Handle when your app resumes
+            var liveWaypointRefreshService = DependencyService.Get<LiveWaypointRefreshService>();
+            liveWaypointRefreshService.ResumeTimer();
         }
         #endregion
     }
