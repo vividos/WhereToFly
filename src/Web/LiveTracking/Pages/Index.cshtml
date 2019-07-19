@@ -3,8 +3,16 @@
 @{
     ViewData["Title"] = "Live Tracking";
 }
+@section Scripts {
+    <script type="text/javascript">
+        $(function () {
+            initLiveTracking();
+        });
+    </script>
+}
 
 <script src="~/js/mapView3D.js" asp-append-version="true"></script>
+<script src="~/js/liveTracking.js" asp-append-version="true"></script>
 
 <div class="wrapper">
 
@@ -17,17 +25,18 @@
             <div class="list-group" id="livetracking-list">
                 <div class="list-group-item">
                     <h5 class="mb-1">
-                        <img src="~/images/paragliding.svg" width="30" height="30" alt="paraglider" class="img-invert" /> Schliersee TestPos
+                        <img src="~/images/paragliding.svg" width="30" height="30" alt="paraglider" class="img-invert" />
+                        <span id="liveWaypointName">Live Waypoint</span>
                     </h5>
                     <p class="mb-1">
-                        <div id="testposDescription">
+                        <div id="liveWaypointDescription">
                             Position: Lat/Long
                         </div>
                     </p>
                     <div class="d-flex w-100 justify-content-between">
-                        <small id="testposLastUpdate">Last update: N/A</small>
+                        <small id="liveWaypointLastUpdate">Last update: N/A</small>
                         <button type="button" class="btn btn-primary btn-sm"
-                                onclick="javascript: liveTracking.updateLiveWaypoint('where-to-fly://TestPos/data');">
+                                onclick="javascript: liveTracking.updateByPrefix('liveWaypoint');">
                             Update
                         </button>
                     </div>
@@ -70,4 +79,19 @@
     <div id="content">
         <div id="mapElement"></div>
     </div>
+
+    <script type="text/javascript">
+
+    function initLiveTracking() {
+        liveTracking = new LiveTracking();
+
+        var liveTrackingInfoList = @Html.Raw(Json.Serialize(Model.LiveTrackingInfoList));
+        for (var key in liveTrackingInfoList) {
+            var item = liveTrackingInfoList[key];
+            liveTracking.addLiveWaypoint(item.name, item.uri);
+        }
+    }
+
+    </script>
+
 </div>

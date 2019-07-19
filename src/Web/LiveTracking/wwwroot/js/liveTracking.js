@@ -23,8 +23,6 @@ function LiveTracking() {
 
     this.addDefaultLocationListsAndTracks();
 
-    this.addLiveWaypoint('where-to-fly://TestPos/data', 'TestPos Schliersee', 'testpos');
-
 }
 
 /**
@@ -98,8 +96,9 @@ LiveTracking.prototype.addDefaultLocationListsAndTracks = function () {
     });
 };
 
-LiveTracking.prototype.addLiveWaypoint = function (liveWaypointId, name, pageIdPrefix) {
+LiveTracking.prototype.addLiveWaypoint = function (name, liveWaypointId) {
 
+    var pageIdPrefix = 'liveWaypoint';
     this.liveWaypointToIdMapping[liveWaypointId] = pageIdPrefix;
 
     this.map.addLocationList([{
@@ -144,6 +143,15 @@ LiveTracking.prototype.geocodeAndShow = function (address) {
         });
 };
 
+LiveTracking.prototype.updateByPrefix = function (pageIdPrefix) {
+
+    var liveWaypointUri =
+        Object.keys(this.liveWaypointToIdMapping).find(
+            key => this.liveWaypointToIdMapping[key] === pageIdPrefix);
+
+    this.updateLiveWaypoint(liveWaypointUri);
+};
+
 LiveTracking.prototype.updateLiveWaypoint = function (liveWaypointUri) {
 
     console.log('updating live waypoint ' + liveWaypointUri);
@@ -169,12 +177,15 @@ LiveTracking.prototype.onUpdateLiveWaypointResult = function (liveWaypointUri, r
         this.map.updateLocation(result.data);
 
         if (this.liveWaypointToIdMapping[liveWaypointUri] !== undefined) {
-            var idDesc = '#' + this.liveWaypointToIdMapping[liveWaypointUri] + 'Description';
+            var pageIdPrefix = this.liveWaypointToIdMapping[liveWaypointUri];
 
+            var idName = '#' + pageIdPrefix + 'Name';
+            $(idName)[0].textContent = result.data.name;
+
+            var idDesc = '#' + pageIdPrefix + 'Description';
             $(idDesc)[0].textContent = result.data.description;
 
-            var idLastUpdate = '#' + this.liveWaypointToIdMapping[liveWaypointUri] + 'LastUpdate';
-
+            var idLastUpdate = '#' + pageIdPrefix + 'LastUpdate';
             $(idLastUpdate)[0].textContent = 'Last update: ' + new Date().toLocaleTimeString();
         }
     }
@@ -217,5 +228,3 @@ LiveTracking.prototype.scheduleNextUpdate = function (liveWaypointUri, nextReque
 
     this.updateTimeoutMapping[liveWaypointUri] = myTimeout;
 };
-
-liveTracking = new LiveTracking();

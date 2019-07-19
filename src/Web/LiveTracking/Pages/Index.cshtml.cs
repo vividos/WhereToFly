@@ -36,8 +36,27 @@ namespace WhereToFly.Web.LiveTracking.Pages
             public string Uri { get; set; }
         }
 
+        /// <summary>
+        /// Infos about a single live tracking object
+        /// </summary>
+        public class LiveTrackingInfo
+        {
+            /// <summary>
+            /// Name of live tracking waypoint
+            /// </summary>
+            public string Name { get; set; }
+
+            /// <summary>
+            /// Live tracking waypoint URI
+            /// </summary>
+            public string Uri { get; set; }
+        }
+
+        /// <summary>
+        /// List of live tracking infos; used as the view data of the page
+        /// </summary>
         [ViewData]
-        public Dictionary<string, string> WhereToFlyLiveTrackUrls { get; private set; }
+        public List<LiveTrackingInfo> LiveTrackingInfoList { get; private set; }
 
         /// <summary>
         /// Creates a new index model
@@ -46,9 +65,13 @@ namespace WhereToFly.Web.LiveTracking.Pages
         {
             this.backendWebApi = RestService.For<IBackendWebApi>(BaseUrl);
 
-            this.WhereToFlyLiveTrackUrls = new Dictionary<string, string>
+            this.LiveTrackingInfoList = new List<LiveTrackingInfo>
             {
-                { "TestPos Schliersee", "where-to-fly://TestPos/data" }
+                new LiveTrackingInfo
+                {
+                    Name = "TestPos Schliersee",
+                    Uri = "where-to-fly://TestPos/data"
+                }
             };
         }
 
