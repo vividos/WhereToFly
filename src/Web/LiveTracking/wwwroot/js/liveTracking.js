@@ -30,11 +30,12 @@ function LiveTracking() {
  */
 LiveTracking.prototype.initPage = function () {
 
+    var that = this;
     $('#findForm').submit(function (event) {
 
         event.preventDefault();
 
-        this.geocodeAndShow($('#findValue')[0].value);
+        that.geocodeAndShow($('#findValue')[0].value);
     });
 
     $(document).ready(function () {
@@ -128,10 +129,11 @@ LiveTracking.prototype.geocodeAndShow = function (address) {
         }
     });
 
+    var that = this;
     return resource.fetchJson()
         .then(function (results) {
             return results.map(function (resultObject) {
-                this.map.showFindResult({
+                that.map.showFindResult({
                     name: address,
                     description: resultObject.display_name,
                     latitude: resultObject.lat,
