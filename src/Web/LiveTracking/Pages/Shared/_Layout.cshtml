@@ -28,16 +28,29 @@
                 Where-to-fly Live Tracking
             </a>
 
-            <form class="form-inline my-2 my-lg-0" id="findForm">
-                <input class="form-control mr-sm-2" type="search" id="findValue" placeholder="Find location" aria-label="Find location">
-                <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Find</button>
-            </form>
-
-            <button type="button" id="sidebarCollapse" class="btn btn-outline-dark btn-sm"
+            <button class="navbar-toggler" type="button"
                     data-toggle="collapse" data-target=".navbar-collapse"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
+            <div class="collapse navbar-collapse" id="navbarToggler">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li>
+                        <form class="form-inline my-2 my-lg-0" id="findForm">
+                            <input class="form-control mr-sm-2" type="search" id="findValue" placeholder="Find location" aria-label="Find location">
+                            <button class="btn btn-outline-light my-2 my-sm-0"  style="margin-right:8px" type="submit">Find</button>
+                        </form>
+                    </li>
+
+                    <li>
+                        <button type="button" id="sidebarCollapse" class="btn btn-outline-light my-2 my-sm-0">
+                            <i class="fas fa-align-left"></i>
+                            <span>Toggle Sidebar</span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
         </nav>
     </header>
 
@@ -63,6 +76,16 @@
                 integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
         </script>
     </environment>
+
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+            integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
+            crossorigin="anonymous">
+    </script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+            integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
+            crossorigin="anonymous">
+    </script>
 
     @RenderSection("Scripts", required: false)
 </body>
