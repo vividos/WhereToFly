@@ -76,6 +76,34 @@ namespace WhereToFly.Web.LiveTracking.Pages
         }
 
         /// <summary>
+        /// GET handler when page parameters uri and name are passed to set a custom live waypoint
+        /// to show in the page.
+        /// </summary>
+        /// <param name="uri">live waypoint uri to show</param>
+        /// <param name="name">name of live waypoint to show</param>
+        public void OnGet(string uri, string name)
+        {
+            if (string.IsNullOrEmpty(uri))
+            {
+                return;
+            }
+
+            var liveWaypointUri = new AppResourceUri(uri);
+
+            if (liveWaypointUri.IsValid)
+            {
+                this.LiveTrackingInfoList = new List<LiveTrackingInfo>
+                {
+                    new LiveTrackingInfo
+                    {
+                        Name = name ?? "Live Waypoint",
+                        Uri = liveWaypointUri.ToString(),
+                    }
+                };
+            }
+        }
+
+        /// <summary>
         /// Called when page requests an update for a live waypoint
         /// </summary>
         /// <param name="data">update live waypoint data</param>
