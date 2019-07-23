@@ -241,14 +241,38 @@ namespace WhereToFly.WebApi.Logic
         /// <returns>live waypoint query result</returns>
         private Task<LiveWaypointQueryResult> GetTestPosResult(AppResourceUri uri)
         {
+            MapPoint mapPoint;
+            switch (uri.Data.ToLowerInvariant())
+            {
+                case "crossingthealps2019":
+                    var point1 = new MapPoint(47.754076, 12.352277, 0.0); // Kampenwand
+                    var point2 = new MapPoint(46.017779, 11.900711, 0.0); // Feltre
+
+                    // every 10 minutes, interpolate between two points, in interval [-0.5; 1.5[
+                    double t = (((DateTimeOffset.Now.TimeOfDay.TotalMinutes % 10.0) / 10.0) * 2) - 0.5;
+
+                    mapPoint = new MapPoint(
+                        Shared.Base.Math.Interpolate(point1.Latitude, point2.Latitude, t),
+                        Shared.Base.Math.Interpolate(point1.Longitude, point2.Longitude, t),
+                        0.0);
+
+                    break;
+
+                case "data":
+                case "spitzingsee":
+                    mapPoint = new MapPoint(47.664601, 11.885455, 0.0);
+
+                    double timeAngleInDegrees = (DateTimeOffset.Now.TimeOfDay.TotalMinutes * 6.0) % 360;
+                    double timeAngle = timeAngleInDegrees / 180.0 * Math.PI;
+                    mapPoint.Latitude += 0.025 * Math.Sin(timeAngle);
+                    mapPoint.Longitude -= 0.025 * Math.Cos(timeAngle);
+                    break;
+
+                default:
+                    throw new ArgumentException("invalid TestPos uri data");
+            }
+
             DateTimeOffset nextRequestDate = DateTimeOffset.Now + TimeSpan.FromMinutes(1.0);
-
-            var mapPoint = new MapPoint(47.664601, 11.885455, 0.0);
-
-            double timeAngleInDegrees = (DateTimeOffset.Now.TimeOfDay.TotalMinutes * 6.0) % 360;
-            double timeAngle = timeAngleInDegrees / 180.0 * Math.PI;
-            mapPoint.Latitude += 0.025 * Math.Sin(timeAngle);
-            mapPoint.Longitude -= 0.025 * Math.Cos(timeAngle);
 
             return Task.FromResult(
                 new LiveWaypointQueryResult
