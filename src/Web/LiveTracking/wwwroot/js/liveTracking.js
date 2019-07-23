@@ -19,7 +19,7 @@ function LiveTracking() {
         callback: this.callMapAction
     });
 
-    this.map.setShadingMode('CurrentTime');
+    this.map.setShadingMode('Fixed10Am');
 
     this.addDefaultLocationListsAndTracks();
 
