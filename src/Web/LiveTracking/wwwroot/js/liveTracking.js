@@ -145,6 +145,28 @@ LiveTracking.prototype.geocodeAndShow = function (address) {
         });
 };
 
+/**
+ * Zooms to a live waypoint by given page ID prefix
+ * @param {String} pageIdPrefix page ID prefix of live waypoint
+ */
+LiveTracking.prototype.zoomToByPrefix = function (pageIdPrefix) {
+
+    var liveWaypointUri =
+        Object.keys(this.liveWaypointToIdMapping).find(
+            key => this.liveWaypointToIdMapping[key] === pageIdPrefix);
+
+    var entity = this.map.viewer.entities.getById(liveWaypointUri);
+
+    var position = entity.position.getValue(this.map.viewer.clock.currentTime);
+    var location = Cesium.Cartographic.fromCartesian(position);
+
+    this.map.zoomToLocation({
+        longitude: Cesium.Math.toDegrees(location.longitude),
+        latitude: Cesium.Math.toDegrees(location.latitude),
+        altitude: location.height
+    });
+};
+
 LiveTracking.prototype.updateByPrefix = function (pageIdPrefix) {
 
     var liveWaypointUri =

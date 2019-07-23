@@ -32,13 +32,19 @@
                         <div id="liveWaypointDescription">
                             Position: Lat/Long
                         </div>
+                        <div class="d-flex w-100">
+                            <button type="button" class="btn btn-primary btn-sm mr-1"
+                                    onclick="javascript: liveTracking.zoomToByPrefix('liveWaypoint');">
+                                Zoom
+                            </button>
+                            <button type="button" class="btn btn-primary btn-sm mr-1"
+                                    onclick="javascript: liveTracking.updateByPrefix('liveWaypoint');">
+                                Update
+                            </button>
+                        </div>
                     </p>
                     <div class="d-flex w-100 justify-content-between">
                         <small id="liveWaypointLastUpdate">Last update: N/A</small>
-                        <button type="button" class="btn btn-primary btn-sm"
-                                onclick="javascript: liveTracking.updateByPrefix('liveWaypoint');">
-                            Update
-                        </button>
                     </div>
                 </div>
             </div>
