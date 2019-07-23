@@ -1,7 +1,7 @@
 ﻿using System;
 using WhereToFly.Shared.Model;
 
-namespace WhereToFly.App.Geo.Spatial
+namespace WhereToFly.Shared.Geo
 {
     /// <summary>
     /// Extension methods for MapPoint class.

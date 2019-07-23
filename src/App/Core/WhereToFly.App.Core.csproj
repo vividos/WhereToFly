@@ -37,6 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Shared\Geo\WhereToFly.Shared.Geo.csproj" />
     <ProjectReference Include="..\Geo\WhereToFly.App.Geo.csproj" />
     <ProjectReference Include="..\Logic\WhereToFly.App.Logic.csproj" />
   </ItemGroup>

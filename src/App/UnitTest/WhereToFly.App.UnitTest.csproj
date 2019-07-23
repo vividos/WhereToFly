@@ -98,6 +98,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Shared\Geo\WhereToFly.Shared.Geo.csproj">
+      <Project>{6ee42b80-bb37-4e2c-9f9f-5f8daa682e3b}</Project>
+      <Name>WhereToFly.Shared.Geo</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Shared\Model\WhereToFly.Shared.Model.csproj">
       <Project>{552d3e32-9f57-42f8-b144-699492f73536}</Project>
       <Name>WhereToFly.Shared.Model</Name>

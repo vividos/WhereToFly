@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using WhereToFly.App.Geo.Spatial;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
+using WhereToFly.Shared.Geo;
 using WhereToFly.Shared.Model;
 using Xamarin.Forms;
 

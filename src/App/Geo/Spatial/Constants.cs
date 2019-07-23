@@ -6,11 +6,6 @@
     public static class Constants
     {
         /// <summary>
-        /// Earth radius, in meter (accepted by WGS84 standard)
-        /// </summary>
-        public static readonly double EarthRadiusInMeter = 6378137;
-
-        /// <summary>
         /// Factor to convert from m/s to km/h
         /// </summary>
         public static readonly double FactorMeterPerSecondToKilometerPerHour = 3.6;

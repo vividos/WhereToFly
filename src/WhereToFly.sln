@@ -58,6 +58,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{30B9CDF1-600
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.Web.LiveTracking", "Web\LiveTracking\WhereToFly.Web.LiveTracking.csproj", "{A53C81A5-250A-483C-BF68-D9C565C2305F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhereToFly.Shared.Geo", "Shared\Geo\WhereToFly.Shared.Geo.csproj", "{6EE42B80-BB37-4E2C-9F9F-5F8DAA682E3B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -136,6 +138,10 @@ Global
 		{A53C81A5-250A-483C-BF68-D9C565C2305F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A53C81A5-250A-483C-BF68-D9C565C2305F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A53C81A5-250A-483C-BF68-D9C565C2305F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EE42B80-BB37-4E2C-9F9F-5F8DAA682E3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EE42B80-BB37-4E2C-9F9F-5F8DAA682E3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EE42B80-BB37-4E2C-9F9F-5F8DAA682E3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EE42B80-BB37-4E2C-9F9F-5F8DAA682E3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -158,6 +164,7 @@ Global
 		{1D3C03EF-701F-4FAB-80B2-1FBEFBC7C8CD} = {A443B9B2-B8C9-44F0-A7F5-DF2466E0E0FE}
 		{EBFA2CAF-D0B4-4A36-91AA-24D393BCD3CF} = {A443B9B2-B8C9-44F0-A7F5-DF2466E0E0FE}
 		{A53C81A5-250A-483C-BF68-D9C565C2305F} = {30B9CDF1-6001-4E25-94F4-8B105BE6F2FB}
+		{6EE42B80-BB37-4E2C-9F9F-5F8DAA682E3B} = {60BE5B8E-A229-488F-A893-379E323EBB3E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D13F3BD1-E396-49C7-BD98-2F3BC15F6E7C}
