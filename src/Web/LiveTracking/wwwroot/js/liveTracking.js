@@ -1,7 +1,9 @@
 ﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
 
-
+/**
+ * Creates a new live tracking object
+ */
 function LiveTracking() {
 
     console.log("initializing live tracking site");
@@ -55,6 +57,9 @@ LiveTracking.prototype.callMapAction = function (funcName, params) {
     console.log('call action: ' + funcName + ', params:' + JSON.stringify(params));
 };
 
+/**
+ * Adds all default locations and tracks to show in the live tracking map
+ */
 LiveTracking.prototype.addDefaultLocationListsAndTracks = function () {
 
     this.map.addLocationList([{
@@ -97,6 +102,11 @@ LiveTracking.prototype.addDefaultLocationListsAndTracks = function () {
     });
 };
 
+/**
+ * Adds a single live waypoint to track
+ * @param {String} name Name of live waypoint
+ * @param {String} liveWaypointId Live waypoint ID
+ */
 LiveTracking.prototype.addLiveWaypoint = function (name, liveWaypointId) {
 
     var pageIdPrefix = 'liveWaypoint';
@@ -116,6 +126,10 @@ LiveTracking.prototype.addLiveWaypoint = function (name, liveWaypointId) {
     this.updateLiveWaypoint(liveWaypointId);
 };
 
+/**
+ * Geocodes entered address and shows pin
+ * @param {String} address entered address to find
+ */
 LiveTracking.prototype.geocodeAndShow = function (address) {
 
     console.log("geocoding find text: " + address);
@@ -130,7 +144,7 @@ LiveTracking.prototype.geocodeAndShow = function (address) {
     });
 
     var that = this;
-    return resource.fetchJson()
+    resource.fetchJson()
         .then(function (results) {
             return results.map(function (resultObject) {
                 that.map.showFindResult({
@@ -167,6 +181,10 @@ LiveTracking.prototype.zoomToByPrefix = function (pageIdPrefix) {
     });
 };
 
+/**
+ * Updates a live waypoint by given page ID prefix
+ * @param {String} pageIdPrefix page ID prefix of live waypoint
+ */
 LiveTracking.prototype.updateByPrefix = function (pageIdPrefix) {
 
     var liveWaypointUri =
@@ -176,6 +194,10 @@ LiveTracking.prototype.updateByPrefix = function (pageIdPrefix) {
     this.updateLiveWaypoint(liveWaypointUri);
 };
 
+/**
+ * Zooms to a live waypoint
+ * @param {String} liveWaypointUri live waypoint uri to update
+ */
 LiveTracking.prototype.updateLiveWaypoint = function (liveWaypointUri) {
 
     console.log('updating live waypoint ' + liveWaypointUri);
@@ -192,6 +214,11 @@ LiveTracking.prototype.updateLiveWaypoint = function (liveWaypointUri) {
         });
 };
 
+/**
+ * Called whwn updated live waypoint data is available
+ * @param {String} liveWaypointUri live waypoint uri to update
+ * @param {Object} result ajax result object with updated data, or a string as error message
+ */
 LiveTracking.prototype.onUpdateLiveWaypointResult = function (liveWaypointUri, result) {
 
     console.log('update result: ' + JSON.stringify(result));
@@ -228,6 +255,11 @@ LiveTracking.prototype.onUpdateLiveWaypointResult = function (liveWaypointUri, r
         this.scheduleNextUpdate(liveWaypointUri, result.nextRequestDate);
 };
 
+/**
+ * Schedules next update for live waypoint, using next request date from query result
+ * @param {String} liveWaypointUri live waypoint uri to use
+ * @param {String} nextRequestDate ISO 8601 formatted next request date
+ */
 LiveTracking.prototype.scheduleNextUpdate = function (liveWaypointUri, nextRequestDate) {
 
     console.log('scheduling next update for live waypoint ' + liveWaypointUri);
