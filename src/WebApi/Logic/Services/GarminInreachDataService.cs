@@ -129,7 +129,8 @@ namespace WhereToFly.WebApi.Logic.Services
                 Longitude = point.Coordinate.Longitude,
                 Altitude = (int)(point.Coordinate.Altitude ?? 0.0),
                 TimeStamp = when.HasValue ? new DateTimeOffset(when.Value) : DateTimeOffset.Now,
-                Description = FormatDescriptionFromPlacemark(placemark),
+                Description = FormatDescriptionFromPlacemark(placemark) +
+                    LiveWaypointCacheManager.GetCoveredDistanceDescription(new MapPoint(point.Coordinate.Latitude, point.Coordinate.Longitude)),
                 DetailsLink = string.Format(MapSharePublicUrl, mapShareIdentifier),
             };
         }

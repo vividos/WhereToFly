@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using WhereToFly.Shared.Geo;
 using WhereToFly.Shared.Model;
 using WhereToFly.WebApi.Logic.Services;
 
@@ -286,11 +287,43 @@ namespace WhereToFly.WebApi.Logic
                         Altitude = mapPoint.Altitude.Value,
                         Name = "Live waypoint test position",
                         Description = "Hello from the Where-to-fly backend services!<br/>" +
-                            $"Next request date is {nextRequestDate.ToString()}",
+                            $"Next request date is {nextRequestDate.ToString()}" +
+                            GetCoveredDistanceDescription(mapPoint),
                         DetailsLink = string.Empty
                     },
                     NextRequestDate = nextRequestDate
                 });
+        }
+
+        /// <summary>
+        /// Calculates "covered distance" description text based on the current point
+        /// </summary>
+        /// <param name="mapPoint">current point</param>
+        /// <returns>description text to display</returns>
+        public static string GetCoveredDistanceDescription(MapPoint mapPoint)
+        {
+            var point1 = new MapPoint(47.754076, 12.352277, 0.0); // Kampenwand
+            var point2 = new MapPoint(46.017779, 11.900711, 0.0); // Feltre
+
+            double distanceTo1 = mapPoint.DistanceTo(point1);
+            double distanceTo2 = mapPoint.DistanceTo(point2);
+            double distanceBetween12 = point1.DistanceTo(point2);
+
+            // between the two points? (or in an circle spanning from point1 to point2
+            if (distanceTo1 < distanceBetween12 &&
+                distanceTo2 < distanceBetween12)
+            {
+                double percent = (distanceTo1 / distanceBetween12) * 100.0;
+                return $"<br/>Covered distance: {distanceTo1/1000.0:0.0} km, {percent:0.0}% done!";
+            }
+            else if (distanceTo1 < distanceTo2)
+            {
+                return $"<br/>Before start turnpoint ({distanceTo1/1000.0:0.0} km to start)!";
+            }
+            else
+            {
+                return $"<br/>End turnpoint reached ({distanceTo2/1000.0:0.0} km from end)!";
+            }
         }
 
         /// <summary>
