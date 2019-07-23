@@ -61,8 +61,8 @@ body {
     padding: 0;
     overflow: hidden;
     position: relative;
-    padding-bottom: 54px;
-    top: -2px;
+    padding-bottom: 53px;
+    top: -3px;
 }
 
 @media (min-width: 768px) {
