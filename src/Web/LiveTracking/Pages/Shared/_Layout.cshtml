@@ -19,6 +19,8 @@
     <script src="https://cesiumjs.org/releases/1.59/Build/Cesium/Cesium.js"></script>
     <link href="https://cesiumjs.org/releases/1.59/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
     <link rel="stylesheet" href="~/css/site.css" />
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 </head>
 <body>
     <header style="height:56px">
@@ -39,7 +41,7 @@
                     <li>
                         <form class="form-inline my-2 my-lg-0" id="findForm">
                             <input class="form-control mr-sm-2" type="search" id="findValue" placeholder="Find location" aria-label="Find location">
-                            <button class="btn btn-outline-light my-2 my-sm-0"  style="margin-right:8px" type="submit">Find</button>
+                            <button class="btn btn-outline-light my-2 my-sm-0" style="margin-right:8px" type="submit">Find</button>
                         </form>
                     </li>
 
@@ -57,6 +59,9 @@
     <main role="main" class="pb-3">
         @RenderBody()
     </main>
+
+    <!-- Dark Overlay element -->
+    <div class="overlay"></div>
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -85,6 +90,10 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
             integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
             crossorigin="anonymous">
+    </script>
+
+    <!-- jQuery Custom Scroller CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js">
     </script>
 
     @RenderSection("Scripts", required: false)
