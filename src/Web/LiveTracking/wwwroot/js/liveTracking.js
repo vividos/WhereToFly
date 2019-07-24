@@ -128,6 +128,9 @@ LiveTracking.prototype.addLiveWaypoint = function (name, liveWaypointId) {
     var pageIdPrefix = 'liveWaypoint';
     this.liveWaypointToIdMapping[liveWaypointId] = pageIdPrefix;
 
+    var idName = '#' + pageIdPrefix + 'Name';
+    $(idName)[0].textContent = name;
+
     this.map.addLocationList([{
         id: liveWaypointId,
         name: name,
@@ -251,11 +254,11 @@ LiveTracking.prototype.onUpdateLiveWaypointResult = function (liveWaypointUri, r
         if (this.liveWaypointToIdMapping[liveWaypointUri] !== undefined) {
             var pageIdPrefix = this.liveWaypointToIdMapping[liveWaypointUri];
 
-            var idName = '#' + pageIdPrefix + 'Name';
-            $(idName)[0].textContent = result.data.name;
+            //var idName = '#' + pageIdPrefix + 'Name';
+            //$(idName)[0].textContent = result.data.name;
 
             var idDesc = '#' + pageIdPrefix + 'Description';
-            $(idDesc)[0].textContent = result.data.description;
+            $(idDesc)[0].innerHTML = result.data.description;
 
             var idLastUpdate = '#' + pageIdPrefix + 'LastUpdate';
             $(idLastUpdate)[0].textContent = 'Last update: ' + new Date().toLocaleTimeString();
