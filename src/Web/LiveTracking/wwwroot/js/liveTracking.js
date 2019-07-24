@@ -187,6 +187,11 @@ LiveTracking.prototype.zoomToByPrefix = function (pageIdPrefix) {
 
     var entity = this.map.viewer.entities.getById(liveWaypointUri);
 
+    if (entity === undefined) {
+        console.log("couldn't find entity for live waypoint id: " + liveWaypointUri);
+        return;
+    }
+
     var position = entity.position.getValue(this.map.viewer.clock.currentTime);
     var location = Cesium.Cartographic.fromCartesian(position);
 

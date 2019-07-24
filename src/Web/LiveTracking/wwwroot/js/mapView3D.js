@@ -944,6 +944,11 @@ MapView.prototype.updateLocation = function (location) {
 
     var entity = this.viewer.entities.getById(location.id);
 
+    if (entity === undefined) {
+        console.log("couldn't find entity for id: " + location.id);
+        return;
+    }
+
     entity.position = Cesium.Cartesian3.fromDegrees(location.longitude, location.latitude, location.altitude);
 
     entity.name = location.name;
