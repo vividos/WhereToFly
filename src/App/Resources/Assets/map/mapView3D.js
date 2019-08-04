@@ -673,7 +673,7 @@ MapView.prototype.addLayer = function (layer) {
 
     console.log("adding layer " + layer.name + ", with data length " + layer.data.length + " bytes");
 
-    czml = JSON.parse(layer.data);
+    var czml = JSON.parse(layer.data);
 
     var dataSourcePromise = Cesium.CzmlDataSource.load(czml);
 
@@ -1117,6 +1117,7 @@ MapView.prototype.sampleTrackHeights = function (track, offsetInMeters) {
 
             var trackPointHeightArray = [];
 
+            // NOSONAR
             for (var trackPointIndex = 0; trackPointIndex < trackPointArray.length; ++trackPointIndex) {
 
                 var trackPointHeight = track.listOfTrackPoints[trackPointIndex * 3 + 2] + offsetInMeters;
