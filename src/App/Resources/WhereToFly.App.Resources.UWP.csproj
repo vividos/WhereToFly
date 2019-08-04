@@ -243,6 +243,9 @@
     <None Include="Assets\map\test.html" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\VersionAssemblyInfo.cs">
+      <Link>Properties\VersionAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

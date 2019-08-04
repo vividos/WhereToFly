@@ -41,6 +41,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\VersionAssemblyInfo.cs">
+      <Link>Properties\VersionAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="DataFormatterTest.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Geo\GpxDataFileTests.cs" />
