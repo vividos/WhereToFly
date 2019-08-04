@@ -69,7 +69,6 @@ namespace WhereToFly.App.UnitTest
         public async Task TestIconTypeIconLink()
         {
             // set up
-            // TODO
             var desc = new WeatherIconDescription
             {
                 Name = "hello world",
