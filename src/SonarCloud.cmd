@@ -39,12 +39,14 @@ rmdir .\bw-output /s /q 2> nul
 
 SonarScanner.MSBuild.exe begin ^
     /k:"WhereToFly" ^
-    /v:"1.6.0" ^
+    /v:"1.7.0" ^
     /d:"sonar.cfamily.build-wrapper-output=%CD%\bw-output" ^
     /d:"sonar.cs.opencover.reportsPaths=%CD%\TestResults\WhereToFly-*-CoverageReport.xml" ^
+    /d:"sonar.exclusions=Web\LiveTracking\wwwroot\lib\**\*" ^
     /d:"sonar.host.url=https://sonarcloud.io" ^
     /o:"vividos-github" ^
     /d:"sonar.login=%SONARLOGIN%"
+if errorlevel 1 goto end
 
 REM
 REM Rebuild projects
@@ -79,5 +81,7 @@ REM
     -targetdir:"%~dp0\TestResults\CoverageReport"
 
 SonarScanner.MSBuild.exe end /d:"sonar.login=%SONARLOGIN%"
+
+:end
 
 pause
