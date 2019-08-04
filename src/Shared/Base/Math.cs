@@ -14,7 +14,7 @@
         /// <returns>interpolated value between p1 and p2</returns>
         public static double Interpolate(double value1, double value2, double delta)
         {
-            return value1 + (value2 - value1) * delta;
+            return value1 + ((value2 - value1) * delta);
         }
     }
 }
