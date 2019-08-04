@@ -84,9 +84,6 @@
     <AndroidAsset Include="Assets\icons\weather-partlycloudy.svg" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\locations\crossing_the_alps_2019.kmz" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidAsset Include="Assets\map\map3D.html" />
   </ItemGroup>
   <ItemGroup>
@@ -595,9 +592,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\alptherm-favicon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\locations\paraglidingspots_crossing_the_alps_2019_05_15.kmz" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\locations\paraglidingspots_european_alps_2019_05_15.kmz" />
