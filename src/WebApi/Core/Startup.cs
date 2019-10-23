@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.IO;
 using WhereToFly.WebApi.Logic;
@@ -36,8 +36,7 @@ namespace WhereToFly.WebApi.LiveWaypoints
         /// <param name="services">service collection</param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddControllers();
 
             // Register the Swagger generator, defining one or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -86,8 +85,8 @@ namespace WhereToFly.WebApi.LiveWaypoints
         /// pipeline.
         /// </summary>
         /// <param name="app">application builder</param>
-        /// <param name="env">hosting environment</param>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        /// <param name="env">web host environment</param>
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -109,7 +108,7 @@ namespace WhereToFly.WebApi.LiveWaypoints
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseRouting();
         }
     }
 }
