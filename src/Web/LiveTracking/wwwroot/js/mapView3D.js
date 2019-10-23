@@ -31,7 +31,7 @@ function MapView(options) {
     Cesium.BingMapsApi.defaultKey = 'AuuY8qZGx-LAeruvajcGMLnudadWlphUWdWb0k6N6lS2QUtURFk3ngCjIXqqFOoe';
 
     this.openStreetMapImageryLayer = null;
-    this.openStreetMapImageryProvider = Cesium.createOpenStreetMapImageryProvider({
+    this.openStreetMapImageryProvider = Cesium.OpenStreetMapImageryProvider({
         url: 'https://{s}.tile.openstreetmap.org/',
         subdomains: 'abc',
         maximumLevel: 18
@@ -44,7 +44,7 @@ function MapView(options) {
     });
 
     this.openTopoMapImageryLayer = null;
-    this.openTopoMapImageryProvider = Cesium.createOpenStreetMapImageryProvider({
+    this.openTopoMapImageryProvider = Cesium.OpenStreetMapImageryProvider({
         url: 'https://{s}.tile.opentopomap.org/',
         subdomains: 'abc',
         maximumLevel: 18,
@@ -56,7 +56,7 @@ function MapView(options) {
 
     this.openFlightMapsImageryLayer = null;
     var airacId = calcCurrentAiracId();
-    this.openFlightMapsImageryProvider = Cesium.createOpenStreetMapImageryProvider({
+    this.openFlightMapsImageryProvider = Cesium.OpenStreetMapImageryProvider({
         url: 'https://snapshots.openflightmaps.org/live/' + airacId + '/tiles/world/noninteractive/epsg3857/merged/512/latest/',
         credit: '(c) <a href="https://openflightmaps.org/" target="_blank">Open Flightmaps association</a>, (c) OpenStreetMap contributors, NASA elevation data',
         maximumLevel: 11
@@ -70,7 +70,7 @@ function MapView(options) {
     console.log('thermal maps url: ' + this.thermalSkywaysOverlay.url);
 
     this.blackMarbleLayer = null;
-    this.blackMarbleOverlay = new Cesium.createTileMapServiceImageryProvider({
+    this.blackMarbleOverlay = new Cesium.TileMapServiceImageryProvider({
         url: 'https://cesiumjs.org/tilesets/imagery/blackmarble',
         maximumLevel: 8,
         credit: 'Black Marble imagery courtesy NASA Earth Observatory'
