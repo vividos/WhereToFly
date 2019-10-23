@@ -122,7 +122,6 @@
     <Content Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\bingAerial.png" />
     <Content Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\bingAerialLabels.png" />
     <Content Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\bingRoads.png" />
-    <Content Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\blackMarble.png" />
     <Content Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\blueMarble.png" />
     <Content Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\earthAtNight.png" />
     <Content Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\esriNationalGeographic.png" />
@@ -149,7 +148,6 @@
     <Content Include="Assets\map\Cesium\Widgets\Images\NavigationHelp\TouchZoom.svg" />
     <Content Include="Assets\map\Cesium\Widgets\Images\TerrainProviders\CesiumWorldTerrain.png" />
     <Content Include="Assets\map\Cesium\Widgets\Images\TerrainProviders\Ellipsoid.png" />
-    <Content Include="Assets\map\Cesium\Widgets\Images\TerrainProviders\STK.png" />
     <Content Include="Assets\map\Cesium\Widgets\Images\TimelineIcons.png" />
     <Content Include="Assets\map\Cesium\Widgets\InfoBox\InfoBox.css" />
     <Content Include="Assets\map\Cesium\Widgets\InfoBox\InfoBoxDescription.css" />

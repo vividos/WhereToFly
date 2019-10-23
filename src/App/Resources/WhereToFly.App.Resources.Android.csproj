@@ -267,9 +267,6 @@
     <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\bingRoads.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\blackMarble.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\blueMarble.png" />
   </ItemGroup>
   <ItemGroup>
@@ -343,9 +340,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\TerrainProviders\Ellipsoid.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Widgets\Images\TerrainProviders\STK.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\map\Cesium\Widgets\InfoBox\InfoBox.css" />
