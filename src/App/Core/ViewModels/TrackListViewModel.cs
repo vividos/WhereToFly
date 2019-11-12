@@ -242,7 +242,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task ImportTrackAsync()
         {
-            FileData result = null;
+            FileData result;
             try
             {
                 string[] fileTypes = null;

@@ -126,8 +126,6 @@ namespace WhereToFly.App.Core
                     Constants.AppTitle,
                     "Error while loading locations: " + ex.Message,
                     "OK");
-
-                return;
             }
             finally
             {

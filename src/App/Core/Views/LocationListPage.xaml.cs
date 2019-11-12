@@ -149,10 +149,9 @@ namespace WhereToFly.App.Core.Views
         {
             base.OnBindingContextChanged();
 
-            ViewCell viewCell = (ViewCell)sender;
-            var cellViewModel = viewCell.BindingContext as LocationListEntryViewModel;
+            var viewCell = (ViewCell)sender;
 
-            if (cellViewModel != null &&
+            if (viewCell.BindingContext is LocationListEntryViewModel cellViewModel &&
                 cellViewModel.Location.IsPlanTourLocation)
             {
                 viewCell.ContextActions.Add(

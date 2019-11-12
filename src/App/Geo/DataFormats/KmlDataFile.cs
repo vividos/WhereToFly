@@ -57,8 +57,10 @@ namespace WhereToFly.App.Geo.DataFormats
             }
             else
             {
-                var kmz = KmzFile.Open(stream);
-                this.kml = kmz.GetDefaultKmlFile();
+                using (var kmz = KmzFile.Open(stream))
+                {
+                    this.kml = kmz.GetDefaultKmlFile();
+                }
             }
 
             if (this.kml != null)
@@ -465,8 +467,7 @@ namespace WhereToFly.App.Geo.DataFormats
             if (styleUrl.StartsWith("#"))
             {
                 var style = kml.FindStyle(styleUrl.Substring(1));
-                if (style != null &&
-                    style is StyleMapCollection styleMap)
+                if (style is StyleMapCollection styleMap)
                 {
                     string link = GetStyleMapNormalStyleIconLink(kml, styleMap);
                     if (!string.IsNullOrEmpty(link))
@@ -494,8 +495,7 @@ namespace WhereToFly.App.Geo.DataFormats
                 if (normalStyleUrl.StartsWith("#"))
                 {
                     var iconStyle = kml.FindStyle(normalStyleUrl.Substring(1));
-                    if (iconStyle != null &&
-                        iconStyle is Style icon)
+                    if (iconStyle is Style icon)
                     {
                         return icon.Icon.Icon.Href.ToString();
                     }

@@ -74,14 +74,14 @@ namespace WhereToFly.App.Core.Services
 
                 case Constants.PageKeyLocationDetailsPage:
                     Debug.Assert(
-                        parameter != null && parameter is Model.Location,
+                        parameter is Model.Location,
                         "location must have been passed as parameter");
                     pageType = typeof(LocationDetailsPage);
                     break;
 
                 case Constants.PageKeyEditLocationDetailsPage:
                     Debug.Assert(
-                        parameter != null && parameter is Model.Location,
+                        parameter is Model.Location,
                         "location must have been passed as parameter");
                     pageType = typeof(EditLocationDetailsPage);
                     break;
@@ -92,7 +92,7 @@ namespace WhereToFly.App.Core.Services
 
                 case Constants.PageKeyTrackDetailsPage:
                     Debug.Assert(
-                        parameter != null && parameter is Geo.Track,
+                        parameter is Geo.Track,
                         "track must have been passed as parameter");
                     pageType = typeof(TrackDetailsPage);
                     break;
@@ -103,14 +103,14 @@ namespace WhereToFly.App.Core.Services
 
                 case Constants.PageKeyWeatherDetailsPage:
                     Debug.Assert(
-                        parameter != null && parameter is WeatherIconDescription,
+                        parameter is WeatherIconDescription,
                         "weather icon description must have been passed as parameter");
                     pageType = typeof(WeatherDetailsPage);
                     break;
 
                 case Constants.PageKeySelectWeatherIconPage:
                     Debug.Assert(
-                        parameter != null && parameter is Action<Model.WeatherIconDescription>,
+                        parameter is Action<WeatherIconDescription>,
                         "action must have been passed as parameter");
                     pageType = typeof(SelectWeatherIconPage);
                     break;

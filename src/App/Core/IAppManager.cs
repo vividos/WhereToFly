@@ -1,6 +1,4 @@
-﻿using Xamarin.Forms;
-
-namespace WhereToFly.App.Core
+﻿namespace WhereToFly.App.Core
 {
     /// <summary>
     /// Interface to app manager that provides operations on external apps

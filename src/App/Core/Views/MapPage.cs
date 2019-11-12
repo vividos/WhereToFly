@@ -155,7 +155,7 @@ namespace WhereToFly.App.Core.Views
         {
             ToolbarItem locateMeButton = new ToolbarItem(
                 "Locate me",
-                Core.Converter.ImagePathConverter.GetDeviceDependentImage("crosshairs_gps"),
+                Converter.ImagePathConverter.GetDeviceDependentImage("crosshairs_gps"),
                 async () => await this.OnClicked_ToolbarButtonLocateMe(),
                 ToolbarItemOrder.Primary)
             {
@@ -176,7 +176,7 @@ namespace WhereToFly.App.Core.Views
                 return;
             }
 
-            Plugin.Geolocator.Abstractions.Position position = null;
+            Position position;
             try
             {
                 position = await this.geolocator.GetPositionAsync(timeout: TimeSpan.FromMilliseconds(100), includeHeading: false);
@@ -391,7 +391,7 @@ namespace WhereToFly.App.Core.Views
             if (args.NavigationEvent == WebNavigationEvent.NewPage &&
                 args.Url.StartsWith("http"))
             {
-                Device.OpenUri(new Uri(args.Url));
+                Xamarin.Essentials.Launcher.OpenAsync(args.Url);
                 args.Cancel = true;
             }
         }

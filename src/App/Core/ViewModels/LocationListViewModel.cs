@@ -500,7 +500,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             string webSiteToOpen = this.downloadWebSiteList[result];
 
-            Device.OpenUri(new Uri(webSiteToOpen));
+            await Xamarin.Essentials.Launcher.OpenAsync(webSiteToOpen);
         }
 
         /// <summary>
