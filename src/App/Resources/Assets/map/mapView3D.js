@@ -31,7 +31,7 @@ function MapView(options) {
     Cesium.BingMapsApi.defaultKey = 'AuuY8qZGx-LAeruvajcGMLnudadWlphUWdWb0k6N6lS2QUtURFk3ngCjIXqqFOoe';
 
     this.openStreetMapImageryLayer = null;
-    this.openStreetMapImageryProvider = Cesium.OpenStreetMapImageryProvider({
+    this.openStreetMapImageryProvider = new Cesium.OpenStreetMapImageryProvider({
         url: 'https://{s}.tile.openstreetmap.org/',
         subdomains: 'abc',
         maximumLevel: 18
@@ -44,7 +44,7 @@ function MapView(options) {
     });
 
     this.openTopoMapImageryLayer = null;
-    this.openTopoMapImageryProvider = Cesium.OpenStreetMapImageryProvider({
+    this.openTopoMapImageryProvider = new Cesium.OpenStreetMapImageryProvider({
         url: 'https://{s}.tile.opentopomap.org/',
         subdomains: 'abc',
         maximumLevel: 18,
@@ -56,7 +56,7 @@ function MapView(options) {
 
     this.openFlightMapsImageryLayer = null;
     var airacId = calcCurrentAiracId();
-    this.openFlightMapsImageryProvider = Cesium.OpenStreetMapImageryProvider({
+    this.openFlightMapsImageryProvider = new Cesium.OpenStreetMapImageryProvider({
         url: 'https://snapshots.openflightmaps.org/live/' + airacId + '/tiles/world/noninteractive/epsg3857/merged/512/latest/',
         credit: '(c) <a href="https://openflightmaps.org/" target="_blank">Open Flightmaps association</a>, (c) OpenStreetMap contributors, NASA elevation data',
         maximumLevel: 11
