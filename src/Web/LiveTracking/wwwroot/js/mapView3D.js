@@ -1107,7 +1107,8 @@ MapView.prototype.sampleTrackHeights = function (track, offsetInMeters) {
         return;
     }
 
-    offsetInMeters = offsetInMeters || 0.0;
+    if (typeof offsetInMeters === 'undefined')
+        offsetInMeters = 0.0;
 
     var trackPointArray = Cesium.Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints);
 
