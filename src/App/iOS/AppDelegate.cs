@@ -50,6 +50,26 @@ namespace WhereToFly.App.iOS
         }
 
         /// <summary>
+        /// Called when a link with where-to-fly scheme is clicked.
+        /// </summary>
+        /// <param name="application">application object</param>
+        /// <param name="url">url that was used</param>
+        /// <param name="sourceApplication">source application; unused</param>
+        /// <param name="annotation">annotation; unused</param>
+        /// <returns>true always</returns>
+        public override bool OpenUrl(UIApplication application, NSUrl url, string sourceApplication, NSObject annotation)
+        {
+            var app = Core.App.Current as Core.App;
+            if (url != null &&
+                url.Scheme == Shared.Model.AppResourceUri.DefaultScheme)
+            {
+                Core.App.RunOnUiThread(async () => await app.OpenAppResourceUriAsync(url.ToString()));
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// Shows toast message with given text
         /// </summary>
         /// <param name="app">app object; unused</param>
