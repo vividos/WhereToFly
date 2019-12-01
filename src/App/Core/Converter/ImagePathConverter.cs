@@ -36,6 +36,7 @@ namespace WhereToFly.App.Core.Converter
                     return imageBaseName + ".xml";
 
                 case Device.UWP:
+                case Device.iOS:
                     return $"Assets/images/{imageBaseName}.png";
 
                 case "Test": // returned by Xamarin.Forms.Mocks

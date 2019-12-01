@@ -335,7 +335,8 @@ namespace WhereToFly.App.Core.Views
             var platform = DependencyService.Get<IPlatform>();
 
             WebViewSource webViewSource = null;
-            if (Device.RuntimePlatform == Device.Android)
+            if (Device.RuntimePlatform == Device.Android ||
+                Device.RuntimePlatform == Device.iOS)
             {
                 string htmlText = platform.LoadAssetText("map/map3D.html");
 
