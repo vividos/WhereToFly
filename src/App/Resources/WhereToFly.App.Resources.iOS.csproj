@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5F4C2261-1C8D-49F9-ACC1-0D3005B23F4F}</ProjectGuid>
+    <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TemplateGuid>{a52b8a63-bc84-4b47-910d-692533484892}</TemplateGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>WhereToFly.App.Resources.iOS</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>WhereToFly.App.Resources.iOS</AssemblyName>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iOS\Debug</OutputPath>
+    <BaseIntermediateOutputPath>obj\iOS\Debug</BaseIntermediateOutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>portable</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iOS\Release</OutputPath>
+    <BaseIntermediateOutputPath>obj\iOS\Release</BaseIntermediateOutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SonarQubeExclude>true</SonarQubeExclude>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="Xamarin.iOS" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="..\..\VersionAssemblyInfo.cs">
+      <Link>Properties\VersionAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Assets\alptherm-favicon.png" />
+    <BundleResource Include="Assets\defaultFaviconUrlCache.json" />
+    <BundleResource Include="Assets\icons\border-none-variant.svg" />
+    <BundleResource Include="Assets\icons\compass.svg" />
+    <BundleResource Include="Assets\icons\eye-off-outline.svg" />
+    <BundleResource Include="Assets\icons\eye.svg" />
+    <BundleResource Include="Assets\icons\format-list-bulleted.svg" />
+    <BundleResource Include="Assets\icons\information-outline.svg" />
+    <BundleResource Include="Assets\icons\layers-outline.svg" />
+    <BundleResource Include="Assets\icons\map-marker-distance.svg" />
+    <BundleResource Include="Assets\icons\map.svg" />
+    <BundleResource Include="Assets\icons\settings.svg" />
+    <BundleResource Include="Assets\icons\weather-partlycloudy.svg" />
+    <BundleResource Include="Assets\info.md" />
+    <BundleResource Include="Assets\locations\paraglidingspots_european_alps_2019_05_15.kmz" />
+    <BundleResource Include="Assets\map\Cesium\ThirdParty\draco_decoder.wasm" />
+    <BundleResource Include="Assets\map\Cesium\ThirdParty\google-earth-dbroot-parser.js" />
+    <BundleResource Include="Assets\map\Cesium\ThirdParty\Workers\deflate.js" />
+    <BundleResource Include="Assets\map\Cesium\ThirdParty\Workers\draco_decoder.js" />
+    <BundleResource Include="Assets\map\Cesium\ThirdParty\Workers\draco_wasm_wrapper.js" />
+    <BundleResource Include="Assets\map\Cesium\ThirdParty\Workers\inflate.js" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Animation\Animation.css" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Animation\lighter.css" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\BaseLayerPicker\BaseLayerPicker.css" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\BaseLayerPicker\lighter.css" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Cesium3DTilesInspector\Cesium3DTilesInspector.css" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\CesiumInspector\CesiumInspector.css" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\CesiumWidget\CesiumWidget.css" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\CesiumWidget\lighter.css" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\FullscreenButton\FullscreenButton.css" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Geocoder\Geocoder.css" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Geocoder\lighter.css" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Images\NavigationHelp\Mouse.svg" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Images\NavigationHelp\MouseLeft.svg" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Images\NavigationHelp\MouseMiddle.svg" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Images\NavigationHelp\MouseRight.svg" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Images\NavigationHelp\Touch.svg" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Images\NavigationHelp\TouchDrag.svg" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Images\NavigationHelp\TouchRotate.svg" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Images\NavigationHelp\TouchTilt.svg" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Images\NavigationHelp\TouchZoom.svg" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\InfoBox\InfoBox.css" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\InfoBox\InfoBoxDescription.css" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\NavigationHelpButton\lighter.css" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\NavigationHelpButton\NavigationHelpButton.css" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\PerformanceWatchdog\PerformanceWatchdog.css" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\ProjectionPicker\ProjectionPicker.css" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\SceneModePicker\SceneModePicker.css" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\SelectionIndicator\SelectionIndicator.css" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Timeline\lighter.css" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Timeline\Timeline.css" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Viewer\Viewer.css" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\VRButton\VRButton.css" />
+    <BundleResource Include="Assets\map\Cesium\Workers\ArcType-e0f1982f.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\arrayRemoveDuplicates-33a93436.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\AttributeCompression-5601f533.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\BoundingRectangle-b2c8004c.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\BoxGeometry-303fc346.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\Cartesian2-ba70b51f.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\cesiumWorkerBootstrapper.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\Check-e5651467.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\Color-e0436000.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\combineGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\ComponentDatatype-418b1c61.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\CoplanarPolygonGeometryLibrary-6a6d2001.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\CorridorGeometryLibrary-612400dc.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createBoxGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createBoxOutlineGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createCircleGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createCircleOutlineGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createCoplanarPolygonGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createCoplanarPolygonOutlineGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createCorridorGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createCorridorOutlineGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createCylinderGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createCylinderOutlineGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createEllipseGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createEllipseOutlineGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createEllipsoidGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createEllipsoidOutlineGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createFrustumGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createFrustumOutlineGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createGroundPolylineGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createPlaneGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createPlaneOutlineGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createPolygonGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createPolygonOutlineGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createPolylineGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createPolylineVolumeGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createPolylineVolumeOutlineGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createRectangleGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createRectangleOutlineGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createSimplePolylineGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createSphereGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createSphereOutlineGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createTaskProcessorWorker.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createVectorTileGeometries.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createVectorTilePoints.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createVectorTilePolygons.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createVectorTilePolylines.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createVerticesFromGoogleEarthEnterpriseBuffer.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createVerticesFromHeightmap.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createVerticesFromQuantizedTerrainMesh.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createWallGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\createWallOutlineGeometry.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\CylinderGeometry-b2227fa7.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\CylinderGeometryLibrary-f35c6b75.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\decodeDraco.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\decodeGoogleEarthEnterprisePacket.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\defaultValue-29c9b1af.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\defined-2a4f2d00.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\defineProperties-c817531e.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\EllipseGeometry-a6bcf217.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\EllipseGeometryLibrary-d9b0e4d2.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\EllipseOutlineGeometry-501d064f.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\EllipsoidalOccluder-e6218e4e.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\EllipsoidGeodesic-666ad0d2.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\EllipsoidGeometry-d739b425.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\EllipsoidOutlineGeometry-ec4c7190.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\EllipsoidRhumbLine-d5a5f3d0.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\EllipsoidTangentPlane-0decb876.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\EncodedCartesian3-4813be74.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\freezeObject-a51e076f.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\FrustumGeometry-1b28344c.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\GeometryAttribute-8bc1900e.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\GeometryAttributes-f8548d3f.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\GeometryInstance-b79eebc1.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\GeometryOffsetAttribute-fa4e7a11.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\GeometryPipeline-bb485d83.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\IndexDatatype-2bcfc06b.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\IntersectionTests-35b85442.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\Math-7782f09e.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\OrientedBoundingBox-2b5c2949.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\Plane-475170f0.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\PolygonGeometryLibrary-35591ed2.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\PolygonPipeline-2f06d6d9.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\PolylinePipeline-b75c5343.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\PolylineVolumeGeometryLibrary-83907e8d.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\PrimitivePipeline-2295818f.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\RectangleGeometryLibrary-8ecf10e3.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\RuntimeError-51c34ab4.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\TerrainEncoding-114aa591.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\transcodeCRNToDXT.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\transferTypedArrayTest.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\Transforms-5119c07b.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\upsampleQuantizedTerrainMesh.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\VertexFormat-e2e35139.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\WallGeometryLibrary-0f3e577d.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\WebGLConstants-90dbfe2f.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\WebMercatorProjection-1ecca5ba.js" />
+    <BundleResource Include="Assets\map\Cesium\Workers\when-1faa3867.js" />
+    <BundleResource Include="Assets\map\images\aerialway-15.svg" />
+    <BundleResource Include="Assets\map\images\attraction-15.svg" />
+    <BundleResource Include="Assets\map\images\bridge.svg" />
+    <BundleResource Include="Assets\map\images\bus.svg" />
+    <BundleResource Include="Assets\map\images\castle.svg" />
+    <BundleResource Include="Assets\map\images\church.svg" />
+    <BundleResource Include="Assets\map\images\close-circle-outline.svg" />
+    <BundleResource Include="Assets\map\images\directions.svg" />
+    <BundleResource Include="Assets\map\images\home-15.svg" />
+    <BundleResource Include="Assets\map\images\information-outline.svg" />
+    <BundleResource Include="Assets\map\images\magnify.svg" />
+    <BundleResource Include="Assets\map\images\map-marker-plus.svg" />
+    <BundleResource Include="Assets\map\images\map-marker.svg" />
+    <BundleResource Include="Assets\map\images\mountain-15.svg" />
+    <BundleResource Include="Assets\map\images\navigation.svg" />
+    <BundleResource Include="Assets\map\images\paragliding.svg" />
+    <BundleResource Include="Assets\map\images\parking.svg" />
+    <BundleResource Include="Assets\map\images\playlist-plus.svg" />
+    <BundleResource Include="Assets\map\images\restaurant-15.svg" />
+    <BundleResource Include="Assets\map\images\share-variant.svg" />
+    <BundleResource Include="Assets\map\images\train.svg" />
+    <BundleResource Include="Assets\map\images\water-15.svg" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Images\TerrainProviders\Ellipsoid.png" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Images\TerrainProviders\CesiumWorldTerrain.png" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\stamenWatercolor.png" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\stamenToner.png" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\sentinel-2.png" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\openStreetMap.png" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\naturalEarthII.png" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\mapQuestOpenStreetMap.png" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\mapboxTerrain.png" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\mapboxStreets.png" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\mapboxSatellite.png" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\esriWorldStreetMap.png" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\esriWorldImagery.png" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\esriNationalGeographic.png" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\earthAtNight.png" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\blueMarble.png" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\bingRoads.png" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\bingAerialLabels.png" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Images\ImageryProviders\bingAerial.png" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Images\info-loading.gif" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\Images\TimelineIcons.png" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\lighter.css" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\lighterShared.css" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\shared.css" />
+    <BundleResource Include="Assets\map\Cesium\Widgets\widgets.css" />
+    <BundleResource Include="Assets\map\Cesium\Assets\Images\ion-credit.png" />
+    <BundleResource Include="Assets\map\Cesium\Assets\Images\google_earth_credit.png" />
+    <BundleResource Include="Assets\map\Cesium\Assets\Images\cesium_credit.png" />
+    <BundleResource Include="Assets\map\Cesium\Assets\Images\bing_maps_credit.png" />
+    <BundleResource Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_9.json" />
+    <BundleResource Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_8.json" />
+    <BundleResource Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_7.json" />
+    <BundleResource Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_6.json" />
+    <BundleResource Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_5.json" />
+    <BundleResource Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_4.json" />
+    <BundleResource Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_3.json" />
+    <BundleResource Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_27.json" />
+    <BundleResource Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_26.json" />
+    <BundleResource Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_25.json" />
+    <BundleResource Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_24.json" />
+    <BundleResource Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_23.json" />
+    <BundleResource Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_22.json" />
+    <BundleResource Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_21.json" />
+    <BundleResource Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_20.json" />
+    <BundleResource Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_2.json" />
+    <BundleResource Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_19.json" />
+    <BundleResource Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_18.json" />
+    <BundleResource Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_17.json" />
+    <BundleResource Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_16.json" />
+    <BundleResource Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_15.json" />
+    <BundleResource Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_14.json" />
+    <BundleResource Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_13.json" />
+    <BundleResource Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_12.json" />
+    <BundleResource Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_11.json" />
+    <BundleResource Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_10.json" />
+    <BundleResource Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_1.json" />
+    <BundleResource Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_0.json" />
+    <BundleResource Include="Assets\map\Cesium\Assets\approximateTerrainHeights.json" />
+    <BundleResource Include="Assets\map\Cesium\Cesium.js" />
+    <BundleResource Include="Assets\map\map3D.html" />
+    <BundleResource Include="Assets\map\mapView3D.js" />
+    <BundleResource Include="Assets\weathericons.json" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+</Project>

@@ -129,5 +129,11 @@
       <Project>{01cafb32-c32b-4e04-b44c-490182f4f31e}</Project>
       <Name>WhereToFly.App.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Resources\WhereToFly.App.Resources.iOS.csproj">
+      <Project>{5f4c2261-1c8d-49f9-acc1-0d3005b23f4f}</Project>
+      <Name>WhereToFly.App.Resources.iOS</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
+    </ProjectReference>
   </ItemGroup>
 </Project>
