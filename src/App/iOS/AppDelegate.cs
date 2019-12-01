@@ -1,31 +1,64 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using Foundation;
+﻿using Foundation;
 using UIKit;
+using WhereToFly.App.Core;
+using Xamarin.Forms;
+
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "Microsoft.StyleCop.CSharp.NamingRules",
+    "SA1300:ElementMustBeginWithUpperCaseLetter",
+    Scope = "namespace",
+    Target = "WhereToFly.App.iOS",
+    Justification = "iOS is a proper name")]
 
 namespace WhereToFly.App.iOS
 {
-    // The UIApplicationDelegate for the application. This class is responsible for launching the 
-    // User Interface of the application, as well as listening (and optionally responding) to 
-    // application events from iOS.
+    /// <summary>
+    /// The UIApplicationDelegate for the application. This class is responsible for launching the 
+    /// User Interface of the application, as well as listening (and optionally responding) to 
+    /// application events from iOS.
+    /// </summary>
     [Register("AppDelegate")]
     public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
     {
-        //
-        // This method is invoked when the application has loaded and is ready to run. In this 
-        // method you should instantiate the window, load the UI into it and then make the window
-        // visible.
-        //
-        // You have 17 seconds to return from this method, or iOS will terminate your application.
-        //
-        public override bool FinishedLaunching(UIApplication app, NSDictionary options)
+        /// <summary>
+        /// This method is invoked when the application has loaded and is ready to run. In this 
+        /// method you should instantiate the window, load the UI into it and then make the window
+        /// visible.
+        /// You have 17 seconds to return from this method, or iOS will terminate your application.
+        /// </summary>
+        /// <param name="uiApplication">application object</param>
+        /// <param name="launchOptions">event options</param>
+        /// <returns>indicates if launching has finished successfully</returns>
+        public override bool FinishedLaunching(UIApplication uiApplication, NSDictionary launchOptions)
         {
-            global::Xamarin.Forms.Forms.Init();
-            LoadApplication(new App());
+#if ENABLE_TEST_CLOUD
+            Xamarin.Calabash.Start();
+#endif
 
-            return base.FinishedLaunching(app, options);
+            Rg.Plugins.Popup.Popup.Init();
+
+            Forms.Init();
+
+            FFImageLoading.ImageService.Instance.Initialize();
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
+
+            MessagingCenter.Subscribe<Core.App, string>(this, Constants.MessageShowToast, this.ShowToast);
+
+            this.LoadApplication(new Core.App());
+
+            return base.FinishedLaunching(uiApplication, launchOptions);
+        }
+
+        /// <summary>
+        /// Shows toast message with given text
+        /// </summary>
+        /// <param name="app">app object; unused</param>
+        /// <param name="message">toast message</param>
+        private void ShowToast(Core.App app, string message)
+        {
+            GlobalToast.Toast.MakeToast(message)
+                .SetDuration(GlobalToast.ToastDuration.Long)
+                .Show();
         }
     }
 }

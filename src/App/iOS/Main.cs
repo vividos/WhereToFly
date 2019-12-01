@@ -1,16 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using UIKit;
 
-using Foundation;
-using UIKit;
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "Microsoft.StyleCop.CSharp.NamingRules",
+    "SA1300:ElementMustBeginWithUpperCaseLetter",
+    Scope = "namespace",
+    Target = "WhereToFly.App.iOS",
+    Justification = "iOS is a proper name")]
 
 namespace WhereToFly.App.iOS
 {
-    public class Application
+    /// <summary>
+    /// Application object for ths iOS app
+    /// </summary>
+    public static class Application
     {
-        // This is the main entry point of the application.
-        static void Main(string[] args)
+        /// <summary>
+        /// This is the main entry point of the application.
+        /// </summary>
+        /// <param name="args">arguments; unused</param>
+        public static void Main(string[] args)
         {
             // if you want to use a different Application Delegate class from "AppDelegate"
             // you can specify it here.
