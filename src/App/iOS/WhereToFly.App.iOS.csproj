@@ -171,4 +171,55 @@
       <IsWatchApp>false</IsWatchApp>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Assets\images\border_none_variant.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Assets\images\calendar_clock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Assets\images\camera.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Assets\images\crosshairs_gps.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Assets\images\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Assets\images\delete_forever.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Assets\images\directions.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Assets\images\information_outline.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Assets\images\layers_plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Assets\images\magnify.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Assets\images\magnify_plus_outline.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Assets\images\map_marker_plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Assets\images\navigation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Assets\images\playlist_plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Assets\images\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Assets\images\share_variant.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Assets\images\weather_partlycloudy.png" />
+  </ItemGroup>
 </Project>
