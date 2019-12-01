@@ -47,5 +47,7 @@
 			<string>Viewer</string>
 		</dict>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Location is used to show the current position</string>
 </dict>
 </plist>
