@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.ViewModels;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace WhereToFly.App.Core.Views
 {
@@ -12,7 +11,6 @@ namespace WhereToFly.App.Core.Views
     /// Page to display location list; the list can be filtered by a filter text, and a single
     /// location entry can be tapped to get more infos.
     /// </summary>
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LocationListPage : ContentPage
     {
         /// <summary>

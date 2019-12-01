@@ -1,14 +1,12 @@
 ﻿using WhereToFly.App.Core.ViewModels;
 using WhereToFly.App.Geo;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace WhereToFly.App.Core.Views
 {
     /// <summary>
     /// Page to display track details
     /// </summary>
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TrackDetailsPage : ContentPage
     {
         /// <summary>

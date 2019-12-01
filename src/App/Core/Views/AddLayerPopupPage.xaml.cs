@@ -4,14 +4,12 @@ using System;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.ViewModels;
 using WhereToFly.Shared.Model;
-using Xamarin.Forms.Xaml;
 
 namespace WhereToFly.App.Core.Views
 {
     /// <summary>
     /// Popup page for adding a new layer and edit its properties.
     /// </summary>
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AddLayerPopupPage : PopupPage
     {
         /// <summary>

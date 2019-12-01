@@ -1,14 +1,12 @@
 ﻿using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.ViewModels;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace WhereToFly.App.Core.Views
 {
     /// <summary>
     /// Page to display menu for the master-detail root page
     /// </summary>
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MenuPage : ContentPage
     {
         /// <summary>

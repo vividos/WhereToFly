@@ -7,14 +7,12 @@ using System.Threading.Tasks;
 using WhereToFly.App.Core.ViewModels;
 using WhereToFly.App.Geo;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace WhereToFly.App.Core.Views
 {
     /// <summary>
     /// Popup page for adding a newly loaded track and edit its properties.
     /// </summary>
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AddTrackPopupPage : PopupPage
     {
         /// <summary>

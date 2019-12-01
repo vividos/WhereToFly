@@ -1,14 +1,12 @@
 ﻿using System.Threading.Tasks;
 using WhereToFly.App.Core.ViewModels;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace WhereToFly.App.Core.Views
 {
     /// <summary>
     /// Page to display track list; a single location entry can be tapped to get more infos.
     /// </summary>
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TrackListPage : ContentPage
     {
         /// <summary>

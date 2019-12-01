@@ -1,6 +1,5 @@
 ﻿using WhereToFly.App.Core.ViewModels;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace WhereToFly.App.Core.Views
 {
@@ -8,7 +7,6 @@ namespace WhereToFly.App.Core.Views
     /// Dashboard page showing one or more weather icon controls. Tapping the icons opens the
     /// associated web page, app or page.
     /// </summary>
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class WeatherDashboardPage : ContentPage
     {
         /// <summary>

@@ -6,14 +6,12 @@ using WhereToFly.App.Core.ViewModels;
 using WhereToFly.App.Logic;
 using WhereToFly.Shared.Model;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace WhereToFly.App.Core.Views
 {
     /// <summary>
     /// Page to display current position details, such as coordinates, speed, heading and accuracy
     /// </summary>
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CurrentPositionDetailsPage : ContentPage
     {
         /// <summary>

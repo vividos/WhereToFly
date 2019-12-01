@@ -2,14 +2,12 @@
 using WhereToFly.App.Core.ViewModels;
 using WhereToFly.App.Model;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace WhereToFly.App.Core.Views
 {
     /// <summary>
     /// Page to edit location details, such as name, type, internet link and description text.
     /// </summary>
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class EditLocationDetailsPage : ContentPage
     {
         /// <summary>

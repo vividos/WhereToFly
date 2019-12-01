@@ -2,7 +2,6 @@
 using Rg.Plugins.Popup.Pages;
 using System;
 using System.Threading.Tasks;
-using Xamarin.Forms.Xaml;
 
 namespace WhereToFly.App.Core.Views
 {
@@ -10,7 +9,6 @@ namespace WhereToFly.App.Core.Views
     /// Popup page showing a waiting dialog. Show the dialog using ShowAsync(), hide again with
     /// HideAsync().
     /// </summary>
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class WaitingPopupPage : PopupPage
     {
         /// <summary>

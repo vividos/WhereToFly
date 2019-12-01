@@ -12,9 +12,13 @@ using WhereToFly.App.Geo.Spatial;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Model;
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 // make Core internals visible to unit tests
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("WhereToFly.App.UnitTest")]
+
+// compile all xaml pages
+[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 
 namespace WhereToFly.App.Core
 {

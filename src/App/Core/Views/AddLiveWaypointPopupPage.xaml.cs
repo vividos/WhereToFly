@@ -4,14 +4,12 @@ using System;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.ViewModels;
 using WhereToFly.App.Model;
-using Xamarin.Forms.Xaml;
 
 namespace WhereToFly.App.Core.Views
 {
     /// <summary>
     /// Popup page for adding a live waypoint and edit its properties.
     /// </summary>
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AddLiveWaypointPopupPage : PopupPage
     {
         /// <summary>

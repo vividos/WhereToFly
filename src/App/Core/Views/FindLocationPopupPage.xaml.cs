@@ -2,14 +2,12 @@
 using Rg.Plugins.Popup.Pages;
 using System;
 using System.Threading.Tasks;
-using Xamarin.Forms.Xaml;
 
 namespace WhereToFly.App.Core.Views
 {
     /// <summary>
     /// Popup page for "Find location" function in order to input a location name.
     /// </summary>
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FindLocationPopupPage : PopupPage
     {
         /// <summary>

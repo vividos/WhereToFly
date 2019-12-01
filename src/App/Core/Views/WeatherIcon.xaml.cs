@@ -1,14 +1,12 @@
 ﻿using WhereToFly.App.Core.ViewModels;
 using WhereToFly.App.Model;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace WhereToFly.App.Core.Views
 {
     /// <summary>
     /// Weather icon content view, showing a single weather icon with title
     /// </summary>
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class WeatherIcon : ContentView
     {
         /// <summary>

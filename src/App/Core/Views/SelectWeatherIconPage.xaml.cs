@@ -2,14 +2,12 @@
 using WhereToFly.App.Core.ViewModels;
 using WhereToFly.App.Model;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace WhereToFly.App.Core.Views
 {
     /// <summary>
     /// Page to select a weather icon to add to the weather dashboard
     /// </summary>
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SelectWeatherIconPage : ContentPage
     {
         /// <summary>

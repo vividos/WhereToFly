@@ -1,6 +1,5 @@
 ﻿using WhereToFly.App.Core.ViewModels;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace WhereToFly.App.Core.Views
 {
@@ -8,7 +7,6 @@ namespace WhereToFly.App.Core.Views
     /// Page to display layer list; the layers' visibility can be set, and a layer can be zoomed
     /// to.
     /// </summary>
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LayerListPage : ContentPage
     {
         /// <summary>

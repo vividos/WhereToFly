@@ -3,8 +3,6 @@ using Rg.Plugins.Popup.Pages;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.ViewModels;
 using WhereToFly.Shared.Model;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace WhereToFly.App.Core.Views
 {
@@ -12,7 +10,6 @@ namespace WhereToFly.App.Core.Views
     /// Popup page to show all locations selected for tour planning. Also lets user start planning
     /// tour.
     /// </summary>
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PlanTourPopupPage : PopupPage
     {
         /// <summary>

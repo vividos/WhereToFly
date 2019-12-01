@@ -4,14 +4,12 @@ using System.Threading.Tasks;
 using WhereToFly.App.Core.ViewModels;
 using WhereToFly.App.Model;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace WhereToFly.App.Core.Views
 {
     /// <summary>
     /// Popup page for "select weather icon" function.
     /// </summary>
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SelectWeatherIconPopupPage : PopupPage
     {
         /// <summary>
