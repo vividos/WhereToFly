@@ -47,7 +47,10 @@
 
         // function used to call to C#
         function callAction(funcName, params) {
-            if (typeof callback === "object")
+            var ios = /iphone|ipod|ipad/.test(window.navigator.userAgent.toLowerCase());
+            if (ios)
+                window.location.href = "callback://" + funcName + "/" + JSON.stringify(params);
+            else if (typeof callback === "object")
                 callback.call(funcName, JSON.stringify(params));
             else
                 window.external.notify('callback://' + funcName + '/' + JSON.stringify(params));

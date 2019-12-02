@@ -710,6 +710,8 @@ namespace WhereToFly.App.Core.Views
                 string functionName = callbackParams.Substring(0, pos);
                 string jsonParameters = callbackParams.Substring(pos + 1);
 
+                jsonParameters = System.Net.WebUtility.UrlDecode(jsonParameters);
+
                 this.ExecuteCallback(functionName, jsonParameters);
             }
         }
