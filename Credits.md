@@ -62,6 +62,11 @@ library to show and cache SVG images.
 The library is licensed using the
 [MIT License](https://github.com/luberda-molinet/FFImageLoading/blob/master/LICENSE.md).
 
+The app uses the [Toast.iOS](https://github.com/andrius-k/Toast)
+library to show Toast messages on iOS.
+The library is licensed using the
+[MIT License](https://github.com/andrius-k/Toast/blob/master/LICENSE.md).
+
 The backend uses the [QuickGraph](https://github.com/oldrev/Sandwych.QuickGraph)
 library for tour planning.
 The library is licensed using the
