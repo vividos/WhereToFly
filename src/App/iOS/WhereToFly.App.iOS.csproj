@@ -224,4 +224,10 @@
   <ItemGroup>
     <BundleResource Include="Assets\images\weather_partlycloudy.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Assets\images\menu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Assets\images\menu%402x.png" />
+  </ItemGroup>
 </Project>

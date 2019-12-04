@@ -98,6 +98,7 @@ The following icons are from the Google Material icon set:
 - magnify-plus-outline
 - map
 - map-marker
+- menu
 - navigation
 - parking
 - playlist-plus
