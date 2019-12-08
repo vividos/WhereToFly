@@ -25,7 +25,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
         public void SetUp()
         {
             Xamarin.Forms.Mocks.MockForms.Init();
-            DependencyService.Register<IDataService, DataService>();
+            DependencyService.Register<IDataService, JsonFileDataService>();
             DependencyService.Register<IPlatform, UnitTestPlatform>();
         }
 

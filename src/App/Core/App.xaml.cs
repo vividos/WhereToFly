@@ -74,7 +74,7 @@ namespace WhereToFly.App.Core
         private void SetupDepencencyService()
         {
             DependencyService.Register<NavigationService>();
-            DependencyService.Register<IDataService, DataService>();
+            DependencyService.Register<IDataService, JsonFileDataService>();
             DependencyService.Register<GeolocationService>();
             DependencyService.Register<LiveWaypointRefreshService>();
         }
@@ -312,7 +312,7 @@ namespace WhereToFly.App.Core
             try
             {
                 var dataService = DependencyService.Get<IDataService>();
-                (dataService as DataService).LoadFaviconUrlCache();
+                (dataService as JsonFileDataService).LoadFaviconUrlCache();
             }
             catch (Exception ex)
             {
@@ -344,7 +344,7 @@ namespace WhereToFly.App.Core
             try
             {
                 var dataService = DependencyService.Get<IDataService>();
-                (dataService as DataService).StoreFaviconUrlCache();
+                (dataService as JsonFileDataService).StoreFaviconUrlCache();
             }
             catch (Exception ex)
             {

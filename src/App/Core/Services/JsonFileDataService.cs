@@ -14,10 +14,10 @@ using Xamarin.Forms;
 namespace WhereToFly.App.Core.Services
 {
     /// <summary>
-    /// Data service for the app; provides access to data storage. For now the data is stored and
-    /// retrieved from the Data directory and is saved in JSON format
+    /// JSON file based data service for the app; provides access to data storage. The data is
+    /// stored and retrieved from the Data directory.
     /// </summary>
-    public class DataService : IDataService
+    public class JsonFileDataService : IDataService
     {
         /// <summary>
         /// Lock for app settings json file

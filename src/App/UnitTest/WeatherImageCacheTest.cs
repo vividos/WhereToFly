@@ -21,7 +21,7 @@ namespace WhereToFly.App.UnitTest
         {
             Xamarin.Forms.Mocks.MockForms.Init();
             DependencyService.Register<IAppManager, UnitTestAppManager>();
-            DependencyService.Register<IDataService, DataService>();
+            DependencyService.Register<IDataService, JsonFileDataService>();
         }
 
         /// <summary>
