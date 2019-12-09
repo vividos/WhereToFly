@@ -6,6 +6,8 @@ using WhereToFly.App.Model;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
+#pragma warning disable S4136 // All 'NavigateAsync' method overloads should be adjacent.
+
 namespace WhereToFly.App.Core.Services
 {
     /// <summary>

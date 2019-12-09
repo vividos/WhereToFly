@@ -9,6 +9,8 @@ using Xamarin.Forms;
 
 [assembly: Dependency(typeof(WhereToFly.App.Core.SvgImageCache))]
 
+#pragma warning disable S4136 // All 'GetImageSource' method overloads should be adjacent.
+
 namespace WhereToFly.App.Core
 {
     /// <summary>
