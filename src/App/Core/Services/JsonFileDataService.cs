@@ -421,21 +421,7 @@ namespace WhereToFly.App.Core.Services
         /// <returns>repository of all weather icons</returns>
         public List<WeatherIconDescription> GetWeatherIconDescriptionRepository()
         {
-            try
-            {
-                var platform = DependencyService.Get<IPlatform>();
-
-                string json = platform.LoadAssetText("weathericons.json");
-
-                var weatherIconList = JsonConvert.DeserializeObject<List<WeatherIconDescription>>(json);
-                return weatherIconList;
-            }
-            catch (Exception ex)
-            {
-                App.LogError(ex);
-
-                return new List<WeatherIconDescription>();
-            }
+            return DataServiceHelper.GetWeatherIconDescriptionRepository();
         }
 
         /// <summary>

@@ -129,5 +129,29 @@ namespace WhereToFly.App.Core.Services
             string json = platform.LoadAssetText(FaviconUrlCacheFilename);
             return JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
         }
+
+        /// <summary>
+        /// Returns the repository of all available weather icon descriptions that can be used
+        /// to select weather icons for the customized list
+        /// </summary>
+        /// <returns>repository of all weather icons</returns>
+        public static List<WeatherIconDescription> GetWeatherIconDescriptionRepository()
+        {
+            try
+            {
+                var platform = DependencyService.Get<IPlatform>();
+
+                string json = platform.LoadAssetText("weathericons.json");
+
+                var weatherIconList = JsonConvert.DeserializeObject<List<WeatherIconDescription>>(json);
+                return weatherIconList;
+            }
+            catch (Exception ex)
+            {
+                App.LogError(ex);
+
+                return new List<WeatherIconDescription>();
+            }
+        }
     }
 }
