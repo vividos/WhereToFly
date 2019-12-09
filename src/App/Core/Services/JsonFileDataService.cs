@@ -80,6 +80,23 @@ namespace WhereToFly.App.Core.Services
         private List<Layer> layerList;
 
         /// <summary>
+        /// Returns if any of the JSON data files are available
+        /// </summary>
+        public bool AreFilesAvailable
+        {
+            get
+            {
+                return
+                    File.Exists(AppSettingsFilename) ||
+                    File.Exists(LocationListFilename) ||
+                    File.Exists(TrackListFilename) ||
+                    File.Exists(LayerListFilename) ||
+                    File.Exists(WeatherIconListFilename) ||
+                    File.Exists(FaviconUrlCacheFilename);
+            }
+        }
+
+        /// <summary>
         /// Loads the favicon url cache from cache data folder
         /// </summary>
         public void LoadFaviconUrlCache()
@@ -477,6 +494,22 @@ namespace WhereToFly.App.Core.Services
         public async Task<PlannedTour> PlanTourAsync(PlanTourParameters planTourParameters)
         {
             return await this.backendDataService.PlanTourAsync(planTourParameters);
+        }
+
+        /// <summary>
+        /// Cleans up all JSON files that store data for this data service
+        /// </summary>
+        public void Cleanup()
+        {
+            lock (this.appSettingsLock)
+            {
+                File.Delete(AppSettingsFilename);
+                File.Delete(LocationListFilename);
+                File.Delete(TrackListFilename);
+                File.Delete(LayerListFilename);
+                File.Delete(WeatherIconListFilename);
+                File.Delete(FaviconUrlCacheFilename);
+            }
         }
     }
 }
