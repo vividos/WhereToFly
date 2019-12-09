@@ -767,6 +767,9 @@
   <ItemGroup>
     <AndroidAsset Include="Assets\map\Cesium\Workers\when-1faa3867.js" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\applogo.svg" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
