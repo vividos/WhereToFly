@@ -83,7 +83,7 @@ namespace WhereToFly.App.Core.Services
         /// Updates live waypoints to update by list of locations, e.g. when a new list is loaded.
         /// </summary>
         /// <param name="locationList">location list</param>
-        public void UpdateLiveWaypointList(List<Location> locationList)
+        public void UpdateLiveWaypointList(IEnumerable<Location> locationList)
         {
             Debug.WriteLine("LiveWaypointRefreshService: updating list of live waypoints");
 
