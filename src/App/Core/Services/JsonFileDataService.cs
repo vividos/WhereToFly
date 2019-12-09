@@ -96,7 +96,7 @@ namespace WhereToFly.App.Core.Services
             if (string.IsNullOrEmpty(json) ||
                 json == "{}")
             {
-                json = platform.LoadAssetText("defaultFaviconUrlCache.json");
+                json = platform.LoadAssetText(DataServiceHelper.FaviconUrlCacheFilename);
                 File.WriteAllText(cacheFilename, json);
             }
 
@@ -211,7 +211,7 @@ namespace WhereToFly.App.Core.Services
 
             if (!File.Exists(filename))
             {
-                this.locationList = this.GetDefaultLocationList();
+                this.locationList = DataServiceHelper.GetDefaultLocationList();
                 return;
             }
 
@@ -224,92 +224,8 @@ namespace WhereToFly.App.Core.Services
             catch (Exception ex)
             {
                 App.LogError(ex);
-                this.locationList = this.GetDefaultLocationList();
+                this.locationList = DataServiceHelper.GetDefaultLocationList();
             }
-        }
-
-        /// <summary>
-        /// Returns a default location list; used when stored location list can't be loaded
-        /// </summary>
-        /// <returns>default location list</returns>
-        private List<Location> GetDefaultLocationList()
-        {
-            return new List<Location>
-            {
-                new Location
-                {
-                    Id = Guid.NewGuid().ToString("B"),
-                    Name = "Brecherspitz",
-                    MapLocation = new MapPoint(47.6764385, 11.8710533, 1685.0),
-                    Description = "Herrliche Aussicht über die drei Seen Schliersee im Norden, Tegernsee im Westen und den Spitzingsee im Süden.",
-                    Type = LocationType.Summit,
-                    InternetLink = "https://de.wikipedia.org/wiki/Brecherspitz"
-                },
-
-                new Location
-                {
-                    Id = "wheretofly-path-jagerkamp",
-                    Name = "Jägerkamp",
-                    MapLocation = new MapPoint(47.673511, 11.9060494, 1746.0),
-                    Description = "Gipfel in den Schlierseer Bergen, mit Ausblick auf Schliersee und die umliegenden Berge.",
-                    Type = LocationType.Summit,
-                    InternetLink = "https://de.wikipedia.org/wiki/J%C3%A4gerkamp",
-                    IsPlanTourLocation = true,
-                },
-
-                new Location
-                {
-                    Id = "wheretofly-path-rotwand",
-                    Name = "Rotwand",
-                    MapLocation = new MapPoint(47.6502332, 11.9345058, 1884),
-                    Description = "Beliebter Ausflugsgipfel.",
-                    Type = LocationType.Summit,
-                    InternetLink = "https://de.wikipedia.org/wiki/Rotwand_(Bayern)",
-                    IsPlanTourLocation = true,
-                },
-
-                new Location
-                {
-                    Id = Guid.NewGuid().ToString("B"),
-                    Name = "Ankel-Alm",
-                    MapLocation = new MapPoint(47.6838571, 11.8687695, 1311.0),
-                    Description = "Privat bewirtschaftete Alm; Montag Ruhetag",
-                    Type = LocationType.AlpineHut,
-                    InternetLink = string.Empty
-                },
-
-                new Location
-                {
-                    Id = Guid.NewGuid().ToString("B"),
-                    Name = "Schönfeldhütte",
-                    MapLocation = new MapPoint(47.66508, 11.90612, 1410.0),
-                    Description = "Alpenvereinshütte der Sektion München des DAV",
-                    Type = LocationType.AlpineHut,
-                    InternetLink = "https://www.davplus.de/huetten__wege/bewirtschaftete_huetten/uebersicht/schoenfeldhuette"
-                },
-
-                new Location
-                {
-                    Id = "wheretofly-path-bahnhof-neuhaus",
-                    Name = "Bahnhof Neuhaus (Schliersee)",
-                    MapLocation = new MapPoint(47.70599, 11.87451, 809.0),
-                    Description = "Anschlussmöglichkeiten zum RBO Bus 9562 zum Spitzingsattel",
-                    Type = LocationType.PublicTransportTrain,
-                    InternetLink = "http://www.bayerischeoberlandbahn.de/strecken-fahrplaene/linie/3-munchen-hbf-holzkirchen-bayrischzell",
-                    IsPlanTourLocation = true
-                },
-
-                new Location
-                {
-                    Id = Guid.NewGuid().ToString("B"),
-                    Name = "Spitzingsattel",
-                    MapLocation = new MapPoint(47.672138, 11.8862728, 1129.0),
-                    Description = "Sattel auf halbem Wege zwischen Schliersee und Spitzingsee",
-                    Type = LocationType.Pass,
-                    InternetLink = string.Empty,
-                    IsPlanTourLocation = true
-                },
-            };
         }
 
         /// <summary>
@@ -357,7 +273,7 @@ namespace WhereToFly.App.Core.Services
 
             if (!File.Exists(filename))
             {
-                this.trackList = GetDefaultTrackList();
+                this.trackList = DataServiceHelper.GetDefaultTrackList();
                 return;
             }
 
@@ -372,15 +288,6 @@ namespace WhereToFly.App.Core.Services
                 App.LogError(ex);
                 this.trackList = new List<Track>();
             }
-        }
-
-        /// <summary>
-        /// Returns a default track list; used when no stored track list is available
-        /// </summary>
-        /// <returns>default track list</returns>
-        private static List<Track> GetDefaultTrackList()
-        {
-            return new List<Track>();
         }
 
         /// <summary>
