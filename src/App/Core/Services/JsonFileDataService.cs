@@ -434,14 +434,7 @@ namespace WhereToFly.App.Core.Services
             {
                 App.LogError(ex);
 
-                return new List<WeatherIconDescription>
-                {
-                    new WeatherIconDescription
-                    {
-                        Name = "Add new...",
-                        Type = WeatherIconDescription.IconType.IconPlaceholder,
-                    },
-                };
+                return new List<WeatherIconDescription>();
             }
         }
 

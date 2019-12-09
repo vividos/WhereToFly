@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -52,6 +53,17 @@ namespace WhereToFly.App.Core.ViewModels
                 var dataService = DependencyService.Get<IDataService>();
 
                 var weatherIconList = dataService.GetWeatherIconDescriptionRepository();
+                if (!weatherIconList.Any())
+                {
+                    weatherIconList = new List<WeatherIconDescription>
+                    {
+                        new WeatherIconDescription
+                        {
+                            Name = "Add new...",
+                            Type = WeatherIconDescription.IconType.IconPlaceholder,
+                        },
+                    };
+                }
 
                 this.WeatherIconList = new ObservableCollection<WeatherIconListEntryViewModel>(
                     from weatherIcon in weatherIconList
