@@ -150,10 +150,10 @@ namespace WhereToFly.App.Core.ViewModels
 
             this.TrackList = new ObservableCollection<TrackListEntryViewModel>(newList);
 
+            this.IsListRefreshActive = false;
+
             this.OnPropertyChanged(nameof(this.TrackList));
             this.OnPropertyChanged(nameof(this.IsListEmpty));
-
-            this.IsListRefreshActive = false;
 
             this.DeleteTrackListCommand.ChangeCanExecute();
         }
