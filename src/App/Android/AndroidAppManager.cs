@@ -1,6 +1,7 @@
 ﻿using Android.Content;
 using Android.Graphics;
 using Android.Graphics.Drawables;
+using System;
 using System.Diagnostics;
 using System.IO;
 using WhereToFly.App.Core;
@@ -64,10 +65,19 @@ namespace WhereToFly.App.Android
         /// <returns>stream containing a PNG image, or null when no bitmap could be loaded</returns>
         private MemoryStream LoadAppIcon(string packageName)
         {
-            var context = AndroidPlatform.CurrentContext;
+            Drawable drawable = null;
+            try
+            {
+                var context = AndroidPlatform.CurrentContext;
+                var pm = context.PackageManager;
 
-            var pm = context.PackageManager;
-            var drawable = pm.GetApplicationIcon(packageName);
+                drawable = pm.GetApplicationIcon(packageName);
+            }
+            catch (Exception)
+            {
+                // ignore exception
+            }
+
             if (drawable == null)
             {
                 return null;
@@ -111,7 +121,7 @@ namespace WhereToFly.App.Android
                 bitmap = Bitmap.CreateBitmap(drawable.IntrinsicWidth, drawable.IntrinsicHeight, Bitmap.Config.Argb8888);
             }
 
-            Canvas canvas = new Canvas(bitmap);
+            var canvas = new Canvas(bitmap);
             drawable.SetBounds(0, 0, canvas.Width, canvas.Height);
             drawable.Draw(canvas);
 
