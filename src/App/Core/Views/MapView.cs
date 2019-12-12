@@ -444,6 +444,11 @@ namespace WhereToFly.App.Core.Views
         /// <param name="locationList">list of locations to add</param>
         public void AddLocationList(List<Location> locationList)
         {
+            if (!locationList.Any())
+            {
+                return;
+            }
+
             if (locationList.Count > MaxLocationListCount)
             {
                 this.ImportLargeLocationList(locationList);
