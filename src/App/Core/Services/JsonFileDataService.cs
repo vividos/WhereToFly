@@ -511,5 +511,41 @@ namespace WhereToFly.App.Core.Services
                 File.Delete(FaviconUrlCacheFilename);
             }
         }
+
+        /// <summary>
+        /// Returns location data service; not implemented
+        /// </summary>
+        /// <returns>throws exception</returns>
+        public ILocationDataService GetLocationDataService()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Returns track data service; not implemented
+        /// </summary>
+        /// <returns>throws exception</returns>
+        public ITrackDataService GetTrackDataService()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Returns layer data service; not implemented
+        /// </summary>
+        /// <returns>throws exception</returns>
+        public ILayerDataService GetLayerDataService()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Returns weather icon description data service; not implemented
+        /// </summary>
+        /// <returns>throws exception</returns>
+        public IWeatherIconDescriptionDataService GetWeatherIconDescriptionDataService()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

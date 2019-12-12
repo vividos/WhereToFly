@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Geo;
@@ -27,6 +28,12 @@ namespace WhereToFly.App.Core
         Task StoreAppSettingsAsync(AppSettings appSettings);
 
         /// <summary>
+        /// Returns a data service for Location objects
+        /// </summary>
+        /// <returns>location data service</returns>
+        ILocationDataService GetLocationDataService();
+
+        /// <summary>
         /// Gets list of locations
         /// </summary>
         /// <param name="token">cancellation token</param>
@@ -39,6 +46,12 @@ namespace WhereToFly.App.Core
         /// <param name="locationList">location list to store</param>
         /// <returns>task to wait on</returns>
         Task StoreLocationListAsync(List<Location> locationList);
+
+        /// <summary>
+        /// Returns a data service for Track objects
+        /// </summary>
+        /// <returns>track data service</returns>
+        ITrackDataService GetTrackDataService();
 
         /// <summary>
         /// Gets list of tracks
@@ -55,6 +68,12 @@ namespace WhereToFly.App.Core
         Task StoreTrackListAsync(List<Track> trackList);
 
         /// <summary>
+        /// Returns a data service for Layer objects
+        /// </summary>
+        /// <returns>layer data service</returns>
+        ILayerDataService GetLayerDataService();
+
+        /// <summary>
         /// Gets list of layers
         /// </summary>
         /// <param name="token">cancellation token</param>
@@ -67,6 +86,12 @@ namespace WhereToFly.App.Core
         /// <param name="layerList">layer list to store</param>
         /// <returns>task to wait on</returns>
         Task StoreLayerListAsync(List<Layer> layerList);
+
+        /// <summary>
+        /// Returns a data service for WeatherIconDescription objects
+        /// </summary>
+        /// <returns>weather icon description data service</returns>
+        IWeatherIconDescriptionDataService GetWeatherIconDescriptionDataService();
 
         /// <summary>
         /// Retrieves list of weather icon descriptions
