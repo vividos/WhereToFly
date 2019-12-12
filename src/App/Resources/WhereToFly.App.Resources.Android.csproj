@@ -588,7 +588,7 @@
     <AndroidAsset Include="Assets\alptherm-favicon.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\locations\paraglidingspots_european_alps_2019_05_15.kmz" />
+    <AndroidAsset Include="Assets\locations\paraglidingspots_european_alps_2019_12_11.kmz" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\map\images\close-circle-outline.svg" />

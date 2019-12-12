@@ -63,7 +63,7 @@
     <BundleResource Include="Assets\icons\settings.svg" />
     <BundleResource Include="Assets\icons\weather-partlycloudy.svg" />
     <BundleResource Include="Assets\info.md" />
-    <BundleResource Include="Assets\locations\paraglidingspots_european_alps_2019_05_15.kmz" />
+    <BundleResource Include="Assets\locations\paraglidingspots_european_alps_2019_12_11.kmz" />
     <BundleResource Include="Assets\map\Cesium\ThirdParty\draco_decoder.wasm" />
     <BundleResource Include="Assets\map\Cesium\ThirdParty\google-earth-dbroot-parser.js" />
     <BundleResource Include="Assets\map\Cesium\ThirdParty\Workers\deflate.js" />
