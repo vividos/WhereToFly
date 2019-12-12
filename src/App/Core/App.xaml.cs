@@ -2,6 +2,7 @@
 using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Distribute;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -62,10 +63,28 @@ namespace WhereToFly.App.Core
                     typeof(Crashes));
             }
 
+            TaskScheduler.UnobservedTaskException += this.TaskScheduler_UnobservedTaskException;
+
             this.InitializeComponent();
             this.SetupDepencencyService();
             this.SetupMainPage();
             Task.Run(async () => await this.LoadAppDataAsync());
+        }
+
+        /// <summary>
+        /// Called when an exception was thrown in a Task and nobody caught it
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="args">event args</param>
+        private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs args)
+        {
+            Exception ex = args.Exception.InnerExceptions.Count == 1
+                ? args.Exception.InnerException
+                : args.Exception;
+
+            Debug.WriteLine($"UnobservedTaskException: {ex.ToString()}");
+
+            LogError(ex);
         }
 
         /// <summary>
