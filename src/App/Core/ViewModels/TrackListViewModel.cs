@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Geo;
@@ -127,8 +126,9 @@ namespace WhereToFly.App.Core.ViewModels
             try
             {
                 IDataService dataService = DependencyService.Get<IDataService>();
+                var trackDataService = dataService.GetTrackDataService();
 
-                this.trackList = await dataService.GetTrackListAsync(CancellationToken.None);
+                this.trackList = (await trackDataService.GetList()).ToList();
             }
             catch (Exception ex)
             {
@@ -190,7 +190,9 @@ namespace WhereToFly.App.Core.ViewModels
             this.trackList.Remove(track);
 
             var dataService = DependencyService.Get<IDataService>();
-            await dataService.StoreTrackListAsync(this.trackList);
+            var trackDataService = dataService.GetTrackDataService();
+            
+            await trackDataService.Remove(track.Id);
 
             this.UpdateTrackList();
 
@@ -217,7 +219,9 @@ namespace WhereToFly.App.Core.ViewModels
             }
 
             var dataService = DependencyService.Get<IDataService>();
-            await dataService.StoreTrackListAsync(new List<Track>());
+            var trackDataService = dataService.GetTrackDataService();
+
+            await trackDataService.ClearList();
 
             await this.ReloadTrackListAsync();
 
@@ -293,8 +297,9 @@ namespace WhereToFly.App.Core.ViewModels
             try
             {
                 IDataService dataService = DependencyService.Get<IDataService>();
+                var trackDataService = dataService.GetTrackDataService();
 
-                var newTrackList = await dataService.GetTrackListAsync(CancellationToken.None);
+                var newTrackList = (await trackDataService.GetList()).ToList();
 
                 if (this.trackList.Count != newTrackList.Count ||
                     this.TrackList == null ||

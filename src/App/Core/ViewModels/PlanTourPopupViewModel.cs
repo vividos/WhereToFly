@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WhereToFly.App.Core.Services;
@@ -171,7 +170,9 @@ namespace WhereToFly.App.Core.ViewModels
         private async Task LoadDataAsync(List<string> waypointIdList)
         {
             var dataService = DependencyService.Get<IDataService>();
-            var locationList = await dataService.GetLocationListAsync(CancellationToken.None);
+            var locationDataService = dataService.GetLocationDataService();
+
+            var locationList = await locationDataService.GetList();
 
             var viewModelList =
                 from waypointId in waypointIdList
@@ -388,11 +389,9 @@ namespace WhereToFly.App.Core.ViewModels
         private static async Task AddTrack(Track track)
         {
             var dataService = DependencyService.Get<IDataService>();
+            var trackDataService = dataService.GetTrackDataService();
 
-            var currentList = await dataService.GetTrackListAsync(CancellationToken.None);
-            currentList.Add(track);
-
-            await dataService.StoreTrackListAsync(currentList);
+            await trackDataService.Add(track);
         }
 
         /// <summary>
@@ -435,11 +434,9 @@ namespace WhereToFly.App.Core.ViewModels
         private async Task AddLocation(Location location)
         {
             var dataService = DependencyService.Get<IDataService>();
+            var locationDataService = dataService.GetLocationDataService();
 
-            var locationList = await dataService.GetLocationListAsync(CancellationToken.None);
-            locationList.Add(location);
-
-            await dataService.StoreLocationListAsync(locationList);
+            await locationDataService.Add(location);
         }
     }
 }

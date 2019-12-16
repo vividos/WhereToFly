@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
@@ -166,10 +165,9 @@ namespace WhereToFly.App.Core.ViewModels
         public async Task SaveChangesAsync()
         {
             var dataService = DependencyService.Get<IDataService>();
+            var locationDataService = dataService.GetLocationDataService();
 
-            var locationList = await dataService.GetLocationListAsync(CancellationToken.None);
-
-            var locationToChange = locationList.Find(x => x.Id == this.location.Id);
+            var locationToChange = await locationDataService.Get(this.location.Id);
 
             if (locationToChange == null)
             {
@@ -187,7 +185,7 @@ namespace WhereToFly.App.Core.ViewModels
             locationToChange.MapLocation.Altitude = this.location.MapLocation.Altitude;
             locationToChange.InternetLink = this.location.InternetLink;
 
-            await dataService.StoreLocationListAsync(locationList);
+            await locationDataService.Update(locationToChange);
 
             App.UpdateMapLocationsList();
         }

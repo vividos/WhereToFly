@@ -93,7 +93,7 @@ namespace WhereToFly.App.Core
         private void SetupDepencencyService()
         {
             DependencyService.Register<NavigationService>();
-            DependencyService.Register<IDataService, JsonFileDataService>();
+            DependencyService.Register<IDataService, Services.SqliteDatabase.SqliteDatabaseDataService>();
             DependencyService.Register<GeolocationService>();
             DependencyService.Register<LiveWaypointRefreshService>();
         }
@@ -121,7 +121,7 @@ namespace WhereToFly.App.Core
             App.Settings = await dataService.GetAppSettingsAsync(CancellationToken.None);
 
             CleanupWeatherImageCache();
-            LoadFaviconUrlCache();
+            await DataServiceHelper.CheckAndMigrateDataServiceAsync(dataService);
             await InitLiveWaypointRefreshService();
         }
 
@@ -324,51 +324,20 @@ namespace WhereToFly.App.Core
         }
 
         /// <summary>
-        /// Loads the favicon url cache
-        /// </summary>
-        private static void LoadFaviconUrlCache()
-        {
-            try
-            {
-                var dataService = DependencyService.Get<IDataService>();
-                (dataService as JsonFileDataService).LoadFaviconUrlCache();
-            }
-            catch (Exception ex)
-            {
-                App.LogError(ex);
-            }
-        }
-
-        /// <summary>
         /// Initializes live waypoint refresh service with current location list
         /// </summary>
         /// <returns>task to wait on</returns>
         private static async Task InitLiveWaypointRefreshService()
         {
             var dataService = DependencyService.Get<IDataService>();
+            var locationDataService = dataService.GetLocationDataService();
 
-            var locationList = await dataService.GetLocationListAsync(CancellationToken.None);
+            var locationList = await locationDataService.GetList();
 
             var liveWaypointRefreshService = DependencyService.Get<LiveWaypointRefreshService>();
             liveWaypointRefreshService.DataService = dataService;
 
             liveWaypointRefreshService.AddLiveWaypointList(locationList);
-        }
-
-        /// <summary>
-        /// Stores the contents of the favicon url cache in the cache folder
-        /// </summary>
-        private static void StoreFaviconUrlCache()
-        {
-            try
-            {
-                var dataService = DependencyService.Get<IDataService>();
-                (dataService as JsonFileDataService).StoreFaviconUrlCache();
-            }
-            catch (Exception ex)
-            {
-                App.LogError(ex);
-            }
         }
 
         #region App lifecycle methods
@@ -386,8 +355,6 @@ namespace WhereToFly.App.Core
         protected override void OnSleep()
         {
             // Handle when your app sleeps
-            StoreFaviconUrlCache();
-
             var liveWaypointRefreshService = DependencyService.Get<LiveWaypointRefreshService>();
             liveWaypointRefreshService.StopTimer();
         }

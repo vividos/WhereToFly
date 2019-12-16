@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Logic;
@@ -250,13 +249,13 @@ namespace WhereToFly.App.Core.ViewModels
                 this.OnPropertyChanged(nameof(this.DescriptionWebViewSource));
 
                 // store new infos in location list
-                var locationList = await dataService.GetLocationListAsync(CancellationToken.None);
+                var locationDataService = dataService.GetLocationDataService();
 
-                var locationInList = locationList.Find(locationToCheck => locationToCheck.Id == this.location.Id);
+                var locationInList = await locationDataService.Get(this.location.Id);
                 locationInList.MapLocation = this.location.MapLocation;
                 locationInList.Description = this.location.Description;
 
-                await dataService.StoreLocationListAsync(locationList);
+                await locationDataService.Update(locationInList);
 
                 var liveWaypointRefreshService = DependencyService.Get<LiveWaypointRefreshService>();
                 liveWaypointRefreshService.RemoveLiveWaypoint(locationInList.Id);
@@ -330,12 +329,9 @@ namespace WhereToFly.App.Core.ViewModels
         private async Task OnDeleteLocationAsync()
         {
             var dataService = DependencyService.Get<IDataService>();
+            var locationDataService = dataService.GetLocationDataService();
 
-            var locationList = await dataService.GetLocationListAsync(CancellationToken.None);
-
-            locationList.RemoveAll(x => x.Id == this.location.Id);
-
-            await dataService.StoreLocationListAsync(locationList);
+            await locationDataService.Remove(this.location.Id);
 
             var liveWaypointRefreshService = DependencyService.Get<LiveWaypointRefreshService>();
             liveWaypointRefreshService.RemoveLiveWaypoint(this.location.Id);

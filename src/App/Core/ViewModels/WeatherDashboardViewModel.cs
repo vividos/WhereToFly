@@ -88,7 +88,10 @@ namespace WhereToFly.App.Core.ViewModels
             var weatherIconDescriptionList = new List<WeatherIconDescription>(this.WeatherIconDescriptionList);
             weatherIconDescriptionList.RemoveAll(x => x.Type == WeatherIconDescription.IconType.IconPlaceholder);
 
-            await dataService.StoreWeatherIconDescriptionListAsync(weatherIconDescriptionList);
+            var weatherIconDescriptionDataService = dataService.GetWeatherIconDescriptionDataService();
+
+            await weatherIconDescriptionDataService.ClearList();
+            await weatherIconDescriptionDataService.AddList(weatherIconDescriptionList);
         }
 
         /// <summary>
@@ -113,8 +116,9 @@ namespace WhereToFly.App.Core.ViewModels
             Task.Run(async () =>
             {
                 var dataService = DependencyService.Get<IDataService>();
+                var weatherIconDescriptionDataService = dataService.GetWeatherIconDescriptionDataService();
 
-                this.WeatherIconDescriptionList = await dataService.GetWeatherIconDescriptionListAsync();
+                this.WeatherIconDescriptionList = (await weatherIconDescriptionDataService.GetList()).ToList();
 
                 this.WeatherIconDescriptionList.Add(
                     new WeatherIconDescription

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.Views;
@@ -113,15 +112,11 @@ namespace WhereToFly.App.Core
         private static async Task StoreLiveWaypoint(Location liveWaypoint)
         {
             var dataService = DependencyService.Get<IDataService>();
-
-            var locationList = await dataService.GetLocationListAsync(CancellationToken.None);
+            var locationDataService = dataService.GetLocationDataService();
 
             // remove when the live waypoint was already in the list
-            locationList.RemoveAll(location => location.Id == liveWaypoint.Id);
-
-            locationList.Add(liveWaypoint);
-
-            await dataService.StoreLocationListAsync(locationList);
+            await locationDataService.Remove(liveWaypoint.Id);
+            await locationDataService.Update(liveWaypoint);
 
             var liveWaypointRefreshService = DependencyService.Get<LiveWaypointRefreshService>();
             liveWaypointRefreshService.AddLiveWaypoint(liveWaypoint);

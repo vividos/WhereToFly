@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Geo;
 using WhereToFly.App.Logic;
@@ -219,12 +218,9 @@ namespace WhereToFly.App.Core.ViewModels
         private async Task OnDeleteTrackAsync()
         {
             var dataService = DependencyService.Get<IDataService>();
+            var trackDataService = dataService.GetTrackDataService();
 
-            var trackList = await dataService.GetTrackListAsync(CancellationToken.None);
-
-            trackList.RemoveAll(x => x.Id == this.track.Id);
-
-            await dataService.StoreTrackListAsync(trackList);
+            await trackDataService.Remove(this.track.Id);
 
             App.UpdateMapTracksList();
 

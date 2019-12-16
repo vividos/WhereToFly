@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Services;
 using WhereToFly.Shared.Model;
@@ -88,8 +87,9 @@ namespace WhereToFly.App.Core.ViewModels
             try
             {
                 IDataService dataService = DependencyService.Get<IDataService>();
+                var layerDataService = dataService.GetLayerDataService();
 
-                this.layerList = await dataService.GetLayerListAsync(CancellationToken.None);
+                this.layerList = (await layerDataService.GetList()).ToList();
             }
             catch (Exception ex)
             {
@@ -191,7 +191,9 @@ namespace WhereToFly.App.Core.ViewModels
             }
 
             var dataService = DependencyService.Get<IDataService>();
-            await dataService.StoreLayerListAsync(new List<Layer>());
+            var layerDataService = dataService.GetLayerDataService();
+            
+            await layerDataService.ClearList();
 
             await this.ReloadLayerListAsync();
 
@@ -210,7 +212,9 @@ namespace WhereToFly.App.Core.ViewModels
             this.layerList.Remove(layer);
 
             var dataService = DependencyService.Get<IDataService>();
-            await dataService.StoreLayerListAsync(this.layerList);
+            var layerDataService = dataService.GetLayerDataService();
+
+            await layerDataService.Remove(layer.Id);
 
             this.UpdateLayerList();
 

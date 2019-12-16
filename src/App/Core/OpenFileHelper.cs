@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.Views;
@@ -205,20 +204,20 @@ namespace WhereToFly.App.Core
         private static async Task ImportLocationListAsync(List<Location> locationList)
         {
             var dataService = DependencyService.Get<IDataService>();
+            var locationDataService = dataService.GetLocationDataService();
 
-            var currentList = await dataService.GetLocationListAsync(CancellationToken.None);
-
-            if (currentList.Any())
+            bool isListEmpty = await locationDataService.IsListEmpty();
+            if (!isListEmpty)
             {
                 bool appendToList = await AskAppendToList();
 
-                if (appendToList)
+                if (!appendToList)
                 {
-                    locationList.InsertRange(0, currentList);
+                    await locationDataService.ClearList();
                 }
             }
 
-            await dataService.StoreLocationListAsync(locationList);
+            await locationDataService.AddList(locationList);
 
             var liveWaypointRefreshService = DependencyService.Get<LiveWaypointRefreshService>();
             liveWaypointRefreshService.ClearLiveWaypointList();
@@ -301,11 +300,9 @@ namespace WhereToFly.App.Core
             }
 
             var dataService = DependencyService.Get<IDataService>();
+            var trackDataService = dataService.GetTrackDataService();
 
-            var currentList = await dataService.GetTrackListAsync(CancellationToken.None);
-            currentList.Add(track);
-
-            await dataService.StoreTrackListAsync(currentList);
+            await trackDataService.Add(track);
 
             await App.AddTrack(track);
             App.MapView.ZoomToTrack(track);
@@ -430,10 +427,9 @@ namespace WhereToFly.App.Core
             }
 
             var dataService = DependencyService.Get<IDataService>();
+            var layerDataService = dataService.GetLayerDataService();
 
-            var layerList = await dataService.GetLayerListAsync(CancellationToken.None);
-            layerList.Add(layer);
-            await dataService.StoreLayerListAsync(layerList);
+            await layerDataService.Add(layer);
 
             await NavigationService.Instance.NavigateAsync(Constants.PageKeyMapPage, animated: true);
 

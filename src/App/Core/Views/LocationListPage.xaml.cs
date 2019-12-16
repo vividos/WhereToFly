@@ -184,7 +184,7 @@ namespace WhereToFly.App.Core.Views
             {
                 this.reloadLocationListOnAppearing = false;
 
-                Task.Run(this.viewModel.ReloadLocationListAsync);
+                this.viewModel.UpdateLocationList();
             }
             else
             {

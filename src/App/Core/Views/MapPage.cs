@@ -382,9 +382,9 @@ namespace WhereToFly.App.Core.Views
             var dataService = DependencyService.Get<IDataService>();
 
             this.appSettings = await dataService.GetAppSettingsAsync(CancellationToken.None);
-            this.locationList = await dataService.GetLocationListAsync(CancellationToken.None);
-            this.trackList = await dataService.GetTrackListAsync(CancellationToken.None);
-            this.layerList = await dataService.GetLayerListAsync(CancellationToken.None);
+            this.locationList = (await dataService.GetLocationDataService().GetList()).ToList();
+            this.trackList = (await dataService.GetTrackDataService().GetList()).ToList();
+            this.layerList = (await dataService.GetLayerDataService().GetList()).ToList();
         }
 
         /// <summary>
@@ -441,7 +441,9 @@ namespace WhereToFly.App.Core.Views
                 this.mapView.UpdateLocation(location);
 
                 var dataService = DependencyService.Get<IDataService>();
-                Task.Run(async () => await dataService.StoreLocationListAsync(this.locationList));
+                var locationDataService = dataService.GetLocationDataService();
+
+                Task.Run(async () => await locationDataService.Update(location));
             }
         }
 
@@ -569,7 +571,9 @@ namespace WhereToFly.App.Core.Views
             this.locationList.Add(location);
 
             var dataService = DependencyService.Get<IDataService>();
-            await dataService.StoreLocationListAsync(this.locationList);
+            var locationDataService = dataService.GetLocationDataService();
+
+            await locationDataService.Add(location);
 
             await NavigationService.Instance.NavigateAsync(
                 Constants.PageKeyEditLocationDetailsPage,
@@ -642,7 +646,9 @@ namespace WhereToFly.App.Core.Views
             this.locationList.Add(location);
 
             var dataService = DependencyService.Get<IDataService>();
-            await dataService.StoreLocationListAsync(this.locationList);
+            var locationDataService = dataService.GetLocationDataService();
+
+            await locationDataService.Add(location);
 
             await NavigationService.Instance.NavigateAsync(
                 Constants.PageKeyEditLocationDetailsPage,
@@ -764,8 +770,9 @@ namespace WhereToFly.App.Core.Views
         private async Task ReloadLocationListAsync()
         {
             var dataService = DependencyService.Get<IDataService>();
+            var locationDataService = dataService.GetLocationDataService();
 
-            var newLocationList = await dataService.GetLocationListAsync(CancellationToken.None);
+            var newLocationList = (await locationDataService.GetList()).ToList();
 
             this.AddAndRemoveDisplayedLocations(newLocationList);
 
@@ -834,8 +841,9 @@ namespace WhereToFly.App.Core.Views
         private async Task ReloadTrackListAsync()
         {
             var dataService = DependencyService.Get<IDataService>();
+            var trackDataService = dataService.GetTrackDataService();
 
-            var newTrackList = await dataService.GetTrackListAsync(CancellationToken.None);
+            var newTrackList = (await trackDataService.GetList()).ToList();
 
             this.AddAndRemoveDisplayedTracks(newTrackList);
 

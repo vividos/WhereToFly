@@ -5,10 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Services;
-using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Model;
 using Xamarin.Forms;
@@ -66,6 +64,11 @@ namespace WhereToFly.App.Core.ViewModels
         private bool isListRefreshActive;
 
         /// <summary>
+        /// Backing field for "IsListEmpty" property
+        /// </summary>
+        private bool isListEmpty = true;
+
+        /// <summary>
         /// Current position of user; may be null when not retrieved yet
         /// </summary>
         private MapPoint currentPosition;
@@ -99,16 +102,11 @@ namespace WhereToFly.App.Core.ViewModels
         /// Returns true when the location list has entries, but all entries were filtered out by
         /// the filter text
         /// </summary>
-        public bool AreAllLocationsFilteredOut
-        {
-            get
-            {
-                return this.locationList != null &&
-                    this.locationList.Any() &&
-                    this.LocationList != null &&
-                    !this.LocationList.Any();
-            }
-        }
+        public bool AreAllLocationsFilteredOut =>
+            !this.IsListRefreshActive &&
+            !this.IsListEmpty &&
+            this.LocationList != null &&
+            !this.LocationList.Any();
 
         /// <summary>
         /// Indicates if the refreshing of the location list is currently active, in order to show
@@ -121,17 +119,16 @@ namespace WhereToFly.App.Core.ViewModels
             {
                 this.isListRefreshActive = value;
                 this.OnPropertyChanged(nameof(this.IsListRefreshActive));
+                this.OnPropertyChanged(nameof(this.IsListEmpty));
+                this.OnPropertyChanged(nameof(this.AreAllLocationsFilteredOut));
             }
         }
 
         /// <summary>
         /// Indicates if the track list is empty.
         /// </summary>
-        public bool IsListEmpty
-        {
-            get => !this.isListRefreshActive &&
-                (this.locationList == null || !this.locationList.Any());
-        }
+        public bool IsListEmpty =>
+            !this.IsListRefreshActive && this.isListEmpty;
 
         /// <summary>
         /// Command to execute when an item in the location list has been tapped
@@ -191,7 +188,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         private void SetupBindings()
         {
-            Task.Run(this.LoadDataAsync);
+            this.UpdateLocationList();
 
             this.ItemTappedCommand =
                 new Command<Location>(async (location) =>
@@ -207,41 +204,22 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
-        /// Loads data; async method
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task LoadDataAsync()
-        {
-            try
-            {
-                IDataService dataService = DependencyService.Get<IDataService>();
-
-                this.locationList = await dataService.GetLocationListAsync(CancellationToken.None);
-            }
-            catch (Exception ex)
-            {
-                App.LogError(ex);
-            }
-
-            this.UpdateLocationList();
-        }
-
-        /// <summary>
         /// Updates location list based on filter and current position
         /// </summary>
-        private void UpdateLocationList()
+        public void UpdateLocationList()
         {
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 this.IsListRefreshActive = true;
 
+                IDataService dataService = DependencyService.Get<IDataService>();
+                var locationDataService = dataService.GetLocationDataService();
+
+                this.isListEmpty = await locationDataService.IsListEmpty();
+                this.locationList = (await locationDataService.GetList(this.FilterText)).ToList();
+
                 var newList = this.locationList
                     .Select(location => new LocationListEntryViewModel(this, location, this.currentPosition));
-
-                if (!string.IsNullOrWhiteSpace(this.filterText))
-                {
-                    newList = newList.Where(viewModel => this.IsFilterMatch(viewModel));
-                }
 
                 if (this.currentPosition != null)
                 {
@@ -251,7 +229,6 @@ namespace WhereToFly.App.Core.ViewModels
                 this.LocationList = new ObservableCollection<LocationListEntryViewModel>(newList);
 
                 this.OnPropertyChanged(nameof(this.LocationList));
-                this.OnPropertyChanged(nameof(this.AreAllLocationsFilteredOut));
                 this.OnPropertyChanged(nameof(this.IsListEmpty));
 
                 this.IsListRefreshActive = false;
@@ -267,13 +244,15 @@ namespace WhereToFly.App.Core.ViewModels
             try
             {
                 IDataService dataService = DependencyService.Get<IDataService>();
+                var locationDataService = dataService.GetLocationDataService();
 
-                var newLocationList = await dataService.GetLocationListAsync(CancellationToken.None);
+                var newLocationList = await locationDataService.GetList(this.FilterText);
 
-                if (this.locationList.Count != newLocationList.Count ||
+                if (this.locationList.Count != newLocationList.Count() ||
                     !Enumerable.SequenceEqual(this.locationList, newLocationList, new LocationEqualityComparer()))
                 {
-                    this.locationList = newLocationList;
+                    this.isListEmpty = await locationDataService.IsListEmpty();
+                    this.locationList = newLocationList.ToList();
 
                     this.UpdateLocationList();
                 }
@@ -282,49 +261,6 @@ namespace WhereToFly.App.Core.ViewModels
             {
                 App.LogError(ex);
             }
-        }
-
-        /// <summary>
-        /// Checks if given location (represented by a view model) is a current filter match,
-        /// based on the filter text.
-        /// </summary>
-        /// <param name="viewModel">location view model to check</param>
-        /// <returns>matching filter</returns>
-        private bool IsFilterMatch(LocationListEntryViewModel viewModel)
-        {
-            if (string.IsNullOrWhiteSpace(this.filterText))
-            {
-                return true;
-            }
-
-            string text = this.filterText;
-            var location = viewModel.Location;
-
-            bool inName = location.Name != null &&
-                location.Name.IndexOf(text, 0, StringComparison.OrdinalIgnoreCase) >= 0;
-
-            bool inDescription = !inName &&
-                location.Description != null &&
-                location.Description.IndexOf(text, 0, StringComparison.OrdinalIgnoreCase) >= 0;
-
-            bool inInternetLink = !inDescription &&
-                location.InternetLink != null &&
-                location.InternetLink.IndexOf(text, 0, StringComparison.OrdinalIgnoreCase) >= 0;
-
-            bool inMapLocation = !inInternetLink &&
-                location.MapLocation != null &&
-                location.MapLocation.ToString().IndexOf(text, 0, StringComparison.OrdinalIgnoreCase) >= 0;
-
-            bool inDistance = !inMapLocation &&
-                Math.Abs(viewModel.Distance) > 1e-6 &&
-                DataFormatter.FormatDistance(viewModel.Distance).IndexOf(text, 0, StringComparison.OrdinalIgnoreCase) >= 0;
-
-            return
-                inName ||
-                inDescription ||
-                inInternetLink ||
-                inMapLocation ||
-                inDistance;
         }
 
         /// <summary>
@@ -412,7 +348,7 @@ namespace WhereToFly.App.Core.ViewModels
                 await OpenFileHelper.OpenLocationListAsync(stream, assetFilename);
             }
 
-            await this.ReloadLocationListAsync();
+            this.UpdateLocationList();
         }
 
         /// <summary>
@@ -476,7 +412,7 @@ namespace WhereToFly.App.Core.ViewModels
                 await OpenFileHelper.OpenLocationListAsync(stream, result.FileName);
             }
 
-            await this.ReloadLocationListAsync();
+            this.UpdateLocationList();
         }
 
         /// <summary>
@@ -513,7 +449,9 @@ namespace WhereToFly.App.Core.ViewModels
             this.locationList.Remove(location);
 
             var dataService = DependencyService.Get<IDataService>();
-            await dataService.StoreLocationListAsync(this.locationList);
+            var locationDataService = dataService.GetLocationDataService();
+
+            await locationDataService.Remove(location.Id);
 
             var liveWaypointRefreshService = DependencyService.Get<LiveWaypointRefreshService>();
             liveWaypointRefreshService.RemoveLiveWaypoint(location.Id);
@@ -543,26 +481,18 @@ namespace WhereToFly.App.Core.ViewModels
             }
 
             var dataService = DependencyService.Get<IDataService>();
-            await dataService.StoreLocationListAsync(new List<Location>());
+            var locationDataService = dataService.GetLocationDataService();
+
+            await locationDataService.ClearList();
 
             var liveWaypointRefreshService = DependencyService.Get<LiveWaypointRefreshService>();
             liveWaypointRefreshService.ClearLiveWaypointList();
 
-            await this.ReloadLocationListAsync();
+            this.UpdateLocationList();
 
             App.UpdateMapLocationsList();
 
             App.ShowToast("Location list was cleared.");
-        }
-
-        /// <summary>
-        /// Reloads location list and shows it on the page
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        public async Task ReloadLocationListAsync()
-        {
-            await this.LoadDataAsync();
-            this.UpdateLocationList();
         }
 
         /// <summary>
