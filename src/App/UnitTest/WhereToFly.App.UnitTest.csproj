@@ -58,6 +58,7 @@
     <Compile Include="HtmlConverterTest.cs" />
     <Compile Include="LocationTest.cs" />
     <Compile Include="Shared\AppResourceUriTest.cs" />
+    <Compile Include="SqliteDatabaseDataServiceTest.cs" />
     <Compile Include="UnitTestAppManager.cs" />
     <Compile Include="UnitTestGeolocationService.cs" />
     <Compile Include="UnitTestHelper.cs" />
@@ -140,6 +141,12 @@
       <Version>8.1.0.13383</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="sqlite-net-pcl">
+      <Version>1.6.292</Version>
+    </PackageReference>
+    <PackageReference Include="System.Data.SQLite.Core">
+      <Version>1.0.112</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.FFImageLoading.Forms">
       <Version>2.4.11.982</Version>

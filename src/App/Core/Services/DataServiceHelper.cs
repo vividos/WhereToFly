@@ -125,6 +125,7 @@ namespace WhereToFly.App.Core.Services
 
             if (!File.Exists(Path.Combine(platform.AppDataFolder, FaviconUrlCacheFilename)))
             {
+                // this code path is only used in unit tests
                 return new Dictionary<string, string>();
             }
 
@@ -175,16 +176,16 @@ namespace WhereToFly.App.Core.Services
             await dataService.StoreAppSettingsAsync(
                 await legacyDataService.GetAppSettingsAsync(cancellationToken));
 
-            await dataService.StoreWeatherIconDescriptionListAsync(
+            await dataService.GetWeatherIconDescriptionDataService().AddList(
                 await legacyDataService.GetWeatherIconDescriptionListAsync());
 
-            await dataService.StoreLayerListAsync(
+            await dataService.GetLayerDataService().AddList(
                 await legacyDataService.GetLayerListAsync(cancellationToken));
 
-            await dataService.StoreLocationListAsync(
+            await dataService.GetLocationDataService().AddList(
                 await legacyDataService.GetLocationListAsync(cancellationToken));
 
-            await dataService.StoreTrackListAsync(
+            await dataService.GetTrackDataService().AddList(
                 await legacyDataService.GetTrackListAsync(cancellationToken));
 
             legacyDataService.Cleanup();
