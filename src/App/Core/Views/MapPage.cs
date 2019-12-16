@@ -1,6 +1,4 @@
 ﻿using Plugin.Geolocator.Abstractions;
-using Plugin.Permissions;
-using Plugin.Permissions.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -171,7 +169,7 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task OnClicked_ToolbarButtonLocateMe()
         {
-            if (!await this.CheckPermissionAsync())
+            if (!await GeolocationService.CheckPermissionAsync())
             {
                 return;
             }
@@ -223,41 +221,6 @@ namespace WhereToFly.App.Core.Views
         {
             this.MapView.AddTrack(track);
             this.displayedTracks.Add(track);
-        }
-
-        /// <summary>
-        /// Checks for permission to use geolocator. See
-        /// https://github.com/jamesmontemagno/PermissionsPlugin
-        /// </summary>
-        /// <returns>true when everything is ok, false when permission wasn't given</returns>
-        private async Task<bool> CheckPermissionAsync()
-        {
-            try
-            {
-                var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Location);
-
-                if (status != PermissionStatus.Granted)
-                {
-                    if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Location))
-                    {
-                        await this.DisplayAlert(
-                            Constants.AppTitle,
-                            "The location permission is needed in order to locate your position on the map",
-                            "OK");
-                    }
-
-                    var results = await CrossPermissions.Current.RequestPermissionsAsync(new[] { Permission.Location });
-
-                    status = results[Permission.Location];
-                }
-
-                return status == PermissionStatus.Granted;
-            }
-            catch (Exception ex)
-            {
-                App.LogError(ex);
-                throw;
-            }
         }
 
         /// <summary>
@@ -565,6 +528,11 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task OnMapView_ShareMyLocation()
         {
+            if (!await GeolocationService.CheckPermissionAsync())
+            {
+                return;
+            }
+
             var position =
                 await this.geolocator.GetPositionAsync(timeout: TimeSpan.FromSeconds(0.1), includeHeading: false);
 

@@ -114,6 +114,11 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task InitPositionAsync()
         {
+            if (!await GeolocationService.CheckPermissionAsync())
+            {
+                return;
+            }
+
             var position =
                 await this.geolocator.GetPositionAsync(timeout: TimeSpan.FromSeconds(1), includeHeading: false);
 
@@ -188,6 +193,11 @@ namespace WhereToFly.App.Core.Views
 
             Task.Run(async () =>
             {
+                if (!await GeolocationService.CheckPermissionAsync())
+                {
+                    return;
+                }
+
                 var position = await this.geolocator.GetPositionAsync(TimeSpan.FromSeconds(1));
                 if (position != null)
                 {
