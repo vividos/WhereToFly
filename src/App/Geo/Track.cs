@@ -45,7 +45,7 @@ namespace WhereToFly.App.Geo
         public double HeightGain { get; set; }
 
         /// <summary>
-        /// Height gain, in meter
+        /// Height loss, in meter
         /// </summary>
         public double HeightLoss { get; set; }
 
