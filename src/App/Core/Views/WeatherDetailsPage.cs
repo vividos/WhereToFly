@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 using WhereToFly.App.Model;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.Views
@@ -48,6 +50,7 @@ namespace WhereToFly.App.Core.Views
                 };
 
                 webView.AutomationId = "WeatherDetailsWebView";
+                webView.Navigated += async (sender, args) => await this.OnNavigated_WebView(sender, args);
 
                 this.Content = webView;
             }
@@ -56,6 +59,59 @@ namespace WhereToFly.App.Core.Views
                 var webView = this.Content as WebView;
                 webView.Source = urlSource;
             }
+        }
+
+        /// <summary>
+        /// Called when navigation to current page has finished
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="args">event args</param>
+        /// <returns>task to wait on</returns>
+        [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1126:PrefixCallsCorrectly", Justification = "false positive")]
+        private async Task OnNavigated_WebView(object sender, WebNavigatedEventArgs args)
+        {
+            if (sender is WebView webView &&
+                args.Url.Contains("https://www.austrocontrol.at/flugwetter/start.php"))
+            {
+                await PasteAlpthermUsernamePassword(webView);
+            }
+        }
+
+        /// <summary>
+        /// Inserts alptherm username and password on the current web view.
+        /// </summary>
+        /// <param name="webView">web view to use</param>
+        /// <returns>task to wait on</returns>
+        private static async Task PasteAlpthermUsernamePassword(WebView webView)
+        {
+            string username = await SecureStorage.GetAsync(Constants.SecureSettingsAlpthermUsername);
+            string password = await SecureStorage.GetAsync(Constants.SecureSettingsAlpthermPassword);
+
+            if (string.IsNullOrEmpty(username) &&
+                string.IsNullOrEmpty(password))
+            {
+                return;
+            }
+
+            string js = $"javascript:";
+
+            if (!string.IsNullOrEmpty(username))
+            {
+                js += $"document.getElementById('username').value = '{username}';";
+            }
+
+            if (!string.IsNullOrEmpty(password))
+            {
+                js += $"document.getElementById('password').value = '{password}';";
+            }
+
+            if (!string.IsNullOrEmpty(username) &&
+                !string.IsNullOrEmpty(password))
+            {
+                js += "document.getElementById('username').form.submit();";
+            }
+
+            await webView.EvaluateJavaScriptAsync(js);
         }
 
         /// <summary>
