@@ -516,7 +516,7 @@ namespace WhereToFly.App.Core.ViewModels
             await dataService.StoreLocationListAsync(this.locationList);
 
             var liveWaypointRefreshService = DependencyService.Get<LiveWaypointRefreshService>();
-            liveWaypointRefreshService.UpdateLiveWaypointList(this.locationList);
+            liveWaypointRefreshService.RemoveLiveWaypoint(location.Id);
 
             this.UpdateLocationList();
 

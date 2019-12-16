@@ -124,7 +124,7 @@ namespace WhereToFly.App.Core
             await dataService.StoreLocationListAsync(locationList);
 
             var liveWaypointRefreshService = DependencyService.Get<LiveWaypointRefreshService>();
-            liveWaypointRefreshService.UpdateLiveWaypointList(locationList);
+            liveWaypointRefreshService.AddLiveWaypoint(liveWaypoint);
         }
     }
 }

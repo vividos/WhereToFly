@@ -352,7 +352,7 @@ namespace WhereToFly.App.Core
             var liveWaypointRefreshService = DependencyService.Get<LiveWaypointRefreshService>();
             liveWaypointRefreshService.DataService = dataService;
 
-            liveWaypointRefreshService.UpdateLiveWaypointList(locationList);
+            liveWaypointRefreshService.AddLiveWaypointList(locationList);
         }
 
         /// <summary>

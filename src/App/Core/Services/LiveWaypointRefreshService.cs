@@ -80,69 +80,68 @@ namespace WhereToFly.App.Core.Services
         }
 
         /// <summary>
-        /// Updates live waypoints to update by list of locations, e.g. when a new list is loaded.
+        /// Adds location list, to be checked for live waypoints to be updated periodically.
         /// </summary>
         /// <param name="locationList">location list</param>
-        public void UpdateLiveWaypointList(IEnumerable<Location> locationList)
+        public void AddLiveWaypointList(IEnumerable<Location> locationList)
         {
-            Debug.WriteLine("LiveWaypointRefreshService: updating list of live waypoints");
+            var liveWaypointLocationList = locationList.Where(location => location.Type == LocationType.LiveWaypoint);
 
-            var addedIds = new HashSet<string>();
+            if (!liveWaypointLocationList.Any())
+            {
+                return;
+            }
+
+            Debug.WriteLine($"LiveWaypointRefreshService: adding list of {liveWaypointLocationList.Count()} live waypoints");
 
             lock (this.dataLock)
             {
-                var liveWaypointLocationList = locationList.Where(location => location.Type == LocationType.LiveWaypoint);
                 foreach (Location liveWaypointLocation in liveWaypointLocationList)
                 {
                     if (!this.liveWaypointMap.ContainsKey(liveWaypointLocation.Id))
                     {
-                        this.AddLiveWaypoint(liveWaypointLocation);
-                        addedIds.Add(liveWaypointLocation.Id);
+                        this.liveWaypointMap.Add(liveWaypointLocation.Id, liveWaypointLocation);
                     }
                 }
-
-                var idsToRemove = new HashSet<string>();
-
-                foreach (string liveWaypointId in this.liveWaypointMap.Keys)
-                {
-                    if (!addedIds.Contains(liveWaypointId))
-                    {
-                        idsToRemove.Add(liveWaypointId);
-                    }
-                }
-
-                foreach (string liveWaypointId in idsToRemove)
-                {
-                    this.RemoveLiveWaypoint(liveWaypointId);
-                }
-
-                this.ScheduleUpdates();
             }
+
+            this.ScheduleUpdates();
         }
 
         /// <summary>
         /// Adds live waypoint to the live waypoint map
         /// </summary>
         /// <param name="liveWaypointLocation">live waypoint location to add</param>
-        private void AddLiveWaypoint(Location liveWaypointLocation)
+        public void AddLiveWaypoint(Location liveWaypointLocation)
         {
             lock (this.dataLock)
             {
-                this.liveWaypointMap.Add(liveWaypointLocation.Id, liveWaypointLocation);
+                if (this.liveWaypointMap.ContainsKey(liveWaypointLocation.Id))
+                {
+                    this.liveWaypointMap[liveWaypointLocation.Id] = liveWaypointLocation;
+                }
+                else
+                {
+                    this.liveWaypointMap.Add(liveWaypointLocation.Id, liveWaypointLocation);
+                }
             }
+
+            this.ScheduleUpdates();
         }
 
         /// <summary>
         /// Removes live waypoint from the live waypoint map
         /// </summary>
         /// <param name="liveWaypointLocationId">live waypoint ID to remove</param>
-        private void RemoveLiveWaypoint(string liveWaypointLocationId)
+        public void RemoveLiveWaypoint(string liveWaypointLocationId)
         {
             lock (this.dataLock)
             {
                 this.liveWaypointMap.Remove(liveWaypointLocationId);
                 this.nextPossibleUpdateMap.Remove(liveWaypointLocationId);
             }
+
+            this.ScheduleUpdates();
         }
 
         /// <summary>
