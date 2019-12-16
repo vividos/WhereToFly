@@ -13,6 +13,12 @@ Current version: %VERSION%
 
 1.7.0
 
+- improved speed of location list; data is now stored in an SQLite database
+- added automatic logon for Alptherm website; can be configured on settings
+  page
+- updated included ParaglidingSpots locations
+- various bug fixes and improvements
+
 1.6.0 "Crossing the Alps 2019" edition
 
 - added new "layer" menu where CesiumJS .czml files can be loaded as layers
