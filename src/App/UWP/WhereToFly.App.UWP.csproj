@@ -127,10 +127,12 @@
     <Content Include="Assets\images\layers_plus.png" />
     <Content Include="Assets\images\magnify.png" />
     <Content Include="Assets\images\magnify_plus_outline.png" />
+    <Content Include="Assets\images\map.png" />
     <Content Include="Assets\images\map_marker_plus.png" />
     <Content Include="Assets\images\navigation.png" />
     <Content Include="Assets\images\playlist_plus.png" />
     <Content Include="Assets\images\refresh.png" />
+    <Content Include="Assets\images\settings_outline.png" />
     <Content Include="Assets\images\share_variant.png" />
     <Content Include="Assets\images\weather_partlycloudy.png" />
     <Content Include="Assets\LargeTile.scale-100.png" />

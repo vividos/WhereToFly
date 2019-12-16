@@ -230,4 +230,16 @@
   <ItemGroup>
     <BundleResource Include="Assets\images\menu%402x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Assets\images\map.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Assets\images\map%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Assets\images\settings_outline.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Assets\images\settings_outline%402x.png" />
+  </ItemGroup>
 </Project>

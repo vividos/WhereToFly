@@ -103,6 +103,7 @@ The following icons are from the Google Material icon set:
 - parking
 - playlist-plus
 - settings
+- settings-outline
 - share-variant
 - train
 - camera
