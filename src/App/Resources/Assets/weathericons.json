@@ -137,7 +137,7 @@
     "Group": "Weather forecast",
     "Type": 0,
     "Icon": null,
-    "WebLink": "https://lawine.tirol.gv.at/home/uebersicht/"
+    "WebLink": "https://lawinen.report/bulletin/latest"
   },
   {
     "Name": "Regenradar Bayern",
@@ -172,7 +172,7 @@
     "Group": "Current weather",
     "Type": 0,
     "Icon": null,
-    "WebLink": "http://www.foto-webcam.eu/webcam/hochries/wetter/"
+    "WebLink": "https://www.foto-webcam.eu/webcam/hochries/wetter/"
   },
   {
     "Name": "Wallberg Wetterstation",
@@ -242,21 +242,21 @@
     "Group": "Webcams",
     "Type": 0,
     "Icon": null,
-    "WebLink": "http://www.foto-webcam.eu/webcam/include/map.php"
+    "WebLink": "https://www.foto-webcam.eu/webcam/include/map.php"
   },
   {
     "Name": "Foto-Webcam Hochries W",
     "Group": "Webcams",
     "Type": 0,
     "Icon": null,
-    "WebLink": "http://www.foto-webcam.eu/webcam/hochries/"
+    "WebLink": "https://www.foto-webcam.eu/webcam/hochries/"
   },
   {
     "Name": "Foto-Webcam Wendelstein SW",
     "Group": "Webcams",
     "Type": 0,
     "Icon": null,
-    "WebLink": "http://www.foto-webcam.eu/webcam/wendelstein-west/"
+    "WebLink": "https://www.foto-webcam.eu/webcam/wendelstein-west/"
   },
   {
     "Name": "Foto-Webcam Wallberg",
@@ -270,21 +270,21 @@
     "Group": "Webcams",
     "Type": 0,
     "Icon": null,
-    "WebLink": "http://www.foto-webcam.eu/webcam/kampenwand/"
+    "WebLink": "https://www.foto-webcam.eu/webcam/kampenwand/"
   },
   {
     "Name": "Foto-Webcam Sonnblick",
     "Group": "Webcams",
     "Type": 0,
     "Icon": null,
-    "WebLink": "http://www.foto-webcam.eu/webcam/sonnblick/"
+    "WebLink": "https://www.foto-webcam.eu/webcam/sonnblick/"
   },
   {
     "Name": "Foto-Webcam Kronplatz",
     "Group": "Webcams",
     "Type": 0,
     "Icon": null,
-    "WebLink": "http://www.foto-webcam.eu/webcam/kronplatz/"
+    "WebLink": "https://www.foto-webcam.eu/webcam/kronplatz/"
   },
   {
     "Name": "Foto-Webcam Zugspitze Süd",
