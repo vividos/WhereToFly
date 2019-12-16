@@ -38,6 +38,12 @@ namespace WhereToFly.App.Core
         Task Remove(string locationId);
 
         /// <summary>
+        /// Returns if the location list is empty
+        /// </summary>
+        /// <returns>true when list is empty, false when not</returns>
+        Task<bool> IsListEmpty();
+
+        /// <summary>
         /// Returns a list of all locations, possibly filtered
         /// </summary>
         /// <param name="filterText">filter text; may be null</param>
