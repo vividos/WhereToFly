@@ -24,36 +24,38 @@
             </StackLayout>
 
             <!-- list view with all menu items -->
-            <ListView x:Name="listView" ItemsSource="{Binding MenuItemList, Mode=OneTime}"
-                      BackgroundColor="LightGray"
-                      VerticalOptions="FillAndExpand"
-                      HorizontalOptions="StartAndExpand"
-                      SeparatorVisibility="None">
-                <ListView.ItemTemplate>
+            <CollectionView ItemsSource="{Binding MenuItemList, Mode=OneTime}"
+                            SelectedItem="{Binding SelectedMenuItem}"
+                            SelectionChangedCommand="{Binding MenuItemSelectedCommand}"
+                            SelectionMode="Single"
+                            BackgroundColor="LightGray"
+                            VerticalOptions="FillAndExpand"
+                            HorizontalOptions="StartAndExpand">
+                <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <!-- single view cell for menu items -->
-                        <ViewCell>
-                            <Grid Padding="5,10">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="40"/>
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
+                        <Grid Padding="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-                                <!-- menu item icon -->
-                                <ffimageloadingsvg:SvgCachedImage Source="{Binding ImageSource, Mode=OneWay}"
-                                       WidthRequest="32" HeightRequest="32"
-                                       HorizontalOptions="Center" VerticalOptions="Center" />
+                            <!-- menu item icon -->
+                            <ffimageloadingsvg:SvgCachedImage Source="{Binding ImageSource, Mode=OneWay}"
+                                                              InputTransparent="True"
+                                                              WidthRequest="32" HeightRequest="32"
+                                                              HorizontalOptions="Center" VerticalOptions="Center" />
 
-                                <!-- title text -->
-                                <Label Grid.Column="1" Text="{Binding Title, Mode=OneTime}"
-                                       TextColor="Black" FontSize="Medium"
-                                       VerticalOptions="FillAndExpand"
-                                       VerticalTextAlignment="Center" />
-                            </Grid>
-                        </ViewCell>
+                            <!-- title text -->
+                            <Label Grid.Column="1" Text="{Binding Title, Mode=OneTime}"
+                                   InputTransparent="True"
+                                   TextColor="Black" FontSize="Medium"
+                                   VerticalOptions="FillAndExpand"
+                                   VerticalTextAlignment="Center" />
+                        </Grid>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

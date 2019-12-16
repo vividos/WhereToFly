@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using WhereToFly.App.Core.Services;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -7,7 +10,7 @@ namespace WhereToFly.App.Core.ViewModels
     /// <summary>
     /// View model for the menu appearing in the "hamburger menu" in the master detail layout.
     /// </summary>
-    public class MenuViewModel
+    public class MenuViewModel : ViewModelBase
     {
         /// <summary>
         /// View model for a single menu item
@@ -60,6 +63,16 @@ namespace WhereToFly.App.Core.ViewModels
         public MenuItemViewModel[] MenuItemList { get; private set; }
 
         /// <summary>
+        /// Currently selected menu item
+        /// </summary>
+        public MenuItemViewModel SelectedMenuItem { get; set; }
+
+        /// <summary>
+        /// Command that is executed when this menu item has been tapped
+        /// </summary>
+        public ICommand MenuItemSelectedCommand { get; private set; }
+
+        /// <summary>
         /// Creates a new menu view model object
         /// </summary>
         public MenuViewModel()
@@ -86,6 +99,28 @@ namespace WhereToFly.App.Core.ViewModels
                 new MenuItemViewModel("Settings", "icons/settings.svg", Constants.PageKeySettingsPage),
                 new MenuItemViewModel("Info", "icons/information-outline.svg", Constants.PageKeyInfoPage),
             };
+
+            this.MenuItemSelectedCommand = new Command(this.OnSelectedMenuItem);
+        }
+
+        /// <summary>
+        /// Called when user tapped on a menu item
+        /// </summary>
+        private void OnSelectedMenuItem()
+        {
+            if (this.SelectedMenuItem == null)
+            {
+                return;
+            }
+
+            App.RunOnUiThread(async () =>
+            {
+                await NavigationService.Instance.NavigateAsync(this.SelectedMenuItem.PageKey, true);
+
+                await Task.Delay(100);
+                this.SelectedMenuItem = null;
+                this.OnPropertyChanged(nameof(this.SelectedMenuItem));
+            });
         }
     }
 }
