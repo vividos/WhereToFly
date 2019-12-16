@@ -14,6 +14,7 @@ namespace WhereToFly.App.Core.Views
         {
             this.Title = "Settings";
 
+            this.Children.Add(new GeneralSettingsPage());
             this.Children.Add(new MapSettingsPage());
         }
     }

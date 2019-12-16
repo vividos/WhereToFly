@@ -14,6 +14,11 @@ namespace WhereToFly.App.Core.Views
         public MapSettingsPage()
         {
             this.Title = "Map";
+            this.IconImageSource = new FileImageSource
+            {
+                File = Converter.ImagePathConverter.GetDeviceDependentImage("map")
+            };
+
             this.BindingContext = new MapSettingsViewModel();
 
             this.InitializeComponent();

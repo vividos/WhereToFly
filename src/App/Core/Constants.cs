@@ -152,5 +152,15 @@ namespace WhereToFly.App.Core
         /// Bing maps API key; used for geocoding in UWP app
         /// </summary>
         public static readonly string BingMapsKeyUwp = "8KK08riht3IKUuEIHhO9~kiUuKLsWDkuE5jm4d2gBDQ~Aho0ktyzI5HmMR7lM_2JwyptBV5ltSyzJAgvfISK_RE1BexmpSH2bInepuuZrMjP";
+
+        /// <summary>
+        /// Key for the SecureStorage to store and read username for Alptherm web page
+        /// </summary>
+        public static readonly string SecureSettingsAlpthermUsername = "AlpthermUsername";
+
+        /// <summary>
+        /// Key for the SecureStorage to store and read password for Alptherm web page
+        /// </summary>
+        public static readonly string SecureSettingsAlpthermPassword = "AlpthermPassword";
     }
 }

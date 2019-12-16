@@ -6,7 +6,7 @@ using Xamarin.Forms;
 namespace WhereToFly.App.Core.ViewModels
 {
     /// <summary>
-    /// View model for the settings page
+    /// View model for the map settings page
     /// </summary>
     public class MapSettingsViewModel : ViewModelBase
     {
