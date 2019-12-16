@@ -38,6 +38,7 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="token">cancellation token</param>
         /// <returns>list of locations</returns>
+        [Obsolete("use ILocationDataService")]
         Task<List<Location>> GetLocationListAsync(CancellationToken token);
 
         /// <summary>
@@ -45,6 +46,7 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="locationList">location list to store</param>
         /// <returns>task to wait on</returns>
+        [Obsolete("use ILocationDataService")]
         Task StoreLocationListAsync(List<Location> locationList);
 
         /// <summary>
@@ -58,6 +60,7 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="token">cancellation token</param>
         /// <returns>list of tracks</returns>
+        [Obsolete("use ITrackDataService")]
         Task<List<Track>> GetTrackListAsync(CancellationToken token);
 
         /// <summary>
@@ -65,6 +68,7 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="trackList">track list to store</param>
         /// <returns>task to wait on</returns>
+        [Obsolete("use ITrackDataService")]
         Task StoreTrackListAsync(List<Track> trackList);
 
         /// <summary>
@@ -78,6 +82,7 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="token">cancellation token</param>
         /// <returns>list of layers</returns>
+        [Obsolete("use ILayerDataService")]
         Task<List<Layer>> GetLayerListAsync(CancellationToken token);
 
         /// <summary>
@@ -85,6 +90,7 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="layerList">layer list to store</param>
         /// <returns>task to wait on</returns>
+        [Obsolete("use ILayerDataService")]
         Task StoreLayerListAsync(List<Layer> layerList);
 
         /// <summary>
@@ -97,6 +103,7 @@ namespace WhereToFly.App.Core
         /// Retrieves list of weather icon descriptions
         /// </summary>
         /// <returns>list with current weather icon descriptions</returns>
+        [Obsolete("use IWeatherIconDescriptionDataService")]
         Task<List<WeatherIconDescription>> GetWeatherIconDescriptionListAsync();
 
         /// <summary>
@@ -104,6 +111,7 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="weatherIconList">weather icon list to store</param>
         /// <returns>task to wait on</returns>
+        [Obsolete("use IWeatherIconDescriptionDataService")]
         Task StoreWeatherIconDescriptionListAsync(List<WeatherIconDescription> weatherIconList);
 
         /// <summary>
