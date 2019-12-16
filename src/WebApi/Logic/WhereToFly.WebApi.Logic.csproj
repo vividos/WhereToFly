@@ -28,7 +28,7 @@
     <PackageReference Include="Refit" Version="5.0.23" />
     <PackageReference Include="Sandwych.QuickGraph.Core" Version="1.0.0" />
     <PackageReference Include="SharpKml.Core" Version="5.1.0" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.0.0.9566">
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.1.0.13383">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
