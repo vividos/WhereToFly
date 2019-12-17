@@ -102,7 +102,11 @@ namespace WhereToFly.App.UnitTest
 
             // check
             Assert.AreEqual("42 m", text1, "formatted text must match");
-            Assert.AreEqual("4.2 km", text2, "formatted text must match");
+
+            string separator = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+            string expectedText2 = $"4{separator}2 km";
+            Assert.AreEqual(expectedText2, text2, "formatted text must match");
+
             Assert.AreEqual("-", text3, "formatted text must match");
         }
 
