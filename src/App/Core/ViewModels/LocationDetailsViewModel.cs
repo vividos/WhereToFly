@@ -178,7 +178,7 @@ namespace WhereToFly.App.Core.ViewModels
         {
             this.DescriptionWebViewSource = new HtmlWebViewSource
             {
-                Html = this.location.Description,
+                Html = FormatLocationDescription(this.location),
                 BaseUrl = "about:blank"
             };
 
@@ -201,6 +201,27 @@ namespace WhereToFly.App.Core.ViewModels
                 new Command(async () => await this.OnDeleteLocationAsync());
 
             Task.Run(this.UpdateDistance);
+        }
+
+        /// <summary>
+        /// Formats location description
+        /// </summary>
+        /// <param name="location">location to format description</param>
+        /// <returns>formatted description text</returns>
+        private static string FormatLocationDescription(Location location)
+        {
+            string desc = location.Description;
+
+            bool hasHtmlTags = desc.Contains("<") &&
+                (desc.Contains("</") || desc.Contains("/>"));
+
+            if (!hasHtmlTags)
+            {
+                // try to format as markdown
+                desc = HtmlConverter.FromMarkdown(desc, null);
+            }
+
+            return $"<span style=\"font-family:sans-serif\">{desc}</span>";
         }
 
         /// <summary>
