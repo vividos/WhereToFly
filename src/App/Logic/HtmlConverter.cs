@@ -91,11 +91,19 @@ namespace WhereToFly.App.Logic
         /// Converts from Markdown text to HTML
         /// </summary>
         /// <param name="markdownText">Markdown formatted text</param>
+        /// <param name="fontName">font name for whole text; may be null</param>
+        /// <param name="fontSize">font size; used when font name is specified</param>
         /// <returns>html text</returns>
-        public static string FromMarkdown(string markdownText)
+        public static string FromMarkdown(string markdownText, string fontName = "sans-serif", int fontSize = 12)
         {
             string htmlText = CommonMark.CommonMarkConverter.Convert(markdownText);
-            return htmlText;
+
+            if (string.IsNullOrEmpty(fontName))
+            {
+                return htmlText;
+            }
+
+            return $"<span style=\"font-family: {fontName}; font-size: {fontSize}\">{htmlText}</span>";
         }
     }
 }
