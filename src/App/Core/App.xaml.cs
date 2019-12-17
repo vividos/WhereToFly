@@ -176,9 +176,7 @@ namespace WhereToFly.App.Core
         /// <param name="message">toast message text</param>
         public static void ShowToast(string message)
         {
-            var app = Current as App;
-
-            MessagingCenter.Send<App, string>(app, Constants.MessageShowToast, message);
+            MessagingCenter.Send(Constants.MessageShowToast, message);
         }
 
         /// <summary>
@@ -237,7 +235,7 @@ namespace WhereToFly.App.Core
         {
             var app = Current as App;
 
-            MessagingCenter.Send<App>(app, Constants.MessageUpdateMapSettings);
+            MessagingCenter.Send(app, Constants.MessageUpdateMapSettings);
         }
 
         /// <summary>
@@ -247,7 +245,7 @@ namespace WhereToFly.App.Core
         {
             var app = Current as App;
 
-            MessagingCenter.Send<App>(app, Constants.MessageUpdateMapLocations);
+            MessagingCenter.Send(app, Constants.MessageUpdateMapLocations);
         }
 
         /// <summary>
@@ -257,7 +255,7 @@ namespace WhereToFly.App.Core
         {
             var app = Current as App;
 
-            MessagingCenter.Send<App>(app, Constants.MessageUpdateMapTracks);
+            MessagingCenter.Send(app, Constants.MessageUpdateMapTracks);
         }
 
         /// <summary>

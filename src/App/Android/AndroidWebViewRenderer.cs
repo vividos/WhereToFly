@@ -36,7 +36,7 @@ namespace WhereToFly.App.Android
             {
                 this.SetupWebViewSettings();
 
-                MessagingCenter.Subscribe<Core.App>(this, Constants.MessageWebViewClearCache, this.ClearCache);
+                MessagingCenter.Subscribe<Core.App>(this, Constants.MessageWebViewClearCache, (app) => this.ClearCache());
             }
 
             if (e.OldElement != null)
@@ -89,8 +89,7 @@ namespace WhereToFly.App.Android
         /// <summary>
         /// Clears cache of the web view control
         /// </summary>
-        /// <param name="app">app object; unused</param>
-        private void ClearCache(Core.App app)
+        private void ClearCache()
         {
             if (this.Control == null)
             {

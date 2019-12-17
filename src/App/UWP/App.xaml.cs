@@ -90,7 +90,7 @@ namespace WhereToFly.App.UWP
 
             Xamarin.Essentials.Platform.MapServiceToken = Constants.BingMapsKeyUwp;
 
-            Xamarin.Forms.MessagingCenter.Subscribe<Core.App, string>(this, Constants.MessageShowToast, this.ShowToast);
+            Xamarin.Forms.MessagingCenter.Subscribe<string>(this, Constants.MessageShowToast, this.ShowToast);
         }
 
         /// <summary>
@@ -161,9 +161,8 @@ namespace WhereToFly.App.UWP
         /// <summary>
         /// Shows toast message with given text
         /// </summary>
-        /// <param name="app">app object; unused</param>
         /// <param name="message">toast message</param>
-        private void ShowToast(Core.App app, string message)
+        private void ShowToast(string message)
         {
             ToastNotifier toastNotifier = ToastNotificationManager.CreateToastNotifier();
 
@@ -172,8 +171,10 @@ namespace WhereToFly.App.UWP
             toastNodeList.Item(0).AppendChild(toastXml.CreateTextNode(Constants.AppTitle));
             toastNodeList.Item(1).AppendChild(toastXml.CreateTextNode(message));
 
-            var toast = new ToastNotification(toastXml);
-            toast.ExpirationTime = DateTime.Now.AddSeconds(4);
+            var toast = new ToastNotification(toastXml)
+            {
+                ExpirationTime = DateTime.Now.AddSeconds(4)
+            };
             toastNotifier.Show(toast);
         }
     }
