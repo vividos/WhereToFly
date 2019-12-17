@@ -161,6 +161,10 @@ namespace WhereToFly.App.Core
         /// <summary>
         /// Key for the SecureStorage to store and read password for Alptherm web page
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Sonar Vulnerability",
+            "S2068:Hard-coded credentials are security-sensitive",
+            Justification = "false positive")]
         public static readonly string SecureSettingsAlpthermPassword = "AlpthermPassword";
     }
 }
