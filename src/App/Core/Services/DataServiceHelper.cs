@@ -182,9 +182,11 @@ namespace WhereToFly.App.Core.Services
             await dataService.GetLayerDataService().AddList(
                 await legacyDataService.GetLayerListAsync(cancellationToken));
 
+            await dataService.GetLocationDataService().ClearList();
             await dataService.GetLocationDataService().AddList(
                 await legacyDataService.GetLocationListAsync(cancellationToken));
 
+            await dataService.GetTrackDataService().ClearList();
             await dataService.GetTrackDataService().AddList(
                 await legacyDataService.GetTrackListAsync(cancellationToken));
 

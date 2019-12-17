@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 using WhereToFly.App.Core;
-using WhereToFly.App.Core.Services;
+using WhereToFly.App.Core.Services.SqliteDatabase;
 using WhereToFly.App.Core.ViewModels;
 using Xamarin.Forms;
 
@@ -22,7 +22,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
         public void SetUp()
         {
             Xamarin.Forms.Mocks.MockForms.Init();
-            DependencyService.Register<IDataService, JsonFileDataService>();
+            DependencyService.Register<IDataService, SqliteDatabaseDataService>();
             DependencyService.Register<IPlatform, UnitTestPlatform>();
         }
 

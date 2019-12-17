@@ -29,7 +29,11 @@ namespace WhereToFly.App.UnitTest
             // start with a new database
             var platform = DependencyService.Get<IPlatform>();
             string databaseFilename = Path.Combine(platform.AppDataFolder, "database.db");
-            File.Delete(databaseFilename);
+
+            if (File.Exists(databaseFilename))
+            {
+                File.Delete(databaseFilename);
+            }
         }
 
         /// <summary>
@@ -98,17 +102,21 @@ namespace WhereToFly.App.UnitTest
         public async Task TestMigrateFromJsonFileDataService()
         {
             // set up
-            var legacyService = new SqliteDatabaseDataService();
+            var legacyService = new JsonFileDataService();
 
             AppSettings appSettings = GetTestAppSettings();
             await legacyService.StoreAppSettingsAsync(appSettings);
+
+            Assert.IsTrue(legacyService.AreFilesAvailable, "legacy files must be available");
 
             // run
             var dataService = new SqliteDatabaseDataService();
             await DataServiceHelper.CheckAndMigrateDataServiceAsync(dataService);
 
             // check
-            var migratedAppSettings = dataService.GetAppSettingsAsync(CancellationToken.None);
+            Assert.IsFalse(legacyService.AreFilesAvailable, "legacy files must not be available");
+
+            var migratedAppSettings = await dataService.GetAppSettingsAsync(CancellationToken.None);
 
             Assert.IsNotNull(migratedAppSettings, "loaded app settings object must be non-null");
             Assert.AreEqual(appSettings, migratedAppSettings, "stored app settings object must match initial one");
