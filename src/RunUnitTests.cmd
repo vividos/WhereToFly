@@ -10,10 +10,10 @@ REM set this to your Visual Studio installation folder
 set VSINSTALL=%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community
 
 REM set this to your OpenCover executable
-set OPENCOVER="d:\devel\tools\OpenCover\OpenCover.Console.exe"
+set OPENCOVER="C:\Projekte\ToolsOpenCover\OpenCover.Console.exe"
 
 REM set this to your ReportGenerator executable
-set REPORTGENERATOR="D:\devel\tools\ReportGenerator\ReportGenerator.exe"
+set REPORTGENERATOR="C:\Projekte\ToolsReportGenerator\ReportGenerator.exe"
 
 REM
 REM Preparations
