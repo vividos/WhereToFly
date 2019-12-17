@@ -132,7 +132,7 @@ namespace WhereToFly.Shared.Model
         private class Converter : JsonConverter
         {
             /// <summary>
-            /// Determines if given type can be converted to an app resource URI
+            /// Determines if given type can be converted to a map point
             /// </summary>
             /// <param name="objectType">object type to convert to</param>
             /// <returns>true when type can be converted to, false when not</returns>
