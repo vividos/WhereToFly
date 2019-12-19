@@ -26,7 +26,7 @@ namespace WhereToFly.App.Core.Views
 
             var platform = DependencyService.Get<IPlatform>();
 
-            string markdownText = platform.LoadAssetText("info.md");
+            string markdownText = platform.LoadAssetText("info/version.md");
 
             string versionText;
             try

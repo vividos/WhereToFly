@@ -113,7 +113,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\info.md" />
+    <Content Include="Assets\info\version.md" />
     <Content Include="Assets\map\Cesium\Assets\approximateTerrainHeights.json" />
     <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_0.json" />
     <Content Include="Assets\map\Cesium\Assets\IAU2006_XYS\IAU2006_XYS_1.json" />

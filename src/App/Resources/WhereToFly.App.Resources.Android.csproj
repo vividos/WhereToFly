@@ -57,7 +57,7 @@
     <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="28.0.0.3" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\info.md" />
+    <AndroidAsset Include="Assets\info\version.md" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\weathericons.json" />
