@@ -39,7 +39,6 @@
 ### Miscellaneous
 - [ ] Add transferring locations using QR code scanning
 - [ ] Implement switching themes/night mode using ResourceDictionary
-- [ ] Implement auto login for Alptherm weather website with settings
 - [ ] Add adding custom weather links
 - [ ] Add carousel view, showing short manual pages for the app
 - [ ] UWP: Implement dropping files to open them
