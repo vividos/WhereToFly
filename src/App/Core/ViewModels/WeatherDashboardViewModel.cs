@@ -40,7 +40,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         public WeatherDashboardViewModel()
         {
-            MessagingCenter.Subscribe<WeatherIconDescription>(this, MessageAddWeatherIcon, this.OnAddWeatherIcon);
+            MessagingCenter.Subscribe<object, WeatherIconDescription>(this, MessageAddWeatherIcon, this.OnAddWeatherIcon);
 
             this.SetupBindings();
         }
@@ -59,7 +59,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// Called when a weather icon should be added to the dashboard
         /// </summary>
         /// <param name="iconDescription">weather icon description</param>
-        private void OnAddWeatherIcon(WeatherIconDescription iconDescription)
+        private void OnAddWeatherIcon(object sender, WeatherIconDescription iconDescription)
         {
             // remove it when it's already in the list, in order to move it to the end
             this.WeatherIconDescriptionList.RemoveAll(
