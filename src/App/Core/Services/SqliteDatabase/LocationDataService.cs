@@ -227,6 +227,11 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             /// <returns>task to wait on</returns>
             public async Task AddList(IEnumerable<Location> locationList)
             {
+                if (!locationList.Any())
+                {
+                    return;
+                }
+
                 var locationEntryList =
                     from location in locationList
                     select new LocationEntry(location);

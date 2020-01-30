@@ -317,6 +317,10 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             /// <returns>task to wait on</returns>
             public async Task AddList(IEnumerable<Track> trackList)
             {
+                if (!trackList.Any())
+                {
+                    return;
+                }
                 var trackEntryList =
                     from track in trackList
                     select new TrackEntry(track);

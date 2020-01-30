@@ -168,6 +168,11 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             /// <returns>task to wait on</returns>
             public async Task AddList(IEnumerable<WeatherIconDescription> weatherIconDescriptionList)
             {
+                if (!weatherIconDescriptionList.Any())
+                {
+                    return;
+                }
+
                 var weatherIconDescriptionEntryList =
                     from weatherIconDescription in weatherIconDescriptionList
                     select new WeatherIconDescriptionEntry(weatherIconDescription);

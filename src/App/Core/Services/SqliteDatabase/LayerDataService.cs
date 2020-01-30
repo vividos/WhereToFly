@@ -171,6 +171,11 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             /// <returns>task to wait on</returns>
             public async Task AddList(IEnumerable<Layer> layerList)
             {
+                if (!layerList.Any())
+                {
+                    return;
+                }
+
                 var layerEntryList =
                     from layer in layerList
                     select new LayerEntry(layer);
