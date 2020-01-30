@@ -13,7 +13,7 @@
         /// <summary>
         /// Glider speed, in km/h; needed for calculating glide factor against wind
         /// </summary>
-        public object GliderSpeed { get; set; } = 38.0;
+        public double GliderSpeed { get; set; } = 38.0;
 
         /// <summary>
         /// Wind speed, in km/h
