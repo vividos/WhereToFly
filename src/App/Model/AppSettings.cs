@@ -1,11 +1,12 @@
-﻿using WhereToFly.Shared.Model;
+﻿using System;
+using WhereToFly.Shared.Model;
 
 namespace WhereToFly.App.Model
 {
     /// <summary>
     /// Settings for the app
     /// </summary>
-    public class AppSettings
+    public sealed class AppSettings : IEquatable<AppSettings>
     {
         /// <summary>
         /// Last position shown in the app
@@ -56,5 +57,53 @@ namespace WhereToFly.App.Model
             this.LastLocationListFilterText = string.Empty;
             this.LastFlyingRangeParameters = new FlyingRangeParameters();
         }
+
+        #region object overridables implementation
+        /// <summary>
+        /// Returns hash code for app resource URI
+        /// </summary>
+        /// <returns>calculated hash code</returns>
+        public override int GetHashCode() =>
+            (LastShownPosition, ShadingMode, MapImageryType, MapOverlayType, CoordinateDisplayFormat, LastLocationListFilterText, LastFlyingRangeParameters).GetHashCode();
+
+        /// <summary>
+        /// Compares this app settings to another object
+        /// </summary>
+        /// <param name="obj">object to compare to</param>
+        /// <returns>true when equal app settings, false when not</returns>
+        public override bool Equals(object obj) =>
+            (obj is AppSettings appSettings) && Equals(appSettings);
+        #endregion
+
+        #region IEquatable implementation
+        /// <summary>
+        /// Compares this app settings to another app settings object
+        /// </summary>
+        /// <param name="obj">object to compare to</param>
+        /// <returns>true when equal app settings, false when not</returns>
+        public bool Equals(AppSettings other) =>
+            LastShownPosition.Equals(other.LastShownPosition) &&
+            LastFlyingRangeParameters.Equals(other.LastFlyingRangeParameters) &&
+            (ShadingMode, MapImageryType, MapOverlayType, CoordinateDisplayFormat, LastLocationListFilterText) ==
+            (other.ShadingMode, other.MapImageryType, other.MapOverlayType, other.CoordinateDisplayFormat, other.LastLocationListFilterText);
+        #endregion
+
+        /// <summary>
+        /// Equality operator
+        /// </summary>
+        /// <param name="left">left operator argument</param>
+        /// <param name="right">right operator argument</param>
+        /// <returns>true when objects are equal, false when not</returns>
+        public static bool operator ==(AppSettings left, AppSettings right) =>
+            Equals(left, right);
+
+        /// <summary>
+        /// Inequality operator
+        /// </summary>
+        /// <param name="left">left operator argument</param>
+        /// <param name="right">right operator argument</param>
+        /// <returns>true when objects are inequal, false when not</returns>
+        public static bool operator !=(AppSettings left, AppSettings right) =>
+            !Equals(left, right);
     }
 }
