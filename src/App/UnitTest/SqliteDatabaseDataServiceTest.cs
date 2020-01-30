@@ -1,10 +1,14 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Core;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.Services.SqliteDatabase;
+using WhereToFly.App.Geo;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Model;
 using Xamarin.Forms;
@@ -107,6 +111,25 @@ namespace WhereToFly.App.UnitTest
             AppSettings appSettings = GetTestAppSettings();
             await legacyService.StoreAppSettingsAsync(appSettings);
 
+            var myTrackList = new List<Track>
+            {
+                new Track
+                {
+                    Id = "my-track",
+                    Name = "My Track",
+                    IsFlightTrack = false,
+                    TrackPoints = new List<TrackPoint>
+                    {
+                        new TrackPoint(47.754076, 12.352277, 1234.0, null)
+                        {
+                            Time = DateTime.Today + TimeSpan.FromHours(1.0)
+                        },
+                        new TrackPoint(47.754076, 12.352277, null, 270),
+                    }
+                }
+            };
+            await legacyService.StoreTrackListAsync(myTrackList);
+
             Assert.IsTrue(legacyService.AreFilesAvailable, "legacy files must be available");
 
             // run
@@ -119,9 +142,17 @@ namespace WhereToFly.App.UnitTest
             var migratedAppSettings = await dataService.GetAppSettingsAsync(CancellationToken.None);
 
             Assert.IsNotNull(migratedAppSettings, "loaded app settings object must be non-null");
-            Assert.AreEqual(appSettings, migratedAppSettings, "stored app settings object must match initial one");
+            Assert.AreEqual(appSettings, migratedAppSettings, "migrated app settings must match initial one");
 
-            // TODO check more
+            var migratedTrackList = (await dataService.GetTrackDataService().GetList()).ToList();
+
+            Assert.AreEqual(myTrackList.Count, migratedTrackList.Count, "track list length must match");
+            Assert.AreEqual(myTrackList[0].Id, migratedTrackList[0].Id, "migrated track ID must match");
+            Assert.AreEqual(myTrackList[0].Name, migratedTrackList[0].Name, "migrated track name must match");
+            Assert.AreEqual(
+                myTrackList[0].TrackPoints.Count,
+                migratedTrackList[0].TrackPoints.Count,
+                "migrated track point list length must match");
         }
     }
 }
