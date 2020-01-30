@@ -80,9 +80,6 @@ namespace WhereToFly.App.Android
             // set up cache
             var platform = DependencyService.Get<IPlatform>();
 
-            this.Control.Settings.SetAppCacheMaxSize(256 * 1024 * 1024); // 256 MB
-            this.Control.Settings.SetAppCachePath(platform.CacheDataFolder);
-            this.Control.Settings.SetAppCacheEnabled(true);
             this.Control.Settings.CacheMode = global::Android.Webkit.CacheModes.Normal;
         }
 
