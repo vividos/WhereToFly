@@ -263,6 +263,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             public async Task Add(Track trackToAdd)
             {
                 var trackEntry = new TrackEntry(trackToAdd);
+
                 trackEntry.StoreTrackPoints();
 
                 await this.connection.InsertAsync(trackEntry);

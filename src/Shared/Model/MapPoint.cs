@@ -154,7 +154,7 @@ namespace WhereToFly.Shared.Model
                 {
                     return null;
                 }
-                
+
                 if (elements.Length != 2 && elements.Length != 3)
                 {
                     return new MapPoint(0.0, 0.0);
