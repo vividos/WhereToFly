@@ -91,7 +91,11 @@ namespace WhereToFly.App.Android
                 this.CorsWebsiteHosts != null &&
                 this.CorsWebsiteHosts.Any(x => host.Contains(x)))
             {
-                return this.BuildCorsResponse(request.Url.ToString());
+                var response = this.BuildCorsResponse(request.Url.ToString());
+                if (response != null)
+                {
+                    return response;
+                }
             }
 
             return base.ShouldInterceptRequest(view, request);
@@ -105,6 +109,12 @@ namespace WhereToFly.App.Android
         /// <returns>newly created web resource response</returns>
         private WebResourceResponse BuildCorsResponse(string url)
         {
+            Stream stream = this.GetUrlContentStream(url);
+            if (stream == null)
+            {
+                return null;
+            }
+
             string date = DateTime.Now.ToUniversalTime().ToString("r");
             string domainName = "file://";
 
@@ -121,8 +131,6 @@ namespace WhereToFly.App.Android
                 { "Via", "1.1 vegur" },
             };
 
-            Stream stream = this.GetUrlContentStream(url);
-
             return new WebResourceResponse(
                 "text/plain",
                 "UTF-8",
@@ -138,7 +146,9 @@ namespace WhereToFly.App.Android
         /// folder.
         /// </summary>
         /// <param name="url">URL to fetch</param>
-        /// <returns>content stream</returns>
+        /// <returns>
+        /// content stream, or null when there was an error getting the content stream
+        /// </returns>
         private Stream GetUrlContentStream(string url)
         {
             int hashCode = url.GetHashCode();
