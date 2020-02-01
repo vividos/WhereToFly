@@ -78,8 +78,6 @@ namespace WhereToFly.App.Android
             this.Control.Settings.MixedContentMode = global::Android.Webkit.MixedContentHandling.CompatibilityMode;
 
             // set up cache
-            var platform = DependencyService.Get<IPlatform>();
-
             this.Control.Settings.CacheMode = global::Android.Webkit.CacheModes.Normal;
         }
 
