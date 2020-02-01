@@ -55,6 +55,8 @@ namespace WhereToFly.App.Core
 
                 await NavigationService.Instance.NavigateAsync(Constants.PageKeyMapPage, animated: true);
 
+                await App.UpdateLastShownPositionAsync(liveWaypoint.MapLocation);
+
                 App.MapView.ZoomToLocation(liveWaypoint.MapLocation);
                 App.UpdateMapLocationsList();
             }

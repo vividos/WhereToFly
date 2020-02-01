@@ -280,6 +280,8 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         internal async Task ZoomToLocation(Location location)
         {
+            await App.UpdateLastShownPositionAsync(location.MapLocation);
+
             App.MapView.ZoomToLocation(location.MapLocation);
 
             App.UpdateMapLocationsList();
