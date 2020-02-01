@@ -38,10 +38,7 @@ function MapView(options) {
     });
 
     this.bingMapsAerialWithLabelsImageryLayer = null;
-    this.bingMapsAerialWithLabelsImageryProvider = new Cesium.BingMapsImageryProvider({
-        url: 'https://dev.virtualearth.net',
-        mapStyle: Cesium.BingMapsStyle.AERIAL_WITH_LABELS_ON_DEMAND
-    });
+    this.bingMapsAerialWithLabelsImageryProvider = null;
 
     this.openTopoMapImageryLayer = null;
     this.openTopoMapImageryProvider = new Cesium.OpenStreetMapImageryProvider({
@@ -52,7 +49,7 @@ function MapView(options) {
     });
 
     this.sentinel2ImageryLayer = null;
-    this.sentinel2ImageryProvider = new Cesium.IonImageryProvider({ assetId: 3954 });
+    this.sentinel2ImageryProvider = null;
 
     this.openFlightMapsImageryLayer = null;
     var airacId = calcCurrentAiracId();
@@ -70,11 +67,7 @@ function MapView(options) {
     console.log('thermal maps url: ' + this.thermalSkywaysOverlay.url);
 
     this.blackMarbleLayer = null;
-    this.blackMarbleOverlay = new Cesium.TileMapServiceImageryProvider({
-        url: 'https://cesiumjs.org/tilesets/imagery/blackmarble',
-        maximumLevel: 8,
-        credit: 'Black Marble imagery courtesy NASA Earth Observatory'
-    });
+    this.blackMarbleOverlay = null;
 
     console.log("#2 terrain provider");
     var terrainProvider = Cesium.createWorldTerrain({
@@ -332,8 +325,17 @@ MapView.prototype.setMapImageryType = function (imageryType) {
             break;
 
         case 'BingMapsAerialWithLabels':
-            if (this.bingMapsAerialWithLabelsImageryLayer === null)
+            if (this.bingMapsAerialWithLabelsImageryLayer === null) {
+
+                // lazy initialize provider
+                if (this.bingMapsAerialWithLabelsImageryProvider === null)
+                    this.bingMapsAerialWithLabelsImageryProvider = new Cesium.BingMapsImageryProvider({
+                        url: 'https://dev.virtualearth.net',
+                        mapStyle: Cesium.BingMapsStyle.AERIAL_WITH_LABELS_ON_DEMAND
+                    });
+
                 this.bingMapsAerialWithLabelsImageryLayer = layers.addImageryProvider(this.bingMapsAerialWithLabelsImageryProvider, 1);
+            }
             else
                 layers.add(this.bingMapsAerialWithLabelsImageryLayer, 1);
             break;
@@ -346,8 +348,14 @@ MapView.prototype.setMapImageryType = function (imageryType) {
             break;
 
         case 'Sentinel2':
-            if (this.sentinel2ImageryLayer === null)
+            if (this.sentinel2ImageryLayer === null) {
+
+                // lazy initialize provider
+                if (this.sentinel2ImageryProvider === null)
+                    this.sentinel2ImageryProvider = new Cesium.IonImageryProvider({ assetId: 3954 });
+
                 this.sentinel2ImageryLayer = layers.addImageryProvider(this.sentinel2ImageryProvider, 1);
+            }
             else
                 layers.add(this.sentinel2ImageryLayer, 1);
             break;
@@ -485,6 +493,13 @@ MapView.prototype.setMapOverlayType = function (overlayType) {
 
         case 'BlackMarble':
             if (this.blackMarbleLayer === null) {
+                if (this.blackMarbleOverlay === null)
+                    this.blackMarbleOverlay = new Cesium.TileMapServiceImageryProvider({
+                        url: 'https://cesiumjs.org/tilesets/imagery/blackmarble',
+                        maximumLevel: 8,
+                        credit: 'Black Marble imagery courtesy NASA Earth Observatory'
+                    });
+
                 this.blackMarbleLayer = layers.addImageryProvider(this.blackMarbleOverlay);
                 this.blackMarbleLayer.alpha = 0.5; // 0.0 is transparent.  1.0 is opaque.
                 this.blackMarbleLayer.brightness = 2.0; // > 1.0 increases brightness.  < 1.0 decreases.
