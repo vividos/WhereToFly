@@ -306,7 +306,10 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             {
                 var trackList = await this.connection.Table<TrackEntry>().ToListAsync();
 
-                trackList.ForEach(trackEntry => trackEntry.LoadTrackPoints());
+                foreach (var trackEntry in trackList)
+                {
+                    trackEntry.LoadTrackPoints();
+                }
 
                 return trackList.Select(trackEntry => trackEntry.Track);
             }
@@ -322,11 +325,15 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
                 {
                     return;
                 }
-                var trackEntryList =
-                    from track in trackList
-                    select new TrackEntry(track);
 
-                trackEntryList.ToList().ForEach(trackEntry => trackEntry.StoreTrackPoints());
+                var trackEntryList =
+                    (from track in trackList
+                     select new TrackEntry(track)).ToList();
+
+                foreach (var trackEntry in trackEntryList)
+                {
+                    trackEntry.StoreTrackPoints();
+                }
 
                 await this.connection.InsertAllAsync(trackEntryList, runInTransaction: true);
             }
