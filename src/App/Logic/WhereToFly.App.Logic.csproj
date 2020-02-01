@@ -24,9 +24,9 @@
   
   <ItemGroup>
     <PackageReference Include="CommonMark.NET" Version="0.15.1" />
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.17" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.18" />
     <PackageReference Include="Refit" Version="5.0.23" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.1.0.13383">
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.3.0.14607">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
