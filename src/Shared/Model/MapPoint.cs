@@ -81,17 +81,8 @@ namespace WhereToFly.Shared.Model
         /// </summary>
         /// <param name="obj">object to compare to</param>
         /// <returns>true when equal, false when not</returns>
-        public override bool Equals(object obj)
-        {
-            var other = obj as MapPoint;
-
-            if (other == null)
-            {
-                return false;
-            }
-
-            return this.Equals(other);
-        }
+        public override bool Equals(object obj) =>
+            obj is MapPoint other && this.Equals(other);
 
         /// <summary>
         /// Calculates hash code for map point
