@@ -207,7 +207,12 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
                 string filename = Path.Combine(platform.AppDataFolder, "tracks", this.TrackPointFilename);
 
                 string json = File.ReadAllText(filename);
-                this.Track.TrackPoints = JsonConvert.DeserializeObject<List<TrackPoint>>(json);
+                this.Track.TrackPoints = JsonConvert.DeserializeObject<List<TrackPoint>>(
+                    json,
+                    new JsonSerializerSettings
+                    {
+                        Converters = new List<JsonConverter> { new TrackPoint.Converter() }
+                    });
             }
 
             /// <summary>
@@ -231,7 +236,13 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
 
                 string filename = Path.Combine(tracksFolder, this.TrackPointFilename);
 
-                string json = JsonConvert.SerializeObject(this.Track.TrackPoints);
+                string json = JsonConvert.SerializeObject(
+                    this.Track.TrackPoints,
+                    new JsonSerializerSettings
+                    {
+                        Converters = new List<JsonConverter> { new TrackPoint.Converter() }
+                    });
+
                 File.WriteAllText(filename, json);
             }
         }
