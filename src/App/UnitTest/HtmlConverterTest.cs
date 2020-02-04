@@ -16,10 +16,25 @@ namespace WhereToFly.App.UnitTest
         public void TestFromMarkdown_EmptyText()
         {
             // run
-            string html = HtmlConverter.FromMarkdown(string.Empty);
+            string html = HtmlConverter.FromMarkdown(string.Empty, fontName: null);
 
             // check
             Assert.IsTrue(html.Length == 0, "html text must also be empty");
+        }
+
+        /// <summary>
+        /// Tests method FromMarkdown(), with empty text but a font set
+        /// </summary>
+        [TestMethod]
+        public void TestFromMarkdown_EmptyTextButFont()
+        {
+            const string FontName = "FunnyFont";
+
+            // run
+            string html = HtmlConverter.FromMarkdown(string.Empty, fontName: FontName);
+
+            // check
+            Assert.IsTrue(html.Contains(FontName), "html text must contain font name");
         }
 
         /// <summary>
