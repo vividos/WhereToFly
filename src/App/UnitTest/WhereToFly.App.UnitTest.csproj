@@ -161,7 +161,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\info.md">
+    <Content Include="Assets\info\version.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
