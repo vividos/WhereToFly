@@ -33,7 +33,7 @@ namespace WhereToFly.Web.LiveTracking
         /// <param name="services">service collection</param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddRazorPages();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -66,6 +66,11 @@ namespace WhereToFly.Web.LiveTracking
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapRazorPages();
+            });
         }
     }
 }

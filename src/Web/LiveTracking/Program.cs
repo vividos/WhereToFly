@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 namespace WhereToFly.Web.LiveTracking
 {
@@ -18,16 +19,19 @@ namespace WhereToFly.Web.LiveTracking
             Justification = "ASP.NET Core boilerplate code")]
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            CreateHostBuilder(args).Build().Run();
         }
 
         /// <summary>
-        /// Creates web host builder for given command line args
+        /// Creates host builder for given command line args
         /// </summary>
         /// <param name="args">command line args</param>
-        /// <returns>web host builder</returns>
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+        /// <returns>host builder</returns>
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
     }
 }
