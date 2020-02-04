@@ -118,11 +118,11 @@ namespace WhereToFly.App.Core
         {
             var dataService = DependencyService.Get<IDataService>();
 
-            App.Settings = await dataService.GetAppSettingsAsync(CancellationToken.None);
-
             CleanupWeatherImageCache();
             await DataServiceHelper.CheckAndMigrateDataServiceAsync(dataService);
             await InitLiveWaypointRefreshService();
+
+            App.Settings = await dataService.GetAppSettingsAsync(CancellationToken.None);
         }
 
         /// <summary>
