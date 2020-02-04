@@ -23,7 +23,7 @@ function LiveTracking() {
 
     this.map.setShadingMode('Fixed10Am');
 
-    this.addDefaultLocationListsAndTracks();
+    this.addDefaultLayerAndLocationListsAndTracks();
 
 }
 
@@ -74,48 +74,12 @@ LiveTracking.prototype.callMapAction = function (funcName, params) {
 };
 
 /**
- * Adds all default locations and tracks to show in the live tracking map
+ * Adds all default layers, locations and tracks to show in the live tracking map
  */
-LiveTracking.prototype.addDefaultLocationListsAndTracks = function () {
+LiveTracking.prototype.addDefaultLayerAndLocationListsAndTracks = function () {
 
-    this.map.addLocationList([{
-        id: 'crossingthealps2019-start',
-        name: 'Start: Kampenwand',
-        description: 'Start of the Crossing the Alps 2019 tour',
-        type: 'Turnpoint',
-        latitude: 47.754076,
-        longitude: 12.352277,
-        altitude: 0.0,
-        isPlanTourLocation: false
-    }]);
+    console.log("loading default data...");
 
-    this.map.addLocationList([{
-        id: 'crossingthealps2019-end',
-        name: 'End: Feltre',
-        description: 'End of the Crossing the Alps 2019 tour',
-        type: 'Turnpoint',
-        latitude: 46.017779,
-        longitude: 11.900711,
-        altitude: 0.0,
-        isPlanTourLocation: false
-    }]);
-
-    this.map.addTrack({
-        id: 'crossingthealps2019',
-        name: 'Crossing the Alps 2019',
-        isFlightTrack: false,
-        color: 'FF0000',
-        listOfTrackPoints: [
-            12.352277, 47.754076, 0.0, // Kampenwand
-            12.431815, 47.631745, 0.0, // Kössen
-            12.297016, 47.285720, 0.0, // Wildkogel
-            12.183008, 47.090525, 0.0, // Alpenhauptkamm
-            11.958434, 46.738669, 0.0, // Kronplatz
-            11.828376, 46.508371, 0.0, // Sellastock
-            11.870709, 46.251668, 0.0, // Pala
-            11.900711, 46.017779, 0.0 // Feltre
-        ]
-    });
 };
 
 /**
