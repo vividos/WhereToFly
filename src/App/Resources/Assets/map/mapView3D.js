@@ -104,14 +104,20 @@ function MapView(options) {
         requestRenderMode: true
     });
 
-    this.viewer.scene.globe.enableLighting = true;
+    console.log("#4a globe options");
+
+    var globe = this.viewer.scene.globe;
+    globe.enableLighting = true;
+    globe.backFaceCulling = false;
+    globe.showSkirts = false;
+    globe.dynamicAtmosphereLighting = false;
 
     // clip walls against terrain
-    this.viewer.scene.globe.depthTestAgainstTerrain = true;
+    globe.depthTestAgainstTerrain = true;
 
     // increase resolution for all image layer
     // https://github.com/AnalyticalGraphicsInc/cesium/issues/3279
-    this.viewer.scene.globe.maximumScreenSpaceError = 1.666;
+    globe.maximumScreenSpaceError = 1.666;
 
     // allow scripts to run in info box
     this.viewer.infoBox.frame.sandbox = this.viewer.infoBox.frame.sandbox + " allow-scripts";
