@@ -173,22 +173,30 @@ namespace WhereToFly.App.Core.Services
 
             var cancellationToken = CancellationToken.None;
 
-            await dataService.StoreAppSettingsAsync(
-                await legacyDataService.GetAppSettingsAsync(cancellationToken));
+            try
+            {
+                await dataService.StoreAppSettingsAsync(
+                    await legacyDataService.GetAppSettingsAsync(cancellationToken));
 
-            await dataService.GetWeatherIconDescriptionDataService().AddList(
-                await legacyDataService.GetWeatherIconDescriptionListAsync());
+                await dataService.GetWeatherIconDescriptionDataService().AddList(
+                    await legacyDataService.GetWeatherIconDescriptionListAsync());
 
-            await dataService.GetLayerDataService().AddList(
-                await legacyDataService.GetLayerListAsync(cancellationToken));
+                await dataService.GetLayerDataService().AddList(
+                    await legacyDataService.GetLayerListAsync(cancellationToken));
 
-            await dataService.GetLocationDataService().ClearList();
-            await dataService.GetLocationDataService().AddList(
-                await legacyDataService.GetLocationListAsync(cancellationToken));
+                await dataService.GetLocationDataService().ClearList();
+                await dataService.GetLocationDataService().AddList(
+                    await legacyDataService.GetLocationListAsync(cancellationToken));
 
-            await dataService.GetTrackDataService().ClearList();
-            await dataService.GetTrackDataService().AddList(
-                await legacyDataService.GetTrackListAsync(cancellationToken));
+                await dataService.GetTrackDataService().ClearList();
+                await dataService.GetTrackDataService().AddList(
+                    await legacyDataService.GetTrackListAsync(cancellationToken));
+            }
+            catch (Exception ex)
+            {
+                // log exception and continue
+                App.LogError(ex);
+            }
 
             legacyDataService.Cleanup();
         }

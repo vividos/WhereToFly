@@ -86,13 +86,15 @@ namespace WhereToFly.App.Core.Services
         {
             get
             {
+                var platform = DependencyService.Get<IPlatform>();
+
                 return
-                    File.Exists(AppSettingsFilename) ||
-                    File.Exists(LocationListFilename) ||
-                    File.Exists(TrackListFilename) ||
-                    File.Exists(LayerListFilename) ||
-                    File.Exists(WeatherIconListFilename) ||
-                    File.Exists(FaviconUrlCacheFilename);
+                    File.Exists(Path.Combine(platform.CacheDataFolder, AppSettingsFilename)) ||
+                    File.Exists(Path.Combine(platform.CacheDataFolder, LocationListFilename)) ||
+                    File.Exists(Path.Combine(platform.CacheDataFolder, TrackListFilename)) ||
+                    File.Exists(Path.Combine(platform.CacheDataFolder, LayerListFilename)) ||
+                    File.Exists(Path.Combine(platform.CacheDataFolder, WeatherIconListFilename)) ||
+                    File.Exists(Path.Combine(platform.CacheDataFolder, FaviconUrlCacheFilename));
             }
         }
 
@@ -501,14 +503,16 @@ namespace WhereToFly.App.Core.Services
         /// </summary>
         public void Cleanup()
         {
+            var platform = DependencyService.Get<IPlatform>();
+
             lock (this.appSettingsLock)
             {
-                File.Delete(AppSettingsFilename);
-                File.Delete(LocationListFilename);
-                File.Delete(TrackListFilename);
-                File.Delete(LayerListFilename);
-                File.Delete(WeatherIconListFilename);
-                File.Delete(FaviconUrlCacheFilename);
+                File.Delete(Path.Combine(platform.CacheDataFolder, AppSettingsFilename));
+                File.Delete(Path.Combine(platform.CacheDataFolder, LocationListFilename));
+                File.Delete(Path.Combine(platform.CacheDataFolder, TrackListFilename));
+                File.Delete(Path.Combine(platform.CacheDataFolder, LayerListFilename));
+                File.Delete(Path.Combine(platform.CacheDataFolder, WeatherIconListFilename));
+                File.Delete(Path.Combine(platform.CacheDataFolder, FaviconUrlCacheFilename));
             }
         }
 
