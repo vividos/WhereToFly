@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.App.Core", "App\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.App.Logic", "App\Logic\WhereToFly.App.Logic.csproj", "{D8B7A38E-6E38-4CC4-A254-80BFBAA262C0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{25BA9AB4-F4F3-4CDC-B13F-A4BB2A27FD41}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{25BA9AB4-F4F3-4CDC-B13F-A4BB2A27FD41}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		..\Credits.md = ..\Credits.md
