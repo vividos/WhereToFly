@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="WhereToFly.App.Core.Views.InfoPage"
+             Title="Info">
+    <ContentPage.Content>
+
+        <!-- Stacked carousel and indicator views -->
+        <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand">
+
+            <!-- Carousel showing the info pages -->
+            <CarouselView x:Name="carouselView"
+                          ItemsSource="{Binding Pages}"
+                          PeekAreaInsets="10"
+                          HorizontalOptions="Start"
+                          ItemsUpdatingScrollMode="KeepItemsInView">
+
+                <!-- Stop on full carousel items -->
+                <CarouselView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal"
+                                       ItemSpacing="10"
+                                       SnapPointsAlignment="Start"
+                                       SnapPointsType="MandatorySingle" />
+                </CarouselView.ItemsLayout>
+
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+
+                        <!-- Header image and a scrollable webview -->
+                        <StackLayout BackgroundColor="#cfd8dc" VerticalOptions="Fill" Margin="20">
+                            <Image Source="{Binding Image, Mode=OneTime}" />
+                            <ScrollView>
+                                <WebView HorizontalOptions="FillAndExpand"
+                                            VerticalOptions="FillAndExpand"
+                                            HeightRequest="2000"
+                                            Source="{Binding WebViewSource}" />
+                            </ScrollView>
+                        </StackLayout>
+                    </DataTemplate>
+
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+
+            <!-- Indicator showing current position in carousel -->
+            <IndicatorView ItemsSourceBy="carouselView"
+                           IndicatorColor="LightGray"
+                           SelectedIndicatorColor="{StaticResource primaryColor}"
+                           IndicatorSize="16"
+                           HeightRequest="40"
+                           HorizontalOptions="Center"
+                           VerticalOptions="End" />
+        </StackLayout>
+
+    </ContentPage.Content>
+</ContentPage>
