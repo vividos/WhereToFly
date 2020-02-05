@@ -5,6 +5,8 @@ with a paraglider. It shows the current position on a 3D map, and nearby
 point of interests, such as start and landing places, webcams and weather
 stations.
 
+See the Changelog for version infos: [Changelog.md](Changelog.md "Changelog")
+
 ## Build
 
 Builds are made by Visual Studio AppCenter:
