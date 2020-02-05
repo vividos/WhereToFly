@@ -83,6 +83,7 @@ namespace WhereToFly.App.UWP
         {
             Rg.Plugins.Popup.Popup.Init();
 
+            Xamarin.Forms.Forms.SetFlags("CarouselView_Experimental", "IndicatorView_Experimental");
             Xamarin.Forms.Forms.Init(args, Rg.Plugins.Popup.Popup.GetExtraAssemblies());
 
             FFImageLoading.ImageService.Instance.Initialize();
