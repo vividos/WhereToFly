@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Threading.Tasks;
 using WhereToFly.App.Core;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -92,6 +93,10 @@ namespace WhereToFly.App.UWP
             Xamarin.Essentials.Platform.MapServiceToken = Constants.BingMapsKeyUwp;
 
             Xamarin.Forms.MessagingCenter.Subscribe<string>(this, Constants.MessageShowToast, this.ShowToast);
+            Xamarin.Forms.MessagingCenter.Subscribe<Core.App>(
+                this,
+                Constants.MessageWebViewClearCache,
+                async (app) => await this.ClearWebViewCache());
         }
 
         /// <summary>
@@ -177,6 +182,15 @@ namespace WhereToFly.App.UWP
                 ExpirationTime = DateTime.Now.AddSeconds(4)
             };
             toastNotifier.Show(toast);
+        }
+
+        /// <summary>
+        /// Clears cache of the UWP web view control
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task ClearWebViewCache()
+        {
+            await WebView.ClearTemporaryWebDataAsync();
         }
     }
 }
