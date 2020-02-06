@@ -9,3 +9,4 @@ stations.
 
 Current version: %VERSION%
 
+Image: Above Roy's Peak, Lake Wanaka, New Zealand

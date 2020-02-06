@@ -43,8 +43,18 @@ namespace WhereToFly.App.Core.ViewModels
             {
                 new InfoPageEntryViewModel
                 {
-                    Image = null,
+                    Image = ImageSource.FromStream(() => platform.OpenAssetStream("info/version.jpg")),
                     WebViewSource = GetWebViewSource("info/version.md"),
+                },
+                new InfoPageEntryViewModel
+                {
+                    Image = null,
+                    WebViewSource = GetWebViewSource("info/Changelog.md")
+                },
+                new InfoPageEntryViewModel
+                {
+                    Image = null,
+                    WebViewSource = GetWebViewSource("info/Credits.md")
                 },
             };
         }

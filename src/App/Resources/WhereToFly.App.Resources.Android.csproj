@@ -568,6 +568,19 @@
   <ItemGroup>
     <AndroidAsset Include="Assets\applogo.svg" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="..\..\..\Credits.md">
+      <Link>Assets\info\Credits.md</Link>
+    </AndroidAsset>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\version.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="..\..\..\Changelog.md">
+      <Link>Assets\info\Changelog.md</Link>
+    </AndroidAsset>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

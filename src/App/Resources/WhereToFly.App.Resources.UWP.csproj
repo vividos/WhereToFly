@@ -51,6 +51,7 @@
     <Content Include="Assets\icons\eye-off-outline.svg" />
     <Content Include="Assets\icons\eye.svg" />
     <Content Include="Assets\icons\layers-outline.svg" />
+    <Content Include="Assets\info\version.jpg" />
     <Content Include="Assets\map\Cesium\Workers\ArcType-318ba758.js" />
     <Content Include="Assets\map\Cesium\Workers\arrayRemoveDuplicates-c6db543d.js" />
     <Content Include="Assets\map\Cesium\Workers\AttributeCompression-fe1560e2.js" />
@@ -286,6 +287,12 @@
     <Content Include="Assets\map\mapView3D.js" />
     <Content Include="Assets\locations\paraglidingspots_european_alps_2019_12_11.kmz" />
     <Content Include="Assets\defaultFaviconUrlCache.json" />
+    <Content Include="..\..\..\Credits.md">
+      <Link>Assets\info\Credits.md</Link>
+    </Content>
+    <Content Include="..\..\..\Changelog.md">
+      <Link>Assets\info\Changelog.md</Link>
+    </Content>
     <None Include="Assets\map\test.html" />
   </ItemGroup>
   <ItemGroup>
