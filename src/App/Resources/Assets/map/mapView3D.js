@@ -1528,11 +1528,12 @@ MapView.prototype.hideFlyingRangeCone = function () {
 
 /**
  * Calculates the current airac ID, based on the current date, which is good enough for our
- * purposes.
+ * purposes. See the actual starting days, per year, here:
+ * https://www.nm.eurocontrol.int/RAD/common/airac_dates.html
  * @returns {number} current airac ID
  */
 function calcCurrentAiracId() {
-    var baseAirac = new Date("2019-01-31"); // 1902 began on that day
+    var baseAirac = new Date("2020-01-02"); // 2001 began on that day
     var diffInDays = Math.abs(new Date() - baseAirac) / 86400000;
-    return 1902 + Math.floor(diffInDays / 28);
+    return 2001 + Math.floor(diffInDays / 28);
 }
