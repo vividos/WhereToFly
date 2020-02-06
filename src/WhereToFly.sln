@@ -12,6 +12,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{25BA9AB4-F4F3-4CDC-B13F-A4BB2A27FD41}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		..\Changelog.md = ..\Changelog.md
 		..\Credits.md = ..\Credits.md
 		..\README.md = ..\README.md
 		..\Release-Checklist.md = ..\Release-Checklist.md
