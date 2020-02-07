@@ -37,6 +37,12 @@ namespace WhereToFly.App.Model
         public LocationType Type { get; set; }
 
         /// <summary>
+        /// When the location is of type FlyingTakeoff, this may specify the possible takeoff
+        /// directions.
+        /// </summary>
+        public TakeoffDirection TakeoffDirection { get; set; }
+
+        /// <summary>
         /// Link to external internet page, for more infos about location
         /// </summary>
         public string InternetLink { get; set; }
@@ -62,6 +68,7 @@ namespace WhereToFly.App.Model
             hashCode = (hashCode * 31) + this.MapLocation.GetHashCode();
             hashCode = (hashCode * 31) + this.Description.GetHashCode();
             hashCode = (hashCode * 31) + this.IsPlanTourLocation.GetHashCode();
+            hashCode = (hashCode * 31) + this.TakeoffDirection.GetHashCode();
 
             return hashCode;
         }
