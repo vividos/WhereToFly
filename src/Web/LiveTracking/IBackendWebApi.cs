@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using WhereToFly.Shared.Model;
 
-namespace WhereToFly.Web.LiveTracking.Pages
+namespace WhereToFly.Web.LiveTracking
 {
     /// <summary>
     /// Web API backend interface
