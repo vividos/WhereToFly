@@ -80,6 +80,29 @@ LiveTracking.prototype.addDefaultLayerAndLocationListsAndTracks = function () {
 
     console.log("loading default data...");
 
+    this.addXLakesLayer();
+};
+
+/**
+ * Adds "X-Lakes" layer
+ */
+LiveTracking.prototype.addXLakesLayer = function () {
+
+    var that = this;
+    $.get("/data/x-lakes-2020-wainwrights.czml",
+        null,
+        function (data) {
+            console.log("successfully loaded czml file, adding layer");
+            that.map.addLayer({
+                id: 'x-lakes-2020-layer',
+                name: 'X-Lakes 2020 Wainwrights',
+                type: '',
+                isVisible: true,
+                data: data
+            });
+            that.map.zoomToLayer('x-lakes-2020-layer');
+        },
+        "text");
 };
 
 /**
@@ -229,7 +252,7 @@ LiveTracking.prototype.updateByPrefix = function (pageIdPrefix) {
 };
 
 /**
- * Zooms to a live waypoint
+ * Updates a live waypoint
  * @param {String} liveWaypointUri live waypoint uri to update
  */
 LiveTracking.prototype.updateLiveWaypoint = function (liveWaypointUri) {
