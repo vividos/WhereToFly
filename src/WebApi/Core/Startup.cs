@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using System;
 using System.IO;
 using WhereToFly.WebApi.Logic;
@@ -43,7 +44,7 @@ namespace WhereToFly.WebApi.LiveWaypoints
             {
                 c.SwaggerDoc(
                     "v1",
-                    new Swashbuckle.AspNetCore.Swagger.Info
+                    new OpenApiInfo
                     {
                         Title = "WhereToFly Web API",
                         Version = "v1"
@@ -100,6 +101,7 @@ namespace WhereToFly.WebApi.LiveWaypoints
                 {
                     const string SwaggerUrl = "/swagger/v1/swagger.json";
                     c.SwaggerEndpoint(SwaggerUrl, "WhereToFly Web API V1");
+                    c.RoutePrefix = string.Empty;
                 });
             }
             else

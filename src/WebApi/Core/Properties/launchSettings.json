@@ -19,11 +19,10 @@
     "WhereToFly.WebApi.Core": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "swagger/",
-      "applicationUrl": "https://localhost:44359/;http://localhost:62318/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "https://localhost:44359/;http://localhost:62318/"
     }
   }
 }
