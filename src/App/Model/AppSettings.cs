@@ -45,6 +45,11 @@ namespace WhereToFly.App.Model
         public FlyingRangeParameters LastFlyingRangeParameters { get; set; }
 
         /// <summary>
+        /// Last shown settings page
+        /// </summary>
+        public int LastShownSettingsPage { get; set; }
+
+        /// <summary>
         /// Creates a new default app settings object
         /// </summary>
         public AppSettings()
@@ -56,6 +61,7 @@ namespace WhereToFly.App.Model
             this.CoordinateDisplayFormat = CoordinateDisplayFormat.Format_dd_mm_mmm;
             this.LastLocationListFilterText = string.Empty;
             this.LastFlyingRangeParameters = new FlyingRangeParameters();
+            this.LastShownSettingsPage = 0;
         }
 
         #region object overridables implementation
@@ -64,7 +70,9 @@ namespace WhereToFly.App.Model
         /// </summary>
         /// <returns>calculated hash code</returns>
         public override int GetHashCode() =>
-            (LastShownPosition, ShadingMode, MapImageryType, MapOverlayType, CoordinateDisplayFormat, LastLocationListFilterText, LastFlyingRangeParameters).GetHashCode();
+            (LastShownPosition, ShadingMode, MapImageryType, MapOverlayType,
+            CoordinateDisplayFormat, LastLocationListFilterText, LastFlyingRangeParameters,
+            LastShownSettingsPage).GetHashCode();
 
         /// <summary>
         /// Compares this app settings to another object
@@ -84,8 +92,11 @@ namespace WhereToFly.App.Model
         public bool Equals(AppSettings other) =>
             LastShownPosition.Equals(other.LastShownPosition) &&
             LastFlyingRangeParameters.Equals(other.LastFlyingRangeParameters) &&
-            (ShadingMode, MapImageryType, MapOverlayType, CoordinateDisplayFormat, LastLocationListFilterText) ==
-            (other.ShadingMode, other.MapImageryType, other.MapOverlayType, other.CoordinateDisplayFormat, other.LastLocationListFilterText);
+            (ShadingMode, MapImageryType, MapOverlayType, CoordinateDisplayFormat,
+            LastLocationListFilterText, LastShownSettingsPage) ==
+            (other.ShadingMode, other.MapImageryType, other.MapOverlayType,
+            other.CoordinateDisplayFormat, other.LastLocationListFilterText,
+            other.LastShownSettingsPage);
         #endregion
 
         /// <summary>
