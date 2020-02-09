@@ -42,11 +42,6 @@
         public IconType Type { get; set; }
 
         /// <summary>
-        /// Icon text, e.g. filename
-        /// </summary>
-        public string Icon { get; set; }
-
-        /// <summary>
         /// Web link or app link
         /// </summary>
         public string WebLink { get; set; }

@@ -62,16 +62,6 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             }
 
             /// <summary>
-            /// Weather icon description icon
-            /// </summary>
-            [Column("icon")]
-            public string Icon
-            {
-                get => this.WeatherIconDescription.Icon;
-                set => this.WeatherIconDescription.Icon = value;
-            }
-
-            /// <summary>
             /// Weather icon description weblink
             /// </summary>
             [Column("weblink")]
