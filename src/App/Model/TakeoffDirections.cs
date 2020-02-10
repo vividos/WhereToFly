@@ -12,7 +12,7 @@ namespace WhereToFly.App.Model
         "StyleCop.CSharp.DocumentationRules",
         "SA1602:EnumerationItemsMustBeDocumented",
         Justification = "No need to document the obvious cardinal directions")]
-    public enum TakeoffDirection
+    public enum TakeoffDirections
     {
         /// <summary>
         /// No takeoff direction, none known, or no takeoff location

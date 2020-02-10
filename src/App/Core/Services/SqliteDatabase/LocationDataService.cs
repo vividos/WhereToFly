@@ -79,13 +79,13 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             }
 
             /// <summary>
-            /// Takeoff direction
+            /// Takeoff directions
             /// </summary>
             [Column("takeoff_dir")]
-            public TakeoffDirection TakeoffDirection
+            public TakeoffDirections TakeoffDirections
             {
-                get => this.Location.TakeoffDirection;
-                set => this.Location.TakeoffDirection = value;
+                get => this.Location.TakeoffDirections;
+                set => this.Location.TakeoffDirections = value;
             }
 
             /// <summary>
