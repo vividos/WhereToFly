@@ -88,6 +88,8 @@ function MapView(options) {
     });
 
     console.log("#4 viewer");
+    var webGLPowerPreference = 'low-power';
+
     this.viewer = new Cesium.Viewer(this.options.id, {
         imageryProvider: this.openStreetMapImageryProvider,
         terrainProvider: terrainProvider,
@@ -101,7 +103,12 @@ function MapView(options) {
         timeline: false,
         skyBox: false,
         scene3DOnly: true,
-        requestRenderMode: true
+        requestRenderMode: true,
+        contextOptions: {
+            webgl: {
+                powerPreference: webGLPowerPreference
+            }
+        }
     });
 
     console.log("#4a globe options");
