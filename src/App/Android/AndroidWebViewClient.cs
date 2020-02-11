@@ -98,7 +98,16 @@ namespace WhereToFly.App.Android
                 }
             }
 
-            return base.ShouldInterceptRequest(view, request);
+            // AppCenter infrequently reports an exception; try to fix this
+            try
+            {
+                return base.ShouldInterceptRequest(view, request);
+            }
+            catch (Exception ex)
+            {
+                Core.App.LogError(ex);
+                return null;
+            }
         }
 
         /// <summary>
