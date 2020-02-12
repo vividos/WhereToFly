@@ -73,9 +73,11 @@ body {
 }
 
 /* set size of infobox to fill 80% of the whole mobile screen */
-.cesium-infoBox {
-    width: 80%;
-    max-width: 80%;
+@media (max-width: 768px) {
+    .cesium-infoBox {
+        width: 80%;
+        max-width: 80%;
+    }
 }
 
 /* sidebar */
