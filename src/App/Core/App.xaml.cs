@@ -29,11 +29,6 @@ namespace WhereToFly.App.Core
     public partial class App : Application
     {
         /// <summary>
-        /// Filename for the weather image cache file
-        /// </summary>
-        private const string WeatherImageCacheFilename = "weatherImageCache.json";
-
-        /// <summary>
         /// Application settings
         /// </summary>
         public static AppSettings Settings { get; internal set; }
@@ -118,7 +113,6 @@ namespace WhereToFly.App.Core
         {
             var dataService = DependencyService.Get<IDataService>();
 
-            CleanupWeatherImageCache();
             await DataServiceHelper.CheckAndMigrateDataServiceAsync(dataService);
             await InitLiveWaypointRefreshService();
 
@@ -298,27 +292,6 @@ namespace WhereToFly.App.Core
         public async Task OpenAppResourceUriAsync(string uri)
         {
             await OpenAppResourceUriHelper.Open(uri);
-        }
-
-        /// <summary>
-        /// Cleans up the weather image cache
-        /// </summary>
-        private static void CleanupWeatherImageCache()
-        {
-            var platform = DependencyService.Get<IPlatform>();
-            string cacheFilename = Path.Combine(platform.CacheDataFolder, WeatherImageCacheFilename);
-
-            if (File.Exists(cacheFilename))
-            {
-                try
-                {
-                    File.Delete(cacheFilename);
-                }
-                catch (Exception)
-                {
-                    // ignore errors
-                }
-            }
         }
 
         /// <summary>
