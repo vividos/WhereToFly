@@ -80,6 +80,8 @@ namespace WhereToFly.App.UnitTest
 
             // check
             Assert.IsNotNull(appSettings, "app settings object must be available");
+
+            await service.CloseAsync();
         }
 
         [TestMethod]
@@ -96,6 +98,8 @@ namespace WhereToFly.App.UnitTest
             // check
             Assert.IsNotNull(appSettings2, "loaded app settings object must be non-null");
             Assert.AreEqual(appSettings, appSettings2, "stored app settings object must match initial one");
+
+            await service.CloseAsync();
         }
 
         /// <summary>
@@ -153,6 +157,8 @@ namespace WhereToFly.App.UnitTest
                 myTrackList[0].TrackPoints.Count,
                 migratedTrackList[0].TrackPoints.Count,
                 "migrated track point list length must match");
+
+            await dataService.CloseAsync();
         }
     }
 }
