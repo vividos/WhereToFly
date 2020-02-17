@@ -739,6 +739,11 @@ namespace WhereToFly.App.Core.Views
 
             Task.Run(async () =>
             {
+                if (!await GeolocationService.CheckPermissionAsync())
+                {
+                    return;
+                }
+
                 await this.geolocator.StartListeningAsync(
                     Constants.GeoLocationMinimumTimeForUpdate,
                     Constants.GeoLocationMinimumDistanceForUpdateInMeters,
