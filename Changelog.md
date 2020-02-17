@@ -1,5 +1,7 @@
 # Changelog
 
+1.8.0
+
 1.7.0
 
 - all data is now stored in an SQLite database; improves speed of location

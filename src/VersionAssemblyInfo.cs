@@ -2,7 +2,7 @@ using System.Reflection;
 
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Where-to-fly")]
-[assembly: AssemblyCopyright("Copyright © 2017-2019 Michael Fink")]
+[assembly: AssemblyCopyright("Copyright © 2017-2020 Michael Fink")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -15,5 +15,5 @@ using System.Reflection;
 //
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("1.7.0.*")]
-[assembly: AssemblyFileVersion("1.7.0.0")]
+[assembly: AssemblyVersion("1.8.0.*")]
+[assembly: AssemblyFileVersion("1.8.0.0")]
