@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using WhereToFly.App.Geo;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Model;
 
@@ -34,42 +32,10 @@ namespace WhereToFly.App.Core
         ILocationDataService GetLocationDataService();
 
         /// <summary>
-        /// Gets list of locations
-        /// </summary>
-        /// <param name="token">cancellation token</param>
-        /// <returns>list of locations</returns>
-        [Obsolete("use ILocationDataService")]
-        Task<List<Location>> GetLocationListAsync(CancellationToken token);
-
-        /// <summary>
-        /// Stores new location list
-        /// </summary>
-        /// <param name="locationList">location list to store</param>
-        /// <returns>task to wait on</returns>
-        [Obsolete("use ILocationDataService")]
-        Task StoreLocationListAsync(List<Location> locationList);
-
-        /// <summary>
         /// Returns a data service for Track objects
         /// </summary>
         /// <returns>track data service</returns>
         ITrackDataService GetTrackDataService();
-
-        /// <summary>
-        /// Gets list of tracks
-        /// </summary>
-        /// <param name="token">cancellation token</param>
-        /// <returns>list of tracks</returns>
-        [Obsolete("use ITrackDataService")]
-        Task<List<Track>> GetTrackListAsync(CancellationToken token);
-
-        /// <summary>
-        /// Stores new track list
-        /// </summary>
-        /// <param name="trackList">track list to store</param>
-        /// <returns>task to wait on</returns>
-        [Obsolete("use ITrackDataService")]
-        Task StoreTrackListAsync(List<Track> trackList);
 
         /// <summary>
         /// Returns a data service for Layer objects
@@ -78,41 +44,10 @@ namespace WhereToFly.App.Core
         ILayerDataService GetLayerDataService();
 
         /// <summary>
-        /// Gets list of layers
-        /// </summary>
-        /// <param name="token">cancellation token</param>
-        /// <returns>list of layers</returns>
-        [Obsolete("use ILayerDataService")]
-        Task<List<Layer>> GetLayerListAsync(CancellationToken token);
-
-        /// <summary>
-        /// Stores new layer list
-        /// </summary>
-        /// <param name="layerList">layer list to store</param>
-        /// <returns>task to wait on</returns>
-        [Obsolete("use ILayerDataService")]
-        Task StoreLayerListAsync(List<Layer> layerList);
-
-        /// <summary>
         /// Returns a data service for WeatherIconDescription objects
         /// </summary>
         /// <returns>weather icon description data service</returns>
         IWeatherIconDescriptionDataService GetWeatherIconDescriptionDataService();
-
-        /// <summary>
-        /// Retrieves list of weather icon descriptions
-        /// </summary>
-        /// <returns>list with current weather icon descriptions</returns>
-        [Obsolete("use IWeatherIconDescriptionDataService")]
-        Task<List<WeatherIconDescription>> GetWeatherIconDescriptionListAsync();
-
-        /// <summary>
-        /// Stores new weather icon list
-        /// </summary>
-        /// <param name="weatherIconList">weather icon list to store</param>
-        /// <returns>task to wait on</returns>
-        [Obsolete("use IWeatherIconDescriptionDataService")]
-        Task StoreWeatherIconDescriptionListAsync(List<WeatherIconDescription> weatherIconList);
 
         /// <summary>
         /// Returns the repository of all available weather icon descriptions that can be used

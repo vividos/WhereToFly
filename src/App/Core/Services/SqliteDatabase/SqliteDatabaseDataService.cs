@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using WhereToFly.App.Geo;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Model;
@@ -216,52 +215,12 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         }
 
         /// <summary>
-        /// Gets list of locations
-        /// </summary>
-        /// <param name="token">cancellation token</param>
-        /// <returns>list of locations</returns>
-        public Task<List<Location>> GetLocationListAsync(CancellationToken token)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Stores new location list
-        /// </summary>
-        /// <param name="locationList">location list to store</param>
-        /// <returns>task to wait on</returns>
-        public Task StoreLocationListAsync(List<Location> locationList)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// Returns track data service that acesses the tracks in the database
         /// </summary>
         /// <returns>track data service</returns>
         public ITrackDataService GetTrackDataService()
         {
             return new TrackDataService(this.connection);
-        }
-
-        /// <summary>
-        /// Gets list of tracks
-        /// </summary>
-        /// <param name="token">cancellation token</param>
-        /// <returns>list of tracks</returns>
-        public Task<List<Track>> GetTrackListAsync(CancellationToken token)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Stores new track list
-        /// </summary>
-        /// <param name="trackList">track list to store</param>
-        /// <returns>task to wait on</returns>
-        public Task StoreTrackListAsync(List<Track> trackList)
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -274,51 +233,12 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         }
 
         /// <summary>
-        /// Gets list of layers
-        /// </summary>
-        /// <param name="token">cancellation token</param>
-        /// <returns>list of layers</returns>
-        public Task<List<Layer>> GetLayerListAsync(CancellationToken token)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Stores new layer list
-        /// </summary>
-        /// <param name="layerList">layer list to store</param>
-        /// <returns>task to wait on</returns>
-        public Task StoreLayerListAsync(List<Layer> layerList)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// Returns a data service for WeatherIconDescription objects
         /// </summary>
         /// <returns>weather icon description data service</returns>
         public IWeatherIconDescriptionDataService GetWeatherIconDescriptionDataService()
         {
             return new WeatherIconDescriptionDataService(this.connection);
-        }
-
-        /// <summary>
-        /// Retrieves list of weather icon descriptions
-        /// </summary>
-        /// <returns>list with current weather icon descriptions</returns>
-        public Task<List<WeatherIconDescription>> GetWeatherIconDescriptionListAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Stores new weather icon list
-        /// </summary>
-        /// <param name="weatherIconList">weather icon list to store</param>
-        /// <returns>task to wait on</returns>
-        public Task StoreWeatherIconDescriptionListAsync(List<WeatherIconDescription> weatherIconList)
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>
