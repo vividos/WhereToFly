@@ -112,11 +112,9 @@ namespace WhereToFly.App.Core
         private async Task LoadAppDataAsync()
         {
             var dataService = DependencyService.Get<IDataService>();
-
-            await DataServiceHelper.CheckAndMigrateDataServiceAsync(dataService);
-            await InitLiveWaypointRefreshService();
-
             App.Settings = await dataService.GetAppSettingsAsync(CancellationToken.None);
+
+            await InitLiveWaypointRefreshService();
         }
 
         /// <summary>

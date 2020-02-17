@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
 using WhereToFly.App.Geo;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Model;
@@ -155,50 +153,6 @@ namespace WhereToFly.App.Core.Services
 
                 return new List<WeatherIconDescription>();
             }
-        }
-
-        /// <summary>
-        /// Checks if there is a legacy data service that can be migrated to the current data
-        /// service and migrates it.
-        /// </summary>
-        /// <param name="dataService">current data service</param>
-        /// <returns>task to wait on</returns>
-        internal static async Task CheckAndMigrateDataServiceAsync(IDataService dataService)
-        {
-            var legacyDataService = new JsonFileDataService();
-            if (!legacyDataService.AreFilesAvailable)
-            {
-                return;
-            }
-
-            var cancellationToken = CancellationToken.None;
-
-            try
-            {
-                await dataService.StoreAppSettingsAsync(
-                    await legacyDataService.GetAppSettingsAsync(cancellationToken));
-
-                await dataService.GetWeatherIconDescriptionDataService().AddList(
-                    await legacyDataService.GetWeatherIconDescriptionListAsync());
-
-                await dataService.GetLayerDataService().AddList(
-                    await legacyDataService.GetLayerListAsync(cancellationToken));
-
-                await dataService.GetLocationDataService().ClearList();
-                await dataService.GetLocationDataService().AddList(
-                    await legacyDataService.GetLocationListAsync(cancellationToken));
-
-                await dataService.GetTrackDataService().ClearList();
-                await dataService.GetTrackDataService().AddList(
-                    await legacyDataService.GetTrackListAsync(cancellationToken));
-            }
-            catch (Exception ex)
-            {
-                // log exception and continue
-                App.LogError(ex);
-            }
-
-            legacyDataService.Cleanup();
         }
     }
 }
