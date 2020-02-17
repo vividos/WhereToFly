@@ -2,11 +2,15 @@
 
 1.7.0
 
-- improved speed of location list; data is now stored in an SQLite database
+- all data is now stored in an SQLite database; improves speed of location
+  list; migrating existing data occurs when upgrading to 1.7.0
 - added automatic logon for Alptherm website; can be configured on settings
   page
 - updated included ParaglidingSpots locations
+- the info page now shows several pages, showing version info, this changelog
+  and the credits
 - various bug fixes and improvements
+- using CesiumJS version 1.66
 
 1.6.0 "Crossing the Alps 2019" edition
 
@@ -17,6 +21,7 @@
 - flying range cones can now be hidden using an icon in the description
 - supported opening .igc files downloaded from xcontest
 - updated waypoints for Crossing the Alps 2019
+- using CesiumJS version 1.59
 
 1.5.0
 
