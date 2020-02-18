@@ -121,14 +121,16 @@ namespace WhereToFly.App.Core.Services
         {
             var platform = DependencyService.Get<IPlatform>();
 
-            if (!File.Exists(Path.Combine(platform.AppDataFolder, FaviconUrlCacheFilename)))
+            try
+            {
+                string json = platform.LoadAssetText(FaviconUrlCacheFilename);
+                return JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+            }
+            catch (Exception)
             {
                 // this code path is only used in unit tests
                 return new Dictionary<string, string>();
             }
-
-            string json = platform.LoadAssetText(FaviconUrlCacheFilename);
-            return JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
         }
 
         /// <summary>
