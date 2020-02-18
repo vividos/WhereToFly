@@ -49,6 +49,11 @@ namespace WhereToFly.App.Core.ViewModels
                 new InfoPageEntryViewModel
                 {
                     Image = null,
+                    WebViewSource = GetWebViewSource("info/manual.md"),
+                },
+                new InfoPageEntryViewModel
+                {
+                    Image = null,
                     WebViewSource = GetWebViewSource("info/Changelog.md")
                 },
                 new InfoPageEntryViewModel
