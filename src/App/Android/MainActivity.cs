@@ -212,7 +212,6 @@ namespace WhereToFly.App.Android
         /// <summary>
         /// Shows toast message with given text
         /// </summary>
-        /// <param name="app">app object; unused</param>
         /// <param name="message">toast message</param>
         private void ShowToast(string message)
         {

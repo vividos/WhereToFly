@@ -111,7 +111,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <param name="weatherIcon">selected weather icon</param>
         private void OnSelectedWeatherIcon(WeatherIconDescription weatherIcon)
         {
-            WeatherDashboardViewModel.AddWeatherIcon(this, weatherIcon);
+            WeatherDashboardViewModel.AddWeatherIcon(weatherIcon);
             App.RunOnUiThread(async () => await NavigationService.Instance.GoBack());
         }
     }

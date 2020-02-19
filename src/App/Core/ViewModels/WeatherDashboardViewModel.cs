@@ -40,7 +40,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         public WeatherDashboardViewModel()
         {
-            MessagingCenter.Subscribe<object, WeatherIconDescription>(this, MessageAddWeatherIcon, this.OnAddWeatherIcon);
+            MessagingCenter.Subscribe<WeatherIconDescription>(this, MessageAddWeatherIcon, this.OnAddWeatherIcon);
 
             this.SetupBindings();
         }
@@ -48,18 +48,17 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Adds new weather icon to dashboard; called by SelectWeatherIconViewModel
         /// </summary>
-        /// <param name="sender">sender object; must not be null</param>
         /// <param name="iconDescription">weather icon description</param>
-        public static void AddWeatherIcon(object sender, WeatherIconDescription iconDescription)
+        public static void AddWeatherIcon(WeatherIconDescription iconDescription)
         {
-            MessagingCenter.Send<object, WeatherIconDescription>(sender, MessageAddWeatherIcon, iconDescription);
+            MessagingCenter.Send(iconDescription, MessageAddWeatherIcon);
         }
 
         /// <summary>
         /// Called when a weather icon should be added to the dashboard
         /// </summary>
         /// <param name="iconDescription">weather icon description</param>
-        private void OnAddWeatherIcon(object sender, WeatherIconDescription iconDescription)
+        private void OnAddWeatherIcon(WeatherIconDescription iconDescription)
         {
             // remove it when it's already in the list, in order to move it to the end
             this.WeatherIconDescriptionList.RemoveAll(
@@ -136,7 +135,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <param name="weatherIcon">selected weather icon</param>
         private void OnSelectedWeatherIcon(WeatherIconDescription weatherIcon)
         {
-            AddWeatherIcon(this, weatherIcon);
+            AddWeatherIcon(weatherIcon);
             App.RunOnUiThread(async () => await NavigationService.Instance.GoBack());
         }
 

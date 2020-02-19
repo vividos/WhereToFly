@@ -159,6 +159,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         /// <summary>
         /// Closes database again
         /// </summary>
+        /// <returns>task to wait on</returns>
         public async Task CloseAsync()
         {
             await this.connection.CloseAsync();

@@ -1,14 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Core;
-using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.Services.SqliteDatabase;
-using WhereToFly.App.Geo;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Model;
 using Xamarin.Forms;
@@ -84,6 +79,10 @@ namespace WhereToFly.App.UnitTest
             await service.CloseAsync();
         }
 
+        /// <summary>
+        /// Tests storing and getting AppSettings object from the database service
+        /// </summary>
+        /// <returns>task to wait on</returns>
         [TestMethod]
         public async Task TestStoreAndGetAppSettings()
         {
