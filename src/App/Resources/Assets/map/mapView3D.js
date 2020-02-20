@@ -69,11 +69,7 @@ function MapView(options) {
     this.blackMarbleLayer = null;
     this.blackMarbleOverlay = null;
 
-    console.log("#2 terrain provider");
-    var terrainProvider = Cesium.createWorldTerrain({
-        requestWaterMask: false,
-        requestVertexNormals: true
-    });
+    this.initTerrainProvider();
 
     console.log("#3 clock");
     var now = Cesium.JulianDate.now();
@@ -92,7 +88,7 @@ function MapView(options) {
 
     this.viewer = new Cesium.Viewer(this.options.id, {
         imageryProvider: this.openStreetMapImageryProvider,
-        terrainProvider: terrainProvider,
+        terrainProvider: null, // is later set when readyPromise completes
         clockViewModel: new Cesium.ClockViewModel(clock),
         baseLayerPicker: false,
         sceneModePicker: false,
@@ -220,6 +216,29 @@ function MapView(options) {
 
     this.onMapInitialized();
 }
+
+/**
+ * Called to initialize terrain provider, which may not available when
+ * offline.
+ */
+MapView.prototype.initTerrainProvider = function () {
+
+    console.log("#2 terrain provider");
+
+    var terrainProvider = Cesium.createWorldTerrain({
+        requestWaterMask: false,
+        requestVertexNormals: true
+    });
+
+    var that = this;
+    terrainProvider.readyPromise.then(function () {
+        console.log("#2a terrain provider is ready!");
+        that.viewer.terrainProvider = terrainProvider;
+    }).otherwise(function (error) {
+        // waiting for onNetworkConnectivityChanged
+        console.log("#2b failed init'ing terrain provider", error);
+    });
+};
 
 /**
  * Called when the screen space event handler detected a touch-down event.
@@ -1531,6 +1550,18 @@ MapView.prototype.hideFlyingRangeCone = function () {
     console.log("hiding flying range cone");
 
     this.viewer.entities.remove(this.flyingRangeCone);
+};
+
+/**
+ * Called when the network connectivity has changed.
+ * @param {boolean} isAvailable indicates if network is available now
+ */
+MapView.prototype.onNetworkConnectivityChanged = function (isAvailable) {
+
+    // retry initializing terrain provider
+    if (isAvailable &&
+        (this.viewer.terrainProvider === null || this.viewer.terrainProvider instanceof Cesium.EllipsoidTerrainProvider))
+        this.initTerrainProvider();
 };
 
 /**
