@@ -6,7 +6,7 @@ Where-to-fly uses several components and resources.
 
 The app uses [CesiumJS](https://cesiumjs.org/) to visualize a 3D map.
 The component is licensed using the
-[Apache License 2.0](https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md).
+[Apache License 2.0](https://github.com/CesiumGS/cesium/blob/master/LICENSE.md).
 
 The app uses the [Microsoft App Center](https://appcenter.ms/) SDK packages to
 distribute the app and to collect crash information.

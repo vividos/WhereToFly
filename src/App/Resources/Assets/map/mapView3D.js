@@ -123,7 +123,7 @@ function MapView(options) {
     globe.depthTestAgainstTerrain = true;
 
     // increase resolution for all image layer
-    // https://github.com/AnalyticalGraphicsInc/cesium/issues/3279
+    // https://github.com/CesiumGS/cesium/issues/3279
     globe.maximumScreenSpaceError = 1.666;
 
     // allow scripts to run in info box
