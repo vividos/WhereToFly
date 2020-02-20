@@ -582,6 +582,12 @@
       <Link>Assets\info\Changelog.md</Link>
     </AndroidAsset>
   </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\settings-general.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\settings-map.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
