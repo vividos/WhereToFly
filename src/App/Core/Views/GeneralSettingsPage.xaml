@@ -29,7 +29,7 @@
             <!-- Alptherm username -->
             <Label Grid.Row="1" Grid.Column="0" FontSize="Medium" Text="Username" />
             <Entry Grid.Row="1" Grid.Column="1"
-                   Placeholder="Username"
+                   Placeholder="Alptherm username"
                    Text="{Binding AlpthermUsername}"
                    IsSpellCheckEnabled="False" IsTextPredictionEnabled="false"
                    ClearButtonVisibility="WhileEditing" />
