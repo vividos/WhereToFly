@@ -751,6 +751,22 @@ namespace WhereToFly.App.Core.Views
             });
 
             this.geolocator.PositionChanged += this.OnPositionChanged;
+
+            Xamarin.Essentials.Connectivity.ConnectivityChanged += this.OnConnectivityChanged;
+        }
+
+        /// <summary>
+        /// Called when network connectivity of the device has changed. Sends a notification to
+        /// the map view.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="args">event args</param>
+        private void OnConnectivityChanged(object sender, Xamarin.Essentials.ConnectivityChangedEventArgs args)
+        {
+            if (this.mapView.MapInitializedTask.IsCompleted)
+            {
+                this.mapView.OnNetworkConnectivityChanged(args.NetworkAccess == Xamarin.Essentials.NetworkAccess.Internet);
+            }
         }
 
         /// <summary>
@@ -893,6 +909,7 @@ namespace WhereToFly.App.Core.Views
             base.OnDisappearing();
 
             this.geolocator.PositionChanged -= this.OnPositionChanged;
+            Xamarin.Essentials.Connectivity.ConnectivityChanged -= this.OnConnectivityChanged;
 
             Task.Run(async () =>
             {

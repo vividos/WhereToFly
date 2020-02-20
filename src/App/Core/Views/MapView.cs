@@ -685,6 +685,16 @@ namespace WhereToFly.App.Core.Views
         }
 
         /// <summary>
+        /// Can be called to signal the MapView that network connectivity is available or not.
+        /// </summary>
+        /// <param name="isAvailable">true when available, false when not</param>
+        public void OnNetworkConnectivityChanged(bool isAvailable)
+        {
+            string js = string.Format("map.onNetworkConnectivityChanged({0});", isAvailable ? "true" : "false");
+            this.RunJavaScript(js);
+        }
+
+        /// <summary>
         /// Runs JavaScript code, in main thread
         /// </summary>
         /// <param name="js">javascript code snippet</param>

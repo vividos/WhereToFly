@@ -13,6 +13,7 @@ using System.Runtime.InteropServices;
 [assembly: UsesPermission(Android.Manifest.Permission.AccessCoarseLocation)]
 [assembly: UsesPermission(Android.Manifest.Permission.AccessFineLocation)]
 [assembly: UsesPermission(Android.Manifest.Permission.WriteExternalStorage)]
+[assembly: UsesPermission(Android.Manifest.Permission.AccessNetworkState)]
 
 // set debuggable flag based on configuration
 #if DEBUG
