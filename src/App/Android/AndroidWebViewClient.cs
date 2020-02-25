@@ -53,6 +53,17 @@ namespace WhereToFly.App.Android
         }
 
         /// <summary>
+        /// Constructor needed when the web view client is copied by Java
+        /// </summary>
+        /// <param name="javaReference">java reference</param>
+        /// <param name="transfer">ownership transfer value</param>
+        protected AndroidWebViewClient(IntPtr javaReference, global::Android.Runtime.JniHandleOwnership transfer)
+            : base(javaReference, transfer)
+        {
+            this.cacheFolder = GetCacheFolder();
+        }
+
+        /// <summary>
         /// Called when an error occured when receiving an URL; just forwards call to previous
         /// client.
         /// </summary>
