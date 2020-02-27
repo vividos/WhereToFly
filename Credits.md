@@ -24,7 +24,6 @@ The library is licensed using the
 [MIT License](https://github.com/xamarin/Essentials/blob/master/LICENSE).
 
 The app uses the following [Xamarin Plugins](https://github.com/jamesmontemagno/Xamarin.Plugins):
-- Plugin.Permissions: Checking and acquiring Android permissions
 - Xam.Plugin.Geolocator: Geo-location of user
 - Xamarin.Plugin.FilePicker: File picker
 

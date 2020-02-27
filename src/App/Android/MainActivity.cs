@@ -2,7 +2,6 @@
 using Android.Content;
 using Android.Content.PM;
 using Android.OS;
-using Plugin.Permissions;
 using System.IO;
 using WhereToFly.App.Core;
 using Xamarin.Forms;
@@ -204,9 +203,6 @@ namespace WhereToFly.App.Android
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-
-            // let Plugin.Permissions handle the request
-            PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
         /// <summary>
