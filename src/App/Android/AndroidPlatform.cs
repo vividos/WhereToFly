@@ -1,5 +1,4 @@
 ﻿using Android.Content;
-using Plugin.CurrentActivity;
 using System.IO;
 using WhereToFly.App.Core;
 using Xamarin.Forms;
@@ -21,7 +20,7 @@ namespace WhereToFly.App.Android
         {
             get
             {
-                return CrossCurrentActivity.Current.Activity ?? global::Android.App.Application.Context;
+                return Xamarin.Essentials.Platform.CurrentActivity ?? global::Android.App.Application.Context;
             }
         }
 
