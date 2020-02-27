@@ -12,8 +12,8 @@
         <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand">
 
             <!-- Carousel showing the info pages -->
-            <CarouselView x:Name="carouselView"
-                          ItemsSource="{Binding Pages}"
+            <CarouselView ItemsSource="{Binding Pages}"
+                          IndicatorView="indicatorView"
                           PeekAreaInsets="10"
                           HorizontalOptions="Start"
                           ItemsUpdatingScrollMode="KeepItemsInView">
@@ -45,7 +45,7 @@
             </CarouselView>
 
             <!-- Indicator showing current position in carousel -->
-            <IndicatorView ItemsSourceBy="carouselView"
+            <IndicatorView x:Name="indicatorView"
                            IndicatorColor="LightGray"
                            SelectedIndicatorColor="{StaticResource primaryColor}"
                            IndicatorSize="16"
