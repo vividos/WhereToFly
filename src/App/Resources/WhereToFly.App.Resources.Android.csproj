@@ -57,6 +57,8 @@
     <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="28.0.0.3" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\current-position.png" />
+    <AndroidAsset Include="Assets\info\images\share-variant.svg" />
     <AndroidAsset Include="Assets\info\manual.md" />
     <AndroidAsset Include="Assets\info\version.md" />
   </ItemGroup>

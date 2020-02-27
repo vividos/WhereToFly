@@ -44,6 +44,14 @@ This can happen for tracks with sub-second track point resolution.
 
 ## Current position
 
+![Current Position](images/current-position.png)
+
+The current position page shows the coordinates and other infos about your
+current position.
+
+The position data can be shared with other apps using the
+![Share](images/share-variant.svg) share button.
+
 ## Weather
 
 ## Settings
