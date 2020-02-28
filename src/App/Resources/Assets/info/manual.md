@@ -54,6 +54,29 @@ The position data can be shared with other apps using the
 
 ## Weather
 
+![Weather Dashboard](images/weather-dashboard.png)
+
+The weather page lets you quickly choose and view weather related pages, such
+as forecast and current weather websites, or webcam pages. The app contains a
+fixed list of different websites that can be added to the dashboard by tapping
+on the ![Add new...](images/border-none-variant.svg) "Add new..." tile or by
+using the ![Add](images/playlist-plus.svg) button.
+
+### Weather browser
+
+![Weather Browser](images/weather-browser.png)
+
+When a weather dashboard tile was tapped, the corresponding weather website is
+loaded and shown. The following buttons are available in this page:
+
+- ![Refresh](images/refresh.svg) Reloads the current page, e.g. to update the
+  weather
+- ![Forecast websites](images/calendar-clock.svg) Shows a list of forecast
+  websites to visit next
+- ![Current weather websites](images/weather-partly-cloudy.svg) Shows a list
+  of current weather websites
+- ![Webcam websites](images/camera.svg) Shows a list of webcam websites
+
 ## Settings
 
 The settings page shows two tabs.

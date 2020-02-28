@@ -590,6 +590,30 @@
   <ItemGroup>
     <AndroidAsset Include="Assets\info\images\settings-map.png" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\border-none-variant.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\calendar-clock.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\camera.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\playlist-plus.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\refresh.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\weather-partly-cloudy.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\weather-browser.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\weather-dashboard.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
