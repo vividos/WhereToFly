@@ -33,7 +33,10 @@ namespace WhereToFly.App.Model
         /// </summary>
         /// <returns>calculated hash code</returns>
         public override int GetHashCode() =>
-            (GlideRatio, GliderSpeed, WindSpeed, WindDirection).GetHashCode();
+            (this.GlideRatio,
+            this.GliderSpeed,
+            this.WindSpeed,
+            this.WindDirection).GetHashCode();
 
         /// <summary>
         /// Compares this app settings to another object
@@ -41,18 +44,25 @@ namespace WhereToFly.App.Model
         /// <param name="obj">object to compare to</param>
         /// <returns>true when equal app settings, false when not</returns>
         public override bool Equals(object obj) =>
-            (obj is FlyingRangeParameters FlyingRangeParameters) && Equals(FlyingRangeParameters);
+            (obj is FlyingRangeParameters FlyingRangeParameters) && this.Equals(FlyingRangeParameters);
         #endregion
 
         #region IEquatable implementation
         /// <summary>
         /// Compares this app settings to another app settings object
         /// </summary>
-        /// <param name="obj">object to compare to</param>
+        /// <param name="other">flying range parameters object to compare to</param>
         /// <returns>true when equal app settings, false when not</returns>
         public bool Equals(FlyingRangeParameters other) =>
-            (GlideRatio, GliderSpeed, WindSpeed, WindDirection) ==
-            (other.GlideRatio, other.GliderSpeed, other.WindSpeed, other.WindDirection);
+            other != null &&
+            (this.GlideRatio,
+            this.GliderSpeed,
+            this.WindSpeed,
+            this.WindDirection) ==
+            (other.GlideRatio,
+            other.GliderSpeed,
+            other.WindSpeed,
+            other.WindDirection);
         #endregion
 
         /// <summary>

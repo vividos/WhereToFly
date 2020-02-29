@@ -70,9 +70,14 @@ namespace WhereToFly.App.Model
         /// </summary>
         /// <returns>calculated hash code</returns>
         public override int GetHashCode() =>
-            (LastShownPosition, ShadingMode, MapImageryType, MapOverlayType,
-            CoordinateDisplayFormat, LastLocationListFilterText, LastFlyingRangeParameters,
-            LastShownSettingsPage).GetHashCode();
+            (this.LastShownPosition,
+            this.ShadingMode,
+            this.MapImageryType,
+            this.MapOverlayType,
+            this.CoordinateDisplayFormat,
+            this.LastLocationListFilterText,
+            this.LastFlyingRangeParameters,
+            this.LastShownSettingsPage).GetHashCode();
 
         /// <summary>
         /// Compares this app settings to another object
@@ -80,22 +85,30 @@ namespace WhereToFly.App.Model
         /// <param name="obj">object to compare to</param>
         /// <returns>true when equal app settings, false when not</returns>
         public override bool Equals(object obj) =>
-            (obj is AppSettings appSettings) && Equals(appSettings);
+            (obj is AppSettings appSettings) && this.Equals(appSettings);
         #endregion
 
         #region IEquatable implementation
         /// <summary>
         /// Compares this app settings to another app settings object
         /// </summary>
-        /// <param name="obj">object to compare to</param>
+        /// <param name="other">app settings object to compare to</param>
         /// <returns>true when equal app settings, false when not</returns>
         public bool Equals(AppSettings other) =>
-            LastShownPosition.Equals(other.LastShownPosition) &&
-            LastFlyingRangeParameters.Equals(other.LastFlyingRangeParameters) &&
-            (ShadingMode, MapImageryType, MapOverlayType, CoordinateDisplayFormat,
-            LastLocationListFilterText, LastShownSettingsPage) ==
-            (other.ShadingMode, other.MapImageryType, other.MapOverlayType,
-            other.CoordinateDisplayFormat, other.LastLocationListFilterText,
+            other != null &&
+            this.LastShownPosition.Equals(other.LastShownPosition) &&
+            this.LastFlyingRangeParameters.Equals(other.LastFlyingRangeParameters) &&
+            (this.ShadingMode,
+            this.MapImageryType,
+            this.MapOverlayType,
+            this.CoordinateDisplayFormat,
+            this.LastLocationListFilterText,
+            this.LastShownSettingsPage) ==
+            (other.ShadingMode,
+            other.MapImageryType,
+            other.MapOverlayType,
+            other.CoordinateDisplayFormat,
+            other.LastLocationListFilterText,
             other.LastShownSettingsPage);
         #endregion
 

@@ -184,7 +184,9 @@ namespace WhereToFly.Shared.Model
         /// </summary>
         /// <param name="other">other URI to compare to</param>
         /// <returns>true when equal URIs, false when not</returns>
-        public bool Equals(AppResourceUri other) => this.uri == other.uri;
+        public bool Equals(AppResourceUri other) =>
+            other != null &&
+            this.uri == other.uri;
 
         /// <summary>
         /// Equality operator
