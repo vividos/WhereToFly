@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Xamarin.Forms;
 
@@ -22,6 +23,7 @@ namespace WhereToFly.App.Core.Controls
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
+        [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1126:PrefixCallsCorrectly", Justification = "false positive")]
         private async void OnNavigated(object sender, WebNavigatedEventArgs args)
         {
             Debug.WriteLine($"OnNavigated: result{args.Result} event={args.NavigationEvent}");
