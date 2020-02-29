@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
              mc:Ignorable="d"
              x:Class="WhereToFly.App.Core.Views.InfoPage"
              Title="Info">
@@ -16,7 +17,8 @@
                           IndicatorView="indicatorView"
                           PeekAreaInsets="10"
                           HorizontalOptions="Start"
-                          ItemsUpdatingScrollMode="KeepItemsInView">
+                          ItemsUpdatingScrollMode="KeepItemsInView"
+                          BackgroundColor="#cfd8dc">
 
                 <!-- Stop on full carousel items -->
                 <CarouselView.ItemsLayout>
@@ -30,13 +32,13 @@
                     <DataTemplate>
 
                         <!-- Header image and a scrollable webview -->
-                        <StackLayout BackgroundColor="#cfd8dc" VerticalOptions="Fill" Margin="20">
+                        <StackLayout VerticalOptions="Fill" Margin="20">
                             <Image Source="{Binding Image, Mode=OneTime}" />
                             <ScrollView>
-                                <WebView HorizontalOptions="FillAndExpand"
-                                            VerticalOptions="FillAndExpand"
-                                            HeightRequest="2000"
-                                            Source="{Binding WebViewSource}" />
+                                <controls:AutoResizeWebView HorizontalOptions="FillAndExpand"
+                                                            VerticalOptions="FillAndExpand"
+                                                            HeightRequest="20"
+                                                            Source="{Binding WebViewSource}" />
                             </ScrollView>
                         </StackLayout>
                     </DataTemplate>
