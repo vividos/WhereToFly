@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Linq;
-using System.Threading;
 using WhereToFly.App.Core;
 using WhereToFly.App.Core.Services.SqliteDatabase;
 using WhereToFly.App.Core.ViewModels;
@@ -37,17 +37,11 @@ namespace WhereToFly.App.UnitTest.ViewModels
             var appSettings = new AppSettings();
             var viewModel = new LocationListViewModel(appSettings);
 
-            var propertyChangedEvent = new ManualResetEvent(false);
-
-            viewModel.PropertyChanged += (sender, args) =>
-                {
-                    if (args.PropertyName == nameof(viewModel.LocationList))
-                    {
-                        propertyChangedEvent.Set();
-                    }
-                };
-
-            propertyChangedEvent.WaitOne();
+            Assert.IsTrue(
+                viewModel.WaitForPropertyChange(
+                    nameof(viewModel.LocationList),
+                    TimeSpan.FromSeconds(10)),
+                "waiting for property change must succeed");
 
             // check
             Assert.IsTrue(viewModel.LocationList.Any(), "location list initially contains the default locations");
