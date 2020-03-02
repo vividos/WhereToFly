@@ -2,15 +2,190 @@
 
 Welcome to the manual page for the Where-to-fly app!
 
-## 3D Map
+## ![Map](images/map.svg) 3D Map
 
-## Layers
+![Map View](images/map-view.jpg)
 
-## Location list
+The 3D map lets you see the terrain profile of the world in a map that can
+display different imagery layers (in this case OpenStreetMap). The map is
+shaded according to the sun's current position. The map can be moved around
+using touch controls.
+
+![Map touch controls](images/map-touch-controls.png)
+
+Locations and tracks can be imported and are displayed on the map. Locations
+can be tapped to show more infos about a pin. Additional custom layers can be
+added that can display other geometric objects, such as thermals, national
+park areas, air spaces or labels.
+
+![Location info](images/location-info.png)
+
+### Title bar icons
+
+The ![Locate](images/crosshairs-gps.svg) button lets you zoom to your current
+position, which is marked with a green pin. From the pin info, you can share
+your position with other apps.
+
+The ![Find](images/magnify.svg) button shows a dialog to find a specific
+place, e.g. a mountain or town name. The result is shown with an orange pin.
+From the pin info, you can add a new location pin for the find result.
+
+### Other functions
+
+A long tap on the map shows the following menu:
+
+![Long-tap menu](images/longtap-menu.png)
+
+- Add new waypoint: Adds a new waypoint location to the location list
+- Navigate here: Starts the navigation app to show a route to this point
+- Show flying range: Shows a cone at the selected point that visualizes the
+  areas that can be reached with a given glide ratio. The following dialog
+  appears:
+
+![Flying range parameters](images/flying-range-menu.png)
+
+- Glide ratio: Determines how fast you sink; glide ratio is given in km
+  gliding per 1000m sinking.
+
+A half-transparent blue cone appears on the selected point, showing the areas
+that are potentially reachable.
+
+## ![Layers](images/layers-outline.svg) Layers
+
+The app can show layers above the 3D map, e.g. to display thermals, national
+park areas or other geographical elements. The Layers view shows the list of
+currently loaded custom layers.
+
+![Layers list](images/layers-list.png)
+
+New layers can be imported with the ![Add layers](images/layers-plus.svg)
+button. A file picker is opened to select a file on the device. Allowed file
+types are CZML. The format is a custom JSON based format from the Cesium
+project.
+
+The ![Delete all](images/delete-forever.svg) button removes all
+layers.
+
+When long-tapping a single layer entry, a context menu appears with the
+following menu entries:
+
+- ![Zoom to](images/magnify-plus-outline.svg) Zooms to layer object on the map
+- ![Delete](images/delete.svg) Deletes the selected layer
+
+## ![Location list](images/format-list-bulleted.svg) Location list
+
+![Locations list](images/location-list.png)
+
+The location list shows all locations. The list can be filtered using the
+entry line. When no location is imported yet, a message is shown. Tapping on
+an entry shows the details of that location (see below).
+
+The ![Add locations](images/playlist-plus.svg) button adds new
+locations to the list. First, a selection dialog is shown:
+
+- Import included: The app has some location lists included. The next dialog
+  shows the list of available locations you can choose from.
+- Import from storage: Opens a file picker to select a file on the device.
+  Allowed file types are KML, KMZ and GPX. 
+- Download from web: Presents a list of websites where lists of locations can
+  be downloaded from. The selection opens the external website then.
+
+When opening a new list, you can choose to append to the existing list or
+replace all existing entries.
+
+Locations can also be added when opening supported file types using the app
+(e.g. by tapping on the file or by downloadng a file from the web).
+
+The ![Remove all locations](images/delete-forever.svg) button removes all
+locations in the list.
+
+When long-tapping a single location entry, a context menu appears with the
+following menu entries:
+
+- ![Info](images/information-outline.svg) Shows details for the selected
+  location
+- ![Zoom to](images/magnify-plus-outline.svg) Zooms to the location on the map
+- ![Delete](images/delete.svg) Deletes the selected location
+
+### Location details
+
+![Location details](images/location-details.png)
+
+The location details shows infos about the location, like type, latitude and
+longitude and a detail text. When the device currently has a position, the
+Distance field contains the current distance to the location.
+
+The following title bar icons are available:
+
+- ![Zoom to](images/magnify-plus-outline.svg) Zooms to the location on the map
+- ![Navigate](images/directions.svg) Starts the navigation app to
+  show a route to this location
+- ![Share](images/share-variant.svg) Shares the location with other apps
+- ![Delete](images/delete.svg) Deletes the location
 
 ### Live waypoints
 
-## Tracks
+Some locations can be updated live, e.g. for lve tracking purposes. The
+locations are imported by clicking on weblinks that start with
+`where-to-fly://`. The position and other infos of those live waypoints
+are updated periodically while the app is running. The live waypoint data is
+queried from the Where-to-fly background service. Sources for live waypoints
+currently are Garmin inReach devices or Find me Spot tracker.
+
+## ![Tracks](../icons/map-marker-distance.svg) Tracks
+
+![Track list](images/track-list.png)
+
+The track list shows all locations. Tapping on an entry shows the details for
+this track (see below).
+
+The ![Add track](images/playlist-plus.svg) button adds a new track to
+the list. A file picker is opened to select a file on the device. Allowed
+file types are KML, KMZ, GPX and IGC. When a file contains multiple tracks, a
+selection dialog is shown to choose a specific track.
+
+After the track is loaded, the following dialog appears:
+
+![Open track](images/track-open-dialog.png)
+
+You can edit the track name and determine if the track is a paragliding
+flight. Flight tracks are colored based on climb or sink rates. If it's not a
+flight, you can select a single color for the track line.
+
+In the rare case that the track has no time points (e.g. for KML LineStrings)
+another field "Track point time interval" appears that lets you specify the
+time delta between the track points. This is only used for correctly
+calculating climb and sink rate.
+
+After the track was added, a waiting dialog marked "Sampling track points" is
+shown, for flight tracks only. The track is checked if any track point is
+located below the actual terrain and is adjusted accordingly.
+
+Tracks can also be added when opening supported file types using the app
+(e.g. by tapping on the file or by downloading a file from the web).
+
+The ![Remove all tracks](images/delete-forever.svg) button removes all
+tracks in the list.
+
+When long-tapping a single track entry, a context menu appears with the
+following menu entries:
+
+- ![Info](images/information-outline.svg) Shows details for the selected
+  track
+- ![Zoom to](images/magnify-plus-outline.svg) Zooms to the track on the map
+- ![Delete](images/delete.svg) Deletes the selected track
+
+### Track details
+
+![Track details](images/track-details.png)
+
+The track details shows infos about the track, like distance and duration, and
+some calculated statistics values.
+
+The following title bar icons are available:
+
+- ![Zoom to](images/magnify-plus-outline.svg) Zooms to the track on the map
+- ![Delete](images/delete.svg) Deletes the track
 
 ### Track colors
 
@@ -42,7 +217,7 @@ to the climb or sink rate of that segment. The following colors are used:
 The colors are interpolated when rates between two colors were calculated.
 This can happen for tracks with sub-second track point resolution.
 
-## Current position
+## ![Current position](images/compass.svg) Current position
 
 ![Current Position](images/current-position.png)
 
@@ -52,7 +227,7 @@ current position.
 The position data can be shared with other apps using the
 ![Share](images/share-variant.svg) share button.
 
-## Weather
+## ![Weather](images/weather-partly-cloudy.svg) Weather
 
 ![Weather Dashboard](images/weather-dashboard.png)
 
@@ -77,11 +252,11 @@ loaded and shown. The following buttons are available in this page:
   of current weather websites
 - ![Webcam websites](images/camera.svg) Shows a list of webcam websites
 
-## Settings
+## ![Settings](images/cog.svg) Settings
 
 The settings page shows two tabs.
 
-### General tab
+### ![General](images/cog-outline.svg) General tab
 
 ![Settings](images/settings-general.png)
 
@@ -90,7 +265,7 @@ When opening one of the Alptherm links, the app automatically logs you in. The
 password is stored using
 [secure storage](https://docs.microsoft.com/en-us/xamarin/essentials/secure-storage?tabs=android).
 
-### Map tab
+### ![Map](images/map.svg) Map tab
 
 ![Settings](images/settings-map.png)
 

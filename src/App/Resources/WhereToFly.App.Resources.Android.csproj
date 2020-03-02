@@ -614,6 +614,84 @@
   <ItemGroup>
     <AndroidAsset Include="Assets\info\images\weather-dashboard.png" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\map-view.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\crosshairs-gps.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\find-dialog.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\flying-range-menu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\location-info.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\longtap-menu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\magnify.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\cog-outline.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\cog.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\compass.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\format-list-bulleted.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\layers-outline.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\map.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\delete-forever.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\delete.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\directions.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\information-outline.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\layers-list.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\layers-plus.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\location-details.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\location-list.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\magnify-plus-outline.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\map-touch-controls.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\track-details.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\track-list.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\track-open-dialog.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
