@@ -18,6 +18,8 @@ namespace WhereToFly.App.Model
         /// No takeoff direction, none known, or no takeoff location
         /// </summary>
         None = 0,
+        First = N,
+        Last = NNW,
 
         N = 1 << 1,
         NNE = 1 << 2,
@@ -34,6 +36,6 @@ namespace WhereToFly.App.Model
         W = 1 << 13,
         WNW = 1 << 14,
         NW = 1 << 15,
-        NNW = 1 << 16
+        NNW = 1 << 16,
     }
 }
