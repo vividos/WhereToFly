@@ -51,6 +51,7 @@
     <Compile Include="Geo\MapPointExtensionMethodsTests.cs" />
     <Compile Include="Geo\IgcDataFileTests.cs" />
     <Compile Include="Geo\TrackExtensionMethodsTest.cs" />
+    <Compile Include="Geo\GpxWriterTest.cs" />
     <Compile Include="Geo\TakeoffDirectionsHelperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Geo\GeoLoaderTest.cs" />
