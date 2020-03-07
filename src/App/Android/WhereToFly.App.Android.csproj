@@ -92,6 +92,7 @@
     <Compile Include="AndroidWebViewRenderer.cs" />
     <Compile Include="IntentFilterHelper.cs" />
     <Compile Include="JavaScriptCallbackHandler.cs" />
+    <Compile Include="LongTapGestureListener.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
