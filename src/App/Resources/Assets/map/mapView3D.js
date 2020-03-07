@@ -734,6 +734,37 @@ MapView.prototype.addLayer = function (layer) {
 };
 
 /**
+ * Gets the bounding sphere of a data source
+ * @param {Cesium.DataSource} [dataSource] data source
+ * @returns {Cesium.BoundingSphere} bounding sphere object, or null when no
+ * bounding sphere could be determined
+ */
+MapView.prototype.getDataSourceBoundingSphere = function (dataSource) {
+
+    var entities = dataSource.entities.values;
+    console.log("getting bounding spheres of " + entities.length + " entities");
+
+    var boundingSphereScratch = new Cesium.BoundingSphere();
+
+    var boundingSpheres = [];
+    for (var i = 0, len = entities.length; i < len; i++) {
+        var state = this.viewer.dataSourceDisplay.getBoundingSphere(entities[i], false, boundingSphereScratch);
+
+        if (state === Cesium.BoundingSphereState.PENDING) {
+            return;
+        } else if (state !== Cesium.BoundingSphereState.FAILED) {
+            boundingSpheres.push(Cesium.BoundingSphere.clone(boundingSphereScratch));
+        }
+    }
+
+    if (boundingSpheres.length === 0) {
+        return null;
+    }
+
+    return Cesium.BoundingSphere.fromBoundingSpheres(boundingSpheres);
+};
+
+/**
  * Zooms to layer with given layer ID
  * @param {string} [layerId] ID of layer
  */
@@ -742,8 +773,22 @@ MapView.prototype.zoomToLayer = function (layerId) {
     console.log("zooming to layer with id " + layerId);
 
     var dataSource = this.dataSourceMap[layerId];
-    if (dataSource !== undefined)
+    if (dataSource !== undefined) {
+
+        var boundingSphere = this.getDataSourceBoundingSphere(dataSource);
+
         this.viewer.flyTo(dataSource);
+
+        if (boundingSphere !== null) {
+            var center = Cesium.Cartographic.fromCartesian(boundingSphere.center);
+
+            this.onUpdateLastShownLocation({
+                latitude: Cesium.Math.toDegrees(center.latitude),
+                longitude: Cesium.Math.toDegrees(center.longitude),
+                altitude: center.height
+            });
+        }
+    }
 };
 
 /**
