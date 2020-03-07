@@ -150,8 +150,6 @@ namespace WhereToFly.App.Core.Views
         /// <param name="args">event args</param>
         private void OnViewCellBindingContextChanged(object sender, EventArgs args)
         {
-            base.OnBindingContextChanged();
-
             var viewCell = (ViewCell)sender;
 
             if (viewCell.BindingContext is LocationListEntryViewModel cellViewModel &&
