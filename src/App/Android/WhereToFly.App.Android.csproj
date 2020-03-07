@@ -88,6 +88,7 @@
     </Compile>
     <Compile Include="AndroidAppManager.cs" />
     <Compile Include="AndroidPlatform.cs" />
+    <Compile Include="AndroidWeatherWebViewRenderer.cs" />
     <Compile Include="AndroidWebViewClient.cs" />
     <Compile Include="AndroidWebViewRenderer.cs" />
     <Compile Include="IntentFilterHelper.cs" />
