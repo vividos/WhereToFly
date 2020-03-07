@@ -1006,7 +1006,7 @@ MapView.prototype.updateLocation = function (location) {
  */
 MapView.prototype.removeLocation = function (locationId) {
 
-    console.log("removing location with ID \"" + location.id);
+    console.log("removing location with ID: " + locationId);
 
     var entity = this.viewer.entities.getById(locationId);
 
