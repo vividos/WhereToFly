@@ -16,10 +16,17 @@
 - [ ] Follow location when "my location" icon is tapped, until user interacts with view
 - [ ] Implement wind field overlay from GFS weather model
 - [ ] Zoom to newly imported locations
+- [ ] Add wind direction and speed to flight calculation
 
 ### Layers
 - [ ] Add predefined layers for locations and tracks
 - [ ] Add switching on/off layers in map view
+- [ ] Add live updating layers using CZML updates
+- [ ] Import OpenAir text files for air spaces
+
+### Locations
+- [ ] Import SeeYou .cup files for waypoints
+- [ ] Show and filter by takeoff direction parsed from location titles
 
 ### Tracks
 - [ ] Add recording current track
@@ -28,6 +35,10 @@
 - [ ] Show height profile of track in map as overlay
 - [ ] Add navigate-to button, with start and end point selection
 - [ ] Add specifying offset for tracks, when importing
+- [ ] Analyze flight tracks and show analysis on a new tab
+
+### Weather
+- [ ] Adding custom weather pages from links
 
 ### Live waypoints
 - [ ] Implement live waypoint type for OpenGliderNetwork position
@@ -39,6 +50,4 @@
 ### Miscellaneous
 - [ ] Add transferring locations using QR code scanning
 - [ ] Implement switching themes/night mode using ResourceDictionary
-- [ ] Add adding custom weather links
-- [ ] Add carousel view, showing short manual pages for the app
 - [ ] UWP: Implement dropping files to open them
