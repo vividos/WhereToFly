@@ -248,8 +248,7 @@ namespace WhereToFly.App.Core.ViewModels
 
                 var newLocationList = await locationDataService.GetList(this.FilterText);
 
-                if (this.locationList.Count != newLocationList.Count() ||
-                    !Enumerable.SequenceEqual(this.locationList, newLocationList, new LocationEqualityComparer()))
+                if (!Enumerable.SequenceEqual(this.locationList, newLocationList))
                 {
                     this.isListEmpty = await locationDataService.IsListEmpty();
                     this.locationList = newLocationList.ToList();

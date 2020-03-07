@@ -6,7 +6,7 @@ namespace WhereToFly.App.Geo
     /// <summary>
     /// A single track consisting of track points
     /// </summary>
-    public class Track
+    public sealed class Track : IEquatable<Track>
     {
         /// <summary>
         /// ID for the track; e.g. generated at import time
@@ -104,5 +104,58 @@ namespace WhereToFly.App.Geo
             this.MaxSinkRate = 0.0;
             this.TrackPoints = new List<TrackPoint>();
         }
+
+        #region IEquatable implementation
+        /// <summary>
+        /// Compares this track with another
+        /// </summary>
+        /// <param name="other">track to compare to</param>
+        /// <returns>true when track are equal, false when not</returns>
+        public bool Equals(Track other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            return this.Id == other.Id &&
+                this.Name == other.Name &&
+                this.TrackPoints.Count == other.TrackPoints.Count;
+        }
+        #endregion
+
+        #region object overridables implementation
+        /// <summary>
+        /// Compares this track to another object
+        /// </summary>
+        /// <param name="obj">object to compare to</param>
+        /// <returns>true when tracks are equal, false when not</returns>
+        public override bool Equals(object obj) =>
+            (obj is Track track) && this.Equals(track);
+
+        /// <summary>
+        /// Calculates hash code for track
+        /// </summary>
+        /// <returns>calculated hash code</returns>
+        public override int GetHashCode()
+        {
+            int hashCode = 487;
+
+            hashCode = (hashCode * 31) + this.Id.GetHashCode();
+            hashCode = (hashCode * 31) + this.Name.GetHashCode();
+            hashCode = (hashCode * 31) + this.TrackPoints.GetHashCode();
+
+            return hashCode;
+        }
+
+        /// <summary>
+        /// Returns a printable representation of this object
+        /// </summary>
+        /// <returns>printable text</returns>
+        public override string ToString()
+        {
+            return $"Name={this.Name}, TrackPoints.Count={this.TrackPoints.Count}";
+        }
+        #endregion
     }
 }

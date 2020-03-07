@@ -1,15 +1,12 @@
-﻿// Note: We can't implement Equals() on Android, since deserializing List<Location> using
-// Newtonsoft.Json crashes on Android.
-#pragma warning disable S1206 // "Equals(Object)" and "GetHashCode()" should be overridden in pairs
-
+﻿using System;
 using WhereToFly.Shared.Model;
 
 namespace WhereToFly.App.Model
 {
     /// <summary>
-    /// A location that can be used for tour planning, e.g. as intermediate stops.
+    /// A location that can be displayed on the map.
     /// </summary>
-    public class Location
+    public sealed class Location : IEquatable<Location>
     {
         /// <summary>
         /// Location ID
@@ -52,9 +49,39 @@ namespace WhereToFly.App.Model
         /// </summary>
         public bool IsPlanTourLocation { get; set; } = false;
 
+        #region IEquatable implementation
+        /// <summary>
+        /// Compares this location with other location
+        /// </summary>
+        /// <param name="other">location to compare to first</param>
+        /// <returns>true when locations are equal, false when not</returns>
+        public bool Equals(Location other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            return this.Id == other.Id &&
+                this.Name == other.Name &&
+                this.Type == other.Type &&
+                this.InternetLink == other.InternetLink &&
+                this.MapLocation.Equals(other.MapLocation) &&
+                this.Description == other.Description;
+        }
+        #endregion
+
         #region object overridables implementation
         /// <summary>
-        /// Calculates hash code for map point
+        /// Compares this location to another object
+        /// </summary>
+        /// <param name="obj">object to compare to</param>
+        /// <returns>true when locations are equal, false when not</returns>
+        public override bool Equals(object obj) =>
+            (obj is Location location) && this.Equals(location);
+
+        /// <summary>
+        /// Calculates hash code for location
         /// </summary>
         /// <returns>calculated hash code</returns>
         public override int GetHashCode()
