@@ -98,6 +98,12 @@ namespace WhereToFly.App.Core.ViewModels
             }
 
             string htmlText = HtmlConverter.FromMarkdown(markdownText);
+
+            if (markdownFilename.EndsWith("manual.md"))
+            {
+                htmlText = "<style> img { max-width: 90vw; }</style>" + htmlText;
+            }
+
             return htmlText;
         }
 
