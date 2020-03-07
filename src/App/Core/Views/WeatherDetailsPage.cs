@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using WhereToFly.App.Core.Controls;
 using WhereToFly.App.Model;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -41,7 +42,7 @@ namespace WhereToFly.App.Core.Views
 
             if (this.Content == null)
             {
-                var webView = new WebView
+                var webView = new WeatherWebView
                 {
                     Source = urlSource,
 
