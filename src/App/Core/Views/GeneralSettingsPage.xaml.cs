@@ -1,14 +1,12 @@
 ﻿using System.Threading.Tasks;
 using WhereToFly.App.Core.ViewModels;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace WhereToFly.App.Core.Views
 {
     /// <summary>
     /// Settings page to configure general app settings
     /// </summary>
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class GeneralSettingsPage : ContentPage
     {
         /// <summary>
