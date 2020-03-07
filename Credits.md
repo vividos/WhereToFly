@@ -79,6 +79,8 @@ permission from Michael of https://kk7.ch/.
 
 ### Icons
 
+#### Google Material
+
 The following icons are from the Google Material icon set:
 
 - bus
@@ -110,6 +112,8 @@ The following icons are from the Google Material icon set:
 The Google Material Icons are licensed under the "Apache License 2.0":
 https://github.com/google/material-design-icons/blob/master/LICENSE
 
+#### Material Design Icons
+
 The following icons in the App are from the Material Design Icons
 (https://materialdesignicons.com/) page:
 
@@ -130,17 +134,20 @@ The following icons in the App are from the Material Design Icons
 All custom icons are licensed under the SIL Open Font License 1.1:
 http://scripts.sil.org/cms/scripts/page.php?item_id=OFL_web
 
+#### Mapbox Maki Icons
+
 Some icons used in the App are used from the Mapbox Maki icon set:
 https://www.mapbox.com/maki-icons/
 
 The Maki icon set is licensed using the CC0 license:
 https://creativecommons.org/publicdomain/zero/1.0/
 
+#### Other Icons
+
 The following icons are from the onlinewebfonts web page:
 
-Paragliding icon:
-Icon made from [http://www.onlinewebfonts.com/icon](http://www.onlinewebfonts.com/icon "Icon Fonts")
-is licensed by CC BY 3.0.
+- Paragliding icon: Icon made from [http://www.onlinewebfonts.com/icon](http://www.onlinewebfonts.com/icon "Icon Fonts").
+  The icon is licensed by CC BY 3.0.
 
 The following icons are from Wikimedia Commons:
 - Mountain pass icon: Icon made by STyx; the icon was placed in the Public
