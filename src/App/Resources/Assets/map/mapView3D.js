@@ -1412,6 +1412,14 @@ MapView.prototype.zoomToTrack = function (trackId) {
         console.log("zooming to track with ID: " + trackId);
 
         this.viewer.camera.flyToBoundingSphere(trackData.boundingSphere);
+
+        var center = Cesium.Cartographic.fromCartesian(trackData.boundingSphere.center);
+
+        this.onUpdateLastShownLocation({
+            latitude: Cesium.Math.toDegrees(center.latitude),
+            longitude: Cesium.Math.toDegrees(center.longitude),
+            altitude: center.height
+        });
     }
 };
 
