@@ -182,7 +182,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             /// <returns>task to wait on</returns>
             public async Task Remove(string locationId)
             {
-                await this.connection.DeleteAsync(locationId);
+                await this.connection.DeleteAsync<LocationEntry>(locationId);
             }
 
             /// <summary>

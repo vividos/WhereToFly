@@ -7,6 +7,7 @@
 - added info page containing the manual for all pages in the app
 - long-tapping on images in the weather browser offers downloading that image
 - fixed crash when navigating between different weather pages
+- fixed crash when deleting a location
 
 1.7.0
 
