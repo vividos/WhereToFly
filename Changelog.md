@@ -5,6 +5,7 @@
 - fixed displaying the map when there is no mobile network at app startup;
   the terrain is loaded when the mobile network is available again
 - added info page containing the manual for all pages in the app
+- long-tapping on images in the weather browser offers downloading that image
 - fixed crash when navigating between different weather pages
 
 1.7.0

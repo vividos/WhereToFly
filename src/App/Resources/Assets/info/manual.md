@@ -252,6 +252,9 @@ loaded and shown. The following buttons are available in this page:
   of current weather websites
 - ![Webcam websites](images/camera.svg) Shows a list of webcam websites
 
+Any images in the browser can be saved to the device by long-tapping the
+image. A menu appears to confirm the download.
+
 ## ![Settings](images/cog.svg) Settings
 
 The settings page shows two tabs.
