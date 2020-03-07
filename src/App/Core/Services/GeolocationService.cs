@@ -22,6 +22,11 @@ namespace WhereToFly.App.Core.Services
         /// <returns>true when everything is ok, false when permission wasn't given</returns>
         public static async Task<bool> CheckPermissionAsync()
         {
+            if (!MainThread.IsMainThread)
+            {
+                return await MainThread.InvokeOnMainThreadAsync(CheckPermissionAsync);
+            }
+
             try
             {
                 var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
