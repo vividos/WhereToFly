@@ -1543,6 +1543,24 @@ MapView.prototype.onAddTourPlanLocation = function (locationId) {
 };
 
 /**
+ * Called to update the last shown location stored in the app.
+ * @param {Object} [options] An object with the following properties:
+ * @param {Number} [options.latitude] Latitude of the position
+ * @param {Number} [options.longitude] Longitude of the position
+ * @param {Number} [options.altitude] Altitude of the position
+ */
+MapView.prototype.onUpdateLastShownLocation = function (options) {
+
+    console.log("updating last shown location: lat=" + options.latitude +
+        ", long=" + options.longitude +
+        ", alt=" + options.altitude);
+
+    if (this.options.callback !== undefined)
+        this.options.callback('onUpdateLastShownLocation', options);
+
+};
+
+/**
  * Called by the "hide" link in the info text are of the flying range cone.
  */
 MapView.prototype.hideFlyingRangeCone = function () {

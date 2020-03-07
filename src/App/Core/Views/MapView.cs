@@ -138,6 +138,17 @@ namespace WhereToFly.App.Core.Views
         public event OnAddTourPlanLocationCallback AddTourPlanLocation;
 
         /// <summary>
+        /// Delegate of function to call when last shown location should be updated
+        /// </summary>
+        /// <param name="point">map point of last shown location</param>
+        public delegate void OnUpdateLastShownLocationCallback(MapPoint point);
+
+        /// <summary>
+        /// Event that is signaled when last shown location should be updated
+        /// </summary>
+        public event OnUpdateLastShownLocationCallback UpdateLastShownLocation;
+
+        /// <summary>
         /// Gets or sets map imagery type
         /// </summary>
         public MapImageryType MapImageryType
@@ -780,6 +791,16 @@ namespace WhereToFly.App.Core.Views
 
                 case "onAddTourPlanLocation":
                     this.AddTourPlanLocation?.Invoke(jsonParameters.Trim('\"'));
+                    break;
+
+                case "onUpdateLastShownLocation":
+                    // this action uses the same parameters as the onLongTap action
+                    var updateLastShownLocationParameters = JsonConvert.DeserializeObject<LongTapParameter>(jsonParameters);
+                    var updateLastShownLocationPoint = new MapPoint(
+                        updateLastShownLocationParameters.Latitude,
+                        updateLastShownLocationParameters.Longitude,
+                        Math.Round(updateLastShownLocationParameters.Altitude));
+                    this.UpdateLastShownLocation?.Invoke(updateLastShownLocationPoint);
                     break;
 
                 case "onSampledTrackHeights":
