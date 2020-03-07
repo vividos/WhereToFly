@@ -1,4 +1,9 @@
-﻿using Windows.UI.ViewManagement;
+﻿using System;
+using System.IO;
+using Windows.ApplicationModel.DataTransfer;
+using Windows.Storage;
+using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
 
 namespace WhereToFly.App.UWP
 {
@@ -18,7 +23,48 @@ namespace WhereToFly.App.UWP
 
             this.InitializeComponent();
 
+            this.AllowDrop = true;
+            this.DragOver += this.OnDragOver;
+            this.Drop += this.OnDrop;
+
             this.LoadApplication(new Core.App());
+        }
+
+        /// <summary>
+        /// Called when a file is dragged over the main page
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="args">event args</param>
+        private void OnDragOver(object sender, DragEventArgs args)
+        {
+            args.AcceptedOperation = DataPackageOperation.Copy;
+        }
+
+        /// <summary>
+        /// Called when a file is dropped onto the main page
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="args">event args</param>
+        private async void OnDrop(object sender, DragEventArgs args)
+        {
+            if (args.DataView.Contains(StandardDataFormats.StorageItems))
+            {
+                var items = await args.DataView.GetStorageItemsAsync();
+                if (items.Count > 0)
+                {
+                    var file = items[0] as StorageFile;
+
+                    var app = Core.App.Current as Core.App;
+
+                    Core.App.RunOnUiThread(async () =>
+                    {
+                        using (var stream = await file.OpenStreamForReadAsync())
+                        {
+                            await app.OpenFileAsync(stream, file.Name);
+                        }
+                    });
+                }
+            }
         }
     }
 }
