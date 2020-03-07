@@ -928,7 +928,7 @@ MapView.prototype.imageUrlFromLocationType = function (locationType) {
 
     switch (locationType) {
         case 'Summit': return 'images/mountain-15.svg';
-        //case 'Pass': return '';
+        case 'Pass': return 'images/mountain-pass.svg';
         case 'Lake': return 'images/water-15.svg';
         case 'Bridge': return 'images/bridge.svg';
         case 'Viewpoint': return 'images/attraction-15.svg';
@@ -936,7 +936,7 @@ MapView.prototype.imageUrlFromLocationType = function (locationType) {
         case 'Restaurant': return 'images/restaurant-15.svg';
         case 'Church': return 'images/church.svg';
         case 'Castle': return 'images/castle.svg';
-        //case 'Cave': return '';
+        case 'Cave': return 'images/cave.svg';
         case 'Information': return 'images/information-outline.svg';
         case 'PublicTransportBus': return 'images/bus.svg';
         case 'PublicTransportTrain': return 'images/train.svg';

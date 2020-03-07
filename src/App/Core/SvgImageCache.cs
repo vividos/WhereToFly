@@ -172,6 +172,8 @@ namespace WhereToFly.App.Core
             {
                 case LocationType.Summit:
                     return "map/images/mountain-15.svg";
+                case LocationType.Pass:
+                    return "map/images/mountain-pass.svg";
                 case LocationType.Lake:
                     return "map/images/water-15.svg";
                 case LocationType.Bridge:
@@ -186,6 +188,8 @@ namespace WhereToFly.App.Core
                     return "map/images/church.svg";
                 case LocationType.Castle:
                     return "map/images/castle.svg";
+                case LocationType.Cave:
+                    return "map/images/cave.svg";
                 case LocationType.Information:
                     return "map/images/information-outline.svg";
                 case LocationType.PublicTransportBus:

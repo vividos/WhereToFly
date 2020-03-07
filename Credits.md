@@ -141,3 +141,10 @@ The following icons are from the onlinewebfonts web page:
 Paragliding icon:
 Icon made from [http://www.onlinewebfonts.com/icon](http://www.onlinewebfonts.com/icon "Icon Fonts")
 is licensed by CC BY 3.0.
+
+The following icons are from Wikimedia Commons:
+- Mountain pass icon: Icon made by STyx; the icon was placed in the Public
+  Domain. https://commons.wikimedia.org/wiki/File:Mountain_pass_12x12_ne.svg
+
+- Cave icon: Icon made by Carport; the icon is licensed under the CC BY-SA 3.0
+  license. https://commons.wikimedia.org/wiki/File:Gfi-set01-cave.svg
