@@ -934,7 +934,7 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args, including position</param>
-        private void OnPositionChanged(object sender, Plugin.Geolocator.Abstractions.PositionEventArgs args)
+        private void OnPositionChanged(object sender, PositionEventArgs args)
         {
             var position = args.Position;
 
@@ -954,7 +954,10 @@ namespace WhereToFly.App.Core.Views
                     zoomToPosition);
             }
 
-            Task.Run(async () => await App.UpdateLastShownPositionAsync(point));
+            if (zoomToPosition)
+            {
+                Task.Run(async () => await App.UpdateLastShownPositionAsync(point));
+            }
         }
     }
 }
