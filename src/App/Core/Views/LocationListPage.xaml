@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
              xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
-             xmlns:local="clr-namespace:WhereToFly.App.Core"
+             xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
              xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
              x:Class="WhereToFly.App.Core.Views.LocationListPage">
 
@@ -78,6 +78,7 @@
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
 
@@ -85,24 +86,37 @@
                                 <ffimageloadingsvg:SvgCachedImage Source="{Binding TypeImageSource, Mode=OneWay}"
                                                    WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
                                                    HorizontalOptions="Start" VerticalOptions="Center"
-                                                   Grid.Column="0" Grid.RowSpan="3"/>
+                                                   Grid.Column="0" Grid.RowSpan="3" />
+
+                                <!-- Takeoff directions -->
+                                <controls:TakeoffDirectionsView Grid.Column="1" Grid.RowSpan="3"
+                                                                IsVisible="{Binding IsTakeoffDirectionsVisible, Mode=OneTime}"
+                                                                WidthRequest="40" HeightRequest="40"
+                                                                HorizontalOptions="Start" VerticalOptions="Center"
+                                                                Source="{Binding TakeoffDirections, Mode=OneTime}"
+                                                                IsReadOnly="True"
+                                                                BackgroundColor="Transparent"
+                                                                CompassBorderColor="Black"
+                                                                CompassBackgroundColor="DarkGray"
+                                                                CompassColor="Green"
+                                                                ShowLabels="False" />
 
                                 <!-- Details -->
                                 <Label Text="{Binding Name}"
                                        Style="{DynamicResource ListItemTextStyle}"
                                        FontSize="Medium"
                                        LineBreakMode="TailTruncation"
-                                       Grid.Column="1" Grid.Row="0" />
+                                       Grid.Column="2" Grid.Row="0" />
                                 <Label Text="{Binding DetailInfos}"
                                        Style="{DynamicResource ListItemDetailTextStyle}"
                                        FontSize="Small"
                                        LineBreakMode="TailTruncation"
-                                       Grid.Column="1" Grid.Row="1" />
+                                       Grid.Column="2" Grid.Row="1" />
                                 <Label Text="{Binding Description}"
                                        Style="{DynamicResource ListItemDetailTextStyle}"
                                        FontSize="Small"
                                        LineBreakMode="TailTruncation"
-                                       Grid.Column="1" Grid.Row="2" />
+                                       Grid.Column="2" Grid.Row="2" />
                             </Grid>
                         </ViewCell.View>
                         <ViewCell.ContextActions>
