@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
-             xmlns:local="clr-namespace:WhereToFly.App.Core"
+             xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
              xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
              x:Class="WhereToFly.App.Core.Views.LocationDetailsPage">
 
@@ -67,6 +67,18 @@
                     <ffimageloadingsvg:SvgCachedImage Source="{Binding TypeImageSource, Mode=OneWay}"
                                        WidthRequest="64" HeightRequest="64"
                                        HorizontalOptions="Start" VerticalOptions="Center" />
+
+                    <!-- Takeoff directions -->
+                    <controls:TakeoffDirectionsView IsVisible="{Binding IsTakeoffDirectionsVisible, Mode=OneTime}"
+                                                    WidthRequest="64" HeightRequest="64"
+                                                    HorizontalOptions="Start" VerticalOptions="Center"
+                                                    Source="{Binding TakeoffDirections, Mode=OneTime}"
+                                                    IsReadOnly="True"
+                                                    BackgroundColor="Transparent"
+                                                    CompassBorderColor="Black"
+                                                    CompassBackgroundColor="DarkGray"
+                                                    CompassColor="Green"
+                                                    ShowLabels="True" />
 
                     <!-- Name -->
                     <Label Text="{Binding Name, Mode=OneTime}"

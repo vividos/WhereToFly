@@ -47,6 +47,18 @@ namespace WhereToFly.App.Core.ViewModels
         public ImageSource TypeImageSource { get; }
 
         /// <summary>
+        /// Returns if takeoff directions view should be visible at all
+        /// </summary>
+        public bool IsTakeoffDirectionsVisible
+            => this.location.Type == LocationType.FlyingTakeoff;
+
+        /// <summary>
+        /// Takeoff directions flags; only set for FlyingTakeoff locations
+        /// </summary>
+        public TakeoffDirections TakeoffDirections
+            => this.location.TakeoffDirections;
+
+        /// <summary>
         /// Property containing location type
         /// </summary>
         public string Type
