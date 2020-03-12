@@ -20,6 +20,7 @@ namespace WhereToFly.App.Model
         None = 0,
         First = N,
         Last = NNW,
+        All = N | NNE | NE | ENE | E | ESE | SE | SSE | S | SSW | SW | WSW | W | WNW | NW | NNW,
 
         N = 1 << 1,
         NNE = 1 << 2,
