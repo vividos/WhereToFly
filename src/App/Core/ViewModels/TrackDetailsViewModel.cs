@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using MvvmHelpers.Commands;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Geo;
 using WhereToFly.App.Logic;
@@ -167,12 +169,12 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Command to execute when "zoom to" menu item is selected on a track
         /// </summary>
-        public Command ZoomToTrackCommand { get; set; }
+        public ICommand ZoomToTrackCommand { get; set; }
 
         /// <summary>
         /// Command to execute when "delete" menu item is selected on a track
         /// </summary>
-        public Command DeleteTrackCommand { get; set; }
+        public ICommand DeleteTrackCommand { get; set; }
         #endregion
 
         /// <summary>
@@ -193,11 +195,9 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         private void SetupBindings()
         {
-            this.ZoomToTrackCommand =
-                new Command(async () => await this.OnZoomToTrackAsync());
+            this.ZoomToTrackCommand = new AsyncCommand(this.OnZoomToTrackAsync);
 
-            this.DeleteTrackCommand =
-                new Command(async () => await this.OnDeleteTrackAsync());
+            this.DeleteTrackCommand = new AsyncCommand(this.OnDeleteTrackAsync);
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
-﻿using Plugin.FilePicker;
+﻿using MvvmHelpers.Commands;
+using Plugin.FilePicker;
 using Plugin.FilePicker.Abstractions;
 using Plugin.Geolocator.Abstractions;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Model;
@@ -133,17 +135,17 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Command to execute when an item in the location list has been tapped
         /// </summary>
-        public Command<Location> ItemTappedCommand { get; private set; }
+        public AsyncCommand<Location> ItemTappedCommand { get; private set; }
 
         /// <summary>
         /// Command to execute when "import locations" context action is selected
         /// </summary>
-        public Command ImportLocationsCommand { get; set; }
+        public ICommand ImportLocationsCommand { get; set; }
 
         /// <summary>
         /// Command to execute when "add tour plan location" conext action is selected
         /// </summary>
-        public Command AddTourPlanLocationCommand { get; set; }
+        public ICommand AddTourPlanLocationCommand { get; set; }
         #endregion
 
         /// <summary>
@@ -191,16 +193,12 @@ namespace WhereToFly.App.Core.ViewModels
             this.UpdateLocationList();
 
             this.ItemTappedCommand =
-                new Command<Location>(async (location) =>
-                {
-                    await this.NavigateToLocationDetails(location);
-                });
+                new AsyncCommand<Location>(this.NavigateToLocationDetails);
 
-            this.ImportLocationsCommand =
-                new Command(async () => await this.ImportLocationsAsync());
+            this.ImportLocationsCommand = new AsyncCommand(this.ImportLocationsAsync);
 
             this.AddTourPlanLocationCommand =
-                new Command<Location>((location) => App.AddTourPlanLocation(location));
+                new Xamarin.Forms.Command<Location>((location) => App.AddTourPlanLocation(location));
         }
 
         /// <summary>

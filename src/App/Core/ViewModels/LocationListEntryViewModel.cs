@@ -1,5 +1,7 @@
-﻿using System;
+﻿using MvvmHelpers.Commands;
+using System;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Geo;
@@ -87,17 +89,17 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Command to execute when "show details" context action is selected on a location
         /// </summary>
-        public Command ShowDetailsLocationContextAction { get; set; }
+        public ICommand ShowDetailsLocationContextAction { get; set; }
 
         /// <summary>
         /// Command to execute when "zoom to" context action is selected on a location
         /// </summary>
-        public Command ZoomToLocationContextAction { get; set; }
+        public ICommand ZoomToLocationContextAction { get; set; }
 
         /// <summary>
         /// Command to execute when "delete" context action is selected on a location
         /// </summary>
-        public Command DeleteLocationContextAction { get; set; }
+        public ICommand DeleteLocationContextAction { get; set; }
 
         /// <summary>
         /// Creates a new view model object based on the given location object
@@ -125,14 +127,9 @@ namespace WhereToFly.App.Core.ViewModels
         {
             this.Description = HtmlConverter.StripAllTags(this.location.Description);
 
-            this.ShowDetailsLocationContextAction =
-                new Command(async () => await this.OnShowDetailsLocation());
-
-            this.ZoomToLocationContextAction =
-                new Command(async () => await this.OnZoomToLocationAsync());
-
-            this.DeleteLocationContextAction =
-                new Command(async () => await this.OnDeleteLocationAsync());
+            this.ShowDetailsLocationContextAction = new AsyncCommand(this.OnShowDetailsLocation);
+            this.ZoomToLocationContextAction = new AsyncCommand(this.OnZoomToLocationAsync);
+            this.DeleteLocationContextAction = new AsyncCommand(this.OnDeleteLocationAsync);
         }
 
         /// <summary>

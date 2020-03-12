@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MvvmHelpers.Commands;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -81,15 +82,15 @@ namespace WhereToFly.App.Core.ViewModels
                 this.TypeImageSource =
                     SvgImageCache.GetImageSource(this.Location, "#000000");
 
-                this.MoveUpCommand = new Command(
+                this.MoveUpCommand = new Xamarin.Forms.Command(
                     (obj) => this.parent.MoveUpLocation(this),
                     (obj) => !this.parent.IsFirstLocation(this));
 
-                this.MoveDownCommand = new Command(
+                this.MoveDownCommand = new Xamarin.Forms.Command(
                     (obj) => this.parent.MoveDownLocation(this),
                     (obj) => !this.parent.IsLastLocation(this));
 
-                this.RemoveCommand = new Command(
+                this.RemoveCommand = new Xamarin.Forms.Command(
                     (obj) => this.parent.RemoveLocation(this));
             }
 
@@ -124,7 +125,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Command to start tour planning
         /// </summary>
-        public Command PlanTourCommand { get; set; }
+        public AsyncCommand PlanTourCommand { get; set; }
 
         /// <summary>
         /// Command to close popup page
@@ -153,11 +154,11 @@ namespace WhereToFly.App.Core.ViewModels
             this.planTourParameters = planTourParameters;
             this.closePopupPage = closePopupPage;
 
-            this.PlanTourCommand = new Command(
-                async (obj) => await this.PlanTourAsync(),
+            this.PlanTourCommand = new AsyncCommand(
+                this.PlanTourAsync,
                 (obj) => this.IsTourPlanningPossible);
 
-            this.CloseCommand = new Command(async () => await this.ClosePageAsync());
+            this.CloseCommand = new AsyncCommand(this.ClosePageAsync);
 
             Task.Run(async () => await this.LoadDataAsync(planTourParameters.WaypointIdList));
         }
@@ -182,7 +183,7 @@ namespace WhereToFly.App.Core.ViewModels
             this.PlanTourList = new ObservableCollection<PlanTourListEntryViewModel>(viewModelList);
             this.OnPropertyChanged(nameof(this.PlanTourList));
             this.OnPropertyChanged(nameof(this.ShowWarningForMoreLocations));
-            this.PlanTourCommand.ChangeCanExecute();
+            this.PlanTourCommand.RaiseCanExecuteChanged();
         }
 
         /// <summary>
@@ -276,7 +277,7 @@ namespace WhereToFly.App.Core.ViewModels
                 entryViewModel.Update();
             }
 
-            this.PlanTourCommand.ChangeCanExecute();
+            this.PlanTourCommand.RaiseCanExecuteChanged();
         }
 
         /// <summary>

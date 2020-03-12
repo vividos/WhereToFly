@@ -140,7 +140,7 @@ namespace WhereToFly.App.Core.Views
             var localViewModel = this.BindingContext as LocationListViewModel;
 
             var locationListEntryViewModel = args.Item as LocationListEntryViewModel;
-            localViewModel.ItemTappedCommand.Execute(locationListEntryViewModel.Location);
+            localViewModel.ItemTappedCommand.ExecuteAsync(locationListEntryViewModel.Location);
         }
 
         /// <summary>

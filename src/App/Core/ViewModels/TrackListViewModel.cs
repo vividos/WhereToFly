@@ -1,10 +1,12 @@
-﻿using Plugin.FilePicker;
+﻿using MvvmHelpers.Commands;
+using Plugin.FilePicker;
 using Plugin.FilePicker.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Geo;
 using Xamarin.Forms;
@@ -67,17 +69,17 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Command to execute when toolbar button "import track" has been tapped
         /// </summary>
-        public Command ImportTrackCommand { get; private set; }
+        public ICommand ImportTrackCommand { get; private set; }
 
         /// <summary>
         /// Command to execute when toolbar button "delete track list" has been tapped
         /// </summary>
-        public Command DeleteTrackListCommand { get; private set; }
+        public AsyncCommand DeleteTrackListCommand { get; private set; }
 
         /// <summary>
         /// Command to execute when an item in the track list has been tapped
         /// </summary>
-        public Command<Track> ItemTappedCommand { get; private set; }
+        public AsyncCommand<Track> ItemTappedCommand { get; private set; }
         #endregion
 
         /// <summary>
@@ -97,24 +99,14 @@ namespace WhereToFly.App.Core.ViewModels
         {
             Task.Run(this.ReloadTrackListAsync);
 
-            this.ImportTrackCommand =
-                new Command(async () =>
-                {
-                    await this.ImportTrackAsync();
-                });
+            this.ImportTrackCommand = new AsyncCommand(this.ImportTrackAsync);
 
-            this.DeleteTrackListCommand = new Command(
-                async () =>
-                {
-                    await this.ClearTracksAsync();
-                },
-                () => this.IsDeleteTrackEnabled);
+            this.DeleteTrackListCommand = new AsyncCommand(
+                this.ClearTracksAsync,
+                (obj) => this.IsDeleteTrackEnabled);
 
             this.ItemTappedCommand =
-                new Command<Track>(async (track) =>
-                {
-                    await this.NavigateToTrackDetails(track);
-                });
+                new AsyncCommand<Track>(this.NavigateToTrackDetails);
         }
 
         /// <summary>
@@ -143,7 +135,7 @@ namespace WhereToFly.App.Core.ViewModels
         {
             this.IsListRefreshActive = true;
 
-            this.DeleteTrackListCommand.ChangeCanExecute();
+            this.DeleteTrackListCommand.RaiseCanExecuteChanged();
 
             var newList = this.trackList
                 .Select(track => new TrackListEntryViewModel(this, track));
@@ -155,7 +147,7 @@ namespace WhereToFly.App.Core.ViewModels
             this.OnPropertyChanged(nameof(this.TrackList));
             this.OnPropertyChanged(nameof(this.IsListEmpty));
 
-            this.DeleteTrackListCommand.ChangeCanExecute();
+            this.DeleteTrackListCommand.RaiseCanExecuteChanged();
         }
 
         /// <summary>
@@ -191,7 +183,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             var dataService = DependencyService.Get<IDataService>();
             var trackDataService = dataService.GetTrackDataService();
-            
+
             await trackDataService.Remove(track.Id);
 
             this.UpdateTrackList();

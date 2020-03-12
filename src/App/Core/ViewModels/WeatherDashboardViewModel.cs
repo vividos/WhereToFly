@@ -1,7 +1,9 @@
-﻿using System;
+﻿using MvvmHelpers.Commands;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Model;
 using Xamarin.Forms;
@@ -22,12 +24,12 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Command to execute when "add new" menu item is selected
         /// </summary>
-        public Command AddNewCommand { get; set; }
+        public ICommand AddNewCommand { get; set; }
 
         /// <summary>
         /// Command to execute when "clear all" menu item is selected
         /// </summary>
-        public Command ClearAllCommand { get; set; }
+        public ICommand ClearAllCommand { get; set; }
         #endregion
 
         /// <summary>
@@ -99,7 +101,7 @@ namespace WhereToFly.App.Core.ViewModels
         {
             this.WeatherIconDescriptionList = new List<WeatherIconDescription>();
 
-            this.AddNewCommand = new Command(async () =>
+            this.AddNewCommand = new AsyncCommand(async () =>
             {
                 Action<WeatherIconDescription> parameter = this.OnSelectedWeatherIcon;
 
@@ -109,7 +111,7 @@ namespace WhereToFly.App.Core.ViewModels
                     parameter: parameter);
             });
 
-            this.ClearAllCommand = new Command(async () => await this.ClearAllWeatherIcons());
+            this.ClearAllCommand = new AsyncCommand(this.ClearAllWeatherIcons);
 
             Task.Run(async () =>
             {

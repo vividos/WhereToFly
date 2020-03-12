@@ -1,10 +1,12 @@
-﻿using Plugin.FilePicker;
+﻿using MvvmHelpers.Commands;
+using Plugin.FilePicker;
 using Plugin.FilePicker.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using WhereToFly.App.Core.Services;
 using WhereToFly.Shared.Model;
 using Xamarin.Forms;
@@ -43,12 +45,12 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Command to execute when toolbar button "import layer" has been tapped
         /// </summary>
-        public Command ImportLayerCommand { get; set; }
+        public ICommand ImportLayerCommand { get; set; }
 
         /// <summary>
         /// Command to execute when toolbar button "delete layer list" has been tapped
         /// </summary>
-        public Command DeleteLayerListCommand { get; private set; }
+        public AsyncCommand DeleteLayerListCommand { get; private set; }
         #endregion
 
         /// <summary>
@@ -66,16 +68,12 @@ namespace WhereToFly.App.Core.ViewModels
         {
             Task.Run(this.LoadDataAsync);
 
-            this.ImportLayerCommand =
-                new Command(async () => await this.ImportLayerAsync());
+            this.ImportLayerCommand = new AsyncCommand(this.ImportLayerAsync);
 
             this.DeleteLayerListCommand =
-                new Command(
-                    async () =>
-                    {
-                        await this.ClearLayersAsync();
-                    },
-                    () => this.IsClearLayerListEnabled);
+                new AsyncCommand(
+                    this.ClearLayersAsync,
+                    (obj) => this.IsClearLayerListEnabled);
         }
 
         /// <summary>
@@ -114,7 +112,7 @@ namespace WhereToFly.App.Core.ViewModels
                 this.OnPropertyChanged(nameof(this.LayerList));
                 this.OnPropertyChanged(nameof(this.IsListEmpty));
                 this.OnPropertyChanged(nameof(this.IsClearLayerListEnabled));
-                App.RunOnUiThread(this.DeleteLayerListCommand.ChangeCanExecute);
+                App.RunOnUiThread(this.DeleteLayerListCommand.RaiseCanExecuteChanged);
             });
         }
 
@@ -192,7 +190,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             var dataService = DependencyService.Get<IDataService>();
             var layerDataService = dataService.GetLayerDataService();
-            
+
             await layerDataService.ClearList();
 
             await this.ReloadLayerListAsync();

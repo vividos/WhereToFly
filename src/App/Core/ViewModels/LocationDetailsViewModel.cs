@@ -1,5 +1,7 @@
-﻿using System;
+﻿using MvvmHelpers.Commands;
+using System;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
@@ -137,32 +139,32 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Command to execute when "refresh live waypoint" toolbar item is selected
         /// </summary>
-        public Command RefreshLiveWaypointCommand { get; set; }
+        public ICommand RefreshLiveWaypointCommand { get; set; }
 
         /// <summary>
         /// Command to execute when "add tour plan location" toolbar item is selected
         /// </summary>
-        public Command AddTourPlanLocationCommand { get; set; }
+        public ICommand AddTourPlanLocationCommand { get; set; }
 
         /// <summary>
         /// Command to execute when "zoom to" menu item is selected on a location
         /// </summary>
-        public Command ZoomToLocationCommand { get; set; }
+        public ICommand ZoomToLocationCommand { get; set; }
 
         /// <summary>
         /// Command to execute when "navigate to" menu item is selected on a location
         /// </summary>
-        public Command NavigateToLocationCommand { get; set; }
+        public ICommand NavigateToLocationCommand { get; set; }
 
         /// <summary>
         /// Command to execute when "share" menu item is selected on a location
         /// </summary>
-        public Command ShareLocationCommand { get; set; }
+        public ICommand ShareLocationCommand { get; set; }
 
         /// <summary>
         /// Command to execute when "delete" menu item is selected on a location
         /// </summary>
-        public Command DeleteLocationCommand { get; set; }
+        public ICommand DeleteLocationCommand { get; set; }
         #endregion
 
         /// <summary>
@@ -194,23 +196,13 @@ namespace WhereToFly.App.Core.ViewModels
                 BaseUrl = "about:blank"
             };
 
-            this.RefreshLiveWaypointCommand =
-                new Command(async () => await this.OnRefreshLiveWaypoint());
-
+            this.RefreshLiveWaypointCommand = new AsyncCommand(this.OnRefreshLiveWaypoint);
             this.AddTourPlanLocationCommand =
-                new Command(this.OnAddTourPlanLocation);
-
-            this.ZoomToLocationCommand =
-                new Command(async () => await this.OnZoomToLocationAsync());
-
-            this.NavigateToLocationCommand =
-                new Command(async () => await this.OnNavigateToLocationAsync());
-
-            this.ShareLocationCommand =
-                new Command(async () => await this.OnShareLocationAsync());
-
-            this.DeleteLocationCommand =
-                new Command(async () => await this.OnDeleteLocationAsync());
+                new Xamarin.Forms.Command(this.OnAddTourPlanLocation);
+            this.ZoomToLocationCommand = new AsyncCommand(this.OnZoomToLocationAsync);
+            this.NavigateToLocationCommand = new AsyncCommand(this.OnNavigateToLocationAsync);
+            this.ShareLocationCommand = new AsyncCommand(this.OnShareLocationAsync);
+            this.DeleteLocationCommand = new AsyncCommand(this.OnDeleteLocationAsync);
 
             Task.Run(this.UpdateDistance);
         }

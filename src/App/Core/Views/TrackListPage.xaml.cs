@@ -34,7 +34,7 @@ namespace WhereToFly.App.Core.Views
         private void OnItemTapped_TrackListView(object sender, ItemTappedEventArgs args)
         {
             var trackListEntryViewModel = args.Item as TrackListEntryViewModel;
-            this.viewModel.ItemTappedCommand.Execute(trackListEntryViewModel.Track);
+            this.viewModel.ItemTappedCommand.ExecuteAsync(trackListEntryViewModel.Track);
         }
 
         #region Page lifecycle methods

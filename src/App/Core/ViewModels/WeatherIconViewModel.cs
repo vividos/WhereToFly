@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MvvmHelpers.Commands;
+using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -51,7 +52,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         private void SetupBindings()
         {
-            this.Tapped = new Command(async () => await this.OpenWeatherIconTargetAsync());
+            this.Tapped = new AsyncCommand(this.OpenWeatherIconTargetAsync);
 
             Task.Run(async () =>
             {

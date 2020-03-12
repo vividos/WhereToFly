@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using MvvmHelpers.Commands;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using WhereToFly.App.Geo;
 using WhereToFly.App.Logic;
 using Xamarin.Forms;
@@ -69,17 +71,17 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Command to execute when "show details" context action is selected on a track
         /// </summary>
-        public Command ShowTrackDetailsContextAction { get; set; }
+        public ICommand ShowTrackDetailsContextAction { get; set; }
 
         /// <summary>
         /// Command to execute when "zoom to" context action is selected on a track
         /// </summary>
-        public Command ZoomToTrackContextAction { get; set; }
+        public ICommand ZoomToTrackContextAction { get; set; }
 
         /// <summary>
         /// Command to execute when "delete" context action is selected on a location
         /// </summary>
-        public Command DeleteTrackContextAction { get; set; }
+        public ICommand DeleteTrackContextAction { get; set; }
 
         /// <summary>
         /// Creates a new view model object based on the given track object
@@ -101,14 +103,9 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         private void SetupBindings()
         {
-            this.ShowTrackDetailsContextAction =
-                new Command(async () => await this.OnShowDetailsLocation());
-
-            this.ZoomToTrackContextAction =
-                new Command(async () => await this.OnZoomToTrackAsync());
-
-            this.DeleteTrackContextAction =
-                new Command(async () => await this.OnDeleteTrackAsync());
+            this.ShowTrackDetailsContextAction = new AsyncCommand(this.OnShowDetailsLocation);
+            this.ZoomToTrackContextAction = new AsyncCommand(this.OnZoomToTrackAsync);
+            this.DeleteTrackContextAction = new AsyncCommand(this.OnDeleteTrackAsync);
         }
 
         /// <summary>

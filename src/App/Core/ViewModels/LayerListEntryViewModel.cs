@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using MvvmHelpers.Commands;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using WhereToFly.Shared.Model;
 using Xamarin.Forms;
 
@@ -44,12 +46,12 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Command to execute when "zoom to" context action is selected on a layer
         /// </summary>
-        public Command ZoomToLayerContextAction { get; set; }
+        public ICommand ZoomToLayerContextAction { get; set; }
 
         /// <summary>
         /// Command to execute when "delete" context action is selected on a layer
         /// </summary>
-        public Command DeleteLayerContextAction { get; set; }
+        public ICommand DeleteLayerContextAction { get; set; }
         #endregion
 
         /// <summary>
@@ -73,11 +75,8 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         private void SetupBindings()
         {
-            this.ZoomToLayerContextAction =
-                new Command(async () => await this.OnZoomToLayerAsync());
-
-            this.DeleteLayerContextAction =
-                new Command(async () => await this.OnDeleteLayerAsync());
+            this.ZoomToLayerContextAction = new AsyncCommand(this.OnZoomToLayerAsync);
+            this.DeleteLayerContextAction = new AsyncCommand(this.OnDeleteLayerAsync);
         }
 
         /// <summary>
