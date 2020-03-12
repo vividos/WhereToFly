@@ -61,7 +61,7 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         private void AddImportLocationsToolbarButton()
         {
-            ToolbarItem importLocationsButton = new ToolbarItem(
+            var importLocationsButton = new ToolbarItem(
                 "Import locations",
                 Converter.ImagePathConverter.GetDeviceDependentImage("playlist_plus"),
                 this.OnClicked_ToolbarButtonImportLocations,
@@ -86,7 +86,7 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         private void AddDeleteLocationListToolbarButton()
         {
-            ToolbarItem deleteLocationListButton = new ToolbarItem(
+            var deleteLocationListButton = new ToolbarItem(
                 "Delete location list",
                 Converter.ImagePathConverter.GetDeviceDependentImage("delete_forever"),
                 async () => await this.OnClicked_ToolbarButtonDeleteLocationList(),
