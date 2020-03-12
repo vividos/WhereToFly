@@ -52,6 +52,9 @@
     <Compile Update="Views\CurrentPositionDetailsPage.xaml.cs">
       <DependentUpon>CurrentPositionDetailsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\FilterTakeoffDirectionsPopupPage.xaml.cs">
+      <DependentUpon>FilterTakeoffDirectionsPopupPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\InfoPage.xaml.cs">
       <DependentUpon>InfoPage.xaml</DependentUpon>
     </Compile>
@@ -68,6 +71,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\EditLocationDetailsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\FilterTakeoffDirectionsPopupPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\FindLocationPopupPage.xaml">
