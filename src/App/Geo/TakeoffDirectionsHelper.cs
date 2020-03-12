@@ -35,7 +35,7 @@ namespace WhereToFly.App.Geo
                 }
             }
 
-            text = text.ToUpperInvariant();
+            text = text.ToUpperInvariant().Replace(" ", string.Empty);
 
             if (text.Any((ch) => !IsValidTakeoffChar(ch)))
             {
