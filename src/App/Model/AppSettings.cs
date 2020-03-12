@@ -50,6 +50,16 @@ namespace WhereToFly.App.Model
         public int LastShownSettingsPage { get; set; }
 
         /// <summary>
+        /// Last location list filter takeoff directions value
+        /// </summary>
+        public TakeoffDirections LastLocationListFilterTakeoffDirections { get; set; }
+
+        /// <summary>
+        /// Filter settings that determines if non-takeoff locations should also be shown
+        /// </summary>
+        public bool LocationListFilterShowNonTakeoffLocations { get; set; }
+
+        /// <summary>
         /// Creates a new default app settings object
         /// </summary>
         public AppSettings()
@@ -62,6 +72,8 @@ namespace WhereToFly.App.Model
             this.LastLocationListFilterText = string.Empty;
             this.LastFlyingRangeParameters = new FlyingRangeParameters();
             this.LastShownSettingsPage = 0;
+            this.LastLocationListFilterTakeoffDirections = TakeoffDirections.All;
+            this.LocationListFilterShowNonTakeoffLocations = true;
         }
 
         #region object overridables implementation
@@ -77,7 +89,9 @@ namespace WhereToFly.App.Model
             this.CoordinateDisplayFormat,
             this.LastLocationListFilterText,
             this.LastFlyingRangeParameters,
-            this.LastShownSettingsPage).GetHashCode();
+            this.LastShownSettingsPage,
+            this.LastLocationListFilterTakeoffDirections,
+            this.LocationListFilterShowNonTakeoffLocations).GetHashCode();
 
         /// <summary>
         /// Compares this app settings to another object
@@ -103,13 +117,17 @@ namespace WhereToFly.App.Model
             this.MapOverlayType,
             this.CoordinateDisplayFormat,
             this.LastLocationListFilterText,
-            this.LastShownSettingsPage) ==
+            this.LastShownSettingsPage,
+            this.LastLocationListFilterTakeoffDirections,
+            this.LocationListFilterShowNonTakeoffLocations) ==
             (other.ShadingMode,
             other.MapImageryType,
             other.MapOverlayType,
             other.CoordinateDisplayFormat,
             other.LastLocationListFilterText,
-            other.LastShownSettingsPage);
+            other.LastShownSettingsPage,
+            other.LastLocationListFilterTakeoffDirections,
+            other.LocationListFilterShowNonTakeoffLocations);
         #endregion
 
         /// <summary>
