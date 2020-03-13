@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Threading.Tasks;
 using WhereToFly.App.Core;
 using WhereToFly.App.Core.ViewModels;
 using Xamarin.Forms;
@@ -26,7 +27,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
         /// Tests default ctor of view model
         /// </summary>
         [TestMethod]
-        public void TestDefaultCtor()
+        public async Task TestDefaultCtor()
         {
             // run
             var viewModel = new TrackListViewModel();
@@ -39,9 +40,9 @@ namespace WhereToFly.App.UnitTest.ViewModels
             Assert.IsNotNull(viewModel.ImportTrackCommand, "import track command must not be null");
             Assert.IsNotNull(viewModel.DeleteTrackListCommand, "delete track list command must not be null");
 
-            viewModel.ItemTappedCommand.Execute(null);
+            await viewModel.ItemTappedCommand.ExecuteAsync(null);
             ////viewModel.ImportTrackCommand.Execute(null); // don't execute import; it opens a file picker
-            viewModel.DeleteTrackListCommand.Execute(null);
+            await viewModel.DeleteTrackListCommand.ExecuteAsync();
         }
     }
 }
