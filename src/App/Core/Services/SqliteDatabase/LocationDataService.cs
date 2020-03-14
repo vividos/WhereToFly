@@ -197,15 +197,18 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             /// <summary>
             /// Returns a list of all locations, possibly filtered
             /// </summary>
-            /// <param name="filterText">filter text; may be null</param>
+            /// <param name="filterSettings">filter settings; may be null</param>
             /// <returns>list of locations</returns>
-            public async Task<IEnumerable<Location>> GetList(string filterText = null)
+            public async Task<IEnumerable<Location>> GetList(
+                LocationFilterSettings filterSettings = null)
             {
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
 
                 List<LocationEntry> locationEntryList = null;
-                if (string.IsNullOrEmpty(filterText))
+                if (string.IsNullOrEmpty(filterSettings.FilterText) &&
+                    filterSettings.FilterTakeoffDirections == TakeoffDirections.All &&
+                    filterSettings.ShowNonTakeoffLocations)
                 {
                     locationEntryList = await this.connection.Table<LocationEntry>().ToListAsync();
                 }
@@ -213,13 +216,13 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
                 {
                     locationEntryList = await this.connection.QueryAsync<LocationEntry>(
                         "select * from locations where name like ? or desc like ?",
-                        "%" + filterText + "%",
-                        "%" + filterText + "%");
+                        "%" + filterSettings.FilterText + "%",
+                        "%" + filterSettings.FilterText + "%");
                 }
 
                 stopwatch.Stop();
 
-                Debug.WriteLine($"Location query with text {filterText} took {stopwatch.ElapsedMilliseconds} ms");
+                Debug.WriteLine($"Location query with text {filterSettings.FilterText} took {stopwatch.ElapsedMilliseconds} ms");
 
                 if (locationEntryList == null ||
                     !locationEntryList.Any())

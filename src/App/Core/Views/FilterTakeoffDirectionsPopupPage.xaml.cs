@@ -18,21 +18,20 @@ namespace WhereToFly.App.Core.Views
         private readonly FilterTakeoffDirectionsPopupViewModel viewModel;
 
         /// <summary>
-        /// Task completion source to report back filter parameters
+        /// Task completion source to report back filter settings
         /// </summary>
-        private TaskCompletionSource<Tuple<TakeoffDirections, bool>> tcs;
+        private TaskCompletionSource<LocationFilterSettings> tcs;
 
         /// <summary>
-        /// Creates a new popup page to edit track properties
+        /// Creates a new popup page to edit filter settings
         /// </summary>
-        /// <param name="track">track to edit</param>
-
-        public FilterTakeoffDirectionsPopupPage(TakeoffDirections takeoffDirections, bool alsoShowOtherLocations)
+        /// <param name="filterSettings">filter settings to edit</param>
+        public FilterTakeoffDirectionsPopupPage(LocationFilterSettings filterSettings)
         {
             this.CloseWhenBackgroundIsClicked = true;
 
             this.BindingContext = this.viewModel =
-                new FilterTakeoffDirectionsPopupViewModel(takeoffDirections, alsoShowOtherLocations);
+                new FilterTakeoffDirectionsPopupViewModel(filterSettings);
 
             this.InitializeComponent();
         }
@@ -41,13 +40,13 @@ namespace WhereToFly.App.Core.Views
         /// Shows "filter by takeoff directions" popup page and lets the user set the filter
         /// criteria.
         /// </summary>
-        /// <param name="track">track to edit</param>
-        /// <returns>entered text, or null when user canceled the popup dialog</returns>
-        public static async Task<Tuple<TakeoffDirections, bool>> ShowAsync(TakeoffDirections takeoffDirections, bool alsoShowOtherLocations)
+        /// <param name="filterSettings">filter settings to edit</param>
+        /// <returns>filter settings, or null when user canceled the popup dialog</returns>
+        public static async Task<LocationFilterSettings> ShowAsync(LocationFilterSettings filterSettings)
         {
-            var popupPage = new FilterTakeoffDirectionsPopupPage(takeoffDirections, alsoShowOtherLocations)
+            var popupPage = new FilterTakeoffDirectionsPopupPage(filterSettings)
             {
-                tcs = new TaskCompletionSource<Tuple<TakeoffDirections, bool>>()
+                tcs = new TaskCompletionSource<LocationFilterSettings>()
             };
 
             await popupPage.Navigation.PushPopupAsync(popupPage);
@@ -92,9 +91,7 @@ namespace WhereToFly.App.Core.Views
         {
             if (!this.tcs.Task.IsCompleted)
             {
-                this.tcs.SetResult(new Tuple<TakeoffDirections, bool>(
-                    this.viewModel.TakeoffDirections,
-                    this.viewModel.AlsoShowOtherLocations));
+                this.tcs.SetResult(this.viewModel.FilterSettings);
             }
 
             await this.Navigation.PopPopupAsync();

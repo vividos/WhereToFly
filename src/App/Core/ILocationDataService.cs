@@ -46,9 +46,9 @@ namespace WhereToFly.App.Core
         /// <summary>
         /// Returns a list of all locations, possibly filtered
         /// </summary>
-        /// <param name="filterText">filter text; may be null</param>
+        /// <param name="filterSettings">filter settings; may be null</param>
         /// <returns>list of locations</returns>
-        Task<IEnumerable<Location>> GetList(string filterText = null);
+        Task<IEnumerable<Location>> GetList(LocationFilterSettings filterSettings = null);
 
         /// <summary>
         /// Adds new location list

@@ -47,7 +47,10 @@ namespace WhereToFly.App.UnitTest
                 MapOverlayType = MapOverlayType.ThermalSkywaysKk7,
                 ShadingMode = MapShadingMode.Fixed10Am,
                 CoordinateDisplayFormat = CoordinateDisplayFormat.Format_dd_dddddd,
-                LastLocationListFilterText = "Brecherspitz",
+                LastLocationFilterSettings = new LocationFilterSettings
+                {
+                    FilterText = "Brecherspitz"
+                },
                 LastShownPosition = new MapPoint(47.6764385, 11.8710533, 1685.0),
                 LastFlyingRangeParameters = new FlyingRangeParameters
                 {

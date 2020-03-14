@@ -35,9 +35,9 @@ namespace WhereToFly.App.Model
         public CoordinateDisplayFormat CoordinateDisplayFormat { get; set; }
 
         /// <summary>
-        /// Last used filter text for location list
+        /// Last location filter settings
         /// </summary>
-        public string LastLocationListFilterText { get; set; }
+        public LocationFilterSettings LastLocationFilterSettings { get; set; }
 
         /// <summary>
         /// Last used flying range parameters
@@ -50,16 +50,6 @@ namespace WhereToFly.App.Model
         public int LastShownSettingsPage { get; set; }
 
         /// <summary>
-        /// Last location list filter takeoff directions value
-        /// </summary>
-        public TakeoffDirections LastLocationListFilterTakeoffDirections { get; set; }
-
-        /// <summary>
-        /// Filter settings that determines if non-takeoff locations should also be shown
-        /// </summary>
-        public bool LocationListFilterShowNonTakeoffLocations { get; set; }
-
-        /// <summary>
         /// Creates a new default app settings object
         /// </summary>
         public AppSettings()
@@ -69,11 +59,8 @@ namespace WhereToFly.App.Model
             this.MapImageryType = MapImageryType.OpenStreetMap;
             this.MapOverlayType = MapOverlayType.None;
             this.CoordinateDisplayFormat = CoordinateDisplayFormat.Format_dd_mm_mmm;
-            this.LastLocationListFilterText = string.Empty;
             this.LastFlyingRangeParameters = new FlyingRangeParameters();
             this.LastShownSettingsPage = 0;
-            this.LastLocationListFilterTakeoffDirections = TakeoffDirections.All;
-            this.LocationListFilterShowNonTakeoffLocations = true;
         }
 
         #region object overridables implementation
@@ -87,11 +74,8 @@ namespace WhereToFly.App.Model
             this.MapImageryType,
             this.MapOverlayType,
             this.CoordinateDisplayFormat,
-            this.LastLocationListFilterText,
             this.LastFlyingRangeParameters,
-            this.LastShownSettingsPage,
-            this.LastLocationListFilterTakeoffDirections,
-            this.LocationListFilterShowNonTakeoffLocations).GetHashCode();
+            this.LastShownSettingsPage).GetHashCode();
 
         /// <summary>
         /// Compares this app settings to another object
@@ -111,23 +95,18 @@ namespace WhereToFly.App.Model
         public bool Equals(AppSettings other) =>
             other != null &&
             this.LastShownPosition.Equals(other.LastShownPosition) &&
+            this.LastLocationFilterSettings.Equals(other.LastLocationFilterSettings) &&
             this.LastFlyingRangeParameters.Equals(other.LastFlyingRangeParameters) &&
             (this.ShadingMode,
             this.MapImageryType,
             this.MapOverlayType,
             this.CoordinateDisplayFormat,
-            this.LastLocationListFilterText,
-            this.LastShownSettingsPage,
-            this.LastLocationListFilterTakeoffDirections,
-            this.LocationListFilterShowNonTakeoffLocations) ==
+            this.LastShownSettingsPage) ==
             (other.ShadingMode,
             other.MapImageryType,
             other.MapOverlayType,
             other.CoordinateDisplayFormat,
-            other.LastLocationListFilterText,
-            other.LastShownSettingsPage,
-            other.LastLocationListFilterTakeoffDirections,
-            other.LocationListFilterShowNonTakeoffLocations);
+            other.LastShownSettingsPage);
         #endregion
 
         /// <summary>

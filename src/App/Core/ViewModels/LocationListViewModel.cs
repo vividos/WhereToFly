@@ -156,7 +156,7 @@ namespace WhereToFly.App.Core.ViewModels
         {
             this.appSettings = appSettings;
 
-            this.filterText = appSettings.LastLocationListFilterText;
+            this.filterText = appSettings.LastLocationFilterSettings.FilterText;
 
             this.filterTextUpdateTimer.Elapsed += async (sender, args) =>
             {
@@ -179,7 +179,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task StoreLastLocationListFilterText(string filterText)
         {
-            this.appSettings.LastLocationListFilterText = filterText;
+            this.appSettings.LastLocationFilterSettings.FilterText = filterText;
 
             var dataService = DependencyService.Get<IDataService>();
             await dataService.StoreAppSettingsAsync(this.appSettings);
