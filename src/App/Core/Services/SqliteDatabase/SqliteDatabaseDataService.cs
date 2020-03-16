@@ -78,6 +78,11 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
                 set
                 {
                     this.AppSettings = JsonConvert.DeserializeObject<AppSettings>(value);
+
+                    if (this.AppSettings.LastLocationFilterSettings == null)
+                    {
+                        this.AppSettings.LastLocationFilterSettings = new LocationFilterSettings();
+                    }
                 }
             }
         }

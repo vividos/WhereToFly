@@ -59,6 +59,7 @@ namespace WhereToFly.App.Model
             this.MapImageryType = MapImageryType.OpenStreetMap;
             this.MapOverlayType = MapOverlayType.None;
             this.CoordinateDisplayFormat = CoordinateDisplayFormat.Format_dd_mm_mmm;
+            this.LastLocationFilterSettings = new LocationFilterSettings();
             this.LastFlyingRangeParameters = new FlyingRangeParameters();
             this.LastShownSettingsPage = 0;
         }
@@ -74,6 +75,7 @@ namespace WhereToFly.App.Model
             this.MapImageryType,
             this.MapOverlayType,
             this.CoordinateDisplayFormat,
+            this.LastLocationFilterSettings,
             this.LastFlyingRangeParameters,
             this.LastShownSettingsPage).GetHashCode();
 
