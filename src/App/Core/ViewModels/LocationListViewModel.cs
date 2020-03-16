@@ -51,11 +51,6 @@ namespace WhereToFly.App.Core.ViewModels
         private List<Location> locationList = new List<Location>();
 
         /// <summary>
-        /// Backing store for FilterText property
-        /// </summary>
-        private string filterText;
-
-        /// <summary>
         /// Timer that is triggered after filter text was updated
         /// </summary>
         private System.Timers.Timer filterTextUpdateTimer = new System.Timers.Timer(1000.0);
@@ -88,16 +83,25 @@ namespace WhereToFly.App.Core.ViewModels
         {
             get
             {
-                return this.filterText;
+                return this.appSettings.LastLocationFilterSettings.FilterText;
             }
 
             set
             {
-                this.filterText = value;
+                this.appSettings.LastLocationFilterSettings.FilterText = value;
 
                 this.filterTextUpdateTimer.Stop();
                 this.filterTextUpdateTimer.Start();
             }
+        }
+
+        /// <summary>
+        /// Takeoff directions filter value
+        /// </summary>
+        public TakeoffDirections FilterTakeoffDirections
+        {
+            get => this.appSettings.LastLocationFilterSettings.FilterTakeoffDirections;
+            set => this.appSettings.LastLocationFilterSettings.FilterTakeoffDirections = value;
         }
 
         /// <summary>
@@ -156,13 +160,11 @@ namespace WhereToFly.App.Core.ViewModels
         {
             this.appSettings = appSettings;
 
-            this.filterText = appSettings.LastLocationFilterSettings.FilterText;
-
             this.filterTextUpdateTimer.Elapsed += async (sender, args) =>
             {
                 this.filterTextUpdateTimer.Stop();
 
-                await StoreLastLocationListFilterText(this.FilterText);
+                await StoreLastLocationFilterSettings();
 
                 this.UpdateLocationList();
             };
@@ -173,14 +175,11 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
-        /// Stores last location list filter text
+        /// Stores last location filter settings
         /// </summary>
-        /// <param name="filterText">filter text to store</param>
         /// <returns>task to wait on</returns>
-        private async Task StoreLastLocationListFilterText(string filterText)
+        private async Task StoreLastLocationFilterSettings()
         {
-            this.appSettings.LastLocationFilterSettings.FilterText = filterText;
-
             var dataService = DependencyService.Get<IDataService>();
             await dataService.StoreAppSettingsAsync(this.appSettings);
         }
@@ -214,7 +213,11 @@ namespace WhereToFly.App.Core.ViewModels
                 var locationDataService = dataService.GetLocationDataService();
 
                 this.isListEmpty = await locationDataService.IsListEmpty();
-                this.locationList = (await locationDataService.GetList(this.FilterText)).ToList();
+
+                IEnumerable<Location> localLocationList = await locationDataService.GetList(
+                    this.appSettings.LastLocationFilterSettings);
+
+                this.locationList = localLocationList.ToList();
 
                 var newList = this.locationList
                     .Select(location => new LocationListEntryViewModel(this, location, this.currentPosition));
@@ -244,7 +247,8 @@ namespace WhereToFly.App.Core.ViewModels
                 IDataService dataService = DependencyService.Get<IDataService>();
                 var locationDataService = dataService.GetLocationDataService();
 
-                var newLocationList = await locationDataService.GetList(this.FilterText);
+                var newLocationList = await locationDataService.GetList(
+                    this.appSettings.LastLocationFilterSettings);
 
                 if (!Enumerable.SequenceEqual(this.locationList, newLocationList))
                 {

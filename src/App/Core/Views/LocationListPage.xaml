@@ -25,6 +25,18 @@
                    Placeholder="Type here to filter"
                    HorizontalOptions="FillAndExpand"
                    AutomationId="FilterText" />
+
+            <!-- Takeoff directions view -->
+            <controls:TakeoffDirectionsView IsVisible="True"
+                                            WidthRequest="40" HeightRequest="40"
+                                            HorizontalOptions="End" VerticalOptions="Center"
+                                            Source="{Binding FilterTakeoffDirections, Mode=TwoWay}"
+                                            IsReadOnly="True"
+                                            BackgroundColor="Transparent"
+                                            CompassBorderColor="Black"
+                                            CompassBackgroundColor="DarkGray"
+                                            CompassColor="Green"
+                                            ShowLabels="False" />
         </StackLayout>
 
         <!-- activity indicator to show while refreshing list -->
