@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -27,9 +26,9 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         private bool whereClauseAdded;
 
         /// <summary>
-        /// List of bound objects to pass to the query
+        /// Array of bound objects to pass to the query
         /// </summary>
-        public IEnumerable<object> BoundObjects => this.boundObjects;
+        public object[] BoundObjects => this.boundObjects.ToArray();
 
         /// <summary>
         /// Creates a new SQL query string for given table
@@ -69,5 +68,11 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         /// </summary>
         /// <returns>SQL query string</returns>
         public string Build() => this.stringBuilder.ToString();
+
+        /// <summary>
+        /// Returns a string for display
+        /// </summary>
+        /// <returns>display string</returns>
+        public override string ToString() => $"SQL: {this.Build()} + {this.boundObjects.Count} bound objects";
     }
 }
