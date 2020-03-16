@@ -24,6 +24,15 @@ namespace WhereToFly.App.Model
 
         #region object overridables implementation
         /// <summary>
+        /// Returns a displayable string
+        /// </summary>
+        /// <returns>displayable string</returns>
+        public override string ToString()
+        {
+            return $"Text={this.FilterText}, TakeoffDirections={this.FilterTakeoffDirections}, ShowNonTakeoffLocations={this.ShowNonTakeoffLocations}";
+        }
+
+        /// <summary>
         /// Returns hash code for app resource URI
         /// </summary>
         /// <returns>calculated hash code</returns>

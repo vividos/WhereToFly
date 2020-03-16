@@ -206,23 +206,21 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
                 stopwatch.Start();
 
                 List<LocationEntry> locationEntryList = null;
-                if (string.IsNullOrEmpty(filterSettings.FilterText) &&
-                    filterSettings.FilterTakeoffDirections == TakeoffDirections.All &&
-                    filterSettings.ShowNonTakeoffLocations)
+                if (filterSettings == null ||
+                    (string.IsNullOrEmpty(filterSettings.FilterText) &&
+                     filterSettings.FilterTakeoffDirections == TakeoffDirections.All &&
+                     filterSettings.ShowNonTakeoffLocations))
                 {
                     locationEntryList = await this.connection.Table<LocationEntry>().ToListAsync();
                 }
                 else
                 {
-                    locationEntryList = await this.connection.QueryAsync<LocationEntry>(
-                        "select * from locations where name like ? or desc like ?",
-                        "%" + filterSettings.FilterText + "%",
-                        "%" + filterSettings.FilterText + "%");
+                    locationEntryList = await this.GetLocationListFromFilterSettings(filterSettings);
                 }
 
                 stopwatch.Stop();
 
-                Debug.WriteLine($"Location query with text {filterSettings.FilterText} took {stopwatch.ElapsedMilliseconds} ms");
+                Debug.WriteLine($"Location query with params {filterSettings?.ToString()} took {stopwatch.ElapsedMilliseconds} ms");
 
                 if (locationEntryList == null ||
                     !locationEntryList.Any())
@@ -231,6 +229,53 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
                 }
 
                 return locationEntryList.Select(locationEntry => locationEntry.Location);
+            }
+
+            /// <summary>
+            /// Gets a location list filtered by the given filter settiings
+            /// </summary>
+            /// <param name="filterSettings">filter settings to use</param>
+            /// <returns>list of zero or more location entries</returns>
+            private async Task<List<LocationEntry>> GetLocationListFromFilterSettings(LocationFilterSettings filterSettings)
+            {
+                var builder = new SqlQueryBuilder("locations");
+
+                if (!string.IsNullOrEmpty(filterSettings.FilterText))
+                {
+                    string filterText = "%" + filterSettings.FilterText + "%";
+                    builder.AddWhereClause(
+                        "(name like ? or desc like ?)",
+                        filterText,
+                        filterText);
+                }
+
+                if (filterSettings.FilterTakeoffDirections != TakeoffDirections.All)
+                {
+                    string queryText =
+                        filterSettings.ShowNonTakeoffLocations
+                        ? "(takeoff_dir & ? != 0 or type = ?)"
+                        : "takeoff_dir & ? != 0 and type = ?";
+
+                    builder.AddWhereClause(
+                        queryText,
+                        (int)filterSettings.FilterTakeoffDirections,
+                        (int)LocationType.FlyingTakeoff);
+                }
+                else
+                {
+                    if (filterSettings.ShowNonTakeoffLocations)
+                    {
+                        builder.AddWhereClause(
+                            "type = ?",
+                            (int)LocationType.FlyingTakeoff);
+                    }
+                }
+
+                var locationEntryList = await this.connection.QueryAsync<LocationEntry>(
+                    builder.Build(),
+                    builder.BoundObjects);
+
+                return locationEntryList;
             }
 
             /// <summary>
