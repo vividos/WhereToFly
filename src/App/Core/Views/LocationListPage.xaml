@@ -32,6 +32,7 @@
                                             HorizontalOptions="End" VerticalOptions="Center"
                                             Source="{Binding FilterTakeoffDirections, Mode=TwoWay}"
                                             IsReadOnly="True"
+                                            TouchCommand="{Binding FilterTakeoffDirectionsCommand}"
                                             BackgroundColor="Transparent"
                                             CompassBorderColor="Black"
                                             CompassBackgroundColor="DarkGray"

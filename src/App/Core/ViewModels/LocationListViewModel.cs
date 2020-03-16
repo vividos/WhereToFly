@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WhereToFly.App.Core.Services;
+using WhereToFly.App.Core.Views;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Model;
 using Xamarin.Forms;
@@ -105,6 +106,11 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
+        /// Command to execute when user taps on the "filter takeoff directions" view
+        /// </summary>
+        public ICommand FilterTakeoffDirectionsCommand { get; private set; }
+
+        /// <summary>
         /// Returns true when the location list has entries, but all entries were filtered out by
         /// the filter text
         /// </summary>
@@ -191,6 +197,9 @@ namespace WhereToFly.App.Core.ViewModels
         {
             this.UpdateLocationList();
 
+            this.FilterTakeoffDirectionsCommand =
+                new AsyncCommand(this.FilterTakeoffDirectionsAsync);
+
             this.ItemTappedCommand =
                 new AsyncCommand<Location>(this.NavigateToLocationDetails);
 
@@ -261,6 +270,26 @@ namespace WhereToFly.App.Core.ViewModels
             catch (Exception ex)
             {
                 App.LogError(ex);
+            }
+        }
+
+        /// <summary>
+        /// Shows the "filter takeoff directions popup page
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        public async Task FilterTakeoffDirectionsAsync()
+        {
+            var result = await FilterTakeoffDirectionsPopupPage.ShowAsync(
+                this.appSettings.LastLocationFilterSettings);
+
+            if (result != null)
+            {
+                this.appSettings.LastLocationFilterSettings = result;
+                this.OnPropertyChanged(nameof(this.FilterTakeoffDirections));
+
+                await this.StoreLastLocationFilterSettings();
+
+                this.UpdateLocationList();
             }
         }
 
