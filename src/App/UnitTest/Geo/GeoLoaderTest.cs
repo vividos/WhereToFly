@@ -76,6 +76,22 @@ namespace WhereToFly.App.UnitTest.Geo
         }
 
         /// <summary>
+        /// Tests method GeoLoader.LoadGeoDataFile() to load .cup file
+        /// </summary>
+        [TestMethod]
+        public void TestLoadGetDataFileCup()
+        {
+            // set up
+            string filename = Path.Combine(UnitTestHelper.TestAssetsPath, "waypoints-variants.cup");
+
+            // run
+            var cupFile = GeoLoader.LoadGeoDataFile(filename);
+
+            // check
+            Assert.IsNotNull(cupFile, "loaded geo data file must not be null");
+        }
+
+        /// <summary>
         /// Tests loading geo data file, with non-existent file
         /// </summary>
         [TestMethod]

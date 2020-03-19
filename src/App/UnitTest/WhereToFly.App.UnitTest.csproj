@@ -53,6 +53,7 @@
     <Compile Include="Geo\TrackExtensionMethodsTest.cs" />
     <Compile Include="Geo\GpxWriterTest.cs" />
     <Compile Include="Geo\TakeoffDirectionsHelperTest.cs" />
+    <Compile Include="Geo\SeeYouDataFileTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Geo\GeoLoaderTest.cs" />
     <Compile Include="MapPointTest.cs" />
@@ -205,6 +206,14 @@
   <ItemGroup>
     <Content Include="..\Resources\Assets\info\manual.md">
       <Link>Assets\info\manual.md</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\waypoints-empty.cup">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\waypoints-variants.cup">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

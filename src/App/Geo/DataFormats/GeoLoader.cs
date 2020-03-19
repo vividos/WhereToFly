@@ -9,7 +9,7 @@ namespace WhereToFly.App.Geo.DataFormats
     public static class GeoLoader
     {
         /// <summary>
-        /// Opens a geo data file from given filename; must have .kml, .kmz, .gpx or .igc
+        /// Opens a geo data file from given filename; must have .kml, .kmz, .gpx, .igc or .cup
         /// extension.
         /// </summary>
         /// <param name="filename">filename of file to load</param>
@@ -23,8 +23,8 @@ namespace WhereToFly.App.Geo.DataFormats
         }
 
         /// <summary>
-        /// Opens a geo data file from given stream; file name must have .kml, .kmz, .gpx or .igc
-        /// extension.
+        /// Opens a geo data file from given stream; file name must have .kml, .kmz, .gpx, .igc or
+        /// .cup extension.
         /// </summary>
         /// <param name="stream">stream to load</param>
         /// <param name="filename">filename of file to load</param>
@@ -47,8 +47,11 @@ namespace WhereToFly.App.Geo.DataFormats
                 case ".igc":
                     return new IgcDataFile(stream);
 
+                case ".cup":
+                    return new SeeYouDataFile(stream);
+
                 default:
-                    throw new ArgumentException("file is not a valid .kml, .kmz, .gpx or .igc file");
+                    throw new ArgumentException("file is not a valid .kml, .kmz, .gpx, .igc or .cup file");
             }
         }
     }

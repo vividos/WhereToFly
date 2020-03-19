@@ -44,6 +44,7 @@
               <uap:FileType>.gpx</uap:FileType>
               <uap:FileType>.igc</uap:FileType>
               <uap:FileType>.czml</uap:FileType>
+              <uap:FileType>.cup</uap:FileType>
             </uap:SupportedFileTypes>
           </uap:FileTypeAssociation>
         </uap:Extension>

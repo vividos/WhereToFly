@@ -1,0 +1,11 @@
+﻿name, code, country, lat, lon, elev, style, rwydir, rwylen, freq, desc
+"Cross Hands","CSS",UK,5147.809N,00405.003W,525ft,1,,,,"Turn Point, A48/A476,Between Cross Hands and Gorslas, 9 NMl ESE of Camarthen."
+"Lesce","LJBL",SI,4621.379N,01410.467E,504.0m,5,144,1130.0m,123.500,"Home Airfield"
+"Aiton","O23L",FR,4533.517N,00614.050E,983.9239ft,3,110,300.0m,,"Page 222: O23L Large flat area. High crops. Sudden wind changes. Power lines N/S. S of road marked fields"
+"Park, the","PRK",UK,5107.830N,00214.420W,697ft,4,,,129.975,"Turn Point, Hangar, NE side of site of Bath, Wilts & N Dorset GC, 3 NNE of Mere. Local knowledge required."
+-----Related Tasks-----
+1000km FAI Triangle","0LESCE","Sv Peter","1KlMAIER","1K ZELTW","1K UDBIN","Sv Peter","0LESCE"
+Options,NoStart=12:34:56,TaskTime=01:45:12,WpDis=False,NearDis=0.7km,NearAlt=300.0m
+ObsZone=0,Style=2,R1=400m,A1=180,Line=1
+ObsZone=1,Style=0,R1=35000m,A1=30,R2=12000m,A2=12,A12=123.4
+ObsZone=2,Style=3,R1=2000m,A1=180,Line=1

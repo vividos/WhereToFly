@@ -417,7 +417,7 @@ namespace WhereToFly.App.Core.ViewModels
 
                 if (Device.RuntimePlatform == Device.UWP)
                 {
-                    fileTypes = new string[] { ".kml", ".kmz", ".gpx" };
+                    fileTypes = new string[] { ".kml", ".kmz", ".gpx", ".cup" };
                 }
 
                 result = await CrossFilePicker.Current.PickFile(fileTypes);

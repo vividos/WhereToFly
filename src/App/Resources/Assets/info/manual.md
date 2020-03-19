@@ -86,7 +86,7 @@ locations to the list. First, a selection dialog is shown:
 - Import included: The app has some location lists included. The next dialog
   shows the list of available locations you can choose from.
 - Import from storage: Opens a file picker to select a file on the device.
-  Allowed file types are KML, KMZ and GPX. 
+  Allowed file types are KML, KMZ, GPX and CUP. 
 - Download from web: Presents a list of websites where lists of locations can
   be downloaded from. The selection opens the external website then.
 
