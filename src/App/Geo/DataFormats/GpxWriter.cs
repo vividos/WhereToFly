@@ -57,8 +57,7 @@ namespace WhereToFly.App.Geo.DataFormats
             {
                 writer.WriteStartDocument();
 
-                writer.WriteStartElement("gpx");
-                writer.WriteAttributeString("xmlns", "http://www.topografix.com/GPX/1/1");
+                writer.WriteStartElement("gpx", "http://www.topografix.com/GPX/1/1");
                 writer.WriteAttributeString("version", "1.1");
                 writer.WriteAttributeString("creator", "Where-to-fly");
 
