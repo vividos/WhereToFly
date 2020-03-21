@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
+using WhereToFly.App.Geo;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Model;
 
@@ -208,7 +209,8 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
                 List<LocationEntry> locationEntryList = null;
                 if (filterSettings == null ||
                     (string.IsNullOrEmpty(filterSettings.FilterText) &&
-                     filterSettings.FilterTakeoffDirections == TakeoffDirections.All &&
+                     TakeoffDirectionsHelper.ModifyAdjacentDirectionsFromView(
+                         filterSettings.FilterTakeoffDirections) == TakeoffDirections.All &&
                      filterSettings.ShowNonTakeoffLocations))
                 {
                     locationEntryList = await this.connection.Table<LocationEntry>().ToListAsync();
@@ -249,7 +251,10 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
                         filterText);
                 }
 
-                if (filterSettings.FilterTakeoffDirections != TakeoffDirections.All)
+                TakeoffDirections directions =TakeoffDirectionsHelper.ModifyAdjacentDirectionsFromView(
+                    filterSettings.FilterTakeoffDirections);
+
+                if (directions != TakeoffDirections.All)
                 {
                     string queryText =
                         filterSettings.ShowNonTakeoffLocations
@@ -258,12 +263,12 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
 
                     builder.AddWhereClause(
                         queryText,
-                        (int)filterSettings.FilterTakeoffDirections,
+                        (int)directions,
                         (int)LocationType.FlyingTakeoff);
                 }
                 else
                 {
-                    if (filterSettings.ShowNonTakeoffLocations)
+                    if (!filterSettings.ShowNonTakeoffLocations)
                     {
                         builder.AddWhereClause(
                             "type = ?",
