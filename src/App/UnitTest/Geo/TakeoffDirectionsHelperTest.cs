@@ -78,5 +78,25 @@ namespace WhereToFly.App.UnitTest.Geo
                 Assert.IsTrue(takeoffDirections == TakeoffDirections.None, "takeoff direction must be None");
             }
         }
+
+        /// <summary>
+        /// Tests method ModifyAdjacentDirectionsFromView()
+        /// </summary>
+        [TestMethod]
+        public void TestModifyAdjacentDirectionsFromView()
+        {
+            // check
+            Assert.AreEqual(TakeoffDirections.NE | TakeoffDirections.NNE | TakeoffDirections.ENE,
+                TakeoffDirectionsHelper.ModifyAdjacentDirectionsFromView(TakeoffDirections.NE),
+                "modified takeoff directions value must contain adjacent directions");
+
+            Assert.AreEqual(TakeoffDirections.All,
+                TakeoffDirectionsHelper.ModifyAdjacentDirectionsFromView(
+                    TakeoffDirections.N | TakeoffDirections.NE |
+                    TakeoffDirections.E | TakeoffDirections.SE |
+                    TakeoffDirections.S | TakeoffDirections.SW |
+                    TakeoffDirections.W | TakeoffDirections.NW),
+                "modified takeoff directions value must contain all directions");
+        }
     }
 }

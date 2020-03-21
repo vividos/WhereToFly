@@ -154,23 +154,64 @@ namespace WhereToFly.App.Geo
                 takeoffDirections |= currentDirection;
 
                 // advance direction
-                if (directionClockwise)
-                {
-                    currentDirection = currentDirection == TakeoffDirections.Last
-                        ? TakeoffDirections.First
-                        : (TakeoffDirections)((int)currentDirection << 1);
-                }
-                else
-                {
-                    currentDirection = currentDirection == TakeoffDirections.First
-                        ? TakeoffDirections.Last
-                        : (TakeoffDirections)((int)currentDirection >> 1);
-                }
+                currentDirection = directionClockwise ? GetNextDirection(currentDirection) : GetPreviousDirection(currentDirection);
             }
 
             takeoffDirections |= endDirection;
 
             return true;
+        }
+
+        /// <summary>
+        /// Returns the next direction in clockwise direction; wraps around when at the last
+        /// direction
+        /// </summary>
+        /// <param name="direction">direction to use</param>
+        /// <returns>next direction value</returns>
+        private static TakeoffDirections GetNextDirection(TakeoffDirections direction)
+        {
+            return direction == TakeoffDirections.Last
+                ? TakeoffDirections.First
+                : (TakeoffDirections)((int)direction << 1);
+        }
+
+        /// <summary>
+        /// Returns the previous direction, or next in counter-clockwise direction; wraps around
+        /// when at the first direction
+        /// </summary>
+        /// <param name="direction">direction to use</param>
+        /// <returns>previous direction value</returns>
+        private static TakeoffDirections GetPreviousDirection(TakeoffDirections direction)
+        {
+            return direction == TakeoffDirections.First
+                ? TakeoffDirections.Last
+                : (TakeoffDirections)((int)direction >> 1);
+        }
+
+        /// <summary>
+        /// Modifies takeoff directions from the TakeoffDirectionsView that only has 8 cardinal
+        /// directions, to a takeoff directions value that can be used for filtering location
+        /// entries. This happens by merging the three-letter directions (e.g. NNE) to their
+        /// adjacent two- or one-letter directions.
+        /// </summary>
+        /// <param name="directions">directions to modify</param>
+        /// <returns>modified directions</returns>
+        public static TakeoffDirections ModifyAdjacentDirectionsFromView(TakeoffDirections directions)
+        {
+            TakeoffDirections directionToCheck = TakeoffDirections.First;
+
+            for (int counter = 0; counter < 8; counter++)
+            {
+                if (directions.HasFlag(directionToCheck))
+                {
+                    directions |= GetNextDirection(directionToCheck);
+                    directions |= GetPreviousDirection(directionToCheck);
+                }
+
+                directionToCheck = GetNextDirection(GetNextDirection(directionToCheck));
+            }
+
+            return directions;
         }
     }
 }
