@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using WhereToFly.Shared.Geo;
 using WhereToFly.Shared.Model;
@@ -215,6 +216,23 @@ namespace WhereToFly.App.Geo.Spatial
 
             track.AverageSpeed += speedInKmh;
             averageSpeedTrackPointCount++;
+        }
+
+        /// <summary>
+        /// Calculates XC Tracer time points, starting with the time point in the track name and
+        /// using a time interval of 0.2s.
+        /// </summary>
+        /// <param name="track">track to modify</param>
+        public static void CalcXCTracerTimePoints(this Track track)
+        {
+            int pos = track.Name.IndexOf(' ');
+            string startDateText = pos != -1 ? track.Name.Substring(0, pos) : string.Empty;
+
+            if (!string.IsNullOrWhiteSpace(startDateText) &&
+                DateTimeOffset.TryParse(startDateText, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTimeOffset startDate))
+            {
+                track.GenerateTrackPointTimeValues(startDate, TimeSpan.FromSeconds(0.2));
+            }
         }
     }
 }

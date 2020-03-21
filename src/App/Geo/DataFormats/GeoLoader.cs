@@ -36,10 +36,10 @@ namespace WhereToFly.App.Geo.DataFormats
             switch (extension.ToLowerInvariant())
             {
                 case ".kml":
-                    return new KmlDataFile(stream, isKml: true);
+                    return new KmlDataFile(stream, filename, isKml: true);
 
                 case ".kmz":
-                    return new KmlDataFile(stream, isKml: false);
+                    return new KmlDataFile(stream, filename, isKml: false);
 
                 case ".gpx":
                     return new GpxDataFile(stream);

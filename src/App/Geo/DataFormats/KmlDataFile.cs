@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using WhereToFly.App.Geo.Spatial;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Model;
@@ -24,6 +25,11 @@ namespace WhereToFly.App.Geo.DataFormats
         private readonly KmlFile kml;
 
         /// <summary>
+        /// Indicates if KML file contains a track from an XC Tracer device
+        /// </summary>
+        private readonly bool hasXCTracerTrack;
+
+        /// <summary>
         /// List of track placemarks
         /// </summary>
         private readonly List<Placemark> trackPlacemarkList = new List<Placemark>();
@@ -37,8 +43,9 @@ namespace WhereToFly.App.Geo.DataFormats
         /// Creates a new KML data file from stream
         /// </summary>
         /// <param name="stream">stream to read from</param>
+        /// <param name="filename">filename of kml or kmz file to load</param>
         /// <param name="isKml">indicates if stream contains a kml or a kmz file</param>
-        public KmlDataFile(Stream stream, bool isKml)
+        public KmlDataFile(Stream stream, string filename, bool isKml)
         {
             if (isKml)
             {
@@ -62,6 +69,8 @@ namespace WhereToFly.App.Geo.DataFormats
                     this.kml = kmz.GetDefaultKmlFile();
                 }
             }
+
+            this.hasXCTracerTrack = filename.Contains("-XTR-");
 
             if (this.kml != null)
             {
@@ -108,15 +117,15 @@ namespace WhereToFly.App.Geo.DataFormats
             {
                 if (element is Placemark placemark)
                 {
-                    if (placemark.Geometry is LineString linestring ||
-                        placemark.Geometry is SharpKml.Dom.GX.Track track ||
-                        placemark.Geometry is MultipleTrack multiTrack ||
-                        placemark.Geometry is MultipleGeometry multiGeometry)
+                    if (placemark.Geometry is LineString ||
+                        placemark.Geometry is SharpKml.Dom.GX.Track ||
+                        placemark.Geometry is MultipleTrack ||
+                        placemark.Geometry is MultipleGeometry)
                     {
                         this.trackPlacemarkList.Add(placemark);
                     }
 
-                    if (placemark.Geometry is Point point)
+                    if (placemark.Geometry is Point)
                     {
                         this.locationPlacemarkList.Add(placemark);
                     }
@@ -155,26 +164,39 @@ namespace WhereToFly.App.Geo.DataFormats
 
             var placemark = this.trackPlacemarkList[trackIndex];
 
+            Track track = null;
+
             if (placemark.Geometry is LineString lineString)
             {
-                return LoadTrackFromLineString(lineString);
+                track = LoadTrackFromLineString(lineString);
             }
-            else if (placemark.Geometry is SharpKml.Dom.GX.Track track)
+            else if (placemark.Geometry is SharpKml.Dom.GX.Track gxtrack)
             {
-                return LoadTrackFromGXTrack(track);
+                track = LoadTrackFromGXTrack(gxtrack);
             }
             else if (placemark.Geometry is MultipleTrack multiTrack)
             {
-                return LoadTrackFromGXMultiTrack(multiTrack);
+                track = LoadTrackFromGXMultiTrack(multiTrack);
             }
             else if (placemark.Geometry is MultipleGeometry multiGeometry)
             {
-                return this.LoadTrackFromMultipleGeometry(multiGeometry);
+                track = this.LoadTrackFromMultipleGeometry(multiGeometry);
             }
             else
             {
                 throw new FormatException("track number was not found in kml/kmz file");
             }
+
+            if (this.hasXCTracerTrack)
+            {
+                track.IsFlightTrack = true;
+                if (!track.TrackPoints.Any(trackPoint => trackPoint.Time.HasValue))
+                {
+                    track.CalcXCTracerTimePoints();
+                }
+            }
+
+            return track;
         }
 
         /// <summary>
