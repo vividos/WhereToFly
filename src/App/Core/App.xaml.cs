@@ -203,7 +203,7 @@ namespace WhereToFly.App.Core
         {
             var app = Current as App;
 
-            MessagingCenter.Send<App, Location>(app, Constants.MessageAddTourPlanLocation, location);
+            MessagingCenter.Send(app, Constants.MessageAddTourPlanLocation, location);
         }
 
         /// <summary>

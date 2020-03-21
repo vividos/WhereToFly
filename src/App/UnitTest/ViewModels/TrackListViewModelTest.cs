@@ -26,6 +26,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
         /// <summary>
         /// Tests default ctor of view model
         /// </summary>
+        /// <returns>task to wait on</returns>
         [TestMethod]
         public async Task TestDefaultCtor()
         {

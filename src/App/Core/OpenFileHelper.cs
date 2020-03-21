@@ -203,7 +203,7 @@ namespace WhereToFly.App.Core
         /// <returns>task to wait on</returns>
         private static async Task ImportLocationListAsync(List<Location> locationList)
         {
-            AddTakeofDirections(locationList);
+            AddTakeoffDirections(locationList);
 
             var dataService = DependencyService.Get<IDataService>();
             var locationDataService = dataService.GetLocationDataService();
@@ -234,7 +234,7 @@ namespace WhereToFly.App.Core
         /// Adds takeoff directions value to every location in the list
         /// </summary>
         /// <param name="locationList">location list to modify</param>
-        private static void AddTakeofDirections(List<Location> locationList)
+        private static void AddTakeoffDirections(List<Location> locationList)
         {
             foreach (var location in locationList)
             {
