@@ -25,12 +25,10 @@
 - [ ] Import OpenAir text files for air spaces
 
 ### Locations
-- [ ] Import SeeYou .cup files for waypoints
-- [ ] Show and filter by takeoff direction parsed from location titles
+- [ ] Export locations to GPX file
 
 ### Tracks
 - [ ] Add recording current track
-- [ ] Add exporting tracks as GPX files
 - [ ] Implement reversing track
 - [ ] Show height profile of track in map as overlay
 - [ ] Add navigate-to button, with start and end point selection
