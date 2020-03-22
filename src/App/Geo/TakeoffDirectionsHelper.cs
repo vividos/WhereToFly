@@ -68,7 +68,7 @@ namespace WhereToFly.App.Geo
         /// <summary>
         /// Mapping between takeoff direction string to takeoff direction enum value
         /// </summary>
-        private static Dictionary<string, TakeoffDirections> mapDirectionToEnum =
+        private static readonly Dictionary<string, TakeoffDirections> mapDirectionToEnum =
             new Dictionary<string, TakeoffDirections>
         {
             { "N", TakeoffDirections.N },
