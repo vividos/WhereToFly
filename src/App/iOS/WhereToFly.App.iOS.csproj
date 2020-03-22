@@ -241,4 +241,7 @@
   <ItemGroup>
     <BundleResource Include="Assets\images\settings_outline%402x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Assets\images\export_variant.png" />
+  </ItemGroup>
 </Project>

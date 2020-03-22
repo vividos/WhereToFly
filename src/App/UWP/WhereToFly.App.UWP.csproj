@@ -124,6 +124,7 @@
     <Content Include="Assets\images\delete.png" />
     <Content Include="Assets\images\delete_forever.png" />
     <Content Include="Assets\images\directions.png" />
+    <Content Include="Assets\images\export_variant.png" />
     <Content Include="Assets\images\information_outline.png" />
     <Content Include="Assets\images\layers_plus.png" />
     <Content Include="Assets\images\magnify.png" />
