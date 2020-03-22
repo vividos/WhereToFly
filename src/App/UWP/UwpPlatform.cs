@@ -31,6 +31,11 @@ namespace WhereToFly.App.UWP
         public string CacheDataFolder => ApplicationData.Current.LocalCacheFolder.Path;
 
         /// <summary>
+        /// Property containing the UWP documents folder
+        /// </summary>
+        public string PublicExportFolder => Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+        /// <summary>
         /// Base path to use in WebView control, for Android
         /// </summary>
         public string WebViewBasePath => "ms-appx-web:///WhereToFly.App.Resources.UWP/Assets/";

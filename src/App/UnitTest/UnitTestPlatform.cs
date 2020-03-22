@@ -19,6 +19,11 @@ namespace WhereToFly.App.UnitTest
         public string CacheDataFolder => this.AppDataFolder;
 
         /// <summary>
+        /// Property containing public export folder
+        /// </summary>
+        public string PublicExportFolder => this.AppDataFolder;
+
+        /// <summary>
         /// Returns web view base path; always "about:blank"
         /// </summary>
         public string WebViewBasePath => "about:blank";

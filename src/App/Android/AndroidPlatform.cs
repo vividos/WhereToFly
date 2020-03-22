@@ -17,42 +17,30 @@ namespace WhereToFly.App.Android
         /// context
         /// </summary>
         internal static Context CurrentContext
-        {
-            get
-            {
-                return Xamarin.Essentials.Platform.CurrentActivity ?? global::Android.App.Application.Context;
-            }
-        }
+            => Xamarin.Essentials.Platform.CurrentActivity ?? global::Android.App.Application.Context;
 
         /// <summary>
         /// Property containing the Android app data folder
         /// </summary>
         public string AppDataFolder
-        {
-            get
-            {
-                return CurrentContext.FilesDir.AbsolutePath;
-            }
-        }
+            => CurrentContext.FilesDir.AbsolutePath;
 
         /// <summary>
         /// Property containing the Android cache data folder
         /// </summary>
         public string CacheDataFolder
-        {
-            get
-            {
-                return CurrentContext.CacheDir.AbsolutePath;
-            }
-        }
+            => CurrentContext.CacheDir.AbsolutePath;
+
+        /// <summary>
+        /// Property containing the public external storage folder
+        /// </summary>
+        public string PublicExportFolder
+            => CurrentContext.GetExternalFilesDir(null).AbsolutePath;
 
         /// <summary>
         /// Base path to use in WebView control, for Android
         /// </summary>
-        public string WebViewBasePath
-        {
-            get { return "file:///android_asset/"; }
-        }
+        public string WebViewBasePath => "file:///android_asset/";
 
         /// <summary>
         /// Opens asset stream and returns it

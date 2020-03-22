@@ -22,12 +22,19 @@ namespace WhereToFly.App.iOS
         /// <summary>
         /// Property containing the iOS library folder
         /// </summary>
-        public string AppDataFolder => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "..", "Library");
+        public string AppDataFolder =>
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "..", "Library");
 
         /// <summary>
         /// Property containing the iOS library cache folder
         /// </summary>
-        public string CacheDataFolder => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "..", "Library", "Caches");
+        public string CacheDataFolder =>
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "..", "Library", "Caches");
+
+        /// <summary>
+        /// Property containing the iOS Documents folder
+        /// </summary>
+        public string PublicExportFolder => Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
         /// <summary>
         /// Base path to use in WebView control, for iOS
