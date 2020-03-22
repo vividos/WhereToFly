@@ -172,6 +172,11 @@ namespace WhereToFly.App.Core.ViewModels
         public ICommand ZoomToTrackCommand { get; set; }
 
         /// <summary>
+        /// Command to execute when "export" menu item is selected on a track
+        /// </summary>
+        public ICommand ExportTrackCommand { get; set; }
+
+        /// <summary>
         /// Command to execute when "delete" menu item is selected on a track
         /// </summary>
         public ICommand DeleteTrackCommand { get; set; }
@@ -196,7 +201,7 @@ namespace WhereToFly.App.Core.ViewModels
         private void SetupBindings()
         {
             this.ZoomToTrackCommand = new AsyncCommand(this.OnZoomToTrackAsync);
-
+            this.ExportTrackCommand = new AsyncCommand(this.OnExportTrackAsync);
             this.DeleteTrackCommand = new AsyncCommand(this.OnDeleteTrackAsync);
         }
 
@@ -209,6 +214,15 @@ namespace WhereToFly.App.Core.ViewModels
             App.MapView.ZoomToTrack(this.track);
 
             await NavigationService.Instance.NavigateAsync(Constants.PageKeyMapPage, animated: true);
+        }
+
+        /// <summary>
+        /// Called when "Export" menu item is selected
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task OnExportTrackAsync()
+        {
+            await ExportFileHelper.ExportTrackAsync(this.track);
         }
 
         /// <summary>

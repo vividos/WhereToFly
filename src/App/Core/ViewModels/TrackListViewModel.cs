@@ -173,6 +173,15 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
+        /// Called when "Export" menu item is selected
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        internal async Task ExportTrack(Track track)
+        {
+            await ExportFileHelper.ExportTrackAsync(track);
+        }
+
+        /// <summary>
         /// Deletes the given track from the track list
         /// </summary>
         /// <param name="track">track to delete</param>

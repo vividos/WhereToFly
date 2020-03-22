@@ -9,6 +9,7 @@
         <ResourceDictionary>
             <converter:ImagePathConverter x:Key="ImagePathConverter" />
             <x:String x:Key="ZoomToImageBaseName">magnify_plus_outline</x:String>
+            <x:String x:Key="ExportImageBaseName">export_variant</x:String>
             <x:String x:Key="DeleteImageBaseName">delete</x:String>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -17,6 +18,11 @@
         <ToolbarItem Name="Zoom to"
                      Icon="{Binding Source={StaticResource ZoomToImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                      Command="{Binding ZoomToTrackCommand}"
+                     Order="Primary" Priority="0" />
+
+        <ToolbarItem Name="Eport"
+                     Icon="{Binding Source={StaticResource ExportImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+                     Command="{Binding ExportTrackCommand}"
                      Order="Primary" Priority="0" />
 
         <ToolbarItem Name="Delete"

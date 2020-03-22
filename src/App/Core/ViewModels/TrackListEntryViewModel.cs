@@ -79,6 +79,11 @@ namespace WhereToFly.App.Core.ViewModels
         public ICommand ZoomToTrackContextAction { get; set; }
 
         /// <summary>
+        /// Command to execute when "Export" context action is selected on a track
+        /// </summary>
+        public ICommand ExportTrackContextAction { get; set; }
+
+        /// <summary>
         /// Command to execute when "delete" context action is selected on a location
         /// </summary>
         public ICommand DeleteTrackContextAction { get; set; }
@@ -105,6 +110,7 @@ namespace WhereToFly.App.Core.ViewModels
         {
             this.ShowTrackDetailsContextAction = new AsyncCommand(this.OnShowDetailsLocation);
             this.ZoomToTrackContextAction = new AsyncCommand(this.OnZoomToTrackAsync);
+            this.ExportTrackContextAction = new AsyncCommand(this.OnExportTrackAsync);
             this.DeleteTrackContextAction = new AsyncCommand(this.OnDeleteTrackAsync);
         }
 
@@ -124,6 +130,15 @@ namespace WhereToFly.App.Core.ViewModels
         private async Task OnZoomToTrackAsync()
         {
             await this.parentViewModel.ZoomToTrack(this.track);
+        }
+
+        /// <summary>
+        /// Called when "Export" context action is selected
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task OnExportTrackAsync()
+        {
+            await this.parentViewModel.ExportTrack(this.track);
         }
 
         /// <summary>

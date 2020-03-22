@@ -6,6 +6,7 @@
   the terrain is loaded when the mobile network is available again
 - added info page containing the manual for all pages in the app
 - added importing locations from SeeYou waypoints.cup files
+- added exporting track to .gpx file
 - importing KML tracks from XC Tracer devices now calculate the time points
   automatically
 - long-tapping on images in the weather browser offers downloading that image
