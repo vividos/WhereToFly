@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using WhereToFly.App.Geo;
 using WhereToFly.App.Geo.DataFormats;
+using Xamarin.Forms;
 
 namespace WhereToFly.App.Core
 {
@@ -50,8 +51,8 @@ namespace WhereToFly.App.Core
         /// </returns>
         private static async Task<string> AskUserExportFilenameAsync(Track track)
         {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            string exportFilename = Path.Combine(path, "WhereToFly", track.Name + ".gpx");
+            var platform = DependencyService.Get<IPlatform>();
+            string exportFilename = Path.Combine(platform.PublicExportFolder, "WhereToFly", track.Name + ".gpx");
 
             string editedExportFilename = await App.Current.MainPage.DisplayPromptAsync(
                 Constants.AppTitle,
