@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using WhereToFly.App.Geo;
 using WhereToFly.App.Geo.DataFormats;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core
@@ -46,13 +47,14 @@ namespace WhereToFly.App.Core
         /// <summary>
         /// Ask user about the export filename and return it
         /// </summary>
+        /// <param name="track">track to export</param>
         /// <returns>
         /// export filename, or null when editing was cancelled or an invalid path was specified
         /// </returns>
         private static async Task<string> AskUserExportFilenameAsync(Track track)
         {
             var platform = DependencyService.Get<IPlatform>();
-            string exportFilename = Path.Combine(platform.PublicExportFolder, "WhereToFly", track.Name + ".gpx");
+            string exportFilename = Path.Combine(platform.PublicExportFolder, track.Name + ".gpx");
 
             string editedExportFilename = await App.Current.MainPage.DisplayPromptAsync(
                 Constants.AppTitle,
@@ -61,29 +63,58 @@ namespace WhereToFly.App.Core
                 "Cancel",
                 initialValue: exportFilename);
 
-
             if (string.IsNullOrEmpty(editedExportFilename))
             {
                 return null;
             }
 
-            string editedDirectoryName = Path.GetDirectoryName(editedExportFilename);
-            if (!Directory.Exists(editedDirectoryName))
+            var status = await Permissions.RequestAsync<Permissions.StorageWrite>();
+            if (status != PermissionStatus.Granted)
             {
-                Directory.CreateDirectory(editedDirectoryName);
+                return null;
+            }
 
-                if (!Directory.Exists(editedDirectoryName))
-                {
-                    await App.Current.MainPage.DisplayAlert(
-                        Constants.AppTitle,
-                        "Invalid path specified",
-                        "Close");
-                }
-
+            if (!await TryCreateFolderAsync(editedExportFilename))
+            {
                 return null;
             }
 
             return editedExportFilename;
+        }
+
+        /// <summary>
+        /// Checks if a folder for the given filename already exists and tries to create it.
+        /// </summary>
+        /// <param name="filename">file name</param>
+        /// <returns>true when creating folder succeeded, or false when not</returns>
+        private static async Task<bool> TryCreateFolderAsync(string filename)
+        {
+            string folderName = Path.GetDirectoryName(filename);
+            if (Directory.Exists(folderName))
+            {
+                return true;
+            }
+
+            try
+            {
+                Directory.CreateDirectory(folderName);
+            }
+            catch (Exception)
+            {
+                // catch and ignore
+            }
+
+            if (!Directory.Exists(folderName))
+            {
+                await App.Current.MainPage.DisplayAlert(
+                    Constants.AppTitle,
+                    "Invalid path was specified: " + filename,
+                    "Close");
+
+                return false;
+            }
+
+            return true;
         }
     }
 }
