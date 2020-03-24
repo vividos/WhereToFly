@@ -14,5 +14,10 @@
         /// Factor to convert feet to meter
         /// </summary>
         public static readonly double FactorFeetToMeter = 0.3048;
+
+        /// <summary>
+        /// Factor to convert nautical miles (nm) to meter
+        /// </summary>
+        public static readonly double FactorNauticalMilesToMeter = 1852.0;
     }
 }
