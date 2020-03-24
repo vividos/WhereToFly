@@ -1,7 +1,7 @@
 @echo off
 REM
 REM Where-to-fly - an app to decide where to (hike up and) fly with a paraglider
-REM Copyright (C) 2017-2019 Michael Fink
+REM Copyright (C) 2017-2020 Michael Fink
 REM
 REM Runs Unit tests and coverage analysis
 REM
@@ -10,10 +10,10 @@ REM set this to your Visual Studio installation folder
 set VSINSTALL=%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community
 
 REM set this to your OpenCover executable
-set OPENCOVER="C:\Projekte\ToolsOpenCover\OpenCover.Console.exe"
+set OPENCOVER="C:\Projekte\Tools\OpenCover\OpenCover.Console.exe"
 
 REM set this to your ReportGenerator executable
-set REPORTGENERATOR="C:\Projekte\ToolsReportGenerator\ReportGenerator.exe"
+set REPORTGENERATOR="C:\Projekte\Tools\ReportGenerator\ReportGenerator.exe"
 
 REM
 REM Preparations
