@@ -86,8 +86,13 @@ namespace WhereToFly.App.Geo.Airspace
                     string line = reader.ReadLine().Trim();
                     this.currentLine++;
 
-                    if (line.Length == 0 ||
-                        line.StartsWith(CommentStart))
+                    int posComment = line.IndexOf(CommentStart);
+                    if (posComment != -1)
+                    {
+                        line = line.Substring(0, posComment).Trim();
+                    }
+
+                    if (line.Length == 0)
                     {
                         continue;
                     }
@@ -255,9 +260,12 @@ namespace WhereToFly.App.Geo.Airspace
             { "D", AirspaceClass.D },
             { "E", AirspaceClass.E },
             { "F", AirspaceClass.F },
-            { "GP", AirspaceClass.GP },
+            { "G", AirspaceClass.G },
+            { "GP", AirspaceClass.GliderProhibited },
             { "CTR", AirspaceClass.CTR },
-            { "W", AirspaceClass.Wave },
+            { "W", AirspaceClass.WaveWindow },
+            { "RMZ", AirspaceClass.RMZ },
+            { "TMZ", AirspaceClass.TMZ },
         };
 
         /// <summary>
@@ -338,8 +346,9 @@ namespace WhereToFly.App.Geo.Airspace
                 case "GND":
                 case "0FT GND":
                     return new Altitude(AltitudeType.GND);
+                case "UNL":
+                case "UNLTD":
                 case "UNLIM":
-                    return new Altitude(AltitudeType.Unlimited);
                 case "UNLIMITED":
                     return new Altitude(AltitudeType.Unlimited);
                 default:

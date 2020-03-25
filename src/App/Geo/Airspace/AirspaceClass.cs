@@ -51,9 +51,14 @@
         F,
 
         /// <summary>
+        /// Class G
+        /// </summary>
+        G,
+
+        /// <summary>
         /// Glider prohibited
         /// </summary>
-        GP,
+        GliderProhibited,
 
         /// <summary>
         /// CTR (=Control Zone)
@@ -63,7 +68,17 @@
         /// <summary>
         /// Wave window
         /// </summary>
-        Wave,
+        WaveWindow,
+
+        /// <summary>
+        /// Radio mandatory zone
+        /// </summary>
+        RMZ,
+
+        /// <summary>
+        /// Transponder mandatory zone
+        /// </summary>
+        TMZ,
 
         /// <summary>
         /// Other airspace

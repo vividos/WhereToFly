@@ -95,6 +95,9 @@
     <Compile Include="Views\MapViewTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\airspaces\201921216_DAEC_Airspace_Germany2019.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\airspaces\flyland.ch-winpilot.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
