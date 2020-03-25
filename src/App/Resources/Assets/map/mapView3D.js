@@ -1636,13 +1636,33 @@ MapView.prototype.onNetworkConnectivityChanged = function (isAvailable) {
 };
 
 /**
- * Calculates the current airac ID, based on the current date, which is good enough for our
- * purposes. See the actual starting days, per year, here:
+ * AIRAC cycle start dates, by year:
  * https://www.nm.eurocontrol.int/RAD/common/airac_dates.html
+ */
+var airacStartDates = {
+    2020: "2020-01-02",
+    2021: "2021-01-28",
+    2022: "2022-01-27",
+};
+
+/**
+ * Calculates the current airac ID, based on the current date. The first two
+ * digits represent the last two year digits. The remaining two digits are
+ * counted up from 1, every 28 days, starting on a specific date.
  * @returns {number} current airac ID
  */
 function calcCurrentAiracId() {
-    var baseAirac = new Date("2020-01-02"); // 2001 began on that day
-    var diffInDays = Math.abs(new Date() - baseAirac) / 86400000;
-    return 2001 + Math.floor(diffInDays / 28);
+    var now = new Date();
+    var currentYear = now.getFullYear();
+
+    var baseAirac = new Date(airacStartDates[currentYear]);
+    if (now < baseAirac) {
+        currentYear--;
+        baseAirac = new Date(airacStartDates[currentYear]);
+    }
+
+    var diffInDays = (now - baseAirac) / 86400000;
+
+    airacId = ((currentYear - 2000) * 100) + 1 + Math.floor(diffInDays / 28);
+    return airacId;
 }
