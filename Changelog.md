@@ -12,6 +12,7 @@
 - long-tapping on images in the weather browser offers downloading that image
 - fixed crash when navigating between different weather pages
 - fixed crash when deleting a location
+- fixed displaying OpenFlightMaps imagery layer
 
 1.7.0
 
