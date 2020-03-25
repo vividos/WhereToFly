@@ -118,7 +118,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
 
             this.connection = new SQLiteAsyncConnection(
                 databaseFilename,
-                SQLiteOpenFlags.Create | SQLiteOpenFlags.ReadWrite);
+                SQLiteOpenFlags.Create | SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.FullMutex);
 
             this.initCompleteTask = Task.Run(async () => await this.InitAsync());
         }
