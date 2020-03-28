@@ -46,6 +46,7 @@
     </Compile>
     <Compile Include="DataFormatterTest.cs" />
     <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="Geo\CzmlAirspaceWriterTest.cs" />
     <Compile Include="Geo\GpxDataFileTests.cs" />
     <Compile Include="Geo\KmlDataFileTests.cs" />
     <Compile Include="Geo\MapPointExtensionMethodsTests.cs" />
