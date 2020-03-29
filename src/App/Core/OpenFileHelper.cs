@@ -417,6 +417,17 @@ namespace WhereToFly.App.Core
                 czml = streamReader.ReadToEnd();
             }
 
+            await AddLayerFromCzml(czml, filename);
+        }
+
+        /// <summary>
+        /// Adds a new layer from given CZML text
+        /// </summary>
+        /// <param name="czml">loaded CZML text</param>
+        /// <param name="filename">filename of loaded file</param>
+        /// <returns>task to wait on</returns>
+        public static async Task AddLayerFromCzml(string czml, string filename)
+        {
             if (!IsValidJson(czml))
             {
                 await App.Current.MainPage.DisplayAlert(

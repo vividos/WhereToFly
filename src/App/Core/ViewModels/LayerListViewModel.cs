@@ -4,10 +4,13 @@ using Plugin.FilePicker.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WhereToFly.App.Core.Services;
+using WhereToFly.App.Geo.Airspace;
+using WhereToFly.App.Geo.DataFormats;
 using WhereToFly.Shared.Model;
 using Xamarin.Forms;
 
@@ -18,6 +21,17 @@ namespace WhereToFly.App.Core.ViewModels
     /// </summary>
     public class LayerListViewModel : ViewModelBase
     {
+        /// <summary>
+        /// A mapping of display string to website address to open
+        /// </summary>
+        private readonly Dictionary<string, string> downloadWebSiteList = new Dictionary<string, string>
+        {
+            { "vividos' Where-to-fly resources", "http://www.vividos.de/wheretofly/index.html" },
+            { "XContest Airspaces", "https://airspace.xcontest.org/" },
+            { "OpenAir Schutzzonen", "https://www.openairschutzzonen.de/" },
+            { "Flyland.ch Lufträume", "http://www.flyland.ch/download.php" }
+        };
+
         /// <summary>
         /// Layer list backing store
         /// </summary>
@@ -134,6 +148,50 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task ImportLayerAsync()
         {
+            var importActions = new List<string>
+            {
+                "Import CZML Layer",
+                "Import OpenAir airspaces",
+                "Download from web"
+            };
+
+            string result = await App.Current.MainPage.DisplayActionSheet(
+                $"Import layer",
+                "Cancel",
+                null,
+                importActions.ToArray());
+
+            if (!string.IsNullOrEmpty(result))
+            {
+                int selectedIndex = importActions.IndexOf(result);
+
+                switch (selectedIndex)
+                {
+                    case 0:
+                        await this.ImportCzmlLayerAsync();
+                        break;
+
+                    case 1:
+                        await this.ImportOpenAirAirspacesAsync();
+                        break;
+
+                    case 2:
+                        await this.DownloadFromWebAsync();
+                        break;
+
+                    default:
+                        // ignore
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Imports a CZML layer by showing file picker and opening the layer file
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task ImportCzmlLayerAsync()
+        {
             FileData result;
             try
             {
@@ -169,6 +227,83 @@ namespace WhereToFly.App.Core.ViewModels
             }
 
             await this.ReloadLayerListAsync();
+        }
+
+        /// <summary>
+        /// Imports OpenAir airspaces file and adds layer
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task ImportOpenAirAirspacesAsync()
+        {
+            FileData result;
+            try
+            {
+                string[] fileTypes = null;
+
+                if (Device.RuntimePlatform == Device.UWP)
+                {
+                    fileTypes = new string[] { ".txt" };
+                }
+                else if (Device.RuntimePlatform == Device.Android)
+                {
+                    fileTypes = new string[] { "text/plain" };
+                }
+
+                result = await CrossFilePicker.Current.PickFile(fileTypes);
+                if (result == null ||
+                    string.IsNullOrEmpty(result.FilePath))
+                {
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                App.LogError(ex);
+
+                await App.Current.MainPage.DisplayAlert(
+                    Constants.AppTitle,
+                    "Error while picking a file: " + ex.Message,
+                    "OK");
+
+                return;
+            }
+
+            using (var stream = result.GetStream())
+            {
+                var parser = new OpenAirFileParser(stream);
+
+                string czml = CzmlAirspaceWriter.WriteCzml(
+                    Path.GetFileNameWithoutExtension(result.FileName),
+                    parser.Airspaces);
+
+                await OpenFileHelper.AddLayerFromCzml(czml, result.FileName);
+            }
+
+            await this.ReloadLayerListAsync();
+        }
+
+        /// <summary>
+        /// Presents a list of websites to download from and opens selected URL. Importing is then
+        /// done using the file extension association.
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task DownloadFromWebAsync()
+        {
+            string result = await App.Current.MainPage.DisplayActionSheet(
+                "Select a web page to open",
+                "Cancel",
+                null,
+                this.downloadWebSiteList.Keys.ToArray());
+
+            if (result == null ||
+                !this.downloadWebSiteList.ContainsKey(result))
+            {
+                return;
+            }
+
+            string webSiteToOpen = this.downloadWebSiteList[result];
+
+            await Xamarin.Essentials.Launcher.OpenAsync(webSiteToOpen);
         }
 
         /// <summary>
