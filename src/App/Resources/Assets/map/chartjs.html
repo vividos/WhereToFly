@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <title>Chart.js</title>
+    <base target="_blank" />
+    <script src="Chart/Chart.bundle.min.js"></script>
+    <style>
+        @import url(Chart/Chart.min.css);
+
+        html, body, #chartElement {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body style="margin: 0px">
+    <script src="heightProfileView.js"></script>
+
+    <canvas id="chartElement"></canvas>
+
+    <script type="text/javascript">
+
+        // function used to call to C#
+        function callAction(funcName, params) {
+            var ios = /iphone|ipod|ipad/.test(window.navigator.userAgent.toLowerCase());
+            if (ios)
+                window.location.href = "callback://" + funcName + "/" + JSON.stringify(params);
+            else if (typeof callback === "object")
+                callback.call(funcName, JSON.stringify(params));
+            else
+                window.external.notify('callback://' + funcName + '/' + JSON.stringify(params));
+        }
+
+    </script>
+
+</body>
+</html>
