@@ -69,6 +69,10 @@ The app uses the [Refractored.MvvmHelpers](https://github.com/jamesmontemagno/mv
 library. The library is licensed using the
 [MIT License](https://github.com/jamesmontemagno/mvvm-helpers/blob/master/LICENSE.md).
 
+The app uses the [Chart.js](https://www.chartjs.org/)
+library to display height profiles. The library is licensed using the
+[MIT License](https://github.com/chartjs/Chart.js/blob/master/LICENSE.md).
+
 The backend uses the [QuickGraph](https://github.com/oldrev/Sandwych.QuickGraph)
 library for tour planning.
 The library is licensed using the
