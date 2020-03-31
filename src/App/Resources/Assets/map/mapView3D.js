@@ -100,6 +100,8 @@ function MapView(options) {
         skyBox: false,
         scene3DOnly: true,
         requestRenderMode: true,
+        // when no animation happens, render after this number of seconds
+        maximumRenderTimeChange: 60.0,
         contextOptions: {
             webgl: {
                 powerPreference: webGLPowerPreference
