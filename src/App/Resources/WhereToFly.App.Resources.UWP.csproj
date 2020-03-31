@@ -185,6 +185,10 @@
     <Content Include="Assets\map\Cesium\Workers\WebGLConstants-66e14a3b.js" />
     <Content Include="Assets\map\Cesium\Workers\WebMercatorProjection-c0de4fbc.js" />
     <Content Include="Assets\map\Cesium\Workers\when-0488ac89.js" />
+    <Content Include="Assets\map\chartjs.html" />
+    <Content Include="Assets\map\Chart\Chart.bundle.min.js" />
+    <Content Include="Assets\map\Chart\Chart.min.css" />
+    <Content Include="Assets\map\heightProfileView.js" />
     <Content Include="Assets\map\images\close-circle-outline.svg" />
     <Content Include="Properties\WhereToFly.App.Resources.UWP.rd.xml" />
   </ItemGroup>

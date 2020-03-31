@@ -128,6 +128,10 @@
     <Content Include="Assets\map\Cesium\Workers\WebGLConstants-66e14a3b.js" />
     <Content Include="Assets\map\Cesium\Workers\WebMercatorProjection-c0de4fbc.js" />
     <Content Include="Assets\map\Cesium\Workers\when-0488ac89.js" />
+    <BundleResource Include="Assets\map\chartjs.html" />
+    <BundleResource Include="Assets\map\Chart\Chart.bundle.min.js" />
+    <BundleResource Include="Assets\map\Chart\Chart.min.css" />
+    <BundleResource Include="Assets\map\heightProfileView.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\VersionAssemblyInfo.cs">
