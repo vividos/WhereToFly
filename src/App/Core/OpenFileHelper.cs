@@ -436,13 +436,25 @@ namespace WhereToFly.App.Core
         /// <returns>task to wait on</returns>
         public static async Task ImportOpenAirAirspaceFile(Stream stream, string filename)
         {
-            var parser = new OpenAirFileParser(stream);
+            try
+            {
+                var parser = new OpenAirFileParser(stream);
 
-            string czml = CzmlAirspaceWriter.WriteCzml(
-                Path.GetFileNameWithoutExtension(filename),
-                parser.Airspaces);
+                string czml = CzmlAirspaceWriter.WriteCzml(
+                    Path.GetFileNameWithoutExtension(filename),
+                    parser.Airspaces);
 
-            await AddLayerFromCzml(czml, filename);
+                await AddLayerFromCzml(czml, filename);
+            }
+            catch (Exception ex)
+            {
+                App.LogError(ex);
+
+                await App.Current.MainPage.DisplayAlert(
+                    Constants.AppTitle,
+                    $"Error while loading OpenAir airspaces: {ex.Message}",
+                    "OK");
+            }
         }
 
         /// <summary>
