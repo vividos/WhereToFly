@@ -545,6 +545,9 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         public async Task SampleTrackHeights(Track track, double offsetInMeters)
         {
+            // need an initialized map in order to sample data
+            await this.taskCompletionSourceMapInitialized.Task;
+
             var trackPointsList =
                 track.TrackPoints.SelectMany(x => new double[]
                 {

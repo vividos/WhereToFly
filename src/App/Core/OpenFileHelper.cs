@@ -339,6 +339,7 @@ namespace WhereToFly.App.Core
             waitingDialog = new WaitingPopupPage("Sampling track point heights...");
             App.RunOnUiThread(async () => await waitingDialog.ShowAsync());
 
+            await App.InitializedTask;
             try
             {
                 await App.MapView.SampleTrackHeights(track, 0.0);
