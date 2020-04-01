@@ -106,6 +106,7 @@ namespace WhereToFly.App.Geo
         }
 
         #region IEquatable implementation
+
         /// <summary>
         /// Compares this track with another
         /// </summary>
@@ -125,6 +126,7 @@ namespace WhereToFly.App.Geo
         #endregion
 
         #region object overridables implementation
+
         /// <summary>
         /// Compares this track to another object
         /// </summary>

@@ -28,6 +28,7 @@ namespace WhereToFly.App.Model
         public double WindDirection { get; set; } = 0.0;
 
         #region object overridables implementation
+
         /// <summary>
         /// Returns hash code for app resource URI
         /// </summary>
@@ -44,10 +45,11 @@ namespace WhereToFly.App.Model
         /// <param name="obj">object to compare to</param>
         /// <returns>true when equal app settings, false when not</returns>
         public override bool Equals(object obj) =>
-            (obj is FlyingRangeParameters FlyingRangeParameters) && this.Equals(FlyingRangeParameters);
+            (obj is FlyingRangeParameters flyingRangeParameters) && this.Equals(flyingRangeParameters);
         #endregion
 
         #region IEquatable implementation
+
         /// <summary>
         /// Compares this app settings to another app settings object
         /// </summary>

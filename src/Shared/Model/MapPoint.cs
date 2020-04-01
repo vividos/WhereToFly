@@ -53,6 +53,7 @@ namespace WhereToFly.Shared.Model
         }
 
         #region IEquatable implementation
+
         /// <summary>
         /// Compares this map point to another map point and returns if they are equal
         /// </summary>
@@ -76,6 +77,7 @@ namespace WhereToFly.Shared.Model
         #endregion
 
         #region object overridables implementation
+
         /// <summary>
         /// Compares this map point to another object and returns if they are equal
         /// </summary>

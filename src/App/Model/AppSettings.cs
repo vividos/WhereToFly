@@ -65,6 +65,7 @@ namespace WhereToFly.App.Model
         }
 
         #region object overridables implementation
+
         /// <summary>
         /// Returns hash code for app resource URI
         /// </summary>
@@ -89,6 +90,7 @@ namespace WhereToFly.App.Model
         #endregion
 
         #region IEquatable implementation
+
         /// <summary>
         /// Compares this app settings to another app settings object
         /// </summary>

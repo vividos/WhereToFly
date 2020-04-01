@@ -50,6 +50,7 @@ namespace WhereToFly.App.Model
         public bool IsPlanTourLocation { get; set; } = false;
 
         #region IEquatable implementation
+
         /// <summary>
         /// Compares this location with other location
         /// </summary>
@@ -72,6 +73,7 @@ namespace WhereToFly.App.Model
         #endregion
 
         #region object overridables implementation
+
         /// <summary>
         /// Compares this location to another object
         /// </summary>

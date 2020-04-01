@@ -51,10 +51,10 @@ namespace WhereToFly.App.Logic
             Task<PlannedTour> PlanTourAsync([Body]PlanTourParameters planTourParameters);
         }
 
-#pragma warning disable S1075 // URIs should not be hardcoded
         /// <summary>
         /// Base URL for the WebApi REST web service
         /// </summary>
+#pragma warning disable S1075 // URIs should not be hardcoded
         private const string BaseUrl = "https://wheretoflywebapi.azurewebsites.net";
 #pragma warning restore S1075 // URIs should not be hardcoded
 

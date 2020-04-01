@@ -23,6 +23,7 @@ namespace WhereToFly.App.Model
         public bool ShowNonTakeoffLocations { get; set; } = true;
 
         #region object overridables implementation
+
         /// <summary>
         /// Returns a displayable string
         /// </summary>
@@ -51,6 +52,7 @@ namespace WhereToFly.App.Model
         #endregion
 
         #region IEquatable implementation
+
         /// <summary>
         /// Compares this app settings to another app settings object
         /// </summary>
