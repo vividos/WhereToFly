@@ -45,6 +45,7 @@
               <uap:FileType>.igc</uap:FileType>
               <uap:FileType>.czml</uap:FileType>
               <uap:FileType>.cup</uap:FileType>
+              <uap:FileType>.txt</uap:FileType>
             </uap:SupportedFileTypes>
           </uap:FileTypeAssociation>
         </uap:Extension>

@@ -4,13 +4,10 @@ using Plugin.FilePicker.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WhereToFly.App.Core.Services;
-using WhereToFly.App.Geo.Airspace;
-using WhereToFly.App.Geo.DataFormats;
 using WhereToFly.Shared.Model;
 using Xamarin.Forms;
 
@@ -270,13 +267,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             using (var stream = result.GetStream())
             {
-                var parser = new OpenAirFileParser(stream);
-
-                string czml = CzmlAirspaceWriter.WriteCzml(
-                    Path.GetFileNameWithoutExtension(result.FileName),
-                    parser.Airspaces);
-
-                await OpenFileHelper.AddLayerFromCzml(czml, result.FileName);
+                await OpenFileHelper.ImportOpenAirAirspaceFile(stream, result.FileName);
             }
 
             await this.ReloadLayerListAsync();

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.Views;
 using WhereToFly.App.Geo;
+using WhereToFly.App.Geo.Airspace;
 using WhereToFly.App.Geo.DataFormats;
 using WhereToFly.App.Geo.Spatial;
 using WhereToFly.App.Model;
@@ -39,6 +40,12 @@ namespace WhereToFly.App.Core
             if (Path.GetExtension(filename).ToLowerInvariant() == ".czml")
             {
                 await ImportLayerFile(stream, filename);
+                return;
+            }
+
+            if (Path.GetExtension(filename).ToLowerInvariant() == ".txt")
+            {
+                await ImportOpenAirAirspaceFile(stream, filename);
                 return;
             }
 
@@ -405,7 +412,7 @@ namespace WhereToFly.App.Core
         }
 
         /// <summary>
-        /// Imports a layer file
+        /// Imports a .czml layer file
         /// </summary>
         /// <param name="stream">stream to read from</param>
         /// <param name="filename">filename of file</param>
@@ -422,12 +429,29 @@ namespace WhereToFly.App.Core
         }
 
         /// <summary>
+        /// Imports a .txt OpenAir airspace file and adds it as layer
+        /// </summary>
+        /// <param name="stream">stream of file to import</param>
+        /// <param name="filename">filename of file to import</param>
+        /// <returns>task to wait on</returns>
+        public static async Task ImportOpenAirAirspaceFile(Stream stream, string filename)
+        {
+            var parser = new OpenAirFileParser(stream);
+
+            string czml = CzmlAirspaceWriter.WriteCzml(
+                Path.GetFileNameWithoutExtension(filename),
+                parser.Airspaces);
+
+            await AddLayerFromCzml(czml, filename);
+        }
+
+        /// <summary>
         /// Adds a new layer from given CZML text
         /// </summary>
         /// <param name="czml">loaded CZML text</param>
         /// <param name="filename">filename of loaded file</param>
         /// <returns>task to wait on</returns>
-        public static async Task AddLayerFromCzml(string czml, string filename)
+        private static async Task AddLayerFromCzml(string czml, string filename)
         {
             if (!IsValidJson(czml))
             {

@@ -33,6 +33,7 @@ namespace WhereToFly.App.Android
             "application/vnd.google-earth.kmz",
             "application/gpx+xml",
             "application/x-igc", // xcontest .igc files return this MIME type
+            "text/plain",
         },
         Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
         Icon = "@drawable/icon")]
@@ -49,6 +50,7 @@ namespace WhereToFly.App.Android
             @".*\\.igc", @".*\\..*\\.igc", ".*\\..*\\..*\\.igc", ".*\\..*\\..*\\..*\\.igc",
             @".*\\.czml", @".*\\..*\\.czml", ".*\\..*\\..*\\.czml", ".*\\..*\\..*\\..*\\.czml",
             @".*\\.cup", @".*\\..*\\.cup", ".*\\..*\\..*\\.cup", ".*\\..*\\..*\\..*\\.cup",
+            @".*\\.txt", @".*\\..*\\.txt", ".*\\..*\\..*\\.txt", ".*\\..*\\..*\\..*\\.txt",
         },
         Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
         Icon = "@drawable/icon")]
@@ -66,6 +68,7 @@ namespace WhereToFly.App.Android
             @".*\\.igc", @".*\\..*\\.igc", ".*\\..*\\..*\\.igc", ".*\\..*\\..*\\..*\\.igc",
             @".*\\.czml", @".*\\..*\\.czml", ".*\\..*\\..*\\.czml", ".*\\..*\\..*\\..*\\.czml",
             @".*\\.cup", @".*\\..*\\.cup", ".*\\..*\\..*\\.cup", ".*\\..*\\..*\\..*\\.cup",
+            @".*\\.txt", @".*\\..*\\.txt", ".*\\..*\\..*\\.txt", ".*\\..*\\..*\\..*\\.txt",
         },
         Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
         Icon = "@drawable/icon")]
@@ -82,6 +85,7 @@ namespace WhereToFly.App.Android
             @".*\\.igc", @".*\\..*\\.igc", ".*\\..*\\..*\\.igc", ".*\\..*\\..*\\..*\\.igc",
             @".*\\.czml", @".*\\..*\\.czml", ".*\\..*\\..*\\.czml", ".*\\..*\\..*\\..*\\.czml",
             @".*\\.cup", @".*\\..*\\.cup", ".*\\..*\\..*\\.cup", ".*\\..*\\..*\\..*\\.cup",
+            @".*\\.txt", @".*\\..*\\.txt", ".*\\..*\\..*\\.txt", ".*\\..*\\..*\\..*\\.txt",
         },
         Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
         Icon = "@drawable/icon")]
@@ -134,7 +138,7 @@ namespace WhereToFly.App.Android
 
         /// <summary>
         /// Called when activity is called with a new intent, e.g. from the intent filter for file
-        /// extension (.kml, .kmz, .gpx, .igc, .czml, .cup).
+        /// extension (.kml, .kmz, .gpx, .igc, .czml, .cup, .txt).
         /// See: https://stackoverflow.com/questions/3760276/android-intent-filter-associate-app-with-file-extension
         /// </summary>
         /// <param name="intent">intent to be passed to the app</param>
