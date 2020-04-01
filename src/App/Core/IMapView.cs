@@ -35,6 +35,11 @@ namespace WhereToFly.App.Core
         #endregion
 
         /// <summary>
+        /// Task that can be awaited to get notified when map view is initialized
+        /// </summary>
+        Task MapInitializedTask { get; }
+
+        /// <summary>
         /// Creates the map view; this must be called before any other methods.
         /// </summary>
         /// <param name="initialCenterPoint">initial center point to be used for map view</param>

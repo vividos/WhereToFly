@@ -28,7 +28,8 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Task completion source for when map is fully initialized
         /// </summary>
-        private TaskCompletionSource<bool> taskCompletionSourceMapInitialized;
+        private readonly TaskCompletionSource<bool> taskCompletionSourceMapInitialized
+            = new TaskCompletionSource<bool>();
 
         /// <summary>
         /// Task completion source for when SampleTrackHeights() has finished
@@ -58,8 +59,7 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Indicates if map control is already initialized
         /// </summary>
-        private bool IsInitialized => this.taskCompletionSourceMapInitialized != null &&
-            this.taskCompletionSourceMapInitialized.Task.IsCompleted;
+        private bool IsInitialized => this.taskCompletionSourceMapInitialized.Task.IsCompleted;
 
         /// <summary>
         /// Maximum number of locations that are imported in one JavaScript call
@@ -69,7 +69,7 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Task that is in "finished" state when map is initialized
         /// </summary>
-        public Task MapInitializedTask { get => this.taskCompletionSourceMapInitialized?.Task; }
+        public Task MapInitializedTask { get => this.taskCompletionSourceMapInitialized.Task; }
 
         /// <summary>
         /// Delegate of function to call when location details should be shown
@@ -238,8 +238,6 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         public async Task CreateAsync(MapPoint initialCenterPoint, int initialZoomLevel)
         {
-            this.taskCompletionSourceMapInitialized = new TaskCompletionSource<bool>();
-
             string initialCenterJs = string.Format(
                 "{{latitude:{0}, longitude:{1}}}",
                 initialCenterPoint.Latitude.ToString(CultureInfo.InvariantCulture),
