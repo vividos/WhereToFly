@@ -29,6 +29,13 @@ namespace WhereToFly.App.Core
     public partial class App : Application
     {
         /// <summary>
+        /// Task completion source which task is completed when the app has finished
+        /// initialisation
+        /// </summary>
+        private static TaskCompletionSource<bool> taskCompletionSourceInitialized
+            = new TaskCompletionSource<bool>();
+
+        /// <summary>
         /// Application settings
         /// </summary>
         public static AppSettings Settings { get; internal set; }
@@ -42,6 +49,11 @@ namespace WhereToFly.App.Core
         /// Access to the map view instance
         /// </summary>
         public static IMapView MapView => (Current as App).MapPage.MapView;
+
+        /// <summary>
+        /// Task that can be awaited to wait for a completed app initialisation
+        /// </summary>
+        public static Task InitializedTask { get => taskCompletionSourceInitialized.Task; }
 
         /// <summary>
         /// Creates a new app object
@@ -115,6 +127,8 @@ namespace WhereToFly.App.Core
             App.Settings = await dataService.GetAppSettingsAsync(CancellationToken.None);
 
             await InitLiveWaypointRefreshService();
+
+            taskCompletionSourceInitialized.SetResult(true);
         }
 
         /// <summary>
