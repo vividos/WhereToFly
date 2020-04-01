@@ -20,6 +20,12 @@ namespace WhereToFly.App.Core.Views
     public class MapPage : ContentPage
     {
         /// <summary>
+        /// Task completion source to signal that the web page has been loaded
+        /// </summary>
+        private readonly TaskCompletionSource<bool> taskCompletionSourcePageLoaded
+            = new TaskCompletionSource<bool>();
+
+        /// <summary>
         /// Geo locator to use for position updates
         /// </summary>
         private readonly IGeolocator geolocator;
@@ -68,11 +74,6 @@ namespace WhereToFly.App.Core.Views
         /// List of layers on the map
         /// </summary>
         private List<Layer> layerList;
-
-        /// <summary>
-        /// Task completion source to signal that the web page has been loaded
-        /// </summary>
-        private TaskCompletionSource<bool> taskCompletionSourcePageLoaded;
 
         /// <summary>
         /// Access to the map view instance
@@ -293,8 +294,6 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task SetupWebViewAsync()
         {
-            this.taskCompletionSourcePageLoaded = new TaskCompletionSource<bool>();
-
             var platform = DependencyService.Get<IPlatform>();
 
             WebViewSource webViewSource = null;
