@@ -16,13 +16,12 @@
 - [ ] Follow location when "my location" icon is tapped, until user interacts with view
 - [ ] Implement wind field overlay from GFS weather model
 - [ ] Zoom to newly imported locations
-- [ ] Add wind direction and speed to flight calculation
+- [ ] Flight range: Add wind direction and speed to flight calculation
 
 ### Layers
 - [ ] Add predefined layers for locations and tracks
 - [ ] Add switching on/off layers in map view
 - [ ] Add live updating layers using CZML updates
-- [ ] Import OpenAir text files for air spaces
 
 ### Locations
 - [ ] Export locations to GPX file
