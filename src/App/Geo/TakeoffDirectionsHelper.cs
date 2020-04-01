@@ -68,7 +68,7 @@ namespace WhereToFly.App.Geo
         /// <summary>
         /// Mapping between takeoff direction string to takeoff direction enum value
         /// </summary>
-        private static readonly Dictionary<string, TakeoffDirections> mapDirectionToEnum =
+        private static readonly Dictionary<string, TakeoffDirections> MapDirectionToEnum =
             new Dictionary<string, TakeoffDirections>
         {
             { "N", TakeoffDirections.N },
@@ -100,12 +100,12 @@ namespace WhereToFly.App.Geo
             int dashIndex = dirOrRange.IndexOf("-");
             if (dashIndex == -1)
             {
-                if (!mapDirectionToEnum.ContainsKey(dirOrRange))
+                if (!MapDirectionToEnum.ContainsKey(dirOrRange))
                 {
                     return false;
                 }
 
-                takeoffDirections |= mapDirectionToEnum[dirOrRange];
+                takeoffDirections |= MapDirectionToEnum[dirOrRange];
                 return true;
             }
 
@@ -129,14 +129,14 @@ namespace WhereToFly.App.Geo
             var startDirectionText = parts[0];
             var endDirectionText = parts[1];
 
-            if (!mapDirectionToEnum.ContainsKey(startDirectionText) ||
-                !mapDirectionToEnum.ContainsKey(endDirectionText))
+            if (!MapDirectionToEnum.ContainsKey(startDirectionText) ||
+                !MapDirectionToEnum.ContainsKey(endDirectionText))
             {
                 return false;
             }
 
-            var startDirection = mapDirectionToEnum[startDirectionText];
-            var endDirection = mapDirectionToEnum[endDirectionText];
+            var startDirection = MapDirectionToEnum[startDirectionText];
+            var endDirection = MapDirectionToEnum[endDirectionText];
 
             // determines which way around the compass rose
             int startBitPos = (int)Math.Log((int)startDirection, 2.0);
