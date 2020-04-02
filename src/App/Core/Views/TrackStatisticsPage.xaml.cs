@@ -5,17 +5,17 @@ using Xamarin.Forms;
 namespace WhereToFly.App.Core.Views
 {
     /// <summary>
-    /// Page to display track details
+    /// Page to display track statistics
     /// </summary>
-    public partial class TrackDetailsPage : ContentPage
+    public partial class TrackStatisticsPage : ContentPage
     {
         /// <summary>
-        /// Creates new track details page
+        /// Creates new track statistics page
         /// </summary>
         /// <param name="track">track to display</param>
-        public TrackDetailsPage(Track track)
+        public TrackStatisticsPage(Track track)
         {
-            this.BindingContext = new TrackDetailsViewModel(track);
+            this.BindingContext = new TrackStatisticsViewModel(track);
             this.InitializeComponent();
         }
     }

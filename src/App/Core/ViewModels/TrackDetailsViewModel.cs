@@ -1,8 +1,4 @@
-﻿using MvvmHelpers.Commands;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using WhereToFly.App.Core.Services;
-using WhereToFly.App.Geo;
+﻿using WhereToFly.App.Geo;
 using WhereToFly.App.Logic;
 using Xamarin.Forms;
 
@@ -66,120 +62,6 @@ namespace WhereToFly.App.Core.ViewModels
                 return DataFormatter.FormatDuration(this.track.Duration);
             }
         }
-
-        /// <summary>
-        /// Property containing number of track points
-        /// </summary>
-        public int NumTrackPoints
-        {
-            get
-            {
-                return this.track.TrackPoints.Count;
-            }
-        }
-
-        /// <summary>
-        /// Property containing height gain
-        /// </summary>
-        public string HeightGain
-        {
-            get
-            {
-                return this.track.HeightGain.ToString("F1") + " m";
-            }
-        }
-
-        /// <summary>
-        /// Property containing height loss
-        /// </summary>
-        public string HeightLoss
-        {
-            get
-            {
-                return this.track.HeightLoss.ToString("F1") + " m";
-            }
-        }
-
-        /// <summary>
-        /// Property containing maximum height
-        /// </summary>
-        public string MaxHeight
-        {
-            get
-            {
-                return this.track.MaxHeight.ToString("F1") + " m";
-            }
-        }
-
-        /// <summary>
-        /// Property containing minimum height
-        /// </summary>
-        public string MinHeight
-        {
-            get
-            {
-                return this.track.MinHeight.ToString("F1") + " m";
-            }
-        }
-
-        /// <summary>
-        /// Property containing max. climb rate
-        /// </summary>
-        public string MaxClimbRate
-        {
-            get
-            {
-                return this.track.MaxClimbRate.ToString("F1") + " m/s";
-            }
-        }
-
-        /// <summary>
-        /// Property containing max. sink rate
-        /// </summary>
-        public string MaxSinkRate
-        {
-            get
-            {
-                return this.track.MaxSinkRate.ToString("F1") + " m/s";
-            }
-        }
-
-        /// <summary>
-        /// Property containing max. speed
-        /// </summary>
-        public string MaxSpeed
-        {
-            get
-            {
-                return this.track.MaxSpeed.ToString("F1") + " km/h";
-            }
-        }
-
-        /// <summary>
-        /// Property containing average speed
-        /// </summary>
-        public string AverageSpeed
-        {
-            get
-            {
-                return this.track.AverageSpeed.ToString("F1") + " km/h";
-            }
-        }
-
-        /// <summary>
-        /// Command to execute when "zoom to" menu item is selected on a track
-        /// </summary>
-        public ICommand ZoomToTrackCommand { get; set; }
-
-        /// <summary>
-        /// Command to execute when "export" menu item is selected on a track
-        /// </summary>
-        public ICommand ExportTrackCommand { get; set; }
-
-        /// <summary>
-        /// Command to execute when "delete" menu item is selected on a track
-        /// </summary>
-        public ICommand DeleteTrackCommand { get; set; }
         #endregion
 
         /// <summary>
@@ -191,56 +73,6 @@ namespace WhereToFly.App.Core.ViewModels
             this.track = track;
 
             this.TypeImageSource = SvgImageCache.GetImageSource(track, "#000000");
-
-            this.SetupBindings();
-        }
-
-        /// <summary>
-        /// Sets up bindings for this view model
-        /// </summary>
-        private void SetupBindings()
-        {
-            this.ZoomToTrackCommand = new AsyncCommand(this.OnZoomToTrackAsync);
-            this.ExportTrackCommand = new AsyncCommand(this.OnExportTrackAsync);
-            this.DeleteTrackCommand = new AsyncCommand(this.OnDeleteTrackAsync);
-        }
-
-        /// <summary>
-        /// Called when "Zoom to" menu item is selected
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task OnZoomToTrackAsync()
-        {
-            App.MapView.ZoomToTrack(this.track);
-
-            await NavigationService.Instance.NavigateAsync(Constants.PageKeyMapPage, animated: true);
-        }
-
-        /// <summary>
-        /// Called when "Export" menu item is selected
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task OnExportTrackAsync()
-        {
-            await ExportFileHelper.ExportTrackAsync(this.track);
-        }
-
-        /// <summary>
-        /// Called when "Delete" menu item is selected
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task OnDeleteTrackAsync()
-        {
-            var dataService = DependencyService.Get<IDataService>();
-            var trackDataService = dataService.GetTrackDataService();
-
-            await trackDataService.Remove(this.track.Id);
-
-            App.UpdateMapTracksList();
-
-            await NavigationService.Instance.GoBack();
-
-            App.ShowToast("Selected track was deleted.");
         }
     }
 }

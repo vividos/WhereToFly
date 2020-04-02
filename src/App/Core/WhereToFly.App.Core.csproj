@@ -64,6 +64,12 @@
     <Compile Update="Views\MapSettingsPage.xaml.cs">
       <DependentUpon>MapSettingsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\TrackInfoTabbedPage.xaml.cs">
+      <DependentUpon>TrackInfoTabbedPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\TrackStatisticsPage.xaml.cs">
+      <DependentUpon>TrackStatisticsPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -107,6 +113,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\TrackDetailsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\TrackInfoTabbedPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\TrackListPage.xaml">

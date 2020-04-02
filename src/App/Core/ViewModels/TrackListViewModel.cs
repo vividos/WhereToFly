@@ -157,7 +157,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         internal async Task NavigateToTrackDetails(Track track)
         {
-            await NavigationService.Instance.NavigateAsync(Constants.PageKeyTrackDetailsPage, true, track);
+            await NavigationService.Instance.NavigateAsync(Constants.PageKeyTrackInfoPage, true, track);
         }
 
         /// <summary>

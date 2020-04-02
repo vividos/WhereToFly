@@ -2,35 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
-             xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
-             x:Class="WhereToFly.App.Core.Views.TrackDetailsPage">
-
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <converter:ImagePathConverter x:Key="ImagePathConverter" />
-            <x:String x:Key="ZoomToImageBaseName">magnify_plus_outline</x:String>
-            <x:String x:Key="ExportImageBaseName">export_variant</x:String>
-            <x:String x:Key="DeleteImageBaseName">delete</x:String>
-        </ResourceDictionary>
-    </ContentPage.Resources>
-
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Name="Zoom to"
-                     Icon="{Binding Source={StaticResource ZoomToImageBaseName}, Converter={StaticResource ImagePathConverter}}"
-                     Command="{Binding ZoomToTrackCommand}"
-                     Order="Primary" Priority="0" />
-
-        <ToolbarItem Name="Eport"
-                     Icon="{Binding Source={StaticResource ExportImageBaseName}, Converter={StaticResource ImagePathConverter}}"
-                     Command="{Binding ExportTrackCommand}"
-                     Order="Primary" Priority="0" />
-
-        <ToolbarItem Name="Delete"
-                     Icon="{Binding Source={StaticResource DeleteImageBaseName}, Converter={StaticResource ImagePathConverter}}"
-                     Command="{Binding DeleteTrackCommand}"
-                     IsDestructive="True"
-                     Order="Primary" Priority="1" />
-    </ContentPage.ToolbarItems>
+             x:Class="WhereToFly.App.Core.Views.TrackDetailsPage"
+             Title="Details">
 
     <ContentPage.Content>
 
@@ -42,16 +15,6 @@
                   HorizontalOptions="Center" Padding="8"
                   ColumnSpacing="16" RowSpacing="16">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -90,44 +53,6 @@
                 <!-- Duration -->
                 <Label Grid.Row="2" Grid.Column="0" Text="Duration" />
                 <Label Grid.Row="2" Grid.Column="1" Text="{Binding Duration, Mode=OneTime}" />
-
-                <!-- Number of track points -->
-                <Label Grid.Row="3" Grid.Column="0" Text="Number of track points" />
-                <Label Grid.Row="3" Grid.Column="1" Text="{Binding NumTrackPoints, Mode=OneTime}" />
-
-                <Label Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Text="Statistics" FontSize="Large" />
-
-                <!-- Height gain -->
-                <Label Grid.Row="5" Grid.Column="0" Text="Height gain" />
-                <Label Grid.Row="5" Grid.Column="1" Text="{Binding HeightGain, Mode=OneTime}" />
-
-                <!-- Height loss -->
-                <Label Grid.Row="6" Grid.Column="0" Text="Height loss" />
-                <Label Grid.Row="6" Grid.Column="1" Text="{Binding HeightLoss, Mode=OneTime}" />
-
-                <!-- Max. height -->
-                <Label Grid.Row="7" Grid.Column="0" Text="Max. height" />
-                <Label Grid.Row="7" Grid.Column="1" Text="{Binding MaxHeight, Mode=OneTime}" />
-
-                <!-- Min. height -->
-                <Label Grid.Row="8" Grid.Column="0" Text="Min. height" />
-                <Label Grid.Row="8" Grid.Column="1" Text="{Binding MinHeight, Mode=OneTime}" />
-
-                <!-- Max. climb rate -->
-                <Label Grid.Row="9" Grid.Column="0" Text="Max. climb rate" />
-                <Label Grid.Row="9" Grid.Column="1" Text="{Binding MaxClimbRate, Mode=OneTime}" />
-
-                <!-- Max. sink rate -->
-                <Label Grid.Row="10" Grid.Column="0" Text="Max. sink rate" />
-                <Label Grid.Row="10" Grid.Column="1" Text="{Binding MaxSinkRate, Mode=OneTime}" />
-
-                <!-- Max. speed -->
-                <Label Grid.Row="11" Grid.Column="0" Text="Max. speed" />
-                <Label Grid.Row="11" Grid.Column="1" Text="{Binding MaxSpeed, Mode=OneTime}" />
-
-                <!-- Average speed -->
-                <Label Grid.Row="12" Grid.Column="0" Text="Average speed" />
-                <Label Grid.Row="12" Grid.Column="1" Text="{Binding AverageSpeed, Mode=OneTime}" />
             </Grid>
 
         </StackLayout>

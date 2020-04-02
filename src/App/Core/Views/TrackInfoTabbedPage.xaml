@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
+            mc:Ignorable="d"
+            x:Class="WhereToFly.App.Core.Views.TrackInfoTabbedPage"
+            Title = "Track infos">
+
+    <TabbedPage.Resources>
+        <ResourceDictionary>
+            <converter:ImagePathConverter x:Key="ImagePathConverter" />
+            <x:String x:Key="ZoomToImageBaseName">magnify_plus_outline</x:String>
+            <x:String x:Key="ExportImageBaseName">export_variant</x:String>
+            <x:String x:Key="DeleteImageBaseName">delete</x:String>
+        </ResourceDictionary>
+    </TabbedPage.Resources>
+
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem Name="Zoom to"
+                     Icon="{Binding Source={StaticResource ZoomToImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+                     Command="{Binding ZoomToTrackCommand}"
+                     Order="Primary" Priority="0" />
+
+        <ToolbarItem Name="Eport"
+                     Icon="{Binding Source={StaticResource ExportImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+                     Command="{Binding ExportTrackCommand}"
+                     Order="Primary" Priority="0" />
+
+        <ToolbarItem Name="Delete"
+                     Icon="{Binding Source={StaticResource DeleteImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+                     Command="{Binding DeleteTrackCommand}"
+                     IsDestructive="True"
+                     Order="Primary" Priority="1" />
+    </TabbedPage.ToolbarItems>
+
+</TabbedPage>
