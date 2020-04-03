@@ -9,11 +9,6 @@ namespace WhereToFly.App.Core.ViewModels
     /// </summary>
     public class TrackDetailsViewModel
     {
-        /// <summary>
-        /// Track to show
-        /// </summary>
-        private readonly Track track;
-
         #region Binding properties
         /// <summary>
         /// Property containing track name
@@ -22,7 +17,7 @@ namespace WhereToFly.App.Core.ViewModels
         {
             get
             {
-                return this.track.Name;
+                return this.Track.Name;
             }
         }
 
@@ -34,12 +29,12 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Property that specifies if the color box is visible
         /// </summary>
-        public bool IsColorBoxVisible => !this.track.IsFlightTrack;
+        public bool IsColorBoxVisible => !this.Track.IsFlightTrack;
 
         /// <summary>
         /// Property that contains the track's color
         /// </summary>
-        public Color TrackColor => this.track.IsFlightTrack ? Color.Transparent : Color.FromHex(this.track.Color);
+        public Color TrackColor => this.Track.IsFlightTrack ? Color.Transparent : Color.FromHex(this.Track.Color);
 
         /// <summary>
         /// Property containing distance
@@ -48,7 +43,7 @@ namespace WhereToFly.App.Core.ViewModels
         {
             get
             {
-                return DataFormatter.FormatDistance(this.track.LengthInMeter);
+                return DataFormatter.FormatDistance(this.Track.LengthInMeter);
             }
         }
 
@@ -59,9 +54,14 @@ namespace WhereToFly.App.Core.ViewModels
         {
             get
             {
-                return DataFormatter.FormatDuration(this.track.Duration);
+                return DataFormatter.FormatDuration(this.Track.Duration);
             }
         }
+
+        /// <summary>
+        /// Track to display height profile for
+        /// </summary>
+        public Track Track { get; private set; }
         #endregion
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <param name="track">track object</param>
         public TrackDetailsViewModel(Track track)
         {
-            this.track = track;
+            this.Track = track;
 
             this.TypeImageSource = SvgImageCache.GetImageSource(track, "#000000");
         }

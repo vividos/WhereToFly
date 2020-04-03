@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
              x:Class="WhereToFly.App.Core.Views.TrackDetailsPage"
              Title="Details">
 
@@ -54,6 +55,13 @@
                 <Label Grid.Row="2" Grid.Column="0" Text="Duration" />
                 <Label Grid.Row="2" Grid.Column="1" Text="{Binding Duration, Mode=OneTime}" />
             </Grid>
+
+            <!-- Height profile -->
+            <controls:HeightProfileWebView Track="{Binding Track, Mode=OneWay}"
+                                           WidthRequest="600"
+                                           HeightRequest="300"
+                                           HorizontalOptions="CenterAndExpand"
+                                           VerticalOptions="FillAndExpand" />
 
         </StackLayout>
     </ContentPage.Content>
