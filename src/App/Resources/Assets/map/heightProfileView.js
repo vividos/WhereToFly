@@ -31,7 +31,9 @@ function HeightProfileView(options) {
                     type: 'time',
                     time: {
                         unit: 'hour',
-                        displayFormats: 'HH:mm',
+                        displayFormats: {
+                            hour: 'HH:mm'
+                        },
                         stepSize: 1,
                         minUnit: 'second'
                     }
@@ -57,18 +59,19 @@ function HeightProfileView(options) {
  * @param {string} [track.id] unique ID of the track
  * @param {string} [track.name] track name to add
  * @param {array} [track.listOfTrackPoints] An array of track points in long, lat, alt, long, lat, alt ... order
- * @param {array} [track.listOfTimePoints] An array of time points in seconds; same length as listOfTrackPoints; may be null
+ * @param {array} [track.listOfTimePoints] An array of time points in seconds since unix epoch;
+ * same length as listOfTrackPoints; may be null
  */
 HeightProfileView.prototype.setTrack = function (track) {
 
-    console.log("adding list of track points, with ID " + track.id + " and " + track.listOfTrackPoints.length / 3 + " track points");
+    console.log("setting height profile with " + track.listOfTrackPoints.length / 3 + " track points");
 
     var trackData = [];
 
     for (var i = 0, len = track.listOfTrackPoints.length; i < len; i += 3) {
         var timePoint = track.listOfTimePoints[i / 3];
         trackData.push({
-            x: timePoint,
+            x: new Date(timePoint * 1000.0),
             y: track.listOfTrackPoints[i + 2],
         });
     }

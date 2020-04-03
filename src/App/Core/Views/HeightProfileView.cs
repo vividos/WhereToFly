@@ -52,9 +52,7 @@ namespace WhereToFly.App.Core.Views
             if (firstTrackPoint != null &&
                 firstTrackPoint.Time.HasValue)
             {
-                var startTime = firstTrackPoint.Time.Value;
-
-                timePointsList = track.TrackPoints.Select(x => (x.Time.Value - startTime).TotalSeconds).ToList();
+                timePointsList = track.TrackPoints.Select(x => x.Time.Value.ToUnixTimeMilliseconds() / 1000.0).ToList();
             }
 
             var trackJsonObject = new
