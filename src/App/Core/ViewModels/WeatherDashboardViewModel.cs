@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WhereToFly.App.Core.Services;
+using WhereToFly.App.Core.Views;
 using WhereToFly.App.Model;
 using Xamarin.Forms;
 
@@ -25,6 +26,11 @@ namespace WhereToFly.App.Core.ViewModels
         /// Command to execute when "add bookmark" menu item is selected
         /// </summary>
         public ICommand AddWebLinkCommand { get; set; }
+
+        /// <summary>
+        /// Command to execute when "add icon" menu item is selected
+        /// </summary>
+        public ICommand AddIconCommand { get; set; }
 
         /// <summary>
         /// Command to execute when "clear all" menu item is selected
@@ -130,6 +136,33 @@ namespace WhereToFly.App.Core.ViewModels
         {
             AddWeatherIcon(weatherIcon);
             App.RunOnUiThread(async () => await NavigationService.Instance.GoBack());
+        }
+
+        /// <summary>
+        /// Called when the user clicked on the "add web link" button
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task AddWebLinkAsync()
+        {
+            WeatherIconDescription weatherIconDescription =
+                await AddWeatherLinkPopupPage.ShowAsync();
+
+            if (weatherIconDescription == null)
+            {
+                return;
+            }
+
+            int insertIndex = this.WeatherIconDescriptionList.Any()
+                ? this.WeatherIconDescriptionList.Count - 1
+                : 0;
+
+            this.WeatherIconDescriptionList.Insert(
+                insertIndex,
+                weatherIconDescription);
+
+            this.OnPropertyChanged(nameof(this.WeatherIconDescriptionList));
+
+            await this.SaveWeatherIconListAsync();
         }
 
         /// <summary>

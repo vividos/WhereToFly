@@ -8,6 +8,7 @@
         <ResourceDictionary>
             <converter:ImagePathConverter x:Key="ImagePathConverter" />
             <x:String x:Key="AddIconImageBaseName">playlist_plus</x:String>
+            <x:String x:Key="AddWebLinkImageBaseName">bookmark_plus_outline</x:String>
             <x:String x:Key="ClearAllImageBaseName">delete</x:String>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -16,6 +17,11 @@
         <ToolbarItem Name="Add icon"
                      Icon="{Binding Source={StaticResource AddIconImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                      Command="{Binding AddIconCommand}"
+                     Order="Primary" Priority="0" />
+
+        <ToolbarItem Name="Add web link"
+                     Icon="{Binding Source={StaticResource AddWebLinkImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+                     Command="{Binding AddWebLinkCommand}"
                      Order="Primary" Priority="0" />
 
         <ToolbarItem Name="Clear all"
