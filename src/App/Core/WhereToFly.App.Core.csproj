@@ -49,6 +49,9 @@
     <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="App.xaml.cs">
       <DependentUpon>*.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\AddWeatherLinkPopupPage.xaml.cs">
+      <DependentUpon>AddWeatherLinkPopupPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\CurrentPositionDetailsPage.xaml.cs">
       <DependentUpon>CurrentPositionDetailsPage.xaml</DependentUpon>
     </Compile>

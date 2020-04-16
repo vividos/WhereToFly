@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+                 x:Class="WhereToFly.App.Core.Views.AddWeatherLinkPopupPage">
+
+    <!-- animate popup page-->
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8"
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True" />
+    </pages:PopupPage.Animation>
+
+    <!-- popup content -->
+    <StackLayout
+        VerticalOptions="CenterAndExpand"
+        HorizontalOptions="Center"
+        WidthRequest="320"
+        BackgroundColor="White"
+        Padding="20">
+
+        <!-- caption -->
+        <Label Text="Add weather link" FontSize="Large" />
+
+        <!-- Entry for name -->
+        <Label Text="Name" FontSize="Medium" />
+        <Entry Placeholder="enter name for link" Text="{Binding Path=Name, Mode=TwoWay}" />
+
+        <!-- Entry for weblink URL -->
+        <Label Text="Link" FontSize="Medium" />
+        <Entry Placeholder="enter weather link" Text="{Binding Path=WebLink, Mode=TwoWay}" />
+
+        <!-- Group selection -->
+        <Label Text="Group" FontSize="Medium" />
+        <Picker SelectedItem="{Binding SelectedGroup, Mode=OneWay}"
+                ItemsSource="{Binding GroupsList, Mode=OneTime}" />
+
+        <!-- Button to add web link -->
+        <Button Text="Add weather link"
+                IsEnabled="{Binding IsValidWebLink, Mode=OneWay}"
+                Clicked="OnClickedAddWeatherLinkButton"
+                AutomationId="AddWeatherLinkButton" />
+    </StackLayout>
+
+</pages:PopupPage>
