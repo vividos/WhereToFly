@@ -207,5 +207,8 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\export_variant.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\bookmark_plus_outline.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

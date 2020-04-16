@@ -117,6 +117,7 @@ The following icons are from the Google Material icon set:
 - camera
 - refresh
 - export-variant
+- bookmark-plus-outline
 
 The Google Material Icons are licensed under the "Apache License 2.0":
 https://github.com/google/material-design-icons/blob/master/LICENSE

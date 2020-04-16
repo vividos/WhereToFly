@@ -247,4 +247,7 @@
   <ItemGroup>
     <BundleResource Include="Assets\images\export_variant.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Assets\images\bookmark_plus_outline.png" />
+  </ItemGroup>
 </Project>
