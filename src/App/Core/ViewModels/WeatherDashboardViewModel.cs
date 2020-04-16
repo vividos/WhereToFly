@@ -22,9 +22,9 @@ namespace WhereToFly.App.Core.ViewModels
         public List<WeatherIconDescription> WeatherIconDescriptionList { get; set; }
 
         /// <summary>
-        /// Command to execute when "add new" menu item is selected
+        /// Command to execute when "add bookmark" menu item is selected
         /// </summary>
-        public ICommand AddNewCommand { get; set; }
+        public ICommand AddWebLinkCommand { get; set; }
 
         /// <summary>
         /// Command to execute when "clear all" menu item is selected
@@ -101,34 +101,25 @@ namespace WhereToFly.App.Core.ViewModels
         {
             this.WeatherIconDescriptionList = new List<WeatherIconDescription>();
 
-            this.AddNewCommand = new AsyncCommand(async () =>
-            {
-                Action<WeatherIconDescription> parameter = this.OnSelectedWeatherIcon;
-
-                await NavigationService.Instance.NavigateAsync(
-                    Constants.PageKeySelectWeatherIconPage,
-                    animated: true,
-                    parameter: parameter);
-            });
-
+            this.AddIconCommand = new AsyncCommand(this.AddIconAsync);
+            this.AddWebLinkCommand = new AsyncCommand(this.AddWebLinkAsync);
             this.ClearAllCommand = new AsyncCommand(this.ClearAllWeatherIcons);
 
-            Task.Run(async () =>
-            {
-                var dataService = DependencyService.Get<IDataService>();
-                var weatherIconDescriptionDataService = dataService.GetWeatherIconDescriptionDataService();
+            Task.Run(async () => await UpdateWeatherIconDescriptionList());
+        }
 
-                this.WeatherIconDescriptionList = (await weatherIconDescriptionDataService.GetList()).ToList();
+        /// <summary>
+        /// Adds a weather icon to the current dashboard
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task AddIconAsync()
+        {
+            Action<WeatherIconDescription> parameter = this.OnSelectedWeatherIcon;
 
-                this.WeatherIconDescriptionList.Add(
-                    new WeatherIconDescription
-                    {
-                        Name = "Add new...",
-                        Type = WeatherIconDescription.IconType.IconPlaceholder,
-                    });
-
-                this.OnPropertyChanged(nameof(this.WeatherIconDescriptionList));
-            });
+            await NavigationService.Instance.NavigateAsync(
+                Constants.PageKeySelectWeatherIconPage,
+                animated: true,
+                parameter: parameter);
         }
 
         /// <summary>
@@ -159,6 +150,27 @@ namespace WhereToFly.App.Core.ViewModels
             this.OnPropertyChanged(nameof(this.WeatherIconDescriptionList));
 
             await this.SaveWeatherIconListAsync();
+        }
+
+        /// <summary>
+        /// Updates the weather icon description list from the data service.
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task UpdateWeatherIconDescriptionList()
+        {
+            var dataService = DependencyService.Get<IDataService>();
+            var weatherIconDescriptionDataService = dataService.GetWeatherIconDescriptionDataService();
+
+            this.WeatherIconDescriptionList = (await weatherIconDescriptionDataService.GetList()).ToList();
+
+            this.WeatherIconDescriptionList.Add(
+                new WeatherIconDescription
+                {
+                    Name = "Add new...",
+                    Type = WeatherIconDescription.IconType.IconPlaceholder,
+                });
+
+            this.OnPropertyChanged(nameof(this.WeatherIconDescriptionList));
         }
     }
 }

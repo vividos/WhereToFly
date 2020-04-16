@@ -7,15 +7,15 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <converter:ImagePathConverter x:Key="ImagePathConverter" />
-            <x:String x:Key="AddNewImageBaseName">playlist_plus</x:String>
+            <x:String x:Key="AddIconImageBaseName">playlist_plus</x:String>
             <x:String x:Key="ClearAllImageBaseName">delete</x:String>
         </ResourceDictionary>
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="Add new"
-                     Icon="{Binding Source={StaticResource AddNewImageBaseName}, Converter={StaticResource ImagePathConverter}}"
-                     Command="{Binding AddNewCommand}"
+        <ToolbarItem Name="Add icon"
+                     Icon="{Binding Source={StaticResource AddIconImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+                     Command="{Binding AddIconCommand}"
                      Order="Primary" Priority="0" />
 
         <ToolbarItem Name="Clear all"
