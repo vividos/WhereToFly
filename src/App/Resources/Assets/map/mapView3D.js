@@ -26,6 +26,7 @@ function MapView(options) {
         initialCenterPoint: { latitude: 47.67, longitude: 11.88 },
         initialZoomLevel: 14,
         hasMouse: false,
+        useAsynchronousPrimitives: true,
         callback: {}
     };
 
@@ -1355,6 +1356,7 @@ MapView.prototype.getFlightTrackPrimitive = function (track, trackPointArray) {
     });
 
     var primitive = new Cesium.Primitive({
+        asynchronous: this.options.useAsynchronousPrimitives,
         geometryInstances: new Cesium.GeometryInstance({
             geometry: trackPolyline
         }),
@@ -1380,6 +1382,7 @@ MapView.prototype.getFlightTrackWallPrimitive = function (trackPointArray) {
     wallMaterial.uniforms.color = new Cesium.Color(0.5, 0.5, 1, 0.4);
 
     var wallPrimitive = new Cesium.Primitive({
+        asynchronous: this.options.useAsynchronousPrimitives,
         geometryInstances: new Cesium.GeometryInstance({
             geometry: Cesium.WallGeometry.createGeometry(wallGeometry)
         }),
@@ -1408,6 +1411,7 @@ MapView.prototype.getGroundTrackPrimitive = function (track, trackPointArray) {
     });
 
     var primitive = new Cesium.GroundPolylinePrimitive({
+        asynchronous: this.options.useAsynchronousPrimitives,
         geometryInstances: new Cesium.GeometryInstance({
             geometry: groundTrackPolyline,
             attributes: {
