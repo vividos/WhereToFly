@@ -9,8 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Refit" Version="5.1.27" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.5.0.15942">
+    <PackageReference Include="Refit" Version="5.1.67" />
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.6.0.16497">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

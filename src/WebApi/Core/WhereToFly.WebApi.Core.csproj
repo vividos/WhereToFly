@@ -18,11 +18,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.5.0.15942">
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.6.0.16497">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.2.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.3.2" />
   </ItemGroup>
 
   <ItemGroup>

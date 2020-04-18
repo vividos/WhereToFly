@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="SharpKml.Core" Version="5.1.1" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.5.0.15942">
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.6.0.16497">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
@@ -24,7 +24,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Xamarin.Essentials" Version="1.5.1" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.5.2" />
   </ItemGroup>
 
   <ItemGroup>
