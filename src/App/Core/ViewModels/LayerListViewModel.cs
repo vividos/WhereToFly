@@ -98,7 +98,10 @@ namespace WhereToFly.App.Core.ViewModels
                 IDataService dataService = DependencyService.Get<IDataService>();
                 var layerDataService = dataService.GetLayerDataService();
 
-                this.layerList = (await layerDataService.GetList()).ToList();
+                var defaultLayerList = GetDefaultLayerList();
+                var storedLayerList = await layerDataService.GetList();
+
+                this.layerList = defaultLayerList.Union(storedLayerList).ToList();
             }
             catch (Exception ex)
             {
@@ -106,6 +109,31 @@ namespace WhereToFly.App.Core.ViewModels
             }
 
             this.UpdateLayerList();
+        }
+
+        /// <summary>
+        /// Returns the default layer list with built-in layers
+        /// </summary>
+        /// <returns>default layer list</returns>
+        private static IEnumerable<Layer> GetDefaultLayerList()
+        {
+            return new Layer[2]
+            {
+                new Layer
+                {
+                    Id = "locationLayer",
+                    Name = "Locations",
+                    IsVisible = true,
+                    LayerType = LayerType.LocationLayer
+                },
+                new Layer
+                {
+                    Id = "trackLayer",
+                    Name = "Tracks",
+                    IsVisible = true,
+                    LayerType = LayerType.TrackLayer
+                }
+            };
         }
 
         /// <summary>

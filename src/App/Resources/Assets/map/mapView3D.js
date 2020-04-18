@@ -739,6 +739,8 @@ MapView.prototype.addLayer = function (layer) {
         function (dataSource) {
             that.viewer.dataSources.add(dataSource);
             that.dataSourceMap[layer.id] = dataSource;
+
+            that.setLayerVisibility(layer.isVisible);
         });
 };
 
@@ -808,12 +810,20 @@ MapView.prototype.zoomToLayer = function (layerId) {
  */
 MapView.prototype.setLayerVisibility = function (layer) {
 
-    console.log("setting new visibility for layer with id " + layerId +
+    console.log("setting new visibility for layer with id " + layer.id +
         ", visibility: " + layer.isVisible);
 
-    var dataSource = this.dataSourceMap[layerId];
-    if (dataSource !== undefined)
-        dataSource.show = layer.isVisible;
+    if (layer.id === "locationLayer")
+        this.viewer.entities.show = layer.isVisible;
+    else if (layer.id === "trackLayer")
+        this.trackPrimitivesCollection.show = layer.isVisible;
+    else {
+        var dataSource = this.dataSourceMap[layer.id];
+        if (dataSource !== undefined)
+            dataSource.show = layer.isVisible;
+    }
+
+    this.viewer.scene.requestRender();
 };
 
 /**

@@ -60,7 +60,7 @@
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="0"/>
+                                    <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
 
@@ -70,10 +70,17 @@
                                                    HorizontalOptions="Start" VerticalOptions="Center"
                                                    Grid.Column="0"/>
 
-                                <ffimageloadingsvg:SvgCachedImage Source="{Binding VisibilityImageSource, Mode=OneWay}"
-                                                   WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
-                                                   HorizontalOptions="Start" VerticalOptions="Center"
-                                                   Grid.Column="1" />
+                                <!-- Layer visibility image -->
+                                <ContentView Margin="0" Padding="0" Grid.Column="1">
+                                    <ContentView.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding VisibilityTappedCommand}"
+                                                              NumberOfTapsRequired="1"/>
+                                    </ContentView.GestureRecognizers>
+                                    <ffimageloadingsvg:SvgCachedImage Source="{Binding VisibilityImageSource, Mode=OneWay}"
+                                                                      WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
+                                                                      HorizontalOptions="Start" VerticalOptions="Center"
+                                                                      InputTransparent="true" />
+                                </ContentView>
 
                                 <!-- Name -->
                                 <Label Text="{Binding Name}"
