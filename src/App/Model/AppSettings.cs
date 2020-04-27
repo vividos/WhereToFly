@@ -50,6 +50,11 @@ namespace WhereToFly.App.Model
         public int LastShownSettingsPage { get; set; }
 
         /// <summary>
+        /// Indicates if the flight planning disclaimer was already shown to the user
+        /// </summary>
+        public bool ShownFlightPlanningDisclaimer { get; set; }
+
+        /// <summary>
         /// Creates a new default app settings object
         /// </summary>
         public AppSettings()
@@ -62,6 +67,7 @@ namespace WhereToFly.App.Model
             this.LastLocationFilterSettings = new LocationFilterSettings();
             this.LastFlyingRangeParameters = new FlyingRangeParameters();
             this.LastShownSettingsPage = 0;
+            this.ShownFlightPlanningDisclaimer = false;
         }
 
         #region object overridables implementation
@@ -78,7 +84,8 @@ namespace WhereToFly.App.Model
             this.CoordinateDisplayFormat,
             this.LastLocationFilterSettings,
             this.LastFlyingRangeParameters,
-            this.LastShownSettingsPage).GetHashCode();
+            this.LastShownSettingsPage,
+            this.ShownFlightPlanningDisclaimer).GetHashCode();
 
         /// <summary>
         /// Compares this app settings to another object
@@ -105,12 +112,14 @@ namespace WhereToFly.App.Model
             this.MapImageryType,
             this.MapOverlayType,
             this.CoordinateDisplayFormat,
-            this.LastShownSettingsPage) ==
+            this.LastShownSettingsPage,
+            this.ShownFlightPlanningDisclaimer) ==
             (other.ShadingMode,
             other.MapImageryType,
             other.MapOverlayType,
             other.CoordinateDisplayFormat,
-            other.LastShownSettingsPage);
+            other.LastShownSettingsPage,
+            other.ShownFlightPlanningDisclaimer);
         #endregion
 
         /// <summary>

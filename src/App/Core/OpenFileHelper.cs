@@ -496,6 +496,8 @@ namespace WhereToFly.App.Core
 
             await layerDataService.Add(layer);
 
+            await App.ShowFlightPlanningDisclaimerAsync();
+
             await NavigationService.Instance.NavigateAsync(Constants.PageKeyMapPage, animated: true);
 
             App.MapView.AddLayer(layer);

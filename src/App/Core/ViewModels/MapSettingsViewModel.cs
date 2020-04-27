@@ -103,7 +103,14 @@ namespace WhereToFly.App.Core.ViewModels
                 if (this.appSettings.MapImageryType != value.Value)
                 {
                     this.appSettings.MapImageryType = value.Value;
-                    Task.Run(async () => await this.SaveSettingsAsync());
+                    Task.Run(async () =>
+                    {
+                        await this.SaveSettingsAsync();
+                        if (value.Value == MapImageryType.OpenFlightMaps)
+                        {
+                            await App.ShowFlightPlanningDisclaimerAsync();
+                        }
+                    });
                 }
             }
         }

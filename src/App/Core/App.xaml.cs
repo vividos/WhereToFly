@@ -323,6 +323,38 @@ namespace WhereToFly.App.Core
             liveWaypointRefreshService.AddLiveWaypointList(locationList);
         }
 
+        /// <summary>
+        /// Shows the flight planning disclaimer dialog, when not already shown to the user.
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        public static async Task ShowFlightPlanningDisclaimerAsync()
+        {
+            var dataService = DependencyService.Get<IDataService>();
+            var appSettings = await dataService.GetAppSettingsAsync(CancellationToken.None);
+
+            if (appSettings.ShownFlightPlanningDisclaimer)
+            {
+                return;
+            }
+
+            await Xamarin.Forms.Device.InvokeOnMainThreadAsync(async () =>
+            {
+                const string DisclaimerMessage =
+                    "The display and use of flight maps and airspace data can contain errors " +
+                    "and their use does not release the pilot from the legally required flight " +
+                    "preparation, as well as the use of all necessary and approved navigation " +
+                    "aids (e.g. ICAO aviation map 1:500,000).";
+
+                await Current.MainPage.DisplayAlert(
+                    Constants.AppTitle,
+                    DisclaimerMessage,
+                    "Understood");
+            });
+
+            appSettings.ShownFlightPlanningDisclaimer = true;
+            await dataService.StoreAppSettingsAsync(appSettings);
+        }
+
         #region App lifecycle methods
         /// <summary>
         /// Called when application is starting
