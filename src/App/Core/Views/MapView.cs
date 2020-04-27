@@ -353,7 +353,7 @@ namespace WhereToFly.App.Core.Views
             {
                 id = layer.Id,
                 name = layer.Name,
-                type = layer.LayerType,
+                type = layer.LayerType.ToString(),
                 isVisible = layer.IsVisible,
                 data = layer.Data,
             };

@@ -741,7 +741,7 @@ MapView.prototype.addLayer = function (layer) {
             that.viewer.dataSources.add(dataSource);
             that.dataSourceMap[layer.id] = dataSource;
 
-            that.setLayerVisibility(layer.isVisible);
+            that.setLayerVisibility(layer);
         });
 };
 
@@ -760,12 +760,16 @@ MapView.prototype.getDataSourceBoundingSphere = function (dataSource) {
 
     var boundingSpheres = [];
     for (var i = 0, len = entities.length; i < len; i++) {
-        var state = this.viewer.dataSourceDisplay.getBoundingSphere(entities[i], false, boundingSphereScratch);
+        try {
+            var state = this.viewer.dataSourceDisplay.getBoundingSphere(entities[i], false, boundingSphereScratch);
 
-        if (state === Cesium.BoundingSphereState.PENDING) {
-            return;
-        } else if (state !== Cesium.BoundingSphereState.FAILED) {
-            boundingSpheres.push(Cesium.BoundingSphere.clone(boundingSphereScratch));
+            if (state === Cesium.BoundingSphereState.PENDING) {
+                continue;
+            } else if (state !== Cesium.BoundingSphereState.FAILED) {
+                boundingSpheres.push(Cesium.BoundingSphere.clone(boundingSphereScratch));
+            }
+        } catch (e) {
+            console.log("warning: " + e.message);
         }
     }
 
@@ -784,13 +788,19 @@ MapView.prototype.zoomToLayer = function (layerId) {
 
     console.log("zooming to layer with id " + layerId);
 
-    var dataSource = this.dataSourceMap[layerId];
-    if (dataSource !== undefined) {
+    var dataSource;
+    if (layerId === "locationLayer")
+        dataSource = this.viewer.entities;
+    else if (layerId === "trackLayer")
+        dataSource = this.trackPrimitivesCollection;
+    else
+        dataSource = this.dataSourceMap[layerId];
 
-        var boundingSphere = this.getDataSourceBoundingSphere(dataSource);
+    if (dataSource !== undefined) {
 
         this.viewer.flyTo(dataSource);
 
+        var boundingSphere = this.getDataSourceBoundingSphere(dataSource);
         if (boundingSphere !== null) {
             var center = Cesium.Cartographic.fromCartesian(boundingSphere.center);
 
