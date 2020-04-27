@@ -1221,9 +1221,10 @@ MapView.prototype.showFlyingRange = function (options) {
  */
 MapView.prototype.sampleTrackHeights = function (track, offsetInMeters) {
 
-    console.log("start sampling track point heights for " + track.listOfTrackPoints.length + " points...");
+    console.log("MapView.sampleTrackHeights: #1 start sampling track point heights for " + track.listOfTrackPoints.length + " points...");
 
     if (!Cesium.Entity.supportsPolylinesOnTerrain(this.viewer.scene)) {
+        console.log("MapView.sampleTrackHeights: #2: polylines on terrain are not supported");
         return;
     }
 
@@ -1236,32 +1237,41 @@ MapView.prototype.sampleTrackHeights = function (track, offsetInMeters) {
         cartographicArray.push(Cesium.Cartographic.fromCartesian(trackPointArray[trackPointIndex]));
     }
 
+    console.log("MapView.sampleTrackHeights: #3: waiting for terrain provider to be ready");
     var that = this;
-    Cesium.when(Cesium.sampleTerrainMostDetailed(
-        this.viewer.terrainProvider,
-        cartographicArray),
-        function (samples) {
+    Cesium.when(
+        this.viewer.terrainProvider.readyPromise,
+        function () {
+            console.log("MapView.sampleTrackHeights: #4: terrain provider is ready; starting sampling terrain");
 
-            var trackPointHeightArray = [];
+            Cesium.when(Cesium.sampleTerrainMostDetailed(
+                that.viewer.terrainProvider,
+                cartographicArray),
+                function (samples) {
 
-            // NOSONAR
-            for (var trackPointIndex = 0; trackPointIndex < trackPointArray.length; ++trackPointIndex) {
+                    console.log("MapView.sampleTrackHeights: #5: terrain provider reports back " + samples.length + " samples");
 
-                var trackPointHeight = track.listOfTrackPoints[trackPointIndex * 3 + 2] + offsetInMeters;
-                var sampledHeight = samples[trackPointIndex].height;
+                    var trackPointHeightArray = [];
 
-                if (sampledHeight > trackPointHeight)
-                    trackPointHeight = sampledHeight;
+                    // NOSONAR
+                    for (var trackPointIndex = 0; trackPointIndex < trackPointArray.length; ++trackPointIndex) {
 
-                trackPointHeightArray.push(trackPointHeight);
-            }
+                        var trackPointHeight = track.listOfTrackPoints[trackPointIndex * 3 + 2] + offsetInMeters;
+                        var sampledHeight = samples[trackPointIndex].height;
 
-            console.log("sampling track point heights finished.");
+                        if (sampledHeight > trackPointHeight)
+                            trackPointHeight = sampledHeight;
 
-            that.onSampledTrackHeights(trackPointHeightArray);
+                        trackPointHeightArray.push(trackPointHeight);
+                    }
+
+                    console.log("MapView.sampleTrackHeights: #6: sampling track point heights finished.");
+
+                    that.onSampledTrackHeights(trackPointHeightArray);
+                });
         });
 
-    console.log("call to sampleTrackHeights() returns.");
+    console.log("MapView.sampleTrackHeights: #7: call to sampleTrackHeights() returns.");
 };
 
 /**
