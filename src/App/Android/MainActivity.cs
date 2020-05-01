@@ -3,7 +3,9 @@ using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using System.IO;
+using System.Threading.Tasks;
 using WhereToFly.App.Core;
+using WhereToFly.App.Core.Styles;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -21,7 +23,7 @@ namespace WhereToFly.App.Android
         Icon = "@drawable/icon",
         Theme = "@style/MainTheme",
         LaunchMode = LaunchMode.SingleTask,
-        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.UiMode | ConfigChanges.Orientation)]
     //// Intent filter, case 1: mime type set
     //// See https://stackoverflow.com/questions/39300649/android-intent-filter-not-working
     [IntentFilter(
@@ -210,6 +212,16 @@ namespace WhereToFly.App.Android
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+        /// <summary>
+        /// Called when the UI configuration has changed
+        /// </summary>
+        /// <param name="newConfig">new configuration object; ignored</param>
+        public override void OnConfigurationChanged(global::Android.Content.Res.Configuration newConfig)
+        {
+            base.OnConfigurationChanged(newConfig);
+            Task.Run(async () => await ThemeHelper.ChangeTheme(ThemeHelper.LastTheme, true));
         }
 
         /// <summary>
