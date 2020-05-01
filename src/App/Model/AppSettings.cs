@@ -55,6 +55,11 @@ namespace WhereToFly.App.Model
         public bool ShownFlightPlanningDisclaimer { get; set; }
 
         /// <summary>
+        /// Theme value for the app style
+        /// </summary>
+        public Theme AppTheme { get; set; }
+
+        /// <summary>
         /// Creates a new default app settings object
         /// </summary>
         public AppSettings()
@@ -68,6 +73,7 @@ namespace WhereToFly.App.Model
             this.LastFlyingRangeParameters = new FlyingRangeParameters();
             this.LastShownSettingsPage = 0;
             this.ShownFlightPlanningDisclaimer = false;
+            this.AppTheme = Theme.Device;
         }
 
         #region object overridables implementation
@@ -85,7 +91,8 @@ namespace WhereToFly.App.Model
             this.LastLocationFilterSettings,
             this.LastFlyingRangeParameters,
             this.LastShownSettingsPage,
-            this.ShownFlightPlanningDisclaimer).GetHashCode();
+            this.ShownFlightPlanningDisclaimer,
+            this.AppTheme).GetHashCode();
 
         /// <summary>
         /// Compares this app settings to another object
@@ -113,13 +120,15 @@ namespace WhereToFly.App.Model
             this.MapOverlayType,
             this.CoordinateDisplayFormat,
             this.LastShownSettingsPage,
-            this.ShownFlightPlanningDisclaimer) ==
+            this.ShownFlightPlanningDisclaimer,
+            this.AppTheme) ==
             (other.ShadingMode,
             other.MapImageryType,
             other.MapOverlayType,
             other.CoordinateDisplayFormat,
             other.LastShownSettingsPage,
-            other.ShownFlightPlanningDisclaimer);
+            other.ShownFlightPlanningDisclaimer,
+            other.AppTheme);
         #endregion
 
         /// <summary>
