@@ -9,7 +9,7 @@
 
         <!-- application resource dictionary -->
         <ResourceDictionary>
-            <Color x:Key="primaryColor">#2F299E</Color>
+            <Color x:Key="PrimaryColor">#2F299E</Color>
         </ResourceDictionary>
 
     </Application.Resources>

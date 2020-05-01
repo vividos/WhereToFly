@@ -49,7 +49,7 @@
             <!-- Indicator showing current position in carousel -->
             <IndicatorView x:Name="indicatorView"
                            IndicatorColor="LightGray"
-                           SelectedIndicatorColor="{StaticResource primaryColor}"
+                           SelectedIndicatorColor="{DynamicResource PrimaryColor}"
                            IndicatorSize="16"
                            HeightRequest="40"
                            HorizontalOptions="Center"
