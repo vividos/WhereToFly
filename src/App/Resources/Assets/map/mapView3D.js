@@ -1,10 +1,3 @@
-// set cesium credit so that the img src tag isn't stripped because it contains a file:// or
-// ms - appx - web:// URL
-Cesium.CreditDisplay.cesiumCredit =
-    new Cesium.Credit(
-        '<a href="https://cesium.com/" target="_blank"><img src="Cesium/Assets/Images/ion-credit.png" title="Cesium ion"/></a>',
-        true);
-
 /**
  * Creates a new instance of MapView
  * @constructor

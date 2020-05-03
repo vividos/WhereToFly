@@ -3,7 +3,6 @@
 ## Bugs
 
 - [ ] Share without location, show toast after x seconds
-- [ ] Fix Cesium ion icon
 - [ ] UWP: Fix iframe actions for pins on map
 - [ ] UWP: Fix crash when opening tour planning popup
 - [ ] Web: Fix map and static navbar issue

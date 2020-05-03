@@ -13,6 +13,7 @@
 - fixed crash when navigating between different weather pages
 - fixed crash when deleting a location
 - fixed displaying OpenFlightMaps imagery layer
+- fixed displaying the Cesium Ion icon on the bottom of the screen
 
 1.7.0
 
