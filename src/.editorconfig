@@ -197,6 +197,9 @@ dotnet_naming_style.begins_with_i.required_suffix =
 dotnet_naming_style.begins_with_i.word_separator =
 dotnet_naming_style.begins_with_i.capitalization = pascal_case
 
+# SA0001: XML comment analysis is disabled due to project configuration
+dotnet_diagnostic.SA0001.severity = none
+
 # SA1124: Do not use regions
 dotnet_diagnostic.SA1124.severity = silent
 
@@ -229,6 +232,9 @@ dotnet_diagnostic.SA1633.severity = silent
 
 # SA1642: Constructor summary documentation should begin with standard text
 dotnet_diagnostic.SA1642.severity = silent
+
+# SA1649: File name should match first type name
+dotnet_diagnostic.SA1649.severity = silent
 
 # iOS PList files
 [*.plist]

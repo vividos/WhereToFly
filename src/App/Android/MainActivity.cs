@@ -9,6 +9,8 @@ using WhereToFly.App.Core.Styles;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
+#pragma warning disable SA1118 // Parameter should not span multiple lines
+
 namespace WhereToFly.App.Android
 {
     /// <summary>
@@ -18,7 +20,8 @@ namespace WhereToFly.App.Android
     /// http://www.helloandroid.com/tutorials/communicating-between-running-activities
     /// The intent filters are used to open various combinations of files.
     /// </summary>
-    [Activity(Label = Constants.AppTitle,
+    [Activity(
+        Label = Constants.AppTitle,
         Name = "wheretofly.MainActivity",
         Icon = "@drawable/icon",
         Theme = "@style/MainTheme",
