@@ -287,7 +287,7 @@ namespace WhereToFly.WebApi.Logic
                         Altitude = mapPoint.Altitude.Value,
                         Name = "Live waypoint test position",
                         Description = "Hello from the Where-to-fly backend services!<br/>" +
-                            $"Next request date is {nextRequestDate.ToString()}" +
+                            $"Next request date is {nextRequestDate}" +
                             GetCoveredDistanceDescription(mapPoint),
                         DetailsLink = string.Empty
                     },
@@ -314,15 +314,15 @@ namespace WhereToFly.WebApi.Logic
                 distanceTo2 < distanceBetween12)
             {
                 double percent = (distanceTo1 / distanceBetween12) * 100.0;
-                return $"<br/>Covered distance: {distanceTo1/1000.0:0.0} km, {percent:0.0}% done!";
+                return $"<br/>Covered distance: {distanceTo1 / 1000.0:0.0} km, {percent:0.0}% done!";
             }
             else if (distanceTo1 < distanceTo2)
             {
-                return $"<br/>Before start turnpoint ({distanceTo1/1000.0:0.0} km to start)!";
+                return $"<br/>Before start turnpoint ({distanceTo1 / 1000.0:0.0} km to start)!";
             }
             else
             {
-                return $"<br/>End turnpoint reached ({distanceTo2/1000.0:0.0} km from end)!";
+                return $"<br/>End turnpoint reached ({distanceTo2 / 1000.0:0.0} km from end)!";
             }
         }
 

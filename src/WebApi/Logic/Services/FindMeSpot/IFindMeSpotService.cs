@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
 using Refit;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
+#pragma warning disable CA1034 // Nested types should not be visible
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
 /// <summary>
@@ -11,11 +13,11 @@ using System.Threading.Tasks;
 /// </summary>
 namespace WhereToFly.WebApi.Logic.Services.FindMeSpot
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage(
+    [SuppressMessage(
         "Microsoft.StyleCop.CSharp.DocumentationRules",
         "SA1600:ElementsMustBeDocumented",
         Justification = "Content classes generated from REST web service response")]
-    public class Model
+    public static class Model
     {
         public class Feed
         {

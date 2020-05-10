@@ -1,5 +1,4 @@
 ﻿using MvvmHelpers.Commands;
-using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WhereToFly.Shared.Model;
