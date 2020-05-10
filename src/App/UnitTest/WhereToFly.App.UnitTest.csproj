@@ -76,7 +76,7 @@
     <Compile Include="ViewModels\PlanTourPopupViewModelTest.cs" />
     <Compile Include="ViewModels\SelectWeatherIconViewModelTest.cs" />
     <Compile Include="ViewModels\SettingsViewModelTest.cs" />
-    <Compile Include="ViewModels\TrackDetailsViewModelTest.cs" />
+    <Compile Include="ViewModels\TrackViewModelTest.cs" />
     <Compile Include="ViewModels\TrackListEntryViewModelTest.cs" />
     <Compile Include="ViewModels\TrackListViewModelTest.cs" />
     <Compile Include="ViewModels\WeatherIconViewModelTest.cs" />
