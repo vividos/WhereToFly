@@ -1,5 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using WhereToFly.App.Core.Styles;
+using WhereToFly.App.Model;
 using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.ViewModels
 {
@@ -8,7 +12,56 @@ namespace WhereToFly.App.Core.ViewModels
     /// </summary>
     public class GeneralSettingsViewModel : ViewModelBase
     {
+        /// <summary>
+        /// View model for app theme
+        /// </summary>
+        public class AppThemeViewModel
+        {
+            /// <summary>
+            /// Display text for value
+            /// </summary>
+            public string Text { get; set; }
+
+            /// <summary>
+            /// App theme value
+            /// </summary>
+            public Theme Value { get; set; }
+        }
+
+        /// <summary>
+        /// App settings object
+        /// </summary>
+        private readonly AppSettings appSettings;
+
         #region Binding properties
+        /// <summary>
+        /// List of available map overlay types
+        /// </summary>
+        public List<AppThemeViewModel> AppThemeItems
+        {
+            get; private set;
+        }
+
+        /// <summary>
+        /// Currently selected app theme
+        /// </summary>
+        public AppThemeViewModel SelectedAppTheme
+        {
+            get
+            {
+                return this.AppThemeItems.Find(x => x.Value == this.appSettings.AppTheme);
+            }
+
+            set
+            {
+                if (this.appSettings.AppTheme != value.Value)
+                {
+                    this.appSettings.AppTheme = value.Value;
+                    Task.Run(async () => await this.SaveThemeSettingsAsync());
+                }
+            }
+        }
+
         /// <summary>
         /// Username for the alptherm web page
         /// </summary>
@@ -25,6 +78,15 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         public GeneralSettingsViewModel()
         {
+            this.appSettings = App.Settings;
+
+            this.AppThemeItems = new List<AppThemeViewModel>
+            {
+                new AppThemeViewModel{ Text = "Same as device", Value = Theme.Device },
+                new AppThemeViewModel{ Text = "Light theme", Value = Theme.Light },
+                new AppThemeViewModel{ Text = "Dark theme", Value = Theme.Dark },
+            };
+
             Task.Run(this.LoadDataAsync);
         }
 
@@ -56,6 +118,18 @@ namespace WhereToFly.App.Core.ViewModels
             {
                 await SecureStorage.SetAsync(Constants.SecureSettingsAlpthermPassword, this.AlpthermPassword);
             }
+        }
+
+        /// <summary>
+        /// Saves settings to data service
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task SaveThemeSettingsAsync()
+        {
+            await ThemeHelper.ChangeTheme(this.appSettings.AppTheme, true);
+
+            var dataService = DependencyService.Get<IDataService>();
+            await dataService.StoreAppSettingsAsync(this.appSettings);
         }
     }
 }
