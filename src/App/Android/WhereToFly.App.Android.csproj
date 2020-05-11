@@ -49,6 +49,7 @@
     <AndroidSupportedAbis>armeabi-v7a;arm64-v8a</AndroidSupportedAbis>
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
     <AndroidEnableProfiledAot>true</AndroidEnableProfiledAot>
+    <AndroidUseDefaultAotProfile>false</AndroidUseDefaultAotProfile>
     <AndroidLinkMode>Full</AndroidLinkMode>
     <AndroidLinkTool>r8</AndroidLinkTool>
     <AndroidLinkSkip>WhereToFly.App.Core;WhereToFly.App.Geo;WhereToFly.App.Logic;WhereToFly.App.Model;WhereToFly.Shared.Base;WhereToFly.Shared.Geo;WhereToFly.Shared.Model;WhereToFly.App.Resources.Android;WhereToFly.App.Android;Xamarin.Forms.Platform.Android;Xamarin.Forms.Platform;Xamarin.Forms.Core;Xamarin.Forms.Xaml;FormsViewGroup</AndroidLinkSkip>
@@ -115,6 +116,9 @@
   <ItemGroup>
     <ProguardConfiguration Include="proguard.cfg" />
     <None Include="Properties\AndroidManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAotProfile Include="custom.aprof" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Tabbar.axml" />
