@@ -41,35 +41,37 @@
 
     <ContentPage.Content>
 
-        <!-- stack layout with location details grid and details web view -->
-        <StackLayout Orientation="Vertical">
+        <ScrollView Orientation="Vertical">
 
-            <!-- Grid with all location details -->
-            <Grid WidthRequest="350" MinimumWidthRequest="350"
-                  HorizontalOptions="Center" Padding="8"
+            <!-- stack layout with location details grid and details web view -->
+            <StackLayout Orientation="Vertical">
+
+                <!-- Grid with all location details -->
+                <Grid WidthRequest="350" MinimumWidthRequest="350"
+                      VerticalOptions="Start" HorizontalOptions="Center" Padding="8"
                   ColumnSpacing="16" RowSpacing="16">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="1*" />
-                </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
 
-                <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                    <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
 
-                    <!-- Type image -->
-                    <ffimageloadingsvg:SvgCachedImage Source="{Binding TypeImageSource, Mode=OneWay}"
+                        <!-- Type image -->
+                        <ffimageloadingsvg:SvgCachedImage Source="{Binding TypeImageSource, Mode=OneWay}"
                                        WidthRequest="64" HeightRequest="64"
                                        HorizontalOptions="Start" VerticalOptions="Center" />
 
-                    <!-- Takeoff directions -->
-                    <controls:TakeoffDirectionsView IsVisible="{Binding IsTakeoffDirectionsVisible, Mode=OneTime}"
+                        <!-- Takeoff directions -->
+                        <controls:TakeoffDirectionsView IsVisible="{Binding IsTakeoffDirectionsVisible, Mode=OneTime}"
                                                     WidthRequest="64" HeightRequest="64"
                                                     HorizontalOptions="Start" VerticalOptions="Center"
                                                     Source="{Binding TakeoffDirections, Mode=OneTime}"
@@ -80,44 +82,44 @@
                                                     CompassColor="Green"
                                                     ShowLabels="True" />
 
-                    <!-- Name -->
-                    <Label Text="{Binding Name, Mode=OneTime}"
+                        <!-- Name -->
+                        <Label Text="{Binding Name, Mode=OneTime}"
                            FontSize="Large" FontAttributes="Bold"
                            VerticalOptions="Center" />
-                </StackLayout>
+                    </StackLayout>
 
-                <!-- Type -->
-                <Label Grid.Row="1" Grid.Column="0" Text="Type" />
-                <Label Grid.Row="1" Grid.Column="1" Text="{Binding Type, Mode=OneTime}" />
+                    <!-- Type -->
+                    <Label Grid.Row="1" Grid.Column="0" Text="Type" />
+                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Type, Mode=OneTime}" />
 
-                <!-- Latitude -->
-                <Label Grid.Row="2" Grid.Column="0" Text="Latitude" />
-                <Label Grid.Row="2" Grid.Column="1" Text="{Binding Latitude, Mode=OneTime}" />
+                    <!-- Latitude -->
+                    <Label Grid.Row="2" Grid.Column="0" Text="Latitude" />
+                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding Latitude, Mode=OneTime}" />
 
-                <!-- Longitude -->
-                <Label Grid.Row="3" Grid.Column="0" Text="Longitude" />
-                <Label Grid.Row="3" Grid.Column="1" Text="{Binding Longitude, Mode=OneTime}" />
+                    <!-- Longitude -->
+                    <Label Grid.Row="3" Grid.Column="0" Text="Longitude" />
+                    <Label Grid.Row="3" Grid.Column="1" Text="{Binding Longitude, Mode=OneTime}" />
 
-                <!-- Altitude -->
-                <Label Grid.Row="4" Grid.Column="0" Text="Altitude" />
-                <Label Grid.Row="4" Grid.Column="1" Text="{Binding Altitude, Mode=OneTime}" />
+                    <!-- Altitude -->
+                    <Label Grid.Row="4" Grid.Column="0" Text="Altitude" />
+                    <Label Grid.Row="4" Grid.Column="1" Text="{Binding Altitude, Mode=OneTime}" />
 
-                <!-- Current distance -->
-                <Label Grid.Row="5" Grid.Column="0" Text="Distance" />
-                <Label Grid.Row="5" Grid.Column="1" Text="{Binding Distance, Mode=OneWay}" />
+                    <!-- Current distance -->
+                    <Label Grid.Row="5" Grid.Column="0" Text="Distance" />
+                    <Label Grid.Row="5" Grid.Column="1" Text="{Binding Distance, Mode=OneWay}" />
 
-                <!-- Internet link -->
-                <Label Grid.Row="6" Grid.Column="0" Text="Internet link" />
-                <Label Grid.Row="6" Grid.Column="1" Text="{Binding InternetLink, Mode=OneTime}" />
-            </Grid>
+                    <!-- Internet link -->
+                    <Label Grid.Row="6" Grid.Column="0" Text="Internet link" />
+                    <Label Grid.Row="6" Grid.Column="1" Text="{Binding InternetLink, Mode=OneTime}" />
+                </Grid>
 
-            <!-- Description web view -->
-            <WebView HorizontalOptions="FillAndExpand"
-                        VerticalOptions="FillAndExpand"
-                        HeightRequest="200" WidthRequest="350"
-                        Source="{Binding DescriptionWebViewSource}" />
+                <!-- Description web view -->
+                <controls:AutoResizeWebView HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand"
+                                            HeightRequest="200"
+                                            Source="{Binding DescriptionWebViewSource}" />
 
-        </StackLayout>
+            </StackLayout>
+        </ScrollView>
 
     </ContentPage.Content>
 </ContentPage>
