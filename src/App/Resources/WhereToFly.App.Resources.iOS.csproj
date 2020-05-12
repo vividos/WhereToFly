@@ -275,6 +275,8 @@
     <Content Include="Assets\map\Cesium\Workers\WebGLConstants-56de22c0.js" />
     <Content Include="Assets\map\Cesium\Workers\WebMercatorProjection-069c36ba.js" />
     <Content Include="Assets\map\Cesium\Workers\when-b43ff45e.js" />
+    <BundleResource Include="Assets\map\images\cave.svg" />
+    <BundleResource Include="Assets\map\images\mountain-pass.svg" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\VersionAssemblyInfo.cs">

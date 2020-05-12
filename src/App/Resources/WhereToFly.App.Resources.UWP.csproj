@@ -285,7 +285,9 @@
     <Content Include="Assets\map\Chart\Chart.bundle.min.js" />
     <Content Include="Assets\map\Chart\Chart.min.css" />
     <Content Include="Assets\map\heightProfileView.js" />
+    <Content Include="Assets\map\images\cave.svg" />
     <Content Include="Assets\map\images\close-circle-outline.svg" />
+    <Content Include="Assets\map\images\mountain-pass.svg" />
     <Content Include="Properties\WhereToFly.App.Resources.UWP.rd.xml" />
   </ItemGroup>
   <ItemGroup>
