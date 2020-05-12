@@ -22,9 +22,9 @@ namespace WhereToFly.App.Logic
 
             var acceptableTags = new List<string>
             {
-                "div", "span",
-                "p", "b", "i", "strong", "em",
-                "table", "th", "tr", "td",
+                "div", "span", "p", "br",
+                "b", "i", "strong", "em",
+                "table", "th", "tr", "td", "thead",
                 "ul", "li",
                 "img", "a"
             };
