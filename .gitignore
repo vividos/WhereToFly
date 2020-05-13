@@ -294,3 +294,5 @@ src/bw-output/
 # my ignores
 stuff/
 *.designer.cs
+/src/Web/LiveTracking/wwwroot/css/site.min.css
+/src/Web/LiveTracking/wwwroot/js/site.min.js

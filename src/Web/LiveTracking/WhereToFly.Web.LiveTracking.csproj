@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BuildBundlerMinifier" Version="3.2.447" />
     <PackageReference Include="Refit" Version="5.1.67" />
     <PackageReference Include="SonarAnalyzer.CSharp" Version="8.6.1.17183">
       <PrivateAssets>all</PrivateAssets>
