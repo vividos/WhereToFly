@@ -6,7 +6,7 @@
  */
 function HeightProfileView(options) {
 
-    console.log("creating new height profile view");
+    console.log("HeightProfileView: creating new height profile view");
 
     this.options = options || {
         id: 'chartElement',
@@ -64,7 +64,7 @@ function HeightProfileView(options) {
  */
 HeightProfileView.prototype.setTrack = function (track) {
 
-    console.log("setting height profile with " + track.listOfTrackPoints.length / 3 + " track points");
+    console.log("HeightProfileView: setting height profile with " + track.listOfTrackPoints.length / 3 + " track points");
 
     var trackData = [];
 
@@ -96,7 +96,7 @@ HeightProfileView.prototype.setTrack = function (track) {
  */
 HeightProfileView.prototype.addGroundProfile = function (elevationArray) {
 
-    console.log("adding ground profile with " + elevationArray.length + " elevation points");
+    console.log("HeightProfileView: adding ground profile with " + elevationArray.length + " elevation points");
 
     var trackData = this.chart.data.datasets[0].data;
     var elevationData = [];
