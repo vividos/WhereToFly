@@ -174,6 +174,9 @@ function MapView(options) {
         function (myLocationEntity) {
             myLocationEntity.show = false;
             that.myLocationMarker = that.viewer.entities.add(myLocationEntity);
+        },
+        function (error) {
+            console.error("MapView: #8 error creating my location entity: " + error);
         });
 
     // the zoom entity is invisible and transparent and is used for zoomToLocation() calls
@@ -193,6 +196,9 @@ function MapView(options) {
         function (findResultEntity) {
             findResultEntity.show = false;
             that.findResultMarker = that.viewer.entities.add(findResultEntity);
+        },
+        function (error) {
+            console.error("MapView: #8 error creating find result entity: " + error);
         });
 
     console.log("MapView: #9 long tap handler");
@@ -736,6 +742,9 @@ MapView.prototype.addLayer = function (layer) {
             that.dataSourceMap[layer.id] = dataSource;
 
             that.setLayerVisibility(layer);
+        },
+        function (error) {
+            console.error("MapView.addLayer: error while loading CZML data source: " + error);
         });
 };
 
@@ -951,6 +960,9 @@ MapView.prototype.addLocationList = function (locationList) {
                 location.latitude),
             function (entity) {
                 that.viewer.entities.add(entity);
+            },
+            function (error) {
+                console.error("MapView.addLocationList: error while adding location entity: " + error);
             });
     }
 };
@@ -985,6 +997,9 @@ MapView.prototype.createEntity = function (id, name, description, pinColor, pinI
                     heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
                 }
             };
+        },
+        function (error) {
+            console.error("MapView.createEntity: error while generating pin from URL " + url + ": " + error);
         });
 };
 
@@ -1262,7 +1277,13 @@ MapView.prototype.sampleTrackHeights = function (track, offsetInMeters) {
                     console.log("MapView.sampleTrackHeights: #6: sampling track point heights finished.");
 
                     that.onSampledTrackHeights(trackPointHeightArray);
+                },
+                function (error) {
+                    console.error("MapView.sampleTrackHeights: #9: error while sampling track point heights: " + error);
                 });
+        },
+        function (error) {
+            console.error("MapView.sampleTrackHeights: #8: error while waiting for terrain provider promise: " + error);
         });
 
     console.log("MapView.sampleTrackHeights: #7: call to sampleTrackHeights() returns.");
