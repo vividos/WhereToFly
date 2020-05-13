@@ -129,7 +129,7 @@ function MapView(options) {
     // allow scripts to run in info box
     console.log("MapView: #6 sandboxing");
     this.viewer.infoBox.frame.sandbox = this.viewer.infoBox.frame.sandbox + " allow-scripts";
-    console.log("MapView: sandbox is: " + this.viewer.infoBox.frame.sandbox);
+    this.viewer.infoBox.frame.setAttribute('src', 'about:blank'); // needed to apply new sandbox attributes
 
     if (!options.hasMouse) {
         // switch to Touch instructions, as the control is only used on touch devices
