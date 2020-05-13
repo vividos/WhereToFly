@@ -6,7 +6,7 @@
  */
 function LiveTracking() {
 
-    console.log("initializing live tracking site");
+    console.log("LiveTracking: initializing live tracking site");
 
     this.liveWaypointToIdMapping = [];
     this.updateTimeoutMapping = [];
@@ -70,7 +70,7 @@ LiveTracking.prototype.initPage = function () {
  * @param {object} params action params
  */
 LiveTracking.prototype.callMapAction = function (funcName, params) {
-    console.log('call action: ' + funcName + ', params:' + JSON.stringify(params));
+    console.log("LiveTracking: call action: " + funcName + ", params: " + JSON.stringify(params));
 };
 
 /**
@@ -78,7 +78,7 @@ LiveTracking.prototype.callMapAction = function (funcName, params) {
  */
 LiveTracking.prototype.addDefaultLayerAndLocationListsAndTracks = function () {
 
-    console.log("loading default data...");
+    console.log("LiveTracking: loading default data...");
 
     this.addXLakesLayer();
 };
@@ -92,7 +92,7 @@ LiveTracking.prototype.addXLakesLayer = function () {
     $.get("/data/x-lakes-2020-wainwrights.czml",
         null,
         function (data) {
-            console.log("successfully loaded czml file, adding layer");
+            console.log("LiveTracking: successfully loaded czml file, adding layer");
             that.map.addLayer({
                 id: 'x-lakes-2020-layer',
                 name: 'X-Lakes 2020 Wainwrights',
@@ -184,7 +184,7 @@ LiveTracking.prototype.addLiveWaypoint = function (name, liveWaypointId) {
  */
 LiveTracking.prototype.geocodeAndShow = function (address) {
 
-    console.log("geocoding find text: " + address);
+    console.log("LiveTracking: geocoding find text: " + address);
 
     var endpoint = 'https://nominatim.openstreetmap.org/search';
     var resource = new Cesium.Resource({
@@ -224,7 +224,7 @@ LiveTracking.prototype.zoomToByPrefix = function (pageIdPrefix) {
     var entity = this.map.viewer.entities.getById(liveWaypointUri);
 
     if (entity === undefined) {
-        console.log("couldn't find entity for live waypoint id: " + liveWaypointUri);
+        console.error("LiveTracking: couldn't find entity for live waypoint id: " + liveWaypointUri);
         return;
     }
 
@@ -257,7 +257,7 @@ LiveTracking.prototype.updateByPrefix = function (pageIdPrefix) {
  */
 LiveTracking.prototype.updateLiveWaypoint = function (liveWaypointUri) {
 
-    console.log('updating live waypoint ' + liveWaypointUri);
+    console.log("LiveTracking: updating live waypoint " + liveWaypointUri);
 
     var that = this;
     $.ajax({
@@ -278,7 +278,7 @@ LiveTracking.prototype.updateLiveWaypoint = function (liveWaypointUri) {
  */
 LiveTracking.prototype.onUpdateLiveWaypointResult = function (liveWaypointUri, result) {
 
-    console.log('update result: ' + JSON.stringify(result));
+    console.log("LiveTracking: update result: " + JSON.stringify(result));
 
     if (result.data !== undefined) {
         result.data.id = liveWaypointUri;
@@ -319,7 +319,7 @@ LiveTracking.prototype.onUpdateLiveWaypointResult = function (liveWaypointUri, r
  */
 LiveTracking.prototype.scheduleNextUpdate = function (liveWaypointUri, nextRequestDate) {
 
-    console.log('scheduling next update for live waypoint ' + liveWaypointUri);
+    console.log("LiveTracking: scheduling next update for live waypoint " + liveWaypointUri);
 
     if (this.updateTimeoutMapping[liveWaypointUri] !== undefined)
         clearTimeout(this.updateTimeoutMapping[liveWaypointUri]);
@@ -331,11 +331,11 @@ LiveTracking.prototype.scheduleNextUpdate = function (liveWaypointUri, nextReque
     if (millisTillUpdate < 0)
         millisTillUpdate = 10 * 1000; // schedule in 10 seconds
 
-    console.log("scheduling update in " + millisTillUpdate + " milliseconds");
+    console.log("LiveTracking: scheduling update in " + millisTillUpdate + " milliseconds");
 
     var that = this;
     var myTimeout = setTimeout(function () {
-        console.log("next update for " + liveWaypointUri + " is due!");
+        console.log("LiveTracking: next update for " + liveWaypointUri + " is due!");
         that.updateLiveWaypoint(liveWaypointUri);
     }, millisTillUpdate);
 
