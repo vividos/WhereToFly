@@ -104,6 +104,7 @@
         showFindResult = function () {
             map.showFindResult({
                 name: 'Bodenschneid',
+                description: 'Beschreibung',
                 latitude: 47.6717531,
                 longitude: 11.8381005,
                 displayLatitude: '47°40\'18.3"N',
@@ -112,11 +113,13 @@
         }
 
         addTrack = function () {
-            map.addTrack(
-                'crossingthealps2018',
-                'Crossing the Alps 2018',
-                [12.352277, 47.754076, 0, 12.432716, 47.630431, 0, 12.29676, 47.285013, 0, 12.183008, 47.090525, 0, 11.958434, 46.738669, 0, 11.787137, 46.296141, 0, 11.904684, 46.017666, 0],
-                "FF0000");
+            map.addTrack({
+                id: 'crossingthealps2018',
+                name: 'Crossing the Alps 2018',
+                isFlightTrack: false,
+                listOfTrackPoints: [12.352277, 47.754076, 0, 12.432716, 47.630431, 0, 12.29676, 47.285013, 0, 12.183008, 47.090525, 0, 11.958434, 46.738669, 0, 11.787137, 46.296141, 0, 11.904684, 46.017666, 0],
+                color: "FF0000"
+            });
         }
 
         zoomToTrack = function () {
