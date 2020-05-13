@@ -12,20 +12,21 @@
  */
 function MapView(options) {
 
-    console.log("creating new 3D map view");
+    console.log("MapView: creating new 3D map view");
 
     this.options = options || {
         id: 'mapElement',
         initialCenterPoint: { latitude: 47.67, longitude: 11.88 },
         initialZoomLevel: 14,
         hasMouse: false,
+        useAsynchronousPrimitives: true,
         callback: {}
     };
 
     if (this.options.callback === undefined)
         this.options.callback = callAction;
 
-    console.log("#1 imagery provider");
+    console.log("MapView: #1 imagery provider");
 
     Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiZWMzMjU5NC00MTg4LTQwYmEtYWNhYi01MDYwMWQyZDIxNTUiLCJpZCI6NjM2LCJpYXQiOjE1MjUzNjQ5OTN9.kXik5Mg_-01LBkN-5OTIDpwlMcuE2noRaaHrqjhbaRE';
     Cesium.BingMapsApi.defaultKey = 'AuuY8qZGx-LAeruvajcGMLnudadWlphUWdWb0k6N6lS2QUtURFk3ngCjIXqqFOoe';
@@ -54,7 +55,7 @@ function MapView(options) {
     this.openFlightMapsImageryLayer = null;
     var airacId = calcCurrentAiracId();
     this.openFlightMapsImageryProvider = new Cesium.OpenStreetMapImageryProvider({
-        url: 'https://snapshots.openflightmaps.org/live/' + airacId + '/tiles/world/noninteractive/epsg3857/merged/512/latest/',
+        url: 'https://snapshots.openflightmaps.org/live/' + airacId + '/tiles/world/epsg3857/aero/512/latest/',
         credit: '(c) <a href="https://openflightmaps.org/" target="_blank">Open Flightmaps association</a>, (c) OpenStreetMap contributors, NASA elevation data',
         maximumLevel: 11
     });
@@ -64,18 +65,15 @@ function MapView(options) {
     this.thermalSkywaysLayer = null;
     this.thermalSkywaysOverlay = this.createThermalImageryProvider();
 
-    console.log('thermal maps url: ' + this.thermalSkywaysOverlay.url);
+    console.log('MapView: thermal maps url: ' + this.thermalSkywaysOverlay.url);
 
     this.blackMarbleLayer = null;
     this.blackMarbleOverlay = null;
 
-    console.log("#2 terrain provider");
-    var terrainProvider = Cesium.createWorldTerrain({
-        requestWaterMask: false,
-        requestVertexNormals: true
-    });
+    console.log("MapView: #2 terrain provider");
+    this.initTerrainProvider();
 
-    console.log("#3 clock");
+    console.log("MapView: #3 clock");
     var now = Cesium.JulianDate.now();
     var end = Cesium.JulianDate.addDays(now, 1, new Cesium.JulianDate());
 
@@ -87,10 +85,12 @@ function MapView(options) {
         clockRange: Cesium.ClockRange.CLAMPED
     });
 
-    console.log("#4 viewer");
+    console.log("MapView: #4 viewer");
+    var webGLPowerPreference = 'low-power';
+
     this.viewer = new Cesium.Viewer(this.options.id, {
         imageryProvider: this.openStreetMapImageryProvider,
-        terrainProvider: terrainProvider,
+        terrainProvider: null, // is later set when readyPromise completes
         clockViewModel: new Cesium.ClockViewModel(clock),
         baseLayerPicker: false,
         sceneModePicker: false,
@@ -101,10 +101,17 @@ function MapView(options) {
         timeline: false,
         skyBox: false,
         scene3DOnly: true,
-        requestRenderMode: true
+        requestRenderMode: true,
+        // when no animation happens, render after this number of seconds
+        maximumRenderTimeChange: 60.0,
+        contextOptions: {
+            webgl: {
+                powerPreference: webGLPowerPreference
+            }
+        }
     });
 
-    console.log("#4a globe options");
+    console.log("MapView: #5 globe options");
 
     var globe = this.viewer.scene.globe;
     globe.enableLighting = true;
@@ -120,14 +127,16 @@ function MapView(options) {
     globe.maximumScreenSpaceError = 1.666;
 
     // allow scripts to run in info box
+    console.log("MapView: #6 sandboxing");
     this.viewer.infoBox.frame.sandbox = this.viewer.infoBox.frame.sandbox + " allow-scripts";
+    this.viewer.infoBox.frame.setAttribute('src', 'about:blank'); // needed to apply new sandbox attributes
 
     if (!options.hasMouse) {
         // switch to Touch instructions, as the control is only used on touch devices
         this.viewer.navigationHelpButton.viewModel.showTouch();
     }
 
-    console.log("#5 setView");
+    console.log("MapView: #7 setView");
     var longitude = this.options.initialCenterPoint['longitude'];
     var latitude = this.options.initialCenterPoint['latitude'];
 
@@ -156,7 +165,7 @@ function MapView(options) {
         });
     }
 
-    console.log("#6 location markers");
+    console.log("MapView: #8 location markers");
     this.myLocationMarker = null;
 
     this.pinBuilder = new Cesium.PinBuilder();
@@ -167,6 +176,9 @@ function MapView(options) {
         function (myLocationEntity) {
             myLocationEntity.show = false;
             that.myLocationMarker = that.viewer.entities.add(myLocationEntity);
+        },
+        function (error) {
+            console.error("MapView: #8 error creating my location entity: " + error);
         });
 
     // the zoom entity is invisible and transparent and is used for zoomToLocation() calls
@@ -186,9 +198,12 @@ function MapView(options) {
         function (findResultEntity) {
             findResultEntity.show = false;
             that.findResultMarker = that.viewer.entities.add(findResultEntity);
+        },
+        function (error) {
+            console.error("MapView: #8 error creating find result entity: " + error);
         });
 
-    console.log("#7 long tap handler");
+    console.log("MapView: #9 long tap handler");
 
     this.pickingHandler = new Cesium.ScreenSpaceEventHandler(this.viewer.scene.canvas);
 
@@ -199,7 +214,7 @@ function MapView(options) {
         this.pickingHandler.setInputAction(this.onScreenRightClick.bind(this), Cesium.ScreenSpaceEventType.RIGHT_CLICK);
     }
 
-    console.log("#8 other stuff");
+    console.log("MapView: #10 other stuff");
 
     // add a dedicated track primitives collection, as we can't call viewer.scene.primitives.removeAll()
     this.trackPrimitivesCollection = new Cesium.PrimitiveCollection({
@@ -215,6 +230,27 @@ function MapView(options) {
 
     this.onMapInitialized();
 }
+
+/**
+ * Called to initialize terrain provider, which may not available when
+ * offline.
+ */
+MapView.prototype.initTerrainProvider = function () {
+
+    var terrainProvider = Cesium.createWorldTerrain({
+        requestWaterMask: false,
+        requestVertexNormals: true
+    });
+
+    var that = this;
+    terrainProvider.readyPromise.then(function () {
+        console.log("MapView: terrain provider is ready!");
+        that.viewer.terrainProvider = terrainProvider;
+    }).otherwise(function (error) {
+        // waiting for onNetworkConnectivityChanged
+        console.error("MapView.initTerrainProvider: failed init'ing terrain provider", error);
+    });
+};
 
 /**
  * Called when the screen space event handler detected a touch-down event.
@@ -305,7 +341,7 @@ MapView.prototype.createThermalImageryProvider = function () {
  */
 MapView.prototype.setMapImageryType = function (imageryType) {
 
-    console.log("setting new imagery type: " + imageryType);
+    console.log("MapView: setting new imagery type: " + imageryType);
 
     var layers = this.viewer.scene.imageryLayers;
 
@@ -376,7 +412,7 @@ MapView.prototype.setMapImageryType = function (imageryType) {
             break;
 
         default:
-            console.log('invalid imagery type: ' + imageryType);
+            console.warn('MapView.setMapImageryType: invalid imagery type: ' + imageryType);
             break;
     }
 
@@ -465,7 +501,7 @@ MapView.prototype.setupSlopeAndContourLines = function () {
  */
 MapView.prototype.setMapOverlayType = function (overlayType) {
 
-    console.log("setting new map overlay type: " + overlayType);
+    console.log("MapView: setting new map overlay type: " + overlayType);
 
     var layers = this.viewer.scene.imageryLayers;
 
@@ -517,7 +553,7 @@ MapView.prototype.setMapOverlayType = function (overlayType) {
             break;
 
         default:
-            console.log('invalid map overlay type: ' + overlayType);
+            console.warn('MapView.setMapOverlayType: invalid map overlay type: ' + overlayType);
             break;
     }
 
@@ -531,7 +567,7 @@ MapView.prototype.setMapOverlayType = function (overlayType) {
  */
 MapView.prototype.setShadingMode = function (shadingMode) {
 
-    console.log("setting new shading mode: " + shadingMode);
+    console.log("MapView: setting new shading mode: " + shadingMode);
 
     var today = new Date();
     var now = Cesium.JulianDate.now();
@@ -575,7 +611,7 @@ MapView.prototype.setShadingMode = function (shadingMode) {
             break;
 
         default:
-            console.log('invalid shading mode: ' + shadingMode);
+            console.warn('MapView.setShadingMode: invalid shading mode: ' + shadingMode);
     }
 
     this.viewer.scene.globe.enableLighting = shadingMode !== 'None';
@@ -605,11 +641,11 @@ MapView.prototype.setShadingMode = function (shadingMode) {
 MapView.prototype.updateMyLocation = function (options) {
 
     if (this.myLocationMarker === null) {
-        console.log("warning: myLocationMarker not initialized yet");
+        console.warn("MapView.updateMyLocation: myLocationMarker not initialized yet");
         return;
     }
 
-    console.log("updating my location: lat=" + options.latitude + ", long=" + options.longitude);
+    console.log("MapView: updating my location: lat=" + options.latitude + ", long=" + options.longitude);
 
     this.myLocationMarker.show = true;
     this.myLocationMarker.position = Cesium.Cartesian3.fromDegrees(options.longitude, options.latitude);
@@ -629,7 +665,7 @@ MapView.prototype.updateMyLocation = function (options) {
     this.myLocationMarker.description = text;
 
     if (options.zoomToLocation) {
-        console.log("also zooming to my location");
+        console.log("MapView: also zooming to my location");
         this.viewer.flyTo(
             this.myLocationMarker,
             {
@@ -651,11 +687,11 @@ MapView.prototype.updateMyLocation = function (options) {
 MapView.prototype.zoomToLocation = function (options) {
 
     if (this.zoomEntity === undefined) {
-        console.log("warning: zoomEntity not initialized yet");
+        console.warn("MapView.zoomToLocation: zoomEntity not initialized yet");
         return;
     }
 
-    console.log("zooming to: latitude=" + options.latitude + ", longitude=" + options.longitude + ", altitude=" + options.altitude);
+    console.log("MapView: zooming to: latitude=" + options.latitude + ", longitude=" + options.longitude + ", altitude=" + options.altitude);
 
     var altitude = options.altitude || 0.0;
 
@@ -668,7 +704,7 @@ MapView.prototype.zoomToLocation = function (options) {
 
     this.zoomEntity.show = true;
 
-    console.log("zooming to: start flying");
+    console.log("MapView: zooming to: start flying");
 
     this.viewer.flyTo(
         this.zoomEntity,
@@ -679,7 +715,7 @@ MapView.prototype.zoomToLocation = function (options) {
                 5000.0)
         }).then(function () {
             this.zoomEntity.show = false;
-            console.log("zooming to: flying finished");
+            console.log("MapView: zooming to: flying finished");
         });
 };
 
@@ -694,7 +730,7 @@ MapView.prototype.zoomToLocation = function (options) {
  */
 MapView.prototype.addLayer = function (layer) {
 
-    console.log("adding layer " + layer.name + ", with data length " + layer.data.length + " bytes");
+    console.log("MapView: adding layer " + layer.name + ", with data length " + layer.data.length + " bytes");
 
     var czml = JSON.parse(layer.data);
 
@@ -706,7 +742,47 @@ MapView.prototype.addLayer = function (layer) {
         function (dataSource) {
             that.viewer.dataSources.add(dataSource);
             that.dataSourceMap[layer.id] = dataSource;
+
+            that.setLayerVisibility(layer);
+        },
+        function (error) {
+            console.error("MapView.addLayer: error while loading CZML data source: " + error);
         });
+};
+
+/**
+ * Gets the bounding sphere of a data source
+ * @param {Cesium.DataSource} [dataSource] data source
+ * @returns {Cesium.BoundingSphere} bounding sphere object, or null when no
+ * bounding sphere could be determined
+ */
+MapView.prototype.getDataSourceBoundingSphere = function (dataSource) {
+
+    var entities = dataSource.entities.values;
+    console.log("MapView: getting bounding spheres of " + entities.length + " entities");
+
+    var boundingSphereScratch = new Cesium.BoundingSphere();
+
+    var boundingSpheres = [];
+    for (var i = 0, len = entities.length; i < len; i++) {
+        try {
+            var state = this.viewer.dataSourceDisplay.getBoundingSphere(entities[i], false, boundingSphereScratch);
+
+            if (state === Cesium.BoundingSphereState.PENDING) {
+                continue;
+            } else if (state !== Cesium.BoundingSphereState.FAILED) {
+                boundingSpheres.push(Cesium.BoundingSphere.clone(boundingSphereScratch));
+            }
+        } catch (e) {
+            console.warn("MapView.getDataSourceBoundingSphere: " + e.message);
+        }
+    }
+
+    if (boundingSpheres.length === 0) {
+        return null;
+    }
+
+    return Cesium.BoundingSphere.fromBoundingSpheres(boundingSpheres);
 };
 
 /**
@@ -715,11 +791,31 @@ MapView.prototype.addLayer = function (layer) {
  */
 MapView.prototype.zoomToLayer = function (layerId) {
 
-    console.log("zooming to layer with id " + layerId);
+    console.log("MapView: zooming to layer with id " + layerId);
 
-    var dataSource = this.dataSourceMap[layerId];
-    if (dataSource !== undefined)
+    var dataSource;
+    if (layerId === "locationLayer")
+        dataSource = this.viewer.entities;
+    else if (layerId === "trackLayer")
+        dataSource = this.trackPrimitivesCollection;
+    else
+        dataSource = this.dataSourceMap[layerId];
+
+    if (dataSource !== undefined) {
+
         this.viewer.flyTo(dataSource);
+
+        var boundingSphere = this.getDataSourceBoundingSphere(dataSource);
+        if (boundingSphere !== null) {
+            var center = Cesium.Cartographic.fromCartesian(boundingSphere.center);
+
+            this.onUpdateLastShownLocation({
+                latitude: Cesium.Math.toDegrees(center.latitude),
+                longitude: Cesium.Math.toDegrees(center.longitude),
+                altitude: center.height
+            });
+        }
+    }
 };
 
 /**
@@ -730,12 +826,20 @@ MapView.prototype.zoomToLayer = function (layerId) {
  */
 MapView.prototype.setLayerVisibility = function (layer) {
 
-    console.log("setting new visibility for layer with id " + layerId +
+    console.log("MapView: setting new visibility for layer with id " + layer.id +
         ", visibility: " + layer.isVisible);
 
-    var dataSource = this.dataSourceMap[layerId];
-    if (dataSource !== undefined)
-        dataSource.show = layer.isVisible;
+    if (layer.id === "locationLayer")
+        this.viewer.entities.show = layer.isVisible;
+    else if (layer.id === "trackLayer")
+        this.trackPrimitivesCollection.show = layer.isVisible;
+    else {
+        var dataSource = this.dataSourceMap[layer.id];
+        if (dataSource !== undefined)
+            dataSource.show = layer.isVisible;
+    }
+
+    this.viewer.scene.requestRender();
 };
 
 /**
@@ -744,7 +848,7 @@ MapView.prototype.setLayerVisibility = function (layer) {
  */
 MapView.prototype.removeLayer = function (layerId) {
 
-    console.log("removing layer with id " + layerId);
+    console.log("MapView: removing layer with id " + layerId);
 
     var dataSource = this.dataSourceMap[layerId];
     if (dataSource !== undefined) {
@@ -758,7 +862,7 @@ MapView.prototype.removeLayer = function (layerId) {
  */
 MapView.prototype.clearLayerList = function () {
 
-    console.log("clearing layer list");
+    console.log("MapView: clearing layer list");
 
     for (var layerId in this.dataSourceMap) {
         var dataSource = this.dataSourceMap[layerId];
@@ -774,7 +878,7 @@ MapView.prototype.clearLayerList = function () {
  */
 MapView.prototype.clearLocationList = function () {
 
-    console.log("clearing location list");
+    console.log("MapView: clearing location list");
 
     this.viewer.entities.removeAll();
 
@@ -836,7 +940,7 @@ MapView.prototype.formatLocationText = function (location) {
  */
 MapView.prototype.addLocationList = function (locationList) {
 
-    console.log("adding location list, with " + locationList.length + " entries");
+    console.log("MapView: adding location list, with " + locationList.length + " entries");
 
     var that = this;
     for (var index in locationList) {
@@ -858,6 +962,9 @@ MapView.prototype.addLocationList = function (locationList) {
                 location.latitude),
             function (entity) {
                 that.viewer.entities.add(entity);
+            },
+            function (error) {
+                console.error("MapView.addLocationList: error while adding location entity: " + error);
             });
     }
 };
@@ -892,6 +999,9 @@ MapView.prototype.createEntity = function (id, name, description, pinColor, pinI
                     heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
                 }
             };
+        },
+        function (error) {
+            console.error("MapView.createEntity: error while generating pin from URL " + url + ": " + error);
         });
 };
 
@@ -904,7 +1014,7 @@ MapView.prototype.imageUrlFromLocationType = function (locationType) {
 
     switch (locationType) {
         case 'Summit': return 'images/mountain-15.svg';
-        //case 'Pass': return '';
+        case 'Pass': return 'images/mountain-pass.svg';
         case 'Lake': return 'images/water-15.svg';
         case 'Bridge': return 'images/bridge.svg';
         case 'Viewpoint': return 'images/attraction-15.svg';
@@ -912,7 +1022,7 @@ MapView.prototype.imageUrlFromLocationType = function (locationType) {
         case 'Restaurant': return 'images/restaurant-15.svg';
         case 'Church': return 'images/church.svg';
         case 'Castle': return 'images/castle.svg';
-        //case 'Cave': return '';
+        case 'Cave': return 'images/cave.svg';
         case 'Information': return 'images/information-outline.svg';
         case 'PublicTransportBus': return 'images/bus.svg';
         case 'PublicTransportTrain': return 'images/train.svg';
@@ -958,7 +1068,7 @@ MapView.prototype.pinColorFromLocationType = function (locationType) {
  */
 MapView.prototype.updateLocation = function (location) {
 
-    console.log("updating location \"" + location.id +
+    console.log("MapView: updating location \"" + location.id +
         "\", new position at at latitude " + location.latitude +
         ", longitude " + location.longitude +
         ", altitude " + location.altitude);
@@ -966,7 +1076,7 @@ MapView.prototype.updateLocation = function (location) {
     var entity = this.viewer.entities.getById(location.id);
 
     if (entity === undefined) {
-        console.log("couldn't find entity for id: " + location.id);
+        console.error("MapView.updateLocation: couldn't find entity for id: " + location.id);
         return;
     }
 
@@ -982,7 +1092,7 @@ MapView.prototype.updateLocation = function (location) {
  */
 MapView.prototype.removeLocation = function (locationId) {
 
-    console.log("removing location with ID \"" + location.id);
+    console.log("MapView: removing location with ID: " + locationId);
 
     var entity = this.viewer.entities.getById(locationId);
 
@@ -1002,11 +1112,11 @@ MapView.prototype.removeLocation = function (locationId) {
 MapView.prototype.showFindResult = function (options) {
 
     if (this.findResultMarker === undefined) {
-        console.log("warning: findResultMarker not initialized yet");
+        console.warn("MapView.showFindResult: findResultMarker not initialized yet");
         return;
     }
 
-    console.log("showing find result for \"" + options.name +
+    console.log("MapView: showing find result for \"" + options.name +
         "\", at latitude " + options.latitude + ", longitude " + options.longitude);
 
     var text = '<h2><img height="48em" width="48em" src="images/magnify.svg" style="vertical-align:middle" />' + options.name + '</h2>' +
@@ -1122,9 +1232,10 @@ MapView.prototype.showFlyingRange = function (options) {
  */
 MapView.prototype.sampleTrackHeights = function (track, offsetInMeters) {
 
-    console.log("start sampling track point heights for " + track.listOfTrackPoints.length + " points...");
+    console.log("MapView.sampleTrackHeights: #1 start sampling track point heights for " + track.listOfTrackPoints.length + " points...");
 
     if (!Cesium.Entity.supportsPolylinesOnTerrain(this.viewer.scene)) {
+        console.warn("MapView.sampleTrackHeights: #2: polylines on terrain are not supported");
         return;
     }
 
@@ -1138,32 +1249,47 @@ MapView.prototype.sampleTrackHeights = function (track, offsetInMeters) {
         cartographicArray.push(Cesium.Cartographic.fromCartesian(trackPointArray[trackPointIndex]));
     }
 
+    console.log("MapView.sampleTrackHeights: #3: waiting for terrain provider to be ready");
     var that = this;
-    Cesium.when(Cesium.sampleTerrainMostDetailed(
-        this.viewer.terrainProvider,
-        cartographicArray),
-        function (samples) {
+    Cesium.when(
+        this.viewer.terrainProvider.readyPromise,
+        function () {
+            console.log("MapView.sampleTrackHeights: #4: terrain provider is ready; starting sampling terrain");
 
-            var trackPointHeightArray = [];
+            Cesium.when(Cesium.sampleTerrainMostDetailed(
+                that.viewer.terrainProvider,
+                cartographicArray),
+                function (samples) {
 
-            // NOSONAR
-            for (var trackPointIndex = 0; trackPointIndex < trackPointArray.length; ++trackPointIndex) {
+                    console.log("MapView.sampleTrackHeights: #5: terrain provider reports back " + samples.length + " samples");
 
-                var trackPointHeight = track.listOfTrackPoints[trackPointIndex * 3 + 2] + offsetInMeters;
-                var sampledHeight = samples[trackPointIndex].height;
+                    var trackPointHeightArray = [];
 
-                if (sampledHeight > trackPointHeight)
-                    trackPointHeight = sampledHeight;
+                    // NOSONAR
+                    for (var trackPointIndex = 0; trackPointIndex < trackPointArray.length; ++trackPointIndex) {
 
-                trackPointHeightArray.push(trackPointHeight);
-            }
+                        var trackPointHeight = track.listOfTrackPoints[trackPointIndex * 3 + 2] + offsetInMeters;
+                        var sampledHeight = samples[trackPointIndex].height;
 
-            console.log("sampling track point heights finished.");
+                        if (sampledHeight > trackPointHeight)
+                            trackPointHeight = sampledHeight;
 
-            that.onSampledTrackHeights(trackPointHeightArray);
+                        trackPointHeightArray.push(trackPointHeight);
+                    }
+
+                    console.log("MapView.sampleTrackHeights: #6: sampling track point heights finished.");
+
+                    that.onSampledTrackHeights(trackPointHeightArray);
+                },
+                function (error) {
+                    console.error("MapView.sampleTrackHeights: #9: error while sampling track point heights: " + error);
+                });
+        },
+        function (error) {
+            console.error("MapView.sampleTrackHeights: #8: error while waiting for terrain provider promise: " + error);
         });
 
-    console.log("call to sampleTrackHeights() returns.");
+    console.log("MapView.sampleTrackHeights: #7: call to sampleTrackHeights() returns.");
 };
 
 /**
@@ -1172,7 +1298,8 @@ MapView.prototype.sampleTrackHeights = function (track, offsetInMeters) {
  * that were passed to sampleTrackHeights().
  */
 MapView.prototype.onSampledTrackHeights = function (listOfTrackPointHeights) {
-    console.log("sampling track heights has finished");
+
+    console.log("MapView: sampling track heights has finished");
 
     if (this.options.callback !== undefined)
         this.options.callback('onSampledTrackHeights', listOfTrackPointHeights);
@@ -1268,6 +1395,7 @@ MapView.prototype.getFlightTrackPrimitive = function (track, trackPointArray) {
     });
 
     var primitive = new Cesium.Primitive({
+        asynchronous: this.options.useAsynchronousPrimitives,
         geometryInstances: new Cesium.GeometryInstance({
             geometry: trackPolyline
         }),
@@ -1293,6 +1421,7 @@ MapView.prototype.getFlightTrackWallPrimitive = function (trackPointArray) {
     wallMaterial.uniforms.color = new Cesium.Color(0.5, 0.5, 1, 0.4);
 
     var wallPrimitive = new Cesium.Primitive({
+        asynchronous: this.options.useAsynchronousPrimitives,
         geometryInstances: new Cesium.GeometryInstance({
             geometry: Cesium.WallGeometry.createGeometry(wallGeometry)
         }),
@@ -1321,6 +1450,7 @@ MapView.prototype.getGroundTrackPrimitive = function (track, trackPointArray) {
     });
 
     var primitive = new Cesium.GroundPolylinePrimitive({
+        asynchronous: this.options.useAsynchronousPrimitives,
         geometryInstances: new Cesium.GeometryInstance({
             geometry: groundTrackPolyline,
             attributes: {
@@ -1348,7 +1478,7 @@ MapView.prototype.addTrack = function (track) {
 
     this.removeTrack(track.id);
 
-    console.log("adding list of track points, with ID " + track.id + " and " + track.listOfTrackPoints.length + " track points");
+    console.log("MapView: adding list of track points, with ID " + track.id + " and " + track.listOfTrackPoints.length + " track points");
 
     var trackPointArray = Cesium.Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints);
 
@@ -1386,9 +1516,17 @@ MapView.prototype.zoomToTrack = function (trackId) {
 
     if (trackData !== undefined) {
 
-        console.log("zooming to track with ID: " + trackId);
+        console.log("MapView: zooming to track with ID: " + trackId);
 
         this.viewer.camera.flyToBoundingSphere(trackData.boundingSphere);
+
+        var center = Cesium.Cartographic.fromCartesian(trackData.boundingSphere.center);
+
+        this.onUpdateLastShownLocation({
+            latitude: Cesium.Math.toDegrees(center.latitude),
+            longitude: Cesium.Math.toDegrees(center.longitude),
+            altitude: center.height
+        });
     }
 };
 
@@ -1402,7 +1540,7 @@ MapView.prototype.removeTrack = function (trackId) {
 
     if (trackData !== undefined) {
 
-        console.log("removing track with ID: " + trackId);
+        console.log("MapView: removing track with ID: " + trackId);
 
         this.trackPrimitivesCollection.remove(trackData.primitive);
         if (trackData.wallPrimitive !== undefined)
@@ -1417,7 +1555,7 @@ MapView.prototype.removeTrack = function (trackId) {
  */
 MapView.prototype.clearAllTracks = function () {
 
-    console.log("clearing all tracks");
+    console.log("MapView: clearing all tracks");
 
     this.trackPrimitivesCollection.removeAll();
 
@@ -1429,7 +1567,7 @@ MapView.prototype.clearAllTracks = function () {
  */
 MapView.prototype.onMapInitialized = function () {
 
-    console.log("map is initialized");
+    console.log("MapView: map is initialized");
 
     if (this.options.callback !== undefined)
         this.options.callback('onMapInitialized');
@@ -1441,7 +1579,7 @@ MapView.prototype.onMapInitialized = function () {
  */
 MapView.prototype.onShowLocationDetails = function (locationId) {
 
-    console.log("showing details to location: id=" + locationId);
+    console.log("MapView: showing details to location with ID:" + locationId);
 
     if (this.options.callback !== undefined)
         this.options.callback('onShowLocationDetails', locationId);
@@ -1453,7 +1591,7 @@ MapView.prototype.onShowLocationDetails = function (locationId) {
  */
 MapView.prototype.onNavigateToLocation = function (locationId) {
 
-    console.log("navigation to location started: id=" + locationId);
+    console.log("MapView: navigation to location started, with ID:" + locationId);
 
     if (this.options.callback !== undefined)
         this.options.callback('onNavigateToLocation', locationId);
@@ -1464,7 +1602,7 @@ MapView.prototype.onNavigateToLocation = function (locationId) {
  */
 MapView.prototype.onShareMyLocation = function () {
 
-    console.log("sharing my location started");
+    console.log("MapView: sharing my location started");
 
     if (this.options.callback !== undefined)
         this.options.callback('onShareMyLocation');
@@ -1479,7 +1617,7 @@ MapView.prototype.onShareMyLocation = function () {
  */
 MapView.prototype.onAddFindResult = function (options) {
 
-    console.log("adding find result as waypoint");
+    console.log("MapView: adding find result as waypoint");
 
     if (this.options.callback !== undefined)
         this.options.callback('onAddFindResult', options);
@@ -1499,7 +1637,7 @@ MapView.prototype.onAddFindResult = function (options) {
  */
 MapView.prototype.onLongTap = function (options) {
 
-    console.log("long-tap occured: lat=" + options.latitude +
+    console.log("MapView: long-tap occured: lat=" + options.latitude +
         ", long=" + options.longitude +
         ", alt=" + options.altitude);
 
@@ -1513,10 +1651,28 @@ MapView.prototype.onLongTap = function (options) {
  */
 MapView.prototype.onAddTourPlanLocation = function (locationId) {
 
-    console.log("adding tour planning location: id=" + locationId);
+    console.log("MapView: adding tour planning location: id=" + locationId);
 
     if (this.options.callback !== undefined)
         this.options.callback('onAddTourPlanLocation', locationId);
+};
+
+/**
+ * Called to update the last shown location stored in the app.
+ * @param {Object} [options] An object with the following properties:
+ * @param {Number} [options.latitude] Latitude of the position
+ * @param {Number} [options.longitude] Longitude of the position
+ * @param {Number} [options.altitude] Altitude of the position
+ */
+MapView.prototype.onUpdateLastShownLocation = function (options) {
+
+    console.log("MapView: updating last shown location: lat=" + options.latitude +
+        ", long=" + options.longitude +
+        ", alt=" + options.altitude);
+
+    if (this.options.callback !== undefined)
+        this.options.callback('onUpdateLastShownLocation', options);
+
 };
 
 /**
@@ -1524,19 +1680,51 @@ MapView.prototype.onAddTourPlanLocation = function (locationId) {
  */
 MapView.prototype.hideFlyingRangeCone = function () {
 
-    console.log("hiding flying range cone");
+    console.log("MapView: hiding flying range cone");
 
     this.viewer.entities.remove(this.flyingRangeCone);
 };
 
 /**
- * Calculates the current airac ID, based on the current date, which is good enough for our
- * purposes. See the actual starting days, per year, here:
+ * Called when the network connectivity has changed.
+ * @param {boolean} isAvailable indicates if network is available now
+ */
+MapView.prototype.onNetworkConnectivityChanged = function (isAvailable) {
+
+    // retry initializing terrain provider
+    if (isAvailable &&
+        (this.viewer.terrainProvider === null || this.viewer.terrainProvider instanceof Cesium.EllipsoidTerrainProvider))
+        this.initTerrainProvider();
+};
+
+/**
+ * AIRAC cycle start dates, by year:
  * https://www.nm.eurocontrol.int/RAD/common/airac_dates.html
+ */
+var airacStartDates = {
+    2020: "2020-01-02",
+    2021: "2021-01-28",
+    2022: "2022-01-27",
+};
+
+/**
+ * Calculates the current airac ID, based on the current date. The first two
+ * digits represent the last two year digits. The remaining two digits are
+ * counted up from 1, every 28 days, starting on a specific date.
  * @returns {number} current airac ID
  */
 function calcCurrentAiracId() {
-    var baseAirac = new Date("2020-01-02"); // 2001 began on that day
-    var diffInDays = Math.abs(new Date() - baseAirac) / 86400000;
-    return 2001 + Math.floor(diffInDays / 28);
+    var now = new Date();
+    var currentYear = now.getFullYear();
+
+    var baseAirac = new Date(airacStartDates[currentYear]);
+    if (now < baseAirac) {
+        currentYear--;
+        baseAirac = new Date(airacStartDates[currentYear]);
+    }
+
+    var diffInDays = (now - baseAirac) / 86400000;
+
+    airacId = ((currentYear - 2000) * 100) + 1 + Math.floor(diffInDays / 28);
+    return airacId;
 }
