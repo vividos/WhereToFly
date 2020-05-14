@@ -26,7 +26,7 @@ namespace WhereToFly.App.Core.Controls
         [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1126:PrefixCallsCorrectly", Justification = "false positive")]
         private async void OnNavigated(object sender, WebNavigatedEventArgs args)
         {
-            Debug.WriteLine($"OnNavigated: result{args.Result} event={args.NavigationEvent}");
+            Debug.WriteLine($"OnNavigated: result={args.Result} event={args.NavigationEvent}");
 
             this.Navigated -= this.OnNavigated;
 

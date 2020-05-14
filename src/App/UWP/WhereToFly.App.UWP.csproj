@@ -108,6 +108,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UwpAppManager.cs" />
+    <Compile Include="UwpAutoResizeWebViewRenderer.cs" />
     <Compile Include="UwpPlatform.cs" />
     <Compile Include="UwpWebViewRenderer.cs" />
   </ItemGroup>
