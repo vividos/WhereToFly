@@ -65,6 +65,24 @@ namespace WhereToFly.App.Geo.Spatial
         }
 
         /// <summary>
+        /// Applies an offset to altitude values of all track points
+        /// </summary>
+        /// <param name="track">track to modify</param>
+        /// <param name="offsetInMeters">altitude offset in meters</param>
+        public static void ApplyAltitudeOffset(this Track track, double offsetInMeters)
+        {
+            for (int trackPointIndex = 0; trackPointIndex < track.TrackPoints.Count; trackPointIndex++)
+            {
+                TrackPoint trackPoint = track.TrackPoints[trackPointIndex];
+
+                if (trackPoint.Altitude.HasValue)
+                {
+                    trackPoint.Altitude = trackPoint.Altitude.Value + offsetInMeters;
+                }
+            }
+        }
+
+        /// <summary>
         /// Calculates statistics for track
         /// </summary>
         /// <param name="track">track to use</param>
