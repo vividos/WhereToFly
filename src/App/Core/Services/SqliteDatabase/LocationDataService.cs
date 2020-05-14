@@ -258,7 +258,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
                 {
                     string queryText =
                         filterSettings.ShowNonTakeoffLocations
-                        ? "(takeoff_dir & ? != 0 or type = ?)"
+                        ? "(takeoff_dir & ? != 0 or type != ?)"
                         : "takeoff_dir & ? != 0 and type = ?";
 
                     builder.AddWhereClause(
