@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using WhereToFly.Shared.Model;
 
@@ -24,16 +25,21 @@ namespace WhereToFly.WebApi.Core.Controllers
         /// <summary>
         /// Creates a new app config controller
         /// </summary>
+        /// <param name="config">configuration object</param>
         /// <param name="logger">logging instance</param>
-        public AppConfigController(ILogger<AppConfigController> logger)
+        public AppConfigController(IConfiguration config, ILogger<AppConfigController> logger)
         {
             this.logger = logger;
 
             this.appConfig = new AppConfig
             {
-                CesiumIonApiKey = string.Empty,
-                BingMapsApiKey = string.Empty,
+                CesiumIonApiKey = config["CESIUM_ION_API_KEY"] ?? string.Empty,
+                BingMapsApiKey = config["BING_MAPS_API_KEY"] ?? string.Empty,
             };
+
+            this.logger.LogDebug(
+                $"Initializing AppConfig controller with Cesium Ion API Key \"{this.appConfig.CesiumIonApiKey}\" " +
+                $"and Bing Maps API key \"{this.appConfig.BingMapsApiKey}\"");
         }
 
         /// <summary>
