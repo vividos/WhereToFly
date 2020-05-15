@@ -37,7 +37,8 @@ namespace WhereToFly.WebApi.LiveWaypoints
         /// <param name="services">service collection</param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson();
 
             // Register the Swagger generator, defining one or more Swagger documents
             services.AddSwaggerGen(c =>

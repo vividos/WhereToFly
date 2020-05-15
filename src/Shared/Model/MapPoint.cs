@@ -42,6 +42,7 @@ namespace WhereToFly.Shared.Model
         /// <summary>
         /// Returns if map point is valid, e.g. when latitude and longitude are != 0
         /// </summary>
+        [JsonIgnore]
         public bool Valid
         {
             get
