@@ -91,7 +91,7 @@ namespace WhereToFly.App.Core.Services
 
                 new Location
                 {
-                    Id = Guid.NewGuid().ToString("B"),
+                    Id = "wheretofly-path-spitzingsattel",
                     Name = "Spitzingsattel",
                     MapLocation = new MapPoint(47.672138, 11.8862728, 1129.0),
                     Description = "Sattel auf halbem Wege zwischen Schliersee und Spitzingsee",
