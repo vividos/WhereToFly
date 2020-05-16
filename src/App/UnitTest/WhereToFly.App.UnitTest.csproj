@@ -169,7 +169,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="sqlite-net-pcl">
-      <Version>1.7.302-beta</Version>
+      <Version>1.7.335</Version>
     </PackageReference>
     <PackageReference Include="System.Data.SQLite.Core">
       <Version>1.0.112.2</Version>
