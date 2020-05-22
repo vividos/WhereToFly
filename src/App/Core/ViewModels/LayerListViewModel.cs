@@ -180,7 +180,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         /// <param name="layer">layer to show</param>
         /// <returns>task to wait on</returns>
-        internal async Task NavigateToLayerDetails(Layer layer)
+        private async Task NavigateToLayerDetails(Layer layer)
         {
             if (layer.LayerType != LayerType.LocationLayer &&
                 layer.LayerType != LayerType.TrackLayer)
