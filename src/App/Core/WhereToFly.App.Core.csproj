@@ -68,6 +68,9 @@
     <Compile Update="Views\InfoPage.xaml.cs">
       <DependentUpon>InfoPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\LayerDetailsPage.xaml.cs">
+      <DependentUpon>LayerDetailsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\SelectWeatherIconPopupPage.xaml.cs">
       <DependentUpon>SelectWeatherIconPopupPage.xaml</DependentUpon>
     </Compile>

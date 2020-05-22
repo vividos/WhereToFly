@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Views;
 using WhereToFly.App.Model;
+using WhereToFly.Shared.Model;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -64,6 +65,13 @@ namespace WhereToFly.App.Core.Services
 
                 case Constants.PageKeyLayerListPage:
                     pageType = typeof(LayerListPage);
+                    break;
+
+                case Constants.PageKeyLayerDetailsPage:
+                    Debug.Assert(
+                        parameter is Layer,
+                        "layer must have been passed as parameter");
+                    pageType = typeof(LayerDetailsPage);
                     break;
 
                 case Constants.PageKeyCurrentPositionDetailsPage:

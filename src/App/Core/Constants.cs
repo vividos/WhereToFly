@@ -64,6 +64,12 @@ namespace WhereToFly.App.Core
         public const string PageKeyLayerListPage = "LayerListPage";
 
         /// <summary>
+        /// Page key for use in NavigationService, to navigate to layer details page. The layer
+        /// must be passed as parameter to the NavigationService.
+        /// </summary>
+        public const string PageKeyLayerDetailsPage = "LayerDetailsPage";
+
+        /// <summary>
         /// Page key for use in NavigationService, to navigate to current position details page
         /// </summary>
         public const string PageKeyCurrentPositionDetailsPage = "CurrentPositionDetailsPage";
