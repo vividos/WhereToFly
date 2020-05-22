@@ -339,30 +339,64 @@ namespace WhereToFly.App.Geo.Airspace
         {
             string localData = data.ToUpperInvariant();
 
-            // parse fixed strings
-            switch (localData)
+            Altitude altitude;
+            if (this.TryParseFixedTextAltitude(localData, out altitude) ||
+                this.TryParseFlightLevelAltitude(localData, out altitude) ||
+                this.TryParseFixedHeightsAltitude(localData, out altitude))
+            {
+                return altitude;
+            }
+
+            return new Altitude(data);
+        }
+
+        /// <summary>
+        /// Tries to parse fixed text altitude
+        /// </summary>
+        /// <param name="data">uppercase data to parse</param>
+        /// <param name="altitude">parsed altitude</param>
+        /// <returns>true when successful, false when not</returns>
+        private bool TryParseFixedTextAltitude(string data, out Altitude altitude)
+        {
+            switch (data)
             {
                 case "SFC":
                 case "GND":
                 case "0FT GND":
-                    return new Altitude(AltitudeType.GND);
+                    altitude = new Altitude(AltitudeType.GND);
+                    return true;
+
                 case "UNL":
                 case "UNLTD":
                 case "UNLIM":
                 case "UNLIMITED":
-                    return new Altitude(AltitudeType.Unlimited);
+                    altitude = new Altitude(AltitudeType.Unlimited);
+                    return true;
+
                 default:
                     break;
             }
 
-            // parse flight level
-            if (localData.StartsWith("FL"))
+            altitude = null;
+            return false;
+        }
+
+        /// <summary>
+        /// Tries to parse flight level altitude
+        /// </summary>
+        /// <param name="data">uppercase data to parse</param>
+        /// <param name="altitude">parsed altitude</param>
+        /// <returns>true when successful, false when not</returns>
+        private bool TryParseFlightLevelAltitude(string data, out Altitude altitude)
+        {
+            if (data.StartsWith("FL"))
             {
                 if (TryParseNumber(
-                    localData.Substring(2).Trim(),
+                    data.Substring(2).Trim(),
                     out double flightLevel))
                 {
-                    return new Altitude(flightLevel, AltitudeType.FlightLevel);
+                    altitude = new Altitude(flightLevel, AltitudeType.FlightLevel);
+                    return true;
                 }
                 else
                 {
@@ -370,24 +404,35 @@ namespace WhereToFly.App.Geo.Airspace
                 }
             }
 
-            // parse fixed heights
+            altitude = null;
+            return false;
+        }
+
+        /// <summary>
+        /// Tries to parse altitude values with fixed heights
+        /// </summary>
+        /// <param name="data">uppercase data to parse</param>
+        /// <param name="altitude">parsed altitude</param>
+        /// <returns>true when successful, false when not</returns>
+        private bool TryParseFixedHeightsAltitude(string data, out Altitude altitude)
+        {
             AltitudeType type = AltitudeType.Textual;
-            if (localData.EndsWith("MSL") ||
-                localData.EndsWith("AMSL") ||
-                localData.EndsWith("M") ||
-                localData.EndsWith("FT") ||
-                localData.All(ch => char.IsDigit(ch)))
+            if (data.EndsWith("MSL") ||
+                data.EndsWith("AMSL") ||
+                data.EndsWith("M") ||
+                data.EndsWith("FT") ||
+                data.All(ch => char.IsDigit(ch)))
             {
                 type = AltitudeType.AMSL;
-                localData = localData.Replace("AMSL", string.Empty)
+                data = data.Replace("AMSL", string.Empty)
                     .Replace("MSL", string.Empty).Trim();
             }
 
-            if (localData.EndsWith("AGL") ||
-                localData.EndsWith("GND"))
+            if (data.EndsWith("AGL") ||
+                data.EndsWith("GND"))
             {
                 type = AltitudeType.AGL;
-                localData = localData.Replace("AGL", string.Empty)
+                data = data.Replace("AGL", string.Empty)
                     .Replace("GND", string.Empty).Trim();
             }
 
@@ -395,29 +440,31 @@ namespace WhereToFly.App.Geo.Airspace
             {
                 bool unitFeet = true; // when empty, use feet
 
-                if (localData.EndsWith("M"))
+                if (data.EndsWith("M"))
                 {
-                    localData = localData.Replace("M", string.Empty).Trim();
+                    data = data.Replace("M", string.Empty).Trim();
                     unitFeet = false;
                 }
 
-                if (localData.EndsWith("FT"))
+                if (data.EndsWith("FT"))
                 {
-                    localData = localData.Replace("FT", string.Empty).Trim();
+                    data = data.Replace("FT", string.Empty).Trim();
                 }
 
-                if (TryParseNumber(localData, out double value))
+                if (TryParseNumber(data, out double value))
                 {
                     if (!unitFeet)
                     {
                         value /= Spatial.Constants.FactorFeetToMeter;
                     }
 
-                    return new Altitude(value, type);
+                    altitude = new Altitude(value, type);
+                    return true;
                 }
             }
 
-            return new Altitude(data);
+            altitude = null;
+            return false;
         }
 
         /// <summary>
