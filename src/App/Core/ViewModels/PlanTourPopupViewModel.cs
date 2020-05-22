@@ -333,28 +333,47 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>planned tour, or null when tour couldn't be planned</returns>
         private async Task<PlannedTour> CalculateTourAsync()
         {
-            var waitingDialog = new WaitingPopupPage("Planning tour...");
-
-            try
+            bool retry;
+            do
             {
-                await waitingDialog.ShowAsync();
+                retry = false;
 
-                var dataService = DependencyService.Get<IDataService>();
-                return await dataService.PlanTourAsync(this.planTourParameters);
-            }
-            catch (Exception ex)
-            {
-                App.LogError(ex);
+                var waitingDialog = new WaitingPopupPage("Planning tour...");
 
-                await App.Current.MainPage.DisplayAlert(
-                    Constants.AppTitle,
-                    "Error while planning tour: " + ex.Message,
-                    "OK");
+                try
+                {
+                    await waitingDialog.ShowAsync();
+
+                    var dataService = DependencyService.Get<IDataService>();
+                    return await dataService.PlanTourAsync(this.planTourParameters);
+                }
+                catch (Refit.ApiException refitException)
+                {
+                    App.LogError(refitException);
+                    Debug.WriteLine("Refit exception: " + refitException.Content);
+
+                    retry = await App.Current.MainPage.DisplayAlert(
+                        Constants.AppTitle,
+                        "Error while planning tour: " + refitException.Content,
+                        "Retry",
+                        "Close");
+                }
+                catch (Exception ex)
+                {
+                    App.LogError(ex);
+
+                    retry = await App.Current.MainPage.DisplayAlert(
+                        Constants.AppTitle,
+                        "Error while planning tour: " + ex.Message,
+                        "Retry",
+                        "Close");
+                }
+                finally
+                {
+                    await waitingDialog.HideAsync();
+                }
             }
-            finally
-            {
-                await waitingDialog.HideAsync();
-            }
+            while (retry);
 
             return null;
         }
