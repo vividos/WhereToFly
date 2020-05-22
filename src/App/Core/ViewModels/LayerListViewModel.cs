@@ -49,6 +49,11 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
+        /// Command to execute when an item in the layer list has been tapped
+        /// </summary>
+        public AsyncCommand<Layer> ItemTappedCommand { get; private set; }
+
+        /// <summary>
         /// Indicates if the "clear layer list" button is enabled.
         /// </summary>
         public bool IsClearLayerListEnabled => !this.IsListEmpty;
@@ -78,6 +83,9 @@ namespace WhereToFly.App.Core.ViewModels
         private void SetupBindings()
         {
             Task.Run(this.LoadDataAsync);
+
+            this.ItemTappedCommand =
+                new AsyncCommand<Layer>(this.NavigateToLayerDetails);
 
             this.ImportLayerCommand = new AsyncCommand(this.ImportLayerAsync);
 
@@ -165,6 +173,24 @@ namespace WhereToFly.App.Core.ViewModels
             App.MapView.ZoomToLayer(layer);
 
             await NavigationService.Instance.NavigateAsync(Constants.PageKeyMapPage, animated: true);
+        }
+
+        /// <summary>
+        /// Navigates to layer details page
+        /// </summary>
+        /// <param name="layer">layer to show</param>
+        /// <returns>task to wait on</returns>
+        internal async Task NavigateToLayerDetails(Layer layer)
+        {
+            if (layer.LayerType != LayerType.LocationLayer &&
+                layer.LayerType != LayerType.TrackLayer)
+            {
+                await NavigationService.Instance.NavigateAsync(Constants.PageKeyLayerDetailsPage, true, layer);
+            }
+            else
+            {
+                App.ShowToast("No details for this layer available.");
+            }
         }
 
         /// <summary>

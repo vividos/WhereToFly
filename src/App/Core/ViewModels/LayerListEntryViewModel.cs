@@ -19,7 +19,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Layer to show
         /// </summary>
-        private readonly Layer layer;
+        public Layer Layer { get; }
 
         #region Binding properties
         /// <summary>
@@ -29,7 +29,7 @@ namespace WhereToFly.App.Core.ViewModels
         {
             get
             {
-                return this.layer.Name;
+                return this.Layer.Name;
             }
         }
 
@@ -67,7 +67,7 @@ namespace WhereToFly.App.Core.ViewModels
         public LayerListEntryViewModel(LayerListViewModel parentViewModel, Layer layer)
         {
             this.parentViewModel = parentViewModel;
-            this.layer = layer;
+            this.Layer = layer;
 
             this.SetupBindings();
         }
@@ -77,8 +77,8 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         private void SetupBindings()
         {
-            this.TypeImageSource = SvgImageCache.GetImageSource(layer, "#000000");
-            this.VisibilityImageSource = SvgImageCache.GetLayerVisibilityImageSource(layer, "#000000");
+            this.TypeImageSource = SvgImageCache.GetImageSource(this.Layer, "#000000");
+            this.VisibilityImageSource = SvgImageCache.GetLayerVisibilityImageSource(this.Layer, "#000000");
 
             this.VisibilityTappedCommand = new AsyncCommand(this.OnTappedLayerVisibilityAsync);
             this.ZoomToLayerContextAction = new AsyncCommand(this.OnZoomToLayerAsync);
@@ -91,15 +91,15 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task OnTappedLayerVisibilityAsync()
         {
-            this.layer.IsVisible = !this.layer.IsVisible;
+            this.Layer.IsVisible = !this.Layer.IsVisible;
 
             IDataService dataService = DependencyService.Get<IDataService>();
             var layerDataService = dataService.GetLayerDataService();
-            await layerDataService.Update(this.layer);
+            await layerDataService.Update(this.Layer);
 
-            App.MapView.SetLayerVisibility(this.layer);
+            App.MapView.SetLayerVisibility(this.Layer);
 
-            this.VisibilityImageSource = SvgImageCache.GetLayerVisibilityImageSource(layer, "#000000");
+            this.VisibilityImageSource = SvgImageCache.GetLayerVisibilityImageSource(Layer, "#000000");
             this.OnPropertyChanged(nameof(this.VisibilityImageSource));
         }
 
@@ -109,7 +109,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task OnZoomToLayerAsync()
         {
-            await this.parentViewModel.ZoomToLayer(this.layer);
+            await this.parentViewModel.ZoomToLayer(this.Layer);
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task OnDeleteLayerAsync()
         {
-            await this.parentViewModel.DeleteLayer(this.layer);
+            await this.parentViewModel.DeleteLayer(this.Layer);
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <param name="arg">argument; unused</param>
         /// <returns>true when context action can be executed, false when not</returns>
         private bool OnCanExecuteDeleteLayer(object arg) =>
-            this.layer.LayerType != LayerType.LocationLayer &&
-            this.layer.LayerType != LayerType.TrackLayer;
+            this.Layer.LayerType != LayerType.LocationLayer &&
+            this.Layer.LayerType != LayerType.TrackLayer;
     }
 }

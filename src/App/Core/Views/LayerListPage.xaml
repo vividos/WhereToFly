@@ -44,6 +44,7 @@
         <ListView x:Name="layerListView"
                   ItemsSource="{Binding Path=LayerList, Mode=OneWay}"
                   RowHeight="{OnPlatform Android=65, UWP=85}"
+                  ItemTapped="OnItemTapped_LayerListView"
                   IsPullToRefreshEnabled="False"
                   CachingStrategy="RecycleElement"
                   SeparatorVisibility="None"
