@@ -461,7 +461,7 @@ namespace WhereToFly.App.Core
                 czml = streamReader.ReadToEnd();
             }
 
-            await AddLayerFromCzml(czml, filename);
+            await AddLayerFromCzml(czml, filename, string.Empty);
         }
 
         /// <summary>
@@ -481,7 +481,12 @@ namespace WhereToFly.App.Core
                     parser.Airspaces,
                     parser.FileCommentLines);
 
-                await AddLayerFromCzml(czml, filename);
+                string description =
+                    string.Join("\n", parser.FileCommentLines)
+                    .Replace("\n\n", "\n")
+                    .Trim();
+
+                await AddLayerFromCzml(czml, filename, description);
             }
             catch (Exception ex)
             {
@@ -499,8 +504,9 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="czml">loaded CZML text</param>
         /// <param name="filename">filename of loaded file</param>
+        /// <param name="description">layer description</param>
         /// <returns>task to wait on</returns>
-        private static async Task AddLayerFromCzml(string czml, string filename)
+        private static async Task AddLayerFromCzml(string czml, string filename, string description)
         {
             if (!IsValidJson(czml))
             {
@@ -516,6 +522,7 @@ namespace WhereToFly.App.Core
             {
                 Id = Guid.NewGuid().ToString("B"),
                 Name = Path.GetFileNameWithoutExtension(filename),
+                Description = description,
                 IsVisible = true,
                 LayerType = LayerType.CzmlLayer,
                 Data = czml
