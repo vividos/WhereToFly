@@ -17,6 +17,11 @@
         public string Name { get; set; } = string.Empty;
 
         /// <summary>
+        /// Layer description text
+        /// </summary>
+        public string Description { get; set; } = string.Empty;
+
+        /// <summary>
         /// Layer type
         /// </summary>
         public LayerType LayerType { get; set; } = LayerType.CzmlLayer;

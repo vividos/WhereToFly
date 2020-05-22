@@ -36,6 +36,7 @@ namespace WhereToFly.App.UnitTest
             {
                 Id = Guid.NewGuid().ToString("B"),
                 Name = "DefaultLayer",
+                Description = "Default description",
                 LayerType = LayerType.CzmlLayer,
                 IsVisible = true,
                 Data = "abc123xyz"

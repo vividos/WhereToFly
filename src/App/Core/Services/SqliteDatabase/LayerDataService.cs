@@ -46,6 +46,16 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             }
 
             /// <summary>
+            /// Layer description
+            /// </summary>
+            [Column("desc")]
+            public string Description
+            {
+                get => this.Layer.Description;
+                set => this.Layer.Description = value;
+            }
+
+            /// <summary>
             /// Layer type
             /// </summary>
             [Column("type")]
