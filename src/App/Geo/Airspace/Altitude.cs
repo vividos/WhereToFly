@@ -23,6 +23,11 @@ namespace WhereToFly.App.Geo.Airspace
         public string Textual { get; private set; }
 
         /// <summary>
+        /// Opening times; may be null.
+        /// </summary>
+        public string OpeningTimes { get; set; }
+
+        /// <summary>
         /// Creates a new altitude with a type that needs no value
         /// </summary>
         /// <param name="type">altitude type</param>

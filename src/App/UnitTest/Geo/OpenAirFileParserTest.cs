@@ -191,5 +191,42 @@ namespace WhereToFly.App.UnitTest.Geo
                 }
             }
         }
+
+        /// <summary>
+        /// Parses opening times stored in altitude values
+        /// </summary>
+        [TestMethod]
+        public void TestParseOpeningTimes()
+        {
+            // set up
+            string[] openingTimesVariants = new string[]
+            {
+                "UNLIM (Mon-Fri)",
+                "UNLIM (Mon-Fri) ",
+                "UNLIM (on midnight)",
+            };
+
+            foreach (var openingTimes in openingTimesVariants)
+            {
+                string openairText = $"AC C\nAN UnitTest\nAL GND\nAH {openingTimes}\nV X=52:23:00 N 005:50:00 E\nDC 5";
+
+                using (var stream = new MemoryStream(Encoding.ASCII.GetBytes(openairText)))
+                {
+                    // run
+                    var parser = new OpenAirFileParser(stream);
+
+                    // check
+                    Assert.IsFalse(parser.ParsingErrors.Any(), "there must be no parsing errors");
+                    Assert.IsTrue(parser.Airspaces.Any(), "there must be some airspaces in the file");
+
+                    var ceiling = parser.Airspaces.First().Ceiling;
+                    Debug.WriteLine($"altitude text {openingTimes} resulted in type {ceiling.Type} and opening times {ceiling.OpeningTimes}");
+
+                    Assert.IsTrue(ceiling.Type != AltitudeType.Textual, "ceiling must not be a textual value");
+
+                    Assert.IsTrue(ceiling.OpeningTimes.Any(), "there must be an opening times text");
+                }
+            }
+        }
     }
 }

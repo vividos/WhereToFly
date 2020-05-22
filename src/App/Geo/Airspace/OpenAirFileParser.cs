@@ -337,6 +337,8 @@ namespace WhereToFly.App.Geo.Airspace
         /// <returns>altitude object</returns>
         private Altitude ParseAltitude(string data)
         {
+            data = ParseOpeningTimes(data, out string openingTimes);
+
             string localData = data.ToUpperInvariant();
 
             Altitude altitude;
@@ -344,10 +346,38 @@ namespace WhereToFly.App.Geo.Airspace
                 this.TryParseFlightLevelAltitude(localData, out altitude) ||
                 this.TryParseFixedHeightsAltitude(localData, out altitude))
             {
+                altitude.OpeningTimes = openingTimes;
                 return altitude;
             }
 
-            return new Altitude(data);
+            var textualAltitude = new Altitude(data);
+            textualAltitude.OpeningTimes = openingTimes;
+            return textualAltitude;
+        }
+
+        /// <summary>
+        /// Parses opening times when available
+        /// </summary>
+        /// <param name="data">altitude data to parse</param>
+        /// <param name="openingTimes">contains parsed opening times, or null when none was found</param>
+        /// <returns>modified altitude data (without opening times)</returns>
+        private static string ParseOpeningTimes(string data, out string openingTimes)
+        {
+            openingTimes = null;
+
+            int posOpeningBracket = data.IndexOf('(');
+            int posClosingBracket = data.IndexOf(')', posOpeningBracket + 1);
+
+            if (posOpeningBracket != -1 &&
+                posClosingBracket != -1)
+            {
+                openingTimes = data.Substring(posOpeningBracket + 1, posClosingBracket - posOpeningBracket - 1);
+                return data
+                    .Remove(posOpeningBracket, posClosingBracket - posOpeningBracket + 1)
+                    .TrimEnd();
+            }
+
+            return data;
         }
 
         /// <summary>
