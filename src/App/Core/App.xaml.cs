@@ -343,9 +343,9 @@ namespace WhereToFly.App.Core
             {
                 const string DisclaimerMessage =
                     "The display and use of flight maps and airspace data can contain errors " +
-                    "and their use does not release the pilot from the legally required flight " +
-                    "preparation, as well as the use of all necessary and approved navigation " +
-                    "aids (e.g. ICAO aviation map 1:500,000).";
+                    "and their use does not release the pilot from the legal obligation of " +
+                    "thorough and orderly preflight planning, nor from the use of all required " +
+                    "and approved means of navigation (e.g. Aeronautical Chart ICAO 1:500,000).";
 
                 await Current.MainPage.DisplayAlert(
                     Constants.AppTitle,
