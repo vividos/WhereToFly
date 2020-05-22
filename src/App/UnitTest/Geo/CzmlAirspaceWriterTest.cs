@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using WhereToFly.App.Geo.Airspace;
 using WhereToFly.App.Geo.DataFormats;
 
@@ -39,13 +40,13 @@ namespace WhereToFly.App.UnitTest.Geo
             };
 
             // run
-            string czml = CzmlAirspaceWriter.WriteCzml("my airspaces", airspacesList);
+            string czml = CzmlAirspaceWriter.WriteCzml("my airspaces", airspacesList, Enumerable.Empty<string>());
 
             // check
-            Debug.WriteLine("CZML is: " + czml);
+            Debug.WriteLine("CZML = " + czml);
 
             Assert.IsTrue(czml.Contains("MyAirspace"), "CZML must contain generated airspace");
-            Assert.IsTrue(czml.Contains("DC "), "CZML must contain a DC element");
+            Assert.IsTrue(czml.Contains("cylinder"), "CZML must contain a cylinder element");
         }
 
         /// <summary>
@@ -66,12 +67,13 @@ namespace WhereToFly.App.UnitTest.Geo
                 // run
                 string czml = CzmlAirspaceWriter.WriteCzml(
                     Path.GetFileNameWithoutExtension(Path.GetFileNameWithoutExtension(filename)),
-                    parser.Airspaces);
+                    parser.Airspaces,
+                    new string[] { "Description line", "Another line" });
 
                 // check
                 Debug.WriteLine("CZML = " + czml);
 
-                Assert.IsTrue(czml.Contains("Gruyere"), "CZML must contain Gruyere airspace");
+                Assert.IsTrue(czml.Contains("GRUYERES"), "CZML must contain Gruyeres airspace");
             }
         }
     }

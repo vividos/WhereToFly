@@ -43,6 +43,12 @@ namespace WhereToFly.App.Geo.DataFormats
             public string Name { get; set; }
 
             /// <summary>
+            /// Packet description; may be null
+            /// </summary>
+            [JsonProperty("description")]
+            public string Description { get; }
+
+            /// <summary>
             /// Packet version
             /// </summary>
             [JsonProperty("version")]
@@ -52,7 +58,12 @@ namespace WhereToFly.App.Geo.DataFormats
             /// Creates a new packet header
             /// </summary>
             /// <param name="name">name of document</param>
-            public CzmlPacketHeader(string name) => this.Name = name;
+            /// <param name="description">description for packet</param>
+            public CzmlPacketHeader(string name, string description)
+            {
+                this.Name = name;
+                this.Description = description;
+            }
         }
 
         /// <summary>
@@ -369,11 +380,20 @@ namespace WhereToFly.App.Geo.DataFormats
         /// </summary>
         /// <param name="name">name of czml document</param>
         /// <param name="allAirspaces">enumerable of airspaces</param>
+        /// <param name="descriptionLines">list of description lines; may be empty</param>
         /// <returns>valid .czml file content</returns>
-        public static string WriteCzml(string name, IEnumerable<Airspace.Airspace> allAirspaces)
+        public static string WriteCzml(string name, IEnumerable<Airspace.Airspace> allAirspaces, IEnumerable<string> descriptionLines)
         {
+            string description = string.Join("\n", descriptionLines).Trim();
+            description = description.Replace("\n", "<br/>");
+
+            if (description.Length == 0)
+            {
+                description = null;
+            }
+
             var objectList = new List<object>();
-            objectList.Add(new CzmlPacketHeader(name));
+            objectList.Add(new CzmlPacketHeader(name, description));
 
             foreach (var airspace in allAirspaces)
             {
@@ -600,16 +620,21 @@ namespace WhereToFly.App.Geo.DataFormats
         {
             var sb = new StringBuilder();
 
-            sb.Append("Name: " + airspace.Name);
+            sb.Append("Name: " + airspace.Name + "\n");
             sb.Append("Class: " + airspace.Class.ToString());
             if (!string.IsNullOrEmpty(airspace.AirspaceType))
             {
-                sb.Append($"({airspace.AirspaceType})");
+                sb.Append($" ({airspace.AirspaceType})");
             }
 
             sb.Append("\n");
 
             sb.Append($"{airspace.Floor} -> {airspace.Ceiling}\n");
+
+            if (!string.IsNullOrEmpty(airspace.Description))
+            {
+                sb.Append($"Description: {airspace.Description}\n");
+            }
 
             if (!string.IsNullOrEmpty(airspace.Frequency))
             {
@@ -620,6 +645,9 @@ namespace WhereToFly.App.Geo.DataFormats
             {
                 sb.Append($"Call sign: {airspace.CallSign}");
             }
+
+            sb.Replace("\n\n", "\n");
+            sb.Replace("\n", "<br/>");
 
             return sb.ToString();
         }

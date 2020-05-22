@@ -478,7 +478,8 @@ namespace WhereToFly.App.Core
 
                 string czml = CzmlAirspaceWriter.WriteCzml(
                     Path.GetFileNameWithoutExtension(filename),
-                    parser.Airspaces);
+                    parser.Airspaces,
+                    parser.FileCommentLines);
 
                 await AddLayerFromCzml(czml, filename);
             }

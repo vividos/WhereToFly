@@ -67,6 +67,22 @@ namespace WhereToFly.App.Geo.Airspace
         /// <returns>airspace as text</returns>
         public override string ToString()
         {
+            string altitudeValue = this.FormatValue();
+
+            if (!string.IsNullOrEmpty(this.OpeningTimes))
+            {
+                altitudeValue += $" ({this.OpeningTimes})";
+            }
+
+            return altitudeValue;
+        }
+
+        /// <summary>
+        /// Formats altitude value
+        /// </summary>
+        /// <returns>formatted atltitude text</returns>
+        private string FormatValue()
+        {
             switch (this.Type)
             {
                 case AltitudeType.GND: return "GND";
