@@ -36,7 +36,11 @@ namespace WhereToFly.App.Core.Services
                     status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
                 }
 
-                if (status != PermissionStatus.Granted)
+                bool shouldShowRationale =
+                    Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android;
+
+                if (shouldShowRationale &&
+                    status != PermissionStatus.Granted)
                 {
                     await Xamarin.Forms.Application.Current.MainPage.DisplayAlert(
                         Constants.AppTitle,
