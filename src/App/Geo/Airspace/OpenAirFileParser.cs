@@ -12,8 +12,10 @@ namespace WhereToFly.App.Geo.Airspace
     /// http://www.winpilot.com/UsersGuide/UserAirspace.asp
     /// The parser does a least-effort try to parse airspaces. A new airspace starts when a new
     /// AC line appears or the file is at the end.
+    /// The parser tries to collect comment blocks for the whole file and comments before each new
+    /// airspace block.
     /// The parser doesn't parse Terrain.txt files and ignores TO and TC elements. The parser also
-    /// ignores the AT command (coordinate to place a label)
+    /// ignores the AT command (coordinates to place a label).
     /// </summary>
     public class OpenAirFileParser
     {
@@ -38,9 +40,19 @@ namespace WhereToFly.App.Geo.Airspace
         private readonly List<string> parsingErrors = new List<string>();
 
         /// <summary>
+        /// All file comment lines collected so far
+        /// </summary>
+        private readonly List<string> fileCommentLines = new List<string>();
+
+        /// <summary>
         /// Dictionary with current values of defined variables
         /// </summary>
         private readonly Dictionary<string, string> currentVariables = new Dictionary<string, string>();
+
+        /// <summary>
+        /// Currently collected comment lines
+        /// </summary>
+        private readonly List<string> currentCommentLines = new List<string>();
 
         /// <summary>
         /// Currently parsed line
@@ -61,6 +73,11 @@ namespace WhereToFly.App.Geo.Airspace
         /// All parsing error messages
         /// </summary>
         public IEnumerable<string> ParsingErrors => this.parsingErrors;
+
+        /// <summary>
+        /// All comment lines for the whole parsed file
+        /// </summary>
+        public IEnumerable<string> FileCommentLines => this.fileCommentLines;
 
         /// <summary>
         /// Creates a new OpenAir file parses
@@ -86,9 +103,19 @@ namespace WhereToFly.App.Geo.Airspace
                     string line = reader.ReadLine().Trim();
                     this.currentLine++;
 
+                    if (line.Length == 0)
+                    {
+                        this.StoreFileCommentLines();
+                    }
+
                     int posComment = line.IndexOf(CommentStart);
                     if (posComment != -1)
                     {
+                        if (posComment == 0)
+                        {
+                            this.currentCommentLines.Add(line.Substring(1));
+                        }
+
                         line = line.Substring(0, posComment).Trim();
                     }
 
@@ -103,6 +130,21 @@ namespace WhereToFly.App.Geo.Airspace
             }
 
             this.StoreCurrentAirspace();
+            this.StoreFileCommentLines();
+        }
+
+        /// <summary>
+        /// Stores all comment lines accumulated so far, in the file's comment lines. When comment
+        /// lines are available when storing an airspace, the airspace gets the comment lines
+        /// instead. This enables having file comments and airspace specific comments.
+        /// </summary>
+        private void StoreFileCommentLines()
+        {
+            if (this.currentCommentLines.Any())
+            {
+                this.fileCommentLines.AddRange(this.currentCommentLines);
+                this.currentCommentLines.Clear();
+            }
         }
 
         /// <summary>
@@ -133,6 +175,15 @@ namespace WhereToFly.App.Geo.Airspace
                 if (this.currentAirspace.Geometry == null)
                 {
                     this.AddParsingError($"airspace {this.currentAirspace.Name} has no geometry!");
+                }
+
+                if (this.currentCommentLines.Any())
+                {
+                    this.currentAirspace.Description =
+                        string.Join("\n", this.currentCommentLines)
+                        .Replace("\n\n", "\n")
+                        .Trim();
+                    this.currentCommentLines.Clear();
                 }
 
                 this.allAirspaces.Add(this.currentAirspace);

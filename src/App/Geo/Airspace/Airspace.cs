@@ -16,6 +16,12 @@
         public string Name { get; set; }
 
         /// <summary>
+        /// Airspace description; collected from comment blocks right before an airspace; may be
+        /// empty. Lines are split by newline characters.
+        /// </summary>
+        public string Description { get; set; } = string.Empty;
+
+        /// <summary>
         /// Airspace floor altitude
         /// </summary>
         public Altitude Floor { get; set; }
