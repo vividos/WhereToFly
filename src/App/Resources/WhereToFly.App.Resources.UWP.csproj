@@ -47,6 +47,7 @@
   <ItemGroup>
     <Content Include="Assets\alptherm-favicon.png" />
     <Content Include="Assets\applogo.svg" />
+    <Content Include="Assets\defaultLayerOpenAir.txt" />
     <Content Include="Assets\icons\border-none-variant.svg" />
     <Content Include="Assets\icons\eye-off-outline.svg" />
     <Content Include="Assets\icons\eye.svg" />

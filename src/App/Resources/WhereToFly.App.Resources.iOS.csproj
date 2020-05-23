@@ -228,6 +228,7 @@
     <BundleResource Include="Assets\map\Chart\Chart.bundle.min.js" />
     <BundleResource Include="Assets\map\Chart\Chart.min.css" />
     <BundleResource Include="Assets\map\heightProfileView.js" />
+    <BundleResource Include="Assets\defaultLayerOpenAir.txt" />
     <Content Include="Assets\map\Cesium\Workers\ArcType-46047bc6.js" />
     <Content Include="Assets\map\Cesium\Workers\arrayRemoveDuplicates-a7dee4b8.js" />
     <Content Include="Assets\map\Cesium\Workers\AttributeCompression-2ec18651.js" />

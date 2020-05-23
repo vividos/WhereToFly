@@ -1,0 +1,68 @@
+* Datenübernahme: 25.02.2020
+* ##############################################################################
+* RECHTLICHER HINWEIS
+* Die Nutzung der folgenden Luftraumdaten entbindet nicht von der gesetzlichen
+* Verpflichtung der gewissenhaften und ordentlichen Flugvorbereitung, sowie der
+* Verwendung aller notwendigen und zugelassenen Navigationsmittel (z.B. Luft-
+* fahrtkarte ICAO 1:500.000). Diese Daten sollen Gleitschirmpiloten und Drachen-
+* flieger vor unbeabsichtigter Einfliegen in Schutzzonen warnen.
+* Alle Daten sind aufgrund topogarfischer Karten und mit Hilfe von GoogleEarth
+* nach besten Wissen und unter zur Verfügung gestellter Angaben von Natur-
+* schutzorganisationen erstellt worden. Fuer die Richtigkeit der Daten ueber-
+* nimmt der Ersteller dieser Datenbank keine Haftung.
+* LEGAL DISCLAIMER
+* The use of the following airspace data does not release the pilot from his
+* legal obligation of thorough and orderly preflight planning, nor from the use
+* of all required and approved means of navigation (e.g. Aeronautical Chart
+* ICAO 1:500.000).  Ceated by Hans-Georg Schober(C)
+* Open-Airspace-file Schutzzonen created by Hans-Georg Schober
+* please send any comment to hgs(at)schober-service.de
+* All data and information contained in this data file is provided without
+* guarantee as to their completeness or correctness. Any conclusions drawn from
+* these data and information are the sole responsibility of the user. Changes to
+* this times can be distributed at every time by NOTAM
+* Hans-Georg Schober, EMail: hgs(at)schober-service.de
+* ##############################################################################
+
+* de: Uhu Brauneck Schutzzone
+* Active: JAN 01- JUL 31 H24
+AC R
+AN Vogels.01.01.-31.07. 150m AGL
+SP 0,2,156,94,8
+SB 240,180,80
+AH 3445ft AMSL
+AL GND
+DP 47:40:14.00 N 011:34:08.00 E
+DP 47:40:13.00 N 011:34:06.00 E
+DP 47:40:13.00 N 011:34:02.00 E
+DP 47:40:13.00 N 011:33:59.00 E
+DP 47:40:12.00 N 011:33:56.00 E
+DP 47:40:13.00 N 011:33:48.00 E
+DP 47:40:12.00 N 011:33:42.00 E
+DP 47:40:13.00 N 011:33:37.00 E
+DP 47:40:12.00 N 011:33:32.00 E
+DP 47:40:12.00 N 011:33:29.00 E
+DP 47:40:10.00 N 011:33:28.00 E
+DP 47:40:09.00 N 011:33:21.00 E
+DP 47:40:09.00 N 011:33:16.00 E
+DP 47:40:03.00 N 011:33:18.00 E
+DP 47:39:55.00 N 011:33:21.00 E
+DP 47:39:55.00 N 011:33:30.00 E
+DP 47:39:56.00 N 011:33:35.00 E
+DP 47:39:56.00 N 011:33:39.00 E
+DP 47:39:57.00 N 011:33:39.00 E
+DP 47:40:00.00 N 011:33:41.00 E
+DP 47:40:00.00 N 011:33:42.00 E
+DP 47:40:00.00 N 011:33:43.00 E
+DP 47:39:59.00 N 011:33:45.00 E
+DP 47:39:59.00 N 011:33:46.00 E
+DP 47:39:59.00 N 011:33:46.00 E
+DP 47:40:01.00 N 011:33:47.00 E
+DP 47:40:02.00 N 011:33:47.00 E
+DP 47:40:02.00 N 011:33:48.00 E
+DP 47:40:03.00 N 011:33:50.00 E
+DP 47:40:03.00 N 011:33:55.00 E
+DP 47:40:03.00 N 011:34:00.00 E
+DP 47:40:03.00 N 011:34:04.00 E
+DP 47:40:08.00 N 011:34:06.00 E
+DP 47:40:11.00 N 011:34:07.00 E
