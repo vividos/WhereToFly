@@ -321,6 +321,8 @@ namespace WhereToFly.App.Core.ViewModels
             await this.AddLocation(location);
             App.UpdateMapLocationsList();
 
+            this.planTourParameters.WaypointIdList.Clear();
+
             await NavigationService.Instance.NavigateAsync(Constants.PageKeyMapPage, animated: true);
 
             ShowTrack(track);
