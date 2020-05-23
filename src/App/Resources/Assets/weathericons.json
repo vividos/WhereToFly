@@ -343,6 +343,13 @@
     "WebLink": "com.windyty.android"
   },
   {
+    "Name": "DWD Warnwetter",
+    "Group": "Android app",
+    "Type": 1,
+    "Icon": null,
+    "WebLink": "de.dwd.warnapp"
+  },
+  {
     "Name": "WetterOnline",
     "Group": "Android app",
     "Type": 1,
