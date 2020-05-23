@@ -1,4 +1,6 @@
-﻿namespace WhereToFly.Shared.Model
+﻿using System;
+
+namespace WhereToFly.Shared.Model
 {
     /// <summary>
     /// Configuration data for the WhereToFly app
@@ -14,5 +16,10 @@
         /// API key for Bing maps
         /// </summary>
         public string BingMapsApiKey { get; set; }
+
+        /// <summary>
+        /// Date/time when validity of infos expire
+        /// </summary>
+        public DateTimeOffset ExpiryDate { get; set; }
     }
 }

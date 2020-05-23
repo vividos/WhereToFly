@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System;
 using WhereToFly.Shared.Model;
 
 namespace WhereToFly.WebApi.Core.Controllers
@@ -12,6 +14,11 @@ namespace WhereToFly.WebApi.Core.Controllers
     [ApiController]
     public class AppConfigController : Controller
     {
+        /// <summary>
+        /// Time span of validity of returned app config
+        /// </summary>
+        private readonly TimeSpan validityTimeSpan = TimeSpan.FromDays(7.0);
+
         /// <summary>
         /// Logger instance
         /// </summary>
@@ -49,9 +56,19 @@ namespace WhereToFly.WebApi.Core.Controllers
         /// <param name="appVersion">version of the app that wants to get app config</param>
         /// <returns>app config object</returns>
         [HttpGet]
-        public AppConfig Get(string appVersion)
+        [Consumes(System.Net.Mime.MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<AppConfig> Get(string appVersion)
         {
             this.logger.LogInformation($"WhereToFly app config request, with version {appVersion}");
+
+            if (string.IsNullOrWhiteSpace(appVersion))
+            {
+                return this.BadRequest("appVersion is missing");
+            }
+
+            this.appConfig.ExpiryDate = DateTimeOffset.Now + this.validityTimeSpan;
 
             return this.appConfig;
         }
