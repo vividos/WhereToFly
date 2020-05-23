@@ -728,7 +728,14 @@ MapView.prototype.zoomToLocation = function (options) {
  */
 MapView.prototype.addLayer = function (layer) {
 
-    console.log("MapView: adding layer " + layer.name + ", with data length " + layer.data.length + " bytes");
+    console.log("MapView: adding layer " + layer.name + ", with type " + layer.type);
+
+    if (layer.type === 'LocationLayer' || layer.type === 'TrackLayer') {
+        this.setLayerVisibility(layer);
+        return;
+    }
+
+    console.log("MapView: layer data length: " + layer.data.length + " bytes");
 
     var czml = JSON.parse(layer.data);
 

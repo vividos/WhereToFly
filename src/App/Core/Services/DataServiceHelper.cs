@@ -1,7 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using WhereToFly.App.Geo;
+using WhereToFly.App.Geo.Airspace;
+using WhereToFly.App.Geo.DataFormats;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Model;
 using Xamarin.Forms;
@@ -14,9 +17,82 @@ namespace WhereToFly.App.Core.Services
     internal static class DataServiceHelper
     {
         /// <summary>
+        /// Filename of the default layer OpenAir file in the Assets folder
+        /// </summary>
+        private const string DefaultLayerFilename = "defaultLayerOpenAir.txt";
+
+        /// <summary>
         /// Filename of the default favicon URL cache in the Assets folder
         /// </summary>
         public const string FaviconUrlCacheFilename = "defaultFaviconUrlCache.json";
+
+        /// <summary>
+        /// Returns the default layer list with only the built-in layers
+        /// </summary>
+        /// <returns>default layer list</returns>
+        internal static IEnumerable<Layer> GetDefaultLayerList()
+        {
+            return new Layer[2]
+            {
+                new Layer
+                {
+                    Id = "locationLayer",
+                    Name = "Locations",
+                    IsVisible = true,
+                    LayerType = LayerType.LocationLayer
+                },
+                new Layer
+                {
+                    Id = "trackLayer",
+                    Name = "Tracks",
+                    IsVisible = true,
+                    LayerType = LayerType.TrackLayer
+                }
+            };
+        }
+
+        /// <summary>
+        /// Returns initial layer list, containing the built-in layers and example layer(s)
+        /// </summary>
+        /// <returns>initial layer list</returns>
+        internal static IEnumerable<Layer> GetInitialLayerList()
+        {
+            return GetDefaultLayerList().Concat(LoadDefaultLayerList());
+        }
+
+        /// <summary>
+        /// Loads default layer list that is used as the initial layer(s)
+        /// </summary>
+        /// <returns>layer list</returns>
+        private static IEnumerable<Layer> LoadDefaultLayerList()
+        {
+            var platform = DependencyService.Get<IPlatform>();
+
+            using (var stream = platform.OpenAssetStream(DefaultLayerFilename))
+            {
+                var parser = new OpenAirFileParser(stream);
+
+                const string LayerName = "OpenAir Schutzzonen Auszug";
+                string czml = CzmlAirspaceWriter.WriteCzml(
+                    LayerName,
+                    parser.Airspaces,
+                    parser.FileCommentLines);
+
+                string description = string.Join("\n", parser.FileCommentLines);
+
+                var layer = new Layer
+                {
+                    Id = Guid.NewGuid().ToString("B"),
+                    Name = LayerName,
+                    Description = description,
+                    IsVisible = true,
+                    LayerType = LayerType.CzmlLayer,
+                    Data = czml
+                };
+
+                return new Layer[] { layer };
+            }
+        }
 
         /// <summary>
         /// Returns a default location list; used when stored location list can't be loaded
