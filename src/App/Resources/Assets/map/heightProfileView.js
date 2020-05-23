@@ -18,6 +18,7 @@ function HeightProfileView(options) {
 
     var ctx = document.getElementById(this.options.id).getContext('2d');
 
+    var that = this;
     this.chart = new Chart(ctx, {
         type: 'line',
         data: {},
@@ -48,6 +49,12 @@ function HeightProfileView(options) {
                         beginAtZero: true
                     }
                 }]
+            },
+            onHover: function (event, elements) {
+                that.onHover(elements);
+            },
+            onClick: function (event, elements) {
+                that.onClick(elements);
             }
         }
     });
@@ -118,4 +125,32 @@ HeightProfileView.prototype.addGroundProfile = function (elevationArray) {
     });
 
     this.chart.update();
+};
+
+/**
+ * Called by Chart.js when the user hovers over an element in the chart
+ * @param {array} [elements] array of elements; may be empty
+ */
+HeightProfileView.prototype.onHover = function (elements) {
+
+    console.log("HeightProfileView: onHover called, with " + elements.length + " elements");
+
+    if (elements.length > 0 &&
+        this.options.callback !== undefined) {
+        this.options.callback('onHover', elements[0]._index);
+    }
+};
+
+/**
+ * Called by Chart.js when the user clicked on an element in the chart
+ * @param {array} [elements] array of elements; may be empty
+ */
+HeightProfileView.prototype.onClick = function (elements) {
+
+    console.log("HeightProfileView: onClick called, with " + elements.length + " elements");
+
+    if (elements.length > 0 &&
+        this.options.callback !== undefined) {
+        this.options.callback('onClick', elements[0]._index);
+    }
 };

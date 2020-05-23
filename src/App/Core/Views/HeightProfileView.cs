@@ -19,6 +19,22 @@ namespace WhereToFly.App.Core.Views
         private readonly WebView webView;
 
         /// <summary>
+        /// Delegate of function to call when user hovers over or clicks on a height profile point
+        /// </summary>
+        /// <param name="trackPointIndex">track point index where click occured over</param>
+        public delegate void OnHoverOrClickCallback(int trackPointIndex);
+
+        /// <summary>
+        /// Event that is signaled when user hovers over a height profile point
+        /// </summary>
+        public event OnHoverOrClickCallback Hover;
+
+        /// <summary>
+        /// Event that is signaled when user clicks on a height profile point
+        /// </summary>
+        public event OnHoverOrClickCallback Click;
+
+        /// <summary>
         /// Creates a new HeightProfileView C# object
         /// </summary>
         /// <param name="webView">web view to use</param>
@@ -115,6 +131,14 @@ namespace WhereToFly.App.Core.Views
         {
             switch (functionName)
             {
+                case "onClick":
+                    this.Click?.Invoke(int.Parse(jsonParameters));
+                    break;
+
+                case "onHover":
+                    this.Hover?.Invoke(int.Parse(jsonParameters));
+                    break;
+
                 default:
                     Debug.Assert(false, "invalid callback function name");
                     break;
