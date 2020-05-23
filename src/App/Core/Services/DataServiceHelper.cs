@@ -184,7 +184,8 @@ namespace WhereToFly.App.Core.Services
                     Description = "Hike & Fly Gelände des Drachenfliegerclub Bayrischzell. Von Josefstal (Landeplatz mit Windsack) zu Fuß in ca. 1,5 Std Aufstieg zum Jägerkamp / Nagelspitz. Startplatz liegt an der Nagelspitz. Ist auch als Startplatz für Streckenflüge in Richtung Osten (Bayrischzell - Kössen) geeignet.",
                     Type = LocationType.FlyingTakeoff,
                     InternetLink = "http://www.dc-bayrischzell.de",
-                    IsPlanTourLocation = false
+                    IsPlanTourLocation = false,
+                    TakeoffDirections = TakeoffDirections.NW | TakeoffDirections.WNW | TakeoffDirections.E,
                 },
 
                 new Location
