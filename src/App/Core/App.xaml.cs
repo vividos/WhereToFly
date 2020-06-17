@@ -7,6 +7,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Services;
+using WhereToFly.App.Core.Styles;
 using WhereToFly.App.Core.Views;
 using WhereToFly.App.Geo;
 using WhereToFly.App.Geo.Spatial;
@@ -76,6 +77,8 @@ namespace WhereToFly.App.Core
             this.SetupDepencencyService();
             this.SetupMainPage();
             Task.Run(async () => await this.LoadAppDataAsync());
+
+            this.RequestedThemeChanged += this.OnRequestedThemeChanged;
         }
 
         /// <summary>
@@ -92,6 +95,18 @@ namespace WhereToFly.App.Core
             Debug.WriteLine($"UnobservedTaskException: {ex.ToString()}");
 
             LogError(ex);
+        }
+
+        /// <summary>
+        /// Called when the requested theme of the operating system has changed
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="args">event args</param>
+        private void OnRequestedThemeChanged(object sender, AppThemeChangedEventArgs args)
+        {
+            Debug.WriteLine($"OS App Theme changed to {args.RequestedTheme}");
+
+            RunOnUiThread(async () => await ThemeHelper.ChangeTheme(ThemeHelper.LastTheme, true));
         }
 
         /// <summary>
