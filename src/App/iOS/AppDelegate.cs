@@ -37,7 +37,10 @@ namespace WhereToFly.App.iOS
 
             Rg.Plugins.Popup.Popup.Init();
 
-            Forms.SetFlags("CarouselView_Experimental", "IndicatorView_Experimental");
+            Forms.SetFlags(
+                "CarouselView_Experimental",
+                "IndicatorView_Experimental",
+                "AppTheme_Experimental");
             Forms.Init();
 
             FFImageLoading.ImageService.Instance.Initialize();

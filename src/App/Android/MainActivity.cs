@@ -118,7 +118,10 @@ namespace WhereToFly.App.Android
 
             Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
 
-            Forms.SetFlags("CarouselView_Experimental", "IndicatorView_Experimental");
+            Forms.SetFlags(
+                "CarouselView_Experimental",
+                "IndicatorView_Experimental",
+                "AppTheme_Experimental");
             Forms.Init(this, savedInstanceState);
 
             FFImageLoading.ImageService.Instance.Initialize();
