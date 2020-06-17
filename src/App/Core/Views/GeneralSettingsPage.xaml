@@ -12,6 +12,7 @@
               HorizontalOptions="Center" VerticalOptions="FillAndExpand"
               ColumnSpacing="16" RowSpacing="16" Padding="8">
             <Grid.RowDefinitions>
+                <RowDefinition Height="0" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -21,22 +22,29 @@
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
 
+            <!-- App theme picker -->
+            <Label Grid.Row="0" Grid.Column="0" FontSize="Medium" Text="App theme" />
+            <Picker Grid.Row="0" Grid.Column="1" Title="App theme"
+                    ItemsSource="{Binding AppThemeItems, Mode=OneWay}"
+                    ItemDisplayBinding="{Binding Text}"
+                    SelectedItem="{Binding SelectedAppTheme, Mode=TwoWay}" />
+
             <!-- Alptherm section header -->
-            <Label Grid.Row="0" Grid.ColumnSpan="2"
+            <Label Grid.Row="1" Grid.ColumnSpan="2"
                    FontSize="Large" Text="Alptherm" Padding="4"
                    BackgroundColor="LightGray" HorizontalOptions="FillAndExpand" />
 
             <!-- Alptherm username -->
-            <Label Grid.Row="1" Grid.Column="0" FontSize="Medium" Text="Username" />
-            <Entry Grid.Row="1" Grid.Column="1"
+            <Label Grid.Row="2" Grid.Column="0" FontSize="Medium" Text="Username" />
+            <Entry Grid.Row="2" Grid.Column="1"
                    Placeholder="Alptherm username"
                    Text="{Binding AlpthermUsername}"
                    IsSpellCheckEnabled="False" IsTextPredictionEnabled="false"
                    ClearButtonVisibility="WhileEditing" />
 
             <!-- Alptherm password -->
-            <Label Grid.Row="2" Grid.Column="0" FontSize="Medium" Text="Password" />
-            <Entry Grid.Row="2" Grid.Column="1"
+            <Label Grid.Row="3" Grid.Column="0" FontSize="Medium" Text="Password" />
+            <Entry Grid.Row="3" Grid.Column="1"
                    Placeholder="Alptherm password"
                    Text="{Binding AlpthermPassword}"
                    IsPassword="True"
