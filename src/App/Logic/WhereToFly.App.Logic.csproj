@@ -23,10 +23,10 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.23" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.24" />
     <PackageReference Include="Markdig" Version="0.20.0" />
     <PackageReference Include="Refit" Version="5.1.67" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.6.1.17183">
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.8.0.18411">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>

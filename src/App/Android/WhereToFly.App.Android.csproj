@@ -62,15 +62,15 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AppCenter.Crashes">
-      <Version>3.2.1</Version>
+      <Version>3.2.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Distribute">
-      <Version>3.2.1</Version>
+      <Version>3.2.2</Version>
     </PackageReference>
     <PackageReference Include="Rg.Plugins.Popup">
-      <Version>2.0.0.2</Version>
+      <Version>2.0.0.3</Version>
     </PackageReference>
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.6.1.17183">
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.8.0.18411">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -88,7 +88,7 @@
     <PackageReference Include="Xamarin.Essentials">
       <Version>1.5.3.2</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="4.6.0.726" />
+    <PackageReference Include="Xamarin.Forms" Version="4.7.0.12346" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\VersionAssemblyInfo.cs">
