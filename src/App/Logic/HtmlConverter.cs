@@ -96,7 +96,7 @@ namespace WhereToFly.App.Logic
         /// <returns>html text</returns>
         public static string FromMarkdown(string markdownText, string fontName = "sans-serif", int fontSize = 12)
         {
-            string htmlText = CommonMark.CommonMarkConverter.Convert(markdownText);
+            string htmlText = Markdig.Markdown.ToHtml(markdownText);
 
             if (string.IsNullOrEmpty(fontName))
             {

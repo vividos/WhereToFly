@@ -30,10 +30,10 @@ The app uses the following [Xamarin Plugins](https://github.com/jamesmontemagno/
 All plugins are licensed using the
 [MIT License](https://github.com/jamesmontemagno/GeolocatorPlugin/blob/master/LICENSE).
 
-The app uses the [CommonMark.NET](https://github.com/Knagis/CommonMark.NET)
+The app uses the [Markdig](https://github.com/lunet-io/markdig)
 library to format MarkDown as HTML.
 The component is licensed using the
-[BSD 3-clause "New" or "Revised" License](https://github.com/Knagis/CommonMark.NET/blob/master/LICENSE.md).
+[BSD 2-clause "Simplified" License](https://github.com/lunet-io/markdig/blob/master/license.txt).
 
 The app uses the [SharpKML](https://github.com/samcragg/sharpkml) library to
 load Google Earth .kml and .kmz files.
