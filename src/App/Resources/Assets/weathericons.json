@@ -109,7 +109,7 @@
     "Group": "Weather forecast",
     "Type": 0,
     "Icon": null,
-    "WebLink": "http://forecast.uoa.gr/dustindx.php"
+    "WebLink": "https://forecast.uoa.gr/en/forecast-maps/dust/europe"
   },
   {
     "Name": "Wetter3 Vertikalschnitt Europa",
