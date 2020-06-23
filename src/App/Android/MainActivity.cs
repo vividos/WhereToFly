@@ -2,6 +2,7 @@
 using Android.Content;
 using Android.Content.PM;
 using Android.OS;
+using Android.Widget;
 using System.IO;
 using System.Threading.Tasks;
 using WhereToFly.App.Core;
@@ -127,7 +128,7 @@ namespace WhereToFly.App.Android
             FFImageLoading.ImageService.Instance.Initialize();
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(enableFastRenderer: true);
 
-            MessagingCenter.Subscribe<string>(this, Constants.MessageShowToast, this.ShowToast);
+            MessagingCenter.Subscribe<Core.App, string>(this, Constants.MessageShowToast, this.ShowToast);
 
             this.LoadApplication(new Core.App());
         }
@@ -233,10 +234,12 @@ namespace WhereToFly.App.Android
         /// <summary>
         /// Shows toast message with given text
         /// </summary>
+        /// <param name="app">sender app object</param>
         /// <param name="message">toast message</param>
-        private void ShowToast(string message)
+        private void ShowToast(Core.App app, string message)
         {
-            Core.App.RunOnUiThread(() => this.ShowToast(message));
+            Core.App.RunOnUiThread(
+                () => Toast.MakeText(this, message, ToastLength.Long).Show());
         }
     }
 }

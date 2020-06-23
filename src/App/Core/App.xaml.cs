@@ -199,7 +199,9 @@ namespace WhereToFly.App.Core
         /// <param name="message">toast message text</param>
         public static void ShowToast(string message)
         {
-            MessagingCenter.Send(Constants.MessageShowToast, message);
+            var app = Current as App;
+
+            MessagingCenter.Send(app, Constants.MessageShowToast, message);
         }
 
         /// <summary>

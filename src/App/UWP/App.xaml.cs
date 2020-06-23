@@ -95,7 +95,7 @@ namespace WhereToFly.App.UWP
 
             Xamarin.Essentials.Platform.MapServiceToken = Constants.BingMapsKeyUwp;
 
-            Xamarin.Forms.MessagingCenter.Subscribe<string>(this, Constants.MessageShowToast, this.ShowToast);
+            Xamarin.Forms.MessagingCenter.Subscribe<Core.App, string>(this, Constants.MessageShowToast, this.ShowToast);
             Xamarin.Forms.MessagingCenter.Subscribe<Core.App>(
                 this,
                 Constants.MessageWebViewClearCache,
@@ -170,8 +170,9 @@ namespace WhereToFly.App.UWP
         /// <summary>
         /// Shows toast message with given text
         /// </summary>
+        /// <param name="app">sender app object</param>
         /// <param name="message">toast message</param>
-        private void ShowToast(string message)
+        private void ShowToast(Core.App app, string message)
         {
             ToastNotifier toastNotifier = ToastNotificationManager.CreateToastNotifier();
 
