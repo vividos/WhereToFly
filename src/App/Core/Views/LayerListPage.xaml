@@ -65,6 +65,11 @@
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
 
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding ItemTappedCommand}"
+                                                          NumberOfTapsRequired="1"/>
+                                </Grid.GestureRecognizers>
+
                                 <!-- Layer type image -->
                                 <ffimageloadingsvg:SvgCachedImage Source="{Binding TypeImageSource, Mode=OneWay}"
                                                    WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"

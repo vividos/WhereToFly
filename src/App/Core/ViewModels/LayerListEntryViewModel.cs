@@ -39,6 +39,11 @@ namespace WhereToFly.App.Core.ViewModels
         public ImageSource TypeImageSource { get; private set; }
 
         /// <summary>
+        /// Command to execute when an item in the layer list has been tapped
+        /// </summary>
+        public AsyncCommand ItemTappedCommand { get; private set; }
+
+        /// <summary>
         /// Returns image source for SvgImage in order to display the visibility of the layer
         /// </summary>
         public ImageSource VisibilityImageSource { get; private set; }
@@ -80,9 +85,26 @@ namespace WhereToFly.App.Core.ViewModels
             this.TypeImageSource = SvgImageCache.GetImageSource(this.Layer, "#000000");
             this.VisibilityImageSource = SvgImageCache.GetLayerVisibilityImageSource(this.Layer, "#000000");
 
+            this.ItemTappedCommand = new AsyncCommand(this.OnTappedLayerItemAsync);
             this.VisibilityTappedCommand = new AsyncCommand(this.OnTappedLayerVisibilityAsync);
             this.ZoomToLayerContextAction = new AsyncCommand(this.OnZoomToLayerAsync);
             this.DeleteLayerContextAction = new AsyncCommand(this.OnDeleteLayerAsync, this.OnCanExecuteDeleteLayer);
+        }
+
+        /// <summary>
+        /// Called when the user tapped on the layer item
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task OnTappedLayerItemAsync()
+        {
+            // due to a bug in Forms on Android, we have to solve tapping items using a gesture recognizer
+            // see: https://github.com/xamarin/Xamarin.Forms/issues/2180
+            if (Device.RuntimePlatform != Device.Android)
+            {
+                return;
+            }
+
+            await this.parentViewModel.ItemTappedCommand.ExecuteAsync(this.Layer);
         }
 
         /// <summary>
