@@ -273,18 +273,18 @@
     "WebLink": "https://www.foto-webcam.eu/webcam/kampenwand/"
   },
   {
-    "Name": "Foto-Webcam Sonnblick",
+    "Name": "Webcam Hochfelln",
     "Group": "Webcams",
     "Type": 0,
     "Icon": null,
-    "WebLink": "https://www.foto-webcam.eu/webcam/sonnblick/"
+    "WebLink": "https://www.bergfex.de/hochfelln/webcams/c12251/"
   },
   {
-    "Name": "Foto-Webcam Kronplatz",
+    "Name": "Webcam Blomberg",
     "Group": "Webcams",
     "Type": 0,
     "Icon": null,
-    "WebLink": "https://www.foto-webcam.eu/webcam/kronplatz/"
+    "WebLink": "http://www.blomberghaus.de/1/webcam/blombergturm.jpg"
   },
   {
     "Name": "Foto-Webcam Zugspitze Süd",
@@ -301,18 +301,11 @@
     "WebLink": "https://zugspitze.panomax.com/?_ga=2.65108654.1817056362.1539838421-934710830.1539838421"
   },
   {
-    "Name": "Webcam Hochfelln",
+    "Name": "Webcam Hohe Salve Video",
     "Group": "Webcams",
     "Type": 0,
     "Icon": null,
-    "WebLink": "https://www.bergfex.de/hochfelln/webcams/c12251/"
-  },
-  {
-    "Name": "Webcam Blomberg",
-    "Group": "Webcams",
-    "Type": 0,
-    "Icon": null,
-    "WebLink": "http://www.blomberghaus.de/1/webcam/blombergturm.jpg"
+    "WebLink": "https://webtv.feratel.com/webtv/?cam=5687"
   },
   {
     "Name": "Webcam Achensee",
@@ -322,11 +315,25 @@
     "WebLink": "https://www.achensee.com/wetter-webcams/"
   },
   {
-    "Name": "Webcam Hohe Salve Video",
+    "Name": "Foto-Webcam Sonnblick",
     "Group": "Webcams",
     "Type": 0,
     "Icon": null,
-    "WebLink": "https://webtv.feratel.com/webtv/?cam=5687"
+    "WebLink": "https://www.foto-webcam.eu/webcam/sonnblick/"
+  },
+  {
+    "Name": "Foto-Webcam Rein in Taufers",
+    "Group": "Webcams",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://www.foto-webcam.eu/webcam/rein/"
+  },
+  {
+    "Name": "Foto-Webcam Kronplatz",
+    "Group": "Webcams",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://www.foto-webcam.eu/webcam/kronplatz/"
   },
   {
     "Name": "Webcam Col Rodella",
