@@ -41,11 +41,14 @@ namespace WhereToFly.App.Core.ViewModels
         public ObservableCollection<LayerListEntryViewModel> LayerList { get; set; }
 
         /// <summary>
-        /// Indicates if the layer list is empty.
+        /// Indicates if the layer list is empty. Default layers like location and track layer are
+        /// disregarded.
         /// </summary>
         public bool IsListEmpty
         {
-            get => this.LayerList == null || !this.LayerList.Any();
+            get => this.LayerList == null ||
+                !this.LayerList.Any(layer =>
+                layer.Layer.LayerType != LayerType.LocationLayer && layer.Layer.LayerType != LayerType.TrackLayer);
         }
 
         /// <summary>
