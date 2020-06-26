@@ -1,6 +1,8 @@
 ﻿using Rg.Plugins.Popup.Extensions;
 using Rg.Plugins.Popup.Pages;
 using System;
+using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace WhereToFly.App.Core.Views
@@ -12,6 +14,11 @@ namespace WhereToFly.App.Core.Views
     public partial class WaitingPopupPage : PopupPage
     {
         /// <summary>
+        /// Cancellation token source that cen be used to cancel a running task; may be null
+        /// </summary>
+        private readonly CancellationTokenSource cancellationTokenSource;
+
+        /// <summary>
         /// Indicates if the popup page is currently shown
         /// </summary>
         private bool isShown;
@@ -20,14 +27,21 @@ namespace WhereToFly.App.Core.Views
         /// Creates a new waiting popup page
         /// </summary>
         /// <param name="waitingMessage">waiting message to display</param>
-        public WaitingPopupPage(string waitingMessage)
+        /// <param name="cancellationTokenSource">
+        /// cancellation token source; when set, the waiting dialog has a cancel button that can
+        /// cancel a running task
+        /// </param>
+        public WaitingPopupPage(string waitingMessage, CancellationTokenSource cancellationTokenSource = null)
         {
-            this.CloseWhenBackgroundIsClicked = false;
+            this.CloseWhenBackgroundIsClicked = cancellationTokenSource != null;
 
             this.InitializeComponent();
 
-            this.waitingMessage.Text = waitingMessage;
+            this.cancellationTokenSource = cancellationTokenSource;
             this.isShown = false;
+
+            this.waitingMessage.Text = waitingMessage;
+            this.cancelButton.IsVisible = cancellationTokenSource != null;
         }
 
         /// <summary>
@@ -68,7 +82,30 @@ namespace WhereToFly.App.Core.Views
         /// <returns>true in order to disable action on back button press</returns>
         protected override bool OnBackButtonPressed()
         {
-            return true;
+            if (this.cancellationTokenSource == null)
+            {
+                return true;
+            }
+
+            this.cancellationTokenSource.Cancel();
+
+            this.isShown = false;
+
+            return false;
+        }
+
+        /// <summary>
+        /// Called when the user clicked on the cancel button
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="args">event args</param>
+        private void OnClickedCancelButton(object sender, EventArgs args)
+        {
+            Debug.Assert(
+                this.cancellationTokenSource != null,
+                "button can only be clicked when cancellation token source is available");
+
+            this.cancellationTokenSource?.Cancel();
         }
     }
 }

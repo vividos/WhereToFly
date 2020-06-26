@@ -7,7 +7,6 @@
     <!-- Popup page showing a waiting message and an activity indicator -->
     <StackLayout VerticalOptions="Center"
                  HorizontalOptions="Center"
-                 HeightRequest="80"
                  WidthRequest="250"
                  BackgroundColor="White"
                  Padding="20">
@@ -24,6 +23,11 @@
                            HeightRequest="40"
                            VerticalOptions="Start"
                            HorizontalOptions="Center" />
+
+        <Button x:Name="cancelButton"
+                Text="Cancel" IsVisible="false"
+                Clicked="OnClickedCancelButton"/>
+
     </StackLayout>
 
 </pages:PopupPage>
