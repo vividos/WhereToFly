@@ -14,6 +14,7 @@
 - fixed crash when deleting a location
 - fixed displaying OpenFlightMaps imagery layer
 - fixed displaying the Cesium Ion icon on the bottom of the screen
+- using CesiumJS version 1.71
 
 1.7.0
 
