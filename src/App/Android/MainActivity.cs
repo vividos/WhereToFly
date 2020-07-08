@@ -24,7 +24,7 @@ namespace WhereToFly.App.Android
     [Activity(
         Label = Constants.AppTitle,
         Name = "wheretofly.MainActivity",
-        Icon = "@drawable/icon",
+        Icon = "@mipmap/icon",
         Theme = "@style/MainTheme",
         LaunchMode = LaunchMode.SingleTask,
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.UiMode | ConfigChanges.Orientation)]
@@ -42,7 +42,7 @@ namespace WhereToFly.App.Android
             "text/plain",
         },
         Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
-        Icon = "@drawable/icon")]
+        Icon = "@mipmap/icon")]
     //// Intent filter, case 2: mime type not set, but valid extensions
     [IntentFilter(
         new[] { Intent.ActionView, Intent.ActionOpenDocument },
@@ -59,7 +59,7 @@ namespace WhereToFly.App.Android
             @".*\\.txt", @".*\\..*\\.txt", ".*\\..*\\..*\\.txt", ".*\\..*\\..*\\..*\\.txt",
         },
         Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
-        Icon = "@drawable/icon")]
+        Icon = "@mipmap/icon")]
     //// Intent filter, case 3: application/octet-stream, and valid extension
     [IntentFilter(
         new[] { Intent.ActionView, Intent.ActionOpenDocument },
@@ -77,7 +77,7 @@ namespace WhereToFly.App.Android
             @".*\\.txt", @".*\\..*\\.txt", ".*\\..*\\..*\\.txt", ".*\\..*\\..*\\..*\\.txt",
         },
         Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
-        Icon = "@drawable/icon")]
+        Icon = "@mipmap/icon")]
     //// Intent filter, case 4: application/octet-stream, and valid extension, but not data host
     [IntentFilter(
         new[] { Intent.ActionView, Intent.ActionOpenDocument, Intent.ActionDefault },
@@ -94,13 +94,13 @@ namespace WhereToFly.App.Android
             @".*\\.txt", @".*\\..*\\.txt", ".*\\..*\\..*\\.txt", ".*\\..*\\..*\\..*\\.txt",
         },
         Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
-        Icon = "@drawable/icon")]
+        Icon = "@mipmap/icon")]
     //// Intent filter, case 5: URI with where-to-fly scheme
     [IntentFilter(
         new[] { Intent.ActionView },
         DataScheme = WhereToFly.Shared.Model.AppResourceUri.DefaultScheme,
         Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
-        Icon = "@drawable/icon")]
+        Icon = "@mipmap/icon")]
     public class MainActivity : FormsAppCompatActivity
     {
         /// <summary>

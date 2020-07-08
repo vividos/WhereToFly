@@ -5,4 +5,5 @@
   <color name="accent">#6A299E</color>
   <color name="window_background">#F5F5F5</color>
   <color name="splash_background">#2F299E</color>
+  <color name="launcher_background">#2F299E</color>
 </resources>
