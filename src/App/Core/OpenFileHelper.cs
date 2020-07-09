@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.Views;
@@ -379,13 +380,17 @@ namespace WhereToFly.App.Core
         /// <returns>task to wait on</returns>
         private static async Task SampleTrackHeightsAsync(Track track)
         {
-            waitingDialog = new WaitingPopupPage("Sampling track point heights...");
-            App.RunOnUiThread(async () => await waitingDialog.ShowAsync());
+            var cts = new CancellationTokenSource();
+
+            waitingDialog = new WaitingPopupPage("Sampling track point heights...", cts);
+            await App.RunOnUiThreadAsync(async () => await waitingDialog.ShowAsync());
 
             await App.InitializedTask;
             try
             {
-                await App.MapView.SampleTrackHeights(track, 0.0);
+                await Task.Run(
+                    async () => await App.MapView.SampleTrackHeights(track, 0.0),
+                    cts.Token);
             }
             finally
             {
