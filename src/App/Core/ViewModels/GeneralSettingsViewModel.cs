@@ -57,6 +57,7 @@ namespace WhereToFly.App.Core.ViewModels
                 if (this.appSettings.AppTheme != value.Value)
                 {
                     this.appSettings.AppTheme = value.Value;
+                    App.Settings.AppTheme = value.Value;
                     Task.Run(async () => await this.SaveThemeSettingsAsync());
                 }
             }
@@ -126,7 +127,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task SaveThemeSettingsAsync()
         {
-            await ThemeHelper.ChangeTheme(this.appSettings.AppTheme, true);
+            ThemeHelper.ChangeTheme(this.appSettings.AppTheme, true);
 
             var dataService = DependencyService.Get<IDataService>();
             await dataService.StoreAppSettingsAsync(this.appSettings);

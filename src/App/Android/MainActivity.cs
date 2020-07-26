@@ -4,9 +4,7 @@ using Android.Content.PM;
 using Android.OS;
 using Android.Widget;
 using System.IO;
-using System.Threading.Tasks;
 using WhereToFly.App.Core;
-using WhereToFly.App.Core.Styles;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -219,16 +217,6 @@ namespace WhereToFly.App.Android
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-
-        /// <summary>
-        /// Called when the UI configuration has changed
-        /// </summary>
-        /// <param name="newConfig">new configuration object; ignored</param>
-        public override void OnConfigurationChanged(global::Android.Content.Res.Configuration newConfig)
-        {
-            base.OnConfigurationChanged(newConfig);
-            Task.Run(async () => await ThemeHelper.ChangeTheme(ThemeHelper.LastTheme, true));
         }
 
         /// <summary>

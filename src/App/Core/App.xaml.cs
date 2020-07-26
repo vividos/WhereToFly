@@ -106,7 +106,10 @@ namespace WhereToFly.App.Core
         {
             Debug.WriteLine($"OS App Theme changed to {args.RequestedTheme}");
 
-            RunOnUiThread(async () => await ThemeHelper.ChangeTheme(ThemeHelper.LastTheme, true));
+            if (Settings != null)
+            {
+                ThemeHelper.ChangeTheme(Settings.AppTheme, true);
+            }
         }
 
         /// <summary>
@@ -141,7 +144,7 @@ namespace WhereToFly.App.Core
             var dataService = DependencyService.Get<IDataService>();
             Settings = await dataService.GetAppSettingsAsync(CancellationToken.None);
 
-            await Styles.ThemeHelper.ChangeTheme(Settings.AppTheme, true);
+            ThemeHelper.ChangeTheme(Settings.AppTheme, true);
 
             await InitLiveWaypointRefreshService();
 
@@ -384,7 +387,7 @@ namespace WhereToFly.App.Core
 
             if (Settings != null)
             {
-                Styles.ThemeHelper.ChangeTheme(Settings.AppTheme, true);
+                ThemeHelper.ChangeTheme(Settings.AppTheme, true);
             }
         }
 
@@ -402,11 +405,14 @@ namespace WhereToFly.App.Core
         /// <summary>
         /// Called when application is resumed
         /// </summary>
-        protected override async void OnResume()
+        protected override void OnResume()
         {
             base.OnResume();
 
-            await Styles.ThemeHelper.ChangeTheme(Settings.AppTheme, true);
+            if (Settings != null)
+            {
+                ThemeHelper.ChangeTheme(Settings.AppTheme, true);
+            }
 
             var liveWaypointRefreshService = DependencyService.Get<LiveWaypointRefreshService>();
             liveWaypointRefreshService.ResumeTimer();

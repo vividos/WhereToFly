@@ -1,6 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using WhereToFly.App.Model;
+﻿using WhereToFly.App.Model;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -14,31 +12,25 @@ namespace WhereToFly.App.Core.Styles
         /// <summary>
         /// Theme that was last set using ChangeTheme
         /// </summary>
-        public static Theme LastTheme { get; private set; }
+        public static Theme CurrentTheme { get; private set; } = Theme.Light;
 
         /// <summary>
         /// Changes app theme
         /// </summary>
         /// <param name="theme">new theme to use</param>
         /// <param name="forceUpdate">true to force update, false when not</param>
-        /// <returns>task to wait on</returns>
-        public static async Task ChangeTheme(Theme theme, bool forceUpdate)
+        public static void ChangeTheme(Theme theme, bool forceUpdate)
         {
-            // switch to UI thread; or else on UWP accessing RequestedTheme crashes
-            if (!MainThread.IsMainThread)
+            if (!forceUpdate && CurrentTheme == theme)
             {
-                await MainThread.InvokeOnMainThreadAsync(() => ChangeTheme(theme, forceUpdate));
                 return;
             }
 
-            if (!forceUpdate)
+            // switch to UI thread; or else accessing RequestedTheme on UWP crashes
+            if (!MainThread.IsMainThread)
             {
-                var dataService = DependencyService.Get<IDataService>();
-                var appSettings = await dataService.GetAppSettingsAsync(CancellationToken.None);
-                if (appSettings.AppTheme == theme)
-                {
-                    return;
-                }
+                MainThread.BeginInvokeOnMainThread(() => ChangeTheme(theme, forceUpdate));
+                return;
             }
 
             if (theme == Theme.Device)
@@ -56,7 +48,7 @@ namespace WhereToFly.App.Core.Styles
                 resources[item] = newTheme[item];
             }
 
-            LastTheme = theme;
+            CurrentTheme = theme;
         }
     }
 }
