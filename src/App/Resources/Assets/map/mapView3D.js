@@ -2,12 +2,16 @@
  * Creates a new instance of MapView
  * @constructor
  * @param {object} [options] Options to use for initializing map view
- * @param {Number} [options.id] DOM ID of the div element to create map view in
+ * @param {String} [options.id] DOM ID of the div element to create map view in
  * @param {object} [options.initialCenterPoint] initial center point of map view
  * @param {double} [options.initialCenterPoint.latitude] latitude of center point
  * @param {double} [options.initialCenterPoint.longitude] longitude of center point
  * @param {Number} [options.initialZoomLevel] initial zoom level
  * @param {Boolean} [options.hasMouse] indicates if the device this is running supports a mouse
+ * @param {Boolean} [options.useAsynchronousPrimitives] indicates of asynchronous primitives
+ * should be used
+ * @param {String} [options.bingMapsApiKey] Bing maps API key to use
+ * @param {String} [options.cesiumIonApiKey] Cesium Ion API key to use
  * @param {Function} [options.callback] callback function to use for calling back to C# code
  */
 function MapView(options) {
@@ -20,6 +24,8 @@ function MapView(options) {
         initialZoomLevel: 14,
         hasMouse: false,
         useAsynchronousPrimitives: true,
+        bingMapsApiKey: 'AuuY8qZGx-LAeruvajcGMLnudadWlphUWdWb0k6N6lS2QUtURFk3ngCjIXqqFOoe',
+        cesiumIonApiKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiZWMzMjU5NC00MTg4LTQwYmEtYWNhYi01MDYwMWQyZDIxNTUiLCJpZCI6NjM2LCJpYXQiOjE1MjUzNjQ5OTN9.kXik5Mg_-01LBkN-5OTIDpwlMcuE2noRaaHrqjhbaRE',
         callback: {}
     };
 
@@ -28,8 +34,7 @@ function MapView(options) {
 
     console.log("MapView: #1 imagery provider");
 
-    Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiZWMzMjU5NC00MTg4LTQwYmEtYWNhYi01MDYwMWQyZDIxNTUiLCJpZCI6NjM2LCJpYXQiOjE1MjUzNjQ5OTN9.kXik5Mg_-01LBkN-5OTIDpwlMcuE2noRaaHrqjhbaRE';
-    Cesium.BingMapsApi.defaultKey = 'AuuY8qZGx-LAeruvajcGMLnudadWlphUWdWb0k6N6lS2QUtURFk3ngCjIXqqFOoe';
+    Cesium.Ion.defaultAccessToken = this.options.cesiumIonApiKey;
 
     this.openStreetMapImageryLayer = null;
     this.openStreetMapImageryProvider = new Cesium.OpenStreetMapImageryProvider({
@@ -373,6 +378,7 @@ MapView.prototype.setMapImageryType = function (imageryType) {
                 if (this.bingMapsAerialWithLabelsImageryProvider === null)
                     this.bingMapsAerialWithLabelsImageryProvider = new Cesium.BingMapsImageryProvider({
                         url: 'https://dev.virtualearth.net',
+                        key: this.options.bingMapsApiKey,
                         mapStyle: Cesium.BingMapsStyle.AERIAL_WITH_LABELS_ON_DEMAND
                     });
 
