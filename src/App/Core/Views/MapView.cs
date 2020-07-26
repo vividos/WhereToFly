@@ -238,18 +238,22 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         public async Task CreateAsync(MapPoint initialCenterPoint, int initialZoomLevel)
         {
-            string initialCenterJs = string.Format(
-                "{{latitude:{0}, longitude:{1}}}",
-                initialCenterPoint.Latitude.ToString(CultureInfo.InvariantCulture),
-                initialCenterPoint.Longitude.ToString(CultureInfo.InvariantCulture));
-
-            bool hasMouse = Device.RuntimePlatform == Device.UWP;
+            var options = new
+            {
+                id = "mapElement",
+                initialCenterPoint = new
+                {
+                    latitude = initialCenterPoint.Latitude.ToString(CultureInfo.InvariantCulture),
+                    longitude = initialCenterPoint.Longitude.ToString(CultureInfo.InvariantCulture),
+                },
+                initialZoomLevel = initialZoomLevel,
+                hasMouse = Device.RuntimePlatform == Device.UWP,
+                useAsynchronousPrimitives = true,
+            };
 
             string js = string.Format(
-                "map = new MapView({{id: 'mapElement', initialCenterPoint: {0}, initialZoomLevel: {1}, hasMouse: {2}}});",
-                initialCenterJs,
-                initialZoomLevel,
-                hasMouse ? "true" : "false");
+                "map = new MapView({0});",
+                JsonConvert.SerializeObject(options));
 
             this.RunJavaScript(js);
 
