@@ -6,7 +6,8 @@
             xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
             mc:Ignorable="d"
             x:Class="WhereToFly.App.Core.Views.TrackInfoTabbedPage"
-            Title = "Track infos">
+            Title = "Track infos"
+            BackgroundColor="{DynamicResource PageBackgroundColor}">
 
     <TabbedPage.Resources>
         <ResourceDictionary>

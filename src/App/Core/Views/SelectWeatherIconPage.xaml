@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
              xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
-             x:Class="WhereToFly.App.Core.Views.SelectWeatherIconPage">
+             x:Class="WhereToFly.App.Core.Views.SelectWeatherIconPage"
+             BackgroundColor="{DynamicResource PageBackgroundColor}">
     <ContentPage.Content>
 
         <!-- List showing all weather icons that can be added -->
@@ -20,7 +21,9 @@
                     <!-- Templace for a single view cell -->
                     <ViewCell Height="75">
                         <ViewCell.View>
-                            <StackLayout Orientation="Horizontal" BackgroundColor="#efefef" Margin="8,4">
+                            <StackLayout Orientation="Horizontal"
+                                         BackgroundColor="{DynamicResource ListViewItemBackgroundColor}"
+                                         Margin="8,4">
                                 <!-- Weather icon -->
                                 <ffimageloadingsvg:SvgCachedImage Source="{Binding Icon, Mode=OneWay}"
                                                                   WidthRequest="32" HeightRequest="32" Margin="4"

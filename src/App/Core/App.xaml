@@ -7,9 +7,36 @@
              x:Class="WhereToFly.App.Core.App">
     <Application.Resources>
 
-        <!-- application resource dictionary -->
+        <ResourceDictionary Source="Styles/LightTheme.xaml" />
+
         <ResourceDictionary>
-            <Color x:Key="PrimaryColor">#2F299E</Color>
+
+            <!-- Control theming -->
+            <Style TargetType="Picker">
+                <Setter Property="BackgroundColor" Value="{DynamicResource ElementBackgroundColor}" />
+                <Setter Property="TextColor" Value="{DynamicResource ElementTextColor}" />
+            </Style>
+
+            <Style TargetType="Entry">
+                <Setter Property="BackgroundColor" Value="{DynamicResource ElementBackgroundColor}" />
+                <Setter Property="TextColor" Value="{DynamicResource ElementTextColor}" />
+                <Setter Property="PlaceholderColor" Value="{DynamicResource ElementTextColor}"/>
+            </Style>
+
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="{DynamicResource ElementTextColor}" />
+            </Style>
+
+            <Style TargetType="Button">
+                <Setter Property="TextColor" Value="{DynamicResource ElementTextColor}" />
+                <Setter Property="BackgroundColor" Value="{DynamicResource ElementBackgroundColor}" />
+            </Style>
+
+            <Style TargetType="TabbedPage">
+                <Setter Property="BarBackgroundColor" Value="{DynamicResource ElementBackgroundColor}" />
+                <Setter Property="BarTextColor" Value="{DynamicResource ElementTextColor}" />
+            </Style>
+
         </ResourceDictionary>
 
     </Application.Resources>

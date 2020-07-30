@@ -4,7 +4,8 @@
              xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
              xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
-             x:Class="WhereToFly.App.Core.Views.TrackListPage">
+             x:Class="WhereToFly.App.Core.Views.TrackListPage"
+             BackgroundColor="{DynamicResource PageBackgroundColor}">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -45,12 +46,14 @@
             </StackLayout>
 
             <!-- Message to show when list is empty -->
-            <StackLayout Padding="4" BackgroundColor="LightGreen"
+            <StackLayout Padding="4" BackgroundColor="{DynamicResource MessageBandBackgroundColor}"
                          HeightRequest="32"
                          HorizontalOptions="FillAndExpand"
                          Orientation="Horizontal"
                          IsVisible="{Binding IsListEmpty, Mode=OneWay}" >
-                <Label Text="There are no tracks in the list." VerticalTextAlignment="Center" FontSize="Medium" />
+                <Label Text="There are no tracks in the list."
+                       VerticalTextAlignment="Center" FontSize="Medium"
+                       TextColor="{DynamicResource MessageBandTextColor}" />
             </StackLayout>
 
             <!-- Track list -->
@@ -69,7 +72,7 @@
                         <!-- Templace for a single view cell -->
                         <ViewCell Height="65">
                             <ViewCell.View>
-                                <Grid BackgroundColor="#efefef" Margin="8,4">
+                                <Grid BackgroundColor="{DynamicResource ListViewItemBackgroundColor}" Margin="8,4">
                                     <Grid.RowDefinitions>
                                         <RowDefinition/>
                                         <RowDefinition/>

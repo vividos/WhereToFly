@@ -6,7 +6,8 @@
              xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
              mc:Ignorable="d"
              x:Class="WhereToFly.App.Core.Views.InfoPage"
-             Title="Info">
+             Title="Info"
+             BackgroundColor="{DynamicResource PageBackgroundColor}">
     <ContentPage.Content>
 
         <!-- Stacked carousel and indicator views -->
@@ -18,7 +19,7 @@
                           PeekAreaInsets="10"
                           HorizontalOptions="Start"
                           ItemsUpdatingScrollMode="KeepItemsInView"
-                          BackgroundColor="#cfd8dc">
+                          BackgroundColor="{DynamicResource ManualBackgroundColor}">
 
                 <!-- Stop on full carousel items -->
                 <CarouselView.ItemsLayout>

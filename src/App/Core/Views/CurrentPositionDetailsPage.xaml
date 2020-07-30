@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="WhereToFly.App.Core.Views.CurrentPositionDetailsPage">
+             x:Class="WhereToFly.App.Core.Views.CurrentPositionDetailsPage"
+             BackgroundColor="{DynamicResource PageBackgroundColor}">
     <ContentPage.Content>
 
         <ScrollView Orientation="Vertical">
@@ -12,14 +13,13 @@
                 AlignItems="Start"
                 AlignContent="Start"
                 JustifyContent="Start"
-                Wrap="Wrap"
-                BackgroundColor="White">
+                Wrap="Wrap">
 
                 <!-- Latitude / Longitude -->
                 <Grid WidthRequest="300" HeightRequest="100"
                       Margin="16,16,0,0"
                       Padding="4"
-                      BackgroundColor="#efefef">
+                      BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -42,7 +42,7 @@
                              Orientation="Vertical"
                              Margin="16,16,0,0"
                              Padding="4"
-                             BackgroundColor="#efefef">
+                             BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
                     <Label Text="Altitude [m]" />
                     <Label Text="{Binding Altitude, Mode=OneWay}" FontSize="32" />
                 </StackLayout>
@@ -52,7 +52,7 @@
                              Orientation="Vertical"
                              Margin="16,16,0,0"
                              Padding="4"
-                             BackgroundColor="#efefef">
+                             BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
                     <Label Text="Accuracy [m]" />
                     <Label Text="{Binding Accuracy, Mode=OneWay}" FontSize="32"
                            TextColor="{Binding PositionAccuracyColor, Mode=OneWay}" />
@@ -63,7 +63,7 @@
                              Orientation="Vertical"
                              Margin="16,16,0,0"
                              Padding="4"
-                             BackgroundColor="#efefef">
+                             BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
                     <Label Text="Last position fix" />
                     <Label Text="{Binding LastPositionFix, Mode=OneWay}" FontSize="24" />
                 </StackLayout>
@@ -73,7 +73,7 @@
                              Orientation="Vertical"
                              Margin="16,16,0,0"
                              Padding="4"
-                             BackgroundColor="#efefef">
+                             BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
                     <Label Text="Speed [km/h]" />
                     <Label Text="{Binding SpeedInKmh, Mode=OneWay}" FontSize="32" />
                 </StackLayout>
@@ -84,7 +84,7 @@
                              Margin="16,16,0,0"
                              Padding="4"
                              IsVisible="{Binding IsHeadingAvail, Mode=OneWay}"
-                             BackgroundColor="#efefef">
+                             BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
                     <Label Text="Heading [°]" />
                     <Label Text="{Binding HeadingInDegrees, Mode=OneWay}" FontSize="32" />
                 </StackLayout>

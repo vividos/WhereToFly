@@ -25,7 +25,7 @@
         HorizontalOptions="Center"
         HeightRequest="140"
         WidthRequest="300"
-        BackgroundColor="White"
+        BackgroundColor="{DynamicResource PageBackgroundColor}"
         Padding="20">
 
         <!-- text, entry control to enter location text and button -->

@@ -26,17 +26,18 @@
         HorizontalOptions="Center"
         WidthRequest="320"
         HeightRequest="400"
-        BackgroundColor="White"
+        BackgroundColor="{DynamicResource PageBackgroundColor}"
         Padding="20">
 
         <!-- caption -->
         <Label Text="Plan tour" FontSize="Large" VerticalOptions="Start" />
 
         <!-- Message to show that more locations are needed for tour planning -->
-        <StackLayout Padding="8" Margin="0" BackgroundColor="Yellow"
+        <StackLayout Padding="8" Margin="0" BackgroundColor="{DynamicResource WarningBandBackgroundColor}"
                      HorizontalOptions="FillAndExpand"
                      IsVisible="{Binding Path=ShowWarningForMoreLocations, Mode=OneWay}">
             <Label Text="At least two locations are needed for tour planning" FontSize="Medium"
+                   TextColor="{DynamicResource WarningBandTextColor}"
                    AutomationId="ShowWarningForMoreLocationsLabel" />
         </StackLayout>
 
@@ -47,7 +48,6 @@
                   CachingStrategy="RecycleElement"
                   SeparatorVisibility="None"
                   VerticalOptions="FillAndExpand"
-                  BackgroundColor="#efefef"
                   AutomationId="PlanTourList">
 
             <ListView.ItemTemplate>
@@ -55,7 +55,7 @@
                     <!-- Template for a single entry -->
                     <ViewCell Height="90">
                         <ViewCell.View>
-                            <Grid BackgroundColor="#f7f7f7" Margin="8,4">
+                            <Grid BackgroundColor="{DynamicResource ListViewItemBackgroundColor}" Margin="8,4">
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
                                     <RowDefinition/>

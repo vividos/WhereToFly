@@ -27,7 +27,7 @@
         HorizontalOptions="Center"
         WidthRequest="300"
         HeightRequest="400"
-        BackgroundColor="White"
+        BackgroundColor="{DynamicResource PageBackgroundColor}"
         Padding="20">
 
         <!-- caption -->
@@ -47,7 +47,9 @@
                     <!-- Templace for a single view cell -->
                     <ViewCell Height="75">
                         <ViewCell.View>
-                            <StackLayout Orientation="Horizontal" BackgroundColor="#efefef" Margin="8,4">
+                            <StackLayout Orientation="Horizontal"
+                                         BackgroundColor="{DynamicResource ListViewItemBackgroundColor}"
+                                         Margin="8,4">
                                 <!-- Weather icon -->
                                 <ffimageloadingsvg:SvgCachedImage Source="{Binding Icon, Mode=OneWay}"
                                                                   WidthRequest="32" HeightRequest="32" Margin="4"

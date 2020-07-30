@@ -4,7 +4,8 @@
              xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
              x:Class="WhereToFly.App.Core.Views.TrackDetailsPage"
-             Title="Details">
+             Title="Details"
+             BackgroundColor="{DynamicResource PageBackgroundColor}">
 
     <ContentPage.Content>
 

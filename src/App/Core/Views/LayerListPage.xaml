@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
-             x:Class="WhereToFly.App.Core.Views.LayerListPage">
+             x:Class="WhereToFly.App.Core.Views.LayerListPage"
+             BackgroundColor="{DynamicResource PageBackgroundColor}">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -32,12 +33,14 @@
     <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
 
         <!-- Message to show when list is empty -->
-        <StackLayout Padding="4" BackgroundColor="LightGreen"
+        <StackLayout Padding="4" BackgroundColor="{DynamicResource MessageBandBackgroundColor}"
                      HeightRequest="32"
                      HorizontalOptions="FillAndExpand"
                      Orientation="Horizontal"
                      IsVisible="{Binding IsListEmpty, Mode=OneWay}" >
-            <Label Text="There are no layers in the list." VerticalTextAlignment="Center" FontSize="Medium" />
+            <Label Text="There are no layers in the list."
+                   VerticalTextAlignment="Center" FontSize="Medium"
+                   TextColor="{DynamicResource MessageBandTextColor}" />
         </StackLayout>
 
         <!-- Layer list -->
@@ -55,7 +58,7 @@
                     <!-- Template for a single view cell -->
                     <ViewCell Height="65">
                         <ViewCell.View>
-                            <Grid BackgroundColor="#efefef" Margin="8,4">
+                            <Grid BackgroundColor="{DynamicResource ListViewItemBackgroundColor}" Margin="8,4">
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>

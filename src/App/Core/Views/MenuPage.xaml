@@ -5,7 +5,8 @@
              x:Class="WhereToFly.App.Core.Views.MenuPage"
              Padding="0,40,0,0"
              Icon="icon.png"
-             Title="Where-to-fly">
+             Title="Where-to-fly"
+             BackgroundColor="{DynamicResource PageBackgroundColor}">
     <ContentPage.Content>
         <StackLayout>
             <!-- menu header -->
@@ -28,7 +29,7 @@
                             SelectedItem="{Binding SelectedMenuItem}"
                             SelectionChangedCommand="{Binding MenuItemSelectedCommand}"
                             SelectionMode="Single"
-                            BackgroundColor="LightGray"
+                            BackgroundColor="{DynamicResource MenuBackgroundColor}"
                             VerticalOptions="FillAndExpand"
                             HorizontalOptions="StartAndExpand">
                 <CollectionView.ItemTemplate>
@@ -49,7 +50,7 @@
                             <!-- title text -->
                             <Label Grid.Column="1" Text="{Binding Title, Mode=OneTime}"
                                    InputTransparent="True"
-                                   TextColor="Black" FontSize="Medium"
+                                   FontSize="Medium"
                                    VerticalOptions="FillAndExpand"
                                    VerticalTextAlignment="Center" />
                         </Grid>

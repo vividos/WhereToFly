@@ -3,6 +3,31 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     x:Class="WhereToFly.App.Core.Styles.LightTheme">
 
-    <!-- colors for light theme -->
+    <!-- Colors for light theme -->
+
+    <!-- General app colors -->
+    <Color x:Key="PrimaryColor">#2F299E</Color>
+    <Color x:Key="AccentColor">#2F299E</Color>
+
+    <!-- Background colors -->
+    <Color x:Key="PageBackgroundColor">#F5F5F5</Color>
+    <Color x:Key="MenuBackgroundColor">LightGray</Color>
+    <Color x:Key="SectionHeaderBackgroundColor">LightGray</Color>
+    <Color x:Key="ManualBackgroundColor">#d0d0d0</Color>
+
+    <!-- Colors for green message band -->
+    <Color x:Key="MessageBandBackgroundColor">LightGreen</Color>
+    <Color x:Key="MessageBandTextColor">Black</Color>
+
+    <!-- Colors for yellow warning band -->
+    <Color x:Key="WarningBandBackgroundColor">Yellow</Color>
+    <Color x:Key="WarningBandTextColor">Black</Color>
+
+    <!-- List view colors -->
+    <Color x:Key="ListViewItemBackgroundColor">#e0e0e0</Color>
+
+    <!-- Colors for different elements -->
+    <Color x:Key="ElementBackgroundColor">White</Color>
+    <Color x:Key="ElementTextColor">Black</Color>
 
 </ResourceDictionary>

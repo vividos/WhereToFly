@@ -5,7 +5,8 @@
              xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
              xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
-             x:Class="WhereToFly.App.Core.Views.LocationListPage">
+             x:Class="WhereToFly.App.Core.Views.LocationListPage"
+             BackgroundColor="{DynamicResource PageBackgroundColor}">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -51,19 +52,22 @@
         </StackLayout>
 
         <!-- Message to show when list is empty -->
-        <StackLayout Padding="4" BackgroundColor="LightGreen"
+        <StackLayout Padding="4" BackgroundColor="{DynamicResource MessageBandBackgroundColor}"
                      HeightRequest="32"
                      HorizontalOptions="FillAndExpand"
                      Orientation="Horizontal"
                      IsVisible="{Binding IsListEmpty, Mode=OneWay}" >
-            <Label Text="There are no locations in the list." VerticalTextAlignment="Center" FontSize="Medium" />
+            <Label Text="There are no locations in the list."
+                   VerticalTextAlignment="Center" FontSize="Medium"
+                   TextColor="{DynamicResource MessageBandTextColor}" />
         </StackLayout>
 
         <!-- Message to show when all locations were filtered out -->
-        <StackLayout Padding="8" BackgroundColor="Yellow"
+        <StackLayout Padding="8" BackgroundColor="{DynamicResource WarningBandBackgroundColor}"
                      HorizontalOptions="FillAndExpand"
                      IsVisible="{Binding Path=AreAllLocationsFilteredOut, Mode=OneWay}">
             <Label Text="All locations filtered out" FontSize="Medium"
+                   TextColor="{DynamicResource WarningBandTextColor}"
                    AutomationId="AllFilteredOutLabel" />
         </StackLayout>
 
@@ -83,7 +87,7 @@
                     <!-- Template for a single view cell -->
                     <ViewCell Height="85" BindingContextChanged="OnViewCellBindingContextChanged">
                         <ViewCell.View>
-                            <Grid BackgroundColor="#efefef" Margin="8,4">
+                            <Grid BackgroundColor="{DynamicResource ListViewItemBackgroundColor}" Margin="8,4">
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
                                     <RowDefinition/>
