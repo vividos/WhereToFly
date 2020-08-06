@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SQLite;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -251,7 +250,8 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
 
         /// <summary>
         /// Returns a data service for WeatherIconDescription objects that are available in the
-        /// database.
+        /// database. This contains a combination of a fixed repository list of icon descriptions
+        /// and all user added icon descriptions.
         /// </summary>
         /// <returns>weather icon description data service</returns>
         public IWeatherIconDescriptionDataService GetWeatherIconDescriptionDataService()
@@ -260,8 +260,8 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         }
 
         /// <summary>
-        /// Returns a data service for WeatherIconDescription objects that are visible on the
-        /// weather dashboard.
+        /// Returns a data service for WeatherIconDescription objects that are currently placed on
+        /// the weather dashboard.
         /// </summary>
         /// <returns>weather icon description data service</returns>
         public IWeatherIconDescriptionDataService GetWeatherDashboardIconDataService()

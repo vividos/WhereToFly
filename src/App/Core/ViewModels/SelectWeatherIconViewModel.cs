@@ -52,7 +52,8 @@ namespace WhereToFly.App.Core.ViewModels
             {
                 var dataService = DependencyService.Get<IDataService>();
 
-                var weatherIconList = await dataService.GetWeatherIconDescriptionDataService().GetList();
+                var weatherIconDescriptionDataService = dataService.GetWeatherIconDescriptionDataService();
+                var weatherIconList = await weatherIconDescriptionDataService.GetList();
 
                 this.WeatherIconList = new ObservableCollection<WeatherIconListEntryViewModel>(
                     from weatherIcon in weatherIconList

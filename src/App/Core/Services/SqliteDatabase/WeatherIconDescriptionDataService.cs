@@ -125,7 +125,8 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             /// <returns>weather icon description from list, or null when none was found</returns>
             public async Task<WeatherIconDescription> Get(string weatherIconDescriptionId)
             {
-                var weatherIconDescriptionEntry = await this.connection.GetAsync<WeatherIconDescriptionEntry>(weatherIconDescriptionId);
+                var weatherIconDescriptionEntry =
+                    await this.connection.GetAsync<WeatherIconDescriptionEntry>(weatherIconDescriptionId);
 
                 return weatherIconDescriptionEntry?.WeatherIconDescription;
             }
@@ -146,7 +147,10 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             /// <returns>list of weather icon descriptions</returns>
             public async Task<IEnumerable<WeatherIconDescription>> GetList()
             {
-                var weatherIconDescriptionList = await this.connection.Table<WeatherIconDescriptionEntry>().ToListAsync();
+                var weatherIconDescriptionList =
+                    await this.connection.Table<WeatherIconDescriptionEntry>()
+                    .ToListAsync();
+
                 return weatherIconDescriptionList.Select(
                     weatherIconDescriptionEntry => weatherIconDescriptionEntry.WeatherIconDescription);
             }
