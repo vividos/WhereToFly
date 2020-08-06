@@ -180,7 +180,7 @@ namespace WhereToFly.App.Core.Services
                 {
                     Id = "wheretofly-path-nagelspitz-start",
                     Name = "SP Jägerkamp/Nagelspitz (NW-WNW, E)",
-                    MapLocation = new MapPoint(47.679201,11.90403, 1612.0),
+                    MapLocation = new MapPoint(47.679201, 11.90403, 1612.0),
                     Description = "Hike & Fly Gelände des Drachenfliegerclub Bayrischzell. Von Josefstal (Landeplatz mit Windsack) zu Fuß in ca. 1,5 Std Aufstieg zum Jägerkamp / Nagelspitz. Startplatz liegt an der Nagelspitz. Ist auch als Startplatz für Streckenflüge in Richtung Osten (Bayrischzell - Kössen) geeignet.",
                     Type = LocationType.FlyingTakeoff,
                     InternetLink = "http://www.dc-bayrischzell.de",
@@ -192,7 +192,7 @@ namespace WhereToFly.App.Core.Services
                 {
                     Id = "wheretofly-path-josefsthal-landeplatz",
                     Name = "LP Josefsthal",
-                    MapLocation = new MapPoint(47.69223,11.886778, 840.0),
+                    MapLocation = new MapPoint(47.69223, 11.886778, 840.0),
                     Description = "Großer Landeplatz mit Windsack ",
                     Type = LocationType.FlyingLandingPlace,
                     InternetLink = "http://www.dc-bayrischzell.de",

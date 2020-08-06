@@ -251,7 +251,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
                         filterText);
                 }
 
-                TakeoffDirections directions =TakeoffDirectionsHelper.ModifyAdjacentDirectionsFromView(
+                TakeoffDirections directions = TakeoffDirectionsHelper.ModifyAdjacentDirectionsFromView(
                     filterSettings.FilterTakeoffDirections);
 
                 if (directions != TakeoffDirections.All)

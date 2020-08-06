@@ -83,9 +83,9 @@ namespace WhereToFly.App.Core.ViewModels
 
             this.AppThemeItems = new List<AppThemeViewModel>
             {
-                new AppThemeViewModel{ Text = "Same as device", Value = Theme.Device },
-                new AppThemeViewModel{ Text = "Light theme", Value = Theme.Light },
-                new AppThemeViewModel{ Text = "Dark theme", Value = Theme.Dark },
+                new AppThemeViewModel { Text = "Same as device", Value = Theme.Device },
+                new AppThemeViewModel { Text = "Light theme", Value = Theme.Light },
+                new AppThemeViewModel { Text = "Dark theme", Value = Theme.Dark },
             };
 
             Task.Run(this.LoadDataAsync);

@@ -12,12 +12,16 @@ namespace WhereToFly.App.Core.Controls
     public class HeightProfileWebView : WebView
     {
         /// <summary>
+        /// Task completion source that completes a task when the height profile view is
+        /// initialized
+        /// </summary>
+        private readonly TaskCompletionSource<bool> taskCompletionSourceViewInitialized
+            = new TaskCompletionSource<bool>();
+
+        /// <summary>
         /// Height profile view to display
         /// </summary>
         private HeightProfileView heightProfileView;
-
-        private readonly TaskCompletionSource<bool> taskCompletionSourceViewInitialized
-            = new TaskCompletionSource<bool>();
 
         #region Binding properties
         /// <summary>
@@ -80,7 +84,6 @@ namespace WhereToFly.App.Core.Controls
             this.AutomationId = "HeightProfileWebView";
 
             this.Navigated += this.OnNavigated;
-
         }
 
         /// <summary>

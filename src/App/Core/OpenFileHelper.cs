@@ -263,7 +263,7 @@ namespace WhereToFly.App.Core
         /// certain text.
         /// </summary>
         /// <param name="description">location description</param>
-        /// <param name="takeoffDirections"></param>
+        /// <param name="takeoffDirections">parsed takeoff directions</param>
         /// <returns>true when a takeoff direction could be parsed, or false when not</returns>
         private static bool TryParseStartDirectionFromDescription(string description, out TakeoffDirections takeoffDirections)
         {

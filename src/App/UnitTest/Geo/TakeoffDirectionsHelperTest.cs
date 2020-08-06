@@ -86,11 +86,13 @@ namespace WhereToFly.App.UnitTest.Geo
         public void TestModifyAdjacentDirectionsFromView()
         {
             // check
-            Assert.AreEqual(TakeoffDirections.NE | TakeoffDirections.NNE | TakeoffDirections.ENE,
+            Assert.AreEqual(
+                TakeoffDirections.NE | TakeoffDirections.NNE | TakeoffDirections.ENE,
                 TakeoffDirectionsHelper.ModifyAdjacentDirectionsFromView(TakeoffDirections.NE),
                 "modified takeoff directions value must contain adjacent directions");
 
-            Assert.AreEqual(TakeoffDirections.All,
+            Assert.AreEqual(
+                TakeoffDirections.All,
                 TakeoffDirectionsHelper.ModifyAdjacentDirectionsFromView(
                     TakeoffDirections.N | TakeoffDirections.NE |
                     TakeoffDirections.E | TakeoffDirections.SE |
