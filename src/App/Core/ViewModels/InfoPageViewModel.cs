@@ -104,6 +104,17 @@ namespace WhereToFly.App.Core.ViewModels
                 htmlText = "<style> img { max-width: 90vw; }</style>" + htmlText;
             }
 
+            htmlText = htmlText.Replace(".svg\"", ".svg\" class=\"svg-img\"");
+
+            if (Styles.ThemeHelper.CurrentTheme == Model.Theme.Light)
+            {
+                htmlText = "<style> body { color: black; background-color: white; } .svg-img { filter: invert(100%); } </style>" + htmlText;
+            }
+            else
+            {
+                htmlText = "<style> body { color: white; background-color: black; } </style>" + htmlText;
+            }
+
             return htmlText;
         }
 
