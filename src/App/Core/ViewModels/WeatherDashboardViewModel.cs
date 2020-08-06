@@ -94,10 +94,10 @@ namespace WhereToFly.App.Core.ViewModels
             var weatherIconDescriptionList = new List<WeatherIconDescription>(this.WeatherIconDescriptionList);
             weatherIconDescriptionList.RemoveAll(x => x.Type == WeatherIconDescription.IconType.IconPlaceholder);
 
-            var weatherIconDescriptionDataService = dataService.GetWeatherIconDescriptionDataService();
+            var weatherDashboardIconDataService = dataService.GetWeatherDashboardIconDataService();
 
-            await weatherIconDescriptionDataService.ClearList();
-            await weatherIconDescriptionDataService.AddList(weatherIconDescriptionList);
+            await weatherDashboardIconDataService.ClearList();
+            await weatherDashboardIconDataService.AddList(weatherIconDescriptionList);
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace WhereToFly.App.Core.ViewModels
             this.AddWebLinkCommand = new AsyncCommand(this.AddWebLinkAsync);
             this.ClearAllCommand = new AsyncCommand(this.ClearAllWeatherIcons);
 
-            Task.Run(async () => await UpdateWeatherIconDescriptionList());
+            Task.Run(async () => await this.UpdateWeatherIconDescriptionList());
         }
 
         /// <summary>
@@ -151,6 +151,10 @@ namespace WhereToFly.App.Core.ViewModels
             {
                 return;
             }
+
+            var dataService = DependencyService.Get<IDataService>();
+            var weatherIconDescriptionDataService = dataService.GetWeatherIconDescriptionDataService();
+            await weatherIconDescriptionDataService.Add(weatherIconDescription);
 
             int insertIndex = this.WeatherIconDescriptionList.Any()
                 ? this.WeatherIconDescriptionList.Count - 1
@@ -192,9 +196,9 @@ namespace WhereToFly.App.Core.ViewModels
         private async Task UpdateWeatherIconDescriptionList()
         {
             var dataService = DependencyService.Get<IDataService>();
-            var weatherIconDescriptionDataService = dataService.GetWeatherIconDescriptionDataService();
+            var weatherDashboardIconDataService = dataService.GetWeatherDashboardIconDataService();
 
-            this.WeatherIconDescriptionList = (await weatherIconDescriptionDataService.GetList()).ToList();
+            this.WeatherIconDescriptionList = (await weatherDashboardIconDataService.GetList()).ToList();
 
             this.WeatherIconDescriptionList.Add(
                 new WeatherIconDescription

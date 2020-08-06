@@ -162,7 +162,14 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
                     DataServiceHelper.GetInitialLayerList());
             }
 
-            await this.connection.CreateTableAsync<WeatherIconDescriptionEntry>();
+            if (await this.connection.CreateTableAsync<WeatherIconDescriptionEntry>() == CreateTableResult.Created ||
+                !(await this.GetWeatherIconDescriptionDataService().GetList()).Any())
+            {
+                await this.GetWeatherIconDescriptionDataService().AddList(
+                    DataServiceHelper.GetWeatherIconDescriptionRepository());
+            }
+
+            await this.connection.CreateTableAsync<WeatherDashboardIconEntry>();
         }
 
         /// <summary>
@@ -243,7 +250,8 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         }
 
         /// <summary>
-        /// Returns a data service for WeatherIconDescription objects
+        /// Returns a data service for WeatherIconDescription objects that are available in the
+        /// database.
         /// </summary>
         /// <returns>weather icon description data service</returns>
         public IWeatherIconDescriptionDataService GetWeatherIconDescriptionDataService()
@@ -252,13 +260,13 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         }
 
         /// <summary>
-        /// Returns the repository of all available weather icon descriptions that can be used
-        /// to select weather icons for the customized list
+        /// Returns a data service for WeatherIconDescription objects that are visible on the
+        /// weather dashboard.
         /// </summary>
-        /// <returns>repository of all weather icons</returns>
-        public List<WeatherIconDescription> GetWeatherIconDescriptionRepository()
+        /// <returns>weather icon description data service</returns>
+        public IWeatherIconDescriptionDataService GetWeatherDashboardIconDataService()
         {
-            return DataServiceHelper.GetWeatherIconDescriptionRepository();
+            return new WeatherDashboardIconDataService(this.connection);
         }
 
         /// <summary>

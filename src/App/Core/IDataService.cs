@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Model;
@@ -44,17 +43,18 @@ namespace WhereToFly.App.Core
         ILayerDataService GetLayerDataService();
 
         /// <summary>
-        /// Returns a data service for WeatherIconDescription objects
+        /// Returns a data service for WeatherIconDescription objects. The data services manages
+        /// all weather icon descriptions that are available.
         /// </summary>
         /// <returns>weather icon description data service</returns>
         IWeatherIconDescriptionDataService GetWeatherIconDescriptionDataService();
 
         /// <summary>
-        /// Returns the repository of all available weather icon descriptions that can be used
-        /// to select weather icons for the customized list
+        /// Returns a data service for WeatherIconDescription objects that are visible on the
+        /// weather dashboard.
         /// </summary>
-        /// <returns>repository of all weather icons</returns>
-        List<WeatherIconDescription> GetWeatherIconDescriptionRepository();
+        /// <returns>weather icon description data service</returns>
+        IWeatherIconDescriptionDataService GetWeatherDashboardIconDataService();
 
         /// <summary>
         /// Retrieves a favicon URL for the given website URL

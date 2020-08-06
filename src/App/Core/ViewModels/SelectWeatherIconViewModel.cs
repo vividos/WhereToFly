@@ -48,22 +48,11 @@ namespace WhereToFly.App.Core.ViewModels
         {
             this.ItemTappedCommand = new Command<WeatherIconDescription>(selectAction);
 
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 var dataService = DependencyService.Get<IDataService>();
 
-                var weatherIconList = dataService.GetWeatherIconDescriptionRepository();
-                if (!weatherIconList.Any())
-                {
-                    weatherIconList = new List<WeatherIconDescription>
-                    {
-                        new WeatherIconDescription
-                        {
-                            Name = "Add new...",
-                            Type = WeatherIconDescription.IconType.IconPlaceholder,
-                        },
-                    };
-                }
+                var weatherIconList = await dataService.GetWeatherIconDescriptionDataService().GetList();
 
                 this.WeatherIconList = new ObservableCollection<WeatherIconListEntryViewModel>(
                     from weatherIcon in weatherIconList

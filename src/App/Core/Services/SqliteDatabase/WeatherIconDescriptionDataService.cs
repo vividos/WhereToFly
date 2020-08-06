@@ -171,12 +171,14 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             }
 
             /// <summary>
-            /// Clears list of weather icon descriptions
+            /// Clears list of weather icon descriptions and re-adds the default list
             /// </summary>
             /// <returns>task to wait on</returns>
             public async Task ClearList()
             {
                 await this.connection.DeleteAllAsync<WeatherIconDescriptionEntry>();
+
+                await this.AddList(DataServiceHelper.GetWeatherIconDescriptionRepository());
             }
         }
     }
