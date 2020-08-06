@@ -98,7 +98,7 @@ namespace WhereToFly.App.Core.ViewModels
             this.parentViewModel = parentViewModel;
             this.track = track;
 
-            this.TypeImageSource = SvgImageCache.GetImageSource(track, "#000000");
+            this.TypeImageSource = SvgImageCache.GetImageSource(track);
 
             this.SetupBindings();
         }

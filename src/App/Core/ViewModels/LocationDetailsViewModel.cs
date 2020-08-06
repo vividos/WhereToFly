@@ -180,7 +180,7 @@ namespace WhereToFly.App.Core.ViewModels
             this.distance = 0.0;
 
             this.TypeImageSource =
-                SvgImageCache.GetImageSource(location, "#000000");
+                SvgImageCache.GetImageSource(location);
 
             this.SetupBindings();
         }

@@ -82,8 +82,8 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         private void SetupBindings()
         {
-            this.TypeImageSource = SvgImageCache.GetImageSource(this.Layer, "#000000");
-            this.VisibilityImageSource = SvgImageCache.GetLayerVisibilityImageSource(this.Layer, "#000000");
+            this.TypeImageSource = SvgImageCache.GetImageSource(this.Layer);
+            this.VisibilityImageSource = SvgImageCache.GetLayerVisibilityImageSource(this.Layer);
 
             this.ItemTappedCommand = new AsyncCommand(this.OnTappedLayerItemAsync);
             this.VisibilityTappedCommand = new AsyncCommand(this.OnTappedLayerVisibilityAsync);
@@ -121,7 +121,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             App.MapView.SetLayerVisibility(this.Layer);
 
-            this.VisibilityImageSource = SvgImageCache.GetLayerVisibilityImageSource(Layer, "#000000");
+            this.VisibilityImageSource = SvgImageCache.GetLayerVisibilityImageSource(Layer);
             this.OnPropertyChanged(nameof(this.VisibilityImageSource));
         }
 

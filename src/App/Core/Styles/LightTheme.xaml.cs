@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using System.Collections.Generic;
+using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.Styles
 {
@@ -13,6 +14,11 @@ namespace WhereToFly.App.Core.Styles
         public LightTheme()
         {
             this.InitializeComponent();
+
+            this["SvgImageFillDark"] = new Dictionary<string, string>
+            {
+                { "fill=\"#ffffff", "fill=\"#000000" }
+            };
         }
     }
 }

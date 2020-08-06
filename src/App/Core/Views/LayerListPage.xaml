@@ -75,9 +75,10 @@
 
                                 <!-- Layer type image -->
                                 <ffimageloadingsvg:SvgCachedImage Source="{Binding TypeImageSource, Mode=OneWay}"
-                                                   WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
-                                                   HorizontalOptions="Start" VerticalOptions="Center"
-                                                   Grid.Column="0"/>
+                                                                  ReplaceStringMap="{DynamicResource SvgImageFillDark}"
+                                                                  WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
+                                                                  HorizontalOptions="Start" VerticalOptions="Center"
+                                                                  Grid.Column="0"/>
 
                                 <!-- Layer visibility image -->
                                 <ContentView Margin="0" Padding="0" Grid.Column="1">
@@ -86,6 +87,7 @@
                                                               NumberOfTapsRequired="1"/>
                                     </ContentView.GestureRecognizers>
                                     <ffimageloadingsvg:SvgCachedImage Source="{Binding VisibilityImageSource, Mode=OneWay}"
+                                                                      ReplaceStringMap="{DynamicResource SvgImageFillDark}"
                                                                       WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
                                                                       HorizontalOptions="Start" VerticalOptions="Center"
                                                                       InputTransparent="true" />

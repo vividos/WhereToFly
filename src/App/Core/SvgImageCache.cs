@@ -27,9 +27,8 @@ namespace WhereToFly.App.Core
         /// Returns an image source for SvgImage that loads an image based on the location's type.
         /// </summary>
         /// <param name="location">location to use</param>
-        /// <param name="fill">when not null, an alternative fill color for SVG path elements</param>
         /// <returns>image source</returns>
-        public static ImageSource GetImageSource(Location location, string fill = null)
+        public static ImageSource GetImageSource(Location location)
         {
             if (location == null)
             {
@@ -37,34 +36,31 @@ namespace WhereToFly.App.Core
             }
 
             return GetImageSource(
-                SvgImagePathFromLocationType(location.Type),
-                fill);
+                SvgImagePathFromLocationType(location.Type));
         }
 
         /// <summary>
         /// Returns an image source for SvgImage that loads an image based on the track.
         /// </summary>
         /// <param name="track">track to use</param>
-        /// <param name="fill">when not null, an alternative fill color for SVG path elements</param>
         /// <returns>image source</returns>
-        public static ImageSource GetImageSource(Track track, string fill = null)
+        public static ImageSource GetImageSource(Track track)
         {
             string svgImagePath = track.IsFlightTrack ? "map/images/paragliding.svg" : "icons/map-marker-distance.svg";
 
-            return GetImageSource(svgImagePath, fill);
+            return GetImageSource(svgImagePath);
         }
 
         /// <summary>
         /// Returns an image source for SvgImage that loads an image based on the given layer.
         /// </summary>
         /// <param name="layer">layer to use</param>
-        /// <param name="fill">when not null, an alternative fill color for SVG path elements</param>
         /// <returns>image source</returns>
-        public static ImageSource GetImageSource(Layer layer, string fill = null)
+        public static ImageSource GetImageSource(Layer layer)
         {
             string svgImagePath = ImagePathFromLayerType(layer.LayerType);
 
-            return GetImageSource(svgImagePath, fill);
+            return GetImageSource(svgImagePath);
         }
 
         /// <summary>
@@ -89,14 +85,13 @@ namespace WhereToFly.App.Core
         /// Returns an image source for the visibility of the given layer.
         /// </summary>
         /// <param name="layer">layer to use</param>
-        /// <param name="fill">when not null, an alternative fill color for SVG path elements</param>
         /// <returns>image source</returns>
-        public static ImageSource GetLayerVisibilityImageSource(Layer layer, string fill = null)
+        public static ImageSource GetLayerVisibilityImageSource(Layer layer)
         {
             string svgImagePath =
                 layer.IsVisible ? "icons/eye.svg" : "icons/eye-off-outline.svg";
 
-            return GetImageSource(svgImagePath, fill);
+            return GetImageSource(svgImagePath);
         }
 
         /// <summary>
@@ -104,14 +99,13 @@ namespace WhereToFly.App.Core
         /// name.
         /// </summary>
         /// <param name="svgImageName">relative path to the SVG image file</param>
-        /// <param name="fill">when not null, an alternative fill color for SVG path elements</param>
         /// <returns>image source</returns>
-        public static ImageSource GetImageSource(string svgImageName, string fill = null)
+        public static ImageSource GetImageSource(string svgImageName)
         {
             var cache = DependencyService.Get<SvgImageCache>();
             Debug.Assert(cache != null, "cache object must exist");
 
-            string svgText = cache.GetSvgImage(svgImageName, fill);
+            string svgText = cache.GetSvgImage(svgImageName);
 
             return SvgImageSource.FromSvgString(svgText);
         }
@@ -120,9 +114,8 @@ namespace WhereToFly.App.Core
         /// Returns an SVG image xml text from an image path
         /// </summary>
         /// <param name="imagePath">image path</param>
-        /// <param name="fill">when not null, an alternative fill color for SVG path elements</param>
         /// <returns>SVG image xml text, or </returns>
-        public string GetSvgImage(string imagePath, string fill = null)
+        public string GetSvgImage(string imagePath)
         {
             if (this.allImages.ContainsKey(imagePath))
             {
@@ -139,11 +132,6 @@ namespace WhereToFly.App.Core
             catch (Exception)
             {
                 // ignore load errors
-            }
-
-            if (svgText != null && fill != null)
-            {
-                svgText = this.ReplaceSvgPathFillValue(svgText, fill);
             }
 
             this.AddImage(imagePath, svgText);
@@ -211,29 +199,5 @@ namespace WhereToFly.App.Core
             }
         }
 
-        /// <summary>
-        /// Replaces path fill attributes in an SVG image text, e.g. to re-colorize the image.
-        /// </summary>
-        /// <param name="svgText">SVG image text</param>
-        /// <param name="fillValue">fill value to replace, e.g. #000000</param>
-        /// <returns>new SVG image text</returns>
-        private string ReplaceSvgPathFillValue(string svgText, string fillValue)
-        {
-            int pos = 0;
-            while ((pos = svgText.IndexOf("<path fill=", pos)) != -1)
-            {
-                char openingQuote = svgText[pos + 11];
-                int endPos = svgText.IndexOf(openingQuote, pos + 11 + 1);
-
-                if (endPos != -1)
-                {
-                    svgText = svgText.Substring(0, pos + 11) + openingQuote + fillValue + svgText.Substring(endPos);
-                }
-
-                pos += 11;
-            }
-
-            return svgText;
-        }
     }
 }

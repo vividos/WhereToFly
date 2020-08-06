@@ -115,7 +115,7 @@ namespace WhereToFly.App.Core.ViewModels
             this.Distance = myCurrentPosition != null ? myCurrentPosition.DistanceTo(this.location.MapLocation) : 0.0;
 
             this.TypeImageSource =
-                SvgImageCache.GetImageSource(this.location, "#000000");
+                SvgImageCache.GetImageSource(this.location);
 
             this.SetupBindings();
         }

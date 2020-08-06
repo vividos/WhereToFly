@@ -72,7 +72,7 @@ namespace WhereToFly.App.Core.ViewModels
         {
             this.Track = track;
 
-            this.TypeImageSource = SvgImageCache.GetImageSource(track, "#000000");
+            this.TypeImageSource = SvgImageCache.GetImageSource(track);
         }
     }
 }

@@ -101,6 +101,7 @@
 
                                 <!-- Type image -->
                                 <ffimageloadingsvg:SvgCachedImage Source="{Binding TypeImageSource, Mode=OneWay}"
+                                                   ReplaceStringMap="{DynamicResource SvgImageFillDark}"
                                                    WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
                                                    HorizontalOptions="Start" VerticalOptions="Center"
                                                    Grid.Column="0" Grid.RowSpan="3" />

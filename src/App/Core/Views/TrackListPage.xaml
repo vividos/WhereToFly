@@ -85,9 +85,10 @@
 
                                     <!-- Track type image -->
                                     <ffimageloadingsvg:SvgCachedImage Source="{Binding TypeImageSource, Mode=OneWay}"
-                                                   WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
-                                                   HorizontalOptions="Start" VerticalOptions="Center"
-                                                   Grid.Column="0" Grid.RowSpan="2" />
+                                                                      ReplaceStringMap="{DynamicResource SvgImageFillDark}"
+                                                                      WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
+                                                                      HorizontalOptions="Start" VerticalOptions="Center"
+                                                                      Grid.Column="0" Grid.RowSpan="2" />
 
                                     <Frame IsVisible="{Binding IsColorBoxVisible, Mode=OneWay}"
                                            BackgroundColor="{Binding TrackColor, Mode=OneTime}"

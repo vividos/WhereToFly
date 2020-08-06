@@ -67,7 +67,7 @@ namespace WhereToFly.App.Core.ViewModels
         {
             this.layer = layer;
 
-            this.TypeImageSource = SvgImageCache.GetImageSource(layer, "#000000");
+            this.TypeImageSource = SvgImageCache.GetImageSource(layer);
 
             this.SetupBindings();
         }

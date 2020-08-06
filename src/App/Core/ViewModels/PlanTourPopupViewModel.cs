@@ -80,7 +80,7 @@ namespace WhereToFly.App.Core.ViewModels
                 this.parent = parent;
 
                 this.TypeImageSource =
-                    SvgImageCache.GetImageSource(this.Location, "#000000");
+                    SvgImageCache.GetImageSource(this.Location);
 
                 this.MoveUpCommand = new Xamarin.Forms.Command(
                     (obj) => this.parent.MoveUpLocation(this),

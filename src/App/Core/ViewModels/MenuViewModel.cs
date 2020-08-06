@@ -43,7 +43,7 @@ namespace WhereToFly.App.Core.ViewModels
                 this.Title = title;
                 this.PageKey = pageKey;
 
-                this.ImageSource = SvgImageCache.GetImageSource(svgImageName, "#000000");
+                this.ImageSource = SvgImageCache.GetImageSource(svgImageName);
             }
         }
 

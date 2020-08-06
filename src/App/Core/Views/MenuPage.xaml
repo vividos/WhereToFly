@@ -43,6 +43,7 @@
 
                             <!-- menu item icon -->
                             <ffimageloadingsvg:SvgCachedImage Source="{Binding ImageSource, Mode=OneWay}"
+                                                              ReplaceStringMap="{DynamicResource SvgImageFillDark}"
                                                               InputTransparent="True"
                                                               WidthRequest="32" HeightRequest="32"
                                                               HorizontalOptions="Center" VerticalOptions="Center" />

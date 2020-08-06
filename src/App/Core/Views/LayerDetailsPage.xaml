@@ -53,8 +53,9 @@
 
                         <!-- Type image -->
                         <ffimageloadingsvg:SvgCachedImage Source="{Binding TypeImageSource, Mode=OneWay}"
-                                       WidthRequest="64" HeightRequest="64"
-                                       HorizontalOptions="Start" VerticalOptions="Center" />
+                                                          ReplaceStringMap="{DynamicResource SvgImageFillDark}"
+                                                          WidthRequest="64" HeightRequest="64"
+                                                          HorizontalOptions="Start" VerticalOptions="Center" />
 
                         <!-- Name -->
                         <Label Text="{Binding Name, Mode=OneTime}"
