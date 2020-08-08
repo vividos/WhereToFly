@@ -2,13 +2,13 @@
 <pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                  xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
-                 x:Class="WhereToFly.App.Core.Views.WaitingPopupPage"
-                 BackgroundColor="{DynamicResource PageBackgroundColor}">
+                 x:Class="WhereToFly.App.Core.Views.WaitingPopupPage">
 
     <!-- Popup page showing a waiting message and an activity indicator -->
     <StackLayout VerticalOptions="Center"
                  HorizontalOptions="Center"
                  WidthRequest="250"
+                 BackgroundColor="{DynamicResource PageBackgroundColor}"
                  Padding="20">
 
         <!-- Waiting message -->
