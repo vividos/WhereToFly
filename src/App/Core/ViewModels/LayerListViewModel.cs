@@ -44,12 +44,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// Indicates if the layer list is empty. Default layers like location and track layer are
         /// disregarded.
         /// </summary>
-        public bool IsListEmpty
-        {
-            get => this.LayerList == null ||
-                !this.LayerList.Any(layer =>
-                layer.Layer.LayerType != LayerType.LocationLayer && layer.Layer.LayerType != LayerType.TrackLayer);
-        }
+        public bool IsListEmpty => this.LayerList == null || !this.LayerList.Any();
 
         /// <summary>
         /// Command to execute when an item in the layer list has been tapped
