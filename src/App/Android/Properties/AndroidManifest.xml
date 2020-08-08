@@ -5,5 +5,5 @@
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-	<application android:label="Where-to-fly" android:icon="@mipmap/icon"></application>
+	<application android:label="Where-to-fly" android:icon="@mipmap/icon" android:usesCleartextTraffic="true"></application>
 </manifest>
