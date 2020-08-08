@@ -99,15 +99,20 @@ namespace WhereToFly.App.Core
         /// name.
         /// </summary>
         /// <param name="svgImageName">relative path to the SVG image file</param>
+        /// <param name="noReplaceStringMap">when true, no replace string map is set</param>
         /// <returns>image source</returns>
-        public static ImageSource GetImageSource(string svgImageName)
+        public static ImageSource GetImageSource(string svgImageName, bool noReplaceStringMap = false)
         {
             var cache = DependencyService.Get<SvgImageCache>();
             Debug.Assert(cache != null, "cache object must exist");
 
             string svgText = cache.GetSvgImage(svgImageName);
 
-            return SvgImageSource.FromSvgString(svgText);
+            var replaceStringMap = noReplaceStringMap
+                ? null
+                : Application.Current.Resources["SvgImageFillDark"] as Dictionary<string, string>;
+
+            return SvgImageSource.FromSvgString(svgText, replaceStringMap: replaceStringMap);
         }
 
         /// <summary>

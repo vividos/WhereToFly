@@ -77,7 +77,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         public MenuViewModel()
         {
-            this.AppIcon = SvgImageCache.GetImageSource("applogo.svg");
+            this.AppIcon = SvgImageCache.GetImageSource("applogo.svg", noReplaceStringMap: true);
 
             try
             {
