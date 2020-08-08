@@ -160,8 +160,17 @@
     <AndroidAsset Include="Assets\map\Cesium\Widgets\Viewer\Viewer.css" />
     <AndroidAsset Include="Assets\map\Cesium\Widgets\VRButton\VRButton.css" />
     <AndroidAsset Include="Assets\map\Cesium\Widgets\widgets.css" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\ArcType-dc1c5aee.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\arrayRemoveDuplicates-ebc732b0.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\AttributeCompression-9fc99391.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\BoundingRectangle-8de79d83.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\BoxGeometry-ee1413aa.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\Cartesian2-bddc1162.js" />
     <AndroidAsset Include="Assets\map\Cesium\Workers\cesiumWorkerBootstrapper.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\Check-6c0211bc.js" />
     <AndroidAsset Include="Assets\map\Cesium\Workers\combineGeometry.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\ComponentDatatype-6d99a1ee.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\CoplanarPolygonGeometryLibrary-dc8e954f.js" />
     <AndroidAsset Include="Assets\map\Cesium\Workers\createBoxGeometry.js" />
     <AndroidAsset Include="Assets\map\Cesium\Workers\createBoxOutlineGeometry.js" />
     <AndroidAsset Include="Assets\map\Cesium\Workers\createCircleGeometry.js" />
@@ -202,11 +211,44 @@
     <AndroidAsset Include="Assets\map\Cesium\Workers\createVerticesFromQuantizedTerrainMesh.js" />
     <AndroidAsset Include="Assets\map\Cesium\Workers\createWallGeometry.js" />
     <AndroidAsset Include="Assets\map\Cesium\Workers\createWallOutlineGeometry.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\CylinderGeometry-01400a36.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\CylinderGeometryLibrary-b0214ab1.js" />
     <AndroidAsset Include="Assets\map\Cesium\Workers\decodeDraco.js" />
     <AndroidAsset Include="Assets\map\Cesium\Workers\decodeGoogleEarthEnterprisePacket.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\EllipseGeometry-b2472656.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\EllipseGeometryLibrary-c9c767e4.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\EllipseOutlineGeometry-2cffcd24.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\EllipsoidGeodesic-30fae80b.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\EllipsoidGeometry-ceb731dc.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\EllipsoidOutlineGeometry-5b7b6e19.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\EllipsoidRhumbLine-c704bf4c.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\EllipsoidTangentPlane-ed172748.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\EncodedCartesian3-e9c71cf0.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\FrustumGeometry-d632cb92.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\GeometryAttribute-44fb48f1.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\GeometryAttributes-4fcfcf40.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\GeometryInstance-11f9a3bd.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\GeometryOffsetAttribute-7350d9af.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\GeometryPipeline-b49b2e59.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\IndexDatatype-53503fee.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\IntersectionTests-2626c9e9.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\Math-fc8cecf5.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\OrientedBoundingBox-c9ad91c4.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\Plane-231f1723.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\PolygonGeometryLibrary-29b9a52e.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\PolygonPipeline-ff364b47.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\PrimitivePipeline-bde6ab6f.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\RectangleGeometryLibrary-341b00f2.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\RuntimeError-2109023a.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\TerrainEncoding-b34235ca.js" />
     <AndroidAsset Include="Assets\map\Cesium\Workers\transcodeCRNToDXT.js" />
     <AndroidAsset Include="Assets\map\Cesium\Workers\transferTypedArrayTest.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\Transforms-ec27f304.js" />
     <AndroidAsset Include="Assets\map\Cesium\Workers\upsampleQuantizedTerrainMesh.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\VertexFormat-7572c785.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\WebGLConstants-76bb35d1.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\WebMercatorProjection-df58d479.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\when-54c2dc71.js" />
     <AndroidAsset Include="Assets\weathericons.json" />
   </ItemGroup>
   <ItemGroup>
@@ -469,145 +511,19 @@
     <AndroidAsset Include="Assets\defaultLayerOpenAir.txt" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\ArcType-dc1c5aee.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\Color-bc1ab1f9.js" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\arrayRemoveDuplicates-ebc732b0.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\CorridorGeometryLibrary-38c8d28f.js" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\AttributeCompression-9fc99391.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\PolylinePipeline-8a1a1e4f.js" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\BoundingRectangle-8de79d83.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\PolylineVolumeGeometryLibrary-ec7dce94.js" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\BoxGeometry-ee1413aa.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\Cartesian2-bddc1162.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\Check-6c0211bc.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\Color-8abf6fcd.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\ComponentDatatype-6d99a1ee.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\CoplanarPolygonGeometryLibrary-dc8e954f.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\CorridorGeometryLibrary-b37f3dba.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\CylinderGeometry-01400a36.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\CylinderGeometryLibrary-b0214ab1.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\EllipseGeometry-b2472656.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\EllipseGeometryLibrary-c9c767e4.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\EllipseOutlineGeometry-2cffcd24.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\EllipsoidGeodesic-30fae80b.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\EllipsoidGeometry-ceb731dc.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\EllipsoidOutlineGeometry-5b7b6e19.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\EllipsoidRhumbLine-c704bf4c.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\EllipsoidTangentPlane-ed172748.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\EncodedCartesian3-e9c71cf0.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\FrustumGeometry-d632cb92.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\GeometryAttribute-44fb48f1.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\GeometryAttributes-4fcfcf40.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\GeometryInstance-11f9a3bd.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\GeometryOffsetAttribute-7350d9af.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\GeometryPipeline-b49b2e59.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\IndexDatatype-53503fee.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\IntersectionTests-2626c9e9.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\Math-fc8cecf5.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\OrientedBoundingBox-c9ad91c4.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\Plane-231f1723.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\PolygonGeometryLibrary-29b9a52e.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\PolygonPipeline-ff364b47.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\PolylinePipeline-fba5024c.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\PolylineVolumeGeometryLibrary-9d4d82f7.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\PrimitivePipeline-bde6ab6f.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\RectangleGeometryLibrary-341b00f2.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\RuntimeError-2109023a.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\TerrainEncoding-b34235ca.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\Transforms-ec27f304.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\VertexFormat-7572c785.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\WallGeometryLibrary-09410f9b.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\WebGLConstants-76bb35d1.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\WebMercatorProjection-df58d479.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\map\Cesium\Workers\when-54c2dc71.js" />
+    <AndroidAsset Include="Assets\map\Cesium\Workers\WallGeometryLibrary-cfdc73e3.js" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
