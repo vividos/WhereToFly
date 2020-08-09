@@ -542,12 +542,10 @@ MapView.prototype.setMapOverlayType = function (overlayType) {
 
         case 'BlackMarble':
             if (this.blackMarbleLayer === null) {
-                if (this.blackMarbleOverlay === null)
-                    this.blackMarbleOverlay = new Cesium.TileMapServiceImageryProvider({
-                        url: 'https://cesiumjs.org/tilesets/imagery/blackmarble',
-                        maximumLevel: 8,
-                        credit: 'Black Marble imagery courtesy NASA Earth Observatory'
-                    });
+                if (this.blackMarbleOverlay === null) {
+                    // The Earth at Night, also known as Black Marble 2017 and Night Lights
+                    this.blackMarbleOverlay = new Cesium.IonImageryProvider({ assetId: 3812 });
+                }
 
                 this.blackMarbleLayer = layers.addImageryProvider(this.blackMarbleOverlay);
                 this.blackMarbleLayer.alpha = 0.5; // 0.0 is transparent.  1.0 is opaque.

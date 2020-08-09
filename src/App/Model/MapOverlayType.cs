@@ -26,7 +26,7 @@
         ThermalSkywaysKk7 = 3,
 
         /// <summary>
-        /// Displays Black Marble imagery courtesy NASA Earth Observatory
+        /// Displays Black Marble 2017 imagery courtesy NASA Earth Observatory
         /// </summary>
         BlackMarble = 4,
     }

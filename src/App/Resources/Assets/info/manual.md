@@ -293,7 +293,7 @@ The Map tab has several settings:
   * Contour lines: Displays contour lines with a distance of 100 meters
   * Slope + contour lines: Displays contour lines and additionally colors the
     ground based on the slope
-  * NASA Black Marble: Displays the night imagery from NASA
+  * NASA Black Marble 2017: Displays the night imagery from NASA
 
 - Map Shading: Determines how the map is shaded, based on the sun's position:
   * Fixed at 10 am: The sunlight shines on early SE slopes

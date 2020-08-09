@@ -235,7 +235,7 @@ namespace WhereToFly.App.Core.ViewModels
                 new MapOverlayTypeViewModel { Text = "Thermal Skyways (thermal.kk7.ch)", Value = MapOverlayType.ThermalSkywaysKk7 },
                 new MapOverlayTypeViewModel { Text = "Contour lines", Value = MapOverlayType.ContourLines },
                 new MapOverlayTypeViewModel { Text = "Slope + contour lines", Value = MapOverlayType.SlopeAndContourLines },
-                new MapOverlayTypeViewModel { Text = "NASA Black Marble", Value = MapOverlayType.BlackMarble },
+                new MapOverlayTypeViewModel { Text = "NASA Black Marble 2017", Value = MapOverlayType.BlackMarble },
             };
 
             this.CoordinateDisplayFormatItems = new List<CoordinateDisplayFormatViewModel>
