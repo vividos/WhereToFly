@@ -28,7 +28,7 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Task completion source for when map is fully initialized
         /// </summary>
-        private readonly TaskCompletionSource<bool> taskCompletionSourceMapInitialized
+        private TaskCompletionSource<bool> taskCompletionSourceMapInitialized
             = new TaskCompletionSource<bool>();
 
         /// <summary>
@@ -238,6 +238,11 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         public async Task CreateAsync(MapPoint initialCenterPoint, int initialZoomLevel)
         {
+            if (this.taskCompletionSourceMapInitialized.Task.IsCompleted)
+            {
+                this.taskCompletionSourceMapInitialized = new TaskCompletionSource<bool>();
+            }
+
             var options = new
             {
                 id = "mapElement",
