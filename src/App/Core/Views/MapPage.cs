@@ -816,7 +816,8 @@ namespace WhereToFly.App.Core.Views
         /// <param name="newLocationList">list of new locations</param>
         private void AddAndRemoveDisplayedLocations(List<Location> newLocationList)
         {
-            if (!this.locationList.Any() ||
+            if (this.locationList == null ||
+                !this.locationList.Any() ||
                 Math.Abs(newLocationList.Count - this.locationList.Count) > 10)
             {
                 this.ReplaceLocationList(newLocationList);
