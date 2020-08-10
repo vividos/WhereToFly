@@ -231,6 +231,13 @@
     <BundleResource Include="Assets\defaultLayerOpenAir.txt" />
     <BundleResource Include="Assets\map\images\cave.svg" />
     <BundleResource Include="Assets\map\images\mountain-pass.svg" />
+    <Content Include="Assets\info\images\bookmark-plus-outline.svg" />
+    <Content Include="Assets\info\images\export-variant.svg" />
+    <Content Include="Assets\info\images\eye-off-outline.svg" />
+    <BundleResource Include="Assets\info\images\takeoff-directions.png" />
+    <BundleResource Include="Assets\info\images\track-statistics.png" />
+    <BundleResource Include="Assets\info\images\weather-add-weblink.png" />
+    <BundleResource Include="Assets\info\images\track-open-dialog-flight.png" />
     <Content Include="Assets\map\Cesium\Workers\ArcType-dc1c5aee.js" />
     <Content Include="Assets\map\Cesium\Workers\arrayRemoveDuplicates-ebc732b0.js" />
     <Content Include="Assets\map\Cesium\Workers\AttributeCompression-9fc99391.js" />

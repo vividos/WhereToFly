@@ -525,6 +525,27 @@
   <ItemGroup>
     <AndroidAsset Include="Assets\map\Cesium\Workers\WallGeometryLibrary-cfdc73e3.js" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\bookmark-plus-outline.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\eye-off-outline.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\export-variant.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\takeoff-directions.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\track-open-dialog-flight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\track-statistics.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\info\images\weather-add-weblink.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

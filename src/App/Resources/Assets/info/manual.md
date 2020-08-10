@@ -9,16 +9,19 @@ Welcome to the manual page for the Where-to-fly app!
 The 3D map lets you see the terrain profile of the world in a map that can
 display different imagery layers (in this case OpenStreetMap). The map is
 shaded according to the sun's current position. The map can be moved around
-using touch controls.
+using touch controls:
 
 ![Map touch controls](images/map-touch-controls.png)
 
 Locations and tracks can be imported and are displayed on the map. Locations
 can be tapped to show more infos about a pin. Additional custom layers can be
 added that can display other geometric objects, such as thermals, national
-park areas, air spaces or labels.
+park areas, air spaces or labels. Here you can see the details of a summit
+location:
 
 ![Location info](images/location-info.png)
+
+Depending on the map element, different option icons are displayed.
 
 ### Title bar icons
 
@@ -28,9 +31,9 @@ your position with other apps.
 
 The ![Find](images/magnify.svg) button shows a dialog to find a specific
 place, e.g. a mountain or town name. The result is shown with an orange pin.
-From the pin info, you can add a new location pin for the find result.
+From the pin info, you can add a new location pin from the find result.
 
-### Other functions
+### Other map functions
 
 A long tap on the map shows the following menu:
 
@@ -44,7 +47,7 @@ A long tap on the map shows the following menu:
 
 ![Flying range parameters](images/flying-range-menu.png)
 
-- Glide ratio: Determines how fast you sink; glide ratio is given in km
+- Glide ratio: Determines how fast you sink; the glide ratio is given in km
   gliding per 1000m sinking.
 
 A half-transparent blue cone appears on the selected point, showing the areas
@@ -58,13 +61,25 @@ currently loaded custom layers.
 
 ![Layers list](images/layers-list.png)
 
-New layers can be imported with the ![Add layers](images/layers-plus.svg)
-button. A file picker is opened to select a file on the device. Allowed file
-types are CZML. The format is a custom JSON based format from the Cesium
-project.
+The layers list always shows the two default layers "Locations" and "Tracks",
+and additionally all loaded layers. Layers can be set invisible with the
+![set invisible](images/eye-off-outline.svg) icon.
 
-The ![Delete all](images/delete-forever.svg) button removes all
-layers.
+New layers can be imported with the ![Add layers](images/layers-plus.svg)
+button. A menu is shown to select which kind of layer to import:
+
+- Import CZML Layer: Lets you import .czml files in the Cesium JSON format
+- Import OpenAir airspaces: Lets you import airspaces in the OpenAir text
+  format.
+- Download from web: Lets you download files to import from the web.
+
+When selecting the first two items, a file picker is opened to select a file
+on the device. Allowed file types are CZML and OpenAir text files. The CZML
+format is a custom JSON based format from the Cesium project.
+
+The ![Delete all](images/delete-forever.svg) button removes all layers
+(except the two default layers "Locations" and "Tracks", which can't be
+removed).
 
 When long-tapping a single layer entry, a context menu appears with the
 following menu entries:
@@ -79,6 +94,14 @@ following menu entries:
 The location list shows all locations. The list can be filtered using the
 entry line. When no location is imported yet, a message is shown. Tapping on
 an entry shows the details of that location (see below).
+
+To the right of the filter entry line is the takeoff directions selection
+icon. Tapping the icon opens a pop-up dialog that lets you select takeoff
+directions that should be used to filter the location list entries. Note that
+the app tries to recognize the start directions from the location title or
+description text.
+
+![Takeoff directions filter](images/takeoff-directions.png)
 
 The ![Add locations](images/playlist-plus.svg) button adds new
 locations to the list. First, a selection dialog is shown:
@@ -125,12 +148,12 @@ The following title bar icons are available:
 
 ### Live waypoints
 
-Some locations can be updated live, e.g. for lve tracking purposes. The
+Some locations can be updated live, e.g. for live tracking purposes. The
 locations are imported by clicking on weblinks that start with
 `where-to-fly://`. The position and other infos of those live waypoints
 are updated periodically while the app is running. The live waypoint data is
 queried from the Where-to-fly background service. Sources for live waypoints
-currently are Garmin inReach devices or Find me Spot tracker.
+currently are Garmin inReach devices or Find me Spot tracker devices.
 
 ## ![Tracks](../icons/map-marker-distance.svg) Tracks
 
@@ -152,10 +175,15 @@ You can edit the track name and determine if the track is a paragliding
 flight. Flight tracks are colored based on climb or sink rates. If it's not a
 flight, you can select a single color for the track line.
 
+![Open track](images/track-open-dialog-flight.png)
+
 In the rare case that the track has no time points (e.g. for KML LineStrings)
 another field "Track point time interval" appears that lets you specify the
 time delta between the track points. This is only used for correctly
 calculating climb and sink rate.
+
+To adjust the offset of the track point heights, adjust the offset in meters,
+by using the "+" and "-" buttons.
 
 After the track was added, a waiting dialog marked "Sampling track points" is
 shown, for flight tracks only. The track is checked if any track point is
@@ -179,12 +207,16 @@ following menu entries:
 
 ![Track details](images/track-details.png)
 
-The track details shows infos about the track, like distance and duration, and
-some calculated statistics values.
+The track details page shows infos about the track, like distance and
+duration, and a height profile. The second tab shows some calculated
+statistics values.
+
+![Track details](images/track-statistics.png)
 
 The following title bar icons are available:
 
 - ![Zoom to](images/magnify-plus-outline.svg) Zooms to the track on the map
+- ![Export](images/export-variant.svg) Exports the track to a .gpx file
 - ![Delete](images/delete.svg) Deletes the track
 
 ### Track colors
@@ -236,6 +268,11 @@ as forecast and current weather websites, or webcam pages. The app contains a
 fixed list of different websites that can be added to the dashboard by tapping
 on the ![Add new...](images/border-none-variant.svg) "Add new..." tile or by
 using the ![Add](images/playlist-plus.svg) button.
+
+The ![Add bookmark](images/bookmark-plus-outline.svg) button lets you add new
+web lins. The following dialog appears to add the link:
+
+![Add Weblink](images/weather-add-weblink.png)
 
 ### Weather browser
 

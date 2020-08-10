@@ -52,6 +52,7 @@
     <Content Include="Assets\icons\eye-off-outline.svg" />
     <Content Include="Assets\icons\eye.svg" />
     <Content Include="Assets\icons\layers-outline.svg" />
+    <Content Include="Assets\info\images\bookmark-plus-outline.svg" />
     <Content Include="Assets\info\images\border-none-variant.svg" />
     <Content Include="Assets\info\images\calendar-clock.svg" />
     <Content Include="Assets\info\images\camera.svg" />
@@ -63,6 +64,8 @@
     <Content Include="Assets\info\images\delete-forever.svg" />
     <Content Include="Assets\info\images\delete.svg" />
     <Content Include="Assets\info\images\directions.svg" />
+    <Content Include="Assets\info\images\export-variant.svg" />
+    <Content Include="Assets\info\images\eye-off-outline.svg" />
     <Content Include="Assets\info\images\find-dialog.png" />
     <Content Include="Assets\info\images\flying-range-menu.png" />
     <Content Include="Assets\info\images\format-list-bulleted.svg" />
@@ -84,9 +87,13 @@
     <Content Include="Assets\info\images\settings-general.png" />
     <Content Include="Assets\info\images\settings-map.png" />
     <Content Include="Assets\info\images\share-variant.svg" />
+    <Content Include="Assets\info\images\takeoff-directions.png" />
     <Content Include="Assets\info\images\track-details.png" />
     <Content Include="Assets\info\images\track-list.png" />
+    <Content Include="Assets\info\images\track-open-dialog-flight.png" />
     <Content Include="Assets\info\images\track-open-dialog.png" />
+    <Content Include="Assets\info\images\track-statistics.png" />
+    <Content Include="Assets\info\images\weather-add-weblink.png" />
     <Content Include="Assets\info\images\weather-browser.png" />
     <Content Include="Assets\info\images\weather-dashboard.png" />
     <Content Include="Assets\info\images\weather-partly-cloudy.svg" />
