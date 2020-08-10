@@ -24,7 +24,7 @@
                      Command="{Binding ZoomToTrackCommand}"
                      Order="Primary" Priority="0" />
 
-        <ToolbarItem Name="Eport"
+        <ToolbarItem Name="Export"
                      Icon="{Binding Source={StaticResource ExportImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                      Command="{Binding ExportTrackCommand}"
                      Order="Primary" Priority="0" />
