@@ -214,7 +214,6 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task ImportCzmlLayerAsync()
         {
-            FileData result;
             try
             {
                 string[] fileTypes = null;
@@ -224,11 +223,16 @@ namespace WhereToFly.App.Core.ViewModels
                     fileTypes = new string[] { ".czml" };
                 }
 
-                result = await CrossFilePicker.Current.PickFile(fileTypes);
+                FileData result = await CrossFilePicker.Current.PickFile(fileTypes);
                 if (result == null ||
                     string.IsNullOrEmpty(result.FilePath))
                 {
                     return;
+                }
+
+                using (var stream = result.GetStream())
+                {
+                    await OpenFileHelper.OpenLayerFileAsync(stream, result.FileName);
                 }
             }
             catch (Exception ex)
@@ -243,11 +247,6 @@ namespace WhereToFly.App.Core.ViewModels
                 return;
             }
 
-            using (var stream = result.GetStream())
-            {
-                await OpenFileHelper.OpenLayerFileAsync(stream, result.FileName);
-            }
-
             await this.ReloadLayerListAsync();
         }
 
@@ -257,7 +256,6 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task ImportOpenAirAirspacesAsync()
         {
-            FileData result;
             try
             {
                 string[] fileTypes = null;
@@ -271,11 +269,16 @@ namespace WhereToFly.App.Core.ViewModels
                     fileTypes = new string[] { "text/plain" };
                 }
 
-                result = await CrossFilePicker.Current.PickFile(fileTypes);
+                FileData result = await CrossFilePicker.Current.PickFile(fileTypes);
                 if (result == null ||
                     string.IsNullOrEmpty(result.FilePath))
                 {
                     return;
+                }
+
+                using (var stream = result.GetStream())
+                {
+                    await OpenFileHelper.ImportOpenAirAirspaceFile(stream, result.FileName);
                 }
             }
             catch (Exception ex)
@@ -288,11 +291,6 @@ namespace WhereToFly.App.Core.ViewModels
                     "OK");
 
                 return;
-            }
-
-            using (var stream = result.GetStream())
-            {
-                await OpenFileHelper.ImportOpenAirAirspaceFile(stream, result.FileName);
             }
 
             await this.ReloadLayerListAsync();

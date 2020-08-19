@@ -248,7 +248,8 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task ImportTrackAsync()
         {
-            FileData result;
+            bool success = false;
+
             try
             {
                 string[] fileTypes = null;
@@ -258,11 +259,16 @@ namespace WhereToFly.App.Core.ViewModels
                     fileTypes = new string[] { ".kml", ".kmz", ".gpx", ".igc" };
                 }
 
-                result = await CrossFilePicker.Current.PickFile(fileTypes);
+                FileData result = await CrossFilePicker.Current.PickFile(fileTypes);
                 if (result == null ||
                     string.IsNullOrEmpty(result.FilePath))
                 {
                     return;
+                }
+
+                using (var stream = result.GetStream())
+                {
+                    success = await OpenFileHelper.OpenTrackAsync(stream, result.FileName);
                 }
             }
             catch (Exception ex)
@@ -275,13 +281,6 @@ namespace WhereToFly.App.Core.ViewModels
                     "OK");
 
                 return;
-            }
-
-            bool success = false;
-
-            using (var stream = result.GetStream())
-            {
-                success = await OpenFileHelper.OpenTrackAsync(stream, result.FileName);
             }
 
             if (success)

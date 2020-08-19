@@ -410,7 +410,6 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task ImportFromStorageAsync()
         {
-            FileData result;
             try
             {
                 string[] fileTypes = null;
@@ -420,11 +419,16 @@ namespace WhereToFly.App.Core.ViewModels
                     fileTypes = new string[] { ".kml", ".kmz", ".gpx", ".cup" };
                 }
 
-                result = await CrossFilePicker.Current.PickFile(fileTypes);
+                FileData result = await CrossFilePicker.Current.PickFile(fileTypes);
                 if (result == null ||
                     string.IsNullOrEmpty(result.FilePath))
                 {
                     return;
+                }
+
+                using (var stream = result.GetStream())
+                {
+                    await OpenFileHelper.OpenLocationListAsync(stream, result.FileName);
                 }
             }
             catch (Exception ex)
@@ -437,11 +441,6 @@ namespace WhereToFly.App.Core.ViewModels
                     "OK");
 
                 return;
-            }
-
-            using (var stream = result.GetStream())
-            {
-                await OpenFileHelper.OpenLocationListAsync(stream, result.FileName);
             }
 
             this.UpdateLocationList();
