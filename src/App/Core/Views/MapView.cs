@@ -830,6 +830,12 @@ namespace WhereToFly.App.Core.Views
         /// <param name="trackPointHeights">list of track point heights</param>
         private void OnSampledTrackHeights(double[] trackPointHeights)
         {
+            if (trackPointHeights == null)
+            {
+                this.taskCompletionSourceSampleTrackHeights.SetResult(false);
+                return;
+            }
+
             Debug.Assert(
                 trackPointHeights.Length == this.sampleTrackHeightsTrack.TrackPoints.Count,
                 "number of track points must be the same as the number of sampled track point heights");

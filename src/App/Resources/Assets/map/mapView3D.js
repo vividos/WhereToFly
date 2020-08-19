@@ -1292,10 +1292,12 @@ MapView.prototype.sampleTrackHeights = function (track, offsetInMeters) {
                 },
                 function (error) {
                     console.error("MapView.sampleTrackHeights: #9: error while sampling track point heights: " + error);
+                    that.onSampledTrackHeights(null);
                 });
         },
         function (error) {
             console.error("MapView.sampleTrackHeights: #8: error while waiting for terrain provider promise: " + error);
+            that.onSampledTrackHeights(null);
         });
 
     console.log("MapView.sampleTrackHeights: #7: call to sampleTrackHeights() returns.");
