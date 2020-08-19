@@ -1,8 +1,8 @@
 # Release checklist
 
-- [ ] Increase version number in version.md, AndroidManifest.xml,
-      VersionAssemblyInfo.cs, Package.appxmanifest and SonarCloud.cmd
-- [ ] Add changes for the version to info.md
+- [ ] Increase version number in AndroidManifest.xml, VersionAssemblyInfo.cs,
+      Package.appxmanifest and SonarCloud.cmd
+- [ ] Add changes for the version to Changelog.md
 - [ ] Update all NuGet packages
 - [ ] Run unit tests and fix fails
 - [ ] Run StyleCop and fix all warnings
