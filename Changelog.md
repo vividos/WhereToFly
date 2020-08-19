@@ -1,5 +1,12 @@
 # Changelog
 
+1.8.1
+
+- fixed "Sampling track point heights..." not disappearing when device has no
+  network connection
+- fixed crash when opening files from remote file providers (like OneDrive and
+  Google Drive) but the device has no network connection
+
 1.8.0
 
 - fixed displaying the map when there is no mobile network at app startup;
