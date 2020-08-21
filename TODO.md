@@ -17,8 +17,6 @@
 - [ ] Flight range: Add wind direction and speed to flight calculation
 
 ### Layers
-- [ ] Add predefined layers for locations and tracks
-- [ ] Add switching on/off layers in map view
 - [ ] Add live updating layers using CZML updates
 
 ### Locations
@@ -33,7 +31,6 @@
 - [ ] Analyze flight tracks and show analysis on a new tab
 
 ### Weather
-- [ ] Adding custom weather pages from links
 
 ### Live waypoints
 - [ ] Implement live waypoint type for OpenGliderNetwork position
