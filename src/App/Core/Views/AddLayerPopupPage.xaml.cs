@@ -10,7 +10,7 @@ namespace WhereToFly.App.Core.Views
     /// <summary>
     /// Popup page for adding a new layer and edit its properties.
     /// </summary>
-    public partial class AddLayerPopupPage : PopupPage
+    public partial class AddLayerPopupPage : BasePopupPage
     {
         /// <summary>
         /// View model for this popup page

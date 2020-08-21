@@ -10,7 +10,7 @@ namespace WhereToFly.App.Core.Views
     /// <summary>
     /// Popup page for "select weather icon" function.
     /// </summary>
-    public partial class SelectWeatherIconPopupPage : PopupPage
+    public partial class SelectWeatherIconPopupPage : BasePopupPage
     {
         /// <summary>
         /// Task completion source to report back selected weather icon description.

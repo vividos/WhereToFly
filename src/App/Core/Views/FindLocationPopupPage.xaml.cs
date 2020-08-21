@@ -8,7 +8,7 @@ namespace WhereToFly.App.Core.Views
     /// <summary>
     /// Popup page for "Find location" function in order to input a location name.
     /// </summary>
-    public partial class FindLocationPopupPage : PopupPage
+    public partial class FindLocationPopupPage : BasePopupPage
     {
         /// <summary>
         /// Task completion source to report back typed in location name to a task.

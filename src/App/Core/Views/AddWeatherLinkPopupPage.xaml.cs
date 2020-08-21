@@ -10,7 +10,7 @@ namespace WhereToFly.App.Core.Views
     /// <summary>
     /// Popup page for adding a new weather link.
     /// </summary>
-    public partial class AddWeatherLinkPopupPage : PopupPage
+    public partial class AddWeatherLinkPopupPage : BasePopupPage
     {
         /// <summary>
         /// View model for this popup page

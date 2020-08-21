@@ -10,7 +10,7 @@ namespace WhereToFly.App.Core.Views
     /// Popup page to show all locations selected for tour planning. Also lets user start planning
     /// tour.
     /// </summary>
-    public partial class PlanTourPopupPage : PopupPage
+    public partial class PlanTourPopupPage : BasePopupPage
     {
         /// <summary>
         /// Creates a new popup page object

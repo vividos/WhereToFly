@@ -10,7 +10,7 @@ namespace WhereToFly.App.Core.Views
     /// <summary>
     /// Popup page for setting parameters to show flying range.
     /// </summary>
-    public partial class FlyingRangePopupPage : PopupPage
+    public partial class FlyingRangePopupPage : BasePopupPage
     {
         /// <summary>
         /// View model for this popup page

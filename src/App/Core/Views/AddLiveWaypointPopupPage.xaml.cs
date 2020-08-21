@@ -10,7 +10,7 @@ namespace WhereToFly.App.Core.Views
     /// <summary>
     /// Popup page for adding a live waypoint and edit its properties.
     /// </summary>
-    public partial class AddLiveWaypointPopupPage : PopupPage
+    public partial class AddLiveWaypointPopupPage : BasePopupPage
     {
         /// <summary>
         /// Task completion source to report back if live waypoint should be added

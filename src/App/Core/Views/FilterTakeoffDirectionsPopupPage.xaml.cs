@@ -10,7 +10,7 @@ namespace WhereToFly.App.Core.Views
     /// <summary>
     /// Popup page for specifying a filter based on takeoff directions for the location list.
     /// </summary>
-    public partial class FilterTakeoffDirectionsPopupPage : PopupPage
+    public partial class FilterTakeoffDirectionsPopupPage : BasePopupPage
     {
         /// <summary>
         /// View model for this popup page

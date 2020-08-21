@@ -13,7 +13,7 @@ namespace WhereToFly.App.Core.Views
     /// <summary>
     /// Popup page for adding a newly loaded track and edit its properties.
     /// </summary>
-    public partial class AddTrackPopupPage : PopupPage
+    public partial class AddTrackPopupPage : BasePopupPage
     {
         /// <summary>
         /// View model for this popup page
