@@ -110,7 +110,7 @@ namespace WhereToFly.App.Core
 
             var replaceStringMap = noReplaceStringMap
                 ? null
-                : Application.Current.Resources["SvgImageFillDark"] as Dictionary<string, string>;
+                : Application.Current?.Resources["SvgImageFillDark"] as Dictionary<string, string>;
 
             return SvgImageSource.FromSvgString(svgText, replaceStringMap: replaceStringMap);
         }
