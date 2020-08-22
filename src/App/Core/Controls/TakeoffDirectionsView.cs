@@ -369,7 +369,7 @@ namespace WhereToFly.App.Core.Controls
                 {
                     string text = DirectionText[segmentIndex];
 
-                    var textBounds = new SKRect();
+                    var textBounds = default(SKRect);
                     textPaint.MeasureText(text, ref textBounds);
 
                     textPos.Y += textBounds.Height / 2.0f;

@@ -203,6 +203,5 @@ namespace WhereToFly.App.Core
                     return "map/images/map-marker.svg";
             }
         }
-
     }
 }

@@ -121,7 +121,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             App.MapView.SetLayerVisibility(this.Layer);
 
-            this.VisibilityImageSource = SvgImageCache.GetLayerVisibilityImageSource(Layer);
+            this.VisibilityImageSource = SvgImageCache.GetLayerVisibilityImageSource(this.Layer);
             this.OnPropertyChanged(nameof(this.VisibilityImageSource));
         }
 

@@ -130,9 +130,9 @@ namespace WhereToFly.App.Core
         public const string PageKeyInfoPage = "InfoPage";
 
         /// <summary>
-        /// Primary color for User Interface
+        /// GeoLocation: Minimum distance to travel to send the next update
         /// </summary>
-        public static readonly Xamarin.Forms.Color PrimaryColor = Xamarin.Forms.Color.FromHex("2F299E");
+        public const double GeoLocationMinimumDistanceForUpdateInMeters = 2;
 
         /// <summary>
         /// GeoLocation: Time span that must elapse until the next update is sent
@@ -140,9 +140,9 @@ namespace WhereToFly.App.Core
         public static readonly TimeSpan GeoLocationMinimumTimeForUpdate = TimeSpan.FromSeconds(5);
 
         /// <summary>
-        /// GeoLocation: Minimum distance to travel to send the next update
+        /// Primary color for User Interface
         /// </summary>
-        public const double GeoLocationMinimumDistanceForUpdateInMeters = 2;
+        public static readonly Xamarin.Forms.Color PrimaryColor = Xamarin.Forms.Color.FromHex("2F299E");
 
         /// <summary>
         /// Initial center point for the map when no last know position is available

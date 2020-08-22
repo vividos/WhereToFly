@@ -21,6 +21,11 @@ namespace WhereToFly.App.Core.Views
     public class MapView : IMapView
     {
         /// <summary>
+        /// Maximum number of locations that are imported in one JavaScript call
+        /// </summary>
+        private const int MaxLocationListCount = 100;
+
+        /// <summary>
         /// Web view where MapView control is used
         /// </summary>
         private readonly WebView webView;
@@ -60,11 +65,6 @@ namespace WhereToFly.App.Core.Views
         /// Indicates if map control is already initialized
         /// </summary>
         private bool IsInitialized => this.taskCompletionSourceMapInitialized.Task.IsCompleted;
-
-        /// <summary>
-        /// Maximum number of locations that are imported in one JavaScript call
-        /// </summary>
-        private const int MaxLocationListCount = 100;
 
         /// <summary>
         /// Task that is in "finished" state when map is initialized
