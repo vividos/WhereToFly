@@ -1,8 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using WhereToFly.App.Core;
 using WhereToFly.App.Core.ViewModels;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Model;
+using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest.ViewModels
 {
@@ -19,6 +21,10 @@ namespace WhereToFly.App.UnitTest.ViewModels
         public void SetUp()
         {
             Xamarin.Forms.Mocks.MockForms.Init();
+            DependencyService.Register<SvgImageCache>();
+
+            var imageCache = DependencyService.Get<SvgImageCache>();
+            imageCache.AddImage("map/images/mountain-15.svg", string.Empty);
         }
 
         /// <summary>

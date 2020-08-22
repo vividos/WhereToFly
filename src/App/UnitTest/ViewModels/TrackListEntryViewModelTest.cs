@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using WhereToFly.App.Core;
+using WhereToFly.App.Core.Services.SqliteDatabase;
 using WhereToFly.App.Core.ViewModels;
 using Xamarin.Forms;
 
@@ -21,6 +22,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
         {
             Xamarin.Forms.Mocks.MockForms.Init();
             DependencyService.Register<IPlatform, UnitTestPlatform>();
+            DependencyService.Register<IDataService, SqliteDatabaseDataService>();
             DependencyService.Register<SvgImageCache>();
 
             var imageCache = DependencyService.Get<SvgImageCache>();
