@@ -1,15 +1,19 @@
 # Changelog
 
-1.9.0
+## Version 1.9.0
 
-1.8.1
+## Version 1.8.1
+
+Released on 2020-08-19.
 
 - fixed "Sampling track point heights..." not disappearing when device has no
   network connection
 - fixed crash when opening files from remote file providers (like OneDrive and
   Google Drive) but the device has no network connection
 
-1.8.0
+## Version 1.8.0
+
+Released on 2020-08-11.
 
 - fixed displaying the map when there is no mobile network at app startup;
   the terrain is loaded when the mobile network is available again
@@ -25,7 +29,9 @@
 - fixed displaying the Cesium Ion icon on the bottom of the screen
 - using CesiumJS version 1.72
 
-1.7.0
+## Version 1.7.0
+
+Released on 2020-02-17.
 
 - all data is now stored in an SQLite database; improves speed of location
   list; migrating existing data occurs when upgrading to 1.7.0
@@ -37,7 +43,9 @@
 - various bug fixes and improvements
 - using CesiumJS version 1.66
 
-1.6.0 "Crossing the Alps 2019" edition
+## Version 1.6.0 "Crossing the Alps 2019" edition
+
+Released on 2019-07-25.
 
 - added new "layer" menu where CesiumJS .czml files can be loaded as layers
   displayed on the map
@@ -48,7 +56,9 @@
 - updated waypoints for Crossing the Alps 2019
 - using CesiumJS version 1.59
 
-1.5.0
+## Version 1.5.0
+
+Released on 2019-05-28.
 
 - added support for live waypoints that update themselves periodically;
   supported are live waypoints to Garmin inReach and SPOT devices
@@ -64,7 +74,9 @@
 - fixed opening .igc files from with negative latitudes or longitudes
 - added Where-to-fly Windows app (beta)
 
-1.4.0
+## Version 1.4.0
+
+Released on 2018-12-08.
 
 - added importing and showing tracks on map, new track list and track details page
 - added opening .igc files as tracks
@@ -73,13 +85,17 @@
 - added new map imagery type: OpenTopoMap
 - added button on settings page to clear cache used for map view
 
-1.3.1 "Crossing the alps 2018" bugfix edition
+## Version 1.3.1 "Crossing the alps 2018" bugfix edition
+
+Released on 2018-07-21.
 
 - fixed bug where a newly added location (using find or long-tap to add) wasn't shown on map
 - fixed bug displaying distances with many fractional digits
 - updated waypoints for Crossing the alps 2018
 
-1.3.0 "Crossing the alps 2018" edition
+## Version 1.3.0 "Crossing the alps 2018" edition
+
+Released on 2018-06-26.
 
 - introduced hamburger menu with drawer to navigate between top-level pages
 - added weather dashboard, showing weather icons that can be links to external web pages or apps
@@ -91,13 +107,17 @@
 - fixed crash on Android before 8.0; the "Skyways" overlay is not available on these devices
 - other small bugfixes and improvements
 
-1.2.1
+## Version 1.2.1
+
+Released on 2018-05-18.
 
 - fixed crash at startup for some Android devices
 - fixed loading terrain height data
 - fixed displaying large number of pins when many locations are loaded
 
-1.2.0
+## Version 1.2.0
+
+Released on 2018-05-04.
 
 - added "Location list" and "Location details" pages, showing list and details of the loaded placemarks
 - added map overlay "Thermal Skyways (thermal.kk7.ch)"
@@ -107,12 +127,16 @@
 - fixed crash when picking files from "Downloads" or other special folders
 - many other bugfixes and minor changes
 
-1.1.0
+## Version 1.1.0
+
+Released on 2018-02-03.
 
 - added imagery layer "Aerials + Labels (Bing Maps)"
 - added map overlays "Contour lines", "Slope + contour lines" and "NASA Black Marble"
 
-1.0.0 "NZ down under" edition for Jonas and Julian.
+## Version 1.0.0 "NZ down under" edition for Jonas and Julian.
+
+Released on 2018-01-29.
 
 - showing 3D map of mountains to hike up and fly down, with shading based on daylight settings
 - showing locations and detail infos, based on imported KML placemarks, e.g. take off and landing place locations
