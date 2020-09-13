@@ -70,7 +70,7 @@ namespace WhereToFly.App.Android
             ICursor cursor = this.resolver.Query(uri, null, null, null, null);
             cursor.MoveToFirst();
 
-            int nameIndex = cursor.GetColumnIndex(global::Android.Provider.MediaStore.MediaColumns.DisplayName);
+            int nameIndex = cursor.GetColumnIndex(global::Android.Provider.MediaStore.IMediaColumns.DisplayName);
             return nameIndex >= 0 ? cursor.GetString(nameIndex) : null;
         }
 
