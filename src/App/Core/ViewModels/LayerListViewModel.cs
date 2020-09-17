@@ -1,6 +1,4 @@
 ﻿using MvvmHelpers.Commands;
-using Plugin.FilePicker;
-using Plugin.FilePicker.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using WhereToFly.App.Core.Services;
 using WhereToFly.Shared.Model;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.ViewModels
@@ -216,21 +215,24 @@ namespace WhereToFly.App.Core.ViewModels
         {
             try
             {
-                string[] fileTypes = null;
-
-                if (Device.RuntimePlatform == Device.UWP)
+                var options = new PickOptions
                 {
-                    fileTypes = new string[] { ".czml" };
-                }
+                    FileTypes = new FilePickerFileType(
+                        new Dictionary<DevicePlatform, IEnumerable<string>>
+                        {
+                            { DevicePlatform.UWP, new string[] {".czml" } },
+                        }),
+                    PickerTitle = "Select a CZML layer file to import"
+                };
 
-                FileData result = await CrossFilePicker.Current.PickFile(fileTypes);
+                var result = await FilePicker.PickAsync(options);
                 if (result == null ||
-                    string.IsNullOrEmpty(result.FilePath))
+                    string.IsNullOrEmpty(result.FullPath))
                 {
                     return;
                 }
 
-                using (var stream = result.GetStream())
+                using (var stream = await result.OpenReadAsync())
                 {
                     await OpenFileHelper.OpenLayerFileAsync(stream, result.FileName);
                 }
@@ -258,25 +260,25 @@ namespace WhereToFly.App.Core.ViewModels
         {
             try
             {
-                string[] fileTypes = null;
-
-                if (Device.RuntimePlatform == Device.UWP)
+                var options = new PickOptions
                 {
-                    fileTypes = new string[] { ".txt" };
-                }
-                else if (Device.RuntimePlatform == Device.Android)
-                {
-                    fileTypes = new string[] { "text/plain" };
-                }
+                    FileTypes = new FilePickerFileType(
+                        new Dictionary<DevicePlatform, IEnumerable<string>>
+                        {
+                            { DevicePlatform.Android, new string[] { "text/plain" } },
+                            { DevicePlatform.UWP, new string[] { ".txt" } },
+                        }),
+                    PickerTitle = "Select an OpenAir text file to import"
+                };
 
-                FileData result = await CrossFilePicker.Current.PickFile(fileTypes);
+                var result = await FilePicker.PickAsync(options);
                 if (result == null ||
-                    string.IsNullOrEmpty(result.FilePath))
+                    string.IsNullOrEmpty(result.FullPath))
                 {
                     return;
                 }
 
-                using (var stream = result.GetStream())
+                using (var stream = await result.OpenReadAsync())
                 {
                     await OpenFileHelper.ImportOpenAirAirspaceFile(stream, result.FileName);
                 }

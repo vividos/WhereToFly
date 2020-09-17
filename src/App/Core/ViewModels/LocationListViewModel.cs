@@ -1,6 +1,4 @@
 ﻿using MvvmHelpers.Commands;
-using Plugin.FilePicker;
-using Plugin.FilePicker.Abstractions;
 using Plugin.Geolocator.Abstractions;
 using System;
 using System.Collections.Generic;
@@ -414,21 +412,24 @@ namespace WhereToFly.App.Core.ViewModels
         {
             try
             {
-                string[] fileTypes = null;
-
-                if (Device.RuntimePlatform == Device.UWP)
+                var options = new Xamarin.Essentials.PickOptions
                 {
-                    fileTypes = new string[] { ".kml", ".kmz", ".gpx", ".cup" };
-                }
+                    FileTypes = new Xamarin.Essentials.FilePickerFileType(
+                        new Dictionary<Xamarin.Essentials.DevicePlatform, IEnumerable<string>>
+                        {
+                            { Xamarin.Essentials.DevicePlatform.UWP, new string[] { ".kml", ".kmz", ".gpx", ".cup" } },
+                        }),
+                    PickerTitle = "Select a Location file to import"
+                };
 
-                FileData result = await CrossFilePicker.Current.PickFile(fileTypes);
+                var result = await Xamarin.Essentials.FilePicker.PickAsync(options);
                 if (result == null ||
-                    string.IsNullOrEmpty(result.FilePath))
+                    string.IsNullOrEmpty(result.FullPath))
                 {
                     return;
                 }
 
-                using (var stream = result.GetStream())
+                using (var stream = await result.OpenReadAsync())
                 {
                     await OpenFileHelper.OpenLocationListAsync(stream, result.FileName);
                 }

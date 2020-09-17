@@ -25,7 +25,6 @@ The library is licensed using the
 
 The app uses the following [Xamarin Plugins](https://github.com/jamesmontemagno/Xamarin.Plugins):
 - Xam.Plugin.Geolocator: Geo-location of user
-- Xamarin.Plugin.FilePicker: File picker
 
 All plugins are licensed using the
 [MIT License](https://github.com/jamesmontemagno/GeolocatorPlugin/blob/master/LICENSE).
