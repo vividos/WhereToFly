@@ -10,8 +10,8 @@
 
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
-    <PackageReference Include="Refit" Version="5.1.67" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.10.0.19839">
+    <PackageReference Include="Refit" Version="5.2.1" />
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.13.0.21683">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

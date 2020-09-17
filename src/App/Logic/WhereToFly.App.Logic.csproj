@@ -24,9 +24,9 @@
   
   <ItemGroup>
     <PackageReference Include="HtmlAgilityPack" Version="1.11.24" />
-    <PackageReference Include="Markdig" Version="0.20.0" />
-    <PackageReference Include="Refit" Version="5.1.67" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.10.0.19839">
+    <PackageReference Include="Markdig" Version="0.21.1" />
+    <PackageReference Include="Refit" Version="5.2.1" />
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.13.0.21683">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
