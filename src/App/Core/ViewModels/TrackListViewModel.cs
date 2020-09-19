@@ -95,6 +95,9 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         private void SetupBindings()
         {
+            this.IsListRefreshActive = true;
+            this.OnPropertyChanged(nameof(this.IsListEmpty));
+
             Task.Run(this.ReloadTrackListAsync);
 
             this.ImportTrackCommand = new AsyncCommand(this.ImportTrackAsync);
@@ -132,6 +135,7 @@ namespace WhereToFly.App.Core.ViewModels
         private void UpdateTrackList()
         {
             this.IsListRefreshActive = true;
+            this.OnPropertyChanged(nameof(this.IsListEmpty));
 
             this.DeleteTrackListCommand.RaiseCanExecuteChanged();
 
@@ -143,6 +147,7 @@ namespace WhereToFly.App.Core.ViewModels
             this.IsListRefreshActive = false;
 
             this.OnPropertyChanged(nameof(this.TrackList));
+            this.OnPropertyChanged(nameof(this.IsListRefreshActive));
             this.OnPropertyChanged(nameof(this.IsListEmpty));
 
             this.DeleteTrackListCommand.RaiseCanExecuteChanged();
