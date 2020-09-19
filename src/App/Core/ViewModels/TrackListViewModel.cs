@@ -255,7 +255,9 @@ namespace WhereToFly.App.Core.ViewModels
                     FileTypes = new Xamarin.Essentials.FilePickerFileType(
                         new Dictionary<Xamarin.Essentials.DevicePlatform, IEnumerable<string>>
                         {
+                            { Xamarin.Essentials.DevicePlatform.Android, null },
                             { Xamarin.Essentials.DevicePlatform.UWP, new string[] { ".kml", ".kmz", ".gpx", ".igc" } },
+                            { Xamarin.Essentials.DevicePlatform.iOS, null },
                         }),
                     PickerTitle = "Select a Track file to import"
                 };

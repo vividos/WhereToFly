@@ -220,7 +220,9 @@ namespace WhereToFly.App.Core.ViewModels
                     FileTypes = new FilePickerFileType(
                         new Dictionary<DevicePlatform, IEnumerable<string>>
                         {
+                            { DevicePlatform.Android, null },
                             { DevicePlatform.UWP, new string[] {".czml" } },
+                            { DevicePlatform.iOS, null },
                         }),
                     PickerTitle = "Select a CZML layer file to import"
                 };
@@ -267,6 +269,7 @@ namespace WhereToFly.App.Core.ViewModels
                         {
                             { DevicePlatform.Android, new string[] { "text/plain" } },
                             { DevicePlatform.UWP, new string[] { ".txt" } },
+                            { DevicePlatform.iOS, null },
                         }),
                     PickerTitle = "Select an OpenAir text file to import"
                 };
