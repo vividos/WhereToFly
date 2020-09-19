@@ -236,5 +236,22 @@ namespace WhereToFly.App.Core.Views
                 this.OpenWebLink(description);
             }
         }
+
+        /// <summary>
+        /// Called when the hardware back button is pressed; navigates back in browser, if
+        /// possible, or lets Forms handle the navigation.
+        /// </summary>
+        /// <returns>true when the back button press was handled, false when not</returns>
+        protected override bool OnBackButtonPressed()
+        {
+            if (this.Content is WebView webView &&
+                webView.CanGoBack)
+            {
+                webView.GoBack();
+                return true;
+            }
+
+            return base.OnBackButtonPressed();
+        }
     }
 }
