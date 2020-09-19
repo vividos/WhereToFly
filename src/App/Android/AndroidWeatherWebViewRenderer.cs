@@ -145,5 +145,25 @@ namespace WhereToFly.App.Android
 
             Toast.MakeText(this.Context, "Image download started...", ToastLength.Short).Show();
         }
+
+        #region IDisposable Support
+        /// <summary>
+        /// Disposes of managed and unmanaged resources
+        /// </summary>
+        /// <param name="disposing">
+        /// true when called from Dispose(), false when called from finalizer
+        /// </param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing &&
+                this.gestureDetector != null)
+            {
+                this.gestureDetector.Dispose();
+                this.gestureDetector = null;
+            }
+
+            base.Dispose(disposing);
+        }
+        #endregion
     }
 }

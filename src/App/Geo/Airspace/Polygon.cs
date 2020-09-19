@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 
+#pragma warning disable CA1034 // Nested types should not be visible
+
 namespace WhereToFly.App.Geo.Airspace
 {
     /// <summary>

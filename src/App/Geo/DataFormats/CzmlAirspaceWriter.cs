@@ -8,6 +8,8 @@ using System.Text;
 using WhereToFly.App.Geo.Airspace;
 using WhereToFly.Shared.Geo;
 
+#pragma warning disable CA1034 // Nested types should not be visible
+
 namespace WhereToFly.App.Geo.DataFormats
 {
     /// <summary>
@@ -18,12 +20,12 @@ namespace WhereToFly.App.Geo.DataFormats
         /// <summary>
         /// Value to use when an Unlimited Altitude object should be displayed; in meter
         /// </summary>
-        private static readonly double UnlimitedAltitudeHeightInMeter = 10000.0;
+        private const double UnlimitedAltitudeHeightInMeter = 10000.0;
 
         /// <summary>
         /// Default airspace color
         /// </summary>
-        private static readonly string DefaultAirspaceColor = "C0C0C0";
+        private const string DefaultAirspaceColor = "C0C0C0";
 
         /// <summary>
         /// CZML packet header
@@ -392,8 +394,10 @@ namespace WhereToFly.App.Geo.DataFormats
                 description = null;
             }
 
-            var objectList = new List<object>();
-            objectList.Add(new CzmlPacketHeader(name, description));
+            var objectList = new List<object>
+            {
+                new CzmlPacketHeader(name, description)
+            };
 
             foreach (var airspace in allAirspaces)
             {
@@ -561,7 +565,7 @@ namespace WhereToFly.App.Geo.DataFormats
                 startAngle += 360.0;
             }
 
-            bool isAtEnd = false;
+            bool isAtEnd;
             double step = (isClockwise ? 1.0 : -1.0) * ArcSegmentAngleStepByRadius(arcSegment.Radius);
             double bearing = startAngle;
 

@@ -42,7 +42,7 @@ namespace WhereToFly.App.Android
             }
             catch (ActivityNotFoundException ex)
             {
-                Debug.WriteLine($"activity for package {packageName} not found: {ex.ToString()}");
+                Debug.WriteLine($"activity for package {packageName} not found: {ex}");
                 return false;
             }
         }

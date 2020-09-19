@@ -105,9 +105,7 @@ namespace WhereToFly.WebApi.Logic.Services
         {
             var file = KmlFile.Load(stream);
 
-            var placemark = file.Root.Flatten().FirstOrDefault(x => x is Placemark) as Placemark;
-
-            if (placemark == null)
+            if (!(file.Root.Flatten().FirstOrDefault(x => x is Placemark) is Placemark placemark))
             {
                 throw new FormatException("No Garmin inReach position/placemark returned from the server");
             }

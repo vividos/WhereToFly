@@ -33,7 +33,7 @@ namespace WhereToFly.App.Core
         /// Task completion source which task is completed when the app has finished
         /// initialisation
         /// </summary>
-        private static TaskCompletionSource<bool> taskCompletionSourceInitialized
+        private static readonly TaskCompletionSource<bool> TaskCompletionSourceInitialized
             = new TaskCompletionSource<bool>();
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace WhereToFly.App.Core
         /// <summary>
         /// Task that can be awaited to wait for a completed app initialisation
         /// </summary>
-        public static Task InitializedTask { get => taskCompletionSourceInitialized.Task; }
+        public static Task InitializedTask { get => TaskCompletionSourceInitialized.Task; }
 
         /// <summary>
         /// Creates a new app object
@@ -92,7 +92,7 @@ namespace WhereToFly.App.Core
                 ? args.Exception.InnerException
                 : args.Exception;
 
-            Debug.WriteLine($"UnobservedTaskException: {ex.ToString()}");
+            Debug.WriteLine($"UnobservedTaskException: {ex}");
 
             LogError(ex);
         }
@@ -148,7 +148,7 @@ namespace WhereToFly.App.Core
 
             await InitLiveWaypointRefreshService();
 
-            taskCompletionSourceInitialized.SetResult(true);
+            TaskCompletionSourceInitialized.SetResult(true);
         }
 
         /// <summary>

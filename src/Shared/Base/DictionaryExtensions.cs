@@ -24,8 +24,7 @@ namespace WhereToFly.Shared.Base
                 throw new ArgumentNullException(nameof(dict));
             }
 
-            TValue value;
-            return dict.TryGetValue(key, out value) ? value : defaultValue;
+            return dict.TryGetValue(key, out TValue value) ? value : defaultValue;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using WhereToFly.App.Core;
+﻿using System;
+using WhereToFly.App.Core;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(WhereToFly.App.UWP.UwpAppManager))]
@@ -27,7 +28,7 @@ namespace WhereToFly.App.UWP
         /// <returns>image data bytes, or null when no image could be retrieved</returns>
         public byte[] GetAppIcon(string packageName)
         {
-            return new byte[0];
+            return Array.Empty<byte>();
         }
     }
 }

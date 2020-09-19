@@ -221,7 +221,7 @@ namespace WhereToFly.App.Core.ViewModels
                         new Dictionary<DevicePlatform, IEnumerable<string>>
                         {
                             { DevicePlatform.Android, null },
-                            { DevicePlatform.UWP, new string[] {".czml" } },
+                            { DevicePlatform.UWP, new string[] { ".czml" } },
                             { DevicePlatform.iOS, null },
                         }),
                     PickerTitle = "Select a CZML layer file to import"

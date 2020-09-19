@@ -4,7 +4,7 @@
     "Microsoft.StyleCop.CSharp.NamingRules",
     "SA1300:ElementMustBeginWithUpperCaseLetter",
     Scope = "namespace",
-    Target = "WhereToFly.App.iOS",
+    Target = "~N:WhereToFly.App.iOS",
     Justification = "iOS is a proper name")]
 
 namespace WhereToFly.App.iOS

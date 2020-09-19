@@ -18,7 +18,7 @@ namespace WhereToFly.App.Geo.DataFormats
         /// <summary>
         /// GPX namespace to use
         /// </summary>
-        private static readonly string GpxNamespace = "http://www.topografix.com/GPX/1/1";
+        private const string GpxNamespace = "http://www.topografix.com/GPX/1/1";
 
         /// <summary>
         /// GPX xml document

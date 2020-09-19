@@ -167,9 +167,7 @@ namespace WhereToFly.Shared.Model
             /// <param name="serializer">json serializer</param>
             public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
             {
-                var point = value as MapPoint;
-
-                if (point == null)
+                if (!(value is MapPoint point))
                 {
                     serializer.Serialize(writer, null);
                 }

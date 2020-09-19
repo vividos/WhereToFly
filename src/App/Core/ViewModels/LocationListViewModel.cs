@@ -546,11 +546,6 @@ namespace WhereToFly.App.Core.ViewModels
 
         #region IDisposable Support
         /// <summary>
-        /// To detect redundant calls
-        /// </summary>
-        private bool disposedValue = false;
-
-        /// <summary>
         /// Disposes of managed and unmanaged resources
         /// </summary>
         /// <param name="disposing">
@@ -558,16 +553,12 @@ namespace WhereToFly.App.Core.ViewModels
         /// </param>
         protected virtual void Dispose(bool disposing)
         {
-            if (!this.disposedValue)
+            if (disposing &&
+                this.filterTextUpdateTimer != null)
             {
-                if (disposing)
-                {
-                    this.filterTextUpdateTimer.Stop();
-                    this.filterTextUpdateTimer.Dispose();
-                    this.filterTextUpdateTimer = null;
-                }
-
-                this.disposedValue = true;
+                this.filterTextUpdateTimer.Stop();
+                this.filterTextUpdateTimer.Dispose();
+                this.filterTextUpdateTimer = null;
             }
         }
 

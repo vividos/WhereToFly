@@ -63,7 +63,7 @@ namespace WhereToFly.WebApi.Logic.Services
 
             string liveFeedId = uri.Data;
 
-            Model.RootObject result = null;
+            Model.RootObject result;
             if (liveFeedId != "xxx")
             {
                 result = await this.findMeSpotApi.GetLatest(liveFeedId);

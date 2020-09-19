@@ -6,7 +6,7 @@ namespace WhereToFly.App.UITest
     /// <summary>
     /// App initializer for unit tests; initializes IApp instance, depending on the platform.
     /// </summary>
-    public class AppInitializer
+    public static class AppInitializer
     {
         /// <summary>
         /// Starts up app for the given platform
