@@ -72,7 +72,8 @@ namespace WhereToFly.App.Core.Views
         private async Task OnNavigated_WebView(object sender, WebNavigatedEventArgs args)
         {
             if (sender is WebView webView &&
-                args.Url.Contains("https://www.austrocontrol.at/flugwetter/start.php"))
+                (args.Url.Contains("https://www.austrocontrol.at/flugwetter/start.php") ||
+                args.Url.Contains("https://www.austrocontrol.at/flugwetter/timeout.php")))
             {
                 await PasteAlpthermUsernamePassword(webView);
             }
