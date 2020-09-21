@@ -24,12 +24,12 @@
             </Style>
 
             <Style TargetType="Label">
-                <Setter Property="TextColor" Value="{DynamicResource ElementTextColor}" />
+                <Setter Property="TextColor" Value="{DynamicResource LabelTextColor}" />
             </Style>
 
             <Style TargetType="Button">
                 <Setter Property="TextColor" Value="{DynamicResource ElementTextColor}" />
-                <Setter Property="BackgroundColor" Value="{DynamicResource ElementBackgroundColor}" />
+                <Setter Property="BackgroundColor" Value="{DynamicResource ButtonBackgroundColor}" />
                 <Setter Property="TextTransform" Value="None" />
             </Style>
 

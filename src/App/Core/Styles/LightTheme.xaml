@@ -27,7 +27,9 @@
     <Color x:Key="ListViewItemBackgroundColor">#e0e0e0</Color>
 
     <!-- Colors for different elements -->
-    <Color x:Key="ElementBackgroundColor">White</Color>
-    <Color x:Key="ElementTextColor">Black</Color>
+    <Color x:Key="ElementBackgroundColor">#F5F5F5</Color>
+    <Color x:Key="ElementTextColor">#1C1C1C</Color>
+    <Color x:Key="LabelTextColor">#707070</Color>
+    <Color x:Key="ButtonBackgroundColor">#D7D7D7</Color>
 
 </ResourceDictionary>
