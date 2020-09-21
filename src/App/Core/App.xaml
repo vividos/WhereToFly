@@ -30,6 +30,7 @@
             <Style TargetType="Button">
                 <Setter Property="TextColor" Value="{DynamicResource ElementTextColor}" />
                 <Setter Property="BackgroundColor" Value="{DynamicResource ElementBackgroundColor}" />
+                <Setter Property="TextTransform" Value="None" />
             </Style>
 
             <Style TargetType="TabbedPage">
@@ -38,6 +39,14 @@
             </Style>
 
         </ResourceDictionary>-->
+
+        <ResourceDictionary>
+
+            <Style TargetType="Button">
+                <Setter Property="TextTransform" Value="None" />
+            </Style>
+
+        </ResourceDictionary>
 
     </Application.Resources>
 </Application>
