@@ -235,7 +235,17 @@ namespace WhereToFly.App.Core.ViewModels
                 desc = HtmlConverter.FromMarkdown(desc, null);
             }
 
-            return $"<span style=\"font-family:sans-serif\">{desc}</span>";
+            string styles;
+            if (Styles.ThemeHelper.CurrentTheme == Model.Theme.Light)
+            {
+                styles = "<style> body { color: black; background-color: white; } </style>";
+            }
+            else
+            {
+                styles = "<style> body { color: #ceced3; background-color: #202124; } a { color: #3b34c6; } </style>";
+            }
+
+            return $"{styles}<span style=\"font-family:sans-serif\">{desc}</span>";
         }
 
         /// <summary>
