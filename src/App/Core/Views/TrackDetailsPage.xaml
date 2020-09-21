@@ -9,32 +9,34 @@
 
     <ContentPage.Content>
 
-        <!-- stack layout with track details grid -->
-        <StackLayout Orientation="Vertical">
+        <ScrollView Orientation="Vertical">
 
-            <!-- Grid with all track details -->
-            <Grid WidthRequest="350" MinimumWidthRequest="350"
+            <!-- stack layout with track details grid and height profile view -->
+            <StackLayout Orientation="Vertical">
+
+                <!-- Grid with all track details -->
+                <Grid WidthRequest="350" MinimumWidthRequest="350"
                   HorizontalOptions="Center" Padding="8"
                   ColumnSpacing="16" RowSpacing="16">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="1*" />
-                </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
 
-                <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                    <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
 
-                    <!-- Type image -->
-                    <ffimageloadingsvg:SvgCachedImage Source="{Binding TypeImageSource, Mode=OneWay}"
+                        <!-- Type image -->
+                        <ffimageloadingsvg:SvgCachedImage Source="{Binding TypeImageSource, Mode=OneWay}"
                                                       ReplaceStringMap="{DynamicResource SvgImageFillDark}"
                                                       WidthRequest="64" HeightRequest="64"
                                                       HorizontalOptions="Start" VerticalOptions="Center" />
 
-                    <Frame IsVisible="{Binding IsColorBoxVisible, Mode=OneWay}"
+                        <Frame IsVisible="{Binding IsColorBoxVisible, Mode=OneWay}"
                            BackgroundColor="{Binding TrackColor, Mode=OneTime}"
                            WidthRequest="16" HeightRequest="48"
                            VerticalOptions="Center"
@@ -43,28 +45,29 @@
                            CornerRadius="3"
                            HasShadow="False" />
 
-                    <!-- Name -->
-                    <Label Text="{Binding Name, Mode=OneTime}"
+                        <!-- Name -->
+                        <Label Text="{Binding Name, Mode=OneTime}"
                            FontSize="Large" FontAttributes="Bold"
                            VerticalOptions="Center" />
-                </StackLayout>
+                    </StackLayout>
 
-                <!-- Distance -->
-                <Label Grid.Row="1" Grid.Column="0" Text="Distance" />
-                <Label Grid.Row="1" Grid.Column="1" Text="{Binding Distance, Mode=OneTime}" />
+                    <!-- Distance -->
+                    <Label Grid.Row="1" Grid.Column="0" Text="Distance" />
+                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Distance, Mode=OneTime}" />
 
-                <!-- Duration -->
-                <Label Grid.Row="2" Grid.Column="0" Text="Duration" />
-                <Label Grid.Row="2" Grid.Column="1" Text="{Binding Duration, Mode=OneTime}" />
-            </Grid>
+                    <!-- Duration -->
+                    <Label Grid.Row="2" Grid.Column="0" Text="Duration" />
+                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding Duration, Mode=OneTime}" />
+                </Grid>
 
-            <!-- Height profile -->
-            <controls:HeightProfileWebView Track="{Binding Track, Mode=OneWay}"
+                <!-- Height profile -->
+                <controls:HeightProfileWebView Track="{Binding Track, Mode=OneWay}"
                                            WidthRequest="600"
                                            HeightRequest="300"
                                            HorizontalOptions="CenterAndExpand"
                                            VerticalOptions="FillAndExpand" />
 
-        </StackLayout>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

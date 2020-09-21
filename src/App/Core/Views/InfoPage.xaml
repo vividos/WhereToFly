@@ -32,14 +32,16 @@
                 <CarouselView.ItemTemplate>
                     <DataTemplate>
 
-                        <!-- Header image and a scrollable webview -->
+                        <!-- Header image and a webview, both scrollable -->
                         <StackLayout VerticalOptions="Fill" Margin="20">
-                            <Image Source="{Binding Image, Mode=OneTime}" />
                             <ScrollView>
-                                <controls:AutoResizeWebView HorizontalOptions="FillAndExpand"
-                                                            VerticalOptions="FillAndExpand"
-                                                            HeightRequest="20"
-                                                            Source="{Binding WebViewSource}" />
+                                <StackLayout>
+                                    <Image Source="{Binding Image, Mode=OneTime}" />
+                                    <controls:AutoResizeWebView HorizontalOptions="FillAndExpand"
+                                                                VerticalOptions="FillAndExpand"
+                                                                HeightRequest="20"
+                                                                Source="{Binding WebViewSource}" />
+                                </StackLayout>
                             </ScrollView>
                         </StackLayout>
                     </DataTemplate>

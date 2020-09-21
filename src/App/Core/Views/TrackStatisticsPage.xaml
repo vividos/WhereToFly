@@ -7,8 +7,8 @@
 
     <ContentPage.Content>
 
-        <!-- stack layout with track statistics grid -->
-        <StackLayout Orientation="Vertical">
+        <!-- scroll view with track statistics grid -->
+        <ScrollView Orientation="Vertical">
 
             <!-- Grid with all track statistics -->
             <Grid WidthRequest="350" MinimumWidthRequest="350"
@@ -81,6 +81,6 @@
                 <Label Grid.Row="11" Grid.Column="1" Text="{Binding AverageSpeed, Mode=OneTime}" />
             </Grid>
 
-        </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
