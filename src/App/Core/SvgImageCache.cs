@@ -108,9 +108,13 @@ namespace WhereToFly.App.Core
 
             string svgText = cache.GetSvgImage(svgImageName);
 
-            var replaceStringMap = noReplaceStringMap
-                ? null
-                : Application.Current?.Resources["SvgImageFillDark"] as Dictionary<string, string>;
+            Dictionary<string, string> replaceStringMap = null;
+            if (!noReplaceStringMap &&
+                Application.Current?.Resources != null &&
+                Application.Current.Resources.ContainsKey("SvgImageFillDark"))
+            {
+                replaceStringMap = Application.Current.Resources["SvgImageFillDark"] as Dictionary<string, string>;
+            }
 
             return SvgImageSource.FromSvgString(svgText, replaceStringMap: replaceStringMap);
         }
