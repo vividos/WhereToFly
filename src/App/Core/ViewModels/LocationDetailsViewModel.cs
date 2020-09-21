@@ -165,6 +165,11 @@ namespace WhereToFly.App.Core.ViewModels
         /// Command to execute when "delete" menu item is selected on a location
         /// </summary>
         public ICommand DeleteLocationCommand { get; set; }
+
+        /// <summary>
+        /// Command to execute when user tapped on the internet link
+        /// </summary>
+        public ICommand InternetLinkTappedCommand { get; set; }
         #endregion
 
         /// <summary>
@@ -203,6 +208,11 @@ namespace WhereToFly.App.Core.ViewModels
             this.NavigateToLocationCommand = new AsyncCommand(this.OnNavigateToLocationAsync);
             this.ShareLocationCommand = new AsyncCommand(this.OnShareLocationAsync);
             this.DeleteLocationCommand = new AsyncCommand(this.OnDeleteLocationAsync);
+
+            if (Uri.TryCreate(this.InternetLink, UriKind.Absolute, out Uri _))
+            {
+                this.InternetLinkTappedCommand = new AsyncCommand(this.OnInternetLinkTappedAsync);
+            }
 
             Task.Run(this.UpdateDistance);
         }
@@ -368,6 +378,16 @@ namespace WhereToFly.App.Core.ViewModels
             await NavigationService.Instance.GoBack();
 
             App.ShowToast("Selected location was deleted.");
+        }
+
+        /// <summary>
+        /// Called when the user tapped on the internet link
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task OnInternetLinkTappedAsync()
+        {
+            await Xamarin.Essentials.Launcher.OpenAsync(
+                new Uri(this.location.InternetLink));
         }
     }
 }

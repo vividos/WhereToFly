@@ -112,7 +112,13 @@
 
                     <!-- Internet link -->
                     <Label Grid.Row="6" Grid.Column="0" Text="Internet link" />
-                    <Label Grid.Row="6" Grid.Column="1" Text="{Binding InternetLink, Mode=OneTime}" />
+                    <Label Grid.Row="6" Grid.Column="1" Text="{Binding InternetLink, Mode=OneTime}"
+                           TextColor="{DynamicResource AccentColor}"
+                           TextDecorations="Underline">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding InternetLinkTappedCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
                 </Grid>
 
                 <!-- Description web view -->
