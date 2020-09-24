@@ -1677,6 +1677,9 @@ MapView.prototype.onAddTourPlanLocation = function (locationId) {
 
     if (this.options.callback !== undefined)
         this.options.callback('onAddTourPlanLocation', locationId);
+
+    // hide the info box
+    this.viewer.selectedEntity = undefined;
 };
 
 /**
