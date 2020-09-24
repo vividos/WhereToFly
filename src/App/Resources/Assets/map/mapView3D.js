@@ -339,6 +339,15 @@ MapView.prototype.createThermalImageryProvider = function () {
 };
 
 /**
+ * Updates scene by requesting rendering from scene. This can be used to
+ * update the view, e.g. when a pin was added or removed, and CesiumJS
+ * wouldn't update the scene itself.
+ */
+MapView.prototype.updateScene = function (imageryType) {
+    this.viewer.scene.requestRender();
+};
+
+/**
  * Sets new map imagery type
  * @param {string} imageryType imagery type constant; the following constants currently can be
  * used: 'OpenStreetMap'.
@@ -421,7 +430,7 @@ MapView.prototype.setMapImageryType = function (imageryType) {
             break;
     }
 
-    this.viewer.scene.requestRender();
+    this.updateScene();
 };
 
 var slopeRamp = [0.0, 0.29, 0.5, Math.sqrt(2) / 2, 0.87, 0.91, 1.0];
@@ -560,7 +569,7 @@ MapView.prototype.setMapOverlayType = function (overlayType) {
             break;
     }
 
-    this.viewer.scene.requestRender();
+    this.updateScene();
 };
 
 /**
@@ -622,7 +631,7 @@ MapView.prototype.setShadingMode = function (shadingMode) {
     this.viewer.terrainShadows =
         shadingMode === 'None' ? Cesium.ShadowMode.DISABLED : Cesium.ShadowMode.RECEIVE_ONLY;
 
-    this.viewer.scene.requestRender();
+    this.updateScene();
 };
 
 /**
@@ -849,7 +858,7 @@ MapView.prototype.setLayerVisibility = function (layer) {
             dataSource.show = layer.isVisible;
     }
 
-    this.viewer.scene.requestRender();
+    this.updateScene();
 };
 
 /**
@@ -1637,6 +1646,8 @@ MapView.prototype.onAddFindResult = function (options) {
 
     // hide the info box
     this.viewer.selectedEntity = undefined;
+
+    this.updateScene();
 };
 
 /**
@@ -1694,6 +1705,8 @@ MapView.prototype.hideFlyingRangeCone = function () {
     console.log("MapView: hiding flying range cone");
 
     this.viewer.entities.remove(this.flyingRangeCone);
+
+    this.updateScene();
 };
 
 /**
