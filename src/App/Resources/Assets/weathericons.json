@@ -140,6 +140,13 @@
     "WebLink": "https://lawinen.report/bulletin/latest"
   },
   {
+    "Name": "Zugspitze meteomedia",
+    "Group": "Weather forecast",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "http://wetterstationen.meteomedia.de/station=109610&wahl=vorhersage"
+  },
+  {
     "Name": "Regenradar Bayern",
     "Group": "Current weather",
     "Type": 0,
