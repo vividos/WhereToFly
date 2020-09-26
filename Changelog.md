@@ -3,7 +3,7 @@
 ## Version 1.9.0
 
 - added support for Android 11
-- magnetic compass is used for heading on the "Current Position" page when the
+- using magnetic compass for heading on the "Current Position" page when the
   device has one
 - various bugfixes and improvements
 
