@@ -131,6 +131,8 @@ namespace WhereToFly.App.Core.Views
             });
 
             this.geolocator.PositionChanged += this.viewModel.OnPositionChanged;
+
+            this.viewModel.StartCompass();
         }
 
         /// <summary>
@@ -146,6 +148,8 @@ namespace WhereToFly.App.Core.Views
             {
                 await this.geolocator.StopListeningAsync();
             });
+
+            this.viewModel.StopCompass();
         }
         #endregion
     }

@@ -5,6 +5,7 @@ using System.Timers;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Model;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.ViewModels
@@ -28,6 +29,16 @@ namespace WhereToFly.App.Core.ViewModels
         /// Current position
         /// </summary>
         private Position position;
+
+        /// <summary>
+        /// Indicates if the device has a compass that is available
+        /// </summary>
+        private bool isCompassAvailable;
+
+        /// <summary>
+        /// Current compass heading; only set if isCompassAvailable is true
+        /// </summary>
+        private int currentCompassHeading;
 
         #region Binding properties
         /// <summary>
@@ -135,7 +146,7 @@ namespace WhereToFly.App.Core.ViewModels
         {
             get
             {
-                return this.position != null;
+                return this.isCompassAvailable || this.position != null;
             }
         }
 
@@ -146,6 +157,11 @@ namespace WhereToFly.App.Core.ViewModels
         {
             get
             {
+                if (this.isCompassAvailable)
+                {
+                    return this.currentCompassHeading;
+                }
+
                 return this.position == null ? 0 : (int)this.position.Heading;
             }
         }
@@ -229,6 +245,75 @@ namespace WhereToFly.App.Core.ViewModels
             {
                 return "#c00000"; // red
             }
+        }
+
+        /// <summary>
+        /// Starts compass monitoring, if compass is available
+        /// </summary>
+        public void StartCompass()
+        {
+            this.isCompassAvailable = false;
+
+            try
+            {
+                if (Compass.IsMonitoring)
+                {
+                    return;
+                }
+
+                Compass.ReadingChanged += this.OnCompassReadingChanged;
+                Compass.Start(SensorSpeed.UI);
+            }
+            catch (FeatureNotSupportedException)
+            {
+                // Feature not supported on device
+            }
+            catch (Exception ex)
+            {
+                // Some other exception has occurred
+                App.LogError(ex);
+            }
+        }
+
+        /// <summary>
+        /// Stops compass monitoring
+        /// </summary>
+        public void StopCompass()
+        {
+            this.isCompassAvailable = false;
+
+            try
+            {
+                if (!Compass.IsMonitoring)
+                {
+                    return;
+                }
+
+                Compass.ReadingChanged -= this.OnCompassReadingChanged;
+                Compass.Stop();
+            }
+            catch (FeatureNotSupportedException)
+            {
+                // Feature not supported on device
+            }
+            catch (Exception ex)
+            {
+                // Some other exception has occurred
+                App.LogError(ex);
+            }
+        }
+
+        /// <summary>
+        /// Called when compass reading has changed
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="args">event args</param>
+        private void OnCompassReadingChanged(object sender, CompassChangedEventArgs args)
+        {
+            this.currentCompassHeading = (int)(args.Reading.HeadingMagneticNorth + 0.5);
+            this.isCompassAvailable = true;
+
+            this.OnPropertyChanged(nameof(this.HeadingInDegrees));
         }
     }
 }
