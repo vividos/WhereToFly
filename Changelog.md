@@ -2,6 +2,9 @@
 
 ## Version 1.9.0
 
+- added support for Android 11
+- various bugfixes and improvements
+
 ## Version 1.8.1
 
 Released on 2020-08-19.
