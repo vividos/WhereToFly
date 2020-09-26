@@ -1,4 +1,4 @@
-# Where-to-fly
+﻿# Where-to-fly
 
 Where-to-fly is an Android app that helps decide where to (hike up and) fly
 with a paraglider. It shows the current position on a 3D map, and nearby
@@ -9,4 +9,4 @@ stations.
 
 Current version: %VERSION%
 
-Image: Above Roy's Peak, Lake Wanaka, New Zealand
+Image: View of the Zugspitze, 2962m, from above Höllental valley, Germany
