@@ -7,7 +7,7 @@
 
     <!-- General app colors -->
     <Color x:Key="PrimaryColor">#2F299E</Color>
-    <Color x:Key="AccentColor">#2F299E</Color>
+    <Color x:Key="AccentColor">#6059d4</Color>
 
     <!-- Background colors -->
     <Color x:Key="PageBackgroundColor">#202124</Color>
