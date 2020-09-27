@@ -20,8 +20,12 @@
          which is used to tint widgets -->
     <item name="colorAccent">@color/accent</item>
     <!-- color of activated highlighted items, e.g. selected list view entries -->
-    <item name="android:colorActivatedHighlight">#1e7397</item>
-    <item name="android:colorControlHighlight">#1e7397</item>
+    <item name="@android:colorActivatedHighlight">@color/primary</item>
+    <item name="@android:colorControlHighlight">@color/primary</item>
+    <item name="@android:colorPressedHighlight">@color/primary</item>
+    <item name="@android:colorLongPressedHighlight">@color/accent</item>
+    <item name="@android:colorFocusedHighlight">@color/primary</item>
+    <item name="@android:activatedBackgroundIndicator">@color/primary</item>
     <!-- You can also set colorControlNormal, colorControlActivated and colorSwitchThumbNormal. -->
     <item name="windowActionModeOverlay">true</item>
     <!-- Style of date picker dialog -->

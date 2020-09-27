@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- this is the accent color for native dialogs in dark mode -->
+  <color name="accent">#6059d4</color>
+</resources>

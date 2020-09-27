@@ -2,7 +2,8 @@
 <resources>
   <color name="primary">#2F299E</color>
   <color name="primary_dark">#1D1961</color>
-  <color name="accent">#6A299E</color>
+  <!-- this is the accent color for native dialogs in light mode -->
+  <color name="accent">#2F299E</color>
   <color name="window_background">#F5F5F5</color>
   <color name="splash_background">#2F299E</color>
   <color name="launcher_background">#2F299E</color>
