@@ -112,7 +112,11 @@ namespace WhereToFly.App.Core.ViewModels
             }
             else
             {
-                htmlText = "<style> body { color: white; background-color: black; } </style>" + htmlText;
+                var dict = Application.Current.Resources;
+                string accentColor = ((Color)dict["AccentColor"]).ToHex().Replace("#FF", "#");
+
+                htmlText = "<style> body { color: white; background-color: black; } " +
+                    $"a {{ color: {accentColor}; }} </style>" + htmlText;
             }
 
             return htmlText;
