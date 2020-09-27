@@ -35,7 +35,7 @@
                         <!-- Header image and a webview, both scrollable -->
                         <StackLayout VerticalOptions="Fill" Margin="20">
                             <ScrollView>
-                                <StackLayout>
+                                <StackLayout Padding="0,0,0,10">
                                     <Image Source="{Binding Image, Mode=OneTime}" />
                                     <controls:AutoResizeWebView HorizontalOptions="FillAndExpand"
                                                                 VerticalOptions="FillAndExpand"
