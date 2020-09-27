@@ -1,4 +1,5 @@
 ﻿using Android.Content;
+using AndroidX.AppCompat.App;
 using System.IO;
 using WhereToFly.App.Core;
 using Xamarin.Forms;
@@ -88,6 +89,29 @@ namespace WhereToFly.App.Android
             {
                 stream.CopyTo(memoryStream);
                 return memoryStream.GetBuffer();
+            }
+        }
+
+        /// <summary>
+        /// Sets app theme to use for platform. This ensures that platform dependent dialogs are
+        /// themed correctly when switching themes.
+        /// </summary>
+        /// <param name="requestedTheme">requested theme</param>
+        public void SetPlatformTheme(OSAppTheme requestedTheme)
+        {
+            switch (requestedTheme)
+            {
+                case OSAppTheme.Dark:
+                    AppCompatDelegate.DefaultNightMode = AppCompatDelegate.ModeNightYes;
+                    break;
+
+                case OSAppTheme.Light:
+                    AppCompatDelegate.DefaultNightMode = AppCompatDelegate.ModeNightNo;
+                    break;
+
+                default:
+                    AppCompatDelegate.DefaultNightMode = AppCompatDelegate.ModeNightFollowSystem;
+                    break;
             }
         }
     }

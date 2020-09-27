@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using Xamarin.Forms;
 
 namespace WhereToFly.App.Core
 {
@@ -49,5 +50,11 @@ namespace WhereToFly.App.Core
         /// <param name="assetFilename">asset filename</param>
         /// <returns>binary content of asset</returns>
         byte[] LoadAssetBinaryData(string assetFilename);
+
+        /// <summary>
+        /// Sets app theme to use for platform
+        /// </summary>
+        /// <param name="requestedTheme">requested theme</param>
+        void SetPlatformTheme(OSAppTheme requestedTheme);
     }
 }

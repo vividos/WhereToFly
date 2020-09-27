@@ -83,5 +83,19 @@ namespace WhereToFly.App.UWP
                 return memoryStream.GetBuffer();
             }
         }
+
+        /// <summary>
+        /// Sets app theme to use for platform. This ensures that platform dependent dialogs are
+        /// themed correctly when switching themes.
+        /// </summary>
+        /// <param name="requestedTheme">requested theme</param>
+        public void SetPlatformTheme(OSAppTheme requestedTheme)
+        {
+            switch (requestedTheme)
+            {
+                case OSAppTheme.Dark: App.Current.RequestedTheme = Windows.UI.Xaml.ApplicationTheme.Dark; break;
+                case OSAppTheme.Light: App.Current.RequestedTheme = Windows.UI.Xaml.ApplicationTheme.Light; break;
+            }
+        }
     }
 }

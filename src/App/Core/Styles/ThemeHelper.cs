@@ -33,10 +33,20 @@ namespace WhereToFly.App.Core.Styles
                 return;
             }
 
+            var platform = DependencyService.Get<IPlatform>();
+
             if (theme == Theme.Device)
             {
-                AppTheme appTheme = AppInfo.RequestedTheme;
-                theme = appTheme == AppTheme.Dark ? Theme.Dark : Theme.Light;
+                // we need to set this to Unspecified first, or RequestedTheme would just contain
+                // the last set value, instead of the device's actual theme
+                Application.Current.UserAppTheme = OSAppTheme.Unspecified;
+
+                // we also need to reset the platform's theme, or else RequestedTheme would still
+                // report the last set platform theme
+                platform?.SetPlatformTheme(OSAppTheme.Unspecified);
+
+                OSAppTheme appTheme = Application.Current.RequestedTheme;
+                theme = appTheme == OSAppTheme.Dark ? Theme.Dark : Theme.Light;
             }
 
             ResourceDictionary newTheme =
@@ -48,6 +58,15 @@ namespace WhereToFly.App.Core.Styles
                 resources[item] = newTheme[item];
             }
 
+            Application.Current.UserAppTheme =
+                theme == Theme.Device ? OSAppTheme.Unspecified :
+                theme == Theme.Dark ? OSAppTheme.Dark : OSAppTheme.Light;
+
+            // apply platform specific changes
+            var osAppTheme = theme == Theme.Dark ? OSAppTheme.Dark : OSAppTheme.Light;
+            platform?.SetPlatformTheme(osAppTheme);
+
+            // remember new theme
             CurrentTheme = theme;
         }
     }

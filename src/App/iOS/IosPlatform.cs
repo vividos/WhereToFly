@@ -85,5 +85,14 @@ namespace WhereToFly.App.iOS
                 return memoryStream.GetBuffer();
             }
         }
+
+        /// <summary>
+        /// Sets app theme to use for platform
+        /// </summary>
+        /// <param name="requestedTheme">requested theme</param>
+        public void SetPlatformTheme(OSAppTheme requestedTheme)
+        {
+            // not implemented yet
+        }
     }
 }
