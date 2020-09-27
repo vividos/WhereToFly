@@ -23,6 +23,10 @@
     <Color x:Key="WarningBandBackgroundColor">Yellow</Color>
     <Color x:Key="WarningBandTextColor">Black</Color>
 
+    <!-- Colors for light blue loading band -->
+    <Color x:Key="LoadingBandBackgroundColor">LightBlue</Color>
+    <Color x:Key="LoadingBandTextColor">Black</Color>
+
     <!-- List view colors -->
     <Color x:Key="ListViewItemBackgroundColor">#e0e0e0</Color>
 
