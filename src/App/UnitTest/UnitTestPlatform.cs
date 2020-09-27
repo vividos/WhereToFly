@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using WhereToFly.App.Core;
+using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest
 {
@@ -70,6 +71,15 @@ namespace WhereToFly.App.UnitTest
                 assetFilename);
 
             return new FileStream(filename, FileMode.Open);
+        }
+
+        /// <summary>
+        /// Sets app theme to use for platform
+        /// </summary>
+        /// <param name="requestedTheme">requested theme</param>
+        public void SetPlatformTheme(OSAppTheme requestedTheme)
+        {
+            // nothing to do
         }
     }
 }
