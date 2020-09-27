@@ -3,6 +3,7 @@
  * @constructor
  * @param {object} [options] Options to use for initializing height profile view
  * @param {Number} [options.id] DOM ID of the canvas element to create height profile view in
+ * @param {boolean} [options.useDarkTheme] indicates if a dark theme should be used for the chart
  */
 function HeightProfileView(options) {
 
@@ -10,6 +11,7 @@ function HeightProfileView(options) {
 
     this.options = options || {
         id: 'chartElement',
+        useDarkTheme: false,
         callback: {}
     };
 
@@ -17,6 +19,10 @@ function HeightProfileView(options) {
         this.options.callback = callAction;
 
     var ctx = document.getElementById(this.options.id).getContext('2d');
+
+    this.backgroundColor = this.options.useDarkTheme ? '#202124' : '#F5F5F5';
+    this.axisColor = this.options.useDarkTheme ? '#f5f5f5' : '#202020';
+    this.groundProfileColor = this.options.useDarkTheme ? '#404040' : '#808080';
 
     var that = this;
     this.chart = new Chart(ctx, {
@@ -30,6 +36,10 @@ function HeightProfileView(options) {
                 xAxes: [{
                     id: 'time',
                     type: 'time',
+                    gridLines: {
+                        color: this.axisColor,
+                        zeroLineColor: this.axisColor
+                    },
                     time: {
                         unit: 'hour',
                         displayFormats: {
@@ -45,6 +55,10 @@ function HeightProfileView(options) {
                     type: 'linear',
                     position: 'left',
                     offset: true,
+                    gridLines: {
+                        color: this.axisColor,
+                        zeroLineColor: this.axisColor
+                    },
                     ticks: {
                         beginAtZero: true
                     }
@@ -56,6 +70,15 @@ function HeightProfileView(options) {
             onClick: function (event, elements) {
                 that.onClick(elements);
             }
+        }
+    });
+
+    // background color can't be set directly, so use a plugin
+    Chart.plugins.register({
+        beforeDraw: function (chartInstance) {
+            var ctx = chartInstance.chart.ctx;
+            ctx.fillStyle = that.backgroundColor;
+            ctx.fillRect(0, 0, chartInstance.chart.width, chartInstance.chart.height);
         }
     });
 }
@@ -121,7 +144,8 @@ HeightProfileView.prototype.addGroundProfile = function (elevationArray) {
         label: 'Terrain',
         tension: 0.0,
         pointRadius: 0.0,
-        bckgroundColor: 'rgba(128,128,128,0)',
+        backgroundColor: this.groundProfileColor,
+        borderColor: 'rgba(0,128,0,255)'
     });
 
     this.chart.update();

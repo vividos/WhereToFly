@@ -38,13 +38,21 @@ namespace WhereToFly.App.Core.Views
         /// Creates a new HeightProfileView C# object
         /// </summary>
         /// <param name="webView">web view to use</param>
-        public HeightProfileView(WebView webView)
+        /// <param name="useDarkTheme">indicates if a dark theme should be used for the chart</param>
+        public HeightProfileView(WebView webView, bool useDarkTheme)
         {
             this.webView = webView;
 
             this.webView.Navigating += this.OnNavigating_WebView;
 
-            string js = "heightProfileView = new HeightProfileView({id: 'chartElement'});";
+            var options = new
+            {
+                id = "chartElement",
+                useDarkTheme
+            };
+
+            string jsonOptions = JsonConvert.SerializeObject(options);
+            string js = $"heightProfileView = new HeightProfileView({jsonOptions});";
             this.RunJavaScript(js);
         }
 

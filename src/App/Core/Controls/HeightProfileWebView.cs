@@ -97,7 +97,8 @@ namespace WhereToFly.App.Core.Controls
 
             this.Navigated -= this.OnNavigated;
 
-            this.heightProfileView = new HeightProfileView(this);
+            bool useDarkTheme = Styles.ThemeHelper.CurrentTheme == Model.Theme.Dark;
+            this.heightProfileView = new HeightProfileView(this, useDarkTheme);
 
             this.taskCompletionSourceViewInitialized.SetResult(true);
 
