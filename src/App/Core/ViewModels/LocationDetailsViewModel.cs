@@ -237,15 +237,13 @@ namespace WhereToFly.App.Core.ViewModels
                 desc = HtmlConverter.FromMarkdown(desc, null);
             }
 
-            string styles;
-            if (Styles.ThemeHelper.CurrentTheme == Model.Theme.Light)
-            {
-                styles = "<style> body { color: black; background-color: white; } </style>";
-            }
-            else
-            {
-                styles = "<style> body { color: #ceced3; background-color: #202124; } a { color: #3b34c6; } </style>";
-            }
+            var dict = Application.Current.Resources;
+            string textColor = ((Color)dict["ElementTextColor"]).ToHex().Replace("#FF", "#");
+            string backgroundColor = ((Color)dict["PageBackgroundColor"]).ToHex().Replace("#FF", "#");
+            string accentColor = ((Color)dict["AccentColor"]).ToHex().Replace("#FF", "#");
+
+            string styles = $"<style> body {{ color: {textColor}; background-color: {backgroundColor}; }} " +
+                $"a {{ color: {accentColor}; }} </style>";
 
             return $"{styles}<span style=\"font-family:sans-serif\">{desc}</span>";
         }
