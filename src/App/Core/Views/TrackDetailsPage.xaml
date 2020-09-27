@@ -62,10 +62,10 @@
 
                 <!-- Height profile -->
                 <controls:HeightProfileWebView Track="{Binding Track, Mode=OneWay}"
-                                           WidthRequest="600"
-                                           HeightRequest="300"
-                                           HorizontalOptions="CenterAndExpand"
-                                           VerticalOptions="FillAndExpand" />
+                                               WidthRequest="600"
+                                               HeightRequest="300"
+                                               HorizontalOptions="CenterAndExpand"
+                                               VerticalOptions="FillAndExpand" />
 
             </StackLayout>
         </ScrollView>
