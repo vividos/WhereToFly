@@ -9,9 +9,9 @@
 
         <ResourceDictionary Source="Styles/LightTheme.xaml" />
 
-        <!--<ResourceDictionary>
+        <ResourceDictionary>
 
-            --><!-- Control theming --><!--
+            <!-- Control theming -->
             <Style TargetType="Picker">
                 <Setter Property="BackgroundColor" Value="{DynamicResource ElementBackgroundColor}" />
                 <Setter Property="TextColor" Value="{DynamicResource ElementTextColor}" />
@@ -36,14 +36,6 @@
             <Style TargetType="TabbedPage">
                 <Setter Property="BarBackgroundColor" Value="{DynamicResource ElementBackgroundColor}" />
                 <Setter Property="BarTextColor" Value="{DynamicResource ElementTextColor}" />
-            </Style>
-
-        </ResourceDictionary>-->
-
-        <ResourceDictionary>
-
-            <Style TargetType="Button">
-                <Setter Property="TextTransform" Value="None" />
             </Style>
 
         </ResourceDictionary>

@@ -3,6 +3,7 @@
 ## Version 1.9.0
 
 - added support for Android 11
+- changing app theme to "light", "dark" and "same as device" is now possible
 - using magnetic compass for heading on the "Current Position" page when the
   device has one
 - various bugfixes and improvements

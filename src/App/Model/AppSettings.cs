@@ -73,7 +73,7 @@ namespace WhereToFly.App.Model
             this.LastFlyingRangeParameters = new FlyingRangeParameters();
             this.LastShownSettingsPage = 0;
             this.ShownFlightPlanningDisclaimer = false;
-            this.AppTheme = Theme.Light;
+            this.AppTheme = Theme.Device;
         }
 
         #region object overridables implementation

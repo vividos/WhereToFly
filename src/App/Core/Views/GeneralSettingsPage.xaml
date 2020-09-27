@@ -15,7 +15,7 @@
               HorizontalOptions="Center" VerticalOptions="FillAndExpand"
               ColumnSpacing="16" RowSpacing="16" Padding="8">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="0" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
