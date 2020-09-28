@@ -7,15 +7,27 @@
     <title>Map</title>
     <base target="_blank" />
     <script src="Cesium/Cesium.js"></script>
+    <link href="Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="Chart/Chart.bundle.min.js"></script>
+    <link href="Chart/Chart.min.css" rel="stylesheet">
     <style>
-        @import url(Cesium/Widgets/widgets.css);
 
-        html, body, #mapElement {
+        html, body, #mapElement, #chartElement {
             width: 100%;
             height: 100%;
             margin: 0;
             padding: 0;
             overflow: hidden;
+        }
+
+        #chartElement {
+            width: 100vw;
+            height: 200px;
+            position: absolute;
+            left: 0px;
+            bottom: 0px;
+            opacity: 0.5;
+            z-index: 10
         }
 
         /* set size of infobox to fill 80% of the whole mobile screen */
@@ -43,8 +55,11 @@
 </head>
 <body style="margin: 0px; background-color: black">
     <script src="mapView3D.js"></script>
+    <script src="heightProfileView.js"></script>
 
-    <div id="mapElement"></div>
+    <div id="mapElement">
+        <canvas id="chartElement"></canvas>
+    </div>
 
     <script type="text/javascript">
 
