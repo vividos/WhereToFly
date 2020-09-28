@@ -16,5 +16,20 @@ namespace WhereToFly.App.Core.Views
             this.BindingContext = new InfoPageViewModel();
             this.InitializeComponent();
         }
+
+        /// <summary>
+        /// Called when web view navigates to a new URL
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="args">event args</param>
+        private void OnNavigating_WebView(object sender, WebNavigatingEventArgs args)
+        {
+            if (args.NavigationEvent == WebNavigationEvent.NewPage &&
+                args.Url.StartsWith("http"))
+            {
+                Xamarin.Essentials.Launcher.OpenAsync(args.Url);
+                args.Cancel = true;
+            }
+        }
     }
 }

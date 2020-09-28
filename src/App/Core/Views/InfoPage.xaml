@@ -40,6 +40,7 @@
                                     <controls:AutoResizeWebView HorizontalOptions="FillAndExpand"
                                                                 VerticalOptions="FillAndExpand"
                                                                 HeightRequest="20"
+                                                                Navigating="OnNavigating_WebView"
                                                                 Source="{Binding WebViewSource}" />
                                 </StackLayout>
                             </ScrollView>
