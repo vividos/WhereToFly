@@ -336,7 +336,7 @@
     <Content Include="Assets\map\images\water-15.svg" />
     <Content Include="Assets\map\map3D.html" />
     <Content Include="Assets\map\mapView3D.js" />
-    <Content Include="Assets\locations\paraglidingspots_european_alps_2019_12_11.kmz" />
+    <Content Include="Assets\locations\paraglidingspots_european_alps_2020_10_01.kmz" />
     <Content Include="Assets\defaultFaviconUrlCache.json" />
     <Content Include="..\..\..\Credits.md">
       <Link>Assets\info\Credits.md</Link>
