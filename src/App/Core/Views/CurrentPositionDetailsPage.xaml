@@ -89,6 +89,28 @@
                     <Label Text="{Binding HeadingInDegrees, Mode=OneWay}" FontSize="32" />
                 </StackLayout>
 
+                <!-- Sunrise -->
+                <StackLayout WidthRequest="100" HeightRequest="100"
+                             Orientation="Vertical"
+                             Margin="16,16,0,0"
+                             Padding="4"
+                             IsVisible="{Binding IsSunriseSunsetAvail, Mode=OneWay}"
+                             BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
+                    <Label Text="Sunrise" />
+                    <Label Text="{Binding SunriseTime, Mode=OneWay}" FontSize="24" />
+                </StackLayout>
+
+                <!-- Sunset -->
+                <StackLayout WidthRequest="100" HeightRequest="100"
+                             Orientation="Vertical"
+                             Margin="16,16,0,0"
+                             Padding="4"
+                             IsVisible="{Binding IsSunriseSunsetAvail, Mode=OneWay}"
+                             BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
+                    <Label Text="Sunset" />
+                    <Label Text="{Binding SunsetTime, Mode=OneWay}" FontSize="24" />
+                </StackLayout>
+
             </FlexLayout>
         </ScrollView>
 

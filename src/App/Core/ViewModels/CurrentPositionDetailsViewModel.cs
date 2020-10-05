@@ -2,6 +2,7 @@
 using System;
 using System.Threading.Tasks;
 using System.Timers;
+using WhereToFly.App.Geo.SunCalcNet;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Model;
@@ -39,6 +40,11 @@ namespace WhereToFly.App.Core.ViewModels
         /// Current compass heading; only set if isCompassAvailable is true
         /// </summary>
         private int currentCompassHeading;
+
+        /// <summary>
+        /// Current solar times data
+        /// </summary>
+        private SolarTimes currentSolarTimes;
 
         #region Binding properties
         /// <summary>
@@ -165,6 +171,54 @@ namespace WhereToFly.App.Core.ViewModels
                 return this.position == null ? 0 : (int)this.position.Heading;
             }
         }
+
+        /// <summary>
+        /// Indicates if sunrise and sunset times are available
+        /// </summary>
+        public bool IsSunriseSunsetAvail
+        {
+            get
+            {
+                return this.position != null &&
+                    this.position.Accuracy < 100.0;
+            }
+        }
+
+        /// <summary>
+        /// Sunrise time text
+        /// </summary>
+        public string SunriseTime
+        {
+            get
+            {
+                if (this.currentSolarTimes == null)
+                {
+                    return "N/A";
+                }
+
+                return this.currentSolarTimes.Sunrise.HasValue
+                  ? DataFormatter.FormatDuration(this.currentSolarTimes.Sunrise.Value.ToLocalTime().TimeOfDay)
+                  : "No sunrise today";
+            }
+        }
+
+        /// <summary>
+        /// Sunrise time text
+        /// </summary>
+        public string SunsetTime
+        {
+            get
+            {
+                if (this.currentSolarTimes == null)
+                {
+                    return "N/A";
+                }
+
+                return this.currentSolarTimes.Sunrise.HasValue
+                  ? DataFormatter.FormatDuration(this.currentSolarTimes.Sunset.Value.ToLocalTime().TimeOfDay)
+                  : "No sunset today";
+            }
+        }
         #endregion
 
         /// <summary>
@@ -217,6 +271,16 @@ namespace WhereToFly.App.Core.ViewModels
             this.OnPropertyChanged(nameof(this.SpeedInKmh));
             this.OnPropertyChanged(nameof(this.IsHeadingAvail));
             this.OnPropertyChanged(nameof(this.HeadingInDegrees));
+
+            this.currentSolarTimes = SunCalc.GetTimes(
+                DateTimeOffset.Now,
+                this.position.Latitude,
+                this.position.Longitude,
+                this.position.Altitude);
+
+            this.OnPropertyChanged(nameof(this.IsSunriseSunsetAvail));
+            this.OnPropertyChanged(nameof(this.SunriseTime));
+            this.OnPropertyChanged(nameof(this.SunsetTime));
 
             var point = new MapPoint(this.position.Latitude, this.position.Longitude, this.position.Altitude);
             Task.Run(async () => await App.UpdateLastShownPositionAsync(point));

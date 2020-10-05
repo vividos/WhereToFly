@@ -4,6 +4,7 @@
 
 - added support for Android 11
 - changing app theme to "light", "dark" and "same as device" is now possible
+- added showing sunrise and sunset times on the "Current Position" page
 - using magnetic compass for heading on the "Current Position" page when the
   device has one
 - various bugfixes and improvements
