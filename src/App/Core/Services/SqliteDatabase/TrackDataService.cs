@@ -25,6 +25,11 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         private class TrackEntry
         {
             /// <summary>
+            /// Folder name for all tracks files
+            /// </summary>
+            private const string TracksFolderName = "tracks";
+
+            /// <summary>
             /// Track to store in the entry
             /// </summary>
             [Ignore]
@@ -204,7 +209,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
                     !string.IsNullOrEmpty(this.TrackPointFilename),
                     "must have set track point filename when loading a track");
 
-                string filename = Path.Combine(platform.AppDataFolder, "tracks", this.TrackPointFilename);
+                string filename = Path.Combine(platform.AppDataFolder, TracksFolderName, this.TrackPointFilename);
 
                 string json = File.ReadAllText(filename);
                 this.Track.TrackPoints = JsonConvert.DeserializeObject<List<TrackPoint>>(
@@ -223,7 +228,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             {
                 var platform = DependencyService.Get<IPlatform>();
 
-                string tracksFolder = Path.Combine(platform.AppDataFolder, "tracks");
+                string tracksFolder = Path.Combine(platform.AppDataFolder, TracksFolderName);
                 if (!Directory.Exists(tracksFolder))
                 {
                     Directory.CreateDirectory(tracksFolder);
