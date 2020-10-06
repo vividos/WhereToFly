@@ -8,11 +8,11 @@
     <ContentPage.Content>
 
         <!-- scroll view with track statistics grid -->
-        <ScrollView Orientation="Vertical">
+        <ScrollView Orientation="Vertical" HorizontalOptions="Center">
 
             <!-- Grid with all track statistics -->
             <Grid WidthRequest="350" MinimumWidthRequest="350"
-                  HorizontalOptions="Center" Padding="8"
+                  Padding="8"
                   ColumnSpacing="16" RowSpacing="16">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
