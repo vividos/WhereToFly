@@ -666,7 +666,7 @@ MapView.prototype.updateMyLocation = function (options) {
         '<div>Latitude: ' + options.displayLatitude + '<br/>' +
         'Longitude: ' + options.displayLongitude + '<br/>' +
         'Accuracy: <span style="color:' + options.positionAccuracyColor + '">+/- ' + options.positionAccuracy + ' m</span><br/>' +
-        (options.altitude !== undefined && options.altitude !== 0 ? 'Altitude: ' + options.altitude + 'm<br/>' : '') +
+        (options.altitude !== undefined && options.altitude !== 0 ? 'Altitude: ' + options.altitude.toFixed(1) + 'm<br/>' : '') +
         'Speed: ' + options.displaySpeed + "<br/>" +
         'Time: ' + options.displayTimestamp +
         '</div>';
@@ -933,7 +933,7 @@ MapView.prototype.formatLocationText = function (location) {
 
     var text = '<h2><img height="48em" width="48em" src="' + this.imageUrlFromLocationType(location.type) + '" style="vertical-align:middle" />' +
         location.name +
-        (location.altitude !== 0 ? ' ' + location.altitude + 'm' : '') +
+        (location.altitude !== 0 ? ' ' + location.altitude.toFixed(1) + 'm' : '') +
         '</h2>';
 
     text += '<p><img height="32em" width="32em" src="images/information-outline.svg" style="vertical-align:middle" /> ' +
@@ -973,7 +973,7 @@ MapView.prototype.addLocationList = function (locationList) {
         Cesium.when(
             this.createEntity(
                 location.id,
-                location.name + (location.altitude !== 0 ? ' ' + location.altitude + 'm' : ''),
+                location.name + (location.altitude !== 0 ? ' ' + location.altitude.toFixed(1) + 'm' : ''),
                 text,
                 this.pinColorFromLocationType(location.type),
                 imagePath,
@@ -1205,7 +1205,7 @@ MapView.prototype.showFlyingRange = function (options) {
 
     text += '<p>Flying range for map point at<br/>Latitude: ' + options.displayLatitude + '<br/>' +
         'Longitude: ' + options.displayLongitude + '<br/>' +
-        'Altitude: ' + options.altitude + 'm</p>';
+        'Altitude: ' + options.altitude.toFixed(1) + 'm</p>';
 
     text += '<p>' +
         'Glide ratio: ' + options.glideRatio + '<br/>' +
