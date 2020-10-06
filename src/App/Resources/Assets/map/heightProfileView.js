@@ -24,6 +24,10 @@ function HeightProfileView(options) {
     this.axisColor = this.options.useDarkTheme ? '#f5f5f5' : '#202020';
     this.groundProfileColor = this.options.useDarkTheme ? '#404040' : '#808080';
 
+    // also style the parent node, in case it's the standalone view
+    var parent = document.getElementById(this.options.id);
+    parent.style.backgroundColor = this.backgroundColor;
+
     var that = this;
     this.chart = new Chart(ctx, {
         type: 'line',
