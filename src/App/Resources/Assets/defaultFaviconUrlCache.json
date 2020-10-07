@@ -16,6 +16,7 @@
   "https://www.zamg.ac.at/": "https://www.zamg.ac.at/cms/zamg_logo_apple_touch_57x57.png",
   "http://www.br.de/": "http://www.br.de/favicon.ico",
   "https://www.bergfex.de/": "https://vcdn.bergfex.at/images/favicons/apple-icon-180x180.png",
+  "https://www.bergfex.at/": "https://vcdn.bergfex.at/images/favicons/apple-icon-180x180.png",
   "http://forecast.uoa.gr/": "http://forecast.uoa.gr/base/img/mini_athina.png",
   "https://www.wetteronline.de/": "https://st.wetteronline.de/images/logo/woicon_180x180.png",
   "https://www.meteoblue.com/": "https://www.meteoblue.com/website/images/logo/apple-touch-icon-196x196-precomposed.png",
@@ -30,5 +31,7 @@
   "https://www.windfinder.com/": "https://cdn.windfinder.com/prod/images/favicons/apple-touch-icon-144x144.af7269d8.png",
   "http://www.foto-webcam.org/": "http://www.foto-webcam.org/apple-touch-icon-precomposed.png",
   "https://www.dhv.de/": "https://www.dhv.de/fileadmin/templates/dhv2011/img/favicon/dhv.ico",
-  "http://www.wetteralarm.at/": "http://www.wetteralarm.at/fileadmin/admin/favicon.ico"
+  "http://www.wetteralarm.at/": "http://www.wetteralarm.at/fileadmin/admin/favicon.ico",
+  "https://forecast.uoa.gr/": "https://forecast.uoa.gr/favicon.ico",
+  "http://wetterstationen.meteomedia.de/": "http://wetterstationen.meteomedia.de/favicon.ico"
 }
