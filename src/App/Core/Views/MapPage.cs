@@ -104,17 +104,6 @@ namespace WhereToFly.App.Core.Views
         }
 
         /// <summary>
-        /// Samples track heights for given track, updating track point altitudes in-place
-        /// </summary>
-        /// <param name="track">track to sample heights</param>
-        /// <param name="offsetInMeters">offset in meters to add to track</param>
-        /// <returns>task to wait on</returns>
-        public async Task SampleTrackHeightsAsync(Track track, double offsetInMeters)
-        {
-            await this.mapView.SampleTrackHeights(track, offsetInMeters);
-        }
-
-        /// <summary>
         /// Initializes layout by loading map html into web view
         /// </summary>
         /// <returns>task to wait on</returns>

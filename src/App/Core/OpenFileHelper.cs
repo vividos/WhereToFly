@@ -357,7 +357,7 @@ namespace WhereToFly.App.Core
             // the ground
             if (track.IsFlightTrack)
             {
-                await SampleTrackHeightsAsync(track);
+                await AdjustTrackHeightsAsync(track);
             }
 
             var dataService = DependencyService.Get<IDataService>();
@@ -374,11 +374,11 @@ namespace WhereToFly.App.Core
         }
 
         /// <summary>
-        /// Samples track point heights and adjust track
+        /// Samples track point heights and adjusts the track when it goes below terrain height.
         /// </summary>
-        /// <param name="track">track to sample point heights</param>
+        /// <param name="track">track to adjust point heights</param>
         /// <returns>task to wait on</returns>
-        private static async Task SampleTrackHeightsAsync(Track track)
+        private static async Task AdjustTrackHeightsAsync(Track track)
         {
             var cts = new CancellationTokenSource();
 
@@ -388,9 +388,20 @@ namespace WhereToFly.App.Core
             await App.InitializedTask;
             try
             {
-                await Task.Run(
-                    async () => await App.MapView.SampleTrackHeights(track, 0.0),
-                    cts.Token);
+                var trackPointHeights =
+                    await Task.Run(
+                        async () => await App.MapView.SampleTrackHeights(track),
+                        cts.Token);
+
+                if (cts.IsCancellationRequested)
+                {
+                    return;
+                }
+
+                if (trackPointHeights != null)
+                {
+                    track.AdjustTrackPointsByGroundProfile(trackPointHeights);
+                }
             }
             finally
             {

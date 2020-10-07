@@ -39,12 +39,7 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Task completion source for when SampleTrackHeights() has finished
         /// </summary>
-        private TaskCompletionSource<bool> taskCompletionSourceSampleTrackHeights;
-
-        /// <summary>
-        /// Track whose track points are being sampled
-        /// </summary>
-        private Track sampleTrackHeightsTrack;
+        private TaskCompletionSource<double[]> taskCompletionSourceSampleTrackHeights;
 
         /// <summary>
         /// Current map imagery type
@@ -546,13 +541,11 @@ namespace WhereToFly.App.Core.Views
         }
 
         /// <summary>
-        /// Samples track point heights from actual map and adjusts the track when it goes below
-        /// terrain height.
+        /// Samples track point heights from actual map and returns it
         /// </summary>
         /// <param name="track">track to modify</param>
-        /// <param name="offsetInMeters">offset in meters</param>
-        /// <returns>task to wait on</returns>
-        public async Task SampleTrackHeights(Track track, double offsetInMeters)
+        /// <returns>ground profile heights</returns>
+        public async Task<double[]> SampleTrackHeights(Track track)
         {
             // need an initialized map in order to sample data
             await this.taskCompletionSourceMapInitialized.Task;
@@ -571,14 +564,14 @@ namespace WhereToFly.App.Core.Views
                 listOfTrackPoints = trackPointsList
             };
 
-            string js = $"map.sampleTrackHeights({JsonConvert.SerializeObject(trackJsonObject)}, {offsetInMeters});";
+            string js = $"map.sampleTrackHeights({JsonConvert.SerializeObject(trackJsonObject)});";
 
-            this.taskCompletionSourceSampleTrackHeights = new TaskCompletionSource<bool>();
-            this.sampleTrackHeightsTrack = track;
+            this.taskCompletionSourceSampleTrackHeights =
+                new TaskCompletionSource<double[]>();
 
             this.RunJavaScript(js);
 
-            await this.taskCompletionSourceSampleTrackHeights.Task;
+            return await this.taskCompletionSourceSampleTrackHeights.Task;
         }
 
         /// <summary>
@@ -830,32 +823,7 @@ namespace WhereToFly.App.Core.Views
         /// <param name="trackPointHeights">list of track point heights</param>
         private void OnSampledTrackHeights(double[] trackPointHeights)
         {
-            if (trackPointHeights == null)
-            {
-                this.taskCompletionSourceSampleTrackHeights.SetResult(false);
-                return;
-            }
-
-            Debug.Assert(
-                trackPointHeights.Length == this.sampleTrackHeightsTrack.TrackPoints.Count,
-                "number of track points must be the same as the number of sampled track point heights");
-
-            int modifiedPoints = 0;
-            for (int pointIndex = 0; pointIndex < this.sampleTrackHeightsTrack.TrackPoints.Count; pointIndex++)
-            {
-                double delta = (this.sampleTrackHeightsTrack.TrackPoints[pointIndex].Altitude ?? 0.0) - trackPointHeights[pointIndex];
-                if (Math.Abs(delta) > 1.0)
-                {
-                    modifiedPoints++;
-                }
-
-                this.sampleTrackHeightsTrack.TrackPoints[pointIndex].Altitude =
-                    trackPointHeights[pointIndex];
-            }
-
-            Debug.WriteLine($"OnSampledTrackHeights: {modifiedPoints} of {trackPointHeights.Length} points changed");
-
-            this.taskCompletionSourceSampleTrackHeights.SetResult(true);
+            this.taskCompletionSourceSampleTrackHeights.SetResult(trackPointHeights);
         }
 
 #pragma warning disable S1144 // Unused private types or members should be removed

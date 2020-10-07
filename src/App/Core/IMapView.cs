@@ -150,13 +150,11 @@ namespace WhereToFly.App.Core
         void ZoomToTrack(Track track);
 
         /// <summary>
-        /// Samples track point heights from actual map and adjusts the track when it goes below
-        /// terrain height.
+        /// Samples track point heights from actual map and returns it.
         /// </summary>
-        /// <param name="track">track to modify</param>
-        /// <param name="offsetInMeters">offset in meters</param>
-        /// <returns>task to wait on</returns>
-        Task SampleTrackHeights(Track track, double offsetInMeters);
+        /// <param name="track">track points to use</param>
+        /// <returns>sampled ground point elevations for all track points</returns>
+        Task<double[]> SampleTrackHeights(Track track);
         #endregion
     }
 }

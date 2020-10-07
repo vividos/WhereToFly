@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using WhereToFly.Shared.Geo;
@@ -80,6 +81,36 @@ namespace WhereToFly.App.Geo.Spatial
                     trackPoint.Altitude = trackPoint.Altitude.Value + offsetInMeters;
                 }
             }
+        }
+
+        /// <summary>
+        /// Adjusts a track's altitude values by using the given ground height profile. When a
+        /// track point's altitude goes below the ground profile, adjust the point.
+        /// The number of track points must be equal to the number of ground height profile
+        /// altitudes.
+        /// </summary>
+        /// <param name="track">track to modify</param>
+        /// <param name="groundHeightProfile">ground height profile altitudes</param>
+        public static void AdjustTrackPointsByGroundProfile(this Track track, double[] groundHeightProfile)
+        {
+            Debug.Assert(
+                track.TrackPoints.Count == groundHeightProfile.Length,
+                "number of track points must be the same as the number of ground height profile altitudes");
+
+            int modifiedPoints = 0;
+            for (int pointIndex = 0; pointIndex < track.TrackPoints.Count; pointIndex++)
+            {
+                double delta = (track.TrackPoints[pointIndex].Altitude ?? 0.0) - groundHeightProfile[pointIndex];
+                if (delta < 0.0)
+                {
+                    modifiedPoints++;
+
+                    track.TrackPoints[pointIndex].Altitude =
+                        groundHeightProfile[pointIndex];
+                }
+            }
+
+            Debug.WriteLine($"AdjustTrackPointsByGroundProfile: {modifiedPoints} of {track.TrackPoints.Count} points changed");
         }
 
         /// <summary>
