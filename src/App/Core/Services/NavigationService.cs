@@ -107,6 +107,13 @@ namespace WhereToFly.App.Core.Services
                     pageType = typeof(TrackInfoTabbedPage);
                     break;
 
+                case Constants.PageKeyTrackHeightProfilePage:
+                    Debug.Assert(
+                        parameter is Geo.Track,
+                        "track must have been passed as parameter");
+                    pageType = typeof(TrackHeightProfilePage);
+                    break;
+
                 case Constants.PageKeyWeatherDashboardPage:
                     pageType = typeof(WeatherDashboardPage);
                     break;

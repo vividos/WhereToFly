@@ -102,6 +102,11 @@ namespace WhereToFly.App.Core
         public const string PageKeyTrackInfoPage = "TrackInfoPage";
 
         /// <summary>
+        /// Page key for use in NavigationService, to navigate to track height profile page.
+        /// </summary>
+        public const string PageKeyTrackHeightProfilePage = "TrackHeightProfile";
+
+        /// <summary>
         /// Page key for use in NavigationService, to navigate to weather dashboard page.
         /// </summary>
         public const string PageKeyWeatherDashboardPage = "WeatherDashboardPage";
