@@ -954,10 +954,11 @@ MapView.prototype.clearLocationList = function () {
  */
 MapView.prototype.formatLocationText = function (location) {
 
+    var altitudeText =
+        location.altitude !== undefined && location.altitude !== 0 ? ' ' + location.altitude.toFixed(1) + 'm' : '';
+
     var text = '<h2><img height="48em" width="48em" src="' + this.imageUrlFromLocationType(location.type) + '" style="vertical-align:middle" />' +
-        location.name +
-        (location.altitude !== 0 ? ' ' + location.altitude.toFixed(1) + 'm' : '') +
-        '</h2>';
+        location.name + altitudeText + '</h2>';
 
     text += '<p><img height="32em" width="32em" src="images/information-outline.svg" style="vertical-align:middle" /> ' +
         '<a href="javascript:parent.map.onShowLocationDetails(\'' + location.id + '\');">Show details</a> ';
@@ -993,10 +994,13 @@ MapView.prototype.addLocationList = function (locationList) {
 
         var imagePath = this.imageUrlFromLocationType(location.type);
 
+        var altitudeText =
+            location.altitude !== undefined && location.altitude !== 0 ? ' ' + location.altitude.toFixed(1) + 'm' : '';
+
         Cesium.when(
             this.createEntity(
                 location.id,
-                location.name + (location.altitude !== 0 ? ' ' + location.altitude.toFixed(1) + 'm' : ''),
+                location.name + altitudeText,
                 text,
                 this.pinColorFromLocationType(location.type),
                 imagePath,
