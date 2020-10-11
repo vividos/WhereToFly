@@ -93,7 +93,7 @@ namespace WhereToFly.App.Core.Controls
         /// <param name="args">event args</param>
         private void OnNavigated(object sender, WebNavigatedEventArgs args)
         {
-            Debug.WriteLine($"OnNavigated: result{args.Result} event={args.NavigationEvent}");
+            Debug.WriteLine($"OnNavigated: result={args.Result} event={args.NavigationEvent}");
 
             this.Navigated -= this.OnNavigated;
 

@@ -16,8 +16,8 @@
 
                 <!-- Grid with all track details -->
                 <Grid WidthRequest="350" MinimumWidthRequest="350"
-                  HorizontalOptions="Center" Padding="8"
-                  ColumnSpacing="16" RowSpacing="16">
+                      HorizontalOptions="Center" Padding="8"
+                      ColumnSpacing="16" RowSpacing="16">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
