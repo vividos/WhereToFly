@@ -196,6 +196,17 @@ function MapView(options) {
         show: false
     });
 
+    // the track marker is initially invisible and only used when a track is tapped
+    Cesium.when(
+        this.createEntity('trackMarker', 'Track point', '', Cesium.Color.PURPLE, 'images/magnify.svg', 0.0, 0.0),
+        function (trackEntity) {
+            trackEntity.show = false;
+            that.trackMarker = that.viewer.entities.add(trackEntity);
+        },
+        function (error) {
+            console.error("MapView: #8 error creating find result entity: " + error);
+        });
+
     // the find result entity is initially invisible
     Cesium.when(
         this.createEntity(undefined, 'Find result', '', Cesium.Color.ORANGE, 'images/magnify.svg', 0.0, 0.0),
@@ -911,8 +922,8 @@ MapView.prototype.clearLocationList = function () {
     if (this.zoomEntity !== null)
         this.viewer.entities.add(this.zoomEntity);
 
-    if (this.trackEntity !== null)
-        this.viewer.entities.add(this.trackEntity);
+    if (this.trackMarker !== null)
+        this.viewer.entities.add(this.trackMarker);
 
     if (this.flyingRangeCone !== null)
         this.viewer.entities.add(this.flyingRangeCone);
