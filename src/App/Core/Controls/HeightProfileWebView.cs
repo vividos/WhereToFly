@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Views;
 using WhereToFly.App.Geo;
@@ -91,7 +92,7 @@ namespace WhereToFly.App.Core.Controls
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        private void OnNavigated(object sender, WebNavigatedEventArgs args)
+        private async void OnNavigated(object sender, WebNavigatedEventArgs args)
         {
             Debug.WriteLine($"OnNavigated: result={args.Result} event={args.NavigationEvent}");
 
@@ -105,6 +106,13 @@ namespace WhereToFly.App.Core.Controls
             if (this.Track != null)
             {
                 this.heightProfileView.SetTrack(this.Track);
+            }
+
+            string result = await this.EvaluateJavaScriptAsync("javascript:document.body.scrollHeight");
+
+            if (double.TryParse(result, NumberStyles.Float, NumberFormatInfo.InvariantInfo, out double height))
+            {
+                this.HeightRequest = height;
             }
         }
 

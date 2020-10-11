@@ -65,7 +65,7 @@
                                                WidthRequest="600"
                                                HeightRequest="300"
                                                HorizontalOptions="CenterAndExpand"
-                                               VerticalOptions="FillAndExpand" />
+                                               VerticalOptions="Fill" />
 
             </StackLayout>
         </ScrollView>
