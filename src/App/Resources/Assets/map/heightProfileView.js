@@ -33,6 +33,9 @@ function HeightProfileView(options) {
         type: 'line',
         data: {},
         options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            aspectRatio: 2,
             legend: {
                 display: false
             },

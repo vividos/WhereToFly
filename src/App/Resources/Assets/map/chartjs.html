@@ -10,19 +10,37 @@
     <style>
         @import url(Chart/Chart.min.css);
 
-        html, body, #chartElement {
+        html, body {
             width: 100%;
             height: 100%;
             margin: 0;
             padding: 0;
             overflow: hidden;
+            position: absolute;
+        }
+
+        #chartContainer {
+            width: 100vw;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+        }
+
+        #chartElement {
+            overflow: hidden;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
         }
     </style>
 </head>
 <body style="margin: 0px">
     <script src="heightProfileView.js"></script>
 
-    <canvas id="chartElement"></canvas>
+    <div id="chartContainer">
+        <canvas id="chartElement"></canvas>
+    </div>
 
     <script type="text/javascript">
 
