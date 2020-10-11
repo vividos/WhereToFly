@@ -18,15 +18,18 @@ function HeightProfileView(options) {
     if (this.options.callback === undefined)
         this.options.callback = callAction;
 
-    var ctx = document.getElementById(this.options.id).getContext('2d');
+    var chartElement = document.getElementById(this.options.id);
+
+    chartElement.parentElement.style.display = 'block';
+
+    var ctx = chartElement.getContext('2d');
 
     this.backgroundColor = this.options.useDarkTheme ? '#202124' : '#F5F5F5';
     this.axisColor = this.options.useDarkTheme ? '#f5f5f5' : '#202020';
     this.groundProfileColor = this.options.useDarkTheme ? '#404040' : '#808080';
 
     // also style the parent node, in case it's the standalone view
-    var parent = document.getElementById(this.options.id);
-    parent.style.backgroundColor = this.backgroundColor;
+    chartElement.style.backgroundColor = this.backgroundColor;
 
     var that = this;
     this.chart = new Chart(ctx, {
