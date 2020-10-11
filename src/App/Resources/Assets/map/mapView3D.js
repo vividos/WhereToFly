@@ -289,7 +289,8 @@ MapView.prototype.onScreenTouchUp = function (movement) {
 
     var deltaTime = new Date().getTime() - this.currentLeftDownTime;
 
-    // when tap was longer than 600ms and moved less than 10 pixels
+    // check if tap was longer than 600ms and moved less than 10 pixels
+    var longTapDetected = false;
     if (deltaTime > 600 && deltaSquared < 10 * 10) {
 
         var ray = this.viewer.camera.getPickRay(movement.position);
@@ -297,11 +298,22 @@ MapView.prototype.onScreenTouchUp = function (movement) {
         if (cartesian) {
             var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
 
+            longTapDetected = true;
             this.onLongTap({
                 latitude: Cesium.Math.toDegrees(cartographic.latitude),
                 longitude: Cesium.Math.toDegrees(cartographic.longitude),
                 altitude: cartographic.height
             });
+        }
+    }
+
+    // check if user tapped a track primitive
+    if (!longTapDetected) {
+        var feature = this.viewer.scene.pick(movement.position, 10, 10);
+        if (feature !== undefined && feature.id !== undefined && typeof feature.id === 'string') {
+            var trackId = feature.id.replace('track-', '');
+            console.log("picked track " + trackId);
+            this.showTrackHeightProfile(trackId);
         }
     }
 };
@@ -1428,6 +1440,7 @@ MapView.prototype.getFlightTrackPrimitive = function (track, trackPointArray) {
     var primitive = new Cesium.Primitive({
         asynchronous: this.options.useAsynchronousPrimitives,
         geometryInstances: new Cesium.GeometryInstance({
+            id: "track-" + track.id,
             geometry: trackPolyline
         }),
         appearance: new Cesium.PolylineColorAppearance({ translucent: false })
@@ -1438,10 +1451,11 @@ MapView.prototype.getFlightTrackPrimitive = function (track, trackPointArray) {
 
 /**
  * Creates a wall primitive for a flight track to display relation to ground
+ * @param {string} [trackId] unique ID of the track
  * @param {array} [trackPointArray] An array of track points to use
  * @returns {Cesium.Primitive} created wall primitive object
  */
-MapView.prototype.getFlightTrackWallPrimitive = function (trackPointArray) {
+MapView.prototype.getFlightTrackWallPrimitive = function (trackId, trackPointArray) {
 
     var wallGeometry = new Cesium.WallGeometry({
         positions: trackPointArray
@@ -1454,6 +1468,7 @@ MapView.prototype.getFlightTrackWallPrimitive = function (trackPointArray) {
     var wallPrimitive = new Cesium.Primitive({
         asynchronous: this.options.useAsynchronousPrimitives,
         geometryInstances: new Cesium.GeometryInstance({
+            id: "track-" + trackId,
             geometry: Cesium.WallGeometry.createGeometry(wallGeometry)
         }),
         appearance: new Cesium.MaterialAppearance({
@@ -1469,6 +1484,7 @@ MapView.prototype.getFlightTrackWallPrimitive = function (trackPointArray) {
 /**
  * Creates a ground primitive for a non-flight track
  * @param {object} [track] Track object to add
+ * @param {string} [track.id] unique ID of the track
  * @param {string} [track.color] Color as "RRGGBB" string value
  * @param {array} [trackPointArray] An array of track points to use
  * @returns {Cesium.Primitive} created primitive object
@@ -1483,6 +1499,7 @@ MapView.prototype.getGroundTrackPrimitive = function (track, trackPointArray) {
     var primitive = new Cesium.GroundPolylinePrimitive({
         asynchronous: this.options.useAsynchronousPrimitives,
         geometryInstances: new Cesium.GeometryInstance({
+            id: "track-" + track.id,
             geometry: groundTrackPolyline,
             attributes: {
                 color: Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.fromCssColorString('#' + track.color))
@@ -1518,7 +1535,7 @@ MapView.prototype.addTrack = function (track) {
 
     if (track.isFlightTrack) {
         primitive = this.getFlightTrackPrimitive(track, trackPointArray);
-        wallPrimitive = this.getFlightTrackWallPrimitive(trackPointArray);
+        wallPrimitive = this.getFlightTrackWallPrimitive(track.id, trackPointArray);
 
         this.trackPrimitivesCollection.add(wallPrimitive);
 
@@ -1591,6 +1608,14 @@ MapView.prototype.clearAllTracks = function () {
     this.trackPrimitivesCollection.removeAll();
 
     this.trackIdToTrackDataMap = {};
+};
+
+/**
+ * Shows track height profile.
+ * @param {string} trackId unique ID of the track
+ */
+MapView.prototype.showTrackHeightProfile = function (trackId) {
+
 };
 
 /**
