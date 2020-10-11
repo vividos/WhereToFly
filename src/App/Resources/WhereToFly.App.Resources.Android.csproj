@@ -594,6 +594,15 @@
   <ItemGroup>
     <AndroidAsset Include="Assets\map\Cesium\Workers\WallGeometryLibrary-24ceb832.js" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Chart\chartjs-plugin-crosshair.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Chart\chartjs-plugin-zoom.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\Chart\hammer.min.js" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

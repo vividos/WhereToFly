@@ -72,6 +72,18 @@ The app uses the [Chart.js](https://www.chartjs.org/)
 library to display height profiles. The library is licensed using the
 [MIT License](https://github.com/chartjs/Chart.js/blob/master/LICENSE.md).
 
+The app uses the [chartjs-plugin-crosshair](https://github.com/abelheinsbroek/chartjs-plugin-crosshair/)
+library to provide a crosshair for height profiles. The library is licensed using the
+[MIT License](https://github.com/AbelHeinsbroek/chartjs-plugin-crosshair/blob/master/LICENSE).
+
+The app uses the [chartjs-plugin-zoom](https://github.com/chartjs/chartjs-plugin-zoom/)
+library to provide zooming into height profiles. The library is licensed using the
+[MIT License](https://github.com/chartjs/chartjs-plugin-zoom/blob/master/LICENSE.md).
+
+The app uses the [Hammer.js](https://hammerjs.github.io/)
+library for touch gesture handling in the chartjs-plugin-zoom plugin. The library is licensed using the
+[MIT License](https://github.com/hammerjs/hammer.js/blob/master/LICENSE.md).
+
 The backend uses the [QuickGraph](https://github.com/oldrev/Sandwych.QuickGraph)
 library for tour planning.
 The library is licensed using the

@@ -292,6 +292,9 @@
     <Content Include="Assets\map\chartjs.html" />
     <Content Include="Assets\map\Chart\Chart.bundle.min.js" />
     <Content Include="Assets\map\Chart\Chart.min.css" />
+    <Content Include="Assets\map\Chart\chartjs-plugin-crosshair.min.js" />
+    <Content Include="Assets\map\Chart\chartjs-plugin-zoom.min.js" />
+    <Content Include="Assets\map\Chart\hammer.min.js" />
     <Content Include="Assets\map\heightProfileView.js" />
     <Content Include="Assets\map\images\cave.svg" />
     <Content Include="Assets\map\images\close-circle-outline.svg" />

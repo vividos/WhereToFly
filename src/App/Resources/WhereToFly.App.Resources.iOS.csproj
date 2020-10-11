@@ -285,6 +285,9 @@
     <Content Include="Assets\map\Cesium\Workers\WebGLConstants-76bb35d1.js" />
     <Content Include="Assets\map\Cesium\Workers\WebMercatorProjection-df58d479.js" />
     <Content Include="Assets\map\Cesium\Workers\when-54c2dc71.js" />
+    <BundleResource Include="Assets\map\Chart\chartjs-plugin-crosshair.min.js" />
+    <BundleResource Include="Assets\map\Chart\chartjs-plugin-zoom.min.js" />
+    <BundleResource Include="Assets\map\Chart\hammer.min.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\VersionAssemblyInfo.cs">
