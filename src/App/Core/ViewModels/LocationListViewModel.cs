@@ -24,6 +24,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         private readonly Dictionary<string, string> includedLocationsList = new Dictionary<string, string>
         {
+            { "Example Schliersee locations", "default" },
             { "Paraglidingspots European Alps Vs. 2.00", "paraglidingspots_european_alps_2020_10_01.kmz" },
         };
 
@@ -374,10 +375,17 @@ namespace WhereToFly.App.Core.ViewModels
                 return;
             }
 
-            var platform = DependencyService.Get<IPlatform>();
-            using (var stream = platform.OpenAssetStream("locations/" + assetFilename))
+            if (assetFilename == "default")
             {
-                await OpenFileHelper.OpenLocationListAsync(stream, assetFilename);
+                await OpenFileHelper.AddDefaultLocationListAsync();
+            }
+            else
+            {
+                var platform = DependencyService.Get<IPlatform>();
+                using (var stream = platform.OpenAssetStream("locations/" + assetFilename))
+                {
+                    await OpenFileHelper.OpenLocationListAsync(stream, assetFilename);
+                }
             }
 
             this.UpdateLocationList();

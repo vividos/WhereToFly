@@ -93,6 +93,29 @@ namespace WhereToFly.App.Core
         }
 
         /// <summary>
+        /// Adds (or replaces) the default location list
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        public static async Task AddDefaultLocationListAsync()
+        {
+            try
+            {
+                var locationList = DataServiceHelper.GetDefaultLocationList();
+
+                await ImportLocationListAsync(locationList);
+            }
+            catch (Exception ex)
+            {
+                App.LogError(ex);
+
+                await App.Current.MainPage.DisplayAlert(
+                    Constants.AppTitle,
+                    "Error while loading default locations: " + ex.Message,
+                    "OK");
+            }
+        }
+
+        /// <summary>
         /// Opens and load location list from given stream object
         /// </summary>
         /// <param name="stream">stream object</param>
