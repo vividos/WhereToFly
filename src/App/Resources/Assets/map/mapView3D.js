@@ -1552,6 +1552,7 @@ MapView.prototype.addTrack = function (track) {
     var boundingSphere = Cesium.BoundingSphere.fromPoints(trackPointArray, null);
 
     this.trackIdToTrackDataMap[track.id] = {
+        track: track,
         primitive: primitive,
         wallPrimitive: wallPrimitive,
         boundingSphere: boundingSphere
@@ -1600,6 +1601,14 @@ MapView.prototype.removeTrack = function (trackId) {
 
         this.trackIdToTrackDataMap[trackId] = undefined;
     }
+
+    if (trackId === this.currentHeightProfileTrackId &&
+        this.heightProfileView !== null) {
+        this.heightProfileView.hide();
+        this.heightProfileView = null;
+
+        this.trackMarker.show = false;
+    }
 };
 
 /**
@@ -1612,6 +1621,13 @@ MapView.prototype.clearAllTracks = function () {
     this.trackPrimitivesCollection.removeAll();
 
     this.trackIdToTrackDataMap = {};
+
+    if (this.heightProfileView !== null) {
+        this.heightProfileView.hide();
+        this.heightProfileView = null;
+
+        this.trackMarker.show = false;
+    }
 };
 
 /**
@@ -1619,6 +1635,33 @@ MapView.prototype.clearAllTracks = function () {
  * @param {string} trackId unique ID of the track
  */
 MapView.prototype.showTrackHeightProfile = function (trackId) {
+
+    var trackData = this.trackIdToTrackDataMap[trackId];
+    if (trackData === undefined) {
+        console.warn("no track found for track ID " + trackId);
+        return;
+    }
+
+    this.currentHeightProfileTrackId = trackId;
+
+    var that = this;
+    this.heightProfileView = new HeightProfileView({
+        id: 'chartElement',
+        useDarkTheme: true,
+        callback: function (funcName, params) {
+            that.heightProfileCallAction(funcName, params);
+        }
+    });
+
+    this.heightProfileView.setTrack(trackData.track);
+};
+
+/**
+ * Called for an action of the height profile view
+ * @param {string} funcName action function name
+ * @param {object} params action params
+ */
+MapView.prototype.heightProfileCallAction = function (funcName, params) {
 
 };
 
