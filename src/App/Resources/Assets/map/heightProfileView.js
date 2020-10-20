@@ -74,6 +74,11 @@ function HeightProfileView(options) {
                     }
                 }]
             },
+            hover: {
+                mode: 'nearest',
+                intersect: false,
+                axis: 'x'
+            },
             onHover: function (event, elements) {
                 that.onHover(elements);
             },
