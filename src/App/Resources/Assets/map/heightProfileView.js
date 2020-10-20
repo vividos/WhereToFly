@@ -4,6 +4,7 @@
  * @param {object} [options] Options to use for initializing height profile view
  * @param {Number} [options.id] DOM ID of the canvas element to create height profile view in
  * @param {boolean} [options.useDarkTheme] indicates if a dark theme should be used for the chart
+ * @param {boolean} [options.showCloseButton] indicates if a close button should be shown
  */
 function HeightProfileView(options) {
 
@@ -12,6 +13,7 @@ function HeightProfileView(options) {
     this.options = options || {
         id: 'chartElement',
         useDarkTheme: false,
+        showCloseButton: false,
         callback: {}
     };
 
@@ -96,6 +98,9 @@ function HeightProfileView(options) {
             ctx.fillRect(0, 0, chartInstance.chart.width, chartInstance.chart.height);
         }
     });
+
+    var chartButtonClose = document.getElementById('chartButtonClose');
+    chartButtonClose.style.display = this.options.showCloseButton ? 'block' : 'none';
 }
 
 /**
@@ -164,6 +169,19 @@ HeightProfileView.prototype.addGroundProfile = function (elevationArray) {
     });
 
     this.chart.update();
+};
+
+/**
+ * Hides the height profile view
+ */
+HeightProfileView.prototype.hide = function () {
+
+    var chartElement = document.getElementById(this.options.id);
+
+    chartElement.parentElement.style.display = 'none';
+
+    if (this.options.callback !== undefined)
+        this.options.callback('onClose', null);
 };
 
 /**

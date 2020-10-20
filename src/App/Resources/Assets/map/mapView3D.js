@@ -1653,6 +1653,7 @@ MapView.prototype.showTrackHeightProfile = function (trackId) {
     this.heightProfileView = new HeightProfileView({
         id: 'chartElement',
         useDarkTheme: true,
+        showCloseButton: true,
         callback: function (funcName, params) {
             that.heightProfileCallAction(funcName, params);
         }
@@ -1671,6 +1672,8 @@ MapView.prototype.heightProfileCallAction = function (funcName, params) {
     if (funcName === "onHover" || funcName === "onClick") {
         this.updateTrackMarker(this.currentHeightProfileTrackId, params);
     }
+    else if (funcName === "onClose")
+        this.trackMarker.show = false;
 };
 
 /**
