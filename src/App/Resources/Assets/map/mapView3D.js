@@ -1031,8 +1031,12 @@ MapView.prototype.createEntity = function (id, name, description, pinColor, pinI
 
     var url = Cesium.getAbsoluteUri(pinImage, window.location.href);
 
+    var imagePromise = window.location.protocol === "file:"
+        ? this.pinBuilder.fromColor(pinColor, 48)
+        : this.pinBuilder.fromUrl(url, pinColor, 48)
+
     return Cesium.when(
-        this.pinBuilder.fromUrl(url, pinColor, 48),
+        imagePromise,
         function (canvas) {
             return {
                 id: id,
