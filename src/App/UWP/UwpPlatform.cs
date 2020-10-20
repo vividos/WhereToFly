@@ -80,7 +80,7 @@ namespace WhereToFly.App.UWP
             using (var memoryStream = new MemoryStream())
             {
                 stream.CopyTo(memoryStream);
-                return memoryStream.GetBuffer();
+                return memoryStream.ToArray();
             }
         }
 
