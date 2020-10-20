@@ -118,17 +118,14 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Called when page is appearing; start position updates
         /// </summary>
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
 
-            Task.Run(async () =>
-            {
-                await this.geolocator.StartListeningAsync(
-                    Constants.GeoLocationMinimumTimeForUpdate,
-                    Constants.GeoLocationMinimumDistanceForUpdateInMeters,
-                    includeHeading: true);
-            });
+            await this.geolocator.StartListeningAsync(
+                Constants.GeoLocationMinimumTimeForUpdate,
+                Constants.GeoLocationMinimumDistanceForUpdateInMeters,
+                includeHeading: true);
 
             this.geolocator.PositionChanged += this.viewModel.OnPositionChanged;
 
@@ -138,18 +135,15 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Called when form is disappearing; stop position updates
         /// </summary>
-        protected override void OnDisappearing()
+        protected override async void OnDisappearing()
         {
             base.OnDisappearing();
 
+            this.viewModel.StopCompass();
+
             this.geolocator.PositionChanged -= this.viewModel.OnPositionChanged;
 
-            Task.Run(async () =>
-            {
-                await this.geolocator.StopListeningAsync();
-            });
-
-            this.viewModel.StopCompass();
+            await this.geolocator.StopListeningAsync();
         }
         #endregion
     }
