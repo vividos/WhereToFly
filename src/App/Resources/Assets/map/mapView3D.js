@@ -1667,6 +1667,31 @@ MapView.prototype.showTrackHeightProfile = function (trackId) {
  */
 MapView.prototype.heightProfileCallAction = function (funcName, params) {
 
+    if (funcName === "onHover" || funcName === "onClick") {
+        this.updateTrackMarker(this.currentHeightProfileTrackId, params);
+    }
+};
+
+/**
+ * Updates track marker to be placed on a track point index.
+ * @param {string} trackId unique ID of the track
+ * @param {object} trackPointIndex index of track point
+ */
+MapView.prototype.updateTrackMarker = function (trackId, trackPointIndex) {
+
+    var trackData = this.trackIdToTrackDataMap[trackId];
+    if (trackData === undefined) {
+        console.warn("no track found for track ID " + trackId);
+        return;
+    }
+
+    var longitude = trackData.track.listOfTrackPoints[trackPointIndex * 3];
+    var latitude = trackData.track.listOfTrackPoints[trackPointIndex * 3 + 1];
+    var altitude = trackData.track.listOfTrackPoints[trackPointIndex * 3 + 2];
+
+    this.trackMarker.show = true;
+    this.trackMarker.position =
+        Cesium.Cartesian3.fromDegrees(longitude, latitude, altitude);
 };
 
 /**
