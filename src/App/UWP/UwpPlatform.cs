@@ -2,6 +2,7 @@
 using System.IO;
 using WhereToFly.App.Core;
 using Windows.Storage;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(WhereToFly.App.UWP.UwpPlatform))]
@@ -91,10 +92,26 @@ namespace WhereToFly.App.UWP
         /// <param name="requestedTheme">requested theme</param>
         public void SetPlatformTheme(OSAppTheme requestedTheme)
         {
-            switch (requestedTheme)
+            // switch to UI thread; or else accessing RequestedTheme on UWP crashes
+            if (!MainThread.IsMainThread)
             {
-                case OSAppTheme.Dark: App.Current.RequestedTheme = Windows.UI.Xaml.ApplicationTheme.Dark; break;
-                case OSAppTheme.Light: App.Current.RequestedTheme = Windows.UI.Xaml.ApplicationTheme.Light; break;
+                MainThread.BeginInvokeOnMainThread(() => this.SetPlatformTheme(requestedTheme));
+                return;
+            }
+
+            try
+            {
+                switch (requestedTheme)
+                {
+                    case OSAppTheme.Dark: App.Current.RequestedTheme = Windows.UI.Xaml.ApplicationTheme.Dark; break;
+                    case OSAppTheme.Light: App.Current.RequestedTheme = Windows.UI.Xaml.ApplicationTheme.Light; break;
+                    default:
+                        // ignore other requested themes
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
             }
         }
     }
