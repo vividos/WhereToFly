@@ -129,6 +129,8 @@ The following icons are from the Google Material icon set:
 - refresh
 - export-variant
 - bookmark-plus-outline
+- close
+- arrow-expand-horizontal
 
 The Google Material Icons are licensed under the "Apache License 2.0":
 https://github.com/google/material-design-icons/blob/master/LICENSE
@@ -151,6 +153,8 @@ The following icons in the App are from the Material Design Icons
 - map-marker-plus - Cody @XT3000
 - eye-off-outline - Austin Andrews @Templarian
 - layers-plus - Austin Andrews @Templarian
+- gesture-spread - Michael Richins @MrGrigri
+- gesture-tap - Michael Richins @MrGrigri
 
 All custom icons are licensed under the SIL Open Font License 1.1:
 http://scripts.sil.org/cms/scripts/page.php?item_id=OFL_web

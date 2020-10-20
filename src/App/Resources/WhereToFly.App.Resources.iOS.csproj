@@ -288,6 +288,10 @@
     <BundleResource Include="Assets\map\Chart\chartjs-plugin-crosshair.min.js" />
     <BundleResource Include="Assets\map\Chart\chartjs-plugin-zoom.min.js" />
     <BundleResource Include="Assets\map\Chart\hammer.min.js" />
+    <BundleResource Include="Assets\map\images\arrow-expand-horizontal.svg" />
+    <BundleResource Include="Assets\map\images\close.svg" />
+    <BundleResource Include="Assets\map\images\gesture-spread.svg" />
+    <BundleResource Include="Assets\map\images\gesture-tap.svg" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\VersionAssemblyInfo.cs">

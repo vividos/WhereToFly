@@ -296,8 +296,12 @@
     <Content Include="Assets\map\Chart\chartjs-plugin-zoom.min.js" />
     <Content Include="Assets\map\Chart\hammer.min.js" />
     <Content Include="Assets\map\heightProfileView.js" />
+    <Content Include="Assets\map\images\arrow-expand-horizontal.svg" />
     <Content Include="Assets\map\images\cave.svg" />
     <Content Include="Assets\map\images\close-circle-outline.svg" />
+    <Content Include="Assets\map\images\close.svg" />
+    <Content Include="Assets\map\images\gesture-spread.svg" />
+    <Content Include="Assets\map\images\gesture-tap.svg" />
     <Content Include="Assets\map\images\mountain-pass.svg" />
     <Content Include="Properties\WhereToFly.App.Resources.UWP.rd.xml" />
   </ItemGroup>

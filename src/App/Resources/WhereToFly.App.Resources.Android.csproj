@@ -603,6 +603,18 @@
   <ItemGroup>
     <AndroidAsset Include="Assets\map\Chart\hammer.min.js" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\arrow-expand-horizontal.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\close.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\gesture-spread.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\map\images\gesture-tap.svg" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
