@@ -126,6 +126,10 @@ namespace WhereToFly.App.Android
             FFImageLoading.ImageService.Instance.Initialize();
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(enableFastRenderer: true);
 
+            // ignore NetworkProvider, as it's too inaccurate
+            Plugin.Geolocator.GeolocatorImplementation.ProvidersToUseWhileListening =
+                new string[] { global::Android.Locations.LocationManager.GpsProvider };
+
             MessagingCenter.Subscribe<Core.App, string>(this, Constants.MessageShowToast, this.ShowToast);
 
             this.LoadApplication(new Core.App());
