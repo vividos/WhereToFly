@@ -167,6 +167,7 @@ namespace WhereToFly.App.Core.ViewModels
         {
             this.appSettings = appSettings;
 
+            this.filterTextUpdateTimer.Stop();
             this.filterTextUpdateTimer.Elapsed += async (sender, args) =>
             {
                 this.filterTextUpdateTimer.Stop();
