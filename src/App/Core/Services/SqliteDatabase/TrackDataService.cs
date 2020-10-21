@@ -18,17 +18,17 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
     internal partial class SqliteDatabaseDataService
     {
         /// <summary>
+        /// Folder name for all tracks files
+        /// </summary>
+        private const string TracksFolderName = "tracks";
+
+        /// <summary>
         /// Database entry for a track
         /// </summary>
         [Table("tracks")]
         [SuppressMessage("StyleCop.CSharp.Naming", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "database entry object")]
         private class TrackEntry
         {
-            /// <summary>
-            /// Folder name for all tracks files
-            /// </summary>
-            private const string TracksFolderName = "tracks";
-
             /// <summary>
             /// Track to store in the entry
             /// </summary>
@@ -366,6 +366,29 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
                 trackEntryList.ToList().ForEach(trackEntry => File.Delete(trackEntry.TrackPointFilename));
 
                 await this.connection.DeleteAllAsync<TrackEntry>();
+
+                ClearTrackFolder();
+            }
+
+            /// <summary>
+            /// Clears track folder by removing all files and the folder itself
+            /// </summary>
+            private static void ClearTrackFolder()
+            {
+                try
+                {
+                    var platform = DependencyService.Get<IPlatform>();
+
+                    string tracksFolder = Path.Combine(platform.AppDataFolder, TracksFolderName);
+                    if (Directory.Exists(tracksFolder))
+                    {
+                        Directory.Delete(tracksFolder, true);
+                    }
+                }
+                catch (Exception)
+                {
+                    // ignore errors
+                }
             }
         }
     }
