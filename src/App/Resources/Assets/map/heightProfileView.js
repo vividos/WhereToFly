@@ -89,6 +89,39 @@ function HeightProfileView(options) {
                     zoom: {
                         enabled: false
                     },
+                },
+                // the zoom plugin is used for panning and zooming
+                zoom: {
+                    pan: {
+                        enabled: true,
+                        mode: 'x',
+                        rangeMin: {
+                            x: null, // to be set later
+                            y: null
+                        },
+                        rangeMax: {
+                            x: null, // to be set later
+                            y: null
+                        },
+                        speed: 20,
+                        threshold: 10
+                    },
+                    zoom: {
+                        enabled: true,
+                        drag: false, // don't use drag-to-zoom
+                        mode: 'x',
+                        rangeMin: {
+                            x: null, // to be set later
+                            y: null
+                        },
+                        rangeMax: {
+                            x: null, // to be set later
+                            y: null
+                        },
+                        speed: 0.1, // mouse wheel zoom speed (in percent)
+                        threshold: 2,
+                        sensitivity: 3
+                    }
                 }
             },
             hover: {
@@ -152,6 +185,17 @@ HeightProfileView.prototype.setTrack = function (track) {
         }]
     };
 
+    // need this to update the scales
+    this.chart.update();
+
+    var scale = this.chart.scales["time"];
+    var zoomPanOptions = this.chart.options.plugins.zoom;
+    zoomPanOptions.pan.rangeMin.x = scale.min.valueOf(); // left value
+    zoomPanOptions.pan.rangeMax.x = scale.max.valueOf(); // right value
+    zoomPanOptions.zoom.rangeMin.x = 60; // seconds of min. zoom level
+    zoomPanOptions.zoom.rangeMax.x = (scale.max - scale.min).valueOf(); // the whole time range
+
+    // need this to update the zoom and pan options
     this.chart.update();
 };
 
