@@ -76,6 +76,21 @@ function HeightProfileView(options) {
                     }
                 }]
             },
+            plugins: {
+                // the crosshair plugin is only used for the line, not for zooming
+                crosshair: {
+                    line: {
+                        color: '#ffe666',
+                        width: 2
+                    },
+                    sync: {
+                        enabled: false
+                    },
+                    zoom: {
+                        enabled: false
+                    },
+                }
+            },
             hover: {
                 mode: 'nearest',
                 intersect: false,
