@@ -51,6 +51,10 @@
             background-color: white;
         }
 
+        .chartToolbarButtonDisabled {
+            background-color: gray !important;
+        }
+
         .cesium-infoBox {
             width: 80%;
             max-width: 80%;
@@ -110,6 +114,20 @@
                  class="chartToolbarButton"
                  onclick="javascript:map.heightProfileView.resetZoom();">
                 <img src="images/arrow-expand-horizontal.svg" />
+            </div>
+
+            <div id="chartButtonModeHover"
+                 class="chartToolbarButton chartToolbarButtonDisabled"
+                 style="margin-left:0px;"
+                 onclick="javascript:map.heightProfileView.setModeHover();">
+                <img src="images/gesture-tap.svg" />
+            </div>
+
+            <div id="chartButtonModeZoomAndPan"
+                 class="chartToolbarButton"
+                 style="margin-right:0px;"
+                 onclick="javascript:map.heightProfileView.setModeZoomAndPan();">
+                <img src="images/gesture-spread.svg" />
             </div>
         </div>
     </div>

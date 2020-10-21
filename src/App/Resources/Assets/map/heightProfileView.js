@@ -10,6 +10,8 @@ function HeightProfileView(options) {
 
     console.log("HeightProfileView: creating new height profile view");
 
+    this.isZoomAndPanActive = true;
+
     this.options = options || {
         id: 'chartElement',
         useDarkTheme: false,
@@ -130,10 +132,12 @@ function HeightProfileView(options) {
                 axis: 'x'
             },
             onHover: function (event, elements) {
-                that.onHover(elements);
+                if (!that.isZoomAndPanActive)
+                    that.onHover(elements);
             },
             onClick: function (event, elements) {
-                that.onClick(elements);
+                if (!that.isZoomAndPanActive)
+                    that.onClick(elements);
             }
         }
     });
@@ -150,6 +154,49 @@ function HeightProfileView(options) {
     var chartButtonClose = document.getElementById('chartButtonClose');
     chartButtonClose.style.display = this.options.showCloseButton ? 'block' : 'none';
 }
+
+/**
+ * Sets 'hover' mode where zoom and pan is disabled and the user can click or
+ * touch on the graph to see the crosshair and to update the track marker, if
+ * displayed.
+ */
+HeightProfileView.prototype.setModeHover = function () {
+
+    this.isZoomAndPanActive = false;
+
+    this.chart.options.plugins.zoom.zoom.enabled = false;
+    this.chart.options.plugins.zoom.pan.enabled = false;
+
+    this.chart.update();
+
+    // update buttons
+    var chartButtonModeHover = document.getElementById('chartButtonModeHover');
+    chartButtonModeHover.classList.remove('chartToolbarButtonDisabled');
+
+    var chartButtonModeZoomAndPan = document.getElementById('chartButtonModeZoomAndPan');
+    chartButtonModeZoomAndPan.classList.add('chartToolbarButtonDisabled');
+};
+
+/**
+ * Sets 'zoom-and-pan' mode where zoom and pan is enabled and clicks or hover
+ * events are not given to the callback.
+ */
+HeightProfileView.prototype.setModeZoomAndPan = function () {
+
+    this.isZoomAndPanActive = true;
+
+    this.chart.options.plugins.zoom.zoom.enabled = true;
+    this.chart.options.plugins.zoom.pan.enabled = true;
+
+    this.chart.update();
+
+    // update buttons
+    var chartButtonModeHover = document.getElementById('chartButtonModeHover');
+    chartButtonModeHover.classList.add('chartToolbarButtonDisabled');
+
+    var chartButtonModeZoomAndPan = document.getElementById('chartButtonModeZoomAndPan');
+    chartButtonModeZoomAndPan.classList.remove('chartToolbarButtonDisabled');
+};
 
 /**
  * Sets track to display the height profile for

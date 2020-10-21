@@ -46,6 +46,10 @@
             height: 24px;
             background-color: white;
         }
+
+        .chartToolbarButtonDisabled {
+            background-color: gray !important;
+        }
     </style>
 </head>
 <body style="margin: 0px">
@@ -64,6 +68,20 @@
                  class="chartToolbarButton"
                  onclick="javascript:heightProfileView.resetZoom();">
                 <img src="images/arrow-expand-horizontal.svg" />
+            </div>
+
+            <div id="chartButtonModeHover"
+                 class="chartToolbarButton chartToolbarButtonDisabled"
+                 style="margin-left:0px;"
+                 onclick="javascript:heightProfileView.setModeHover();">
+                <img src="images/gesture-tap.svg" />
+            </div>
+
+            <div id="chartButtonModeZoomAndPan"
+                 class="chartToolbarButton"
+                 style="margin-right:0px;"
+                 onclick="javascript:heightProfileView.setModeZoomAndPan();">
+                <img src="images/gesture-spread.svg" />
             </div>
         </div>
     </div>
