@@ -187,6 +187,14 @@ HeightProfileView.prototype.addGroundProfile = function (elevationArray) {
 };
 
 /**
+ * Resets zoom level
+ */
+HeightProfileView.prototype.resetZoom = function () {
+
+    this.chart.resetZoom();
+};
+
+/**
  * Hides the height profile view
  */
 HeightProfileView.prototype.hide = function () {
