@@ -5,6 +5,7 @@
  * @param {Number} [options.id] DOM ID of the canvas element to create height profile view in
  * @param {boolean} [options.useDarkTheme] indicates if a dark theme should be used for the chart
  * @param {boolean} [options.showCloseButton] indicates if a close button should be shown
+ * @param {Function} [options.callback] action function callback
  */
 function HeightProfileView(options) {
 
@@ -141,8 +142,7 @@ function HeightProfileView(options) {
                 axis: 'x'
             },
             onHover: function (event, elements) {
-                if (!that.isZoomAndPanActive)
-                    that.onHover(elements);
+                that.onHover(elements);
             },
             onClick: function (event, elements) {
                 if (!that.isZoomAndPanActive)
@@ -176,7 +176,7 @@ HeightProfileView.prototype.setModeHover = function () {
     this.chart.options.plugins.zoom.zoom.enabled = false;
     this.chart.options.plugins.zoom.pan.enabled = false;
 
-    this.chart.update();
+    this.chart.update(0);
 
     // update buttons
     var chartButtonModeHover = document.getElementById('chartButtonModeHover');
@@ -197,7 +197,7 @@ HeightProfileView.prototype.setModeZoomAndPan = function () {
     this.chart.options.plugins.zoom.zoom.enabled = true;
     this.chart.options.plugins.zoom.pan.enabled = true;
 
-    this.chart.update();
+    this.chart.update(0);
 
     // update buttons
     var chartButtonModeHover = document.getElementById('chartButtonModeHover');
@@ -242,7 +242,7 @@ HeightProfileView.prototype.setTrack = function (track) {
     };
 
     // need this to update the scales
-    this.chart.update();
+    this.chart.update(0);
 
     var scale = this.chart.scales["time"];
     var zoomPanOptions = this.chart.options.plugins.zoom;
@@ -252,7 +252,7 @@ HeightProfileView.prototype.setTrack = function (track) {
     zoomPanOptions.zoom.rangeMax.x = (scale.max - scale.min).valueOf(); // the whole time range
 
     // need this to update the zoom and pan options
-    this.chart.update();
+    this.chart.update(0);
 };
 
 /**
@@ -313,7 +313,7 @@ HeightProfileView.prototype.hide = function () {
  */
 HeightProfileView.prototype.onHover = function (elements) {
 
-    console.log("HeightProfileView: onHover called, with " + elements.length + " elements");
+    //console.log("HeightProfileView: onHover called, with " + elements.length + " elements");
 
     if (elements.length > 0 &&
         this.options.callback !== undefined) {
@@ -327,7 +327,7 @@ HeightProfileView.prototype.onHover = function (elements) {
  */
 HeightProfileView.prototype.onClick = function (elements) {
 
-    console.log("HeightProfileView: onClick called, with " + elements.length + " elements");
+    //console.log("HeightProfileView: onClick called, with " + elements.length + " elements");
 
     if (elements.length > 0 &&
         this.options.callback !== undefined) {

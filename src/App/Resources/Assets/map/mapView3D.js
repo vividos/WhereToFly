@@ -1641,6 +1641,9 @@ MapView.prototype.clearAllTracks = function () {
  */
 MapView.prototype.showTrackHeightProfile = function (trackId) {
 
+    if (this.currentHeightProfileTrackId === trackId)
+        return; // already shown
+
     var trackData = this.trackIdToTrackDataMap[trackId];
     if (trackData === undefined) {
         console.warn("no track found for track ID " + trackId);
@@ -1672,8 +1675,10 @@ MapView.prototype.heightProfileCallAction = function (funcName, params) {
     if (funcName === "onHover" || funcName === "onClick") {
         this.updateTrackMarker(this.currentHeightProfileTrackId, params);
     }
-    else if (funcName === "onClose")
+    else if (funcName === "onClose") {
         this.trackMarker.show = false;
+        this.currentHeightProfileTrackId = undefined;
+    }
 };
 
 /**
@@ -1696,6 +1701,8 @@ MapView.prototype.updateTrackMarker = function (trackId, trackPointIndex) {
     this.trackMarker.show = true;
     this.trackMarker.position =
         Cesium.Cartesian3.fromDegrees(longitude, latitude, altitude);
+
+    this.updateScene();
 };
 
 /**
