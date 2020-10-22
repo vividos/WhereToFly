@@ -58,9 +58,7 @@ namespace WhereToFly.App.Core.Styles
                 resources[item] = newTheme[item];
             }
 
-            Application.Current.UserAppTheme =
-                theme == Theme.Device ? OSAppTheme.Unspecified :
-                theme == Theme.Dark ? OSAppTheme.Dark : OSAppTheme.Light;
+            Application.Current.UserAppTheme = OSAppThemeFromTheme(theme);
 
             // apply platform specific changes
             var osAppTheme = theme == Theme.Dark ? OSAppTheme.Dark : OSAppTheme.Light;
@@ -68,6 +66,25 @@ namespace WhereToFly.App.Core.Styles
 
             // remember new theme
             CurrentTheme = theme;
+        }
+
+        /// <summary>
+        /// Translates Theme value to OSAppTheme value
+        /// </summary>
+        /// <param name="theme">theme value</param>
+        /// <returns>OS app theme value</returns>
+        private static OSAppTheme OSAppThemeFromTheme(Theme theme)
+        {
+            switch (theme)
+            {
+                case Theme.Light:
+                    return OSAppTheme.Light;
+                case Theme.Dark:
+                    return OSAppTheme.Dark;
+                case Theme.Device:
+                default:
+                    return OSAppTheme.Unspecified;
+            }
         }
     }
 }

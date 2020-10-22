@@ -110,8 +110,9 @@ namespace WhereToFly.App.UWP
                         break;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
+                // ignore errors when setting theme
             }
         }
     }
