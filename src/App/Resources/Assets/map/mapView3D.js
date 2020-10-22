@@ -1032,7 +1032,7 @@ MapView.prototype.createEntity = function (id, name, description, pinColor, pinI
 
     var url = Cesium.getAbsoluteUri(pinImage, window.location.href);
 
-    var imagePromise = window.location.protocol === "file:"
+    var imagePromise = window.location.protocol === "file:" && !window.location.href.includes("android_asset")
         ? this.pinBuilder.fromColor(pinColor, 48)
         : this.pinBuilder.fromUrl(url, pinColor, 48)
 
