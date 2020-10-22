@@ -46,6 +46,15 @@ function HeightProfileView(options) {
             legend: {
                 display: false
             },
+            tooltips: {
+                enabled: false,
+                mode: 'nearest',
+                axis: 'x',
+                intersect: false,
+                custom: function (tooltipModel) {
+                    that.updateTooltipElement(tooltipModel);
+                }
+            },
             scales: {
                 xAxes: [{
                     id: 'time',
@@ -324,4 +333,134 @@ HeightProfileView.prototype.onClick = function (elements) {
         this.options.callback !== undefined) {
         this.options.callback('onClick', elements[0]._index);
     }
+};
+
+/**
+ * @typedef {Object} TooltipTrackPointInfo
+ * @property {Date} timePoint time point of track; may be undefined
+ * @property {number} elapsedTime elapsed time, in seconds since track start
+ * @property {number} trackHeight track altitude, in m
+ * @property {number} groundHeight ground height, in m; may be undefined
+ * @property {number} varioValue variometer climb or sink value; in m/s
+ */
+
+/**
+ * Returns data about a tooltip track point. Depending on the track point,
+ * various infos are returned.
+ * @param {object} tooltipModel tooltip model
+ * @returns {TooltipTrackPointInfo} track point info
+ */
+HeightProfileView.prototype.getTrackTooltipInfos = function (tooltipModel) {
+
+    var values = {};
+
+    var timePoint = this.chart.data.datasets[0].data[tooltipModel.dataPoints[0].index].x;
+
+    if (timePoint.getFullYear() === 1970)
+        values.elapsedTime = timePoint.valueOf() / 1000.0;
+    else {
+        values.timePoint = timePoint;
+        var startTime = this.chart.data.datasets[0].data[0].x;
+        values.elapsedTime = (values.timePoint - startTime).valueOf() / 1000.0;
+    }
+
+    var that = this;
+    tooltipModel.dataPoints.forEach(function (tooltipItem) {
+        if (tooltipItem.datasetIndex === 0) {
+
+            var currentDataPoint = that.chart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+            values.trackHeight = currentDataPoint.y;
+
+            if (tooltipItem.index === 0) {
+                values.varioValue = 0.0;
+            }
+            else {
+                var lastDataPoint = that.chart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index - 1];
+
+                var lastTrackHeight = lastDataPoint.y;
+
+                var deltaTimeMs = currentDataPoint.x.valueOf() - lastDataPoint.x.valueOf();
+                values.varioValue = (values.trackHeight - lastTrackHeight) / deltaTimeMs * 1000.0;
+            }
+        }
+
+        if (tooltipItem.datasetIndex === 1) {
+            values.groundHeight = that.chart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].y;
+        }
+    });
+
+    return values;
+};
+
+/**
+ * Formats the tooltip text from given tooltip model
+ * @param {object} tooltipModel tooltip model
+ */
+HeightProfileView.prototype.formatTooltipText = function (tooltipModel) {
+
+    var values = this.getTrackTooltipInfos(tooltipModel);
+
+    var text = "";
+
+    if (values.timePoint !== undefined)
+        text += "<div>Time: " + values.timePoint.toLocaleTimeString() + "</div>";
+
+    text += "<div>Elapsed: " + new Date((values.elapsedTime - 60.0 * 60.0) * 1000.0).toLocaleTimeString() + "</div>";
+
+    if (values.trackHeight !== undefined)
+        text += "<div>Altitude: " + values.trackHeight.toFixed(1) + "m</div>";
+
+    if (values.groundHeight !== undefined) {
+        text += "<div>Ground: " + values.groundHeight.toFixed(1) + "m</div>";
+        text += "<div>AGL: " + (values.trackHeight - values.groundHeight).toFixed(1) + "m</div>";
+    }
+
+    if (values.varioValue !== undefined) {
+        text += "<div>Vario: " + values.varioValue.toFixed(1) + "m/s</div>";
+    }
+
+    return text;
+};
+
+/**
+ * Updates the tooltip DOM element
+ * @param {object} tooltipModel tooltip model
+ */
+HeightProfileView.prototype.updateTooltipElement = function (tooltipModel) {
+
+    var tooltipElement = document.getElementById('chartjs-tooltip');
+
+    if (!tooltipElement) {
+        tooltipElement = document.createElement('div');
+        tooltipElement.id = 'chartjs-tooltip';
+        this.chart.canvas.parentNode.appendChild(tooltipElement);
+    }
+
+    // hide if no tooltip
+    if (tooltipModel.opacity === 0) {
+        tooltipElement.style.opacity = 0;
+        return;
+    }
+
+    // set caret position
+    tooltipElement.classList.remove('above', 'below', 'no-transform');
+    if (tooltipModel.yAlign)
+        tooltipElement.classList.add(tooltipModel.yAlign);
+    else
+        tooltipElement.classList.add('no-transform');
+
+    // set text
+    tooltipElement.innerHTML = this.formatTooltipText(tooltipModel);
+
+    var positionY = this.chart.canvas.offsetTop;
+    var positionX = this.chart.canvas.offsetLeft;
+
+    // display, position, and set styles for font
+    tooltipElement.style.opacity = 1;
+    tooltipElement.style.left = positionX + tooltipModel.caretX + 'px';
+    tooltipElement.style.top = positionY + tooltipModel.caretY + 'px';
+    tooltipElement.style.fontFamily = tooltipModel._bodyFontFamily;
+    tooltipElement.style.fontSize = tooltipModel.bodyFontSize + 'px';
+    tooltipElement.style.fontStyle = tooltipModel._bodyFontStyle;
+    tooltipElement.style.padding = tooltipModel.yPadding + 'px ' + tooltipModel.xPadding + 'px';
 };

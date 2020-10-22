@@ -55,6 +55,17 @@
             background-color: gray !important;
         }
 
+        #chartjs-tooltip {
+            opacity: 1;
+            position: absolute;
+            background: rgba(0, 0, 0, .7);
+            color: white;
+            border-radius: 3px;
+            pointer-events: none;
+            -webkit-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+        }
+
         /* set size of infobox to fill 80% of the whole mobile screen */
         @media (max-width: 768px) {
             .cesium-infoBox {
