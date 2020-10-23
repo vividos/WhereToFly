@@ -18,7 +18,8 @@
         <Label Text="Plan tour" FontSize="Large" VerticalOptions="Start" />
 
         <!-- Message to show that more locations are needed for tour planning -->
-        <StackLayout Padding="8" Margin="0" BackgroundColor="{DynamicResource WarningBandBackgroundColor}"
+        <StackLayout Padding="8" Margin="0"
+                     BackgroundColor="{DynamicResource WarningBandBackgroundColor}"
                      HorizontalOptions="FillAndExpand"
                      IsVisible="{Binding Path=ShowWarningForMoreLocations, Mode=OneWay}">
             <Label Text="At least two locations are needed for tour planning" FontSize="Medium"
@@ -26,59 +27,59 @@
                    AutomationId="ShowWarningForMoreLocationsLabel" />
         </StackLayout>
 
-        <!-- Location list -->
-        <ListView ItemsSource="{Binding Path=PlanTourList, Mode=OneWay}"
-                  RowHeight="90"
-                  IsPullToRefreshEnabled="False"
-                  CachingStrategy="RecycleElement"
-                  SeparatorVisibility="None"
-                  VerticalOptions="FillAndExpand"
-                  AutomationId="PlanTourList">
+        <!-- Tour plan location list -->
+        <CollectionView ItemsSource="{Binding Path=PlanTourList, Mode=OneWay}"
+                        ItemSizingStrategy="MeasureFirstItem"
+                        SelectionMode="None"
+                        VerticalOptions="FillAndExpand"
+                        HorizontalOptions="StartAndExpand"
+                        AutomationId="PlanTourList">
 
-            <ListView.ItemTemplate>
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="4" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <!-- Template for a single entry -->
-                    <ViewCell Height="90">
-                        <ViewCell.View>
-                            <Grid BackgroundColor="{DynamicResource ListViewItemBackgroundColor}" Margin="8,4">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="40" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
+                    <Grid BackgroundColor="{DynamicResource ListViewItemBackgroundColor}"
+                          HeightRequest="90" Margin="8,4">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
 
-                                <!-- Type image -->
-                                <ffimageloadingsvg:SvgCachedImage Source="{Binding TypeImageSource, Mode=OneWay}"
-                                                                  ReplaceStringMap="{DynamicResource SvgImageFillDark}"
-                                                                  WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
-                                                                  HorizontalOptions="Start" VerticalOptions="Center"
-                                                                  Grid.Row="0" Grid.Column="0" />
+                        <!-- Type image -->
+                        <ffimageloadingsvg:SvgCachedImage Source="{Binding TypeImageSource, Mode=OneWay}"
+                                                          ReplaceStringMap="{DynamicResource SvgImageFillDark}"
+                                                          WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
+                                                          HorizontalOptions="Start" VerticalOptions="Center"
+                                                          Grid.Row="0" Grid.Column="0" />
 
-                                <!-- Name -->
-                                <Label Text="{Binding Name, Mode=OneTime}"
-                                       Style="{DynamicResource ListItemTextStyle}"
-                                       FontSize="Medium"
-                                       LineBreakMode="TailTruncation"
-                                       HorizontalOptions="Fill" VerticalOptions="Center"
-                                       Grid.Row="0" Grid.Column="1" />
+                        <!-- Name -->
+                        <Label Text="{Binding Name, Mode=OneTime}"
+                               Style="{DynamicResource ListItemTextStyle}"
+                               FontSize="Medium"
+                               LineBreakMode="TailTruncation"
+                               HorizontalOptions="Fill" VerticalOptions="Center"
+                               Grid.Row="0" Grid.Column="1" />
 
-                                <!-- Buttons -->
-                                <StackLayout Orientation="Horizontal"
-                                             HorizontalOptions="Fill" VerticalOptions="Center"
-                                             Grid.Row="1" Grid.Column="1">
-                                    <Button Text="Up" WidthRequest="80" Command="{Binding MoveUpCommand}" />
-                                    <Button Text="Down" WidthRequest="80" Command="{Binding MoveDownCommand}" />
-                                    <Button Text="X" WidthRequest="60" Command="{Binding RemoveCommand}" />
-                                </StackLayout>
-                            </Grid>
-                        </ViewCell.View>
-                    </ViewCell>
+                        <!-- Up/down buttons -->
+                        <StackLayout Orientation="Horizontal"
+                                     HorizontalOptions="Fill" VerticalOptions="Center"
+                                     Grid.Row="1" Grid.Column="1">
+                            <Button Text="Up" WidthRequest="80" Command="{Binding MoveUpCommand}" />
+                            <Button Text="Down" WidthRequest="80" Command="{Binding MoveDownCommand}" />
+                            <Button Text="X" WidthRequest="60" Command="{Binding RemoveCommand}" />
+                        </StackLayout>
+                    </Grid>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
         <!-- Buttons -->
         <StackLayout Orientation="Horizontal">

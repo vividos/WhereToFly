@@ -55,12 +55,12 @@ namespace WhereToFly.App.Core.ViewModels
             /// <summary>
             /// Command to move up location in the list
             /// </summary>
-            public ICommand MoveUpCommand { get; set; }
+            public Xamarin.Forms.Command MoveUpCommand { get; set; }
 
             /// <summary>
             /// Command to move down location in the list
             /// </summary>
-            public ICommand MoveDownCommand { get; set; }
+            public Xamarin.Forms.Command MoveDownCommand { get; set; }
 
             /// <summary>
             /// Command to remove location from the list
@@ -102,6 +102,9 @@ namespace WhereToFly.App.Core.ViewModels
                 this.OnPropertyChanged(nameof(this.MoveUpCommand));
                 this.OnPropertyChanged(nameof(this.MoveDownCommand));
                 this.OnPropertyChanged(nameof(this.RemoveCommand));
+
+                this.MoveUpCommand.ChangeCanExecute();
+                this.MoveDownCommand.ChangeCanExecute();
             }
         }
 
@@ -212,7 +215,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <param name="viewModel">location view model to move</param>
         private void MoveDownLocation(PlanTourListEntryViewModel viewModel)
         {
-            Debug.Assert(!this.IsFirstLocation(viewModel), "must not be called with the last location");
+            Debug.Assert(!this.IsLastLocation(viewModel), "must not be called with the last location");
 
             var locationViewModel = this.PlanTourList.FirstOrDefault(viewModelToCheck => viewModelToCheck.Id == viewModel.Id);
             if (locationViewModel != null)
