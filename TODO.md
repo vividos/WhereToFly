@@ -3,7 +3,6 @@
 ## Bugs
 
 - [ ] Share without location, show toast after x seconds
-- [ ] UWP: Fix crash when opening tour planning popup
 - [ ] Web: Fix map and static navbar issue
 
 ## New Features
@@ -23,11 +22,7 @@
 - [ ] Export locations to GPX file
 
 ### Tracks
-- [ ] Add recording current track
 - [ ] Implement reversing track
-- [ ] Show height profile of track in map as overlay
-- [ ] Add navigate-to button, with start and end point selection
-- [ ] Add specifying offset for tracks, when importing
 - [ ] Analyze flight tracks and show analysis on a new tab
 
 ### Weather
@@ -41,5 +36,4 @@
 
 ### Miscellaneous
 - [ ] Add transferring locations using QR code scanning
-- [ ] Implement switching themes/night mode using ResourceDictionary
 - [ ] UWP: Implement dropping files to open them
