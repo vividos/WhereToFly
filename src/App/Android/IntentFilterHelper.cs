@@ -68,6 +68,11 @@ namespace WhereToFly.App.Android
         private string GetContentNameFromContentUri(Uri uri)
         {
             ICursor cursor = this.resolver.Query(uri, null, null, null, null);
+            if (cursor == null)
+            {
+                return null;
+            }
+
             cursor.MoveToFirst();
 
             int nameIndex = cursor.GetColumnIndex(global::Android.Provider.MediaStore.IMediaColumns.DisplayName);
