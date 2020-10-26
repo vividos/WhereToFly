@@ -13,6 +13,7 @@
     <script src="Chart/hammer.min.js"></script>
     <script src="Chart/chartjs-plugin-zoom.min.js"></script>
     <link href="Chart/Chart.min.css" rel="stylesheet">
+    <link href="heightProfileView.css" rel="stylesheet">
     <style>
 
         html, body, #mapElement {
@@ -25,8 +26,6 @@
         }
 
         #chartContainer {
-            width: 100vw;
-            position: absolute;
             left: 0px;
             bottom: 0px;
         }
@@ -34,36 +33,6 @@
         #chartElement {
             opacity: 0.5;
             z-index: 10;
-            overflow: hidden;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
-        }
-
-        .chartToolbarButton {
-            position: relative;
-            float: right;
-            padding: 5px;
-            margin: 10px;
-            width: 24px;
-            height: 24px;
-            background-color: white;
-        }
-
-        .chartToolbarButtonDisabled {
-            background-color: gray !important;
-        }
-
-        #chartjs-tooltip {
-            opacity: 1;
-            position: absolute;
-            background: rgba(0, 0, 0, .7);
-            color: white;
-            border-radius: 3px;
-            pointer-events: none;
-            -webkit-transform: translate(-50%, 0);
-            transform: translate(-50%, 0);
         }
 
         .cesium-infoBox {
