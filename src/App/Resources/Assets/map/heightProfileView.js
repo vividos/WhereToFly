@@ -29,6 +29,7 @@ function HeightProfileView(options) {
 
     var ctx = chartElement.getContext('2d');
 
+    this.trackColor = this.options.useDarkTheme ? '#00ffff' : '#0000ff';
     this.backgroundColor = this.options.useDarkTheme ? '#202124' : '#F5F5F5';
     this.axisColor = this.options.useDarkTheme ? '#f5f5f5' : '#202020';
     this.groundProfileColor = this.options.useDarkTheme ? '#404040' : '#808080';
@@ -237,7 +238,7 @@ HeightProfileView.prototype.setTrack = function (track) {
             label: 'Track',
             tension: 0.0,
             pointRadius: 0.0,
-            borderColor: 'rgba(0,0,255,255)',
+            borderColor: this.trackColor,
         }]
     };
 
