@@ -292,6 +292,7 @@
     <BundleResource Include="Assets\map\images\close.svg" />
     <BundleResource Include="Assets\map\images\gesture-spread.svg" />
     <BundleResource Include="Assets\map\images\gesture-tap.svg" />
+    <BundleResource Include="Assets\map\heightProfileView.css" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\VersionAssemblyInfo.cs">

@@ -295,6 +295,7 @@
     <Content Include="Assets\map\Chart\chartjs-plugin-crosshair.min.js" />
     <Content Include="Assets\map\Chart\chartjs-plugin-zoom.min.js" />
     <Content Include="Assets\map\Chart\hammer.min.js" />
+    <Content Include="Assets\map\heightProfileView.css" />
     <Content Include="Assets\map\heightProfileView.js" />
     <Content Include="Assets\map\images\arrow-expand-horizontal.svg" />
     <Content Include="Assets\map\images\cave.svg" />
