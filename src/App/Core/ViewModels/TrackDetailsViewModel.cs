@@ -1,4 +1,8 @@
-﻿using WhereToFly.App.Geo;
+﻿using MvvmHelpers.Commands;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using WhereToFly.App.Core.Services;
+using WhereToFly.App.Geo;
 using WhereToFly.App.Logic;
 using Xamarin.Forms;
 
@@ -62,6 +66,11 @@ namespace WhereToFly.App.Core.ViewModels
         /// Track to display height profile for
         /// </summary>
         public Track Track { get; private set; }
+
+        /// <summary>
+        /// Command that is called when height profile should be opened in a new page
+        /// </summary>
+        public ICommand OpenHeightProfileCommand { get; set; }
         #endregion
 
         /// <summary>
@@ -73,6 +82,20 @@ namespace WhereToFly.App.Core.ViewModels
             this.Track = track;
 
             this.TypeImageSource = SvgImageCache.GetImageSource(track);
+            this.OpenHeightProfileCommand = new AsyncCommand(
+                this.OpenHeightProfilePage);
+        }
+
+        /// <summary>
+        /// Opens height profile page
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task OpenHeightProfilePage()
+        {
+            await NavigationService.Instance.NavigateAsync(
+                Constants.PageKeyTrackHeightProfilePage,
+                true,
+                this.Track);
         }
     }
 }

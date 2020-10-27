@@ -67,6 +67,12 @@
                                                HorizontalOptions="CenterAndExpand"
                                                VerticalOptions="Fill" />
 
+                <!-- Button to show height profile in new page -->
+                <Button Text="Show full screen"
+                        HorizontalOptions="Center"
+                        WidthRequest="300"
+                        Command="{Binding OpenHeightProfileCommand}" />
+
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
