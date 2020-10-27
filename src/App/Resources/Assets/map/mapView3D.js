@@ -1279,9 +1279,8 @@ MapView.prototype.showFlyingRange = function (options) {
  * @param {object} [track] Track object to add
  * @param {string} [track.id] unique ID of the track
  * @param {array} [track.listOfTrackPoints] An array of track points in long, lat, alt, long, lat, alt ... order
- * @param {number} [offsetInMeters] offset in meters to apply to track
  */
-MapView.prototype.sampleTrackHeights = function (track, offsetInMeters) {
+MapView.prototype.sampleTrackHeights = function (track) {
 
     console.log("MapView.sampleTrackHeights: #1 start sampling track point heights for " + track.listOfTrackPoints.length + " points...");
 
@@ -1289,8 +1288,6 @@ MapView.prototype.sampleTrackHeights = function (track, offsetInMeters) {
         console.warn("MapView.sampleTrackHeights: #2: polylines on terrain are not supported");
         return;
     }
-
-    offsetInMeters = offsetInMeters || 0.0;
 
     var trackPointArray = Cesium.Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints);
 
@@ -1318,13 +1315,8 @@ MapView.prototype.sampleTrackHeights = function (track, offsetInMeters) {
                     // NOSONAR
                     for (var trackPointIndex = 0; trackPointIndex < trackPointArray.length; ++trackPointIndex) {
 
-                        var trackPointHeight = track.listOfTrackPoints[trackPointIndex * 3 + 2] + offsetInMeters;
                         var sampledHeight = samples[trackPointIndex].height;
-
-                        if (sampledHeight > trackPointHeight)
-                            trackPointHeight = sampledHeight;
-
-                        trackPointHeightArray.push(trackPointHeight);
+                        trackPointHeightArray.push(sampledHeight);
                     }
 
                     console.log("MapView.sampleTrackHeights: #6: sampling track point heights finished.");
