@@ -1608,6 +1608,8 @@ MapView.prototype.removeTrack = function (trackId) {
 
         this.trackMarker.show = false;
     }
+
+    this.updateScene();
 };
 
 /**
@@ -1627,6 +1629,8 @@ MapView.prototype.clearAllTracks = function () {
 
         this.trackMarker.show = false;
     }
+
+    this.updateScene();
 };
 
 /**
