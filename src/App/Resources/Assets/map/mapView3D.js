@@ -1673,7 +1673,20 @@ MapView.prototype.showTrackHeightProfile = function (trackId) {
 MapView.prototype.heightProfileCallAction = function (funcName, params) {
 
     if (funcName === "onHover" || funcName === "onClick") {
+
         this.updateTrackMarker(this.currentHeightProfileTrackId, params);
+
+        if (funcName === "onClick") {
+
+            this.viewer.flyTo(
+                this.trackMarker,
+                {
+                    offset: new Cesium.HeadingPitchRange(
+                        this.viewer.scene.camera.heading,
+                        this.viewer.scene.camera.pitch,
+                        2000.0)
+                });
+        }
     }
     else if (funcName === "onClose") {
         this.trackMarker.show = false;
