@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Platform.UWP;
 
 [assembly: ExportRenderer(typeof(WebView), typeof(WhereToFly.App.UWP.UwpWebViewRenderer))]
@@ -44,12 +43,7 @@ namespace WhereToFly.App.UWP
         /// <param name="args">event args</param>
         private void OnScriptNotify(object sender, Windows.UI.Xaml.Controls.NotifyEventArgs args)
         {
-            Debug.WriteLine(
-                string.Format(
-                    "ScriptNotify: {0}, CallingUri={1}, Value={2}",
-                    sender.ToString(),
-                    args.CallingUri,
-                    args.Value));
+            ////Debug.WriteLine($"ScriptNotify: {sender}, CallingUri={args.CallingUri}, Value={args.Value}");
 
             string url = args.Value;
 
