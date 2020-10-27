@@ -40,7 +40,7 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\applogo.svg" />
+    <BundleResource Include="Assets\applogo.svg" />
     <BundleResource Include="Assets\info\version.jpg" />
     <BundleResource Include="Assets\info\images\border-none-variant.svg" />
     <BundleResource Include="Assets\info\images\calendar-clock.svg" />
