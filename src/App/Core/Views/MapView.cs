@@ -604,6 +604,10 @@ namespace WhereToFly.App.Core.Views
                 timePointsList = track.TrackPoints.Select(x => (x.Time.Value - startTime).TotalSeconds).ToList();
             }
 
+            List<double> groundHeightProfileList = track.GroundHeightProfile.Any()
+                ? track.GroundHeightProfile
+                : null;
+
             var trackJsonObject = new
             {
                 id = track.Id,
@@ -611,6 +615,7 @@ namespace WhereToFly.App.Core.Views
                 isFlightTrack = track.IsFlightTrack,
                 listOfTrackPoints = trackPointsList,
                 listOfTimePoints = timePointsList,
+                groundHeightProfile = groundHeightProfileList,
                 color = track.IsFlightTrack ? null : track.Color
             };
 

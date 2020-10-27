@@ -96,7 +96,7 @@ namespace WhereToFly.App.Core.Views
         /// match the number of track points from the SetTrack() call.
         /// </summary>
         /// <param name="elevationValues">elevation values</param>
-        public void AddGroundProfile(double[] elevationValues)
+        public void AddGroundProfile(IEnumerable<double> elevationValues)
         {
             string elevations = JsonConvert.SerializeObject(elevationValues);
             string js = $"heightProfileView.addGroundProfile({elevations});";

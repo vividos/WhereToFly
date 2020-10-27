@@ -182,6 +182,22 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             public string TrackPointFilename { get; set; }
 
             /// <summary>
+            /// Ground height profile
+            /// </summary>
+            [Column("ground_height_profile")]
+            public string GroundHeightProfile
+            {
+                get => JsonConvert.SerializeObject(this.Track.GroundHeightProfile);
+                set
+                {
+                    var list = value == null
+                        ? null
+                        : JsonConvert.DeserializeObject<List<double>>(value);
+                    this.Track.GroundHeightProfile = list ?? new List<double>();
+                }
+            }
+
+            /// <summary>
             /// Creates an empty track entry; used when loading entry from database
             /// </summary>
             public TrackEntry()

@@ -85,6 +85,12 @@ namespace WhereToFly.App.Geo
         public List<TrackPoint> TrackPoints { get; set; }
 
         /// <summary>
+        /// List of altitude values, specifying the ground height profile; only set for flight
+        /// tracks
+        /// </summary>
+        public List<double> GroundHeightProfile { get; set; } = new List<double>();
+
+        /// <summary>
         /// Creates a new and empty track object
         /// </summary>
         public Track()
@@ -121,7 +127,8 @@ namespace WhereToFly.App.Geo
 
             return this.Id == other.Id &&
                 this.Name == other.Name &&
-                this.TrackPoints.Count == other.TrackPoints.Count;
+                this.TrackPoints.Count == other.TrackPoints.Count &&
+                this.GroundHeightProfile.Count == other.GroundHeightProfile.Count;
         }
         #endregion
 
@@ -146,6 +153,7 @@ namespace WhereToFly.App.Geo
             hashCode = (hashCode * 31) + this.Id.GetHashCode();
             hashCode = (hashCode * 31) + this.Name.GetHashCode();
             hashCode = (hashCode * 31) + this.TrackPoints.GetHashCode();
+            hashCode = (hashCode * 31) + this.GroundHeightProfile.GetHashCode();
 
             return hashCode;
         }

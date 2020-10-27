@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Views;
 using WhereToFly.App.Geo;
@@ -106,6 +107,11 @@ namespace WhereToFly.App.Core.Controls
             if (this.Track != null)
             {
                 this.heightProfileView.SetTrack(this.Track);
+
+                if (this.Track.GroundHeightProfile.Any())
+                {
+                    this.heightProfileView.AddGroundProfile(this.Track.GroundHeightProfile);
+                }
             }
 
             string result = await this.EvaluateJavaScriptAsync("javascript:document.body.scrollHeight");
@@ -125,6 +131,11 @@ namespace WhereToFly.App.Core.Controls
         {
             await this.taskCompletionSourceViewInitialized.Task;
             this.heightProfileView.SetTrack(track);
+
+            if (track.GroundHeightProfile.Any())
+            {
+                this.heightProfileView.AddGroundProfile(track.GroundHeightProfile);
+            }
         }
     }
 }

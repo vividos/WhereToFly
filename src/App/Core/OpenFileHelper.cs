@@ -423,6 +423,7 @@ namespace WhereToFly.App.Core
 
                 if (trackPointHeights != null)
                 {
+                    track.GroundHeightProfile = trackPointHeights.ToList();
                     track.AdjustTrackPointsByGroundProfile(trackPointHeights);
                 }
             }

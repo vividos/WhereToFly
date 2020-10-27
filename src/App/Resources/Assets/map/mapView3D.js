@@ -1520,6 +1520,8 @@ MapView.prototype.getGroundTrackPrimitive = function (track, trackPointArray) {
  * @param {boolean} [track.isFlightTrack] indicates if track is a flight
  * @param {array} [track.listOfTrackPoints] An array of track points in long, lat, alt, long, lat, alt ... order
  * @param {array} [track.listOfTimePoints] An array of time points in seconds; same length as listOfTrackPoints; may be null
+ * @param {array} [track.groundHeightProfile] An array of ground height profile elevations; same
+ * length as listOfTimePoints; may be null
  * @param {string} [track.color] Color as "RRGGBB" string value, or undefined when track should be colored
  *                       according to climb and sink rate.
  */
@@ -1655,6 +1657,9 @@ MapView.prototype.showTrackHeightProfile = function (trackId) {
     });
 
     this.heightProfileView.setTrack(trackData.track);
+
+    if (trackData.track.groundHeightProfile !== null)
+        this.heightProfileView.addGroundProfile(trackData.track.groundHeightProfile);
 };
 
 /**
