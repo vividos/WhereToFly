@@ -8,7 +8,7 @@
              BackgroundColor="{DynamicResource PageBackgroundColor}">
     <ContentPage.Content>
 
-        <ScrollView Orientation="Vertical">
+        <ScrollView Orientation="Vertical" HorizontalOptions="Center">
 
             <!-- Grid with all settings -->
             <Grid WidthRequest="350" MinimumWidthRequest="350"
