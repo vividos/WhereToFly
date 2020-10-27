@@ -352,7 +352,6 @@
       <Link>Assets\info\Changelog.md</Link>
     </Content>
     <Content Include="Assets\info\manual.md" />
-    <None Include="Assets\map\test.html" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\VersionAssemblyInfo.cs">
