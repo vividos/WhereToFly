@@ -59,6 +59,16 @@ library to show and cache SVG images.
 The library is licensed using the
 [MIT License](https://github.com/luberda-molinet/FFImageLoading/blob/master/LICENSE.md).
 
+The app uses the [sqlite-net](https://github.com/praeclarum/sqlite-net)
+library to store all data.
+The library is licensed using the
+[MIT License](https://github.com/praeclarum/sqlite-net/blob/master/LICENSE.txt).
+
+The app uses the [SkiaSharp](https://github.com/mono/SkiaSharp)
+library to draw custom controls.
+The library is licensed using the
+[MIT License](https://github.com/mono/SkiaSharp/blob/master/LICENSE.md).
+
 The app uses the [Toast.iOS](https://github.com/andrius-k/Toast)
 library to show Toast messages on iOS.
 The library is licensed using the
