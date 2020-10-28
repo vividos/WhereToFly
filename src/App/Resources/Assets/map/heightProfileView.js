@@ -70,7 +70,7 @@ function HeightProfileView(options) {
                         displayFormats: {
                             hour: 'HH:mm'
                         },
-                        stepSize: 1,
+                        stepSize: 0.25, // every 15 minutes
                         minUnit: 'second'
                     }
                 }
@@ -85,7 +85,7 @@ function HeightProfileView(options) {
                         zeroLineColor: this.axisColor
                     },
                     ticks: {
-                        beginAtZero: true
+                        beginAtZero: false
                     }
                 }]
             },
@@ -276,7 +276,7 @@ HeightProfileView.prototype.addGroundProfile = function (elevationArray) {
     this.chart.data.datasets.push({
         data: elevationData,
         showLine: true,
-        fill: true,
+        fill: 'start',
         label: 'Terrain',
         tension: 0.0,
         pointRadius: 0.0,
