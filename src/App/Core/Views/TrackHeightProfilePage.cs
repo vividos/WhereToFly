@@ -22,6 +22,8 @@ namespace WhereToFly.App.Core.Views
                 Track = track
             };
 
+            this.SetDynamicResource(BackgroundColorProperty, "PageBackgroundColor");
+
             this.AutomationId = "TrackHeightProfile";
         }
     }
