@@ -3,7 +3,9 @@
 ## Version 1.9.0
 
 - added support for Android 11
-- changing app theme to "light", "dark" and "same as device" is now possible
+- added showing height profile when clicking on a track
+- added zooming and panning to height profile graph
+- added setting app themes "light", "dark" and "same as device"
 - added showing sunrise and sunset times on the "Current Position" page
 - using magnetic compass for heading on the "Current Position" page when the
   device has one
