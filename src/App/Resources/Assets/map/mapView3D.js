@@ -1655,6 +1655,9 @@ MapView.prototype.showTrackHeightProfile = function (trackId) {
         id: 'chartElement',
         useDarkTheme: true,
         showCloseButton: true,
+        colorFromVarioValue: function (varioValue) {
+            return that.trackColorFromVarioValue(varioValue).toCssColorString();
+        },
         callback: function (funcName, params) {
             that.heightProfileCallAction(funcName, params);
         }

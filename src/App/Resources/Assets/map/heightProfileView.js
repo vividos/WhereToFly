@@ -5,6 +5,8 @@
  * @param {Number} [options.id] DOM ID of the canvas element to create height profile view in
  * @param {boolean} [options.useDarkTheme] indicates if a dark theme should be used for the chart
  * @param {boolean} [options.showCloseButton] indicates if a close button should be shown
+ * @param {Function} [options.colorFromVarioValue] function to get a color from vario value; may
+ * be undefined
  * @param {Function} [options.callback] action function callback
  */
 function HeightProfileView(options) {
@@ -417,7 +419,15 @@ HeightProfileView.prototype.formatTooltipText = function (tooltipModel) {
     }
 
     if (values.varioValue !== undefined) {
-        text += "<div>Vario: " + values.varioValue.toFixed(1) + "m/s</div>";
+
+        text += "<div>Vario: " + values.varioValue.toFixed(1) + "m/s ";
+
+        if (this.options.colorFromVarioValue !== undefined) {
+            var varioColor = this.options.colorFromVarioValue(values.varioValue);
+            text += "<div style='width:12px; height:12px; border:1px white solid; background-color:" + varioColor + "'></div>";
+        }
+
+        text += "</div>";
     }
 
     return text;
