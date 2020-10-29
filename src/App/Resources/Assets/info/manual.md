@@ -6,22 +6,56 @@ Welcome to the manual page for the Where-to-fly app!
 
 ![Map View](images/map-view.jpg)
 
-The 3D map lets you see the terrain profile of the world in a map that can
-display different imagery layers (in this case OpenStreetMap). The map is
-shaded according to the sun's current position. The map can be moved around
-using touch controls:
+The map lets you see a 3D map that visualizes the terrain of the world.
+Different imagery layers can be used to show the ground details (in this case
+it's OpenStreetMap). The map is shaded according to the sun's current
+position, in order to see which slopes are better for early thermals or late
+in the day. The map can be moved around using touch controls:
 
 ![Map touch controls](images/map-touch-controls.png)
 
-Locations and tracks can be imported and are displayed on the map. Locations
-can be tapped to show more infos about a pin. Additional custom layers can be
-added that can display other geometric objects, such as thermals, national
-park areas, air spaces or labels. Here you can see the details of a summit
-location:
+Locations and tracks can be imported and are displayed on the map. Location
+pins can be tapped to show detail infos about a location. Here you can see the
+details of a summit location:
 
 ![Location info](images/location-info.png)
 
-Depending on the map element, different option icons are displayed.
+Depending on the map element, different option icons are displayed. Locations
+have the following options:
+
+- ![Show details](images/information-outline.svg) Show details: Opens a page
+  with the location's details
+- ![Navigate here](images/directions.svg) Navigate here: Starts the navigation
+  app to show a route to this point
+
+### Track height profile
+
+When tapping on a track, the height profile of that track is shown in a
+semi-transparent window on the lower part of the window:
+
+![Track height profile](images/track-height-profile.png)
+
+The height profile shows the tracks's height, and if it's a flight track, also
+shows the ground profile. When touching the height profile with a finger, or
+when hovering or clicking with a mouse, a line and a tooltip is shown with
+extra infos about the current position. Additionally, a purple pin is shown in
+the map at the current track position.
+
+There are several toolbar buttons above the track height profile:
+
+- ![Zoom-and-pan](../map/images/gesture-spread.svg) Zoom-and-pan: When active
+  (white), the user can zoom (with a pinch gesture) and pan (with a one-finger
+  drag gesture) the height profile.
+- ![Hover](../map/images/gesture-tap.svg) Hover: Fixes the height profile dimensions
+  after panning and zooming to explore the height profile by hovering over the
+  track points.
+- ![Reset zoom](../map/images/arrow-expand-horizontal.svg) Reset zoom: Resets the
+  zoomed height profile to the full track again
+- ![Close](../map/images/close.svg) Close: Closes the height profile window again
+
+Custom layers can be added to the map. The layers can display geometric
+objects, such as thermals, national park areas, air spaces or labels. The
+layers can be imported from CZML files or OpenAir Airspace text files.
 
 ### Title bar icons
 
@@ -92,14 +126,14 @@ following menu entries:
 ![Locations list](images/location-list.png)
 
 The location list shows all locations. The list can be filtered using the
-entry line. When no location is imported yet, a message is shown. Tapping on
-an entry shows the details of that location (see below).
+entry line. When no location is imported yet, a message is shown that the list
+is empty. Tapping on an entry shows the details of that location (see below).
 
 To the right of the filter entry line is the takeoff directions selection
 icon. Tapping the icon opens a pop-up dialog that lets you select takeoff
 directions that should be used to filter the location list entries. Note that
 the app tries to recognize the start directions from the location title or
-description text.
+description text at import.
 
 ![Takeoff directions filter](images/takeoff-directions.png)
 
@@ -117,7 +151,7 @@ When opening a new list, you can choose to append to the existing list or
 replace all existing entries.
 
 Locations can also be added when opening supported file types using the app
-(e.g. by tapping on the file or by downloadng a file from the web).
+(e.g. by tapping on the file or by downloading a file from the web).
 
 The ![Remove all locations](images/delete-forever.svg) button removes all
 locations in the list.
@@ -148,12 +182,12 @@ The following title bar icons are available:
 
 ### Live waypoints
 
-Some locations can be updated live, e.g. for live tracking purposes. The
-locations are imported by clicking on weblinks that start with
+Some locations can be updated periodically, e.g. for live tracking purposes.
+The locations are imported by clicking on weblinks that start with
 `where-to-fly://`. The position and other infos of those live waypoints
 are updated periodically while the app is running. The live waypoint data is
 queried from the Where-to-fly background service. Sources for live waypoints
-currently are Garmin inReach devices or Find me Spot tracker devices.
+currently are "Garmin inReach" devices or "Find me Spot" tracker devices.
 
 ## ![Tracks](../icons/map-marker-distance.svg) Tracks
 
@@ -179,15 +213,16 @@ flight, you can select a single color for the track line.
 
 In the rare case that the track has no time points (e.g. for KML LineStrings)
 another field "Track point time interval" appears that lets you specify the
-time delta between the track points. This is only used for correctly
-calculating climb and sink rate.
+time delta between the track points. This is used for correctly calculating
+climb and sink rate.
 
 To adjust the offset of the track point heights, adjust the offset in meters,
 by using the "+" and "-" buttons.
 
 After the track was added, a waiting dialog marked "Sampling track points" is
-shown, for flight tracks only. The track is checked if any track point is
-located below the actual terrain and is adjusted accordingly.
+shown, for flight tracks only. The ground profile is determined and the track
+is checked if any track point is located below the actual terrain and is
+adjusted accordingly.
 
 Tracks can also be added when opening supported file types using the app
 (e.g. by tapping on the file or by downloading a file from the web).
@@ -254,7 +289,9 @@ This can happen for tracks with sub-second track point resolution.
 ![Current Position](images/current-position.png)
 
 The current position page shows the coordinates and other infos about your
-current position.
+current position. If available, the magnetic compass of the device is used
+instead of the heading calculated from GPS. The sunrise and sunset times are
+calculated from the current longitude and latitude.
 
 The position data can be shared with other apps using the
 ![Share](images/share-variant.svg) share button.
@@ -270,7 +307,7 @@ on the ![Add new...](images/border-none-variant.svg) "Add new..." tile or by
 using the ![Add](images/playlist-plus.svg) button.
 
 The ![Add bookmark](images/bookmark-plus-outline.svg) button lets you add new
-web lins. The following dialog appears to add the link:
+web links. The following dialog appears to add the link:
 
 ![Add Weblink](images/weather-add-weblink.png)
 
@@ -282,7 +319,7 @@ When a weather dashboard tile was tapped, the corresponding weather website is
 loaded and shown. The following buttons are available in this page:
 
 - ![Refresh](images/refresh.svg) Reloads the current page, e.g. to update the
-  weather
+  weather infos
 - ![Forecast websites](images/calendar-clock.svg) Shows a list of forecast
   websites to visit next
 - ![Current weather websites](images/weather-partly-cloudy.svg) Shows a list
@@ -294,15 +331,36 @@ image. A menu appears to confirm the download.
 
 ## ![Settings](images/cog.svg) Settings
 
-The settings page shows two tabs.
+The settings page shows two tabs, the general tab and the map tab.
 
 ### ![General](images/cog-outline.svg) General tab
 
 ![Settings](images/settings-general.png)
 
-The General tab lets you specify an account for the Alptherm weather service.
-When opening one of the Alptherm links, the app automatically logs you in. The
-password is stored using
+The General tab lets you specify the following settings.
+
+#### App Theme
+
+Specifies the app color theme that should be used. The following
+options are available:
+
+- Same as device: Uses the theme of the device. Android 9 and later, and
+  Windows 10 version 1803 and later support switching to dark mode. On earlier
+  devices, light theme is automatically used.
+- Light theme: Shows the user interface in a light theme, with light
+  backgrounds and dark or black controls.
+- Dark theme: Shows the user interface in a dark theme. This is easier to read
+  when it's dark outside. It also saves battery with OLED screens.
+
+The default setting is "Same as device". When the device switches themes
+automatically (e.g. dark theme in the evening), then the app also switches
+theme automatically.
+
+#### Alptherm
+
+Lets you enter username/passwort of an account for the Alptherm weather
+service. When opening one of the Alptherm links, the app automatically logs
+you in if necessary. The password is stored using
 [secure storage](https://docs.microsoft.com/en-us/xamarin/essentials/secure-storage?tabs=android).
 
 ### ![Map](images/map.svg) Map tab
@@ -346,4 +404,5 @@ The Map tab has several settings:
   * dd&deg; mm' sss"
 
 The "Clear map view cache" button clears the app's browser cache that stores
-tile map images and terrain height infos.
+tile map images and terrain height infos. This may be useful to use when the
+app doesn't continue to load tiles.
