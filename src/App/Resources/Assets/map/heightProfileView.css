@@ -23,6 +23,11 @@
     background-color: white;
 }
 
+/* the .svg toolbar images are white, so invert them to display correctly */
+.chartToolbarButtonImage {
+    filter: invert(100%);
+}
+
 .chartToolbarButtonDisabled {
     background-color: gray !important;
 }
