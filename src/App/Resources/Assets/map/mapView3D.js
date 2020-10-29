@@ -1662,7 +1662,8 @@ MapView.prototype.showTrackHeightProfile = function (trackId) {
 
     this.heightProfileView.setTrack(trackData.track);
 
-    if (trackData.track.groundHeightProfile !== null)
+    if (trackData.track.groundHeightProfile !== undefined &&
+        trackData.track.groundHeightProfile !== null)
         this.heightProfileView.addGroundProfile(trackData.track.groundHeightProfile);
 };
 
