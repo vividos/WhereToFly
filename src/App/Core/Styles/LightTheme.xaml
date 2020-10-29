@@ -34,6 +34,7 @@
     <Color x:Key="ElementBackgroundColor">#F5F5F5</Color>
     <Color x:Key="ElementTextColor">#1C1C1C</Color>
     <Color x:Key="LabelTextColor">#707070</Color>
+    <Color x:Key="EntryPlaceholderTextColor">#9b9b9b</Color>
     <Color x:Key="ButtonBackgroundColor">#D7D7D7</Color>
 
 </ResourceDictionary>

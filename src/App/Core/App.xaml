@@ -20,7 +20,7 @@
             <Style TargetType="Entry">
                 <Setter Property="BackgroundColor" Value="{DynamicResource ElementBackgroundColor}" />
                 <Setter Property="TextColor" Value="{DynamicResource ElementTextColor}" />
-                <Setter Property="PlaceholderColor" Value="{DynamicResource ElementTextColor}"/>
+                <Setter Property="PlaceholderColor" Value="{DynamicResource EntryPlaceholderTextColor}"/>
             </Style>
 
             <Style TargetType="Label">
