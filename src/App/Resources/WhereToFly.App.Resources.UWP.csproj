@@ -206,8 +206,8 @@
     <Content Include="Assets\map\Cesium\Workers\Color-bac25fae.js" />
     <Content Include="Assets\map\Cesium\Workers\combineGeometry.js" />
     <Content Include="Assets\map\Cesium\Workers\ComponentDatatype-6d99a1ee.js" />
-    <Content Include="Assets\map\Cesium\Workers\CoplanarPolygonGeometryLibrary-2d2c2665.js" />
-    <Content Include="Assets\map\Cesium\Workers\CorridorGeometryLibrary-7feb157b.js" />
+    <Content Include="Assets\map\Cesium\Workers\CoplanarPolygonGeometryLibrary-d953389e.js" />
+    <Content Include="Assets\map\Cesium\Workers\CorridorGeometryLibrary-20af884b.js" />
     <Content Include="Assets\map\Cesium\Workers\createBoxGeometry.js" />
     <Content Include="Assets\map\Cesium\Workers\createBoxOutlineGeometry.js" />
     <Content Include="Assets\map\Cesium\Workers\createCircleGeometry.js" />
@@ -259,7 +259,7 @@
     <Content Include="Assets\map\Cesium\Workers\EllipsoidGeometry-2c4c641e.js" />
     <Content Include="Assets\map\Cesium\Workers\EllipsoidOutlineGeometry-7ef60a22.js" />
     <Content Include="Assets\map\Cesium\Workers\EllipsoidRhumbLine-c704bf4c.js" />
-    <Content Include="Assets\map\Cesium\Workers\EllipsoidTangentPlane-64140317.js" />
+    <Content Include="Assets\map\Cesium\Workers\EllipsoidTangentPlane-0a0e472c.js" />
     <Content Include="Assets\map\Cesium\Workers\EncodedCartesian3-4df2eabb.js" />
     <Content Include="Assets\map\Cesium\Workers\FrustumGeometry-5d17caee.js" />
     <Content Include="Assets\map\Cesium\Workers\GeometryAttribute-be1a3386.js" />
@@ -270,12 +270,12 @@
     <Content Include="Assets\map\Cesium\Workers\IndexDatatype-53503fee.js" />
     <Content Include="Assets\map\Cesium\Workers\IntersectionTests-8abf6dba.js" />
     <Content Include="Assets\map\Cesium\Workers\Math-fc8cecf5.js" />
-    <Content Include="Assets\map\Cesium\Workers\OrientedBoundingBox-11af7c9d.js" />
+    <Content Include="Assets\map\Cesium\Workers\OrientedBoundingBox-2c275398.js" />
     <Content Include="Assets\map\Cesium\Workers\Plane-c8971487.js" />
     <Content Include="Assets\map\Cesium\Workers\PolygonGeometryLibrary-eba8dd45.js" />
     <Content Include="Assets\map\Cesium\Workers\PolygonPipeline-b9585f01.js" />
     <Content Include="Assets\map\Cesium\Workers\PolylinePipeline-fa11d71d.js" />
-    <Content Include="Assets\map\Cesium\Workers\PolylineVolumeGeometryLibrary-abc37e8c.js" />
+    <Content Include="Assets\map\Cesium\Workers\PolylineVolumeGeometryLibrary-c4d4bf97.js" />
     <Content Include="Assets\map\Cesium\Workers\PrimitivePipeline-1823f7f9.js" />
     <Content Include="Assets\map\Cesium\Workers\RectangleGeometryLibrary-ac41ca49.js" />
     <Content Include="Assets\map\Cesium\Workers\RuntimeError-2109023a.js" />

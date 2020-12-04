@@ -10,6 +10,7 @@
 - using magnetic compass for heading on the "Current Position" page when the
   device has one
 - various bugfixes and improvements
+- using CesiumJS version 1.76
 
 ## Version 1.8.1
 
