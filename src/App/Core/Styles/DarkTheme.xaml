@@ -36,5 +36,6 @@
     <Color x:Key="LabelTextColor">White</Color>
     <Color x:Key="EntryPlaceholderTextColor">#373737</Color>
     <Color x:Key="ButtonBackgroundColor">#2B3032</Color>
+    <Color x:Key="BorderSelectionColor">White</Color>
 
 </ResourceDictionary>

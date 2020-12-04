@@ -55,7 +55,6 @@
                     AlignContent="Start"
                     JustifyContent="Start"
                     Wrap="Wrap"
-                    BackgroundColor="White"
                     IsVisible="{Binding IsColorPickerVisible, Mode=OneWay}"
                     x:Name="colorPickerLayout" />
 

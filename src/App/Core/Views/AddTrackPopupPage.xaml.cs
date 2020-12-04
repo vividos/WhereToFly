@@ -87,7 +87,6 @@ namespace WhereToFly.App.Core.Views
                 var frame = new Frame
                 {
                     Padding = new Thickness(5),
-                    BorderColor = Color.White,
                     CornerRadius = 5.0f,
                     HasShadow = false,
                     Content = button
@@ -123,7 +122,14 @@ namespace WhereToFly.App.Core.Views
             {
                 Debug.Assert(frame != null, "view element must be a Frame");
 
-                frame.BorderColor = frame == selectedFrame ? Color.Black : Color.White;
+                if (frame == selectedFrame)
+                {
+                    frame.SetDynamicResource(Frame.BorderColorProperty, "BorderSelectionColor");
+                }
+                else
+                {
+                    frame.BorderColor = Color.Transparent;
+                }
             }
 
             // update view model
