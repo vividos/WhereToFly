@@ -205,7 +205,7 @@
       <Version>1.6.0-pre2</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="4.8.0.1687" />
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.10" />
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.11" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\WhereToFly.App.Core.csproj">
