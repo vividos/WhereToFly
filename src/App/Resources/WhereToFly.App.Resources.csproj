@@ -1,0 +1,42 @@
+﻿<Project Sdk="MSBuild.Sdk.Extras/2.1.2">
+
+  <PropertyGroup>
+    <TargetFrameworks>Xamarin.iOS10;MonoAndroid10.0</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">$(TargetFrameworks);uap10.0.17763</TargetFrameworks>
+    <Description>Where-to-fly app resources</Description>
+    <Product>WhereToFly.App.Resources</Product>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <SonarQubeExclude>true</SonarQubeExclude>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
+    <AndroidAsset Include="Assets\**\*.*" />
+    <AndroidAsset Include="..\..\..\Credits.md">
+      <Link>Assets\info\Credits.md</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\..\..\Changelog.md">
+      <Link>Assets\info\Changelog.md</Link>
+    </AndroidAsset>
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
+    <BundleResource Include="Assets\**\*.*" />
+    <BundleResource Include="..\..\..\Credits.md">
+      <Link>Assets\info\Credits.md</Link>
+    </BundleResource>
+    <BundleResource Include="..\..\..\Changelog.md">
+      <Link>Assets\info\Changelog.md</Link>
+    </BundleResource>
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('uap10.0')) ">
+    <Content Include="Assets\**\*.*" />
+    <Content Include="..\..\..\Credits.md">
+      <Link>Assets\info\Credits.md</Link>
+    </Content>
+    <Content Include="..\..\..\Changelog.md">
+      <Link>Assets\info\Changelog.md</Link>
+    </Content>
+  </ItemGroup>
+
+</Project>

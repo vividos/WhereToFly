@@ -155,9 +155,9 @@
       <Project>{6A01E52C-1CF1-48E2-AC01-045A7B82E4B7}</Project>
       <Name>WhereToFly.App.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Resources\WhereToFly.App.Resources.Android.csproj">
-      <Project>{cbbb5ed6-f0d9-49c1-bb4e-d54757483953}</Project>
-      <Name>WhereToFly.App.Resources.Android</Name>
+    <ProjectReference Include="..\Resources\WhereToFly.App.Resources.csproj">
+      <Project>{2f10550e-c477-47d8-a960-d272859efce8}</Project>
+      <Name>WhereToFly.App.Resources</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

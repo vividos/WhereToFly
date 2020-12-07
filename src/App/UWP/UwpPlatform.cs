@@ -18,7 +18,7 @@ namespace WhereToFly.App.UWP
         /// <summary>
         /// Path URL for assets files
         /// </summary>
-        private const string AppxAssetsPathUrl = "ms-appx:///WhereToFly.App.Resources.UWP/Assets/";
+        private const string AppxAssetsPathUrl = "ms-appx:///WhereToFly.App.Resources/Assets/";
 #pragma warning restore S1075 // URIs should not be hardcoded
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace WhereToFly.App.UWP
         /// <summary>
         /// Base path to use in WebView control, for Android
         /// </summary>
-        public string WebViewBasePath => "ms-appx-web:///WhereToFly.App.Resources.UWP/Assets/";
+        public string WebViewBasePath => "ms-appx-web:///WhereToFly.App.Resources/Assets/";
 
         /// <summary>
         /// Opens UWP asset stream and returns it
