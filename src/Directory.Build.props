@@ -2,4 +2,9 @@
   <PropertyGroup>
     <Product>Where-to-fly</Product>
   </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Add reference to SonarAnalyzer analyzers to all projects -->
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.*" />
+  </ItemGroup>
 </Project>
