@@ -814,11 +814,29 @@ namespace WhereToFly.App.Core.Views
             }
 
             var locationIdsToRemove = new HashSet<string>();
+            var locationsToUpdate = new HashSet<Location>();
             foreach (string oldLocationId in this.displayedLocationIds)
             {
-                if (newLocationList.Find(locationToCheck => locationToCheck.Id == oldLocationId) == null)
+                Location foundLocation = newLocationList.Find(locationToCheck => locationToCheck.Id == oldLocationId);
+                if (foundLocation == null)
                 {
                     locationIdsToRemove.Add(oldLocationId);
+                }
+                else
+                {
+                    var oldLocation = this.locationList.Find(locationIdToCheck => locationIdToCheck.Id == oldLocationId);
+                    if (!foundLocation.Equals(oldLocation))
+                    {
+                        // when type has changed, re-add the location to generate a new entity
+                        if (foundLocation.Type != oldLocation.Type)
+                        {
+                            locationIdsToRemove.Add(oldLocationId);
+                        }
+                        else
+                        {
+                            locationsToUpdate.Add(foundLocation);
+                        }
+                    }
                 }
             }
 
@@ -835,6 +853,11 @@ namespace WhereToFly.App.Core.Views
                     this.mapView.AddLocation(newLocation);
                     this.displayedLocationIds.Add(newLocation.Id);
                 }
+            }
+
+            foreach (var modifiedLocation in locationsToUpdate)
+            {
+                this.mapView.UpdateLocation(modifiedLocation);
             }
         }
 
