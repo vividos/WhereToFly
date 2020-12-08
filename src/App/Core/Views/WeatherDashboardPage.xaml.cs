@@ -19,8 +19,6 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         public WeatherDashboardPage()
         {
-            this.Title = "Weather";
-
             this.InitializeComponent();
 
             this.BindingContext = this.viewModel = new WeatherDashboardViewModel();
