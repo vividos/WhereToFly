@@ -36,12 +36,12 @@ namespace WhereToFly.App.UnitTest.ViewModels
 
             Assert.IsTrue(
                 viewModel.WaitForPropertyChange(
-                    nameof(viewModel.WeatherIconDescriptionList),
+                    nameof(viewModel.WeatherDashboardItems),
                     TimeSpan.FromSeconds(10)),
                 "waiting for property change must succeed");
 
             // check
-            Assert.IsTrue(viewModel.WeatherIconDescriptionList.Any(), "weather icon list must contain placeholder icon");
+            Assert.IsTrue(viewModel.WeatherDashboardItems.Any(), "weather icon list must contain placeholder icon");
         }
     }
 }
