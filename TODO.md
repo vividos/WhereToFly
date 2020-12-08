@@ -8,8 +8,6 @@
 ## New Features
 
 ### Map
-
-- [ ] Show polyline with path from last 1h
 - [ ] Follow location when "my location" icon is tapped, until user interacts with view
 - [ ] Implement wind field overlay from GFS weather model
 - [ ] Zoom to newly imported locations
@@ -17,9 +15,10 @@
 
 ### Layers
 - [ ] Add live updating layers using CZML updates
+- [ ] Export layers to KML file
 
 ### Locations
-- [ ] Export locations to GPX file
+- [ ] Export visible/selected locations to GPX file
 
 ### Tracks
 - [ ] Implement reversing track
