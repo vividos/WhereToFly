@@ -859,6 +859,8 @@ namespace WhereToFly.App.Core.Views
             {
                 this.mapView.UpdateLocation(modifiedLocation);
             }
+
+            this.mapView.UpdateScene();
         }
 
         /// <summary>

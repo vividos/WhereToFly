@@ -704,6 +704,14 @@ namespace WhereToFly.App.Core.Views
         }
 
         /// <summary>
+        /// Updates scene by requesting re-rendering the scene.
+        /// </summary>
+        public void UpdateScene()
+        {
+            this.RunJavaScript("map.updateScene();");
+        }
+
+        /// <summary>
         /// Can be called to signal the MapView that network connectivity is available or not.
         /// </summary>
         /// <param name="isAvailable">true when available, false when not</param>
