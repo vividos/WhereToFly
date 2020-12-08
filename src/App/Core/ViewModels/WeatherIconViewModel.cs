@@ -17,13 +17,13 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Weather icon description object
         /// </summary>
-        private readonly WeatherIconDescription iconDescription;
+        public WeatherIconDescription IconDescription { get; }
 
         #region Binding properties
         /// <summary>
         /// Title of weather icon
         /// </summary>
-        public string Title { get => this.iconDescription.Name; }
+        public string Title { get => this.IconDescription.Name; }
 
         /// <summary>
         /// Icon image source for weather icon
@@ -42,7 +42,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <param name="iconDescription">weather icon description to use</param>
         public WeatherIconViewModel(WeatherIconDescription iconDescription)
         {
-            this.iconDescription = iconDescription;
+            this.IconDescription = iconDescription;
 
             this.SetupBindings();
         }
@@ -56,7 +56,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             Task.Run(async () =>
             {
-                this.Icon = await WeatherImageCache.GetImageAsync(this.iconDescription);
+                this.Icon = await WeatherImageCache.GetImageAsync(this.IconDescription);
 
                 this.OnPropertyChanged(nameof(this.Icon));
             });
@@ -68,18 +68,18 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task OpenWeatherIconTargetAsync()
         {
-            switch (this.iconDescription.Type)
+            switch (this.IconDescription.Type)
             {
                 case WeatherIconDescription.IconType.IconLink:
                     await NavigationService.Instance.NavigateAsync(
                         Constants.PageKeyWeatherDetailsPage,
                         animated: true,
-                        parameter: this.iconDescription);
+                        parameter: this.IconDescription);
                     break;
 
                 case WeatherIconDescription.IconType.IconApp:
                     var appManager = DependencyService.Get<IAppManager>();
-                    appManager.OpenApp(this.iconDescription.WebLink);
+                    appManager.OpenApp(this.IconDescription.WebLink);
                     break;
 
                 case WeatherIconDescription.IconType.IconPlaceholder:
