@@ -1,11 +1,29 @@
-#chartContainer {
+/* style for the outer container that contains chart and toolbar */
+.chart-and-toolbar-container {
     width: 100vw;
     position: absolute;
     left: 0px;
+}
+
+/* style to top-align the outer container */
+.chart-and-toolbar-container-top {
+    top: 0px;
+}
+
+/* style to bottom-align the outer container */
+.chart-and-toolbar-container-bottom {
     bottom: 0px;
 }
 
-#chartElement {
+/* style for the toolbar container */
+.chart-toolbar-container {
+    width: 100vw;
+    top: 10px;
+    right: 10px;
+}
+
+/* style for the chart canvas */
+.chart-canvas {
     overflow: hidden;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -13,6 +31,7 @@
     user-select: none;
 }
 
+/* style for each toolbar button */
 .chart-toolbar-button {
     position: relative;
     float: right;

@@ -48,6 +48,7 @@ namespace WhereToFly.App.Core.Views
             var options = new
             {
                 id = "chartElement",
+                containerId = "chartContainer",
                 useDarkTheme
             };
 

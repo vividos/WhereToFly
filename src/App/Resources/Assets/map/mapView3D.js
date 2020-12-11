@@ -1653,6 +1653,7 @@ MapView.prototype.showTrackHeightProfile = function (trackId) {
     var that = this;
     this.heightProfileView = new HeightProfileView({
         id: 'chartElement',
+        containerId: 'chartContainer',
         useDarkTheme: true,
         showCloseButton: true,
         colorFromVarioValue: function (varioValue) {

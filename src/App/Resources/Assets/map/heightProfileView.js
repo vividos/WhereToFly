@@ -17,6 +17,7 @@ function HeightProfileView(options) {
 
     this.options = options || {
         id: 'chartElement',
+        containerId: 'chartContainer',
         useDarkTheme: false,
         showCloseButton: false,
         callback: {}
@@ -25,19 +26,19 @@ function HeightProfileView(options) {
     if (this.options.callback === undefined)
         this.options.callback = callAction;
 
-    var chartElement = document.getElementById(this.options.id);
-
-    chartElement.parentElement.style.display = 'block';
-
-    var ctx = chartElement.getContext('2d');
-
     this.trackColor = this.options.useDarkTheme ? '#00ffff' : '#0000ff';
     this.backgroundColor = this.options.useDarkTheme ? '#202124' : '#F5F5F5';
     this.axisColor = this.options.useDarkTheme ? '#f5f5f5' : '#202020';
     this.groundProfileColor = this.options.useDarkTheme ? '#404040' : '#808080';
 
+    var chartContainer = document.getElementById(this.options.containerId);
+    chartContainer.style.display = 'block';
+
     // also style the parent node, in case it's the standalone view
-    chartElement.style.backgroundColor = this.backgroundColor;
+    chartContainer.style.backgroundColor = this.backgroundColor;
+
+    var chartElement = document.getElementById(this.options.id);
+    var ctx = chartElement.getContext('2d');
 
     var that = this;
     this.chart = new Chart(ctx, {
@@ -302,9 +303,9 @@ HeightProfileView.prototype.resetZoom = function () {
  */
 HeightProfileView.prototype.hide = function () {
 
-    var chartElement = document.getElementById(this.options.id);
+    var chartContainer = document.getElementById(this.options.containerId);
 
-    chartElement.parentElement.style.display = 'none';
+    chartContainer.style.display = 'none';
 
     if (this.options.callback !== undefined)
         this.options.callback('onClose', null);

@@ -26,11 +26,6 @@
         }
 
         #chartContainer {
-            left: 0px;
-            bottom: 0px;
-        }
-
-        #chartElement {
             opacity: 0.5;
             z-index: 10;
         }
@@ -64,9 +59,8 @@
 
     <div id="mapElement"></div>
 
-    <div id="chartContainer" style="display:none">
-        <canvas id="chartElement"></canvas>
-        <div style="position:absolute; top:10px; right:10px; width:100%">
+    <div id="chartContainer" class="chart-and-toolbar-container chart-and-toolbar-container-bottom" style="display:none">
+        <div class="chart-toolbar-container">
             <div id="chartButtonClose"
                  class="chart-toolbar-button"
                  onclick="javascript:map.heightProfileView.hide();">
@@ -92,6 +86,9 @@
                  onclick="javascript:map.heightProfileView.setModeZoomAndPan();">
                 <img class="chart-toolbar-button-image" src="images/gesture-spread.svg" />
             </div>
+        </div>
+        <div>
+            <canvas id="chartElement" class="chart-canvas"></canvas>
         </div>
     </div>
 
