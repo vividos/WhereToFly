@@ -254,8 +254,8 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task UpdateDistance()
         {
-            var geolocationService = DependencyService.Get<GeolocationService>();
-            var position = await geolocationService.GetCurrentPositionAsync();
+            var geolocationService = DependencyService.Get<IGeolocationService>();
+            var position = await geolocationService.GetLastKnownPositionAsync();
 
             if (position != null)
             {

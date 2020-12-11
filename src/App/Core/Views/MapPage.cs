@@ -1,5 +1,4 @@
-﻿using Plugin.Geolocator.Abstractions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -26,9 +25,9 @@ namespace WhereToFly.App.Core.Views
             = new TaskCompletionSource<bool>();
 
         /// <summary>
-        /// Geo locator to use for position updates
+        /// Geolocation service to use for position updates
         /// </summary>
-        private readonly IGeolocator geolocator;
+        private readonly IGeolocationService geolocationService;
 
         /// <summary>
         /// List of track IDs currently being displayed
@@ -89,7 +88,7 @@ namespace WhereToFly.App.Core.Views
 
             this.zoomToMyPosition = false;
 
-            this.geolocator = DependencyService.Get<GeolocationService>().Geolocator;
+            this.geolocationService = DependencyService.Get<IGeolocationService>();
 
             Task.Run(this.InitLayoutAsync);
 
@@ -159,15 +158,10 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task OnClicked_ToolbarButtonLocateMe()
         {
-            if (!await GeolocationService.CheckPermissionAsync())
-            {
-                return;
-            }
-
-            Position position;
+            Plugin.Geolocator.Abstractions.Position position;
             try
             {
-                position = await this.geolocator.GetPositionAsync(timeout: TimeSpan.FromMilliseconds(100), includeHeading: false);
+                position = await this.geolocationService.GetPositionAsync(timeout: TimeSpan.FromMilliseconds(100));
             }
             catch (Exception ex)
             {
@@ -519,13 +513,8 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task OnMapView_ShareMyLocation()
         {
-            if (!await GeolocationService.CheckPermissionAsync())
-            {
-                return;
-            }
-
             var position =
-                await this.geolocator.GetPositionAsync(timeout: TimeSpan.FromSeconds(0.1), includeHeading: false);
+                await this.geolocationService.GetPositionAsync(timeout: TimeSpan.FromSeconds(0.1));
 
             if (position != null)
             {
@@ -738,18 +727,10 @@ namespace WhereToFly.App.Core.Views
 
             Task.Run(async () =>
             {
-                if (!await GeolocationService.CheckPermissionAsync())
-                {
-                    return;
-                }
-
-                await this.geolocator.StartListeningAsync(
-                    Constants.GeoLocationMinimumTimeForUpdate,
-                    Constants.GeoLocationMinimumDistanceForUpdateInMeters,
-                    includeHeading: false);
+                await this.geolocationService.StartListeningAsync();
             });
 
-            this.geolocator.PositionChanged += this.OnPositionChanged;
+            this.geolocationService.PositionChanged += this.OnPositionChanged;
 
             Xamarin.Essentials.Connectivity.ConnectivityChanged += this.OnConnectivityChanged;
         }
@@ -933,12 +914,12 @@ namespace WhereToFly.App.Core.Views
         {
             base.OnDisappearing();
 
-            this.geolocator.PositionChanged -= this.OnPositionChanged;
+            this.geolocationService.PositionChanged -= this.OnPositionChanged;
             Xamarin.Essentials.Connectivity.ConnectivityChanged -= this.OnConnectivityChanged;
 
             Task.Run(async () =>
             {
-                await this.geolocator.StopListeningAsync();
+                await this.geolocationService.StopListeningAsync();
             });
         }
         #endregion
@@ -948,23 +929,21 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args, including position</param>
-        private void OnPositionChanged(object sender, PositionEventArgs args)
+        private void OnPositionChanged(object sender, GeolocationEventArgs args)
         {
-            var position = args.Position;
+            MapPoint point = args.Point;
 
             bool zoomToPosition = this.zoomToMyPosition;
 
             this.zoomToMyPosition = false;
 
-            var point = new MapPoint(position.Latitude, position.Longitude, position.Altitude);
-
             if (this.mapView != null)
             {
                 this.mapView.UpdateMyLocation(
                     point,
-                    (int)position.Accuracy,
-                    position.Speed * Geo.Spatial.Constants.FactorMeterPerSecondToKilometerPerHour,
-                    position.Timestamp,
+                    (int)args.Position.Accuracy,
+                    args.Position.Speed * Geo.Spatial.Constants.FactorMeterPerSecondToKilometerPerHour,
+                    args.Position.Timestamp,
                     zoomToPosition);
             }
 

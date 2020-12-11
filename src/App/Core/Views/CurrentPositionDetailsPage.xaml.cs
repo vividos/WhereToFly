@@ -1,7 +1,5 @@
-﻿using Plugin.Geolocator.Abstractions;
-using System;
+﻿using System;
 using System.Threading.Tasks;
-using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.ViewModels;
 using WhereToFly.App.Logic;
 using WhereToFly.Shared.Model;
@@ -20,9 +18,9 @@ namespace WhereToFly.App.Core.Views
         private readonly CurrentPositionDetailsViewModel viewModel;
 
         /// <summary>
-        /// Geo locator to use for position updates
+        /// Geolocation service to use for position updates
         /// </summary>
-        private readonly IGeolocator geolocator;
+        private readonly IGeolocationService geolocationService;
 
         /// <summary>
         /// Creates new current position details page
@@ -33,7 +31,7 @@ namespace WhereToFly.App.Core.Views
 
             this.InitializeComponent();
 
-            this.geolocator = DependencyService.Get<GeolocationService>().Geolocator;
+            this.geolocationService = DependencyService.Get<IGeolocationService>();
 
             this.BindingContext = this.viewModel = new CurrentPositionDetailsViewModel(App.Settings);
 
@@ -49,19 +47,14 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task InitPositionAsync()
         {
-            if (!await GeolocationService.CheckPermissionAsync())
-            {
-                return;
-            }
-
             var position =
-                await this.geolocator.GetPositionAsync(timeout: TimeSpan.FromSeconds(1), includeHeading: false);
+                await this.geolocationService.GetPositionAsync(timeout: TimeSpan.FromSeconds(1));
 
             if (position != null)
             {
                 this.viewModel.OnPositionChanged(
                     this,
-                    new PositionEventArgs(position));
+                    new GeolocationEventArgs(position));
             }
         }
 
@@ -96,13 +89,8 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task OnClicked_ToolbarButtonSharePosition()
         {
-            if (!await GeolocationService.CheckPermissionAsync())
-            {
-                return;
-            }
-
             var position =
-                await this.geolocator.GetPositionAsync(timeout: TimeSpan.FromSeconds(0.1), includeHeading: false);
+                await this.geolocationService.GetPositionAsync(timeout: TimeSpan.FromSeconds(0.1));
 
             if (position != null)
             {
@@ -122,12 +110,9 @@ namespace WhereToFly.App.Core.Views
         {
             base.OnAppearing();
 
-            await this.geolocator.StartListeningAsync(
-                Constants.GeoLocationMinimumTimeForUpdate,
-                Constants.GeoLocationMinimumDistanceForUpdateInMeters,
-                includeHeading: true);
+            await this.geolocationService.StartListeningAsync();
 
-            this.geolocator.PositionChanged += this.viewModel.OnPositionChanged;
+            this.geolocationService.PositionChanged += this.viewModel.OnPositionChanged;
 
             this.viewModel.StartCompass();
         }
@@ -141,9 +126,9 @@ namespace WhereToFly.App.Core.Views
 
             this.viewModel.StopCompass();
 
-            this.geolocator.PositionChanged -= this.viewModel.OnPositionChanged;
+            this.geolocationService.PositionChanged -= this.viewModel.OnPositionChanged;
 
-            await this.geolocator.StopListeningAsync();
+            await this.geolocationService.StopListeningAsync();
         }
         #endregion
     }

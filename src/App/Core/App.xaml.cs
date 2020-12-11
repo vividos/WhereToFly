@@ -119,7 +119,7 @@ namespace WhereToFly.App.Core
         {
             DependencyService.Register<NavigationService>();
             DependencyService.Register<IDataService, Services.SqliteDatabase.SqliteDatabaseDataService>();
-            DependencyService.Register<GeolocationService>();
+            DependencyService.Register<IGeolocationService, GeolocationService>();
             DependencyService.Register<LiveWaypointRefreshService>();
         }
 

@@ -1,5 +1,4 @@
-﻿using Plugin.Geolocator.Abstractions;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using System.Timers;
 using WhereToFly.App.Geo.SunCalcNet;
@@ -29,7 +28,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Current position
         /// </summary>
-        private Position position;
+        private Plugin.Geolocator.Abstractions.Position position;
 
         /// <summary>
         /// Indicates if the device has a compass that is available
@@ -258,7 +257,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args, including position</param>
-        public void OnPositionChanged(object sender, PositionEventArgs args)
+        public void OnPositionChanged(object sender, GeolocationEventArgs args)
         {
             this.position = args.Position;
 

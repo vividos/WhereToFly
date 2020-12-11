@@ -1,4 +1,5 @@
-﻿using Plugin.Geolocator.Abstractions;
+﻿using Plugin.Geolocator;
+using Plugin.Geolocator.Abstractions;
 using System;
 using System.Threading.Tasks;
 using WhereToFly.Shared.Model;
@@ -9,18 +10,18 @@ namespace WhereToFly.App.Core.Services
     /// <summary>
     /// Geographic location service
     /// </summary>
-    public class GeolocationService
+    public class GeolocationService : IGeolocationService
     {
         /// <summary>
-        /// Returns current geolocator instance
+        /// Event handler that is called for position changes
         /// </summary>
-        public virtual IGeolocator Geolocator { get => Plugin.Geolocator.CrossGeolocator.Current; }
+        public event EventHandler<GeolocationEventArgs> PositionChanged;
 
         /// <summary>
         /// Checks for permission to use location.
         /// </summary>
         /// <returns>true when everything is ok, false when permission wasn't given</returns>
-        public static async Task<bool> CheckPermissionAsync()
+        private static async Task<bool> CheckPermissionAsync()
         {
             if (!MainThread.IsMainThread)
             {
@@ -57,16 +58,74 @@ namespace WhereToFly.App.Core.Services
         /// <summary>
         /// Returns current position
         /// </summary>
+        /// <param name="timeout">timeout for waiting for position</param>
         /// <returns>current position, or null when none could be retrieved</returns>
-        public async Task<MapPoint> GetCurrentPositionAsync()
+        public async Task<Position> GetPositionAsync(TimeSpan timeout)
         {
-            var position = await this.Geolocator.GetLastKnownLocationAsync();
-            if (position == null)
+            if (!await CheckPermissionAsync())
             {
                 return null;
             }
 
-            return new MapPoint(position.Latitude, position.Longitude, position.Altitude);
+            return await CrossGeolocator.Current.GetPositionAsync(timeout);
+        }
+
+        /// <summary>
+        /// Returns last known position
+        /// </summary>
+        /// <returns>last known position, or null when none could be retrieved</returns>
+        public async Task<MapPoint> GetLastKnownPositionAsync()
+        {
+            var location = await Geolocation.GetLastKnownLocationAsync();
+            if (location == null)
+            {
+                return null;
+            }
+
+            return new MapPoint(location.Latitude, location.Longitude, location.Altitude);
+        }
+
+        /// <summary>
+        /// Starts listening for location updates
+        /// </summary>
+        /// <returns>true when successful, false when not</returns>
+        public async Task<bool> StartListeningAsync()
+        {
+            if (!await CheckPermissionAsync())
+            {
+                return false;
+            }
+
+            CrossGeolocator.Current.PositionChanged += this.OnPositionChanged;
+
+            return await CrossGeolocator.Current.StartListeningAsync(
+                Constants.GeoLocationMinimumTimeForUpdate,
+                Constants.GeoLocationMinimumDistanceForUpdateInMeters,
+                includeHeading: true,
+                listenerSettings: null);
+        }
+
+        /// <summary>
+        /// Called when the position has changed
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="args">event args</param>
+        private void OnPositionChanged(object sender, Plugin.Geolocator.Abstractions.PositionEventArgs args)
+        {
+            this.PositionChanged?.Invoke(
+                sender,
+                new GeolocationEventArgs(args.Position));
+        }
+
+        /// <summary>
+        /// Stops listening for location updates
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        public async Task StopListeningAsync()
+        {
+            CrossGeolocator.Current.PositionChanged -= this.OnPositionChanged;
+
+            await CrossGeolocator.Current.StopListeningAsync();
         }
     }
 }

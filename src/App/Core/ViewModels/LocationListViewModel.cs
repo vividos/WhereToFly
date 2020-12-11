@@ -1,5 +1,4 @@
 ﻿using MvvmHelpers.Commands;
-using Plugin.Geolocator.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -546,9 +545,9 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args, including position</param>
-        public void OnPositionChanged(object sender, PositionEventArgs args)
+        public void OnPositionChanged(object sender, GeolocationEventArgs args)
         {
-            this.currentPosition = new MapPoint(args.Position.Latitude, args.Position.Longitude, args.Position.Altitude);
+            this.currentPosition = args.Point;
 
             this.UpdateLocationList();
         }

@@ -1,7 +1,5 @@
-﻿using Plugin.Geolocator.Abstractions;
-using System;
+﻿using System;
 using System.Threading.Tasks;
-using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.ViewModels;
 using Xamarin.Forms;
 
@@ -19,9 +17,9 @@ namespace WhereToFly.App.Core.Views
         private readonly LocationListViewModel viewModel;
 
         /// <summary>
-        /// Geo locator to use for position updates
+        /// Geolocation service to use for position updates
         /// </summary>
-        private readonly IGeolocator geolocator;
+        private readonly IGeolocationService geolocationService;
 
         /// <summary>
         /// Indicates if import page was started; used to update location list when returning to
@@ -38,7 +36,7 @@ namespace WhereToFly.App.Core.Views
 
             this.InitializeComponent();
 
-            this.geolocator = DependencyService.Get<GeolocationService>().Geolocator;
+            this.geolocationService = DependencyService.Get<IGeolocationService>();
 
             this.BindingContext = this.viewModel = new LocationListViewModel(App.Settings);
 
@@ -114,19 +112,14 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task InitPositionAsync()
         {
-            if (!await GeolocationService.CheckPermissionAsync())
-            {
-                return;
-            }
-
             var position =
-                await this.geolocator.GetPositionAsync(timeout: TimeSpan.FromSeconds(1), includeHeading: false);
+                await this.geolocationService.GetPositionAsync(timeout: TimeSpan.FromSeconds(1));
 
             if (position != null)
             {
                 this.viewModel.OnPositionChanged(
                     this,
-                    new PositionEventArgs(position));
+                    new GeolocationEventArgs(position));
             }
         }
 
@@ -191,15 +184,10 @@ namespace WhereToFly.App.Core.Views
 
             Task.Run(async () =>
             {
-                if (!await GeolocationService.CheckPermissionAsync())
-                {
-                    return;
-                }
-
-                var position = await this.geolocator.GetPositionAsync(TimeSpan.FromSeconds(1));
+                var position = await this.geolocationService.GetPositionAsync(TimeSpan.FromSeconds(1));
                 if (position != null)
                 {
-                    this.viewModel.OnPositionChanged(this, new PositionEventArgs(position));
+                    this.viewModel.OnPositionChanged(this, new GeolocationEventArgs(position));
                 }
             });
         }
