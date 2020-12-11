@@ -183,10 +183,10 @@ HeightProfileView.prototype.setModeHover = function () {
 
     // update buttons
     var chartButtonModeHover = document.getElementById('chartButtonModeHover');
-    chartButtonModeHover.classList.remove('chartToolbarButtonDisabled');
+    chartButtonModeHover.classList.remove('chart-toolbar-button-disabled');
 
     var chartButtonModeZoomAndPan = document.getElementById('chartButtonModeZoomAndPan');
-    chartButtonModeZoomAndPan.classList.add('chartToolbarButtonDisabled');
+    chartButtonModeZoomAndPan.classList.add('chart-toolbar-button-disabled');
 };
 
 /**
@@ -204,10 +204,10 @@ HeightProfileView.prototype.setModeZoomAndPan = function () {
 
     // update buttons
     var chartButtonModeHover = document.getElementById('chartButtonModeHover');
-    chartButtonModeHover.classList.add('chartToolbarButtonDisabled');
+    chartButtonModeHover.classList.add('chart-toolbar-button-disabled');
 
     var chartButtonModeZoomAndPan = document.getElementById('chartButtonModeZoomAndPan');
-    chartButtonModeZoomAndPan.classList.remove('chartToolbarButtonDisabled');
+    chartButtonModeZoomAndPan.classList.remove('chart-toolbar-button-disabled');
 };
 
 /**

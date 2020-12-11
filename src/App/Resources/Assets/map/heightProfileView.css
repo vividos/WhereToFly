@@ -13,7 +13,7 @@
     user-select: none;
 }
 
-.chartToolbarButton {
+.chart-toolbar-button {
     position: relative;
     float: right;
     padding: 5px;
@@ -24,11 +24,11 @@
 }
 
 /* the .svg toolbar images are white, so invert them to display correctly */
-.chartToolbarButtonImage {
+.chart-toolbar-button-image {
     filter: invert(100%);
 }
 
-.chartToolbarButtonDisabled {
+.chart-toolbar-button-disabled {
     background-color: gray !important;
 }
 
