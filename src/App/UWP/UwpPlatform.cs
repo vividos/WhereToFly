@@ -37,7 +37,7 @@ namespace WhereToFly.App.UWP
         public string PublicExportFolder => Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
         /// <summary>
-        /// Base path to use in WebView control, for Android
+        /// Base path to use in WebView control, for UWP
         /// </summary>
         public string WebViewBasePath => "ms-appx-web:///WhereToFly.App.Resources/Assets/";
 
