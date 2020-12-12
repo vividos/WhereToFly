@@ -72,6 +72,8 @@
         <button onclick="addTrack()">Add track</button>
 
         <button onclick="zoomToTrack()">Zoom to track</button>
+
+        <button onclick="sampleTrackHeights()">Sample track heights</button>
     </div>
 
     <div id="mapElement"></div>
@@ -161,17 +163,30 @@
         }
 
         addTrack = function () {
-            map.addTrack({
+            theTrack = {
                 id: 'crossingthealps2018',
                 name: 'Crossing the Alps 2018',
                 isFlightTrack: false,
                 listOfTrackPoints: [12.352277, 47.754076, 0, 12.432716, 47.630431, 0, 12.29676, 47.285013, 0, 12.183008, 47.090525, 0, 11.958434, 46.738669, 0, 11.787137, 46.296141, 0, 11.904684, 46.017666, 0],
                 color: "FF0000"
-            });
+            };
+            map.addTrack(theTrack);
         }
 
         zoomToTrack = function () {
-            map.zoomToTrack('crossingthealps2018');
+            map.zoomToTrack(theTrack.id);
+        }
+
+        sampleTrackHeights = function () {
+            map.showTrackHeightProfile(theTrack.id);
+
+            map.onSampledTrackHeights = function (listOfTrackPointHeights) {
+                theTrack.groundHeightProfile = listOfTrackPointHeights;
+
+                map.heightProfileView.addGroundProfile(theTrack.groundHeightProfile);
+            };
+
+            map.sampleTrackHeights(theTrack);
         }
 
     </script>
