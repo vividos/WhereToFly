@@ -29,7 +29,7 @@ function HeightProfileView(options) {
     this.trackColor = this.options.useDarkTheme ? '#00ffff' : '#0000ff';
     this.backgroundColor = this.options.useDarkTheme ? '#202124' : '#F5F5F5';
     this.axisColor = this.options.useDarkTheme ? '#f5f5f5' : '#202020';
-    this.groundProfileColor = this.options.useDarkTheme ? '#404040' : '#808080';
+    this.groundProfileColor = this.options.useDarkTheme ? '#404040C0' : '#808080C0';
 
     var chartContainer = document.getElementById(this.options.containerId);
     chartContainer.style.display = 'block';
