@@ -15,6 +15,8 @@ namespace WhereToFly.App.Core.Views
         /// <param name="track">track to display</param>
         public TrackHeightProfilePage(Track track)
         {
+            this.Title = "Track height profile";
+
             this.Content = new HeightProfileWebView
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
