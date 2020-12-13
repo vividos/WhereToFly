@@ -516,9 +516,15 @@ namespace WhereToFly.App.Core
             {
                 var parser = new OpenAirFileParser(stream);
 
+                var filteredAirspaces = await SelectAirspaceClassesToImport(parser.Airspaces);
+                if (!filteredAirspaces.Any())
+                {
+                    return;
+                }
+
                 string czml = CzmlAirspaceWriter.WriteCzml(
                     Path.GetFileNameWithoutExtension(filename),
-                    parser.Airspaces,
+                    filteredAirspaces,
                     parser.FileCommentLines);
 
                 string description =
@@ -537,6 +543,28 @@ namespace WhereToFly.App.Core
                     $"Error while loading OpenAir airspaces: {ex.Message}",
                     "OK");
             }
+        }
+
+        /// <summary>
+        /// Filters airspaces list by letting the user select all airspace classes that should be
+        /// imported.
+        /// </summary>
+        /// <param name="airspacesList">list of all airspaces</param>
+        /// <returns>filtered list of all airspaces</returns>
+        private static async Task<IEnumerable<Airspace>> SelectAirspaceClassesToImport(IEnumerable<Airspace> airspacesList)
+        {
+            var airspaceClasses = airspacesList.Select(airspace => airspace.Class).Distinct();
+
+            var selectedAirspaceClasses = await SelectAirspaceClassPopupPage.ShowAsync(airspaceClasses);
+            if (selectedAirspaceClasses == null)
+            {
+                return Enumerable.Empty<Airspace>();
+            }
+
+            var filteredAirspaces = airspacesList.Where(
+                airspace => selectedAirspaceClasses.Contains(airspace.Class));
+
+            return filteredAirspaces;
         }
 
         /// <summary>

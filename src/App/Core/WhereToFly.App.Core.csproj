@@ -52,6 +52,9 @@
     <Compile Update="Styles\DarkTheme.xaml.cs">
       <DependentUpon>DarkTheme.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\SelectAirspaceClassPopupPage.xaml.cs">
+      <DependentUpon>SelectAirspaceClassPopupPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\AddWeatherLinkPopupPage.xaml.cs">
       <DependentUpon>AddWeatherLinkPopupPage.xaml</DependentUpon>
     </Compile>

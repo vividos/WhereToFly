@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:BasePopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                     xmlns:views="clr-namespace:WhereToFly.App.Core.Views"
+                     x:Class="WhereToFly.App.Core.Views.SelectAirspaceClassPopupPage">
+
+    <!-- popup content -->
+    <StackLayout
+        VerticalOptions="CenterAndExpand"
+        HorizontalOptions="Center"
+        WidthRequest="320"
+        BackgroundColor="{DynamicResource PageBackgroundColor}"
+        Padding="20">
+
+        <!-- caption -->
+        <Label Text="Select airspace classes" FontSize="Large" />
+
+        <!-- flex layout with airspace classes -->
+        <FlexLayout BindableLayout.ItemsSource="{Binding AirspaceClassList}"
+                    VerticalOptions="StartAndExpand"
+                    Direction="Row"
+                    AlignItems="Start"
+                    AlignContent="Start"
+                    JustifyContent="Start"
+                    Wrap="Wrap">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout
+                        HeightRequest="64"
+                        MinimumWidthRequest="64"
+                        VerticalOptions="FillAndExpand"
+                        Margin="8"
+                        BackgroundColor="{Binding BackgroundColor, Mode=OneWay}">
+
+                        <!-- Recognize taps anywhere in the layout -->
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Tapped}" />
+                        </StackLayout.GestureRecognizers>
+
+                        <Label Text="{Binding Text, Mode=OneTime}" FontSize="Large"
+                               TextColor="{Binding TextColor, Mode=OneWay}"
+                               VerticalOptions="Fill"
+                               VerticalTextAlignment="Center"
+                               HorizontalTextAlignment="Center"
+                               Padding="8" />
+                    </StackLayout>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </FlexLayout>
+
+        <!-- Button to filter for airspace classes -->
+        <Button Text="Filter airspaces"
+                Clicked="OnClickedFilterAirspacesButton"
+                AutomationId="FilterAirspacesButton" />
+    </StackLayout>
+
+</views:BasePopupPage>
