@@ -65,7 +65,7 @@
                                                WidthRequest="600"
                                                HeightRequest="300"
                                                HorizontalOptions="CenterAndExpand"
-                                               VerticalOptions="Fill" />
+                                               VerticalOptions="Start" />
 
                 <!-- Button to show height profile in new page -->
                 <Button Text="Show full screen"

@@ -1,9 +1,11 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Views;
 using WhereToFly.App.Geo;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.Controls
@@ -86,6 +88,7 @@ namespace WhereToFly.App.Core.Controls
             this.AutomationId = "HeightProfileWebView";
 
             this.Navigated += this.OnNavigated;
+            this.SizeChanged += this.OnSizeChanged;
         }
 
         /// <summary>
@@ -93,7 +96,7 @@ namespace WhereToFly.App.Core.Controls
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        private async void OnNavigated(object sender, WebNavigatedEventArgs args)
+        private void OnNavigated(object sender, WebNavigatedEventArgs args)
         {
             Debug.WriteLine($"OnNavigated: result={args.Result} event={args.NavigationEvent}");
 
@@ -114,7 +117,29 @@ namespace WhereToFly.App.Core.Controls
                 }
             }
 
-            string result = await this.EvaluateJavaScriptAsync("javascript:document.body.scrollHeight");
+            MainThread.BeginInvokeOnMainThread(async () => await this.ResizeViewHeight());
+        }
+
+        /// <summary>
+        /// Called when the size of the view has changed
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="args">event args</param>
+        private void OnSizeChanged(object sender, EventArgs args)
+        {
+            MainThread.BeginInvokeOnMainThread(async () => await this.ResizeViewHeight());
+        }
+
+        /// <summary>
+        /// Resizes view height based on height of the chart container
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task ResizeViewHeight()
+        {
+            string result = await this.EvaluateJavaScriptAsync(
+                "javascript:document.getElementById('chartContainer').offsetHeight");
+
+            Debug.WriteLine($"ResizeView: set height to {result}");
 
             if (double.TryParse(result, NumberStyles.Float, NumberFormatInfo.InvariantInfo, out double height))
             {
