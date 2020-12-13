@@ -38,8 +38,9 @@ namespace WhereToFly.App.Core.Views
         /// Creates a new HeightProfileView C# object
         /// </summary>
         /// <param name="webView">web view to use</param>
+        /// <param name="setBodyBackgroundColor">indicates if body background should be set</param>
         /// <param name="useDarkTheme">indicates if a dark theme should be used for the chart</param>
-        public HeightProfileView(WebView webView, bool useDarkTheme)
+        public HeightProfileView(WebView webView, bool setBodyBackgroundColor, bool useDarkTheme)
         {
             this.webView = webView;
 
@@ -49,6 +50,7 @@ namespace WhereToFly.App.Core.Views
             {
                 id = "chartElement",
                 containerId = "chartContainer",
+                setBodyBackgroundColor,
                 useDarkTheme
             };
 

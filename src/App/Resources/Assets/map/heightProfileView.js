@@ -3,7 +3,10 @@
  * @constructor
  * @param {object} [options] Options to use for initializing height profile view
  * @param {Number} [options.id] DOM ID of the canvas element to create height profile view in
+ * @param {Number} [options.containerId] DOM ID of the container that contains the chart and the
+ * toolbar
  * @param {boolean} [options.useDarkTheme] indicates if a dark theme should be used for the chart
+ * @param {boolean} [options.setBodyBackgroundColor] indicates if body background should be themed
  * @param {boolean} [options.showCloseButton] indicates if a close button should be shown
  * @param {Function} [options.colorFromVarioValue] function to get a color from vario value; may
  * be undefined
@@ -18,6 +21,7 @@ function HeightProfileView(options) {
     this.options = options || {
         id: 'chartElement',
         containerId: 'chartContainer',
+        setBodyBackgroundColor: true,
         useDarkTheme: false,
         showCloseButton: false,
         callback: {}
@@ -30,6 +34,9 @@ function HeightProfileView(options) {
     this.backgroundColor = this.options.useDarkTheme ? '#202124' : '#F5F5F5';
     this.axisColor = this.options.useDarkTheme ? '#f5f5f5' : '#202020';
     this.groundProfileColor = this.options.useDarkTheme ? '#404040C0' : '#808080C0';
+
+    if (this.options.setBodyBackgroundColor)
+        document.body.style.backgroundColor = this.backgroundColor;
 
     var chartContainer = document.getElementById(this.options.containerId);
     chartContainer.style.display = 'block';
