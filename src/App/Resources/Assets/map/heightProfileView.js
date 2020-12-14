@@ -126,7 +126,7 @@ function HeightProfileView(options) {
                             x: null, // to be set later
                             y: null
                         },
-                        speed: 20,
+                        speed: 0.2,
                         threshold: 10
                     },
                     zoom: {
@@ -143,7 +143,7 @@ function HeightProfileView(options) {
                         },
                         speed: 0.1, // mouse wheel zoom speed (in percent)
                         threshold: 2,
-                        sensitivity: 3
+                        sensitivity: 0.3
                     }
                 }
             },
