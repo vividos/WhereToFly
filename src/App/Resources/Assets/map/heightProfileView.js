@@ -471,13 +471,15 @@ HeightProfileView.prototype.updateTooltipElement = function (tooltipModel) {
     // set text
     tooltipElement.innerHTML = this.formatTooltipText(tooltipModel);
 
-    var positionY = this.chart.canvas.offsetTop;
-    var positionX = this.chart.canvas.offsetLeft;
+    var position = this.chart.canvas.getBoundingClientRect();
+
+    var showLeft = tooltipModel.caretX > position.width / 2;
 
     // display, position, and set styles for font
     tooltipElement.style.opacity = 1;
-    tooltipElement.style.left = positionX + tooltipModel.caretX + 'px';
-    tooltipElement.style.top = positionY + tooltipModel.caretY + 'px';
+    tooltipElement.style.left = showLeft ? (position.x + window.pageXOffset + 50) + 'px' : '';
+    tooltipElement.style.right = !showLeft ? '10px' : '';
+    tooltipElement.style.top = '60px';
     tooltipElement.style.fontFamily = tooltipModel._bodyFontFamily;
     tooltipElement.style.fontSize = tooltipModel.bodyFontSize + 'px';
     tooltipElement.style.fontStyle = tooltipModel._bodyFontStyle;

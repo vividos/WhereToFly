@@ -58,6 +58,4 @@
     color: white;
     border-radius: 3px;
     pointer-events: none;
-    -webkit-transform: translate(-50%, 0);
-    transform: translate(-50%, 0);
 }
