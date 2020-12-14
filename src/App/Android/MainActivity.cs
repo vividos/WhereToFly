@@ -115,7 +115,7 @@ namespace WhereToFly.App.Android
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
 
-            Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
+            Rg.Plugins.Popup.Popup.Init(this);
 
             Forms.SetFlags("CarouselView_Experimental");
             Forms.Init(this, savedInstanceState);
