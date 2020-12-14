@@ -173,6 +173,8 @@ function HeightProfileView(options) {
 
     var chartButtonClose = document.getElementById('chartButtonClose');
     chartButtonClose.style.display = this.options.showCloseButton ? 'block' : 'none';
+
+    this.setModeZoomAndPan();
 }
 
 /**
@@ -294,7 +296,7 @@ HeightProfileView.prototype.addGroundProfile = function (elevationArray) {
         borderColor: 'rgba(0,128,0,255)'
     });
 
-    this.chart.update();
+    this.chart.update(0);
 };
 
 /**
