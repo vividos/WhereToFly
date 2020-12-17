@@ -98,7 +98,8 @@ namespace WhereToFly.App.UITest
 
                 System.Threading.Thread.Sleep(100);
 
-                this.app.Screenshot($"Screen: {markedItem}");
+                var fileInfo = this.app.Screenshot($"Screen: {markedItem}");
+                Assert.IsNotNull(fileInfo);
 
                 if (!showsMap)
                 {

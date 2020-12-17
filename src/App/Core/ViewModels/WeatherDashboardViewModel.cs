@@ -18,6 +18,11 @@ namespace WhereToFly.App.Core.ViewModels
     internal class WeatherDashboardViewModel : ViewModelBase
     {
         /// <summary>
+        /// MessagingCenter message constant to show toast message
+        /// </summary>
+        private const string MessageAddWeatherIcon = "AddWeatherIcon";
+
+        /// <summary>
         /// List of weather icon descriptions to display
         /// </summary>
         private List<WeatherIconDescription> weatherIconDescriptionList;
@@ -46,16 +51,14 @@ namespace WhereToFly.App.Core.ViewModels
         #endregion
 
         /// <summary>
-        /// MessagingCenter message constant to show toast message
-        /// </summary>
-        private const string MessageAddWeatherIcon = "AddWeatherIcon";
-
-        /// <summary>
         /// Creates a new view model for the weather dashboard
         /// </summary>
         public WeatherDashboardViewModel()
         {
-            MessagingCenter.Subscribe<WeatherIconDescription>(this, MessageAddWeatherIcon, this.OnAddWeatherIcon);
+            MessagingCenter.Subscribe<WeatherIconDescription>(
+                this,
+                MessageAddWeatherIcon,
+                async (iconDescription) => await this.OnAddWeatherIcon(iconDescription));
 
             this.SetupBindings();
         }
@@ -73,7 +76,8 @@ namespace WhereToFly.App.Core.ViewModels
         /// Called when a weather icon should be added to the dashboard
         /// </summary>
         /// <param name="iconDescription">weather icon description</param>
-        private async void OnAddWeatherIcon(WeatherIconDescription iconDescription)
+        /// <returns>task to wait on</returns>
+        private async Task OnAddWeatherIcon(WeatherIconDescription iconDescription)
         {
             // remove it when it's already in the list, in order to move it to the end
             this.weatherIconDescriptionList.RemoveAll(
@@ -103,13 +107,21 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Sets up bindings properties
         /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task SetupBindings()
+        private void SetupBindings()
         {
             this.AddIconCommand = new AsyncCommand(this.AddIconAsync);
             this.AddWebLinkCommand = new AsyncCommand(this.AddWebLinkAsync);
             this.ClearAllCommand = new AsyncCommand(this.ClearAllWeatherIcons);
 
+            Task.Run(async () => await this.InitWeatherIconDescriptionList());
+        }
+
+        /// <summary>
+        /// Initializes weather icon description list
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task InitWeatherIconDescriptionList()
+        {
             var dataService = DependencyService.Get<IDataService>();
             var weatherDashboardIconDataService = dataService.GetWeatherDashboardIconDataService();
 
