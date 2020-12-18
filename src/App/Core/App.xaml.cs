@@ -117,6 +117,7 @@ namespace WhereToFly.App.Core
         /// </summary>
         private void SetupDepencencyService()
         {
+            DependencyService.Register<SvgImageCache>();
             DependencyService.Register<NavigationService>();
             DependencyService.Register<IDataService, Services.SqliteDatabase.SqliteDatabaseDataService>();
             DependencyService.Register<IGeolocationService, GeolocationService>();
