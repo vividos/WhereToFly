@@ -243,8 +243,8 @@ namespace WhereToFly.App.Core.Views
                 id = "mapElement",
                 initialCenterPoint = new
                 {
-                    latitude = initialCenterPoint.Latitude.ToString(CultureInfo.InvariantCulture),
-                    longitude = initialCenterPoint.Longitude.ToString(CultureInfo.InvariantCulture),
+                    latitude = initialCenterPoint.Latitude,
+                    longitude = initialCenterPoint.Longitude,
                 },
                 initialZoomLevel = initialZoomLevel,
                 hasMouse = Device.RuntimePlatform == Device.UWP,
