@@ -279,6 +279,11 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             private readonly SQLiteAsyncConnection connection;
 
             /// <summary>
+            /// Cache for tracks, with track ID as key
+            /// </summary>
+            private readonly Dictionary<string, Track> trackCache = new Dictionary<string, Track>();
+
+            /// <summary>
             /// Creates a new track data service
             /// </summary>
             /// <param name="connection">SQLite database connection</param>
@@ -299,6 +304,8 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
                 trackEntry.StoreTrackPoints();
 
                 await this.connection.InsertAsync(trackEntry);
+
+                this.trackCache[trackToAdd.Id] = trackToAdd;
             }
 
             /// <summary>
@@ -308,6 +315,11 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             /// <returns>track from list, or null when none was found</returns>
             public async Task<Track> Get(string trackId)
             {
+                if (this.trackCache.ContainsKey(trackId))
+                {
+                    return this.trackCache[trackId];
+                }
+
                 var trackEntry = await this.connection.GetAsync<TrackEntry>(trackId);
 
                 trackEntry.LoadTrackPoints();
@@ -328,6 +340,8 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
                 File.Delete(filename);
 
                 await this.connection.DeleteAsync<TrackEntry>(trackId);
+
+                this.trackCache.Remove(trackId);
             }
 
             /// <summary>
@@ -340,7 +354,14 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
 
                 foreach (var trackEntry in trackList)
                 {
-                    trackEntry.LoadTrackPoints();
+                    if (this.trackCache.ContainsKey(trackEntry.Id))
+                    {
+                        trackEntry.Track = this.trackCache[trackEntry.Id];
+                    }
+                    else
+                    {
+                        trackEntry.LoadTrackPoints();
+                    }
                 }
 
                 return trackList.Select(trackEntry => trackEntry.Track);
@@ -368,6 +389,11 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
                 }
 
                 await this.connection.InsertAllAsync(trackEntryList, runInTransaction: true);
+
+                foreach (var trackEntry in trackEntryList)
+                {
+                    this.trackCache[trackEntry.Id] = trackEntry.Track;
+                }
             }
 
             /// <summary>
@@ -384,6 +410,8 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
                 await this.connection.DeleteAllAsync<TrackEntry>();
 
                 ClearTrackFolder();
+
+                this.trackCache.Clear();
             }
 
             /// <summary>
