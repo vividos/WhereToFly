@@ -129,13 +129,15 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
                     return;
                 }
 
-                var weatherIconDescriptionEntryList =
-                    weatherIconDescriptionList.Select(async weatherIconDescription =>
-                    new WeatherDashboardIconEntry
-                    {
-                        WeatherIconDescriptionId = await this.IdFromDescription(weatherIconDescription)
-                    })
-                    .Select(t => t.Result);
+                var weatherIconDescriptionEntryList = new List<WeatherDashboardIconEntry>();
+                foreach (var weatherIconDescription in weatherIconDescriptionList)
+                {
+                    weatherIconDescriptionEntryList.Add(
+                        new WeatherDashboardIconEntry
+                        {
+                            WeatherIconDescriptionId = await this.IdFromDescription(weatherIconDescription)
+                        });
+                }
 
                 await this.connection.InsertAllAsync(
                     weatherIconDescriptionEntryList,
