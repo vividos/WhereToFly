@@ -2,6 +2,8 @@
 
 ## Version 1.9.0
 
+Released on 2020-12-21.
+
 - added support for Android 11
 - added showing height profile when tapping on a track
 - added zooming and panning to height profile graph
