@@ -51,7 +51,7 @@ if errorlevel 1 goto end
 REM
 REM Rebuild projects
 REM
-build-wrapper-win-x86-64.exe --out-dir bw-output msbuild WhereToFly.sln /m /property:Configuration=Release /target:Rebuild
+build-wrapper-win-x86-64.exe --out-dir bw-output msbuild WhereToFly.sln /m /property:Configuration=SonarQube /target:Rebuild
 
 REM
 REM Run Unit-Tests
