@@ -16,6 +16,7 @@ namespace WhereToFly.App.UnitTest.Views
         public void SetUp()
         {
             Xamarin.Forms.Mocks.MockForms.Init();
+            FFImageLoading.ImageService.EnableMockImageService = true;
         }
 
         /// <summary>

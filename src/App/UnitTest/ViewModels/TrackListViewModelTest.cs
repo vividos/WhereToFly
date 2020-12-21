@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Threading.Tasks;
 using WhereToFly.App.Core;
+using WhereToFly.App.Core.Services.SqliteDatabase;
 using WhereToFly.App.Core.ViewModels;
 using Xamarin.Forms;
 
@@ -21,6 +23,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
         {
             Xamarin.Forms.Mocks.MockForms.Init();
             DependencyService.Register<IPlatform, UnitTestPlatform>();
+            DependencyService.Register<IDataService, SqliteDatabaseDataService>();
         }
 
         /// <summary>
@@ -29,8 +32,11 @@ namespace WhereToFly.App.UnitTest.ViewModels
         [TestMethod]
         public void TestDefaultCtor()
         {
-            // run
+            // set up
             var viewModel = new TrackListViewModel();
+
+            // run
+            viewModel.WaitForPropertyChange(nameof(viewModel.TrackList), TimeSpan.FromSeconds(10));
 
             // check
             Assert.IsTrue(viewModel.IsListEmpty, "list must be empty");

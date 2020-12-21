@@ -22,6 +22,7 @@ namespace WhereToFly.App.UnitTest
             Xamarin.Forms.Mocks.MockForms.Init();
             DependencyService.Register<IAppManager, UnitTestAppManager>();
             DependencyService.Register<IDataService, SqliteDatabaseDataService>();
+            DependencyService.Register<SvgImageCache>();
         }
 
         /// <summary>
@@ -31,12 +32,15 @@ namespace WhereToFly.App.UnitTest
         [TestMethod]
         public async Task TestIconTypePlaceholder()
         {
-            // run
-            var imageSource = await WeatherImageCache.GetImageAsync(new WeatherIconDescription
+            // set up
+            var placeholderIcon = new WeatherIconDescription
             {
                 Name = "placeholder",
                 Type = WeatherIconDescription.IconType.IconPlaceholder,
-            });
+            };
+
+            // run
+            var imageSource = await WeatherImageCache.GetImageAsync(placeholderIcon);
 
             // check
             Assert.IsNotNull(imageSource, "returned image source must not be null");

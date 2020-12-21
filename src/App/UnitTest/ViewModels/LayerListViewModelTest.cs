@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Linq;
-using System.Threading;
 using WhereToFly.App.Core;
 using WhereToFly.App.Core.Services.SqliteDatabase;
 using WhereToFly.App.Core.ViewModels;
@@ -23,6 +23,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
             Xamarin.Forms.Mocks.MockForms.Init();
             DependencyService.Register<IPlatform, UnitTestPlatform>();
             DependencyService.Register<IDataService, SqliteDatabaseDataService>();
+            DependencyService.Register<SvgImageCache>();
         }
 
         /// <summary>
@@ -34,19 +35,11 @@ namespace WhereToFly.App.UnitTest.ViewModels
             // set up
             var viewModel = new LayerListViewModel();
 
-            var propertyChangedEvent = new ManualResetEvent(false);
-
-            viewModel.PropertyChanged += (sender, args) =>
-                {
-                    if (args.PropertyName == nameof(viewModel.LayerList))
-                    {
-                        propertyChangedEvent.Set();
-                    }
-                };
-
-            propertyChangedEvent.WaitOne();
+            // run
+            bool result = viewModel.WaitForPropertyChange(nameof(viewModel.LayerList), TimeSpan.FromSeconds(10));
 
             // check
+            Assert.IsTrue(result, "LayerList property must have been changed");
             Assert.IsTrue(viewModel.LayerList.Any(), "layer list must not be empty");
             Assert.IsFalse(viewModel.IsListEmpty, "layer list must not be empty");
             Assert.IsTrue(viewModel.IsClearLayerListEnabled, "layer list must not be empty");
