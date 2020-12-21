@@ -3,10 +3,12 @@
 ## Version 1.9.0
 
 - added support for Android 11
-- added showing height profile when clicking on a track
+- added showing height profile when tapping on a track
 - added zooming and panning to height profile graph
 - added setting app themes "light", "dark" and "same as device"
 - added showing sunrise and sunset times on the "Current Position" page
+- added dialog when importing airspaces to select which airspace classes to
+  import
 - using magnetic compass for heading on the "Current Position" page when the
   device has one
 - various bugfixes and improvements
@@ -20,6 +22,7 @@ Released on 2020-08-19.
   network connection
 - fixed crash when opening files from remote file providers (like OneDrive and
   Google Drive) but the device has no network connection
+- using CesiumJS version 1.72
 
 ## Version 1.8.0
 
