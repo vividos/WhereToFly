@@ -18,6 +18,7 @@ function LiveTracking() {
         initialCenterPoint: { latitude: 47.083, longitude: 12.178 },
         initialZoomLevel: 5,
         hasMouse: true,
+        useAsynchronousPrimitives: true,
         callback: this.callMapAction
     });
 

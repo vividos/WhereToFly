@@ -2,12 +2,16 @@
  * Creates a new instance of MapView
  * @constructor
  * @param {object} [options] Options to use for initializing map view
- * @param {Number} [options.id] DOM ID of the div element to create map view in
+ * @param {String} [options.id] DOM ID of the div element to create map view in
  * @param {object} [options.initialCenterPoint] initial center point of map view
  * @param {double} [options.initialCenterPoint.latitude] latitude of center point
  * @param {double} [options.initialCenterPoint.longitude] longitude of center point
  * @param {Number} [options.initialZoomLevel] initial zoom level
  * @param {Boolean} [options.hasMouse] indicates if the device this is running supports a mouse
+ * @param {Boolean} [options.useAsynchronousPrimitives] indicates of asynchronous primitives
+ * should be used
+ * @param {String} [options.bingMapsApiKey] Bing maps API key to use
+ * @param {String} [options.cesiumIonApiKey] Cesium Ion API key to use
  * @param {Function} [options.callback] callback function to use for calling back to C# code
  */
 function MapView(options) {
@@ -23,13 +27,15 @@ function MapView(options) {
         callback: {}
     };
 
+    this.options.bingMapsApiKey = this.options.bingMapsApiKey || 'AuuY8qZGx-LAeruvajcGMLnudadWlphUWdWb0k6N6lS2QUtURFk3ngCjIXqqFOoe';
+    this.options.cesiumIonApiKey = this.options.cesiumIonApiKey || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiZWMzMjU5NC00MTg4LTQwYmEtYWNhYi01MDYwMWQyZDIxNTUiLCJpZCI6NjM2LCJpYXQiOjE1MjUzNjQ5OTN9.kXik5Mg_-01LBkN-5OTIDpwlMcuE2noRaaHrqjhbaRE';
+
     if (this.options.callback === undefined)
         this.options.callback = callAction;
 
     console.log("MapView: #1 imagery provider");
 
-    Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiZWMzMjU5NC00MTg4LTQwYmEtYWNhYi01MDYwMWQyZDIxNTUiLCJpZCI6NjM2LCJpYXQiOjE1MjUzNjQ5OTN9.kXik5Mg_-01LBkN-5OTIDpwlMcuE2noRaaHrqjhbaRE';
-    Cesium.BingMapsApi.defaultKey = 'AuuY8qZGx-LAeruvajcGMLnudadWlphUWdWb0k6N6lS2QUtURFk3ngCjIXqqFOoe';
+    Cesium.Ion.defaultAccessToken = this.options.cesiumIonApiKey;
 
     this.openStreetMapImageryLayer = null;
     this.openStreetMapImageryProvider = new Cesium.OpenStreetMapImageryProvider({
@@ -192,6 +198,18 @@ function MapView(options) {
         show: false
     });
 
+    // the track marker is initially invisible and only used when a track is tapped
+    Cesium.when(
+        this.createEntity('trackMarker', 'Track point', '', Cesium.Color.PURPLE, '../icons/map-marker-distance.svg', 0.0, 0.0),
+        function (trackEntity) {
+            trackEntity.show = false;
+            trackEntity.billboard.heightReference = Cesium.HeightReference.NONE;
+            that.trackMarker = that.viewer.entities.add(trackEntity);
+        },
+        function (error) {
+            console.error("MapView: #8 error creating find result entity: " + error);
+        });
+
     // the find result entity is initially invisible
     Cesium.when(
         this.createEntity(undefined, 'Find result', '', Cesium.Color.ORANGE, 'images/magnify.svg', 0.0, 0.0),
@@ -274,7 +292,8 @@ MapView.prototype.onScreenTouchUp = function (movement) {
 
     var deltaTime = new Date().getTime() - this.currentLeftDownTime;
 
-    // when tap was longer than 600ms and moved less than 10 pixels
+    // check if tap was longer than 600ms and moved less than 10 pixels
+    var longTapDetected = false;
     if (deltaTime > 600 && deltaSquared < 10 * 10) {
 
         var ray = this.viewer.camera.getPickRay(movement.position);
@@ -282,11 +301,22 @@ MapView.prototype.onScreenTouchUp = function (movement) {
         if (cartesian) {
             var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
 
+            longTapDetected = true;
             this.onLongTap({
                 latitude: Cesium.Math.toDegrees(cartographic.latitude),
                 longitude: Cesium.Math.toDegrees(cartographic.longitude),
                 altitude: cartographic.height
             });
+        }
+    }
+
+    // check if user tapped a track primitive
+    if (!longTapDetected) {
+        var feature = this.viewer.scene.pick(movement.position, 10, 10);
+        if (feature !== undefined && feature.id !== undefined && typeof feature.id === 'string') {
+            var trackId = feature.id.replace('track-', '');
+            console.log("picked track " + trackId);
+            this.showTrackHeightProfile(trackId);
         }
     }
 };
@@ -335,6 +365,15 @@ MapView.prototype.createThermalImageryProvider = function () {
 };
 
 /**
+ * Updates scene by requesting rendering from scene. This can be used to
+ * update the view, e.g. when a pin was added or removed, and CesiumJS
+ * wouldn't update the scene itself.
+ */
+MapView.prototype.updateScene = function (imageryType) {
+    this.viewer.scene.requestRender();
+};
+
+/**
  * Sets new map imagery type
  * @param {string} imageryType imagery type constant; the following constants currently can be
  * used: 'OpenStreetMap'.
@@ -375,6 +414,7 @@ MapView.prototype.setMapImageryType = function (imageryType) {
                 if (this.bingMapsAerialWithLabelsImageryProvider === null)
                     this.bingMapsAerialWithLabelsImageryProvider = new Cesium.BingMapsImageryProvider({
                         url: 'https://dev.virtualearth.net',
+                        key: this.options.bingMapsApiKey,
                         mapStyle: Cesium.BingMapsStyle.AERIAL_WITH_LABELS_ON_DEMAND
                     });
 
@@ -416,7 +456,7 @@ MapView.prototype.setMapImageryType = function (imageryType) {
             break;
     }
 
-    this.viewer.scene.requestRender();
+    this.updateScene();
 };
 
 var slopeRamp = [0.0, 0.29, 0.5, Math.sqrt(2) / 2, 0.87, 0.91, 1.0];
@@ -537,12 +577,10 @@ MapView.prototype.setMapOverlayType = function (overlayType) {
 
         case 'BlackMarble':
             if (this.blackMarbleLayer === null) {
-                if (this.blackMarbleOverlay === null)
-                    this.blackMarbleOverlay = new Cesium.TileMapServiceImageryProvider({
-                        url: 'https://cesiumjs.org/tilesets/imagery/blackmarble',
-                        maximumLevel: 8,
-                        credit: 'Black Marble imagery courtesy NASA Earth Observatory'
-                    });
+                if (this.blackMarbleOverlay === null) {
+                    // The Earth at Night, also known as Black Marble 2017 and Night Lights
+                    this.blackMarbleOverlay = new Cesium.IonImageryProvider({ assetId: 3812 });
+                }
 
                 this.blackMarbleLayer = layers.addImageryProvider(this.blackMarbleOverlay);
                 this.blackMarbleLayer.alpha = 0.5; // 0.0 is transparent.  1.0 is opaque.
@@ -557,7 +595,7 @@ MapView.prototype.setMapOverlayType = function (overlayType) {
             break;
     }
 
-    this.viewer.scene.requestRender();
+    this.updateScene();
 };
 
 /**
@@ -619,7 +657,7 @@ MapView.prototype.setShadingMode = function (shadingMode) {
     this.viewer.terrainShadows =
         shadingMode === 'None' ? Cesium.ShadowMode.DISABLED : Cesium.ShadowMode.RECEIVE_ONLY;
 
-    this.viewer.scene.requestRender();
+    this.updateScene();
 };
 
 /**
@@ -654,7 +692,7 @@ MapView.prototype.updateMyLocation = function (options) {
         '<div>Latitude: ' + options.displayLatitude + '<br/>' +
         'Longitude: ' + options.displayLongitude + '<br/>' +
         'Accuracy: <span style="color:' + options.positionAccuracyColor + '">+/- ' + options.positionAccuracy + ' m</span><br/>' +
-        (options.altitude !== undefined && options.altitude !== 0 ? 'Altitude: ' + options.altitude + 'm<br/>' : '') +
+        (options.altitude !== undefined && options.altitude !== 0 ? 'Altitude: ' + options.altitude.toFixed(1) + 'm<br/>' : '') +
         'Speed: ' + options.displaySpeed + "<br/>" +
         'Time: ' + options.displayTimestamp +
         '</div>';
@@ -730,7 +768,14 @@ MapView.prototype.zoomToLocation = function (options) {
  */
 MapView.prototype.addLayer = function (layer) {
 
-    console.log("MapView: adding layer " + layer.name + ", with data length " + layer.data.length + " bytes");
+    console.log("MapView: adding layer " + layer.name + ", with type " + layer.type);
+
+    if (layer.type === 'LocationLayer' || layer.type === 'TrackLayer') {
+        this.setLayerVisibility(layer);
+        return;
+    }
+
+    console.log("MapView: layer data length: " + layer.data.length + " bytes");
 
     var czml = JSON.parse(layer.data);
 
@@ -839,7 +884,7 @@ MapView.prototype.setLayerVisibility = function (layer) {
             dataSource.show = layer.isVisible;
     }
 
-    this.viewer.scene.requestRender();
+    this.updateScene();
 };
 
 /**
@@ -892,8 +937,8 @@ MapView.prototype.clearLocationList = function () {
     if (this.zoomEntity !== null)
         this.viewer.entities.add(this.zoomEntity);
 
-    if (this.trackEntity !== null)
-        this.viewer.entities.add(this.trackEntity);
+    if (this.trackMarker !== null)
+        this.viewer.entities.add(this.trackMarker);
 
     if (this.flyingRangeCone !== null)
         this.viewer.entities.add(this.flyingRangeCone);
@@ -912,10 +957,11 @@ MapView.prototype.clearLocationList = function () {
  */
 MapView.prototype.formatLocationText = function (location) {
 
+    var altitudeText =
+        location.altitude !== undefined && location.altitude !== 0 ? ' ' + location.altitude.toFixed(1) + 'm' : '';
+
     var text = '<h2><img height="48em" width="48em" src="' + this.imageUrlFromLocationType(location.type) + '" style="vertical-align:middle" />' +
-        location.name +
-        (location.altitude !== 0 ? ' ' + location.altitude + 'm' : '') +
-        '</h2>';
+        location.name + altitudeText + '</h2>';
 
     text += '<p><img height="32em" width="32em" src="images/information-outline.svg" style="vertical-align:middle" /> ' +
         '<a href="javascript:parent.map.onShowLocationDetails(\'' + location.id + '\');">Show details</a> ';
@@ -951,10 +997,13 @@ MapView.prototype.addLocationList = function (locationList) {
 
         var imagePath = this.imageUrlFromLocationType(location.type);
 
+        var altitudeText =
+            location.altitude !== undefined && location.altitude !== 0 ? ' ' + location.altitude.toFixed(1) + 'm' : '';
+
         Cesium.when(
             this.createEntity(
                 location.id,
-                location.name + (location.altitude !== 0 ? ' ' + location.altitude + 'm' : ''),
+                location.name + altitudeText,
                 text,
                 this.pinColorFromLocationType(location.type),
                 imagePath,
@@ -985,8 +1034,12 @@ MapView.prototype.createEntity = function (id, name, description, pinColor, pinI
 
     var url = Cesium.getAbsoluteUri(pinImage, window.location.href);
 
+    var imagePromise = window.location.protocol === "file:" && !window.location.href.includes("android_asset")
+        ? this.pinBuilder.fromColor(pinColor, 48)
+        : this.pinBuilder.fromUrl(url, pinColor, 48)
+
     return Cesium.when(
-        this.pinBuilder.fromUrl(url, pinColor, 48),
+        imagePromise,
         function (canvas) {
             return {
                 id: id,
@@ -1186,7 +1239,7 @@ MapView.prototype.showFlyingRange = function (options) {
 
     text += '<p>Flying range for map point at<br/>Latitude: ' + options.displayLatitude + '<br/>' +
         'Longitude: ' + options.displayLongitude + '<br/>' +
-        'Altitude: ' + options.altitude + 'm</p>';
+        'Altitude: ' + options.altitude.toFixed(1) + 'm</p>';
 
     text += '<p>' +
         'Glide ratio: ' + options.glideRatio + '<br/>' +
@@ -1228,9 +1281,8 @@ MapView.prototype.showFlyingRange = function (options) {
  * @param {object} [track] Track object to add
  * @param {string} [track.id] unique ID of the track
  * @param {array} [track.listOfTrackPoints] An array of track points in long, lat, alt, long, lat, alt ... order
- * @param {number} [offsetInMeters] offset in meters to apply to track
  */
-MapView.prototype.sampleTrackHeights = function (track, offsetInMeters) {
+MapView.prototype.sampleTrackHeights = function (track) {
 
     console.log("MapView.sampleTrackHeights: #1 start sampling track point heights for " + track.listOfTrackPoints.length + " points...");
 
@@ -1238,9 +1290,6 @@ MapView.prototype.sampleTrackHeights = function (track, offsetInMeters) {
         console.warn("MapView.sampleTrackHeights: #2: polylines on terrain are not supported");
         return;
     }
-
-    if (typeof offsetInMeters === 'undefined')
-        offsetInMeters = 0.0;
 
     var trackPointArray = Cesium.Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints);
 
@@ -1268,13 +1317,8 @@ MapView.prototype.sampleTrackHeights = function (track, offsetInMeters) {
                     // NOSONAR
                     for (var trackPointIndex = 0; trackPointIndex < trackPointArray.length; ++trackPointIndex) {
 
-                        var trackPointHeight = track.listOfTrackPoints[trackPointIndex * 3 + 2] + offsetInMeters;
                         var sampledHeight = samples[trackPointIndex].height;
-
-                        if (sampledHeight > trackPointHeight)
-                            trackPointHeight = sampledHeight;
-
-                        trackPointHeightArray.push(trackPointHeight);
+                        trackPointHeightArray.push(sampledHeight);
                     }
 
                     console.log("MapView.sampleTrackHeights: #6: sampling track point heights finished.");
@@ -1283,10 +1327,12 @@ MapView.prototype.sampleTrackHeights = function (track, offsetInMeters) {
                 },
                 function (error) {
                     console.error("MapView.sampleTrackHeights: #9: error while sampling track point heights: " + error);
+                    that.onSampledTrackHeights(null);
                 });
         },
         function (error) {
             console.error("MapView.sampleTrackHeights: #8: error while waiting for terrain provider promise: " + error);
+            that.onSampledTrackHeights(null);
         });
 
     console.log("MapView.sampleTrackHeights: #7: call to sampleTrackHeights() returns.");
@@ -1397,6 +1443,7 @@ MapView.prototype.getFlightTrackPrimitive = function (track, trackPointArray) {
     var primitive = new Cesium.Primitive({
         asynchronous: this.options.useAsynchronousPrimitives,
         geometryInstances: new Cesium.GeometryInstance({
+            id: "track-" + track.id,
             geometry: trackPolyline
         }),
         appearance: new Cesium.PolylineColorAppearance({ translucent: false })
@@ -1407,10 +1454,11 @@ MapView.prototype.getFlightTrackPrimitive = function (track, trackPointArray) {
 
 /**
  * Creates a wall primitive for a flight track to display relation to ground
+ * @param {string} [trackId] unique ID of the track
  * @param {array} [trackPointArray] An array of track points to use
  * @returns {Cesium.Primitive} created wall primitive object
  */
-MapView.prototype.getFlightTrackWallPrimitive = function (trackPointArray) {
+MapView.prototype.getFlightTrackWallPrimitive = function (trackId, trackPointArray) {
 
     var wallGeometry = new Cesium.WallGeometry({
         positions: trackPointArray
@@ -1423,6 +1471,7 @@ MapView.prototype.getFlightTrackWallPrimitive = function (trackPointArray) {
     var wallPrimitive = new Cesium.Primitive({
         asynchronous: this.options.useAsynchronousPrimitives,
         geometryInstances: new Cesium.GeometryInstance({
+            id: "track-" + trackId,
             geometry: Cesium.WallGeometry.createGeometry(wallGeometry)
         }),
         appearance: new Cesium.MaterialAppearance({
@@ -1438,6 +1487,7 @@ MapView.prototype.getFlightTrackWallPrimitive = function (trackPointArray) {
 /**
  * Creates a ground primitive for a non-flight track
  * @param {object} [track] Track object to add
+ * @param {string} [track.id] unique ID of the track
  * @param {string} [track.color] Color as "RRGGBB" string value
  * @param {array} [trackPointArray] An array of track points to use
  * @returns {Cesium.Primitive} created primitive object
@@ -1452,6 +1502,7 @@ MapView.prototype.getGroundTrackPrimitive = function (track, trackPointArray) {
     var primitive = new Cesium.GroundPolylinePrimitive({
         asynchronous: this.options.useAsynchronousPrimitives,
         geometryInstances: new Cesium.GeometryInstance({
+            id: "track-" + track.id,
             geometry: groundTrackPolyline,
             attributes: {
                 color: Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.fromCssColorString('#' + track.color))
@@ -1471,6 +1522,8 @@ MapView.prototype.getGroundTrackPrimitive = function (track, trackPointArray) {
  * @param {boolean} [track.isFlightTrack] indicates if track is a flight
  * @param {array} [track.listOfTrackPoints] An array of track points in long, lat, alt, long, lat, alt ... order
  * @param {array} [track.listOfTimePoints] An array of time points in seconds; same length as listOfTrackPoints; may be null
+ * @param {array} [track.groundHeightProfile] An array of ground height profile elevations; same
+ * length as listOfTimePoints; may be null
  * @param {string} [track.color] Color as "RRGGBB" string value, or undefined when track should be colored
  *                       according to climb and sink rate.
  */
@@ -1487,7 +1540,7 @@ MapView.prototype.addTrack = function (track) {
 
     if (track.isFlightTrack) {
         primitive = this.getFlightTrackPrimitive(track, trackPointArray);
-        wallPrimitive = this.getFlightTrackWallPrimitive(trackPointArray);
+        wallPrimitive = this.getFlightTrackWallPrimitive(track.id, trackPointArray);
 
         this.trackPrimitivesCollection.add(wallPrimitive);
 
@@ -1500,6 +1553,7 @@ MapView.prototype.addTrack = function (track) {
     var boundingSphere = Cesium.BoundingSphere.fromPoints(trackPointArray, null);
 
     this.trackIdToTrackDataMap[track.id] = {
+        track: track,
         primitive: primitive,
         wallPrimitive: wallPrimitive,
         boundingSphere: boundingSphere
@@ -1548,6 +1602,16 @@ MapView.prototype.removeTrack = function (trackId) {
 
         this.trackIdToTrackDataMap[trackId] = undefined;
     }
+
+    if (trackId === this.currentHeightProfileTrackId &&
+        this.heightProfileView !== null) {
+        this.heightProfileView.hide();
+        this.heightProfileView = null;
+
+        this.trackMarker.show = false;
+    }
+
+    this.updateScene();
 };
 
 /**
@@ -1560,6 +1624,107 @@ MapView.prototype.clearAllTracks = function () {
     this.trackPrimitivesCollection.removeAll();
 
     this.trackIdToTrackDataMap = {};
+
+    if (this.heightProfileView !== null) {
+        this.heightProfileView.hide();
+        this.heightProfileView = null;
+
+        this.trackMarker.show = false;
+    }
+
+    this.updateScene();
+};
+
+/**
+ * Shows track height profile.
+ * @param {string} trackId unique ID of the track
+ */
+MapView.prototype.showTrackHeightProfile = function (trackId) {
+
+    if (this.currentHeightProfileTrackId === trackId)
+        return; // already shown
+
+    var trackData = this.trackIdToTrackDataMap[trackId];
+    if (trackData === undefined) {
+        console.warn("no track found for track ID " + trackId);
+        return;
+    }
+
+    this.currentHeightProfileTrackId = trackId;
+
+    var that = this;
+    this.heightProfileView = new HeightProfileView({
+        id: 'chartElement',
+        containerId: 'chartContainer',
+        setBodyBackgroundColor: false,
+        useDarkTheme: true,
+        showCloseButton: true,
+        colorFromVarioValue: function (varioValue) {
+            return that.trackColorFromVarioValue(varioValue).toCssColorString();
+        },
+        callback: function (funcName, params) {
+            that.heightProfileCallAction(funcName, params);
+        }
+    });
+
+    this.heightProfileView.setTrack(trackData.track);
+
+    if (trackData.track.groundHeightProfile !== undefined &&
+        trackData.track.groundHeightProfile !== null)
+        this.heightProfileView.addGroundProfile(trackData.track.groundHeightProfile);
+};
+
+/**
+ * Called for an action of the height profile view
+ * @param {string} funcName action function name
+ * @param {object} params action params
+ */
+MapView.prototype.heightProfileCallAction = function (funcName, params) {
+
+    if (funcName === "onHover" || funcName === "onClick") {
+
+        this.updateTrackMarker(this.currentHeightProfileTrackId, params);
+
+        if (funcName === "onClick") {
+
+            this.viewer.flyTo(
+                this.trackMarker,
+                {
+                    offset: new Cesium.HeadingPitchRange(
+                        this.viewer.scene.camera.heading,
+                        this.viewer.scene.camera.pitch,
+                        2000.0)
+                });
+        }
+    }
+    else if (funcName === "onClose") {
+        this.trackMarker.show = false;
+        this.currentHeightProfileTrackId = undefined;
+    }
+};
+
+/**
+ * Updates track marker to be placed on a track point index.
+ * @param {string} trackId unique ID of the track
+ * @param {object} trackPointIndex index of track point
+ */
+MapView.prototype.updateTrackMarker = function (trackId, trackPointIndex) {
+
+    var trackData = this.trackIdToTrackDataMap[trackId];
+    if (trackData === undefined) {
+        console.warn("no track found for track ID " + trackId);
+        return;
+    }
+
+    var longitude = trackData.track.listOfTrackPoints[trackPointIndex * 3];
+    var latitude = trackData.track.listOfTrackPoints[trackPointIndex * 3 + 1];
+    var altitude = trackData.track.listOfTrackPoints[trackPointIndex * 3 + 2];
+
+    this.trackMarker.show = true;
+    this.trackMarker.position =
+        Cesium.Cartesian3.fromDegrees(longitude, latitude, altitude);
+
+    this.updateScene();
 };
 
 /**
@@ -1626,6 +1791,8 @@ MapView.prototype.onAddFindResult = function (options) {
 
     // hide the info box
     this.viewer.selectedEntity = undefined;
+
+    this.updateScene();
 };
 
 /**
@@ -1655,6 +1822,9 @@ MapView.prototype.onAddTourPlanLocation = function (locationId) {
 
     if (this.options.callback !== undefined)
         this.options.callback('onAddTourPlanLocation', locationId);
+
+    // hide the info box
+    this.viewer.selectedEntity = undefined;
 };
 
 /**
@@ -1683,6 +1853,8 @@ MapView.prototype.hideFlyingRangeCone = function () {
     console.log("MapView: hiding flying range cone");
 
     this.viewer.entities.remove(this.flyingRangeCone);
+
+    this.updateScene();
 };
 
 /**
@@ -1705,6 +1877,7 @@ var airacStartDates = {
     2020: "2020-01-02",
     2021: "2021-01-28",
     2022: "2022-01-27",
+    2023: "2023-01-26",
 };
 
 /**
