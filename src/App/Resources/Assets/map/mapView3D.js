@@ -198,7 +198,7 @@ function MapView(options) {
 
     // the track marker is initially invisible and only used when a track is tapped
     Cesium.when(
-        this.createEntity('trackMarker', 'Track point', '', Cesium.Color.PURPLE, '../images/map-marker-distance.svg', 0.0, 0.0),
+        this.createEntity('trackMarker', 'Track point', '', Cesium.Color.PURPLE, 'images/map-marker-distance.svg', 0.0, 0.0),
         function (trackEntity) {
             trackEntity.show = false;
             trackEntity.billboard.heightReference = Cesium.HeightReference.NONE;
