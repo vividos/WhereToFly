@@ -79,6 +79,17 @@ namespace WhereToFly.App.Geo.DataFormats.Czml
         /// </summary>
         [JsonProperty("position", NullValueHandling = NullValueHandling.Ignore)]
         public Position Position { get; set; }
+        /// <summary>
+        /// Point entity
+        /// </summary>
+        [JsonProperty("point", NullValueHandling = NullValueHandling.Ignore)]
+        public Point Point { get; set; }
+
+        /// <summary>
+        /// Polyline entity
+        /// </summary>
+        [JsonProperty("polyline", NullValueHandling = NullValueHandling.Ignore)]
+        public Polyline Polyline { get; set; }
 
         /// <summary>
         /// Cylinder entity
@@ -168,6 +179,72 @@ namespace WhereToFly.App.Geo.DataFormats.Czml
         /// Clamps to terrain
         /// </summary>
         ClampToGround,
+    }
+
+    /// <summary>
+    /// CZML point object
+    /// </summary>
+    public class Point
+    {
+        /// <summary>
+        /// Pixel size
+        /// </summary>
+        [JsonProperty("pixelSize")]
+        public double PixelSize { get; set; }
+
+        /// <summary>
+        /// Height reference of object
+        /// </summary>
+        [JsonProperty("heightReference")]
+        public HeightReference HeightReference { get; set; } = HeightReference.None;
+
+        /// <summary>
+        /// Specifies the color
+        /// </summary>
+        [JsonProperty("color")]
+        public Color Color { get; set; }
+
+        /// <summary>
+        /// Specifies the outline color
+        /// </summary>
+        [JsonProperty("outlineColor")]
+        public Color OutlineColor { get; set; }
+
+        /// <summary>
+        /// Outline width
+        /// </summary>
+        [JsonProperty("outlineWidth")]
+        public double OutlineWidth { get; set; }
+    }
+
+    /// <summary>
+    /// CZML polyline object
+    /// </summary>
+    public class Polyline
+    {
+        /// <summary>
+        /// All positions of polyline points
+        /// </summary>
+        [JsonProperty("positions")]
+        public PositionList Positions { get; set; }
+
+        /// <summary>
+        /// Width
+        /// </summary>
+        [JsonProperty("width")]
+        public double Width { get; set; }
+
+        /// <summary>
+        /// Indicates if polyline is clamped to ground
+        /// </summary>
+        [JsonProperty("clampToGround")]
+        public bool ClampToGround { get; set; }
+
+        /// <summary>
+        /// Material used to show the polyline
+        /// </summary>
+        [JsonProperty("material")]
+        public Material Material { get; set; }
     }
 
     /// <summary>
