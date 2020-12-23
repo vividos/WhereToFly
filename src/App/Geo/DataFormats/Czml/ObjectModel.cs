@@ -447,7 +447,7 @@ namespace WhereToFly.App.Geo.DataFormats.Czml
         /// <param name="g">green component</param>
         /// <param name="b">blue component</param>
         /// <param name="a">alpha component</param>
-        public Color(int r, int g, int b, int a = 0)
+        public Color(int r, int g, int b, int a = 255)
         {
             this.Rgba[0] = r;
             this.Rgba[1] = g;
