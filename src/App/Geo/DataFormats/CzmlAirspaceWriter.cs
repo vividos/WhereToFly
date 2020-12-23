@@ -8,8 +8,6 @@ using System.Text;
 using WhereToFly.App.Geo.Airspace;
 using WhereToFly.Shared.Geo;
 
-#pragma warning disable CA1034 // Nested types should not be visible
-
 namespace WhereToFly.App.Geo.DataFormats
 {
     /// <summary>
@@ -26,356 +24,6 @@ namespace WhereToFly.App.Geo.DataFormats
         /// Default airspace color
         /// </summary>
         private const string DefaultAirspaceColor = "C0C0C0";
-
-        /// <summary>
-        /// CZML packet header
-        /// </summary>
-        public class CzmlPacketHeader
-        {
-            /// <summary>
-            /// Document ID
-            /// </summary>
-            [JsonProperty("id")]
-            public string Id { get; set; } = "document";
-
-            /// <summary>
-            /// Packet name
-            /// </summary>
-            [JsonProperty("name")]
-            public string Name { get; set; }
-
-            /// <summary>
-            /// Packet description; may be null
-            /// </summary>
-            [JsonProperty("description")]
-            public string Description { get; }
-
-            /// <summary>
-            /// Packet version
-            /// </summary>
-            [JsonProperty("version")]
-            public string Version { get; set; } = "1.0";
-
-            /// <summary>
-            /// Creates a new packet header
-            /// </summary>
-            /// <param name="name">name of document</param>
-            /// <param name="description">description for packet</param>
-            public CzmlPacketHeader(string name, string description)
-            {
-                this.Name = name;
-                this.Description = description;
-            }
-        }
-
-        /// <summary>
-        /// CZML object, containing various entity objects
-        /// </summary>
-        public class CzmlObject
-        {
-            /// <summary>
-            /// ID of object
-            /// </summary>
-            [JsonProperty("id")]
-            public string Id { get; set; } = Guid.NewGuid().ToString("B");
-
-            /// <summary>
-            /// Object name
-            /// </summary>
-            [JsonProperty("name")]
-            public string Name { get; set; }
-
-            /// <summary>
-            /// Object description
-            /// </summary>
-            [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
-            public string Description { get; set; }
-
-            /// <summary>
-            /// Position; used by Point, Cylinder, etc.
-            /// </summary>
-            [JsonProperty("position", NullValueHandling = NullValueHandling.Ignore)]
-            public Position Position { get; set; }
-
-            /// <summary>
-            /// Cylinder entity
-            /// </summary>
-            [JsonProperty("cylinder", NullValueHandling = NullValueHandling.Ignore)]
-            public Cylinder Cylinder { get; set; }
-
-            /// <summary>
-            /// Polygon entity
-            /// </summary>
-            [JsonProperty("polygon", NullValueHandling = NullValueHandling.Ignore)]
-            public Polygon Polygon { get; set; }
-        }
-
-        /// <summary>
-        /// JSON converter for HeightReference enum
-        /// </summary>
-        public class HeightReferenceConverter : JsonConverter
-        {
-            /// <summary>
-            /// Can convert the type when it's a HeightReference
-            /// </summary>
-            /// <param name="objectType">object type to try to convert</param>
-            /// <returns>true when it's a HeightReference</returns>
-            public override bool CanConvert(Type objectType)
-            {
-                return objectType == typeof(HeightReference);
-            }
-
-            /// <summary>
-            /// Reads HeightReference from JSON; not implemented
-            /// </summary>
-            /// <param name="reader">reader; unused</param>
-            /// <param name="objectType">object type; unused</param>
-            /// <param name="existingValue">existing value; unused</param>
-            /// <param name="serializer">serializer; unused</param>
-            /// <returns>throws exception</returns>
-            public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-            {
-                throw new NotImplementedException();
-            }
-
-            /// <summary>
-            /// Writes HeightReference value to JSON
-            /// </summary>
-            /// <param name="writer">JSON writer to use</param>
-            /// <param name="value">HeightReference value to write</param>
-            /// <param name="serializer">serializer; unused</param>
-            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-            {
-                var heightReference = (HeightReference)value;
-                switch (heightReference)
-                {
-                    case HeightReference.None:
-                        writer.WriteValue("NONE");
-                        break;
-                    case HeightReference.RelativeToGround:
-                        writer.WriteValue("RELATIVE_TO_GROUND");
-                        break;
-                    case HeightReference.ClampToGround:
-                        writer.WriteValue("CLAMP_TO_GROUND");
-                        break;
-                    default:
-                        Debug.Assert(false, "invalid height reference value");
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Height reference for positioning objects
-        /// </summary>
-        [JsonConverter(typeof(HeightReferenceConverter))]
-        public enum HeightReference
-        {
-            /// <summary>
-            /// No height reference; position absolute
-            /// </summary>
-            None,
-
-            /// <summary>
-            /// Position relative to ground
-            /// </summary>
-            RelativeToGround,
-
-            /// <summary>
-            /// Clamps to terrain
-            /// </summary>
-            ClampToGround,
-        }
-
-        /// <summary>
-        /// CZML cylinder object
-        /// </summary>
-        public class Cylinder
-        {
-            /// <summary>
-            /// Length (or more exactly, height) of cylinder
-            /// </summary>
-            [JsonProperty("length")]
-            public double Length { get; set; }
-
-            /// <summary>
-            /// Radius at the top of the cylinder
-            /// </summary>
-            [JsonProperty("topRadius")]
-            public double TopRadius { get; set; }
-
-            /// <summary>
-            /// Radius at the bottom
-            /// </summary>
-            [JsonProperty("bottomRadius")]
-            public double BottomRadius { get; set; }
-
-            /// <summary>
-            /// Height reference of object
-            /// </summary>
-            [JsonProperty("heightReference")]
-            public HeightReference HeightReference { get; set; } = HeightReference.None;
-
-            /// <summary>
-            /// Material used to show the cylinder
-            /// </summary>
-            [JsonProperty("material")]
-            public Material Material { get; set; }
-
-            /// <summary>
-            /// Indicates if the cylinder should also be drawn with an outline
-            /// </summary>
-            [JsonProperty("outline")]
-            public bool Outline { get; set; }
-
-            /// <summary>
-            /// Specifies the outline color
-            /// </summary>
-            [JsonProperty("outlineColor")]
-            public Color OutlineColor { get; set; }
-        }
-
-        /// <summary>
-        /// CZML polygon object
-        /// </summary>
-        public class Polygon
-        {
-            /// <summary>
-            /// All positions of polygon points
-            /// </summary>
-            [JsonProperty("positions")]
-            public Position Positions { get; set; }
-
-            /// <summary>
-            /// Height of polygon, when HeightReference is set to RelativeToGround
-            /// </summary>
-            [JsonProperty("height")]
-            public double Height { get; set; }
-
-            /// <summary>
-            /// Extruded height in meters
-            /// </summary>
-            [JsonProperty("extrudedHeight")]
-            public double ExtrudedHeight { get; set; }
-
-            /// <summary>
-            /// Height reference of object
-            /// </summary>
-            [JsonProperty("heightReference")]
-            public HeightReference HeightReference { get; set; } = HeightReference.None;
-
-            /// <summary>
-            /// Material used to show the polygon
-            /// </summary>
-            [JsonProperty("material")]
-            public Material Material { get; set; }
-
-            /// <summary>
-            /// Indicates if the polygon should also be drawn with an outline
-            /// </summary>
-            [JsonProperty("outline")]
-            public bool Outline { get; set; }
-
-            /// <summary>
-            /// Specifies the outline color
-            /// </summary>
-            [JsonProperty("outlineColor")]
-            public Color OutlineColor { get; set; }
-        }
-
-        /// <summary>
-        /// A list of positions, containing multiple triplets of latitude, longitude and altitude
-        /// values.
-        /// </summary>
-        public class Position
-        {
-            /// <summary>
-            /// List of positions, 3 double values each, longitude/latitude/altitude
-            /// </summary>
-            [JsonProperty("cartographicDegrees")]
-            public List<double> CartographicDegrees { get; set; } = new List<double>();
-
-            /// <summary>
-            /// Adds a new point to the list of cartographic positions
-            /// </summary>
-            /// <param name="latitude">latitude of point</param>
-            /// <param name="longitude">longitude of point</param>
-            /// <param name="height">height of point</param>
-            internal void Add(double latitude, double longitude, double height)
-            {
-                // note the reversal of latitude and longitude in cartographicDegrees
-                this.CartographicDegrees.Add(longitude);
-                this.CartographicDegrees.Add(latitude);
-                this.CartographicDegrees.Add(height);
-            }
-        }
-
-        /// <summary>
-        /// CZML material
-        /// </summary>
-        public class Material
-        {
-            /// <summary>
-            /// Solid color for material
-            /// </summary>
-            [JsonProperty("solidColor")]
-            public SolidColor SolidColor { get; set; }
-
-            /// <summary>
-            /// Creates a material from a solid color
-            /// </summary>
-            /// <param name="color">color to use</param>
-            /// <returns>solid color material</returns>
-            public static Material FromSolidColor(Color color)
-            {
-                return new Material
-                {
-                    SolidColor = new SolidColor
-                    {
-                        Color = color
-                    }
-                };
-            }
-        }
-
-        /// <summary>
-        /// Specifies a single solid color value
-        /// </summary>
-        public class SolidColor
-        {
-            /// <summary>
-            /// Specifies the color value
-            /// </summary>
-            [JsonProperty("color")]
-            public Color Color { get; set; }
-        }
-
-        /// <summary>
-        /// Color value, specified by RGBA components in interval [0; 255]
-        /// </summary>
-        public class Color
-        {
-            /// <summary>
-            /// Stores the color components
-            /// </summary>
-            [JsonProperty("rgba")]
-            public int[] Rgba { get; set; } = new int[4];
-
-            /// <summary>
-            /// Creates a new
-            /// </summary>
-            /// <param name="r">red component</param>
-            /// <param name="g">green component</param>
-            /// <param name="b">blue component</param>
-            /// <param name="a">alpha component</param>
-            public Color(int r, int g, int b, int a = 0)
-            {
-                this.Rgba[0] = r;
-                this.Rgba[1] = g;
-                this.Rgba[2] = b;
-                this.Rgba[3] = a;
-            }
-        }
 
         /// <summary>
         /// Writes a list of airspaces to a .czml text string
@@ -396,7 +44,7 @@ namespace WhereToFly.App.Geo.DataFormats
 
             var objectList = new List<object>
             {
-                new CzmlPacketHeader(name, description)
+                new Czml.PacketHeader(name, description)
             };
 
             foreach (var airspace in allAirspaces)
@@ -415,22 +63,22 @@ namespace WhereToFly.App.Geo.DataFormats
         }
 
         /// <summary>
-        /// Creates a CzmlObject from given airspace
+        /// Creates a Czml.Object from given airspace
         /// </summary>
         /// <param name="airspace">airspace to use</param>
         /// <returns>created CZML object</returns>
-        private static CzmlObject CzmlObjectFromAirspace(Airspace.Airspace airspace)
+        private static Czml.Object CzmlObjectFromAirspace(Airspace.Airspace airspace)
         {
             double height = HeightFromAltitude(airspace.Ceiling) - HeightFromAltitude(airspace.Floor);
 
             if (airspace.Geometry is Circle circle)
             {
-                return new CzmlObject
+                return new Czml.Object
                 {
                     Name = airspace.Name,
                     Description = DescriptionFromAirspace(airspace),
                     Position = PositionFromCoord(circle.Center, airspace.Floor),
-                    Cylinder = new Cylinder
+                    Cylinder = new Czml.Cylinder
                     {
                         BottomRadius = circle.Radius,
                         TopRadius = circle.Radius,
@@ -445,18 +93,18 @@ namespace WhereToFly.App.Geo.DataFormats
 
             if (airspace.Geometry is Airspace.Polygon polygon)
             {
-                Position position = GetPolygonPointsFromAirspacePolygon(polygon, airspace.Floor);
+                Czml.Position position = GetPolygonPointsFromAirspacePolygon(polygon, airspace.Floor);
 
                 if (!position.CartographicDegrees.Any())
                 {
                     return null;
                 }
 
-                return new CzmlObject
+                return new Czml.Object
                 {
                     Name = airspace.Name,
                     Description = DescriptionFromAirspace(airspace),
-                    Polygon = new Polygon
+                    Polygon = new Czml.Polygon
                     {
                         Positions = position,
                         Height = HeightFromAltitude(airspace.Floor),
@@ -478,11 +126,11 @@ namespace WhereToFly.App.Geo.DataFormats
         /// <param name="polygon">airspace polygon</param>
         /// <param name="floor">floor altitude</param>
         /// <returns>position object with all polygon points</returns>
-        private static Position GetPolygonPointsFromAirspacePolygon(Airspace.Polygon polygon, Altitude floor)
+        private static Czml.Position GetPolygonPointsFromAirspacePolygon(Airspace.Polygon polygon, Altitude floor)
         {
             double height = HeightFromAltitude(floor);
 
-            var positions = new Position();
+            var positions = new Czml.Position();
 
             foreach (var segment in polygon.Segments)
             {
@@ -544,7 +192,7 @@ namespace WhereToFly.App.Geo.DataFormats
         /// <param name="height">height value</param>
         private static void AddArcSegmentPolygonPoints(
             Airspace.Polygon.PolygonArcSegment arcSegment,
-            Position positions,
+            Czml.Position positions,
             double height)
         {
             var center = arcSegment.Center.ToMapPoint(height);
@@ -662,9 +310,9 @@ namespace WhereToFly.App.Geo.DataFormats
         /// <param name="coord">coordinates object</param>
         /// <param name="altitude">altitude object</param>
         /// <returns>CZML position object</returns>
-        private static Position PositionFromCoord(Coord coord, Altitude altitude)
+        private static Czml.Position PositionFromCoord(Coord coord, Altitude altitude)
         {
-            return new Position
+            return new Czml.Position
             {
                 CartographicDegrees = new List<double>
                 {
@@ -709,20 +357,20 @@ namespace WhereToFly.App.Geo.DataFormats
         /// </summary>
         /// <param name="altitude">altitude object</param>
         /// <returns>height reference value</returns>
-        private static HeightReference HeightReferenceFromAltitude(Altitude altitude)
+        private static Czml.HeightReference HeightReferenceFromAltitude(Altitude altitude)
         {
             switch (altitude.Type)
             {
                 case AltitudeType.GND:
-                    return HeightReference.ClampToGround;
+                    return Czml.HeightReference.ClampToGround;
                 case AltitudeType.Unlimited:
                 case AltitudeType.Textual:
                 case AltitudeType.AGL:
-                    return HeightReference.RelativeToGround;
+                    return Czml.HeightReference.RelativeToGround;
                 case AltitudeType.AMSL:
                 case AltitudeType.FlightLevel:
                 default:
-                    return HeightReference.None;
+                    return Czml.HeightReference.None;
             }
         }
 
@@ -731,10 +379,10 @@ namespace WhereToFly.App.Geo.DataFormats
         /// </summary>
         /// <param name="airspace">airspace to use</param>
         /// <returns>material object</returns>
-        private static Material MaterialFromAirspace(Airspace.Airspace airspace)
+        private static Czml.Material MaterialFromAirspace(Airspace.Airspace airspace)
         {
             var color = ColorFromAirspace(airspace, outlineColor: false);
-            return Material.FromSolidColor(color);
+            return Czml.Material.FromSolidColor(color);
         }
 
         /// <summary>
@@ -744,7 +392,7 @@ namespace WhereToFly.App.Geo.DataFormats
         /// <param name="airspace">airspace to use</param>
         /// <param name="outlineColor">true when outline color should be generated</param>
         /// <returns>color object</returns>
-        private static Color ColorFromAirspace(Airspace.Airspace airspace, bool outlineColor)
+        private static Czml.Color ColorFromAirspace(Airspace.Airspace airspace, bool outlineColor)
         {
             string color = airspace.Color ?? DefaultAirspaceColor;
 
@@ -764,7 +412,7 @@ namespace WhereToFly.App.Geo.DataFormats
                 b -= (int)(b * 0.2);
             }
 
-            return new Color(r, g, b, outlineColor ? 255 : 128);
+            return new Czml.Color(r, g, b, outlineColor ? 255 : 128);
         }
     }
 }
