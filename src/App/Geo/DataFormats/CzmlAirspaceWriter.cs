@@ -93,9 +93,9 @@ namespace WhereToFly.App.Geo.DataFormats
 
             if (airspace.Geometry is Airspace.Polygon polygon)
             {
-                Czml.Position position = GetPolygonPointsFromAirspacePolygon(polygon, airspace.Floor);
+                Czml.PositionList positions = GetPolygonPointsFromAirspacePolygon(polygon, airspace.Floor);
 
-                if (!position.CartographicDegrees.Any())
+                if (!positions.CartographicDegrees.Any())
                 {
                     return null;
                 }
@@ -106,7 +106,7 @@ namespace WhereToFly.App.Geo.DataFormats
                     Description = DescriptionFromAirspace(airspace),
                     Polygon = new Czml.Polygon
                     {
-                        Positions = position,
+                        Positions = positions,
                         Height = HeightFromAltitude(airspace.Floor),
                         ExtrudedHeight = height,
                         HeightReference = HeightReferenceFromAltitude(airspace.Floor),
@@ -125,12 +125,12 @@ namespace WhereToFly.App.Geo.DataFormats
         /// </summary>
         /// <param name="polygon">airspace polygon</param>
         /// <param name="floor">floor altitude</param>
-        /// <returns>position object with all polygon points</returns>
-        private static Czml.Position GetPolygonPointsFromAirspacePolygon(Airspace.Polygon polygon, Altitude floor)
+        /// <returns>position list object with all polygon points</returns>
+        private static Czml.PositionList GetPolygonPointsFromAirspacePolygon(Airspace.Polygon polygon, Altitude floor)
         {
             double height = HeightFromAltitude(floor);
 
-            var positions = new Czml.Position();
+            var positions = new Czml.PositionList();
 
             foreach (var segment in polygon.Segments)
             {
@@ -192,7 +192,7 @@ namespace WhereToFly.App.Geo.DataFormats
         /// <param name="height">height value</param>
         private static void AddArcSegmentPolygonPoints(
             Airspace.Polygon.PolygonArcSegment arcSegment,
-            Czml.Position positions,
+            Czml.PositionList positions,
             double height)
         {
             var center = arcSegment.Center.ToMapPoint(height);
@@ -310,9 +310,9 @@ namespace WhereToFly.App.Geo.DataFormats
         /// <param name="coord">coordinates object</param>
         /// <param name="altitude">altitude object</param>
         /// <returns>CZML position object</returns>
-        private static Czml.Position PositionFromCoord(Coord coord, Altitude altitude)
+        private static Czml.PositionList PositionFromCoord(Coord coord, Altitude altitude)
         {
-            return new Czml.Position
+            return new Czml.PositionList
             {
                 CartographicDegrees = new List<double>
                 {

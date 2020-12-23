@@ -78,7 +78,8 @@ namespace WhereToFly.App.Geo.DataFormats.Czml
         /// Position; used by Point, Cylinder, etc.
         /// </summary>
         [JsonProperty("position", NullValueHandling = NullValueHandling.Ignore)]
-        public Position Position { get; set; }
+        public PositionList Position { get; set; }
+
         /// <summary>
         /// Point entity
         /// </summary>
@@ -304,7 +305,7 @@ namespace WhereToFly.App.Geo.DataFormats.Czml
         /// All positions of polygon points
         /// </summary>
         [JsonProperty("positions")]
-        public Position Positions { get; set; }
+        public PositionList Positions { get; set; }
 
         /// <summary>
         /// Height of polygon, when HeightReference is set to RelativeToGround
@@ -347,8 +348,26 @@ namespace WhereToFly.App.Geo.DataFormats.Czml
     /// A list of positions, containing multiple triplets of latitude, longitude and altitude
     /// values.
     /// </summary>
-    public class Position
+    public class PositionList
     {
+        /// <summary>
+        /// Creates a new empty position list object
+        /// </summary>
+        public PositionList()
+        {
+        }
+
+        /// <summary>
+        /// Creates a new position list object with a single point
+        /// </summary>
+        /// <param name="latitude">latitude of point</param>
+        /// <param name="longitude">longitude of point</param>
+        /// <param name="height">height of point; optional</param>
+        public PositionList(double latitude, double longitude, double? height)
+        {
+            this.Add(latitude, longitude, height);
+        }
+
         /// <summary>
         /// List of positions, 3 double values each, longitude/latitude/altitude
         /// </summary>
@@ -360,13 +379,13 @@ namespace WhereToFly.App.Geo.DataFormats.Czml
         /// </summary>
         /// <param name="latitude">latitude of point</param>
         /// <param name="longitude">longitude of point</param>
-        /// <param name="height">height of point</param>
-        internal void Add(double latitude, double longitude, double height)
+        /// <param name="height">height of point; optional</param>
+        internal void Add(double latitude, double longitude, double? height)
         {
             // note the reversal of latitude and longitude in cartographicDegrees
             this.CartographicDegrees.Add(longitude);
             this.CartographicDegrees.Add(latitude);
-            this.CartographicDegrees.Add(height);
+            this.CartographicDegrees.Add(height ?? 0.0);
         }
     }
 
