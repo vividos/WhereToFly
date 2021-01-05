@@ -12,4 +12,4 @@ The Where-to-fly GitHub project can be found here:
 
 Current version: %VERSION%
 
-Image: View of the Zugspitze, 2962m, above the Höllental valley, Germany
+Image: View of the Langkofel and Sella group from the Belvedere takeoff.
