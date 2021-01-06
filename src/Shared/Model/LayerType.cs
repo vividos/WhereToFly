@@ -16,6 +16,11 @@
         TrackLayer,
 
         /// <summary>
+        /// Layer containing Cesium OSM buildings
+        /// </summary>
+        OsmBuildingsLayer,
+
+        /// <summary>
         /// A custom layer that shows a .czml file containing CesiumJS objects
         /// </summary>
         CzmlLayer,

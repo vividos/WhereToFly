@@ -74,6 +74,10 @@
         <button onclick="zoomToTrack()">Zoom to track</button>
 
         <button onclick="sampleTrackHeights()">Sample track heights</button>
+
+        <button onclick="addOsmBuildingsLayer()">Add OSM Buildings layer</button>
+
+        <button onclick="removeOsmBuildingsLayer()">Remove OSM Buildings layer</button>
     </div>
 
     <div id="mapElement"></div>
@@ -187,6 +191,20 @@
             };
 
             map.sampleTrackHeights(theTrack);
+        }
+
+        addOsmBuildingsLayer = function () {
+            var theLayer = {
+                id: 'osmBuildingsLayer',
+                name: 'Cesium OSM Buildings',
+                type: 'OsmBuildingsLayer',
+                isVisible: true
+            };
+            map.addLayer(theLayer);
+        }
+
+        removeOsmBuildingsLayer = function () {
+            map.removeLayer('osmBuildingsLayer');
         }
 
     </script>

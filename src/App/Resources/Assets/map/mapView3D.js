@@ -244,6 +244,8 @@ function MapView(options) {
 
     this.dataSourceMap = {};
 
+    this.osmBuildingsTileset = null;
+
     this.onMapInitialized();
 }
 
@@ -773,6 +775,16 @@ MapView.prototype.addLayer = function (layer) {
         return;
     }
 
+    if (layer.type === 'OsmBuildingsLayer') {
+        if (this.osmBuildingsTileset === null)
+            this.osmBuildingsTileset = Cesium.createOsmBuildings();
+
+        this.viewer.scene.primitives.add(this.osmBuildingsTileset);
+
+        this.setLayerVisibility(layer);
+        return;
+    }
+
     console.log("MapView: layer data length: " + layer.data.length + " bytes");
 
     var czml = JSON.parse(layer.data);
@@ -836,6 +848,12 @@ MapView.prototype.zoomToLayer = function (layerId) {
 
     console.log("MapView: zooming to layer with id " + layerId);
 
+    if (layerId === "osmBuildingsLayer") {
+
+        console.warn("can't zoom to OSM buildings layer");
+        return;
+    }
+
     var dataSource;
     if (layerId === "locationLayer")
         dataSource = this.viewer.entities;
@@ -876,6 +894,8 @@ MapView.prototype.setLayerVisibility = function (layer) {
         this.viewer.entities.show = layer.isVisible;
     else if (layer.id === "trackLayer")
         this.trackPrimitivesCollection.show = layer.isVisible;
+    else if (layer.id === "osmBuildingsLayer")
+        this.osmBuildingsTileset.show = layer.isVisible;
     else {
         var dataSource = this.dataSourceMap[layer.id];
         if (dataSource !== undefined)
@@ -893,11 +913,21 @@ MapView.prototype.removeLayer = function (layerId) {
 
     console.log("MapView: removing layer with id " + layerId);
 
+    if (layerId === "osmBuildingsLayer" && this.osmBuildingsTileset !== null) {
+        this.viewer.scene.primitives.remove(this.osmBuildingsTileset);
+        this.osmBuildingsTileset = null;
+
+        this.updateScene();
+        return;
+    }
+
     var dataSource = this.dataSourceMap[layerId];
     if (dataSource !== undefined) {
         this.viewer.dataSources.remove(dataSource);
         this.dataSourceMap[layerId] = undefined;
     }
+
+    this.updateScene();
 };
 
 /**
@@ -907,6 +937,11 @@ MapView.prototype.clearLayerList = function () {
 
     console.log("MapView: clearing layer list");
 
+    if (this.osmBuildingsTileset !== null) {
+        this.viewer.scene.primitives.remove(this.osmBuildingsTileset);
+        this.osmBuildingsTileset = null;
+    }
+
     for (var layerId in this.dataSourceMap) {
         var dataSource = this.dataSourceMap[layerId];
         if (dataSource !== undefined)
@@ -914,6 +949,8 @@ MapView.prototype.clearLayerList = function () {
     }
 
     this.dataSourceMap = {};
+
+    this.updateScene();
 };
 
 /**
