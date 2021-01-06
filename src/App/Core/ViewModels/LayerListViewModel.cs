@@ -174,6 +174,7 @@ namespace WhereToFly.App.Core.ViewModels
             {
                 "Import CZML Layer",
                 "Import OpenAir airspaces",
+                "Add OpenStreetMap Buildings Layer",
                 "Download from web"
             };
 
@@ -198,6 +199,10 @@ namespace WhereToFly.App.Core.ViewModels
                         break;
 
                     case 2:
+                        await this.AddOpenStreetMapLayerAsync();
+                        break;
+
+                    case 3:
                         await this.DownloadFromWebAsync();
                         break;
 
@@ -300,6 +305,27 @@ namespace WhereToFly.App.Core.ViewModels
             }
 
             await this.ReloadLayerListAsync();
+        }
+
+        /// <summary>
+        /// Adds (or re-adds at the end) the Cesium OpenStreetMap Buildings layer
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task AddOpenStreetMapLayerAsync()
+        {
+            var dataService = DependencyService.Get<IDataService>();
+            var layerDataService = dataService.GetLayerDataService();
+
+            var layer = DataServiceHelper.GetOpenStreetMapBuildingsLayer();
+
+            await layerDataService.Remove(layer.Id);
+            await layerDataService.Add(layer);
+
+            await NavigationService.Instance.NavigateAsync(Constants.PageKeyMapPage, animated: true);
+
+            App.MapView.AddLayer(layer);
+
+            App.ShowToast("Layer was added.");
         }
 
         /// <summary>

@@ -57,14 +57,14 @@ namespace WhereToFly.App.Core.Services
         /// <returns>initial layer list</returns>
         internal static IEnumerable<Layer> GetInitialLayerList()
         {
-            return GetDefaultLayerList().Concat(LoadDefaultLayerList());
+            return GetDefaultLayerList().Concat(LoadExampleLayerList());
         }
 
         /// <summary>
-        /// Loads default layer list that is used as the initial layer(s)
+        /// Loads example layer list that is used as the initial layer(s)
         /// </summary>
         /// <returns>layer list</returns>
-        private static IEnumerable<Layer> LoadDefaultLayerList()
+        private static IEnumerable<Layer> LoadExampleLayerList()
         {
             var platform = DependencyService.Get<IPlatform>();
 
@@ -80,7 +80,7 @@ namespace WhereToFly.App.Core.Services
 
                 string description = string.Join("\n", parser.FileCommentLines);
 
-                var layer = new Layer
+                var airspaceLayer = new Layer
                 {
                     Id = Guid.NewGuid().ToString("B"),
                     Name = LayerName,
@@ -90,8 +90,27 @@ namespace WhereToFly.App.Core.Services
                     Data = czml
                 };
 
-                return new Layer[] { layer };
+                return new Layer[]
+                {
+                    GetOpenStreetMapBuildingsLayer(),
+                    airspaceLayer,
+                };
             }
+        }
+
+        /// <summary>
+        /// Returns an OpenStreetMap Buildings layer
+        /// </summary>
+        /// <returns>newly created layer</returns>
+        internal static Layer GetOpenStreetMapBuildingsLayer()
+        {
+            return new Layer
+            {
+                Id = "osmBuildingsLayer",
+                Name = "Cesium OpenStreetMap Buildings",
+                IsVisible = true,
+                LayerType = LayerType.OsmBuildingsLayer
+            };
         }
 
         /// <summary>
