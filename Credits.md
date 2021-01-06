@@ -166,8 +166,8 @@ The following icons in the App are from the Material Design Icons
 - gesture-spread - Michael Richins @MrGrigri
 - gesture-tap - Michael Richins @MrGrigri
 
-All custom icons are licensed under the SIL Open Font License 1.1:
-http://scripts.sil.org/cms/scripts/page.php?item_id=OFL_web
+All custom icons are licensed under the Apache 2.0 license:
+https://github.com/Templarian/MaterialDesign/blob/master/LICENSE
 
 #### Mapbox Maki Icons
 
