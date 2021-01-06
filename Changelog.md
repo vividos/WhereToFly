@@ -1,5 +1,7 @@
 # Changelog
 
+## Version 1.10.0
+
 - support for Cesium OpenStreetMap Buildings layer; can be added to layer list
 
 ## Version 1.9.0
