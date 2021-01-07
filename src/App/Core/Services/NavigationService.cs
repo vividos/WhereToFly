@@ -176,11 +176,11 @@ namespace WhereToFly.App.Core.Services
                 return;
             }
 
-            // close drawer if necessary
-            if (App.Current.MainPage is MasterDetailPage masterDetailPage &&
-                masterDetailPage.IsPresented)
+            // close flyout if necessary
+            if (App.Current.MainPage is FlyoutPage flyoutPage &&
+                flyoutPage.IsPresented)
             {
-                masterDetailPage.IsPresented = false;
+                flyoutPage.IsPresented = false;
             }
 
             Page displayPage = null;

@@ -8,7 +8,7 @@ using Xamarin.Forms;
 namespace WhereToFly.App.Core.ViewModels
 {
     /// <summary>
-    /// View model for the menu appearing in the "hamburger menu" in the master detail layout.
+    /// View model for the menu appearing in the "hamburger menu" in the flyout page layout.
     /// </summary>
     public class MenuViewModel : ViewModelBase
     {

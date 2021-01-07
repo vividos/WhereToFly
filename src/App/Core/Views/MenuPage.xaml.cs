@@ -4,7 +4,7 @@ using Xamarin.Forms;
 namespace WhereToFly.App.Core.Views
 {
     /// <summary>
-    /// Page to display menu for the master-detail root page
+    /// Page to display menu for the flyout page
     /// </summary>
     public partial class MenuPage : ContentPage
     {
