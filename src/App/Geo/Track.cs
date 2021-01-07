@@ -19,6 +19,11 @@ namespace WhereToFly.App.Geo
         public string Name { get; set; }
 
         /// <summary>
+        /// Track description
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
         /// Indicates if track is a flight track and will be colored depending on climb and sink
         /// rates.
         /// </summary>
@@ -96,6 +101,7 @@ namespace WhereToFly.App.Geo
         public Track()
         {
             this.Name = string.Empty;
+            this.Description = string.Empty;
             this.IsFlightTrack = false;
             this.Color = "0000FF";
             this.Duration = TimeSpan.Zero;
@@ -127,6 +133,7 @@ namespace WhereToFly.App.Geo
 
             return this.Id == other.Id &&
                 this.Name == other.Name &&
+                this.Description == other.Description &&
                 this.TrackPoints.Count == other.TrackPoints.Count &&
                 this.GroundHeightProfile.Count == other.GroundHeightProfile.Count;
         }
@@ -152,6 +159,7 @@ namespace WhereToFly.App.Geo
 
             hashCode = (hashCode * 31) + this.Id.GetHashCode();
             hashCode = (hashCode * 31) + this.Name.GetHashCode();
+            hashCode = (hashCode * 31) + this.Description.GetHashCode();
             hashCode = (hashCode * 31) + this.TrackPoints.GetHashCode();
             hashCode = (hashCode * 31) + this.GroundHeightProfile.GetHashCode();
 

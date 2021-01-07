@@ -56,6 +56,16 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             }
 
             /// <summary>
+            /// Track description
+            /// </summary>
+            [Column("desc")]
+            public string Description
+            {
+                get => this.Track.Description;
+                set => this.Track.Description = value;
+            }
+
+            /// <summary>
             /// Track is a flight?
             /// </summary>
             [Column("is_flight")]

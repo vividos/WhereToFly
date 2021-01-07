@@ -397,6 +397,7 @@ namespace WhereToFly.App.Core.ViewModels
             {
                 Id = Guid.NewGuid().ToString("B"),
                 Name = "Planned Tour",
+                Description = plannedTour.Description,
                 IsFlightTrack = false,
                 TrackPoints = trackPoints.ToList()
             };
