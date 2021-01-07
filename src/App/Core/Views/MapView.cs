@@ -280,6 +280,35 @@ namespace WhereToFly.App.Core.Views
         }
 
         /// <summary>
+        /// Zooms to rectangle specified by two map points
+        /// </summary>
+        /// <param name="minPosition">minimum position values</param>
+        /// <param name="maxPosition">maximum position values</param>
+        public void ZoomToRectangle(MapPoint minPosition, MapPoint maxPosition)
+        {
+            if (!this.IsInitialized)
+            {
+                return;
+            }
+
+            var rectangle = new
+            {
+                minLatitude = minPosition.Latitude,
+                maxLatitude = maxPosition.Latitude,
+                minLongitude = minPosition.Longitude,
+                maxLongitude = maxPosition.Longitude,
+                minAltitude = minPosition.Altitude ?? 0.0,
+                maxAltitude = maxPosition.Altitude ?? 0.0,
+            };
+
+            string js = string.Format(
+                "map.zoomToRectangle({0});",
+                JsonConvert.SerializeObject(rectangle));
+
+            this.RunJavaScript(js);
+        }
+
+        /// <summary>
         /// Updates the "my location" pin in the map
         /// </summary>
         /// <param name="position">new position to use</param>

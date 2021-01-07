@@ -767,6 +767,33 @@ MapView.prototype.zoomToLocation = function (options) {
 };
 
 /**
+ * Zooms to given map rectangle
+ * @param {object} [rectangle] map rectangle to zoom to
+ * @param {double} [rectangle.minLatitude] minimum latitude
+ * @param {double} [rectangle.maxLatitude] maximum latitude
+ * @param {double} [rectangle.minLongitude] minimum longitude
+ * @param {double} [rectangle.maxLongitude] maximum longitude
+ * @param {double} [rectangle.minAltitude] minimum altitude
+ * @param {double} [rectangle.maxAltitude] maximum altitude
+ */
+MapView.prototype.zoomToRectangle = function (rectangle) {
+
+    console.log("MapView: start flying to rectangle");
+
+    var corner = Cesium.Cartesian3.fromDegrees(rectangle.minLongitude, rectangle.minLatitude, rectangle.minAltitude);
+    var oppositeCorner = Cesium.Cartesian3.fromDegrees(rectangle.maxLongitude, rectangle.maxLatitude, rectangle.maxAltitude);
+
+    var boundingSphere = Cesium.BoundingSphere.fromCornerPoints(corner, oppositeCorner);
+
+    this.viewer.camera.flyToBoundingSphere(boundingSphere, {
+        offset: new Cesium.HeadingPitchRange(
+            this.viewer.camera.heading,
+            this.viewer.camera.pitch,
+            5000.0)
+    });
+};
+
+/**
  * Adds a new layer to the map
  * @param {object} [layer] Layer object to add
  * @param {string} [layer.id] ID of layer

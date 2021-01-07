@@ -123,6 +123,13 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="position">position to zoom to</param>
         void ZoomToLocation(MapPoint position);
+
+        /// <summary>
+        /// Zooms to rectangle specified by two map points
+        /// </summary>
+        /// <param name="minPosition">minimum position values</param>
+        /// <param name="maxPosition">maximum position values</param>
+        void ZoomToRectangle(MapPoint minPosition, MapPoint maxPosition);
         #endregion
 
         #region Track list methods

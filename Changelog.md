@@ -5,6 +5,7 @@
 - support for Cesium OpenStreetMap Buildings layer; can be added to layer list
 - for locations that have takeoff directions, the takeoff directions are now
   shown on the map as circle slices
+- automatically zoom to newly imported locations
 
 ## Version 1.9.0
 
