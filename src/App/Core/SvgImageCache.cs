@@ -201,6 +201,8 @@ namespace WhereToFly.App.Core
                     return "map/images/paragliding.svg";
                 case LocationType.FlyingWinchTowing:
                     return "map/images/paragliding.svg";
+                case LocationType.LiveWaypoint:
+                    return "map/images/autorenew.svg";
                 default:
                     return "map/images/map-marker.svg";
             }

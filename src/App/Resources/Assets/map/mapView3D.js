@@ -1149,7 +1149,7 @@ MapView.prototype.imageUrlFromLocationType = function (locationType) {
         case 'FlyingTakeoff': return 'images/paragliding.svg';
         case 'FlyingLandingPlace': return 'images/paragliding.svg';
         case 'FlyingWinchTowing': return 'images/paragliding.svg';
-        //case 'LiveWaypoint': return '';
+        case 'LiveWaypoint': return 'images/autorenew.svg';
         //case 'Turnpoint': return '';
         default: return 'images/map-marker.svg';
     }
