@@ -34,7 +34,7 @@
     <Color x:Key="ElementBackgroundColor">#202124</Color>
     <Color x:Key="ElementTextColor">#ceced3</Color>
     <Color x:Key="LabelTextColor">White</Color>
-    <Color x:Key="EntryPlaceholderTextColor">#373737</Color>
+    <Color x:Key="EntryPlaceholderTextColor">#7c7c7c</Color>
     <Color x:Key="ButtonBackgroundColor">#2B3032</Color>
     <Color x:Key="BorderSelectionColor">White</Color>
 

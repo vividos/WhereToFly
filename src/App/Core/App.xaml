@@ -15,6 +15,7 @@
             <Style TargetType="Picker">
                 <Setter Property="BackgroundColor" Value="{DynamicResource ElementBackgroundColor}" />
                 <Setter Property="TextColor" Value="{DynamicResource ElementTextColor}" />
+                <Setter Property="TitleColor" Value="{DynamicResource ElementTextColor}" />
             </Style>
 
             <Style TargetType="Entry">
