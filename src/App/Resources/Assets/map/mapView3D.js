@@ -246,6 +246,15 @@ function MapView(options) {
 
     this.osmBuildingsTileset = null;
 
+    this.takeoffPrimitivesCollection = new Cesium.PrimitiveCollection({
+        show: true,
+        destroyPrimitives: true
+    });
+
+    this.takeoffPrimitivesMap = {};
+
+    this.viewer.scene.primitives.add(this.takeoffPrimitivesCollection);
+
     this.onMapInitialized();
 }
 
@@ -977,6 +986,8 @@ MapView.prototype.clearLocationList = function () {
 
     if (this.flyingRangeCone !== null)
         this.viewer.entities.add(this.flyingRangeCone);
+
+    this.takeoffPrimitivesMap = {};
 };
 
 /**
@@ -1050,6 +1061,24 @@ MapView.prototype.addLocationList = function (locationList) {
             function (error) {
                 console.error("MapView.addLocationList: error while adding location entity: " + error);
             });
+
+        if (location.takeoffDirections !== undefined && location.takeoffDirections !== 0) {
+            var takeoffOutlinePrimitive = this.createTakeoffPrimitive(
+                location,
+                new Cesium.Color(1.0, 1.0, 0.0, 0.4), // yellow
+                true);
+
+            this.takeoffPrimitivesCollection.add(takeoffOutlinePrimitive);
+
+            var takeoffPrimitive = this.createTakeoffPrimitive(
+                location,
+                new Cesium.Color(1.0, 0.5, 1, 0.4), // purple
+                false);
+
+            this.takeoffPrimitivesCollection.add(takeoffPrimitive);
+
+            this.takeoffPrimitivesMap[location.id] = [takeoffOutlinePrimitive, takeoffPrimitive];
+        }
     }
 };
 
@@ -1143,6 +1172,144 @@ MapView.prototype.pinColorFromLocationType = function (locationType) {
 };
 
 /**
+ * Calculates a point on a circle around a given center.
+ * Note: Most of the code is adapted from code in Cesium's EllipseGeometryLibrary.js
+ * @param {Cesium.Cartesian3} [center] Center point of the circle
+ * @param {number} [radius] radius of the circle, in meter
+ * @param {number} [angleDegrees] angle of point on circle, in degrees
+ * @returns {Cesium.Cartesian3} calculated point coordinates
+ */
+pointFromCenterRadiusAngle = function (center, radius, angleDegrees) {
+
+    var unitPosScratch = new Cesium.Cartesian3();
+    var unitPos = Cesium.Cartesian3.normalize(center, unitPosScratch);
+
+    var eastVecScratch = new Cesium.Cartesian3();
+    var eastVec = Cesium.Cartesian3.cross(Cesium.Cartesian3.UNIT_Z, center, eastVecScratch);
+    eastVec = Cesium.Cartesian3.normalize(eastVec, eastVec);
+
+    var northVecScratch = new Cesium.Cartesian3();
+    var northVec = Cesium.Cartesian3.cross(unitPos, eastVec, northVecScratch);
+
+    var azimuth = Cesium.Math.toRadians(angleDegrees);
+
+    var rotAxis = new Cesium.Cartesian3();
+    var tempVec = new Cesium.Cartesian3();
+    Cesium.Cartesian3.multiplyByScalar(eastVec, Math.cos(azimuth), rotAxis);
+    Cesium.Cartesian3.multiplyByScalar(northVec, Math.sin(azimuth), tempVec);
+    Cesium.Cartesian3.add(rotAxis, tempVec, rotAxis);
+
+    var mag = Cesium.Cartesian3.magnitude(center);
+    var angle = radius / mag;
+
+    // Create the quaternion to rotate the position vector to the boundary of the ellipse.
+    var unitQuat = new Cesium.Quaternion();
+    Cesium.Quaternion.fromAxisAngle(rotAxis, angle, unitQuat);
+
+    var rotMtx = new Cesium.Matrix3();
+    Cesium.Matrix3.fromQuaternion(unitQuat, rotMtx);
+
+    var result = new Cesium.Cartesian3();
+    Cesium.Matrix3.multiplyByVector(rotMtx, unitPos, result);
+    Cesium.Cartesian3.normalize(result, result);
+
+    Cesium.Cartesian3.multiplyByScalar(result, mag, result);
+    return result;
+}
+
+/**
+ * Creates a primitive visualizing the takeoff directions of the given location
+ * @param {Object} [location] An object with at least the following properties:
+ * @param {String} [location.id] ID of the location to update
+ * @param {Number} [location.latitude] Latitude of the location to update
+ * @param {Number} [location.longitude] Longitude of the location to update
+ * @param {number} [location.takeoffDirections] Takeoff directions bit values
+ * @param {Cesium.Color} [color] Color of the polygon or polyline primitive
+ * @param {boolean} [outline] If true, only an outline primitive is returned,
+ * otherwise a full polygon promitive
+ */
+MapView.prototype.createTakeoffPrimitive = function (location, color, outline) {
+
+    var center = Cesium.Cartesian3.fromDegrees(location.longitude, location.latitude);
+    var radius = 50.0; // in meter
+
+    var pointArray = [];
+    var takeoffBits = location.takeoffDirections;
+    var sliceAngle = 360.0 / 16.0;
+
+    pointArray.push(center);
+
+    // from the bits, calculate the takeoff angle and add polygon points
+    for (var angleBit = 0; angleBit <= 16; angleBit++) {
+        var bitmask = 1 << angleBit;
+        var angle = 180.0 - angleBit * sliceAngle;
+
+        if ((takeoffBits & bitmask) !== 0) {
+            pointArray.push(pointFromCenterRadiusAngle(center, radius, angle - sliceAngle / 2.0));
+            pointArray.push(pointFromCenterRadiusAngle(center, radius, angle));
+            pointArray.push(pointFromCenterRadiusAngle(center, radius, angle + sliceAngle / 2.0));
+            pointArray.push(center);
+        }
+    }
+
+    var material = Cesium.Material.fromType('Color');
+    material.uniforms.color = color;
+
+    var distanceDisplayCondition =
+        new Cesium.DistanceDisplayConditionGeometryInstanceAttribute(0.0, 5000.0);
+
+    var primitive;
+    if (outline) {
+        // generate the outline using ground polyline
+        primitive = new Cesium.GroundPolylinePrimitive({
+            asynchronous: this.options.useAsynchronousPrimitives,
+            allowPicking: false,
+            geometryInstances: new Cesium.GeometryInstance({
+                id: "takeoff-outline-" + location.Id,
+                geometry: new Cesium.GroundPolylineGeometry({
+                    positions: pointArray,
+                    width: 3.0
+                }),
+                attributes: {
+                    distanceDisplayCondition: distanceDisplayCondition
+                }
+            }),
+            appearance: new Cesium.MaterialAppearance({
+                translucent: false,
+                material: material,
+                faceForward: true
+            })
+        });
+    }
+    else {
+        // generate the filled polygon using PolygonGeometry on a GroundPrimitive
+        if (!this.viewer.scene.context.fragmentDepth)
+            console.warn("Warning: WebGL extension EXT_frag_depth isn't supported by GPU, using GroundPrimitive anyway...");
+
+        primitive = new Cesium.GroundPrimitive({
+            asynchronous: this.options.useAsynchronousPrimitives,
+            allowPicking: false,
+            geometryInstances: new Cesium.GeometryInstance({
+                id: "takeoff-" + location.Id,
+                geometry: new Cesium.PolygonGeometry({
+                    polygonHierarchy: new Cesium.PolygonHierarchy(pointArray)
+                }),
+                attributes: {
+                    distanceDisplayCondition: distanceDisplayCondition
+                }
+            }),
+            appearance: new Cesium.MaterialAppearance({
+                translucent: true,
+                material: material,
+                faceForward: true
+            })
+        });
+    }
+
+    return primitive;
+};
+
+/**
  * Updates a single location
  * @param {Object} [location] An object with the following properties:
  * @param {String} [location.id] ID of the location to update
@@ -1185,6 +1352,12 @@ MapView.prototype.removeLocation = function (locationId) {
     var entity = this.viewer.entities.getById(locationId);
 
     this.viewer.entities.remove(entity);
+
+    var primitivesList = this.takeoffPrimitivesMap[locationId];
+    var that = this;
+    if (primitivesList !== undefined) {
+        primitivesList.forEach(primitive => that.takeoffPrimitivesCollection.remove(primitive));
+    }
 };
 
 /**

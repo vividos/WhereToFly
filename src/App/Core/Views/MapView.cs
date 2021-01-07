@@ -441,6 +441,7 @@ namespace WhereToFly.App.Core.Views
                 latitude = location.MapLocation.Latitude,
                 longitude = location.MapLocation.Longitude,
                 altitude = location.MapLocation.Altitude.GetValueOrDefault(0.0),
+                takeoffDirections = (int)location.TakeoffDirections,
                 isPlanTourLocation = location.IsPlanTourLocation,
             };
 
@@ -479,6 +480,7 @@ namespace WhereToFly.App.Core.Views
                     latitude = location.MapLocation.Latitude,
                     longitude = location.MapLocation.Longitude,
                     altitude = location.MapLocation.Altitude.GetValueOrDefault(0.0),
+                    takeoffDirections = (int)location.TakeoffDirections,
                     isPlanTourLocation = location.IsPlanTourLocation,
                 };
 

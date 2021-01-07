@@ -78,6 +78,8 @@
         <button onclick="addOsmBuildingsLayer()">Add OSM Buildings layer</button>
 
         <button onclick="removeOsmBuildingsLayer()">Remove OSM Buildings layer</button>
+
+        <button onclick="addTakeoffLocation()">Add Takeoff</button>
     </div>
 
     <div style="position: absolute" id="mapElement"></div>
@@ -205,6 +207,22 @@
 
         removeOsmBuildingsLayer = function () {
             map.removeLayer('osmBuildingsLayer');
+        }
+
+        addTakeoffLocation = function () {
+            var theLocation = {
+                "id": "wheretofly-path-nagelspitz-start",
+                "name": "SP Jägerkamp/Nagelspitz (NW-WNW, E)",
+                "description": "",
+                "type": "FlyingTakeoff",
+                "latitude": 47.679201,
+                "longitude": 11.90403,
+                "altitude": 1612.0,
+                "takeoffDirections": 1 + 16 + 256 + 1024 + 4096, // N,E,S,SW,W
+                "isPlanTourLocation": false
+            };
+            map.addLocationList([theLocation]);
+            map.zoomToLocation(theLocation);
         }
 
     </script>
