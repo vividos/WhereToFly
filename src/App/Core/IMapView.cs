@@ -86,6 +86,13 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="layer">layer to set visibility</param>
         void SetLayerVisibility(Layer layer);
+
+        /// <summary>
+        /// Exports given CZML layer as KMZ bytestream
+        /// </summary>
+        /// <param name="layer">layer to export</param>
+        /// <returns>exported KMZ byte stream</returns>
+        Task<byte[]> ExportLayerAsync(Layer layer);
         #endregion
 
         #region Location list methods

@@ -42,6 +42,11 @@ namespace WhereToFly.App.Core.Views
         private TaskCompletionSource<double[]> taskCompletionSourceSampleTrackHeights;
 
         /// <summary>
+        /// Task completion source for when ExportLayer() has finished
+        /// </summary>
+        private TaskCompletionSource<byte[]> taskCompletionSourceExportLayer;
+
+        /// <summary>
         /// Current map imagery type
         /// </summary>
         private MapImageryType mapImageryType = MapImageryType.OpenStreetMap;
@@ -445,6 +450,20 @@ namespace WhereToFly.App.Core.Views
         public void ClearLayerList()
         {
             this.RunJavaScript("map.clearLayerList();");
+        }
+
+        /// <summary>
+        /// Exports given CZML layer as KMZ bytestream
+        /// </summary>
+        /// <param name="layer">layer to export</param>
+        /// <returns>exported KMZ byte stream</returns>
+        public async Task<byte[]> ExportLayerAsync(Layer layer)
+        {
+            this.taskCompletionSourceExportLayer = new TaskCompletionSource<byte[]>();
+
+            this.RunJavaScript($"map.exportLayer(\"{layer.Id}\");");
+
+            return await this.taskCompletionSourceExportLayer.Task;
         }
 
         /// <summary>
@@ -855,6 +874,10 @@ namespace WhereToFly.App.Core.Views
                     this.OnSampledTrackHeights(trackPointHeights);
                     break;
 
+                case "onExportLayer":
+                    this.OnExportLayer(jsonParameters.Trim('"').Replace(' ', '+'));
+                    break;
+
                 default:
                     Debug.Assert(false, "invalid callback function name");
                     break;
@@ -868,6 +891,28 @@ namespace WhereToFly.App.Core.Views
         private void OnSampledTrackHeights(double[] trackPointHeights)
         {
             this.taskCompletionSourceSampleTrackHeights.SetResult(trackPointHeights);
+        }
+
+        /// <summary>
+        /// Called when ExportLayer() was called
+        /// </summary>
+        /// <param name="base64Data">KMZ byte stream as Base64 encoded data</param>
+        private void OnExportLayer(string base64Data)
+        {
+            byte[] kmzData = null;
+            try
+            {
+                if (!string.IsNullOrEmpty(base64Data))
+                {
+                    kmzData = Convert.FromBase64String(base64Data);
+                }
+            }
+            catch (Exception ex)
+            {
+                App.LogError(ex);
+            }
+
+            this.taskCompletionSourceExportLayer.SetResult(kmzData);
         }
 
 #pragma warning disable S1144 // Unused private types or members should be removed

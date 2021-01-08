@@ -942,6 +942,38 @@ MapView.prototype.setLayerVisibility = function (layer) {
 };
 
 /**
+ * Exports layer with given ID to KMZ bytestream
+ *
+ * @param {string} layerId
+ */
+MapView.prototype.exportLayer = function (layerId) {
+
+    console.log("MapView: exporting layer with id " + layerId);
+
+    if (layerId === "locationLayer" ||
+        layerId === "trackLayer" ||
+        layerId === "osmBuildingsLayer") {
+        console.warn("MapView: can't export layer of type " + layerId);
+        this.onExportLayer(null);
+        return;
+    }
+
+    var dataSource = this.dataSourceMap[layerId];
+    if (dataSource !== undefined) {
+        var that = this;
+        Cesium.exportKml({
+            entities: dataSource.entities,
+            kmz: true
+        }).then(function (result) {
+            that.onExportLayer(result.kmz);
+        }).otherwise(function (result) {
+            console.error(result);
+            that.onExportLayer(null);
+        });
+    }
+};
+
+/**
  * Removes layer with given layer ID
  * @param {string} [layerId] ID of layer
  */
@@ -2102,6 +2134,28 @@ MapView.prototype.onNetworkConnectivityChanged = function (isAvailable) {
     if (isAvailable &&
         (this.viewer.terrainProvider === null || this.viewer.terrainProvider instanceof Cesium.EllipsoidTerrainProvider))
         this.initTerrainProvider();
+};
+
+/**
+ * Called when a layer was successfully exported as KMZ byte stream
+ * @param {string} blobData KMZ data, as blob, or null
+ */
+MapView.prototype.onExportLayer = function (blobData) {
+
+    if (this.options.callback === undefined)
+        return;
+
+    // convert to base64
+    var reader = new FileReader();
+    var that = this;
+    reader.onloadend = function () {
+        var dataUrl = reader.result;
+        var base64data = dataUrl.substr(dataUrl.indexOf(',') + 1);
+
+        that.options.callback('onExportLayer', base64data);
+    }
+
+    reader.readAsDataURL(blobData);
 };
 
 /**

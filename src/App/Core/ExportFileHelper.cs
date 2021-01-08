@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using WhereToFly.App.Geo;
 using WhereToFly.App.Geo.DataFormats;
+using WhereToFly.Shared.Model;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -14,6 +15,44 @@ namespace WhereToFly.App.Core
     public static class ExportFileHelper
     {
         /// <summary>
+        /// Exports layer by asking user for destination path and then saving binary KML data of
+        /// layer to file.
+        /// </summary>
+        /// <param name="layer">layer to export</param>
+        /// <returns>task to wait on</returns>
+        public static async Task ExportLayerAsync(Layer layer)
+        {
+            byte[] data = await App.MapView.ExportLayerAsync(layer);
+            if (data == null)
+            {
+                App.ShowToast("Error occured at layer export.");
+                return;
+            }
+
+            string exportFilename = await AskUserExportFilenameAsync(layer.Name + ".kmz");
+            if (exportFilename == null)
+            {
+                return;
+            }
+
+            try
+            {
+                File.WriteAllBytes(exportFilename, data);
+
+                App.ShowToast("Layer was successfully exported.");
+            }
+            catch (Exception ex)
+            {
+                App.LogError(ex);
+
+                await App.Current.MainPage.DisplayAlert(
+                    Constants.AppTitle,
+                    "Error while exporting layer: " + ex.Message,
+                    "OK");
+            }
+        }
+
+        /// <summary>
         /// Exports track by asking user for destination path and then using GpxWriter to write
         /// track to file
         /// </summary>
@@ -21,7 +60,7 @@ namespace WhereToFly.App.Core
         /// <returns>task to wait on</returns>
         public static async Task ExportTrackAsync(Track track)
         {
-            string exportFilename = await AskUserExportFilenameAsync(track);
+            string exportFilename = await AskUserExportFilenameAsync(track.Name + ".gpx");
             if (exportFilename == null)
             {
                 return;
@@ -47,14 +86,14 @@ namespace WhereToFly.App.Core
         /// <summary>
         /// Ask user about the export filename and return it
         /// </summary>
-        /// <param name="track">track to export</param>
+        /// <param name="filename">filename and extension of file to export</param>
         /// <returns>
         /// export filename, or null when editing was cancelled or an invalid path was specified
         /// </returns>
-        private static async Task<string> AskUserExportFilenameAsync(Track track)
+        private static async Task<string> AskUserExportFilenameAsync(string filename)
         {
             var platform = DependencyService.Get<IPlatform>();
-            string exportFilename = Path.Combine(platform.PublicExportFolder, track.Name + ".gpx");
+            string exportFilename = Path.Combine(platform.PublicExportFolder, filename);
 
             string editedExportFilename = await App.Current.MainPage.DisplayPromptAsync(
                 Constants.AppTitle,

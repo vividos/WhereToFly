@@ -56,6 +56,11 @@ namespace WhereToFly.App.Core.ViewModels
         public ICommand ZoomToLayerCommand { get; set; }
 
         /// <summary>
+        /// Command to execute when "export" menu item is selected on a layer
+        /// </summary>
+        public ICommand ExportLayerCommand { get; set; }
+
+        /// <summary>
         /// Command to execute when "delete" menu item is selected on a layer
         /// </summary>
         public ICommand DeleteLayerCommand { get; set; }
@@ -86,6 +91,7 @@ namespace WhereToFly.App.Core.ViewModels
             };
 
             this.ZoomToLayerCommand = new AsyncCommand(this.OnZoomToLayerAsync);
+            this.ExportLayerCommand = new AsyncCommand(this.OnExportLayerAsync);
             this.DeleteLayerCommand = new AsyncCommand(this.OnDeleteLayerAsync);
         }
 
@@ -114,6 +120,15 @@ namespace WhereToFly.App.Core.ViewModels
             App.MapView.ZoomToLayer(this.layer);
 
             await NavigationService.Instance.NavigateAsync(Constants.PageKeyMapPage, animated: true);
+        }
+
+        /// <summary>
+        /// Called when "Export" menu item is selected
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task OnExportLayerAsync()
+        {
+            await ExportFileHelper.ExportLayerAsync(this.layer);
         }
 
         /// <summary>

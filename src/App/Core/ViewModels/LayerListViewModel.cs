@@ -385,6 +385,16 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
+        /// Called when "Export" menu item is selected
+        /// </summary>
+        /// <param name="layer">layer to export</param>
+        /// <returns>task to wait on</returns>
+        internal async Task ExportLayer(Layer layer)
+        {
+            await ExportFileHelper.ExportLayerAsync(layer);
+        }
+
+        /// <summary>
         /// Deletes the given layer from the layer list
         /// </summary>
         /// <param name="layer">layer to delete</param>

@@ -12,6 +12,7 @@
             <x:String x:Key="ImportLayerImageBaseName">layers_plus</x:String>
             <x:String x:Key="DeleteLayerListImageBaseName">delete_forever</x:String>
             <x:String x:Key="ZoomToLayerImageBaseName">magnify_plus_outline</x:String>
+            <x:String x:Key="ExportImageBaseName">export_variant</x:String>
             <x:String x:Key="DeleteLayerImageBaseName">delete</x:String>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -107,6 +108,9 @@
                             <MenuItem Text="Zoom to"
                                       Icon="{Binding Source={StaticResource ZoomToLayerImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                                       Command="{Binding ZoomToLayerContextAction}" />
+                            <MenuItem Text="Export"
+                                      Icon="{Binding Source={StaticResource ExportImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+                                      Command="{Binding ExportLayerContextAction}" />
                             <MenuItem Text="Delete" IsDestructive="True"
                                       Icon="{Binding Source={StaticResource DeleteLayerImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                                       Command="{Binding DeleteLayerContextAction}" />

@@ -59,6 +59,11 @@ namespace WhereToFly.App.Core.ViewModels
         public ICommand ZoomToLayerContextAction { get; private set; }
 
         /// <summary>
+        /// Command to execute when "Export" context action is selected on a layer
+        /// </summary>
+        public ICommand ExportLayerContextAction { get; set; }
+
+        /// <summary>
         /// Command to execute when "delete" context action is selected on a layer
         /// </summary>
         public ICommand DeleteLayerContextAction { get; private set; }
@@ -88,6 +93,7 @@ namespace WhereToFly.App.Core.ViewModels
             this.ItemTappedCommand = new AsyncCommand(this.OnTappedLayerItemAsync);
             this.VisibilityTappedCommand = new AsyncCommand(this.OnTappedLayerVisibilityAsync);
             this.ZoomToLayerContextAction = new AsyncCommand(this.OnZoomToLayerAsync);
+            this.ExportLayerContextAction = new AsyncCommand(this.OnExportLayerAsync, this.OnCanExecuteExportLayer);
             this.DeleteLayerContextAction = new AsyncCommand(this.OnDeleteLayerAsync, this.OnCanExecuteDeleteLayer);
         }
 
@@ -133,6 +139,26 @@ namespace WhereToFly.App.Core.ViewModels
         {
             await this.parentViewModel.ZoomToLayer(this.Layer);
         }
+
+        /// <summary>
+        /// Called when "Export" context action is selected
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task OnExportLayerAsync()
+        {
+            await this.parentViewModel.ExportLayer(this.Layer);
+        }
+
+        /// <summary>
+        /// Determines if a layer's "export layer" context action can be executed. Prevents
+        /// exporting layers that can't be exported.
+        /// </summary>
+        /// <param name="arg">argument; unused</param>
+        /// <returns>true when context action can be executed, false when not</returns>
+        private bool OnCanExecuteExportLayer(object arg) =>
+            this.Layer.LayerType != LayerType.LocationLayer &&
+            this.Layer.LayerType != LayerType.TrackLayer &&
+            this.Layer.LayerType != LayerType.OsmBuildingsLayer;
 
         /// <summary>
         /// Called when "delete" context action is selected
