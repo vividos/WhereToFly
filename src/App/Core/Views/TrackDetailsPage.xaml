@@ -11,7 +11,7 @@
 
         <ScrollView Orientation="Vertical">
 
-            <!-- stack layout with track details grid and height profile view -->
+            <!-- stack layout with track details grid, height profile view and track description -->
             <StackLayout Orientation="Vertical">
 
                 <!-- Grid with all track details -->
@@ -74,6 +74,11 @@
                         WidthRequest="300"
                         Command="{Binding OpenHeightProfileCommand}" />
                 -->
+
+                <!-- Track description web view -->
+                <controls:AutoResizeWebView HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand"
+                                            HeightRequest="200"
+                                            Source="{Binding DescriptionWebViewSource}" />
 
             </StackLayout>
         </ScrollView>
