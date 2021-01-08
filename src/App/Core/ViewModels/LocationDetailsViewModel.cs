@@ -131,7 +131,7 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
-        /// Property containing location description
+        /// Property containing WebViewSource of location description
         /// </summary>
         public WebViewSource DescriptionWebViewSource
         {
@@ -226,26 +226,13 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>formatted description text</returns>
         private static string FormatLocationDescription(Location location)
         {
-            string desc = location.Description;
+            string desc = HtmlConverter.FromHtmlOrMarkdown(location.Description);
 
-            bool hasHtmlTags = desc.Contains("<") &&
-                (desc.Contains("</") || desc.Contains("/>"));
-
-            if (!hasHtmlTags)
-            {
-                // try to format as markdown
-                desc = HtmlConverter.FromMarkdown(desc, null);
-            }
-
-            var dict = Application.Current.Resources;
-            string textColor = ((Color)dict["ElementTextColor"]).ToHex().Replace("#FF", "#");
-            string backgroundColor = ((Color)dict["PageBackgroundColor"]).ToHex().Replace("#FF", "#");
-            string accentColor = ((Color)dict["AccentColor"]).ToHex().Replace("#FF", "#");
-
-            string styles = $"<style> body {{ color: {textColor}; background-color: {backgroundColor}; }} " +
-                $"a {{ color: {accentColor}; }} </style>";
-
-            return $"{styles}<span style=\"font-family:sans-serif\">{desc}</span>";
+            return HtmlConverter.AddTextColorStyles(
+                desc,
+                App.GetResourceColor("ElementTextColor"),
+                App.GetResourceColor("PageBackgroundColor"),
+                App.GetResourceColor("AccentColor"));
         }
 
         /// <summary>

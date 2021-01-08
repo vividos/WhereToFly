@@ -1,4 +1,5 @@
 using HtmlAgilityPack;
+using System;
 using System.Collections.Generic;
 
 namespace WhereToFly.App.Logic
@@ -93,7 +94,7 @@ namespace WhereToFly.App.Logic
         /// <param name="markdownText">Markdown formatted text</param>
         /// <param name="fontName">font name for whole text; may be null</param>
         /// <param name="fontSize">font size; used when font name is specified</param>
-        /// <returns>html text</returns>
+        /// <returns>HTML text</returns>
         public static string FromMarkdown(string markdownText, string fontName = "sans-serif", int fontSize = 12)
         {
             string htmlText = Markdig.Markdown.ToHtml(markdownText);
@@ -104,6 +105,48 @@ namespace WhereToFly.App.Logic
             }
 
             return $"<span style=\"font-family: {fontName}; font-size: {fontSize}\">{htmlText}</span>";
+        }
+
+        /// <summary>
+        /// Formats text that may contain markdown or HTML
+        /// </summary>
+        /// <param name="markdownOrHtmlText">Markdown or HTML formatted text</param>
+        /// <param name="fontName">font name for whole text; may be null</param>
+        /// <param name="fontSize">font size; used when font name is specified</param>
+        /// <returns>HTML text</returns>
+        public static string FromHtmlOrMarkdown(string markdownOrHtmlText, string fontName = "sans-serif", int fontSize = 12)
+        {
+            if (string.IsNullOrEmpty(markdownOrHtmlText))
+            {
+                return string.Empty;
+            }
+
+            bool hasHtmlTags = markdownOrHtmlText.Contains("<") &&
+                (markdownOrHtmlText.Contains("</") || markdownOrHtmlText.Contains("/>"));
+
+            if (!hasHtmlTags)
+            {
+                // try to format as markdown
+                markdownOrHtmlText = FromMarkdown(markdownOrHtmlText, fontName, fontSize);
+            }
+
+            return markdownOrHtmlText;
+        }
+
+        /// <summary>
+        /// Adds CSS styles to html text to set color for text, background and links.
+        /// </summary>
+        /// <param name="text">text to modify</param>
+        /// <param name="textColor">text color, in #RRGGBB format</param>
+        /// <param name="backgroundColor">background color</param>
+        /// <param name="accentColor">accent color</param>
+        /// <returns>modified text</returns>
+        public static string AddTextColorStyles(string text, string textColor, string backgroundColor, string accentColor)
+        {
+            string styles = $"<style> body {{ color: {textColor}; background-color: {backgroundColor}; }} " +
+                $"a {{ color: {accentColor}; }} </style>";
+
+            return styles + text;
         }
     }
 }

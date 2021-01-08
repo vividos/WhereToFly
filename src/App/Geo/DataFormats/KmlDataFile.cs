@@ -363,14 +363,8 @@ namespace WhereToFly.App.Geo.DataFormats
         {
             string text = placemark.Description?.Text ?? string.Empty;
 
-            // no HTML tags? assume MarkDown
-            if (!text.Contains("<") &&
-                !text.Contains(">"))
-            {
-                text = HtmlConverter.FromMarkdown(text);
-            }
-
             text = HtmlConverter.Sanitize(text);
+            text = HtmlConverter.FromHtmlOrMarkdown(text);
 
             return text;
         }

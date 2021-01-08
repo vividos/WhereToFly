@@ -209,6 +209,16 @@ namespace WhereToFly.App.Core
         }
 
         /// <summary>
+        /// Returns color hex string for given resource color key
+        /// </summary>
+        /// <param name="colorKey">resource color key</param>
+        /// <returns>hex color string, in the format #RRGGBB</returns>
+        public static string GetResourceColor(string colorKey)
+        {
+            return ((Color)Current.Resources[colorKey]).ToHex().Replace("#FF", "#");
+        }
+
+        /// <summary>
         /// Shares a message with other apps
         /// </summary>
         /// <param name="title">title of the share dialog</param>
