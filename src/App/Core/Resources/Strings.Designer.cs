@@ -79,6 +79,15 @@ namespace WhereToFly.App.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cesium OpenStreetMap Buildings Layer.
+        /// </summary>
+        internal static string LayerType_OsmBuildingsLayer {
+            get {
+                return ResourceManager.GetString("LayerType_OsmBuildingsLayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Track Layer.
         /// </summary>
         internal static string LayerType_TrackLayer {

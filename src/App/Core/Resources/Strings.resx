@@ -126,6 +126,9 @@
   <data name="LayerType_TrackLayer" xml:space="preserve">
     <value>Track Layer</value>
   </data>
+  <data name="LayerType_OsmBuildingsLayer" xml:space="preserve">
+    <value>Cesium OpenStreetMap Buildings Layer</value>
+  </data>
   <data name="LocationType_Waypoint" xml:space="preserve">
     <value>Waypoint</value>
   </data>
