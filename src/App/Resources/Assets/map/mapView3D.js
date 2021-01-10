@@ -230,7 +230,10 @@ function MapView(options) {
         this.pickingHandler.setInputAction(this.onScreenRightClick.bind(this), Cesium.ScreenSpaceEventType.RIGHT_CLICK);
     }
 
-    console.log("MapView: #10 other stuff");
+    console.log("MapView: #10 entity clustering");
+    this.setupEntityClustering();
+
+    console.log("MapView: #11 other stuff");
 
     // add a dedicated track primitives collection, as we can't call viewer.scene.primitives.removeAll()
     this.trackPrimitivesCollection = new Cesium.PrimitiveCollection({
@@ -256,6 +259,7 @@ function MapView(options) {
     this.viewer.scene.primitives.add(this.takeoffPrimitivesCollection);
 
     this.locationDataSource = new Cesium.CustomDataSource('locations');
+    this.locationDataSource.clustering = this.clustering;
     this.viewer.dataSources.add(this.locationDataSource);
 
     this.onMapInitialized();
@@ -374,6 +378,65 @@ MapView.prototype.createThermalImageryProvider = function () {
         maximumLevel: 12,
         rectangle: tilingScheme.rectangle
     });
+};
+
+/**
+ * Sets up entity clustering, showing custom pins for clustered locations when
+ * too far away.
+ */
+MapView.prototype.setupEntityClustering = function () {
+
+    this.clustering = new Cesium.EntityCluster({
+        enabled: true,
+        minimumClusterSize: 5,
+        pixelRange: 40
+    });
+
+    var pinBuilder = new Cesium.PinBuilder();
+    this.clustering.pin50 = pinBuilder.fromText("50+", Cesium.Color.RED, 48).toDataURL();
+    this.clustering.pin40 = pinBuilder.fromText("40+", Cesium.Color.ORANGE, 48).toDataURL();
+    this.clustering.pin30 = pinBuilder.fromText("30+", Cesium.Color.YELLOW, 48).toDataURL();
+    this.clustering.pin20 = pinBuilder.fromText("20+", Cesium.Color.GREEN, 48).toDataURL();
+    this.clustering.pin10 = pinBuilder.fromText("10+", Cesium.Color.BLUE, 48).toDataURL();
+
+    this.clustering.singleDigitPins = new Array(8);
+    for (var i = 0; i < this.clustering.singleDigitPins.length; ++i) {
+        this.clustering.singleDigitPins[i] = pinBuilder
+            .fromText("" + (i + 2), Cesium.Color.VIOLET, 48).toDataURL();
+    }
+
+    var that = this;
+    this.clustering.clusterEvent.addEventListener(
+        function (clusteredEntities, cluster) {
+            that.onNewCluster(clusteredEntities, cluster);
+        });
+};
+
+/**
+ * Called when a cluster of entities will be displayed
+ * @param {any} clusteredEntities
+ * @param {any} cluster
+ */
+MapView.prototype.onNewCluster = function (clusteredEntities, cluster) {
+
+    cluster.label.show = false;
+    cluster.billboard.show = true;
+    cluster.billboard.id = cluster.label.id;
+    cluster.billboard.verticalOrigin = Cesium.VerticalOrigin.BOTTOM;
+
+    if (clusteredEntities.length >= 50)
+        cluster.billboard.image = this.clustering.pin50;
+    else if (clusteredEntities.length >= 40)
+        cluster.billboard.image = this.clustering.pin40;
+    else if (clusteredEntities.length >= 30)
+        cluster.billboard.image = this.clustering.pin30;
+    else if (clusteredEntities.length >= 20)
+        cluster.billboard.image = this.clustering.pin20;
+    else if (clusteredEntities.length >= 10)
+        cluster.billboard.image = this.clustering.pin10;
+    else
+        cluster.billboard.image =
+            this.clustering.singleDigitPins[clusteredEntities.length - 2];
 };
 
 /**
