@@ -425,6 +425,7 @@ MapView.prototype.onNewCluster = function (clusteredEntities, cluster) {
     cluster.billboard.show = true;
     cluster.billboard.id = cluster.label.id;
     cluster.billboard.verticalOrigin = Cesium.VerticalOrigin.BOTTOM;
+    cluster.billboard.heightReference = Cesium.HeightReference.CLAMP_TO_GROUND;
 
     if (clusteredEntities.length >= 50)
         cluster.billboard.image = this.clustering.pin50;
