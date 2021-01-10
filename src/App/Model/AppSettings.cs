@@ -35,6 +35,11 @@ namespace WhereToFly.App.Model
         public CoordinateDisplayFormat CoordinateDisplayFormat { get; set; }
 
         /// <summary>
+        /// Specifies if entity clustering is used on the map
+        /// </summary>
+        public bool UseMapEntityClustering { get; set; } = true;
+
+        /// <summary>
         /// Last location filter settings
         /// </summary>
         public LocationFilterSettings LastLocationFilterSettings { get; set; }
@@ -88,6 +93,7 @@ namespace WhereToFly.App.Model
             this.MapImageryType,
             this.MapOverlayType,
             this.CoordinateDisplayFormat,
+            this.UseMapEntityClustering,
             this.LastLocationFilterSettings,
             this.LastFlyingRangeParameters,
             this.LastShownSettingsPage,
@@ -119,6 +125,7 @@ namespace WhereToFly.App.Model
             this.MapImageryType,
             this.MapOverlayType,
             this.CoordinateDisplayFormat,
+            this.UseMapEntityClustering,
             this.LastShownSettingsPage,
             this.ShownFlightPlanningDisclaimer,
             this.AppTheme) ==
@@ -126,6 +133,7 @@ namespace WhereToFly.App.Model
             other.MapImageryType,
             other.MapOverlayType,
             other.CoordinateDisplayFormat,
+            other.UseMapEntityClustering,
             other.LastShownSettingsPage,
             other.ShownFlightPlanningDisclaimer,
             other.AppTheme);

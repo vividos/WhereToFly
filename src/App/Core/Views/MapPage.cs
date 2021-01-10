@@ -382,7 +382,7 @@ namespace WhereToFly.App.Core.Views
                 initialCenter = Constants.InitialCenterPoint;
             }
 
-            await this.mapView.CreateAsync(initialCenter, 14);
+            await this.mapView.CreateAsync(initialCenter, 14, this.appSettings.UseMapEntityClustering);
 
             this.mapView.MapImageryType = this.appSettings.MapImageryType;
             this.mapView.MapOverlayType = this.appSettings.MapOverlayType;
@@ -760,6 +760,7 @@ namespace WhereToFly.App.Core.Views
             this.mapView.MapOverlayType = this.appSettings.MapOverlayType;
             this.mapView.MapShadingMode = this.appSettings.ShadingMode;
             this.mapView.CoordinateDisplayFormat = this.appSettings.CoordinateDisplayFormat;
+            this.mapView.UseEntityClustering = this.appSettings.UseMapEntityClustering;
 
             App.ShowToast("Settings were saved.");
         }

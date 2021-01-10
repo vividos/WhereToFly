@@ -200,6 +200,25 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
+        /// Current value of the "entity clustering" checkbox state
+        /// </summary>
+        public bool MapEntityClustering
+        {
+            get
+            {
+                return this.appSettings.UseMapEntityClustering;
+            }
+            set
+            {
+                if (this.appSettings.UseMapEntityClustering != value)
+                {
+                    this.appSettings.UseMapEntityClustering = value;
+                    Task.Run(async () => await this.SaveSettingsAsync());
+                }
+            }
+        }
+
+        /// <summary>
         /// Command to clear web view cache
         /// </summary>
         public Command ClearWebViewCacheCommand { get; set; }

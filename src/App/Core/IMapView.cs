@@ -44,8 +44,9 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="initialCenterPoint">initial center point to be used for map view</param>
         /// <param name="initialZoomLevel">initial zoom level, in 2D zoom level steps</param>
+        /// <param name="useEntityClustering">indicates if entity clustering should be used</param>
         /// <returns>task to wait on</returns>
-        Task CreateAsync(MapPoint initialCenterPoint, int initialZoomLevel);
+        Task CreateAsync(MapPoint initialCenterPoint, int initialZoomLevel, bool useEntityClustering);
 
         /// <summary>
         /// Updates the "my location" pin in the map

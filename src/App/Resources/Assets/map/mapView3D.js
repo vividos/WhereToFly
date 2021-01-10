@@ -8,8 +8,9 @@
  * @param {double} [options.initialCenterPoint.longitude] longitude of center point
  * @param {Number} [options.initialZoomLevel] initial zoom level
  * @param {Boolean} [options.hasMouse] indicates if the device this is running supports a mouse
- * @param {Boolean} [options.useAsynchronousPrimitives] indicates of asynchronous primitives
+ * @param {Boolean} [options.useAsynchronousPrimitives] indicates if asynchronous primitives
  * should be used
+ * @param {Boolean} [options.useEntityClustering] indicates if entity clustering should be used
  * @param {String} [options.bingMapsApiKey] Bing maps API key to use
  * @param {String} [options.cesiumIonApiKey] Cesium Ion API key to use
  * @param {Function} [options.callback] callback function to use for calling back to C# code
@@ -24,6 +25,7 @@ function MapView(options) {
         initialZoomLevel: 14,
         hasMouse: false,
         useAsynchronousPrimitives: true,
+        useEntityClustering: true,
         callback: {}
     };
 
@@ -387,7 +389,7 @@ MapView.prototype.createThermalImageryProvider = function () {
 MapView.prototype.setupEntityClustering = function () {
 
     this.clustering = new Cesium.EntityCluster({
-        enabled: true,
+        enabled: this.options.useEntityClustering,
         minimumClusterSize: 5,
         pixelRange: 40
     });
@@ -731,6 +733,24 @@ MapView.prototype.setShadingMode = function (shadingMode) {
 
     this.viewer.terrainShadows =
         shadingMode === 'None' ? Cesium.ShadowMode.DISABLED : Cesium.ShadowMode.RECEIVE_ONLY;
+
+    this.updateScene();
+};
+
+/**
+ * Sets if entity clustering is used
+ * @param {boolean} useEntityClustering true when entity clustering should be used
+ */
+MapView.prototype.setEntityClustering = function (useEntityClustering) {
+
+    this.options.useEntityClustering = useEntityClustering;
+    this.clustering.enabled = useEntityClustering;
+
+    if (useEntityClustering) {
+        var lastPixelRange = this.clustering.pixelRange;
+        this.clustering.pixelRange = 0;
+        this.clustering.pixelRange = lastPixelRange;
+    }
 
     this.updateScene();
 };

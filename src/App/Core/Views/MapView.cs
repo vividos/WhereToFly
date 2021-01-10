@@ -62,6 +62,11 @@ namespace WhereToFly.App.Core.Views
         private MapShadingMode mapShadingMode = MapShadingMode.CurrentTime;
 
         /// <summary>
+        /// Current value for "entity clustering" flag
+        /// </summary>
+        private bool useEntityClustering = true;
+
+        /// <summary>
         /// Indicates if map control is already initialized
         /// </summary>
         private bool IsInitialized => this.taskCompletionSourceMapInitialized.Task.IsCompleted;
@@ -220,6 +225,30 @@ namespace WhereToFly.App.Core.Views
         public CoordinateDisplayFormat CoordinateDisplayFormat { get; set; }
 
         /// <summary>
+        /// Gets or sets if entity clustering is enabled
+        /// </summary>
+        public bool UseEntityClustering
+        {
+            get
+            {
+                return this.useEntityClustering;
+            }
+
+            set
+            {
+                if (this.useEntityClustering != value)
+                {
+                    this.useEntityClustering = value;
+
+                    string js = string.Format(
+                        "map.setEntityClustering({0});",
+                        value.ToString().ToLowerInvariant());
+                    this.RunJavaScript(js);
+                }
+            }
+        }
+
+        /// <summary>
         /// Creates a new MapView C# object
         /// </summary>
         /// <param name="webView">web view to use</param>
@@ -235,8 +264,9 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         /// <param name="initialCenterPoint">initial center point to be used for map view</param>
         /// <param name="initialZoomLevel">initial zoom level, in 2D zoom level steps</param>
+        /// <param name="useEntityClustering">indicates if entity clustering should be used</param>
         /// <returns>task to wait on</returns>
-        public async Task CreateAsync(MapPoint initialCenterPoint, int initialZoomLevel)
+        public async Task CreateAsync(MapPoint initialCenterPoint, int initialZoomLevel, bool useEntityClustering)
         {
             if (this.taskCompletionSourceMapInitialized.Task.IsCompleted)
             {
@@ -254,6 +284,7 @@ namespace WhereToFly.App.Core.Views
                 initialZoomLevel = initialZoomLevel,
                 hasMouse = Device.RuntimePlatform == Device.UWP,
                 useAsynchronousPrimitives = true,
+                useEntityClustering = useEntityClustering,
             };
 
             string js = string.Format(
