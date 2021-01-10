@@ -7,7 +7,7 @@
   shown on the map as circle slices
 - automatically zoom to newly imported locations
 - added exporting CZML layers to .kmz files
-- added clustering of Location pins when zooming out
+- added clustering of Location pins and Layer elements when zooming out
 
 ## Version 1.9.0
 

@@ -917,6 +917,7 @@ MapView.prototype.addLayer = function (layer) {
 
     Cesium.when(dataSourcePromise,
         function (dataSource) {
+            dataSource.clustering = that.clustering;
             that.viewer.dataSources.add(dataSource);
             that.dataSourceMap[layer.id] = dataSource;
 
