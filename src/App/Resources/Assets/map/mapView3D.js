@@ -1102,7 +1102,7 @@ MapView.prototype.addLocationList = function (locationList) {
                 location.longitude,
                 location.latitude),
             function (entity) {
-                that.viewer.entities.add(entity);
+                that.locationDataSource.entities.add(entity);
             },
             function (error) {
                 console.error("MapView.addLocationList: error while adding location entity: " + error);
