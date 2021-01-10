@@ -394,15 +394,15 @@ MapView.prototype.setupEntityClustering = function () {
 
     var pinBuilder = new Cesium.PinBuilder();
     this.clustering.pin50 = pinBuilder.fromText("50+", Cesium.Color.RED, 48).toDataURL();
-    this.clustering.pin40 = pinBuilder.fromText("40+", Cesium.Color.ORANGE, 48).toDataURL();
-    this.clustering.pin30 = pinBuilder.fromText("30+", Cesium.Color.YELLOW, 48).toDataURL();
-    this.clustering.pin20 = pinBuilder.fromText("20+", Cesium.Color.GREEN, 48).toDataURL();
-    this.clustering.pin10 = pinBuilder.fromText("10+", Cesium.Color.BLUE, 48).toDataURL();
+    this.clustering.pin40 = pinBuilder.fromText("40+", Cesium.Color.RED, 48).toDataURL();
+    this.clustering.pin30 = pinBuilder.fromText("30+", Cesium.Color.RED, 48).toDataURL();
+    this.clustering.pin20 = pinBuilder.fromText("20+", Cesium.Color.RED, 48).toDataURL();
+    this.clustering.pin10 = pinBuilder.fromText("10+", Cesium.Color.RED, 48).toDataURL();
 
     this.clustering.singleDigitPins = new Array(8);
     for (var i = 0; i < this.clustering.singleDigitPins.length; ++i) {
         this.clustering.singleDigitPins[i] = pinBuilder
-            .fromText("" + (i + 2), Cesium.Color.VIOLET, 48).toDataURL();
+            .fromText("" + (i + 2), Cesium.Color.RED, 48).toDataURL();
     }
 
     var that = this;
