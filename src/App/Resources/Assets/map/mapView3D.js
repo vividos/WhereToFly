@@ -255,6 +255,9 @@ function MapView(options) {
 
     this.viewer.scene.primitives.add(this.takeoffPrimitivesCollection);
 
+    this.locationDataSource = new Cesium.CustomDataSource('locations');
+    this.viewer.dataSources.add(this.locationDataSource);
+
     this.onMapInitialized();
 }
 
@@ -892,7 +895,7 @@ MapView.prototype.zoomToLayer = function (layerId) {
 
     var dataSource;
     if (layerId === "locationLayer")
-        dataSource = this.viewer.entities;
+        dataSource = this.locationDataSource;
     else if (layerId === "trackLayer")
         dataSource = this.trackPrimitivesCollection;
     else
@@ -927,7 +930,7 @@ MapView.prototype.setLayerVisibility = function (layer) {
         ", visibility: " + layer.isVisible);
 
     if (layer.id === "locationLayer")
-        this.viewer.entities.show = layer.isVisible;
+        this.locationDataSource.show = layer.isVisible;
     else if (layer.id === "trackLayer")
         this.trackPrimitivesCollection.show = layer.isVisible;
     else if (layer.id === "osmBuildingsLayer")
@@ -1028,23 +1031,7 @@ MapView.prototype.clearLocationList = function () {
 
     console.log("MapView: clearing location list");
 
-    this.viewer.entities.removeAll();
-
-    // re-add the special purpose entities
-    if (this.myLocationMarker !== null)
-        this.viewer.entities.add(this.myLocationMarker);
-
-    if (this.findResultMarker !== null)
-        this.viewer.entities.add(this.findResultMarker);
-
-    if (this.zoomEntity !== null)
-        this.viewer.entities.add(this.zoomEntity);
-
-    if (this.trackMarker !== null)
-        this.viewer.entities.add(this.trackMarker);
-
-    if (this.flyingRangeCone !== null)
-        this.viewer.entities.add(this.flyingRangeCone);
+    this.locationDataSource.entities.removeAll();
 
     this.takeoffPrimitivesMap = {};
 };
@@ -1387,7 +1374,7 @@ MapView.prototype.updateLocation = function (location) {
         ", longitude " + location.longitude +
         ", altitude " + location.altitude);
 
-    var entity = this.viewer.entities.getById(location.id);
+    var entity = this.locationDataSource.entities.getById(location.id);
 
     if (entity === undefined) {
         console.error("MapView.updateLocation: couldn't find entity for id: " + location.id);
@@ -1408,9 +1395,9 @@ MapView.prototype.removeLocation = function (locationId) {
 
     console.log("MapView: removing location with ID: " + locationId);
 
-    var entity = this.viewer.entities.getById(locationId);
+    var entity = this.locationDataSource.entities.getById(locationId);
 
-    this.viewer.entities.remove(entity);
+    this.locationDataSource.entities.remove(entity);
 
     var primitivesList = this.takeoffPrimitivesMap[locationId];
     var that = this;
