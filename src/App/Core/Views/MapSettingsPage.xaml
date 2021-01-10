@@ -54,8 +54,8 @@
 
                 <!-- Map entity clustering -->
                 <Label Grid.Row="4" Grid.Column="0" FontSize="Medium" Text="Use location clustering" />
-                <CheckBox Grid.Row="4" Grid.Column="1"
-                          IsChecked="{Binding MapEntityClustering}" />
+                <Switch Grid.Row="4" Grid.Column="1"
+                        IsToggled="{Binding MapEntityClustering}" />
 
                 <!-- Clear cache button -->
                 <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"

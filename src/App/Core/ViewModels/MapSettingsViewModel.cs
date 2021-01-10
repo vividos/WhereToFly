@@ -200,7 +200,7 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
-        /// Current value of the "entity clustering" checkbox state
+        /// Current value of the "entity clustering" switch state
         /// </summary>
         public bool MapEntityClustering
         {
