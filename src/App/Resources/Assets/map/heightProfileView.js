@@ -235,6 +235,13 @@ HeightProfileView.prototype.setTrack = function (track) {
 
     var trackData = [];
 
+    if (track.listOfTimePoints == null) {
+        // create time points from 0 to length, in seconds
+        track.listOfTimePoints = [];
+        for (var i = 0, len = track.listOfTrackPoints.length / 3; i < len; i ++)
+            track.listOfTimePoints[i] = i;
+    }
+
     for (var i = 0, len = track.listOfTrackPoints.length; i < len; i += 3) {
         var timePoint = track.listOfTimePoints[i / 3];
         trackData.push({
