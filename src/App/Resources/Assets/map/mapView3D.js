@@ -728,6 +728,7 @@ MapView.prototype.setShadingMode = function (shadingMode) {
 
         default:
             console.warn('MapView.setShadingMode: invalid shading mode: ' + shadingMode);
+            break;
     }
 
     this.viewer.scene.globe.enableLighting = shadingMode !== 'None';
