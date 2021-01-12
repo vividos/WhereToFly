@@ -1080,6 +1080,7 @@ MapView.prototype.removeLayer = function (layerId) {
 
     var dataSource = this.dataSourceMap[layerId];
     if (dataSource !== undefined) {
+        dataSource.clustering = null;
         this.viewer.dataSources.remove(dataSource);
         this.dataSourceMap[layerId] = undefined;
     }
@@ -1101,8 +1102,10 @@ MapView.prototype.clearLayerList = function () {
 
     for (var layerId in this.dataSourceMap) {
         var dataSource = this.dataSourceMap[layerId];
-        if (dataSource !== undefined)
+        if (dataSource !== undefined) {
+            dataSource.clustering = null;
             this.viewer.dataSources.remove(dataSource);
+        }
     }
 
     this.dataSourceMap = {};
