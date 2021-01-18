@@ -87,6 +87,12 @@ namespace WhereToFly.App.Geo.DataFormats.Czml
         public Point Point { get; set; }
 
         /// <summary>
+        /// Label entity
+        /// </summary>
+        [JsonProperty("label", NullValueHandling = NullValueHandling.Ignore)]
+        public Label Label { get; set; }
+
+        /// <summary>
         /// Polyline entity
         /// </summary>
         [JsonProperty("polyline", NullValueHandling = NullValueHandling.Ignore)]
@@ -183,6 +189,168 @@ namespace WhereToFly.App.Geo.DataFormats.Czml
     }
 
     /// <summary>
+    /// JSON converter for HorizontalOrigin enum
+    /// </summary>
+    public class HorizontalOriginConverter : JsonConverter
+    {
+        /// <summary>
+        /// Can convert the type when it's a HorizontalOrigin
+        /// </summary>
+        /// <param name="objectType">object type to try to convert</param>
+        /// <returns>true when it's a HorizontalOrigin</returns>
+        public override bool CanConvert(Type objectType)
+        {
+            return objectType == typeof(HorizontalOrigin);
+        }
+
+        /// <summary>
+        /// Reads HorizontalOrigin from JSON; not implemented
+        /// </summary>
+        /// <param name="reader">reader; unused</param>
+        /// <param name="objectType">object type; unused</param>
+        /// <param name="existingValue">existing value; unused</param>
+        /// <param name="serializer">serializer; unused</param>
+        /// <returns>throws exception</returns>
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Writes HorizontalOrigin value to JSON
+        /// </summary>
+        /// <param name="writer">JSON writer to use</param>
+        /// <param name="value">HorizontalOrigin value to write</param>
+        /// <param name="serializer">serializer; unused</param>
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            var horizontalOrigin = (HorizontalOrigin)value;
+            switch (horizontalOrigin)
+            {
+                case HorizontalOrigin.Center:
+                    writer.WriteValue("CENTER");
+                    break;
+                case HorizontalOrigin.Left:
+                    writer.WriteValue("LEFT");
+                    break;
+                case HorizontalOrigin.Right:
+                    writer.WriteValue("RIGHT");
+                    break;
+                default:
+                    Debug.Assert(false, "invalid horizontal origin value");
+                    break;
+            }
+        }
+    }
+
+    /// <summary>
+    /// The horizontal origin of a Billboard or Label object, relative to the position.
+    /// </summary>
+    [JsonConverter(typeof(HorizontalOriginConverter))]
+    public enum HorizontalOrigin
+    {
+        /// <summary>
+        /// Origin at the center of the anchor point
+        /// </summary>
+        Center,
+
+        /// <summary>
+        /// Origin at the left of the anchor point
+        /// </summary>
+        Left,
+
+        /// <summary>
+        /// Origin at the right of the anchor point
+        /// </summary>
+        Right,
+    }
+
+    /// <summary>
+    /// JSON converter for VerticalOrigin enum
+    /// </summary>
+    public class VerticalOriginConverter : JsonConverter
+    {
+        /// <summary>
+        /// Can convert the type when it's a VerticalOrigin
+        /// </summary>
+        /// <param name="objectType">object type to try to convert</param>
+        /// <returns>true when it's a VerticalOrigin</returns>
+        public override bool CanConvert(Type objectType)
+        {
+            return objectType == typeof(VerticalOrigin);
+        }
+
+        /// <summary>
+        /// Reads VerticalOrigin from JSON; not implemented
+        /// </summary>
+        /// <param name="reader">reader; unused</param>
+        /// <param name="objectType">object type; unused</param>
+        /// <param name="existingValue">existing value; unused</param>
+        /// <param name="serializer">serializer; unused</param>
+        /// <returns>throws exception</returns>
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Writes VerticalOrigin value to JSON
+        /// </summary>
+        /// <param name="writer">JSON writer to use</param>
+        /// <param name="value">VerticalOrigin value to write</param>
+        /// <param name="serializer">serializer; unused</param>
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            var verticalOrigin = (VerticalOrigin)value;
+            switch (verticalOrigin)
+            {
+                case VerticalOrigin.Center:
+                    writer.WriteValue("CENTER");
+                    break;
+                case VerticalOrigin.Bottom:
+                    writer.WriteValue("BOTTOM");
+                    break;
+                case VerticalOrigin.Baseline:
+                    writer.WriteValue("BASELINE");
+                    break;
+                case VerticalOrigin.Top:
+                    writer.WriteValue("TOP");
+                    break;
+                default:
+                    Debug.Assert(false, "invalid vertical origin value");
+                    break;
+            }
+        }
+    }
+
+    /// <summary>
+    /// The vertical origin of a Billboard or Label object, relative to the position.
+    /// </summary>
+    [JsonConverter(typeof(VerticalOriginConverter))]
+    public enum VerticalOrigin
+    {
+        /// <summary>
+        /// Origin at the vertical center between Baseline and Top
+        /// </summary>
+        Center,
+
+        /// <summary>
+        /// Origin at the bottom of the anchor point
+        /// </summary>
+        Bottom,
+
+        /// <summary>
+        /// Origin at the baseline of the text
+        /// </summary>
+        Baseline,
+
+        /// <summary>
+        /// Origin at the vertical top
+        /// </summary>
+        Top,
+    }
+
+    /// <summary>
     /// CZML point object
     /// </summary>
     public class Point
@@ -219,6 +387,185 @@ namespace WhereToFly.App.Geo.DataFormats.Czml
     }
 
     /// <summary>
+    /// JSON converter for LabelStyle enum
+    /// </summary>
+    public class LabelStyleConverter : JsonConverter
+    {
+        /// <summary>
+        /// Can convert the type when it's a LabelStyle
+        /// </summary>
+        /// <param name="objectType">object type to try to convert</param>
+        /// <returns>true when it's a LabelStyle</returns>
+        public override bool CanConvert(Type objectType)
+        {
+            return objectType == typeof(LabelStyle);
+        }
+
+        /// <summary>
+        /// Reads LabelStyle from JSON; not implemented
+        /// </summary>
+        /// <param name="reader">reader; unused</param>
+        /// <param name="objectType">object type; unused</param>
+        /// <param name="existingValue">existing value; unused</param>
+        /// <param name="serializer">serializer; unused</param>
+        /// <returns>throws exception</returns>
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Writes LabelStyle value to JSON
+        /// </summary>
+        /// <param name="writer">JSON writer to use</param>
+        /// <param name="value">LabelStyle value to write</param>
+        /// <param name="serializer">serializer; unused</param>
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            var verticalOrigin = (LabelStyle)value;
+            switch (verticalOrigin)
+            {
+                case LabelStyle.Fill:
+                    writer.WriteValue("FILL");
+                    break;
+                case LabelStyle.Outline:
+                    writer.WriteValue("OUTLINE");
+                    break;
+                case LabelStyle.FillAndOutline:
+                    writer.WriteValue("FILL_AND_OUTLINE");
+                    break;
+                default:
+                    Debug.Assert(false, "invalid label style value");
+                    break;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Distance display condition; specifies if an entity is visible based on the viewer's
+    /// distance.
+    /// </summary>
+    public class DistanceDisplayCondition
+    {
+        /// <summary>
+        /// Distance display condition values
+        /// </summary>
+        [JsonProperty("distanceDisplayCondition")]
+        public double[] DistanceDisplayConditionValues { get; set; } = new double[2];
+
+        /// <summary>
+        /// Creates a new distance display condition object
+        /// </summary>
+        /// <param name="nearDistance">near distance</param>
+        /// <param name="farDistance">far distance</param>
+        public DistanceDisplayCondition(double nearDistance, double farDistance)
+        {
+            this.DistanceDisplayConditionValues[0] = nearDistance;
+            this.DistanceDisplayConditionValues[1] = farDistance;
+        }
+    }
+
+    /// <summary>
+    /// The label style of a Label object.
+    /// </summary>
+    [JsonConverter(typeof(LabelStyleConverter))]
+    public enum LabelStyle
+    {
+        /// <summary>
+        /// Filled label
+        /// </summary>
+        Fill,
+
+        /// <summary>
+        /// Only outline label
+        /// </summary>
+        Outline,
+
+        /// <summary>
+        /// Filled and outline label style
+        /// </summary>
+        FillAndOutline,
+    }
+
+    /// <summary>
+    /// CZML label object
+    /// </summary>
+    public class Label
+    {
+        /// <summary>
+        /// Label text
+        /// </summary>
+        [JsonProperty("text")]
+        public string Text { get; set; }
+
+        /// <summary>
+        /// Font name, e.g. "12pt Lucida Console"
+        /// </summary>
+        [JsonProperty("font", NullValueHandling = NullValueHandling.Ignore)]
+        public string Font { get; set; }
+
+        /// <summary>
+        /// Label style
+        /// </summary>
+        [JsonProperty("style")]
+        public LabelStyle LabelStyle { get; set; }
+
+        /// <summary>
+        /// Indicates if background is shown
+        /// </summary>
+        [JsonProperty("showBackground")]
+        public bool ShowBackground { get; set; }
+
+        /// <summary>
+        /// Horizontal origin value for the label
+        /// </summary>
+        [JsonProperty("horizontalOrigin")]
+        public HorizontalOrigin HorizontalOrigin { get; set; }
+
+        /// <summary>
+        /// Vertical origin value for the label
+        /// </summary>
+        [JsonProperty("verticalOrigin")]
+        public VerticalOrigin VerticalOrigin { get; set; }
+
+        /// <summary>
+        /// Height reference of object
+        /// </summary>
+        [JsonProperty("heightReference")]
+        public HeightReference HeightReference { get; set; } = HeightReference.None;
+
+        /// <summary>
+        /// Specifies the fill color
+        /// </summary>
+        [JsonProperty("fillColor", NullValueHandling = NullValueHandling.Ignore)]
+        public Color FillColor { get; set; }
+
+        /// <summary>
+        /// Specifies the background color
+        /// </summary>
+        [JsonProperty("backgroundColor", NullValueHandling = NullValueHandling.Ignore)]
+        public Color BackgroundColor { get; set; }
+
+        /// <summary>
+        /// Specifies the outline color
+        /// </summary>
+        [JsonProperty("outlineColor", NullValueHandling = NullValueHandling.Ignore)]
+        public Color OutlineColor { get; set; }
+
+        /// <summary>
+        /// Outline width
+        /// </summary>
+        [JsonProperty("outlineWidth")]
+        public double OutlineWidth { get; set; } = 1.0;
+
+        /// <summary>
+        /// Distance display condition
+        /// </summary>
+        [JsonProperty("distanceDisplayCondition", NullValueHandling = NullValueHandling.Ignore)]
+        public DistanceDisplayCondition DistanceDisplayCondition { get; set; }
+    }
+
+    /// <summary>
     /// CZML polyline object
     /// </summary>
     public class Polyline
@@ -246,6 +593,12 @@ namespace WhereToFly.App.Geo.DataFormats.Czml
         /// </summary>
         [JsonProperty("material")]
         public Material Material { get; set; }
+
+        /// <summary>
+        /// Distance display condition
+        /// </summary>
+        [JsonProperty("distanceDisplayCondition", NullValueHandling = NullValueHandling.Ignore)]
+        public DistanceDisplayCondition DistanceDisplayCondition { get; set; }
     }
 
     /// <summary>
