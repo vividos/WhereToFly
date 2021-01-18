@@ -164,7 +164,7 @@ function MapView(options) {
 
         var altitude = this.options.initialCenterPoint['altitude'] || 0.0;
 
-        this.zoomToLocation({
+        this.flyTo({
             longitude: longitude,
             latitude: latitude,
             altitude: altitude
@@ -801,25 +801,18 @@ MapView.prototype.updateMyLocation = function (options) {
 
     if (options.zoomToLocation) {
         console.log("MapView: also zooming to my location");
-        this.viewer.flyTo(
-            this.myLocationMarker,
-            {
-                offset: new Cesium.HeadingPitchRange(
-                    this.viewer.scene.camera.heading,
-                    this.viewer.scene.camera.pitch,
-                    5000.0)
-            });
+        this.flyTo(options);
     }
 };
 
 /**
- * Zooms to given location, by flying to the location
+ * Flies to to given location
  * @param {object} [options] Options to use for zooming
  * @param {double} [options.latitude] Latitude of zoom target
  * @param {double} [options.longitude] Longitude of zoom target
- * @param {double} [options.altitude] Altitude of zoom target
+ * @param {double} [options.altitude] Altitude of zoom target; optional
  */
-MapView.prototype.zoomToLocation = function (options) {
+MapView.prototype.flyTo = function (options) {
 
     if (this.zoomEntity === undefined) {
         console.warn("MapView.zoomToLocation: zoomEntity not initialized yet");
@@ -828,7 +821,7 @@ MapView.prototype.zoomToLocation = function (options) {
 
     console.log("MapView: zooming to: latitude=" + options.latitude + ", longitude=" + options.longitude + ", altitude=" + options.altitude);
 
-    var altitude = options.altitude || 0.0;
+    var altitude = options.altitude;
 
     // zooming works by assinging the zoom entity a new position, making it
     // visible (but transparent), fly there and hiding it again
@@ -852,6 +845,20 @@ MapView.prototype.zoomToLocation = function (options) {
             this.zoomEntity.show = false;
             console.log("MapView: zooming to: flying finished");
         });
+};
+
+/**
+ * Zooms to given location, by flying to the location
+ * @param {object} [options] Options to use for zooming
+ * @param {double} [options.latitude] Latitude of zoom target
+ * @param {double} [options.longitude] Longitude of zoom target
+ * @param {double} [options.altitude] Altitude of zoom target
+ */
+MapView.prototype.zoomToLocation = function (options) {
+
+    console.log("MapView: zooming to: latitude=" + options.latitude + ", longitude=" + options.longitude + ", altitude=" + options.altitude);
+
+    this.flyTo(options);
 };
 
 /**
@@ -1532,14 +1539,7 @@ MapView.prototype.showFindResult = function (options) {
     this.findResultMarker.position = Cesium.Cartesian3.fromDegrees(options.longitude, options.latitude);
     this.findResultMarker.show = true;
 
-    this.viewer.flyTo(
-        this.findResultMarker,
-        {
-            offset: new Cesium.HeadingPitchRange(
-                this.viewer.camera.heading,
-                this.viewer.camera.pitch,
-                5000.0)
-        });
+    this.flyTo(options);
 };
 
 /**
