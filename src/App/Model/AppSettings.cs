@@ -14,6 +14,11 @@ namespace WhereToFly.App.Model
         public MapPoint LastShownPosition { get; set; }
 
         /// <summary>
+        /// Last viewing distance of map, in meters from terrain
+        /// </summary>
+        public int LastViewingDistance { get; set; } = 5000;
+
+        /// <summary>
         /// Map shading mode; determines at which hour in the day the sun shading is simulated
         /// </summary>
         public MapShadingMode ShadingMode { get; set; }
@@ -89,6 +94,7 @@ namespace WhereToFly.App.Model
         /// <returns>calculated hash code</returns>
         public override int GetHashCode() =>
             (this.LastShownPosition,
+            this.LastViewingDistance,
             this.ShadingMode,
             this.MapImageryType,
             this.MapOverlayType,
@@ -121,7 +127,8 @@ namespace WhereToFly.App.Model
             this.LastShownPosition.Equals(other.LastShownPosition) &&
             this.LastLocationFilterSettings.Equals(other.LastLocationFilterSettings) &&
             this.LastFlyingRangeParameters.Equals(other.LastFlyingRangeParameters) &&
-            (this.ShadingMode,
+            (this.LastViewingDistance,
+            this.ShadingMode,
             this.MapImageryType,
             this.MapOverlayType,
             this.CoordinateDisplayFormat,
@@ -129,7 +136,8 @@ namespace WhereToFly.App.Model
             this.LastShownSettingsPage,
             this.ShownFlightPlanningDisclaimer,
             this.AppTheme) ==
-            (other.ShadingMode,
+            (other.LastViewingDistance,
+            other.ShadingMode,
             other.MapImageryType,
             other.MapOverlayType,
             other.CoordinateDisplayFormat,

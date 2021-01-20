@@ -263,10 +263,10 @@ namespace WhereToFly.App.Core.Views
         /// Creates the MapView JavaScript object; this must be called before any other methods.
         /// </summary>
         /// <param name="initialCenterPoint">initial center point to be used for map view</param>
-        /// <param name="initialZoomLevel">initial zoom level, in 2D zoom level steps</param>
+        /// <param name="initialViewingDistance">initial viewing distance, in meters from terrain</param>
         /// <param name="useEntityClustering">indicates if entity clustering should be used</param>
         /// <returns>task to wait on</returns>
-        public async Task CreateAsync(MapPoint initialCenterPoint, int initialZoomLevel, bool useEntityClustering)
+        public async Task CreateAsync(MapPoint initialCenterPoint, int initialViewingDistance, bool useEntityClustering)
         {
             if (this.taskCompletionSourceMapInitialized.Task.IsCompleted)
             {
@@ -281,7 +281,7 @@ namespace WhereToFly.App.Core.Views
                     latitude = initialCenterPoint.Latitude,
                     longitude = initialCenterPoint.Longitude,
                 },
-                initialZoomLevel = initialZoomLevel,
+                initialViewingDistance = initialViewingDistance,
                 hasMouse = Device.RuntimePlatform == Device.UWP,
                 useAsynchronousPrimitives = true,
                 useEntityClustering = useEntityClustering,

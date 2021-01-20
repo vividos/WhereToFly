@@ -6,7 +6,7 @@
  * @param {object} [options.initialCenterPoint] initial center point of map view
  * @param {double} [options.initialCenterPoint.latitude] latitude of center point
  * @param {double} [options.initialCenterPoint.longitude] longitude of center point
- * @param {Number} [options.initialZoomLevel] initial zoom level
+ * @param {Number} [options.initialViewingDistance] initial viewing distance
  * @param {Boolean} [options.hasMouse] indicates if the device this is running supports a mouse
  * @param {Boolean} [options.useAsynchronousPrimitives] indicates if asynchronous primitives
  * should be used
@@ -22,7 +22,7 @@ function MapView(options) {
     this.options = options || {
         id: 'mapElement',
         initialCenterPoint: { latitude: 47.67, longitude: 11.88 },
-        initialZoomLevel: 14,
+        initialViewingDistance: 5000.0,
         hasMouse: false,
         useAsynchronousPrimitives: true,
         useEntityClustering: true,
@@ -152,9 +152,10 @@ function MapView(options) {
 
         var initialHeading = 0.0; // north
         var initialPitch = Cesium.Math.toRadians(-35);
+        var initialViewingDistance = this.options.initialViewingDistance || 5000.0;
 
         this.viewer.camera.setView({
-            destination: Cesium.Cartesian3.fromDegrees(longitude, latitude, 5000.0),
+            destination: Cesium.Cartesian3.fromDegrees(longitude, latitude, initialViewingDistance),
             orientation: {
                 initialHeading,
                 initialPitch,

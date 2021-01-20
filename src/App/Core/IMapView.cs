@@ -43,10 +43,10 @@ namespace WhereToFly.App.Core
         /// Creates the map view; this must be called before any other methods.
         /// </summary>
         /// <param name="initialCenterPoint">initial center point to be used for map view</param>
-        /// <param name="initialZoomLevel">initial zoom level, in 2D zoom level steps</param>
+        /// <param name="initialViewingDistance">initial viewing distance, in meters from terrain</param>
         /// <param name="useEntityClustering">indicates if entity clustering should be used</param>
         /// <returns>task to wait on</returns>
-        Task CreateAsync(MapPoint initialCenterPoint, int initialZoomLevel, bool useEntityClustering);
+        Task CreateAsync(MapPoint initialCenterPoint, int initialViewingDistance, bool useEntityClustering);
 
         /// <summary>
         /// Updates the "my location" pin in the map

@@ -382,7 +382,16 @@ namespace WhereToFly.App.Core.Views
                 initialCenter = Constants.InitialCenterPoint;
             }
 
-            await this.mapView.CreateAsync(initialCenter, 14, this.appSettings.UseMapEntityClustering);
+            int lastViewingDistance = this.appSettings.LastViewingDistance;
+            if (lastViewingDistance == 0)
+            {
+                lastViewingDistance = 5000;
+            }
+
+            await this.mapView.CreateAsync(
+                initialCenter,
+                lastViewingDistance,
+                this.appSettings.UseMapEntityClustering);
 
             this.mapView.MapImageryType = this.appSettings.MapImageryType;
             this.mapView.MapOverlayType = this.appSettings.MapOverlayType;
