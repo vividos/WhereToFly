@@ -807,6 +807,25 @@ MapView.prototype.updateMyLocation = function (options) {
 };
 
 /**
+ * Returns the current viewing distance from the camera to the terrain in the
+ * center of the scene.
+ */
+MapView.prototype.getCurrentViewingDistance = function () {
+
+    var width = this.viewer.container.clientWidth;
+    var height = this.viewer.container.clientHeight;
+
+    var ray = this.viewer.camera.getPickRay(new Cesium.Cartesian2(width / 2, height / 2));
+    var position = this.viewer.scene.globe.pick(ray, this.viewer.scene);
+
+    if (position !== undefined) {
+        return Cesium.Cartesian3.distance(this.viewer.camera.positionWC, position);
+    }
+
+    return 5000.0;
+};
+
+/**
  * Flies to to given location
  * @param {object} [options] Options to use for zooming
  * @param {double} [options.latitude] Latitude of zoom target
@@ -823,6 +842,8 @@ MapView.prototype.flyTo = function (options) {
     console.log("MapView: zooming to: latitude=" + options.latitude + ", longitude=" + options.longitude + ", altitude=" + options.altitude);
 
     var altitude = options.altitude;
+
+    var viewingDistance = this.getCurrentViewingDistance();
 
     // zooming works by assinging the zoom entity a new position, making it
     // visible (but transparent), fly there and hiding it again
@@ -841,7 +862,7 @@ MapView.prototype.flyTo = function (options) {
             offset: new Cesium.HeadingPitchRange(
                 this.viewer.camera.heading,
                 this.viewer.camera.pitch,
-                5000.0)
+                viewingDistance)
         }).then(function () {
             this.zoomEntity.show = false;
             console.log("MapView: zooming to: flying finished");
@@ -881,11 +902,13 @@ MapView.prototype.zoomToRectangle = function (rectangle) {
 
     var boundingSphere = Cesium.BoundingSphere.fromCornerPoints(corner, oppositeCorner);
 
+    var viewingDistance = this.getCurrentViewingDistance();
+
     this.viewer.camera.flyToBoundingSphere(boundingSphere, {
         offset: new Cesium.HeadingPitchRange(
             this.viewer.camera.heading,
             this.viewer.camera.pitch,
-            5000.0)
+            viewingDistance)
     });
 };
 
