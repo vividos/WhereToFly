@@ -841,7 +841,7 @@ MapView.prototype.flyTo = function (options) {
 
     console.log("MapView: zooming to: latitude=" + options.latitude + ", longitude=" + options.longitude + ", altitude=" + options.altitude);
 
-    var altitude = options.altitude;
+    var altitude = options.altitude || 0.0;
 
     var viewingDistance = this.getCurrentViewingDistance();
 
@@ -856,6 +856,7 @@ MapView.prototype.flyTo = function (options) {
 
     console.log("MapView: zooming to: start flying");
 
+    var that = this;
     this.viewer.flyTo(
         this.zoomEntity,
         {
@@ -864,7 +865,7 @@ MapView.prototype.flyTo = function (options) {
                 this.viewer.camera.pitch,
                 viewingDistance)
         }).then(function () {
-            this.zoomEntity.show = false;
+            that.zoomEntity.show = false;
             console.log("MapView: zooming to: flying finished");
         });
 };
