@@ -301,8 +301,9 @@ namespace WhereToFly.App.Core
         /// Updates last shown position in app settings
         /// </summary>
         /// <param name="point">current position</param>
+        /// <param name="viewingDistance">current viewing distance; may be unset</param>
         /// <returns>task to wait on</returns>
-        public static async Task UpdateLastShownPositionAsync(MapPoint point)
+        public static async Task UpdateLastShownPositionAsync(MapPoint point, int? viewingDistance = null)
         {
             if (Settings == null)
             {
@@ -312,6 +313,11 @@ namespace WhereToFly.App.Core
             if (point.Valid)
             {
                 Settings.LastShownPosition = point;
+
+                if (viewingDistance.HasValue)
+                {
+                    Settings.LastViewingDistance = viewingDistance.Value;
+                }
 
                 var dataService = DependencyService.Get<IDataService>();
                 await dataService.StoreAppSettingsAsync(Settings);

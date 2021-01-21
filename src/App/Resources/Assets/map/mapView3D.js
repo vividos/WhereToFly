@@ -867,6 +867,13 @@ MapView.prototype.flyTo = function (options) {
         }).then(function () {
             that.zoomEntity.show = false;
             console.log("MapView: zooming to: flying finished");
+
+            that.onUpdateLastShownLocation({
+                latitude: options.latitude,
+                longitude: options.longitude,
+                altitude: options.altitude,
+                viewingDistance: that.getCurrentViewingDistance()
+            });
         });
 };
 
@@ -1030,7 +1037,8 @@ MapView.prototype.zoomToLayer = function (layerId) {
             this.onUpdateLastShownLocation({
                 latitude: Cesium.Math.toDegrees(center.latitude),
                 longitude: Cesium.Math.toDegrees(center.longitude),
-                altitude: center.height
+                altitude: center.height,
+                viewingDistance: this.getCurrentViewingDistance()
             });
         }
     }
@@ -1947,7 +1955,8 @@ MapView.prototype.zoomToTrack = function (trackId) {
         this.onUpdateLastShownLocation({
             latitude: Cesium.Math.toDegrees(center.latitude),
             longitude: Cesium.Math.toDegrees(center.longitude),
-            altitude: center.height
+            altitude: center.height,
+            viewingDistance: this.getCurrentViewingDistance()
         });
     }
 };
@@ -2201,12 +2210,15 @@ MapView.prototype.onAddTourPlanLocation = function (locationId) {
  * @param {Number} [options.latitude] Latitude of the position
  * @param {Number} [options.longitude] Longitude of the position
  * @param {Number} [options.altitude] Altitude of the position
+ * @param {Number} [options.viewingDistance] viewing distance of camera; optional
  */
 MapView.prototype.onUpdateLastShownLocation = function (options) {
 
-    console.log("MapView: updating last shown location: lat=" + options.latitude +
+    console.log("MapView: updating last shown location: " +
+        "lat=" + options.latitude +
         ", long=" + options.longitude +
-        ", alt=" + options.altitude);
+        ", alt=" + options.altitude +
+        ", viewingDistance=" + options.viewingDistance);
 
     if (this.options.callback !== undefined)
         this.options.callback('onUpdateLastShownLocation', options);

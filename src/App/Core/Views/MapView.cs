@@ -146,7 +146,8 @@ namespace WhereToFly.App.Core.Views
         /// Delegate of function to call when last shown location should be updated
         /// </summary>
         /// <param name="point">map point of last shown location</param>
-        public delegate void OnUpdateLastShownLocationCallback(MapPoint point);
+        /// <param name="viewingDistance">current viewing distance</param>
+        public delegate void OnUpdateLastShownLocationCallback(MapPoint point, int viewingDistance);
 
         /// <summary>
         /// Event that is signaled when last shown location should be updated
@@ -892,12 +893,17 @@ namespace WhereToFly.App.Core.Views
 
                 case "onUpdateLastShownLocation":
                     // this action uses the same parameters as the onLongTap action
-                    var updateLastShownLocationParameters = JsonConvert.DeserializeObject<LongTapParameter>(jsonParameters);
+                    var updateLastShownLocationParameters =
+                        JsonConvert.DeserializeObject<UpdateLastShownLocationParameter>(jsonParameters);
+
                     var updateLastShownLocationPoint = new MapPoint(
                         updateLastShownLocationParameters.Latitude,
                         updateLastShownLocationParameters.Longitude,
                         Math.Round(updateLastShownLocationParameters.Altitude));
-                    this.UpdateLastShownLocation?.Invoke(updateLastShownLocationPoint);
+
+                    int viewingDistance = updateLastShownLocationParameters.ViewingDistance;
+
+                    this.UpdateLastShownLocation?.Invoke(updateLastShownLocationPoint, viewingDistance);
                     break;
 
                 case "onSampledTrackHeights":
@@ -987,6 +993,17 @@ namespace WhereToFly.App.Core.Views
             /// Altitude of map point where long tap occured
             /// </summary>
             public double Altitude { get; set; }
+        }
+
+        /// <summary>
+        /// Additional parameter for the OnUpdateLastShownLocation JavaScript event
+        /// </summary>
+        internal class UpdateLastShownLocationParameter : LongTapParameter
+        {
+            /// <summary>
+            /// Current viewing distance from the terrain, in meters
+            /// </summary>
+            public int ViewingDistance { get; set; }
         }
 #pragma warning restore S1144 // Unused private types or members should be removed
     }

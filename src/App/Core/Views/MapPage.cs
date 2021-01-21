@@ -321,7 +321,8 @@ namespace WhereToFly.App.Core.Views
             this.mapView.AddFindResult += async (name, point) => await this.OnMapView_AddFindResult(name, point);
             this.mapView.LongTap += async (point) => await this.OnMapView_LongTap(point);
             this.mapView.AddTourPlanLocation += async (locationId) => await this.OnMapView_AddTourPlanLocation(locationId);
-            this.mapView.UpdateLastShownLocation += async (point) => await this.OnMapView_UpdateLastShownLocation(point);
+            this.mapView.UpdateLastShownLocation += async (point, viewingDistance)
+                => await this.OnMapView_UpdateLastShownLocation(point, viewingDistance);
 
             this.Content = webView;
 
@@ -574,10 +575,11 @@ namespace WhereToFly.App.Core.Views
         /// Called when the last shown location should be updated in the app settings.
         /// </summary>
         /// <param name="point">map point to store</param>
+        /// <param name="viewingDistance">current viewing distance</param>
         /// <returns>task to wait on</returns>
-        private async Task OnMapView_UpdateLastShownLocation(MapPoint point)
+        private async Task OnMapView_UpdateLastShownLocation(MapPoint point, int viewingDistance)
         {
-            await App.UpdateLastShownPositionAsync(point);
+            await App.UpdateLastShownPositionAsync(point, viewingDistance);
         }
 
         /// <summary>
