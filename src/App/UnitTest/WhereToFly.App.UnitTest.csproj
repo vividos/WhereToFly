@@ -65,6 +65,8 @@
     <Compile Include="HtmlConverterTest.cs" />
     <Compile Include="LocationTest.cs" />
     <Compile Include="Shared\AppResourceUriTest.cs" />
+    <Compile Include="Shared\MathTest.cs" />
+    <Compile Include="Shared\DictionaryExtensionsTest.cs" />
     <Compile Include="SqliteDatabaseDataServiceTest.cs" />
     <Compile Include="UnitTestAppManager.cs" />
     <Compile Include="UnitTestGeolocationService.cs" />
@@ -134,6 +136,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Shared\Base\WhereToFly.Shared.Base.csproj">
+      <Project>{96ac92ea-4f83-4a23-80d1-8ee5740d20df}</Project>
+      <Name>WhereToFly.Shared.Base</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Shared\Geo\WhereToFly.Shared.Geo.csproj">
       <Project>{6ee42b80-bb37-4e2c-9f9f-5f8daa682e3b}</Project>
       <Name>WhereToFly.Shared.Geo</Name>
