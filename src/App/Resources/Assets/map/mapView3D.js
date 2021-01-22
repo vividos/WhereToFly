@@ -2216,6 +2216,8 @@ MapView.prototype.onAddTourPlanLocation = function (locationId) {
  */
 MapView.prototype.onUpdateLastShownLocation = function (options) {
 
+    options.viewingDistance = Math.floor(options.viewingDistance);
+
     console.log("MapView: updating last shown location: " +
         "lat=" + options.latitude +
         ", long=" + options.longitude +
