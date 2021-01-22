@@ -92,7 +92,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             this.ItemTappedCommand = new AsyncCommand(this.OnTappedLayerItemAsync);
             this.VisibilityTappedCommand = new AsyncCommand(this.OnTappedLayerVisibilityAsync);
-            this.ZoomToLayerContextAction = new AsyncCommand(this.OnZoomToLayerAsync);
+            this.ZoomToLayerContextAction = new AsyncCommand(this.OnZoomToLayerAsync, this.OnCanExecuteZoomToLayer);
             this.ExportLayerContextAction = new AsyncCommand(this.OnExportLayerAsync, this.OnCanExecuteExportLayer);
             this.DeleteLayerContextAction = new AsyncCommand(this.OnDeleteLayerAsync, this.OnCanExecuteDeleteLayer);
         }
@@ -139,6 +139,15 @@ namespace WhereToFly.App.Core.ViewModels
         {
             await this.parentViewModel.ZoomToLayer(this.Layer);
         }
+
+        /// <summary>
+        /// Determines if a layer's "zoom to layer" context action can be executed. Prevents
+        /// zooming to OSM buildings layer.
+        /// </summary>
+        /// <param name="arg">argument; unused</param>
+        /// <returns>true when context action can be executed, false when not</returns>
+        private bool OnCanExecuteZoomToLayer(object arg) =>
+            this.Layer.LayerType != LayerType.OsmBuildingsLayer;
 
         /// <summary>
         /// Called when "Export" context action is selected

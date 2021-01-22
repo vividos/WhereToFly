@@ -90,8 +90,8 @@ namespace WhereToFly.App.Core.ViewModels
                 BaseUrl = "about:blank"
             };
 
-            this.ZoomToLayerCommand = new AsyncCommand(this.OnZoomToLayerAsync);
-            this.ExportLayerCommand = new AsyncCommand(this.OnExportLayerAsync);
+            this.ZoomToLayerCommand = new AsyncCommand(this.OnZoomToLayerAsync, this.OnCanExecuteZoomToLayer);
+            this.ExportLayerCommand = new AsyncCommand(this.OnExportLayerAsync, this.OnCanExecuteExportLayer);
             this.DeleteLayerCommand = new AsyncCommand(this.OnDeleteLayerAsync);
         }
 
@@ -123,6 +123,15 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
+        /// Determines if a layer's "zoom to layer" toolbar action can be executed. Prevents
+        /// zooming to OSM buildings layer.
+        /// </summary>
+        /// <param name="arg">argument; unused</param>
+        /// <returns>true when context action can be executed, false when not</returns>
+        private bool OnCanExecuteZoomToLayer(object arg) =>
+            this.layer.LayerType != LayerType.OsmBuildingsLayer;
+
+        /// <summary>
         /// Called when "Export" menu item is selected
         /// </summary>
         /// <returns>task to wait on</returns>
@@ -130,6 +139,17 @@ namespace WhereToFly.App.Core.ViewModels
         {
             await ExportFileHelper.ExportLayerAsync(this.layer);
         }
+
+        /// <summary>
+        /// Determines if a layer's "export layer" toolbar action can be executed. Prevents
+        /// exporting layers that can't be exported.
+        /// </summary>
+        /// <param name="arg">argument; unused</param>
+        /// <returns>true when context action can be executed, false when not</returns>
+        private bool OnCanExecuteExportLayer(object arg) =>
+            this.layer.LayerType != LayerType.LocationLayer &&
+            this.layer.LayerType != LayerType.TrackLayer &&
+            this.layer.LayerType != LayerType.OsmBuildingsLayer;
 
         /// <summary>
         /// Called when "Delete" menu item is selected

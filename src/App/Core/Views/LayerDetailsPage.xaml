@@ -26,13 +26,13 @@
         <ToolbarItem Name="Export"
                      Icon="{Binding Source={StaticResource ExportImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                      Command="{Binding ExportLayerCommand}"
-                     Order="Primary" Priority="0" />
+                     Order="Primary" Priority="1" />
 
         <ToolbarItem Name="Delete"
                      Icon="{Binding Source={StaticResource DeleteImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                      Command="{Binding DeleteLayerCommand}"
                      IsDestructive="True"
-                     Order="Primary" Priority="3" />
+                     Order="Primary" Priority="2" />
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
