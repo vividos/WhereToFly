@@ -208,6 +208,7 @@ namespace WhereToFly.App.Core.ViewModels
             {
                 return this.appSettings.UseMapEntityClustering;
             }
+
             set
             {
                 if (this.appSettings.UseMapEntityClustering != value)
