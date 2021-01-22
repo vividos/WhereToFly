@@ -77,7 +77,7 @@
 
                 <!-- Track description web view -->
                 <controls:AutoResizeWebView HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand"
-                                            HeightRequest="200"
+                                            WidthRequest="600" HeightRequest="200"
                                             Source="{Binding DescriptionWebViewSource}" />
 
             </StackLayout>
