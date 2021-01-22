@@ -71,6 +71,7 @@
                         <!-- Up/down buttons -->
                         <StackLayout Orientation="Horizontal"
                                      HorizontalOptions="Fill" VerticalOptions="Center"
+                                     HeightRequest="30"
                                      Grid.Row="1" Grid.Column="1">
                             <Button Text="Up" WidthRequest="80" Command="{Binding MoveUpCommand}" />
                             <Button Text="Down" WidthRequest="80" Command="{Binding MoveDownCommand}" />
