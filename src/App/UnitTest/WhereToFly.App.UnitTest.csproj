@@ -85,8 +85,13 @@
     <Compile Include="ViewModels\TrackListViewModelTest.cs" />
     <Compile Include="ViewModels\WeatherIconViewModelTest.cs" />
     <Compile Include="ViewModels\WeatherDashboardViewModelTest.cs" />
+    <Compile Include="Views\AddLayerPopupPageTest.cs" />
+    <Compile Include="Views\AddLiveWaypointPopupPageTest.cs" />
+    <Compile Include="Views\AddTrackPopupPageTest.cs" />
+    <Compile Include="Views\LayerDetailsPageTest.cs" />
     <Compile Include="Views\SettingsPageTest.cs" />
     <Compile Include="Views\WeatherDashboardPageTest.cs" />
+    <Compile Include="Views\WeatherDetailsPageTest.cs" />
     <Compile Include="WeatherImageCacheTest.cs" />
     <Compile Include="UnitTestPlatform.cs" />
     <Compile Include="ViewModels\LocationListEntryViewModelTest.cs" />

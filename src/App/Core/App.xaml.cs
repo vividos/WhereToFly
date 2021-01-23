@@ -215,7 +215,11 @@ namespace WhereToFly.App.Core
         /// <returns>hex color string, in the format #RRGGBB</returns>
         public static string GetResourceColor(string colorKey)
         {
-            return ((Color)Current.Resources[colorKey]).ToHex().Replace("#FF", "#");
+            return Current?.Resources != null &&
+                Current.Resources.TryGetValue(colorKey, out object value) &&
+                value is Color color
+                ? color.ToHex().Replace("#FF", "#")
+                : "#000000";
         }
 
         /// <summary>

@@ -21,9 +21,9 @@ namespace WhereToFly.App.UnitTest.Shared
             var value3 = Math.Interpolate(10.0, 0.0, 0.99);
 
             // check
-            Assert.AreEqual(4.2, value1, "interpolated value must match");
-            Assert.AreEqual(-2.0, value2, "interpolated value must match");
-            Assert.AreEqual(0.1, value3, "interpolated value must match");
+            Assert.AreEqual(4.2, value1, 1e-5, "interpolated value must match");
+            Assert.AreEqual(-2.0, value2, 1e-5, "interpolated value must match");
+            Assert.AreEqual(0.1, value3, 1e-5, "interpolated value must match");
         }
     }
 }
