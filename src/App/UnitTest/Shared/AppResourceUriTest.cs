@@ -65,7 +65,7 @@ namespace WhereToFly.App.UnitTest.Shared
             Assert.ThrowsException<ArgumentNullException>(() => new AppResourceUri(AppResourceUri.ResourceType.FindMeSpotPos, null));
             Assert.ThrowsException<UriFormatException>(() => new AppResourceUri(string.Empty));
 
-            var uri1 = new AppResourceUri("http://github.com/");
+            var uri1 = new AppResourceUri("https://github.com/");
             var uri2 = new AppResourceUri("where-to-fly://");
             var uri3 = new AppResourceUri("where-to-fly://xxx");
             var uri4 = new AppResourceUri("where-to-fly://findmespotpos/");

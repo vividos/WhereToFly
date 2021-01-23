@@ -8,7 +8,7 @@ using WhereToFly.Shared.Geo;
 /// SunCalc.Net is a C# library for calculating sun/moon position and light phases.
 /// The library was ported from the suncalc JavaScript library:
 /// https://github.com/mourner/suncalc
-/// Sun calculations are based on http://aa.quae.nl/en/reken/zonpositie.html formulas
+/// Sun calculations are based on https://aa.quae.nl/en/reken/zonpositie.html formulas
 /// Note that moon calculations weren't ported over (yet).
 /// </summary>
 namespace WhereToFly.App.Geo.SunCalcNet

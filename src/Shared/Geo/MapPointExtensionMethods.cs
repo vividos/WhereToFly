@@ -6,7 +6,7 @@ namespace WhereToFly.Shared.Geo
     /// <summary>
     /// Extension methods for MapPoint class.
     /// Calculation formulas are used from Aviation Formulary, from Ed Williams:
-    /// http://www.edwilliams.org/avform.htm
+    /// https://www.edwilliams.org/avform.htm
     /// </summary>
     public static class MapPointExtensionMethods
     {

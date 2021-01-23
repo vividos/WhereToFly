@@ -44,7 +44,7 @@ REST based web service requests.
 The library is licensed using the
 [MIT License](https://github.com/paulcbetts/refit/blob/master/COPYING).
 
-The app uses the [Html Agility Pack](http://html-agility-pack.net/) to parse
+The app uses the [Html Agility Pack](https://html-agility-pack.net/) to parse
 HTML content.
 The library is licensed using the
 [MIT License](https://github.com/zzzprojects/html-agility-pack/blob/master/LICENSE).
@@ -182,7 +182,7 @@ https://creativecommons.org/publicdomain/zero/1.0/
 
 The following icons are from the onlinewebfonts web page:
 
-- Paragliding icon: Icon made from [http://www.onlinewebfonts.com/icon](http://www.onlinewebfonts.com/icon "Icon Fonts").
+- Paragliding icon: Icon made from [https://www.onlinewebfonts.com/icon/](https://www.onlinewebfonts.com/icon/ "Icon Fonts").
   The icon is licensed by CC BY 3.0.
 
 The following icons are from Wikimedia Commons:

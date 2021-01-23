@@ -180,7 +180,7 @@ namespace WhereToFly.App.Core.Services
                     MapLocation = new MapPoint(47.70599, 11.87451, 809.0),
                     Description = "Anschlussmöglichkeiten zum RBO Bus 9562 zum Spitzingsattel",
                     Type = LocationType.PublicTransportTrain,
-                    InternetLink = "http://www.bayerischeoberlandbahn.de/strecken-fahrplaene/linie/3-munchen-hbf-holzkirchen-bayrischzell",
+                    InternetLink = "https://www.brb.de/strecken-fahrplaene/linie/3-munchen-hbf-holzkirchen-bayrischzell",
                     IsPlanTourLocation = true
                 },
 
@@ -202,7 +202,7 @@ namespace WhereToFly.App.Core.Services
                     MapLocation = new MapPoint(47.679201, 11.90403, 1612.0),
                     Description = "Hike & Fly Gelände des Drachenfliegerclub Bayrischzell. Von Josefstal (Landeplatz mit Windsack) zu Fuß in ca. 1,5 Std Aufstieg zum Jägerkamp / Nagelspitz. Startplatz liegt an der Nagelspitz. Ist auch als Startplatz für Streckenflüge in Richtung Osten (Bayrischzell - Kössen) geeignet.",
                     Type = LocationType.FlyingTakeoff,
-                    InternetLink = "http://www.dc-bayrischzell.de",
+                    InternetLink = "https://dc-bayrischzell.jimdosite.com/",
                     IsPlanTourLocation = false,
                     TakeoffDirections = TakeoffDirections.NW | TakeoffDirections.WNW | TakeoffDirections.E,
                 },
@@ -214,7 +214,7 @@ namespace WhereToFly.App.Core.Services
                     MapLocation = new MapPoint(47.69223, 11.886778, 840.0),
                     Description = "Großer Landeplatz mit Windsack ",
                     Type = LocationType.FlyingLandingPlace,
-                    InternetLink = "http://www.dc-bayrischzell.de",
+                    InternetLink = "https://dc-bayrischzell.jimdosite.com/",
                     IsPlanTourLocation = false
                 },
             };

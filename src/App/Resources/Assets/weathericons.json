@@ -88,21 +88,21 @@
     "Group": "Weather forecast",
     "Type": 0,
     "Icon": null,
-    "WebLink": "http://www.wetterzentrale.de/topkarten/"
+    "WebLink": "https://www.wetterzentrale.de/topkarten.php"
   },
   {
     "Name": "BR Bergwetter Alpen",
     "Group": "Weather forecast",
     "Type": 0,
     "Icon": null,
-    "WebLink": "http://www.br.de/wetter/action/reisewetter/bergwetter.do"
+    "WebLink": "https://www.br.de/wetter/action/reisewetter/bergwetter.do"
   },
   {
     "Name": "Unwetterzentrale.de",
     "Group": "Weather forecast",
     "Type": 0,
     "Icon": null,
-    "WebLink": "http://www.unwetterzentrale.de/uwz/lagebericht.html"
+    "WebLink": "https://www.unwetterzentrale.de/uwz/lagebericht.html"
   },
   {
     "Name": "Dust forecast",
@@ -116,7 +116,7 @@
     "Group": "Weather forecast",
     "Type": 0,
     "Icon": null,
-    "WebLink": "http://www.wetter3.de/vertikal.html"
+    "WebLink": "https://www.wetter3.de/vertikal.html"
   },
   {
     "Name": "Wetterkarte ZAMG",
@@ -158,7 +158,7 @@
     "Group": "Current weather",
     "Type": 0,
     "Icon": null,
-    "WebLink": "http://www.lawinenwarndienst-bayern.de/res/daten_meldungen/messdaten/"
+    "WebLink": "https://www.lawinenwarndienst-bayern.de/res/daten_meldungen/messdaten/"
   },
   {
     "Name": "Holfuy Map Alpen",
@@ -221,14 +221,14 @@
     "Group": "Current weather",
     "Type": 0,
     "Icon": null,
-    "WebLink": "http://www.lawinenwarndienst-bayern.de/res/daten_meldungen/messdaten/messstation.php?rid=16"
+    "WebLink": "https://www.lawinenwarndienst-bayern.de/res/daten_meldungen/messdaten/messstation.php?rid=16"
   },
   {
     "Name": "Brauneck Wind",
     "Group": "Current weather",
     "Type": 0,
     "Icon": null,
-    "WebLink": "http://www.lawinenwarndienst-bayern.de/res/daten_meldungen/messdaten/messstation.php?rid=9"
+    "WebLink": "https://www.lawinenwarndienst-bayern.de/res/daten_meldungen/messdaten/messstation.php?rid=9"
   },
   {
     "Name": "Windfinder Neubiberg",
@@ -270,7 +270,7 @@
     "Group": "Webcams",
     "Type": 0,
     "Icon": null,
-    "WebLink": "http://www.foto-webcam.org/webcam/wallberg/"
+    "WebLink": "https://www.foto-webcam.org/webcam/wallberg/"
   },
   {
     "Name": "Foto-Webcam Kampenwand",
@@ -291,7 +291,7 @@
     "Group": "Webcams",
     "Type": 0,
     "Icon": null,
-    "WebLink": "http://www.blomberghaus.de/1/webcam/blombergturm.jpg"
+    "WebLink": "https://www.der-blomberg.de/webcams"
   },
   {
     "Name": "Foto-Webcam Zugspitze Süd",

@@ -9,7 +9,7 @@ namespace WhereToFly.App.Geo.DataFormats
 {
     /// <summary>
     /// File parser for SeeYou waypoints file with extension .cup. See .cup specification:
-    /// http://download.naviter.com/docs/CUP-file-format-description.pdf
+    /// https://download.naviter.com/docs/CUP-file-format-description.pdf
     /// </summary>
     internal class SeeYouWaypointsFileParser
     {
