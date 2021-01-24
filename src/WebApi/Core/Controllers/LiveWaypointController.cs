@@ -60,13 +60,15 @@ namespace LiveWaypoints.Controllers
         /// <summary>
         /// Checks live waypoint ID parameter and throws exception when invalid
         /// </summary>
-        /// <param name="id">live waypoint ID to check</param>
-        private void CheckLiveWaypointId(string id)
+        /// <param name="liveWaypointId">live waypoint ID to check</param>
+        private void CheckLiveWaypointId(string liveWaypointId)
         {
-            if (string.IsNullOrEmpty(id))
+            if (string.IsNullOrEmpty(liveWaypointId))
             {
-                this.logger.LogWarning($"invalid live waypoint ID: {id}");
-                throw new ArgumentException(nameof(id));
+                this.logger.LogWarning($"invalid live waypoint ID: {liveWaypointId}");
+                throw new ArgumentException(
+                    "invalid live waypoint ID",
+                    nameof(liveWaypointId));
             }
         }
     }
