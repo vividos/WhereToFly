@@ -58,6 +58,7 @@
     <Compile Include="Geo\TakeoffDirectionsHelperTest.cs" />
     <Compile Include="Geo\SeeYouDataFileTest.cs" />
     <Compile Include="Geo\SunCalcNetTest.cs" />
+    <Compile Include="Geo\GeoJsonConvertTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Geo\GeoLoaderTest.cs" />
     <Compile Include="MapPointTest.cs" />
