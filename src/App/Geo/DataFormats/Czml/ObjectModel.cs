@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 
 #pragma warning disable SA1402 // File may only contain a single type
+#pragma warning disable CA1819 // Properties should not return arrays
 
 /// <summary>
 /// C# object model for deserializing CZML JSON data.
