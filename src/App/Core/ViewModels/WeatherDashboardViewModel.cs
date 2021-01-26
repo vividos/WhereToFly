@@ -1,5 +1,4 @@
-﻿using MvvmHelpers.Commands;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -8,6 +7,7 @@ using System.Windows.Input;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.Views;
 using WhereToFly.App.Model;
+using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.ViewModels

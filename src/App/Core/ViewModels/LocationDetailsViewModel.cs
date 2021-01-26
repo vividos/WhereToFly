@@ -1,5 +1,4 @@
-﻿using MvvmHelpers.Commands;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WhereToFly.App.Core.Resources;
@@ -8,6 +7,7 @@ using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Geo;
 using WhereToFly.Shared.Model;
+using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.ViewModels

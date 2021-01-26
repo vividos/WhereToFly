@@ -1,5 +1,4 @@
-﻿using MvvmHelpers.Commands;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -12,6 +11,7 @@ using WhereToFly.App.Geo;
 using WhereToFly.App.Geo.Spatial;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Model;
+using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.ViewModels

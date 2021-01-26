@@ -23,6 +23,10 @@ access all sorts of platform specific APIs.
 The library is licensed using the
 [MIT License](https://github.com/xamarin/Essentials/blob/master/LICENSE).
 
+The app uses the [Xamarin Community Toolkit](https://github.com/xamarin/XamarinCommunityToolkit)
+library. The library is licensed using the
+[MIT License](https://github.com/xamarin/XamarinCommunityToolkit/blob/main/LICENSE).
+
 The app uses the following [Xamarin Plugins](https://github.com/jamesmontemagno/Xamarin.Plugins):
 - Xam.Plugin.Geolocator: Geo-location of user
 
@@ -73,10 +77,6 @@ The app uses the [Toast.iOS](https://github.com/andrius-k/Toast)
 library to show Toast messages on iOS.
 The library is licensed using the
 [MIT License](https://github.com/andrius-k/Toast/blob/master/LICENSE.md).
-
-The app uses the [Refractored.MvvmHelpers](https://github.com/jamesmontemagno/mvvm-helpers)
-library. The library is licensed using the
-[MIT License](https://github.com/jamesmontemagno/mvvm-helpers/blob/master/LICENSE.md).
 
 The app uses the [Chart.js](https://www.chartjs.org/)
 library to display height profiles. The library is licensed using the
