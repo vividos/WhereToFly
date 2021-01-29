@@ -277,6 +277,7 @@ namespace WhereToFly.App.Core.Views
             var options = new
             {
                 id = "mapElement",
+                messageBandId = "messageBand",
                 initialCenterPoint = new
                 {
                     latitude = initialCenterPoint.Latitude,
@@ -295,6 +296,25 @@ namespace WhereToFly.App.Core.Views
             this.RunJavaScript(js);
 
             await this.MapInitializedTask;
+        }
+
+        /// <summary>
+        /// Shows a message band at the top of the map, with given message text
+        /// </summary>
+        /// <param name="messageText">message text</param>
+        private void ShowMessageBand(string messageText)
+        {
+            string js = $"map.showMessageBand(\"{messageText}\");";
+
+            this.RunJavaScript(js);
+        }
+
+        /// <summary>
+        /// Hides message band again
+        /// </summary>
+        private void HideMessageBand()
+        {
+            this.RunJavaScript("map.hideMessageBand();");
         }
 
         /// <summary>

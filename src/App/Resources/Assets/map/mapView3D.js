@@ -3,6 +3,7 @@
  * @constructor
  * @param {object} [options] Options to use for initializing map view
  * @param {String} [options.id] DOM ID of the div element to create map view in
+ * @param {String} [options.messageBandId] DOM ID of the message band div element
  * @param {object} [options.initialCenterPoint] initial center point of map view
  * @param {double} [options.initialCenterPoint.latitude] latitude of center point
  * @param {double} [options.initialCenterPoint.longitude] longitude of center point
@@ -34,6 +35,8 @@ function MapView(options) {
 
     if (this.options.callback === undefined)
         this.options.callback = callAction;
+
+    this.showMessageBand("Initializing map...");
 
     console.log("MapView: #1 imagery provider");
 
@@ -266,6 +269,8 @@ function MapView(options) {
     this.viewer.dataSources.add(this.locationDataSource);
 
     this.onMapInitialized();
+
+    this.hideMessageBand();
 }
 
 /**
@@ -450,6 +455,37 @@ MapView.prototype.onNewCluster = function (clusteredEntities, cluster) {
  */
 MapView.prototype.updateScene = function (imageryType) {
     this.viewer.scene.requestRender();
+};
+
+/**
+ * Shows message band with given text.
+ * @param {String} messageText message text to show
+ */
+MapView.prototype.showMessageBand = function (messageText) {
+
+    if (this.options.messageBandId === undefined)
+        return;
+
+    var bandElement = document.getElementById(this.options.messageBandId);
+    if (bandElement === undefined)
+        return;
+
+    bandElement.style.display = 'block';
+    bandElement.innerHTML = messageText;
+};
+
+/**
+ * Hides message band again.
+ */
+MapView.prototype.hideMessageBand = function () {
+
+    if (this.options.messageBandId === undefined)
+        return;
+
+    var bandElement = document.getElementById(this.options.messageBandId);
+    if (bandElement !== undefined)
+        bandElement.style.display = 'none';
+
 };
 
 /**
