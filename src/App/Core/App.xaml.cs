@@ -76,7 +76,11 @@ namespace WhereToFly.App.Core
             this.InitializeComponent();
             this.SetupDepencencyService();
             this.SetupMainPage();
-            Task.Run(async () => await this.LoadAppDataAsync());
+
+            if (!TaskCompletionSourceInitialized.Task.IsCompleted)
+            {
+                Task.Run(async () => await this.LoadAppDataAsync());
+            }
 
             this.RequestedThemeChanged += this.OnRequestedThemeChanged;
         }
