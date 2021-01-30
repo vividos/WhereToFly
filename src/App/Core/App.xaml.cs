@@ -52,9 +52,15 @@ namespace WhereToFly.App.Core
         public static IMapView MapView => (Current as App).MapPage.MapView;
 
         /// <summary>
-        /// Task that can be awaited to wait for a completed app initialisation
+        /// Task that can be awaited to wait for a completed app initialisation. The task performs
+        /// the following:
+        /// - sets up dependency service objects
+        /// - sets up main page and map page
+        /// - loads app data
+        /// - initializes live waypoint refresh service
+        /// Note that MapPage also has a task to wait for initialized page.
         /// </summary>
-        public static Task InitializedTask { get => TaskCompletionSourceInitialized.Task; }
+        public static Task InitializedTask => TaskCompletionSourceInitialized.Task;
 
         /// <summary>
         /// Creates a new app object

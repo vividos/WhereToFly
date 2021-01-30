@@ -72,9 +72,10 @@ namespace WhereToFly.App.Core.Views
         private bool IsInitialized => this.taskCompletionSourceMapInitialized.Task.IsCompleted;
 
         /// <summary>
-        /// Task that is in "finished" state when map is initialized
+        /// Task that is in "completed" state when map is initialized. This is the case when
+        /// CreateAsync() created the JavaScript MapView object and its ctor ran to completion.
         /// </summary>
-        public Task MapInitializedTask { get => this.taskCompletionSourceMapInitialized.Task; }
+        public Task MapInitializedTask => this.taskCompletionSourceMapInitialized.Task;
 
         /// <summary>
         /// Delegate of function to call when location details should be shown
@@ -269,7 +270,7 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         public async Task CreateAsync(MapPoint initialCenterPoint, int initialViewingDistance, bool useEntityClustering)
         {
-            if (this.taskCompletionSourceMapInitialized.Task.IsCompleted)
+            if (this.IsInitialized)
             {
                 this.taskCompletionSourceMapInitialized = new TaskCompletionSource<bool>();
             }

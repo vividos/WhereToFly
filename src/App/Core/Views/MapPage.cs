@@ -272,7 +272,8 @@ namespace WhereToFly.App.Core.Views
         }
 
         /// <summary>
-        /// Sets up WebView control
+        /// Sets up WebView control. Loads the map html page into the web view, creates the C#
+        /// MapView instance and waits for the page to load.
         /// </summary>
         /// <returns>task to wait on</returns>
         private async Task SetupWebViewAsync()
@@ -372,7 +373,10 @@ namespace WhereToFly.App.Core.Views
         }
 
         /// <summary>
-        /// Creates the map view
+        /// Creates the map view. Uses the C# MapView object to create its JavaScript MapView
+        /// counterpart. Also locations, tracks and layers are added. The call doesn't wait for
+        /// the map view to finish initialization. MapView would have a task to wait for that
+        /// event, though.
         /// </summary>
         /// <returns>task to wait on</returns>
         private async Task CreateMapViewAsync()
