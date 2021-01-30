@@ -1484,13 +1484,12 @@ MapView.prototype.createTakeoffPrimitive = function (location, color, outline) {
                     width: 3.0
                 }),
                 attributes: {
+                    color: Cesium.ColorGeometryInstanceAttribute.fromColor(color),
                     distanceDisplayCondition: distanceDisplayCondition
                 }
             }),
-            appearance: new Cesium.MaterialAppearance({
-                translucent: false,
-                material: material,
-                faceForward: true
+            appearance: new Cesium.PolylineColorAppearance({
+                translucent: false
             })
         });
     }
@@ -1508,6 +1507,7 @@ MapView.prototype.createTakeoffPrimitive = function (location, color, outline) {
                     polygonHierarchy: new Cesium.PolygonHierarchy(pointArray)
                 }),
                 attributes: {
+                    color: Cesium.ColorGeometryInstanceAttribute.fromColor(color),
                     distanceDisplayCondition: distanceDisplayCondition
                 }
             }),
