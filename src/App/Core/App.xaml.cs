@@ -333,24 +333,12 @@ namespace WhereToFly.App.Core
         }
 
         /// <summary>
-        /// Opens file for importing data
-        /// </summary>
-        /// <param name="stream">stream to import</param>
-        /// <param name="filename">filename of stream</param>
-        /// <returns>task to wait on</returns>
-        public async Task OpenFileAsync(Stream stream, string filename)
-        {
-            await OpenFileHelper.OpenFileAsync(stream, filename);
-        }
-
-        /// <summary>
         /// Opens app resource URI, e.g. a live waypoint
         /// </summary>
         /// <param name="uri">app resource URI to open</param>
-        /// <returns>task to wait on</returns>
-        public async Task OpenAppResourceUriAsync(string uri)
+        public static void OpenAppResourceUri(string uri)
         {
-            await OpenAppResourceUriHelper.Open(uri);
+            RunOnUiThread(async () => await OpenAppResourceUriHelper.OpenAsync(uri));
         }
 
         /// <summary>

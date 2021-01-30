@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using WhereToFly.App.Core;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using Windows.UI.ViewManagement;
@@ -54,13 +55,11 @@ namespace WhereToFly.App.UWP
                 {
                     var file = items[0] as StorageFile;
 
-                    var app = Core.App.Current as Core.App;
-
                     Core.App.RunOnUiThread(async () =>
                     {
                         using (var stream = await file.OpenStreamForReadAsync())
                         {
-                            await app.OpenFileAsync(stream, file.Name);
+                            await OpenFileHelper.OpenFileAsync(stream, file.Name);
                         }
                     });
                 }

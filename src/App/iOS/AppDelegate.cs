@@ -59,11 +59,10 @@ namespace WhereToFly.App.iOS
         /// <returns>true always</returns>
         public override bool OpenUrl(UIApplication application, NSUrl url, string sourceApplication, NSObject annotation)
         {
-            var app = Core.App.Current as Core.App;
             if (url != null &&
                 url.Scheme == Shared.Model.AppResourceUri.DefaultScheme)
             {
-                Core.App.RunOnUiThread(async () => await app.OpenAppResourceUriAsync(url.ToString()));
+                Core.App.OpenAppResourceUri(url.ToString());
             }
 
             return true;

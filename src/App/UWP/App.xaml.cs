@@ -108,9 +108,7 @@ namespace WhereToFly.App.UWP
             {
                 var eventArgs = args as ProtocolActivatedEventArgs;
 
-                var app = Core.App.Current as Core.App;
-
-                Core.App.RunOnUiThread(async () => await app.OpenAppResourceUriAsync(eventArgs.Uri.AbsoluteUri));
+                Core.App.OpenAppResourceUri(eventArgs.Uri.AbsoluteUri);
             }
         }
 
@@ -126,13 +124,11 @@ namespace WhereToFly.App.UWP
             {
                 var file = args.Files[0] as StorageFile;
 
-                var app = Core.App.Current as Core.App;
-
                 Core.App.RunOnUiThread(async () =>
                 {
                     using (var stream = await file.OpenStreamForReadAsync())
                     {
-                        await app.OpenFileAsync(stream, file.Name);
+                        await OpenFileHelper.OpenFileAsync(stream, file.Name);
                     }
                 });
             }

@@ -18,7 +18,7 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="uri">app resource URI to open</param>
         /// <returns>task to wait on</returns>
-        public static async Task Open(string uri)
+        public static async Task OpenAsync(string uri)
         {
             try
             {

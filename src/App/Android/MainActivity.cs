@@ -179,11 +179,10 @@ namespace WhereToFly.App.Android
         /// <param name="intent">intent to process</param>
         private void ProcessIntent(Intent intent)
         {
-            var app = Core.App.Current as Core.App;
             if (intent.DataString != null &&
                 intent.DataString.StartsWith(Shared.Model.AppResourceUri.DefaultScheme))
             {
-                Core.App.RunOnUiThread(async () => await app.OpenAppResourceUriAsync(intent.DataString));
+                Core.App.OpenAppResourceUri(intent.DataString);
                 return;
             }
 
@@ -199,7 +198,7 @@ namespace WhereToFly.App.Android
 
             if (stream != null)
             {
-                Core.App.RunOnUiThread(async () => await app.OpenFileAsync(stream, filename));
+                Core.App.RunOnUiThread(async () => await OpenFileHelper.OpenFileAsync(stream, filename));
             }
         }
 

@@ -29,7 +29,7 @@ namespace WhereToFly.App.Core
         private static WaitingPopupPage waitingDialog;
 
         /// <summary>
-        /// Opens file from given stream
+        /// Opens file from given stream.
         /// </summary>
         /// <param name="stream">stream object</param>
         /// <param name="filename">
