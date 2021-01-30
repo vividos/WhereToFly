@@ -760,7 +760,10 @@ namespace WhereToFly.App.Core.Views
         {
             if (this.mapView.MapInitializedTask.IsCompleted)
             {
-                this.mapView.OnNetworkConnectivityChanged(args.NetworkAccess == Xamarin.Essentials.NetworkAccess.Internet);
+                bool isConnectivityAvailable =
+                    args.NetworkAccess == Xamarin.Essentials.NetworkAccess.Internet;
+
+                this.mapView.OnNetworkConnectivityChanged(isConnectivityAvailable);
             }
         }
 

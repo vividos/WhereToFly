@@ -18,8 +18,10 @@ namespace WhereToFly.App.UnitTest.Shared
         public void TestGetValueOrDefault()
         {
             // set up
-            var dict = new Dictionary<string, int>();
-            dict.Add("key1", 42);
+            var dict = new Dictionary<string, int>
+            {
+                { "key1", 42 }
+            };
 
             Dictionary<string, int> nullDict = null;
 

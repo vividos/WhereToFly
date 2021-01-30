@@ -1,6 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WhereToFly.App.Geo;
 using WhereToFly.App.Model;
 

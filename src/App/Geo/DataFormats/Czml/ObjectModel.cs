@@ -578,7 +578,7 @@ namespace WhereToFly.App.Geo.DataFormats.Czml
         public PositionList Positions { get; set; }
 
         /// <summary>
-        /// Width
+        /// Polyline width
         /// </summary>
         [JsonProperty("width")]
         public double Width { get; set; }

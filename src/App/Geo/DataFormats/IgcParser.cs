@@ -241,7 +241,7 @@ namespace WhereToFly.App.Geo.DataFormats
             int minuteValue = Convert.ToInt32(latLong.Substring(3, 2));
             int minuteFractional = Convert.ToInt32(latLong.Substring(5, 3));
 
-            double value = (double)decimalValue + ((minuteValue + (minuteFractional / 1000.0)) / 60.0);
+            double value = decimalValue + ((minuteValue + (minuteFractional / 1000.0)) / 60.0);
 
             char direction = latLong[8];
             if (direction == 'S' || direction == 'W')

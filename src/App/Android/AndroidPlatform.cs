@@ -35,16 +35,11 @@ namespace WhereToFly.App.Android
         /// <summary>
         /// Property containing the public external storage folder
         /// </summary>
-        public string PublicExportFolder
-        {
+        public string PublicExportFolder =>
 #pragma warning disable CS0618 // Type or member is obsolete
-            get
-            {
-                return global::Android.OS.Environment.GetExternalStoragePublicDirectory(
-                    global::Android.OS.Environment.DirectoryDocuments).AbsolutePath;
-            }
+            global::Android.OS.Environment.GetExternalStoragePublicDirectory(
+                global::Android.OS.Environment.DirectoryDocuments).AbsolutePath;
 #pragma warning restore CS0618 // Type or member is obsolete
-        }
 
         /// <summary>
         /// Base path to use in WebView control, for Android

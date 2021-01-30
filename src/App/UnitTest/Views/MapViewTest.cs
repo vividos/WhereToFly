@@ -61,6 +61,8 @@ namespace WhereToFly.App.UnitTest.Views
             var webView = new WebView();
             var mapView = new MapView(webView);
 
+            Assert.IsTrue(mapView.UseEntityClustering, "initial settings value must be correct");
+
             // run
             mapView.MapImageryType = Model.MapImageryType.BingMapsAerialWithLabels;
             mapView.MapOverlayType = Model.MapOverlayType.ContourLines;

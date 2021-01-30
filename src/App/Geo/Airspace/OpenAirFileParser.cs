@@ -392,8 +392,7 @@ namespace WhereToFly.App.Geo.Airspace
 
             string localData = data.ToUpperInvariant();
 
-            Altitude altitude;
-            if (this.TryParseFixedTextAltitude(localData, out altitude) ||
+            if (this.TryParseFixedTextAltitude(localData, out Altitude altitude) ||
                 this.TryParseFlightLevelAltitude(localData, out altitude) ||
                 this.TryParseFixedHeightsAltitude(localData, out altitude))
             {
@@ -401,8 +400,11 @@ namespace WhereToFly.App.Geo.Airspace
                 return altitude;
             }
 
-            var textualAltitude = new Altitude(data);
-            textualAltitude.OpeningTimes = openingTimes;
+            var textualAltitude = new Altitude(data)
+            {
+                OpeningTimes = openingTimes
+            };
+
             return textualAltitude;
         }
 
@@ -790,7 +792,7 @@ namespace WhereToFly.App.Geo.Airspace
         /// <summary>
         /// Array of coordinate separator characters
         /// </summary>
-        private static char[] coordinateSeparators = new char[] { 'N', 'S', 'E', 'W' };
+        private static readonly char[] CoordinateSeparators = new char[] { 'N', 'S', 'E', 'W' };
 
         /// <summary>
         /// Parses coordinates, various formats. Examples:
@@ -854,7 +856,7 @@ namespace WhereToFly.App.Geo.Airspace
                 isNegative = true;
             }
 
-            latLongText = latLongText.TrimEnd(coordinateSeparators).TrimEnd();
+            latLongText = latLongText.TrimEnd(CoordinateSeparators).TrimEnd();
 
             string[] parts = latLongText.Split(':');
             if (parts.Length != 2 && parts.Length != 3)

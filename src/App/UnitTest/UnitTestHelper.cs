@@ -16,15 +16,10 @@ namespace WhereToFly.App.UnitTest
         /// Returns the Assets path for all unit tests; place your test files in the Assets folder
         /// and mark them with "Content" and "Copy if newer".
         /// </summary>
-        public static string TestAssetsPath
-        {
-            get
-            {
-                return Path.Combine(
-                    Path.GetDirectoryName(typeof(UnitTestHelper).Assembly.Location),
-                    "Assets");
-            }
-        }
+        public static string TestAssetsPath =>
+            Path.Combine(
+                Path.GetDirectoryName(typeof(UnitTestHelper).Assembly.Location),
+                "Assets");
 
         /// <summary>
         /// Returns default layer for unit tests
