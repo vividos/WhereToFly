@@ -81,7 +81,7 @@ LiveTracking.prototype.addDefaultLayerAndLocationListsAndTracks = function () {
 
     console.log("LiveTracking: loading default data...");
 
-    this.addXLakesLayer();
+    this.addCrossingTheAlpsLocationsAndTracks();
 };
 
 /**
@@ -112,9 +112,9 @@ LiveTracking.prototype.addXLakesLayer = function () {
 LiveTracking.prototype.addCrossingTheAlpsLocationsAndTracks = function () {
 
     this.map.addLocationList([{
-        id: 'crossingthealps2019-start',
+        id: 'crossingthealps2021-start',
         name: 'Start: Kampenwand',
-        description: 'Start of the Crossing the Alps 2019 tour',
+        description: 'Start of the Crossing the Alps 2021 tour',
         type: 'Turnpoint',
         latitude: 47.754076,
         longitude: 12.352277,
@@ -123,9 +123,9 @@ LiveTracking.prototype.addCrossingTheAlpsLocationsAndTracks = function () {
     }]);
 
     this.map.addLocationList([{
-        id: 'crossingthealps2019-end',
+        id: 'crossingthealps2021-end',
         name: 'End: Feltre',
-        description: 'End of the Crossing the Alps 2019 tour',
+        description: 'End of the Crossing the Alps 2021 tour',
         type: 'Turnpoint',
         latitude: 46.017779,
         longitude: 11.900711,
@@ -134,8 +134,8 @@ LiveTracking.prototype.addCrossingTheAlpsLocationsAndTracks = function () {
     }]);
 
     this.map.addTrack({
-        id: 'crossingthealps2019',
-        name: 'Crossing the Alps 2019',
+        id: 'crossingthealps2021',
+        name: 'Crossing the Alps 2021',
         isFlightTrack: false,
         color: 'FF0000',
         listOfTrackPoints: [
