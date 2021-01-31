@@ -2056,6 +2056,11 @@ MapView.prototype.clearAllTracks = function () {
  */
 MapView.prototype.showTrackHeightProfile = function (trackId) {
 
+    if (typeof HeightProfileView !== "function") {
+        console.warn("can't display track height profile; HeightProfileView class is not available");
+        return;
+    }
+
     if (this.currentHeightProfileTrackId === trackId)
         return; // already shown
 
