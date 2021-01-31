@@ -18,7 +18,9 @@
  */
 function MapView(options) {
 
-    console.log("MapView: creating new 3D map view");
+    this.consoleLogStyle = "background: lightgreen; color: darkblue; padding: 1px 3px; border-radius: 3px;";
+
+    console.groupCollapsed("%cMapView%ccreating new 3D map view", this.consoleLogStyle);
 
     this.options = options || {
         id: 'mapElement',
@@ -278,6 +280,8 @@ function MapView(options) {
     this.onMapInitialized();
 
     this.hideMessageBand();
+
+    console.groupEnd();
 }
 
 /**
