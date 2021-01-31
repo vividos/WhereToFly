@@ -1392,7 +1392,7 @@ MapView.prototype.pinColorFromLocationType = function (locationType) {
  * @param {number} [angleDegrees] angle of point on circle, in degrees
  * @returns {Cesium.Cartesian3} calculated point coordinates
  */
-pointFromCenterRadiusAngle = function (center, radius, angleDegrees) {
+function pointFromCenterRadiusAngle(center, radius, angleDegrees) {
 
     var unitPosScratch = new Cesium.Cartesian3();
     var unitPos = Cesium.Cartesian3.normalize(center, unitPosScratch);
