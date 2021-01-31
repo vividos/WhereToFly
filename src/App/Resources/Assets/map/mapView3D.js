@@ -268,6 +268,13 @@ function MapView(options) {
     this.locationDataSource.clustering = this.clustering;
     this.viewer.dataSources.add(this.locationDataSource);
 
+    // swap out console.error for logging purposes
+    var oldLog = console.error;
+    console.error = function (message) {
+        that.onConsoleErrorMessage(message);
+        oldLog.apply(console, arguments);
+    };
+
     this.onMapInitialized();
 
     this.hideMessageBand();
@@ -2245,6 +2252,17 @@ MapView.prototype.onAddTourPlanLocation = function (locationId) {
 
     // hide the info box
     this.viewer.selectedEntity = undefined;
+};
+
+
+/**
+ * Called when a console.error() is called, e.g. for rendering errors from CesiumJS.
+ * @param {string} message error message
+ */
+MapView.prototype.onConsoleErrorMessage = function (message) {
+
+    if (this.options.callback !== undefined)
+        this.options.callback('onConsoleErrorMessage', message);
 };
 
 /**

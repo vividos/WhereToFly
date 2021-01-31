@@ -936,6 +936,10 @@ namespace WhereToFly.App.Core.Views
                     this.OnExportLayer(jsonParameters.Trim('"').Replace(' ', '+'));
                     break;
 
+                case "onConsoleErrorMessage":
+                    this.OnConsoleErrorMessage(jsonParameters);
+                    break;
+
                 default:
                     Debug.Assert(false, "invalid callback function name");
                     break;
@@ -971,6 +975,16 @@ namespace WhereToFly.App.Core.Views
             }
 
             this.taskCompletionSourceExportLayer.SetResult(kmzData);
+        }
+
+        /// <summary>
+        /// Called when the JavaScript console.error() message is called.
+        /// </summary>
+        /// <param name="message">message text</param>
+        private void OnConsoleErrorMessage(string message)
+        {
+            App.LogError(new InvalidOperationException(
+                "JavaScript error: " + message));
         }
 
 #pragma warning disable S1144 // Unused private types or members should be removed
