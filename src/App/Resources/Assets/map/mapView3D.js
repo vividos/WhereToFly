@@ -21,6 +21,7 @@ function MapView(options) {
     this.consoleLogStyle = "background: lightgreen; color: darkblue; padding: 1px 3px; border-radius: 3px;";
 
     console.groupCollapsed("%cMapView%ccreating new 3D map view", this.consoleLogStyle);
+    console.time("ctor");
 
     this.options = options || {
         id: 'mapElement',
@@ -281,6 +282,7 @@ function MapView(options) {
 
     this.hideMessageBand();
 
+    console.timeEnd("ctor");
     console.groupEnd();
 }
 
@@ -1257,6 +1259,7 @@ MapView.prototype.formatLocationText = function (location) {
 MapView.prototype.addLocationList = function (locationList) {
 
     console.log("MapView: adding location list, with " + locationList.length + " entries");
+    console.time("MapView.addLocationList");
 
     var that = this;
     for (var index in locationList) {
@@ -1304,6 +1307,8 @@ MapView.prototype.addLocationList = function (locationList) {
             this.takeoffPrimitivesMap[location.id] = [takeoffOutlinePrimitive, takeoffPrimitive];
         }
     }
+
+    console.timeEnd("MapView.addLocationList");
 };
 
 /**
@@ -1710,6 +1715,7 @@ MapView.prototype.showFlyingRange = function (options) {
 MapView.prototype.sampleTrackHeights = function (track) {
 
     console.log("MapView.sampleTrackHeights: #1 start sampling track point heights for " + track.listOfTrackPoints.length + " points...");
+    console.time("MapView.sampleTrackHeights");
 
     if (!Cesium.Entity.supportsPolylinesOnTerrain(this.viewer.scene)) {
         console.warn("MapView.sampleTrackHeights: #2: polylines on terrain are not supported");
@@ -1749,15 +1755,21 @@ MapView.prototype.sampleTrackHeights = function (track) {
                     console.log("MapView.sampleTrackHeights: #6: sampling track point heights finished.");
 
                     that.onSampledTrackHeights(trackPointHeightArray);
+
+                    console.timeEnd("MapView.sampleTrackHeights");
                 },
                 function (error) {
                     console.error("MapView.sampleTrackHeights: #9: error while sampling track point heights: " + error);
                     that.onSampledTrackHeights(null);
+
+                    console.timeEnd("MapView.sampleTrackHeights");
                 });
         },
         function (error) {
             console.error("MapView.sampleTrackHeights: #8: error while waiting for terrain provider promise: " + error);
             that.onSampledTrackHeights(null);
+
+            console.timeEnd("MapView.sampleTrackHeights");
         });
 
     console.log("MapView.sampleTrackHeights: #7: call to sampleTrackHeights() returns.");
