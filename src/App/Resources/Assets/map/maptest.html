@@ -83,6 +83,11 @@
         <button onclick="removeOsmBuildingsLayer()">Remove OSM Buildings layer</button>
 
         <button onclick="addTakeoffLocation()">Add Takeoff</button>
+
+        <button onclick="addLayer()">Add layer</button>
+
+        <button onclick="removeLayer()">Remove layer</button>
+
     </div>
 
     <div id="messageBand" class="message-band" style="top: 60px"></div>
@@ -233,6 +238,21 @@
             };
             map.addLocationList([theLocation]);
             map.zoomToLocation(theLocation);
+        }
+
+        addLayer = function () {
+            var theLayer = {
+                id: 'testLayer',
+                name: 'Test Layer',
+                type: 'CzmlLayer',
+                isVisible: true,
+                data: '[{"id":"document","name":"Schliersee Mountain Peaks","version":"1.0"},{"id":"rotwand","name":"Rotwand","description":"Rotwand","position":{"cartographicDegrees":[11.9345058,47.6502332,1934.0]},"label":{"text":"Rotwand 1884m","font":"14pt Lucida Console","style":"FILL_AND_OUTLINE","showBackground":false,"horizontalOrigin":"LEFT","verticalOrigin":"BOTTOM","heightReference":"NONE","fillColor":{"rgba":[255,255,255,255]},"outlineColor":{"rgba":[0,0,0,255]},"outlineWidth":10.0,"distanceDisplayCondition":{"distanceDisplayCondition":[0.1,20000.0]}},"polyline":{"positions":{"cartographicDegrees":[11.9345058,47.6502332,0.0,11.9345058,47.6502332,1934.0]},"width":3.0,"clampToGround":false,"material":{"solidColor":{"color":{"rgba":[255,255,255,255]}}},"distanceDisplayCondition":{"distanceDisplayCondition":[0.1,20000.0]}}}]'
+            };
+            map.addLayer(theLayer);
+        }
+
+        removeLayer = function () {
+            map.removeLayer('testLayer');
         }
 
     </script>
