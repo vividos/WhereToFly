@@ -44,16 +44,6 @@ namespace WhereToFly.App.Core
         public const string MessageUpdateMapSettings = "UpdateMapSettings";
 
         /// <summary>
-        /// MessagingCenter message constant to update location list on MapPage
-        /// </summary>
-        public const string MessageUpdateMapLocations = "UpdateMapLocations";
-
-        /// <summary>
-        /// MessagingCenter message constant to update track list on MapPage
-        /// </summary>
-        public const string MessageUpdateMapTracks = "UpdateMapTracks";
-
-        /// <summary>
         /// Page key for use in NavigationService, to navigate to map page
         /// </summary>
         public const string PageKeyMapPage = "MapPage";

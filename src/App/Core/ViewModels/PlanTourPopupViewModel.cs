@@ -322,7 +322,8 @@ namespace WhereToFly.App.Core.ViewModels
 
             var location = StartWaypointFromPlannedTour(plannedTour);
             await this.AddLocation(location);
-            App.UpdateMapLocationsList();
+
+            App.MapView.AddLocation(location);
 
             this.planTourParameters.WaypointIdList.Clear();
 

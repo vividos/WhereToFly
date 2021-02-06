@@ -277,8 +277,7 @@ namespace WhereToFly.App.Core
             var point = track.CalculateCenterPoint();
             await UpdateLastShownPositionAsync(point);
 
-            var app = Current as App;
-            app.MapPage.AddTrack(track);
+            MapView.AddTrack(track);
         }
 
         /// <summary>
@@ -289,26 +288,6 @@ namespace WhereToFly.App.Core
             var app = Current as App;
 
             MessagingCenter.Send(app, Constants.MessageUpdateMapSettings);
-        }
-
-        /// <summary>
-        /// Updates locations list on opened MapPage.
-        /// </summary>
-        public static void UpdateMapLocationsList()
-        {
-            var app = Current as App;
-
-            MessagingCenter.Send(app, Constants.MessageUpdateMapLocations);
-        }
-
-        /// <summary>
-        /// Updates tracks list on opened MapPage.
-        /// </summary>
-        public static void UpdateMapTracksList()
-        {
-            var app = Current as App;
-
-            MessagingCenter.Send(app, Constants.MessageUpdateMapTracks);
         }
 
         /// <summary>

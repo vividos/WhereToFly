@@ -370,7 +370,7 @@ namespace WhereToFly.App.Core.ViewModels
             var liveWaypointRefreshService = DependencyService.Get<LiveWaypointRefreshService>();
             liveWaypointRefreshService.RemoveLiveWaypoint(this.location.Id);
 
-            App.UpdateMapLocationsList();
+            App.MapView.RemoveLocation(this.location.Id);
 
             await NavigationService.Instance.GoBack();
 

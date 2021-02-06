@@ -315,7 +315,6 @@ namespace WhereToFly.App.Core.ViewModels
 
             App.MapView.ZoomToLocation(location.MapLocation);
 
-            App.UpdateMapLocationsList();
             await NavigationService.Instance.NavigateAsync(Constants.PageKeyMapPage, animated: true);
         }
 
@@ -502,7 +501,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             this.UpdateLocationList();
 
-            App.UpdateMapLocationsList();
+            App.MapView.RemoveLocation(location.Id);
 
             App.ShowToast("Selected location was deleted.");
         }
@@ -534,7 +533,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             this.UpdateLocationList();
 
-            App.UpdateMapLocationsList();
+            App.MapView.ClearLocationList();
 
             App.ShowToast("Location list was cleared.");
         }

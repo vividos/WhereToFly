@@ -30,19 +30,9 @@ namespace WhereToFly.App.Core.Views
         private readonly IGeolocationService geolocationService;
 
         /// <summary>
-        /// List of track IDs currently being displayed
-        /// </summary>
-        private readonly HashSet<Track> displayedTracks = new HashSet<Track>();
-
-        /// <summary>
         /// Tour planning parameters for the map page
         /// </summary>
         private readonly PlanTourParameters planTourParameters = new PlanTourParameters();
-
-        /// <summary>
-        /// List of location IDs currently being displayed
-        /// </summary>
-        private HashSet<string> displayedLocationIds = new HashSet<string>();
 
         /// <summary>
         /// Indicates if the next position update should also zoom to my position
@@ -98,8 +88,6 @@ namespace WhereToFly.App.Core.Views
                 async (app, location) => await this.AddTourPlanningLocationAsync(location));
 
             MessagingCenter.Subscribe<App>(this, Constants.MessageUpdateMapSettings, (app) => this.OnMessageUpdateMapSettings());
-            MessagingCenter.Subscribe<App>(this, Constants.MessageUpdateMapLocations, (app) => this.OnMessageUpdateMapLocations());
-            MessagingCenter.Subscribe<App>(this, Constants.MessageUpdateMapTracks, (app) => this.OnMessageUpdateMapTracks());
         }
 
         /// <summary>
@@ -195,16 +183,6 @@ namespace WhereToFly.App.Core.Views
                 // zoom at next update
                 this.zoomToMyPosition = true;
             }
-        }
-
-        /// <summary>
-        /// Adds track to map view
-        /// </summary>
-        /// <param name="track">track to add</param>
-        public void AddTrack(Track track)
-        {
-            this.MapView.AddTrack(track);
-            this.displayedTracks.Add(track);
         }
 
         /// <summary>
@@ -404,12 +382,10 @@ namespace WhereToFly.App.Core.Views
             this.mapView.CoordinateDisplayFormat = this.appSettings.CoordinateDisplayFormat;
 
             this.mapView.AddLocationList(this.locationList);
-            this.displayedLocationIds = new HashSet<string>(
-                this.locationList.Select(location => location.Id));
 
             foreach (var track in this.trackList)
             {
-                this.AddTrack(track);
+                this.MapView.AddTrack(track);
             }
 
             foreach (var layer in this.layerList)
@@ -572,7 +548,7 @@ namespace WhereToFly.App.Core.Views
                 animated: true,
                 parameter: location);
 
-            this.OnMessageUpdateMapLocations();
+            this.MapView.AddLocation(location);
         }
 
         /// <summary>
@@ -658,7 +634,7 @@ namespace WhereToFly.App.Core.Views
                 animated: true,
                 parameter: location);
 
-            this.OnMessageUpdateMapLocations();
+            this.MapView.AddLocation(location);
         }
 
         /// <summary>
@@ -716,22 +692,6 @@ namespace WhereToFly.App.Core.Views
             this.ReloadMapViewAppSettings();
         }
 
-        /// <summary>
-        /// Called when message arrives in order to update location list on map
-        /// </summary>
-        private void OnMessageUpdateMapLocations()
-        {
-            App.RunOnUiThread(async () => await this.ReloadLocationListAsync());
-        }
-
-        /// <summary>
-        /// Called when message arrives in order to update track list on map
-        /// </summary>
-        private void OnMessageUpdateMapTracks()
-        {
-            App.RunOnUiThread(async () => await this.ReloadTrackListAsync());
-        }
-
         #region Page lifecycle methods
         /// <summary>
         /// Called when page is appearing; start position updates
@@ -781,149 +741,6 @@ namespace WhereToFly.App.Core.Views
             this.mapView.UseEntityClustering = this.appSettings.UseMapEntityClustering;
 
             App.ShowToast("Settings were saved.");
-        }
-
-        /// <summary>
-        /// Reloads location list from data service
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task ReloadLocationListAsync()
-        {
-            var dataService = DependencyService.Get<IDataService>();
-            var locationDataService = dataService.GetLocationDataService();
-
-            var newLocationList = (await locationDataService.GetList()).ToList();
-
-            this.AddAndRemoveDisplayedLocations(newLocationList);
-
-            this.locationList = newLocationList;
-        }
-
-        /// <summary>
-        /// Adds new and removes old locations from current location list
-        /// </summary>
-        /// <param name="newLocationList">list of new locations</param>
-        private void AddAndRemoveDisplayedLocations(List<Location> newLocationList)
-        {
-            if (this.locationList == null ||
-                !this.locationList.Any() ||
-                Math.Abs(newLocationList.Count - this.locationList.Count) > 10)
-            {
-                this.ReplaceLocationList(newLocationList);
-                return;
-            }
-
-            var locationIdsToRemove = new HashSet<string>();
-            var locationsToUpdate = new HashSet<Location>();
-            foreach (string oldLocationId in this.displayedLocationIds)
-            {
-                Location foundLocation = newLocationList.Find(locationToCheck => locationToCheck.Id == oldLocationId);
-                if (foundLocation == null)
-                {
-                    locationIdsToRemove.Add(oldLocationId);
-                }
-                else
-                {
-                    var oldLocation = this.locationList.Find(locationIdToCheck => locationIdToCheck.Id == oldLocationId);
-                    if (!foundLocation.Equals(oldLocation))
-                    {
-                        // when type has changed, re-add the location to generate a new entity
-                        if (foundLocation.Type != oldLocation.Type)
-                        {
-                            locationIdsToRemove.Add(oldLocationId);
-                        }
-                        else
-                        {
-                            locationsToUpdate.Add(foundLocation);
-                        }
-                    }
-                }
-            }
-
-            foreach (string locationIdToRemove in locationIdsToRemove)
-            {
-                this.mapView.RemoveLocation(locationIdToRemove);
-                this.displayedLocationIds.Remove(locationIdToRemove);
-            }
-
-            foreach (var newLocation in newLocationList)
-            {
-                if (!this.displayedLocationIds.Contains(newLocation.Id))
-                {
-                    this.mapView.AddLocation(newLocation);
-                    this.displayedLocationIds.Add(newLocation.Id);
-                }
-            }
-
-            foreach (var modifiedLocation in locationsToUpdate)
-            {
-                this.mapView.UpdateLocation(modifiedLocation);
-            }
-
-            this.mapView.UpdateScene();
-        }
-
-        /// <summary>
-        /// Replaces location list in map view
-        /// </summary>
-        /// <param name="newLocationList">new location list to use</param>
-        private void ReplaceLocationList(List<Location> newLocationList)
-        {
-            if (this.locationList.Any())
-            {
-                this.mapView.ClearLocationList();
-            }
-
-            this.mapView.AddLocationList(newLocationList);
-
-            this.displayedLocationIds = new HashSet<string>(
-                this.locationList.Select(location => location.Id));
-        }
-
-        /// <summary>
-        /// Reloads track list from data service
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task ReloadTrackListAsync()
-        {
-            var dataService = DependencyService.Get<IDataService>();
-            var trackDataService = dataService.GetTrackDataService();
-
-            var newTrackList = (await trackDataService.GetList()).ToList();
-
-            this.AddAndRemoveDisplayedTracks(newTrackList);
-
-            this.trackList = newTrackList;
-        }
-
-        /// <summary>
-        /// Adds new and removes old tracks from map view
-        /// </summary>
-        /// <param name="newTrackList">new track list</param>
-        private void AddAndRemoveDisplayedTracks(List<Track> newTrackList)
-        {
-            var tracksToRemove = new HashSet<Track>();
-            foreach (var oldTrack in this.displayedTracks)
-            {
-                if (!newTrackList.Contains(oldTrack))
-                {
-                    tracksToRemove.Add(oldTrack);
-                }
-            }
-
-            foreach (var trackToRemove in tracksToRemove)
-            {
-                this.mapView.RemoveTrack(trackToRemove);
-                this.displayedTracks.Remove(trackToRemove);
-            }
-
-            foreach (var newTrack in newTrackList)
-            {
-                if (!this.displayedTracks.Contains(newTrack))
-                {
-                    this.AddTrack(newTrack);
-                }
-            }
         }
 
         /// <summary>

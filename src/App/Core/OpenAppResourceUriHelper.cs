@@ -42,7 +42,7 @@ namespace WhereToFly.App.Core
                         System.Net.WebUtility.UrlDecode(rawUri.Fragment.TrimStart('#'));
                 }
 
-                var liveWaypoint = await GetLiveWaypointLocation(waypointName, appResourceUri);
+                Location liveWaypoint = await GetLiveWaypointLocation(waypointName, appResourceUri);
 
                 if (!await ShowAddLiveWaypointDialog(liveWaypoint))
                 {
@@ -57,8 +57,9 @@ namespace WhereToFly.App.Core
 
                 await App.UpdateLastShownPositionAsync(liveWaypoint.MapLocation);
 
+                App.MapView.AddLocation(liveWaypoint);
+
                 App.MapView.ZoomToLocation(liveWaypoint.MapLocation);
-                App.UpdateMapLocationsList();
             }
             catch (Exception ex)
             {

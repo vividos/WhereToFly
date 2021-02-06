@@ -187,7 +187,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             await locationDataService.Update(locationToChange);
 
-            App.UpdateMapLocationsList();
+            App.MapView.UpdateLocation(locationToChange);
         }
     }
 }

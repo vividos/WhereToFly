@@ -86,7 +86,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             await trackDataService.Remove(this.track.Id);
 
-            App.UpdateMapTracksList();
+            App.MapView.RemoveTrack(this.track);
 
             await NavigationService.Instance.GoBack();
 

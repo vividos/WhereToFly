@@ -201,7 +201,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             this.UpdateTrackList();
 
-            App.UpdateMapTracksList();
+            App.MapView.RemoveTrack(track);
 
             App.ShowToast("Selected track was deleted.");
         }
@@ -230,7 +230,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             await this.ReloadTrackListAsync();
 
-            App.UpdateMapTracksList();
+            App.MapView.ClearAllTracks();
 
             App.ShowToast("Track list was cleared.");
         }

@@ -247,6 +247,7 @@ namespace WhereToFly.App.Core
                 if (!appendToList)
                 {
                     await locationDataService.ClearList();
+                    App.MapView.ClearLocationList();
                 }
             }
 
@@ -260,7 +261,7 @@ namespace WhereToFly.App.Core
 
             App.ShowToast("Locations were loaded.");
 
-            App.UpdateMapLocationsList();
+            App.MapView.AddLocationList(locationList);
 
             ZoomToLocationList(locationList);
         }
