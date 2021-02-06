@@ -258,18 +258,12 @@ function MapView(options) {
 
     this.osmBuildingsTileset = null;
 
-    this.takeoffPrimitivesCollection = new Cesium.PrimitiveCollection({
-        show: true,
-        destroyPrimitives: true
-    });
-
-    this.takeoffPrimitivesMap = {};
-
-    this.viewer.scene.primitives.add(this.takeoffPrimitivesCollection);
-
     this.locationDataSource = new Cesium.CustomDataSource('locations');
     this.locationDataSource.clustering = this.clustering;
     this.viewer.dataSources.add(this.locationDataSource);
+
+    this.takeoffEntityDataSource = new Cesium.CustomDataSource('takeoff-entities');
+    this.viewer.dataSources.add(this.takeoffEntityDataSource);
 
     // swap out console.error for logging purposes
     var oldLog = console.error;
@@ -1212,8 +1206,7 @@ MapView.prototype.clearLocationList = function () {
     console.log("MapView: clearing location list");
 
     this.locationDataSource.entities.removeAll();
-
-    this.takeoffPrimitivesMap = {};
+    this.takeoffEntityDataSource.entities.removeAll();
 };
 
 /**
@@ -1290,21 +1283,19 @@ MapView.prototype.addLocationList = function (locationList) {
             });
 
         if (location.takeoffDirections !== undefined && location.takeoffDirections !== 0) {
-            var takeoffOutlinePrimitive = this.createTakeoffPrimitive(
+            var takeoffOutlineEntity = this.createTakeoffEntity(
                 location,
-                new Cesium.Color(1.0, 1.0, 0.0, 0.4), // yellow
+                new Cesium.Color(1.0, 1.0, 0.5, 0.4), // light yellow
                 true);
 
-            this.takeoffPrimitivesCollection.add(takeoffOutlinePrimitive);
+            this.takeoffEntityDataSource.entities.add(takeoffOutlineEntity);
 
-            var takeoffPrimitive = this.createTakeoffPrimitive(
+            var takeoffEntity = this.createTakeoffEntity(
                 location,
-                new Cesium.Color(1.0, 0.5, 1, 0.4), // purple
+                new Cesium.Color(0.0, 0.0, 0.54, 0.4), // dark blue
                 false);
 
-            this.takeoffPrimitivesCollection.add(takeoffPrimitive);
-
-            this.takeoffPrimitivesMap[location.id] = [takeoffOutlinePrimitive, takeoffPrimitive];
+            this.takeoffEntityDataSource.entities.add(takeoffEntity);
         }
     }
 
@@ -1447,17 +1438,17 @@ function pointFromCenterRadiusAngle(center, radius, angleDegrees) {
 }
 
 /**
- * Creates a primitive visualizing the takeoff directions of the given location
+ * Creates an entity visualizing the takeoff directions of the given location
  * @param {Object} [location] An object with at least the following properties:
  * @param {String} [location.id] ID of the location to update
  * @param {Number} [location.latitude] Latitude of the location to update
  * @param {Number} [location.longitude] Longitude of the location to update
  * @param {number} [location.takeoffDirections] Takeoff directions bit values
- * @param {Cesium.Color} [color] Color of the polygon or polyline primitive
- * @param {boolean} [outline] If true, only an outline primitive is returned,
- * otherwise a full polygon promitive
+ * @param {Cesium.Color} [color] Color of the polygon or polyline entity
+ * @param {boolean} [outline] If true, only an outline entity is returned,
+ * otherwise a full polygon entity
  */
-MapView.prototype.createTakeoffPrimitive = function (location, color, outline) {
+MapView.prototype.createTakeoffEntity = function (location, color, outline) {
 
     var center = Cesium.Cartesian3.fromDegrees(location.longitude, location.latitude);
     var radius = 50.0; // in meter
@@ -1481,61 +1472,41 @@ MapView.prototype.createTakeoffPrimitive = function (location, color, outline) {
         }
     }
 
-    var material = Cesium.Material.fromType('Color');
-    material.uniforms.color = color;
-
     var distanceDisplayCondition =
-        new Cesium.DistanceDisplayConditionGeometryInstanceAttribute(0.0, 5000.0);
+        new Cesium.DistanceDisplayCondition(0.0, 5000.0);
 
-    var primitive;
+    var entity;
     if (outline) {
-        // generate the outline using ground polyline
-        primitive = new Cesium.GroundPolylinePrimitive({
-            asynchronous: this.options.useAsynchronousPrimitives,
-            allowPicking: false,
-            geometryInstances: new Cesium.GeometryInstance({
-                id: "takeoff-outline-" + location.Id,
-                geometry: new Cesium.GroundPolylineGeometry({
-                    positions: pointArray,
-                    width: 3.0
-                }),
-                attributes: {
-                    color: Cesium.ColorGeometryInstanceAttribute.fromColor(color),
-                    distanceDisplayCondition: distanceDisplayCondition
-                }
-            }),
-            appearance: new Cesium.PolylineColorAppearance({
-                translucent: false
-            })
+        entity = new Cesium.Entity({
+            id: "takeoff-outline-" + location.id,
+            name: location.name,
+            polyline: {
+                positions: pointArray,
+                width: 3.0,
+                material: color,
+                clampToGround: true,
+                distanceDisplayCondition: distanceDisplayCondition
+            }
         });
     }
     else {
-        // generate the filled polygon using PolygonGeometry on a GroundPrimitive
         if (!this.viewer.scene.context.fragmentDepth)
             console.warn("Warning: WebGL extension EXT_frag_depth isn't supported by GPU, using GroundPrimitive anyway...");
 
-        primitive = new Cesium.GroundPrimitive({
-            asynchronous: this.options.useAsynchronousPrimitives,
-            allowPicking: false,
-            geometryInstances: new Cesium.GeometryInstance({
-                id: "takeoff-" + location.Id,
-                geometry: new Cesium.PolygonGeometry({
-                    polygonHierarchy: new Cesium.PolygonHierarchy(pointArray)
-                }),
-                attributes: {
-                    color: Cesium.ColorGeometryInstanceAttribute.fromColor(color),
-                    distanceDisplayCondition: distanceDisplayCondition
-                }
-            }),
-            appearance: new Cesium.MaterialAppearance({
-                translucent: true,
-                material: material,
-                faceForward: true
-            })
+        entity = new Cesium.Entity({
+            id: "takeoff-" + location.id,
+            name: location.name,
+            polygon: {
+                // note: clamping to terrain is achieved by not specifying height and heightReference at all
+                hierarchy: new Cesium.PolygonHierarchy(pointArray),
+                material: color,
+                outline: false, // when an outline would be present, it would not clamp to ground
+                distanceDisplayCondition: distanceDisplayCondition
+            }
         });
     }
 
-    return primitive;
+    return entity;
 };
 
 /**
@@ -1582,11 +1553,8 @@ MapView.prototype.removeLocation = function (locationId) {
 
     this.locationDataSource.entities.remove(entity);
 
-    var primitivesList = this.takeoffPrimitivesMap[locationId];
-    var that = this;
-    if (primitivesList !== undefined) {
-        primitivesList.forEach(primitive => that.takeoffPrimitivesCollection.remove(primitive));
-    }
+    this.takeoffEntityDataSource.entities.remove("takeoff-" + location.id);
+    this.takeoffEntityDataSource.entities.remove("takeoff-outline-" + location.id);
 };
 
 /**
