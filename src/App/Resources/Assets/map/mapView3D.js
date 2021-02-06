@@ -407,6 +407,11 @@ MapView.prototype.setupEntityClustering = function () {
         pixelRange: 40
     });
 
+    // When EntityCluster is added to more than one DataSource, it will try to
+    // destroy the EntityCluster object; prevent that here. Ugly workaround!
+    // See: https://github.com/CesiumGS/cesium/issues/9336
+    this.clustering.destroy = function () { };
+
     var pinBuilder = new Cesium.PinBuilder();
     this.clustering.pin50 = pinBuilder.fromText("50+", Cesium.Color.RED, 48).toDataURL();
     this.clustering.pin40 = pinBuilder.fromText("40+", Cesium.Color.RED, 48).toDataURL();
@@ -436,7 +441,7 @@ MapView.prototype.onNewCluster = function (clusteredEntities, cluster) {
 
     cluster.label.show = false;
     cluster.billboard.show = true;
-    cluster.billboard.id = cluster.label.id;
+    cluster.billboard.id = "cluster-billboard-" + cluster.label.id;
     cluster.billboard.verticalOrigin = Cesium.VerticalOrigin.BOTTOM;
     cluster.billboard.heightReference = Cesium.HeightReference.CLAMP_TO_GROUND;
 
@@ -793,6 +798,7 @@ MapView.prototype.setEntityClustering = function (useEntityClustering) {
     this.clustering.enabled = useEntityClustering;
 
     if (useEntityClustering) {
+        // force re-clustering
         var lastPixelRange = this.clustering.pixelRange;
         this.clustering.pixelRange = 0;
         this.clustering.pixelRange = lastPixelRange;
@@ -1165,9 +1171,13 @@ MapView.prototype.removeLayer = function (layerId) {
 
     var dataSource = this.dataSourceMap[layerId];
     if (dataSource !== undefined) {
-        dataSource.clustering = null;
         this.viewer.dataSources.remove(dataSource);
         this.dataSourceMap[layerId] = undefined;
+
+        // force re-clustering
+        var lastPixelRange = this.clustering.pixelRange;
+        this.clustering.pixelRange = 0;
+        this.clustering.pixelRange = lastPixelRange;
     }
 
     this.updateScene();
@@ -1188,12 +1198,16 @@ MapView.prototype.clearLayerList = function () {
     for (var layerId in this.dataSourceMap) {
         var dataSource = this.dataSourceMap[layerId];
         if (dataSource !== undefined) {
-            dataSource.clustering = null;
             this.viewer.dataSources.remove(dataSource);
         }
     }
 
     this.dataSourceMap = {};
+
+    // force re-clustering
+    var lastPixelRange = this.clustering.pixelRange;
+    this.clustering.pixelRange = 0;
+    this.clustering.pixelRange = lastPixelRange;
 
     this.updateScene();
 };
