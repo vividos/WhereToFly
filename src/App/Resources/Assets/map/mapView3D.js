@@ -1259,6 +1259,11 @@ MapView.prototype.addLocationList = function (locationList) {
 
         var location = locationList[index];
 
+        if (location.id === undefined) {
+            console.warn("MapView: ignored adding location without ID");
+            continue;
+        }
+
         var text = this.formatLocationText(location);
 
         var imagePath = this.imageUrlFromLocationType(location.type);
