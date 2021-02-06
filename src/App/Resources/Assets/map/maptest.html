@@ -64,6 +64,8 @@
             <option value="BlackMarble">NASA Black Marble 2017</option>
         </select>
 
+        <button onclick="addInspector()">Add inspector</button>
+
         <button onclick="map.updateMyLocation({latitude: 47.666283, longitude: 11.886159, zoomToLocation: true})">Fly to my position</button>
 
         <button onclick="map.zoomToLocation({latitude: 47.6764385, longitude: 11.8710533})">Fly to summit</button>
@@ -147,6 +149,10 @@
             { "id": "{ec0a1a47-b67e-42f1-b6d2-322d259ca729}", "name": "Bahnhof Neuhaus (Schliersee)", "description": "Anschlussmöglichkeiten zum RBO Bus 9562 zum Spitzingsattel", "type": "PublicTransportTrain", "latitude": 47.70599, "longitude": 11.87451, "elevation": 809 },
             { "id": "{4064d1f0-a476-4fe8-973f-f784cae39790}", "name": "RBO Bus 9562 Bushaltestelle Spitzingsattel", "description": "Haltestelle am Spitzingsattel. Abfahrtszeiten Richtung Schliersee: 8:42, 11:15, 15:31, 18:02.", "type": "PublicTransportBus", "latitude": 47.672138, "longitude": 11.8862728, "elevation": 1129 }
         ]);
+
+        addInspector = function () {
+            map.viewer.extend(Cesium.viewerCesiumInspectorMixin);
+        }
 
         setTimeout(function () {
             map.updateMyLocation({
