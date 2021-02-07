@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.29" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.30" />
     <PackageReference Include="Markdig" Version="0.23.0" />
     <PackageReference Include="Refit" Version="5.2.4" />
   </ItemGroup>
