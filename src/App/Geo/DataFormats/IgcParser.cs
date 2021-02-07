@@ -11,6 +11,9 @@ namespace WhereToFly.App.Geo.DataFormats
     /// "IGC GNSS FR Specification" (file tech_spec_gnss.pdf), Appendix A.
     /// Note that the parser doesn't check the exact format of the file, but instead tries to get
     /// a best-effort track representation of the IGC file and its flight(s).
+    /// More infos and inspirations about IGC file parsing:
+    /// https://github.com/xiadz/igc_lib/blob/master/igc_lib.py
+    /// https://edavies.me.uk/ew/ewa-igc.htm
     /// </summary>
     internal class IgcParser
     {
