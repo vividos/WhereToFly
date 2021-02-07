@@ -40,6 +40,11 @@ namespace WhereToFly.App.Geo.DataFormats
         private int currentLine;
 
         /// <summary>
+        /// Count of invalid coordinates, e.g. null-records
+        /// </summary>
+        private int invalidCoordinateCount = 0;
+
+        /// <summary>
         /// Count of ignored records; note that this parser only parses some records, and others
         /// are simply ignored.
         /// </summary>
@@ -125,6 +130,11 @@ namespace WhereToFly.App.Geo.DataFormats
                 description += $"Number of ignored records: {this.ignoredRecordCount}";
             }
 
+            if (this.invalidCoordinateCount > 0)
+            {
+                description += $"Number of invalid coordinates in B records: {this.invalidCoordinateCount}";
+            }
+
             return description;
         }
 
@@ -144,6 +154,11 @@ namespace WhereToFly.App.Geo.DataFormats
 
                 case 'B': // Fix
                     var trackPoint = this.ParseRecordB(line);
+                    if (trackPoint == null)
+                    {
+                        return;
+                    }
+
                     this.Track.TrackPoints.Add(trackPoint);
 
                     if (trackPoint.Time.HasValue &&
@@ -287,6 +302,14 @@ namespace WhereToFly.App.Geo.DataFormats
             double longitude = ParseLatLong(line.Substring(15, 9));
 
             double altitude = Convert.ToDouble(line.Substring(30, 5));
+
+            if (System.Math.Abs(latitude) < 1e-6 &&
+                System.Math.Abs(longitude) < 1e-6 &&
+                System.Math.Abs(altitude) < 1e-6)
+            {
+                this.invalidCoordinateCount++;
+                return null;
+            }
 
             var trackPoint = new TrackPoint(latitude, longitude, altitude, null);
 

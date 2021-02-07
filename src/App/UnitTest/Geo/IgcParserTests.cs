@@ -78,5 +78,31 @@ namespace WhereToFly.App.UnitTest.Geo
                 Assert.AreEqual(expectedDate, date);
             }
         }
+
+        /// <summary>
+        /// Tests parsing IGC file with an invalid B record
+        /// </summary>
+        [TestMethod]
+        public void TestInvalidBRecordCoordinates()
+        {
+            // set up
+            string line =
+                "B1746454650892N01205373EV015050000076\n" +
+                "B1746460000000N00000000EV014970000000\n" +
+                "B1746470000000N00000000EV014880000000\n" +
+                "B1746484650918N01205513EV014790000000\n";
+
+            // run
+            Track track = null;
+            using (var stream = new MemoryStream(System.Text.Encoding.ASCII.GetBytes(line)))
+            {
+                var igcParser = new IgcParser(stream);
+                track = igcParser.Track;
+            }
+
+            // check
+            Assert.IsNotNull(track, "track must not be null");
+            Assert.AreEqual(2, track.TrackPoints.Count, "there only must be two track points");
+       }
     }
 }
