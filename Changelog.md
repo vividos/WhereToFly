@@ -10,6 +10,7 @@
 - added clustering of Location pins and Layer elements when zooming out
 - keep distance to terrain when zooming to different location pins or the
   current location; the viewing distance is also re-used after app restarts
+- using CesiumJS version 1.78
 
 ## Version 1.9.0
 
