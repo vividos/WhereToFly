@@ -126,16 +126,16 @@ namespace WhereToFly.App.Geo.DataFormats
         {
             string description = $"Import info:" +
                 string.Join("\n", this.parsingErrors) +
-                $"There were {this.parsingErrors.Count} parsing errors.";
+                $"\nThere were {this.parsingErrors.Count} parsing errors.";
 
             if (this.ignoredRecordCount > 0)
             {
-                description += $"Number of ignored records: {this.ignoredRecordCount}";
+                description += $"\nNumber of ignored records: {this.ignoredRecordCount}";
             }
 
             if (this.invalidCoordinateCount > 0)
             {
-                description += $"Number of invalid coordinates in B records: {this.invalidCoordinateCount}";
+                description += $"\nNumber of invalid coordinates in B records: {this.invalidCoordinateCount}";
             }
 
             return description;
