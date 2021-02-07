@@ -71,5 +71,44 @@ namespace WhereToFly.App.UnitTest.Geo
                 Assert.ThrowsException<NotImplementedException>(igcFile.LoadLocationList);
             }
         }
+
+        /// <summary>
+        /// Tests parsing the start date record
+        /// </summary>
+        [TestMethod]
+        public void TestParseStartDate()
+        {
+            // set up
+            var expectedDate = new DateTime(2021, 2, 7);
+            var lines = new string[]
+            {
+                "HFDTE070221",
+                "HFDTE 070221",
+                "HFDTEDATE:070221",
+                "HFDTEDATE:070221,01",
+                "HFDTEDATE: 070221,01",
+            };
+
+            // run
+            foreach (var lineToParse in lines)
+            {
+                string line = lineToParse + "\r\n" + "B0903544724034N01052829EA009300100900108000";
+
+                Track track = null;
+                using (var stream = new MemoryStream(System.Text.Encoding.ASCII.GetBytes(line)))
+                {
+                    var igcFile = new IgcDataFile(stream);
+                    track = igcFile.LoadTrack(0);
+
+                    // check
+                    Assert.AreEqual(1, track.TrackPoints.Count, "there must be one track point");
+
+                    var trackPoint = track.TrackPoints[0];
+                    var date = trackPoint.Time.Value.Date;
+
+                    Assert.AreEqual(expectedDate, date);
+                }
+            }
+        }
     }
 }

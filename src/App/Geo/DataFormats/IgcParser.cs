@@ -136,15 +136,9 @@ namespace WhereToFly.App.Geo.DataFormats
             Justification = "False positive")]
         private void ParseRecordH(string line)
         {
-            if (line.StartsWith("HFDTE") &&
-                DateTimeOffset.TryParseExact(
-                    line.Substring(5),
-                    "ddMMyy",
-                    System.Globalization.CultureInfo.InvariantCulture,
-                    System.Globalization.DateTimeStyles.AssumeUniversal,
-                    out DateTimeOffset startDate))
+            if (line.StartsWith("HFDTE"))
             {
-                this.currentDate = startDate.Date;
+                this.ParseStartDate(line);
             }
 
             int pos = line.IndexOf(':');
@@ -165,6 +159,41 @@ namespace WhereToFly.App.Geo.DataFormats
                 !this.headerFields.ContainsKey(key))
             {
                 this.headerFields.Add(key, text);
+            }
+        }
+
+        /// <summary>
+        /// Parses the start date, contained in the HFDTE record. Definen in
+        ///
+        /// Example: HFDTE260898
+        /// </summary>
+        /// <param name="line">line to parse</param>
+        private void ParseStartDate(string line)
+        {
+            string dateText = line.Substring(5);
+
+            // there are IGC files which have a "HFDTEDATE:" record
+            if (dateText.StartsWith("DATE:"))
+            {
+                dateText = dateText.Substring(5);
+
+                // and some of them have a comma, e.g.:
+                // HFDTEDATE:200720,01
+                int commaPos = dateText.IndexOf(',');
+                if (commaPos != -1)
+                {
+                    dateText = dateText.Substring(0, commaPos);
+                }
+            }
+
+            if (DateTimeOffset.TryParseExact(
+                dateText.Trim(),
+                "ddMMyy",
+                System.Globalization.CultureInfo.InvariantCulture,
+                System.Globalization.DateTimeStyles.AssumeUniversal,
+                out DateTimeOffset startDate))
+            {
+                this.currentDate = startDate.Date;
             }
         }
 
