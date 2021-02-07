@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using WhereToFly.App.Geo;
@@ -24,16 +25,19 @@ namespace WhereToFly.App.UnitTest.Geo
 
             // run
             Track track = null;
+            IEnumerable<string> parsingErrors = Enumerable.Empty<string>();
             using (var stream = new FileStream(filename, FileMode.Open))
             {
                 var igcParser = new IgcParser(stream);
                 track = igcParser.Track;
+                parsingErrors = igcParser.ParsingErrors;
             }
 
             // check
             Assert.IsNotNull(track, "track must not be null");
             Assert.IsNotNull(track.Name, "track name must be set");
             Assert.IsTrue(track.TrackPoints.Any(), "there must be any track points");
+            Assert.IsFalse(parsingErrors.Any(), "there must be no parsing errors");
         }
 
         /// <summary>

@@ -20,9 +20,30 @@ namespace WhereToFly.App.Geo.DataFormats
         public Track Track { get; set; } = new Track();
 
         /// <summary>
+        /// All parsing error messages
+        /// </summary>
+        public IEnumerable<string> ParsingErrors => this.parsingErrors;
+
+        /// <summary>
         /// Header fields, from H records
         /// </summary>
         private readonly Dictionary<string, string> headerFields = new Dictionary<string, string>();
+
+        /// <summary>
+        /// All parsing warnings or errors
+        /// </summary>
+        private readonly List<string> parsingErrors = new List<string>();
+
+        /// <summary>
+        /// Currently parsed line
+        /// </summary>
+        private int currentLine;
+
+        /// <summary>
+        /// Count of ignored records; note that this parser only parses some records, and others
+        /// are simply ignored.
+        /// </summary>
+        private int ignoredRecordCount = 0;
 
         /// <summary>
         /// Current date part of track
@@ -46,11 +67,13 @@ namespace WhereToFly.App.Geo.DataFormats
         /// <param name="stream">IGC data stream</param>
         private void Parse(Stream stream)
         {
+            this.currentLine = 0;
             using (var reader = new StreamReader(stream))
             {
                 while (!reader.EndOfStream)
                 {
                     string line = reader.ReadLine();
+                    this.currentLine++;
 
                     if (line.Length > 0)
                     {
@@ -67,6 +90,7 @@ namespace WhereToFly.App.Geo.DataFormats
             }
 
             this.Track.Name = this.FormatTrackName();
+            this.Track.Description = this.FormatDescription();
         }
 
         /// <summary>
@@ -84,6 +108,24 @@ namespace WhereToFly.App.Geo.DataFormats
             }
 
             return $"{date} {pilotName}";
+        }
+
+        /// <summary>
+        /// Formats description for IGC file
+        /// </summary>
+        /// <returns>description text</returns>
+        private string FormatDescription()
+        {
+            string description = $"Import info:" +
+                string.Join("\n", this.parsingErrors) +
+                $"There were {this.parsingErrors.Count} parsing errors.";
+
+            if (this.ignoredRecordCount > 0)
+            {
+                description += $"Number of ignored records: {this.ignoredRecordCount}";
+            }
+
+            return description;
         }
 
         /// <summary>
@@ -113,7 +155,15 @@ namespace WhereToFly.App.Geo.DataFormats
 
                     break;
 
+                case 'A': // Flight Recorder ID
+                case 'C': // Task
                 case 'G': // Security
+                case 'I': // Extension data definition for B records
+                case 'J': // Extension data definition for K records
+                case 'K': // Extension data
+                case 'L': // Logbook/comments
+                    // ignore those records
+                    this.ignoredRecordCount++;
                     break;
 
                 default:
@@ -194,6 +244,10 @@ namespace WhereToFly.App.Geo.DataFormats
                 out DateTimeOffset startDate))
             {
                 this.currentDate = startDate.Date;
+            }
+            else
+            {
+                this.AddParsingError("Invalid HFDTE record: " + line);
             }
         }
 
@@ -279,6 +333,18 @@ namespace WhereToFly.App.Geo.DataFormats
             }
 
             return value;
+        }
+
+        /// <summary>
+        /// Adds a new parsing error text
+        /// </summary>
+        /// <param name="errorText">error text to add</param>
+        private void AddParsingError(string errorText)
+        {
+            string text = $"Error on line {this.currentLine}: {errorText}";
+
+            Debug.WriteLine(text);
+            this.parsingErrors.Add(text);
         }
     }
 }
