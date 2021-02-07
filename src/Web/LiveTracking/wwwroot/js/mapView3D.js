@@ -3,27 +3,33 @@
  * @constructor
  * @param {object} [options] Options to use for initializing map view
  * @param {String} [options.id] DOM ID of the div element to create map view in
+ * @param {String} [options.messageBandId] DOM ID of the message band div element
  * @param {object} [options.initialCenterPoint] initial center point of map view
  * @param {double} [options.initialCenterPoint.latitude] latitude of center point
  * @param {double} [options.initialCenterPoint.longitude] longitude of center point
- * @param {Number} [options.initialZoomLevel] initial zoom level
+ * @param {Number} [options.initialViewingDistance] initial viewing distance
  * @param {Boolean} [options.hasMouse] indicates if the device this is running supports a mouse
- * @param {Boolean} [options.useAsynchronousPrimitives] indicates of asynchronous primitives
+ * @param {Boolean} [options.useAsynchronousPrimitives] indicates if asynchronous primitives
  * should be used
+ * @param {Boolean} [options.useEntityClustering] indicates if entity clustering should be used
  * @param {String} [options.bingMapsApiKey] Bing maps API key to use
  * @param {String} [options.cesiumIonApiKey] Cesium Ion API key to use
  * @param {Function} [options.callback] callback function to use for calling back to C# code
  */
 function MapView(options) {
 
-    console.log("MapView: creating new 3D map view");
+    this.consoleLogStyle = "background: lightgreen; color: darkblue; padding: 1px 3px; border-radius: 3px;";
+
+    console.groupCollapsed("%cMapView%ccreating new 3D map view", this.consoleLogStyle);
+    console.time("ctor");
 
     this.options = options || {
         id: 'mapElement',
         initialCenterPoint: { latitude: 47.67, longitude: 11.88 },
-        initialZoomLevel: 14,
+        initialViewingDistance: 5000.0,
         hasMouse: false,
         useAsynchronousPrimitives: true,
+        useEntityClustering: true,
         callback: {}
     };
 
@@ -32,6 +38,8 @@ function MapView(options) {
 
     if (this.options.callback === undefined)
         this.options.callback = callAction;
+
+    this.showMessageBand("Initializing map...");
 
     console.log("MapView: #1 imagery provider");
 
@@ -150,11 +158,10 @@ function MapView(options) {
 
         var initialHeading = 0.0; // north
         var initialPitch = Cesium.Math.toRadians(-35);
-
-        var distance = 600000 - 40000 * this.options.initialZoomLevel;
+        var initialViewingDistance = this.options.initialViewingDistance || 5000.0;
 
         this.viewer.camera.setView({
-            destination: Cesium.Cartesian3.fromDegrees(longitude, latitude, distance),
+            destination: Cesium.Cartesian3.fromDegrees(longitude, latitude, initialViewingDistance),
             orientation: {
                 initialHeading,
                 initialPitch,
@@ -164,7 +171,7 @@ function MapView(options) {
 
         var altitude = this.options.initialCenterPoint['altitude'] || 0.0;
 
-        this.zoomToLocation({
+        this.flyTo({
             longitude: longitude,
             latitude: latitude,
             altitude: altitude
@@ -232,7 +239,10 @@ function MapView(options) {
         this.pickingHandler.setInputAction(this.onScreenRightClick.bind(this), Cesium.ScreenSpaceEventType.RIGHT_CLICK);
     }
 
-    console.log("MapView: #10 other stuff");
+    console.log("MapView: #10 entity clustering");
+    this.setupEntityClustering();
+
+    console.log("MapView: #11 other stuff");
 
     // add a dedicated track primitives collection, as we can't call viewer.scene.primitives.removeAll()
     this.trackPrimitivesCollection = new Cesium.PrimitiveCollection({
@@ -246,7 +256,28 @@ function MapView(options) {
 
     this.dataSourceMap = {};
 
+    this.osmBuildingsTileset = null;
+
+    this.locationDataSource = new Cesium.CustomDataSource('locations');
+    this.locationDataSource.clustering = this.clustering;
+    this.viewer.dataSources.add(this.locationDataSource);
+
+    this.takeoffEntityDataSource = new Cesium.CustomDataSource('takeoff-entities');
+    this.viewer.dataSources.add(this.takeoffEntityDataSource);
+
+    // swap out console.error for logging purposes
+    var oldLog = console.error;
+    console.error = function (message) {
+        that.onConsoleErrorMessage(message);
+        oldLog.apply(console, arguments);
+    };
+
     this.onMapInitialized();
+
+    this.hideMessageBand();
+
+    console.timeEnd("ctor");
+    console.groupEnd();
 }
 
 /**
@@ -365,12 +396,108 @@ MapView.prototype.createThermalImageryProvider = function () {
 };
 
 /**
+ * Sets up entity clustering, showing custom pins for clustered locations when
+ * too far away.
+ */
+MapView.prototype.setupEntityClustering = function () {
+
+    this.clustering = new Cesium.EntityCluster({
+        enabled: this.options.useEntityClustering,
+        minimumClusterSize: 5,
+        pixelRange: 40
+    });
+
+    // When EntityCluster is added to more than one DataSource, it will try to
+    // destroy the EntityCluster object; prevent that here. Ugly workaround!
+    // See: https://github.com/CesiumGS/cesium/issues/9336
+    this.clustering.destroy = function () { };
+
+    var pinBuilder = new Cesium.PinBuilder();
+    this.clustering.pin50 = pinBuilder.fromText("50+", Cesium.Color.RED, 48).toDataURL();
+    this.clustering.pin40 = pinBuilder.fromText("40+", Cesium.Color.RED, 48).toDataURL();
+    this.clustering.pin30 = pinBuilder.fromText("30+", Cesium.Color.RED, 48).toDataURL();
+    this.clustering.pin20 = pinBuilder.fromText("20+", Cesium.Color.RED, 48).toDataURL();
+    this.clustering.pin10 = pinBuilder.fromText("10+", Cesium.Color.RED, 48).toDataURL();
+
+    this.clustering.singleDigitPins = new Array(8);
+    for (var i = 0; i < this.clustering.singleDigitPins.length; ++i) {
+        this.clustering.singleDigitPins[i] = pinBuilder
+            .fromText("" + (i + 2), Cesium.Color.RED, 48).toDataURL();
+    }
+
+    var that = this;
+    this.clustering.clusterEvent.addEventListener(
+        function (clusteredEntities, cluster) {
+            that.onNewCluster(clusteredEntities, cluster);
+        });
+};
+
+/**
+ * Called when a cluster of entities will be displayed
+ * @param {any} clusteredEntities
+ * @param {any} cluster
+ */
+MapView.prototype.onNewCluster = function (clusteredEntities, cluster) {
+
+    cluster.label.show = false;
+    cluster.billboard.show = true;
+    cluster.billboard.id = "cluster-billboard-" + cluster.label.id;
+    cluster.billboard.verticalOrigin = Cesium.VerticalOrigin.BOTTOM;
+    cluster.billboard.heightReference = Cesium.HeightReference.CLAMP_TO_GROUND;
+
+    if (clusteredEntities.length >= 50)
+        cluster.billboard.image = this.clustering.pin50;
+    else if (clusteredEntities.length >= 40)
+        cluster.billboard.image = this.clustering.pin40;
+    else if (clusteredEntities.length >= 30)
+        cluster.billboard.image = this.clustering.pin30;
+    else if (clusteredEntities.length >= 20)
+        cluster.billboard.image = this.clustering.pin20;
+    else if (clusteredEntities.length >= 10)
+        cluster.billboard.image = this.clustering.pin10;
+    else
+        cluster.billboard.image =
+            this.clustering.singleDigitPins[clusteredEntities.length - 2];
+};
+
+/**
  * Updates scene by requesting rendering from scene. This can be used to
  * update the view, e.g. when a pin was added or removed, and CesiumJS
  * wouldn't update the scene itself.
  */
 MapView.prototype.updateScene = function (imageryType) {
     this.viewer.scene.requestRender();
+};
+
+/**
+ * Shows message band with given text.
+ * @param {String} messageText message text to show
+ */
+MapView.prototype.showMessageBand = function (messageText) {
+
+    if (this.options.messageBandId === undefined)
+        return;
+
+    var bandElement = document.getElementById(this.options.messageBandId);
+    if (bandElement === undefined)
+        return;
+
+    bandElement.style.display = 'block';
+    bandElement.innerHTML = messageText;
+};
+
+/**
+ * Hides message band again.
+ */
+MapView.prototype.hideMessageBand = function () {
+
+    if (this.options.messageBandId === undefined)
+        return;
+
+    var bandElement = document.getElementById(this.options.messageBandId);
+    if (bandElement !== undefined)
+        bandElement.style.display = 'none';
+
 };
 
 /**
@@ -650,12 +777,32 @@ MapView.prototype.setShadingMode = function (shadingMode) {
 
         default:
             console.warn('MapView.setShadingMode: invalid shading mode: ' + shadingMode);
+            break;
     }
 
     this.viewer.scene.globe.enableLighting = shadingMode !== 'None';
 
     this.viewer.terrainShadows =
         shadingMode === 'None' ? Cesium.ShadowMode.DISABLED : Cesium.ShadowMode.RECEIVE_ONLY;
+
+    this.updateScene();
+};
+
+/**
+ * Sets if entity clustering is used
+ * @param {boolean} useEntityClustering true when entity clustering should be used
+ */
+MapView.prototype.setEntityClustering = function (useEntityClustering) {
+
+    this.options.useEntityClustering = useEntityClustering;
+    this.clustering.enabled = useEntityClustering;
+
+    if (useEntityClustering) {
+        // force re-clustering
+        var lastPixelRange = this.clustering.pixelRange;
+        this.clustering.pixelRange = 0;
+        this.clustering.pixelRange = lastPixelRange;
+    }
 
     this.updateScene();
 };
@@ -704,15 +851,79 @@ MapView.prototype.updateMyLocation = function (options) {
 
     if (options.zoomToLocation) {
         console.log("MapView: also zooming to my location");
-        this.viewer.flyTo(
-            this.myLocationMarker,
-            {
-                offset: new Cesium.HeadingPitchRange(
-                    this.viewer.scene.camera.heading,
-                    this.viewer.scene.camera.pitch,
-                    5000.0)
-            });
+        this.flyTo(options);
     }
+};
+
+/**
+ * Returns the current viewing distance from the camera to the terrain in the
+ * center of the scene.
+ */
+MapView.prototype.getCurrentViewingDistance = function () {
+
+    var width = this.viewer.container.clientWidth;
+    var height = this.viewer.container.clientHeight;
+
+    var ray = this.viewer.camera.getPickRay(new Cesium.Cartesian2(width / 2, height / 2));
+    var position = this.viewer.scene.globe.pick(ray, this.viewer.scene);
+
+    if (position !== undefined) {
+        return Cesium.Cartesian3.distance(this.viewer.camera.positionWC, position);
+    }
+
+    return 5000.0;
+};
+
+/**
+ * Flies to to given location
+ * @param {object} [options] Options to use for zooming
+ * @param {double} [options.latitude] Latitude of zoom target
+ * @param {double} [options.longitude] Longitude of zoom target
+ * @param {double} [options.altitude] Altitude of zoom target; optional
+ */
+MapView.prototype.flyTo = function (options) {
+
+    if (this.zoomEntity === undefined) {
+        console.warn("MapView.zoomToLocation: zoomEntity not initialized yet");
+        return;
+    }
+
+    console.log("MapView: flying to: latitude=" + options.latitude +
+        ", longitude=" + options.longitude +
+        ", altitude=" + options.altitude);
+
+    var altitude = options.altitude || 0.0;
+
+    var viewingDistance = this.getCurrentViewingDistance();
+
+    // zooming works by assinging the zoom entity a new position, making it
+    // visible (but transparent), fly there and hiding it again
+    this.zoomEntity.position = Cesium.Cartesian3.fromDegrees(options.longitude, options.latitude, altitude);
+
+    this.zoomEntity.point.heightReference =
+        altitude === 0.0 ? Cesium.HeightReference.CLAMP_TO_GROUND : Cesium.HeightReference.NONE;
+
+    this.zoomEntity.show = true;
+
+    var that = this;
+    this.viewer.flyTo(
+        this.zoomEntity,
+        {
+            offset: new Cesium.HeadingPitchRange(
+                this.viewer.camera.heading,
+                this.viewer.camera.pitch,
+                viewingDistance)
+        }).then(function () {
+            that.zoomEntity.show = false;
+            console.log("MapView: flying finished");
+
+            that.onUpdateLastShownLocation({
+                latitude: options.latitude,
+                longitude: options.longitude,
+                altitude: options.altitude,
+                viewingDistance: that.getCurrentViewingDistance()
+            });
+        });
 };
 
 /**
@@ -724,36 +935,39 @@ MapView.prototype.updateMyLocation = function (options) {
  */
 MapView.prototype.zoomToLocation = function (options) {
 
-    if (this.zoomEntity === undefined) {
-        console.warn("MapView.zoomToLocation: zoomEntity not initialized yet");
-        return;
-    }
+    console.log("MapView: zooming to location at: " +
+        "latitude=" + options.latitude + ", longitude=" + options.longitude +
+        ", altitude=" + options.altitude);
 
-    console.log("MapView: zooming to: latitude=" + options.latitude + ", longitude=" + options.longitude + ", altitude=" + options.altitude);
+    this.flyTo(options);
+};
 
-    var altitude = options.altitude || 0.0;
+/**
+ * Zooms to given map rectangle
+ * @param {object} [rectangle] map rectangle to zoom to
+ * @param {double} [rectangle.minLatitude] minimum latitude
+ * @param {double} [rectangle.maxLatitude] maximum latitude
+ * @param {double} [rectangle.minLongitude] minimum longitude
+ * @param {double} [rectangle.maxLongitude] maximum longitude
+ * @param {double} [rectangle.minAltitude] minimum altitude
+ * @param {double} [rectangle.maxAltitude] maximum altitude
+ */
+MapView.prototype.zoomToRectangle = function (rectangle) {
 
-    // zooming works by assinging the zoom entity a new position, making it
-    // visible (but transparent), fly there and hiding it again
-    this.zoomEntity.position = Cesium.Cartesian3.fromDegrees(options.longitude, options.latitude, altitude);
+    console.log("MapView: start flying to rectangle");
 
-    this.zoomEntity.point.heightReference =
-        altitude === 0.0 ? Cesium.HeightReference.CLAMP_TO_GROUND : Cesium.HeightReference.NONE;
+    var corner = Cesium.Cartesian3.fromDegrees(rectangle.minLongitude, rectangle.minLatitude, rectangle.minAltitude);
+    var oppositeCorner = Cesium.Cartesian3.fromDegrees(rectangle.maxLongitude, rectangle.maxLatitude, rectangle.maxAltitude);
 
-    this.zoomEntity.show = true;
+    var boundingSphere = Cesium.BoundingSphere.fromCornerPoints(corner, oppositeCorner);
 
-    console.log("MapView: zooming to: start flying");
+    var viewingDistance = this.getCurrentViewingDistance();
 
-    this.viewer.flyTo(
-        this.zoomEntity,
-        {
-            offset: new Cesium.HeadingPitchRange(
-                this.viewer.camera.heading,
-                this.viewer.camera.pitch,
-                5000.0)
-        }).then(function () {
-            this.zoomEntity.show = false;
-            console.log("MapView: zooming to: flying finished");
+    this.viewer.camera.flyToBoundingSphere(boundingSphere, {
+        offset: new Cesium.HeadingPitchRange(
+            this.viewer.camera.heading,
+            this.viewer.camera.pitch,
+            viewingDistance)
         });
 };
 
@@ -775,6 +989,16 @@ MapView.prototype.addLayer = function (layer) {
         return;
     }
 
+    if (layer.type === 'OsmBuildingsLayer') {
+        if (this.osmBuildingsTileset === null)
+            this.osmBuildingsTileset = Cesium.createOsmBuildings();
+
+        this.viewer.scene.primitives.add(this.osmBuildingsTileset);
+
+        this.setLayerVisibility(layer);
+        return;
+    }
+
     console.log("MapView: layer data length: " + layer.data.length + " bytes");
 
     var czml = JSON.parse(layer.data);
@@ -785,6 +1009,7 @@ MapView.prototype.addLayer = function (layer) {
 
     Cesium.when(dataSourcePromise,
         function (dataSource) {
+            dataSource.clustering = that.clustering;
             that.viewer.dataSources.add(dataSource);
             that.dataSourceMap[layer.id] = dataSource;
 
@@ -838,9 +1063,15 @@ MapView.prototype.zoomToLayer = function (layerId) {
 
     console.log("MapView: zooming to layer with id " + layerId);
 
+    if (layerId === "osmBuildingsLayer") {
+
+        console.warn("can't zoom to OSM buildings layer");
+        return;
+    }
+
     var dataSource;
     if (layerId === "locationLayer")
-        dataSource = this.viewer.entities;
+        dataSource = this.locationDataSource;
     else if (layerId === "trackLayer")
         dataSource = this.trackPrimitivesCollection;
     else
@@ -857,7 +1088,8 @@ MapView.prototype.zoomToLayer = function (layerId) {
             this.onUpdateLastShownLocation({
                 latitude: Cesium.Math.toDegrees(center.latitude),
                 longitude: Cesium.Math.toDegrees(center.longitude),
-                altitude: center.height
+                altitude: center.height,
+                viewingDistance: this.getCurrentViewingDistance()
             });
         }
     }
@@ -875,9 +1107,11 @@ MapView.prototype.setLayerVisibility = function (layer) {
         ", visibility: " + layer.isVisible);
 
     if (layer.id === "locationLayer")
-        this.viewer.entities.show = layer.isVisible;
+        this.locationDataSource.show = layer.isVisible;
     else if (layer.id === "trackLayer")
         this.trackPrimitivesCollection.show = layer.isVisible;
+    else if (layer.id === "osmBuildingsLayer")
+        this.osmBuildingsTileset.show = layer.isVisible;
     else {
         var dataSource = this.dataSourceMap[layer.id];
         if (dataSource !== undefined)
@@ -888,6 +1122,38 @@ MapView.prototype.setLayerVisibility = function (layer) {
 };
 
 /**
+ * Exports layer with given ID to KMZ bytestream
+ *
+ * @param {string} layerId
+ */
+MapView.prototype.exportLayer = function (layerId) {
+
+    console.log("MapView: exporting layer with id " + layerId);
+
+    if (layerId === "locationLayer" ||
+        layerId === "trackLayer" ||
+        layerId === "osmBuildingsLayer") {
+        console.warn("MapView: can't export layer of type " + layerId);
+        this.onExportLayer(null);
+        return;
+    }
+
+    var dataSource = this.dataSourceMap[layerId];
+    if (dataSource !== undefined) {
+        var that = this;
+        Cesium.exportKml({
+            entities: dataSource.entities,
+            kmz: true
+        }).then(function (result) {
+            that.onExportLayer(result.kmz);
+        }).otherwise(function (result) {
+            console.error(result);
+            that.onExportLayer(null);
+        });
+    }
+};
+
+/**
  * Removes layer with given layer ID
  * @param {string} [layerId] ID of layer
  */
@@ -895,11 +1161,26 @@ MapView.prototype.removeLayer = function (layerId) {
 
     console.log("MapView: removing layer with id " + layerId);
 
+    if (layerId === "osmBuildingsLayer" && this.osmBuildingsTileset !== null) {
+        this.viewer.scene.primitives.remove(this.osmBuildingsTileset);
+        this.osmBuildingsTileset = null;
+
+        this.updateScene();
+        return;
+    }
+
     var dataSource = this.dataSourceMap[layerId];
     if (dataSource !== undefined) {
         this.viewer.dataSources.remove(dataSource);
         this.dataSourceMap[layerId] = undefined;
+
+        // force re-clustering
+        var lastPixelRange = this.clustering.pixelRange;
+        this.clustering.pixelRange = 0;
+        this.clustering.pixelRange = lastPixelRange;
     }
+
+    this.updateScene();
 };
 
 /**
@@ -909,13 +1190,26 @@ MapView.prototype.clearLayerList = function () {
 
     console.log("MapView: clearing layer list");
 
+    if (this.osmBuildingsTileset !== null) {
+        this.viewer.scene.primitives.remove(this.osmBuildingsTileset);
+        this.osmBuildingsTileset = null;
+    }
+
     for (var layerId in this.dataSourceMap) {
         var dataSource = this.dataSourceMap[layerId];
-        if (dataSource !== undefined)
+        if (dataSource !== undefined) {
             this.viewer.dataSources.remove(dataSource);
+    }
     }
 
     this.dataSourceMap = {};
+
+    // force re-clustering
+    var lastPixelRange = this.clustering.pixelRange;
+    this.clustering.pixelRange = 0;
+    this.clustering.pixelRange = lastPixelRange;
+
+    this.updateScene();
 };
 
 /**
@@ -925,23 +1219,8 @@ MapView.prototype.clearLocationList = function () {
 
     console.log("MapView: clearing location list");
 
-    this.viewer.entities.removeAll();
-
-    // re-add the special purpose entities
-    if (this.myLocationMarker !== null)
-        this.viewer.entities.add(this.myLocationMarker);
-
-    if (this.findResultMarker !== null)
-        this.viewer.entities.add(this.findResultMarker);
-
-    if (this.zoomEntity !== null)
-        this.viewer.entities.add(this.zoomEntity);
-
-    if (this.trackMarker !== null)
-        this.viewer.entities.add(this.trackMarker);
-
-    if (this.flyingRangeCone !== null)
-        this.viewer.entities.add(this.flyingRangeCone);
+    this.locationDataSource.entities.removeAll();
+    this.takeoffEntityDataSource.entities.removeAll();
 };
 
 /**
@@ -987,11 +1266,17 @@ MapView.prototype.formatLocationText = function (location) {
 MapView.prototype.addLocationList = function (locationList) {
 
     console.log("MapView: adding location list, with " + locationList.length + " entries");
+    console.time("MapView.addLocationList");
 
     var that = this;
     for (var index in locationList) {
 
         var location = locationList[index];
+
+        if (location.id === undefined) {
+            console.warn("MapView: ignored adding location without ID");
+            continue;
+        }
 
         var text = this.formatLocationText(location);
 
@@ -1010,12 +1295,30 @@ MapView.prototype.addLocationList = function (locationList) {
                 location.longitude,
                 location.latitude),
             function (entity) {
-                that.viewer.entities.add(entity);
+                that.locationDataSource.entities.add(entity);
             },
             function (error) {
                 console.error("MapView.addLocationList: error while adding location entity: " + error);
             });
+
+        if (location.takeoffDirections !== undefined && location.takeoffDirections !== 0) {
+            var takeoffOutlineEntity = this.createTakeoffEntity(
+                location,
+                new Cesium.Color(1.0, 1.0, 0.5, 0.4), // light yellow
+                true);
+
+            this.takeoffEntityDataSource.entities.add(takeoffOutlineEntity);
+
+            var takeoffEntity = this.createTakeoffEntity(
+                location,
+                new Cesium.Color(0.0, 0.0, 0.54, 0.4), // dark blue
+                false);
+
+            this.takeoffEntityDataSource.entities.add(takeoffEntity);
     }
+    }
+
+    console.timeEnd("MapView.addLocationList");
 };
 
 /**
@@ -1085,7 +1388,7 @@ MapView.prototype.imageUrlFromLocationType = function (locationType) {
         case 'FlyingTakeoff': return 'images/paragliding.svg';
         case 'FlyingLandingPlace': return 'images/paragliding.svg';
         case 'FlyingWinchTowing': return 'images/paragliding.svg';
-        //case 'LiveWaypoint': return '';
+        case 'LiveWaypoint': return 'images/autorenew.svg';
         //case 'Turnpoint': return '';
         default: return 'images/map-marker.svg';
     }
@@ -1108,6 +1411,124 @@ MapView.prototype.pinColorFromLocationType = function (locationType) {
 };
 
 /**
+ * Calculates a point on a circle around a given center.
+ * Note: Most of the code is adapted from code in Cesium's EllipseGeometryLibrary.js
+ * @param {Cesium.Cartesian3} [center] Center point of the circle
+ * @param {number} [radius] radius of the circle, in meter
+ * @param {number} [angleDegrees] angle of point on circle, in degrees
+ * @returns {Cesium.Cartesian3} calculated point coordinates
+ */
+function pointFromCenterRadiusAngle(center, radius, angleDegrees) {
+
+    var unitPosScratch = new Cesium.Cartesian3();
+    var unitPos = Cesium.Cartesian3.normalize(center, unitPosScratch);
+
+    var eastVecScratch = new Cesium.Cartesian3();
+    var eastVec = Cesium.Cartesian3.cross(Cesium.Cartesian3.UNIT_Z, center, eastVecScratch);
+    eastVec = Cesium.Cartesian3.normalize(eastVec, eastVec);
+
+    var northVecScratch = new Cesium.Cartesian3();
+    var northVec = Cesium.Cartesian3.cross(unitPos, eastVec, northVecScratch);
+
+    var azimuth = Cesium.Math.toRadians(angleDegrees);
+
+    var rotAxis = new Cesium.Cartesian3();
+    var tempVec = new Cesium.Cartesian3();
+    Cesium.Cartesian3.multiplyByScalar(eastVec, Math.cos(azimuth), rotAxis);
+    Cesium.Cartesian3.multiplyByScalar(northVec, Math.sin(azimuth), tempVec);
+    Cesium.Cartesian3.add(rotAxis, tempVec, rotAxis);
+
+    var mag = Cesium.Cartesian3.magnitude(center);
+    var angle = radius / mag;
+
+    // Create the quaternion to rotate the position vector to the boundary of the ellipse.
+    var unitQuat = new Cesium.Quaternion();
+    Cesium.Quaternion.fromAxisAngle(rotAxis, angle, unitQuat);
+
+    var rotMtx = new Cesium.Matrix3();
+    Cesium.Matrix3.fromQuaternion(unitQuat, rotMtx);
+
+    var result = new Cesium.Cartesian3();
+    Cesium.Matrix3.multiplyByVector(rotMtx, unitPos, result);
+    Cesium.Cartesian3.normalize(result, result);
+
+    Cesium.Cartesian3.multiplyByScalar(result, mag, result);
+    return result;
+}
+
+/**
+ * Creates an entity visualizing the takeoff directions of the given location
+ * @param {Object} [location] An object with at least the following properties:
+ * @param {String} [location.id] ID of the location to update
+ * @param {Number} [location.latitude] Latitude of the location to update
+ * @param {Number} [location.longitude] Longitude of the location to update
+ * @param {number} [location.takeoffDirections] Takeoff directions bit values
+ * @param {Cesium.Color} [color] Color of the polygon or polyline entity
+ * @param {boolean} [outline] If true, only an outline entity is returned,
+ * otherwise a full polygon entity
+ */
+MapView.prototype.createTakeoffEntity = function (location, color, outline) {
+
+    var center = Cesium.Cartesian3.fromDegrees(location.longitude, location.latitude);
+    var radius = 50.0; // in meter
+
+    var pointArray = [];
+    var takeoffBits = location.takeoffDirections;
+    var sliceAngle = 360.0 / 16.0;
+
+    pointArray.push(center);
+
+    // from the bits, calculate the takeoff angle and add polygon points
+    for (var angleBit = 0; angleBit <= 16; angleBit++) {
+        var bitmask = 1 << angleBit;
+        var angle = 180.0 - angleBit * sliceAngle;
+
+        if ((takeoffBits & bitmask) !== 0) {
+            pointArray.push(pointFromCenterRadiusAngle(center, radius, angle - sliceAngle / 2.0));
+            pointArray.push(pointFromCenterRadiusAngle(center, radius, angle));
+            pointArray.push(pointFromCenterRadiusAngle(center, radius, angle + sliceAngle / 2.0));
+            pointArray.push(center);
+        }
+    }
+
+    var distanceDisplayCondition =
+        new Cesium.DistanceDisplayCondition(0.0, 5000.0);
+
+    var entity;
+    if (outline) {
+        entity = new Cesium.Entity({
+            id: "takeoff-outline-" + location.id,
+            name: location.name,
+            polyline: {
+                positions: pointArray,
+                width: 3.0,
+                material: color,
+                clampToGround: true,
+                distanceDisplayCondition: distanceDisplayCondition
+            }
+        });
+    }
+    else {
+        if (!this.viewer.scene.context.fragmentDepth)
+            console.warn("Warning: WebGL extension EXT_frag_depth isn't supported by GPU, using GroundPrimitive anyway...");
+
+        entity = new Cesium.Entity({
+            id: "takeoff-" + location.id,
+            name: location.name,
+            polygon: {
+                // note: clamping to terrain is achieved by not specifying height and heightReference at all
+                hierarchy: new Cesium.PolygonHierarchy(pointArray),
+                material: color,
+                outline: false, // when an outline would be present, it would not clamp to ground
+                distanceDisplayCondition: distanceDisplayCondition
+            }
+        });
+    }
+
+    return entity;
+};
+
+/**
  * Updates a single location
  * @param {Object} [location] An object with the following properties:
  * @param {String} [location.id] ID of the location to update
@@ -1126,7 +1547,7 @@ MapView.prototype.updateLocation = function (location) {
         ", longitude " + location.longitude +
         ", altitude " + location.altitude);
 
-    var entity = this.viewer.entities.getById(location.id);
+    var entity = this.locationDataSource.entities.getById(location.id);
 
     if (entity === undefined) {
         console.error("MapView.updateLocation: couldn't find entity for id: " + location.id);
@@ -1147,9 +1568,12 @@ MapView.prototype.removeLocation = function (locationId) {
 
     console.log("MapView: removing location with ID: " + locationId);
 
-    var entity = this.viewer.entities.getById(locationId);
+    var entity = this.locationDataSource.entities.getById(locationId);
 
-    this.viewer.entities.remove(entity);
+    this.locationDataSource.entities.remove(entity);
+
+    this.takeoffEntityDataSource.entities.remove("takeoff-" + location.id);
+    this.takeoffEntityDataSource.entities.remove("takeoff-outline-" + location.id);
 };
 
 /**
@@ -1189,14 +1613,7 @@ MapView.prototype.showFindResult = function (options) {
     this.findResultMarker.position = Cesium.Cartesian3.fromDegrees(options.longitude, options.latitude);
     this.findResultMarker.show = true;
 
-    this.viewer.flyTo(
-        this.findResultMarker,
-        {
-            offset: new Cesium.HeadingPitchRange(
-                this.viewer.camera.heading,
-                this.viewer.camera.pitch,
-                5000.0)
-        });
+    this.flyTo(options);
 };
 
 /**
@@ -1285,6 +1702,7 @@ MapView.prototype.showFlyingRange = function (options) {
 MapView.prototype.sampleTrackHeights = function (track) {
 
     console.log("MapView.sampleTrackHeights: #1 start sampling track point heights for " + track.listOfTrackPoints.length + " points...");
+    console.time("MapView.sampleTrackHeights");
 
     if (!Cesium.Entity.supportsPolylinesOnTerrain(this.viewer.scene)) {
         console.warn("MapView.sampleTrackHeights: #2: polylines on terrain are not supported");
@@ -1324,15 +1742,21 @@ MapView.prototype.sampleTrackHeights = function (track) {
                     console.log("MapView.sampleTrackHeights: #6: sampling track point heights finished.");
 
                     that.onSampledTrackHeights(trackPointHeightArray);
+
+                    console.timeEnd("MapView.sampleTrackHeights");
                 },
                 function (error) {
                     console.error("MapView.sampleTrackHeights: #9: error while sampling track point heights: " + error);
                     that.onSampledTrackHeights(null);
+
+                    console.timeEnd("MapView.sampleTrackHeights");
                 });
         },
         function (error) {
             console.error("MapView.sampleTrackHeights: #8: error while waiting for terrain provider promise: " + error);
             that.onSampledTrackHeights(null);
+
+            console.timeEnd("MapView.sampleTrackHeights");
         });
 
     console.log("MapView.sampleTrackHeights: #7: call to sampleTrackHeights() returns.");
@@ -1579,7 +2003,8 @@ MapView.prototype.zoomToTrack = function (trackId) {
         this.onUpdateLastShownLocation({
             latitude: Cesium.Math.toDegrees(center.latitude),
             longitude: Cesium.Math.toDegrees(center.longitude),
-            altitude: center.height
+            altitude: center.height,
+            viewingDistance: this.getCurrentViewingDistance()
         });
     }
 };
@@ -1832,18 +2257,34 @@ MapView.prototype.onAddTourPlanLocation = function (locationId) {
     this.viewer.selectedEntity = undefined;
 };
 
+
+/**
+ * Called when a console.error() is called, e.g. for rendering errors from CesiumJS.
+ * @param {string} message error message
+ */
+MapView.prototype.onConsoleErrorMessage = function (message) {
+
+    if (this.options.callback !== undefined)
+        this.options.callback('onConsoleErrorMessage', message);
+};
+
 /**
  * Called to update the last shown location stored in the app.
  * @param {Object} [options] An object with the following properties:
  * @param {Number} [options.latitude] Latitude of the position
  * @param {Number} [options.longitude] Longitude of the position
  * @param {Number} [options.altitude] Altitude of the position
+ * @param {Number} [options.viewingDistance] viewing distance of camera; optional
  */
 MapView.prototype.onUpdateLastShownLocation = function (options) {
 
-    console.log("MapView: updating last shown location: lat=" + options.latitude +
+    options.viewingDistance = Math.floor(options.viewingDistance);
+
+    console.log("MapView: updating last shown location: " +
+        "lat=" + options.latitude +
         ", long=" + options.longitude +
-        ", alt=" + options.altitude);
+        ", alt=" + options.altitude +
+        ", viewingDistance=" + options.viewingDistance);
 
     if (this.options.callback !== undefined)
         this.options.callback('onUpdateLastShownLocation', options);
@@ -1872,6 +2313,28 @@ MapView.prototype.onNetworkConnectivityChanged = function (isAvailable) {
     if (isAvailable &&
         (this.viewer.terrainProvider === null || this.viewer.terrainProvider instanceof Cesium.EllipsoidTerrainProvider))
         this.initTerrainProvider();
+};
+
+/**
+ * Called when a layer was successfully exported as KMZ byte stream
+ * @param {string} blobData KMZ data, as blob, or null
+ */
+MapView.prototype.onExportLayer = function (blobData) {
+
+    if (this.options.callback === undefined)
+        return;
+
+    // convert to base64
+    var reader = new FileReader();
+    var that = this;
+    reader.onloadend = function () {
+        var dataUrl = reader.result;
+        var base64data = dataUrl.substr(dataUrl.indexOf(',') + 1);
+
+        that.options.callback('onExportLayer', base64data);
+    }
+
+    reader.readAsDataURL(blobData);
 };
 
 /**

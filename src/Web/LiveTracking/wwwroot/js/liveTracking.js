@@ -16,9 +16,10 @@ function LiveTracking() {
     this.map = new MapView({
         id: 'mapElement',
         initialCenterPoint: { latitude: 47.083, longitude: 12.178 },
-        initialZoomLevel: 5,
+        initialViewingDistance: 5000.0,
         hasMouse: true,
         useAsynchronousPrimitives: true,
+        useEntityClustering: false,
         callback: this.callMapAction
     });
 
