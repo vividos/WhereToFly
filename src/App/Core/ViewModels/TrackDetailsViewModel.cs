@@ -120,6 +120,7 @@ namespace WhereToFly.App.Core.ViewModels
         private static string FormatTrackDescription(Track track)
         {
             string desc = HtmlConverter.FromHtmlOrMarkdown(track.Description);
+            desc = desc.Replace("\n", "<br/>");
 
             return HtmlConverter.AddTextColorStyles(
                 desc,
