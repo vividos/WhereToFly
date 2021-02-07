@@ -260,6 +260,8 @@ LiveTracking.prototype.onUpdateLiveWaypointResult = function (liveWaypointUri, r
 
     if (result.data !== undefined) {
         result.data.id = liveWaypointUri;
+        result.data.type = 'LiveWaypoint';
+
         this.map.updateLocation(result.data);
 
         if (this.liveWaypointToIdMapping[liveWaypointUri] !== undefined) {
