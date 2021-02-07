@@ -49,6 +49,7 @@
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Geo\CzmlAirspaceWriterTest.cs" />
     <Compile Include="Geo\GpxDataFileTests.cs" />
+    <Compile Include="Geo\IgcParserTests.cs" />
     <Compile Include="Geo\KmlDataFileTests.cs" />
     <Compile Include="Geo\MapPointExtensionMethodsTests.cs" />
     <Compile Include="Geo\IgcDataFileTests.cs" />
