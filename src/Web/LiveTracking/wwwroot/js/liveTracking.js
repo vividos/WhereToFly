@@ -81,7 +81,7 @@ LiveTracking.prototype.addDefaultLayerAndLocationListsAndTracks = function () {
 
     console.log("LiveTracking: loading default data...");
 
-    this.addCrossingTheAlpsLocationsAndTracks();
+    this.addCrossingTheAlpsLayer();
 };
 
 /**
@@ -107,49 +107,25 @@ LiveTracking.prototype.addXLakesLayer = function () {
 };
 
 /**
- * Adds "crossing the alps" locations and track
+ * Adds "crossing the alps" layer
  */
-LiveTracking.prototype.addCrossingTheAlpsLocationsAndTracks = function () {
+LiveTracking.prototype.addCrossingTheAlpsLayer = function () {
 
-    this.map.addLocationList([{
-        id: 'crossingthealps2021-start',
-        name: 'Start: Kampenwand',
-        description: 'Start of the Crossing the Alps 2021 tour',
-        type: 'Turnpoint',
-        latitude: 47.754076,
-        longitude: 12.352277,
-        altitude: 0.0,
-        isPlanTourLocation: false
-    }]);
-
-    this.map.addLocationList([{
-        id: 'crossingthealps2021-end',
-        name: 'End: Feltre',
-        description: 'End of the Crossing the Alps 2021 tour',
-        type: 'Turnpoint',
-        latitude: 46.017779,
-        longitude: 11.900711,
-        altitude: 0.0,
-        isPlanTourLocation: false
-    }]);
-
-    this.map.addTrack({
-        id: 'crossingthealps2021',
-        name: 'Crossing the Alps 2021',
-        isFlightTrack: false,
-        color: 'FF0000',
-        listOfTrackPoints: [
-            12.352277, 47.754076, 0.0, // Kampenwand
-            12.431815, 47.631745, 0.0, // Kössen
-            12.297016, 47.285720, 0.0, // Wildkogel
-            12.183008, 47.090525, 0.0, // Alpenhauptkamm
-            11.958434, 46.738669, 0.0, // Kronplatz
-            11.828376, 46.508371, 0.0, // Sellastock
-            11.870709, 46.251668, 0.0, // Pala
-            11.900711, 46.017779, 0.0 // Feltre
-        ]
-    });
-
+    var that = this;
+    $.get("/data/crossing-the-alps-2021.czml",
+        null,
+        function (data) {
+            console.log("LiveTracking: successfully loaded czml file, adding layer");
+            that.map.addLayer({
+                id: 'crossng-the-alps-2021-layer',
+                name: 'Crossing the Alps 2021',
+                type: '',
+                isVisible: true,
+                data: data
+            });
+            that.map.zoomToLayer('rossng-the-alps-2021-layer');
+        },
+        "text");
 };
 
 /**
