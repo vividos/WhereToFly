@@ -107,7 +107,7 @@ namespace WhereToFly.App.Core.ViewModels
         private async Task OpenHeightProfilePage()
         {
             await NavigationService.Instance.NavigateAsync(
-                Constants.PageKeyTrackHeightProfilePage,
+                PageKey.TrackHeightProfilePage,
                 true,
                 this.Track);
         }

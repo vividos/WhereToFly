@@ -139,7 +139,7 @@ namespace WhereToFly.App.Core.ViewModels
             var tcs = new TaskCompletionSource<WeatherIconDescription>();
 
             await NavigationService.Instance.NavigateAsync(
-                Constants.PageKeySelectWeatherIconPage,
+                PageKey.SelectWeatherIconPage,
                 animated: true,
                 parameter: tcs);
 

@@ -322,7 +322,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             App.MapView.ZoomToLocation(this.location.MapLocation);
 
-            await NavigationService.Instance.NavigateAsync(Constants.PageKeyMapPage, animated: true);
+            await NavigationService.Instance.NavigateAsync(PageKey.MapPage, animated: true);
         }
 
         /// <summary>

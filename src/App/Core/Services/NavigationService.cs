@@ -36,7 +36,7 @@ namespace WhereToFly.App.Core.Services
         /// <param name="animated">indicates if page navigation should be animated</param>
         /// <param name="parameter">parameter object to pass; may be null</param>
         /// <returns>task to wait on</returns>
-        public async Task NavigateAsync(string pageKey, bool animated, object parameter = null)
+        public async Task NavigateAsync(PageKey pageKey, bool animated, object parameter = null)
         {
             Type pageType = GetPageTypeFromPageKey(pageKey, parameter);
 
@@ -53,90 +53,90 @@ namespace WhereToFly.App.Core.Services
         /// <param name="pageKey">page key</param>
         /// <param name="parameter">parameter; mandatory for some pages</param>
         /// <returns>page type</returns>
-        private static Type GetPageTypeFromPageKey(string pageKey, object parameter)
+        private static Type GetPageTypeFromPageKey(PageKey pageKey, object parameter)
         {
             Type pageType = null;
 
             switch (pageKey)
             {
-                case Constants.PageKeyMapPage:
+                case PageKey.MapPage:
                     pageType = typeof(MapPage);
                     break;
 
-                case Constants.PageKeyLayerListPage:
+                case PageKey.LayerListPage:
                     pageType = typeof(LayerListPage);
                     break;
 
-                case Constants.PageKeyLayerDetailsPage:
+                case PageKey.LayerDetailsPage:
                     Debug.Assert(
                         parameter is Layer,
                         "layer must have been passed as parameter");
                     pageType = typeof(LayerDetailsPage);
                     break;
 
-                case Constants.PageKeyCurrentPositionDetailsPage:
+                case PageKey.CurrentPositionDetailsPage:
                     pageType = typeof(CurrentPositionDetailsPage);
                     break;
 
-                case Constants.PageKeyLocationListPage:
+                case PageKey.LocationListPage:
                     pageType = typeof(LocationListPage);
                     break;
 
-                case Constants.PageKeyLocationDetailsPage:
+                case PageKey.LocationDetailsPage:
                     Debug.Assert(
                         parameter is Model.Location,
                         "location must have been passed as parameter");
                     pageType = typeof(LocationDetailsPage);
                     break;
 
-                case Constants.PageKeyEditLocationDetailsPage:
+                case PageKey.EditLocationDetailsPage:
                     Debug.Assert(
                         parameter is Model.Location,
                         "location must have been passed as parameter");
                     pageType = typeof(EditLocationDetailsPage);
                     break;
 
-                case Constants.PageKeyTrackListPage:
+                case PageKey.TrackListPage:
                     pageType = typeof(TrackListPage);
                     break;
 
-                case Constants.PageKeyTrackInfoPage:
+                case PageKey.TrackInfoPage:
                     Debug.Assert(
                         parameter is Geo.Track,
                         "track must have been passed as parameter");
                     pageType = typeof(TrackInfoTabbedPage);
                     break;
 
-                case Constants.PageKeyTrackHeightProfilePage:
+                case PageKey.TrackHeightProfilePage:
                     Debug.Assert(
                         parameter is Geo.Track,
                         "track must have been passed as parameter");
                     pageType = typeof(TrackHeightProfilePage);
                     break;
 
-                case Constants.PageKeyWeatherDashboardPage:
+                case PageKey.WeatherDashboardPage:
                     pageType = typeof(WeatherDashboardPage);
                     break;
 
-                case Constants.PageKeyWeatherDetailsPage:
+                case PageKey.WeatherDetailsPage:
                     Debug.Assert(
                         parameter is WeatherIconDescription,
                         "weather icon description must have been passed as parameter");
                     pageType = typeof(WeatherDetailsPage);
                     break;
 
-                case Constants.PageKeySelectWeatherIconPage:
+                case PageKey.SelectWeatherIconPage:
                     Debug.Assert(
                         parameter is TaskCompletionSource<WeatherIconDescription>,
                         "task completion source must have been passed as parameter");
                     pageType = typeof(SelectWeatherIconPage);
                     break;
 
-                case Constants.PageKeySettingsPage:
+                case PageKey.SettingsPage:
                     pageType = typeof(SettingsPage);
                     break;
 
-                case Constants.PageKeyInfoPage:
+                case PageKey.InfoPage:
                     pageType = typeof(InfoPage);
                     break;
 

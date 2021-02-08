@@ -160,7 +160,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         internal async Task NavigateToTrackDetails(Track track)
         {
-            await NavigationService.Instance.NavigateAsync(Constants.PageKeyTrackInfoPage, true, track);
+            await NavigationService.Instance.NavigateAsync(PageKey.TrackInfoPage, true, track);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace WhereToFly.App.Core.ViewModels
         {
             App.MapView.ZoomToTrack(track);
 
-            await NavigationService.Instance.NavigateAsync(Constants.PageKeyMapPage, animated: true);
+            await NavigationService.Instance.NavigateAsync(PageKey.MapPage, animated: true);
         }
 
         /// <summary>

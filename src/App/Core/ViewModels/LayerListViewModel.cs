@@ -143,7 +143,7 @@ namespace WhereToFly.App.Core.ViewModels
         {
             App.MapView.ZoomToLayer(layer);
 
-            await NavigationService.Instance.NavigateAsync(Constants.PageKeyMapPage, animated: true);
+            await NavigationService.Instance.NavigateAsync(PageKey.MapPage, animated: true);
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace WhereToFly.App.Core.ViewModels
             if (layer.LayerType != LayerType.LocationLayer &&
                 layer.LayerType != LayerType.TrackLayer)
             {
-                await NavigationService.Instance.NavigateAsync(Constants.PageKeyLayerDetailsPage, true, layer);
+                await NavigationService.Instance.NavigateAsync(PageKey.LayerDetailsPage, true, layer);
             }
             else
             {
@@ -321,7 +321,7 @@ namespace WhereToFly.App.Core.ViewModels
             await layerDataService.Remove(layer.Id);
             await layerDataService.Add(layer);
 
-            await NavigationService.Instance.NavigateAsync(Constants.PageKeyMapPage, animated: true);
+            await NavigationService.Instance.NavigateAsync(PageKey.MapPage, animated: true);
 
             App.MapView.AddLayer(layer);
 

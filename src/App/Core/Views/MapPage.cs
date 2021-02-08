@@ -437,7 +437,7 @@ namespace WhereToFly.App.Core.Views
             }
 
             await NavigationService.Instance.NavigateAsync(
-                Constants.PageKeyLocationDetailsPage,
+                PageKey.LocationDetailsPage,
                 animated: true,
                 parameter: location);
         }
@@ -544,7 +544,7 @@ namespace WhereToFly.App.Core.Views
             await locationDataService.Add(location);
 
             await NavigationService.Instance.NavigateAsync(
-                Constants.PageKeyEditLocationDetailsPage,
+                PageKey.EditLocationDetailsPage,
                 animated: true,
                 parameter: location);
 
@@ -630,7 +630,7 @@ namespace WhereToFly.App.Core.Views
             await locationDataService.Add(location);
 
             await NavigationService.Instance.NavigateAsync(
-                Constants.PageKeyEditLocationDetailsPage,
+                PageKey.EditLocationDetailsPage,
                 animated: true,
                 parameter: location);
 
