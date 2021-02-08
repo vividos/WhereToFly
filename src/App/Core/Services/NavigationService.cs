@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Views;
@@ -16,6 +17,33 @@ namespace WhereToFly.App.Core.Services
     /// </summary>
     public class NavigationService
     {
+        /// <summary>
+        /// Mapping from page key to page type and, optionally, the type of parameter that must be
+        /// passed
+        /// </summary>
+        private static readonly Dictionary<PageKey, (Type, Type)> PageKeyToPageMap =
+            new Dictionary<PageKey, (Type, Type)>
+            {
+                { PageKey.MapPage, (typeof(MapPage), null) },
+                { PageKey.LayerListPage, (typeof(LayerListPage), null) },
+                { PageKey.LayerDetailsPage, (typeof(LayerDetailsPage), typeof(Layer)) },
+                { PageKey.CurrentPositionDetailsPage, (typeof(CurrentPositionDetailsPage), null) },
+                { PageKey.LocationListPage, (typeof(LocationListPage), null) },
+                { PageKey.LocationDetailsPage, (typeof(LocationDetailsPage), typeof(Model.Location)) },
+                { PageKey.EditLocationDetailsPage, (typeof(EditLocationDetailsPage), typeof(Model.Location)) },
+                { PageKey.TrackListPage, (typeof(TrackListPage), null) },
+                { PageKey.TrackInfoPage, (typeof(TrackInfoTabbedPage), typeof(Geo.Track)) },
+                { PageKey.TrackHeightProfilePage, (typeof(TrackHeightProfilePage), typeof(Geo.Track)) },
+                { PageKey.WeatherDashboardPage, (typeof(WeatherDashboardPage), null) },
+                { PageKey.WeatherDetailsPage, (typeof(WeatherDetailsPage), typeof(WeatherIconDescription)) },
+                {
+                    PageKey.SelectWeatherIconPage,
+                    (typeof(SelectWeatherIconPage), typeof(TaskCompletionSource<WeatherIconDescription>))
+                },
+                { PageKey.SettingsPage, (typeof(SettingsPage), null) },
+                { PageKey.InfoPage, (typeof(InfoPage), null) },
+            };
+
         /// <summary>
         /// Returns current instance of navigation service, registered with the DependencyService.
         /// </summary>
@@ -55,94 +83,21 @@ namespace WhereToFly.App.Core.Services
         /// <returns>page type</returns>
         private static Type GetPageTypeFromPageKey(PageKey pageKey, object parameter)
         {
-            Type pageType = null;
+            Debug.Assert(
+                PageKeyToPageMap.ContainsKey(pageKey),
+                "page key couldn't be found");
 
-            switch (pageKey)
+            var tuple = PageKeyToPageMap[pageKey];
+            Type pageType = tuple.Item1;
+
+            Type parameterType = tuple.Item2;
+            if (parameterType != null)
             {
-                case PageKey.MapPage:
-                    pageType = typeof(MapPage);
-                    break;
+                Debug.Assert(parameter != null, "passed parameter must be non-null");
 
-                case PageKey.LayerListPage:
-                    pageType = typeof(LayerListPage);
-                    break;
-
-                case PageKey.LayerDetailsPage:
-                    Debug.Assert(
-                        parameter is Layer,
-                        "layer must have been passed as parameter");
-                    pageType = typeof(LayerDetailsPage);
-                    break;
-
-                case PageKey.CurrentPositionDetailsPage:
-                    pageType = typeof(CurrentPositionDetailsPage);
-                    break;
-
-                case PageKey.LocationListPage:
-                    pageType = typeof(LocationListPage);
-                    break;
-
-                case PageKey.LocationDetailsPage:
-                    Debug.Assert(
-                        parameter is Model.Location,
-                        "location must have been passed as parameter");
-                    pageType = typeof(LocationDetailsPage);
-                    break;
-
-                case PageKey.EditLocationDetailsPage:
-                    Debug.Assert(
-                        parameter is Model.Location,
-                        "location must have been passed as parameter");
-                    pageType = typeof(EditLocationDetailsPage);
-                    break;
-
-                case PageKey.TrackListPage:
-                    pageType = typeof(TrackListPage);
-                    break;
-
-                case PageKey.TrackInfoPage:
-                    Debug.Assert(
-                        parameter is Geo.Track,
-                        "track must have been passed as parameter");
-                    pageType = typeof(TrackInfoTabbedPage);
-                    break;
-
-                case PageKey.TrackHeightProfilePage:
-                    Debug.Assert(
-                        parameter is Geo.Track,
-                        "track must have been passed as parameter");
-                    pageType = typeof(TrackHeightProfilePage);
-                    break;
-
-                case PageKey.WeatherDashboardPage:
-                    pageType = typeof(WeatherDashboardPage);
-                    break;
-
-                case PageKey.WeatherDetailsPage:
-                    Debug.Assert(
-                        parameter is WeatherIconDescription,
-                        "weather icon description must have been passed as parameter");
-                    pageType = typeof(WeatherDetailsPage);
-                    break;
-
-                case PageKey.SelectWeatherIconPage:
-                    Debug.Assert(
-                        parameter is TaskCompletionSource<WeatherIconDescription>,
-                        "task completion source must have been passed as parameter");
-                    pageType = typeof(SelectWeatherIconPage);
-                    break;
-
-                case PageKey.SettingsPage:
-                    pageType = typeof(SettingsPage);
-                    break;
-
-                case PageKey.InfoPage:
-                    pageType = typeof(InfoPage);
-                    break;
-
-                default:
-                    Debug.Assert(false, "invalid page key");
-                    break;
+                Debug.Assert(
+                    parameterType.FullName == parameter.GetType().FullName,
+                    "passed parameter must be of the correct type " + parameterType.Name);
             }
 
             return pageType;
