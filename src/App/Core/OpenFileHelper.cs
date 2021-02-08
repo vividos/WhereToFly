@@ -257,7 +257,7 @@ namespace WhereToFly.App.Core
             liveWaypointRefreshService.ClearLiveWaypointList();
             liveWaypointRefreshService.AddLiveWaypointList(locationList);
 
-            await NavigationService.Instance.NavigateAsync(PageKey.MapPage, animated: true);
+            await NavigationService.GoToMap();
 
             App.ShowToast("Locations were loaded.");
 
@@ -626,7 +626,7 @@ namespace WhereToFly.App.Core
 
             await App.ShowFlightPlanningDisclaimerAsync();
 
-            await NavigationService.Instance.NavigateAsync(PageKey.MapPage, animated: true);
+            await NavigationService.GoToMap();
 
             App.MapView.AddLayer(layer);
             App.MapView.ZoomToLayer(layer);

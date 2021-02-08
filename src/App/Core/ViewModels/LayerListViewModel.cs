@@ -143,7 +143,7 @@ namespace WhereToFly.App.Core.ViewModels
         {
             App.MapView.ZoomToLayer(layer);
 
-            await NavigationService.Instance.NavigateAsync(PageKey.MapPage, animated: true);
+            await NavigationService.GoToMap();
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace WhereToFly.App.Core.ViewModels
             await layerDataService.Remove(layer.Id);
             await layerDataService.Add(layer);
 
-            await NavigationService.Instance.NavigateAsync(PageKey.MapPage, animated: true);
+            await NavigationService.GoToMap();
 
             App.MapView.AddLayer(layer);
 

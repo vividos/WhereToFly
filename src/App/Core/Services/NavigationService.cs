@@ -58,6 +58,15 @@ namespace WhereToFly.App.Core.Services
         public NavigationPage NavigationPage { get; internal set; }
 
         /// <summary>
+        /// Navigates to the map page
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        public static Task GoToMap()
+        {
+            return Instance.NavigateAsync(PageKey.MapPage, animated: true);
+        }
+
+        /// <summary>
         /// Navigates to a page with given page key and parameters; async version
         /// </summary>
         /// <param name="pageKey">page key of page to navigate to</param>

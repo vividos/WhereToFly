@@ -63,7 +63,7 @@ namespace WhereToFly.App.Core.ViewModels
         {
             App.MapView.ZoomToTrack(this.track);
 
-            await NavigationService.Instance.NavigateAsync(PageKey.MapPage, animated: true);
+            await NavigationService.GoToMap();
         }
 
         /// <summary>

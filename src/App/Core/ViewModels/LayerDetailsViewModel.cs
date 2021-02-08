@@ -119,7 +119,7 @@ namespace WhereToFly.App.Core.ViewModels
         {
             App.MapView.ZoomToLayer(this.layer);
 
-            await NavigationService.Instance.NavigateAsync(PageKey.MapPage, animated: true);
+            await NavigationService.GoToMap();
         }
 
         /// <summary>
