@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using WhereToFly.App.Core.Services;
 using WhereToFly.App.Model;
 using Xamarin.Forms;
 
@@ -30,23 +29,30 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Creates a new select weather icon view model
         /// </summary>
-        /// <param name="selectAction">action to call when a weather icon description was selected</param>
+        /// <param name="tcs">
+        /// task completion source to use when a weather icon description was selected
+        /// </param>
         /// <param name="group">group to filter by, or null to show all groups</param>
-        public SelectWeatherIconViewModel(Action<WeatherIconDescription> selectAction, string group = null)
+        public SelectWeatherIconViewModel(
+            TaskCompletionSource<WeatherIconDescription> tcs,
+            string group = null)
         {
-            Debug.Assert(selectAction != null, "selectAction must not be null");
+            Debug.Assert(tcs != null, "task completion source must not be null");
 
-            this.SetupBindings(selectAction, group);
+            this.SetupBindings(tcs, group);
         }
 
         /// <summary>
         /// Sets up bindings properties
         /// </summary>
-        /// <param name="selectAction">action to call when a weather icon description was selected</param>
+        /// <param name="tcs">
+        /// task completion source to use when a weather icon description was selected
+        /// </param>
         /// <param name="group">group to filter by, or null to show all groups</param>
-        private void SetupBindings(Action<WeatherIconDescription> selectAction, string group)
+        private void SetupBindings(TaskCompletionSource<WeatherIconDescription> tcs, string group)
         {
-            this.ItemTappedCommand = new Command<WeatherIconDescription>(selectAction);
+            this.ItemTappedCommand = new Command<WeatherIconDescription>(
+                (weatherIcon) => tcs.SetResult(weatherIcon));
 
             Task.Run(async () =>
             {

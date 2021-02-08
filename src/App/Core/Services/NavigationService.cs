@@ -127,8 +127,8 @@ namespace WhereToFly.App.Core.Services
 
                 case Constants.PageKeySelectWeatherIconPage:
                     Debug.Assert(
-                        parameter is Action<WeatherIconDescription>,
-                        "action must have been passed as parameter");
+                        parameter is TaskCompletionSource<WeatherIconDescription>,
+                        "task completion source must have been passed as parameter");
                     pageType = typeof(SelectWeatherIconPage);
                     break;
 

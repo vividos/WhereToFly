@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WhereToFly.App.Core.Services;
@@ -98,22 +97,21 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task OpenSelectionPageAsync()
         {
-            Action<WeatherIconDescription> parameter = this.OnSelectedWeatherIcon;
+            var tcs = new TaskCompletionSource<WeatherIconDescription>();
 
             await NavigationService.Instance.NavigateAsync(
                 Constants.PageKeySelectWeatherIconPage,
                 animated: true,
-                parameter: parameter);
-        }
+                parameter: tcs);
 
-        /// <summary>
-        /// Called from SelectWeatherIconPage when a weather icon was selected by the user.
-        /// </summary>
-        /// <param name="weatherIcon">selected weather icon</param>
-        private void OnSelectedWeatherIcon(WeatherIconDescription weatherIcon)
-        {
-            WeatherDashboardViewModel.AddWeatherIcon(weatherIcon);
-            App.RunOnUiThread(async () => await NavigationService.Instance.GoBack());
+            var weatherIcon = await tcs.Task;
+
+            await NavigationService.Instance.GoBack();
+
+            if (weatherIcon != null)
+            {
+                WeatherDashboardViewModel.AddWeatherIcon(weatherIcon);
+            }
         }
     }
 }

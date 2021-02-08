@@ -109,8 +109,8 @@ namespace WhereToFly.App.Core
 
         /// <summary>
         /// Page key for use in NavigationService, to navigate to weather icon selection page.
-        /// The page must be started with an Action with WeatherIconDescription as parameter that
-        /// is called when a weather icon was selected.
+        /// The page must be started with a TaskCompletionSource with WeatherIconDescription as
+        /// parameter that is used to set a result when a weather icon was selected.
         /// </summary>
         public const string PageKeySelectWeatherIconPage = "SelectWeatherIconPage";
 

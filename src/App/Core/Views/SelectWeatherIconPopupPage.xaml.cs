@@ -39,7 +39,11 @@ namespace WhereToFly.App.Core.Views
 
             await popupPage.Navigation.PushPopupAsync(popupPage);
 
-            return await popupPage.tcs.Task;
+            var weatherIcon = await popupPage.tcs.Task;
+
+            await popupPage.Navigation.PopPopupAsync(true);
+
+            return weatherIcon;
         }
 
         /// <summary>
@@ -62,16 +66,8 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         private void SetupBindings()
         {
-            this.BindingContext = this.viewModel = new SelectWeatherIconViewModel(
-                async (weatherIconDescription) =>
-                {
-                    if (!this.tcs.Task.IsCompleted)
-                    {
-                        this.tcs.SetResult(weatherIconDescription);
-                        await this.Navigation.PopPopupAsync();
-                    }
-                },
-                this.group);
+            this.BindingContext = this.viewModel =
+                new SelectWeatherIconViewModel(this.tcs, this.group);
         }
 
         /// <summary>

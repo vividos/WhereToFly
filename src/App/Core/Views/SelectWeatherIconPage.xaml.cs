@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Threading.Tasks;
 using WhereToFly.App.Core.ViewModels;
 using WhereToFly.App.Model;
 using Xamarin.Forms;
@@ -11,6 +11,11 @@ namespace WhereToFly.App.Core.Views
     public partial class SelectWeatherIconPage : ContentPage
     {
         /// <summary>
+        /// Task completion source to use when a weather icon description was selected
+        /// </summary>
+        private readonly TaskCompletionSource<WeatherIconDescription> tcs;
+
+        /// <summary>
         /// View model for this page
         /// </summary>
         private SelectWeatherIconViewModel viewModel;
@@ -18,11 +23,14 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Creates a new page object
         /// </summary>
-        /// <param name="selectAction">action to call when a weather icon description was selected</param>
-        public SelectWeatherIconPage(Action<WeatherIconDescription> selectAction)
+        /// <param name="tcs">
+        /// task completion source to use when a weather icon description was selected
+        /// </param>
+        public SelectWeatherIconPage(TaskCompletionSource<WeatherIconDescription> tcs)
         {
             this.Title = "Select a weather icon";
-            this.BindingContext = this.viewModel = new SelectWeatherIconViewModel(selectAction);
+            this.tcs = tcs;
+            this.BindingContext = this.viewModel = new SelectWeatherIconViewModel(tcs);
 
             this.InitializeComponent();
         }
@@ -36,6 +44,20 @@ namespace WhereToFly.App.Core.Views
         {
             var weatherIconListEntryViewModel = args.Item as WeatherIconListEntryViewModel;
             this.viewModel.ItemTappedCommand.Execute(weatherIconListEntryViewModel.IconDescription);
+        }
+
+        /// <summary>
+        /// Called when the page is about to disappear; checks if the view model already set a
+        /// task result.
+        /// </summary>
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            if (!this.tcs.Task.IsCompleted)
+            {
+                this.tcs.SetResult(null);
+            }
         }
     }
 }

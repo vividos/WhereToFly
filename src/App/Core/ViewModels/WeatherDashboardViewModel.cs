@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -137,22 +136,21 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task AddIconAsync()
         {
-            Action<WeatherIconDescription> parameter = this.OnSelectedWeatherIcon;
+            var tcs = new TaskCompletionSource<WeatherIconDescription>();
 
             await NavigationService.Instance.NavigateAsync(
                 Constants.PageKeySelectWeatherIconPage,
                 animated: true,
-                parameter: parameter);
-        }
+                parameter: tcs);
 
-        /// <summary>
-        /// Called from SelectWeatherIconPage when a weather icon was selected by the user.
-        /// </summary>
-        /// <param name="weatherIcon">selected weather icon</param>
-        private void OnSelectedWeatherIcon(WeatherIconDescription weatherIcon)
-        {
-            AddWeatherIcon(weatherIcon);
-            App.RunOnUiThread(async () => await NavigationService.Instance.GoBack());
+            var weatherIcon = await tcs.Task;
+
+            await NavigationService.Instance.GoBack();
+
+            if (weatherIcon != null)
+            {
+                AddWeatherIcon(weatherIcon);
+            }
         }
 
         /// <summary>
