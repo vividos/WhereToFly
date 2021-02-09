@@ -3,7 +3,6 @@ using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Distribute;
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Services;
@@ -241,18 +240,6 @@ namespace WhereToFly.App.Core
         public static async Task ShareMessageAsync(string title, string message)
         {
             await Xamarin.Essentials.Share.RequestAsync(message, title);
-        }
-
-        /// <summary>
-        /// Clears cache of WebView used for map view and reloads map
-        /// </summary>
-        public static void ClearWebViewCache()
-        {
-            var app = Current as App;
-
-            MessagingCenter.Send(app, Constants.MessageWebViewClearCache);
-
-            Task.Run(() => app.MapPage.ReloadMapAsync());
         }
 
         /// <summary>

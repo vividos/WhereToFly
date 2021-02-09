@@ -17,7 +17,6 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
@@ -56,12 +55,6 @@
                 <Label Grid.Row="4" Grid.Column="0" FontSize="Medium" Text="Use location clustering" />
                 <Switch Grid.Row="4" Grid.Column="1"
                         IsToggled="{Binding MapEntityClustering}" />
-
-                <!-- Clear cache button -->
-                <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"
-                        Text="Clear map view cache"
-                        Command="{Binding ClearWebViewCacheCommand}"
-                        AutomationId="ClearWebViewCache" />
             </Grid>
 
         </ScrollView>

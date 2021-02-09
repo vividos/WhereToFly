@@ -29,11 +29,6 @@ namespace WhereToFly.App.Core
         public const string MessageShowToast = "ShowToast";
 
         /// <summary>
-        /// Clears cache of web view control
-        /// </summary>
-        public const string MessageWebViewClearCache = "WebViewClearCache";
-
-        /// <summary>
         /// MessagingCenter message constant to add tour plan location
         /// </summary>
         public const string MessageAddTourPlanLocation = "AddTourPlanLocation";

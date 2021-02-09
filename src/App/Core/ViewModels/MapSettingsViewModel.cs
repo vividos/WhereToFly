@@ -218,11 +218,6 @@ namespace WhereToFly.App.Core.ViewModels
                 }
             }
         }
-
-        /// <summary>
-        /// Command to clear web view cache
-        /// </summary>
-        public Command ClearWebViewCacheCommand { get; set; }
         #endregion
 
         /// <summary>
@@ -273,8 +268,6 @@ namespace WhereToFly.App.Core.ViewModels
                 new MapShadingModeViewModel { Text = "Current time + 6 hours", Value = MapShadingMode.Ahead6Hours },
                 new MapShadingModeViewModel { Text = "No shading", Value = MapShadingMode.None },
             };
-
-            this.ClearWebViewCacheCommand = new Command(App.ClearWebViewCache);
         }
 
         /// <summary>

@@ -1,6 +1,4 @@
 using Android.Content;
-using System;
-using WhereToFly.App.Core;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -35,8 +33,6 @@ namespace WhereToFly.App.Android
                 e.NewElement != null)
             {
                 this.SetupWebViewSettings();
-
-                MessagingCenter.Subscribe<Core.App>(this, Constants.MessageWebViewClearCache, (app) => this.ClearCache());
             }
 
             if (e.OldElement != null)
@@ -79,28 +75,6 @@ namespace WhereToFly.App.Android
 
             // set up cache
             this.Control.Settings.CacheMode = global::Android.Webkit.CacheModes.Normal;
-        }
-
-        /// <summary>
-        /// Clears cache of the web view control
-        /// </summary>
-        private void ClearCache()
-        {
-            if (this.Control == null)
-            {
-                return;
-            }
-
-            try
-            {
-                this.Control.ClearHistory();
-                this.Control.ClearFormData();
-                this.Control.ClearCache(true);
-            }
-            catch (Exception)
-            {
-                // ignore exception when clearing cache
-            }
         }
     }
 }
