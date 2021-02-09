@@ -16,78 +16,78 @@ namespace WhereToFly.App.Geo
         /// <summary>
         /// Track name
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         /// <summary>
         /// Track description
         /// </summary>
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
         /// <summary>
         /// Indicates if track is a flight track and will be colored depending on climb and sink
         /// rates.
         /// </summary>
-        public bool IsFlightTrack { get; set; }
+        public bool IsFlightTrack { get; set; } = false;
 
         /// <summary>
         /// Color to use for the track; used when not a flight track; format is RRGGBB in hex.
         /// </summary>
-        public string Color { get; set; }
+        public string Color { get; set; } = "0000FF";
 
         /// <summary>
         /// Duration of track
         /// </summary>
-        public TimeSpan Duration { get; set; }
+        public TimeSpan Duration { get; set; } = TimeSpan.Zero;
 
         /// <summary>
         /// Length of track, in meter
         /// </summary>
-        public double LengthInMeter { get; set; }
+        public double LengthInMeter { get; set; } = 0.0;
 
         /// <summary>
         /// Height gain, in meter
         /// </summary>
-        public double HeightGain { get; set; }
+        public double HeightGain { get; set; } = 0.0;
 
         /// <summary>
         /// Height loss, in meter
         /// </summary>
-        public double HeightLoss { get; set; }
+        public double HeightLoss { get; set; } = 0.0;
 
         /// <summary>
         /// Max. height, in meter
         /// </summary>
-        public double MaxHeight { get; set; }
+        public double MaxHeight { get; set; } = 0.0;
 
         /// <summary>
         /// Min. height, in meter
         /// </summary>
-        public double MinHeight { get; set; }
+        public double MinHeight { get; set; } = 0.0;
 
         /// <summary>
         /// Max. climb rate, in m/s
         /// </summary>
-        public double MaxClimbRate { get; set; }
+        public double MaxClimbRate { get; set; } = 0.0;
 
         /// <summary>
         /// Max. sink rate (or min. negative climb rate), in m/s
         /// </summary>
-        public double MaxSinkRate { get; set; }
+        public double MaxSinkRate { get; set; } = 0.0;
 
         /// <summary>
         /// Maximum speed, in km/h
         /// </summary>
-        public double MaxSpeed { get; set; }
+        public double MaxSpeed { get; set; } = 0.0;
 
         /// <summary>
         /// Average speed, in km/h
         /// </summary>
-        public double AverageSpeed { get; set; }
+        public double AverageSpeed { get; set; } = 0.0;
 
         /// <summary>
         /// List of track points
         /// </summary>
-        public List<TrackPoint> TrackPoints { get; set; }
+        public List<TrackPoint> TrackPoints { get; set; } = new List<TrackPoint>();
 
         /// <summary>
         /// List of altitude values, specifying the ground height profile; only set for flight
@@ -100,21 +100,6 @@ namespace WhereToFly.App.Geo
         /// </summary>
         public Track()
         {
-            this.Name = string.Empty;
-            this.Description = string.Empty;
-            this.IsFlightTrack = false;
-            this.Color = "0000FF";
-            this.Duration = TimeSpan.Zero;
-            this.LengthInMeter = 0.0;
-            this.HeightGain = 0.0;
-            this.HeightLoss = 0.0;
-            this.MaxHeight = 0.0;
-            this.MinHeight = 0.0;
-            this.MaxSpeed = 0.0;
-            this.AverageSpeed = 0.0;
-            this.MaxClimbRate = 0.0;
-            this.MaxSinkRate = 0.0;
-            this.TrackPoints = new List<TrackPoint>();
         }
 
         #region IEquatable implementation
