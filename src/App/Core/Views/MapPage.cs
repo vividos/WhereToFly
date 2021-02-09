@@ -106,15 +106,6 @@ namespace WhereToFly.App.Core.Views
         }
 
         /// <summary>
-        /// Reloads map by re-creating map view
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        public async Task ReloadMapAsync()
-        {
-            await this.CreateMapViewAsync();
-        }
-
-        /// <summary>
         /// Sets up toolbar for this page
         /// </summary>
         private void SetupToolbar()
@@ -388,10 +379,14 @@ namespace WhereToFly.App.Core.Views
                 this.MapView.AddTrack(track);
             }
 
+            this.trackList.Clear();
+
             foreach (var layer in this.layerList)
             {
                 this.mapView.AddLayer(layer);
             }
+
+            this.layerList.Clear();
 
             var liveWaypointRefreshService = DependencyService.Get<LiveWaypointRefreshService>();
             liveWaypointRefreshService.UpdateLiveWaypoint += this.OnUpdateLiveWaypoint;
