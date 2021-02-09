@@ -1,9 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using WhereToFly.App.Core;
 using WhereToFly.App.Core.Services.SqliteDatabase;
 using WhereToFly.App.Core.ViewModels;
+using WhereToFly.App.Model;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest.ViewModels
@@ -33,7 +35,8 @@ namespace WhereToFly.App.UnitTest.ViewModels
         public void TestCtor()
         {
             // set up + run
-            var viewModel = new SelectWeatherIconViewModel((iconDescription) => { });
+            var tcs = new TaskCompletionSource<WeatherIconDescription>();
+            var viewModel = new SelectWeatherIconViewModel(tcs);
 
             Assert.IsTrue(
                 viewModel.WaitForPropertyChange(
