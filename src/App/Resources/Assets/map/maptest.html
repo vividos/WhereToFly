@@ -88,6 +88,8 @@
 
         <button onclick="removeLayer()">Remove layer</button>
 
+        <button onclick="showFlyingRange()">Show flying range</button>
+
     </div>
 
     <div id="messageBand" class="message-band" style="top: 60px"></div>
@@ -253,6 +255,20 @@
 
         removeLayer = function () {
             map.removeLayer('testLayer');
+        }
+
+        showFlyingRange = function () {
+            map.showFlyingRange({
+                latitude: 47.6764385,
+                longitude: 11.8710533,
+                displayLatitude: "47.6764385",
+                displayLongitude: "11.8710533",
+                altitude: 1685.0,
+                glideRatio: 8.5,
+                gliderSpeed: 42.0,
+                windDirection: 0.0,
+                windSpeed: 0.0,
+            });
         }
 
     </script>
