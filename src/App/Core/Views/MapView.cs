@@ -564,6 +564,8 @@ namespace WhereToFly.App.Core.Views
                 return;
             }
 
+            this.ShowMessageBand("Loading locations...");
+
             if (locationList.Count > MaxLocationListCount)
             {
                 this.ImportLargeLocationList(locationList);
@@ -590,6 +592,8 @@ namespace WhereToFly.App.Core.Views
                 JsonConvert.SerializeObject(jsonLocationList));
 
             this.RunJavaScript(js);
+
+            this.HideMessageBand();
         }
 
         /// <summary>
