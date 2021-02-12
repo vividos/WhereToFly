@@ -2031,6 +2031,7 @@ MapView.prototype.removeTrack = function (trackId) {
     if (trackId === this.currentHeightProfileTrackId &&
         this.heightProfileView !== null) {
         this.heightProfileView.hide();
+        this.heightProfileView.destroy();
         this.heightProfileView = null;
 
         this.trackMarker.show = false;
@@ -2081,6 +2082,10 @@ MapView.prototype.showTrackHeightProfile = function (trackId) {
     }
 
     this.currentHeightProfileTrackId = trackId;
+
+    if (this.heightProfileView !== undefined) {
+        this.heightProfileView.destroy();
+    }
 
     var that = this;
     this.heightProfileView = new HeightProfileView({

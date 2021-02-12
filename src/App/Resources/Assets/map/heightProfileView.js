@@ -328,6 +328,17 @@ HeightProfileView.prototype.hide = function () {
 };
 
 /**
+ * Destroys the height profile view
+ */
+HeightProfileView.prototype.destroy = function () {
+
+    this.chart.stop();
+    this.chart.destroy();
+    this.options = undefined;
+    this.chart = undefined;
+};
+
+/**
  * Called by Chart.js when the user hovers over an element in the chart
  * @param {array} [elements] array of elements; may be empty
  */
