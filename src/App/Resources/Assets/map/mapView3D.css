@@ -1,3 +1,13 @@
+/* style for fullscreen map element */
+.map-element-fullscreen {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    position: absolute;
+}
+
 /* style for message band */
 .message-band {
     display: none;
