@@ -263,9 +263,6 @@ function MapView(options) {
     this.locationDataSource.clustering = this.clustering;
     this.viewer.dataSources.add(this.locationDataSource);
 
-    this.takeoffEntityDataSource = new Cesium.CustomDataSource('takeoff-entities');
-    this.viewer.dataSources.add(this.takeoffEntityDataSource);
-
     // swap out console.error for logging purposes
     var oldLog = console.error;
     console.error = function (message) {
@@ -1221,7 +1218,6 @@ MapView.prototype.clearLocationList = function () {
     console.log("MapView: clearing location list");
 
     this.locationDataSource.entities.removeAll();
-    this.takeoffEntityDataSource.entities.removeAll();
 };
 
 /**
@@ -1296,27 +1292,14 @@ MapView.prototype.addLocationList = function (locationList) {
                 location.longitude,
                 location.latitude),
             function (entity) {
+                if (location.takeoffDirections !== undefined && location.takeoffDirections !== 0)
+                    that.addTakeoffEntities(entity, location);
+
                 that.locationDataSource.entities.add(entity);
             },
             function (error) {
                 console.error("MapView.addLocationList: error while adding location entity: " + error);
             });
-
-        if (location.takeoffDirections !== undefined && location.takeoffDirections !== 0) {
-            var takeoffOutlineEntity = this.createTakeoffEntity(
-                location,
-                new Cesium.Color(1.0, 1.0, 0.5, 0.4), // light yellow
-                true);
-
-            this.takeoffEntityDataSource.entities.add(takeoffOutlineEntity);
-
-            var takeoffEntity = this.createTakeoffEntity(
-                location,
-                new Cesium.Color(0.0, 0.0, 0.54, 0.4), // dark blue
-                false);
-
-            this.takeoffEntityDataSource.entities.add(takeoffEntity);
-        }
     }
 
     console.timeEnd("MapView.addLocationList");
@@ -1458,17 +1441,16 @@ function pointFromCenterRadiusAngle(center, radius, angleDegrees) {
 }
 
 /**
- * Creates an entity visualizing the takeoff directions of the given location
+ * Adds a polyline and polygon entity visualizing the takeoff directions of
+ * the given location, to an existing entity.
+ * @param {Object} [entity] Entity object to add to
  * @param {Object} [location] An object with at least the following properties:
  * @param {String} [location.id] ID of the location to update
  * @param {Number} [location.latitude] Latitude of the location to update
  * @param {Number} [location.longitude] Longitude of the location to update
  * @param {number} [location.takeoffDirections] Takeoff directions bit values
- * @param {Cesium.Color} [color] Color of the polygon or polyline entity
- * @param {boolean} [outline] If true, only an outline entity is returned,
- * otherwise a full polygon entity
  */
-MapView.prototype.createTakeoffEntity = function (location, color, outline) {
+MapView.prototype.addTakeoffEntities = function (entity, location) {
 
     var center = Cesium.Cartesian3.fromDegrees(location.longitude, location.latitude);
     var radius = 50.0; // in meter
@@ -1495,38 +1477,21 @@ MapView.prototype.createTakeoffEntity = function (location, color, outline) {
     var distanceDisplayCondition =
         new Cesium.DistanceDisplayCondition(0.0, 5000.0);
 
-    var entity;
-    if (outline) {
-        entity = new Cesium.Entity({
-            id: "takeoff-outline-" + location.id,
-            name: location.name,
-            polyline: {
-                positions: pointArray,
-                width: 3.0,
-                material: color,
-                clampToGround: true,
-                distanceDisplayCondition: distanceDisplayCondition
-            }
-        });
-    }
-    else {
-        if (!this.viewer.scene.context.fragmentDepth)
-            console.warn("Warning: WebGL extension EXT_frag_depth isn't supported by GPU, using GroundPrimitive anyway...");
+    entity.polyline = {
+        positions: pointArray,
+        width: 3.0,
+        material: new Cesium.Color(1.0, 1.0, 0.5, 0.4), // light yellow
+        clampToGround: true,
+        distanceDisplayCondition: distanceDisplayCondition
+    };
 
-        entity = new Cesium.Entity({
-            id: "takeoff-" + location.id,
-            name: location.name,
-            polygon: {
-                // note: clamping to terrain is achieved by not specifying height and heightReference at all
-                hierarchy: new Cesium.PolygonHierarchy(pointArray),
-                material: color,
-                outline: false, // when an outline would be present, it would not clamp to ground
-                distanceDisplayCondition: distanceDisplayCondition
-            }
-        });
-    }
-
-    return entity;
+    entity.polygon = {
+        // note: clamping to terrain is achieved by not specifying height and heightReference at all
+        hierarchy: new Cesium.PolygonHierarchy(pointArray),
+        material: new Cesium.Color(0.0, 0.0, 0.54, 0.4), // dark blue
+        outline: false, // when an outline would be present, it would not clamp to ground
+        distanceDisplayCondition: distanceDisplayCondition
+    };
 };
 
 /**
@@ -1572,9 +1537,6 @@ MapView.prototype.removeLocation = function (locationId) {
     var entity = this.locationDataSource.entities.getById(locationId);
 
     this.locationDataSource.entities.remove(entity);
-
-    this.takeoffEntityDataSource.entities.remove("takeoff-" + location.id);
-    this.takeoffEntityDataSource.entities.remove("takeoff-outline-" + location.id);
 };
 
 /**
