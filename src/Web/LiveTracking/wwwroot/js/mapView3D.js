@@ -1723,19 +1723,20 @@ MapView.prototype.sampleTrackHeights = function (track) {
         function () {
             console.log("MapView.sampleTrackHeights: #4: terrain provider is ready; starting sampling terrain");
 
-            Cesium.when(Cesium.sampleTerrainMostDetailed(
+            var samplePromise = Cesium.sampleTerrainMostDetailed(
                 that.viewer.terrainProvider,
-                cartographicArray),
+                cartographicArray);
+
+            Cesium.when(samplePromise,
                 function (samples) {
 
                     console.log("MapView.sampleTrackHeights: #5: terrain provider reports back " + samples.length + " samples");
 
                     var trackPointHeightArray = [];
 
-                    // NOSONAR
-                    for (var trackPointIndex = 0; trackPointIndex < trackPointArray.length; ++trackPointIndex) {
+                    for (var sampleIndex = 0; sampleIndex < samples.length; ++sampleIndex) {
 
-                        var sampledHeight = samples[trackPointIndex].height;
+                        var sampledHeight = samples[sampleIndex].height;
                         trackPointHeightArray.push(sampledHeight);
                     }
 
@@ -2366,6 +2367,6 @@ function calcCurrentAiracId() {
 
     var diffInDays = (now - baseAirac) / 86400000;
 
-    airacId = ((currentYear - 2000) * 100) + 1 + Math.floor(diffInDays / 28);
+    var airacId = ((currentYear - 2000) * 100) + 1 + Math.floor(diffInDays / 28);
     return airacId;
 }

@@ -8,8 +8,8 @@ function LiveTracking() {
 
     console.log("LiveTracking: initializing live tracking site");
 
-    this.liveWaypointToIdMapping = [];
-    this.updateTimeoutMapping = [];
+    this.liveWaypointToIdMapping = {};
+    this.updateTimeoutMapping = {};
 
     this.initPage();
 
