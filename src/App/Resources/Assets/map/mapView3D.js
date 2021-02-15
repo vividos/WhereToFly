@@ -1910,12 +1910,14 @@ MapView.prototype.getGroundTrackPrimitive = function (track, trackPointArray) {
  * @param {string} [track.id] unique ID of the track
  * @param {string} [track.name] track name to add
  * @param {boolean} [track.isFlightTrack] indicates if track is a flight
- * @param {array} [track.listOfTrackPoints] An array of track points in long, lat, alt, long, lat, alt ... order
- * @param {array} [track.listOfTimePoints] An array of time points in seconds; same length as listOfTrackPoints; may be null
- * @param {array} [track.groundHeightProfile] An array of ground height profile elevations; same
- * length as listOfTimePoints; may be null
- * @param {string} [track.color] Color as "RRGGBB" string value, or undefined when track should be colored
- *                       according to climb and sink rate.
+ * @param {array} [track.listOfTrackPoints] An array of track points in long,
+ * lat, alt, long, lat, alt ... order
+ * @param {array} [track.listOfTimePoints] An array of time points in seconds;
+ * same length as listOfTrackPoints.length / 3; may be null
+ * @param {array} [track.groundHeightProfile] An array of ground height
+ * profile elevations; same length as listOfTimePoints; may be null
+ * @param {string} [track.color] Color as "RRGGBB" string value, or undefined
+ * when track should be colored according to climb and sink rate.
  */
 MapView.prototype.addTrack = function (track) {
 
