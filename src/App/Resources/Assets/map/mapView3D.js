@@ -1927,6 +1927,10 @@ MapView.prototype.addTrack = function (track) {
 
     var trackPointArray = Cesium.Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints);
 
+    // remove duplicates so that color values are calculated correctly
+    if (track.isFlightTrack)
+        trackPointArray = this.removeTrackDuplicatePoints(track, trackPointArray);
+
     var primitive = undefined;
     var wallPrimitive = undefined;
 
@@ -1950,6 +1954,66 @@ MapView.prototype.addTrack = function (track) {
         wallPrimitive: wallPrimitive,
         boundingSphere: boundingSphere
     };
+};
+
+/**
+ * Removes duplicate track points, e.g. when the track position hasn't changed
+ * for several seconds. This is needed since CesiumJS removes duplicate
+ * position values from tracks, but doesn't remove per-vertex color values.
+ * See also: https://github.com/CesiumGS/cesium/issues/9379
+ * @param {object} track Track object to modify, with at least the following
+ * properties:
+ * @param {array} [track.listOfTrackPoints] An array of track points in long,
+ * lat, alt, long, lat, alt ... order
+ * @param {array} [track.listOfTimePoints] An array of time points in seconds;
+ * same length as listOfTrackPoints.length / 3; may be null
+ * @param {array} [track.groundHeightProfile] An array of ground height
+ * profile elevations; same length as listOfTimePoints; may be null
+ * @param {array} [trackPointArray] An array of track points to modify
+ * @returns {array} new trackPointArray array
+ */
+MapView.prototype.removeTrackDuplicatePoints = function (track, trackPointArray) {
+
+    // add index to every track point
+    for (var trackPointIndex = 0; trackPointIndex < trackPointArray.length; trackPointIndex++) {
+        trackPointArray[trackPointIndex].trackPointIndex = trackPointIndex;
+    }
+
+    var modifiedTrackPointArray = Cesium.arrayRemoveDuplicates(trackPointArray, Cesium.Cartesian3.equalsEpsilon);
+
+    if (trackPointArray.length === modifiedTrackPointArray.length)
+        return trackPointArray; // nothing was removed
+
+    var removedTrackPoints = trackPointArray.length - modifiedTrackPointArray.length;
+    console.log("MapView: removed " + removedTrackPoints + " duplicate track points from track");
+
+    var newListOfTrackPoints = [];
+    var newListOfTimePoints = [];
+    var newGroundHeightProfile = [];
+
+    for (var modifiedIndex = 0; modifiedIndex < modifiedTrackPointArray.length; modifiedIndex++) {
+        var oldTrackPointIndex = modifiedTrackPointArray[modifiedIndex].trackPointIndex;
+
+        newListOfTrackPoints.push(track.listOfTrackPoints[oldTrackPointIndex * 3]);
+        newListOfTrackPoints.push(track.listOfTrackPoints[oldTrackPointIndex * 3 + 1]);
+        newListOfTrackPoints.push(track.listOfTrackPoints[oldTrackPointIndex * 3 + 2]);
+
+        if (track.listOfTimePoints !== null)
+            newListOfTimePoints.push(track.listOfTimePoints[oldTrackPointIndex]);
+
+        if (track.groundHeightProfile !== null)
+            newGroundHeightProfile.push(track.groundHeightProfile[oldTrackPointIndex]);
+    }
+
+    track.listOfTrackPoints = newListOfTrackPoints;
+
+    if (track.listOfTimePoints !== null)
+        track.listOfTimePoints = newListOfTimePoints;
+
+    if (track.groundHeightProfile !== null)
+        track.groundHeightProfile = newGroundHeightProfile;
+
+    return modifiedTrackPointArray;
 };
 
 /**
