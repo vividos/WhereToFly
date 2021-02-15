@@ -245,6 +245,8 @@ function MapView(options) {
 
     console.log("MapView: #11 other stuff");
 
+    this.heightProfileView = null;
+
     // add a dedicated track primitives collection, as we can't call viewer.scene.primitives.removeAll()
     this.trackPrimitivesCollection = new Cesium.PrimitiveCollection({
         show: true,
@@ -2047,7 +2049,7 @@ MapView.prototype.showTrackHeightProfile = function (trackId) {
 
     this.currentHeightProfileTrackId = trackId;
 
-    if (this.heightProfileView !== undefined) {
+    if (this.heightProfileView !== null) {
         this.heightProfileView.destroy();
     }
 
