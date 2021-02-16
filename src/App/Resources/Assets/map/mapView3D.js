@@ -482,7 +482,7 @@ MapView.prototype.showMessageBand = function (messageText) {
     if (bandElement === undefined)
         return;
 
-    bandElement.style.display = 'block';
+    bandElement.style.display = 'flex';
     bandElement.innerHTML = messageText;
 };
 
