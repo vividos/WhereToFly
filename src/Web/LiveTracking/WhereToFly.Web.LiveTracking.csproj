@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
-    <PackageReference Include="Refit" Version="5.2.4" />
+    <PackageReference Include="Refit" Version="6.0.15" />
     <PackageReference Include="System.Collections" Version="4.3.0" />
   </ItemGroup>
 
