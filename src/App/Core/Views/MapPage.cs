@@ -374,6 +374,8 @@ namespace WhereToFly.App.Core.Views
 
             this.mapView.AddLocationList(this.locationList);
 
+            this.mapView.ShowMessageBand("Loading tracks...");
+
             foreach (var track in this.trackList)
             {
                 this.MapView.AddTrack(track);
@@ -381,12 +383,16 @@ namespace WhereToFly.App.Core.Views
 
             this.trackList.Clear();
 
+            this.mapView.ShowMessageBand("Loading layer...");
+
             foreach (var layer in this.layerList)
             {
                 this.mapView.AddLayer(layer);
             }
 
             this.layerList.Clear();
+
+            this.mapView.HideMessageBand();
 
             var liveWaypointRefreshService = DependencyService.Get<LiveWaypointRefreshService>();
             liveWaypointRefreshService.UpdateLiveWaypoint += this.OnUpdateLiveWaypoint;

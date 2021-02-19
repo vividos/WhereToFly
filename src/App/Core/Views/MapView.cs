@@ -303,7 +303,7 @@ namespace WhereToFly.App.Core.Views
         /// Shows a message band at the top of the map, with given message text
         /// </summary>
         /// <param name="messageText">message text</param>
-        private void ShowMessageBand(string messageText)
+        public void ShowMessageBand(string messageText)
         {
             string js = $"map.showMessageBand(\"{messageText}\");";
 
@@ -313,7 +313,7 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Hides message band again
         /// </summary>
-        private void HideMessageBand()
+        public void HideMessageBand()
         {
             this.RunJavaScript("map.hideMessageBand();");
         }
