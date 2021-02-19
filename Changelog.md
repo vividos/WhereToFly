@@ -12,6 +12,7 @@
   current location; the viewing distance is also re-used after app restarts
 - fixed flight track colors when track contains many duplicate track points
   (e.g. from waiting at takeoff)
+- fixed importing GPX files with version 1.0 
 - using CesiumJS version 1.78
 
 ## Version 1.9.0

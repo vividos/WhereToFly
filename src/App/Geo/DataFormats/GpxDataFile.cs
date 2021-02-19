@@ -16,9 +16,14 @@ namespace WhereToFly.App.Geo.DataFormats
     internal class GpxDataFile : IGeoDataFile
     {
         /// <summary>
-        /// GPX namespace to use
+        /// GPX 1.0 namespace to use
         /// </summary>
-        private const string GpxNamespace = "http://www.topografix.com/GPX/1/1";
+        private const string Gpx10Namespace = "http://www.topografix.com/GPX/1/0";
+
+        /// <summary>
+        /// GPX 1.1 namespace to use
+        /// </summary>
+        private const string Gpx11Namespace = "http://www.topografix.com/GPX/1/1";
 
         /// <summary>
         /// GPX xml document
@@ -39,8 +44,22 @@ namespace WhereToFly.App.Geo.DataFormats
             this.gpxDocument = new XmlDocument();
             this.gpxDocument.Load(stream);
 
+            bool useVersion11 = this.CheckGpx11Version();
+
             this.namespaceManager = new XmlNamespaceManager(this.gpxDocument.NameTable);
-            this.namespaceManager.AddNamespace("x", GpxNamespace);
+            this.namespaceManager.AddNamespace("x", useVersion11 ? Gpx11Namespace : Gpx10Namespace);
+        }
+
+        /// <summary>
+        /// Checks if the GPX xml document has version 1.0 or 1.1.
+        /// </summary>
+        /// <returns>true when version 1.1, false when 1.0 or any other</returns>
+        private bool CheckGpx11Version()
+        {
+            string version = this.gpxDocument.DocumentElement.GetAttribute("version");
+
+            return version == null ||
+                version == "1.1";
         }
 
         /// <summary>
