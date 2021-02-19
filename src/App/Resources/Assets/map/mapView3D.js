@@ -261,6 +261,8 @@ function MapView(options) {
 
     this.osmBuildingsTileset = null;
 
+    this.inOnCloseHandler = false;
+
     this.locationDataSource = new Cesium.CustomDataSource('locations');
     this.locationDataSource.clustering = this.clustering;
     this.viewer.dataSources.add(this.locationDataSource);
@@ -2060,14 +2062,8 @@ MapView.prototype.removeTrack = function (trackId) {
         this.trackIdToTrackDataMap[trackId] = undefined;
     }
 
-    if (trackId === this.currentHeightProfileTrackId &&
-        this.heightProfileView !== null) {
-        this.heightProfileView.hide();
-        this.heightProfileView.destroy();
-        this.heightProfileView = null;
-
-        this.trackMarker.show = false;
-    }
+    if (trackId === this.currentHeightProfileTrackId)
+        this.closeHeightProfileView();
 
     this.updateScene();
 };
@@ -2083,12 +2079,8 @@ MapView.prototype.clearAllTracks = function () {
 
     this.trackIdToTrackDataMap = {};
 
-    if (this.heightProfileView !== null) {
-        this.heightProfileView.hide();
-        this.heightProfileView = null;
-
-        this.trackMarker.show = false;
-    }
+    if (this.heightProfileView !== null)
+        this.closeHeightProfileView();
 
     this.updateScene();
 };
@@ -2142,6 +2134,25 @@ MapView.prototype.showTrackHeightProfile = function (trackId) {
 };
 
 /**
+ * Closes height profile view again
+ */
+MapView.prototype.closeHeightProfileView = function () {
+
+    if (this.heightProfileView !== null) {
+        this.heightProfileView.hide();
+        this.heightProfileView.destroy();
+        this.heightProfileView = null;
+    }
+
+    this.trackMarker.show = false;
+
+    if (this.trackMarker === this.viewer.trackedEntity)
+        this.viewer.trackedEntity = null;
+
+    this.currentHeightProfileTrackId = undefined;
+};
+
+/**
  * Called for an action of the height profile view
  * @param {string} funcName action function name
  * @param {object} params action params
@@ -2164,9 +2175,10 @@ MapView.prototype.heightProfileCallAction = function (funcName, params) {
                 });
         }
     }
-    else if (funcName === "onClose") {
-        this.trackMarker.show = false;
-        this.currentHeightProfileTrackId = undefined;
+    else if (funcName === "onClose" && this.inOnCloseHandler === false) {
+        this.inOnCloseHandler = true;
+        this.closeHeightProfileView();
+        this.inOnCloseHandler = false;
     }
 };
 
