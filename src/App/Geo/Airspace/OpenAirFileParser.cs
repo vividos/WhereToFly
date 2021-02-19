@@ -534,6 +534,11 @@ namespace WhereToFly.App.Geo.Airspace
                     data = data.Replace("FT", string.Empty).Trim();
                 }
 
+                if (data.EndsWith("F"))
+                {
+                    data = data.Replace("F", string.Empty).Trim();
+                }
+
                 if (TryParseNumber(data, out double value))
                 {
                     if (!unitFeet)

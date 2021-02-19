@@ -108,7 +108,7 @@ namespace WhereToFly.App.Geo.DataFormats
                     {
                         Positions = positions,
                         Height = HeightFromAltitude(airspace.Floor),
-                        ExtrudedHeight = height,
+                        ExtrudedHeight = HeightFromAltitude(airspace.Ceiling),
                         HeightReference = HeightReferenceFromAltitude(airspace.Floor),
                         Material = MaterialFromAirspace(airspace),
                         Outline = true,
