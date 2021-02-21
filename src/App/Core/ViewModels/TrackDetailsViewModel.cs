@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
 using WhereToFly.App.Core.Services;
+using WhereToFly.App.Core.Views;
 using WhereToFly.App.Geo;
 using WhereToFly.App.Logic;
 using Xamarin.CommunityToolkit.ObjectModel;
@@ -11,7 +12,7 @@ namespace WhereToFly.App.Core.ViewModels
     /// <summary>
     /// View model for the track details page
     /// </summary>
-    public class TrackDetailsViewModel
+    public class TrackDetailsViewModel : ViewModelBase
     {
         #region Binding properties
         /// <summary>
@@ -39,6 +40,16 @@ namespace WhereToFly.App.Core.ViewModels
         /// Property that contains the track's color
         /// </summary>
         public Color TrackColor => this.Track.IsFlightTrack ? Color.Transparent : Color.FromHex(this.Track.Color);
+
+        /// <summary>
+        /// Command that is called when the user taps on the color box
+        /// </summary>
+        public ICommand ColorBoxTappedCommand { get; set; }
+
+        /// <summary>
+        /// Command that is called when the user taps on the track name box
+        /// </summary>
+        public ICommand TrackNameTappedCommand { get; set; }
 
         /// <summary>
         /// Property containing distance
@@ -90,6 +101,11 @@ namespace WhereToFly.App.Core.ViewModels
             this.Track = track;
 
             this.TypeImageSource = SvgImageCache.GetImageSource(track);
+
+            this.ColorBoxTappedCommand =
+                this.TrackNameTappedCommand = new AsyncCommand(
+                    this.EditTrackInfos);
+
             this.OpenHeightProfileCommand = new AsyncCommand(
                 this.OpenHeightProfilePage);
 
@@ -98,6 +114,28 @@ namespace WhereToFly.App.Core.ViewModels
                 Html = FormatTrackDescription(this.Track),
                 BaseUrl = "about:blank"
             };
+        }
+
+        /// <summary>
+        /// Called to edit track infos
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task EditTrackInfos()
+        {
+            var editedTrack = await SetTrackInfosPopupPage.ShowAsync(this.Track);
+
+            if (editedTrack != null)
+            {
+                this.Track = editedTrack;
+
+                var dataService = DependencyService.Get<IDataService>();
+                var trackDataService = dataService.GetTrackDataService();
+
+                await trackDataService.Update(this.Track);
+                App.MapView.UpdateTrack(this.Track);
+
+                this.OnPropertyChanged(nameof(this.TrackColor));
+            }
         }
 
         /// <summary>
