@@ -732,6 +732,24 @@ namespace WhereToFly.App.Core.Views
         }
 
         /// <summary>
+        /// Updates track infos like name and color
+        /// </summary>
+        /// <param name="track">track to update</param>
+        public void UpdateTrack(Track track)
+        {
+            var trackJsonObject = new
+            {
+                id = track.Id,
+                name = track.Name,
+                color = track.IsFlightTrack ? null : track.Color
+            };
+
+            string js = $"map.updateTrack({JsonConvert.SerializeObject(trackJsonObject)});";
+
+            this.RunJavaScript(js);
+        }
+
+        /// <summary>
         /// Zooms to track on map
         /// </summary>
         /// <param name="track">track to zoom to</param>

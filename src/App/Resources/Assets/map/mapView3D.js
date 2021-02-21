@@ -1959,6 +1959,31 @@ MapView.prototype.addTrack = function (track) {
 };
 
 /**
+ * Updates track infos like name and color
+ * @param {object} [track] Track object to update, with at least the following properties:
+ * @param {string} [track.id] unique ID of the track
+ * @param {string} [track.name] track name to add
+ * @param {boolean} [track.isFlightTrack] indicates if track is a flight
+ * @param {string} [track.color] Color as "RRGGBB" string value, or undefined
+ * when track should be colored according to climb and sink rate.
+ */
+MapView.prototype.updateTrack = function (track) {
+
+    var trackInfos = this.trackIdToTrackDataMap[track.id];
+    if (trackInfos !== undefined) {
+        trackInfos.track.name = track.name;
+
+        if (!track.isFlightTrack) {
+            var attributes = trackInfos.primitive.getGeometryInstanceAttributes(
+                "track-" + track.id);
+
+            attributes.color = Cesium.ColorGeometryInstanceAttribute.fromColor(
+                Cesium.Color.fromCssColorString('#' + track.color));
+        }
+    }
+};
+
+/**
  * Removes duplicate track points, e.g. when the track position hasn't changed
  * for several seconds. This is needed since CesiumJS removes duplicate
  * position values from tracks, but doesn't remove per-vertex color values.

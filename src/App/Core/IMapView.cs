@@ -148,6 +148,12 @@ namespace WhereToFly.App.Core
         void AddTrack(Track track);
 
         /// <summary>
+        /// Updates track infos like name and color
+        /// </summary>
+        /// <param name="track">track to update</param>
+        void UpdateTrack(Track track);
+
+        /// <summary>
         /// Removes track from map
         /// </summary>
         /// <param name="track">track to remove</param>
