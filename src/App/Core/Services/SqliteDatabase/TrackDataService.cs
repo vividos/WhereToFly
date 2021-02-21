@@ -338,6 +338,22 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             }
 
             /// <summary>
+            /// Updates an existing track
+            /// </summary>
+            /// <param name="trackToUpdate">track to update</param>
+            /// <returns>task to wait on</returns>
+            public async Task Update(Track trackToUpdate)
+            {
+                var trackEntry = await this.connection.GetAsync<TrackEntry>(trackToUpdate.Id);
+
+                trackEntry.Track = trackToUpdate;
+
+                await this.connection.UpdateAsync(trackEntry);
+
+                this.trackCache[trackToUpdate.Id] = trackToUpdate;
+            }
+
+            /// <summary>
             /// Removes a specific track
             /// </summary>
             /// <param name="trackId">track ID</param>

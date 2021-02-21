@@ -24,6 +24,13 @@ namespace WhereToFly.App.Core
         Task<Track> Get(string trackId);
 
         /// <summary>
+        /// Updates an existing track
+        /// </summary>
+        /// <param name="trackToUpdate">track to update</param>
+        /// <returns>task to wait on</returns>
+        Task Update(Track trackToUpdate);
+
+        /// <summary>
         /// Removes a specific track
         /// </summary>
         /// <param name="trackId">track ID</param>
