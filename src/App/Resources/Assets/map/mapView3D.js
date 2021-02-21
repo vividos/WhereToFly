@@ -1977,9 +1977,12 @@ MapView.prototype.updateTrack = function (track) {
             var attributes = trackInfos.primitive.getGeometryInstanceAttributes(
                 "track-" + track.id);
 
-            attributes.color = Cesium.ColorGeometryInstanceAttribute.fromColor(
-                Cesium.Color.fromCssColorString('#' + track.color));
+            attributes.color = Cesium.ColorGeometryInstanceAttribute.toValue(
+                Cesium.Color.fromCssColorString('#' + track.color),
+                attributes.color);
         }
+
+        this.updateScene();
     }
 };
 
