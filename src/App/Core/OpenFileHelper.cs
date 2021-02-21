@@ -543,8 +543,17 @@ namespace WhereToFly.App.Core
                     filteredAirspaces,
                     parser.FileCommentLines);
 
+                string fileComments = string.Join("\n", parser.FileCommentLines);
+
+                if (parser.ParsingErrors.Any())
+                {
+                    fileComments += "\nParsing errors:\n";
+                    fileComments +=
+                        string.Join("\n", parser.ParsingErrors);
+                }
+
                 string description =
-                    string.Join("\n", parser.FileCommentLines)
+                    fileComments
                     .Replace("\n\n", "\n")
                     .Trim();
 
