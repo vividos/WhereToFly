@@ -515,7 +515,7 @@ namespace WhereToFly.App.Core.Controls
         {
             Debug.Assert(segmentIndex >= 0 && segmentIndex < 8, "segment index must be in range");
 
-            return (TakeoffDirections)(1 << ((segmentIndex * 2) + 1));
+            return (TakeoffDirections)(1 << (segmentIndex * 2));
         }
 
         /// <summary>
