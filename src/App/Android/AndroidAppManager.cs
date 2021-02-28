@@ -17,6 +17,28 @@ namespace WhereToFly.App.Android
     public class AndroidAppManager : IAppManager
     {
         /// <summary>
+        /// Determines if the app with given package name is available
+        /// </summary>
+        /// <param name="packageName">package name of app to check</param>
+        /// <returns>true when available, or false when not</returns>
+        public bool IsAvailable(string packageName)
+        {
+            var context = AndroidPlatform.CurrentContext;
+
+            var pm = context.PackageManager;
+            try
+            {
+                var intent = pm.GetLaunchIntentForPackage(packageName);
+                return intent != null;
+            }
+            catch (ActivityNotFoundException ex)
+            {
+                Debug.WriteLine($"activity for package {packageName} not found: {ex}");
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Starts app's launch intent for app with given package name. See:
         /// https://stackoverflow.com/questions/2780102/open-another-application-from-your-own-intent
         /// </summary>

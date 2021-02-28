@@ -6,6 +6,13 @@
     public interface IAppManager
     {
         /// <summary>
+        /// Determines if the app with given package name is available
+        /// </summary>
+        /// <param name="packageName">package name of app to check</param>
+        /// <returns>true when available, or false when not</returns>
+        bool IsAvailable(string packageName);
+
+        /// <summary>
         /// Opens app with given package name
         /// </summary>
         /// <param name="packageName">package name of app to open</param>

@@ -19,6 +19,9 @@ namespace WhereToFly.App.UnitTest
         public bool AppHasBeenOpened { get; internal set; }
 
         /// <inheritdoc />
+        public bool IsAvailable(string packageName) => this.AppExists;
+
+        /// <inheritdoc />
         public byte[] GetAppIcon(string packageName)
         {
             Debug.WriteLine("unit test: getting app icon for app " + packageName);

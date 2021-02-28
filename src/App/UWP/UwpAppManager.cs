@@ -12,6 +12,16 @@ namespace WhereToFly.App.UWP
     public class UwpAppManager : IAppManager
     {
         /// <summary>
+        /// Determines if the app with given package name is available
+        /// </summary>
+        /// <param name="packageName">package name of app to check</param>
+        /// <returns>true when available, or false when not</returns>
+        public bool IsAvailable(string packageName)
+        {
+            return false;
+        }
+
+        /// <summary>
         /// Starts app.
         /// </summary>
         /// <param name="packageName">android package name</param>
