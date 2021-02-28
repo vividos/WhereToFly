@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using WhereToFly.App.Core.Services;
 using WhereToFly.App.Model;
 using Xamarin.Forms;
 
@@ -54,20 +53,32 @@ namespace WhereToFly.App.Core.ViewModels
             this.ItemTappedCommand = new Command<WeatherIconDescription>(
                 (weatherIcon) => tcs.SetResult(weatherIcon));
 
-            Task.Run(async () =>
+            Task.Run(async () => await this.LoadData(group));
+        }
+
+        /// <summary>
+        /// Loads data for view model
+        /// </summary>
+        /// <param name="group">group to filter by, or null to show all groups</param>
+        /// <returns>task to wait on</returns>
+        private async Task LoadData(string group)
+        {
+            var dataService = DependencyService.Get<IDataService>();
+
+            var weatherIconDescriptionDataService = dataService.GetWeatherIconDescriptionDataService();
+            var weatherIconList = await weatherIconDescriptionDataService.GetList();
+
+            this.WeatherIconList = new ObservableCollection<WeatherIconListEntryViewModel>(
+                from weatherIcon in weatherIconList
+                where IsInGroup(@group, weatherIcon)
+                select new WeatherIconListEntryViewModel(weatherIcon));
+
+            this.OnPropertyChanged(nameof(this.WeatherIconList));
+
+            bool IsInGroup(string groupToCheck, WeatherIconDescription weatherIcon)
             {
-                var dataService = DependencyService.Get<IDataService>();
-
-                var weatherIconDescriptionDataService = dataService.GetWeatherIconDescriptionDataService();
-                var weatherIconList = await weatherIconDescriptionDataService.GetList();
-
-                this.WeatherIconList = new ObservableCollection<WeatherIconListEntryViewModel>(
-                    from weatherIcon in weatherIconList
-                    where @group == null || @group == weatherIcon.Group
-                    select new WeatherIconListEntryViewModel(weatherIcon));
-
-                this.OnPropertyChanged(nameof(this.WeatherIconList));
-            });
+                return groupToCheck == null || groupToCheck == weatherIcon.Group;
+            }
         }
     }
 }
