@@ -102,7 +102,7 @@
     "Group": "Weather forecast",
     "Type": 0,
     "Icon": null,
-    "WebLink": "https://www.unwetterzentrale.de/uwz/lagebericht.html"
+    "WebLink": "http://www.unwetterzentrale.de/uwz/lagebericht.html"
   },
   {
     "Name": "Dust forecast",
