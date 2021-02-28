@@ -68,9 +68,11 @@ namespace WhereToFly.App.Core.ViewModels
             var weatherIconDescriptionDataService = dataService.GetWeatherIconDescriptionDataService();
             var weatherIconList = await weatherIconDescriptionDataService.GetList();
 
+            var appManager = DependencyService.Get<IAppManager>();
+
             this.WeatherIconList = new ObservableCollection<WeatherIconListEntryViewModel>(
                 from weatherIcon in weatherIconList
-                where IsInGroup(@group, weatherIcon)
+                where IsInGroup(@group, weatherIcon) && IsAppAvailable(weatherIcon)
                 select new WeatherIconListEntryViewModel(weatherIcon));
 
             this.OnPropertyChanged(nameof(this.WeatherIconList));
@@ -78,6 +80,12 @@ namespace WhereToFly.App.Core.ViewModels
             bool IsInGroup(string groupToCheck, WeatherIconDescription weatherIcon)
             {
                 return groupToCheck == null || groupToCheck == weatherIcon.Group;
+            }
+
+            bool IsAppAvailable(WeatherIconDescription weatherIcon)
+            {
+                return weatherIcon.Type != WeatherIconDescription.IconType.IconApp ||
+                    appManager.IsAvailable(weatherIcon.WebLink);
             }
         }
     }
