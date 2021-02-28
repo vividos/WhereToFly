@@ -18,7 +18,7 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// View model for this page
         /// </summary>
-        private SelectWeatherIconViewModel viewModel;
+        private readonly SelectWeatherIconViewModel viewModel;
 
         /// <summary>
         /// Creates a new page object

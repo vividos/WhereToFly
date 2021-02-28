@@ -1,5 +1,4 @@
 ﻿using Rg.Plugins.Popup.Extensions;
-using Rg.Plugins.Popup.Pages;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.ViewModels;
 using WhereToFly.Shared.Model;

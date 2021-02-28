@@ -103,6 +103,6 @@ namespace WhereToFly.App.UnitTest.Geo
             // check
             Assert.IsNotNull(track, "track must not be null");
             Assert.AreEqual(2, track.TrackPoints.Count, "there only must be two track points");
-       }
+        }
     }
 }

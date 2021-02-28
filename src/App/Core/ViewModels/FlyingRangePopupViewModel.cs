@@ -67,8 +67,7 @@ namespace WhereToFly.App.Core.ViewModels
             get => $"{(int)this.Parameters.WindSpeed} km/h";
             set
             {
-                int windSpeed = 0;
-                if (int.TryParse(value.Replace(" km/h", string.Empty), out windSpeed))
+                if (int.TryParse(value.Replace(" km/h", string.Empty), out int windSpeed))
                 {
                     this.Parameters.WindSpeed = windSpeed;
                 }

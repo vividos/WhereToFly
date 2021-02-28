@@ -25,8 +25,10 @@ namespace WhereToFly.App.Core.Views
             this.FlyoutLayoutBehavior = FlyoutLayoutBehavior.Popover;
 
             // set up flyout menu page
-            this.Flyout = new MenuPage();
-            this.Flyout.BackgroundColor = Constants.PrimaryColor;
+            this.Flyout = new MenuPage
+            {
+                BackgroundColor = Constants.PrimaryColor
+            };
             if (Device.RuntimePlatform == Device.iOS)
             {
                 this.Flyout.IconImageSource = ImageSource.FromFile("Assets/images/menu.png");
@@ -34,10 +36,11 @@ namespace WhereToFly.App.Core.Views
 
             // set up detail page
             var mapPage = (App.Current as App).MapPage;
-            var navigationPage = new NavigationPage(mapPage);
-
-            navigationPage.BarBackgroundColor = Constants.PrimaryColor;
-            navigationPage.BarTextColor = Color.White;
+            var navigationPage = new NavigationPage(mapPage)
+            {
+                BarBackgroundColor = Constants.PrimaryColor,
+                BarTextColor = Color.White
+            };
 
             NavigationPage.SetTitleIconImageSource(navigationPage, "icon.png");
 

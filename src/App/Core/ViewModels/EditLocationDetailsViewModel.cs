@@ -107,7 +107,7 @@ namespace WhereToFly.App.Core.ViewModels
             {
                 try
                 {
-                    this.location.MapLocation.Altitude = (double)System.Convert.ToInt32(value);
+                    this.location.MapLocation.Altitude = System.Convert.ToInt32(value);
                 }
                 catch (Exception)
                 {

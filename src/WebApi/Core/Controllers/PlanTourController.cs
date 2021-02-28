@@ -48,7 +48,7 @@ namespace WhereToFly.WebApi.Core.Controllers
         [Consumes(System.Net.Mime.MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<PlannedTour> Get([FromBody]PlanTourParameters planTourParameters)
+        public ActionResult<PlannedTour> Get([FromBody] PlanTourParameters planTourParameters)
         {
             this.logger.LogDebug($"Planning tour with {planTourParameters.WaypointIdList.Count} waypoints...");
 

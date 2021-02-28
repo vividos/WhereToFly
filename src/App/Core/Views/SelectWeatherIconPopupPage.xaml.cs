@@ -1,5 +1,4 @@
 ﻿using Rg.Plugins.Popup.Extensions;
-using Rg.Plugins.Popup.Pages;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.ViewModels;
 using WhereToFly.App.Model;
@@ -15,12 +14,12 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Task completion source to report back selected weather icon description.
         /// </summary>
-        private TaskCompletionSource<WeatherIconDescription> tcs = new TaskCompletionSource<WeatherIconDescription>();
+        private readonly TaskCompletionSource<WeatherIconDescription> tcs = new TaskCompletionSource<WeatherIconDescription>();
 
         /// <summary>
         /// Weather icon group to filter list by; may be null to show all groups
         /// </summary>
-        private string group;
+        private readonly string group;
 
         /// <summary>
         /// View model for this popup page

@@ -39,7 +39,7 @@ namespace WhereToFly.App.Logic
             /// <param name="liveWaypointId">live waypoint ID</param>
             /// <returns>query result for live waypoint</returns>
             [Get("/api/LiveWaypoint?id={id}")]
-            Task<LiveWaypointQueryResult> GetLiveWaypointDataAsync([AliasAs("id")]string liveWaypointId);
+            Task<LiveWaypointQueryResult> GetLiveWaypointDataAsync([AliasAs("id")] string liveWaypointId);
 
             /// <summary>
             /// Plans a tour with given parameters and returns a planned tour, including
@@ -48,7 +48,7 @@ namespace WhereToFly.App.Logic
             /// <param name="planTourParameters">tour planning parameters</param>
             /// <returns>planned tour</returns>
             [Post("/api/PlanTour")]
-            Task<PlannedTour> PlanTourAsync([Body]PlanTourParameters planTourParameters);
+            Task<PlannedTour> PlanTourAsync([Body] PlanTourParameters planTourParameters);
         }
 
         /// <summary>
