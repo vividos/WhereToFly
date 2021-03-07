@@ -25,7 +25,7 @@ namespace WhereToFly.App.UnitTest.Geo
 
             // run
             Track track = null;
-            IEnumerable<string> parsingErrors = Enumerable.Empty<string>();
+            IEnumerable<string> parsingErrors;
             using (var stream = new FileStream(filename, FileMode.Open))
             {
                 var igcParser = new IgcParser(stream);
