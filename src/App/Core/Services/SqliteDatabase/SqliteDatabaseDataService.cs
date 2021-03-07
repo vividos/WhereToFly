@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Model;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.Services.SqliteDatabase
@@ -112,8 +113,9 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         /// </summary>
         public SqliteDatabaseDataService()
         {
-            var platform = DependencyService.Get<IPlatform>();
-            string databaseFilename = Path.Combine(platform.AppDataFolder, DatabaseFilename);
+            string databaseFilename = Path.Combine(
+                FileSystem.AppDataDirectory,
+                DatabaseFilename);
 
             this.connection = new SQLiteAsyncConnection(
                 databaseFilename,

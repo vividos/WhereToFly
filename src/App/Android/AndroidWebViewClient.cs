@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using WhereToFly.App.Core;
+using Xamarin.Essentials;
 using Xamarin.Forms.Platform.Android;
 
 namespace WhereToFly.App.Android
@@ -208,9 +209,9 @@ namespace WhereToFly.App.Android
         /// <returns>file name of cache folder</returns>
         private static string GetCacheFolder()
         {
-            var platform = Xamarin.Forms.DependencyService.Get<IPlatform>();
-
-            string corsCacheFolder = Path.Combine(platform.CacheDataFolder, "cors-cache");
+            string corsCacheFolder = Path.Combine(
+                FileSystem.CacheDirectory,
+                "cors-cache");
 
             if (!Directory.Exists(corsCacheFolder))
             {

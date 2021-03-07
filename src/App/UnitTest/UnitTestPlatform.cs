@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using WhereToFly.App.Core;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest
@@ -10,19 +11,9 @@ namespace WhereToFly.App.UnitTest
     internal class UnitTestPlatform : IPlatform
     {
         /// <summary>
-        /// Property containing app data folder
-        /// </summary>
-        public string AppDataFolder => Path.GetDirectoryName(this.GetType().Assembly.Location);
-
-        /// <summary>
-        /// Property containing cache data folder
-        /// </summary>
-        public string CacheDataFolder => this.AppDataFolder;
-
-        /// <summary>
         /// Property containing public export folder
         /// </summary>
-        public string PublicExportFolder => this.AppDataFolder;
+        public string PublicExportFolder => FileSystem.AppDataDirectory;
 
         /// <summary>
         /// Returns web view base path; always "about:blank"

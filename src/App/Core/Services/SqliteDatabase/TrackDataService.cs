@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using WhereToFly.App.Geo;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.Services.SqliteDatabase
@@ -229,13 +230,14 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             /// </summary>
             public void LoadTrackPoints()
             {
-                var platform = DependencyService.Get<IPlatform>();
-
                 Debug.Assert(
                     !string.IsNullOrEmpty(this.TrackPointFilename),
                     "must have set track point filename when loading a track");
 
-                string filename = Path.Combine(platform.AppDataFolder, TracksFolderName, this.TrackPointFilename);
+                string filename = Path.Combine(
+                    FileSystem.AppDataDirectory,
+                    TracksFolderName,
+                    this.TrackPointFilename);
 
                 string json = File.ReadAllText(filename);
                 this.Track.TrackPoints = JsonConvert.DeserializeObject<List<TrackPoint>>(
@@ -252,9 +254,10 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             /// </summary>
             public void StoreTrackPoints()
             {
-                var platform = DependencyService.Get<IPlatform>();
+                string tracksFolder = Path.Combine(
+                    FileSystem.AppDataDirectory,
+                    TracksFolderName);
 
-                string tracksFolder = Path.Combine(platform.AppDataFolder, TracksFolderName);
                 if (!Directory.Exists(tracksFolder))
                 {
                     Directory.CreateDirectory(tracksFolder);
@@ -447,9 +450,10 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             {
                 try
                 {
-                    var platform = DependencyService.Get<IPlatform>();
+                    string tracksFolder = Path.Combine(
+                        FileSystem.AppDataDirectory,
+                        TracksFolderName);
 
-                    string tracksFolder = Path.Combine(platform.AppDataFolder, TracksFolderName);
                     if (Directory.Exists(tracksFolder))
                     {
                         Directory.Delete(tracksFolder, true);

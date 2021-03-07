@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using WhereToFly.App.Core;
 using Xamarin.Forms;
@@ -19,18 +19,6 @@ namespace WhereToFly.App.iOS
     /// </summary>
     public class IosPlatform : IPlatform
     {
-        /// <summary>
-        /// Property containing the iOS library folder
-        /// </summary>
-        public string AppDataFolder =>
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "..", "Library");
-
-        /// <summary>
-        /// Property containing the iOS library cache folder
-        /// </summary>
-        public string CacheDataFolder =>
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "..", "Library", "Caches");
-
         /// <summary>
         /// Property containing the iOS Documents folder
         /// </summary>

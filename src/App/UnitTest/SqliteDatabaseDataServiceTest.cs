@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -6,6 +6,7 @@ using WhereToFly.App.Core;
 using WhereToFly.App.Core.Services.SqliteDatabase;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Model;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest
@@ -26,8 +27,9 @@ namespace WhereToFly.App.UnitTest
             DependencyService.Register<IPlatform, UnitTestPlatform>();
 
             // start with a new database
-            var platform = DependencyService.Get<IPlatform>();
-            string databaseFilename = Path.Combine(platform.AppDataFolder, "database.db");
+            string databaseFilename = Path.Combine(
+                FileSystem.AppDataDirectory,
+                "database.db");
 
             if (File.Exists(databaseFilename))
             {

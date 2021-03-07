@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core
@@ -8,17 +8,6 @@ namespace WhereToFly.App.Core
     /// </summary>
     public interface IPlatform
     {
-        /// <summary>
-        /// Property containing the folder where the app can place its data files.
-        /// </summary>
-        string AppDataFolder { get; }
-
-        /// <summary>
-        /// Property containing the folder where the app can place cache files. The cache folder
-        /// can always be cleard without impact the app.
-        /// </summary>
-        string CacheDataFolder { get; }
-
         /// <summary>
         /// Property containing the folder where files can be exported to. The folder should be
         /// public.

@@ -1,4 +1,4 @@
-﻿using Android.Content;
+using Android.Content;
 using AndroidX.AppCompat.App;
 using System.IO;
 using WhereToFly.App.Core;
@@ -19,18 +19,6 @@ namespace WhereToFly.App.Android
         /// </summary>
         internal static Context CurrentContext
             => Xamarin.Essentials.Platform.CurrentActivity ?? global::Android.App.Application.Context;
-
-        /// <summary>
-        /// Property containing the Android app data folder
-        /// </summary>
-        public string AppDataFolder
-            => CurrentContext.FilesDir.AbsolutePath;
-
-        /// <summary>
-        /// Property containing the Android cache data folder
-        /// </summary>
-        public string CacheDataFolder
-            => CurrentContext.CacheDir.AbsolutePath;
 
         /// <summary>
         /// Property containing the public external storage folder
