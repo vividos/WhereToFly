@@ -1340,7 +1340,8 @@ MapView.prototype.createEntity = function (id, name, description, pinColor, pinI
                 billboard: {
                     image: canvas.toDataURL(),
                     verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-                    heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
+                    heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+                    disableDepthTestDistance: 5000.0
                 }
             };
         },
