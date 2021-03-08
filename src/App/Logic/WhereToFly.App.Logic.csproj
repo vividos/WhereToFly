@@ -19,9 +19,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.30" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.31" />
     <PackageReference Include="Markdig" Version="0.23.0" />
-    <PackageReference Include="Refit" Version="6.0.15" />
+    <PackageReference Include="Refit" Version="6.0.24" />
   </ItemGroup>
   
   <ItemGroup>
