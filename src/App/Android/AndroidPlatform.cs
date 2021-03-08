@@ -14,13 +14,6 @@ namespace WhereToFly.App.Android
     public class AndroidPlatform : IPlatform
     {
         /// <summary>
-        /// Returns current context, either from current activity, or the global application
-        /// context
-        /// </summary>
-        internal static Context CurrentContext
-            => Xamarin.Essentials.Platform.CurrentActivity ?? global::Android.App.Application.Context;
-
-        /// <summary>
         /// Property containing the public external storage folder
         /// </summary>
         public string PublicExportFolder =>
@@ -41,7 +34,7 @@ namespace WhereToFly.App.Android
         /// <returns>stream to read from file</returns>
         public Stream OpenAssetStream(string assetFilename)
         {
-            var assetManager = CurrentContext.Assets;
+            var assetManager = global::Android.App.Application.Context.Assets;
 
             return assetManager.Open(assetFilename);
         }
