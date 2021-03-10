@@ -484,7 +484,13 @@ MapView.prototype.showMessageBand = function (messageText) {
     if (bandElement === undefined)
         return;
 
+    bandElement.style.opacity = '0';
     bandElement.style.display = 'flex';
+
+    setTimeout(function () {
+        bandElement.style.opacity = '0.7';
+    }, 1);
+
     bandElement.innerHTML = messageText;
 };
 
@@ -497,8 +503,13 @@ MapView.prototype.hideMessageBand = function () {
         return;
 
     var bandElement = document.getElementById(this.options.messageBandId);
-    if (bandElement !== undefined)
-        bandElement.style.display = 'none';
+    if (bandElement !== undefined) {
+        bandElement.style.opacity = '0.0';
+
+        setTimeout(function () {
+            bandElement.style.display = 'none';
+        }, 700);
+    }
 
 };
 

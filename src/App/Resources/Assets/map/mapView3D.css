@@ -16,6 +16,7 @@
     height: 40px;
     z-index: 100;
     align-items: center;
+    padding-left: 8px;
     background-color: #90ee90;
     opacity: 0.7;
     font-family: sans-serif;
