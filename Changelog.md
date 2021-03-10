@@ -13,7 +13,7 @@
 - fixed flight track colors when track contains many duplicate track points
   (e.g. from waiting at takeoff)
 - fixed importing GPX files with version 1.0 
-- using CesiumJS version 1.78
+- using CesiumJS version 1.79.1
 
 ## Version 1.9.0
 
