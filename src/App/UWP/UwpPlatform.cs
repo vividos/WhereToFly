@@ -22,11 +22,6 @@ namespace WhereToFly.App.UWP
 #pragma warning restore S1075 // URIs should not be hardcoded
 
         /// <summary>
-        /// Property containing the UWP documents folder
-        /// </summary>
-        public string PublicExportFolder => Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-
-        /// <summary>
         /// Base path to use in WebView control, for UWP
         /// </summary>
         public string WebViewBasePath => "ms-appx-web:///WhereToFly.App.Resources/Assets/";

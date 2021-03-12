@@ -11,11 +11,6 @@ namespace WhereToFly.App.UnitTest
     internal class UnitTestPlatform : IPlatform
     {
         /// <summary>
-        /// Property containing public export folder
-        /// </summary>
-        public string PublicExportFolder => FileSystem.AppDataDirectory;
-
-        /// <summary>
         /// Returns web view base path; always "about:blank"
         /// </summary>
         public string WebViewBasePath => "about:blank";

@@ -9,12 +9,6 @@ namespace WhereToFly.App.Core
     public interface IPlatform
     {
         /// <summary>
-        /// Property containing the folder where files can be exported to. The folder should be
-        /// public.
-        /// </summary>
-        string PublicExportFolder { get; }
-
-        /// <summary>
         /// Base path to use in WebView control
         /// </summary>
         string WebViewBasePath { get; }

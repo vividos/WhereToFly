@@ -14,15 +14,6 @@ namespace WhereToFly.App.Android
     public class AndroidPlatform : IPlatform
     {
         /// <summary>
-        /// Property containing the public external storage folder
-        /// </summary>
-        public string PublicExportFolder =>
-#pragma warning disable CS0618 // Type or member is obsolete
-            global::Android.OS.Environment.GetExternalStoragePublicDirectory(
-                global::Android.OS.Environment.DirectoryDocuments).AbsolutePath;
-#pragma warning restore CS0618 // Type or member is obsolete
-
-        /// <summary>
         /// Base path to use in WebView control, for Android
         /// </summary>
         public string WebViewBasePath => "file:///android_asset/";

@@ -20,11 +20,6 @@ namespace WhereToFly.App.iOS
     public class IosPlatform : IPlatform
     {
         /// <summary>
-        /// Property containing the iOS Documents folder
-        /// </summary>
-        public string PublicExportFolder => Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-
-        /// <summary>
         /// Base path to use in WebView control, for iOS
         /// </summary>
         public string WebViewBasePath => Foundation.NSBundle.MainBundle.BundlePath + "/Assets/";
