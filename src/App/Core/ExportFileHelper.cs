@@ -5,7 +5,6 @@ using WhereToFly.App.Geo;
 using WhereToFly.App.Geo.DataFormats;
 using WhereToFly.Shared.Model;
 using Xamarin.Essentials;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.Core
 {
@@ -35,11 +34,13 @@ namespace WhereToFly.App.Core
                 return;
             }
 
+            string exportPath = Path.Combine(FileSystem.CacheDirectory, exportFilename);
+
             try
             {
-                File.WriteAllBytes(exportFilename, data);
+                File.WriteAllBytes(exportPath, data);
 
-                App.ShowToast("Layer was successfully exported.");
+                await ShareFile(exportPath, "application/vnd.google-earth.kmz");
             }
             catch (Exception ex)
             {
@@ -66,11 +67,13 @@ namespace WhereToFly.App.Core
                 return;
             }
 
+            string exportPath = Path.Combine(FileSystem.CacheDirectory, exportFilename);
+
             try
             {
-                GpxWriter.WriteTrack(exportFilename, track);
+                GpxWriter.WriteTrack(exportPath, track);
 
-                App.ShowToast("Track was successfully exported.");
+                await ShareFile(exportPath, "application/gpx+xml");
             }
             catch (Exception ex)
             {
@@ -86,15 +89,12 @@ namespace WhereToFly.App.Core
         /// <summary>
         /// Ask user about the export filename and return it
         /// </summary>
-        /// <param name="filename">filename and extension of file to export</param>
+        /// <param name="exportFilename">filename and extension of file to export</param>
         /// <returns>
         /// export filename, or null when editing was cancelled or an invalid path was specified
         /// </returns>
-        private static async Task<string> AskUserExportFilenameAsync(string filename)
+        private static async Task<string> AskUserExportFilenameAsync(string exportFilename)
         {
-            var platform = DependencyService.Get<IPlatform>();
-            string exportFilename = Path.Combine(platform.PublicExportFolder, filename);
-
             string editedExportFilename = await App.Current.MainPage.DisplayPromptAsync(
                 Constants.AppTitle,
                 "Export filename",
@@ -107,53 +107,21 @@ namespace WhereToFly.App.Core
                 return null;
             }
 
-            var status = await Permissions.RequestAsync<Permissions.StorageWrite>();
-            if (status != PermissionStatus.Granted)
-            {
-                return null;
-            }
-
-            if (!await TryCreateFolderAsync(editedExportFilename))
-            {
-                return null;
-            }
-
             return editedExportFilename;
         }
 
         /// <summary>
-        /// Checks if a folder for the given filename already exists and tries to create it.
+        /// Shares file with other apps
         /// </summary>
-        /// <param name="filename">file name</param>
-        /// <returns>true when creating folder succeeded, or false when not</returns>
-        private static async Task<bool> TryCreateFolderAsync(string filename)
+        /// <param name="filename">full fulename of file to share</param>
+        /// <param name="contentType">MIME type of content</param>
+        /// <returns>task to wait on</returns>
+        private static async Task ShareFile(string filename, string contentType)
         {
-            string folderName = Path.GetDirectoryName(filename);
-            if (Directory.Exists(folderName))
-            {
-                return true;
-            }
-
-            try
-            {
-                Directory.CreateDirectory(folderName);
-            }
-            catch (Exception)
-            {
-                // catch and ignore
-            }
-
-            if (!Directory.Exists(folderName))
-            {
-                await App.Current.MainPage.DisplayAlert(
-                    Constants.AppTitle,
-                    "Invalid path was specified: " + filename,
-                    "Close");
-
-                return false;
-            }
-
-            return true;
+            await Share.RequestAsync(
+                new ShareFileRequest(
+                    $"Sharing file {Path.GetFileName(filename)}...",
+                    new ShareFile(filename, contentType)));
         }
     }
 }
