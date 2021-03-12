@@ -75,6 +75,7 @@ namespace WhereToFly.App.Core.Views
         public MapPage()
         {
             this.Title = Constants.AppTitle;
+            this.BackgroundColor = Color.Black;
 
             this.zoomToMyPosition = false;
 
