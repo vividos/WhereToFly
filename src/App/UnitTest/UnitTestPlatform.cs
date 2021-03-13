@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using WhereToFly.App.Core;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest

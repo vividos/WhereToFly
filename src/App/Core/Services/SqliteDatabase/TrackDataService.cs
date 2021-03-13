@@ -9,7 +9,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using WhereToFly.App.Geo;
 using Xamarin.Essentials;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.Services.SqliteDatabase
 {

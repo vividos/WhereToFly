@@ -1,4 +1,3 @@
-using Android.Content;
 using AndroidX.AppCompat.App;
 using System.IO;
 using WhereToFly.App.Core;

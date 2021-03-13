@@ -10,7 +10,6 @@ using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Model;
 using Xamarin.Essentials;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.Services.SqliteDatabase
 {

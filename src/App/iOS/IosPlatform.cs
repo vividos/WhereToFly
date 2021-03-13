@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using WhereToFly.App.Core;
 using Xamarin.Forms;
