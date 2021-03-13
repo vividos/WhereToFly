@@ -36,6 +36,11 @@ have the following options:
 - ![Navigate here](images/directions.svg) Navigate here: Starts the navigation
   app to show a route to this location
 
+When the location displays a takeoff, the takeoff directions are shown using
+circle sectors:
+
+![Takeoff direction pin](images/takeoff-direction-location.png)
+
 ### Track height profile
 
 When tapping on a track, the height profile of that track is shown in a
@@ -66,7 +71,7 @@ There are several toolbar buttons above the track height profile:
 Custom layers can be added to the map. The layers can display geometric
 objects, such as thermals, national park areas, air spaces or labels. The
 layers can be imported from CZML files or OpenAir Airspace text files. When
-tapping on a layer object, details for the object is shown:
+tapping on a layer object, details for the object are shown:
 
 ![Layer object](images/layer-object.png)
 
@@ -103,7 +108,7 @@ flying range. A Hide button lets you hide the cone again.
 
 ## ![Layers](images/layers-outline.svg) Layers
 
-The app can show layers above the 3D map, e.g. to display thermals, national
+The app can show layers on the 3D map, e.g. to display thermals, national
 park areas or other geographical elements. The Layers view shows the list of
 currently loaded custom layers.
 
@@ -164,8 +169,8 @@ locations to the list. First, a selection dialog is shown:
 When opening a new list, you can choose to append to the existing list or
 replace all existing entries.
 
-Locations can also be added when opening supported file types using the app
-(e.g. by tapping on the file or by downloading a file from the web).
+Locations can also be added when opening files of supported file types, using
+the app (e.g. by tapping on the file or by downloading a file from the web).
 
 When importing KML or KMZ files, only the Placemarks contained in the file are
 added as locations. When importing GPX files, only "wpt" waypoints are
@@ -424,6 +429,7 @@ The Map tab has several settings:
   * dd&deg; mm.mmm'
   * dd&deg; mm' sss"
 
-The "Clear map view cache" button clears the app's browser cache that stores
-tile map images and terrain height infos. This may be useful to use when the
-app doesn't continue to load tiles.
+- Use location clustering: When activiated, location pins are clustered into
+  red "placeholder" pins when zooming out. The pins show how many actual
+  loations are clustered. This helps when many location pins are placed in one
+  small region.
