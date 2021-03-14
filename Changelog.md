@@ -2,6 +2,8 @@
 
 ## Version 1.10.0
 
+Released on 2021-03-14.
+
 - support for Cesium OpenStreetMap Buildings layer; can be added to layer list
 - for locations that have takeoff directions, the takeoff directions are now
   shown on the map as circle slices
