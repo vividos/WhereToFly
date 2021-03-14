@@ -97,7 +97,7 @@ library for touch gesture handling in the chartjs-plugin-zoom plugin. The librar
 The backend uses the [QuickGraph](https://github.com/oldrev/Sandwych.QuickGraph)
 library for tour planning.
 The library is licensed using the
-[Microsoft Pulbic License](https://github.com/oldrev/Sandwych.QuickGraph/blob/master/LICENSE.md).
+[Microsoft Public License](https://github.com/oldrev/Sandwych.QuickGraph/blob/master/LICENSE.md).
 
 ## Services
 
