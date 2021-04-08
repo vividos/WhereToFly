@@ -27,8 +27,10 @@ namespace WhereToFly.App.UnitTest
             DependencyService.Register<IPlatform, UnitTestPlatform>();
 
             // start with a new database
+            string folder = Path.GetDirectoryName(this.GetType().Assembly.Location);
+
             string databaseFilename = Path.Combine(
-                FileSystem.AppDataDirectory,
+                folder,
                 "database.db");
 
             if (File.Exists(databaseFilename))

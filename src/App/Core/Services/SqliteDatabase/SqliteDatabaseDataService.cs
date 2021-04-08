@@ -112,8 +112,12 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         /// </summary>
         public SqliteDatabaseDataService()
         {
+            string folder = DeviceInfo.Platform == DevicePlatform.Unknown
+                ? Path.GetDirectoryName(this.GetType().Assembly.Location)
+                : FileSystem.AppDataDirectory;
+
             string databaseFilename = Path.Combine(
-                FileSystem.AppDataDirectory,
+                folder,
                 DatabaseFilename);
 
             this.connection = new SQLiteAsyncConnection(
