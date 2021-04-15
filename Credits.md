@@ -82,6 +82,16 @@ The app uses the [Chart.js](https://www.chartjs.org/)
 library to display height profiles. The library is licensed using the
 [MIT License](https://github.com/chartjs/Chart.js/blob/master/LICENSE.md).
 
+The app uses the [chartjs-adapter-moment](https://github.com/chartjs/chartjs-adapter-moment)
+library to integrate the Moment.js library into Chart.js.
+The library is licensed using the
+[MIT License](https://github.com/chartjs/chartjs-adapter-moment/blob/master/LICENSE.md).
+
+The app uses the [Moment.js](https://momentjs.com/)
+library to format date and time values in Chart.js.
+The library is licensed using the
+[MIT License](https://github.com/moment/moment/blob/develop/LICENSE).
+
 The app uses the [chartjs-plugin-crosshair](https://github.com/abelheinsbroek/chartjs-plugin-crosshair/)
 library to provide a crosshair for height profiles. The library is licensed using the
 [MIT License](https://github.com/AbelHeinsbroek/chartjs-plugin-crosshair/blob/master/LICENSE).
