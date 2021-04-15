@@ -55,23 +55,11 @@ function HeightProfileView(options) {
             responsive: true,
             maintainAspectRatio: true,
             aspectRatio: 2,
-            legend: {
-                display: false
-            },
-            tooltips: {
-                enabled: false,
-                mode: 'nearest',
-                axis: 'x',
-                intersect: false,
-                custom: function (tooltipModel) {
-                    that.updateTooltipElement(tooltipModel);
-                }
-            },
             scales: {
-                xAxes: [{
+                x: {
                     id: 'time',
                     type: 'time',
-                    gridLines: {
+                    grid: {
                         color: this.axisColor,
                         zeroLineColor: this.axisColor
                     },
@@ -83,23 +71,34 @@ function HeightProfileView(options) {
                         stepSize: 0.25, // every 15 minutes
                         minUnit: 'second'
                     }
-                }
-                ],
-                yAxes: [{
+                },
+                y: {
                     id: 'elevation',
                     type: 'linear',
                     position: 'left',
                     offset: true,
-                    gridLines: {
+                    grid: {
                         color: this.axisColor,
                         zeroLineColor: this.axisColor
                     },
                     ticks: {
                         beginAtZero: false
                     }
-                }]
+                }
             },
             plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    enabled: false,
+                    mode: 'nearest',
+                    axis: 'x',
+                    intersect: false,
+                    external: function (context) {
+                        that.updateTooltipElement(context.tooltip);
+                    }
+                },
                 // the crosshair plugin is only used for the line, not for zooming
                 crosshair: {
                     line: {
@@ -152,22 +151,13 @@ function HeightProfileView(options) {
                 intersect: false,
                 axis: 'x'
             },
-            onHover: function (event, elements) {
+            onHover: function (event, elements, chart) {
                 that.onHover(elements);
             },
-            onClick: function (event, elements) {
+            onClick: function (event, elements, chart) {
                 if (!that.isZoomAndPanActive)
                     that.onClick(elements);
             }
-        }
-    });
-
-    // background color can't be set directly, so use a plugin
-    Chart.plugins.register({
-        beforeDraw: function (chartInstance) {
-            var ctx = chartInstance.chart.ctx;
-            ctx.fillStyle = that.backgroundColor;
-            ctx.fillRect(0, 0, chartInstance.chart.width, chartInstance.chart.height);
         }
     });
 
@@ -253,6 +243,7 @@ HeightProfileView.prototype.setTrack = function (track) {
     this.chart.data = {
         datasets: [{
             data: trackData,
+            backgroundColor: this.backgroundColor,
             fill: false,
             label: 'Track',
             tension: 0.0,
@@ -264,7 +255,7 @@ HeightProfileView.prototype.setTrack = function (track) {
     // need this to update the scales
     this.chart.update(0);
 
-    var scale = this.chart.scales["time"];
+    var scale = this.chart.scales.x;
     var zoomPanOptions = this.chart.options.plugins.zoom;
     zoomPanOptions.pan.rangeMin.x = scale.min.valueOf(); // left value
     zoomPanOptions.pan.rangeMax.x = scale.max.valueOf(); // right value
@@ -385,7 +376,7 @@ HeightProfileView.prototype.getTrackTooltipInfos = function (tooltipModel) {
 
     var values = {};
 
-    var timePoint = this.chart.data.datasets[0].data[tooltipModel.dataPoints[0].index].x;
+    var timePoint = this.chart.data.datasets[0].data[tooltipModel.dataPoints[0].dataIndex].x;
 
     if (timePoint.getFullYear() === 1970)
         values.elapsedTime = timePoint.valueOf() / 1000.0;
@@ -399,14 +390,14 @@ HeightProfileView.prototype.getTrackTooltipInfos = function (tooltipModel) {
     tooltipModel.dataPoints.forEach(function (tooltipItem) {
         if (tooltipItem.datasetIndex === 0) {
 
-            var currentDataPoint = that.chart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+            var currentDataPoint = that.chart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex];
             values.trackHeight = currentDataPoint.y;
 
-            if (tooltipItem.index === 0) {
+            if (tooltipItem.dataIndex === 0) {
                 values.varioValue = 0.0;
             }
             else {
-                var lastDataPoint = that.chart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index - 1];
+                var lastDataPoint = that.chart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex - 1];
 
                 var lastTrackHeight = lastDataPoint.y;
 
@@ -416,7 +407,7 @@ HeightProfileView.prototype.getTrackTooltipInfos = function (tooltipModel) {
         }
 
         if (tooltipItem.datasetIndex === 1) {
-            values.groundHeight = that.chart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index].y;
+            values.groundHeight = that.chart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex].y;
         }
     });
 
@@ -495,13 +486,13 @@ HeightProfileView.prototype.updateTooltipElement = function (tooltipModel) {
 
     var showLeft = tooltipModel.caretX > position.width / 2;
 
+    var bodyFont = Chart.helpers.toFont(tooltipModel.options.bodyFont);
+
     // display, position, and set styles for font
     tooltipElement.style.opacity = 1;
     tooltipElement.style.left = showLeft ? (position.x + window.pageXOffset + 50) + 'px' : '';
     tooltipElement.style.right = !showLeft ? '10px' : '';
     tooltipElement.style.top = '60px';
-    tooltipElement.style.fontFamily = tooltipModel._bodyFontFamily;
-    tooltipElement.style.fontSize = tooltipModel.bodyFontSize + 'px';
-    tooltipElement.style.fontStyle = tooltipModel._bodyFontStyle;
-    tooltipElement.style.padding = tooltipModel.yPadding + 'px ' + tooltipModel.xPadding + 'px';
+    tooltipElement.style.font = bodyFont.string;
+    tooltipElement.style.padding = tooltipModel.padding + 'px ' + tooltipModel.padding + 'px';
 };
