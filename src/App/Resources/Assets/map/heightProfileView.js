@@ -339,7 +339,7 @@ HeightProfileView.prototype.onHover = function (elements) {
 
     if (elements.length > 0 &&
         this.options.callback !== undefined) {
-        this.options.callback('onHover', elements[0]._index);
+        this.options.callback('onHover', elements[0].index);
     }
 };
 
@@ -353,7 +353,7 @@ HeightProfileView.prototype.onClick = function (elements) {
 
     if (elements.length > 0 &&
         this.options.callback !== undefined) {
-        this.options.callback('onClick', elements[0]._index);
+        this.options.callback('onClick', elements[0].index);
     }
 };
 
