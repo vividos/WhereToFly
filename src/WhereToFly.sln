@@ -64,6 +64,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhereToFly.App.iOS", "App\i
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.App.Resources", "App\Resources\WhereToFly.App.Resources.csproj", "{2F10550E-C477-47D8-A960-D272859EFCE8}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.App.Essentials", "App\Essentials\WhereToFly.App.Essentials.csproj", "{547F7ADF-91C5-4A1B-93DD-727F404E1EE2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -184,6 +186,12 @@ Global
 		{2F10550E-C477-47D8-A960-D272859EFCE8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2F10550E-C477-47D8-A960-D272859EFCE8}.SonarQube|Any CPU.ActiveCfg = Release|Any CPU
 		{2F10550E-C477-47D8-A960-D272859EFCE8}.SonarQube|Any CPU.Build.0 = Release|Any CPU
+		{547F7ADF-91C5-4A1B-93DD-727F404E1EE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{547F7ADF-91C5-4A1B-93DD-727F404E1EE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{547F7ADF-91C5-4A1B-93DD-727F404E1EE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{547F7ADF-91C5-4A1B-93DD-727F404E1EE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{547F7ADF-91C5-4A1B-93DD-727F404E1EE2}.SonarQube|Any CPU.ActiveCfg = Debug|Any CPU
+		{547F7ADF-91C5-4A1B-93DD-727F404E1EE2}.SonarQube|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -207,6 +215,7 @@ Global
 		{6EE42B80-BB37-4E2C-9F9F-5F8DAA682E3B} = {60BE5B8E-A229-488F-A893-379E323EBB3E}
 		{E7F80B72-C984-4598-A93E-FFA4903387CD} = {A443B9B2-B8C9-44F0-A7F5-DF2466E0E0FE}
 		{2F10550E-C477-47D8-A960-D272859EFCE8} = {A443B9B2-B8C9-44F0-A7F5-DF2466E0E0FE}
+		{547F7ADF-91C5-4A1B-93DD-727F404E1EE2} = {A443B9B2-B8C9-44F0-A7F5-DF2466E0E0FE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D13F3BD1-E396-49C7-BD98-2F3BC15F6E7C}
