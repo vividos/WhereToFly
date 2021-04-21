@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Xml;
-using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Model;
 
@@ -203,7 +202,7 @@ namespace WhereToFly.App.Geo.DataFormats
                 Id = Guid.NewGuid().ToString("B"),
                 Name = nameNode?.InnerText ?? "Waypoint",
                 MapLocation = new MapPoint(latitude, longitude, elevation),
-                Description = HtmlConverter.Sanitize(descNode?.InnerText ?? string.Empty),
+                Description = descNode?.InnerText ?? string.Empty,
                 Type = LocationTypeFromWaypointNode(nameNode),
                 InternetLink = linkHrefNode?.Value ?? string.Empty
             };

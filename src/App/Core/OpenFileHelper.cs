@@ -234,6 +234,7 @@ namespace WhereToFly.App.Core
         /// <returns>task to wait on</returns>
         private static async Task ImportLocationListAsync(List<Location> locationList)
         {
+            SanitizeLocationDescriptions(locationList);
             AddTakeoffDirections(locationList);
 
             var dataService = DependencyService.Get<IDataService>();
@@ -264,6 +265,18 @@ namespace WhereToFly.App.Core
             App.MapView.AddLocationList(locationList);
 
             ZoomToLocationList(locationList);
+        }
+
+        /// <summary>
+        /// Sanitizes all descriptions of all locations in the list
+        /// </summary>
+        /// <param name="locationList">location list</param>
+        private static void SanitizeLocationDescriptions(List<Location> locationList)
+        {
+            foreach (var location in locationList)
+            {
+                location.Description = HtmlConverter.Sanitize(location.Description);
+            }
         }
 
         /// <summary>
@@ -381,6 +394,8 @@ namespace WhereToFly.App.Core
             {
                 return false;
             }
+
+            track.Description = HtmlConverter.Sanitize(track.Description);
 
             track.CalculateStatistics();
 
@@ -615,7 +630,7 @@ namespace WhereToFly.App.Core
             {
                 Id = Guid.NewGuid().ToString("B"),
                 Name = Path.GetFileNameWithoutExtension(filename),
-                Description = description,
+                Description = HtmlConverter.Sanitize(description),
                 IsVisible = true,
                 LayerType = LayerType.CzmlLayer,
                 Data = czml

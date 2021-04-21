@@ -8,7 +8,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using WhereToFly.App.Geo.Spatial;
-using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Model;
 
@@ -348,25 +347,10 @@ namespace WhereToFly.App.Geo.DataFormats
                  {
                      Id = placemark.Id ?? Guid.NewGuid().ToString("B"),
                      Name = placemark.Name ?? "unknown",
-                     Description = GetDescriptionFromPlacemark(placemark),
+                     Description = placemark.Description?.Text ?? string.Empty,
                      Type = MapPlacemarkToType(this.kml, placemark),
                      MapLocation = new MapPoint(point.Coordinate.Latitude, point.Coordinate.Longitude, point.Coordinate.Altitude)
                  }).ToList();
-        }
-
-        /// <summary>
-        /// Returns sanitized description HTML text from given placemark.
-        /// </summary>
-        /// <param name="placemark">placemark to use</param>
-        /// <returns>HTML description text</returns>
-        private static string GetDescriptionFromPlacemark(Placemark placemark)
-        {
-            string text = placemark.Description?.Text ?? string.Empty;
-
-            text = HtmlConverter.Sanitize(text);
-            text = HtmlConverter.FromHtmlOrMarkdown(text);
-
-            return text;
         }
 
         /// <summary>
