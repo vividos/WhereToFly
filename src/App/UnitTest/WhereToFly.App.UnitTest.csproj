@@ -163,10 +163,6 @@
       <Project>{f6b9c753-c5ff-4079-a92b-79911755b3c5}</Project>
       <Name>WhereToFly.App.Geo</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Logic\WhereToFly.App.Logic.csproj">
-      <Project>{D8B7A38E-6E38-4CC4-A254-80BFBAA262C0}</Project>
-      <Name>WhereToFly.App.Logic</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Model\WhereToFly.App.Model.csproj">
       <Project>{6A01E52C-1CF1-48E2-AC01-045A7B82E4B7}</Project>
       <Name>WhereToFly.App.Model</Name>
