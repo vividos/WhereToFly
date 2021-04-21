@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Model;
 using Xamarin.Essentials;

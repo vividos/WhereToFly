@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using WhereToFly.Shared.Model;
 
-namespace WhereToFly.App.Logic
+namespace WhereToFly.App.Core.Services
 {
     /// <summary>
     /// Data service that communicates with the backend data service (the project
