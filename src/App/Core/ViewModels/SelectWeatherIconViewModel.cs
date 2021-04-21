@@ -68,7 +68,9 @@ namespace WhereToFly.App.Core.ViewModels
             var weatherIconDescriptionDataService = dataService.GetWeatherIconDescriptionDataService();
             var weatherIconList = await weatherIconDescriptionDataService.GetList();
 
+#pragma warning disable S1854 // Unused assignments should be removed
             var appManager = DependencyService.Get<IAppManager>();
+#pragma warning restore S1854 // Unused assignments should be removed
 
             this.WeatherIconList = new ObservableCollection<WeatherIconListEntryViewModel>(
                 from weatherIcon in weatherIconList
