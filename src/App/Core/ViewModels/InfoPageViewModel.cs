@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using WhereToFly.App.Logic;
+using WhereToFly.App.Core.Logic;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 

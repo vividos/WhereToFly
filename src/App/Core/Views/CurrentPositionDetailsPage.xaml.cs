@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
+using WhereToFly.App.Core.Logic;
 using WhereToFly.App.Core.ViewModels;
-using WhereToFly.App.Logic;
 using WhereToFly.Shared.Model;
 using Xamarin.Forms;
 

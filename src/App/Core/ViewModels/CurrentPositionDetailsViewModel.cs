@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Timers;
+using WhereToFly.App.Core.Logic;
 using WhereToFly.App.Geo.SunCalcNet;
-using WhereToFly.App.Logic;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Model;
 using Xamarin.Essentials;

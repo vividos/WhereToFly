@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WhereToFly.App.Logic;
+using WhereToFly.App.Core.Logic;
 using WhereToFly.App.Model;
 using Xamarin.Forms;
 

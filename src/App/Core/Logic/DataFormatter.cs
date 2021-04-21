@@ -4,7 +4,7 @@ using System.Globalization;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Model;
 
-namespace WhereToFly.App.Logic
+namespace WhereToFly.App.Core.Logic
 {
     /// <summary>
     /// Formatter for different data structures

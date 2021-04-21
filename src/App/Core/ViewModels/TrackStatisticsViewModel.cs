@@ -1,5 +1,5 @@
-﻿using WhereToFly.App.Geo;
-using WhereToFly.App.Logic;
+﻿using WhereToFly.App.Core.Logic;
+using WhereToFly.App.Geo;
 
 namespace WhereToFly.App.Core.ViewModels
 {
