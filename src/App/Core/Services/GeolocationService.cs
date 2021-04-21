@@ -1,6 +1,4 @@
-﻿using Plugin.Geolocator;
-using Plugin.Geolocator.Abstractions;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using WhereToFly.Shared.Model;
 using Xamarin.Essentials;
@@ -65,14 +63,15 @@ namespace WhereToFly.App.Core.Services
         /// </summary>
         /// <param name="timeout">timeout for waiting for position</param>
         /// <returns>current position, or null when none could be retrieved</returns>
-        public async Task<Position> GetPositionAsync(TimeSpan timeout)
+        public async Task<Location> GetPositionAsync(TimeSpan timeout)
         {
             if (!await CheckPermissionAsync())
             {
                 return null;
             }
 
-            return await CrossGeolocator.Current.GetPositionAsync(timeout);
+            return await Geolocation.GetLocationAsync(
+                new GeolocationRequest(GeolocationAccuracy.Default, timeout));
         }
 
         /// <summary>
@@ -106,15 +105,12 @@ namespace WhereToFly.App.Core.Services
                 return false;
             }
 
-            CrossGeolocator.Current.PositionChanged += this.OnPositionChanged;
+            WhereToFly.App.Essentials.Geolocation.LocationChanged += this.OnLocationChanged;
 
-            this.isListening = true;
-
-            return await CrossGeolocator.Current.StartListeningAsync(
-                Constants.GeoLocationMinimumTimeForUpdate,
-                Constants.GeoLocationMinimumDistanceForUpdateInMeters,
-                includeHeading: true,
-                listenerSettings: null);
+            return await WhereToFly.App.Essentials.Geolocation.StartListeningForegroundAsync(
+                new GeolocationRequest(
+                    GeolocationAccuracy.Best,
+                    Constants.GeoLocationMinimumTimeForUpdate));
         }
 
         /// <summary>
@@ -122,11 +118,11 @@ namespace WhereToFly.App.Core.Services
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        private void OnPositionChanged(object sender, Plugin.Geolocator.Abstractions.PositionEventArgs args)
+        private void OnLocationChanged(object sender, WhereToFly.App.Essentials.Geolocation.LocationEventArgs args)
         {
             this.PositionChanged?.Invoke(
                 sender,
-                new GeolocationEventArgs(args.Position));
+                new GeolocationEventArgs(args.Location));
         }
 
         /// <summary>
@@ -140,9 +136,9 @@ namespace WhereToFly.App.Core.Services
                 return;
             }
 
-            CrossGeolocator.Current.PositionChanged -= this.OnPositionChanged;
+            WhereToFly.App.Essentials.Geolocation.LocationChanged -= this.OnLocationChanged;
 
-            await CrossGeolocator.Current.StopListeningAsync();
+            await WhereToFly.App.Essentials.Geolocation.StopListeningForegroundAsync();
 
             this.isListening = false;
         }

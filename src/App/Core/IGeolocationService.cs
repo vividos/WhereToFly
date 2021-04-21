@@ -1,7 +1,7 @@
-﻿using Plugin.Geolocator.Abstractions;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using WhereToFly.Shared.Model;
+using Xamarin.Essentials;
 
 namespace WhereToFly.App.Core
 {
@@ -20,7 +20,7 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="timeout">timeout for waiting for position</param>
         /// <returns>current position, or null when none could be retrieved</returns>
-        Task<Position> GetPositionAsync(TimeSpan timeout);
+        Task<Location> GetPositionAsync(TimeSpan timeout);
 
         /// <summary>
         /// Returns last known position

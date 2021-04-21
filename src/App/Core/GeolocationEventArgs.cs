@@ -1,6 +1,6 @@
-﻿using Plugin.Geolocator.Abstractions;
-using System;
+﻿using System;
 using WhereToFly.Shared.Model;
+using Xamarin.Essentials;
 
 namespace WhereToFly.App.Core
 {
@@ -13,7 +13,7 @@ namespace WhereToFly.App.Core
         /// Creates a new event args object
         /// </summary>
         /// <param name="position">position object</param>
-        public GeolocationEventArgs(Position position)
+        public GeolocationEventArgs(Location position)
         {
             this.Point = new MapPoint(
                 position.Latitude,
@@ -31,6 +31,6 @@ namespace WhereToFly.App.Core
         /// <summary>
         /// Position object
         /// </summary>
-        public Position Position { get; }
+        public Location Position { get; }
     }
 }

@@ -138,7 +138,7 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task OnClicked_ToolbarButtonLocateMe()
         {
-            Plugin.Geolocator.Abstractions.Position position;
+            Xamarin.Essentials.Location position;
             try
             {
                 position = await this.geolocationService.GetPositionAsync(timeout: TimeSpan.FromMilliseconds(100));
@@ -166,7 +166,7 @@ namespace WhereToFly.App.Core.Views
                 this.mapView.UpdateMyLocation(
                     point,
                     (int)position.Accuracy,
-                    position.Speed * Geo.Spatial.Constants.FactorMeterPerSecondToKilometerPerHour,
+                    (position.Speed ?? 0.0) * Geo.Spatial.Constants.FactorMeterPerSecondToKilometerPerHour,
                     position.Timestamp,
                     zoomToLocation: true);
             }
@@ -780,7 +780,7 @@ namespace WhereToFly.App.Core.Views
                 this.mapView.UpdateMyLocation(
                     point,
                     (int)args.Position.Accuracy,
-                    args.Position.Speed * Geo.Spatial.Constants.FactorMeterPerSecondToKilometerPerHour,
+                    (args.Position.Speed ?? 0.0) * Geo.Spatial.Constants.FactorMeterPerSecondToKilometerPerHour,
                     args.Position.Timestamp,
                     zoomToPosition);
             }

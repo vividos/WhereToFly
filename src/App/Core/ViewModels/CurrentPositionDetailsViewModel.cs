@@ -28,7 +28,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Current position
         /// </summary>
-        private Plugin.Geolocator.Abstractions.Position position;
+        private Xamarin.Essentials.Location position;
 
         /// <summary>
         /// Indicates if the device has a compass that is available
@@ -139,8 +139,9 @@ namespace WhereToFly.App.Core.ViewModels
             get
             {
                 // the Geolocator plugin reports speed in m/s
-                return this.position == null ? 0 :
-                    (int)(this.position.Speed * Geo.Spatial.Constants.FactorMeterPerSecondToKilometerPerHour);
+                return this.position == null
+                    ? 0
+                    : (int)((this.position.Speed ?? 0.0) * Geo.Spatial.Constants.FactorMeterPerSecondToKilometerPerHour);
             }
         }
 
@@ -167,7 +168,9 @@ namespace WhereToFly.App.Core.ViewModels
                     return this.currentCompassHeading;
                 }
 
-                return this.position == null ? 0 : (int)this.position.Heading;
+                return this.position == null
+                    ? 0
+                    : (int)(this.position.Course ?? 0.0);
             }
         }
 
@@ -275,7 +278,7 @@ namespace WhereToFly.App.Core.ViewModels
                 DateTimeOffset.Now,
                 this.position.Latitude,
                 this.position.Longitude,
-                this.position.Altitude);
+                this.position.Altitude ?? 0.0);
 
             this.OnPropertyChanged(nameof(this.IsSunriseSunsetAvail));
             this.OnPropertyChanged(nameof(this.SunriseTime));

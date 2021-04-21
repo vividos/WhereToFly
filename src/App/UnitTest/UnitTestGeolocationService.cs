@@ -1,8 +1,8 @@
-﻿using Plugin.Geolocator.Abstractions;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using WhereToFly.App.Core;
 using WhereToFly.Shared.Model;
+using Xamarin.Essentials;
 
 namespace WhereToFly.App.UnitTest
 {
@@ -21,15 +21,15 @@ namespace WhereToFly.App.UnitTest
         }
 
         /// <inheritdoc />
-        public Task<Position> GetPositionAsync(TimeSpan timeout)
+        public Task<Location> GetPositionAsync(TimeSpan timeout)
         {
-            return Task.FromResult<Position>(null);
+            return Task.FromResult<Location>(null);
         }
 
         /// <inheritdoc />
         public Task<bool> StartListeningAsync()
         {
-            this.PositionChanged?.Invoke(this, new GeolocationEventArgs(new Position()));
+            this.PositionChanged?.Invoke(this, new GeolocationEventArgs(new Location()));
             return Task.FromResult(true);
         }
 
