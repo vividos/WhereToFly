@@ -6,6 +6,12 @@
     <Company></Company>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+
   <ItemGroup>
     <!-- Add reference to SonarAnalyzer analyzers to all projects -->
     <PackageReference Include="SonarAnalyzer.CSharp" Version="8.*" />
