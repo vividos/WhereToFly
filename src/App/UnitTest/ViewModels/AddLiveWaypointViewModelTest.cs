@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using WhereToFly.App.Core.ViewModels;
+using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.UnitTest.ViewModels
 {
@@ -27,7 +28,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
         {
             // set up
             var location = UnitTestHelper.GetDefaultLocation();
-            location.Type = Model.LocationType.LiveWaypoint;
+            location.Type = LocationType.LiveWaypoint;
 
             // run
             var viewModel = new AddLiveWaypointPopupViewModel(location);

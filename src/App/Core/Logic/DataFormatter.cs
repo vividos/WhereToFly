@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Globalization;
 using WhereToFly.App.Model;
-using WhereToFly.Shared.Model;
+using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.Core.Logic
 {

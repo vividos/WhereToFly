@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using WhereToFly.Shared.Model;
+using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.Core
 {

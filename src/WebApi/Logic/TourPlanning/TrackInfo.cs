@@ -1,7 +1,7 @@
 ﻿using QuickGraph;
 using System;
 using System.Collections.Generic;
-using WhereToFly.Shared.Model;
+using WhereToFly.Geo.Model;
 
 namespace WhereToFly.WebApi.Logic.TourPlanning
 {

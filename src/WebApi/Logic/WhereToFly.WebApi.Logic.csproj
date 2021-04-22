@@ -32,7 +32,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\Base\WhereToFly.Shared.Base.csproj" />
-    <ProjectReference Include="..\..\Shared\Geo\WhereToFly.Shared.Geo.csproj" />
     <ProjectReference Include="..\..\Shared\Model\WhereToFly.Shared.Model.csproj" />
   </ItemGroup>
 

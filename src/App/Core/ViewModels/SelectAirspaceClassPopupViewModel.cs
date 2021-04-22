@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
-using WhereToFly.App.Geo.Airspace;
+using WhereToFly.Geo.Airspace;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.ViewModels

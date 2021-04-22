@@ -1,6 +1,5 @@
 ﻿using System;
-using WhereToFly.Shared.Model;
-using Xamarin.Essentials;
+using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.Core
 {
@@ -13,7 +12,7 @@ namespace WhereToFly.App.Core
         /// Creates a new event args object
         /// </summary>
         /// <param name="position">position object</param>
-        public GeolocationEventArgs(Location position)
+        public GeolocationEventArgs(Xamarin.Essentials.Location position)
         {
             this.Point = new MapPoint(
                 position.Latitude,
@@ -31,6 +30,6 @@ namespace WhereToFly.App.Core
         /// <summary>
         /// Position object
         /// </summary>
-        public Location Position { get; }
+        public Xamarin.Essentials.Location Position { get; }
     }
 }

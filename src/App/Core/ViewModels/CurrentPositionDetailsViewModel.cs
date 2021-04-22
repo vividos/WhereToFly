@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using System.Timers;
 using WhereToFly.App.Core.Logic;
-using WhereToFly.App.Geo.SunCalcNet;
 using WhereToFly.App.Model;
-using WhereToFly.Shared.Model;
+using WhereToFly.Geo.Model;
+using WhereToFly.Geo.SunCalcNet;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -141,7 +141,7 @@ namespace WhereToFly.App.Core.ViewModels
                 // the Geolocator plugin reports speed in m/s
                 return this.position == null
                     ? 0
-                    : (int)((this.position.Speed ?? 0.0) * Geo.Spatial.Constants.FactorMeterPerSecondToKilometerPerHour);
+                    : (int)((this.position.Speed ?? 0.0) * Geo.Constants.FactorMeterPerSecondToKilometerPerHour);
             }
         }
 

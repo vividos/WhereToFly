@@ -6,9 +6,8 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Logic;
-using WhereToFly.App.Geo;
 using WhereToFly.App.Model;
-using WhereToFly.Shared.Model;
+using WhereToFly.Geo.Model;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.Views

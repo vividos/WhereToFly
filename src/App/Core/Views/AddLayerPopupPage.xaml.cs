@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.ViewModels;
-using WhereToFly.Shared.Model;
+using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.Core.Views
 {

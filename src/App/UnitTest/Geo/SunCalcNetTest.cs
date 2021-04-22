@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using WhereToFly.App.Geo.SunCalcNet;
+using WhereToFly.Geo.SunCalcNet;
 
 namespace WhereToFly.App.UnitTest.Geo
 {

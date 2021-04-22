@@ -2,8 +2,8 @@
 using System;
 using System.IO;
 using System.Linq;
-using WhereToFly.App.Geo;
-using WhereToFly.App.Geo.DataFormats;
+using WhereToFly.Geo.DataFormats;
+using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.UnitTest.Geo
 {

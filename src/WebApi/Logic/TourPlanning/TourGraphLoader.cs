@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Base;
-using WhereToFly.Shared.Model;
 
 namespace WhereToFly.WebApi.Logic.TourPlanning
 {
@@ -280,7 +280,7 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
                     mapPointList.Add(new MapPoint(vector.Latitude, vector.Longitude, vector.Altitude));
                 }
             }
-            else if (geometry is Track track)
+            else if (geometry is SharpKml.Dom.GX.Track track)
             {
                 AddGxTrackPointsToTrack(track, mapPointList);
             }
@@ -305,7 +305,7 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
         /// </summary>
         /// <param name="gxtrack">track to use</param>
         /// <param name="mapPointList">map point list</param>
-        private static void AddGxTrackPointsToTrack(Track gxtrack, List<MapPoint> mapPointList)
+        private static void AddGxTrackPointsToTrack(SharpKml.Dom.GX.Track gxtrack, List<MapPoint> mapPointList)
         {
             foreach (var vector in gxtrack.Coordinates)
             {

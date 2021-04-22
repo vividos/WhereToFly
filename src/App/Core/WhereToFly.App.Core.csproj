@@ -34,9 +34,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Shared\Geo\WhereToFly.Shared.Geo.csproj" />
+    <ProjectReference Include="..\..\Geo\WhereToFly.Geo.csproj" />
     <ProjectReference Include="..\Essentials\WhereToFly.App.Essentials.csproj" />
-    <ProjectReference Include="..\Geo\WhereToFly.App.Geo.csproj" />
+    <ProjectReference Include="..\Model\WhereToFly.App.Model.csproj" />
   </ItemGroup>
 
   <ItemGroup>

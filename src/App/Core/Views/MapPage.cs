@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Logic;
 using WhereToFly.App.Core.Services;
-using WhereToFly.App.Geo;
 using WhereToFly.App.Model;
+using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;
 using Xamarin.Forms;
 
@@ -166,7 +166,7 @@ namespace WhereToFly.App.Core.Views
                 this.mapView.UpdateMyLocation(
                     point,
                     (int)position.Accuracy,
-                    (position.Speed ?? 0.0) * Geo.Spatial.Constants.FactorMeterPerSecondToKilometerPerHour,
+                    (position.Speed ?? 0.0) * Geo.Constants.FactorMeterPerSecondToKilometerPerHour,
                     position.Timestamp,
                     zoomToLocation: true);
             }
@@ -780,7 +780,7 @@ namespace WhereToFly.App.Core.Views
                 this.mapView.UpdateMyLocation(
                     point,
                     (int)args.Position.Accuracy,
-                    (args.Position.Speed ?? 0.0) * Geo.Spatial.Constants.FactorMeterPerSecondToKilometerPerHour,
+                    (args.Position.Speed ?? 0.0) * Geo.Constants.FactorMeterPerSecondToKilometerPerHour,
                     args.Position.Timestamp,
                     zoomToPosition);
             }

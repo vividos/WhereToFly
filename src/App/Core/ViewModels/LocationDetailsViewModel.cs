@@ -5,8 +5,8 @@ using WhereToFly.App.Core.Logic;
 using WhereToFly.App.Core.Resources;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Model;
-using WhereToFly.Shared.Geo;
-using WhereToFly.Shared.Model;
+using WhereToFly.Geo;
+using WhereToFly.Geo.Model;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
 

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.Views;
-using WhereToFly.App.Model;
+using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;
 using Xamarin.Forms;
 

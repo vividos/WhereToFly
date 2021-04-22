@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Logic;
 using WhereToFly.App.Model;
+using WhereToFly.Geo.Model;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.ViewModels

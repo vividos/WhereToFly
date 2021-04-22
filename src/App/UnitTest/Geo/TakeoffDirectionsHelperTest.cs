@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
-using WhereToFly.App.Geo;
-using WhereToFly.App.Model;
+using WhereToFly.Geo;
+using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.UnitTest.Geo
 {

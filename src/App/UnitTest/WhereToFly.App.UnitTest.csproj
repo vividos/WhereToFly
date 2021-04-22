@@ -143,13 +143,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Geo\WhereToFly.Geo.csproj">
+      <Project>{c6f67b7c-1893-4e40-8a6d-4665ef86f5b9}</Project>
+      <Name>WhereToFly.Geo</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Shared\Base\WhereToFly.Shared.Base.csproj">
       <Project>{96ac92ea-4f83-4a23-80d1-8ee5740d20df}</Project>
       <Name>WhereToFly.Shared.Base</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Shared\Geo\WhereToFly.Shared.Geo.csproj">
-      <Project>{6ee42b80-bb37-4e2c-9f9f-5f8daa682e3b}</Project>
-      <Name>WhereToFly.Shared.Geo</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Shared\Model\WhereToFly.Shared.Model.csproj">
       <Project>{552d3e32-9f57-42f8-b144-699492f73536}</Project>
@@ -158,10 +158,6 @@
     <ProjectReference Include="..\Core\WhereToFly.App.Core.csproj">
       <Project>{01CAFB32-C32B-4E04-B44C-490182F4F31E}</Project>
       <Name>WhereToFly.App.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Geo\WhereToFly.App.Geo.csproj">
-      <Project>{f6b9c753-c5ff-4079-a92b-79911755b3c5}</Project>
-      <Name>WhereToFly.App.Geo</Name>
     </ProjectReference>
     <ProjectReference Include="..\Model\WhereToFly.App.Model.csproj">
       <Project>{6A01E52C-1CF1-48E2-AC01-045A7B82E4B7}</Project>

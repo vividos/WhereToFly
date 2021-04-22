@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.ViewModels;
-using WhereToFly.App.Geo.Airspace;
+using WhereToFly.Geo.Airspace;
 
 namespace WhereToFly.App.Core.Views
 {

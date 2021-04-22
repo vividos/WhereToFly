@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using WhereToFly.App.Geo;
-using WhereToFly.App.Geo.Spatial;
+using WhereToFly.Geo;
+using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.Core.ViewModels
 {

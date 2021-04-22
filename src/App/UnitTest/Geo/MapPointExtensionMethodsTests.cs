@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WhereToFly.Shared.Geo;
-using WhereToFly.Shared.Model;
+using WhereToFly.Geo;
+using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.UnitTest.Geo
 {

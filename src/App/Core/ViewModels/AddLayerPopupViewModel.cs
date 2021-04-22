@@ -1,4 +1,4 @@
-﻿using WhereToFly.Shared.Model;
+﻿using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.Core.ViewModels
 {

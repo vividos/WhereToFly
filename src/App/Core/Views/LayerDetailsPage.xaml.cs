@@ -1,5 +1,5 @@
 ﻿using WhereToFly.App.Core.ViewModels;
-using WhereToFly.Shared.Model;
+using WhereToFly.Geo.Model;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.Views

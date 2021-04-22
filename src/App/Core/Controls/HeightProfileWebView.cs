@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Views;
-using WhereToFly.App.Geo;
+using WhereToFly.Geo.Model;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 

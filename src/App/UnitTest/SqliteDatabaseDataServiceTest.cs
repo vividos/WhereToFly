@@ -5,8 +5,7 @@ using System.Threading.Tasks;
 using WhereToFly.App.Core;
 using WhereToFly.App.Core.Services.SqliteDatabase;
 using WhereToFly.App.Model;
-using WhereToFly.Shared.Model;
-using Xamarin.Essentials;
+using WhereToFly.Geo.Model;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest

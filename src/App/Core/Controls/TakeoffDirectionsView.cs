@@ -3,7 +3,7 @@ using SkiaSharp.Views.Forms;
 using System;
 using System.Diagnostics;
 using System.Windows.Input;
-using WhereToFly.App.Model;
+using WhereToFly.Geo.Model;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.Controls

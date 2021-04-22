@@ -3,8 +3,8 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using WhereToFly.App.Geo;
-using WhereToFly.App.Geo.DataFormats;
+using WhereToFly.Geo.DataFormats;
+using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.UnitTest.Geo
 {

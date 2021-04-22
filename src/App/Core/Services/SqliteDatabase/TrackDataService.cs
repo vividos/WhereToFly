@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using WhereToFly.App.Geo;
+using WhereToFly.Geo.Model;
 using Xamarin.Essentials;
 
 namespace WhereToFly.App.Core.Services.SqliteDatabase

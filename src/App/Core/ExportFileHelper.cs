@@ -1,9 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using WhereToFly.App.Geo;
-using WhereToFly.App.Geo.DataFormats;
-using WhereToFly.Shared.Model;
+using WhereToFly.Geo.DataFormats;
+using WhereToFly.Geo.Model;
 using Xamarin.Essentials;
 
 namespace WhereToFly.App.Core

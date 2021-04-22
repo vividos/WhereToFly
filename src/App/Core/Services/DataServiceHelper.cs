@@ -2,11 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using WhereToFly.App.Geo;
-using WhereToFly.App.Geo.Airspace;
-using WhereToFly.App.Geo.DataFormats;
 using WhereToFly.App.Model;
-using WhereToFly.Shared.Model;
+using WhereToFly.Geo.Airspace;
+using WhereToFly.Geo.DataFormats;
+using WhereToFly.Geo.Model;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.Services

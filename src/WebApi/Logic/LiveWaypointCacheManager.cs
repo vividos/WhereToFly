@@ -3,7 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using WhereToFly.Shared.Geo;
+using WhereToFly.Geo;
+using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;
 using WhereToFly.WebApi.Logic.Services;
 

@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using WhereToFly.App.Geo.Airspace;
+using WhereToFly.Geo.Airspace;
 
 namespace WhereToFly.App.UnitTest.Geo
 {

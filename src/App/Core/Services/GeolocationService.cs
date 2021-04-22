@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using WhereToFly.Shared.Model;
+using WhereToFly.Geo.Model;
 using Xamarin.Essentials;
 
 namespace WhereToFly.App.Core.Services
@@ -63,7 +63,7 @@ namespace WhereToFly.App.Core.Services
         /// </summary>
         /// <param name="timeout">timeout for waiting for position</param>
         /// <returns>current position, or null when none could be retrieved</returns>
-        public async Task<Location> GetPositionAsync(TimeSpan timeout)
+        public async Task<Xamarin.Essentials.Location> GetPositionAsync(TimeSpan timeout)
         {
             if (!await CheckPermissionAsync())
             {

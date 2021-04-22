@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using WhereToFly.App.Geo.DataFormats.GeoJson;
+using WhereToFly.Geo.DataFormats.GeoJson;
 
 namespace WhereToFly.App.UnitTest.Geo
 {
@@ -170,14 +170,14 @@ namespace WhereToFly.App.UnitTest.Geo
                         DocumentName = "empty",
                         DocumentDescription = "also empty",
                         PointSize = 15.0,
-                        PointColor = new App.Geo.DataFormats.Czml.Color(255, 0, 255),
+                        PointColor = new WhereToFly.Geo.DataFormats.Czml.Color(255, 0, 255),
                         LineWidth = 10.0,
-                        LineColor = new App.Geo.DataFormats.Czml.Color(0, 255, 255),
-                        PolygonColor = new App.Geo.DataFormats.Czml.Color(255, 255, 0),
+                        LineColor = new WhereToFly.Geo.DataFormats.Czml.Color(0, 255, 255),
+                        PolygonColor = new WhereToFly.Geo.DataFormats.Czml.Color(255, 255, 0),
                         CustomNameFormatter = (element) => element.Title ?? "title",
                         CustomDescriptionFormatter = (element) => element.Title ?? "description",
                         CustomPointColorResolver = (element) =>
-                            new App.Geo.DataFormats.Czml.Color(element.GetHashCode() & 0xFF, 0, 0),
+                            new WhereToFly.Geo.DataFormats.Czml.Color(element.GetHashCode() & 0xFF, 0, 0),
                     };
 
                     // run

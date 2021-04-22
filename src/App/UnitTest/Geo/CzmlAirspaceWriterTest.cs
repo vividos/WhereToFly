@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using WhereToFly.App.Geo.Airspace;
-using WhereToFly.App.Geo.DataFormats;
+using WhereToFly.Geo.Airspace;
+using WhereToFly.Geo.DataFormats;
 
 namespace WhereToFly.App.UnitTest.Geo
 {

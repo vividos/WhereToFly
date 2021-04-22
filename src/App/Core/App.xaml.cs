@@ -8,10 +8,9 @@ using System.Threading.Tasks;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.Styles;
 using WhereToFly.App.Core.Views;
-using WhereToFly.App.Geo;
-using WhereToFly.App.Geo.Spatial;
 using WhereToFly.App.Model;
-using WhereToFly.Shared.Model;
+using WhereToFly.Geo;
+using WhereToFly.Geo.Model;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

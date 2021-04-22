@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Base;
 using WhereToFly.Shared.Model;
 

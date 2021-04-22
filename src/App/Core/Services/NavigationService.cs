@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Views;
 using WhereToFly.App.Model;
-using WhereToFly.Shared.Model;
+using WhereToFly.Geo.Model;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -29,11 +29,11 @@ namespace WhereToFly.App.Core.Services
                 { PageKey.LayerDetailsPage, (typeof(LayerDetailsPage), typeof(Layer)) },
                 { PageKey.CurrentPositionDetailsPage, (typeof(CurrentPositionDetailsPage), null) },
                 { PageKey.LocationListPage, (typeof(LocationListPage), null) },
-                { PageKey.LocationDetailsPage, (typeof(LocationDetailsPage), typeof(Model.Location)) },
-                { PageKey.EditLocationDetailsPage, (typeof(EditLocationDetailsPage), typeof(Model.Location)) },
+                { PageKey.LocationDetailsPage, (typeof(LocationDetailsPage), typeof(Geo.Model.Location)) },
+                { PageKey.EditLocationDetailsPage, (typeof(EditLocationDetailsPage), typeof(Geo.Model.Location)) },
                 { PageKey.TrackListPage, (typeof(TrackListPage), null) },
-                { PageKey.TrackInfoPage, (typeof(TrackInfoTabbedPage), typeof(Geo.Track)) },
-                { PageKey.TrackHeightProfilePage, (typeof(TrackHeightProfilePage), typeof(Geo.Track)) },
+                { PageKey.TrackInfoPage, (typeof(TrackInfoTabbedPage), typeof(Geo.Model.Track)) },
+                { PageKey.TrackHeightProfilePage, (typeof(TrackHeightProfilePage), typeof(Geo.Model.Track)) },
                 { PageKey.WeatherDashboardPage, (typeof(WeatherDashboardPage), null) },
                 { PageKey.WeatherDetailsPage, (typeof(WeatherDetailsPage), typeof(WeatherIconDescription)) },
                 {

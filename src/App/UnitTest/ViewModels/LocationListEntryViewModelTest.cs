@@ -2,8 +2,7 @@
 using System;
 using WhereToFly.App.Core;
 using WhereToFly.App.Core.ViewModels;
-using WhereToFly.App.Model;
-using WhereToFly.Shared.Model;
+using WhereToFly.Geo.Model;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest.ViewModels

@@ -2,7 +2,7 @@
 using System;
 using WhereToFly.App.Core.Logic;
 using WhereToFly.App.Model;
-using WhereToFly.Shared.Model;
+using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.UnitTest
 {
