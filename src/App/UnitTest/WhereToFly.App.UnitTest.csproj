@@ -1,237 +1,22 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BB6FBEF2-D8E4-417D-8CFE-2CF73245DD6D}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WhereToFly.App.UnitTest</RootNamespace>
-    <AssemblyName>WhereToFly.App.UnitTest</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">15.0</VisualStudioVersion>
-    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
-    <IsCodedUITest>False</IsCodedUITest>
-    <TestProjectType>UnitTest</TestProjectType>
-    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
-    <TargetFrameworkProfile />
+    <TargetFramework>net462</TargetFramework>
+    <Description>Where-to-fly unit tests</Description>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>portable</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>portable</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\..\VersionAssemblyInfo.cs">
-      <Link>Properties\VersionAssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="DataFormatterTest.cs" />
-    <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="Geo\CzmlAirspaceWriterTest.cs" />
-    <Compile Include="Geo\GpxDataFileTests.cs" />
-    <Compile Include="Geo\IgcParserTests.cs" />
-    <Compile Include="Geo\KmlDataFileTests.cs" />
-    <Compile Include="Geo\MapPointExtensionMethodsTests.cs" />
-    <Compile Include="Geo\IgcDataFileTests.cs" />
-    <Compile Include="Geo\OpenAirFileParserTest.cs" />
-    <Compile Include="Geo\TrackExtensionMethodsTest.cs" />
-    <Compile Include="Geo\GpxWriterTest.cs" />
-    <Compile Include="Geo\TakeoffDirectionsHelperTest.cs" />
-    <Compile Include="Geo\SeeYouDataFileTest.cs" />
-    <Compile Include="Geo\SunCalcNetTest.cs" />
-    <Compile Include="Geo\GeoJsonConvertTest.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Geo\GeoLoaderTest.cs" />
-    <Compile Include="MapPointTest.cs" />
-    <Compile Include="AppSettingsTest.cs" />
-    <Compile Include="HtmlConverterTest.cs" />
-    <Compile Include="LocationTest.cs" />
-    <Compile Include="Shared\AppResourceUriTest.cs" />
-    <Compile Include="Shared\MathTest.cs" />
-    <Compile Include="Shared\DictionaryExtensionsTest.cs" />
-    <Compile Include="SqliteDatabaseDataServiceTest.cs" />
-    <Compile Include="UnitTestAppManager.cs" />
-    <Compile Include="UnitTestGeolocationService.cs" />
-    <Compile Include="UnitTestHelper.cs" />
-    <Compile Include="ViewModels\AddLayerPopupViewModelTest.cs" />
-    <Compile Include="ViewModels\AddLiveWaypointViewModelTest.cs" />
-    <Compile Include="ViewModels\AddTrackPopupViewModelTest.cs" />
-    <Compile Include="ViewModels\FlyingRangePopupViewModelTest.cs" />
-    <Compile Include="ViewModels\LayerListViewModelTest.cs" />
-    <Compile Include="ViewModels\MenuViewModelTest.cs" />
-    <Compile Include="ViewModels\PlanTourPopupViewModelTest.cs" />
-    <Compile Include="ViewModels\SelectWeatherIconViewModelTest.cs" />
-    <Compile Include="ViewModels\SettingsViewModelTest.cs" />
-    <Compile Include="ViewModels\TrackViewModelTest.cs" />
-    <Compile Include="ViewModels\TrackListEntryViewModelTest.cs" />
-    <Compile Include="ViewModels\TrackListViewModelTest.cs" />
-    <Compile Include="ViewModels\WeatherIconViewModelTest.cs" />
-    <Compile Include="ViewModels\WeatherDashboardViewModelTest.cs" />
-    <Compile Include="Views\AddLayerPopupPageTest.cs" />
-    <Compile Include="Views\AddLiveWaypointPopupPageTest.cs" />
-    <Compile Include="Views\AddTrackPopupPageTest.cs" />
-    <Compile Include="Views\LayerDetailsPageTest.cs" />
-    <Compile Include="Views\SettingsPageTest.cs" />
-    <Compile Include="Views\WeatherDashboardPageTest.cs" />
-    <Compile Include="Views\WeatherDetailsPageTest.cs" />
-    <Compile Include="WeatherImageCacheTest.cs" />
-    <Compile Include="UnitTestPlatform.cs" />
-    <Compile Include="ViewModels\LocationListEntryViewModelTest.cs" />
-    <Compile Include="ViewModels\CurrentPositionDetailsViewModelTest.cs" />
-    <Compile Include="ViewModels\LocationListViewModelTest.cs" />
-    <Compile Include="Views\CurrentPositionDetailsPageTest.cs" />
-    <Compile Include="Views\EditLocationDetailsPageTest.cs" />
-    <Compile Include="Views\InfoPageTest.cs" />
-    <Compile Include="Views\LocationDetailsPageTest.cs" />
-    <Compile Include="Views\MapPageTest.cs" />
-    <Compile Include="Views\MapViewTest.cs" />
-  </ItemGroup>
-  <ItemGroup>
+    <Content Include="Assets\**\*.*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Resources\Assets\defaultLayerOpenAir.txt">
       <Link>Assets\defaultLayerOpenAir.txt</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\airspaces\201921216_DAEC_Airspace_Germany2019.txt">
+    <Content Include="..\Resources\Assets\info\manual.md">
+      <Link>Assets\info\manual.md</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\airspaces\flyland.ch-winpilot.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\airspaces\openairschutzzonen.de-gesamt.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\airspaces\spec-examples.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\airspaces\xcontest-austria.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\airspaces\xcontest-nz.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\airspaces\xcontest-switzerland.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\tracks.kmz">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\waypoints.kml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\waypoints.kmz">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Geo\WhereToFly.Geo.csproj">
-      <Project>{c6f67b7c-1893-4e40-8a6d-4665ef86f5b9}</Project>
-      <Name>WhereToFly.Geo</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Shared\Base\WhereToFly.Shared.Base.csproj">
-      <Project>{96ac92ea-4f83-4a23-80d1-8ee5740d20df}</Project>
-      <Name>WhereToFly.Shared.Base</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Shared\Model\WhereToFly.Shared.Model.csproj">
-      <Project>{552d3e32-9f57-42f8-b144-699492f73536}</Project>
-      <Name>WhereToFly.Shared.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Core\WhereToFly.App.Core.csproj">
-      <Project>{01CAFB32-C32B-4E04-B44C-490182F4F31E}</Project>
-      <Name>WhereToFly.App.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Model\WhereToFly.App.Model.csproj">
-      <Project>{6A01E52C-1CF1-48E2-AC01-045A7B82E4B7}</Project>
-      <Name>WhereToFly.App.Model</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="MSTest.TestAdapter">
-      <Version>2.2.3</Version>
-    </PackageReference>
-    <PackageReference Include="MSTest.TestFramework">
-      <Version>2.2.3</Version>
-    </PackageReference>
-    <PackageReference Include="NETStandard.Library">
-      <Version>2.0.3</Version>
-    </PackageReference>
-    <PackageReference Include="SkiaSharp.Views.Forms">
-      <Version>2.80.2</Version>
-    </PackageReference>
-    <PackageReference Include="SkiaSharp.Views.Forms.WPF">
-      <Version>2.80.2</Version>
-    </PackageReference>
-    <PackageReference Include="sqlite-net-pcl">
-      <Version>1.7.335</Version>
-    </PackageReference>
-    <PackageReference Include="SQLitePCLRaw.bundle_green">
-      <Version>2.0.3</Version>
-    </PackageReference>
-    <PackageReference Include="System.Data.SQLite.Core">
-      <Version>1.0.113.7</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.FFImageLoading.Forms">
-      <Version>2.4.11.982</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.Forms.Mocks">
-      <Version>4.7.0.1</Version>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Assets\waypoints.gpx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Assets\info\version.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Assets\weathericons.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Assets\85QA3ET1.igc">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Assets\track_linestring.kmz">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Assets\tracks.gpx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Assets\kml21.kml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="..\..\..\Changelog.md">
       <Link>Assets\info\Changelog.md</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -241,20 +26,22 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+
   <ItemGroup>
-    <Content Include="..\Resources\Assets\info\manual.md">
-      <Link>Assets\info\manual.md</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <PackageReference Include="MSTest.TestAdapter" Version="2.2.3" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.2.3" />
+    <PackageReference Include="SkiaSharp.Views.Forms" Version="2.80.2" />
+    <PackageReference Include="SkiaSharp.Views.Forms.WPF" Version="2.80.2" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.7.335" />
+    <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.0.3" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
+    <PackageReference Include="Xamarin.Forms.Mocks" Version="4.7.0.1" />
   </ItemGroup>
+
   <ItemGroup>
-    <Content Include="Assets\waypoints-empty.cup">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\waypoints-variants.cup">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <ProjectReference Include="..\..\Geo\WhereToFly.Geo.csproj" />
+    <ProjectReference Include="..\Core\WhereToFly.App.Core.csproj" />
+    <ProjectReference Include="..\Model\WhereToFly.App.Model.csproj" />
   </ItemGroup>
-  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
 </Project>
