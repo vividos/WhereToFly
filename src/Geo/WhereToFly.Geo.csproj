@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>Where-to-fly Geography related classes</Description>
   </PropertyGroup>
 
   <ItemGroup>
