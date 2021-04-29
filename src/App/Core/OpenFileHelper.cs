@@ -635,7 +635,10 @@ namespace WhereToFly.App.Core
                 Data = czml
             };
 
-            layer = await AddLayerPopupPage.ShowAsync(layer);
+            layer = await NavigationService.Instance.NavigateToPopupPageAsync<Layer>(
+                PopupPageKey.AddLayerPopupPage,
+                true,
+                layer);
 
             if (layer == null)
             {

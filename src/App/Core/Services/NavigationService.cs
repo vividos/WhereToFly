@@ -53,6 +53,7 @@ namespace WhereToFly.App.Core.Services
         private static readonly Dictionary<PopupPageKey, (Type, Type)> PopupPageKeyToPageMap =
             new Dictionary<PopupPageKey, (Type, Type)>
             {
+                { PopupPageKey.AddLayerPopupPage, (typeof(AddLayerPopupPage), null) },
             };
 
         /// <summary>
