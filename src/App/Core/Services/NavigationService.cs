@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Rg.Plugins.Popup.Extensions;
+using Rg.Plugins.Popup.Pages;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -42,6 +44,15 @@ namespace WhereToFly.App.Core.Services
                 },
                 { PageKey.SettingsPage, (typeof(SettingsPage), null) },
                 { PageKey.InfoPage, (typeof(InfoPage), null) },
+            };
+
+        /// <summary>
+        /// Mapping from popup page key to page type and, optionally, the type of parameter that
+        /// must be passed.
+        /// </summary>
+        private static readonly Dictionary<PopupPageKey, (Type, Type)> PopupPageKeyToPageMap =
+            new Dictionary<PopupPageKey, (Type, Type)>
+            {
             };
 
         /// <summary>
@@ -110,6 +121,81 @@ namespace WhereToFly.App.Core.Services
             }
 
             return pageType;
+        }
+
+        /// <summary>
+        /// Navigates to popup page and returns the popup page's result
+        /// </summary>
+        /// <typeparam name="TResult">type of result</typeparam>
+        /// <param name="popupPageKey">popup page key</param>
+        /// <param name="animated">indicates if popup page navigation should be animated</param>
+        /// <param name="parameter">parameter; mandatory for some popup pages</param>
+        /// <returns>result object</returns>
+        public async Task<TResult> NavigateToPopupPageAsync<TResult>(
+            PopupPageKey popupPageKey,
+            bool animated,
+            object parameter = null)
+            where TResult : class
+        {
+            Debug.Assert(this.NavigationPage != null, "NavigationPage property must have been set");
+
+            if (!MainThread.IsMainThread)
+            {
+                return await MainThread.InvokeOnMainThreadAsync(
+                    async () => await this.NavigateToPopupPageAsync<TResult>(popupPageKey, animated, parameter));
+            }
+
+            if (!PopupPageKeyToPageMap.TryGetValue(popupPageKey, out (Type, Type) typeTuple))
+            {
+                throw new ArgumentException(
+                    nameof(popupPageKey),
+                    $"invalid popup page key: {popupPageKey}");
+            }
+
+            Type parameterType = typeTuple.Item2;
+
+            if (parameterType != null &&
+                parameter != null &&
+                !parameterType.Equals(parameter.GetType()))
+            {
+                throw new ArgumentException(
+                    nameof(parameter),
+                    $"expected parameter of type {parameterType.FullName}, but type {parameter.GetType().FullName} was passed!");
+            }
+
+            Type popupPageType = typeTuple.Item1;
+
+            PopupPage popupPage = null;
+            if (parameter == null)
+            {
+                popupPage = (PopupPage)Activator.CreateInstance(popupPageType);
+            }
+            else
+            {
+                popupPage = (PopupPage)Activator.CreateInstance(popupPageType, parameter);
+            }
+
+            if (popupPage != null)
+            {
+                await popupPage.Navigation.PushPopupAsync(popupPage, animated);
+            }
+            else
+            {
+                throw new InvalidOperationException("couldn't create popup page for popup page key " + popupPageKey);
+            }
+
+            if (popupPage is IPageResult<TResult> pageResult)
+            {
+                return await pageResult.ResultTask;
+            }
+            else
+            {
+                Debug.Assert(
+                    false,
+                    $"the page's {popupPage.GetType().FullName} result type doesn't match the calling NavigateToPopupPageAsync result type {typeof(TResult).FullName}");
+            }
+
+            return null;
         }
 
         /// <summary>
