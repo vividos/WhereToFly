@@ -519,39 +519,56 @@ namespace WhereToFly.Geo.Airspace
                     .Replace("GND", string.Empty).Trim();
             }
 
-            if (type != AltitudeType.Textual)
+            if (type != AltitudeType.Textual &&
+                TryParseAltitudeFeetOrMeter(data, out double altitudeInFeet))
             {
-                bool unitFeet = true; // when empty, use feet
-
-                if (data.EndsWith("M"))
-                {
-                    data = data.Replace("M", string.Empty).Trim();
-                    unitFeet = false;
-                }
-
-                if (data.EndsWith("FT"))
-                {
-                    data = data.Replace("FT", string.Empty).Trim();
-                }
-
-                if (data.EndsWith("F"))
-                {
-                    data = data.Replace("F", string.Empty).Trim();
-                }
-
-                if (TryParseNumber(data, out double value))
-                {
-                    if (!unitFeet)
-                    {
-                        value /= Constants.FactorFeetToMeter;
-                    }
-
-                    altitude = new Altitude(value, type);
-                    return true;
-                }
+                altitude = new Altitude(altitudeInFeet, type);
+                return true;
             }
 
             altitude = null;
+            return false;
+        }
+
+        /// <summary>
+        /// Tries to parse a text string that ends with M, FT or F and returns the parsed value in
+        /// feet.
+        /// </summary>
+        /// <param name="text">text to parse</param>
+        /// <param name="altitudeInFeet">altitude in feet</param>
+        /// <returns>true when parsing was successful, false when not</returns>
+        private static bool TryParseAltitudeFeetOrMeter(string text, out double altitudeInFeet)
+        {
+            bool unitFeet = true; // when empty, use feet
+
+            if (text.EndsWith("M"))
+            {
+                text = text.Replace("M", string.Empty).Trim();
+                unitFeet = false;
+            }
+
+            if (text.EndsWith("FT"))
+            {
+                text = text.Replace("FT", string.Empty).Trim();
+            }
+
+            if (text.EndsWith("F"))
+            {
+                text = text.Replace("F", string.Empty).Trim();
+            }
+
+            if (TryParseNumber(text, out double value))
+            {
+                if (!unitFeet)
+                {
+                    value /= Constants.FactorFeetToMeter;
+                }
+
+                altitudeInFeet = value;
+                return true;
+            }
+
+            altitudeInFeet = 0.0;
             return false;
         }
 
