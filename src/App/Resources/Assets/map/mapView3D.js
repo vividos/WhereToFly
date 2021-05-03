@@ -412,7 +412,9 @@ MapView.prototype.setupEntityClustering = function () {
     // When EntityCluster is added to more than one DataSource, it will try to
     // destroy the EntityCluster object; prevent that here. Ugly workaround!
     // See: https://github.com/CesiumGS/cesium/issues/9336
-    this.clustering.destroy = function () { };
+    this.clustering.destroy = function () {
+        // do nothing
+    };
 
     var pinBuilder = new Cesium.PinBuilder();
     this.clustering.pin50 = pinBuilder.fromText("50+", Cesium.Color.RED, 48).toDataURL();
@@ -1691,9 +1693,8 @@ MapView.prototype.sampleTrackHeights = function (track) {
     var trackPointArray = Cesium.Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints);
 
     var cartographicArray = [];
-    for (var trackPointIndex = 0; trackPointIndex < trackPointArray.length; ++trackPointIndex) {
-        cartographicArray.push(Cesium.Cartographic.fromCartesian(trackPointArray[trackPointIndex]));
-    }
+    for (let trackPoint of trackPointArray)
+        cartographicArray.push(Cesium.Cartographic.fromCartesian(trackPoint));
 
     console.log("MapView.sampleTrackHeights: #3: waiting for terrain provider to be ready");
     var that = this;
@@ -1713,9 +1714,8 @@ MapView.prototype.sampleTrackHeights = function (track) {
 
                     var trackPointHeightArray = [];
 
-                    for (var sampleIndex = 0; sampleIndex < samples.length; ++sampleIndex) {
-
-                        var sampledHeight = samples[sampleIndex].height;
+                    for (let sampledValue of samples) {
+                        var sampledHeight = sampledValue.height;
                         trackPointHeightArray.push(sampledHeight);
                     }
 
