@@ -5,6 +5,7 @@
              xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
              xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              x:Class="WhereToFly.App.Core.Views.LocationListPage"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
 
@@ -25,7 +26,13 @@
             <Entry Text="{Binding Path=FilterText, Mode=TwoWay}"
                    Placeholder="Type here to filter"
                    HorizontalOptions="FillAndExpand"
-                   AutomationId="FilterText" />
+                   AutomationId="FilterText">
+                <Entry.Behaviors>
+                    <xct:UserStoppedTypingBehavior Command="{Binding FindTextEnteredCommand}"
+                                                   StoppedTypingTimeThreshold="1000"
+                                                   ShouldDismissKeyboardAutomatically="False" />
+                </Entry.Behaviors>
+            </Entry>
 
             <!-- Takeoff directions view -->
             <controls:TakeoffDirectionsView IsVisible="True"

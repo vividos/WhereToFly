@@ -16,7 +16,7 @@ namespace WhereToFly.App.Core.ViewModels
     /// <summary>
     /// View model for the location list page
     /// </summary>
-    public class LocationListViewModel : ViewModelBase, IDisposable
+    public class LocationListViewModel : ViewModelBase
     {
         /// <summary>
         /// A mapping of display string to locations list filename, stored as Assets in the app
@@ -52,11 +52,6 @@ namespace WhereToFly.App.Core.ViewModels
         private List<Location> locationList = new List<Location>();
 
         /// <summary>
-        /// Timer that is triggered after filter text was updated
-        /// </summary>
-        private System.Timers.Timer filterTextUpdateTimer = new System.Timers.Timer(1000.0);
-
-        /// <summary>
         /// Backing field for "IsListRefreshActive" property
         /// </summary>
         private bool isListRefreshActive;
@@ -82,19 +77,14 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         public string FilterText
         {
-            get
-            {
-                return this.appSettings.LastLocationFilterSettings.FilterText;
-            }
-
-            set
-            {
-                this.appSettings.LastLocationFilterSettings.FilterText = value;
-
-                this.filterTextUpdateTimer.Stop();
-                this.filterTextUpdateTimer.Start();
-            }
+            get => this.appSettings.LastLocationFilterSettings.FilterText;
+            set => this.appSettings.LastLocationFilterSettings.FilterText = value;
         }
+
+        /// <summary>
+        /// Command to execute when find text has finished entering
+        /// </summary>
+        public ICommand FindTextEnteredCommand { get; private set; }
 
         /// <summary>
         /// Takeoff directions filter value
@@ -166,16 +156,6 @@ namespace WhereToFly.App.Core.ViewModels
         {
             this.appSettings = appSettings;
 
-            this.filterTextUpdateTimer.Stop();
-            this.filterTextUpdateTimer.Elapsed += async (sender, args) =>
-            {
-                this.filterTextUpdateTimer.Stop();
-
-                await this.StoreLastLocationFilterSettings();
-
-                this.UpdateLocationList();
-            };
-
             this.isListRefreshActive = false;
 
             this.SetupBindings();
@@ -198,6 +178,9 @@ namespace WhereToFly.App.Core.ViewModels
         {
             this.UpdateLocationList();
 
+            this.FindTextEnteredCommand =
+                new AsyncCommand(this.OnFindTextEntered);
+
             this.FilterTakeoffDirectionsCommand =
                 new AsyncCommand(this.FilterTakeoffDirectionsAsync);
 
@@ -208,6 +191,17 @@ namespace WhereToFly.App.Core.ViewModels
 
             this.AddTourPlanLocationCommand =
                 new Xamarin.Forms.Command<Location>((location) => App.AddTourPlanLocation(location));
+        }
+
+        /// <summary>
+        /// Called when find text was finished entering
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task OnFindTextEntered()
+        {
+            await this.StoreLastLocationFilterSettings();
+
+            this.UpdateLocationList();
         }
 
         /// <summary>
@@ -550,34 +544,5 @@ namespace WhereToFly.App.Core.ViewModels
 
             this.UpdateLocationList();
         }
-
-        #region IDisposable Support
-        /// <summary>
-        /// Disposes of managed and unmanaged resources
-        /// </summary>
-        /// <param name="disposing">
-        /// true when called from Dispose(), false when called from finalizer
-        /// </param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing &&
-                this.filterTextUpdateTimer != null)
-            {
-                this.filterTextUpdateTimer.Stop();
-                this.filterTextUpdateTimer.Dispose();
-                this.filterTextUpdateTimer = null;
-            }
-        }
-
-        /// <summary>
-        /// This code added to correctly implement the disposable pattern.
-        /// </summary>
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        #endregion
     }
 }
