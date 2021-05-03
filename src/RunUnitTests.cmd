@@ -1,7 +1,7 @@
 @echo off
 REM
 REM Where-to-fly - an app to decide where to (hike up and) fly with a paraglider
-REM Copyright (C) 2017-2020 Michael Fink
+REM Copyright (C) 2017-2021 Michael Fink
 REM
 REM Runs Unit tests and coverage analysis
 REM
@@ -39,7 +39,7 @@ REM
 %OPENCOVER% ^
     -register:user ^
     -target:"%VSTEST%" ^
-    -targetargs:"\"%~dp0App\UnitTest\bin\Release\WhereToFly.App.UnitTest.dll\"" ^
+    -targetargs:"\"%~dp0App\UnitTest\bin\Release\net462\WhereToFly.App.UnitTest.dll\"" ^
     -filter:"+[WhereToFly*]* -[WhereToFly.App.Android]* -[WhereToFly.App.UnitTest]*" ^
     -mergebyhash ^
     -skipautoprops ^
