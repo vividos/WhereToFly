@@ -56,21 +56,6 @@ namespace WhereToFly.App.UWP
         }
 
         /// <summary>
-        /// Loads binary data of asset file from given filename
-        /// </summary>
-        /// <param name="assetFilename">asset filename</param>
-        /// <returns>binary content of asset</returns>
-        public byte[] LoadAssetBinaryData(string assetFilename)
-        {
-            using (var stream = this.OpenAssetStream(assetFilename))
-            using (var memoryStream = new MemoryStream())
-            {
-                stream.CopyTo(memoryStream);
-                return memoryStream.ToArray();
-            }
-        }
-
-        /// <summary>
         /// Sets app theme to use for platform. This ensures that platform dependent dialogs are
         /// themed correctly when switching themes.
         /// </summary>

@@ -28,13 +28,6 @@ namespace WhereToFly.App.Core
         string LoadAssetText(string assetFilename);
 
         /// <summary>
-        /// Loads binary data of asset file from given filename
-        /// </summary>
-        /// <param name="assetFilename">asset filename</param>
-        /// <returns>binary content of asset</returns>
-        byte[] LoadAssetBinaryData(string assetFilename);
-
-        /// <summary>
         /// Sets app theme to use for platform
         /// </summary>
         /// <param name="requestedTheme">requested theme</param>

@@ -28,9 +28,7 @@ namespace WhereToFly.App.Core
                             Stream = (cancellationToken) =>
                             {
                                 var platform = DependencyService.Get<IPlatform>();
-                                byte[] data = platform.LoadAssetBinaryData("alptherm-favicon.png");
-
-                                return Task.FromResult<Stream>(new MemoryStream(data));
+                                return Task.FromResult(platform.OpenAssetStream("alptherm-favicon.png"));
                             }
                         };
                     }
