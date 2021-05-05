@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using WhereToFly.App.Model;
+using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.ViewModels
@@ -15,9 +16,14 @@ namespace WhereToFly.App.Core.ViewModels
     {
         #region Binding properties
         /// <summary>
-        /// Current location list; may be filtered by filter text
+        /// Weather icon view models list
         /// </summary>
         public ObservableCollection<WeatherIconListEntryViewModel> WeatherIconList { get; set; }
+
+        /// <summary>
+        /// List of grouped weather icon view models
+        /// </summary>
+        public ObservableCollection<Grouping<string, WeatherIconListEntryViewModel>> GroupedWeatherIconList { get; set; }
 
         /// <summary>
         /// Command to execute when an item in the weather icon list has been tapped
@@ -78,6 +84,19 @@ namespace WhereToFly.App.Core.ViewModels
                 select new WeatherIconListEntryViewModel(weatherIcon));
 
             this.OnPropertyChanged(nameof(this.WeatherIconList));
+
+            var groupedWeatherIconList =
+                from weatherIconViewModel in this.WeatherIconList
+                orderby weatherIconViewModel.Group
+                group weatherIconViewModel by weatherIconViewModel.Group into weatherIconGroup
+                select new Grouping<string, WeatherIconListEntryViewModel>(
+                    weatherIconGroup.Key, weatherIconGroup);
+
+            this.GroupedWeatherIconList =
+                new ObservableCollection<Grouping<string, WeatherIconListEntryViewModel>>(
+                    groupedWeatherIconList);
+
+            this.OnPropertyChanged(nameof(this.GroupedWeatherIconList));
 
             bool IsInGroup(string groupToCheck, WeatherIconDescription weatherIcon)
             {

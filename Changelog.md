@@ -2,6 +2,8 @@
 
 ## Version 1.11.0
 
+- added group headings for list when selecting weather icons
+
 ## Version 1.10.0
 
 Released on 2021-03-14.

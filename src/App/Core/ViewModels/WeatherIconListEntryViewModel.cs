@@ -19,6 +19,11 @@ namespace WhereToFly.App.Core.ViewModels
         /// Image source for weather icon
         /// </summary>
         public ImageSource Icon { get; private set; }
+
+        /// <summary>
+        /// The weather icon's group text
+        /// </summary>
+        public string Group => this.IconDescription.Group;
         #endregion
 
         /// <summary>

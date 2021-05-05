@@ -8,9 +8,11 @@
     <ContentPage.Content>
 
         <!-- List showing all weather icons that can be added -->
-        <ListView ItemsSource="{Binding Path=WeatherIconList, Mode=OneWay}"
+        <ListView ItemsSource="{Binding Path=GroupedWeatherIconList, Mode=OneWay}"
                   ItemTapped="OnItemTapped_WeatherIconListView"
                   IsPullToRefreshEnabled="False"
+                  IsGroupingEnabled="True"
+                  GroupDisplayBinding="{Binding Key}"
                   android:ListView.IsFastScrollEnabled="true"
                   CachingStrategy="RecycleElement"
                   SeparatorVisibility="None"
