@@ -39,7 +39,7 @@ rmdir .\bw-output /s /q 2> nul
 
 SonarScanner.MSBuild.exe begin ^
     /k:"WhereToFly" ^
-    /v:"1.10.0" ^
+    /v:"1.11.0" ^
     /d:"sonar.cfamily.build-wrapper-output=%CD%\bw-output" ^
     /d:"sonar.cs.opencover.reportsPaths=%CD%\TestResults\WhereToFly-*-CoverageReport.xml" ^
     /d:"sonar.exclusions=Web\LiveTracking\wwwroot\lib\**\*" ^

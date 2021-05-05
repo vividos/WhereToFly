@@ -1,5 +1,7 @@
 # Changelog
 
+## Version 1.11.0
+
 ## Version 1.10.0
 
 Released on 2021-03-14.
