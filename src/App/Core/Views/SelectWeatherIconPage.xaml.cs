@@ -16,11 +16,6 @@ namespace WhereToFly.App.Core.Views
         private readonly TaskCompletionSource<WeatherIconDescription> tcs;
 
         /// <summary>
-        /// View model for this page
-        /// </summary>
-        private readonly SelectWeatherIconViewModel viewModel;
-
-        /// <summary>
         /// Creates a new page object
         /// </summary>
         /// <param name="tcs">
@@ -30,20 +25,9 @@ namespace WhereToFly.App.Core.Views
         {
             this.Title = "Select a weather icon";
             this.tcs = tcs;
-            this.BindingContext = this.viewModel = new SelectWeatherIconViewModel(tcs);
+            this.BindingContext = new SelectWeatherIconViewModel(tcs);
 
             this.InitializeComponent();
-        }
-
-        /// <summary>
-        /// Called when an item was tapped on the location list
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="args">event args</param>
-        private void OnItemTapped_WeatherIconListView(object sender, ItemTappedEventArgs args)
-        {
-            var weatherIconListEntryViewModel = args.Item as WeatherIconListEntryViewModel;
-            this.viewModel.ItemTappedCommand.Execute(weatherIconListEntryViewModel.IconDescription);
         }
 
         /// <summary>

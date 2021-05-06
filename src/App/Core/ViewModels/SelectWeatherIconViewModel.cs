@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using WhereToFly.App.Model;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
@@ -26,9 +27,14 @@ namespace WhereToFly.App.Core.ViewModels
         public ObservableCollection<Grouping<string, WeatherIconListEntryViewModel>> GroupedWeatherIconList { get; set; }
 
         /// <summary>
+        /// Stores the selected weather icon when an item is tapped
+        /// </summary>
+        public WeatherIconListEntryViewModel SelectedWeatherIcon { get; set; }
+
+        /// <summary>
         /// Command to execute when an item in the weather icon list has been tapped
         /// </summary>
-        public Command<WeatherIconDescription> ItemTappedCommand { get; private set; }
+        public ICommand ItemTappedCommand { get; set; }
         #endregion
 
         /// <summary>
@@ -56,8 +62,12 @@ namespace WhereToFly.App.Core.ViewModels
         /// <param name="group">group to filter by, or null to show all groups</param>
         private void SetupBindings(TaskCompletionSource<WeatherIconDescription> tcs, string group)
         {
-            this.ItemTappedCommand = new Command<WeatherIconDescription>(
-                (weatherIcon) => tcs.SetResult(weatherIcon));
+            this.ItemTappedCommand = new AsyncCommand(
+                async () =>
+                {
+                    await Task.Delay(100);
+                    tcs.SetResult(this.SelectedWeatherIcon.IconDescription);
+                });
 
             Task.Run(async () => await this.LoadData(group));
         }
