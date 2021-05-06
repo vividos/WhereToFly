@@ -50,20 +50,12 @@ namespace WhereToFly.App.Android
         /// <param name="requestedTheme">requested theme</param>
         public void SetPlatformTheme(OSAppTheme requestedTheme)
         {
-            switch (requestedTheme)
+            AppCompatDelegate.DefaultNightMode = requestedTheme switch
             {
-                case OSAppTheme.Dark:
-                    AppCompatDelegate.DefaultNightMode = AppCompatDelegate.ModeNightYes;
-                    break;
-
-                case OSAppTheme.Light:
-                    AppCompatDelegate.DefaultNightMode = AppCompatDelegate.ModeNightNo;
-                    break;
-
-                default:
-                    AppCompatDelegate.DefaultNightMode = AppCompatDelegate.ModeNightFollowSystem;
-                    break;
-            }
+                OSAppTheme.Dark => AppCompatDelegate.ModeNightYes,
+                OSAppTheme.Light => AppCompatDelegate.ModeNightNo,
+                _ => AppCompatDelegate.ModeNightFollowSystem,
+            };
         }
     }
 }
