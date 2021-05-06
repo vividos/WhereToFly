@@ -3,9 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
+             xmlns:viewmodels="clr-namespace:WhereToFly.App.Core.ViewModels"
              x:Class="WhereToFly.App.Core.Views.WeatherDashboardPage"
              Title="Weather"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
+
+    <ContentPage.BindingContext>
+        <viewmodels:WeatherDashboardViewModel />
+    </ContentPage.BindingContext>
 
     <ContentPage.Resources>
         <ResourceDictionary>

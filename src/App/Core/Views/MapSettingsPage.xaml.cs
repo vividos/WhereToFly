@@ -1,5 +1,4 @@
-﻿using WhereToFly.App.Core.ViewModels;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.Views
 {
@@ -13,13 +12,10 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         public MapSettingsPage()
         {
-            this.Title = "Map";
             this.IconImageSource = new FileImageSource
             {
                 File = Converter.ImagePathConverter.GetDeviceDependentImage("map")
             };
-
-            this.BindingContext = new MapSettingsViewModel();
 
             this.InitializeComponent();
         }

@@ -14,11 +14,7 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         public LayerListPage()
         {
-            this.Title = "Layer list";
-
             this.InitializeComponent();
-
-            this.BindingContext = new LayerListViewModel();
         }
 
         /// <summary>

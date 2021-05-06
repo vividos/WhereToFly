@@ -4,10 +4,16 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
+             xmlns:viewmodels="clr-namespace:WhereToFly.App.Core.ViewModels"
              mc:Ignorable="d"
              x:Class="WhereToFly.App.Core.Views.InfoPage"
              Title="Info"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
+
+    <ContentPage.BindingContext>
+        <viewmodels:InfoPageViewModel />
+    </ContentPage.BindingContext>
+
     <ContentPage.Content>
 
         <!-- Stacked carousel and indicator views -->

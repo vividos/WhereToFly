@@ -19,8 +19,6 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         public TrackListPage()
         {
-            this.Title = "Track list";
-
             this.InitializeComponent();
 
             this.BindingContext = this.viewModel = new TrackListViewModel();
