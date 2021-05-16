@@ -26,7 +26,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// <summary>
         /// Color for point elements
         /// </summary>
-        public Color PointColor { get; internal set; }
+        public Color PointColor { get; set; }
 
         /// <summary>
         /// Line width for line strings
@@ -36,12 +36,12 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// <summary>
         /// Color for line strings
         /// </summary>
-        public Color LineColor { get; internal set; }
+        public Color LineColor { get; set; }
 
         /// <summary>
         /// Color for polygon elements
         /// </summary>
-        public Color PolygonColor { get; internal set; }
+        public Color PolygonColor { get; set; }
 
         /// <summary>
         /// Custom function to format names for CZML elements; may be null

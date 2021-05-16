@@ -734,7 +734,7 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// <param name="latitude">latitude of point</param>
         /// <param name="longitude">longitude of point</param>
         /// <param name="height">height of point; optional</param>
-        internal void Add(double latitude, double longitude, double? height)
+        public void Add(double latitude, double longitude, double? height)
         {
             // note the reversal of latitude and longitude in cartographicDegrees
             this.CartographicDegrees.Add(longitude);
