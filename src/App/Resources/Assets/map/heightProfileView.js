@@ -116,33 +116,25 @@ function HeightProfileView(options) {
                 zoom: {
                     pan: {
                         enabled: true,
-                        mode: 'x',
-                        rangeMin: {
-                            x: null, // to be set later
-                            y: null
-                        },
-                        rangeMax: {
-                            x: null, // to be set later
-                            y: null
-                        },
-                        speed: 0.2,
-                        threshold: 10
+                        mode: 'x'
                     },
                     zoom: {
-                        enabled: true,
-                        drag: false, // don't use drag-to-zoom
-                        mode: 'x',
-                        rangeMin: {
-                            x: null, // to be set later
-                            y: null
+                        wheel: {
+                            enabled: true,
+                            speed: 0.1 // mouse wheel zoom speed (in percent)
                         },
-                        rangeMax: {
-                            x: null, // to be set later
-                            y: null
+                        drag: {
+                            enabled: false // don't use drag-to-zoom
                         },
-                        speed: 0.1, // mouse wheel zoom speed (in percent)
-                        threshold: 2,
-                        sensitivity: 0.3
+                        pinch: {
+                            enabled: true
+                        },
+                        mode: 'x'
+                    },
+                    limits: {
+                        // to be set later
+                        x: { min: null, max: null },
+                        y: { min: null, max: null }
                     }
                 }
             },
@@ -256,11 +248,11 @@ HeightProfileView.prototype.setTrack = function (track) {
     this.chart.update(0);
 
     var scale = this.chart.scales.x;
-    var zoomPanOptions = this.chart.options.plugins.zoom;
-    zoomPanOptions.pan.rangeMin.x = scale.min.valueOf(); // left value
-    zoomPanOptions.pan.rangeMax.x = scale.max.valueOf(); // right value
-    zoomPanOptions.zoom.rangeMin.x = 60; // seconds of min. zoom level
-    zoomPanOptions.zoom.rangeMax.x = (scale.max - scale.min).valueOf(); // the whole time range
+    var zoomPanLimits = this.chart.options.plugins.zoom.limits;
+    zoomPanLimits.x.min = scale.min.valueOf(); // left value
+    zoomPanLimits.x.max = scale.max.valueOf(); // right value
+    zoomPanLimits.y.min = 60; // seconds of min. zoom level
+    zoomPanLimits.y.max = (scale.max - scale.min).valueOf(); // the whole time range
 
     // need this to update the zoom and pan options
     this.chart.update(0);
