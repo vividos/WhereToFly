@@ -1385,6 +1385,7 @@ MapView.prototype.imageUrlFromLocationType = function (locationType) {
         case 'PublicTransportBus': return 'images/bus.svg';
         case 'PublicTransportTrain': return 'images/train.svg';
         case 'Parking': return 'images/parking.svg';
+        case 'Webcam': return 'images/camera-outline.svg';
         //case 'ViaFerrata': return '';
         case 'CableCar': return 'images/aerialway-15.svg';
         case 'FlyingTakeoff': return 'images/paragliding.svg';

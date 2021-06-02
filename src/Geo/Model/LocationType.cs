@@ -86,6 +86,11 @@
         Parking = 15,
 
         /// <summary>
+        /// Webcam
+        /// </summary>
+        Webcam = 16,
+
+        /// <summary>
         /// Start or end point of a via ferrata, a climbing trail
         /// </summary>
         ViaFerrata = 100,

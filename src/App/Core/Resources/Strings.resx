@@ -201,4 +201,7 @@
   <data name="LocationType_Undefined" xml:space="preserve">
     <value>Undefined</value>
   </data>
+  <data name="LocationType_Webcam" xml:space="preserve">
+    <value>Webcam</value>
+  </data>
 </root>

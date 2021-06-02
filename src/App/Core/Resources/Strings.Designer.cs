@@ -311,5 +311,14 @@ namespace WhereToFly.App.Core.Resources {
                 return ResourceManager.GetString("LocationType_Waypoint", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Webcam.
+        /// </summary>
+        internal static string LocationType_Webcam {
+            get {
+                return ResourceManager.GetString("LocationType_Webcam", resourceCulture);
+            }
+        }
     }
 }
