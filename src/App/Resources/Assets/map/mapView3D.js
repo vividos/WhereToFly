@@ -1391,8 +1391,10 @@ MapView.prototype.imageUrlFromLocationType = function (locationType) {
         case 'FlyingTakeoff': return 'images/paragliding.svg';
         case 'FlyingLandingPlace': return 'images/paragliding.svg';
         case 'FlyingWinchTowing': return 'images/paragliding.svg';
-        case 'LiveWaypoint': return 'images/autorenew.svg';
         //case 'Turnpoint': return '';
+        case 'Thermal': return 'images/weather-partly-cloudy.svg';
+        case 'MeteoStation': return 'images/cloud-upload-outline-modified.svg';
+        case 'LiveWaypoint': return 'images/autorenew.svg';
         default: return 'images/map-marker.svg';
     }
 };

@@ -203,6 +203,10 @@ namespace WhereToFly.App.Core
                     return "map/images/paragliding.svg";
                 case LocationType.LiveWaypoint:
                     return "map/images/autorenew.svg";
+                case LocationType.Thermal:
+                    return "map/images/cloud-upload-outline-modified.svg";
+                case LocationType.MeteoStation:
+                    return "map/images/weather-partly-cloudy.svg";
                 default:
                     return "map/images/map-marker.svg";
             }

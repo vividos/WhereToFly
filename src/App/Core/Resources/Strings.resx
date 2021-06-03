@@ -204,4 +204,10 @@
   <data name="LocationType_Webcam" xml:space="preserve">
     <value>Webcam</value>
   </data>
+  <data name="LocationType_MeteoStation" xml:space="preserve">
+    <value>Meteo station</value>
+  </data>
+  <data name="LocationType_Thermal" xml:space="preserve">
+    <value>Thermal</value>
+  </data>
 </root>

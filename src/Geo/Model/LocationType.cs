@@ -121,6 +121,16 @@
         Turnpoint = 153,
 
         /// <summary>
+        /// Thermal point
+        /// </summary>
+        Thermal = 154,
+
+        /// <summary>
+        /// Meteorological station, e.g. wind and temperature
+        /// </summary>
+        MeteoStation = 155,
+
+        /// <summary>
         /// Live waypoint that is getting updated over the internet
         /// </summary>
         LiveWaypoint = 200,

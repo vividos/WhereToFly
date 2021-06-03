@@ -205,6 +205,15 @@ namespace WhereToFly.App.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Meteo station.
+        /// </summary>
+        internal static string LocationType_MeteoStation {
+            get {
+                return ResourceManager.GetString("LocationType_MeteoStation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parking.
         /// </summary>
         internal static string LocationType_Parking {
@@ -264,6 +273,15 @@ namespace WhereToFly.App.Core.Resources {
         internal static string LocationType_SwimmingSpot {
             get {
                 return ResourceManager.GetString("LocationType_SwimmingSpot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thermal.
+        /// </summary>
+        internal static string LocationType_Thermal {
+            get {
+                return ResourceManager.GetString("LocationType_Thermal", resourceCulture);
             }
         }
         

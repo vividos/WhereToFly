@@ -153,6 +153,7 @@ The following icons are from the Google Material icon set:
 - close
 - arrow-expand-horizontal
 - camera-outline
+- cloud-upload-outline (modified)
 
 The Google Material Icons are licensed under the "Apache License 2.0":
 https://github.com/google/material-design-icons/blob/master/LICENSE
