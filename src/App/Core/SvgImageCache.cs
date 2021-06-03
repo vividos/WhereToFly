@@ -191,6 +191,8 @@ namespace WhereToFly.App.Core
                     return "map/images/train.svg";
                 case LocationType.Parking:
                     return "map/images/parking.svg";
+                case LocationType.Webcam:
+                    return "map/images/camera-outline.svg";
                 case LocationType.CableCar:
                     return "map/images/aerialway-15.svg";
                 case LocationType.FlyingTakeoff:
