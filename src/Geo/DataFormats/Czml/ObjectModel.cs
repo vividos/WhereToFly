@@ -94,6 +94,12 @@ namespace WhereToFly.Geo.DataFormats.Czml
         public Label Label { get; set; }
 
         /// <summary>
+        /// Billboard entity
+        /// </summary>
+        [JsonProperty("billboard", NullValueHandling = NullValueHandling.Ignore)]
+        public Billboard Billboard { get; set; }
+
+        /// <summary>
         /// Polyline entity
         /// </summary>
         [JsonProperty("polyline", NullValueHandling = NullValueHandling.Ignore)]
@@ -564,6 +570,48 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// </summary>
         [JsonProperty("distanceDisplayCondition", NullValueHandling = NullValueHandling.Ignore)]
         public DistanceDisplayCondition DistanceDisplayCondition { get; set; }
+    }
+
+    /// <summary>
+    /// CZML billboard object
+    /// </summary>
+    public class Billboard
+    {
+        /// <summary>
+        /// Billboard image URI
+        /// </summary>
+        [JsonProperty("image")]
+        public string Image { get; set; }
+
+        /// <summary>
+        /// Horizontal origin value for the billboard
+        /// </summary>
+        [JsonProperty("horizontalOrigin")]
+        public HorizontalOrigin HorizontalOrigin { get; set; } = HorizontalOrigin.Center;
+
+        /// <summary>
+        /// Vertical origin value for the billboard
+        /// </summary>
+        [JsonProperty("verticalOrigin")]
+        public VerticalOrigin VerticalOrigin { get; set; } = VerticalOrigin.Center;
+
+        /// <summary>
+        /// Height reference of object
+        /// </summary>
+        [JsonProperty("heightReference")]
+        public HeightReference HeightReference { get; set; } = HeightReference.None;
+
+        /// <summary>
+        /// Indicates if height and width are in meters (when true) or in pixels (when false)
+        /// </summary>
+        [JsonProperty("sizeInMeters")]
+        public bool SizeInMeters { get; set; }
+
+        /// <summary>
+        /// Viewing distance where depth test is disabled for the billboard
+        /// </summary>
+        [JsonProperty("disableDepthTestDistance")]
+        public double DisableDepthTestDistance { get; set; } = 0.0;
     }
 
     /// <summary>
