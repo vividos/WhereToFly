@@ -651,7 +651,8 @@ namespace WhereToFly.Geo.DataFormats.Czml
     }
 
     /// <summary>
-    /// CZML polygon object
+    /// CZML polygon object.
+    /// Note that clamping to ground is achieved when not setting Height and HeightReference property
     /// </summary>
     public class Polygon
     {
@@ -664,20 +665,20 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// <summary>
         /// Height of polygon, when HeightReference is set to RelativeToGround
         /// </summary>
-        [JsonProperty("height")]
-        public double Height { get; set; }
+        [JsonProperty("height", NullValueHandling = NullValueHandling.Ignore)]
+        public double? Height { get; set; }
 
         /// <summary>
         /// Extruded height in meters
         /// </summary>
-        [JsonProperty("extrudedHeight")]
-        public double ExtrudedHeight { get; set; }
+        [JsonProperty("extrudedHeight", NullValueHandling = NullValueHandling.Ignore)]
+        public double? ExtrudedHeight { get; set; }
 
         /// <summary>
-        /// Height reference of object
+        /// Height reference of object; when null, is not set at all
         /// </summary>
-        [JsonProperty("heightReference")]
-        public HeightReference HeightReference { get; set; } = HeightReference.None;
+        [JsonProperty("heightReference", NullValueHandling = NullValueHandling.Ignore)]
+        public HeightReference? HeightReference { get; set; } = null;
 
         /// <summary>
         /// Material used to show the polygon

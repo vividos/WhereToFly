@@ -394,9 +394,6 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
                 Polygon = new Czml.Polygon
                 {
                     Positions = positionList,
-                    Height = 0.0,
-                    ExtrudedHeight = 0.0,
-                    HeightReference = Czml.HeightReference.ClampToGround,
                     Material = Czml.Material.FromSolidColor(this.czmlOptions.PolygonColor),
                     Outline = false,
                     OutlineColor = new Czml.Color(0, 0, 0),
