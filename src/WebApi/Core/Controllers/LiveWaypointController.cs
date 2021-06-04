@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using WhereToFly.Shared.Model;
 using WhereToFly.WebApi.Logic;
 
-namespace LiveWaypoints.Controllers
+namespace WhereToFly.WebApi.Core.Controllers
 {
     /// <summary>
     /// Controller for delivering Live Waypoints in a standard way. Live waypoints can be of any

@@ -8,7 +8,7 @@ using WhereToFly.Shared.Model;
 namespace WhereToFly.WebApi.Core.Controllers
 {
     /// <summary>
-    /// Controller to deliver app config for WhereToiFly app
+    /// Controller to deliver app config for WhereToFly app
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
