@@ -340,15 +340,31 @@ namespace WhereToFly.Geo.DataFormats
         {
             return
                 (from placemark in this.locationPlacemarkList
-                 let point = placemark.Geometry as Point
-                 select new Model.Location
-                 {
-                     Id = placemark.Id ?? Guid.NewGuid().ToString("B"),
-                     Name = placemark.Name ?? "unknown",
-                     Description = placemark.Description?.Text ?? string.Empty,
-                     Type = MapPlacemarkToType(this.kml, placemark),
-                     MapLocation = new MapPoint(point.Coordinate.Latitude, point.Coordinate.Longitude, point.Coordinate.Altitude)
-                 }).ToList();
+                 select LocationFromPlacemark(this.kml, placemark)).ToList();
+        }
+
+        /// <summary>
+        /// Creates a location object from a KML placemark object
+        /// </summary>
+        /// <param name="kml">kml file where the placemark is in</param>
+        /// <param name="placemark">placemark to use</param>
+        /// <returns>location object</returns>
+        internal static Model.Location LocationFromPlacemark(KmlFile kml, Placemark placemark)
+        {
+            Debug.Assert(
+                placemark.Geometry is Point,
+                "can only call this method for point placemarks");
+
+            var point = placemark.Geometry as Point;
+
+            return new Model.Location
+            {
+                Id = placemark.Id ?? Guid.NewGuid().ToString("B"),
+                Name = placemark.Name ?? "unknown",
+                Description = placemark.Description?.Text ?? string.Empty,
+                Type = MapPlacemarkToType(kml, placemark),
+                MapLocation = new MapPoint(point.Coordinate.Latitude, point.Coordinate.Longitude, point.Coordinate.Altitude)
+            };
         }
 
         /// <summary>
