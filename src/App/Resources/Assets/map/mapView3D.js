@@ -976,13 +976,24 @@ MapView.prototype.zoomToRectangle = function (rectangle) {
 
     var boundingSphere = Cesium.BoundingSphere.fromCornerPoints(corner, oppositeCorner);
 
-    var viewingDistance = this.getCurrentViewingDistance();
-
+    var that = this;
     this.viewer.camera.flyToBoundingSphere(boundingSphere, {
         offset: new Cesium.HeadingPitchRange(
             this.viewer.camera.heading,
             this.viewer.camera.pitch,
-            viewingDistance)
+            0.0),
+        complete: function () {
+            console.log("MapView: flying to rectangle finished");
+
+            var center = Cesium.Cartographic.fromCartesian(boundingSphere.center);
+
+            that.onUpdateLastShownLocation({
+                latitude: Cesium.Math.toDegrees(center.latitude),
+                    longitude: Cesium.Math.toDegrees(center.longitude),
+                altitude: center.height,
+                viewingDistance: that.getCurrentViewingDistance()
+            });
+        }
     });
 };
 
