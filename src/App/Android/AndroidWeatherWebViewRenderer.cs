@@ -113,12 +113,13 @@ namespace WhereToFly.App.Android
         {
             var uri = new Uri(imageLink);
             string lastSegment = uri.Segments.LastOrDefault();
-            string filename = lastSegment != null ? "Image: " + lastSegment : "Image";
+            string title = lastSegment != null ? "Image: " + lastSegment : "Image";
+            string filename = lastSegment ?? "image";
 
             var builder = new AlertDialog.Builder(this.Context);
-            builder.SetTitle(filename);
+            builder.SetTitle(title);
             builder.SetNegativeButton("Cancel", (sender1, args1) => { });
-            builder.SetItems(new string[] { "Download" }, (sender2, args2) => this.StartDownload(imageLink));
+            builder.SetItems(new string[] { "Download" }, (sender2, args2) => this.StartDownload(imageLink, filename));
             builder.Show();
         }
 
@@ -126,17 +127,29 @@ namespace WhereToFly.App.Android
         /// Starts download of given URL
         /// </summary>
         /// <param name="url">URL of file to download</param>
-        private void StartDownload(string url)
+        /// <param name="filename">filename of file to download</param>
+        private void StartDownload(string url, string filename)
         {
             var uri = global::Android.Net.Uri.Parse(url);
             var request = new DownloadManager.Request(uri);
+            request.SetTitle(filename);
+            request.SetDescription("Downloading file...");
 
             var cookie = CookieManager.Instance.GetCookie(url);
             request.AddRequestHeader("Cookie", cookie);
 
+            if (global::Android.OS.Build.VERSION.SdkInt < global::Android.OS.BuildVersionCodes.Q)
+            {
 #pragma warning disable CS0618 // Type or member is obsolete
-            request.AllowScanningByMediaScanner();
+                request.AllowScanningByMediaScanner();
 #pragma warning restore CS0618 // Type or member is obsolete
+            }
+            else
+            {
+                request.SetDestinationInExternalPublicDir(
+                    global::Android.OS.Environment.DirectoryDownloads,
+                    filename);
+            }
 
             request.SetNotificationVisibility(DownloadVisibility.VisibleNotifyCompleted);
 

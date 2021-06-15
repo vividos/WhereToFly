@@ -3,6 +3,7 @@
 ## Version 1.11.0
 
 - added group headings for list when selecting weather icons
+- fixed saving images in weather web pages on Android 10 and above
 
 ## Version 1.10.0
 
