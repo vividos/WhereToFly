@@ -70,6 +70,7 @@ namespace WhereToFly.App.Core.Views
         /// Sets up color picker control, which actually is a FlexLayout containing several
         /// buttons with a border.
         /// </summary>
+        /// <param name="selectedColor">selected color</param>
         private void SetupColorPicker(string selectedColor)
         {
             foreach (string color in AllColorPickerColors)

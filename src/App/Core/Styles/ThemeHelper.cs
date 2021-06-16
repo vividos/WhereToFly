@@ -61,8 +61,8 @@ namespace WhereToFly.App.Core.Styles
             Application.Current.UserAppTheme = OSAppThemeFromTheme(theme);
 
             // apply platform specific changes
-            var osAppTheme = theme == Theme.Dark ? OSAppTheme.Dark : OSAppTheme.Light;
-            platform?.SetPlatformTheme(osAppTheme);
+            var platformAppTheme = theme == Theme.Dark ? OSAppTheme.Dark : OSAppTheme.Light;
+            platform?.SetPlatformTheme(platformAppTheme);
 
             // remember new theme
             CurrentTheme = theme;
