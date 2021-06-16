@@ -99,7 +99,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             var groupedWeatherIconList =
                 from weatherIconViewModel in this.WeatherIconList
-                orderby weatherIconViewModel.Group
+                orderby GroupKeyFromGroup(weatherIconViewModel.Group)
                 group weatherIconViewModel by weatherIconViewModel.Group into weatherIconGroup
                 select new Grouping<string, WeatherIconListEntryViewModel>(
                     weatherIconGroup.Key, weatherIconGroup);
@@ -119,6 +119,23 @@ namespace WhereToFly.App.Core.ViewModels
             {
                 return weatherIcon.Type != WeatherIconDescription.IconType.IconApp ||
                     appManager.IsAvailable(weatherIcon.WebLink);
+            }
+        }
+
+        /// <summary>
+        /// Returns a group key for the group text; this is used to order weather icons by group.
+        /// </summary>
+        /// <param name="group">group text</param>
+        /// <returns>group key; an order integer</returns>
+        private static int GroupKeyFromGroup(string group)
+        {
+            switch (group)
+            {
+                case "Weather forecast": return 0;
+                case "Current weather": return 1;
+                case "Webcams": return 2;
+                case "Android app": return 3;
+                default: return 4;
             }
         }
     }
