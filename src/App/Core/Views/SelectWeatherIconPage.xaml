@@ -22,6 +22,8 @@
             <CollectionView.GroupHeaderTemplate>
                 <DataTemplate>
                     <Label Text="{Binding Key}"
+                           VerticalOptions="Center"
+                           Padding="8,4"
                            FontSize="Large"
                            FontAttributes="Bold" />
                 </DataTemplate>
@@ -32,7 +34,8 @@
                     <!-- Template for a single view cell -->
                     <StackLayout Orientation="Horizontal"
                                  BackgroundColor="{DynamicResource ListViewItemBackgroundColor}"
-                                 HeightRequest="40" Margin="8,4">
+                                 HeightRequest="{OnPlatform Android=65, iOS=65, UWP=45}"
+                                 Padding="2,1">
                         <StackLayout.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1"
                                                   Command="{Binding ItemTappedCommand}"
