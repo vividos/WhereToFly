@@ -11,7 +11,6 @@
         <CollectionView ItemsSource="{Binding Path=GroupedWeatherIconList, Mode=OneWay}"
                         SelectionMode="Single"
                         SelectedItem="{Binding SelectedWeatherIcon}"
-                        SelectionChangedCommand="{Binding ItemTappedCommand}"
                         ItemSizingStrategy="MeasureFirstItem"
                         IsGrouped="True"
                         AutomationId="WeatherIconList">
@@ -34,6 +33,12 @@
                     <StackLayout Orientation="Horizontal"
                                  BackgroundColor="{DynamicResource ListViewItemBackgroundColor}"
                                  HeightRequest="40" Margin="8,4">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                  Command="{Binding ItemTappedCommand}"
+                                                  CommandParameter="{Binding .}" />
+                        </StackLayout.GestureRecognizers>
+
                         <!-- Weather icon -->
                         <ffimageloadingsvg:SvgCachedImage Source="{Binding Icon, Mode=OneWay}"
                                                           ReplaceStringMap="{DynamicResource SvgImageFillDark}"

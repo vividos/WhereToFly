@@ -77,7 +77,7 @@ namespace WhereToFly.App.Core.Views
         private void OnItemTapped_WeatherIconListView(object sender, ItemTappedEventArgs args)
         {
             var weatherIconListEntryViewModel = args.Item as WeatherIconListEntryViewModel;
-            this.viewModel.ItemTappedCommand.Execute(weatherIconListEntryViewModel.IconDescription);
+            this.viewModel.ItemTappedCommand.Execute(weatherIconListEntryViewModel);
         }
 
         /// <summary>

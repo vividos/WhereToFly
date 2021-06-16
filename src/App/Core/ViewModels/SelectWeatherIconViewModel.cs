@@ -62,11 +62,13 @@ namespace WhereToFly.App.Core.ViewModels
         /// <param name="group">group to filter by, or null to show all groups</param>
         private void SetupBindings(TaskCompletionSource<WeatherIconDescription> tcs, string group)
         {
-            this.ItemTappedCommand = new AsyncCommand(
-                async () =>
+            this.ItemTappedCommand = new Command<WeatherIconListEntryViewModel>(
+                (itemViewModel) =>
                 {
-                    await Task.Delay(100);
-                    tcs.SetResult(this.SelectedWeatherIcon.IconDescription);
+                    tcs.SetResult(itemViewModel.IconDescription);
+
+                    this.SelectedWeatherIcon = null;
+                    this.OnPropertyChanged(nameof(this.SelectedWeatherIcon));
                 });
 
             Task.Run(async () => await this.LoadData(group));
@@ -91,7 +93,7 @@ namespace WhereToFly.App.Core.ViewModels
             this.WeatherIconList = new ObservableCollection<WeatherIconListEntryViewModel>(
                 from weatherIcon in weatherIconList
                 where IsInGroup(@group, weatherIcon) && IsAppAvailable(weatherIcon)
-                select new WeatherIconListEntryViewModel(weatherIcon));
+                select new WeatherIconListEntryViewModel(this, weatherIcon));
 
             this.OnPropertyChanged(nameof(this.WeatherIconList));
 
