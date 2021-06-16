@@ -989,7 +989,7 @@ MapView.prototype.zoomToRectangle = function (rectangle) {
 
             that.onUpdateLastShownLocation({
                 latitude: Cesium.Math.toDegrees(center.latitude),
-                    longitude: Cesium.Math.toDegrees(center.longitude),
+                longitude: Cesium.Math.toDegrees(center.longitude),
                 altitude: center.height,
                 viewingDistance: that.getCurrentViewingDistance()
             });
