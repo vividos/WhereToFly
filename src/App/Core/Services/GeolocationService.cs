@@ -11,11 +11,6 @@ namespace WhereToFly.App.Core.Services
     public class GeolocationService : IGeolocationService
     {
         /// <summary>
-        /// Indicates if the geolocation service is already listening for position changes
-        /// </summary>
-        private bool isListening;
-
-        /// <summary>
         /// Event handler that is called for position changes
         /// </summary>
         public event EventHandler<GeolocationEventArgs> PositionChanged;
@@ -95,7 +90,7 @@ namespace WhereToFly.App.Core.Services
         /// <returns>true when successful, false when not</returns>
         public async Task<bool> StartListeningAsync()
         {
-            if (this.isListening)
+            if (Essentials.Geolocation.IsListening)
             {
                 return true;
             }
@@ -105,9 +100,9 @@ namespace WhereToFly.App.Core.Services
                 return false;
             }
 
-            WhereToFly.App.Essentials.Geolocation.LocationChanged += this.OnLocationChanged;
+            Essentials.Geolocation.LocationChanged += this.OnLocationChanged;
 
-            return await WhereToFly.App.Essentials.Geolocation.StartListeningForegroundAsync(
+            return await Essentials.Geolocation.StartListeningForegroundAsync(
                 new GeolocationRequest(
                     GeolocationAccuracy.Best,
                     Constants.GeoLocationMinimumTimeForUpdate));
@@ -131,16 +126,14 @@ namespace WhereToFly.App.Core.Services
         /// <returns>task to wait on</returns>
         public async Task StopListeningAsync()
         {
-            if (!this.isListening)
+            if (!Essentials.Geolocation.IsListening)
             {
                 return;
             }
 
-            WhereToFly.App.Essentials.Geolocation.LocationChanged -= this.OnLocationChanged;
+            Essentials.Geolocation.LocationChanged -= this.OnLocationChanged;
 
-            await WhereToFly.App.Essentials.Geolocation.StopListeningForegroundAsync();
-
-            this.isListening = false;
+            await Essentials.Geolocation.StopListeningForegroundAsync();
         }
     }
 }
