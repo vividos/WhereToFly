@@ -5,6 +5,7 @@
 - added group headings for list when selecting weather icons
 - fixed saving images in weather web pages on Android 10 and above
 - fixed zooming to newly added locations
+- using CesiumJS version 1.82
 
 ## Version 1.10.0
 
