@@ -71,6 +71,7 @@ namespace WhereToFly.WebApi.LiveWaypoints
         private static void AddLogicServices(IServiceCollection services)
         {
             services.AddSingleton<LiveWaypointCacheManager>();
+            services.AddSingleton<LiveTrackCacheManager>();
             services.AddSingleton<LocationFindManager>();
 
             // confiugre and add tour planning engine

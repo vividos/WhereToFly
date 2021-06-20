@@ -17,5 +17,14 @@ namespace WhereToFly.Web.LiveTracking
         /// <returns>query result for live waypoint</returns>
         [Get("/api/LiveWaypoint?id={id}")]
         Task<LiveWaypointQueryResult> GetLiveWaypointDataAsync([AliasAs("id")] string liveWaypointId);
+
+        /// <summary>
+        /// Retrieves latest info about a live track, including new coordinates and
+        /// description.
+        /// </summary>
+        /// <param name="liveTrackId">live track ID</param>
+        /// <returns>query result for live track</returns>
+        [Get("/api/LiveTrack?id={id}")]
+        Task<LiveTrackQueryResult> GetLiveTrackDataAsync([AliasAs("id")] string liveTrackId);
     }
 }

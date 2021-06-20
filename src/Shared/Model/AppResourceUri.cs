@@ -52,6 +52,11 @@ namespace WhereToFly.Shared.Model
             /// Specifies a position for testing
             /// </summary>
             TestPos = 100,
+
+            /// <summary>
+            /// Live tracking test track
+            /// </summary>
+            TestLiveTrack = 101,
         }
 
         /// <summary>

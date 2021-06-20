@@ -270,6 +270,10 @@ namespace WhereToFly.WebApi.Logic
                     mapPoint.Longitude -= 0.025 * Math.Cos(timeAngle);
                     break;
 
+                case "livetracking":
+                    return Task.FromResult(
+                        TestLiveTrackService.GetPositionQueryResult(uri.ToString()));
+
                 default:
                     throw new ArgumentException("invalid TestPos uri data");
             }
