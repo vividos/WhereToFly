@@ -113,6 +113,59 @@ namespace WhereToFly.Geo
         }
 
         /// <summary>
+        /// Joins track points from another track to this track
+        /// </summary>
+        /// <param name="track">this track to add track points to</param>
+        /// <param name="trackPointsToJoin">track to join</param>
+        public static void JoinTrackPoints(this Track track, Track trackPointsToJoin)
+        {
+            if (!trackPointsToJoin.TrackPoints.Any())
+            {
+                return;
+            }
+
+            if (!track.TrackPoints.Any())
+            {
+                track.TrackPoints.AddRange(trackPointsToJoin.TrackPoints);
+                return;
+            }
+
+            if (track.TrackPoints.First().Time > trackPointsToJoin.TrackPoints.Last().Time)
+            {
+                track.TrackPoints.InsertRange(0, trackPointsToJoin.TrackPoints);
+                return;
+            }
+
+            if (track.TrackPoints.Last().Time < trackPointsToJoin.TrackPoints.First().Time)
+            {
+                track.TrackPoints.AddRange(trackPointsToJoin.TrackPoints);
+                return;
+            }
+
+            throw new FormatException("tracks to join overlap!");
+        }
+
+        /// <summary>
+        /// Removes all track points before a given date and time
+        /// </summary>
+        /// <param name="track">track to modify</param>
+        /// <param name="dateBefore">before date and time</param>
+        public static void RemoveTrackPointsBefore(this Track track, DateTimeOffset dateBefore)
+        {
+            track.TrackPoints.RemoveAll(trackPoint => trackPoint.Time < dateBefore);
+        }
+
+        /// <summary>
+        /// Removes all track points after a given date and time
+        /// </summary>
+        /// <param name="track">track to modify</param>
+        /// <param name="dateAfter">after date and time</param>
+        public static void RemoveTrackPointsAfter(this Track track, DateTimeOffset dateAfter)
+        {
+            track.TrackPoints.RemoveAll(trackPoint => trackPoint.Time > dateAfter);
+        }
+
+        /// <summary>
         /// Calculates statistics for track
         /// </summary>
         /// <param name="track">track to use</param>
