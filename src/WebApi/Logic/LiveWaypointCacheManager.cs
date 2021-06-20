@@ -21,7 +21,7 @@ namespace WhereToFly.WebApi.Logic
         private readonly ILogger<LiveWaypointCacheManager> logger;
 
         /// <summary>
-        /// Cacle for live waypoint data, keyed by ID
+        /// Cache for live waypoint data, keyed by ID
         /// </summary>
         private readonly Dictionary<string, LiveWaypointData> liveWaypointCache = new Dictionary<string, LiveWaypointData>();
 
