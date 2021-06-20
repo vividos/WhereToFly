@@ -250,7 +250,7 @@ LiveTracking.prototype.updateLiveWaypoint = function (liveWaypointUri) {
 };
 
 /**
- * Called whwn updated live waypoint data is available
+ * Called when updated live waypoint data is available
  * @param {String} liveWaypointUri live waypoint uri to update
  * @param {Object} result ajax result object with updated data, or a string as error message
  */
