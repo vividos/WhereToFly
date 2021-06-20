@@ -119,6 +119,7 @@ function MapView(options) {
         // when no animation happens, render after this number of seconds
         maximumRenderTimeChange: 60.0,
         contextOptions: {
+            requestWebgl2: true,
             webgl: {
                 powerPreference: webGLPowerPreference
             }
@@ -244,6 +245,8 @@ function MapView(options) {
 
     console.log("MapView: #11 other stuff");
 
+    this.heightProfileView = null;
+
     // add a dedicated track primitives collection, as we can't call viewer.scene.primitives.removeAll()
     this.trackPrimitivesCollection = new Cesium.PrimitiveCollection({
         show: true,
@@ -258,12 +261,11 @@ function MapView(options) {
 
     this.osmBuildingsTileset = null;
 
+    this.inOnCloseHandler = false;
+
     this.locationDataSource = new Cesium.CustomDataSource('locations');
     this.locationDataSource.clustering = this.clustering;
     this.viewer.dataSources.add(this.locationDataSource);
-
-    this.takeoffEntityDataSource = new Cesium.CustomDataSource('takeoff-entities');
-    this.viewer.dataSources.add(this.takeoffEntityDataSource);
 
     // swap out console.error for logging purposes
     var oldLog = console.error;
@@ -410,7 +412,9 @@ MapView.prototype.setupEntityClustering = function () {
     // When EntityCluster is added to more than one DataSource, it will try to
     // destroy the EntityCluster object; prevent that here. Ugly workaround!
     // See: https://github.com/CesiumGS/cesium/issues/9336
-    this.clustering.destroy = function () { };
+    this.clustering.destroy = function () {
+        // do nothing
+    };
 
     var pinBuilder = new Cesium.PinBuilder();
     this.clustering.pin50 = pinBuilder.fromText("50+", Cesium.Color.RED, 48).toDataURL();
@@ -482,7 +486,13 @@ MapView.prototype.showMessageBand = function (messageText) {
     if (bandElement === undefined)
         return;
 
-    bandElement.style.display = 'block';
+    bandElement.style.opacity = '0';
+    bandElement.style.display = 'flex';
+
+    setTimeout(function () {
+        bandElement.style.opacity = '0.7';
+    }, 1);
+
     bandElement.innerHTML = messageText;
 };
 
@@ -495,8 +505,13 @@ MapView.prototype.hideMessageBand = function () {
         return;
 
     var bandElement = document.getElementById(this.options.messageBandId);
-    if (bandElement !== undefined)
-        bandElement.style.display = 'none';
+    if (bandElement !== undefined) {
+        bandElement.style.opacity = '0.0';
+
+        setTimeout(function () {
+            bandElement.style.display = 'none';
+        }, 700);
+    }
 
 };
 
@@ -961,14 +976,25 @@ MapView.prototype.zoomToRectangle = function (rectangle) {
 
     var boundingSphere = Cesium.BoundingSphere.fromCornerPoints(corner, oppositeCorner);
 
-    var viewingDistance = this.getCurrentViewingDistance();
-
+    var that = this;
     this.viewer.camera.flyToBoundingSphere(boundingSphere, {
         offset: new Cesium.HeadingPitchRange(
             this.viewer.camera.heading,
             this.viewer.camera.pitch,
-            viewingDistance)
-        });
+            0.0),
+        complete: function () {
+            console.log("MapView: flying to rectangle finished");
+
+            var center = Cesium.Cartographic.fromCartesian(boundingSphere.center);
+
+            that.onUpdateLastShownLocation({
+                latitude: Cesium.Math.toDegrees(center.latitude),
+                longitude: Cesium.Math.toDegrees(center.longitude),
+                altitude: center.height,
+                viewingDistance: that.getCurrentViewingDistance()
+            });
+        }
+    });
 };
 
 /**
@@ -1199,7 +1225,7 @@ MapView.prototype.clearLayerList = function () {
         var dataSource = this.dataSourceMap[layerId];
         if (dataSource !== undefined) {
             this.viewer.dataSources.remove(dataSource);
-    }
+        }
     }
 
     this.dataSourceMap = {};
@@ -1220,7 +1246,6 @@ MapView.prototype.clearLocationList = function () {
     console.log("MapView: clearing location list");
 
     this.locationDataSource.entities.removeAll();
-    this.takeoffEntityDataSource.entities.removeAll();
 };
 
 /**
@@ -1295,27 +1320,14 @@ MapView.prototype.addLocationList = function (locationList) {
                 location.longitude,
                 location.latitude),
             function (entity) {
+                if (location.takeoffDirections !== undefined && location.takeoffDirections !== 0)
+                    that.addTakeoffEntities(entity, location);
+
                 that.locationDataSource.entities.add(entity);
             },
             function (error) {
                 console.error("MapView.addLocationList: error while adding location entity: " + error);
             });
-
-        if (location.takeoffDirections !== undefined && location.takeoffDirections !== 0) {
-            var takeoffOutlineEntity = this.createTakeoffEntity(
-                location,
-                new Cesium.Color(1.0, 1.0, 0.5, 0.4), // light yellow
-                true);
-
-            this.takeoffEntityDataSource.entities.add(takeoffOutlineEntity);
-
-            var takeoffEntity = this.createTakeoffEntity(
-                location,
-                new Cesium.Color(0.0, 0.0, 0.54, 0.4), // dark blue
-                false);
-
-            this.takeoffEntityDataSource.entities.add(takeoffEntity);
-    }
     }
 
     console.timeEnd("MapView.addLocationList");
@@ -1352,7 +1364,8 @@ MapView.prototype.createEntity = function (id, name, description, pinColor, pinI
                 billboard: {
                     image: canvas.toDataURL(),
                     verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-                    heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
+                    heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+                    disableDepthTestDistance: 5000.0
                 }
             };
         },
@@ -1383,13 +1396,16 @@ MapView.prototype.imageUrlFromLocationType = function (locationType) {
         case 'PublicTransportBus': return 'images/bus.svg';
         case 'PublicTransportTrain': return 'images/train.svg';
         case 'Parking': return 'images/parking.svg';
+        case 'Webcam': return 'images/camera-outline.svg';
         //case 'ViaFerrata': return '';
         case 'CableCar': return 'images/aerialway-15.svg';
         case 'FlyingTakeoff': return 'images/paragliding.svg';
         case 'FlyingLandingPlace': return 'images/paragliding.svg';
         case 'FlyingWinchTowing': return 'images/paragliding.svg';
-        case 'LiveWaypoint': return 'images/autorenew.svg';
         //case 'Turnpoint': return '';
+        case 'Thermal': return 'images/weather-partly-cloudy.svg';
+        case 'MeteoStation': return 'images/cloud-upload-outline-modified.svg';
+        case 'LiveWaypoint': return 'images/autorenew.svg';
         default: return 'images/map-marker.svg';
     }
 };
@@ -1457,17 +1473,16 @@ function pointFromCenterRadiusAngle(center, radius, angleDegrees) {
 }
 
 /**
- * Creates an entity visualizing the takeoff directions of the given location
+ * Adds a polyline and polygon entity visualizing the takeoff directions of
+ * the given location, to an existing entity.
+ * @param {Object} [entity] Entity object to add to
  * @param {Object} [location] An object with at least the following properties:
  * @param {String} [location.id] ID of the location to update
  * @param {Number} [location.latitude] Latitude of the location to update
  * @param {Number} [location.longitude] Longitude of the location to update
  * @param {number} [location.takeoffDirections] Takeoff directions bit values
- * @param {Cesium.Color} [color] Color of the polygon or polyline entity
- * @param {boolean} [outline] If true, only an outline entity is returned,
- * otherwise a full polygon entity
  */
-MapView.prototype.createTakeoffEntity = function (location, color, outline) {
+MapView.prototype.addTakeoffEntities = function (entity, location) {
 
     var center = Cesium.Cartesian3.fromDegrees(location.longitude, location.latitude);
     var radius = 50.0; // in meter
@@ -1494,38 +1509,21 @@ MapView.prototype.createTakeoffEntity = function (location, color, outline) {
     var distanceDisplayCondition =
         new Cesium.DistanceDisplayCondition(0.0, 5000.0);
 
-    var entity;
-    if (outline) {
-        entity = new Cesium.Entity({
-            id: "takeoff-outline-" + location.id,
-            name: location.name,
-            polyline: {
-                positions: pointArray,
-                width: 3.0,
-                material: color,
-                clampToGround: true,
-                distanceDisplayCondition: distanceDisplayCondition
-            }
-        });
-    }
-    else {
-        if (!this.viewer.scene.context.fragmentDepth)
-            console.warn("Warning: WebGL extension EXT_frag_depth isn't supported by GPU, using GroundPrimitive anyway...");
+    entity.polyline = {
+        positions: pointArray,
+        width: 3.0,
+        material: new Cesium.Color(1.0, 1.0, 0.5, 0.4), // light yellow
+        clampToGround: true,
+        distanceDisplayCondition: distanceDisplayCondition
+    };
 
-        entity = new Cesium.Entity({
-            id: "takeoff-" + location.id,
-            name: location.name,
-            polygon: {
-                // note: clamping to terrain is achieved by not specifying height and heightReference at all
-                hierarchy: new Cesium.PolygonHierarchy(pointArray),
-                material: color,
-                outline: false, // when an outline would be present, it would not clamp to ground
-                distanceDisplayCondition: distanceDisplayCondition
-            }
-        });
-    }
-
-    return entity;
+    entity.polygon = {
+        // note: clamping to terrain is achieved by not specifying height and heightReference at all
+        hierarchy: new Cesium.PolygonHierarchy(pointArray),
+        material: new Cesium.Color(0.0, 0.0, 0.54, 0.4), // dark blue
+        outline: false, // when an outline would be present, it would not clamp to ground
+        distanceDisplayCondition: distanceDisplayCondition
+    };
 };
 
 /**
@@ -1571,9 +1569,6 @@ MapView.prototype.removeLocation = function (locationId) {
     var entity = this.locationDataSource.entities.getById(locationId);
 
     this.locationDataSource.entities.remove(entity);
-
-    this.takeoffEntityDataSource.entities.remove("takeoff-" + location.id);
-    this.takeoffEntityDataSource.entities.remove("takeoff-outline-" + location.id);
 };
 
 /**
@@ -1712,9 +1707,8 @@ MapView.prototype.sampleTrackHeights = function (track) {
     var trackPointArray = Cesium.Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints);
 
     var cartographicArray = [];
-    for (var trackPointIndex = 0; trackPointIndex < trackPointArray.length; ++trackPointIndex) {
-        cartographicArray.push(Cesium.Cartographic.fromCartesian(trackPointArray[trackPointIndex]));
-    }
+    for (let trackPoint of trackPointArray)
+        cartographicArray.push(Cesium.Cartographic.fromCartesian(trackPoint));
 
     console.log("MapView.sampleTrackHeights: #3: waiting for terrain provider to be ready");
     var that = this;
@@ -1734,9 +1728,8 @@ MapView.prototype.sampleTrackHeights = function (track) {
 
                     var trackPointHeightArray = [];
 
-                    for (var sampleIndex = 0; sampleIndex < samples.length; ++sampleIndex) {
-
-                        var sampledHeight = samples[sampleIndex].height;
+                    for (let sampledValue of samples) {
+                        var sampledHeight = sampledValue.height;
                         trackPointHeightArray.push(sampledHeight);
                     }
 
@@ -1945,12 +1938,14 @@ MapView.prototype.getGroundTrackPrimitive = function (track, trackPointArray) {
  * @param {string} [track.id] unique ID of the track
  * @param {string} [track.name] track name to add
  * @param {boolean} [track.isFlightTrack] indicates if track is a flight
- * @param {array} [track.listOfTrackPoints] An array of track points in long, lat, alt, long, lat, alt ... order
- * @param {array} [track.listOfTimePoints] An array of time points in seconds; same length as listOfTrackPoints; may be null
- * @param {array} [track.groundHeightProfile] An array of ground height profile elevations; same
- * length as listOfTimePoints; may be null
- * @param {string} [track.color] Color as "RRGGBB" string value, or undefined when track should be colored
- *                       according to climb and sink rate.
+ * @param {array} [track.listOfTrackPoints] An array of track points in long,
+ * lat, alt, long, lat, alt ... order
+ * @param {array} [track.listOfTimePoints] An array of time points in seconds;
+ * same length as listOfTrackPoints.length / 3; may be null
+ * @param {array} [track.groundHeightProfile] An array of ground height
+ * profile elevations; same length as listOfTimePoints; may be null
+ * @param {string} [track.color] Color as "RRGGBB" string value, or undefined
+ * when track should be colored according to climb and sink rate.
  */
 MapView.prototype.addTrack = function (track) {
 
@@ -1959,6 +1954,10 @@ MapView.prototype.addTrack = function (track) {
     console.log("MapView: adding list of track points, with ID " + track.id + " and " + track.listOfTrackPoints.length + " track points");
 
     var trackPointArray = Cesium.Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints);
+
+    // remove duplicates so that color values are calculated correctly
+    if (track.isFlightTrack)
+        trackPointArray = this.removeTrackDuplicatePoints(track, trackPointArray);
 
     var primitive = undefined;
     var wallPrimitive = undefined;
@@ -1983,6 +1982,94 @@ MapView.prototype.addTrack = function (track) {
         wallPrimitive: wallPrimitive,
         boundingSphere: boundingSphere
     };
+};
+
+/**
+ * Updates track infos like name and color
+ * @param {object} [track] Track object to update, with at least the following properties:
+ * @param {string} [track.id] unique ID of the track
+ * @param {string} [track.name] track name to add
+ * @param {boolean} [track.isFlightTrack] indicates if track is a flight
+ * @param {string} [track.color] Color as "RRGGBB" string value, or undefined
+ * when track should be colored according to climb and sink rate.
+ */
+MapView.prototype.updateTrack = function (track) {
+
+    var trackInfos = this.trackIdToTrackDataMap[track.id];
+    if (trackInfos !== undefined) {
+        trackInfos.track.name = track.name;
+
+        if (!track.isFlightTrack) {
+            var attributes = trackInfos.primitive.getGeometryInstanceAttributes(
+                "track-" + track.id);
+
+            attributes.color = Cesium.ColorGeometryInstanceAttribute.toValue(
+                Cesium.Color.fromCssColorString('#' + track.color),
+                attributes.color);
+        }
+
+        this.updateScene();
+    }
+};
+
+/**
+ * Removes duplicate track points, e.g. when the track position hasn't changed
+ * for several seconds. This is needed since CesiumJS removes duplicate
+ * position values from tracks, but doesn't remove per-vertex color values.
+ * See also: https://github.com/CesiumGS/cesium/issues/9379
+ * @param {object} track Track object to modify, with at least the following
+ * properties:
+ * @param {array} [track.listOfTrackPoints] An array of track points in long,
+ * lat, alt, long, lat, alt ... order
+ * @param {array} [track.listOfTimePoints] An array of time points in seconds;
+ * same length as listOfTrackPoints.length / 3; may be null
+ * @param {array} [track.groundHeightProfile] An array of ground height
+ * profile elevations; same length as listOfTimePoints; may be null
+ * @param {array} [trackPointArray] An array of track points to modify
+ * @returns {array} new trackPointArray array
+ */
+MapView.prototype.removeTrackDuplicatePoints = function (track, trackPointArray) {
+
+    // add index to every track point
+    for (var trackPointIndex = 0; trackPointIndex < trackPointArray.length; trackPointIndex++) {
+        trackPointArray[trackPointIndex].trackPointIndex = trackPointIndex;
+    }
+
+    var modifiedTrackPointArray = Cesium.arrayRemoveDuplicates(trackPointArray, Cesium.Cartesian3.equalsEpsilon);
+
+    if (trackPointArray.length === modifiedTrackPointArray.length)
+        return trackPointArray; // nothing was removed
+
+    var removedTrackPoints = trackPointArray.length - modifiedTrackPointArray.length;
+    console.log("MapView: removed " + removedTrackPoints + " duplicate track points from track");
+
+    var newListOfTrackPoints = [];
+    var newListOfTimePoints = [];
+    var newGroundHeightProfile = [];
+
+    for (var modifiedIndex = 0; modifiedIndex < modifiedTrackPointArray.length; modifiedIndex++) {
+        var oldTrackPointIndex = modifiedTrackPointArray[modifiedIndex].trackPointIndex;
+
+        newListOfTrackPoints.push(track.listOfTrackPoints[oldTrackPointIndex * 3]);
+        newListOfTrackPoints.push(track.listOfTrackPoints[oldTrackPointIndex * 3 + 1]);
+        newListOfTrackPoints.push(track.listOfTrackPoints[oldTrackPointIndex * 3 + 2]);
+
+        if (track.listOfTimePoints !== null)
+            newListOfTimePoints.push(track.listOfTimePoints[oldTrackPointIndex]);
+
+        if (track.groundHeightProfile !== null)
+            newGroundHeightProfile.push(track.groundHeightProfile[oldTrackPointIndex]);
+    }
+
+    track.listOfTrackPoints = newListOfTrackPoints;
+
+    if (track.listOfTimePoints !== null)
+        track.listOfTimePoints = newListOfTimePoints;
+
+    if (track.groundHeightProfile !== null)
+        track.groundHeightProfile = newGroundHeightProfile;
+
+    return modifiedTrackPointArray;
 };
 
 /**
@@ -2029,13 +2116,8 @@ MapView.prototype.removeTrack = function (trackId) {
         this.trackIdToTrackDataMap[trackId] = undefined;
     }
 
-    if (trackId === this.currentHeightProfileTrackId &&
-        this.heightProfileView !== null) {
-        this.heightProfileView.hide();
-        this.heightProfileView = null;
-
-        this.trackMarker.show = false;
-    }
+    if (trackId === this.currentHeightProfileTrackId)
+        this.closeHeightProfileView();
 
     this.updateScene();
 };
@@ -2051,12 +2133,8 @@ MapView.prototype.clearAllTracks = function () {
 
     this.trackIdToTrackDataMap = {};
 
-    if (this.heightProfileView !== null) {
-        this.heightProfileView.hide();
-        this.heightProfileView = null;
-
-        this.trackMarker.show = false;
-    }
+    if (this.heightProfileView !== null)
+        this.closeHeightProfileView();
 
     this.updateScene();
 };
@@ -2083,6 +2161,10 @@ MapView.prototype.showTrackHeightProfile = function (trackId) {
 
     this.currentHeightProfileTrackId = trackId;
 
+    if (this.heightProfileView !== null) {
+        this.heightProfileView.destroy();
+    }
+
     var that = this;
     this.heightProfileView = new HeightProfileView({
         id: 'chartElement',
@@ -2103,6 +2185,25 @@ MapView.prototype.showTrackHeightProfile = function (trackId) {
     if (trackData.track.groundHeightProfile !== undefined &&
         trackData.track.groundHeightProfile !== null)
         this.heightProfileView.addGroundProfile(trackData.track.groundHeightProfile);
+};
+
+/**
+ * Closes height profile view again
+ */
+MapView.prototype.closeHeightProfileView = function () {
+
+    if (this.heightProfileView !== null) {
+        this.heightProfileView.hide();
+        this.heightProfileView.destroy();
+        this.heightProfileView = null;
+    }
+
+    this.trackMarker.show = false;
+
+    if (this.trackMarker === this.viewer.trackedEntity)
+        this.viewer.trackedEntity = null;
+
+    this.currentHeightProfileTrackId = undefined;
 };
 
 /**
@@ -2128,9 +2229,10 @@ MapView.prototype.heightProfileCallAction = function (funcName, params) {
                 });
         }
     }
-    else if (funcName === "onClose") {
-        this.trackMarker.show = false;
-        this.currentHeightProfileTrackId = undefined;
+    else if (funcName === "onClose" && this.inOnCloseHandler === false) {
+        this.inOnCloseHandler = true;
+        this.closeHeightProfileView();
+        this.inOnCloseHandler = false;
     }
 };
 
