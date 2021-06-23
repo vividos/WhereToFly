@@ -199,21 +199,19 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         private void UpdateWeatherDashboardItems()
         {
-            this.WeatherDashboardItems.Clear();
+            var weatherIconViewModels =
+                (from iconDescription in this.weatherIconDescriptionList
+                 select new WeatherIconViewModel(iconDescription)).ToList();
 
-            foreach (var iconDescription in this.weatherIconDescriptionList)
-            {
-                this.WeatherDashboardItems.Add(
-                    new WeatherIconViewModel(iconDescription));
-            }
-
-            this.WeatherDashboardItems.Add(
+            weatherIconViewModels.Add(
                 new WeatherIconViewModel(
                     new WeatherIconDescription
                     {
                         Name = "Add new...",
                         Type = WeatherIconDescription.IconType.IconPlaceholder,
                     }));
+
+            this.WeatherDashboardItems = new ObservableCollection<WeatherIconViewModel>(weatherIconViewModels);
 
             this.OnPropertyChanged(nameof(this.WeatherDashboardItems));
         }
