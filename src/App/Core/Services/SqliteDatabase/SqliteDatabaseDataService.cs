@@ -328,6 +328,17 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         }
 
         /// <summary>
+        /// Retrieves latest info about a live track, including new list of track points and
+        /// description.
+        /// </summary>
+        /// <param name="liveTrackId">live track ID</param>
+        /// <returns>query result for live track</returns>
+        public async Task<LiveTrackQueryResult> GetLiveTrackDataAsync(string liveTrackId)
+        {
+            return await this.backendDataService.GetLiveTrackDataAsync(liveTrackId);
+        }
+
+        /// <summary>
         /// Plans a tour with given tour planning parameters and returns the planned tour.
         /// </summary>
         /// <param name="planTourParameters">tour planning parameters</param>

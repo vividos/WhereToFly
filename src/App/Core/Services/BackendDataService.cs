@@ -42,6 +42,15 @@ namespace WhereToFly.App.Core.Services
             Task<LiveWaypointQueryResult> GetLiveWaypointDataAsync([AliasAs("id")] string liveWaypointId);
 
             /// <summary>
+            /// Retrieves latest info about a live track, including new list of track points and
+            /// description.
+            /// </summary>
+            /// <param name="liveTrackId">live track ID</param>
+            /// <returns>query result for live track</returns>
+            [Get("/api/LiveTrack?id={id}")]
+            Task<LiveTrackQueryResult> GetLiveTrackDataAsync([AliasAs("id")] string liveTrackId);
+
+            /// <summary>
             /// Plans a tour with given parameters and returns a planned tour, including
             /// description and a track.
             /// </summary>
@@ -101,6 +110,21 @@ namespace WhereToFly.App.Core.Services
         public async Task<LiveWaypointQueryResult> GetLiveWaypointDataAsync(string liveWaypointId)
         {
             LiveWaypointQueryResult result = await this.backendWebApi.GetLiveWaypointDataAsync(liveWaypointId);
+
+            result.Data.ID = System.Net.WebUtility.UrlDecode(result.Data.ID);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Retrieves latest info about a live track, including new list of track points and
+        /// description.
+        /// </summary>
+        /// <param name="liveTrackId">live track ID</param>
+        /// <returns>query result for live track</returns>
+        public async Task<LiveTrackQueryResult> GetLiveTrackDataAsync(string liveTrackId)
+        {
+            LiveTrackQueryResult result = await this.backendWebApi.GetLiveTrackDataAsync(liveTrackId);
 
             result.Data.ID = System.Net.WebUtility.UrlDecode(result.Data.ID);
 
