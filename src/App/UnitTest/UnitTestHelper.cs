@@ -64,6 +64,7 @@ namespace WhereToFly.App.UnitTest
                 Id = "track1",
                 Name = "Track1",
                 IsFlightTrack = false,
+                IsLiveTrack = false,
                 Color = "FF0000",
                 TrackPoints = new List<TrackPoint>
                 {

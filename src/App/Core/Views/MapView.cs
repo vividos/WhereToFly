@@ -719,6 +719,7 @@ namespace WhereToFly.App.Core.Views
                 id = track.Id,
                 name = track.Name,
                 isFlightTrack = track.IsFlightTrack,
+                isLiveTrack = track.IsLiveTrack,
                 listOfTrackPoints = trackPointsList,
                 listOfTimePoints = timePointsList,
                 groundHeightProfile = groundHeightProfileList,

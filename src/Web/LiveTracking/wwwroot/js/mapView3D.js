@@ -1938,6 +1938,8 @@ MapView.prototype.getGroundTrackPrimitive = function (track, trackPointArray) {
  * @param {string} [track.id] unique ID of the track
  * @param {string} [track.name] track name to add
  * @param {boolean} [track.isFlightTrack] indicates if track is a flight
+ * @param {boolean} [track.isLiveTrack] indicates if track is a live track
+ * that is updated periodically
  * @param {array} [track.listOfTrackPoints] An array of track points in long,
  * lat, alt, long, lat, alt ... order
  * @param {array} [track.listOfTimePoints] An array of time points in seconds;

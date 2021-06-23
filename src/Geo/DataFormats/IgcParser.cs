@@ -67,6 +67,7 @@ namespace WhereToFly.Geo.DataFormats
         {
             this.Track.Id = Guid.NewGuid().ToString("B");
             this.Track.IsFlightTrack = true;
+            this.Track.IsLiveTrack = false;
             this.Parse(stream);
         }
 

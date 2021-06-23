@@ -76,6 +76,16 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             }
 
             /// <summary>
+            /// Track is a live track?
+            /// </summary>
+            [Column("is_livetrack")]
+            public bool IsLiveTrack
+            {
+                get => this.Track.IsLiveTrack;
+                set => this.Track.IsLiveTrack = value;
+            }
+
+            /// <summary>
             /// Track color
             /// </summary>
             [Column("color")]

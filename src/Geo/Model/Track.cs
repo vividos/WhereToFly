@@ -30,6 +30,11 @@ namespace WhereToFly.Geo.Model
         public bool IsFlightTrack { get; set; } = false;
 
         /// <summary>
+        /// Indicates if the track is a live track that is updated periodically
+        /// </summary>
+        public bool IsLiveTrack { get; set; }
+
+        /// <summary>
         /// Color to use for the track; used when not a flight track; format is RRGGBB in hex.
         /// </summary>
         public string Color { get; set; } = "0000FF";
