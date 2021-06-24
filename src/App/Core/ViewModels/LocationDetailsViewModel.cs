@@ -289,7 +289,7 @@ namespace WhereToFly.App.Core.ViewModels
 
                 await locationDataService.Update(locationInList);
 
-                var liveWaypointRefreshService = DependencyService.Get<LiveWaypointRefreshService>();
+                var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
                 liveWaypointRefreshService.RemoveLiveWaypoint(locationInList.Id);
                 liveWaypointRefreshService.AddLiveWaypoint(locationInList);
             }
@@ -367,7 +367,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             await locationDataService.Remove(this.location.Id);
 
-            var liveWaypointRefreshService = DependencyService.Get<LiveWaypointRefreshService>();
+            var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
             liveWaypointRefreshService.RemoveLiveWaypoint(this.location.Id);
 
             App.MapView.RemoveLocation(this.location.Id);

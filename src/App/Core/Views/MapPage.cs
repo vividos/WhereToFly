@@ -395,8 +395,8 @@ namespace WhereToFly.App.Core.Views
 
             this.mapView.HideMessageBand();
 
-            var liveWaypointRefreshService = DependencyService.Get<LiveWaypointRefreshService>();
-            liveWaypointRefreshService.UpdateLiveWaypoint += this.OnUpdateLiveWaypoint;
+            var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
+            liveWaypointRefreshService.UpdateLiveData += this.OnUpdateLiveData;
         }
 
         /// <summary>
@@ -404,14 +404,15 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        private void OnUpdateLiveWaypoint(object sender, LiveWaypointUpdateEventArgs args)
+        private void OnUpdateLiveData(object sender, LiveDataUpdateEventArgs args)
         {
-            var location = this.FindLocationById(args.Data.ID);
+            LiveWaypointData waypointData = args.WaypointData;
+            var location = this.FindLocationById(waypointData.ID);
             if (location != null)
             {
-                location.MapLocation = new MapPoint(args.Data.Latitude, args.Data.Longitude, args.Data.Altitude);
-                location.Description = args.Data.Description;
-                location.Name = args.Data.Name;
+                location.MapLocation = new MapPoint(waypointData.Latitude, waypointData.Longitude, waypointData.Altitude);
+                location.Description = waypointData.Description;
+                location.Name = waypointData.Name;
 
                 this.mapView.UpdateLocation(location);
 

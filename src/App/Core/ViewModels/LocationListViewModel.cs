@@ -490,7 +490,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             await locationDataService.Remove(location.Id);
 
-            var liveWaypointRefreshService = DependencyService.Get<LiveWaypointRefreshService>();
+            var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
             liveWaypointRefreshService.RemoveLiveWaypoint(location.Id);
 
             this.UpdateLocationList();
@@ -522,7 +522,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             await locationDataService.ClearList();
 
-            var liveWaypointRefreshService = DependencyService.Get<LiveWaypointRefreshService>();
+            var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
             liveWaypointRefreshService.ClearLiveWaypointList();
 
             this.UpdateLocationList();

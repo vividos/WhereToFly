@@ -12,7 +12,7 @@ namespace WhereToFly.App.Core.Services
     /// <summary>
     /// Service for refreshing live waypoints and their data
     /// </summary>
-    public class LiveWaypointRefreshService
+    public class LiveDataRefreshService
     {
         /// <summary>
         /// Update info for queueing live waypoint updates
@@ -65,17 +65,17 @@ namespace WhereToFly.App.Core.Services
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        public delegate void OnUpdateLiveWaypoint(object sender, LiveWaypointUpdateEventArgs args);
+        public delegate void OnUpdateLiveData(object sender, LiveDataUpdateEventArgs args);
 
         /// <summary>
         /// Event that is triggered when data for a live waypoint was updated
         /// </summary>
-        public event OnUpdateLiveWaypoint UpdateLiveWaypoint;
+        public event OnUpdateLiveData UpdateLiveData;
 
         /// <summary>
         /// Creates a new live waypoint refresh service
         /// </summary>
-        public LiveWaypointRefreshService()
+        public LiveDataRefreshService()
         {
         }
 
@@ -92,7 +92,7 @@ namespace WhereToFly.App.Core.Services
                 return;
             }
 
-            Debug.WriteLine($"LiveWaypointRefreshService: adding list of {liveWaypointLocationList.Count()} live waypoints");
+            Debug.WriteLine($"LiveDataRefreshService: adding list of {liveWaypointLocationList.Count()} live waypoints");
 
             lock (this.dataLock)
             {
@@ -150,7 +150,7 @@ namespace WhereToFly.App.Core.Services
         /// </summary>
         private void ScheduleUpdates()
         {
-            Debug.WriteLine("LiveWaypointRefreshService: scheduling updates");
+            Debug.WriteLine("LiveDataRefreshService: scheduling updates");
 
             lock (this.dataLock)
             {
@@ -178,7 +178,7 @@ namespace WhereToFly.App.Core.Services
                 else if (this.liveWaypointMap.Any())
                 {
                     // no locations in the map; update all
-                    Debug.WriteLine("LiveWaypointRefreshService: schedule update for all live waypoints");
+                    Debug.WriteLine("LiveDataRefreshService: schedule update for all live waypoints");
 
                     foreach (var liveWaypointId in this.liveWaypointMap.Keys)
                     {
@@ -205,7 +205,7 @@ namespace WhereToFly.App.Core.Services
         /// <param name="nextUpdateTime">next time an update should be carried out</param>
         private void StartTimer(DateTimeOffset nextUpdateTime)
         {
-            Debug.WriteLine($"LiveWaypointRefreshService: starting timer for next update on {nextUpdateTime}");
+            Debug.WriteLine($"LiveDataRefreshService: starting timer for next update on {nextUpdateTime}");
 
             TimeSpan dueTimeSpan = nextUpdateTime - DateTimeOffset.Now;
 
@@ -267,7 +267,7 @@ namespace WhereToFly.App.Core.Services
         {
             this.StopTimer();
 
-            Debug.WriteLine("LiveWaypointRefreshService: checking all live waypoints in queue");
+            Debug.WriteLine("LiveDataRefreshService: checking all live waypoints in queue");
 
             LiveWaypointUpdateInfo updateInfo;
             while ((updateInfo = this.GetNextUpdateInfo()) != null)
@@ -304,7 +304,7 @@ namespace WhereToFly.App.Core.Services
         /// <returns>task to wait on</returns>
         private async Task UpdateLiveWaypointAsync(string liveWaypointId)
         {
-            Debug.WriteLine($"LiveWaypointRefreshService: updating live waypoint for {liveWaypointId}");
+            Debug.WriteLine($"LiveDataRefreshService: updating live waypoint for {liveWaypointId}");
 
             LiveWaypointQueryResult data = null;
             try
@@ -314,7 +314,7 @@ namespace WhereToFly.App.Core.Services
             catch (Exception ex)
             {
                 // ignore exception
-                Debug.WriteLine($"LiveWaypointRefreshService: exception occured: {ex.ToString()}");
+                Debug.WriteLine($"LiveDataRefreshService: exception occured: {ex.ToString()}");
             }
 
             if (data == null)
@@ -330,11 +330,11 @@ namespace WhereToFly.App.Core.Services
 
             if (data.Data != null)
             {
-                this.UpdateLiveWaypoint?.Invoke(
+                this.UpdateLiveData?.Invoke(
                     this,
-                    new LiveWaypointUpdateEventArgs
+                    new LiveDataUpdateEventArgs
                     {
-                        Data = data.Data,
+                        WaypointData = data.Data,
                     });
             }
 

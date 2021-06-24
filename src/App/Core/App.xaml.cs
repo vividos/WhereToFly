@@ -129,7 +129,7 @@ namespace WhereToFly.App.Core
             DependencyService.Register<NavigationService>();
             DependencyService.Register<IDataService, Services.SqliteDatabase.SqliteDatabaseDataService>();
             DependencyService.Register<IGeolocationService, GeolocationService>();
-            DependencyService.Register<LiveWaypointRefreshService>();
+            DependencyService.Register<LiveDataRefreshService>();
         }
 
         /// <summary>
@@ -323,7 +323,7 @@ namespace WhereToFly.App.Core
 
             var locationList = await locationDataService.GetList();
 
-            var liveWaypointRefreshService = DependencyService.Get<LiveWaypointRefreshService>();
+            var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
             liveWaypointRefreshService.DataService = dataService;
 
             liveWaypointRefreshService.AddLiveWaypointList(locationList);
@@ -382,7 +382,7 @@ namespace WhereToFly.App.Core
         {
             base.OnSleep();
 
-            var liveWaypointRefreshService = DependencyService.Get<LiveWaypointRefreshService>();
+            var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
             liveWaypointRefreshService.StopTimer();
         }
 
@@ -398,7 +398,7 @@ namespace WhereToFly.App.Core
                 ThemeHelper.ChangeTheme(Settings.AppTheme, true);
             }
 
-            var liveWaypointRefreshService = DependencyService.Get<LiveWaypointRefreshService>();
+            var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
             liveWaypointRefreshService.ResumeTimer();
         }
         #endregion
