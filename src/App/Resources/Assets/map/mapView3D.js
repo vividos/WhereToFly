@@ -1965,34 +1965,69 @@ MapView.prototype.addTrack = function (track) {
     if (track.isFlightTrack)
         trackPointArray = this.removeTrackDuplicatePoints(track, trackPointArray);
 
-    var primitive = undefined;
-    var wallPrimitive = undefined;
-
-    if (track.isFlightTrack) {
-        primitive = this.getFlightTrackPrimitive(track, trackPointArray);
-        wallPrimitive = this.getFlightTrackWallPrimitive(track.id, trackPointArray);
-
-        this.trackPrimitivesCollection.add(wallPrimitive);
-
-    } else {
-        primitive = this.getGroundTrackPrimitive(track, trackPointArray);
-    }
-
-    this.trackPrimitivesCollection.add(primitive);
-
-    var boundingSphere = Cesium.BoundingSphere.fromPoints(trackPointArray, null);
-
     this.trackIdToTrackDataMap[track.id] = {
         track: track,
-        primitive: primitive,
-        wallPrimitive: wallPrimitive,
-        boundingSphere: boundingSphere
+        primitive: undefined,
+        wallPrimitive: undefined,
+        boundingSphere: undefined
     };
+
+    this.addOrUpdateTrackPrimitives(track);
 
     if (track.isLiveTrack) {
         this.addLiveTrackEntity(track);
         this.viewer.scene.requestRenderMode = false;
     }
+};
+
+/**
+ * Adds or updates track primitives to display ground track or flight track + wall. When the
+ * primitives already exist, the primitives are recreated with the current track data
+ * @param {object} [track] Track object to use
+ * @param {string} [track.id] unique ID of the track
+ * @param {boolean} [track.isFlightTrack] indicates if track is a flight
+ * @param {array} [track.listOfTrackPoints] An array of track points in long,
+ * lat, alt, long, lat, alt ... order
+ * @param {array} [track.listOfTimePoints] An array of time points in seconds;
+ * same length as listOfTrackPoints.length / 3; may be null
+ */
+MapView.prototype.addOrUpdateTrackPrimitives = function (track) {
+
+    var trackPointArray = Cesium.Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints);
+
+    // remove duplicates so that color values are calculated correctly
+    if (track.isFlightTrack)
+        trackPointArray = this.removeTrackDuplicatePoints(track, trackPointArray);
+
+    if (trackPointArray.length === 0)
+        return;
+
+    var trackData = this.trackIdToTrackDataMap[track.id];
+
+    if (trackData.boundingSphere !== undefined) {
+        // remove the existing primitives
+        if (trackData.primitive !== undefined)
+            this.trackPrimitivesCollection.remove(trackData.primitive);
+
+        if (trackData.wallPrimitive !== undefined)
+            this.trackPrimitivesCollection.remove(trackData.wallPrimitive);
+    }
+
+    // create new primitives
+    if (track.isFlightTrack) {
+        trackData.primitive = this.getFlightTrackPrimitive(track, trackPointArray);
+        trackData.wallPrimitive = this.getFlightTrackWallPrimitive(track.id, trackPointArray);
+
+        this.trackPrimitivesCollection.add(trackData.wallPrimitive);
+
+    } else {
+        trackData.primitive = this.getGroundTrackPrimitive(track, trackPointArray);
+    }
+
+    if (trackData.primitive !== undefined)
+        this.trackPrimitivesCollection.add(trackData.primitive);
+
+    trackData.boundingSphere = Cesium.BoundingSphere.fromPoints(trackPointArray, null);
 };
 
 /**
