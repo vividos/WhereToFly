@@ -89,10 +89,11 @@ function MapView(options) {
 
     console.log("MapView: #3 clock");
     var now = Cesium.JulianDate.now();
+    var start = Cesium.JulianDate.addDays(now, -1, new Cesium.JulianDate());
     var end = Cesium.JulianDate.addDays(now, 1, new Cesium.JulianDate());
 
     var clock = new Cesium.Clock({
-        startTime: now,
+        startTime: start,
         endTime: end,
         currentTime: now.clone(),
         clockStep: Cesium.ClockStep.SYSTEM_CLOCK,
@@ -266,6 +267,9 @@ function MapView(options) {
     this.locationDataSource = new Cesium.CustomDataSource('locations');
     this.locationDataSource.clustering = this.clustering;
     this.viewer.dataSources.add(this.locationDataSource);
+
+    this.liveTrackDataSource = new Cesium.CustomDataSource('livetrack');
+    this.viewer.dataSources.add(this.liveTrackDataSource);
 
     // swap out console.error for logging purposes
     var oldLog = console.error;
@@ -1984,6 +1988,93 @@ MapView.prototype.addTrack = function (track) {
         wallPrimitive: wallPrimitive,
         boundingSphere: boundingSphere
     };
+
+    if (track.isLiveTrack) {
+        this.addLiveTrackEntity(track);
+        this.viewer.scene.requestRenderMode = false;
+    }
+};
+
+/**
+ * Adds a live track entity for the given track object
+ * @param {object} [track] track object, with at least the following properties:
+ * @param {string} [track.id] unique ID of the track
+ * @param {string} [track.name] track name to add
+ * @param {string} [track.description] track description
+ * @param {string} [track.color] Color as "RRGGBB" string value, for trailing path
+ */
+MapView.prototype.addLiveTrackEntity = function (track) {
+
+    var pinColor = this.pinColorFromLocationType('LiveWaypoint');
+    var pinImage = this.imageUrlFromLocationType('LiveWaypoint');
+
+    var url = Cesium.getAbsoluteUri(pinImage, window.location.href);
+
+    var imagePromise = window.location.protocol === "file:" && !window.location.href.includes("android_asset")
+        ? this.pinBuilder.fromColor(pinColor, 48)
+        : this.pinBuilder.fromUrl(url, pinColor, 48)
+
+    var that = this;
+    return Cesium.when(
+        imagePromise,
+        function (canvas) {
+
+            var sampledPos = new Cesium.SampledPositionProperty();
+            sampledPos.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD;
+            sampledPos.setInterpolationOptions({
+                interpolationAlgorithm: Cesium.LagrangePolynomialApproximation,
+                interpolationDegree: 3
+            });
+
+            var showLabelProperty = new Cesium.TimeIntervalCollectionProperty();
+            showLabelProperty.intervals.addInterval(
+                new Cesium.TimeInterval({
+                    start: Cesium.JulianDate.now,
+                    stop: Cesium.JulianDate.addDays(Cesium.JulianDate.now, 365, new Cesium.JulianDate()),
+                    data: false // label is not visible
+                }));
+
+            var entity = {
+                id: "livetrackpoint-" + track.id,
+                name: track.name,
+                description: track.description,
+                position: sampledPos,
+                billboard: {
+                    image: canvas.toDataURL(),
+                    heightReference: Cesium.HeightReference.NONE,
+                    verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+                    disableDepthTestDistance: 5000.0
+                },
+                path: {
+                    leadTime: 0,
+                    trailTime: 3 * 300,
+                    resolution: 1,
+                    width: 3,
+                    material: Cesium.Color.fromCssColorString('#' + track.color)
+                },
+                label: {
+                    text: new Cesium.ConstantProperty("out of current track data"),
+                    show: showLabelProperty,
+                    font: "14pt sans-serif",
+                    style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+                    fillColor: Cesium.Color.WHITE,
+                    showBackground: false,
+                    outlineWidth: 10.0,
+                    outlineColor: Cesium.Color.BLACK,
+                    pixelOffset: new Cesium.Cartesian2(64, 0),
+                    heightReference: Cesium.HeightReference.NONE,
+                    disableDepthTestDistance: 5000.0
+                }
+            };
+
+            that.liveTrackDataSource.entities.add(entity);
+
+            var trackData = that.trackIdToTrackDataMap[track.id];
+            trackData.liveTrackEntity = entity;
+        },
+        function (error) {
+            console.error("MapView.addLiveTrackEntity: error while generating pin from URL " + url + ": " + error);
+        });
 };
 
 /**
@@ -2075,6 +2166,103 @@ MapView.prototype.removeTrackDuplicatePoints = function (track, trackPointArray)
 };
 
 /**
+ * When getting back live track data from the web API, it uses a different
+ * format for track points; convert here to the track format.
+ * @param {object} track Track object to modify
+ * @param {Number} track.trackStart track start, in seconds from epoch
+ * @param {Array} track.trackPoints track points, with latitude, longitude,
+ * altitude and offset values
+ */
+MapView.prototype.convertResponseDataToTrack = function (track) {
+
+    var trackStart = Math.floor(new Date(track.trackStart).getTime() / 1000.0);
+
+    track.listOfTrackPoints = [];
+    track.listOfTimePoints = [];
+
+    for (var trackPointIndex in track.trackPoints) {
+
+        var trackPoint = track.trackPoints[trackPointIndex];
+
+        track.listOfTrackPoints.push(trackPoint.longitude);
+        track.listOfTrackPoints.push(trackPoint.latitude);
+        track.listOfTrackPoints.push(trackPoint.altitude);
+
+        track.listOfTimePoints.push(trackStart + trackPoint.offset);
+    }
+
+    track.trackStart = undefined;
+    track.trackPoints = undefined;
+};
+
+/**
+ * Updates a live track with new track points. The track points are displayed
+ * using a Path entity object. If the height profile view is currently open,
+ * also add the track points there and update the view.
+ * @param {object} track Track object to modify, with at least the following
+ * @param {string} track.id unique ID of the track to add more track points
+ * properties:
+ * @param {array} [track.listOfTrackPoints] An array of track points in long,
+ * lat, alt, long, lat, alt ... order
+ * @param {array} [track.listOfTimePoints] An array of time points in seconds;
+ * same length as listOfTrackPoints.length / 3; must not be null
+ */
+MapView.prototype.updateLiveTrack = function (track) {
+
+    if (track.trackStart !== undefined)
+        this.convertResponseDataToTrack(track);
+
+    var trackData = this.trackIdToTrackDataMap[track.id];
+
+    if (trackData.liveTrackEntity === undefined) {
+        console.warn("called updateLiveTrack(), but track is no live track");
+        return;
+    }
+
+    // add points to path entity
+    var trackPointArray = Cesium.Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints);
+
+    var julianTimePoints = [];
+    for (var index = 0; index < track.listOfTimePoints.length; index++)
+        julianTimePoints.push(
+            Cesium.JulianDate.fromDate(
+                new Date(track.listOfTimePoints[index] * 1000.0)));
+
+    var lastTimePoint = track.listOfTimePoints[track.listOfTimePoints.length - 1];
+
+    console.info("added new track points, from " +
+        new Date(track.listOfTimePoints[0] * 1000.0) +
+        " to " +
+        new Date(lastTimePoint * 1000.0));
+
+    var sampledPos = trackData.liveTrackEntity.position;
+    sampledPos.addSamples(julianTimePoints, trackPointArray);
+
+    // update visibility and text of label
+    var showLabelProperty = trackData.liveTrackEntity.label.show;
+    showLabelProperty.intervals.addInterval(
+        new Cesium.TimeInterval({
+            start: julianTimePoints[0],
+            stop: julianTimePoints[julianTimePoints.length - 1],
+            data: false // label is not visible
+        }));
+
+    // TODO replacing label doesn't work yet
+    var text = "out of data since " +
+        new Date(lastTimePoint * 1000.0).toTimeString().substring(0, 8);
+
+    trackData.liveTrackEntity.label.text =
+        new Cesium.ConstantProperty(text);
+
+    // update height profile when shown
+    if (this.heightProfileView !== null &&
+        track.Id === this.currentHeightProfileTrackId) {
+
+        this.heightProfileView.addTrackPoints(track);
+    }
+};
+
+/**
  * Zooms to a track on the map
  * @param {string} trackId unique ID of the track to zoom to
  */
@@ -2115,11 +2303,19 @@ MapView.prototype.removeTrack = function (trackId) {
         if (trackData.wallPrimitive !== undefined)
             this.trackPrimitivesCollection.remove(trackData.wallPrimitive);
 
+        if (trackData.liveTrackEntity !== undefined)
+            this.liveTrackDataSource.entities.remove(trackData.liveTrackEntity);
+
         this.trackIdToTrackDataMap[trackId] = undefined;
     }
 
     if (trackId === this.currentHeightProfileTrackId)
         this.closeHeightProfileView();
+
+    if (this.liveTrackDataSource.entities.length === 0) {
+        // removed the last live track entity
+        this.viewer.scene.requestRenderMode = true;
+    }
 
     this.updateScene();
 };
@@ -2132,6 +2328,9 @@ MapView.prototype.clearAllTracks = function () {
     console.log("MapView: clearing all tracks");
 
     this.trackPrimitivesCollection.removeAll();
+
+    this.liveTrackDataSource.entities.removeAll();
+    this.viewer.scene.requestRenderMode = true;
 
     this.trackIdToTrackDataMap = {};
 

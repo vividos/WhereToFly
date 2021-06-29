@@ -290,6 +290,20 @@ HeightProfileView.prototype.addGroundProfile = function (elevationArray) {
 };
 
 /**
+ * Adds new track points to the height profile view, for the currently displayed track.
+ * @param {object} [track] Track data to add
+ * @param {string} [track.id] unique ID of the track
+ * @param {array} [track.listOfTrackPoints] An array of additional track points in long, lat, alt,
+ * long, lat, alt ... order
+ * @param {array} [track.listOfTimePoints] An array of additional time points in seconds since
+ * unix epoch; * same length as listOfTrackPoints; may be null
+ */
+HeightProfileView.prototype.addTrackPoints = function (track) {
+
+    // TODO implement
+};
+
+/**
  * Resets zoom level
  */
 HeightProfileView.prototype.resetZoom = function () {

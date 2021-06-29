@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using WhereToFly.App.Core.Logic;
 using WhereToFly.App.Model;
 using WhereToFly.Geo.Model;
+using WhereToFly.Shared.Model;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.Views
@@ -745,6 +746,33 @@ namespace WhereToFly.App.Core.Views
             };
 
             string js = $"map.updateTrack({JsonConvert.SerializeObject(trackJsonObject)});";
+
+            this.RunJavaScript(js);
+        }
+
+        /// <summary>
+        /// Updates live track data for a track
+        /// </summary>
+        /// <param name="data">live track data with updated track points</param>
+        public void UpdateLiveTrack(LiveTrackData data)
+        {
+            var trackJsonObject = new
+            {
+                id = data.ID,
+                name = data.Name,
+                description = data.Description,
+                trackStart = data.TrackStart.ToUnixTimeMilliseconds() / 1000.0,
+                trackPoints = data.TrackPoints.Select(
+                    trackPoint => new
+                    {
+                        latitude = trackPoint.Latitude,
+                        longitude = trackPoint.Longitude,
+                        altitude = trackPoint.Altitude,
+                        offset = trackPoint.Offset,
+                    }).ToArray()
+            };
+
+            string js = $"map.updateLiveTrack({JsonConvert.SerializeObject(trackJsonObject)});";
 
             this.RunJavaScript(js);
         }
