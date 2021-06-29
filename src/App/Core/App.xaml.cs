@@ -3,6 +3,7 @@ using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Distribute;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Services;
@@ -327,6 +328,17 @@ namespace WhereToFly.App.Core
             liveWaypointRefreshService.DataService = dataService;
 
             liveWaypointRefreshService.AddLiveWaypointList(locationList);
+
+            var trackDataService = dataService.GetTrackDataService();
+
+            var trackList = await trackDataService.GetList();
+
+            var liveTrackList = trackList.Where(track => track.IsLiveTrack);
+
+            foreach (var liveTrack in liveTrackList)
+            {
+                liveWaypointRefreshService.AddLiveTrack(liveTrack);
+            }
         }
 
         /// <summary>

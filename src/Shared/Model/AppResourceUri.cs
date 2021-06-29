@@ -74,6 +74,17 @@ namespace WhereToFly.Shared.Model
         }
 
         /// <summary>
+        /// Property that returns if the URI is a track resource uri
+        /// </summary>
+        public bool IsTrackResourceType
+        {
+            get
+            {
+                return this.Type == ResourceType.TestLiveTrack;
+            }
+        }
+
+        /// <summary>
         /// Resource type of the app resource URI; invalid when it contains None.
         /// </summary>
         public ResourceType Type { get; private set; } = ResourceType.None;

@@ -199,6 +199,12 @@ namespace WhereToFly.App.Core.ViewModels
 
             await trackDataService.Remove(track.Id);
 
+            if (track.IsLiveTrack)
+            {
+                var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
+                liveWaypointRefreshService.RemoveLiveTrack(track.Id);
+            }
+
             this.UpdateTrackList();
 
             App.MapView.RemoveTrack(track);
@@ -227,6 +233,9 @@ namespace WhereToFly.App.Core.ViewModels
             var trackDataService = dataService.GetTrackDataService();
 
             await trackDataService.ClearList();
+
+            var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
+            liveWaypointRefreshService.ClearLiveWaypointList();
 
             await this.ReloadTrackListAsync();
 

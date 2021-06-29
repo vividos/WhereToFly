@@ -400,26 +400,34 @@ namespace WhereToFly.App.Core.Views
         }
 
         /// <summary>
-        /// Called when live waypoint location has been updated
+        /// Called when live waypoint or live track location has been updated
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
         private void OnUpdateLiveData(object sender, LiveDataUpdateEventArgs args)
         {
             LiveWaypointData waypointData = args.WaypointData;
-            var location = this.FindLocationById(waypointData.ID);
-            if (location != null)
+            if (waypointData != null)
             {
-                location.MapLocation = new MapPoint(waypointData.Latitude, waypointData.Longitude, waypointData.Altitude);
-                location.Description = waypointData.Description;
-                location.Name = waypointData.Name;
+                var location = this.FindLocationById(waypointData.ID);
+                if (location != null)
+                {
+                    location.MapLocation = new MapPoint(waypointData.Latitude, waypointData.Longitude, waypointData.Altitude);
+                    location.Description = waypointData.Description;
+                    location.Name = waypointData.Name;
 
-                this.mapView.UpdateLocation(location);
+                    this.mapView.UpdateLocation(location);
 
-                var dataService = DependencyService.Get<IDataService>();
-                var locationDataService = dataService.GetLocationDataService();
+                    var dataService = DependencyService.Get<IDataService>();
+                    var locationDataService = dataService.GetLocationDataService();
 
-                Task.Run(async () => await locationDataService.Update(location));
+                    Task.Run(async () => await locationDataService.Update(location));
+                }
+            }
+
+            if (args.TrackData != null)
+            {
+                this.mapView.UpdateLiveTrack(args.TrackData);
             }
         }
 

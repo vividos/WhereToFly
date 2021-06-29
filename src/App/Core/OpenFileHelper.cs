@@ -418,6 +418,12 @@ namespace WhereToFly.App.Core
 
             await trackDataService.Add(track);
 
+            if (track.IsLiveTrack)
+            {
+                var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
+                liveWaypointRefreshService.AddLiveTrack(track);
+            }
+
             await App.AddTrack(track);
             App.MapView.ZoomToTrack(track);
 
