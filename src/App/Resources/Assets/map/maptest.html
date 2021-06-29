@@ -95,7 +95,7 @@
 
         <button onclick="updateLiveTrack()">Update live track</button>
 
-        <button onclick="zoomToTrack()">Zoom to live track</button>
+        <button onclick="zoomToLiveTrack()">Zoom to live track</button>
     </div>
 
     <div id="messageBand" class="message-band" style="top: 60px"></div>
@@ -295,16 +295,20 @@
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4) {
-                    var response = JSON.parse(xhr.responseText);
-                    response.data.id = liveTrack.id;
-                    map.updateLiveTrack(response.data);
+                    if (xhr.responseText === '')
+                        console.warn("xhr call returned nothing");
+                    else {
+                        var response = JSON.parse(xhr.responseText);
+                        response.data.id = liveTrack.id;
+                        map.updateLiveTrack(response.data);
+                    }
                 }
             };
             xhr.open('GET', 'https://wheretoflywebapi.azurewebsites.net/api/LiveTrack?id=where-to-fly://TestLiveTrack/dummy');
             xhr.send();
         }
 
-        zoomToTrack = function () {
+        zoomToLiveTrack = function () {
             map.zoomToTrack(liveTrack.id);
         }
 
