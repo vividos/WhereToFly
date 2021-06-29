@@ -1959,7 +1959,9 @@ MapView.prototype.addTrack = function (track) {
 
     console.log("MapView: adding list of track points, with ID " + track.id + " and " + track.listOfTrackPoints.length + " track points");
 
-    var trackPointArray = Cesium.Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints);
+    var trackPointArray = track.listOfTrackPoints.length > 0
+        ? Cesium.Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints)
+        : [];
 
     // remove duplicates so that color values are calculated correctly
     if (track.isFlightTrack)
@@ -1993,7 +1995,9 @@ MapView.prototype.addTrack = function (track) {
  */
 MapView.prototype.addOrUpdateTrackPrimitives = function (track) {
 
-    var trackPointArray = Cesium.Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints);
+    var trackPointArray = track.listOfTrackPoints.length > 0
+        ? Cesium.Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints)
+        : [];
 
     // remove duplicates so that color values are calculated correctly
     if (track.isFlightTrack)
