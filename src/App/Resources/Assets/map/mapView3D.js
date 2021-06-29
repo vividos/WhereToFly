@@ -2309,16 +2309,34 @@ MapView.prototype.zoomToTrack = function (trackId) {
 
         console.log("MapView: zooming to track with ID: " + trackId);
 
-        this.viewer.camera.flyToBoundingSphere(trackData.boundingSphere);
+        if (trackData.liveTrackEntity !== undefined) {
 
-        var center = Cesium.Cartographic.fromCartesian(trackData.boundingSphere.center);
+            var sampledPos = trackData.liveTrackEntity.position;
 
-        this.onUpdateLastShownLocation({
-            latitude: Cesium.Math.toDegrees(center.latitude),
-            longitude: Cesium.Math.toDegrees(center.longitude),
-            altitude: center.height,
-            viewingDistance: this.getCurrentViewingDistance()
-        });
+            var currentPosCartesian = sampledPos.getValue(this.viewer.clockViewModel.currentTime, new Cesium.Cartesian3());
+            if (currentPosCartesian !== undefined) {
+                var currentPos = Cesium.Cartographic.fromCartesian(currentPosCartesian);
+
+                this.flyTo({
+                    latitude: Cesium.Math.toDegrees(currentPos.latitude),
+                    longitude: Cesium.Math.toDegrees(currentPos.longitude),
+                    altitude: currentPos.height,
+                });
+            }
+        }
+        else if (trackData.boundingSphere !== undefined) {
+
+            this.viewer.camera.flyToBoundingSphere(trackData.boundingSphere);
+
+            var center = Cesium.Cartographic.fromCartesian(trackData.boundingSphere.center);
+
+            this.onUpdateLastShownLocation({
+                latitude: Cesium.Math.toDegrees(center.latitude),
+                longitude: Cesium.Math.toDegrees(center.longitude),
+                altitude: center.height,
+                viewingDistance: this.getCurrentViewingDistance()
+            });
+        }
     }
 };
 
@@ -2334,7 +2352,9 @@ MapView.prototype.removeTrack = function (trackId) {
 
         console.log("MapView: removing track with ID: " + trackId);
 
-        this.trackPrimitivesCollection.remove(trackData.primitive);
+        if (trackData.primitive !== undefined)
+            this.trackPrimitivesCollection.remove(trackData.primitive);
+
         if (trackData.wallPrimitive !== undefined)
             this.trackPrimitivesCollection.remove(trackData.wallPrimitive);
 
