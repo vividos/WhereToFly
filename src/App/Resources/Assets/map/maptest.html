@@ -300,6 +300,8 @@
                     else {
                         var response = JSON.parse(xhr.responseText);
                         response.data.id = liveTrack.id;
+                        response.data.isLiveTrack = true;
+                        response.data.isFlightTrack = true;
                         map.updateLiveTrack(response.data);
                     }
                 }
