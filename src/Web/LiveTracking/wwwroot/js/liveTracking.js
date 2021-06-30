@@ -9,6 +9,7 @@ function LiveTracking() {
     console.log("LiveTracking: initializing live tracking site");
 
     this.liveWaypointToIdMapping = {};
+    this.liveTrackToIdMapping = {};
     this.updateTimeoutMapping = {};
 
     this.initPage();
@@ -23,7 +24,7 @@ function LiveTracking() {
         callback: this.callMapAction
     });
 
-    this.map.setShadingMode('Fixed10Am');
+    this.map.setShadingMode('CurrentTime');
 
     this.addDefaultLayerAndLocationListsAndTracks();
 
@@ -136,7 +137,7 @@ LiveTracking.prototype.addCrossingTheAlpsLayer = function () {
  */
 LiveTracking.prototype.addLiveWaypoint = function (name, liveWaypointId) {
 
-    var pageIdPrefix = 'liveWaypoint';
+    var pageIdPrefix = 'liveData';
     this.liveWaypointToIdMapping[liveWaypointId] = pageIdPrefix;
 
     var idName = '#' + pageIdPrefix + 'Name';
@@ -154,6 +155,34 @@ LiveTracking.prototype.addLiveWaypoint = function (name, liveWaypointId) {
     }]);
 
     this.updateLiveWaypoint(liveWaypointId);
+};
+
+/**
+ * Adds a single live track to map
+ * @param {String} name Name of live track
+ * @param {String} liveTrackId Live track ID
+ */
+LiveTracking.prototype.addLiveTrack = function (name, liveTrackId) {
+
+    var pageIdPrefix = 'liveData';
+    this.liveTrackToIdMapping[liveTrackId] = pageIdPrefix;
+
+    var idName = '#' + pageIdPrefix + 'Name';
+    $(idName)[0].textContent = name;
+
+    this.map.addTrack({
+        id: liveTrackId,
+        name: name,
+        description: '',
+        isFlightTrack: true,
+        isLiveTrack: true,
+        listOfTrackPoints: [],
+        listOfTimePoints: [],
+        groundHeightProfile: [],
+        color: "ff8000"
+    });
+
+    this.updateLiveTrack(liveTrackId);
 };
 
 /**
@@ -199,25 +228,35 @@ LiveTracking.prototype.zoomToByPrefix = function (pageIdPrefix) {
         Object.keys(this.liveWaypointToIdMapping).find(
             key => this.liveWaypointToIdMapping[key] === pageIdPrefix);
 
-    var entity = this.map.viewer.entities.getById(liveWaypointUri);
+    if (liveWaypointUri !== undefined) {
 
-    if (entity === undefined) {
-        console.error("LiveTracking: couldn't find entity for live waypoint id: " + liveWaypointUri);
-        return;
+        var entity = this.map.viewer.entities.getById(liveWaypointUri);
+
+        if (entity === undefined) {
+            console.error("LiveTracking: couldn't find entity for live waypoint id: " + liveWaypointUri);
+            return;
+        }
+
+        var position = entity.position.getValue(this.map.viewer.clock.currentTime);
+        var location = Cesium.Cartographic.fromCartesian(position);
+
+        this.map.zoomToLocation({
+            longitude: Cesium.Math.toDegrees(location.longitude),
+            latitude: Cesium.Math.toDegrees(location.latitude),
+            altitude: location.height
+        });
     }
 
-    var position = entity.position.getValue(this.map.viewer.clock.currentTime);
-    var location = Cesium.Cartographic.fromCartesian(position);
+    var liveTrackUri =
+        Object.keys(this.liveTrackToIdMapping).find(
+            key => this.liveTrackToIdMapping[key] === pageIdPrefix);
 
-    this.map.zoomToLocation({
-        longitude: Cesium.Math.toDegrees(location.longitude),
-        latitude: Cesium.Math.toDegrees(location.latitude),
-        altitude: location.height
-    });
+    if (liveTrackUri !== undefined)
+        this.map.zoomToTrack(liveTrackUri);
 };
 
 /**
- * Updates a live waypoint by given page ID prefix
+ * Updates a live waypoint or track by given page ID prefix
  * @param {String} pageIdPrefix page ID prefix of live waypoint
  */
 LiveTracking.prototype.updateByPrefix = function (pageIdPrefix) {
@@ -226,7 +265,15 @@ LiveTracking.prototype.updateByPrefix = function (pageIdPrefix) {
         Object.keys(this.liveWaypointToIdMapping).find(
             key => this.liveWaypointToIdMapping[key] === pageIdPrefix);
 
-    this.updateLiveWaypoint(liveWaypointUri);
+    if (liveWaypointUri !== undefined)
+        this.updateLiveWaypoint(liveWaypointUri);
+
+    var liveTrackUri =
+        Object.keys(this.liveTrackToIdMapping).find(
+            key => this.liveTrackToIdMapping[key] === pageIdPrefix);
+
+    if (liveTrackUri !== undefined)
+        this.updateLiveTrack(liveTrackUri);
 };
 
 /**
@@ -293,16 +340,78 @@ LiveTracking.prototype.onUpdateLiveWaypointResult = function (liveWaypointUri, r
 };
 
 /**
+ * Updates a live track
+ * @param {String} liveTrackUri live track uri to update
+ */
+LiveTracking.prototype.updateLiveTrack = function (liveTrackUri) {
+
+    console.log("LiveTracking: updating live track " + liveTrackUri);
+
+    var that = this;
+    $.ajax({
+        url: '/?handler=UpdateLiveTrack',
+        data: {
+            Uri: liveTrackUri
+        }
+    })
+        .done(function (result) {
+            that.onUpdateLiveTrackResult(liveTrackUri, result);
+        });
+};
+
+/**
+ * Called when updated live waypoint data is available
+ * @param {String} liveTrackUri live track uri to update
+ * @param {Object} result ajax result object with updated data, or a string as error message
+ */
+LiveTracking.prototype.onUpdateLiveTrackResult = function (liveTrackUri, result) {
+
+    console.log("LiveTracking: update result: " + JSON.stringify(result));
+
+    if (result.data !== undefined) {
+        result.data.id = liveTrackUri;
+        result.data.isFlightTrack = true;
+        result.data.isLiveTrack = true;
+        result.data.color = "ff8000";
+
+        this.map.updateLiveTrack(result.data);
+
+        if (this.liveTrackToIdMapping[liveTrackUri] !== undefined) {
+            var pageIdPrefix = this.liveTrackToIdMapping[liveTrackUri];
+
+            var idDesc = '#' + pageIdPrefix + 'Description';
+            $(idDesc)[0].innerHTML = result.data.description;
+
+            var idLastUpdate = '#' + pageIdPrefix + 'LastUpdate';
+            $(idLastUpdate)[0].textContent = 'Last update: ' + new Date().toLocaleTimeString();
+        }
+    }
+
+    if (typeof result === 'string') {
+
+        if (this.liveTrackToIdMapping[liveTrackUri] !== undefined) {
+            var idDesc2 = '#' + this.liveTrackToIdMapping[liveTrackUri] + 'Description';
+
+            $(idDesc2)[0].textContent = 'Error: ' + result;
+        }
+    }
+
+    // schedule next update based on reported date
+    if (result.nextRequestDate !== undefined)
+        this.scheduleNextUpdate(liveTrackUri, result.nextRequestDate);
+};
+
+/**
  * Schedules next update for live waypoint, using next request date from query result
- * @param {String} liveWaypointUri live waypoint uri to use
+ * @param {String} liveDataUri live waypoint or track uri to use
  * @param {String} nextRequestDate ISO 8601 formatted next request date
  */
-LiveTracking.prototype.scheduleNextUpdate = function (liveWaypointUri, nextRequestDate) {
+LiveTracking.prototype.scheduleNextUpdate = function (liveDataUri, nextRequestDate) {
 
-    console.log("LiveTracking: scheduling next update for live waypoint " + liveWaypointUri);
+    console.log("LiveTracking: scheduling next update for live waypoint or track " + liveDataUri);
 
-    if (this.updateTimeoutMapping[liveWaypointUri] !== undefined)
-        clearTimeout(this.updateTimeoutMapping[liveWaypointUri]);
+    if (this.updateTimeoutMapping[liveDataUri] !== undefined)
+        clearTimeout(this.updateTimeoutMapping[liveDataUri]);
 
     var now = new Date();
     var nextRequest = new Date(nextRequestDate);
@@ -315,9 +424,12 @@ LiveTracking.prototype.scheduleNextUpdate = function (liveWaypointUri, nextReque
 
     var that = this;
     var myTimeout = setTimeout(function () {
-        console.log("LiveTracking: next update for " + liveWaypointUri + " is due!");
-        that.updateLiveWaypoint(liveWaypointUri);
+        console.log("LiveTracking: next update for " + liveDataUri + " is due!");
+        if (liveDataUri in that.liveTrackToIdMapping)
+            that.updateLiveTrack(liveDataUri);
+        else
+            that.updateLiveWaypoint(liveDataUri);
     }, millisTillUpdate);
 
-    this.updateTimeoutMapping[liveWaypointUri] = myTimeout;
+    this.updateTimeoutMapping[liveDataUri] = myTimeout;
 };

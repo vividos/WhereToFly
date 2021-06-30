@@ -36,25 +36,25 @@
                 <div class="list-group-item">
                     <h5 class="mb-1">
                         <img src="~/images/paragliding.svg" width="30" height="30" alt="paraglider" class="img-invert" />
-                        <span id="liveWaypointName">Live Waypoint</span>
+                        <span id="liveDataName">Live Waypoint</span>
                     </h5>
                     <p class="mb-1">
-                        <div id="liveWaypointDescription">
+                        <div id="liveDataDescription">
                             Position: Lat/Long
                         </div>
                         <div class="d-flex w-100">
                             <button type="button" class="btn btn-primary btn-sm mr-1"
-                                    onclick="javascript: liveTracking.zoomToByPrefix('liveWaypoint');">
+                                    onclick="javascript: liveTracking.zoomToByPrefix('liveData');">
                                 Zoom
                             </button>
                             <button type="button" class="btn btn-primary btn-sm mr-1"
-                                    onclick="javascript: liveTracking.updateByPrefix('liveWaypoint');">
+                                    onclick="javascript: liveTracking.updateByPrefix('liveData');">
                                 Update
                             </button>
                         </div>
                     </p>
                     <div class="d-flex w-100 justify-content-between">
-                        <small id="liveWaypointLastUpdate">Last update: N/A</small>
+                        <small id="liveDataLastUpdate">Last update: N/A</small>
                     </div>
                 </div>
             </div>
@@ -104,7 +104,10 @@
         var liveTrackingInfoList = @Html.Raw(Json.Serialize(Model.LiveTrackingInfoList));
         for (var key in liveTrackingInfoList) {
             var item = liveTrackingInfoList[key];
-            liveTracking.addLiveWaypoint(item.name, item.uri);
+            if (item.isLiveTrack)
+                liveTracking.addLiveTrack(item.name, item.uri);
+            else
+                liveTracking.addLiveWaypoint(item.name, item.uri);
         }
     }
 

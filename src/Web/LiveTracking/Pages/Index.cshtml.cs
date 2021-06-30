@@ -50,6 +50,11 @@ namespace WhereToFly.Web.LiveTracking.Pages
             /// Live tracking waypoint URI
             /// </summary>
             public string Uri { get; set; }
+
+            /// <summary>
+            /// Indicates if it's a live track or a live waypoint
+            /// </summary>
+            public bool IsLiveTrack { get; set; }
         }
 
         /// <summary>
@@ -98,6 +103,7 @@ namespace WhereToFly.Web.LiveTracking.Pages
                     {
                         Name = name ?? "Live Waypoint",
                         Uri = liveWaypointUri.ToString(),
+                        IsLiveTrack = liveWaypointUri.IsTrackResourceType,
                     }
                 };
             }
@@ -117,6 +123,29 @@ namespace WhereToFly.Web.LiveTracking.Pages
             try
             {
                 LiveWaypointQueryResult queryResult = await this.backendWebApi.GetLiveWaypointDataAsync(liveWaypointId);
+
+                return new JsonResult(queryResult);
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Called when page requests an update for a live track
+        /// </summary>
+        /// <param name="data">update live track data</param>
+        /// <returns>
+        /// JSON result of query, either a LiveTrackQueryResult or an exception text
+        /// </returns>
+        public async Task<JsonResult> OnGetUpdateLiveTrackAsync(UpdateLiveWaypointData data)
+        {
+            string liveTrackId = data.Uri;
+
+            try
+            {
+                LiveTrackQueryResult queryResult = await this.backendWebApi.GetLiveTrackDataAsync(liveTrackId);
 
                 return new JsonResult(queryResult);
             }
