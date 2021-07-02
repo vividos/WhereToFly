@@ -208,12 +208,7 @@ namespace WhereToFly.App.Core.Services
 
                 if (nextLocationOrTrackId != null)
                 {
-                    this.nextUpdateQueue.Enqueue(new LiveDataUpdateInfo
-                    {
-                        LocationOrTrackId = nextLocationOrTrackId,
-                        UpdateTime = nextUpdateTime
-                    });
-
+                    this.EnqueueNextUpdate(nextLocationOrTrackId, nextUpdateTime);
                     this.StartTimer(nextUpdateTime);
                 }
                 else if (this.liveWaypointMap.Any() || this.liveTrackMap.Any())
@@ -221,22 +216,14 @@ namespace WhereToFly.App.Core.Services
                     // no locations or tracks in the map; update all
                     Debug.WriteLine("LiveDataRefreshService: schedule update for all live waypoints and live tracks");
 
-                    foreach (var liveWaypointId in this.liveWaypointMap.Keys)
+                    foreach (string liveWaypointId in this.liveWaypointMap.Keys)
                     {
-                        this.nextUpdateQueue.Enqueue(new LiveDataUpdateInfo
-                        {
-                            LocationOrTrackId = liveWaypointId,
-                            UpdateTime = DateTimeOffset.Now
-                        });
+                        this.EnqueueNextUpdate(liveWaypointId, DateTimeOffset.Now);
                     }
 
-                    foreach (var liveTrackId in this.liveTrackMap.Keys)
+                    foreach (string liveTrackId in this.liveTrackMap.Keys)
                     {
-                        this.nextUpdateQueue.Enqueue(new LiveDataUpdateInfo
-                        {
-                            LocationOrTrackId = liveTrackId,
-                            UpdateTime = DateTimeOffset.Now
-                        });
+                        this.EnqueueNextUpdate(liveTrackId, DateTimeOffset.Now);
                     }
 
                     Task.Run(this.CheckLiveWaypointsAndTracksAsync);
@@ -246,6 +233,28 @@ namespace WhereToFly.App.Core.Services
                     nextUpdateTime = DateTimeOffset.Now + TimeSpan.FromMinutes(1.0);
                     this.StartTimer(nextUpdateTime);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Enqueues next update for given location or track ID
+        /// </summary>
+        /// <param name="locationOrTrackId">location or track ID to enqueue update</param>
+        /// <param name="nextUpdateTime">time of next update</param>
+        private void EnqueueNextUpdate(string locationOrTrackId, DateTimeOffset nextUpdateTime)
+        {
+            lock (this.dataLock)
+            {
+                if (this.nextUpdateQueue.Any(updateInfo => updateInfo.LocationOrTrackId == locationOrTrackId))
+                {
+                    return; // already scheduled
+                }
+
+                this.nextUpdateQueue.Enqueue(new LiveDataUpdateInfo
+                {
+                    LocationOrTrackId = locationOrTrackId,
+                    UpdateTime = nextUpdateTime
+                });
             }
         }
 
