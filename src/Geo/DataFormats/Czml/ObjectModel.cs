@@ -116,6 +116,12 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// </summary>
         [JsonProperty("polygon", NullValueHandling = NullValueHandling.Ignore)]
         public Polygon Polygon { get; set; }
+
+        /// <summary>
+        /// Model entity
+        /// </summary>
+        [JsonProperty("model", NullValueHandling = NullValueHandling.Ignore)]
+        public Model Model { get; set; }
     }
 
     /// <summary>
@@ -612,6 +618,12 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// </summary>
         [JsonProperty("disableDepthTestDistance")]
         public double DisableDepthTestDistance { get; set; } = 0.0;
+
+        /// <summary>
+        /// Distance display condition
+        /// </summary>
+        [JsonProperty("distanceDisplayCondition", NullValueHandling = NullValueHandling.Ignore)]
+        public DistanceDisplayCondition DistanceDisplayCondition { get; set; }
     }
 
     /// <summary>
@@ -748,6 +760,30 @@ namespace WhereToFly.Geo.DataFormats.Czml
     }
 
     /// <summary>
+    /// CZML model object.
+    /// </summary>
+    public class Model
+    {
+        /// <summary>
+        /// The model's URI, usually an URL to a .glb file
+        /// </summary>
+        [JsonProperty("uri")]
+        public string Uri { get; set; }
+
+        /// <summary>
+        /// Scale of model
+        /// </summary>
+        [JsonProperty("scale")]
+        public double Scale { get; set; } = 1.0;
+
+        /// <summary>
+        /// Height reference of object; when null, is not set at all
+        /// </summary>
+        [JsonProperty("heightReference", NullValueHandling = NullValueHandling.Ignore)]
+        public HeightReference? HeightReference { get; set; } = null;
+    }
+
+    /// <summary>
     /// A list of positions, containing multiple triplets of latitude, longitude and altitude
     /// values.
     /// </summary>
@@ -856,6 +892,37 @@ namespace WhereToFly.Geo.DataFormats.Czml
             this.Rgba[1] = g;
             this.Rgba[2] = b;
             this.Rgba[3] = a;
+        }
+
+        /// <summary>
+        /// Returns a color object from given CSS color string, either in the format #RRGGBB or
+        /// #RRGGBBAA.
+        /// </summary>
+        /// <param name="cssColor">CSS color string</param>
+        /// <returns>color object</returns>
+        public static Color FromCssColorString(string cssColor)
+        {
+            string color = cssColor.TrimStart('#');
+            uint rgba = uint.Parse(color, System.Globalization.NumberStyles.HexNumber);
+
+            if (color.Length == 6)
+            {
+                return new Color(
+                    (int)((rgba >> 16) & 0xFF),
+                    (int)((rgba >> 8) & 0xFF),
+                    (int)(rgba & 0xFF),
+                    255);
+            }
+            else if (color.Length == 8)
+            {
+                return new Color(
+                    (int)((rgba >> 24) & 0xFF),
+                    (int)((rgba >> 16) & 0xFF),
+                    (int)((rgba >> 8) & 0xFF),
+                    (int)(rgba & 0xFF));
+            }
+
+            throw new FormatException("invalid css color string: " + cssColor);
         }
     }
 }
