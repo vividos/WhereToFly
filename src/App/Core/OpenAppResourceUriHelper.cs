@@ -195,6 +195,7 @@ namespace WhereToFly.App.Core
                 Description = HtmlConverter.Sanitize(result.Data.Description),
                 IsFlightTrack = true,
                 IsLiveTrack = true,
+                Color = "ff8000",
                 TrackPoints = result.Data.TrackPoints.Select(
                     trackPoint => new TrackPoint(
                         latitude: trackPoint.Latitude,

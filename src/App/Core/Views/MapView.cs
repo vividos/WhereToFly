@@ -724,7 +724,7 @@ namespace WhereToFly.App.Core.Views
                 listOfTrackPoints = trackPointsList,
                 listOfTimePoints = timePointsList,
                 groundHeightProfile = groundHeightProfileList,
-                color = track.IsFlightTrack ? null : track.Color
+                color = track.IsFlightTrack && !track.IsLiveTrack ? null : track.Color
             };
 
             string js = $"map.addTrack({JsonConvert.SerializeObject(trackJsonObject)});";
