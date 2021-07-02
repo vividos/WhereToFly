@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WhereToFly.App.Core.Logic;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Model;
+using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;
 using Xamarin.Forms;
@@ -427,7 +428,51 @@ namespace WhereToFly.App.Core.Views
 
             if (args.TrackData != null)
             {
+                var dataService = DependencyService.Get<IDataService>();
+                var trackDataService = dataService.GetTrackDataService();
+
+                Task.Run(async () =>
+                {
+                    var track = await trackDataService.Get(args.TrackData.ID);
+
+                    track.Name = args.TrackData.Name;
+                    track.Description = args.TrackData.Description;
+                    this.MergeTrackPoints(track, args.TrackData);
+
+                    track.CalculateStatistics();
+
+                    await trackDataService.Update(track);
+                });
+
                 this.mapView.UpdateLiveTrack(args.TrackData);
+            }
+        }
+
+        /// <summary>
+        /// Merges track points from live track data with the given track
+        /// </summary>
+        /// <param name="track">track to merge new track points to</param>
+        /// <param name="trackData">newly received track data</param>
+        private void MergeTrackPoints(Track track, LiveTrackData trackData)
+        {
+            var trackPoints = trackData.TrackPoints.Select(
+                    trackPoint => new TrackPoint(
+                        latitude: trackPoint.Latitude,
+                        longitude: trackPoint.Longitude,
+                        altitude: trackPoint.Altitude,
+                        null)
+                    {
+                        Time = trackData.TrackStart.AddSeconds(trackPoint.Offset),
+                    }).ToList();
+
+            if (trackPoints.Any())
+            {
+                DateTimeOffset? trackDataStart = trackPoints.First().Time;
+                if (trackDataStart.HasValue)
+                {
+                    track.RemoveTrackPointsAfter(trackDataStart.Value);
+                    track.TrackPoints.AddRange(trackPoints);
+                }
             }
         }
 
