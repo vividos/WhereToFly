@@ -332,10 +332,16 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         /// description.
         /// </summary>
         /// <param name="liveTrackId">live track ID</param>
+        /// <param name="lastTrackPointTime">
+        /// last track point that the client already has received, or null when no track points
+        /// are known yet
+        /// </param>
         /// <returns>query result for live track</returns>
-        public async Task<LiveTrackQueryResult> GetLiveTrackDataAsync(string liveTrackId)
+        public async Task<LiveTrackQueryResult> GetLiveTrackDataAsync(
+            string liveTrackId,
+            DateTimeOffset? lastTrackPointTime)
         {
-            return await this.backendDataService.GetLiveTrackDataAsync(liveTrackId);
+            return await this.backendDataService.GetLiveTrackDataAsync(liveTrackId, lastTrackPointTime);
         }
 
         /// <summary>

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using WhereToFly.Shared.Model;
 using WhereToFly.WebApi.Logic.Services;
@@ -42,8 +43,14 @@ namespace WhereToFly.WebApi.Logic
         /// data is not readily available and must be fetched.
         /// </summary>
         /// <param name="rawId">live track ID (maybe urlencoded)</param>
+        /// <param name="lastTrackPointTime">
+        /// last track point that the client already has received, or null when no track points
+        /// are known yet
+        /// </param>
         /// <returns>live track query result</returns>
-        public async Task<LiveTrackQueryResult> GetLiveTrackDataAsync(string rawId)
+        public async Task<LiveTrackQueryResult> GetLiveTrackDataAsync(
+            string rawId,
+            DateTimeOffset? lastTrackPointTime)
         {
             AppResourceUri uri = GetAndCheckLiveTrackId(rawId);
 
@@ -58,6 +65,17 @@ namespace WhereToFly.WebApi.Logic
             if (result != null)
             {
                 this.CacheLiveTrackData(result.Data);
+            }
+
+            if (result != null &&
+                lastTrackPointTime.HasValue &&
+                lastTrackPointTime.Value > result.Data.TrackStart)
+            {
+                double lastTrackOffset = (lastTrackPointTime.Value - result.Data.TrackStart).TotalSeconds;
+                result.Data.TrackPoints =
+                    result.Data.TrackPoints
+                    .Where(trackPoint => trackPoint.Offset > lastTrackOffset)
+                    .ToArray();
             }
 
             return result;

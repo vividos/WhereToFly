@@ -346,9 +346,18 @@ namespace WhereToFly.App.Core.Services
             while ((updateInfo = this.GetNextUpdateInfo()) != null)
             {
                 bool isLocation = false;
+                DateTimeOffset? lastTrackPointTime = null;
                 lock (this.dataLock)
                 {
                     isLocation = this.liveWaypointMap.ContainsKey(updateInfo.LocationOrTrackId);
+
+                    if (!isLocation &&
+                        this.liveTrackMap.TryGetValue(updateInfo.LocationOrTrackId, out Track liveTrack))
+                    {
+                        lastTrackPointTime =
+                            liveTrack.TrackPoints.LastOrDefault(
+                                trackPoint => trackPoint.Time != null)?.Time;
+                    }
                 }
 
                 if (isLocation)
@@ -357,7 +366,9 @@ namespace WhereToFly.App.Core.Services
                 }
                 else
                 {
-                    await this.UpdateLiveTrackAsync(updateInfo.LocationOrTrackId);
+                    await this.UpdateLiveTrackAsync(
+                        updateInfo.LocationOrTrackId,
+                        lastTrackPointTime);
                 }
             }
 
@@ -435,15 +446,23 @@ namespace WhereToFly.App.Core.Services
         /// Updates live track by getting live track data and notify all event subjects.
         /// </summary>
         /// <param name="liveTrackId">live track ID to update</param>
+        /// <param name="lastTrackPointTime">
+        /// last track point that the client already has received, or null when no track points
+        /// are known yet
+        /// </param>
         /// <returns>task to wait on</returns>
-        private async Task UpdateLiveTrackAsync(string liveTrackId)
+        private async Task UpdateLiveTrackAsync(
+            string liveTrackId,
+            DateTimeOffset? lastTrackPointTime)
         {
             Debug.WriteLine($"LiveDataRefreshService: updating live track for {liveTrackId}");
 
             LiveTrackQueryResult queryResult = null;
             try
             {
-                queryResult = await this.DataService.GetLiveTrackDataAsync(liveTrackId);
+                queryResult = await this.DataService.GetLiveTrackDataAsync(
+                    liveTrackId,
+                    lastTrackPointTime);
             }
             catch (Exception ex)
             {

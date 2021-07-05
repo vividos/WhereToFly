@@ -1,4 +1,5 @@
 ﻿using Refit;
+using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using WhereToFly.Shared.Model;
@@ -46,9 +47,15 @@ namespace WhereToFly.App.Core.Services
             /// description.
             /// </summary>
             /// <param name="liveTrackId">live track ID</param>
+            /// <param name="lastTrackPointTime">
+            /// last track point that the client already has received, or null when no track points
+            /// are known yet
+            /// </param>
             /// <returns>query result for live track</returns>
-            [Get("/api/LiveTrack?id={id}")]
-            Task<LiveTrackQueryResult> GetLiveTrackDataAsync([AliasAs("id")] string liveTrackId);
+            [Get("/api/LiveTrack?id={id}&time={time}")]
+            Task<LiveTrackQueryResult> GetLiveTrackDataAsync(
+                [AliasAs("id")] string liveTrackId,
+                [AliasAs("time")] DateTimeOffset? lastTrackPointTime);
 
             /// <summary>
             /// Plans a tour with given parameters and returns a planned tour, including
@@ -121,10 +128,18 @@ namespace WhereToFly.App.Core.Services
         /// description.
         /// </summary>
         /// <param name="liveTrackId">live track ID</param>
+        /// <param name="lastTrackPointTime">
+        /// last track point that the client already has received, or null when no track points
+        /// are known yet
+        /// </param>
         /// <returns>query result for live track</returns>
-        public async Task<LiveTrackQueryResult> GetLiveTrackDataAsync(string liveTrackId)
+        public async Task<LiveTrackQueryResult> GetLiveTrackDataAsync(
+            string liveTrackId,
+            DateTimeOffset? lastTrackPointTime)
         {
-            LiveTrackQueryResult result = await this.backendWebApi.GetLiveTrackDataAsync(liveTrackId);
+            LiveTrackQueryResult result = await this.backendWebApi.GetLiveTrackDataAsync(
+                liveTrackId,
+                lastTrackPointTime);
 
             result.Data.ID = System.Net.WebUtility.UrlDecode(result.Data.ID);
 

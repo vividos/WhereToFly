@@ -1,4 +1,5 @@
 ﻿using Refit;
+using System;
 using System.Threading.Tasks;
 using WhereToFly.Shared.Model;
 
@@ -23,8 +24,14 @@ namespace WhereToFly.Web.LiveTracking
         /// description.
         /// </summary>
         /// <param name="liveTrackId">live track ID</param>
+        /// <param name="lastTrackPointTime">
+        /// last track point that the client already has received, or null when no track points
+        /// are known yet
+        /// </param>
         /// <returns>query result for live track</returns>
-        [Get("/api/LiveTrack?id={id}")]
-        Task<LiveTrackQueryResult> GetLiveTrackDataAsync([AliasAs("id")] string liveTrackId);
+        [Get("/api/LiveTrack?id={id}&time={time}")]
+        Task<LiveTrackQueryResult> GetLiveTrackDataAsync(
+            [AliasAs("id")] string liveTrackId,
+            [AliasAs("time")] DateTimeOffset? lastTrackPointTime);
     }
 }

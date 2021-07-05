@@ -186,7 +186,8 @@ namespace WhereToFly.App.Core
             var dataService = DependencyService.Get<IDataService>();
 
             LiveTrackQueryResult result = await dataService.GetLiveTrackDataAsync(
-                appResourceUri.ToString());
+                appResourceUri.ToString(),
+                null);
 
             var track = new Track
             {

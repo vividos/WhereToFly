@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Model;
 using WhereToFly.Shared.Model;
@@ -76,8 +77,14 @@ namespace WhereToFly.App.Core
         /// description.
         /// </summary>
         /// <param name="liveTrackId">live track ID</param>
+        /// <param name="lastTrackPointTime">
+        /// last track point that the client already has received, or null when no track points
+        /// are known yet
+        /// </param>
         /// <returns>query result for live track</returns>
-        Task<LiveTrackQueryResult> GetLiveTrackDataAsync(string liveTrackId);
+        Task<LiveTrackQueryResult> GetLiveTrackDataAsync(
+            string liveTrackId,
+            DateTimeOffset? lastTrackPointTime);
 
         /// <summary>
         /// Plans a tour with given tour planning parameters and returns the planned tour.

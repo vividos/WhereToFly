@@ -43,16 +43,20 @@ namespace WhereToFly.WebApi.Core.Controllers
         /// live track is retrieved when necessary, or a cached copy of the data is used.
         /// </summary>
         /// <param name="id">live track ID</param>
+        /// <param name="lastTrackPointTime">
+        /// last track point that the client already has received, or null when no track points
+        /// are known yet
+        /// </param>
         /// <returns>live track query result</returns>
         /// <exception cref="ArgumentException">thrown when invalid live track ID was passed</exception>
         [HttpGet]
-        public async Task<LiveTrackQueryResult> Get(string id)
+        public async Task<LiveTrackQueryResult> Get(string id, DateTimeOffset? lastTrackPointTime)
         {
             this.CheckLiveTrackId(id);
 
             this.logger.LogDebug($"getting live track with ID: {id}");
 
-            return await this.cacheManager.GetLiveTrackDataAsync(id);
+            return await this.cacheManager.GetLiveTrackDataAsync(id, lastTrackPointTime);
         }
 
         /// <summary>
