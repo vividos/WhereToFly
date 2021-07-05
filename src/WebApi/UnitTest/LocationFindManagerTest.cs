@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
+using WhereToFly.Geo.Model;
 using WhereToFly.WebApi.Logic;
 
 namespace WhereToFly.WebApi.UnitTest
