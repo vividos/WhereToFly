@@ -96,6 +96,8 @@
         <button onclick="updateLiveTrack()">Update live track</button>
 
         <button onclick="zoomToLiveTrack()">Zoom to live track</button>
+
+        <button onclick="removeLiveTrack()">Remove live track</button>
     </div>
 
     <div id="messageBand" class="message-band" style="top: 60px"></div>
@@ -312,6 +314,10 @@
 
         zoomToLiveTrack = function () {
             map.zoomToTrack(liveTrack.id);
+        }
+
+        removeLiveTrack = function () {
+            map.removeTrack(liveTrack.id);
         }
 
     </script>
