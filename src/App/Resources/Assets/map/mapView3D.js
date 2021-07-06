@@ -2450,7 +2450,7 @@ MapView.prototype.removeTrack = function (trackId) {
     if (trackId === this.currentHeightProfileTrackId)
         this.closeHeightProfileView();
 
-    if (this.liveTrackDataSource.entities.length === 0) {
+    if (this.liveTrackDataSource.entities.values.length === 0) {
         // removed the last live track entity
         this.viewer.scene.requestRenderMode = true;
     }
