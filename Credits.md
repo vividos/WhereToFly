@@ -178,6 +178,7 @@ The following icons in the App are from the Material Design Icons
 - layers-plus - Austin Andrews @Templarian
 - gesture-spread - Michael Richins @MrGrigri
 - gesture-tap - Michael Richins @MrGrigri
+- timeline-clock-outline - Austin Andrews @Templarian
 
 All custom icons are licensed under the Apache 2.0 license:
 https://github.com/Templarian/MaterialDesign/blob/master/LICENSE
