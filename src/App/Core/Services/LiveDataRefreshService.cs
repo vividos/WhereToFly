@@ -31,7 +31,8 @@ namespace WhereToFly.App.Core.Services
         }
 
         /// <summary>
-        /// Lock for liveWaypointMap, liveTrackMap, nextUpdateQueue and nextPossibleUpdateMap
+        /// Lock for liveWaypointMap, liveTrackMap, liveTrackLastTrackPointTimeMap,
+        /// nextUpdateQueue and nextPossibleUpdateMap
         /// </summary>
         private readonly object dataLock = new object();
 
@@ -44,6 +45,12 @@ namespace WhereToFly.App.Core.Services
         /// Mapping of live track IDs and their track objects
         /// </summary>
         private readonly Dictionary<string, Track> liveTrackMap = new Dictionary<string, Track>();
+
+        /// <summary>
+        /// Mapping of live track IDs and the last track point time
+        /// </summary>
+        private readonly Dictionary<string, DateTimeOffset> liveTrackLastTrackPointTimeMap =
+            new Dictionary<string, DateTimeOffset>();
 
         /// <summary>
         /// Queue with all updates to be due
@@ -164,6 +171,16 @@ namespace WhereToFly.App.Core.Services
                 else
                 {
                     this.liveTrackMap.Add(liveTrack.Id, liveTrack);
+                }
+
+                DateTimeOffset? lastTrackPointTime =
+                    liveTrack.TrackPoints.LastOrDefault(
+                        trackPoint => trackPoint.Time != null)?.Time;
+
+                if (lastTrackPointTime != null)
+                {
+                    this.liveTrackLastTrackPointTimeMap[liveTrack.Id] =
+                        lastTrackPointTime.Value;
                 }
             }
 
@@ -351,12 +368,18 @@ namespace WhereToFly.App.Core.Services
                 {
                     isLocation = this.liveWaypointMap.ContainsKey(updateInfo.LocationOrTrackId);
 
-                    if (!isLocation &&
-                        this.liveTrackMap.TryGetValue(updateInfo.LocationOrTrackId, out Track liveTrack))
+                    if (!isLocation)
                     {
-                        lastTrackPointTime =
-                            liveTrack.TrackPoints.LastOrDefault(
-                                trackPoint => trackPoint.Time != null)?.Time;
+                        if (this.liveTrackLastTrackPointTimeMap.ContainsKey(updateInfo.LocationOrTrackId))
+                        {
+                            lastTrackPointTime = this.liveTrackLastTrackPointTimeMap[updateInfo.LocationOrTrackId];
+                        }
+                        else if (this.liveTrackMap.TryGetValue(updateInfo.LocationOrTrackId, out Track liveTrack))
+                        {
+                            lastTrackPointTime =
+                                liveTrack.TrackPoints.LastOrDefault(
+                                    trackPoint => trackPoint.Time != null)?.Time;
+                        }
                     }
                 }
 
@@ -481,6 +504,8 @@ namespace WhereToFly.App.Core.Services
                 return;
             }
 
+            DateTimeOffset? nextLastTrackPointTime = null;
+
             if (queryResult.Data != null)
             {
                 this.UpdateLiveData?.Invoke(
@@ -489,12 +514,24 @@ namespace WhereToFly.App.Core.Services
                     {
                         TrackData = queryResult.Data,
                     });
+
+                if (queryResult.Data.TrackPoints.Any())
+                {
+                    double offset = queryResult.Data.TrackPoints.Last().Offset;
+                    nextLastTrackPointTime = queryResult.Data.TrackStart.AddSeconds(offset);
+                }
             }
 
             var nextUpdate = queryResult.NextRequestDate;
             lock (this.dataLock)
             {
                 this.nextPossibleUpdateMap[liveTrackId] = nextUpdate;
+
+                if (nextLastTrackPointTime != null)
+                {
+                    this.liveTrackLastTrackPointTimeMap[liveTrackId] =
+                        nextLastTrackPointTime.Value;
+                }
             }
         }
     }
