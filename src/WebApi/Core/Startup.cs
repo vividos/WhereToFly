@@ -17,6 +17,11 @@ namespace WhereToFly.WebApi.LiveWaypoints
     public class Startup
     {
         /// <summary>
+        /// CORS policy name for debug mode
+        /// </summary>
+        private const string DebugCorsPolicyName = "DebugCorsPolicy";
+
+        /// <summary>
         /// Starts up WebAPI project
         /// </summary>
         /// <param name="configuration">configuration object</param>
@@ -37,6 +42,18 @@ namespace WhereToFly.WebApi.LiveWaypoints
         /// <param name="services">service collection</param>
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(
+                    DebugCorsPolicyName,
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                    });
+            });
+
             services.AddControllers()
                 .AddNewtonsoftJson();
 
@@ -114,6 +131,11 @@ namespace WhereToFly.WebApi.LiveWaypoints
 
             app.UseHttpsRedirection();
             app.UseRouting();
+
+            if (env.IsDevelopment())
+            {
+                app.UseCors(DebugCorsPolicyName);
+            }
 
             app.UseEndpoints(endpoints =>
             {
