@@ -50,7 +50,9 @@ namespace WhereToFly.WebApi.Core.Controllers
         /// <returns>live track query result</returns>
         /// <exception cref="ArgumentException">thrown when invalid live track ID was passed</exception>
         [HttpGet]
-        public async Task<LiveTrackQueryResult> Get(string id, DateTimeOffset? lastTrackPointTime)
+        public async Task<LiveTrackQueryResult> Get(
+            string id,
+            [FromQuery(Name = "time")] DateTimeOffset? lastTrackPointTime)
         {
             this.CheckLiveTrackId(id);
 
