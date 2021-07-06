@@ -687,7 +687,7 @@ namespace WhereToFly.App.Core.Views
         /// <param name="track">track to add</param>
         public void AddTrack(Track track)
         {
-            if (!track.TrackPoints.Any())
+            if (!track.TrackPoints.Any() && !track.IsLiveTrack)
             {
                 return;
             }
