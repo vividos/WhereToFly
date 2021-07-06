@@ -24,3 +24,84 @@
     text-align: left;
     transition: all 0.25s ease-in-out;
 }
+
+/* container div style for the live track toolbar */
+.livetrack-toolbar-container {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    position: absolute;
+    bottom: 50px;
+    opacity: 0.7;
+    background-color: #202124;
+    margin: 0px;
+    padding: 8px;
+    z-index: 100;
+    width: 100vw;
+    color: white;
+    font-family: sans-serif
+}
+
+/* style for the toolbar title text */
+.livetrack-toolbar-title {
+    font: bold 18px sans-serif
+}
+
+/* style for the slider container */
+.livetrack-slider-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 400px;
+    padding: 10px;
+}
+
+/* style for the slider */
+.livetrack-slider {
+    height: 22px;
+    background-color: #d3d3d3;
+    cursor: pointer;
+    outline: none;
+}
+
+    /* style for the slider handle, webkit */
+    .livetrack-slider::-webkit-slider-thumb {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 22px;
+        height: 22px;
+        background: #2F299E;
+    }
+
+    /* style for the slider handle, mozilla */
+    .livetrack-slider::-moz-range-thumb {
+        appearance: none;
+        -moz-appearance: none;
+        width: 22px;
+        height: 22px;
+        background: #2F299E;
+    }
+
+/* style for the toolbar button container */
+.livetrack-toolbar-button-container {
+    top: 10px;
+    right: 18px;
+}
+
+/* style for each toolbar button */
+.livetrack-toolbar-button {
+    position: relative;
+    float: right;
+    padding: 5px;
+    margin: 10px;
+    width: 24px;
+    height: 24px;
+    background-color: white;
+}
+
+/* the .svg toolbar images are white, so invert them to display correctly */
+.livetrack-toolbar-button-image {
+    filter: invert(100%);
+}

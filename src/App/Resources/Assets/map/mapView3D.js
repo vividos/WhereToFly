@@ -4,6 +4,7 @@
  * @param {object} [options] Options to use for initializing map view
  * @param {String} [options.id] DOM ID of the div element to create map view in
  * @param {String} [options.messageBandId] DOM ID of the message band div element
+ * @param {String} [options.liveTrackToolbarId] DOM ID of the live track toolbar div element
  * @param {object} [options.initialCenterPoint] initial center point of map view
  * @param {double} [options.initialCenterPoint.latitude] latitude of center point
  * @param {double} [options.initialCenterPoint.longitude] longitude of center point
@@ -25,6 +26,7 @@ function MapView(options) {
 
     this.options = options || {
         id: 'mapElement',
+        liveTrackToolbarId: 'liveTrackToolbar',
         initialCenterPoint: { latitude: 47.67, longitude: 11.88 },
         initialViewingDistance: 5000.0,
         hasMouse: false,
@@ -271,6 +273,10 @@ function MapView(options) {
     this.liveTrackDataSource = new Cesium.CustomDataSource('livetrack');
     this.viewer.dataSources.add(this.liveTrackDataSource);
 
+    this.currentLiveTrackTimeOffset = -180;
+
+    this.setupLiveTrackToolbar();
+
     // swap out console.error for logging purposes
     var oldLog = console.error;
     console.error = function (message) {
@@ -466,6 +472,99 @@ MapView.prototype.onNewCluster = function (clusteredEntities, cluster) {
     else
         cluster.billboard.image =
             this.clustering.singleDigitPins[clusteredEntities.length - 2];
+};
+
+/**
+ * Sets up the live track toolbar to show when one or more live tracks are
+ * present. The toolbar consists of a slider to adjust the time offset into
+ * the past, a text div displaying the time offset and a button to reset the
+ * time offset to the default value.
+ */
+MapView.prototype.setupLiveTrackToolbar = function () {
+
+    if (this.options.liveTrackToolbarId === undefined)
+        return;
+
+    var toolbar = document.getElementById(this.options.liveTrackToolbarId);
+
+    // add title
+    var titleDiv = document.createElement('div');
+    titleDiv.classList.add('livetrack-toolbar-title');
+    titleDiv.innerText = 'Live Tracking';
+    toolbar.appendChild(titleDiv);
+
+    // add slider
+    var sliderCont = document.createElement('div');
+    sliderCont.classList.add('livetrack-slider-container');
+    sliderCont.innerHTML = 'Time offset';
+
+    var sliderInput = document.createElement('input');
+    sliderInput.type = 'range';
+    sliderInput.min = -900;
+    sliderInput.max = 0;
+    sliderInput.value = this.currentLiveTrackTimeOffset;
+    sliderInput.classList.add('livetrack-slider');
+
+    var that = this;
+    sliderInput.oninput = function () {
+        var timeOffset = parseInt(this.value, 10);
+        that.setLiveTrackTime(timeOffset);
+    }
+    sliderCont.appendChild(sliderInput);
+
+    // slider text
+    var sliderText = document.createElement('div');
+    sliderText.id = 'liveTrackSliderText';
+    sliderCont.appendChild(sliderText);
+
+    toolbar.appendChild(sliderCont);
+
+    // add toolbar buttons
+    var toolbarCont = document.createElement('div');
+    toolbarCont.classList.add('livetrack-toolbar-button-container');
+
+    // reset button
+    var resetButton = document.createElement('div');
+    resetButton.classList.add('livetrack-toolbar-button');
+    resetButton.onclick = function () {
+        that.setLiveTrackTime(-180);
+        sliderInput.value = that.currentLiveTrackTimeOffset;
+    }
+
+    // reset button image
+    var resetButtonImg = document.createElement('img');
+    resetButtonImg.src = 'images/timeline-clock-outline.svg';
+    resetButtonImg.classList.add('livetrack-toolbar-button-image');
+    resetButton.appendChild(resetButtonImg);
+    toolbarCont.appendChild(resetButton);
+
+    toolbar.appendChild(toolbarCont);
+};
+
+/**
+ * Displays the live track toolbar, e.g. when a live track was loaded.
+ */
+MapView.prototype.showLiveTrackToolbar = function () {
+
+    if (this.options.liveTrackToolbarId === undefined)
+        return;
+
+    var toolbar = document.getElementById(this.options.liveTrackToolbarId);
+
+    toolbar.style.display = 'flex';
+};
+
+/**
+ * Hides the live track toolbar, e.g. when no live tracks are displayed anymore.
+ */
+MapView.prototype.hideLiveTrackToolbar = function () {
+
+    if (this.options.liveTrackToolbarId === undefined)
+        return;
+
+    var toolbar = document.getElementById(this.options.liveTrackToolbarId);
+
+    toolbar.style.display = 'none';
 };
 
 /**
@@ -1980,6 +2079,10 @@ MapView.prototype.addTrack = function (track) {
     if (track.isLiveTrack) {
         this.addLiveTrackEntity(track);
         this.viewer.scene.requestRenderMode = false;
+
+        this.showLiveTrackToolbar();
+
+        this.setLiveTrackTime(this.currentLiveTrackTimeOffset);
     }
 };
 
@@ -2381,6 +2484,37 @@ MapView.prototype.getTrackLastTrackPointTime = function (trackId) {
 };
 
 /**
+ * Sets a new time offset from current time ("now")
+ * @param {Number} timeOffset time offset from now, in seconds; usually
+ * negative, since most live tracking data is sent from the past
+ */
+MapView.prototype.setLiveTrackTime = function (timeOffset) {
+
+    this.currentLiveTrackTimeOffset = timeOffset;
+
+    var now = Cesium.JulianDate.now();
+    var liveTrackTime = Cesium.JulianDate.addSeconds(now, timeOffset, new Cesium.JulianDate());
+    var end = Cesium.JulianDate.addDays(now, 1, new Cesium.JulianDate());
+
+    // note: set clockStep before currentTime, or it will be reset
+    this.viewer.clock.clockStep = Cesium.ClockStep.SYSTEM_CLOCK;
+    this.viewer.clock.stopTime = end.clone();
+    this.viewer.clock.currentTime = liveTrackTime.clone();
+
+    // also update text
+    if (this.options.liveTrackToolbarId === undefined)
+        return;
+
+    var liveTrackSliderText = document.getElementById("liveTrackSliderText");
+
+    if (timeOffset === 0)
+        liveTrackSliderText.innerHTML = "now";
+    else
+        liveTrackSliderText.innerHTML = "-" + new Date(-timeOffset * 1000).toTimeString().substring(3, 8);
+
+};
+
+/**
  * Zooms to a track on the map
  * @param {string} trackId unique ID of the track to zoom to
  */
@@ -2453,6 +2587,8 @@ MapView.prototype.removeTrack = function (trackId) {
     if (this.liveTrackDataSource.entities.values.length === 0) {
         // removed the last live track entity
         this.viewer.scene.requestRenderMode = true;
+
+        this.hideLiveTrackToolbar();
     }
 
     this.updateScene();
@@ -2469,6 +2605,8 @@ MapView.prototype.clearAllTracks = function () {
 
     this.liveTrackDataSource.entities.removeAll();
     this.viewer.scene.requestRenderMode = true;
+
+    this.hideLiveTrackToolbar();
 
     this.trackIdToTrackDataMap = {};
 

@@ -279,6 +279,7 @@ namespace WhereToFly.App.Core.Views
             {
                 id = "mapElement",
                 messageBandId = "messageBand",
+                liveTrackToolbarId = "liveTrackToolbar",
                 initialCenterPoint = new
                 {
                     latitude = initialCenterPoint.Latitude,
