@@ -2363,6 +2363,24 @@ MapView.prototype.mergeLiveTrackPoints = function (track) {
 };
 
 /**
+ * Returns the time of the last (latest) track point of a track.
+ * @param {string} trackId track ID of track
+ * @returns track point time, in seconds since epoch, or null when no track
+ * points are available yet
+ */
+MapView.prototype.getTrackLastTrackPointTime = function (trackId) {
+
+    var trackData = this.trackIdToTrackDataMap[trackId];
+
+    if (trackData === undefined ||
+        trackData.track === undefined ||
+        trackData.track.listOfTimePoints.length === 0)
+        return null;
+
+    return trackData.track.listOfTimePoints[trackData.track.listOfTimePoints.length - 1];
+};
+
+/**
  * Zooms to a track on the map
  * @param {string} trackId unique ID of the track to zoom to
  */

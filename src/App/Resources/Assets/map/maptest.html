@@ -308,7 +308,16 @@
                     }
                 }
             };
-            xhr.open('GET', 'https://wheretoflywebapi.azurewebsites.net/api/LiveTrack?id=where-to-fly://TestLiveTrack/dummy');
+
+            var url = 'https://wheretoflywebapi.azurewebsites.net/api/LiveTrack?id=where-to-fly://TestLiveTrack/dummy';
+
+            var lastTrackPointTime = map.getTrackLastTrackPointTime(liveTrack.id);
+            if (lastTrackPointTime !== null) {
+                var time = new Date(lastTrackPointTime * 1000.0).toISOString();
+                url += "&time=" + encodeURIComponent(time);
+            }
+
+            xhr.open('GET', url);
             xhr.send();
         }
 
