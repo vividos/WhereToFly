@@ -38,6 +38,11 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         private readonly BackendDataService backendDataService = new BackendDataService();
 
         /// <summary>
+        /// Track data service; only created once for caching purposes
+        /// </summary>
+        private TrackDataService trackDataService;
+
+        /// <summary>
         /// Backing store for app settings
         /// </summary>
         private AppSettings appSettings;
@@ -240,7 +245,12 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         /// <returns>track data service</returns>
         public ITrackDataService GetTrackDataService()
         {
-            return new TrackDataService(this.connection);
+            if (this.trackDataService == null)
+            {
+                this.trackDataService = new TrackDataService(this.connection);
+            }
+
+            return this.trackDataService;
         }
 
         /// <summary>
