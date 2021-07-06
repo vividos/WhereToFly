@@ -371,9 +371,6 @@ LiveTracking.prototype.onUpdateLiveTrackResult = function (liveTrackUri, result)
 
     if (result.data !== undefined) {
         result.data.id = liveTrackUri;
-        result.data.isFlightTrack = true;
-        result.data.isLiveTrack = true;
-        result.data.color = "ff8000";
 
         this.map.updateLiveTrack(result.data);
 
