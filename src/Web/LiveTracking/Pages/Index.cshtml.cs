@@ -37,6 +37,22 @@ namespace WhereToFly.Web.LiveTracking.Pages
         }
 
         /// <summary>
+        /// Data sent by UpdateLiveTrack GET request from page
+        /// </summary>
+        public class UpdateLiveTrackData
+        {
+            /// <summary>
+            /// The URI of the live track to update
+            /// </summary>
+            public string Uri { get; set; }
+
+            /// <summary>
+            /// Last track point time; may be null
+            /// </summary>
+            public DateTimeOffset? LastTrackPointTime { get; set; }
+        }
+
+        /// <summary>
         /// Infos about a single live tracking object
         /// </summary>
         public class LiveTrackingInfo
@@ -139,13 +155,17 @@ namespace WhereToFly.Web.LiveTracking.Pages
         /// <returns>
         /// JSON result of query, either a LiveTrackQueryResult or an exception text
         /// </returns>
-        public async Task<JsonResult> OnGetUpdateLiveTrackAsync(UpdateLiveWaypointData data)
+        public async Task<JsonResult> OnGetUpdateLiveTrackAsync(UpdateLiveTrackData data)
         {
             string liveTrackId = data.Uri;
+            DateTimeOffset? lastTrackPointTime = data.LastTrackPointTime;
 
             try
             {
-                LiveTrackQueryResult queryResult = await this.backendWebApi.GetLiveTrackDataAsync(liveTrackId);
+                LiveTrackQueryResult queryResult =
+                    await this.backendWebApi.GetLiveTrackDataAsync(
+                        liveTrackId,
+                        lastTrackPointTime);
 
                 return new JsonResult(queryResult);
             }

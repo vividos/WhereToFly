@@ -351,7 +351,8 @@ LiveTracking.prototype.updateLiveTrack = function (liveTrackUri) {
     $.ajax({
         url: '/?handler=UpdateLiveTrack',
         data: {
-            Uri: liveTrackUri
+            Uri: liveTrackUri,
+            LastTrackPointTime: that.map.getTrackLastTrackPointTime(liveTrackUri)
         }
     })
         .done(function (result) {
