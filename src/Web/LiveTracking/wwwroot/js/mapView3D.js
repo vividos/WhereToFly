@@ -4,6 +4,7 @@
  * @param {object} [options] Options to use for initializing map view
  * @param {String} [options.id] DOM ID of the div element to create map view in
  * @param {String} [options.messageBandId] DOM ID of the message band div element
+ * @param {String} [options.liveTrackToolbarId] DOM ID of the live track toolbar div element
  * @param {object} [options.initialCenterPoint] initial center point of map view
  * @param {double} [options.initialCenterPoint.latitude] latitude of center point
  * @param {double} [options.initialCenterPoint.longitude] longitude of center point
@@ -25,6 +26,7 @@ function MapView(options) {
 
     this.options = options || {
         id: 'mapElement',
+        liveTrackToolbarId: 'liveTrackToolbar',
         initialCenterPoint: { latitude: 47.67, longitude: 11.88 },
         initialViewingDistance: 5000.0,
         hasMouse: false,
@@ -271,6 +273,10 @@ function MapView(options) {
     this.liveTrackDataSource = new Cesium.CustomDataSource('livetrack');
     this.viewer.dataSources.add(this.liveTrackDataSource);
 
+    this.currentLiveTrackTimeOffset = -180;
+
+    this.setupLiveTrackToolbar();
+
     // swap out console.error for logging purposes
     var oldLog = console.error;
     console.error = function (message) {
@@ -466,6 +472,99 @@ MapView.prototype.onNewCluster = function (clusteredEntities, cluster) {
     else
         cluster.billboard.image =
             this.clustering.singleDigitPins[clusteredEntities.length - 2];
+};
+
+/**
+ * Sets up the live track toolbar to show when one or more live tracks are
+ * present. The toolbar consists of a slider to adjust the time offset into
+ * the past, a text div displaying the time offset and a button to reset the
+ * time offset to the default value.
+ */
+MapView.prototype.setupLiveTrackToolbar = function () {
+
+    if (this.options.liveTrackToolbarId === undefined)
+        return;
+
+    var toolbar = document.getElementById(this.options.liveTrackToolbarId);
+
+    // add title
+    var titleDiv = document.createElement('div');
+    titleDiv.classList.add('livetrack-toolbar-title');
+    titleDiv.innerText = 'Live Tracking';
+    toolbar.appendChild(titleDiv);
+
+    // add slider
+    var sliderCont = document.createElement('div');
+    sliderCont.classList.add('livetrack-slider-container');
+    sliderCont.innerHTML = 'Time offset';
+
+    var sliderInput = document.createElement('input');
+    sliderInput.type = 'range';
+    sliderInput.min = -900;
+    sliderInput.max = 0;
+    sliderInput.value = this.currentLiveTrackTimeOffset;
+    sliderInput.classList.add('livetrack-slider');
+
+    var that = this;
+    sliderInput.oninput = function () {
+        var timeOffset = parseInt(this.value, 10);
+        that.setLiveTrackTime(timeOffset);
+    }
+    sliderCont.appendChild(sliderInput);
+
+    // slider text
+    var sliderText = document.createElement('div');
+    sliderText.id = 'liveTrackSliderText';
+    sliderCont.appendChild(sliderText);
+
+    toolbar.appendChild(sliderCont);
+
+    // add toolbar buttons
+    var toolbarCont = document.createElement('div');
+    toolbarCont.classList.add('livetrack-toolbar-button-container');
+
+    // reset button
+    var resetButton = document.createElement('div');
+    resetButton.classList.add('livetrack-toolbar-button');
+    resetButton.onclick = function () {
+        that.setLiveTrackTime(-180);
+        sliderInput.value = that.currentLiveTrackTimeOffset;
+    }
+
+    // reset button image
+    var resetButtonImg = document.createElement('img');
+    resetButtonImg.src = 'images/timeline-clock-outline.svg';
+    resetButtonImg.classList.add('livetrack-toolbar-button-image');
+    resetButton.appendChild(resetButtonImg);
+    toolbarCont.appendChild(resetButton);
+
+    toolbar.appendChild(toolbarCont);
+};
+
+/**
+ * Displays the live track toolbar, e.g. when a live track was loaded.
+ */
+MapView.prototype.showLiveTrackToolbar = function () {
+
+    if (this.options.liveTrackToolbarId === undefined)
+        return;
+
+    var toolbar = document.getElementById(this.options.liveTrackToolbarId);
+
+    toolbar.style.display = 'flex';
+};
+
+/**
+ * Hides the live track toolbar, e.g. when no live tracks are displayed anymore.
+ */
+MapView.prototype.hideLiveTrackToolbar = function () {
+
+    if (this.options.liveTrackToolbarId === undefined)
+        return;
+
+    var toolbar = document.getElementById(this.options.liveTrackToolbarId);
+
+    toolbar.style.display = 'none';
 };
 
 /**
@@ -755,6 +854,7 @@ MapView.prototype.setShadingMode = function (shadingMode) {
 
     var today = new Date();
     var now = Cesium.JulianDate.now();
+    var start = Cesium.JulianDate.addDays(now, -1, new Cesium.JulianDate());
 
     switch (shadingMode) {
         case 'Fixed10Am':
@@ -772,7 +872,7 @@ MapView.prototype.setShadingMode = function (shadingMode) {
         case 'CurrentTime':
             var end = Cesium.JulianDate.addDays(now, 1, new Cesium.JulianDate());
 
-            this.viewer.clockViewModel.startTime = now;
+            this.viewer.clockViewModel.startTime = start;
             this.viewer.clockViewModel.currentTime = now.clone();
             this.viewer.clockViewModel.endTime = end;
             this.viewer.clockViewModel.clockStep = Cesium.ClockStep.SYSTEM_CLOCK;
@@ -1979,6 +2079,10 @@ MapView.prototype.addTrack = function (track) {
     if (track.isLiveTrack) {
         this.addLiveTrackEntity(track);
         this.viewer.scene.requestRenderMode = false;
+
+        this.showLiveTrackToolbar();
+
+        this.setLiveTrackTime(this.currentLiveTrackTimeOffset);
     }
 };
 
@@ -2073,7 +2177,7 @@ MapView.prototype.addLiveTrackEntity = function (track) {
                     data: false // label is not visible
                 }));
 
-            var entity = {
+            var entityOptions = {
                 id: "livetrackpoint-" + track.id,
                 name: track.name,
                 description: track.description,
@@ -2086,8 +2190,8 @@ MapView.prototype.addLiveTrackEntity = function (track) {
                 },
                 path: {
                     leadTime: 0,
-                    trailTime: 3 * 300,
-                    resolution: 1,
+                    trailTime: 15 * 60,
+                    resolution: 60,
                     width: 3,
                     material: Cesium.Color.fromCssColorString('#' + track.color)
                 },
@@ -2106,7 +2210,7 @@ MapView.prototype.addLiveTrackEntity = function (track) {
                 }
             };
 
-            that.liveTrackDataSource.entities.add(entity);
+            var entity = that.liveTrackDataSource.entities.add(entityOptions);
 
             var trackData = that.trackIdToTrackDataMap[track.id];
             trackData.liveTrackEntity = entity;
@@ -2208,13 +2312,16 @@ MapView.prototype.removeTrackDuplicatePoints = function (track, trackPointArray)
  * When getting back live track data from the web API, it uses a different
  * format for track points; convert here to the track format.
  * @param {object} track Track object to modify
- * @param {Number} track.trackStart track start, in seconds from epoch
+ * @param {Number} track.trackStart track start, in seconds from epoch or as
+ * ISO8601 string
  * @param {Array} track.trackPoints track points, with latitude, longitude,
  * altitude and offset values
  */
 MapView.prototype.convertResponseDataToTrack = function (track) {
 
-    var trackStart = Math.floor(new Date(track.trackStart).getTime() / 1000.0);
+    var trackStart = typeof track.trackStart === 'string'
+        ? Math.floor(new Date(track.trackStart).getTime() / 1000.0)
+        : track.trackStart;
 
     track.listOfTrackPoints = [];
     track.listOfTimePoints = [];
@@ -2245,11 +2352,22 @@ MapView.prototype.convertResponseDataToTrack = function (track) {
  * lat, alt, long, lat, alt ... order
  * @param {array} [track.listOfTimePoints] An array of time points in seconds;
  * same length as listOfTrackPoints.length / 3; must not be null
+ * Also the following properties can be set, which will be converted to
+ * listOfTrackPoints and listOfTimePoints internally:
+ * @param {Number} track.trackStart track start, in seconds from epoch or as
+ * ISO8601 string
+ * @param {Array} track.trackPoints track points, with latitude, longitude,
+ * altitude and offset values
  */
 MapView.prototype.updateLiveTrack = function (track) {
 
     if (track.trackStart !== undefined)
         this.convertResponseDataToTrack(track);
+
+    if (!(track.id in this.trackIdToTrackDataMap)) {
+        console.warn("called updateLiveTrack(), but track wasn't added with addTrack() yet");
+        return;
+    }
 
     var trackData = this.trackIdToTrackDataMap[track.id];
 
@@ -2257,6 +2375,17 @@ MapView.prototype.updateLiveTrack = function (track) {
         console.warn("called updateLiveTrack(), but track is no live track");
         return;
     }
+
+    track.color = trackData.track.color;
+    track.isFlightTrack = trackData.track.isFlightTrack;
+    track.isLiveTrack = trackData.track.isLiveTrack;
+
+    trackData.liveTrackEntity.name = track.name;
+    trackData.liveTrackEntity.description = track.description;
+
+    // add new track points to track and wall primitives
+    this.mergeLiveTrackPoints(track);
+    this.addOrUpdateTrackPrimitives(track);
 
     // add points to path entity
     var trackPointArray = Cesium.Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints);
@@ -2269,7 +2398,7 @@ MapView.prototype.updateLiveTrack = function (track) {
 
     var lastTimePoint = track.listOfTimePoints[track.listOfTimePoints.length - 1];
 
-    console.info("added new track points, from " +
+    console.info("MapView: added new track points, from " +
         new Date(track.listOfTimePoints[0] * 1000.0) +
         " to " +
         new Date(lastTimePoint * 1000.0));
@@ -2286,8 +2415,7 @@ MapView.prototype.updateLiveTrack = function (track) {
             data: false // label is not visible
         }));
 
-    // TODO replacing label doesn't work yet
-    var text = "out of data since " +
+    var text = "out of data\nsince " +
         new Date(lastTimePoint * 1000.0).toTimeString().substring(0, 8);
 
     trackData.liveTrackEntity.label.text =
@@ -2299,6 +2427,91 @@ MapView.prototype.updateLiveTrack = function (track) {
 
         this.heightProfileView.addTrackPoints(track);
     }
+};
+
+/**
+ * Merges the track points in given track object with track points already
+ * stored in the trackData mapping. Used for live tracking.
+ * @param {object} track Track object to use
+ * @param {string} track.id unique ID of the track to add more track points
+ * @param {array} [track.listOfTrackPoints] An array of track points in long,
+ * lat, alt, long, lat, alt ... order
+ * @param {array} [track.listOfTimePoints] An array of time points in seconds;
+ * same length as listOfTrackPoints.length / 3; must not be null
+ */
+MapView.prototype.mergeLiveTrackPoints = function (track) {
+
+    var trackData = this.trackIdToTrackDataMap[track.id];
+
+    if (track.listOfTrackPoints.length === 0 ||
+        track.listOfTrackPoints.length !== track.listOfTimePoints.length * 3)
+        return;
+
+    var startTimePoint = track.listOfTimePoints[0];
+
+    var timePos = trackData.track.listOfTimePoints.indexOf(startTimePoint);
+    var trackPos = timePos * 3;
+
+    var removedTrackPoints = (timePos === -1 ? "no " : (trackData.track.listOfTimePoints.length - timePos) + " ");
+    console.info("MapView: removing " + removedTrackPoints +
+        "live track points and adding " + track.listOfTimePoints.length + " new track points");
+
+    if (timePos !== -1) {
+        trackData.track.listOfTrackPoints.splice(trackPos, trackData.track.listOfTrackPoints.length - trackPos);
+        trackData.track.listOfTimePoints.splice(timePos, trackData.track.listOfTimePoints.length - timePos);
+    }
+
+    trackData.track.listOfTrackPoints = trackData.track.listOfTrackPoints.concat(track.listOfTrackPoints);
+    trackData.track.listOfTimePoints = trackData.track.listOfTimePoints.concat(track.listOfTimePoints);
+};
+
+/**
+ * Returns the time of the last (latest) track point of a track.
+ * @param {string} trackId track ID of track
+ * @returns track point time, in seconds since epoch, or null when no track
+ * points are available yet
+ */
+MapView.prototype.getTrackLastTrackPointTime = function (trackId) {
+
+    var trackData = this.trackIdToTrackDataMap[trackId];
+
+    if (trackData === undefined ||
+        trackData.track === undefined ||
+        trackData.track.listOfTimePoints.length === 0)
+        return null;
+
+    return trackData.track.listOfTimePoints[trackData.track.listOfTimePoints.length - 1];
+};
+
+/**
+ * Sets a new time offset from current time ("now")
+ * @param {Number} timeOffset time offset from now, in seconds; usually
+ * negative, since most live tracking data is sent from the past
+ */
+MapView.prototype.setLiveTrackTime = function (timeOffset) {
+
+    this.currentLiveTrackTimeOffset = timeOffset;
+
+    var now = Cesium.JulianDate.now();
+    var liveTrackTime = Cesium.JulianDate.addSeconds(now, timeOffset, new Cesium.JulianDate());
+    var end = Cesium.JulianDate.addDays(now, 1, new Cesium.JulianDate());
+
+    // note: set clockStep before currentTime, or it will be reset
+    this.viewer.clock.clockStep = Cesium.ClockStep.SYSTEM_CLOCK;
+    this.viewer.clock.stopTime = end.clone();
+    this.viewer.clock.currentTime = liveTrackTime.clone();
+
+    // also update text
+    if (this.options.liveTrackToolbarId === undefined)
+        return;
+
+    var liveTrackSliderText = document.getElementById("liveTrackSliderText");
+
+    if (timeOffset === 0)
+        liveTrackSliderText.innerHTML = "now";
+    else
+        liveTrackSliderText.innerHTML = "-" + new Date(-timeOffset * 1000).toTimeString().substring(3, 8);
+
 };
 
 /**
@@ -2371,9 +2584,11 @@ MapView.prototype.removeTrack = function (trackId) {
     if (trackId === this.currentHeightProfileTrackId)
         this.closeHeightProfileView();
 
-    if (this.liveTrackDataSource.entities.length === 0) {
+    if (this.liveTrackDataSource.entities.values.length === 0) {
         // removed the last live track entity
         this.viewer.scene.requestRenderMode = true;
+
+        this.hideLiveTrackToolbar();
     }
 
     this.updateScene();
@@ -2390,6 +2605,8 @@ MapView.prototype.clearAllTracks = function () {
 
     this.liveTrackDataSource.entities.removeAll();
     this.viewer.scene.requestRenderMode = true;
+
+    this.hideLiveTrackToolbar();
 
     this.trackIdToTrackDataMap = {};
 
