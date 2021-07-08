@@ -32,6 +32,11 @@ namespace WhereToFly.Geo.DataFormats
         private readonly List<Placemark> trackPlacemarkList = new List<Placemark>();
 
         /// <summary>
+        /// List of track display names
+        /// </summary>
+        private readonly List<string> trackDisplayNameList = new List<string>();
+
+        /// <summary>
         /// List of location placemarks
         /// </summary>
         private readonly List<Placemark> locationPlacemarkList = new List<Placemark>();
@@ -128,6 +133,32 @@ namespace WhereToFly.Geo.DataFormats
                     }
                 }
             }
+
+            this.trackDisplayNameList.AddRange(
+                from trackPlacemark in this.trackPlacemarkList
+                select GetElementDisplayPath(trackPlacemark));
+        }
+
+        /// <summary>
+        /// Returns display path for given KML element
+        /// </summary>
+        /// <param name="element">KML element</param>
+        /// <returns>display name for element</returns>
+        private static string GetElementDisplayPath(Element element)
+        {
+            string parentName =
+                element.Parent == null || element.Parent is Kml
+                ? string.Empty
+                : GetElementDisplayPath(element.Parent);
+
+            if (element is Feature feature)
+            {
+                return string.IsNullOrEmpty(parentName)
+                    ? feature.Name
+                    : parentName + " > " + feature.Name;
+            }
+
+            return string.Empty;
         }
 
         /// <summary>
@@ -140,12 +171,7 @@ namespace WhereToFly.Geo.DataFormats
         /// Returns a list of tracks contained in the kml or kmz file.
         /// </summary>
         /// <returns>list of tracks found in the file</returns>
-        public List<string> GetTrackList()
-        {
-            return
-                (from trackPlacemark in this.trackPlacemarkList
-                 select trackPlacemark.Name).ToList();
-        }
+        public List<string> GetTrackList() => this.trackDisplayNameList;
 
         /// <summary>
         /// Loads track from the kml or kmz file.
