@@ -230,7 +230,7 @@ LiveTracking.prototype.zoomToByPrefix = function (pageIdPrefix) {
 
     if (liveWaypointUri !== undefined) {
 
-        var entity = this.map.viewer.entities.getById(liveWaypointUri);
+        var entity = this.locationDataSource.entities.getById(liveWaypointUri);
 
         if (entity === undefined) {
             console.error("LiveTracking: couldn't find entity for live waypoint id: " + liveWaypointUri);
