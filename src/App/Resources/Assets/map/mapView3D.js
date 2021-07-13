@@ -2443,19 +2443,22 @@ MapView.prototype.mergeLiveTrackPoints = function (track) {
     var startTimePoint = track.listOfTimePoints[0];
 
     var timePos = trackData.track.listOfTimePoints.indexOf(startTimePoint);
-    var trackPos = timePos * 3;
 
     var removedTrackPoints = (timePos === -1 ? "no " : (trackData.track.listOfTimePoints.length - timePos) + " ");
     console.info("MapView: removing " + removedTrackPoints +
         "live track points and adding " + track.listOfTimePoints.length + " new track points");
 
     if (timePos !== -1) {
+        var trackPos = timePos * 3;
         trackData.track.listOfTrackPoints.splice(trackPos, trackData.track.listOfTrackPoints.length - trackPos);
         trackData.track.listOfTimePoints.splice(timePos, trackData.track.listOfTimePoints.length - timePos);
     }
 
     trackData.track.listOfTrackPoints = trackData.track.listOfTrackPoints.concat(track.listOfTrackPoints);
     trackData.track.listOfTimePoints = trackData.track.listOfTimePoints.concat(track.listOfTimePoints);
+
+    track.listOfTrackPoints = trackData.track.listOfTrackPoints;
+    track.listOfTimePoints = trackData.track.listOfTimePoints;
 };
 
 /**
