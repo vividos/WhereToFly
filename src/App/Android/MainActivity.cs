@@ -3,6 +3,7 @@ using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using Android.Widget;
+using System;
 using System.IO;
 using WhereToFly.App.Core;
 using Xamarin.Forms;
@@ -179,26 +180,33 @@ namespace WhereToFly.App.Android
         /// <param name="intent">intent to process</param>
         private void ProcessIntent(Intent intent)
         {
-            if (intent.DataString != null &&
-                intent.DataString.StartsWith(Shared.Model.AppResourceUri.DefaultScheme))
+            try
             {
-                Core.App.OpenAppResourceUri(intent.DataString);
-                return;
+                if (intent.DataString != null &&
+                    intent.DataString.StartsWith(Shared.Model.AppResourceUri.DefaultScheme))
+                {
+                    Core.App.OpenAppResourceUri(intent.DataString);
+                    return;
+                }
+
+                var helper = new IntentFilterHelper(this.ContentResolver);
+
+                string filename = Path.GetFileName(helper.GetFilenameFromIntent(intent));
+                if (filename == null)
+                {
+                    return;
+                }
+
+                var stream = helper.GetStreamFromIntent(intent);
+
+                if (stream != null)
+                {
+                    Core.App.RunOnUiThread(async () => await OpenFileHelper.OpenFileAsync(stream, filename));
+                }
             }
-
-            var helper = new IntentFilterHelper(this.ContentResolver);
-
-            string filename = Path.GetFileName(helper.GetFilenameFromIntent(intent));
-            if (filename == null)
+            catch (Exception)
             {
-                return;
-            }
-
-            var stream = helper.GetStreamFromIntent(intent);
-
-            if (stream != null)
-            {
-                Core.App.RunOnUiThread(async () => await OpenFileHelper.OpenFileAsync(stream, filename));
+                // ignore errors
             }
         }
 
