@@ -2059,13 +2059,7 @@ MapView.prototype.addTrack = function (track) {
 
     console.log("MapView: adding list of track points, with ID " + track.id + " and " + track.listOfTrackPoints.length + " track points");
 
-    var trackPointArray = track.listOfTrackPoints.length > 0
-        ? Cesium.Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints)
-        : [];
-
-    // remove duplicates so that color values are calculated correctly
-    if (track.isFlightTrack)
-        trackPointArray = this.removeTrackDuplicatePoints(track, trackPointArray);
+    this.addOrUpdateTrackPrimitives(track);
 
     this.trackIdToTrackDataMap[track.id] = {
         track: track,
@@ -2073,8 +2067,6 @@ MapView.prototype.addTrack = function (track) {
         wallPrimitive: undefined,
         boundingSphere: undefined
     };
-
-    this.addOrUpdateTrackPrimitives(track);
 
     if (track.isLiveTrack) {
         this.addLiveTrackEntity(track);
@@ -2107,7 +2099,8 @@ MapView.prototype.addOrUpdateTrackPrimitives = function (track) {
     if (track.isFlightTrack)
         trackPointArray = this.removeTrackDuplicatePoints(track, trackPointArray);
 
-    if (trackPointArray.length === 0)
+    // need at least 2 points for the track primitives
+    if (trackPointArray.length < 2)
         return;
 
     var trackData = this.trackIdToTrackDataMap[track.id];
@@ -2450,19 +2443,22 @@ MapView.prototype.mergeLiveTrackPoints = function (track) {
     var startTimePoint = track.listOfTimePoints[0];
 
     var timePos = trackData.track.listOfTimePoints.indexOf(startTimePoint);
-    var trackPos = timePos * 3;
 
     var removedTrackPoints = (timePos === -1 ? "no " : (trackData.track.listOfTimePoints.length - timePos) + " ");
     console.info("MapView: removing " + removedTrackPoints +
         "live track points and adding " + track.listOfTimePoints.length + " new track points");
 
     if (timePos !== -1) {
+        var trackPos = timePos * 3;
         trackData.track.listOfTrackPoints.splice(trackPos, trackData.track.listOfTrackPoints.length - trackPos);
         trackData.track.listOfTimePoints.splice(timePos, trackData.track.listOfTimePoints.length - timePos);
     }
 
     trackData.track.listOfTrackPoints = trackData.track.listOfTrackPoints.concat(track.listOfTrackPoints);
     trackData.track.listOfTimePoints = trackData.track.listOfTimePoints.concat(track.listOfTimePoints);
+
+    track.listOfTrackPoints = trackData.track.listOfTrackPoints;
+    track.listOfTimePoints = trackData.track.listOfTimePoints;
 };
 
 /**
