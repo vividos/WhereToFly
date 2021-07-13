@@ -118,15 +118,15 @@ LiveTracking.prototype.addCrossingTheAlpsLayer = function () {
     $.get("/data/crossing-the-alps-2021.czml",
         null,
         function (data) {
-            console.log("LiveTracking: successfully loaded czml file, adding layer");
+            console.log("LiveTracking: successfully loaded czml file, adding layer to map");
             that.map.addLayer({
-                id: 'crossng-the-alps-2021-layer',
+                id: 'crossing-the-alps-2021-layer',
                 name: 'Crossing the Alps 2021',
                 type: '',
                 isVisible: true,
                 data: data
             });
-            that.map.zoomToLayer('rossng-the-alps-2021-layer');
+            that.map.zoomToLayer('crossing-the-alps-2021-layer');
         },
         "text");
 };
@@ -368,7 +368,7 @@ LiveTracking.prototype.updateLiveTrack = function (liveTrackUri) {
  */
 LiveTracking.prototype.onUpdateLiveTrackResult = function (liveTrackUri, result) {
 
-    console.log("LiveTracking: update result: " + JSON.stringify(result));
+    //console.log("LiveTracking: update result: " + JSON.stringify(result));
 
     if (result.data !== undefined) {
         result.data.id = liveTrackUri;
@@ -419,7 +419,7 @@ LiveTracking.prototype.scheduleNextUpdate = function (liveDataUri, nextRequestDa
     if (millisTillUpdate < 0)
         millisTillUpdate = 10 * 1000; // schedule in 10 seconds
 
-    console.log("LiveTracking: scheduling update in " + millisTillUpdate + " milliseconds");
+    console.log("LiveTracking: scheduling update in " + (millisTillUpdate / 1000.0).toFixed(1) + " seconds");
 
     var that = this;
     var myTimeout = setTimeout(function () {
