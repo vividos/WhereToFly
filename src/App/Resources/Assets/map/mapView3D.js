@@ -2059,13 +2059,7 @@ MapView.prototype.addTrack = function (track) {
 
     console.log("MapView: adding list of track points, with ID " + track.id + " and " + track.listOfTrackPoints.length + " track points");
 
-    var trackPointArray = track.listOfTrackPoints.length > 0
-        ? Cesium.Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints)
-        : [];
-
-    // remove duplicates so that color values are calculated correctly
-    if (track.isFlightTrack)
-        trackPointArray = this.removeTrackDuplicatePoints(track, trackPointArray);
+    this.addOrUpdateTrackPrimitives(track);
 
     this.trackIdToTrackDataMap[track.id] = {
         track: track,
@@ -2073,8 +2067,6 @@ MapView.prototype.addTrack = function (track) {
         wallPrimitive: undefined,
         boundingSphere: undefined
     };
-
-    this.addOrUpdateTrackPrimitives(track);
 
     if (track.isLiveTrack) {
         this.addLiveTrackEntity(track);
@@ -2107,7 +2099,8 @@ MapView.prototype.addOrUpdateTrackPrimitives = function (track) {
     if (track.isFlightTrack)
         trackPointArray = this.removeTrackDuplicatePoints(track, trackPointArray);
 
-    if (trackPointArray.length === 0)
+    // need at least 2 points for the track primitives
+    if (trackPointArray.length < 2)
         return;
 
     var trackData = this.trackIdToTrackDataMap[track.id];
