@@ -77,11 +77,11 @@
     "WebLink": "https://www.meteo.guru/"
   },
   {
-    "Name": "Föhnprognose",
+    "Name": "Föhndiagramm",
     "Group": "Weather forecast",
     "Type": 0,
     "Icon": null,
-    "WebLink": "http://www.wetteralarm.at/de/wetter/foehndiagramme.html"
+    "WebLink": "https://wetter.provinz.bz.it/foehndiagramm.asp"
   },
   {
     "Name": "Wetterzentrale Top Karten",
