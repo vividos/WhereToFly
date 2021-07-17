@@ -2059,14 +2059,14 @@ MapView.prototype.addTrack = function (track) {
 
     console.log("MapView: adding list of track points, with ID " + track.id + " and " + track.listOfTrackPoints.length + " track points");
 
-    this.addOrUpdateTrackPrimitives(track);
-
     this.trackIdToTrackDataMap[track.id] = {
         track: track,
         primitive: undefined,
         wallPrimitive: undefined,
         boundingSphere: undefined
     };
+
+    this.addOrUpdateTrackPrimitives(track);
 
     if (track.isLiveTrack) {
         this.addLiveTrackEntity(track);
