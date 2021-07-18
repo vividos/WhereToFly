@@ -2666,9 +2666,11 @@ MapView.prototype.showTrackHeightProfile = function (trackId) {
 MapView.prototype.closeHeightProfileView = function () {
 
     if (this.heightProfileView !== null) {
-        this.heightProfileView.hide();
-        this.heightProfileView.destroy();
+        var view = this.heightProfileView;
         this.heightProfileView = null;
+
+        view.hide();
+        view.destroy();
     }
 
     this.trackMarker.show = false;
