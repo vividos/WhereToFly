@@ -1,4 +1,4 @@
-﻿<Project Sdk="MSBuild.Sdk.Extras/3.0.23">
+﻿<Project Sdk="MSBuild.Sdk.Extras/3.0.38">
 
   <PropertyGroup>
     <TargetFrameworks>Xamarin.iOS10;MonoAndroid10.0</TargetFrameworks>
