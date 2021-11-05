@@ -421,6 +421,23 @@ HeightProfileView.prototype.getTrackTooltipInfos = function (tooltipModel) {
 };
 
 /**
+ * Formats an elapsed time value as time span, in the format h:mm:ss; when the
+ * elapsed time is greater than a day, the format is d.hh:mm:ss.
+ * @param {any} elapsedTime elapsed time in milliseconds
+ * @returns formatted time span text
+ */
+function formatTimeSpan(elapsedTime) {
+
+    var elapsed = moment(new Date((elapsedTime - 60.0 * 60.0) * 1000.0));
+
+    if (elapsed.dayOfYear() === 1)
+        return elapsed.format('H:mm:ss');
+
+    var dayElapsed = elapsed.subtract(1, 'days').format('DDD');
+    return dayElapsed + "." + elapsed.format('HH:mm:ss');
+}
+
+/**
  * Formats the tooltip text from given tooltip model
  * @param {object} tooltipModel tooltip model
  */
@@ -433,7 +450,7 @@ HeightProfileView.prototype.formatTooltipText = function (tooltipModel) {
     if (values.timePoint !== undefined)
         text += "<div>Time: " + values.timePoint.toLocaleTimeString() + "</div>";
 
-    text += "<div>Elapsed: " + new Date((values.elapsedTime - 60.0 * 60.0) * 1000.0).toLocaleTimeString() + "</div>";
+    text += "<div>Elapsed: " + formatTimeSpan(values.elapsedTime) + "</div>";
 
     if (values.trackHeight !== undefined)
         text += "<div>Altitude: " + values.trackHeight.toFixed(1) + "m</div>";
