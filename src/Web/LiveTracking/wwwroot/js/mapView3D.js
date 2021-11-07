@@ -24,16 +24,15 @@ function MapView(options) {
     console.groupCollapsed("%cMapView%ccreating new 3D map view", this.consoleLogStyle);
     console.time("ctor");
 
-    this.options = options || {
+    this.options = Object.assign(options, {
         id: 'mapElement',
         liveTrackToolbarId: 'liveTrackToolbar',
         initialCenterPoint: { latitude: 47.67, longitude: 11.88 },
         initialViewingDistance: 5000.0,
         hasMouse: false,
         useAsynchronousPrimitives: true,
-        useEntityClustering: true,
-        callback: {}
-    };
+        useEntityClustering: true
+    });
 
     this.options.bingMapsApiKey = this.options.bingMapsApiKey || 'AuuY8qZGx-LAeruvajcGMLnudadWlphUWdWb0k6N6lS2QUtURFk3ngCjIXqqFOoe';
     this.options.cesiumIonApiKey = this.options.cesiumIonApiKey || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiZWMzMjU5NC00MTg4LTQwYmEtYWNhYi01MDYwMWQyZDIxNTUiLCJpZCI6NjM2LCJpYXQiOjE1MjUzNjQ5OTN9.kXik5Mg_-01LBkN-5OTIDpwlMcuE2noRaaHrqjhbaRE';
@@ -849,6 +848,13 @@ MapView.prototype.setMapOverlayType = function (overlayType) {
  * used: 'Fixed10Am', 'Fixed3Pm', 'CurrentTime', 'Ahead6Hours' and 'None'.
  */
 MapView.prototype.setShadingMode = function (shadingMode) {
+
+    this.lastShadingMode = shadingMode;
+
+    if (this.viewer.scene.requestRenderMode === false) {
+        console.log("MapView: ignored setting shading mode; currently showing live track(s)");
+        return;
+    }
 
     console.log("MapView: setting new shading mode: " + shadingMode);
 
@@ -2059,14 +2065,14 @@ MapView.prototype.addTrack = function (track) {
 
     console.log("MapView: adding list of track points, with ID " + track.id + " and " + track.listOfTrackPoints.length + " track points");
 
-    this.addOrUpdateTrackPrimitives(track);
-
     this.trackIdToTrackDataMap[track.id] = {
         track: track,
         primitive: undefined,
         wallPrimitive: undefined,
         boundingSphere: undefined
     };
+
+    this.addOrUpdateTrackPrimitives(track);
 
     if (track.isLiveTrack) {
         this.addLiveTrackEntity(track);
@@ -2416,8 +2422,7 @@ MapView.prototype.updateLiveTrack = function (track) {
 
     // update height profile when shown
     if (this.heightProfileView !== null &&
-        track.Id === this.currentHeightProfileTrackId) {
-
+        track.id === this.currentHeightProfileTrackId) {
         this.heightProfileView.addTrackPoints(track);
     }
 };
@@ -2584,6 +2589,9 @@ MapView.prototype.removeTrack = function (trackId) {
         // removed the last live track entity
         this.viewer.scene.requestRenderMode = true;
 
+        if (this.lastShadingMode !== undefined)
+            this.setShadingMode(this.lastShadingMode);
+
         this.hideLiveTrackToolbar();
     }
 
@@ -2601,6 +2609,9 @@ MapView.prototype.clearAllTracks = function () {
 
     this.liveTrackDataSource.entities.removeAll();
     this.viewer.scene.requestRenderMode = true;
+
+    if (this.lastShadingMode !== undefined)
+        this.setShadingMode(this.lastShadingMode);
 
     this.hideLiveTrackToolbar();
 
@@ -2666,9 +2677,11 @@ MapView.prototype.showTrackHeightProfile = function (trackId) {
 MapView.prototype.closeHeightProfileView = function () {
 
     if (this.heightProfileView !== null) {
-        this.heightProfileView.hide();
-        this.heightProfileView.destroy();
+        var view = this.heightProfileView;
         this.heightProfileView = null;
+
+        view.hide();
+        view.destroy();
     }
 
     this.trackMarker.show = false;

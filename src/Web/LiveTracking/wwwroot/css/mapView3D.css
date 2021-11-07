@@ -25,21 +25,29 @@
     transition: all 0.25s ease-in-out;
 }
 
+/* container div styles for all toolbars */
+.toolbar-container {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: absolute;
+    bottom: 50px;
+    z-index: 100;
+}
+
 /* container div style for the live track toolbar */
 .livetrack-toolbar-container {
+    width: 100vw;
+    margin: 0px;
+    padding: 8px;
     display: flex;
     justify-content: flex-start;
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    position: absolute;
-    bottom: 50px;
-    opacity: 0.7;
+    opacity: 0.5;
     background-color: #202124;
-    margin: 0px;
-    padding: 8px;
-    z-index: 100;
-    width: 100vw;
     color: white;
     font-family: sans-serif
 }
@@ -98,7 +106,7 @@
     margin: 10px;
     width: 24px;
     height: 24px;
-    background-color: white;
+    background-color: #202124;
 }
 
 /* the .svg toolbar images are white, so invert them to display correctly */
