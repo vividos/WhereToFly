@@ -45,8 +45,8 @@
                     <Grid BackgroundColor="{DynamicResource ListViewItemBackgroundColor}"
                           HeightRequest="90" Margin="8,4">
                         <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="40" />
@@ -71,7 +71,7 @@
                         <!-- Up/down buttons -->
                         <StackLayout Orientation="Horizontal"
                                      HorizontalOptions="Fill" VerticalOptions="Center"
-                                     HeightRequest="30"
+                                     HeightRequest="40"
                                      Grid.Row="1" Grid.Column="1">
                             <Button Text="Up" WidthRequest="80" Command="{Binding MoveUpCommand}" />
                             <Button Text="Down" WidthRequest="80" Command="{Binding MoveDownCommand}" />
