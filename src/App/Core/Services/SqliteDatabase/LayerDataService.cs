@@ -17,7 +17,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         /// </summary>
         [Table("layers")]
         [SuppressMessage("StyleCop.CSharp.Naming", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "database entry object")]
-        private class LayerEntry
+        private sealed class LayerEntry
         {
             /// <summary>
             /// Layer to store in the entry
@@ -106,7 +106,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         /// <summary>
         /// Layer data service with access to the SQLite database
         /// </summary>
-        private class LayerDataService : ILayerDataService
+        private sealed class LayerDataService : ILayerDataService
         {
             /// <summary>
             /// SQLite database connection

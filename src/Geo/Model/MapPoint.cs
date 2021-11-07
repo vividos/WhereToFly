@@ -123,7 +123,7 @@ namespace WhereToFly.Geo.Model
         /// Nested JSON converter class for map point. Map point properties are stored as JSON
         /// array, either with two (without altitude) or three elements (with altitude).
         /// </summary>
-        private class Converter : JsonConverter
+        private sealed class Converter : JsonConverter
         {
             /// <summary>
             /// Determines if given type can be converted to a map point

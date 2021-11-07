@@ -18,7 +18,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         /// </summary>
         [Table("weather_dashboard_icons")]
         [SuppressMessage("StyleCop.CSharp.Naming", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "database entry object")]
-        private class WeatherDashboardIconEntry
+        private sealed class WeatherDashboardIconEntry
         {
             /// <summary>
             /// Weather dashboard icon ID
@@ -36,7 +36,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         /// <summary>
         /// Weather dashboard icon description data service with access to the SQLite database
         /// </summary>
-        private class WeatherDashboardIconDataService : IWeatherIconDescriptionDataService
+        private sealed class WeatherDashboardIconDataService : IWeatherIconDescriptionDataService
         {
             /// <summary>
             /// SQLite database connection

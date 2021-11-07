@@ -17,7 +17,7 @@ namespace WhereToFly.App.Core.Services
         /// <summary>
         /// Update info for queueing live data updates
         /// </summary>
-        private class LiveDataUpdateInfo
+        private sealed class LiveDataUpdateInfo
         {
             /// <summary>
             /// Update time for this given live waypoint/track

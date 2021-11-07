@@ -95,7 +95,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         /// </summary>a
         [Table("favicons")]
         [SuppressMessage("StyleCop.CSharp.Naming", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "database entry object")]
-        private class FaviconUrlEntry
+        private sealed class FaviconUrlEntry
         {
             /// <summary>
             /// Website URL

@@ -21,7 +21,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         /// </summary>
         [Table("locations")]
         [SuppressMessage("StyleCop.CSharp.Naming", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "database entry object")]
-        private class LocationEntry
+        private sealed class LocationEntry
         {
             /// <summary>
             /// Location to store in the entry
@@ -130,7 +130,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         /// <summary>
         /// Location data service with access to the SQLite database
         /// </summary>
-        private class LocationDataService : ILocationDataService
+        private sealed class LocationDataService : ILocationDataService
         {
             /// <summary>
             /// SQLite database connection

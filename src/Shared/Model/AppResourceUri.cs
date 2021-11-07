@@ -223,7 +223,7 @@ namespace WhereToFly.Shared.Model
         /// <summary>
         /// Nested JSON converter class for app resource URI
         /// </summary>
-        private class Converter : JsonConverter
+        private sealed class Converter : JsonConverter
         {
             /// <summary>
             /// Determines if given type can be converted to an app resource URI

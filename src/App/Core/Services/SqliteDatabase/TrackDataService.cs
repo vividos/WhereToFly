@@ -27,7 +27,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         /// </summary>
         [Table("tracks")]
         [SuppressMessage("StyleCop.CSharp.Naming", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "database entry object")]
-        private class TrackEntry
+        private sealed class TrackEntry
         {
             /// <summary>
             /// Track to store in the entry
@@ -293,7 +293,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         /// <summary>
         /// Track data service with access to the SQLite database
         /// </summary>
-        private class TrackDataService : ITrackDataService
+        private sealed class TrackDataService : ITrackDataService
         {
             /// <summary>
             /// SQLite database connection
