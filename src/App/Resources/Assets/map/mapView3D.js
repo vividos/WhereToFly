@@ -24,16 +24,15 @@ function MapView(options) {
     console.groupCollapsed("%cMapView%ccreating new 3D map view", this.consoleLogStyle);
     console.time("ctor");
 
-    this.options = options || {
+    this.options = Object.assign(options, {
         id: 'mapElement',
         liveTrackToolbarId: 'liveTrackToolbar',
         initialCenterPoint: { latitude: 47.67, longitude: 11.88 },
         initialViewingDistance: 5000.0,
         hasMouse: false,
         useAsynchronousPrimitives: true,
-        useEntityClustering: true,
-        callback: {}
-    };
+        useEntityClustering: true
+    });
 
     this.options.bingMapsApiKey = this.options.bingMapsApiKey || 'AuuY8qZGx-LAeruvajcGMLnudadWlphUWdWb0k6N6lS2QUtURFk3ngCjIXqqFOoe';
     this.options.cesiumIonApiKey = this.options.cesiumIonApiKey || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiZWMzMjU5NC00MTg4LTQwYmEtYWNhYi01MDYwMWQyZDIxNTUiLCJpZCI6NjM2LCJpYXQiOjE1MjUzNjQ5OTN9.kXik5Mg_-01LBkN-5OTIDpwlMcuE2noRaaHrqjhbaRE';
