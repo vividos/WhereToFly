@@ -26,6 +26,7 @@ namespace WhereToFly.App.Android
         Icon = "@mipmap/icon",
         Theme = "@style/MainTheme",
         LaunchMode = LaunchMode.SingleTask,
+        Exported = true,
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.UiMode | ConfigChanges.Orientation)]
     //// Intent filter, case 1: mime type set
     //// See https://stackoverflow.com/questions/39300649/android-intent-filter-not-working
