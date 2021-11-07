@@ -247,6 +247,15 @@ HeightProfileView.prototype.setTrack = function (track) {
     // need this to update the scales
     this.chart.update(0);
 
+    this.updateZoomPanLimits();
+};
+
+/**
+ * Updates the current zoom and pan limits, based on the current X axis scale.
+ * After adding data, be sure to call chart.update() so that scales are current.
+ * */
+HeightProfileView.prototype.updateZoomPanLimits = function () {
+
     var scale = this.chart.scales.x;
     var zoomPanLimits = this.chart.options.plugins.zoom.limits;
     zoomPanLimits.x.min = scale.min.valueOf(); // left value
@@ -300,7 +309,37 @@ HeightProfileView.prototype.addGroundProfile = function (elevationArray) {
  */
 HeightProfileView.prototype.addTrackPoints = function (track) {
 
-    // TODO implement
+    if (track.listOfTrackPoints.length === 0 ||
+        track.listOfTrackPoints.length !== track.listOfTimePoints.length * 3)
+        return;
+
+    var trackData = this.chart.data.datasets[0].data;
+    if (trackData.length === 0) {
+        this.setTrack(track);
+        return;
+    }
+
+    var lastDate = trackData[trackData.length - 1].x;
+    var lastTimePoint = lastDate.getTime() / 1000;
+
+    var newStartTimePos = track.listOfTimePoints.indexOf(lastTimePoint) + 1;
+    if (newStartTimePos === 0 ||
+        newStartTimePos >= track.listOfTimePoints.length)
+        return;
+
+    console.log("HeightProfileView: adding " + (track.listOfTimePoints.length - newStartTimePos) + " track points to height profile");
+
+    for (var trackPointIndex = newStartTimePos * 3, len = track.listOfTrackPoints.length; trackPointIndex < len; trackPointIndex += 3) {
+        var timePoint = track.listOfTimePoints[trackPointIndex / 3];
+        trackData.push({
+            x: new Date(timePoint * 1000.0),
+            y: track.listOfTrackPoints[trackPointIndex + 2],
+        });
+    }
+
+    this.chart.update(0);
+
+    this.updateZoomPanLimits();
 };
 
 /**

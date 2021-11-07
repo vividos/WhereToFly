@@ -2416,8 +2416,7 @@ MapView.prototype.updateLiveTrack = function (track) {
 
     // update height profile when shown
     if (this.heightProfileView !== null &&
-        track.Id === this.currentHeightProfileTrackId) {
-
+        track.id === this.currentHeightProfileTrackId) {
         this.heightProfileView.addTrackPoints(track);
     }
 };
