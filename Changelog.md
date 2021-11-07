@@ -1,11 +1,24 @@
-# Changelog
+﻿# Changelog
 
 ## Version 1.11.0
 
+Released on 2021-11-07.
+
+✨ New Features / Improvements
+
+- added support for live tracking tracks using `where-to-fly://` links
 - added group headings for list when selecting weather icons
+- improved track handling by using a memory cache for tracks
+- when importing tracks from KML files, display track names based on KML tree
+  structure
+- using CesiumJS version 1.87
+
+🐛 Bugfixes
+
 - fixed saving images in weather web pages on Android 10 and above
 - fixed zooming to newly added locations
-- using CesiumJS version 1.87
+- fixed displaying OpenFlightMaps layer
+- various other minor bugfixes
 
 ## Version 1.10.0
 
