@@ -178,16 +178,16 @@ namespace WhereToFly.WebApi.Logic
         /// </summary>
         /// <param name="uri">live track ID</param>
         /// <returns>query result</returns>
-        private async Task<LiveTrackQueryResult> GetLiveTrackQueryResult(AppResourceUri uri)
+        private Task<LiveTrackQueryResult> GetLiveTrackQueryResult(AppResourceUri uri)
         {
             switch (uri.Type)
             {
                 case AppResourceUri.ResourceType.TestLiveTrack:
-                    return TestLiveTrackService.GetLiveTrackingQueryResult(uri.ToString());
+                    return Task.FromResult(TestLiveTrackService.GetLiveTrackingQueryResult(uri.ToString()));
 
                 default:
                     Debug.Assert(false, "invalid app resource URI type");
-                    return null;
+                    return Task.FromResult<LiveTrackQueryResult>(null);
             }
         }
 

@@ -86,7 +86,7 @@
         Parking = 15,
 
         /// <summary>
-        /// Webcam
+        /// Webcam location
         /// </summary>
         Webcam = 16,
 
