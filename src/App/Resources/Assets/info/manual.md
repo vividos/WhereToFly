@@ -9,8 +9,8 @@ Welcome to the manual page for the Where-to-fly app!
 The map view shows a 3D map that visualizes the terrain of the world.
 Different imagery layers can be used to show the ground details (in this case
 it's OpenStreetMap). The map is shaded according to the sun's current
-position, in order to see which slopes are better for early thermals or late
-in the day. The map can be moved around using touch controls:
+position, in order to see which slopes may generate better thermals than
+others. The map can be moved around using touch controls:
 
 ![Map touch controls](images/map-touch-controls.png)
 
@@ -44,7 +44,7 @@ circle sectors:
 ### Track height profile
 
 When tapping on a track, the height profile of that track is shown in a
-semi-transparent window in the lower part of the window:
+semi-transparent window in the lower part of the screen:
 
 ![Track height profile](images/track-height-profile.png)
 
@@ -57,7 +57,7 @@ pin is shown in the map at the current track point.
 There are several toolbar buttons above the track height profile:
 
 - ![Zoom-and-pan](../map/images/gesture-spread.svg) Zoom-and-pan: When active
-  (white), the user can zoom (with a pinch gesture) and pan (with a one-finger
+  (white), you can zoom (with a pinch gesture) and pan (with a one-finger
   drag gesture) the height profile.
 - ![Hover](../map/images/gesture-tap.svg) Hover: Fixes the height profile
   dimensions after panning and zooming, in order to explore the height profile
@@ -308,6 +308,24 @@ to the climb or sink rate of that segment. The following colors are used:
 
 The colors are interpolated when rates between two colors were calculated.
 This can happen for tracks with sub-second track point resolution.
+
+### Live tracks
+
+Live tracking tracks can be updated periodically. The track is imported by
+clicking on weblinks that start with `where-to-fly://`. The track data is
+updated periodically while the app is running. The live track data is queried
+from the Where-to-fly background service.
+
+As soon as a live track is added to the track list, the live tracking toolbar
+appears at the bottom of the screen:
+
+![Live tracking toolbar](images/livetracking-toolbar.png)
+
+The toolbar lets you adjust the time offset of the currently displayed live
+track point. Naturally, live track data is transferred with a delay, so the
+current position can only be displayed in the past. The time offset slider
+sets the difference. The ![Zoom to](images/timeline-clock-outline.svg) button
+resets the time offset to -3 minutes.
 
 ## ![Current position](images/compass.svg) Current position
 
