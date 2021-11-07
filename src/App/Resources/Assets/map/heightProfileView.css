@@ -1,17 +1,23 @@
 /* style for the outer container that contains chart and toolbar */
 .chart-and-toolbar-container {
     width: 100vw;
-    position: absolute;
     left: 0px;
 }
 
 /* style to top-align the outer container */
 .chart-and-toolbar-container-top {
+    position: absolute;
     top: 0px;
 }
 
 /* style to bottom-align the outer container */
 .chart-and-toolbar-container-bottom {
+    position: absolute;
+    bottom: 0px;
+}
+
+/* style to let the outer container control the alignment */
+.chart-and-toolbar-container-outer {
     bottom: 0px;
 }
 
