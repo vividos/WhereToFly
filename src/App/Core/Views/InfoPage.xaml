@@ -21,6 +21,7 @@
 
             <!-- Carousel showing the info pages -->
             <CarouselView ItemsSource="{Binding Pages}"
+                          Loop="False"
                           IndicatorView="indicatorView"
                           PeekAreaInsets="10"
                           HorizontalOptions="Start"
