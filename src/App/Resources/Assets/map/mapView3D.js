@@ -850,6 +850,13 @@ MapView.prototype.setMapOverlayType = function (overlayType) {
  */
 MapView.prototype.setShadingMode = function (shadingMode) {
 
+    this.lastShadingMode = shadingMode;
+
+    if (this.viewer.scene.requestRenderMode === false) {
+        console.log("MapView: ignored setting shading mode; currently showing live track(s)");
+        return;
+    }
+
     console.log("MapView: setting new shading mode: " + shadingMode);
 
     var today = new Date();
@@ -2583,6 +2590,9 @@ MapView.prototype.removeTrack = function (trackId) {
         // removed the last live track entity
         this.viewer.scene.requestRenderMode = true;
 
+        if (this.lastShadingMode !== undefined)
+            this.setShadingMode(this.lastShadingMode);
+
         this.hideLiveTrackToolbar();
     }
 
@@ -2600,6 +2610,9 @@ MapView.prototype.clearAllTracks = function () {
 
     this.liveTrackDataSource.entities.removeAll();
     this.viewer.scene.requestRenderMode = true;
+
+    if (this.lastShadingMode !== undefined)
+        this.setShadingMode(this.lastShadingMode);
 
     this.hideLiveTrackToolbar();
 
