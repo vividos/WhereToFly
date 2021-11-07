@@ -111,8 +111,8 @@ The library is licensed using the
 
 ## Services
 
-The app uses the Thermal Skyways from https://thermal.kk7.ch/, with kind
-permission from Michael of https://kk7.ch/.
+The app uses the Thermal Skyways from [https://thermal.kk7.ch/](https://thermal.kk7.ch/),
+with kind permission from Michael of https://kk7.ch/.
 
 ## Resources
 
@@ -128,7 +128,7 @@ The following icons are from the Google Material icon set:
 - compass
 - crosshairs-gps
 - delete
-- delete_forever
+- delete-forever
 - directions
 - eye
 - format-list-bulleted
@@ -155,13 +155,13 @@ The following icons are from the Google Material icon set:
 - camera-outline
 - cloud-upload-outline (modified)
 
-The Google Material Icons are licensed under the "Apache License 2.0":
-https://github.com/google/material-design-icons/blob/master/LICENSE
+The Google Material Icons are licensed under the
+[Apache License 2.0](https://github.com/google/material-design-icons/blob/master/LICENSE).
 
 #### Material Design Icons
 
-The following icons in the App are from the Material Design Icons
-(https://materialdesignicons.com/) page:
+The following icons in the App are from the
+[Material Design Icons](https://materialdesignicons.com/) page:
 
 - ruler - distance.png - Austin Andrews @Templarian
 - church - church.png - Austin Andrews @Templarian
@@ -180,16 +180,16 @@ The following icons in the App are from the Material Design Icons
 - gesture-tap - Michael Richins @MrGrigri
 - timeline-clock-outline - Austin Andrews @Templarian
 
-All custom icons are licensed under the Apache 2.0 license:
-https://github.com/Templarian/MaterialDesign/blob/master/LICENSE
+All custom icons are licensed under the
+[Apache 2.0 license](https://github.com/Templarian/MaterialDesign/blob/master/LICENSE).
 
 #### Mapbox Maki Icons
 
 Some icons used in the App are used from the Mapbox Maki icon set:
-https://www.mapbox.com/maki-icons/
+[https://www.mapbox.com/maki-icons/](https://www.mapbox.com/maki-icons/)
 
 The Maki icon set is licensed using the CC0 license:
-https://creativecommons.org/publicdomain/zero/1.0/
+[https://creativecommons.org/publicdomain/zero/1.0/](https://creativecommons.org/publicdomain/zero/1.0/)
 
 #### Other Icons
 
@@ -200,4 +200,5 @@ The following icons are from the onlinewebfonts web page:
 
 The following icons are from Wikimedia Commons:
 - Cave icon: Icon made by Carport; the icon is licensed under the CC BY-SA 3.0
-  license. https://commons.wikimedia.org/wiki/File:Gfi-set01-cave.svg
+  license.
+  [https://commons.wikimedia.org/wiki/File:Gfi-set01-cave.svg](https://commons.wikimedia.org/wiki/File:Gfi-set01-cave.svg)
