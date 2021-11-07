@@ -12,4 +12,4 @@ The Where-to-fly GitHub project can be found here:
 
 Current version: %VERSION%
 
-Image: View of the Langkofel and Sella group from the Belvedere takeoff.
+Image: Above the Kampenwand, Bavaria.
