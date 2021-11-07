@@ -471,8 +471,10 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// </summary>
         /// <param name="nearDistance">near distance</param>
         /// <param name="farDistance">far distance</param>
-        public DistanceDisplayCondition(double nearDistance, double farDistance)
+        public DistanceDisplayCondition(double nearDistance = 0.0, double farDistance = double.MaxValue)
         {
+            Debug.Assert(nearDistance < farDistance, "near distance must be smaller than the far distance");
+
             this.DistanceDisplayConditionValues[0] = nearDistance;
             this.DistanceDisplayConditionValues[1] = farDistance;
         }
