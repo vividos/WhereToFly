@@ -24,6 +24,8 @@ Released on 2021-11-07.
 
 Released on 2021-03-14.
 
+✨ New Features / Improvements
+
 - support for Cesium OpenStreetMap Buildings layer; can be added to layer list
 - for locations that have takeoff directions, the takeoff directions are now
   shown on the map as circle slices
@@ -32,14 +34,19 @@ Released on 2021-03-14.
 - added clustering of Location pins and Layer elements when zooming out
 - keep distance to terrain when zooming to different location pins or the
   current location; the viewing distance is also re-used after app restarts
+- using CesiumJS version 1.79.1
+
+🐛 Bugfixes
+
 - fixed flight track colors when track contains many duplicate track points
   (e.g. from waiting at takeoff)
 - fixed importing GPX files with version 1.0 
-- using CesiumJS version 1.79.1
 
 ## Version 1.9.0
 
 Released on 2020-12-21.
+
+✨ New Features / Improvements
 
 - added support for Android 11
 - added showing height profile when tapping on a track
@@ -50,40 +57,55 @@ Released on 2020-12-21.
   import
 - using magnetic compass for heading on the "Current Position" page when the
   device has one
-- various bugfixes and improvements
 - using CesiumJS version 1.76
+
+🐛 Bugfixes
+
+- various bugfixes and improvements
 
 ## Version 1.8.1
 
 Released on 2020-08-19.
 
+✨ New Features / Improvements
+
+- using CesiumJS version 1.72
+
+🐛 Bugfixes
+
 - fixed "Sampling track point heights..." not disappearing when device has no
   network connection
 - fixed crash when opening files from remote file providers (like OneDrive and
   Google Drive) but the device has no network connection
-- using CesiumJS version 1.72
 
 ## Version 1.8.0
 
 Released on 2020-08-11.
 
-- fixed displaying the map when there is no mobile network at app startup;
-  the terrain is loaded when the mobile network is available again
+✨ New Features / Improvements
+
 - added info page containing the manual for all pages in the app
 - added importing locations from SeeYou waypoints.cup files
 - added exporting track to .gpx file
 - importing KML tracks from XC Tracer devices now calculate the time points
   automatically
 - long-tapping on images in the weather browser offers downloading that image
+- using CesiumJS version 1.72
+
+🐛 Bugfixes
+
+- fixed displaying the map when there is no mobile network at app startup;
+  the terrain is loaded when the mobile network is available again
 - fixed crash when navigating between different weather pages
 - fixed crash when deleting a location
 - fixed displaying OpenFlightMaps imagery layer
 - fixed displaying the Cesium Ion icon on the bottom of the screen
-- using CesiumJS version 1.72
 
 ## Version 1.7.0
 
 Released on 2020-02-17.
+
+✨ New Features / Improvements
 
 - all data is now stored in an SQLite database; improves speed of location
   list; migrating existing data occurs when upgrading to 1.7.0
@@ -92,12 +114,17 @@ Released on 2020-02-17.
 - updated included ParaglidingSpots locations
 - the info page now shows several pages, showing version info, this changelog
   and the credits
-- various bug fixes and improvements
 - using CesiumJS version 1.66
+
+🐛 Bugfixes
+
+- various bug fixes and improvements
 
 ## Version 1.6.0 "Crossing the Alps 2019" edition
 
 Released on 2019-07-25.
+
+✨ New Features / Improvements
 
 - added new "layer" menu where CesiumJS .czml files can be loaded as layers
   displayed on the map
@@ -112,9 +139,11 @@ Released on 2019-07-25.
 
 Released on 2019-05-28.
 
+✨ New Features / Improvements
+
 - added support for live waypoints that update themselves periodically;
   supported are live waypoints to Garmin inReach and SPOT devices
-- added support for where-to-fly:// URLs for adding live waypoints
+- added support for `where-to-fly://` URLs for adding live waypoints
 - added long-tap menu entry "show flying range" to display a half transparent
   cone that shows the flying range, based on the glide ratio
 - when adding a flying track, terrain height is sampled so that track is never
@@ -123,12 +152,17 @@ Released on 2019-05-28.
 - added hiking tour planning support for some selected location waypoints in
   the Schliersee area.
 - improved retrieving and caching of weather dashboard icons
-- fixed opening .igc files from with negative latitudes or longitudes
 - added Where-to-fly Windows app (beta)
+
+🐛 Bugfixes
+
+- fixed opening .igc files from with negative latitudes or longitudes
 
 ## Version 1.4.0
 
 Released on 2018-12-08.
+
+✨ New Features / Improvements
 
 - added importing and showing tracks on map, new track list and track details page
 - added opening .igc files as tracks
@@ -141,13 +175,20 @@ Released on 2018-12-08.
 
 Released on 2018-07-21.
 
+✨ New Features / Improvements
+
+- updated waypoints for Crossing the alps 2018
+
+🐛 Bugfixes
+
 - fixed bug where a newly added location (using find or long-tap to add) wasn't shown on map
 - fixed bug displaying distances with many fractional digits
-- updated waypoints for Crossing the alps 2018
 
 ## Version 1.3.0 "Crossing the alps 2018" edition
 
 Released on 2018-06-26.
+
+✨ New Features / Improvements
 
 - introduced hamburger menu with drawer to navigate between top-level pages
 - added weather dashboard, showing weather icons that can be links to external web pages or apps
@@ -155,6 +196,9 @@ Released on 2018-06-26.
 - added sharing a location on the "location details" page
 - added waiting dialogs when importing locations
 - crossing the alps: added waypoints and a fixed red polyline with the planned route
+
+🐛 Bugfixes
+
 - fixed opening downloaded .kml, .kmz and .gpx files
 - fixed crash on Android before 8.0; the "Skyways" overlay is not available on these devices
 - other small bugfixes and improvements
@@ -162,6 +206,8 @@ Released on 2018-06-26.
 ## Version 1.2.1
 
 Released on 2018-05-18.
+
+🐛 Bugfixes
 
 - fixed crash at startup for some Android devices
 - fixed loading terrain height data
@@ -171,11 +217,16 @@ Released on 2018-05-18.
 
 Released on 2018-05-04.
 
+✨ New Features / Improvements
+
 - added "Location list" and "Location details" pages, showing list and details of the loaded placemarks
 - added map overlay "Thermal Skyways (thermal.kk7.ch)"
 - added long-tap gesture on map, in order to add custom waypoint
 - added "Find location" function to search for addresses or other place names
 - added importing GPX files for locations
+
+🐛 Bugfixes
+
 - fixed crash when picking files from "Downloads" or other special folders
 - many other bugfixes and minor changes
 
@@ -183,12 +234,16 @@ Released on 2018-05-04.
 
 Released on 2018-02-03.
 
+✨ New Features / Improvements
+
 - added imagery layer "Aerials + Labels (Bing Maps)"
 - added map overlays "Contour lines", "Slope + contour lines" and "NASA Black Marble"
 
 ## Version 1.0.0 "NZ down under" edition for Jonas and Julian.
 
 Released on 2018-01-29.
+
+✨ New Features / Improvements
 
 - showing 3D map of mountains to hike up and fly down, with shading based on daylight settings
 - showing locations and detail infos, based on imported KML placemarks, e.g. take off and landing place locations
