@@ -260,10 +260,3 @@ dotnet_diagnostic.SA1642.severity = silent
 # SA1649: File name should match first type name
 dotnet_diagnostic.SA1649.severity = silent
 
-# iOS PList files
-[*.plist]
-
-# Indentation and spacing
-indent_size = 2
-indent_style = tab
-tab_width = 2
