@@ -69,10 +69,13 @@ function MapView(options) {
 
     this.openFlightMapsImageryLayer = null;
     var airacId = calcCurrentAiracId();
-    this.openFlightMapsImageryProvider = new Cesium.OpenStreetMapImageryProvider({
-        url: 'https://snapshots.openflightmaps.org/live/' + airacId + '/tiles/world/epsg3857/aero/512/latest/',
-        credit: '(c) <a href="https://openflightmaps.org/" target="_blank">Open Flightmaps association</a>, (c) OpenStreetMap contributors, NASA elevation data',
-        maximumLevel: 11
+    this.openFlightMapsImageryProvider = new Cesium.UrlTemplateImageryProvider({
+        url: 'https://nwy-tiles-api.prod.newaydata.com/tiles/{z}/{x}/{y}.png?path=' + airacId + '/aero/latest',
+        tileWidth: 512,
+        tileHeight: 512,
+        maximumLevel: 11,
+        enablePickFeatures: false,
+        credit: '(c) <a href="https://openflightmaps.org/" target="_blank">Open Flightmaps association</a>, (c) OpenStreetMap contributors, NASA elevation data'
     });
 
     this.setupSlopeAndContourLines();
