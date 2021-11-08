@@ -207,7 +207,15 @@ namespace WhereToFly.App.Core.Services
         {
             Debug.Assert(this.NavigationPage != null, "NavigationPage property must have been set");
 
-            await this.NavigationPage.Navigation.PopAsync();
+            if (!MainThread.IsMainThread)
+            {
+                await MainThread.InvokeOnMainThreadAsync(
+                    async () => await this.NavigationPage.Navigation.PopAsync());
+            }
+            else
+            {
+                await this.NavigationPage.Navigation.PopAsync();
+            }
         }
 
         /// <summary>
