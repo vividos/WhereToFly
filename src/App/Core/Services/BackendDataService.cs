@@ -84,7 +84,12 @@ namespace WhereToFly.App.Core.Services
         /// </summary>
         public BackendDataService()
         {
-            this.backendWebApi = RestService.For<IBackendWebApi>(BaseUrl);
+            this.backendWebApi = RestService.For<IBackendWebApi>(
+                BaseUrl,
+                new RefitSettings
+                {
+                    ContentSerializer = new NewtonsoftJsonContentSerializer()
+                });
         }
 
         /// <summary>
