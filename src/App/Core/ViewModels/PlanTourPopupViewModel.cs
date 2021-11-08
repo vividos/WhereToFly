@@ -357,9 +357,13 @@ namespace WhereToFly.App.Core.ViewModels
                     App.LogError(refitException);
                     Debug.WriteLine("Refit exception: " + refitException.Content);
 
+                    string text = refitException.HasContent
+                        ? refitException.Content
+                        : refitException.Message;
+
                     retry = await App.Current.MainPage.DisplayAlert(
                         Constants.AppTitle,
-                        "Error while planning tour: " + refitException.Content,
+                        "Error while planning tour: " + text,
                         "Retry",
                         "Close");
                 }
