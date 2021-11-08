@@ -104,7 +104,7 @@ namespace WhereToFly.App.Core.ViewModels
                 animated: true,
                 parameter: tcs);
 
-            var weatherIcon = await tcs.Task;
+            var weatherIcon = await tcs.Task.ConfigureAwait(false);
 
             await NavigationService.Instance.GoBack();
 
