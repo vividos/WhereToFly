@@ -2,7 +2,7 @@
 
 ## Version 1.11.0
 
-Released on 2021-11-08.
+Released on 2021-11-09.
 
 ✨ New Features / Improvements
 
