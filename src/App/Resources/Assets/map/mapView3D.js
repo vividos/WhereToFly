@@ -1411,6 +1411,8 @@ MapView.prototype.addLocationList = function (locationList) {
 
         var location = locationList[index];
 
+        var isLastLocation = locationList.length - 1 === index;
+
         if (location.id === undefined) {
             console.warn("MapView: ignored adding location without ID");
             continue;
@@ -1437,9 +1439,15 @@ MapView.prototype.addLocationList = function (locationList) {
                     that.addTakeoffEntities(entity, location);
 
                 that.locationDataSource.entities.add(entity);
+
+                if (isLastLocation)
+                    this.updateScene();
             },
             function (error) {
                 console.error("MapView.addLocationList: error while adding location entity: " + error);
+
+                if (isLastLocation)
+                    this.updateScene();
             });
     }
 
@@ -1669,6 +1677,8 @@ MapView.prototype.updateLocation = function (location) {
 
     entity.name = location.name;
     entity.description = this.formatLocationText(location);
+
+    this.updateScene();
 };
 
 /**
@@ -1682,6 +1692,8 @@ MapView.prototype.removeLocation = function (locationId) {
     var entity = this.locationDataSource.entities.getById(locationId);
 
     this.locationDataSource.entities.remove(entity);
+
+    this.updateScene();
 };
 
 /**
