@@ -57,7 +57,7 @@
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
     <AndroidEnableProfiledAot>true</AndroidEnableProfiledAot>
     <AndroidUseDefaultAotProfile>false</AndroidUseDefaultAotProfile>
-    <AndroidLinkMode>SdkOnly</AndroidLinkMode>
+    <AndroidLinkMode>Full</AndroidLinkMode>
     <AndroidLinkTool>r8</AndroidLinkTool>
     <AndroidLinkSkip>WhereToFly.App.Core;WhereToFly.Geo;WhereToFly.App.Model;WhereToFly.Shared.Base;WhereToFly.Shared.Model;WhereToFly.App.Resources;WhereToFly.App.Android;Xamarin.Forms.Platform.Android;Xamarin.Forms.Platform;Xamarin.Forms.Core;Xamarin.Forms.Xaml;FormsViewGroup;SharpKml.Core</AndroidLinkSkip>
   </PropertyGroup>
