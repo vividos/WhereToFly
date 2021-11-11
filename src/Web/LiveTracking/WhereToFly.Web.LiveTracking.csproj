@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
     <PackageReference Include="Refit" Version="6.1.15" />
     <PackageReference Include="System.Collections" Version="4.3.0" />
   </ItemGroup>
@@ -17,5 +16,14 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\Model\WhereToFly.Shared.Model.csproj" />
   </ItemGroup>
+
+  <!-- npm frontend project integration for ASP.NET Core based projects -->
+  <PropertyGroup>
+    <NpmProjectPath>Frontend\</NpmProjectPath>
+    <NpmOutputPath>wwwroot\</NpmOutputPath>
+  </PropertyGroup>
+
+  <Import Project="..\..\WhereToFly.NpmBuildProject.targets" />
+  <!-- end of npm frontend project integration -->
 
 </Project>
