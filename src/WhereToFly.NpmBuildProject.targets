@@ -1,0 +1,72 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- NPM build project inside a .NET project -->
+  <!--
+
+This targets file can be used to build a npm project inside a .NET project. This can be handy when
+building web components that are later used in Xamarin apps using Assets or Embedded Resources, or
+for ASP.NET Core projects for the frontend code.
+
+Configure like this:
+
+NpmProjectPath: This is the relative path where the npm project is stored; it must contain the package.json file.
+In a "ASP.NET Core with Angular" project this is the same as the $(SpaRoot) variable. The path can be outside of
+the project's path.
+
+NpmOutputPath: This is the output path where the 'dist' files of the npm build are stored after build. The npm
+project must output its build artifacts to this folder. In an ASP.NET Core project this will be the $(WwwRootPath)
+folder or a subfolder of it. Note that the folder is cleared when doing a project clean or a "Build > Clean Solution".
+
+-->
+
+  <!-- npm frontend project integration for ASP.NET Core based (or other suitable) projects -->
+  <!-- https://medium.com/@lars.willemsens/managing-asp-net-core-mvc-front-end-dependencies-with-npm-and-webpack-part-1-1f6a8b8a1289 -->
+  <!-- https://medium.com/@lars.willemsens/managing-asp-net-core-mvc-front-end-dependencies-with-npm-and-webpack-part-2-330ccbe89e0a -->
+  <PropertyGroup>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(NpmProjectPath)node_modules\**</DefaultItemExcludes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Don't publish the frontend source files, but do show them in the project files list -->
+    <Content Remove="$(NpmProjectPath)**" />
+    <None Remove="$(NpmProjectPath)**" />
+    <None Include="$(NpmProjectPath)**" Exclude="$(NpmProjectPath)node_modules\**" />
+  </ItemGroup>
+
+  <!-- This target checks and ensures that Node.js is installed -->
+  <Target Name="NpmInstall" BeforeTargets="Build" Condition=" !Exists('$(NpmProjectPath)node_modules') ">
+    <!-- Ensure Node.js is installed -->
+    <Exec Command="node --version" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+    </Exec>
+    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+    <Exec WorkingDirectory="$(NpmProjectPath)" Command="npm install" />
+  </Target>
+
+  <!-- This target runs the 'build' or 'build-release' npm script, depending on the selected configuration -->
+  <Target Name="NpmRunBuild" BeforeTargets="Build" DependsOnTargets="NpmInstall">
+    <!-- Build the npm project -->
+    <Exec Condition=" '$(Configuration)' == 'Debug' " WorkingDirectory="$(NpmProjectPath)" Command="npm run build" />
+    <Exec Condition=" '$(Configuration)' == 'Release' " WorkingDirectory="$(NpmProjectPath)" Command="npm run build-release" />
+  </Target>
+
+  <!-- This target is run to determine which files are needed in the publish step -->
+  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish" DependsOnTargets="NpmRunBuild">
+    <!-- Include the newly-built files in the publish output -->
+    <ItemGroup>
+      <DistFiles Include="$(NpmOutputPath)**" />
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>%(DistFiles.Identity)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
+
+  <!-- This target will clean the npm output folder again -->
+  <Target Name="NpmClean" BeforeTargets="Clean">
+    <RemoveDir Directories="$(NpmOutputPath)" />
+  </Target>
+
+</Project>
