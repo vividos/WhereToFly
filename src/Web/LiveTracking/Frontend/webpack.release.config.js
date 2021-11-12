@@ -28,7 +28,7 @@ module.exports = {
             { test: /\.(woff|woff2)$/, use: ["url-loader?prefix=font/&limit=5000"] },
             { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, use: ["url-loader?limit=10000&mimetype=application/octet-stream"] },
             {
-                // Remove pragmas
+                // Strip cesium pragmas
                 test: /\.js$/,
                 enforce: 'pre',
                 include: path.resolve(__dirname, 'node_modules/cesium/Source'),
