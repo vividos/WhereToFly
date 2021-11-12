@@ -1,5 +1,6 @@
 ﻿const path = require('path');
 
+const webpack = require('webpack');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
@@ -31,6 +32,7 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: "css/[name].css"
         }),
+        // Copy Cesium Assets, Widgets, and Workers to a static directory
         new CopyWebpackPlugin({
             patterns: [
                 { from: 'src/favicon.png', to: 'favicon.png' },
@@ -38,7 +40,23 @@ module.exports = {
                 { from: 'src/images', to: 'images' },
                 { from: 'src/js', to: 'js' },
                 { from: 'src/css', to: 'css' },
+                { from: 'node_modules/cesium/Build/Cesium/Workers', to: 'js/Workers' },
+                { from: 'node_modules/cesium/Build/Cesium/Assets', to: 'js/Assets' },
+                { from: 'node_modules/cesium/Build/Cesium/Widgets', to: 'js/Widgets' }
             ],
+        }),
+        new webpack.DefinePlugin({
+            // Define relative base path in cesium for loading assets
+            CESIUM_BASE_URL: JSON.stringify('./js/')
         })
-    ]
+    ],
+    amd: {
+        // Enable webpack-friendly use of require in Cesium
+        toUrlUndefined: true
+    },
+    resolve: {
+        // Needed when using webpack 5 until this bug is fixed in CesiumJS:
+        // https://github.com/CesiumGS/cesium/issues/9212
+        exportsFields: []
+    }
 };

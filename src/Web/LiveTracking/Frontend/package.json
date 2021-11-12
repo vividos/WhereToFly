@@ -28,6 +28,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",
     "bootstrap": "^4.6.1",
+    "cesium": "^1.87.1",
     "jquery": "^3.6.0",
     "malihu-custom-scrollbar-plugin": "^3.1.5",
     "popper.js": "^1.16.1"
