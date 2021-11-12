@@ -13,6 +13,7 @@ import '@fortawesome/fontawesome-free/js/fontawesome.js';
 
 // Site
 import '../css/site.css';
+import '../css/mapView3D.css';
 
 // make jQuery visible outside ES6 modules
 window.$ = $;
