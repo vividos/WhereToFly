@@ -1145,7 +1145,9 @@ MapView.prototype.addLayer = function (layer) {
 
     Cesium.when(dataSourcePromise,
         function (dataSource) {
-            dataSource.clustering = that.clustering;
+            // don't set clustering on CZML data sources, since the object can't be shared;
+            // see https://github.com/CesiumGS/cesium/issues/9336
+            // dataSource.clustering = that.clustering;
             that.viewer.dataSources.add(dataSource);
             that.dataSourceMap[layer.id] = dataSource;
 
