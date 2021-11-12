@@ -3,19 +3,6 @@
 @{
     ViewData["Title"] = "Live Tracking";
 }
-@section Scripts {
-    <script type="text/javascript">
-        function ready(callbackFunction) {
-            if (document.readyState != 'loading')
-                callbackFunction(event)
-            else
-                document.addEventListener("DOMContentLoaded", callbackFunction)
-        }
-        ready(event => {
-            initLiveTracking();
-        })
-    </script>
-}
 
 <environment include="Development">
     <script src="~/js/mapView3D.js" asp-append-version="true"></script>
@@ -106,18 +93,10 @@
 
     <script type="text/javascript">
 
-    function initLiveTracking() {
-        liveTracking = new LiveTracking();
-
-        var liveTrackingInfoList = @Html.Raw(Json.Serialize(Model.LiveTrackingInfoList));
-        for (var key in liveTrackingInfoList) {
-            var item = liveTrackingInfoList[key];
-            if (item.isLiveTrack)
-                liveTracking.addLiveTrack(item.name, item.uri);
-            else
-                liveTracking.addLiveWaypoint(item.name, item.uri);
+        function getLiveTrackingInfoList() {
+            var liveTrackingInfoList = @Html.Raw(Json.Serialize(Model.LiveTrackingInfoList));
+            return liveTrackingInfoList;
         }
-    }
 
     </script>
 

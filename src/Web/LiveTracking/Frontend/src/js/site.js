@@ -17,3 +17,23 @@ import '../css/mapView3D.css';
 
 // make jQuery visible outside ES6 modules
 window.$ = $;
+
+// Site initialisation
+$(function () {
+    initLiveTracking();
+});
+
+function initLiveTracking() {
+    var liveTracking = new LiveTracking();
+
+    var liveTrackingInfoList = getLiveTrackingInfoList();
+    for (var key in liveTrackingInfoList) {
+        var item = liveTrackingInfoList[key];
+        if (item.isLiveTrack)
+            liveTracking.addLiveTrack(item.name, item.uri);
+        else
+            liveTracking.addLiveWaypoint(item.name, item.uri);
+    }
+
+    window.liveTracking = liveTracking;
+}
