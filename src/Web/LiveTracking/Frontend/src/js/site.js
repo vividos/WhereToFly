@@ -17,6 +17,7 @@ import "cesium/Build/Cesium/Widgets/widgets.css";
 // Site
 import '../css/site.css';
 import '../css/mapView3D.css';
+import '../css/heightProfileView.css';
 import LiveTracking from '../js/liveTracking.js';
 
 // Site initialisation

@@ -1,4 +1,5 @@
 import * as Cesium from 'cesium';
+import HeightProfileView from './heightProfileView.js';
 
 export default class MapView {
     /**
