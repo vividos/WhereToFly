@@ -13,16 +13,11 @@ import '@fortawesome/fontawesome-free/js/fontawesome.js';
 
 // Cesium.js
 import "cesium/Build/Cesium/Widgets/widgets.css";
-import * as Cesium from 'cesium';
 
 // Site
 import '../css/site.css';
 import '../css/mapView3D.css';
-
-// make jQuery visible outside ES6 modules
-window.$ = $;
-// also for Cesium.js
-window.Cesium = Cesium;
+import LiveTracking from '../js/liveTracking.js';
 
 // Site initialisation
 $(function () {

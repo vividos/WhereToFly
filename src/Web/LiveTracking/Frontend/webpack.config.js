@@ -38,8 +38,6 @@ module.exports = {
                 { from: 'src/favicon.png', to: 'favicon.png' },
                 { from: 'src/data', to: 'data' },
                 { from: 'src/images', to: 'images' },
-                { from: 'src/js', to: 'js' },
-                { from: 'src/css', to: 'css' },
                 { from: 'node_modules/cesium/Build/Cesium/Workers', to: 'js/Workers' },
                 { from: 'node_modules/cesium/Build/Cesium/Assets', to: 'js/Assets' },
                 { from: 'node_modules/cesium/Build/Cesium/Widgets', to: 'js/Widgets' }

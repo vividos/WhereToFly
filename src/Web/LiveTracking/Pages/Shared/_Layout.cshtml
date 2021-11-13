@@ -14,6 +14,8 @@
         <script type="module" src="~/js/site.bundle.js" defer></script>
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
+
+    @await RenderSectionAsync("Scripts", required: false)
 </head>
 <body>
     <header style="height:56px">
@@ -56,6 +58,5 @@
     <!-- Dark Overlay element -->
     <div class="overlay"></div>
 
-    @RenderSection("Scripts", required: false)
 </body>
 </html>
