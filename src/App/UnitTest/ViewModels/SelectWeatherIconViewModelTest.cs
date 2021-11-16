@@ -40,12 +40,12 @@ namespace WhereToFly.App.UnitTest.ViewModels
 
             Assert.IsTrue(
                 viewModel.WaitForPropertyChange(
-                    nameof(viewModel.WeatherIconList),
+                    nameof(viewModel.GroupedWeatherIconList),
                     TimeSpan.FromSeconds(10)),
                 "waiting for property change must succeed");
 
             // check
-            Assert.IsTrue(viewModel.WeatherIconList.Any(), "weather icon description list must not be empty");
+            Assert.IsTrue(viewModel.GroupedWeatherIconList.Any(), "weather icon description list must not be empty");
         }
     }
 }

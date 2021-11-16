@@ -14,13 +14,8 @@ namespace WhereToFly.App.Core.ViewModels
     /// <summary>
     /// View model for the weather dashboard page
     /// </summary>
-    internal class WeatherDashboardViewModel : ViewModelBase
+    public class WeatherDashboardViewModel : ViewModelBase
     {
-        /// <summary>
-        /// MessagingCenter message constant to show toast message
-        /// </summary>
-        private const string MessageAddWeatherIcon = "AddWeatherIcon";
-
         /// <summary>
         /// List of weather icon descriptions to display
         /// </summary>
@@ -54,21 +49,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         public WeatherDashboardViewModel()
         {
-            MessagingCenter.Subscribe<WeatherIconDescription>(
-                this,
-                MessageAddWeatherIcon,
-                async (iconDescription) => await this.OnAddWeatherIcon(iconDescription));
-
             this.SetupBindings();
-        }
-
-        /// <summary>
-        /// Adds new weather icon to dashboard; called by SelectWeatherIconViewModel
-        /// </summary>
-        /// <param name="iconDescription">weather icon description</param>
-        public static void AddWeatherIcon(WeatherIconDescription iconDescription)
-        {
-            MessagingCenter.Send(iconDescription, MessageAddWeatherIcon);
         }
 
         /// <summary>
@@ -76,7 +57,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         /// <param name="iconDescription">weather icon description</param>
         /// <returns>task to wait on</returns>
-        private async Task OnAddWeatherIcon(WeatherIconDescription iconDescription)
+        public async Task AddWeatherIcon(WeatherIconDescription iconDescription)
         {
             // remove it when it's already in the list, in order to move it to the end
             this.weatherIconDescriptionList.RemoveAll(
@@ -136,20 +117,14 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task AddIconAsync()
         {
-            var tcs = new TaskCompletionSource<WeatherIconDescription>();
-
-            await NavigationService.Instance.NavigateAsync(
-                PageKey.SelectWeatherIconPage,
-                animated: true,
-                parameter: tcs);
-
-            var weatherIcon = await tcs.Task;
-
-            await NavigationService.Instance.GoBack();
+            var weatherIcon =
+                await NavigationService.Instance.NavigateToPopupPageAsync<WeatherIconDescription>(
+                    PopupPageKey.SelectWeatherIconPopupPage,
+                    animated: true);
 
             if (weatherIcon != null)
             {
-                AddWeatherIcon(weatherIcon);
+                await this.AddWeatherIcon(weatherIcon);
             }
         }
 
@@ -177,7 +152,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             this.WeatherDashboardItems.Insert(
                 insertIndex,
-                new WeatherIconViewModel(weatherIconDescription));
+                new WeatherIconViewModel(this.AddIconAsync, weatherIconDescription));
 
             this.OnPropertyChanged(nameof(this.WeatherDashboardItems));
         }
@@ -201,10 +176,11 @@ namespace WhereToFly.App.Core.ViewModels
         {
             var weatherIconViewModels =
                 (from iconDescription in this.weatherIconDescriptionList
-                 select new WeatherIconViewModel(iconDescription)).ToList();
+                 select new WeatherIconViewModel(this.AddIconAsync, iconDescription)).ToList();
 
             weatherIconViewModels.Add(
                 new WeatherIconViewModel(
+                    this.AddIconAsync,
                     new WeatherIconDescription
                     {
                         Name = "Add new...",

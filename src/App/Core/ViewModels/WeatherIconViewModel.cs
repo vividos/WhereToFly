@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WhereToFly.App.Core.Services;
@@ -13,6 +14,11 @@ namespace WhereToFly.App.Core.ViewModels
     /// </summary>
     public class WeatherIconViewModel : ViewModelBase
     {
+        /// <summary>
+        /// Function to call to start adding a new weather icon
+        /// </summary>
+        private readonly Func<Task> funcAddWeatherIcon;
+
         /// <summary>
         /// Weather icon description object
         /// </summary>
@@ -38,9 +44,13 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Creates a new weather icon view model from weather icon description
         /// </summary>
+        /// <param name="funcAddWeatherIcon">function to start adding a new weather icon</param>
         /// <param name="iconDescription">weather icon description to use</param>
-        public WeatherIconViewModel(WeatherIconDescription iconDescription)
+        public WeatherIconViewModel(
+            Func<Task> funcAddWeatherIcon,
+            WeatherIconDescription iconDescription)
         {
+            this.funcAddWeatherIcon = funcAddWeatherIcon;
             this.IconDescription = iconDescription;
 
             this.SetupBindings();
@@ -82,35 +92,12 @@ namespace WhereToFly.App.Core.ViewModels
                     break;
 
                 case WeatherIconDescription.IconType.IconPlaceholder:
-                    await this.OpenSelectionPageAsync();
+                    await this.funcAddWeatherIcon?.Invoke();
                     break;
 
                 default:
                     Debug.Assert(false, "invalid weather icon type");
                     break;
-            }
-        }
-
-        /// <summary>
-        /// Opens weather icon selection page
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task OpenSelectionPageAsync()
-        {
-            var tcs = new TaskCompletionSource<WeatherIconDescription>();
-
-            await NavigationService.Instance.NavigateAsync(
-                PageKey.SelectWeatherIconPage,
-                animated: true,
-                parameter: tcs);
-
-            var weatherIcon = await tcs.Task.ConfigureAwait(false);
-
-            await NavigationService.Instance.GoBack();
-
-            if (weatherIcon != null)
-            {
-                WeatherDashboardViewModel.AddWeatherIcon(weatherIcon);
             }
         }
     }

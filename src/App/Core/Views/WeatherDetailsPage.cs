@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Controls;
+using WhereToFly.App.Core.Services;
 using WhereToFly.App.Model;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -229,11 +230,15 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task SelectAndOpenWeatherPageAsync(string group)
         {
-            var description = await SelectWeatherIconPopupPage.ShowAsync(group);
+            var weatherIcon =
+                await NavigationService.Instance.NavigateToPopupPageAsync<WeatherIconDescription>(
+                    PopupPageKey.SelectWeatherIconPopupPage,
+                    animated: true,
+                    group);
 
-            if (description != null)
+            if (weatherIcon != null)
             {
-                this.OpenWebLink(description);
+                this.OpenWebLink(weatherIcon);
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,17 +11,11 @@ using Xamarin.Forms;
 namespace WhereToFly.App.Core.ViewModels
 {
     /// <summary>
-    /// View model for the weather icon selection page. Used by SelectWeatherIconPage and
-    /// SelectWeatherIconPopupPage.
+    /// View model for the weather icon selection popup page.
     /// </summary>
     public partial class SelectWeatherIconViewModel : ViewModelBase
     {
         #region Binding properties
-        /// <summary>
-        /// Weather icon view models list
-        /// </summary>
-        public ObservableCollection<WeatherIconListEntryViewModel> WeatherIconList { get; set; }
-
         /// <summary>
         /// List of grouped weather icon view models
         /// </summary>
@@ -40,32 +35,28 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Creates a new select weather icon view model
         /// </summary>
-        /// <param name="tcs">
-        /// task completion source to use when a weather icon description was selected
-        /// </param>
+        /// <param name="setResult">action to set result</param>
         /// <param name="group">group to filter by, or null to show all groups</param>
         public SelectWeatherIconViewModel(
-            TaskCompletionSource<WeatherIconDescription> tcs,
+            Action<WeatherIconDescription> setResult,
             string group = null)
         {
-            Debug.Assert(tcs != null, "task completion source must not be null");
+            Debug.Assert(setResult != null, "action must not be null");
 
-            this.SetupBindings(tcs, group);
+            this.SetupBindings(setResult, group);
         }
 
         /// <summary>
         /// Sets up bindings properties
         /// </summary>
-        /// <param name="tcs">
-        /// task completion source to use when a weather icon description was selected
-        /// </param>
+        /// <param name="setResult">action to set result</param>
         /// <param name="group">group to filter by, or null to show all groups</param>
-        private void SetupBindings(TaskCompletionSource<WeatherIconDescription> tcs, string group)
+        private void SetupBindings(Action<WeatherIconDescription> setResult, string group)
         {
             this.ItemTappedCommand = new Command<WeatherIconListEntryViewModel>(
                 (itemViewModel) =>
                 {
-                    tcs.SetResult(itemViewModel.IconDescription);
+                    setResult(itemViewModel.IconDescription);
 
                     this.SelectedWeatherIcon = null;
                     this.OnPropertyChanged(nameof(this.SelectedWeatherIcon));
@@ -90,15 +81,13 @@ namespace WhereToFly.App.Core.ViewModels
             var appManager = DependencyService.Get<IAppManager>();
 #pragma warning restore S1854 // Unused assignments should be removed
 
-            this.WeatherIconList = new ObservableCollection<WeatherIconListEntryViewModel>(
+            var ungroupedWeatherIconList = new ObservableCollection<WeatherIconListEntryViewModel>(
                 from weatherIcon in weatherIconList
                 where IsInGroup(@group, weatherIcon) && IsAppAvailable(weatherIcon)
                 select new WeatherIconListEntryViewModel(this, weatherIcon));
 
-            this.OnPropertyChanged(nameof(this.WeatherIconList));
-
             var groupedWeatherIconList =
-                from weatherIconViewModel in this.WeatherIconList
+                from weatherIconViewModel in ungroupedWeatherIconList
                 orderby GroupKeyFromGroup(weatherIconViewModel.Group)
                 group weatherIconViewModel by weatherIconViewModel.Group into weatherIconGroup
                 select new Grouping<string, WeatherIconListEntryViewModel>(

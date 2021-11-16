@@ -38,10 +38,6 @@ namespace WhereToFly.App.Core.Services
                 { PageKey.TrackHeightProfilePage, (typeof(TrackHeightProfilePage), typeof(Geo.Model.Track)) },
                 { PageKey.WeatherDashboardPage, (typeof(WeatherDashboardPage), null) },
                 { PageKey.WeatherDetailsPage, (typeof(WeatherDetailsPage), typeof(WeatherIconDescription)) },
-                {
-                    PageKey.SelectWeatherIconPage,
-                    (typeof(SelectWeatherIconPage), typeof(TaskCompletionSource<WeatherIconDescription>))
-                },
                 { PageKey.SettingsPage, (typeof(SettingsPage), null) },
                 { PageKey.InfoPage, (typeof(InfoPage), null) },
             };
@@ -54,6 +50,7 @@ namespace WhereToFly.App.Core.Services
             new Dictionary<PopupPageKey, (Type, Type)>
             {
                 { PopupPageKey.AddLayerPopupPage, (typeof(AddLayerPopupPage), null) },
+                { PopupPageKey.SelectWeatherIconPopupPage, (typeof(SelectWeatherIconPopupPage), typeof(string)) },
             };
 
         /// <summary>

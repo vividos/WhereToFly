@@ -70,13 +70,6 @@
         WeatherDetailsPage,
 
         /// <summary>
-        /// Page key to navigate to weather icon selection page. The page must be started with a
-        /// TaskCompletionSource with WeatherIconDescription as parameter that is used to set a
-        /// result when a weather icon was selected.
-        /// </summary>
-        SelectWeatherIconPage,
-
-        /// <summary>
         /// Page key to navigate to settings page
         /// </summary>
         SettingsPage,

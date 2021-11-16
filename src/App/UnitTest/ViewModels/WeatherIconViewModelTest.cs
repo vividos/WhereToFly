@@ -37,7 +37,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
             };
 
             // run
-            var viewModel = new WeatherIconViewModel(description);
+            var viewModel = new WeatherIconViewModel(null, description);
 
             ////Assert.IsTrue(
             ////    viewModel.WaitForPropertyChange(
@@ -66,7 +66,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
             };
 
             // run
-            var viewModel = new WeatherIconViewModel(description);
+            var viewModel = new WeatherIconViewModel(null, description);
             Assert.IsTrue(viewModel.Tapped.CanExecute(null), "command must be able to executed");
 
             viewModel.Tapped.Execute(null);
@@ -91,7 +91,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
             };
 
             // run
-            var viewModel = new WeatherIconViewModel(description);
+            var viewModel = new WeatherIconViewModel(null, description);
             Assert.IsTrue(viewModel.Tapped.CanExecute(null), "command must be able to executed");
 
             viewModel.Tapped.Execute(null);
