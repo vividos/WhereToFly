@@ -12,7 +12,6 @@ namespace WhereToFly.App.Android
     /// </summary>
     [Activity(
         MainLauncher = true,
-        Exported = true,
         Name = "wheretofly.SplashActivity",
         NoHistory = true,
         Theme = "@style/SplashTheme",
