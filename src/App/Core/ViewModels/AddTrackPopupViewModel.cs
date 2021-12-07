@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
@@ -54,7 +53,6 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Property that contains the track point interval, as text
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1126:PrefixCallsCorrectly", Justification = "false positive")]
         public string TrackPointIntervalText
         {
             get => $"{(int)this.trackPointInterval.TotalSeconds} s";

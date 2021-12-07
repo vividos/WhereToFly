@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using WhereToFly.App.Core.Controls;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Model;
@@ -69,7 +68,6 @@ namespace WhereToFly.App.Core.Views
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
         /// <returns>task to wait on</returns>
-        [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1126:PrefixCallsCorrectly", Justification = "false positive")]
         private async Task OnNavigated_WebView(object sender, WebNavigatedEventArgs args)
         {
             if (sender is WebView webView &&
