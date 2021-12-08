@@ -1,4 +1,5 @@
 ﻿using WhereToFly.Geo.Model;
+using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.ViewModels
 {
@@ -27,14 +28,14 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
-        /// Propertiy containing the color of the track, in format RRGGBB
+        /// Property containing the color of the track
         /// </summary>
-        public string SelectedTrackColor
+        public Color SelectedTrackColor
         {
-            get => this.Track.Color;
+            get => Color.FromHex("#" + this.Track.Color);
             set
             {
-                this.Track.Color = value;
+                this.Track.Color = value.ToHex().Replace("#FF", string.Empty);
                 this.OnPropertyChanged(nameof(this.SelectedTrackColor));
             }
         }

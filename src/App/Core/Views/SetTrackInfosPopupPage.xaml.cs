@@ -1,11 +1,8 @@
 ﻿using Rg.Plugins.Popup.Extensions;
 using System;
-using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.ViewModels;
 using WhereToFly.Geo.Model;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.Views
 {
@@ -18,16 +15,6 @@ namespace WhereToFly.App.Core.Views
         /// View model for this popup page
         /// </summary>
         private readonly SetTrackInfoPopupViewModel viewModel;
-
-        /// <summary>
-        /// All colors to display in the color picker for the track color
-        /// </summary>
-        private static readonly string[] AllColorPickerColors = new string[]
-        {
-            "C70039", "FF5733", "FF8D1A", "FFC300",
-            "EDDD52", "ADD45D", "56C785", "00BAAD",
-            "2A7A9B", "3C3D6B", "52184A", "900C3E",
-        };
 
         /// <summary>
         /// Task completion source to report back edited track
@@ -45,8 +32,6 @@ namespace WhereToFly.App.Core.Views
             this.InitializeComponent();
 
             this.BindingContext = this.viewModel = new SetTrackInfoPopupViewModel(track);
-
-            this.SetupColorPicker(track.IsFlightTrack ? null : track.Color);
         }
 
         /// <summary>
@@ -64,87 +49,6 @@ namespace WhereToFly.App.Core.Views
             await popupPage.Navigation.PushPopupAsync(popupPage);
 
             return await popupPage.tcs.Task;
-        }
-
-        /// <summary>
-        /// Sets up color picker control, which actually is a FlexLayout containing several
-        /// buttons with a border.
-        /// </summary>
-        /// <param name="selectedColor">selected color</param>
-        private void SetupColorPicker(string selectedColor)
-        {
-            foreach (string color in AllColorPickerColors)
-            {
-                var button = new Button
-                {
-                    WidthRequest = 40.0,
-                    HeightRequest = 40.0,
-                    BackgroundColor = Color.FromHex(color),
-                };
-
-                button.Clicked += this.OnClicked_ColorPickerButton;
-
-                var frame = new Frame
-                {
-                    Padding = new Thickness(5),
-                    CornerRadius = 5.0f,
-                    HasShadow = false,
-                    Content = button
-                };
-
-                this.colorPickerLayout.Children.Add(frame);
-            }
-
-            int selectedIndex = selectedColor != null
-                ? Array.IndexOf(AllColorPickerColors, selectedColor)
-                : -1;
-
-            if (selectedIndex == -1)
-            {
-                selectedIndex = 0;
-            }
-
-            this.SelectColorFrame(this.colorPickerLayout.Children[selectedIndex] as Frame);
-        }
-
-        /// <summary>
-        /// Called when a color picker button control has been clicked
-        /// </summary>
-        /// <param name="sender">sender object; the button being clicked</param>
-        /// <param name="args">event args</param>
-        private void OnClicked_ColorPickerButton(object sender, EventArgs args)
-        {
-            var button = sender as Button;
-            var selectedFrame = button.Parent as Frame;
-
-            this.SelectColorFrame(selectedFrame);
-        }
-
-        /// <summary>
-        /// Marks a new color element (button inside a frame) as the selected element.
-        /// </summary>
-        /// <param name="selectedFrame">selected frame</param>
-        private void SelectColorFrame(Frame selectedFrame)
-        {
-            // set all frame colors to white except the selected one
-            foreach (Frame frame in this.colorPickerLayout.Children.Cast<Frame>())
-            {
-                Debug.Assert(frame != null, "view element must be a Frame");
-
-                if (frame == selectedFrame)
-                {
-                    frame.SetDynamicResource(Frame.BorderColorProperty, "BorderSelectionColor");
-                }
-                else
-                {
-                    frame.BorderColor = Color.Transparent;
-                }
-            }
-
-            // update view model
-            int colorIndex = this.colorPickerLayout.Children.IndexOf(selectedFrame);
-
-            this.viewModel.SelectedTrackColor = AllColorPickerColors[colorIndex];
         }
 
         /// <summary>

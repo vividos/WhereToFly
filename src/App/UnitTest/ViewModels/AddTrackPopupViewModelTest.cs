@@ -41,11 +41,11 @@ namespace WhereToFly.App.UnitTest.ViewModels
             Assert.AreEqual(track.Name, viewModel.TrackName, "is not a flight track");
             Assert.AreEqual(track.IsFlightTrack, viewModel.IsFlightTrack, "is not a flight track");
             Assert.IsTrue(viewModel.IsColorPickerVisible, "color picker must be visible");
-            Assert.IsTrue(viewModel.SelectedTrackColor.Any(), "selected track color must contain value");
+            Assert.IsTrue(viewModel.SelectedTrackColor != null, "selected track color must be set");
 
             // modify values
             viewModel.TrackName = "Track2";
-            viewModel.SelectedTrackColor = "0000FF";
+            viewModel.SelectedTrackColor = Color.FromHex("#0000FF");
             viewModel.IsFlightTrack = false;
         }
     }

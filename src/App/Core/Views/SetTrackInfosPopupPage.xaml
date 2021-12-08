@@ -2,6 +2,7 @@
 <views:BasePopupPage xmlns="http://xamarin.com/schemas/2014/forms"
                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                      xmlns:views="clr-namespace:WhereToFly.App.Core.Views"
+                     xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
                      x:Class="WhereToFly.App.Core.Views.SetTrackInfosPopupPage">
 
     <!-- popup content -->
@@ -20,15 +21,10 @@
         <Entry Placeholder="enter track name" Text="{Binding Path=TrackName, Mode=TwoWay}" />
 
         <!-- Colors to choose from -->
-        <Label Text="Color" FontSize="Medium" Margin="0, 10, 0, 0"
-               IsVisible="{Binding IsColorPickerVisible, Mode=OneWay}" />
-        <FlexLayout Direction="Row"
-                    AlignItems="Start"
-                    AlignContent="Start"
-                    JustifyContent="Start"
-                    Wrap="Wrap"
-                    IsVisible="{Binding IsColorPickerVisible, Mode=OneWay}"
-                    x:Name="colorPickerLayout" />
+        <Label Text="Color" FontSize="Medium" Margin="0, 10, 0, 0" />
+        <controls:ColorPickerView x:Name="colorPickerLayout"
+                                  SelectionBorderColor="{DynamicResource BorderSelectionColor}"
+                                  SelectedColor="{Binding SelectedTrackColor}" />
 
         <!-- Button to set track infos -->
         <Button Text="OK"

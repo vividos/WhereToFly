@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WhereToFly.App.Core.Controls.ColorPickerView">
+    <!-- flex layout with buttons for each color -->
+    <FlexLayout x:Name="colorPickerLayout"
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand"
+                Direction="Row"
+                AlignItems="Start"
+                AlignContent="Start"
+                JustifyContent="Start"
+                Wrap="Wrap" />
+</ContentView>
