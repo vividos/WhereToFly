@@ -36,7 +36,8 @@ namespace WhereToFly.App.UnitTest.ViewModels
         {
             // set up + run
             var tcs = new TaskCompletionSource<WeatherIconDescription>();
-            var viewModel = new SelectWeatherIconViewModel(tcs);
+            var viewModel = new SelectWeatherIconViewModel(
+                (result) => tcs.SetResult(result));
 
             Assert.IsTrue(
                 viewModel.WaitForPropertyChange(
