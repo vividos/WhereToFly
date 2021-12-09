@@ -54,6 +54,7 @@
         <controls:ColorPickerView x:Name="colorPickerLayout"
                                   SelectionBorderColor="{DynamicResource BorderSelectionColor}"
                                   SelectedColor="{Binding SelectedTrackColor}"
+                                  BackgroundColor="{DynamicResource PageBackgroundColor}"
                                   IsVisible="{Binding IsColorPickerVisible, Mode=OneWay}" />
 
         <!-- Button to add track -->

@@ -96,15 +96,27 @@ namespace WhereToFly.App.Core.Controls
 
                 button.Clicked += this.OnClicked_ColorPickerButton;
 
-                var frame = new Frame
+                var innerFrame = new Frame
                 {
-                    Padding = new Thickness(5),
-                    CornerRadius = 5.0f,
+                    Padding = new Thickness(2, 2, 2.5, 2.5), // distance to button
+                    Margin = new Thickness(2), // border width
+                    CornerRadius = 3.0f,
+                    BackgroundColor = this.BackgroundColor,
                     HasShadow = false,
                     Content = button,
                 };
 
-                this.colorPickerLayout.Children.Add(frame);
+                var outerFrame = new Frame
+                {
+                    Padding = new Thickness(0),
+                    Margin = new Thickness(0),
+                    CornerRadius = 5.0f,
+                    BackgroundColor = Color.Transparent,
+                    HasShadow = false,
+                    Content = innerFrame,
+                };
+
+                this.colorPickerLayout.Children.Add(outerFrame);
             }
         }
 
@@ -159,17 +171,40 @@ namespace WhereToFly.App.Core.Controls
         private void SelectColorFrame(Color color, Frame selectedFrame)
         {
             // set all frame colors to white except the selected one
-            foreach (Frame frame in this.colorPickerLayout.Children.Cast<Frame>())
+            foreach (Frame outerFrame in this.colorPickerLayout.Children.Cast<Frame>())
             {
-                Debug.Assert(frame != null, "view element must be a Frame");
+                Debug.Assert(outerFrame != null, "view element must be a Frame");
 
-                frame.BorderColor = frame == selectedFrame
+                outerFrame.BackgroundColor = outerFrame == selectedFrame
                     ? this.SelectionBorderColor
                     : Color.Transparent;
             }
 
             // update view model
             this.SetValue(SelectedColorProperty, color);
+        }
+
+        /// <summary>
+        /// Called when a property has changed
+        /// </summary>
+        /// <param name="propertyName">name of changed property</param>
+        protected override void OnPropertyChanged(string propertyName = null)
+        {
+            Debug.WriteLine($"OnPropertyChanged({propertyName})");
+            if (propertyName == nameof(this.BackgroundColor))
+            {
+                // set all inner frame background colors
+                foreach (Frame outerFrame in this.colorPickerLayout.Children.Cast<Frame>())
+                {
+                    Debug.Assert(outerFrame != null, "view element must be a Frame");
+
+                    var innerFrame = outerFrame.Content as Frame;
+
+                    innerFrame.BackgroundColor = this.BackgroundColor;
+                }
+            }
+
+            base.OnPropertyChanged(propertyName);
         }
     }
 }
