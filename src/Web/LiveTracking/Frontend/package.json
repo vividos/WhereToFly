@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Where-to-fly LiveTracking frontend",
   "main": "site.js",
-  "sideEffects": ["./src/css/site.css"],
+  "sideEffects": [
+    "./src/css/site.css"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config webpack.config.js",
