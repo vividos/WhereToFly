@@ -47,10 +47,6 @@ export default class LiveTracking {
 
         $(document).ready(function () {
 
-            $("#sidebar").mCustomScrollbar({
-                theme: "minimal"
-            });
-
             $('#dismiss, .overlay').on('click', function () {
                 // hide sidebar
                 $('#sidebar').removeClass('active');
