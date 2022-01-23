@@ -1,7 +1,7 @@
 ﻿/* live tracking site wide styles */
 
-.bg-dark {
-    background-color: #2F299E !important;
+#navbar {
+    background-color: #2F299E
 }
 
 body {
@@ -12,6 +12,10 @@ body {
     overflow: hidden;
     /* Margin bottom by footer height */
     margin-bottom: 60px;
+}
+
+main {
+    margin-top: 57px;
 }
 
 /* inverts images; used for SVGs with wrong fill value */

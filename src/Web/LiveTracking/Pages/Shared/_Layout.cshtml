@@ -18,38 +18,38 @@
     @await RenderSectionAsync("Scripts", required: false)
 </head>
 <body>
-    <header style="height:56px">
-        <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark mb-3">
+    <nav id="navbar" class="navbar fixed-top navbar-expand-lg navbar-dark mb-3">
+        <div class="container-fluid">
             <a class="navbar-brand" asp-area="" asp-page="/Index">
                 <img src="/favicon.png" width="30" height="30" alt="logo">
                 Where-to-fly Live Tracking
             </a>
 
             <button class="navbar-toggler" type="button"
-                    data-toggle="collapse" data-target=".navbar-collapse"
-                    aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+                    data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarToggler">
-                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    <li>
-                        <form class="form-inline my-2 my-lg-0" id="findForm">
-                            <input class="form-control mr-sm-2" type="search" id="findValue" placeholder="Find location" aria-label="Find location">
-                            <button class="btn btn-outline-light my-2 my-sm-0" style="margin-right:8px" type="submit">Find</button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-2 md-md-0">
+                    <li class="nav-item">
+                        <form class="d-flex" id="findForm" style="margin-right:8px">
+                            <input class="form-control me-2" type="search" id="findValue" placeholder="Find location" aria-label="Find location">
+                            <button class="btn btn-outline-light" type="submit">Find</button>
                         </form>
                     </li>
 
-                    <li>
-                        <button type="button" id="sidebarCollapse" class="btn btn-outline-light my-2 my-sm-0">
+                    <li class="nav-item">
+                        <button type="button" id="sidebarCollapse" class="btn btn-outline-light">
                             <em class="fas fa-align-left"></em>
                             <span>Show Sidebar</span>
                         </button>
                     </li>
                 </ul>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
 
     <main role="main" class="pb-3">
         @RenderBody()
