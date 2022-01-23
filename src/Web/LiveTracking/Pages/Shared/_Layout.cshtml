@@ -41,8 +41,10 @@
                     </li>
 
                     <li class="nav-item">
-                        <button type="button" id="sidebarCollapse" class="btn btn-outline-light">
-                            <em class="fas fa-align-left"></em>
+                        <button type="button" id="sidebarCollapse" class="btn btn-outline-light"
+                                data-bs-toggle="offcanvas" data-bs-target="#sidebar">
+                            <em class="fas fa-align-left"
+                                data-bs-toggle="offcanvas" data-bs-target="#sidebar"></em>
                             <span>Show Sidebar</span>
                         </button>
                     </li>
@@ -54,9 +56,6 @@
     <main role="main" class="pb-3">
         @RenderBody()
     </main>
-
-    <!-- Dark Overlay element -->
-    <div class="overlay"></div>
 
 </body>
 </html>

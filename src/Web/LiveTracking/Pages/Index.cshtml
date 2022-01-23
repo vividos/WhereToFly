@@ -4,43 +4,38 @@
     ViewData["Title"] = "Live Tracking";
 }
 
-<div class="wrapper">
-
-    <nav id="sidebar">
-
-        <div id="dismiss">
+<div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar" data-bs-keyboard="false" data-bs-backdrop="false">
+    <div class="offcanvas-header sidebar-header">
+        <h5 class="offcanvas-title d-none d-sm-block" id="offcanvas">Live Tracking</h5>
+        <div id="btn-dismiss" data-bs-dismiss="offcanvas" data-bs-target="#sidebar" aria-label="Close">
             <em class="fas fa-arrow-left"></em>
         </div>
+    </div>
 
-        <div class="sidebar-header">
-            <h5>Live Tracking</h5>
-        </div>
-
-        <div class="sidebar-content">
-            <div class="list-group" id="livetracking-list">
-                <div class="list-group-item">
-                    <h5 class="mb-1">
-                        <img src="~/images/paragliding.svg" width="30" height="30" alt="paraglider" class="img-invert" />
-                        <span id="liveDataName">Live Waypoint</span>
-                    </h5>
-                    <p class="mb-1">
-                        <div id="liveDataDescription">
-                            Position: Lat/Long
-                        </div>
-                        <div class="d-flex w-100">
-                            <button type="button" class="btn btn-primary btn-sm me-1"
-                                    onclick="javascript: liveTracking.zoomToByPrefix('liveData');">
-                                Zoom
-                            </button>
-                            <button type="button" class="btn btn-primary btn-sm me-1"
-                                    onclick="javascript: liveTracking.updateByPrefix('liveData');">
-                                Update
-                            </button>
-                        </div>
-                    </p>
-                    <div class="d-flex w-100 justify-content-between">
-                        <small id="liveDataLastUpdate">Last update: N/A</small>
+    <div class="offcanvas-body px-0 py-0">
+        <div class="list-group sidebar-content" id="livetracking-list">
+            <div class="list-group-item">
+                <h5 class="mb-1">
+                    <img src="~/images/paragliding.svg" width="30" height="30" alt="paraglider" class="img-invert" />
+                    <span id="liveDataName">Live Waypoint</span>
+                </h5>
+                <p class="mb-1">
+                    <div id="liveDataDescription">
+                        Position: Lat/Long
                     </div>
+                    <div class="d-flex w-100">
+                        <button type="button" class="btn btn-primary btn-sm me-1"
+                                onclick="javascript: liveTracking.zoomToByPrefix('liveData');">
+                            Zoom
+                        </button>
+                        <button type="button" class="btn btn-primary btn-sm me-1"
+                                onclick="javascript: liveTracking.updateByPrefix('liveData');">
+                            Update
+                        </button>
+                    </div>
+                </p>
+                <div class="d-flex w-100 justify-content-between">
+                    <small id="liveDataLastUpdate">Last update: N/A</small>
                 </div>
             </div>
         </div>
@@ -75,20 +70,19 @@
                 <option value="ContourLines">Contour lines</option>
             </select>
         </div>
-    </nav>
-
-    <div id="content">
-        <div id="mapElement"></div>
-        <div id="liveTrackToolbar" class="livetrack-toolbar-container" style="display:none; bottom:130px"></div>
     </div>
+</div>
 
-    <script type="text/javascript">
+<div id="content">
+    <div id="mapElement"></div>
+    <div id="liveTrackToolbar" class="livetrack-toolbar-container" style="display:none; bottom:130px"></div>
+</div>
+
+<script type="text/javascript">
 
         function getLiveTrackingInfoList() {
             var liveTrackingInfoList = @Html.Raw(Json.Serialize(Model.LiveTrackingInfoList));
             return liveTrackingInfoList;
         }
 
-    </script>
-
-</div>
+</script>

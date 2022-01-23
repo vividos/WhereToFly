@@ -51,61 +51,27 @@ img.img-invert {
 
 /* sidebar */
 
-.wrapper {
-    display: block;
-}
-
 #sidebar {
-    position: fixed;
     width: 250px;
     height: 100vh;
-    top: 0px;
-    left: -250px;
-    /* top layer */
-    z-index: 9999;
     background: #cfcfcf;
     color: #000;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
-    overflow-y: scroll;
+    overflow-y: auto;
     transition: all 0.3s;
 }
 
-#sidebar.active {
-    left: 0;
-}
+    #sidebar .sidebar-header {
+        background: #2F299E;
+        color: #fff;
+        padding: 10px;
+    }
 
-#sidebar .sidebar-header {
-    background: #2F299E;
-    color: #fff;
-    padding: 10px;
-}
+    #sidebar .sidebar-content {
+        padding: 10px;
+    }
 
-#sidebar .sidebar-content {
-    padding: 10px;
-}
-
-.overlay {
-    display: none;
-    position: fixed;
-    /* full screen */
-    width: 100vw;
-    height: 100vh;
-    /* transparent black */
-    background: rgba(0, 0, 0, 0.7);
-    /* middle layer, i.e. appears below the sidebar */
-    z-index: 998;
-    opacity: 0;
-    /* animate the transition */
-    transition: all 0.5s ease-in-out;
-}
-
-/* display .overlay when it has the .active class */
-.overlay.active {
-    display: block;
-    opacity: 1;
-}
-
-#dismiss {
+#btn-dismiss {
     width: 35px;
     height: 35px;
     line-height: 35px;
@@ -119,7 +85,7 @@ img.img-invert {
     transition: all 0.3s;
 }
 
-#dismiss:hover {
-    background: #fff;
-    color: #2F299E;
-}
+    #btn-dismiss:hover {
+        background: #fff;
+        color: #2F299E;
+    }
