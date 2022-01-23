@@ -3,54 +3,20 @@
 .bg-dark {
     background-color: #2F299E !important;
 }
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
 }
 
 /* inverts images; used for SVGs with wrong fill value */
 img.img-invert {
     filter: invert(1);
-}
-
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  font-size: 14px;
-}
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.border-top {
-  border-top: 1px solid #e5e5e5;
-}
-.border-bottom {
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
-
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
 }
 
 #mapElement {
