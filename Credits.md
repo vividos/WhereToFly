@@ -130,6 +130,7 @@ The following icons are from the Google Material icon set:
 - delete
 - delete-forever
 - directions
+- dots-vertical
 - eye
 - format-list-bulleted
 - information-outline
