@@ -69,24 +69,29 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
-        /// Command to execute when "show details" context action is selected on a track
+        /// Command to execute when an item in the track list has been tapped
         /// </summary>
-        public ICommand ShowTrackDetailsContextAction { get; set; }
+        public AsyncCommand ItemTappedCommand { get; private set; }
 
         /// <summary>
-        /// Command to execute when "zoom to" context action is selected on a track
+        /// Command to execute when "show details" context menu item is selected on a track
         /// </summary>
-        public ICommand ZoomToTrackContextAction { get; set; }
+        public ICommand ShowTrackDetailsCommand => this.ItemTappedCommand;
 
         /// <summary>
-        /// Command to execute when "Export" context action is selected on a track
+        /// Command to execute when "zoom to" context menu item is selected on a track
         /// </summary>
-        public ICommand ExportTrackContextAction { get; set; }
+        public ICommand ZoomToTrackCommand { get; set; }
 
         /// <summary>
-        /// Command to execute when "delete" context action is selected on a location
+        /// Command to execute when "Export" context menu item is selected on a track
         /// </summary>
-        public ICommand DeleteTrackContextAction { get; set; }
+        public ICommand ExportTrackCommand { get; set; }
+
+        /// <summary>
+        /// Command to execute when "delete" context menu item is selected on a location
+        /// </summary>
+        public ICommand DeleteTrackCommand { get; set; }
 
         /// <summary>
         /// Creates a new view model object based on the given track object
@@ -108,14 +113,14 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         private void SetupBindings()
         {
-            this.ShowTrackDetailsContextAction = new AsyncCommand(this.OnShowDetailsLocation);
-            this.ZoomToTrackContextAction = new AsyncCommand(this.OnZoomToTrackAsync);
-            this.ExportTrackContextAction = new AsyncCommand(this.OnExportTrackAsync);
-            this.DeleteTrackContextAction = new AsyncCommand(this.OnDeleteTrackAsync);
+            this.ItemTappedCommand = new AsyncCommand(this.OnShowDetailsLocation);
+            this.ZoomToTrackCommand = new AsyncCommand(this.OnZoomToTrackAsync);
+            this.ExportTrackCommand = new AsyncCommand(this.OnExportTrackAsync);
+            this.DeleteTrackCommand = new AsyncCommand(this.OnDeleteTrackAsync);
         }
 
         /// <summary>
-        /// Called when "show details" context action is selected
+        /// Called when "show details" context menu item is selected
         /// </summary>
         /// <returns>task to wait on</returns>
         private async Task OnShowDetailsLocation()
@@ -124,7 +129,7 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
-        /// Called when "zoom to" context action is selected
+        /// Called when "zoom to" context menu item is selected
         /// </summary>
         /// <returns>task to wait on</returns>
         private async Task OnZoomToTrackAsync()
@@ -133,7 +138,7 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
-        /// Called when "Export" context action is selected
+        /// Called when "Export" context menu item is selected
         /// </summary>
         /// <returns>task to wait on</returns>
         private async Task OnExportTrackAsync()
@@ -142,7 +147,7 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
-        /// Called when "delete" context action is selected
+        /// Called when "delete" context menu item is selected
         /// </summary>
         /// <returns>task to wait on</returns>
         private async Task OnDeleteTrackAsync()

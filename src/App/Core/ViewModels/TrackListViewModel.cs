@@ -56,6 +56,11 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
+        /// Stores the selected track when an item is tapped
+        /// </summary>
+        public TrackListEntryViewModel SelectedTrack { get; set; }
+
+        /// <summary>
         /// Indicates if the "delete track" button is enabled.
         /// </summary>
         public bool IsDeleteTrackEnabled
@@ -73,11 +78,6 @@ namespace WhereToFly.App.Core.ViewModels
         /// Command to execute when toolbar button "delete track list" has been tapped
         /// </summary>
         public AsyncCommand DeleteTrackListCommand { get; private set; }
-
-        /// <summary>
-        /// Command to execute when an item in the track list has been tapped
-        /// </summary>
-        public AsyncCommand<Track> ItemTappedCommand { get; private set; }
         #endregion
 
         /// <summary>
@@ -105,9 +105,6 @@ namespace WhereToFly.App.Core.ViewModels
             this.DeleteTrackListCommand = new AsyncCommand(
                 this.ClearTracksAsync,
                 (obj) => this.IsDeleteTrackEnabled);
-
-            this.ItemTappedCommand =
-                new AsyncCommand<Track>(this.NavigateToTrackDetails);
         }
 
         /// <summary>
@@ -160,6 +157,9 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         internal async Task NavigateToTrackDetails(Track track)
         {
+            this.SelectedTrack = null;
+            this.OnPropertyChanged(nameof(this.SelectedTrack));
+
             await NavigationService.Instance.NavigateAsync(PageKey.TrackInfoPage, true, track);
         }
 

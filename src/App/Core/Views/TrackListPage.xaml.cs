@@ -24,17 +24,6 @@ namespace WhereToFly.App.Core.Views
             this.BindingContext = this.viewModel = new TrackListViewModel();
         }
 
-        /// <summary>
-        /// Called when an item was tapped on the track list
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="args">event args</param>
-        private void OnItemTapped_TrackListView(object sender, ItemTappedEventArgs args)
-        {
-            var trackListEntryViewModel = args.Item as TrackListEntryViewModel;
-            this.viewModel.ItemTappedCommand.ExecuteAsync(trackListEntryViewModel.Track);
-        }
-
         #region Page lifecycle methods
         /// <summary>
         /// Called when page is appearing; get current position

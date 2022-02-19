@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
              xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
              xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
              x:Class="WhereToFly.App.Core.Views.TrackListPage"
              Title="Track list"
@@ -11,12 +11,13 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <converter:ImagePathConverter x:Key="ImagePathConverter" />
+            <converter:SvgImagePathConverter x:Key="SvgImagePathConverter" />
             <x:String x:Key="ImportTrackImageBaseName">playlist_plus</x:String>
             <x:String x:Key="DeleteTrackListImageBaseName">delete_forever</x:String>
-            <x:String x:Key="ShowDetailsImageBaseName">information_outline</x:String>
-            <x:String x:Key="ZoomToImageBaseName">magnify_plus_outline</x:String>
-            <x:String x:Key="ExportImageBaseName">export_variant</x:String>
-            <x:String x:Key="DeleteImageBaseName">delete</x:String>
+            <x:String x:Key="ShowDetailsImagePath">info/images/information-outline.svg</x:String>
+            <x:String x:Key="ZoomToImagePath">info/images/magnify-plus-outline.svg</x:String>
+            <x:String x:Key="ExportImagePath">info/images/export-variant.svg</x:String>
+            <x:String x:Key="DeleteImagePath">info/images/delete.svg</x:String>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -60,79 +61,84 @@
             </StackLayout>
 
             <!-- Track list -->
-            <ListView x:Name="trackListView"
-                  ItemsSource="{Binding Path=TrackList, Mode=OneWay}"
-                  RowHeight="65"
-                  ItemTapped="OnItemTapped_TrackListView"
-                  IsPullToRefreshEnabled="False"
-                  android:ListView.IsFastScrollEnabled="true"
-                  CachingStrategy="RecycleElement"
-                  SeparatorVisibility="None"
-                  AutomationId="TrackList">
+            <CollectionView ItemsSource="{Binding Path=TrackList, Mode=OneWay}"
+                            SelectionMode="Single"
+                            SelectedItem="{Binding SelectedTrack}"
+                            ItemSizingStrategy="MeasureFirstItem"
+                            AutomationId="TrackList">
 
-                <ListView.ItemTemplate>
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="4" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <!-- Templace for a single view cell -->
-                        <ViewCell Height="65">
-                            <ViewCell.View>
-                                <Grid BackgroundColor="{DynamicResource ListViewItemBackgroundColor}" Margin="8,4">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
+                        <!-- Template for a single item -->
+                        <Grid BackgroundColor="{DynamicResource ListViewItemBackgroundColor}"
+                              HeightRequest="{OnPlatform Android=45, UWP=55}"
+                              Margin="8,4"
+                              RowDefinitions="Auto,Auto"
+                              ColumnDefinitions="Auto,Auto,1*,40">
 
-                                    <!-- Track type image -->
-                                    <ffimageloadingsvg:SvgCachedImage Source="{Binding TypeImageSource, Mode=OneWay}"
-                                                                      ReplaceStringMap="{DynamicResource SvgImageFillDark}"
-                                                                      WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
-                                                                      HorizontalOptions="Start" VerticalOptions="Center"
-                                                                      Grid.Column="0" Grid.RowSpan="2" />
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ItemTappedCommand}"
+                                                      NumberOfTapsRequired="1" />
+                            </Grid.GestureRecognizers>
 
-                                    <Frame IsVisible="{Binding IsColorBoxVisible, Mode=OneWay}"
-                                           BackgroundColor="{Binding TrackColor, Mode=OneTime}"
-                                           VerticalOptions="Center"
-                                           WidthRequest="12" HeightRequest="32"
-                                           Padding="5"
-                                           CornerRadius="3"
-                                           HasShadow="False"
-                                           Grid.Column="1" Grid.RowSpan="2" />
+                            <!-- Track type image -->
+                            <ffimageloadingsvg:SvgCachedImage Source="{Binding TypeImageSource, Mode=OneWay}"
+                                                              ReplaceStringMap="{DynamicResource SvgImageFillDark}"
+                                                              WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
+                                                              HorizontalOptions="Start" VerticalOptions="Center"
+                                                              Grid.Column="0" Grid.RowSpan="2" />
 
-                                    <!-- Details -->
-                                    <Label Text="{Binding Name}"
-                                       Style="{DynamicResource ListItemTextStyle}"
-                                       FontSize="Medium"
-                                       LineBreakMode="TailTruncation"
-                                       Grid.Column="2" Grid.Row="0" />
-                                    <Label Text="{Binding DetailInfos}"
-                                       Style="{DynamicResource ListItemDetailTextStyle}"
-                                       FontSize="Small"
-                                       LineBreakMode="TailTruncation"
-                                       Grid.Column="2" Grid.Row="1" />
-                                </Grid>
-                            </ViewCell.View>
-                            <ViewCell.ContextActions>
-                                <MenuItem Text="Show Details"
-                                      Icon="{Binding Source={StaticResource ShowDetailsImageBaseName}, Converter={StaticResource ImagePathConverter}}"
-                                      Command="{Binding ShowTrackDetailsContextAction}" />
-                                <MenuItem Text="Zoom to"
-                                      Icon="{Binding Source={StaticResource ZoomToImageBaseName}, Converter={StaticResource ImagePathConverter}}"
-                                      Command="{Binding ZoomToTrackContextAction}" />
-                                <MenuItem Text="Export"
-                                      Icon="{Binding Source={StaticResource ExportImageBaseName}, Converter={StaticResource ImagePathConverter}}"
-                                      Command="{Binding ExportTrackContextAction}" />
-                                <MenuItem Text="Delete" IsDestructive="True"
-                                      Icon="{Binding Source={StaticResource DeleteImageBaseName}, Converter={StaticResource ImagePathConverter}}"
-                                      Command="{Binding DeleteTrackContextAction}" />
-                            </ViewCell.ContextActions>
-                        </ViewCell>
+                            <Frame IsVisible="{Binding IsColorBoxVisible, Mode=OneWay}"
+                                   BackgroundColor="{Binding TrackColor, Mode=OneTime}"
+                                   VerticalOptions="Center"
+                                   WidthRequest="12" HeightRequest="32"
+                                   Padding="5"
+                                   CornerRadius="3"
+                                   HasShadow="False"
+                                   Grid.Column="1" Grid.RowSpan="2" />
+
+                            <!-- Details -->
+                            <Label Text="{Binding Name}"
+                                   Style="{DynamicResource ListItemTextStyle}"
+                                   FontSize="Medium"
+                                   LineBreakMode="TailTruncation"
+                                   Grid.Column="2" Grid.Row="0" />
+                            <Label Text="{Binding DetailInfos}"
+                                   Style="{DynamicResource ListItemDetailTextStyle}"
+                                   FontSize="Small"
+                                   LineBreakMode="TailTruncation"
+                                   Grid.Column="2" Grid.Row="1" />
+
+                            <!-- Context menu for an item -->
+                            <controls:ContextMenu Grid.Column="3" Grid.RowSpan="2"
+                                                  Caption="Layer"
+                                                  WidthRequest="40" HeightRequest="40"
+                                                  HorizontalOptions="Center"
+                                                  VerticalOptions="Center">
+                                <controls:ContextMenu.Items>
+                                    <MenuItem Text="Show Details"
+                                              Icon="{Binding Source={StaticResource ShowDetailsImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                              Command="{Binding ShowTrackDetailsCommand}" />
+                                    <MenuItem Text="Zoom to"
+                                              Icon="{Binding Source={StaticResource ZoomToImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                              Command="{Binding ZoomToTrackCommand}" />
+                                    <MenuItem Text="Export"
+                                              Icon="{Binding Source={StaticResource ExportImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                              Command="{Binding ExportTrackCommand}" />
+                                    <MenuItem Text="Delete" IsDestructive="True"
+                                              Icon="{Binding Source={StaticResource DeleteImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                              Command="{Binding DeleteTrackCommand}" />
+                                </controls:ContextMenu.Items>
+                            </controls:ContextMenu>
+                        </Grid>
+
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
         </StackLayout>
     </ContentPage.Content>
