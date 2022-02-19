@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:BasePopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                     xmlns:views="clr-namespace:WhereToFly.App.Core.Views"
+                     xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+                     x:Class="WhereToFly.App.Core.Views.ContextMenuPopupPage">
+
+    <!-- Popup content -->
+    <StackLayout
+        VerticalOptions="Center"
+        HorizontalOptions="Center"
+        WidthRequest="320"
+        BackgroundColor="{DynamicResource PageBackgroundColor}"
+        Padding="20">
+
+        <!-- Caption text -->
+        <Label Text="{Binding Caption}" FontSize="Medium" />
+
+        <!-- Context menu list -->
+        <CollectionView ItemsSource="{Binding ContextMenuItems, Mode=OneTime}"
+                        SelectedItem="{Binding SelectedMenuItem}"
+                        SelectionChangedCommand="{Binding MenuItemSelectedCommand}"
+                        SelectionMode="Single"
+                        VerticalOptions="Start"
+                        HorizontalOptions="FillAndExpand"
+                        HeightRequest="{Binding ContextMenuListHeight, Mode=OneTime}">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <!-- Context menu item -->
+                    <Grid Padding="4"
+                          ColumnDefinitions="40,Auto">
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                  Command="{Binding Command}"
+                                                  CommandParameter="{Binding CommandParameter}" />
+                        </Grid.GestureRecognizers>
+
+                        <!-- Menu item icon -->
+                        <ffimageloadingsvg:SvgCachedImage Source="{Binding IconImageSource, Mode=OneWay}"
+                                                          ReplaceStringMap="{DynamicResource SvgImageFillDark}"
+                                                          InputTransparent="True"
+                                                          WidthRequest="32" HeightRequest="32"
+                                                          HorizontalOptions="Center" VerticalOptions="Center" />
+
+                        <!-- Menu item text -->
+                        <Label Grid.Column="1" Text="{Binding Text, Mode=OneTime}"
+                               InputTransparent="True"
+                               IsEnabled="{Binding IsEnabled, Mode=OneWay}"
+                               FontSize="Medium"
+                               VerticalOptions="FillAndExpand"
+                               VerticalTextAlignment="Center" />
+                    </Grid>
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+
+    </StackLayout>
+</views:BasePopupPage>
