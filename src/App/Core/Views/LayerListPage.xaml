@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
              xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
              xmlns:viewmodels="clr-namespace:WhereToFly.App.Core.ViewModels"
              x:Class="WhereToFly.App.Core.Views.LayerListPage"
@@ -15,11 +16,12 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <converter:ImagePathConverter x:Key="ImagePathConverter" />
+            <converter:SvgImagePathConverter x:Key="SvgImagePathConverter" />
             <x:String x:Key="ImportLayerImageBaseName">layers_plus</x:String>
             <x:String x:Key="DeleteLayerListImageBaseName">delete_forever</x:String>
-            <x:String x:Key="ZoomToLayerImageBaseName">magnify_plus_outline</x:String>
-            <x:String x:Key="ExportImageBaseName">export_variant</x:String>
-            <x:String x:Key="DeleteLayerImageBaseName">delete</x:String>
+            <x:String x:Key="ZoomToLayerImagePath">info/images/magnify-plus-outline.svg</x:String>
+            <x:String x:Key="ExportImagePath">info/images/export-variant.svg</x:String>
+            <x:String x:Key="DeleteLayerImagePath">info/images/delete.svg</x:String>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -36,7 +38,6 @@
                      Order="Primary" Priority="1" />
     </ContentPage.ToolbarItems>
 
-
     <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
 
         <!-- Message to show when list is empty -->
@@ -51,80 +52,86 @@
         </StackLayout>
 
         <!-- Layer list -->
-        <ListView x:Name="layerListView"
-                  ItemsSource="{Binding Path=LayerList, Mode=OneWay}"
-                  RowHeight="{OnPlatform Android=65, UWP=85}"
-                  ItemTapped="OnItemTapped_LayerListView"
-                  IsPullToRefreshEnabled="False"
-                  CachingStrategy="RecycleElement"
-                  SeparatorVisibility="None"
-                  AutomationId="LayerList">
+        <CollectionView ItemsSource="{Binding Path=LayerList, Mode=OneWay}"
+                        SelectionMode="Single"
+                        SelectedItem="{Binding SelectedLayer}"
+                        ItemSizingStrategy="MeasureFirstItem"
+                        AutomationId="LayerList">
 
-            <ListView.ItemTemplate>
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="4" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <!-- Template for a single view cell -->
-                    <ViewCell Height="65">
-                        <ViewCell.View>
-                            <Grid BackgroundColor="{DynamicResource ListViewItemBackgroundColor}" Margin="8,4">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
+                    <Grid BackgroundColor="{DynamicResource ListViewItemBackgroundColor}"
+                          HeightRequest="{OnPlatform Android=65, UWP=50}"
+                          Margin="8,4"
+                          RowDefinitions="*"
+                          ColumnDefinitions="Auto,Auto,1*,40">
 
-                                <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding ItemTappedCommand}"
-                                                          NumberOfTapsRequired="1"/>
-                                </Grid.GestureRecognizers>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ItemTappedCommand}"
+                                                  NumberOfTapsRequired="1" />
+                        </Grid.GestureRecognizers>
 
-                                <!-- Layer type image -->
-                                <ffimageloadingsvg:SvgCachedImage Source="{Binding TypeImageSource, Mode=OneWay}"
-                                                                  ReplaceStringMap="{DynamicResource SvgImageFillDark}"
-                                                                  WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
-                                                                  HorizontalOptions="Start" VerticalOptions="Center"
-                                                                  Grid.Column="0"/>
+                        <!-- Layer type image -->
+                        <ffimageloadingsvg:SvgCachedImage Source="{Binding TypeImageSource, Mode=OneWay}"
+                                                          ReplaceStringMap="{DynamicResource SvgImageFillDark}"
+                                                          WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
+                                                          HorizontalOptions="Start" VerticalOptions="Center"
+                                                          Grid.Column="0"/>
 
-                                <!-- Layer visibility image -->
-                                <ContentView Margin="0" Padding="0" Grid.Column="1">
-                                    <ContentView.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding VisibilityTappedCommand}"
-                                                              NumberOfTapsRequired="1"/>
-                                    </ContentView.GestureRecognizers>
-                                    <ffimageloadingsvg:SvgCachedImage Source="{Binding VisibilityImageSource, Mode=OneWay}"
-                                                                      ReplaceStringMap="{DynamicResource SvgImageFillDark}"
-                                                                      WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
-                                                                      HorizontalOptions="Start" VerticalOptions="Center"
-                                                                      InputTransparent="true" />
-                                </ContentView>
+                        <!-- Layer visibility image -->
+                        <ContentView Margin="0" Padding="0" Grid.Column="1">
+                            <ContentView.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding VisibilityTappedCommand}"
+                                                      NumberOfTapsRequired="1"/>
+                            </ContentView.GestureRecognizers>
+                            <ffimageloadingsvg:SvgCachedImage Source="{Binding VisibilityImageSource, Mode=OneWay}"
+                                                              ReplaceStringMap="{DynamicResource SvgImageFillDark}"
+                                                              WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
+                                                              HorizontalOptions="Start" VerticalOptions="Center"
+                                                              InputTransparent="true" />
+                        </ContentView>
 
-                                <!-- Name -->
-                                <Label Text="{Binding Name}"
-                                       VerticalOptions="Center"
-                                       Style="{DynamicResource ListItemTextStyle}"
-                                       FontSize="Medium"
-                                       LineBreakMode="TailTruncation"
-                                       Grid.Column="2" />
-                            </Grid>
-                        </ViewCell.View>
+                        <!-- Name -->
+                        <Label Text="{Binding Name}"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Fill"
+                               Style="{DynamicResource ListItemTextStyle}"
+                               FontSize="Medium"
+                               LineBreakMode="TailTruncation"
+                               Grid.Column="2" />
 
-                        <ViewCell.ContextActions>
-                            <MenuItem Text="Zoom to"
-                                      Icon="{Binding Source={StaticResource ZoomToLayerImageBaseName}, Converter={StaticResource ImagePathConverter}}"
-                                      Command="{Binding ZoomToLayerContextAction}" />
-                            <MenuItem Text="Export"
-                                      Icon="{Binding Source={StaticResource ExportImageBaseName}, Converter={StaticResource ImagePathConverter}}"
-                                      Command="{Binding ExportLayerContextAction}" />
-                            <MenuItem Text="Delete" IsDestructive="True"
-                                      Icon="{Binding Source={StaticResource DeleteLayerImageBaseName}, Converter={StaticResource ImagePathConverter}}"
-                                      Command="{Binding DeleteLayerContextAction}" />
-                        </ViewCell.ContextActions>
-                    </ViewCell>
+                        <!-- Context menu for an item -->
+                        <controls:ContextMenu Grid.Column="3"
+                                              Caption="Layer"
+                                              WidthRequest="40" HeightRequest="40"
+                                              HorizontalOptions="Center"
+                                              VerticalOptions="Center">
+                            <controls:ContextMenu.Items>
+                                <MenuItem Text="Zoom to"
+                                          Icon="{Binding Source={StaticResource ZoomToLayerImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                          Command="{Binding ZoomToLayerCommand}"
+                                          CommandParameter="{Binding .}" />
+                                <MenuItem Text="Export"
+                                          Icon="{Binding Source={StaticResource ExportImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                          Command="{Binding ExportLayerCommand}"
+                                          CommandParameter="{Binding .}" />
+                                <MenuItem Text="Delete" IsDestructive="True"
+                                          Icon="{Binding Source={StaticResource DeleteLayerImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                          Command="{Binding DeleteLayerCommand}"
+                                          CommandParameter="{Binding .}" />
+
+                            </controls:ContextMenu.Items>
+                        </controls:ContextMenu>
+
+                    </Grid>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
     </StackLayout>
 </ContentPage>

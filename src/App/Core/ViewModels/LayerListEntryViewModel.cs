@@ -54,19 +54,19 @@ namespace WhereToFly.App.Core.ViewModels
         public ICommand VisibilityTappedCommand { get; private set; }
 
         /// <summary>
-        /// Command to execute when "zoom to" context action is selected on a layer
+        /// Command to execute when "zoom to" context menu item is selected on a layer
         /// </summary>
-        public ICommand ZoomToLayerContextAction { get; private set; }
+        public ICommand ZoomToLayerCommand { get; private set; }
 
         /// <summary>
-        /// Command to execute when "Export" context action is selected on a layer
+        /// Command to execute when "Export" context menu item is selected on a layer
         /// </summary>
-        public ICommand ExportLayerContextAction { get; set; }
+        public ICommand ExportLayerCommand { get; set; }
 
         /// <summary>
-        /// Command to execute when "delete" context action is selected on a layer
+        /// Command to execute when "delete" context menu item is selected on a layer
         /// </summary>
-        public ICommand DeleteLayerContextAction { get; private set; }
+        public ICommand DeleteLayerCommand { get; private set; }
         #endregion
 
         /// <summary>
@@ -92,9 +92,9 @@ namespace WhereToFly.App.Core.ViewModels
 
             this.ItemTappedCommand = new AsyncCommand(this.OnTappedLayerItemAsync);
             this.VisibilityTappedCommand = new AsyncCommand(this.OnTappedLayerVisibilityAsync);
-            this.ZoomToLayerContextAction = new AsyncCommand(this.OnZoomToLayerAsync, this.OnCanExecuteZoomToLayer);
-            this.ExportLayerContextAction = new AsyncCommand(this.OnExportLayerAsync, this.OnCanExecuteExportLayer);
-            this.DeleteLayerContextAction = new AsyncCommand(this.OnDeleteLayerAsync, this.OnCanExecuteDeleteLayer);
+            this.ZoomToLayerCommand = new AsyncCommand(this.OnZoomToLayerAsync, this.OnCanExecuteZoomToLayer);
+            this.ExportLayerCommand = new AsyncCommand(this.OnExportLayerAsync, this.OnCanExecuteExportLayer);
+            this.DeleteLayerCommand = new AsyncCommand(this.OnDeleteLayerAsync, this.OnCanExecuteDeleteLayer);
         }
 
         /// <summary>
@@ -103,13 +103,6 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task OnTappedLayerItemAsync()
         {
-            // due to a bug in Forms on Android, we have to solve tapping items using a gesture recognizer
-            // see: https://github.com/xamarin/Xamarin.Forms/issues/2180
-            if (Device.RuntimePlatform != Device.Android)
-            {
-                return;
-            }
-
             await this.parentViewModel.ItemTappedCommand.ExecuteAsync(this.Layer);
         }
 
@@ -132,7 +125,7 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
-        /// Called when "zoom to" context action is selected
+        /// Called when "zoom to" context menu item is selected
         /// </summary>
         /// <returns>task to wait on</returns>
         private async Task OnZoomToLayerAsync()
@@ -141,16 +134,16 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
-        /// Determines if a layer's "zoom to layer" context action can be executed. Prevents
+        /// Determines if a layer's "zoom to layer" context menu item can be executed. Prevents
         /// zooming to OSM buildings layer.
         /// </summary>
         /// <param name="arg">argument; unused</param>
-        /// <returns>true when context action can be executed, false when not</returns>
+        /// <returns>true when context menu item can be executed, false when not</returns>
         private bool OnCanExecuteZoomToLayer(object arg) =>
             this.Layer.LayerType != LayerType.OsmBuildingsLayer;
 
         /// <summary>
-        /// Called when "Export" context action is selected
+        /// Called when "Export" context menu item is selected
         /// </summary>
         /// <returns>task to wait on</returns>
         private async Task OnExportLayerAsync()
@@ -159,18 +152,18 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
-        /// Determines if a layer's "export layer" context action can be executed. Prevents
+        /// Determines if a layer's "export layer" context menu item can be executed. Prevents
         /// exporting layers that can't be exported.
         /// </summary>
         /// <param name="arg">argument; unused</param>
-        /// <returns>true when context action can be executed, false when not</returns>
+        /// <returns>true when context menu item can be executed, false when not</returns>
         private bool OnCanExecuteExportLayer(object arg) =>
             this.Layer.LayerType != LayerType.LocationLayer &&
             this.Layer.LayerType != LayerType.TrackLayer &&
             this.Layer.LayerType != LayerType.OsmBuildingsLayer;
 
         /// <summary>
-        /// Called when "delete" context action is selected
+        /// Called when "delete" context menu item is selected
         /// </summary>
         /// <returns>task to wait on</returns>
         private async Task OnDeleteLayerAsync()
@@ -179,11 +172,11 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
-        /// Determines if a layer's "delete layer" context action can be executed. Prevents
+        /// Determines if a layer's "delete layer" context menu item can be executed. Prevents
         /// deleting default layers.
         /// </summary>
         /// <param name="arg">argument; unused</param>
-        /// <returns>true when context action can be executed, false when not</returns>
+        /// <returns>true when context menu item can be executed, false when not</returns>
         private bool OnCanExecuteDeleteLayer(object arg) =>
             this.Layer.LayerType != LayerType.LocationLayer &&
             this.Layer.LayerType != LayerType.TrackLayer;

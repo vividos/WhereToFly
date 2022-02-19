@@ -47,6 +47,11 @@ namespace WhereToFly.App.Core.ViewModels
         public bool IsListEmpty => this.LayerList == null || !this.LayerList.Any();
 
         /// <summary>
+        /// Stores the selected layer when an item is tapped
+        /// </summary>
+        public LayerListEntryViewModel SelectedLayer { get; set; }
+
+        /// <summary>
         /// Command to execute when an item in the layer list has been tapped
         /// </summary>
         public AsyncCommand<Layer> ItemTappedCommand { get; private set; }
@@ -153,6 +158,9 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task NavigateToLayerDetails(Layer layer)
         {
+            this.SelectedLayer = null;
+            this.OnPropertyChanged(nameof(this.SelectedLayer));
+
             if (layer.LayerType != LayerType.LocationLayer &&
                 layer.LayerType != LayerType.TrackLayer)
             {
