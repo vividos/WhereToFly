@@ -6,6 +6,9 @@ Released on ?.
 
 ✨ New Features / Improvements
 
+- Layers, tracks and locations now have a 3-dot-button to show the context menu
+- The context menus now have icons and are displayed as popup dialogs
+
 🐛 Bugfixes
 
 ## Version 1.11.0
