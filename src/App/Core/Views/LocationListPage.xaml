@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
              xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
              xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
@@ -11,10 +10,11 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <converter:ImagePathConverter x:Key="ImagePathConverter" />
-            <x:String x:Key="ShowDetailsImageBaseName">information_outline</x:String>
-            <x:String x:Key="ZoomToImageBaseName">magnify_plus_outline</x:String>
-            <x:String x:Key="DeleteImageBaseName">delete</x:String>
+            <converter:SvgImagePathConverter x:Key="SvgImagePathConverter" />
+            <x:String x:Key="ShowDetailsImagePath">info/images/information-outline.svg</x:String>
+            <x:String x:Key="ZoomToImagePath">info/images/magnify-plus-outline.svg</x:String>
+            <x:String x:Key="DeleteImagePath">info/images/delete.svg</x:String>
+            <x:String x:Key="AddTourPlanLocationImagePath">map/images/map-marker-plus.svg</x:String>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -81,86 +81,95 @@
         </StackLayout>
 
         <!-- Location list -->
-        <ListView x:Name="locationsListView"
-                  ItemsSource="{Binding Path=LocationList, Mode=OneWay}"
-                  RowHeight="{OnPlatform Android=85, UWP=105}"
-                  ItemTapped="OnItemTapped_LocationsListView"
-                  IsPullToRefreshEnabled="False"
-                  android:ListView.IsFastScrollEnabled="true"
-                  CachingStrategy="RecycleElement"
-                  SeparatorVisibility="None"
-                  AutomationId="LocationList">
+        <CollectionView x:Name="locationsListView"
+                        ItemsSource="{Binding Path=LocationList, Mode=OneWay}"
+                        SelectionMode="Single"
+                        SelectedItem="{Binding SelectedLocation}"
+                        ItemSizingStrategy="MeasureFirstItem"
+                        AutomationId="LocationList">
 
-            <ListView.ItemTemplate>
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="4" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <!-- Template for a single view cell -->
-                    <ViewCell Height="85" BindingContextChanged="OnViewCellBindingContextChanged">
-                        <ViewCell.View>
-                            <Grid BackgroundColor="{DynamicResource ListViewItemBackgroundColor}" Margin="8,4">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
+                    <!-- Template for a single item -->
+                    <Grid RowDefinitions="Auto,Auto,Auto"
+                          ColumnDefinitions="Auto,Auto,1*,40"
+                          BackgroundColor="{DynamicResource ListViewItemBackgroundColor}"
+                          HeightRequest="{OnPlatform Android=85, UWP=105}"
+                          Margin="8,4">
 
-                                <!-- Type image -->
-                                <ffimageloadingsvg:SvgCachedImage Source="{Binding TypeImageSource, Mode=OneWay}"
-                                                   ReplaceStringMap="{DynamicResource SvgImageFillDark}"
-                                                   WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
-                                                   HorizontalOptions="Start" VerticalOptions="Center"
-                                                   Grid.Column="0" Grid.RowSpan="3" />
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ItemTappedCommand}"
+                                                  NumberOfTapsRequired="1" />
+                        </Grid.GestureRecognizers>
 
-                                <!-- Takeoff directions -->
-                                <controls:TakeoffDirectionsView Grid.Column="1" Grid.RowSpan="3"
-                                                                IsVisible="{Binding IsTakeoffDirectionsVisible, Mode=OneTime}"
-                                                                WidthRequest="40" HeightRequest="40"
-                                                                HorizontalOptions="Start" VerticalOptions="Center"
-                                                                Source="{Binding TakeoffDirections, Mode=OneTime}"
-                                                                IsReadOnly="True"
-                                                                BackgroundColor="Transparent"
-                                                                CompassBorderColor="Black"
-                                                                CompassBackgroundColor="DarkGray"
-                                                                CompassColor="Green"
-                                                                ShowLabels="False" />
+                        <!-- Type image -->
+                        <ffimageloadingsvg:SvgCachedImage Source="{Binding TypeImageSource, Mode=OneWay}"
+                                                          ReplaceStringMap="{DynamicResource SvgImageFillDark}"
+                                                          WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
+                                                          HorizontalOptions="Start" VerticalOptions="Center"
+                                                          Grid.Column="0" Grid.RowSpan="3" />
 
-                                <!-- Details -->
-                                <Label Text="{Binding Name}"
-                                       Style="{DynamicResource ListItemTextStyle}"
-                                       FontSize="Medium"
-                                       LineBreakMode="TailTruncation"
-                                       Grid.Column="2" Grid.Row="0" />
-                                <Label Text="{Binding DetailInfos}"
-                                       Style="{DynamicResource ListItemDetailTextStyle}"
-                                       FontSize="Small"
-                                       LineBreakMode="TailTruncation"
-                                       Grid.Column="2" Grid.Row="1" />
-                                <Label Text="{Binding Description}"
-                                       Style="{DynamicResource ListItemDetailTextStyle}"
-                                       FontSize="Small"
-                                       LineBreakMode="TailTruncation"
-                                       Grid.Column="2" Grid.Row="2" />
-                            </Grid>
-                        </ViewCell.View>
-                        <ViewCell.ContextActions>
-                            <MenuItem Text="Show Details"
-                                      Icon="{Binding Source={StaticResource ShowDetailsImageBaseName}, Converter={StaticResource ImagePathConverter}}"
-                                      Command="{Binding ShowDetailsLocationContextAction}" />
-                            <MenuItem Text="Zoom to"
-                                      Icon="{Binding Source={StaticResource ZoomToImageBaseName}, Converter={StaticResource ImagePathConverter}}"
-                                      Command="{Binding ZoomToLocationContextAction}" />
-                            <MenuItem Text="Delete" IsDestructive="True"
-                                      Icon="{Binding Source={StaticResource DeleteImageBaseName}, Converter={StaticResource ImagePathConverter}}"
-                                      Command="{Binding DeleteLocationContextAction}" />
-                        </ViewCell.ContextActions>
-                    </ViewCell>
+                        <!-- Takeoff directions -->
+                        <controls:TakeoffDirectionsView Grid.Column="1" Grid.RowSpan="3"
+                                                        IsVisible="{Binding IsTakeoffDirectionsVisible, Mode=OneTime}"
+                                                        WidthRequest="40" HeightRequest="40"
+                                                        HorizontalOptions="Start" VerticalOptions="Center"
+                                                        Source="{Binding TakeoffDirections, Mode=OneTime}"
+                                                        IsReadOnly="True"
+                                                        BackgroundColor="Transparent"
+                                                        CompassBorderColor="Black"
+                                                        CompassBackgroundColor="DarkGray"
+                                                        CompassColor="Green"
+                                                        ShowLabels="False" />
+
+                        <!-- Details -->
+                        <Label Text="{Binding Name}"
+                               Style="{DynamicResource ListItemTextStyle}"
+                               FontSize="Medium"
+                               LineBreakMode="TailTruncation"
+                               Grid.Column="2" Grid.Row="0" />
+                        <Label Text="{Binding DetailInfos}"
+                               Style="{DynamicResource ListItemDetailTextStyle}"
+                               FontSize="Small"
+                               LineBreakMode="TailTruncation"
+                               Grid.Column="2" Grid.Row="1" />
+                        <Label Text="{Binding Description}"
+                               Style="{DynamicResource ListItemDetailTextStyle}"
+                               FontSize="Small"
+                               LineBreakMode="TailTruncation"
+                               Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" />
+
+                        <!-- Context menu for an item -->
+                        <controls:ContextMenu Grid.Column="3" Grid.RowSpan="2"
+                                              Caption="Layer"
+                                              WidthRequest="40" HeightRequest="40"
+                                              HorizontalOptions="Center"
+                                              VerticalOptions="Center">
+                            <controls:ContextMenu.Items>
+                                <MenuItem Text="Show Details"
+                                          Icon="{Binding Source={StaticResource ShowDetailsImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                          Command="{Binding ShowDetailsLocationCommand}" />
+                                <MenuItem Text="Zoom to"
+                                          Icon="{Binding Source={StaticResource ZoomToImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                          Command="{Binding ZoomToLocationCommand}" />
+                                <MenuItem Text="Delete" IsDestructive="True"
+                                          Icon="{Binding Source={StaticResource DeleteImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                          Command="{Binding DeleteLocationCommand}" />
+                                <MenuItem Text="Add tour plan location"
+                                          Icon="{Binding Source={StaticResource AddTourPlanLocationImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                          Command="{Binding AddTourPlanLocationCommand}"
+                                          IsEnabled="{Binding IsEnabledAddTourPlanLocation}"
+                                          AutomationId="AddTourPlanLocation" />
+                            </controls:ContextMenu.Items>
+                        </controls:ContextMenu>
+                    </Grid>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
     </StackLayout>
 </ContentPage>

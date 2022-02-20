@@ -86,19 +86,34 @@ namespace WhereToFly.App.Core.ViewModels
         public double Distance { get; set; }
 
         /// <summary>
-        /// Command to execute when "show details" context action is selected on a location
+        /// Command to execute when the item has been tapped
         /// </summary>
-        public ICommand ShowDetailsLocationContextAction { get; set; }
+        public AsyncCommand ItemTappedCommand { get; private set; }
 
         /// <summary>
-        /// Command to execute when "zoom to" context action is selected on a location
+        /// Command to execute when "show details" context menu item is selected on a location
         /// </summary>
-        public ICommand ZoomToLocationContextAction { get; set; }
+        public ICommand ShowDetailsLocationCommand => this.ItemTappedCommand;
 
         /// <summary>
-        /// Command to execute when "delete" context action is selected on a location
+        /// Command to execute when "zoom to" context menu item is selected on a location
         /// </summary>
-        public ICommand DeleteLocationContextAction { get; set; }
+        public ICommand ZoomToLocationCommand { get; set; }
+
+        /// <summary>
+        /// Command to execute when "delete" context menu item is selected on a location
+        /// </summary>
+        public ICommand DeleteLocationCommand { get; set; }
+
+        /// <summary>
+        /// Returns if the "add tour plan location" menu item is enabled
+        /// </summary>
+        public bool IsEnabledAddTourPlanLocation => this.Location?.IsPlanTourLocation ?? false;
+
+        /// <summary>
+        /// Command to execute when "add tour plan location" toolbar item item is selected
+        /// </summary>
+        public ICommand AddTourPlanLocationCommand { get; set; }
 
         /// <summary>
         /// Creates a new view model object based on the given location object
@@ -126,13 +141,15 @@ namespace WhereToFly.App.Core.ViewModels
         {
             this.Description = HtmlConverter.StripAllTags(this.location.Description);
 
-            this.ShowDetailsLocationContextAction = new AsyncCommand(this.OnShowDetailsLocation);
-            this.ZoomToLocationContextAction = new AsyncCommand(this.OnZoomToLocationAsync);
-            this.DeleteLocationContextAction = new AsyncCommand(this.OnDeleteLocationAsync);
+            this.ItemTappedCommand = new AsyncCommand(this.OnShowDetailsLocation);
+            this.ZoomToLocationCommand = new AsyncCommand(this.OnZoomToLocationAsync);
+            this.DeleteLocationCommand = new AsyncCommand(this.OnDeleteLocationAsync);
+            this.AddTourPlanLocationCommand =
+                new Command<Location>((location) => App.AddTourPlanLocation(location));
         }
 
         /// <summary>
-        /// Called when "show details" context action is selected
+        /// Called when "show details" context menu item is selected
         /// </summary>
         /// <returns>task to wait on</returns>
         private async Task OnShowDetailsLocation()
@@ -141,7 +158,7 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
-        /// Called when "zoom to" context action is selected
+        /// Called when "zoom to" context menu item is selected
         /// </summary>
         /// <returns>task to wait on</returns>
         private async Task OnZoomToLocationAsync()
@@ -150,7 +167,7 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
-        /// Called when "delete" context action is selected
+        /// Called when "delete" context menu item is selected
         /// </summary>
         /// <returns>task to wait on</returns>
         private async Task OnDeleteLocationAsync()

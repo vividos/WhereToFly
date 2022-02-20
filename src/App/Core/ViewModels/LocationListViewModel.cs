@@ -133,19 +133,14 @@ namespace WhereToFly.App.Core.ViewModels
             !this.IsListRefreshActive && this.isListEmpty;
 
         /// <summary>
-        /// Command to execute when an item in the location list has been tapped
+        /// Stores the selected location when an item is tapped
         /// </summary>
-        public AsyncCommand<Location> ItemTappedCommand { get; private set; }
+        public LocationListEntryViewModel SelectedLocation { get; set; }
 
         /// <summary>
-        /// Command to execute when "import locations" context action is selected
+        /// Command to execute when "import locations" toolbar item is selected
         /// </summary>
         public ICommand ImportLocationsCommand { get; set; }
-
-        /// <summary>
-        /// Command to execute when "add tour plan location" conext action is selected
-        /// </summary>
-        public ICommand AddTourPlanLocationCommand { get; set; }
         #endregion
 
         /// <summary>
@@ -184,13 +179,7 @@ namespace WhereToFly.App.Core.ViewModels
             this.FilterTakeoffDirectionsCommand =
                 new AsyncCommand(this.FilterTakeoffDirectionsAsync);
 
-            this.ItemTappedCommand =
-                new AsyncCommand<Location>(this.NavigateToLocationDetails);
-
             this.ImportLocationsCommand = new AsyncCommand(this.ImportLocationsAsync);
-
-            this.AddTourPlanLocationCommand =
-                new Xamarin.Forms.Command<Location>((location) => App.AddTourPlanLocation(location));
         }
 
         /// <summary>

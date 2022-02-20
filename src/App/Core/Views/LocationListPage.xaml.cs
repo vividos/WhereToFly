@@ -123,46 +123,6 @@ namespace WhereToFly.App.Core.Views
             }
         }
 
-        /// <summary>
-        /// Called when an item was tapped on the location list
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="args">event args</param>
-        private void OnItemTapped_LocationsListView(object sender, ItemTappedEventArgs args)
-        {
-            var localViewModel = this.BindingContext as LocationListViewModel;
-
-            var locationListEntryViewModel = args.Item as LocationListEntryViewModel;
-            localViewModel.ItemTappedCommand.ExecuteAsync(locationListEntryViewModel.Location);
-        }
-
-        /// <summary>
-        /// Called when the binding context of the view cell has changed
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="args">event args</param>
-        private void OnViewCellBindingContextChanged(object sender, EventArgs args)
-        {
-            var viewCell = (ViewCell)sender;
-
-            if (viewCell.BindingContext is LocationListEntryViewModel cellViewModel &&
-                cellViewModel.Location.IsPlanTourLocation)
-            {
-                viewCell.ContextActions.Add(
-                    new MenuItem
-                    {
-                        Text = "Add tour plan location",
-                        IconImageSource = new FileImageSource
-                        {
-                            File = Converter.ImagePathConverter.GetDeviceDependentImage("map_marker_plus")
-                        },
-                        Command = this.viewModel.AddTourPlanLocationCommand,
-                        CommandParameter = cellViewModel.Location,
-                        AutomationId = "AddTourPlanLocation"
-                    });
-            }
-        }
-
         #region Page lifecycle methods
         /// <summary>
         /// Called when page is appearing; get current position
