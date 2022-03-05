@@ -1,0 +1,78 @@
+/* style for the body element to display a fullscreen chart */
+.chart-body-fullscreen {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    position: absolute;
+}
+
+/* style for the outer container that contains chart and toolbar */
+.chart-and-toolbar-container {
+    width: 100vw;
+    left: 0px;
+}
+
+/* style to top-align the outer container */
+.chart-and-toolbar-container-top {
+    position: absolute;
+    top: 0px;
+}
+
+/* style to bottom-align the outer container */
+.chart-and-toolbar-container-bottom {
+    position: absolute;
+    bottom: 0px;
+}
+
+/* style to let the outer container control the alignment */
+.chart-and-toolbar-container-outer {
+    bottom: 0px;
+}
+
+/* style for the toolbar container */
+.chart-toolbar-container {
+    width: 100vw;
+    top: 10px;
+    right: 10px;
+}
+
+/* style for the chart canvas */
+.chart-canvas {
+    overflow: hidden;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+/* style for each toolbar button */
+.chart-toolbar-button {
+    position: relative;
+    float: right;
+    padding: 5px;
+    margin: 10px;
+    width: 24px;
+    height: 24px;
+    background-color: white;
+}
+
+/* the .svg toolbar images are white, so invert them to display correctly */
+.chart-toolbar-button-image {
+    filter: invert(100%);
+}
+
+.chart-toolbar-button-disabled {
+    background-color: gray !important;
+}
+
+#chartjs-tooltip {
+    opacity: 1;
+    position: absolute;
+    background: rgba(0, 0, 0, .7);
+    color: white;
+    border-radius: 3px;
+    pointer-events: none;
+    transition: all 0.25s ease-in-out;
+}

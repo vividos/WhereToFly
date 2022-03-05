@@ -1,12 +1,16 @@
 ﻿const path = require('path');
 
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
     mode: 'production',
-    entry: "./src/js/index.js",
+    entry: {
+        heightProfileView: "./src/js/heightProfileView.js",
+    },
     output: {
         clean: true,
         path: path.resolve(__dirname, 'dist'),
@@ -35,9 +39,24 @@ module.exports = {
             new CssMinimizerPlugin(),
         ]
     },
+    performance: {
+        hints: 'error',
+        maxAssetSize: 524288,
+        maxEntrypointSize: 524288,
+    },
     plugins: [
+        new HtmlWebpackPlugin({
+            filename: "heightProfileView.html",
+            template: "src/heightProfileView.html",
+            chunks: ["heightProfileView"]
+        }),
         new MiniCssExtractPlugin({
             filename: "css/[name].css"
+        }),
+        new CopyWebpackPlugin({
+            patterns: [
+                { from: 'src/images', to: 'images' },
+            ],
         }),
     ],
 };

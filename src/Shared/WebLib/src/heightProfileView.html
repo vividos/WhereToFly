@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <title>HeightProfileView</title>
+    <base target="_blank" />
+</head>
+<body class="chart-body-fullscreen">
+
+    <div id="chartContainer" class="chart-and-toolbar-container chart-and-toolbar-container-top">
+        <div class="chart-toolbar-container">
+            <div id="chartButtonClose"
+                 class="chart-toolbar-button"
+                 onclick="javascript:heightProfileView.hide();">
+                <img class="chart-toolbar-button-image" src="images/close.svg" />
+            </div>
+
+            <div id="chartButtonResetZoom"
+                 class="chart-toolbar-button"
+                 onclick="javascript:heightProfileView.resetZoom();">
+                <img class="chart-toolbar-button-image" src="images/arrow-expand-horizontal.svg" />
+            </div>
+
+            <div id="chartButtonModeHover"
+                 class="chart-toolbar-button chart-toolbar-button-disabled"
+                 style="margin-left:0px;"
+                 onclick="javascript:heightProfileView.setModeHover();">
+                <img class="chart-toolbar-button-image" src="images/gesture-tap.svg" />
+            </div>
+
+            <div id="chartButtonModeZoomAndPan"
+                 class="chart-toolbar-button"
+                 style="margin-right:0px;"
+                 onclick="javascript:heightProfileView.setModeZoomAndPan();">
+                <img class="chart-toolbar-button-image" src="images/gesture-spread.svg" />
+            </div>
+        </div>
+        <div>
+            <canvas id="chartElement" class="chart-canvas"></canvas>
+        </div>
+    </div>
+
+</body>
+</html>

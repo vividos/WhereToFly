@@ -1,10 +1,14 @@
 ﻿const path = require('path');
 
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     mode: 'development',
-    entry: "./src/js/index.js",
+    entry: {
+        heightProfileView: "./src/js/heightProfileView.js",
+    },
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'js/WhereToFly.[name].js',
@@ -27,9 +31,29 @@ module.exports = {
             },
         ]
     },
+    performance: {
+        hints: 'warning',
+        maxAssetSize: 2097152,
+        maxEntrypointSize: 2097152,
+    },
     plugins: [
+        new HtmlWebpackPlugin({
+            filename: "heightProfileView.html",
+            template: "src/heightProfileView.html",
+            chunks: ["heightProfileView"]
+        }),
+        new HtmlWebpackPlugin({
+            filename: "heightProfileTest.html",
+            template: "src/heightProfileTest.html",
+            chunks: ["heightProfileView"]
+        }),
         new MiniCssExtractPlugin({
             filename: "css/[name].css"
+        }),
+        new CopyWebpackPlugin({
+            patterns: [
+                { from: 'src/images', to: 'images' },
+            ],
         }),
     ],
 };
