@@ -42,7 +42,6 @@ namespace WhereToFly.App.UnitTest.ViewModels
             Assert.IsTrue(viewModel.IsListEmpty, "list must be empty");
             Assert.IsFalse(viewModel.IsListRefreshActive, "refresh must not be active");
 
-            Assert.IsNotNull(viewModel.ItemTappedCommand, "item tapped command must not be null");
             Assert.IsNotNull(viewModel.ImportTrackCommand, "import track command must not be null");
             Assert.IsNotNull(viewModel.DeleteTrackListCommand, "delete track list command must not be null");
         }
@@ -59,7 +58,6 @@ namespace WhereToFly.App.UnitTest.ViewModels
             var viewModel = new TrackListViewModel();
 
             // check
-            await viewModel.ItemTappedCommand.ExecuteAsync(null);
             ////viewModel.ImportTrackCommand.Execute(null); // don't execute import; it opens a file picker
             await viewModel.DeleteTrackListCommand.ExecuteAsync();
         }

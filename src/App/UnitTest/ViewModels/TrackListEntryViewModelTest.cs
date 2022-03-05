@@ -46,14 +46,14 @@ namespace WhereToFly.App.UnitTest.ViewModels
             Assert.IsTrue(viewModel.DetailInfos.Any(), "detail infos must contain value");
             Assert.IsNotNull(viewModel.Track, "track must be not null");
 
-            Assert.IsNotNull(viewModel.ShowTrackDetailsContextAction, "show track details command must not be null");
-            Assert.IsNotNull(viewModel.ZoomToTrackContextAction, "zoom to track command must not be null");
-            Assert.IsNotNull(viewModel.DeleteTrackContextAction, "delete track command must not be null");
+            Assert.IsNotNull(viewModel.ShowTrackDetailsCommand, "show track details command must not be null");
+            Assert.IsNotNull(viewModel.ZoomToTrackCommand, "zoom to track command must not be null");
+            Assert.IsNotNull(viewModel.DeleteTrackCommand, "delete track command must not be null");
             Assert.IsNotNull(viewModel.TypeImageSource, "type image source must not be null");
 
-            viewModel.ShowTrackDetailsContextAction.Execute(null);
-            viewModel.ZoomToTrackContextAction.Execute(null);
-            viewModel.DeleteTrackContextAction.Execute(null);
+            viewModel.ShowTrackDetailsCommand.Execute(null);
+            viewModel.ZoomToTrackCommand.Execute(null);
+            viewModel.DeleteTrackCommand.Execute(null);
         }
     }
 }
