@@ -10,6 +10,9 @@ module.exports = {
         filename: 'js/WhereToFly.[name].js',
         library: ["WhereToFly", "[name]"],
         libraryTarget: "umd",
+        // this fixes the "Automatic publicPath is not supported in this browser"
+        // error when using webpack serve
+        publicPath: ''
     },
     devtool: 'source-map',
     module: {
