@@ -2,7 +2,7 @@ using System.Reflection;
 
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Where-to-fly")]
-[assembly: AssemblyCopyright("Copyright © 2017-2021 Michael Fink")]
+[assembly: AssemblyCopyright("Copyright © 2017-2022 Michael Fink")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
