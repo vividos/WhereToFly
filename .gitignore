@@ -298,3 +298,4 @@ stuff/
 /src/Web/LiveTracking/wwwroot/js/site.min.js
 *.GeneratedMSBuildEditorConfig.editorconfig
 /src/Web/LiveTracking/wwwroot/
+/src/Shared/WebLib/dist/

@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>Where-to-fly Web Library</Description>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+
+  <!-- npm frontend project integration for ASP.NET Core based projects -->
+  <PropertyGroup>
+    <NpmProjectPath>.\</NpmProjectPath>
+    <NpmOutputPath>dist\</NpmOutputPath>
+  </PropertyGroup>
+
+  <Import Project="..\..\WhereToFly.NpmBuildProject.targets" />
+  <!-- end of npm frontend project integration -->
+
+</Project>
