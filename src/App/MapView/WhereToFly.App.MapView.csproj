@@ -1,0 +1,49 @@
+﻿<Project Sdk="MSBuild.Sdk.Extras/3.0.38">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;MonoAndroid12.0</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">$(TargetFrameworks);uap10.0.19041</TargetFrameworks>
+    <Description>Where-to-fly App MapView</Description>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="**" />
+    <EmbeddedResource Remove="**" />
+    <None Remove="**" />
+  </ItemGroup>
+
+  <!-- copy assets from the WebLib project -->
+  <ItemGroup>
+    <AssetSourceFiles
+      Include="..\..\Shared\WebLib\dist\**\*.*"
+      Exclude="..\..\Shared\WebLib\dist\**\*.map" />
+  </ItemGroup>
+
+  <Target Name="CopyAssets" BeforeTargets="Build">
+    <Message Text="Copying Assets..." />
+    <Copy
+      UseHardlinksIfPossible="true"
+      SourceFiles="@(AssetSourceFiles)"
+      DestinationFiles="@(AssetSourceFiles->'$(MSBuildThisFileDirectory)Assets\weblib\%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
+
+  <Target Name="CleanAssets" AfterTargets="Clean">
+    <Message Text="Deleting Assets folder..." />
+    <RemoveDir Directories="$(MSBuildThisFileDirectory)Assets" />
+  </Target>
+
+  <!-- add assets as AndroidAsset or Content -->
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
+    <AndroidAsset Include="Assets\**\*.*" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('uap10.0')) ">
+    <Content Include="Assets\**\*.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\WebLib\WhereToFly.Shared.WebLib.csproj" />
+  </ItemGroup>
+
+</Project>

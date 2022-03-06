@@ -299,3 +299,4 @@ stuff/
 *.GeneratedMSBuildEditorConfig.editorconfig
 /src/Web/LiveTracking/wwwroot/
 /src/Shared/WebLib/dist/
+/src/App/MapView/Assets/
