@@ -31,12 +31,12 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",
+    "@popperjs/core": "^2.11.0",
     "bootstrap": "^5.1.3",
     "cesium": "^1.89.0",
     "chart.js": "^3.7.0",
     "chartjs-adapter-moment": "^1.0.0",
     "jquery": "^3.6.0",
     "moment": "^2.29.1",
-    "@popperjs/core": "^2.11.0"
   }
 }
