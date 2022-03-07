@@ -56,13 +56,13 @@ pin is shown in the map at the current track point.
 
 There are several toolbar buttons above the track height profile:
 
-- ![Zoom-and-pan](../map/images/gesture-spread.svg) Zoom-and-pan: When active
+- ![Zoom-and-pan](images/gesture-spread.svg) Zoom-and-pan: When active
   (white), you can zoom (with a pinch gesture) and pan (with a one-finger
   drag gesture) the height profile.
-- ![Hover](../map/images/gesture-tap.svg) Hover: Fixes the height profile
+- ![Hover](images/gesture-tap.svg) Hover: Fixes the height profile
   dimensions after panning and zooming, in order to explore the height profile
   by hovering over the track points.
-- ![Reset zoom](../map/images/arrow-expand-horizontal.svg) Reset zoom: Resets
+- ![Reset zoom](images/arrow-expand-horizontal.svg) Reset zoom: Resets
   the zoomed height profile to the full track again.
 - ![Close](../map/images/close.svg) Close: Closes the height profile window.
 
