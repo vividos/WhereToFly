@@ -203,6 +203,10 @@
       <Project>{01cafb32-c32b-4e04-b44c-490182f4f31e}</Project>
       <Name>WhereToFly.App.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MapView\WhereToFly.App.MapView.csproj">
+      <Project>{4653a8f6-77cd-495d-84df-fde19829ba89}</Project>
+      <Name>WhereToFly.App.MapView</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Resources\WhereToFly.App.Resources.csproj">
       <Project>{2f10550e-c477-47d8-a960-d272859efce8}</Project>
       <Name>WhereToFly.App.Resources</Name>

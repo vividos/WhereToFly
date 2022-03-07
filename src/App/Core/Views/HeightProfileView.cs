@@ -55,7 +55,7 @@ namespace WhereToFly.App.Core.Views
             };
 
             string jsonOptions = JsonConvert.SerializeObject(options);
-            string js = $"heightProfileView = new HeightProfileView({jsonOptions});";
+            string js = $"heightProfileView = new WhereToFly.heightProfileView.HeightProfileView({jsonOptions});";
             this.RunJavaScript(js);
         }
 

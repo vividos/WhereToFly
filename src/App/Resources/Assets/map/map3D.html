@@ -8,14 +8,8 @@
     <base target="_blank" />
     <script src="Cesium/Cesium.js"></script>
     <link href="Cesium/Widgets/widgets.css" rel="stylesheet">
-    <script src="Chart/chart.min.js"></script>
-    <script src="Chart/moment.min.js"></script>
-    <script src="Chart/chartjs-adapter-moment.min.js"></script>
-    <script src="Chart/chartjs-plugin-crosshair.min.js"></script>
-    <script src="Chart/hammer.min.js"></script>
-    <script src="Chart/chartjs-plugin-zoom.min.js"></script>
     <link href="mapView3D.css" rel="stylesheet">
-    <link href="heightProfileView.css" rel="stylesheet">
+    <link href="../weblib/css/heightProfileView.css" rel="stylesheet">
     <style>
 
         html, body {
@@ -57,7 +51,7 @@
 </head>
 <body style="margin: 0px; background-color: black">
     <script src="mapView3D.js"></script>
-    <script src="heightProfileView.js"></script>
+    <script src="../weblib/js/WhereToFly.heightProfileView.js"></script>
 
     <div id="messageBand" class="message-band" style="top: 0px"></div>
 
@@ -71,27 +65,27 @@
                 <div id="chartButtonClose"
                      class="chart-toolbar-button"
                      onclick="javascript:map.heightProfileView.hide();">
-                    <img class="chart-toolbar-button-image" src="images/close.svg" />
+                    <img class="chart-toolbar-button-image" src="../weblib/images/close.svg" />
                 </div>
 
                 <div id="chartButtonResetZoom"
                      class="chart-toolbar-button"
                      onclick="javascript:map.heightProfileView.resetZoom();">
-                    <img class="chart-toolbar-button-image" src="images/arrow-expand-horizontal.svg" />
+                    <img class="chart-toolbar-button-image" src="../weblib/images/arrow-expand-horizontal.svg" />
                 </div>
 
                 <div id="chartButtonModeHover"
                      class="chart-toolbar-button chart-toolbar-button-disabled"
                      style="margin-left:0px;"
                      onclick="javascript:map.heightProfileView.setModeHover();">
-                    <img class="chart-toolbar-button-image" src="images/gesture-tap.svg" />
+                    <img class="chart-toolbar-button-image" src="../weblib/images/gesture-tap.svg" />
                 </div>
 
                 <div id="chartButtonModeZoomAndPan"
                      class="chart-toolbar-button"
                      style="margin-right:0px;"
                      onclick="javascript:map.heightProfileView.setModeZoomAndPan();">
-                    <img class="chart-toolbar-button-image" src="images/gesture-spread.svg" />
+                    <img class="chart-toolbar-button-image" src="../weblib/images/gesture-spread.svg" />
                 </div>
             </div>
             <div>

@@ -67,12 +67,12 @@ namespace WhereToFly.App.Core.Controls
             if (Device.RuntimePlatform == Device.Android ||
                 Device.RuntimePlatform == Device.iOS)
             {
-                string htmlText = platform.LoadAssetText("map/chartjs.html");
+                string htmlText = platform.LoadAssetText("weblib/heightProfileView.html");
 
                 webViewSource = new HtmlWebViewSource
                 {
                     Html = htmlText,
-                    BaseUrl = platform.WebViewBasePath + "map/"
+                    BaseUrl = platform.WebViewBasePath + "weblib/"
                 };
             }
 
@@ -80,7 +80,7 @@ namespace WhereToFly.App.Core.Controls
             {
                 webViewSource = new UrlWebViewSource
                 {
-                    Url = platform.WebViewBasePath + "map/chartjs.html"
+                    Url = platform.WebViewBasePath + "weblib/heightProfileView.html"
                 };
             }
 

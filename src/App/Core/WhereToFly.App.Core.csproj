@@ -25,6 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Geo\WhereToFly.Geo.csproj" />
     <ProjectReference Include="..\Essentials\WhereToFly.App.Essentials.csproj" />
+    <ProjectReference Include="..\MapView\WhereToFly.App.MapView.csproj" />
     <ProjectReference Include="..\Model\WhereToFly.App.Model.csproj" />
   </ItemGroup>
 

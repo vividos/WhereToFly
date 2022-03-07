@@ -2644,7 +2644,7 @@ MapView.prototype.clearAllTracks = function () {
  */
 MapView.prototype.showTrackHeightProfile = function (trackId) {
 
-    if (typeof HeightProfileView !== "function") {
+    if (typeof WhereToFly.heightProfileView.HeightProfileView !== "function") {
         console.warn("can't display track height profile; HeightProfileView class is not available");
         return;
     }
@@ -2665,7 +2665,7 @@ MapView.prototype.showTrackHeightProfile = function (trackId) {
     }
 
     var that = this;
-    this.heightProfileView = new HeightProfileView({
+    this.heightProfileView = new WhereToFly.heightProfileView.HeightProfileView({
         id: 'chartElement',
         containerId: 'chartContainer',
         setBodyBackgroundColor: false,
