@@ -64,7 +64,7 @@ There are several toolbar buttons above the track height profile:
   by hovering over the track points.
 - ![Reset zoom](images/arrow-expand-horizontal.svg) Reset zoom: Resets
   the zoomed height profile to the full track again.
-- ![Close](../map/images/close.svg) Close: Closes the height profile window.
+- ![Close](images/close.svg) Close: Closes the height profile window.
 
 ### Layer objects
 
