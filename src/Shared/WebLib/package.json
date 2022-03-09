@@ -22,6 +22,7 @@
     "css-minimizer-webpack-plugin": "^3.4.1",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.5.3",
+    "strip-pragma-loader": "^1.0.0",
     "terser-webpack-plugin": "^5.3.1",
     "url-loader": "^4.1.1",
     "webpack": "^5.69.1",
@@ -29,6 +30,7 @@
     "webpack-dev-server": "^4.7.4"
   },
   "dependencies": {
+    "cesium": "^1.90.0",
     "chart.js": "^3.7.1",
     "chartjs-adapter-moment": "^1.0.0",
     "chartjs-plugin-crosshair": "^1.2.0",

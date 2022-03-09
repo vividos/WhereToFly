@@ -1,5 +1,6 @@
 ﻿const path = require('path');
 
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -7,6 +8,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
     mode: 'development',
     entry: {
+        mapView: './src/js/mapView.js',
         heightProfileView: "./src/js/heightProfileView.js",
     },
     output: {
@@ -33,14 +35,24 @@ module.exports = {
     },
     performance: {
         hints: 'warning',
-        maxAssetSize: 2097152,
-        maxEntrypointSize: 2097152,
+        maxAssetSize: 17300000,
+        maxEntrypointSize: 17300000,
     },
     plugins: [
+        new HtmlWebpackPlugin({
+            filename: "mapView.html",
+            template: "src/mapView.html",
+            chunks: ["mapView"]
+        }),
         new HtmlWebpackPlugin({
             filename: "heightProfileView.html",
             template: "src/heightProfileView.html",
             chunks: ["heightProfileView"]
+        }),
+        new HtmlWebpackPlugin({
+            filename: "mapTest.html",
+            template: "src/mapTest.html",
+            chunks: ["mapView"]
         }),
         new HtmlWebpackPlugin({
             filename: "heightProfileTest.html",
@@ -50,10 +62,27 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: "css/[name].css"
         }),
+        // Copy images and Cesium files
         new CopyWebpackPlugin({
             patterns: [
                 { from: 'src/images', to: 'images' },
+                { from: 'node_modules/cesium/Build/Cesium/Workers', to: 'js/Workers' },
+                { from: 'node_modules/cesium/Build/Cesium/Assets', to: 'js/Assets' },
+                { from: 'node_modules/cesium/Build/Cesium/Widgets', to: 'js/Widgets' }
             ],
         }),
+        new webpack.DefinePlugin({
+            // Define relative base path in cesium for loading assets
+            CESIUM_BASE_URL: JSON.stringify('./js/')
+        })
     ],
+    amd: {
+        // Enable webpack-friendly use of require in Cesium
+        toUrlUndefined: true
+    },
+    resolve: {
+        // Needed when using webpack 5 until this bug is fixed in CesiumJS:
+        // https://github.com/CesiumGS/cesium/issues/9212
+        exportsFields: []
+    }
 };

@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <title>MapView</title>
+    <base target="_blank" />
+    <style>
+
+        html, body {
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            position: absolute;
+        }
+
+        #chartContainer {
+            opacity: 0.5;
+            z-index: 10;
+        }
+
+        /* set size of infobox to fill 80% of the whole mobile screen */
+        @media (max-width: 768px) {
+            .cesium-infoBox {
+                width: 80%;
+                max-width: 80%;
+            }
+        }
+
+        @media (any-hover: none) {
+            /* hide the left "mouse" navigation button */
+            .cesium-navigation-button-left {
+                display: none
+            }
+
+            /* make right "touch" navigation button bigger */
+            .cesium-navigation-button-right {
+                border-radius: 10px 10px 0 0;
+                border-left: 1px solid #444;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body style="margin: 0px; background-color: black">
+
+    <div id="messageBand" class="message-band" style="top: 0px"></div>
+
+    <div id="mapElement" class="map-element-fullscreen"></div>
+
+    <div class="toolbar-container">
+        <div id="liveTrackToolbar" class="livetrack-toolbar-container" style="display:none"></div>
+
+        <div id="chartContainer" class="chart-and-toolbar-container chart-and-toolbar-container-outer" style="display:none">
+            <div class="chart-toolbar-container">
+                <div id="chartButtonClose"
+                     class="chart-toolbar-button"
+                     onclick="javascript:map.heightProfileView.hide();">
+                    <img class="chart-toolbar-button-image" src="images/close.svg" />
+                </div>
+
+                <div id="chartButtonResetZoom"
+                     class="chart-toolbar-button"
+                     onclick="javascript:map.heightProfileView.resetZoom();">
+                    <img class="chart-toolbar-button-image" src="images/arrow-expand-horizontal.svg" />
+                </div>
+
+                <div id="chartButtonModeHover"
+                     class="chart-toolbar-button chart-toolbar-button-disabled"
+                     style="margin-left:0px;"
+                     onclick="javascript:map.heightProfileView.setModeHover();">
+                    <img class="chart-toolbar-button-image" src="images/gesture-tap.svg" />
+                </div>
+
+                <div id="chartButtonModeZoomAndPan"
+                     class="chart-toolbar-button"
+                     style="margin-right:0px;"
+                     onclick="javascript:map.heightProfileView.setModeZoomAndPan();">
+                    <img class="chart-toolbar-button-image" src="images/gesture-spread.svg" />
+                </div>
+            </div>
+            <div>
+                <canvas id="chartElement" class="chart-canvas"></canvas>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

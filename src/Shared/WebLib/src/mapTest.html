@@ -1,0 +1,332 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <title>MapView Test</title>
+    <base target="_blank" />
+    <style>
+
+        html, body {
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            position: absolute;
+        }
+
+        #chartContainer {
+            opacity: 0.5;
+            z-index: 10;
+        }
+
+        /* set size of infobox to fill 80% of the whole mobile screen */
+        .cesium-infoBox {
+            width: 80%;
+            max-width: 80%;
+        }
+    </style>
+</head>
+<body style="margin: 0px; background-color: black">
+
+    <div style="position: absolute; top: 0px; margin: 10px; z-index: 100; width: 100vw">
+        <select name="mapShadingMode" onChange="map.setShadingMode(this.value.toString())">
+            <option value="Fixed10Am">Fixed at 10 am.</option>
+            <option value="Fixed3Pm">Fixed at 3 pm.</option>
+            <option value="CurrentTime">Current time</option>
+            <option value="Ahead6Hours">Current time + 6 hours</option>
+            <option value="None">No shading</option>
+        </select>
+
+        <select name="mapImageryType" onChange="map.setMapImageryType(this.value.toString())">
+            <option value="OpenStreetMap">OpenStreetMap</option>
+            <option value="BingMapsAerialWithLabels">Bing maps Aerial with labels</option>
+            <option value="OpenTopoMap">OpenTopoMap</option>
+        </select>
+
+        <select name="mapOverlayType" onChange="map.setMapOverlayType(this.value.toString())">
+            <option value="None">None</option>
+            <option value="ThermalSkywaysKk7">kk7 thermal skyways</option>
+            <option value="ContourLines">Contour lines</option>
+            <option value="SlopeAndContourLines">Slope + contour lines</option>
+            <option value="BlackMarble">NASA Black Marble 2017</option>
+        </select>
+
+        <!--<button onclick="addInspector()">Add inspector</button>-->
+
+        <button onclick="map.updateMyLocation({latitude: 47.666283, longitude: 11.886159, zoomToLocation: true})">Fly to my position</button>
+
+        <button onclick="map.zoomToLocation({latitude: 47.6764385, longitude: 11.8710533})">Fly to summit</button>
+
+        <button onclick="showFindResult()">Show find result</button>
+
+        <button onclick="addTrack()">Add track</button>
+
+        <button onclick="zoomToTrack()">Zoom to track</button>
+
+        <button onclick="sampleTrackHeights()">Sample track heights</button>
+
+        <button onclick="addOsmBuildingsLayer()">Add OSM Buildings layer</button>
+
+        <button onclick="removeOsmBuildingsLayer()">Remove OSM Buildings layer</button>
+
+        <button onclick="addTakeoffLocation()">Add Takeoff</button>
+
+        <button onclick="addLayer()">Add layer</button>
+
+        <button onclick="removeLayer()">Remove layer</button>
+
+        <button onclick="showFlyingRange()">Show flying range</button>
+
+        <button onclick="addLiveTrack()">Add live track</button>
+
+        <button onclick="updateLiveTrack()">Update live track</button>
+
+        <button onclick="zoomToLiveTrack()">Zoom to live track</button>
+
+        <button onclick="removeLiveTrack()">Remove live track</button>
+    </div>
+
+    <div id="messageBand" class="message-band" style="top: 60px"></div>
+
+    <div id="mapElement" class="map-element-fullscreen"></div>
+
+    <div class="toolbar-container">
+        <div id="liveTrackToolbar" class="livetrack-toolbar-container" style="display:none"></div>
+
+        <div id="chartContainer" class="chart-and-toolbar-container chart-and-toolbar-container-outer" style="display:none">
+            <div class="chart-toolbar-container">
+                <div id="chartButtonClose"
+                     class="chart-toolbar-button"
+                     onclick="javascript:map.heightProfileView.hide();">
+                    <img class="chart-toolbar-button-image" src="images/close.svg" />
+                </div>
+
+                <div id="chartButtonResetZoom"
+                     class="chart-toolbar-button"
+                     onclick="javascript:map.heightProfileView.resetZoom();">
+                    <img class="chart-toolbar-button-image" src="images/arrow-expand-horizontal.svg" />
+                </div>
+
+                <div id="chartButtonModeHover"
+                     class="chart-toolbar-button chart-toolbar-button-disabled"
+                     style="margin-left:0px;"
+                     onclick="javascript:map.heightProfileView.setModeHover();">
+                    <img class="chart-toolbar-button-image" src="images/gesture-tap.svg" />
+                </div>
+
+                <div id="chartButtonModeZoomAndPan"
+                     class="chart-toolbar-button"
+                     style="margin-right:0px;"
+                     onclick="javascript:map.heightProfileView.setModeZoomAndPan();">
+                    <img class="chart-toolbar-button-image" src="images/gesture-spread.svg" />
+                </div>
+            </div>
+            <div>
+                <canvas id="chartElement" class="chart-canvas"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+
+        // function used to call to C#
+        function callAction(funcName, params) {
+            console.log("callback://" + funcName + "/" + JSON.stringify(params));
+        }
+
+        let map = new WhereToFly.mapView.MapView({
+            id: 'mapElement',
+            messageBandId: 'messageBand',
+            liveTrackToolbarId: 'liveTrackToolbar',
+            callback: callAction,
+            initialCenterPoint: { latitude: 47.6764385, longitude: 11.8710533 },
+            initialViewingDistance: 5000.0
+        });
+
+        window.map = map;
+
+        map.setMapImageryType('OpenStreetMap');
+        map.setMapOverlayType('None');
+        map.setShadingMode('CurrentTime');
+
+        map.addLocationList([
+            { "id": "{cc8fa282-10fb-4bab-8af2-0a31f5d528a3}", "name": "Brecherspitz", "description": "Herrliche Aussicht über die drei Seen Schliersee im Norden, Tegernsee im Westen und den Spitzingsee im Süden.", "type": "Summit", "latitude": 47.6764385, "longitude": 11.8710533, "elevation": 1685 },
+            { "id": "{d5012732-c371-4b46-9b28-a0aa7a3e47c7}", "name": "Jägerkamp", "description": "Gipfel in den Schlierseer Bergen, mit Ausblick auf Schliersee und die umliegenden Berge.", "type": "Summit", "latitude": 47.673511, "longitude": 11.9060494, "elevation": 1746 },
+            { "id": "{2121170e-2f6f-49bd-8f57-b8d64d8b38bb}", "name": "Ankel-Alm", "description": "Privat bewirtschaftete Alm; Montag Ruhetag", "type": "AlpineHut", "latitude": 47.6838571, "longitude": 11.8687695, "elevation": 1311 },
+            { "id": "{a963bac3-c573-4498-80d3-447ddeb9494a}", "name": "Schönfeldhütte", "description": "Alpenvereinshütte der Sektion München des DAV", "type": "AlpineHut", "latitude": 47.66508, "longitude": 11.90612, "elevation": 1410 },
+            { "id": "{807a72a2-34b9-486d-9f5a-24b404a797ae}", "name": "Spitzingsattel", "description": "Sattel auf halbem Wege zwischen Schliersee und Spitzingsee", "type": "Pass", "latitude": 47.672138, "longitude": 11.8862728, "elevation": 1129 },
+            { "id": "{ec0a1a47-b67e-42f1-b6d2-322d259ca729}", "name": "Bahnhof Neuhaus (Schliersee)", "description": "Anschlussmöglichkeiten zum RBO Bus 9562 zum Spitzingsattel", "type": "PublicTransportTrain", "latitude": 47.70599, "longitude": 11.87451, "elevation": 809 },
+            { "id": "{4064d1f0-a476-4fe8-973f-f784cae39790}", "name": "RBO Bus 9562 Bushaltestelle Spitzingsattel", "description": "Haltestelle am Spitzingsattel. Abfahrtszeiten Richtung Schliersee: 8:42, 11:15, 15:31, 18:02.", "type": "PublicTransportBus", "latitude": 47.672138, "longitude": 11.8862728, "elevation": 1129 }
+        ]);
+
+        setTimeout(function () {
+            map.updateMyLocation({
+                latitude: 47.666283,
+                longitude: 11.886159,
+                altitude: 1084,
+                displayLatitude: '47°39\'58.6"N',
+                displayLongitude: '11°53\'10.2"E',
+                displayTimestamp: '2018-01-07 12:01:54',
+                zoomTo: false
+            });
+        }, 2000);
+
+        window.addInspector = function () {
+            //    map.viewer.extend(Cesium.viewerCesiumInspectorMixin);
+        }
+
+        window.showFindResult = function () {
+            map.showFindResult({
+                name: 'Bodenschneid',
+                description: 'Beschreibung',
+                latitude: 47.6717531,
+                longitude: 11.8381005,
+                altitude: 1667,
+                displayLatitude: '47°40\'18.3"N',
+                displayLongitude: '11°50\'17.2"E'
+            });
+        }
+
+        window.addTrack = function () {
+            window.theTrack = {
+                id: 'crossingthealps2018',
+                name: 'Crossing the Alps 2018',
+                isFlightTrack: false,
+                listOfTrackPoints: [12.352277, 47.754076, 0, 12.432716, 47.630431, 0, 12.29676, 47.285013, 0, 12.183008, 47.090525, 0, 11.958434, 46.738669, 0, 11.787137, 46.296141, 0, 11.904684, 46.017666, 0],
+                color: "FF0000"
+            };
+            map.addTrack(window.theTrack);
+        }
+
+        window.zoomToTrack = function () {
+            map.zoomToTrack(theTrack.id);
+        }
+
+        window.sampleTrackHeights = function () {
+            map.showTrackHeightProfile(theTrack.id);
+
+            map.onSampledTrackHeights = function (listOfTrackPointHeights) {
+                theTrack.groundHeightProfile = listOfTrackPointHeights;
+
+                map.heightProfileView.addGroundProfile(theTrack.groundHeightProfile);
+            };
+
+            map.sampleTrackHeights(theTrack);
+        }
+
+        window.addOsmBuildingsLayer = function () {
+            var theLayer = {
+                id: 'osmBuildingsLayer',
+                name: 'Cesium OSM Buildings',
+                type: 'OsmBuildingsLayer',
+                isVisible: true
+            };
+            map.addLayer(theLayer);
+        }
+
+        window.removeOsmBuildingsLayer = function () {
+            map.removeLayer('osmBuildingsLayer');
+        }
+
+        window.addTakeoffLocation = function () {
+            var theLocation = {
+                "id": "wheretofly-path-nagelspitz-start",
+                "name": "SP Jägerkamp/Nagelspitz (NW-WNW, E)",
+                "description": "",
+                "type": "FlyingTakeoff",
+                "latitude": 47.679201,
+                "longitude": 11.90403,
+                "altitude": 1612.0,
+                "takeoffDirections": 1 + 16 + 256 + 1024 + 4096, // N,E,S,SW,W
+                "isPlanTourLocation": false
+            };
+            map.addLocationList([theLocation]);
+            map.zoomToLocation(theLocation);
+        }
+
+        window.addLayer = function () {
+            var theLayer = {
+                id: 'testLayer',
+                name: 'Test Layer',
+                type: 'CzmlLayer',
+                isVisible: true,
+                data: '[{"id":"document","name":"Schliersee Mountain Peaks","version":"1.0"},{"id":"rotwand","name":"Rotwand","description":"Rotwand","position":{"cartographicDegrees":[11.9345058,47.6502332,1934.0]},"label":{"text":"Rotwand 1884m","font":"14pt Lucida Console","style":"FILL_AND_OUTLINE","showBackground":false,"horizontalOrigin":"LEFT","verticalOrigin":"BOTTOM","heightReference":"NONE","fillColor":{"rgba":[255,255,255,255]},"outlineColor":{"rgba":[0,0,0,255]},"outlineWidth":10.0,"distanceDisplayCondition":{"distanceDisplayCondition":[0.1,20000.0]}},"polyline":{"positions":{"cartographicDegrees":[11.9345058,47.6502332,0.0,11.9345058,47.6502332,1934.0]},"width":3.0,"clampToGround":false,"material":{"solidColor":{"color":{"rgba":[255,255,255,255]}}},"distanceDisplayCondition":{"distanceDisplayCondition":[0.1,20000.0]}}}]'
+            };
+            map.addLayer(theLayer);
+        }
+
+        window.removeLayer = function () {
+            map.removeLayer('testLayer');
+        }
+
+        window.showFlyingRange = function () {
+            map.showFlyingRange({
+                latitude: 47.6764385,
+                longitude: 11.8710533,
+                displayLatitude: "47.6764385",
+                displayLongitude: "11.8710533",
+                altitude: 1685.0,
+                glideRatio: 8.5,
+                gliderSpeed: 42.0,
+                windDirection: 0.0,
+                windSpeed: 0.0,
+            });
+        }
+
+        window.addLiveTrack = function () {
+            window.liveTrack = {
+                id: 'live-track',
+                name: 'Live Track',
+                isFlightTrack: true,
+                isLiveTrack: true,
+                listOfTrackPoints: [],
+                listOfTimePoints: [],
+                groundHeightProfile: null,
+                color: "ff8000"
+            };
+            map.addTrack(window.liveTrack);
+        }
+
+        window.updateLiveTrack = function () {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.responseText === '')
+                        console.warn("xhr call returned nothing");
+                    else {
+                        var response = JSON.parse(xhr.responseText);
+                        response.data.id = liveTrack.id;
+                        response.data.isLiveTrack = true;
+                        response.data.isFlightTrack = true;
+                        map.updateLiveTrack(response.data);
+                    }
+                }
+            };
+
+            var url = 'https://wheretoflywebapi.azurewebsites.net/api/LiveTrack?id=where-to-fly://TestLiveTrack/dummy';
+
+            var lastTrackPointTime = map.getTrackLastTrackPointTime(liveTrack.id);
+            if (lastTrackPointTime !== null) {
+                var time = new Date(lastTrackPointTime * 1000.0).toISOString();
+                url += "&time=" + encodeURIComponent(time);
+            }
+
+            xhr.open('GET', url);
+            xhr.send();
+        }
+
+        window.zoomToLiveTrack = function () {
+            map.zoomToTrack(liveTrack.id);
+        }
+
+        window.removeLiveTrack = function () {
+            map.removeTrack(liveTrack.id);
+        }
+
+    </script>
+
+</body>
+</html>
