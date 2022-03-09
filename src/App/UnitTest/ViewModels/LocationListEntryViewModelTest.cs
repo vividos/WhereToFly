@@ -23,7 +23,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
             DependencyService.Register<SvgImageCache>();
 
             var imageCache = DependencyService.Get<SvgImageCache>();
-            imageCache.AddImage("map/images/mountain-15.svg", string.Empty);
+            imageCache.AddImage("weblib/images/mountain-15.svg", string.Empty);
         }
 
         /// <summary>

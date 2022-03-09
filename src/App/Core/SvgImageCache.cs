@@ -42,7 +42,7 @@ namespace WhereToFly.App.Core
         /// <returns>image source</returns>
         public static ImageSource GetImageSource(Track track)
         {
-            string svgImagePath = track.IsFlightTrack ? "map/images/paragliding.svg" : "icons/map-marker-distance.svg";
+            string svgImagePath = track.IsFlightTrack ? "weblib/images/paragliding.svg" : "icons/map-marker-distance.svg";
 
             return GetImageSource(svgImagePath);
         }
@@ -164,51 +164,51 @@ namespace WhereToFly.App.Core
             switch (locationType)
             {
                 case LocationType.Summit:
-                    return "map/images/mountain-15.svg";
+                    return "weblib/images/mountain-15.svg";
                 case LocationType.Pass:
-                    return "map/images/mountain-pass.svg";
+                    return "weblib/images/mountain-pass.svg";
                 case LocationType.Lake:
-                    return "map/images/water-15.svg";
+                    return "weblib/images/water-15.svg";
                 case LocationType.Bridge:
-                    return "map/images/bridge.svg";
+                    return "weblib/images/bridge.svg";
                 case LocationType.Viewpoint:
-                    return "map/images/attraction-15.svg";
+                    return "weblib/images/attraction-15.svg";
                 case LocationType.AlpineHut:
-                    return "map/images/home-15.svg";
+                    return "weblib/images/home-15.svg";
                 case LocationType.Restaurant:
-                    return "map/images/restaurant-15.svg";
+                    return "weblib/images/restaurant-15.svg";
                 case LocationType.Church:
-                    return "map/images/church.svg";
+                    return "weblib/images/church.svg";
                 case LocationType.Castle:
-                    return "map/images/castle.svg";
+                    return "weblib/images/castle.svg";
                 case LocationType.Cave:
-                    return "map/images/cave.svg";
+                    return "weblib/images/cave.svg";
                 case LocationType.Information:
-                    return "map/images/information-outline.svg";
+                    return "weblib/images/information-outline.svg";
                 case LocationType.PublicTransportBus:
-                    return "map/images/bus.svg";
+                    return "weblib/images/bus.svg";
                 case LocationType.PublicTransportTrain:
-                    return "map/images/train.svg";
+                    return "weblib/images/train.svg";
                 case LocationType.Parking:
-                    return "map/images/parking.svg";
+                    return "weblib/images/parking.svg";
                 case LocationType.Webcam:
-                    return "map/images/camera-outline.svg";
+                    return "weblib/images/camera-outline.svg";
                 case LocationType.CableCar:
-                    return "map/images/aerialway-15.svg";
+                    return "weblib/images/aerialway-15.svg";
                 case LocationType.FlyingTakeoff:
-                    return "map/images/paragliding.svg";
+                    return "weblib/images/paragliding.svg";
                 case LocationType.FlyingLandingPlace:
-                    return "map/images/paragliding.svg";
+                    return "weblib/images/paragliding.svg";
                 case LocationType.FlyingWinchTowing:
-                    return "map/images/paragliding.svg";
+                    return "weblib/images/paragliding.svg";
                 case LocationType.LiveWaypoint:
-                    return "map/images/autorenew.svg";
+                    return "weblib/images/autorenew.svg";
                 case LocationType.Thermal:
-                    return "map/images/cloud-upload-outline-modified.svg";
+                    return "weblib/images/cloud-upload-outline-modified.svg";
                 case LocationType.MeteoStation:
-                    return "map/images/weather-partly-cloudy.svg";
+                    return "weblib/images/weather-partly-cloudy.svg";
                 default:
-                    return "map/images/map-marker.svg";
+                    return "weblib/images/map-marker.svg";
             }
         }
     }

@@ -14,7 +14,7 @@
             <x:String x:Key="ShowDetailsImagePath">info/images/information-outline.svg</x:String>
             <x:String x:Key="ZoomToImagePath">info/images/magnify-plus-outline.svg</x:String>
             <x:String x:Key="DeleteImagePath">info/images/delete.svg</x:String>
-            <x:String x:Key="AddTourPlanLocationImagePath">map/images/map-marker-plus.svg</x:String>
+            <x:String x:Key="AddTourPlanLocationImagePath">weblib/images/map-marker-plus.svg</x:String>
         </ResourceDictionary>
     </ContentPage.Resources>
 

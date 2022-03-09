@@ -26,7 +26,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
             DependencyService.Register<SvgImageCache>();
 
             var imageCache = DependencyService.Get<SvgImageCache>();
-            imageCache.AddImage("map/images/paragliding.svg", string.Empty);
+            imageCache.AddImage("weblib/images/paragliding.svg", string.Empty);
             imageCache.AddImage("icons/map-marker-distance.svg", string.Empty);
         }
 
