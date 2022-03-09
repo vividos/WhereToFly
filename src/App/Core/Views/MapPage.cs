@@ -255,12 +255,12 @@ namespace WhereToFly.App.Core.Views
             if (Device.RuntimePlatform == Device.Android ||
                 Device.RuntimePlatform == Device.iOS)
             {
-                string htmlText = platform.LoadAssetText("map/map3D.html");
+                string htmlText = platform.LoadAssetText("weblib/mapView.html");
 
                 webViewSource = new HtmlWebViewSource
                 {
                     Html = htmlText,
-                    BaseUrl = platform.WebViewBasePath + "map/"
+                    BaseUrl = platform.WebViewBasePath + "weblib/"
                 };
             }
 
@@ -268,7 +268,7 @@ namespace WhereToFly.App.Core.Views
             {
                 webViewSource = new UrlWebViewSource
                 {
-                    Url = platform.WebViewBasePath + "map/map3D.html"
+                    Url = platform.WebViewBasePath + "weblib/mapView.html"
                 };
             }
 

@@ -292,7 +292,7 @@ namespace WhereToFly.App.Core.Views
             };
 
             string js = string.Format(
-                "map = new MapView({0});",
+                "map = new WhereToFly.mapView.MapView({0});",
                 JsonConvert.SerializeObject(options));
 
             this.RunJavaScript(js);
