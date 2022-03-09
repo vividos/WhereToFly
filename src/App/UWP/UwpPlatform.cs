@@ -18,13 +18,18 @@ namespace WhereToFly.App.UWP
         /// <summary>
         /// Path URL for assets files
         /// </summary>
-        private const string AppxAssetsPathUrl = "ms-appx:///WhereToFly.App.Resources/Assets/";
+        private const string AppxAssetsPathUrl1 = "ms-appx:///WhereToFly.App.Resources/Assets/";
+
+        /// <summary>
+        /// Path URL for assets files, second variant
+        /// </summary>
+        private const string AppxAssetsPathUrl2 = "ms-appx:///WhereToFly.App.MapView/Assets/";
 #pragma warning restore S1075 // URIs should not be hardcoded
 
         /// <summary>
         /// Base path to use in WebView control, for UWP
         /// </summary>
-        public string WebViewBasePath => "ms-appx-web:///WhereToFly.App.Resources/Assets/";
+        public string WebViewBasePath => "ms-appx-web:///WhereToFly.App.MapView/Assets/";
 
         /// <summary>
         /// Opens UWP asset stream and returns it
@@ -33,10 +38,24 @@ namespace WhereToFly.App.UWP
         /// <returns>stream to read from file</returns>
         public Stream OpenAssetStream(string assetFilename)
         {
-            string fullAssetPath = AppxAssetsPathUrl + assetFilename;
+            string fullAssetPath = AppxAssetsPathUrl1 + assetFilename;
             var uri = new Uri(fullAssetPath);
 
-            var file = StorageFile.GetFileFromApplicationUriAsync(uri).AsTask().Result;
+            StorageFile file = null;
+            try
+            {
+                file = StorageFile.GetFileFromApplicationUriAsync(uri).AsTask().Result;
+            }
+            catch (Exception)
+            {
+            }
+
+            if (file == null)
+            {
+                fullAssetPath = AppxAssetsPathUrl2 + assetFilename;
+                uri = new Uri(fullAssetPath);
+                file = StorageFile.GetFileFromApplicationUriAsync(uri).AsTask().Result;
+            }
 
             return file.OpenStreamForReadAsync().Result;
         }
