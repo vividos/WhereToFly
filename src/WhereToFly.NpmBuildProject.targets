@@ -17,6 +17,13 @@ NpmOutputPath: This is the output path where the 'dist' files of the npm build a
 project must output its build artifacts to this folder. In an ASP.NET Core project this will be the $(WwwRootPath)
 folder or a subfolder of it. Note that the folder is cleared when doing a project clean or a "Build > Clean Solution".
 
+NpmMainEntryPointFilename: For MSBuild to recognize that no build is necesary, the input files are checked against the
+output files in the "dist" folder (specified by NpmOutputPath). Input files are all files in the "src" folder as well
+as the package.json, package-lock.json and the two webpack config files. Now in order to recognize a completely empty
+dist folder, you have to specify a single file created by one of your npm package.json entry points. This property
+specifies that filename, relative to the NpmOutputPath, e.g. "js/app.js". Also the webpack variable output.clean
+should be set to true, or otherwise MSBuild won't recognize an incremental build.
+
 -->
 
   <!-- npm frontend project integration for ASP.NET Core based (or other suitable) projects -->
@@ -44,8 +51,21 @@ folder or a subfolder of it. Note that the folder is cleared when doing a projec
     <Exec WorkingDirectory="$(NpmProjectPath)" Command="npm install" />
   </Target>
 
+  <!-- Collect all inputs and outputs to determine if a build is necessary -->
+  <ItemGroup>
+    <NpmRunBuildInputs Include="$(NpmProjectPath)src\**" />
+    <NpmRunBuildInputs Include="$(NpmProjectPath)package.json" />
+    <NpmRunBuildInputs Include="$(NpmProjectPath)package-lock.json" />
+    <NpmRunBuildInputs Include="$(NpmProjectPath)webpack.config.js" />
+    <NpmRunBuildInputs Include="$(NpmProjectPath)webpack.prod.config.js" />
+    <NpmRunBuildOutputs Include="$(NpmOutputPath)**" />
+    <NpmRunBuildOutputs Include="$(NpmOutputPath)$(NpmMainEntryPointFilename)" />
+  </ItemGroup>
+
   <!-- This target runs the 'build' or 'build-release' npm script, depending on the selected configuration -->
-  <Target Name="NpmRunBuild" BeforeTargets="Build" DependsOnTargets="NpmInstall">
+  <Target Name="NpmRunBuild" BeforeTargets="Build" DependsOnTargets="NpmInstall"
+          Inputs="@(NpmRunBuildInputs)"
+          Outputs="@(NpmRunBuildOutputs)">
     <!-- Build the npm project -->
     <Exec Condition=" '$(Configuration)' == 'Debug' " WorkingDirectory="$(NpmProjectPath)" Command="npm run build" />
     <Exec Condition=" '$(Configuration)' == 'Release' " WorkingDirectory="$(NpmProjectPath)" Command="npm run build-release" />

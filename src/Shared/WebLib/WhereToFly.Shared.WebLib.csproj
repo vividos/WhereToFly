@@ -10,6 +10,7 @@
   <PropertyGroup>
     <NpmProjectPath>.\</NpmProjectPath>
     <NpmOutputPath>dist\</NpmOutputPath>
+    <NpmMainEntryPointFilename>js\WhereToFly.mapView.js</NpmMainEntryPointFilename>
   </PropertyGroup>
 
   <Import Project="..\..\WhereToFly.NpmBuildProject.targets" />
