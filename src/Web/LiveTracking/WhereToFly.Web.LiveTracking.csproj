@@ -21,6 +21,7 @@
   <PropertyGroup>
     <NpmProjectPath>Frontend\</NpmProjectPath>
     <NpmOutputPath>wwwroot\</NpmOutputPath>
+    <NpmMainEntryPointFilename>js\site.bundle.js</NpmMainEntryPointFilename>
   </PropertyGroup>
 
   <Import Project="..\..\WhereToFly.NpmBuildProject.targets" />
