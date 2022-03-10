@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\Model\WhereToFly.Shared.Model.csproj" />
+    <ProjectReference Include="..\..\Shared\WebLib\WhereToFly.Shared.WebLib.csproj" />
   </ItemGroup>
 
   <!-- npm frontend project integration for ASP.NET Core based projects -->
