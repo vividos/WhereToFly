@@ -12,6 +12,7 @@ module.exports = {
         heightProfileView: "./src/js/heightProfileView.js",
     },
     output: {
+        clean: true,
         path: path.resolve(__dirname, 'dist'),
         filename: 'js/WhereToFly.[name].js',
         library: ["WhereToFly", "[name]"],
