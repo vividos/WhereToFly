@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "description": "Where-to-fly web library",
   "sideEffects": false,
+  "exports": {
+    "./mapView.js": "./dist/js/WhereToFly.mapView.js",
+    "./mapView.css": "./dist/css/mapView.css",
+    "./heightProfileView.js": "./dist/js/WhereToFly.heightProfileView.js",
+    "./heightProfileView.css": "./dist/css/heightProfileView.css"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config webpack.config.js",
