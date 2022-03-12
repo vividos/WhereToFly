@@ -5,6 +5,7 @@ using Android.OS;
 using Android.Widget;
 using System;
 using System.IO;
+using System.Net.Http;
 using WhereToFly.App.Core;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
@@ -121,7 +122,12 @@ namespace WhereToFly.App.Android
 
             Forms.Init(this, savedInstanceState);
 
-            FFImageLoading.ImageService.Instance.Initialize();
+            var imageLoadingConfig = new FFImageLoading.Config.Configuration
+            {
+                HttpClient = new HttpClient(new FFImageLoadingHttpClientHandler()),
+            };
+
+            FFImageLoading.ImageService.Instance.Initialize(imageLoadingConfig);
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(enableFastRenderer: true);
 
             // ignore NetworkProvider, as it's too inaccurate

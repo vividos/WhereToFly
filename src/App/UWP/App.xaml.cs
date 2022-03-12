@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Net.Http;
 using WhereToFly.App.Core;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -85,7 +86,12 @@ namespace WhereToFly.App.UWP
 
             Xamarin.Forms.Forms.Init(args, Rg.Plugins.Popup.Popup.GetExtraAssemblies());
 
-            FFImageLoading.ImageService.Instance.Initialize();
+            var imageLoadingConfig = new FFImageLoading.Config.Configuration
+            {
+                HttpClient = new HttpClient(new FFImageLoadingHttpClientHandler()),
+            };
+
+            FFImageLoading.ImageService.Instance.Initialize(imageLoadingConfig);
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
 
             Xamarin.Essentials.Platform.MapServiceToken = Constants.BingMapsKeyUwp;
