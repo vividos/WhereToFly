@@ -1,5 +1,8 @@
 import * as Cesium from 'cesium';
-import HeightProfileView from './heightProfileView.js';
+
+// wheretofly-weblib
+import { HeightProfileView } from 'wheretofly-weblib/dist/js/WhereToFly.heightProfileView';
+import 'wheretofly-weblib/dist/css/heightProfileView.css';
 
 export default class MapView {
     /**
