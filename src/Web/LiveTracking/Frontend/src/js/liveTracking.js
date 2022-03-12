@@ -114,7 +114,7 @@ export default class LiveTracking {
      * @param {String} name Name of live waypoint
      * @param {String} liveWaypointId Live waypoint ID
      */
-    addLiveWaypoint = function (name, liveWaypointId) {
+    addLiveWaypoint(name, liveWaypointId) {
 
         var pageIdPrefix = 'liveData';
         this.liveWaypointToIdMapping[liveWaypointId] = pageIdPrefix;
@@ -322,7 +322,7 @@ export default class LiveTracking {
      * Updates a live track
      * @param {String} liveTrackUri live track uri to update
      */
-    LupdateLiveTrack(liveTrackUri) {
+    updateLiveTrack(liveTrackUri) {
 
         console.log("LiveTracking: updating live track " + liveTrackUri);
 
