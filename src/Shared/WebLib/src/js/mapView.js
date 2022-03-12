@@ -2543,6 +2543,29 @@ export class MapView {
     };
 
     /**
+     * Zooms to the current position of a live waypoint with given location ID
+     * @param {string} locationId unique ID of the live waypoint to zoom to
+     */
+    zoomToLiveWaypointCurrentPos(locationId) {
+
+        var entity = this.locationDataSource.entities.getById(locationId);
+
+        if (entity === undefined) {
+            console.error("MapView: couldn't find entity for live waypoint id: " + locationId);
+            return;
+        }
+
+        var position = entity.position.getValue(this.viewer.clock.currentTime);
+        var location = Cesium.Cartographic.fromCartesian(position);
+
+        this.zoomToLocation({
+            longitude: Cesium.Math.toDegrees(location.longitude),
+            latitude: Cesium.Math.toDegrees(location.latitude),
+            altitude: location.height
+        });
+    };
+
+    /**
      * Zooms to a track on the map
      * @param {string} trackId unique ID of the track to zoom to
      */
