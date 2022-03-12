@@ -1,6 +1,5 @@
 ﻿import $ from "jquery";
 import MapView from './mapView3D.js';
-import * as Cesium from 'cesium';
 
 export default class LiveTracking {
     /**
@@ -208,21 +207,7 @@ export default class LiveTracking {
 
         if (liveWaypointUri !== undefined) {
 
-            var entity = this.map.locationDataSource.entities.getById(liveWaypointUri);
-
-            if (entity === undefined) {
-                console.error("LiveTracking: couldn't find entity for live waypoint id: " + liveWaypointUri);
-                return;
-            }
-
-            var position = entity.position.getValue(this.map.viewer.clock.currentTime);
-            var location = Cesium.Cartographic.fromCartesian(position);
-
-            this.map.zoomToLocation({
-                longitude: Cesium.Math.toDegrees(location.longitude),
-                latitude: Cesium.Math.toDegrees(location.latitude),
-                altitude: location.height
-            });
+            this.map.zoomToLiveWaypointCurrentPos(liveWaypointUri);
         }
 
         var liveTrackUri =
