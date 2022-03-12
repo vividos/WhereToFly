@@ -173,18 +173,17 @@ export default class LiveTracking {
         console.log("LiveTracking: geocoding find text: " + address);
 
         var endpoint = 'https://nominatim.openstreetmap.org/search';
-        var resource = new Cesium.Resource({
-            url: endpoint,
-            queryParameters: {
-                format: 'json',
-                q: address
-            }
-        });
 
         var that = this;
-        resource.fetchJson()
-            .then(function (results) {
-                return results.map(function (resultObject) {
+        $.ajax({
+            url: endpoint,
+            data: {
+                q: address
+            }
+        })
+            .done(function (result) {
+
+                return result.data.map(function (resultObject) {
                     that.map.showFindResult({
                         name: address,
                         description: resultObject.display_name,
