@@ -13,6 +13,7 @@ module.exports = {
     },
     output: {
         clean: true,
+        compareBeforeEmit: false,
         path: path.resolve(__dirname, 'dist'),
         filename: 'js/WhereToFly.[name].js',
         library: ["WhereToFly", "[name]"],
