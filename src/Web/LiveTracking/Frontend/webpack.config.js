@@ -39,6 +39,7 @@ module.exports = {
                 { from: 'src/favicon.png', to: 'favicon.png' },
                 { from: 'src/data', to: 'data' },
                 { from: 'src/images', to: 'images' },
+                { from: 'node_modules/wheretofly-weblib/dist/images', to: 'images' },
                 { from: 'node_modules/cesium/Build/Cesium/Workers', to: 'js/Workers' },
                 { from: 'node_modules/cesium/Build/Cesium/Assets', to: 'js/Assets' },
                 { from: 'node_modules/cesium/Build/Cesium/Widgets', to: 'js/Widgets' }
