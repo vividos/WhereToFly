@@ -625,39 +625,29 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task OnMapView_LongTap(MapPoint point)
         {
-            string latitudeText = DataFormatter.FormatLatLong(point.Latitude, this.appSettings.CoordinateDisplayFormat);
-            string longitudeText = DataFormatter.FormatLatLong(point.Longitude, this.appSettings.CoordinateDisplayFormat);
+            var result = await MapLongTapContextMenu.ShowAsync(point, this.appSettings);
 
-            var longTapActions = new List<string> { "Add new waypoint", "Navigate here", "Show flying range" };
-
-            string result = await App.Current.MainPage.DisplayActionSheet(
-                $"Selected point at Latitude: {latitudeText}, Longitude: {longitudeText}, Altitude {point.Altitude.GetValueOrDefault(0.0)} m",
-                "Cancel",
-                null,
-                longTapActions.ToArray());
-
-            if (!string.IsNullOrEmpty(result))
+            switch (result)
             {
-                int selectedIndex = longTapActions.IndexOf(result);
+                case MapLongTapContextMenu.Result.AddNewWaypoint:
+                    await this.AddNewWaypoint(point);
+                    break;
 
-                switch (selectedIndex)
-                {
-                    case 0:
-                        await this.AddNewWaypoint(point);
-                        break;
+                case MapLongTapContextMenu.Result.NavigateHere:
+                    await NavigateToPointAsync(string.Empty, point);
+                    break;
 
-                    case 1:
-                        await NavigateToPointAsync(string.Empty, point);
-                        break;
+                case MapLongTapContextMenu.Result.ShowFlyingRange:
+                    await this.ShowFlyingRange(point);
+                    break;
 
-                    case 2:
-                        await this.ShowFlyingRange(point);
-                        break;
+                case MapLongTapContextMenu.Result.Cancel:
+                    // ignore
+                    break;
 
-                    default:
-                        // ignore
-                        break;
-                }
+                default:
+                    Debug.Assert(false, "invalid context menu result");
+                    break;
             }
         }
 
