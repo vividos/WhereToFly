@@ -11,6 +11,8 @@ Released on ?.
 
 🐛 Bugfixes
 
+- Fixed loading weather icons for some pages
+
 ## Version 1.11.0
 
 Released on 2021-11-09.
