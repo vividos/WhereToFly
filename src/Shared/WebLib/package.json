@@ -23,6 +23,9 @@
   "author": "vividos",
   "license": "BSD-3-Clause",
   "devDependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.8",
+    "@babel/preset-env": "^7.16.11",
     "copy-webpack-plugin": "^10.2.4",
     "css-loader": "^6.7.1",
     "css-minimizer-webpack-plugin": "^3.4.1",
@@ -41,6 +44,7 @@
     "chartjs-adapter-moment": "^1.0.0",
     "chartjs-plugin-crosshair": "^1.2.0",
     "chartjs-plugin-zoom": "^1.2.0",
+    "core-js": "^3.21.1",
     "moment": "^2.29.1"
   }
 }
