@@ -36,6 +36,12 @@
     z-index: 100;
 }
 
+/* optional style to make the toolbar half transparent */
+.toolbar-container-halftransparent {
+    width: 100vw;
+    left: 0px;
+}
+
 /* container div style for the live track toolbar */
 .livetrack-toolbar-container {
     width: 100vw;
