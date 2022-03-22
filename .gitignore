@@ -300,3 +300,4 @@ stuff/
 /src/Web/LiveTracking/wwwroot/
 /src/Shared/WebLib/dist/
 /src/App/MapView/Assets/
+/src/Shared/WebLib/dist-es5/

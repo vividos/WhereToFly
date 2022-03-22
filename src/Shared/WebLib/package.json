@@ -13,6 +13,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config webpack.config.js",
     "build-release": "webpack --config webpack.prod.config.js",
+    "build-es5": "webpack --config webpack.es5.config.js",
     "serve": "webpack serve",
     "watch": "webpack --watch"
   },
