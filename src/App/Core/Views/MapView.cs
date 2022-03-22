@@ -258,7 +258,7 @@ namespace WhereToFly.App.Core.Views
         {
             this.webView = webView;
 
-            this.webView.Navigating += this.OnNavigating_WebView;
+            this.RegisterWebViewCallbacks();
         }
 
         /// <summary>
@@ -887,131 +887,136 @@ namespace WhereToFly.App.Core.Views
         }
 
         /// <summary>
-        /// Called when web view navigates to a new URL; used to bypass callback:// URLs.
+        /// Registers callback functions from JavaScript to C#
         /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="args">event args</param>
-        private void OnNavigating_WebView(object sender, WebNavigatingEventArgs args)
+        private void RegisterWebViewCallbacks()
         {
-            const string CallbackSchema = "callback://";
-            if (args.Url.ToString().StartsWith(CallbackSchema))
-            {
-                args.Cancel = true;
+            var callbackHandler = new WebViewCallbackSchemaHandler(webView);
 
-                string callbackParams = args.Url.ToString().Substring(CallbackSchema.Length);
+            callbackHandler.RegisterHandler(
+                "onMapInitialized",
+                (jsonParameters) => this.OnMapInitialized());
 
-                int pos = callbackParams.IndexOf('/');
-                Debug.Assert(pos > 0, "callback Uri must contain a slash after the function name");
+            callbackHandler.RegisterHandler(
+                "onShowLocationDetails",
+                (jsonParameters) => this.ShowLocationDetails?.Invoke(jsonParameters.Trim('\"')));
 
-                string functionName = callbackParams.Substring(0, pos);
-                string jsonParameters = callbackParams.Substring(pos + 1);
+            callbackHandler.RegisterHandler(
+                "onNavigateToLocation",
+                (jsonParameters) => this.NavigateToLocation?.Invoke(jsonParameters.Trim('\"')));
 
-                jsonParameters = System.Net.WebUtility.UrlDecode(jsonParameters);
+            callbackHandler.RegisterHandler(
+                "onShareMyLocation",
+                (jsonParameters) => this.ShareMyLocation?.Invoke());
 
-                this.ExecuteCallback(functionName, jsonParameters);
-            }
+            callbackHandler.RegisterHandler(
+                "onAddFindResult",
+                this.OnAddFindResult);
+
+            callbackHandler.RegisterHandler(
+                "onLongTap",
+                this.OnLongTap);
+
+            callbackHandler.RegisterHandler(
+                "onAddTourPlanLocation",
+                (jsonParameters) => this.AddTourPlanLocation?.Invoke(jsonParameters.Trim('\"')));
+
+            callbackHandler.RegisterHandler(
+                "onUpdateLastShownLocation",
+                this.OnUpdateLastShownLocation);
+
+            callbackHandler.RegisterHandler(
+                "onSampledTrackHeights",
+                this.OnSampledTrackHeights);
+
+            callbackHandler.RegisterHandler(
+                "onExportLayer",
+                this.OnExportLayer);
+
+            callbackHandler.RegisterHandler(
+                "onConsoleErrorMessage",
+                this.OnConsoleErrorMessage);
         }
 
         /// <summary>
-        /// Executes callback function
+        /// Called when the "mapInitialized" callback has been sent from JavaScript.
         /// </summary>
-        /// <param name="functionName">function name of function to execute</param>
-        /// <param name="jsonParameters">JSON formatted parameters for function</param>
-        private void ExecuteCallback(string functionName, string jsonParameters)
+        private void OnMapInitialized()
         {
-            switch (functionName)
-            {
-                case "onMapInitialized":
-                    Debug.Assert(
-                        this.taskCompletionSourceMapInitialized != null,
-                        "task completion source must have been created");
+            Debug.Assert(
+                this.taskCompletionSourceMapInitialized != null,
+                "task completion source must have been created");
 
-                    this.taskCompletionSourceMapInitialized.SetResult(true);
-                    break;
-
-                case "onShowLocationDetails":
-                    this.ShowLocationDetails?.Invoke(jsonParameters.Trim('\"'));
-
-                    break;
-
-                case "onNavigateToLocation":
-                    this.NavigateToLocation?.Invoke(jsonParameters.Trim('\"'));
-
-                    break;
-
-                case "onShareMyLocation":
-                    this.ShareMyLocation?.Invoke();
-
-                    break;
-
-                case "onAddFindResult":
-                    var parameters = JsonConvert.DeserializeObject<AddFindResultParameter>(jsonParameters);
-                    var point = new MapPoint(parameters.Latitude, parameters.Longitude);
-                    this.AddFindResult?.Invoke(parameters.Name, point);
-                    break;
-
-                case "onLongTap":
-                    var longTapParameters = JsonConvert.DeserializeObject<LongTapParameter>(jsonParameters);
-                    var longTapPoint = new MapPoint(
-                        longTapParameters.Latitude,
-                        longTapParameters.Longitude,
-                        Math.Round(longTapParameters.Altitude));
-                    this.LongTap?.Invoke(longTapPoint);
-                    break;
-
-                case "onAddTourPlanLocation":
-                    this.AddTourPlanLocation?.Invoke(jsonParameters.Trim('\"'));
-                    break;
-
-                case "onUpdateLastShownLocation":
-                    // this action uses the same parameters as the onLongTap action
-                    var updateLastShownLocationParameters =
-                        JsonConvert.DeserializeObject<UpdateLastShownLocationParameter>(jsonParameters);
-
-                    var updateLastShownLocationPoint = new MapPoint(
-                        updateLastShownLocationParameters.Latitude,
-                        updateLastShownLocationParameters.Longitude,
-                        Math.Round(updateLastShownLocationParameters.Altitude));
-
-                    int viewingDistance = updateLastShownLocationParameters.ViewingDistance;
-
-                    this.UpdateLastShownLocation?.Invoke(updateLastShownLocationPoint, viewingDistance);
-                    break;
-
-                case "onSampledTrackHeights":
-                    var trackPointHeights = JsonConvert.DeserializeObject<double[]>(jsonParameters);
-                    this.OnSampledTrackHeights(trackPointHeights);
-                    break;
-
-                case "onExportLayer":
-                    this.OnExportLayer(jsonParameters.Trim('"').Replace(' ', '+'));
-                    break;
-
-                case "onConsoleErrorMessage":
-                    this.OnConsoleErrorMessage(jsonParameters);
-                    break;
-
-                default:
-                    Debug.Assert(false, "invalid callback function name");
-                    break;
-            }
+            this.taskCompletionSourceMapInitialized.SetResult(true);
         }
 
         /// <summary>
-        /// Called when SampleTrackHeights() was called
+        /// Called when the "onAddFindResult" callback has been sent from JavaScript.
         /// </summary>
-        /// <param name="trackPointHeights">list of track point heights</param>
-        private void OnSampledTrackHeights(double[] trackPointHeights)
+        /// <param name="jsonParameters">find result parameters as JSON</param>
+        private void OnAddFindResult(string jsonParameters)
         {
+            var parameters = JsonConvert.DeserializeObject<AddFindResultParameter>(jsonParameters);
+            var point = new MapPoint(parameters.Latitude, parameters.Longitude);
+
+            this.AddFindResult?.Invoke(parameters.Name, point);
+        }
+
+        /// <summary>
+        /// Called when the "onLongTap" callback has been sent from JavaScript.
+        /// </summary>
+        /// <param name="jsonParameters">long tap parameters as JSON</param>
+        private void OnLongTap(string jsonParameters)
+        {
+            var longTapParameters = JsonConvert.DeserializeObject<LongTapParameter>(jsonParameters);
+            var longTapPoint = new MapPoint(
+                longTapParameters.Latitude,
+                longTapParameters.Longitude,
+                Math.Round(longTapParameters.Altitude));
+
+            this.LongTap?.Invoke(longTapPoint);
+        }
+
+        /// <summary>
+        /// Called when the "onUpdateLastShownLocation" callback has been sent from JavaScript.
+        /// </summary>
+        /// <param name="jsonParameters">update last shown location parameters as JSON</param>
+        private void OnUpdateLastShownLocation(string jsonParameters)
+        {
+            // this action uses the same parameters as the onLongTap action
+            var updateLastShownLocationParameters =
+                JsonConvert.DeserializeObject<UpdateLastShownLocationParameter>(jsonParameters);
+
+            var updateLastShownLocationPoint = new MapPoint(
+                updateLastShownLocationParameters.Latitude,
+                updateLastShownLocationParameters.Longitude,
+                Math.Round(updateLastShownLocationParameters.Altitude));
+
+            int viewingDistance = updateLastShownLocationParameters.ViewingDistance;
+
+            this.UpdateLastShownLocation?.Invoke(updateLastShownLocationPoint, viewingDistance);
+        }
+
+        /// <summary>
+        /// Called when SampleTrackHeights() call returns data via "onSampledTrackHeights"
+        /// JavaScript call
+        /// </summary>
+        /// <param name="jsonParameters">track point heights as JSON array</param>
+        private void OnSampledTrackHeights(string jsonParameters)
+        {
+            var trackPointHeights = JsonConvert.DeserializeObject<double[]>(jsonParameters);
             this.taskCompletionSourceSampleTrackHeights.SetResult(trackPointHeights);
         }
 
         /// <summary>
         /// Called when ExportLayer() was called
         /// </summary>
-        /// <param name="base64Data">KMZ byte stream as Base64 encoded data</param>
-        private void OnExportLayer(string base64Data)
+        /// <param name="jsonParameters">
+        /// KMZ byte stream as Base64 encoded data formatted as JSON
+        /// </param>
+        private void OnExportLayer(string jsonParameters)
         {
+            string base64Data = jsonParameters.Trim('"').Replace(' ', '+');
             byte[] kmzData = null;
             try
             {
