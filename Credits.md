@@ -73,11 +73,6 @@ library to draw custom controls.
 The library is licensed using the
 [MIT License](https://github.com/mono/SkiaSharp/blob/master/LICENSE.md).
 
-The app uses the [Toast.iOS](https://github.com/andrius-k/Toast)
-library to show Toast messages on iOS.
-The library is licensed using the
-[MIT License](https://github.com/andrius-k/Toast/blob/master/LICENSE.md).
-
 The app uses the [Chart.js](https://www.chartjs.org/)
 library to display height profiles. The library is licensed using the
 [MIT License](https://github.com/chartjs/Chart.js/blob/master/LICENSE.md).
