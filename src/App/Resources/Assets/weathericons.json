@@ -112,6 +112,13 @@
     "WebLink": "https://forecast.uoa.gr/en/forecast-maps/dust/europe"
   },
   {
+    "Name": "ZAMG Saharastaub",
+    "Group": "Weather forecast",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://www.zamg.ac.at/cms/de/umwelt/luftqualitaetsvorhersagen/schadstofftransport/?imgtype=0"
+  },
+  {
     "Name": "Wetter3 Vertikalschnitt Europa",
     "Group": "Weather forecast",
     "Type": 0,
