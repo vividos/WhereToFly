@@ -44,7 +44,14 @@ namespace WhereToFly.App.Core.Views
         {
             this.webView = webView;
 
-            this.webView.Navigating += this.OnNavigating_WebView;
+            var callbackHandler = new WebViewCallbackSchemaHandler(webView);
+            callbackHandler.RegisterHandler(
+                "onClick",
+                (jsonParameters) => this.Click?.Invoke(int.Parse(jsonParameters)));
+
+            callbackHandler.RegisterHandler(
+                "onHover",
+                (jsonParameters) => this.Hover?.Invoke(int.Parse(jsonParameters)));
 
             var options = new
             {
@@ -105,55 +112,6 @@ namespace WhereToFly.App.Core.Views
             string js = $"heightProfileView.addGroundProfile({elevations});";
 
             this.RunJavaScript(js);
-        }
-
-        /// <summary>
-        /// Called when web view navigates to a new URL; used to bypass callback:// URLs.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="args">event args</param>
-        private void OnNavigating_WebView(object sender, WebNavigatingEventArgs args)
-        {
-            const string CallbackSchema = "callback://";
-            if (args.Url.ToString().StartsWith(CallbackSchema))
-            {
-                args.Cancel = true;
-
-                string callbackParams = args.Url.ToString().Substring(CallbackSchema.Length);
-
-                int pos = callbackParams.IndexOf('/');
-                Debug.Assert(pos > 0, "callback Uri must contain a slash after the function name");
-
-                string functionName = callbackParams.Substring(0, pos);
-                string jsonParameters = callbackParams.Substring(pos + 1);
-
-                jsonParameters = System.Net.WebUtility.UrlDecode(jsonParameters);
-
-                this.ExecuteCallback(functionName, jsonParameters);
-            }
-        }
-
-        /// <summary>
-        /// Executes callback function
-        /// </summary>
-        /// <param name="functionName">function name of function to execute</param>
-        /// <param name="jsonParameters">JSON formatted parameters for function</param>
-        private void ExecuteCallback(string functionName, string jsonParameters)
-        {
-            switch (functionName)
-            {
-                case "onClick":
-                    this.Click?.Invoke(int.Parse(jsonParameters));
-                    break;
-
-                case "onHover":
-                    this.Hover?.Invoke(int.Parse(jsonParameters));
-                    break;
-
-                default:
-                    Debug.Assert(false, "invalid callback function name");
-                    break;
-            }
         }
 
         /// <summary>
