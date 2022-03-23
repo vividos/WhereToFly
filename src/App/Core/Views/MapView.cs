@@ -891,7 +891,7 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         private void RegisterWebViewCallbacks()
         {
-            var callbackHandler = new WebViewCallbackSchemaHandler(webView);
+            var callbackHandler = new WebViewCallbackSchemaHandler(this.webView);
 
             callbackHandler.RegisterHandler(
                 "onMapInitialized",
