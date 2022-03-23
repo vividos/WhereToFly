@@ -25,7 +25,10 @@
     <Copy
       UseHardlinksIfPossible="true"
       SourceFiles="@(AssetSourceFiles)"
-      DestinationFiles="@(AssetSourceFiles->'$(MSBuildThisFileDirectory)Assets\weblib\%(RecursiveDir)%(Filename)%(Extension)')" />
+      DestinationFiles="@(AssetSourceFiles->'$(MSBuildThisFileDirectory)Assets\weblib\%(RecursiveDir)%(Filename)%(Extension)')">
+      <Output TaskParameter="CopiedFiles" ItemName="CopiedAssetSourceFiles" />
+    </Copy>
+    <Message Importance="high" Text="Copied Assets files: @(CopiedAssetSourceFiles)" />
   </Target>
 
   <Target Name="CleanAssets" AfterTargets="Clean">
