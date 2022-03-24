@@ -38,8 +38,8 @@
 
 /* optional style to make the toolbar half transparent */
 .toolbar-container-halftransparent {
-    width: 100vw;
-    left: 0px;
+    opacity: 0.5;
+    z-index: 10;
 }
 
 /* container div style for the live track toolbar */
