@@ -16,8 +16,8 @@
   <!-- copy assets from the WebLib project -->
   <ItemGroup>
     <AssetSourceFiles
-      Include="..\..\Shared\WebLib\dist\**\*.*"
-      Exclude="..\..\Shared\WebLib\dist\**\*.map" />
+      Include="../../Shared/WebLib/dist/**/*.*"
+      Exclude="../../Shared/WebLib/dist/**/*.map" />
   </ItemGroup>
 
   <Target Name="CopyAssets" BeforeTargets="Build">
