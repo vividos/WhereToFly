@@ -46,7 +46,9 @@ export class HeightProfileView {
      */
     constructor(options) {
 
-        console.log("HeightProfileView: creating new height profile view");
+        this.consoleLogStyle = "background: darkblue; color: yellow; padding: 1px 3px; border-radius: 3px;";
+
+        console.log("%cHeightProfileView%ccreating new height profile view", this.consoleLogStyle);
 
         this.isZoomAndPanActive = true;
 
@@ -245,7 +247,9 @@ export class HeightProfileView {
      */
     setTrack(track) {
 
-        console.log("HeightProfileView: setting height profile with " + track.listOfTrackPoints.length / 3 + " track points");
+        console.log("%cHeightProfileView%csetting height profile with " +
+            track.listOfTrackPoints.length / 3 + " track points",
+            this.consoleLogStyle);
 
         var trackData = [];
 
@@ -305,7 +309,9 @@ export class HeightProfileView {
      */
     addGroundProfile(elevationArray) {
 
-        console.log("HeightProfileView: adding ground profile with " + elevationArray.length + " elevation points");
+        console.log("%cHeightProfileView%cadding ground profile with " +
+            elevationArray.length + " elevation points",
+            this.consoleLogStyle);
 
         var trackData = this.chart.data.datasets[0].data;
         var elevationData = [];
@@ -359,7 +365,10 @@ export class HeightProfileView {
             newStartTimePos >= track.listOfTimePoints.length)
             return;
 
-        console.log("HeightProfileView: adding " + (track.listOfTimePoints.length - newStartTimePos) + " track points to height profile");
+        console.log("%cHeightProfileView%cadding " +
+            (track.listOfTimePoints.length - newStartTimePos) +
+            " track points to height profile",
+            this.consoleLogStyle);
 
         for (var trackPointIndex = newStartTimePos * 3, len = track.listOfTrackPoints.length; trackPointIndex < len; trackPointIndex += 3) {
             var timePoint = track.listOfTimePoints[trackPointIndex / 3];
@@ -412,7 +421,8 @@ export class HeightProfileView {
      */
     onHover(elements) {
 
-        //console.log("HeightProfileView: onHover called, with " + elements.length + " elements");
+        //console.log("%cHeightProfileView%conHover called, with " +
+        //    elements.length + " elements", this.consoleLogStyle);
 
         if (elements.length > 0 &&
             this.options.callback !== undefined) {
@@ -426,7 +436,8 @@ export class HeightProfileView {
      */
     onClick(elements) {
 
-        //console.log("HeightProfileView: onClick called, with " + elements.length + " elements");
+        //console.log("%cHeightProfileView%conClick called, with " +
+        //    elements.length + " elements", this.consoleLogStyle);
 
         if (elements.length > 0 &&
             this.options.callback !== undefined) {
