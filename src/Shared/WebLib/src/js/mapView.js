@@ -2027,7 +2027,7 @@ export class MapView {
             asynchronous: this.options.useAsynchronousPrimitives,
             geometryInstances: new Cesium.GeometryInstance({
                 id: "track-" + trackId,
-                geometry: Cesium.WallGeometry.createGeometry(wallGeometry)
+                geometry: wallGeometry
             }),
             appearance: new Cesium.MaterialAppearance({
                 translucent: true,
