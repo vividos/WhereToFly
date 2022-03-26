@@ -15,9 +15,11 @@
 
   <!-- copy assets from the WebLib project -->
   <Target Name="CopyAssets" BeforeTargets="Build">
-    <AssetSourceFiles
-      Include="../../Shared/WebLib/dist/**/*.*"
-      Exclude="../../Shared/WebLib/dist/**/*.map" />
+    <ItemGroup>
+      <AssetSourceFiles
+        Include="../../Shared/WebLib/dist/**/*.*"
+        Exclude="../../Shared/WebLib/dist/**/*.map" />
+    </ItemGroup>
     <Message Text="Copying Assets..." />
     <Copy
       UseHardlinksIfPossible="true"
