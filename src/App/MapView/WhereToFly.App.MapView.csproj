@@ -14,18 +14,15 @@
   </ItemGroup>
 
   <!-- copy assets from the WebLib project -->
-  <ItemGroup>
+  <Target Name="CopyAssets" BeforeTargets="Build">
     <AssetSourceFiles
       Include="../../Shared/WebLib/dist/**/*.*"
       Exclude="../../Shared/WebLib/dist/**/*.map" />
-  </ItemGroup>
-
-  <Target Name="CopyAssets" BeforeTargets="Build">
     <Message Text="Copying Assets..." />
     <Copy
       UseHardlinksIfPossible="true"
       SourceFiles="@(AssetSourceFiles)"
-      DestinationFiles="@(AssetSourceFiles->'$(MSBuildThisFileDirectory)Assets/weblib/%(RecursiveDir)%(Filename)%(Extension)')">
+      DestinationFolder="$(MSBuildThisFileDirectory)Assets/weblib/%(RecursiveDir)">
       <Output TaskParameter="CopiedFiles" ItemName="CopiedAssetSourceFiles" />
     </Copy>
     <Message Importance="high" Text="Copied Assets files: @(CopiedAssetSourceFiles)" />
