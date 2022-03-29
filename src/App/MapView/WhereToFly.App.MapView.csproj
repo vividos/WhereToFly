@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <!-- copy assets from the WebLib project -->
-  <Target Name="CopyAssets" BeforeTargets="Build">
+  <Target Name="CopyAssets" BeforeTargets="_CreateManagedLibraryResourceArchive">
     <ItemGroup>
       <AssetSourceFiles
         Include="../../Shared/WebLib/dist/**/*.*"
@@ -25,6 +25,10 @@
       UseHardlinksIfPossible="true"
       SourceFiles="@(AssetSourceFiles)"
       DestinationFolder="$(MSBuildThisFileDirectory)Assets/weblib/%(RecursiveDir)" />
+    <!-- dynamically add copied files to the AndroidAsset item group -->
+    <CreateItem Include="$(MSBuildThisFileDirectory)Assets/weblib/**/*.*">
+      <Output TaskParameter="Include" ItemName="AndroidAsset" />
+    </CreateItem>
   </Target>
 
   <Target Name="CleanAssets" AfterTargets="Clean">
@@ -34,6 +38,9 @@
 
   <!-- add assets as AndroidAsset or Content -->
   <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
+    <!-- need at least one file in AndroidAsset at .csproj load time, or the
+        _CreateManagedLibraryResourceArchive target is not run at all -->
+    <AndroidAsset Include="../../Shared/WebLib/Readme.md" />
     <AndroidAsset Include="Assets\**\*.*" />
   </ItemGroup>
 
