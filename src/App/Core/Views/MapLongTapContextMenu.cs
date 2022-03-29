@@ -52,6 +52,9 @@ namespace WhereToFly.App.Core.Views
             string latitudeText = DataFormatter.FormatLatLong(point.Latitude, appSettings.CoordinateDisplayFormat);
             string longitudeText = DataFormatter.FormatLatLong(point.Longitude, appSettings.CoordinateDisplayFormat);
 
+            string caption =
+                $"Selected point at Latitude: {latitudeText}, Longitude: {longitudeText}, Altitude {point.Altitude.GetValueOrDefault(0.0)} m";
+
             var tcs = new TaskCompletionSource<Result>();
 
             var items = new List<MenuItem>
@@ -60,29 +63,26 @@ namespace WhereToFly.App.Core.Views
                 {
                     Text = "Add new waypoint",
                     IconImageSource = SvgImageCache.GetImageSource("info/images/playlist-plus.svg"),
-                    Command = new Command(() => tcs.SetResult(Result.AddNewWaypoint)),
+                    Command = new Command(() => tcs.TrySetResult(Result.AddNewWaypoint)),
                 },
                 new MenuItem
                 {
                     Text = "Navigate here",
                     IconImageSource = SvgImageCache.GetImageSource("info/images/directions.svg"),
-                    Command = new Command(() => tcs.SetResult(Result.NavigateHere)),
+                    Command = new Command(() => tcs.TrySetResult(Result.NavigateHere)),
                 },
                 new MenuItem
                 {
                     Text = "Show flying range",
                     IconImageSource = SvgImageCache.GetImageSource("info/images/arrow-expand-horizontal.svg"),
-                    Command = new Command(() => tcs.SetResult(Result.ShowFlyingRange)),
+                    Command = new Command(() => tcs.TrySetResult(Result.ShowFlyingRange)),
                 },
             };
-
-            string caption =
-                $"Selected point at Latitude: {latitudeText}, Longitude: {longitudeText}, Altitude {point.Altitude.GetValueOrDefault(0.0)} m";
 
             ContextMenuPopupPage popupPage = null;
 
             EventHandler backgroundClicked =
-                (sender, args) => tcs.SetResult(Result.Cancel);
+                (sender, args) => tcs.TrySetResult(Result.Cancel);
 
             var viewModel = new ContextMenuPopupViewModel(
                 caption,
