@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Input;
+using System.Linq;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
 
@@ -11,11 +11,6 @@ namespace WhereToFly.App.Core.ViewModels
     /// </summary>
     public class ContextMenuPopupViewModel : ObservableObject
     {
-        /// <summary>
-        /// Action to dismiss the popup page
-        /// </summary>
-        private readonly Action actionDismiss;
-
         #region Binding properties
         /// <summary>
         /// Caption text for context menu
@@ -25,23 +20,13 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// List of context menu items to display
         /// </summary>
-        public IList<MenuItem> ContextMenuItems { get; }
+        public IList<ContextMenuItemViewModel> ContextMenuItems { get; }
 
         /// <summary>
         /// Height of context menu list, depending on the number of items
         /// </summary>
         public double ContextMenuListHeight
             => this.ContextMenuItems.Count * 40;
-
-        /// <summary>
-        /// Currently selected context menu item
-        /// </summary>
-        public MenuItem SelectedMenuItem { get; set; }
-
-        /// <summary>
-        /// Command to execute when a menu item was selected
-        /// </summary>
-        public ICommand MenuItemSelectedCommand { get; }
         #endregion
 
         /// <summary>
@@ -56,26 +41,10 @@ namespace WhereToFly.App.Core.ViewModels
             Action actionDismiss)
         {
             this.Caption = caption;
-            this.ContextMenuItems = contextMenuItems;
-            this.actionDismiss = actionDismiss;
-
-            this.MenuItemSelectedCommand = new Command(this.OnSelectedMenuItem);
-        }
-
-        /// <summary>
-        /// Called when the user taps on a context menu item
-        /// </summary>
-        private void OnSelectedMenuItem()
-        {
-            if (this.SelectedMenuItem == null)
-            {
-                return;
-            }
-
-            this.actionDismiss.Invoke();
-
-            this.SelectedMenuItem = null;
-            this.OnPropertyChanged(nameof(this.SelectedMenuItem));
+            this.ContextMenuItems =
+                contextMenuItems.Select(
+                    menuItem => new ContextMenuItemViewModel(menuItem, actionDismiss))
+                .ToList();
         }
     }
 }

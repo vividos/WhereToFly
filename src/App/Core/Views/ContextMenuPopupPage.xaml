@@ -18,9 +18,6 @@
 
         <!-- Context menu list -->
         <CollectionView ItemsSource="{Binding ContextMenuItems, Mode=OneTime}"
-                        SelectedItem="{Binding SelectedMenuItem}"
-                        SelectionChangedCommand="{Binding MenuItemSelectedCommand}"
-                        SelectionMode="Single"
                         VerticalOptions="Start"
                         HorizontalOptions="FillAndExpand"
                         HeightRequest="{Binding ContextMenuListHeight, Mode=OneTime}">
