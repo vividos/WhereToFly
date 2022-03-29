@@ -30,6 +30,9 @@
     <!-- List view colors -->
     <Color x:Key="ListViewItemBackgroundColor">#e0e0e0</Color>
 
+    <!-- Menu item colors -->
+    <Color x:Key="MenuItemDestructiveBackgroundColor">Red</Color>
+
     <!-- Colors for different elements -->
     <Color x:Key="ElementBackgroundColor">#F5F5F5</Color>
     <Color x:Key="ElementTextColor">#1C1C1C</Color>

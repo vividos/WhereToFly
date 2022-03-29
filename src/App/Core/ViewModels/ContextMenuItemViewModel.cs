@@ -39,6 +39,20 @@ namespace WhereToFly.App.Core.ViewModels
         /// Command parameter for the menu item
         /// </summary>
         public object CommandParameter => this.menuItem.CommandParameter;
+
+        /// <summary>
+        /// Foreground color for the menu item icon and text
+        /// </summary>
+        public Color ForegroundColor => this.menuItem.IsDestructive
+            ? Color.White
+            : Color.FromHex(App.GetResourceColor("LabelTextColor"));
+
+        /// <summary>
+        /// Background color for the menu item; red when it is a destructive operation
+        /// </summary>
+        public Color BackgroundColor => this.menuItem.IsDestructive
+            ? Color.FromHex(App.GetResourceColor("MenuItemDestructiveBackgroundColor"))
+            : Color.Transparent;
         #endregion
 
         /// <summary>

@@ -26,7 +26,8 @@
                 <DataTemplate>
                     <!-- Context menu item -->
                     <Grid Padding="4"
-                          ColumnDefinitions="40,Auto">
+                          ColumnDefinitions="40,Auto"
+                          BackgroundColor="{Binding BackgroundColor}">
 
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1"
@@ -44,6 +45,7 @@
                         <!-- Menu item text -->
                         <Label Grid.Column="1" Text="{Binding Text, Mode=OneTime}"
                                InputTransparent="True"
+                               TextColor="{Binding ForegroundColor}"
                                IsEnabled="{Binding IsEnabled, Mode=OneWay}"
                                FontSize="Medium"
                                VerticalOptions="FillAndExpand"
