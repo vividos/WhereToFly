@@ -68,9 +68,30 @@ module.exports = {
         new CopyWebpackPlugin({
             patterns: [
                 { from: 'src/images', to: 'images' },
-                { from: 'node_modules/cesium/Build/Cesium/Workers', to: 'js/Workers' },
-                { from: 'node_modules/cesium/Build/Cesium/Assets', to: 'js/Assets' },
-                { from: 'node_modules/cesium/Build/Cesium/Widgets', to: 'js/Widgets' }
+                {
+                    context: "node_modules/cesium/Build/Cesium",
+                    from: "Assets",
+                    to: "js/Assets",
+                    globOptions: {
+                        ignore: [
+                            // don't copy textures, as they are not used
+                            "**/Assets/Textures/**",
+                        ],
+                    }
+                },
+                {
+                    from: "node_modules/cesium/Build/Cesium/Widgets/InfoBox",
+                    to: "js/Widgets/InfoBox",
+                },
+                {
+                    from: "node_modules/cesium/Build/Cesium/Widgets/NavigationHelpButton",
+                    to: "js/Widgets/NavigationHelpButton",
+                },
+                {
+                    from: "node_modules/cesium/Build/Cesium/Widgets/Images/NavigationHelp",
+                    to: "js/Widgets/Images/NavigationHelp",
+                },
+                { from: "node_modules/cesium/Build/Cesium/Workers", to: "js/Workers" }
             ],
         }),
         new webpack.DefinePlugin({
