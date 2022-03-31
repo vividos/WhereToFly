@@ -1872,7 +1872,7 @@ export class MapView {
                 Cesium.when(samplePromise,
                     function (samples) {
 
-                        log("sampleTrackHeights: #5: terrain provider reports back " + samples.length + " samples");
+                        MapView.log("sampleTrackHeights: #5: terrain provider reports back " + samples.length + " samples");
 
                         var trackPointHeightArray = [];
 
