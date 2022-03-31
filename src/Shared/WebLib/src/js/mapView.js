@@ -319,21 +319,23 @@ export class MapView {
      * Called to initialize terrain provider, which may not available when
      * offline.
      */
-    initTerrainProvider() {
+    async initTerrainProvider() {
 
-        var terrainProvider = Cesium.createWorldTerrain({
-            requestWaterMask: false,
-            requestVertexNormals: true
-        });
+        try {
+            let terrainProvider = Cesium.createWorldTerrain({
+                requestWaterMask: false,
+                requestVertexNormals: true
+            });
 
-        var that = this;
-        terrainProvider.readyPromise.then(function () {
+            await terrainProvider.readyPromise;
+            this.viewer.terrainProvider = terrainProvider;
             MapView.log("terrain provider is ready!");
-            that.viewer.terrainProvider = terrainProvider;
-        }).otherwise(function (error) {
+
+        } catch (error) {
+
             // waiting for onNetworkConnectivityChanged
             console.error("MapView.initTerrainProvider: failed init'ing terrain provider", error);
-        });
+        }
     };
 
     /**
@@ -1030,7 +1032,7 @@ export class MapView {
      * @param {double} [options.longitude] Longitude of zoom target
      * @param {double} [options.altitude] Altitude of zoom target; optional
      */
-    flyTo(options) {
+    async flyTo(options) {
 
         if (this.zoomEntity === undefined) {
             console.warn("MapView.zoomToLocation: zoomEntity not initialized yet");
@@ -1055,24 +1057,24 @@ export class MapView {
         this.zoomEntity.show = true;
 
         var that = this;
-        this.viewer.flyTo(
+        await this.viewer.flyTo(
             this.zoomEntity,
             {
                 offset: new Cesium.HeadingPitchRange(
                     this.viewer.camera.heading,
                     this.viewer.camera.pitch,
                     viewingDistance)
-            }).then(function () {
-                that.zoomEntity.show = false;
-                MapView.log("flying finished");
-
-                that.onUpdateLastShownLocation({
-                    latitude: options.latitude,
-                    longitude: options.longitude,
-                    altitude: options.altitude,
-                    viewingDistance: that.getCurrentViewingDistance()
-                });
             });
+
+        this.zoomEntity.show = false;
+        MapView.log("flying finished");
+
+        this.onUpdateLastShownLocation({
+            latitude: options.latitude,
+            longitude: options.longitude,
+            altitude: options.altitude,
+            viewingDistance: that.getCurrentViewingDistance()
+        });
     };
 
     /**
@@ -1140,7 +1142,7 @@ export class MapView {
      * @param {boolean} [layer.isVisible] Indicates if layer is visible
      * @param {string} [layer.data] CZML data of layer
      */
-    addLayer(layer) {
+    async addLayer(layer) {
 
         MapView.log("adding layer " + layer.name + ", with type " + layer.type);
 
@@ -1161,25 +1163,22 @@ export class MapView {
 
         MapView.log("layer data length: " + layer.data.length + " bytes");
 
-        var czml = JSON.parse(layer.data);
+        let czml = JSON.parse(layer.data);
 
-        var dataSourcePromise = Cesium.CzmlDataSource.load(czml);
+        try {
+            let dataSource = await Cesium.CzmlDataSource.load(czml);
 
-        var that = this;
+            // don't set clustering on CZML data sources, since the object can't be shared;
+            // see https://github.com/CesiumGS/cesium/issues/9336
+            // dataSource.clustering = that.clustering;
+            this.viewer.dataSources.add(dataSource);
+            this.dataSourceMap[layer.id] = dataSource;
 
-        Cesium.when(dataSourcePromise,
-            function (dataSource) {
-                // don't set clustering on CZML data sources, since the object can't be shared;
-                // see https://github.com/CesiumGS/cesium/issues/9336
-                // dataSource.clustering = that.clustering;
-                that.viewer.dataSources.add(dataSource);
-                that.dataSourceMap[layer.id] = dataSource;
+            this.setLayerVisibility(layer);
 
-                that.setLayerVisibility(layer);
-            },
-            function (error) {
-                console.error("MapView.addLayer: error while loading CZML data source: " + error);
-            });
+        } catch (error) {
+            console.error("MapView.addLayer: error while loading CZML data source: " + error);
+        }
     };
 
     /**
@@ -1288,7 +1287,7 @@ export class MapView {
      *
      * @param {string} layerId
      */
-    exportLayer(layerId) {
+    async exportLayer(layerId) {
 
         MapView.log("exporting layer with id " + layerId);
 
@@ -1301,17 +1300,20 @@ export class MapView {
         }
 
         var dataSource = this.dataSourceMap[layerId];
-        if (dataSource !== undefined) {
-            var that = this;
-            Cesium.exportKml({
+        if (dataSource === undefined)
+            return;
+
+        try {
+            let result = await Cesium.exportKml({
                 entities: dataSource.entities,
                 kmz: true
-            }).then(function (result) {
-                that.onExportLayer(result.kmz);
-            }).otherwise(function (result) {
-                console.error(result);
-                that.onExportLayer(null);
             });
+
+            this.onExportLayer(result.kmz);
+
+        } catch (error) {
+            console.error(error);
+            this.onExportLayer(null);
         }
     };
 
@@ -1424,17 +1426,14 @@ export class MapView {
      * @param {array} locationList An array of location, each with the following object layout:
      * { id:"location-id", name:"Location Name", type:"LocationType", latitude: 123.45678, longitude: 9.87654, altitude:1234.5 }
      */
-    addLocationList(locationList) {
+    async addLocationList(locationList) {
 
         MapView.log("adding location list, with " + locationList.length + " entries");
         console.time("MapView.addLocationList");
 
-        var that = this;
         for (var index in locationList) {
 
             var location = locationList[index];
-
-            var isLastLocation = locationList.length - 1 === index;
 
             if (location.id === undefined) {
                 console.warn("MapView: ignored adding location without ID");
@@ -1448,31 +1447,27 @@ export class MapView {
             var altitudeText =
                 location.altitude !== undefined && location.altitude !== 0 ? ' ' + location.altitude.toFixed(1) + 'm' : '';
 
-            Cesium.when(
-                this.createEntity(
+            try {
+                let entity = await this.createEntity(
                     location.id,
                     location.name + altitudeText,
                     text,
                     this.pinColorFromLocationType(location.type),
                     imagePath,
                     location.longitude,
-                    location.latitude),
-                function (entity) {
-                    if (location.takeoffDirections !== undefined && location.takeoffDirections !== 0)
-                        that.addTakeoffEntities(entity, location);
+                    location.latitude);
 
-                    that.locationDataSource.entities.add(entity);
+                if (location.takeoffDirections !== undefined && location.takeoffDirections !== 0)
+                    this.addTakeoffEntities(entity, location);
 
-                    if (isLastLocation)
-                        this.updateScene();
-                },
-                function (error) {
-                    console.error("MapView.addLocationList: error while adding location entity: " + error);
+                this.locationDataSource.entities.add(entity);
 
-                    if (isLastLocation)
-                        this.updateScene();
-                });
+            } catch (error) {
+                console.error("MapView.addLocationList: error while adding location entity: " + error);
+            }
         }
+
+        this.updateScene();
 
         console.timeEnd("MapView.addLocationList");
     };
@@ -1489,33 +1484,31 @@ export class MapView {
      * @param {double} latitude Latitude of entity
      * @returns {Promise<object>} entity description, usable for viewer.entities.add()
      */
-    createEntity(id, name, description, pinColor, pinImage, longitude, latitude) {
+    async createEntity(id, name, description, pinColor, pinImage, longitude, latitude) {
 
         var url = Cesium.getAbsoluteUri(pinImage, window.location.href);
 
-        var imagePromise = window.location.protocol === "file:" && !window.location.href.includes("android_asset")
-            ? this.pinBuilder.fromColor(pinColor, 48)
-            : this.pinBuilder.fromUrl(url, pinColor, 48)
+        let canvas = window.location.protocol === "file:" && !window.location.href.includes("android_asset")
+            ? await this.pinBuilder.fromColor(pinColor, 48)
+            : await this.pinBuilder.fromUrl(url, pinColor, 48)
 
-        return Cesium.when(
-            imagePromise,
-            function (canvas) {
-                return {
-                    id: id,
-                    name: name,
-                    description: description,
-                    position: Cesium.Cartesian3.fromDegrees(longitude, latitude),
-                    billboard: {
-                        image: canvas.toDataURL(),
-                        verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-                        heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
-                        disableDepthTestDistance: 5000.0
-                    }
-                };
-            },
-            function (error) {
-                console.error("MapView.createEntity: error while generating pin from URL " + url + ": " + error);
-            });
+        try {
+            return {
+                id: id,
+                name: name,
+                description: description,
+                position: Cesium.Cartesian3.fromDegrees(longitude, latitude),
+                billboard: {
+                    image: canvas.toDataURL(),
+                    verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+                    heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+                    disableDepthTestDistance: 5000.0
+                }
+            };
+
+        } catch (error) {
+            console.error("MapView.createEntity: error while generating pin from URL " + url + ": " + error);
+        }
     };
 
     /**
@@ -1842,7 +1835,7 @@ export class MapView {
      * @param {string} [track.id] unique ID of the track
      * @param {array} [track.listOfTrackPoints] An array of track points in long, lat, alt, long, lat, alt ... order
      */
-    sampleTrackHeights(track) {
+    async sampleTrackHeights(track) {
 
         MapView.log("sampleTrackHeights: #1 start sampling track point heights for " + track.listOfTrackPoints.length + " points...");
         console.time("MapView.sampleTrackHeights");
@@ -1859,47 +1852,45 @@ export class MapView {
             cartographicArray.push(Cesium.Cartographic.fromCartesian(trackPoint));
 
         MapView.log("sampleTrackHeights: #3: waiting for terrain provider to be ready");
-        var that = this;
-        Cesium.when(
-            this.viewer.terrainProvider.readyPromise,
-            function () {
-                MapView.log("sampleTrackHeights: #4: terrain provider is ready; starting sampling terrain");
 
-                var samplePromise = Cesium.sampleTerrainMostDetailed(
-                    that.viewer.terrainProvider,
-                    cartographicArray);
+        try {
+            await this.viewer.terrainProvider.readyPromise;
 
-                Cesium.when(samplePromise,
-                    function (samples) {
+        } catch (error) {
+            console.error("MapView.sampleTrackHeights: #8: error while waiting for terrain provider promise: " + error);
+            this.onSampledTrackHeights(null);
 
-                        MapView.log("sampleTrackHeights: #5: terrain provider reports back " + samples.length + " samples");
+            console.timeEnd("MapView.sampleTrackHeights");
+            return;
+        }
 
-                        var trackPointHeightArray = [];
+        MapView.log("sampleTrackHeights: #4: terrain provider is ready; starting sampling terrain");
 
-                        for (let sampledValue of samples) {
-                            var sampledHeight = sampledValue.height;
-                            trackPointHeightArray.push(sampledHeight);
-                        }
+        try {
+            let samples = await Cesium.sampleTerrainMostDetailed(
+                this.viewer.terrainProvider,
+                cartographicArray);
 
-                        MapView.log("sampleTrackHeights: #6: sampling track point heights finished.");
+            MapView.log("sampleTrackHeights: #5: terrain provider reports back " + samples.length + " samples");
 
-                        that.onSampledTrackHeights(trackPointHeightArray);
+            var trackPointHeightArray = [];
 
-                        console.timeEnd("MapView.sampleTrackHeights");
-                    },
-                    function (error) {
-                        console.error("MapView.sampleTrackHeights: #9: error while sampling track point heights: " + error);
-                        that.onSampledTrackHeights(null);
+            for (let sampledValue of samples) {
+                var sampledHeight = sampledValue.height;
+                trackPointHeightArray.push(sampledHeight);
+            }
 
-                        console.timeEnd("MapView.sampleTrackHeights");
-                    });
-            },
-            function (error) {
-                console.error("MapView.sampleTrackHeights: #8: error while waiting for terrain provider promise: " + error);
-                that.onSampledTrackHeights(null);
+            MapView.log("sampleTrackHeights: #6: sampling track point heights finished.");
 
-                console.timeEnd("MapView.sampleTrackHeights");
-            });
+            this.onSampledTrackHeights(trackPointHeightArray);
+
+            console.timeEnd("MapView.sampleTrackHeights");
+
+        } catch (error) {
+            console.error("MapView.sampleTrackHeights: #9: error while sampling track point heights: " + error);
+            this.onSampledTrackHeights(null);
+            console.timeEnd("MapView.sampleTrackHeights");
+        }
 
         MapView.log("sampleTrackHeights: #7: call to sampleTrackHeights() returns.");
     };
@@ -2183,78 +2174,74 @@ export class MapView {
      * @param {string} [track.description] track description
      * @param {string} [track.color] Color as "RRGGBB" string value, for trailing path
      */
-    addLiveTrackEntity(track) {
+    async addLiveTrackEntity(track) {
 
         var pinColor = this.pinColorFromLocationType('LiveWaypoint');
         var pinImage = this.imageUrlFromLocationType('LiveWaypoint');
 
         var url = Cesium.getAbsoluteUri(pinImage, window.location.href);
 
-        var imagePromise = window.location.protocol === "file:" && !window.location.href.includes("android_asset")
-            ? this.pinBuilder.fromColor(pinColor, 48)
-            : this.pinBuilder.fromUrl(url, pinColor, 48)
+        let canvas = window.location.protocol === "file:" && !window.location.href.includes("android_asset")
+            ? await this.pinBuilder.fromColor(pinColor, 48)
+            : await this.pinBuilder.fromUrl(url, pinColor, 48);
 
-        var that = this;
-        return Cesium.when(
-            imagePromise,
-            function (canvas) {
-
-                var sampledPos = new Cesium.SampledPositionProperty();
-                sampledPos.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD;
-                sampledPos.setInterpolationOptions({
-                    interpolationAlgorithm: Cesium.LagrangePolynomialApproximation,
-                    interpolationDegree: 3
-                });
-
-                var showLabelProperty = new Cesium.TimeIntervalCollectionProperty();
-                showLabelProperty.intervals.addInterval(
-                    new Cesium.TimeInterval({
-                        start: Cesium.JulianDate.now,
-                        stop: Cesium.JulianDate.addDays(Cesium.JulianDate.now, 365, new Cesium.JulianDate()),
-                        data: false // label is not visible
-                    }));
-
-                var entityOptions = {
-                    id: "livetrackpoint-" + track.id,
-                    name: track.name,
-                    description: track.description,
-                    position: sampledPos,
-                    billboard: {
-                        image: canvas.toDataURL(),
-                        heightReference: Cesium.HeightReference.NONE,
-                        verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-                        disableDepthTestDistance: 5000.0
-                    },
-                    path: {
-                        leadTime: 0,
-                        trailTime: 15 * 60,
-                        resolution: 60,
-                        width: 3,
-                        material: Cesium.Color.fromCssColorString('#' + track.color)
-                    },
-                    label: {
-                        text: new Cesium.ConstantProperty("out of current track data"),
-                        show: showLabelProperty,
-                        font: "14pt sans-serif",
-                        style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-                        fillColor: Cesium.Color.WHITE,
-                        showBackground: false,
-                        outlineWidth: 10.0,
-                        outlineColor: Cesium.Color.BLACK,
-                        pixelOffset: new Cesium.Cartesian2(64, 0),
-                        heightReference: Cesium.HeightReference.NONE,
-                        disableDepthTestDistance: 5000.0
-                    }
-                };
-
-                var entity = that.liveTrackDataSource.entities.add(entityOptions);
-
-                var trackData = that.trackIdToTrackDataMap[track.id];
-                trackData.liveTrackEntity = entity;
-            },
-            function (error) {
-                console.error("MapView.addLiveTrackEntity: error while generating pin from URL " + url + ": " + error);
+        try {
+            var sampledPos = new Cesium.SampledPositionProperty();
+            sampledPos.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD;
+            sampledPos.setInterpolationOptions({
+                interpolationAlgorithm: Cesium.LagrangePolynomialApproximation,
+                interpolationDegree: 3
             });
+
+            var showLabelProperty = new Cesium.TimeIntervalCollectionProperty();
+            showLabelProperty.intervals.addInterval(
+                new Cesium.TimeInterval({
+                    start: Cesium.JulianDate.now,
+                    stop: Cesium.JulianDate.addDays(Cesium.JulianDate.now, 365, new Cesium.JulianDate()),
+                    data: false // label is not visible
+                }));
+
+            var entityOptions = {
+                id: "livetrackpoint-" + track.id,
+                name: track.name,
+                description: track.description,
+                position: sampledPos,
+                billboard: {
+                    image: canvas.toDataURL(),
+                    heightReference: Cesium.HeightReference.NONE,
+                    verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+                    disableDepthTestDistance: 5000.0
+                },
+                path: {
+                    leadTime: 0,
+                    trailTime: 15 * 60,
+                    resolution: 60,
+                    width: 3,
+                    material: Cesium.Color.fromCssColorString('#' + track.color)
+                },
+                label: {
+                    text: new Cesium.ConstantProperty("out of current track data"),
+                    show: showLabelProperty,
+                    font: "14pt sans-serif",
+                    style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+                    fillColor: Cesium.Color.WHITE,
+                    showBackground: false,
+                    outlineWidth: 10.0,
+                    outlineColor: Cesium.Color.BLACK,
+                    pixelOffset: new Cesium.Cartesian2(64, 0),
+                    heightReference: Cesium.HeightReference.NONE,
+                    disableDepthTestDistance: 5000.0
+                }
+            };
+
+            var entity = this.liveTrackDataSource.entities.add(entityOptions);
+
+            var trackData = this.trackIdToTrackDataMap[track.id];
+            trackData.liveTrackEntity = entity;
+
+        } catch (error) {
+            console.error("MapView.addLiveTrackEntity: error while generating pin from URL " + url + ": " + error);
+        }
     };
 
     /**
