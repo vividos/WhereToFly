@@ -725,6 +725,8 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task AddTourPlanningLocationAsync(Location location)
         {
+            Debug.Assert(location != null, "passed location must be non-null");
+
             this.planTourParameters.WaypointIdList.Add(location.Id);
 
             await PlanTourPopupPage.ShowAsync(this.planTourParameters);

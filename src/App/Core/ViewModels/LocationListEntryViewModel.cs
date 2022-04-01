@@ -145,7 +145,7 @@ namespace WhereToFly.App.Core.ViewModels
             this.ZoomToLocationCommand = new AsyncCommand(this.OnZoomToLocationAsync);
             this.DeleteLocationCommand = new AsyncCommand(this.OnDeleteLocationAsync);
             this.AddTourPlanLocationCommand =
-                new Command<Location>((location) => App.AddTourPlanLocation(location));
+                new Command(() => App.AddTourPlanLocation(this.location));
         }
 
         /// <summary>

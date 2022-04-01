@@ -204,8 +204,7 @@ namespace WhereToFly.App.Core.ViewModels
             };
 
             this.RefreshLiveWaypointCommand = new AsyncCommand(this.OnRefreshLiveWaypoint);
-            this.AddTourPlanLocationCommand =
-                new Xamarin.Forms.Command(this.OnAddTourPlanLocation);
+            this.AddTourPlanLocationCommand = new Command(this.OnAddTourPlanLocation);
             this.ZoomToLocationCommand = new AsyncCommand(this.OnZoomToLocationAsync);
             this.NavigateToLocationCommand = new AsyncCommand(this.OnNavigateToLocationAsync);
             this.ShareLocationCommand = new AsyncCommand(this.OnShareLocationAsync);
