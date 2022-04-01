@@ -49,6 +49,27 @@ namespace WhereToFly.App.Core.ViewModels
         public ImageSource VisibilityImageSource { get; private set; }
 
         /// <summary>
+        /// Returns if the layer can be zoomed to
+        /// </summary>
+        public bool IsEnabledZoomToLayer =>
+            this.Layer.LayerType != LayerType.OsmBuildingsLayer;
+
+        /// <summary>
+        /// Returns if the layer can be exported
+        /// </summary>
+        public bool IsEnabledExportLayer =>
+            this.Layer.LayerType != LayerType.LocationLayer &&
+            this.Layer.LayerType != LayerType.TrackLayer &&
+            this.Layer.LayerType != LayerType.OsmBuildingsLayer;
+
+        /// <summary>
+        /// Returns if the layer can be deleted
+        /// </summary>
+        public bool IsEnabledDeleteLayer =>
+            this.Layer.LayerType != LayerType.LocationLayer &&
+            this.Layer.LayerType != LayerType.TrackLayer;
+
+        /// <summary>
         /// Command to execute when user tapped on the layer visibility icon
         /// </summary>
         public ICommand VisibilityTappedCommand { get; private set; }
@@ -139,8 +160,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         /// <param name="arg">argument; unused</param>
         /// <returns>true when context menu item can be executed, false when not</returns>
-        private bool OnCanExecuteZoomToLayer(object arg) =>
-            this.Layer.LayerType != LayerType.OsmBuildingsLayer;
+        private bool OnCanExecuteZoomToLayer(object arg) => this.IsEnabledZoomToLayer;
 
         /// <summary>
         /// Called when "Export" context menu item is selected
@@ -157,10 +177,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         /// <param name="arg">argument; unused</param>
         /// <returns>true when context menu item can be executed, false when not</returns>
-        private bool OnCanExecuteExportLayer(object arg) =>
-            this.Layer.LayerType != LayerType.LocationLayer &&
-            this.Layer.LayerType != LayerType.TrackLayer &&
-            this.Layer.LayerType != LayerType.OsmBuildingsLayer;
+        private bool OnCanExecuteExportLayer(object arg) => this.IsEnabledExportLayer;
 
         /// <summary>
         /// Called when "delete" context menu item is selected

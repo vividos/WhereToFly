@@ -114,14 +114,17 @@
                             <controls:ContextMenu.Items>
                                 <MenuItem Text="Zoom to"
                                           Icon="{Binding Source={StaticResource ZoomToLayerImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                          IsEnabled="{Binding IsEnabledZoomToLayer}"
                                           Command="{Binding ZoomToLayerCommand}"
                                           CommandParameter="{Binding .}" />
                                 <MenuItem Text="Export"
                                           Icon="{Binding Source={StaticResource ExportImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                          IsEnabled="{Binding IsEnabledExportLayer}"
                                           Command="{Binding ExportLayerCommand}"
                                           CommandParameter="{Binding .}" />
                                 <MenuItem Text="Delete" IsDestructive="True"
                                           Icon="{Binding Source={StaticResource DeleteLayerImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                          IsEnabled="{Binding IsEnabledDeleteLayer}"
                                           Command="{Binding DeleteLayerCommand}"
                                           CommandParameter="{Binding .}" />
 
