@@ -114,7 +114,8 @@ module.exports = {
                     from: "node_modules/cesium/Build/Cesium/Widgets/Images/NavigationHelp",
                     to: "js/Widgets/Images/NavigationHelp",
                 },
-                { from: "node_modules/cesium/Build/Cesium/Workers", to: "js/Workers" }
+                { from: "node_modules/cesium/Build/Cesium/Workers", to: "js/Workers" },
+                { from: "node_modules/cesium/Build/Cesium/ThirdParty/Workers", to: "js/ThirdParty/Workers" },
             ],
         }),
         new webpack.DefinePlugin({
