@@ -145,7 +145,7 @@
 
                         <!-- Context menu for an item -->
                         <controls:ContextMenu Grid.Column="3" Grid.RowSpan="2"
-                                              Caption="Layer"
+                                              Caption="Location"
                                               WidthRequest="40" HeightRequest="40"
                                               HorizontalOptions="Center"
                                               VerticalOptions="Center">
