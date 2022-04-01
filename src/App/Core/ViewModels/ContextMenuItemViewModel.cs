@@ -43,16 +43,12 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Foreground color for the menu item icon and text
         /// </summary>
-        public Color ForegroundColor => this.menuItem.IsDestructive
-            ? Color.White
-            : Color.FromHex(App.GetResourceColor("LabelTextColor"));
+        public Color ForegroundColor { get; }
 
         /// <summary>
         /// Background color for the menu item; red when it is a destructive operation
         /// </summary>
-        public Color BackgroundColor => this.menuItem.IsDestructive
-            ? Color.FromHex(App.GetResourceColor("MenuItemDestructiveBackgroundColor"))
-            : Color.Transparent;
+        public Color BackgroundColor { get; } = Color.Transparent;
         #endregion
 
         /// <summary>
@@ -63,6 +59,30 @@ namespace WhereToFly.App.Core.ViewModels
         public ContextMenuItemViewModel(MenuItem menuItem, Action actionDismiss)
         {
             this.menuItem = menuItem;
+
+            string foregroundColorName = "LabelTextColor";
+            string backgroundColorName = null;
+
+            if (this.menuItem.IsDestructive)
+            {
+                foregroundColorName = "MenuItemDestructiveForegroundColor";
+                backgroundColorName = "MenuItemDestructiveBackgroundColor";
+            }
+
+            if (!this.menuItem.IsEnabled)
+            {
+                foregroundColorName = "MenuItemDisabledForegroundColor";
+                backgroundColorName = "MenuItemDisabledBackgroundColor";
+            }
+
+            this.ForegroundColor =
+                Color.FromHex(App.GetResourceColor(foregroundColorName));
+
+            if (backgroundColorName != null)
+            {
+                this.BackgroundColor =
+                    Color.FromHex(App.GetResourceColor(backgroundColorName));
+            }
 
             this.Command = new Command(
                 () =>

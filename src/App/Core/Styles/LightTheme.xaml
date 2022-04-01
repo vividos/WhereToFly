@@ -32,6 +32,9 @@
 
     <!-- Menu item colors -->
     <Color x:Key="MenuItemDestructiveBackgroundColor">Red</Color>
+    <Color x:Key="MenuItemDestructiveForegroundColor">White</Color>
+    <Color x:Key="MenuItemDisabledBackgroundColor">#9b9b9b</Color>
+    <Color x:Key="MenuItemDisabledForegroundColor">#2B3032</Color>
 
     <!-- Colors for different elements -->
     <Color x:Key="ElementBackgroundColor">#F5F5F5</Color>
