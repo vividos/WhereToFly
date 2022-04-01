@@ -8,7 +8,7 @@ Released on ?.
 
 - Layers, tracks and locations now have a 3-dot-button to show the context menu
 - The context menus now have icons and are displayed as popup dialogs
-- using CesiumJS version 1.91
+- using CesiumJS version 1.92
 
 🐛 Bugfixes
 
