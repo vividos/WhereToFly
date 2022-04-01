@@ -199,54 +199,7 @@ export class MapView {
         }
 
         console.log("#8 location markers");
-        this.myLocationMarker = null;
-
-        this.pinBuilder = new Cesium.PinBuilder();
-
-        var that = this;
-        Cesium.when(
-            this.createEntity(undefined, 'My Position', '', Cesium.Color.GREEN, 'images/map-marker.svg', 0.0, 0.0),
-            function (myLocationEntity) {
-                myLocationEntity.show = false;
-                that.myLocationMarker = that.viewer.entities.add(myLocationEntity);
-            },
-            function (error) {
-                console.error("MapView: #8 error creating my location entity: " + error);
-            });
-
-        // the zoom entity is invisible and transparent and is used for zoomToLocation() calls
-        this.zoomEntity = this.viewer.entities.add({
-            id: 'zoomEntity',
-            position: Cesium.Cartesian3.fromDegrees(0.0, 0.0),
-            point: {
-                color: Cesium.Color.TRANSPARENT,
-                heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
-            },
-            show: false
-        });
-
-        // the track marker is initially invisible and only used when a track is tapped
-        Cesium.when(
-            this.createEntity('trackMarker', 'Track point', '', Cesium.Color.PURPLE, 'images/map-marker-distance.svg', 0.0, 0.0),
-            function (trackEntity) {
-                trackEntity.show = false;
-                trackEntity.billboard.heightReference = Cesium.HeightReference.NONE;
-                that.trackMarker = that.viewer.entities.add(trackEntity);
-            },
-            function (error) {
-                console.error("MapView: #8 error creating find result entity: " + error);
-            });
-
-        // the find result entity is initially invisible
-        Cesium.when(
-            this.createEntity(undefined, 'Find result', '', Cesium.Color.ORANGE, 'images/magnify.svg', 0.0, 0.0),
-            function (findResultEntity) {
-                findResultEntity.show = false;
-                that.findResultMarker = that.viewer.entities.add(findResultEntity);
-            },
-            function (error) {
-                console.error("MapView: #8 error creating find result entity: " + error);
-            });
+        this.initLocationMarkers();
 
         console.log("#9 long tap handler");
 
@@ -335,6 +288,78 @@ export class MapView {
 
             // waiting for onNetworkConnectivityChanged
             console.error("MapView.initTerrainProvider: failed init'ing terrain provider", error);
+        }
+    };
+
+    /**
+     * Initializes location markers.
+     */
+    async initLocationMarkers() {
+        this.myLocationMarker = null;
+
+        this.pinBuilder = new Cesium.PinBuilder();
+
+        try {
+            let myLocationEntity = await this.createEntity(
+                undefined,
+                'My Position',
+                '',
+                Cesium.Color.GREEN,
+                'images/map-marker.svg',
+                0.0,
+                0.0);
+
+            myLocationEntity.show = false;
+            this.myLocationMarker = this.viewer.entities.add(myLocationEntity);
+
+        } catch (error) {
+            console.error("MapView: #8 error creating my location entity: " + error);
+        }
+
+        // the zoom entity is invisible and transparent and is used for zoomToLocation() calls
+        this.zoomEntity = this.viewer.entities.add({
+            id: 'zoomEntity',
+            position: Cesium.Cartesian3.fromDegrees(0.0, 0.0),
+            point: {
+                color: Cesium.Color.TRANSPARENT,
+                heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
+            },
+            show: false
+        });
+
+        // the track marker is initially invisible and only used when a track is tapped
+        try {
+            let trackEntity = await this.createEntity(
+                'trackMarker',
+                'Track point',
+                '',
+                Cesium.Color.PURPLE,
+                'images/map-marker-distance.svg',
+                0.0,
+                0.0);
+
+            trackEntity.show = false;
+            trackEntity.billboard.heightReference = Cesium.HeightReference.NONE;
+            this.trackMarker = this.viewer.entities.add(trackEntity);
+        } catch (error) {
+            console.error("MapView: #8 error creating find result entity: " + error);
+        }
+
+        // the find result entity is initially invisible
+        try {
+
+            let findResultEntity = await this.createEntity(
+                undefined,
+                'Find result',
+                '',
+                Cesium.Color.ORANGE,
+                'images/magnify.svg',
+                0.0,
+                0.0);
+            findResultEntity.show = false;
+            this.findResultMarker = this.viewer.entities.add(findResultEntity);
+        } catch (error) {
+            console.error("MapView: #8 error creating find result entity: " + error);
         }
     };
 
