@@ -20,16 +20,19 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="Zoom to"
                      Icon="{Binding Source={StaticResource ZoomToImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+                     IsEnabled="{Binding IsEnabledZoomToLayer}"
                      Command="{Binding ZoomToLayerCommand}"
                      Order="Primary" Priority="0" />
 
         <ToolbarItem Name="Export"
                      Icon="{Binding Source={StaticResource ExportImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+                     IsEnabled="{Binding IsEnabledExportLayer}"
                      Command="{Binding ExportLayerCommand}"
                      Order="Primary" Priority="1" />
 
         <ToolbarItem Name="Delete"
                      Icon="{Binding Source={StaticResource DeleteImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+                     IsEnabled="{Binding IsEnabledDeleteLayer}"
                      Command="{Binding DeleteLayerCommand}"
                      IsDestructive="True"
                      Order="Primary" Priority="2" />

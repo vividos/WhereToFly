@@ -51,6 +51,27 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
+        /// Returns if the layer can be zoomed to
+        /// </summary>
+        public bool IsEnabledZoomToLayer =>
+            this.layer.LayerType != LayerType.OsmBuildingsLayer;
+
+        /// <summary>
+        /// Returns if the layer can be exported
+        /// </summary>
+        public bool IsEnabledExportLayer =>
+            this.layer.LayerType != LayerType.LocationLayer &&
+            this.layer.LayerType != LayerType.TrackLayer &&
+            this.layer.LayerType != LayerType.OsmBuildingsLayer;
+
+        /// <summary>
+        /// Returns if the layer can be deleted
+        /// </summary>
+        public bool IsEnabledDeleteLayer =>
+            this.layer.LayerType != LayerType.LocationLayer &&
+            this.layer.LayerType != LayerType.TrackLayer;
+
+        /// <summary>
         /// Command to execute when "zoom to" menu item is selected on a layer
         /// </summary>
         public ICommand ZoomToLayerCommand { get; set; }
@@ -92,7 +113,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             this.ZoomToLayerCommand = new AsyncCommand(this.OnZoomToLayerAsync, this.OnCanExecuteZoomToLayer);
             this.ExportLayerCommand = new AsyncCommand(this.OnExportLayerAsync, this.OnCanExecuteExportLayer);
-            this.DeleteLayerCommand = new AsyncCommand(this.OnDeleteLayerAsync);
+            this.DeleteLayerCommand = new AsyncCommand(this.OnDeleteLayerAsync, this.OnCanExecuteDeleteLayer);
         }
 
         /// <summary>
@@ -128,8 +149,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         /// <param name="arg">argument; unused</param>
         /// <returns>true when context action can be executed, false when not</returns>
-        private bool OnCanExecuteZoomToLayer(object arg) =>
-            this.layer.LayerType != LayerType.OsmBuildingsLayer;
+        private bool OnCanExecuteZoomToLayer(object arg) => this.IsEnabledZoomToLayer;
 
         /// <summary>
         /// Called when "Export" menu item is selected
@@ -146,10 +166,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         /// <param name="arg">argument; unused</param>
         /// <returns>true when context action can be executed, false when not</returns>
-        private bool OnCanExecuteExportLayer(object arg) =>
-            this.layer.LayerType != LayerType.LocationLayer &&
-            this.layer.LayerType != LayerType.TrackLayer &&
-            this.layer.LayerType != LayerType.OsmBuildingsLayer;
+        private bool OnCanExecuteExportLayer(object arg) => this.IsEnabledExportLayer;
 
         /// <summary>
         /// Called when "Delete" menu item is selected
@@ -168,5 +185,13 @@ namespace WhereToFly.App.Core.ViewModels
 
             App.ShowToast("Selected layer was deleted.");
         }
+
+        /// <summary>
+        /// Determines if a layer's "delete" toolbar action can be executed. Prevents
+        /// exporting layers that can't be deleted.
+        /// </summary>
+        /// <param name="arg">argument; unused</param>
+        /// <returns>true when context action can be executed, false when not</returns>
+        private bool OnCanExecuteDeleteLayer(object arg) => this.IsEnabledDeleteLayer;
     }
 }
