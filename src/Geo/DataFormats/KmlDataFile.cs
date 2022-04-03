@@ -442,13 +442,22 @@ namespace WhereToFly.Geo.DataFormats
 
             var name = placemark.Name ?? string.Empty;
 
+            // Startplatz, takeoff, takeoff coast, takeoff winch
             if (name.StartsWith("SP ") ||
-                name.StartsWith("SP-HG "))
+                name.StartsWith("SP-HG ") ||
+                name.StartsWith("TO ") ||
+                name.StartsWith("TO-HG ") ||
+                name.StartsWith("TOC ") ||
+                name.StartsWith("TOC-HG ") ||
+                name.StartsWith("TOW ") ||
+                name.StartsWith("TOW-HG "))
             {
                 return LocationType.FlyingTakeoff;
             }
 
-            if (name.StartsWith("LP "))
+            // Landeplatz, landing zone
+            if (name.StartsWith("LP ") ||
+                name.StartsWith("LZ "))
             {
                 return LocationType.FlyingLandingPlace;
             }
