@@ -96,8 +96,9 @@ export class MapView {
 
         this.thermalSkywaysLayer = null;
         this.thermalSkywaysOverlay = this.createThermalImageryProvider();
-
-        console.log("thermal maps url: " + this.thermalSkywaysOverlay.url);
+        this.thermalSkywaysOverlay.readyPromise.then(success => {
+            MapView.log("thermal maps url: " + this.thermalSkywaysOverlay.url);
+        });
 
         this.blackMarbleLayer = null;
         this.blackMarbleOverlay = null;
