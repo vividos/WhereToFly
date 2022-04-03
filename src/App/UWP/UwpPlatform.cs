@@ -48,6 +48,7 @@ namespace WhereToFly.App.UWP
             }
             catch (Exception)
             {
+                // ignore error when opening asset stream
             }
 
             if (file == null)

@@ -20,9 +20,11 @@ namespace WhereToFly.App.Core
             HttpRequestMessage request,
             CancellationToken cancellationToken)
         {
+            const string UriPathSeparator = "/";
+
             // the referer only contains the Url without the path
             string refererUrl = request.RequestUri
-                .GetLeftPart(System.UriPartial.Authority) + "/";
+                .GetLeftPart(System.UriPartial.Authority) + UriPathSeparator;
 
             request.Headers.Add("Referer", refererUrl);
 
