@@ -213,7 +213,7 @@ export class HeightProfileView {
 
         var chartButtonModeZoomAndPan = document.getElementById('chartButtonModeZoomAndPan');
         chartButtonModeZoomAndPan.classList.add('chart-toolbar-button-disabled');
-    };
+    }
 
     /**
      * Sets 'zoom-and-pan' mode where zoom and pan is enabled and clicks or hover
@@ -234,7 +234,7 @@ export class HeightProfileView {
 
         var chartButtonModeZoomAndPan = document.getElementById('chartButtonModeZoomAndPan');
         chartButtonModeZoomAndPan.classList.remove('chart-toolbar-button-disabled');
-    };
+    }
 
     /**
      * Sets track to display the height profile for
@@ -284,7 +284,7 @@ export class HeightProfileView {
         this.chart.update(0);
 
         this.updateZoomPanLimits();
-    };
+    }
 
     /**
      * Updates the current zoom and pan limits, based on the current X axis scale.
@@ -301,7 +301,7 @@ export class HeightProfileView {
 
         // need this to update the zoom and pan options
         this.chart.update(0);
-    };
+    }
 
     /**
      * adds a ground profile for an already added track
@@ -334,7 +334,7 @@ export class HeightProfileView {
         });
 
         this.chart.update(0);
-    };
+    }
 
     /**
      * Adds new track points to the height profile view, for the currently displayed track.
@@ -381,7 +381,7 @@ export class HeightProfileView {
         this.chart.update(0);
 
         this.updateZoomPanLimits();
-    };
+    }
 
     /**
      * Resets zoom level
@@ -389,7 +389,7 @@ export class HeightProfileView {
     resetZoom() {
 
         this.chart.resetZoom();
-    };
+    }
 
     /**
      * Hides the height profile view
@@ -402,7 +402,7 @@ export class HeightProfileView {
 
         if (this.options.callback !== undefined)
             this.options.callback('onClose', null);
-    };
+    }
 
     /**
      * Destroys the height profile view
@@ -413,7 +413,7 @@ export class HeightProfileView {
         this.chart.destroy();
         this.options = undefined;
         this.chart = undefined;
-    };
+    }
 
     /**
      * Called by Chart.js when the user hovers over an element in the chart
@@ -428,7 +428,7 @@ export class HeightProfileView {
             this.options.callback !== undefined) {
             this.options.callback('onHover', elements[0].index);
         }
-    };
+    }
 
     /**
      * Called by Chart.js when the user clicked on an element in the chart
@@ -443,7 +443,7 @@ export class HeightProfileView {
             this.options.callback !== undefined) {
             this.options.callback('onClick', elements[0].index);
         }
-    };
+    }
 
     /**
      * @typedef {Object} TooltipTrackPointInfo
@@ -500,7 +500,7 @@ export class HeightProfileView {
         });
 
         return values;
-    };
+    }
 
     /**
      * Formats an elapsed time value as time span, in the format h:mm:ss; when the
@@ -555,7 +555,7 @@ export class HeightProfileView {
         }
 
         return text;
-    };
+    }
 
     /**
      * Updates the tooltip DOM element
@@ -600,5 +600,5 @@ export class HeightProfileView {
         tooltipElement.style.top = '60px';
         tooltipElement.style.font = bodyFont.string;
         tooltipElement.style.padding = tooltipModel.padding + 'px ' + tooltipModel.padding + 'px';
-    };
+    }
 }

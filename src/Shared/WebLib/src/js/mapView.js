@@ -267,7 +267,7 @@ export class MapView {
      */
     static log(message) {
         console.log("%cMapView%c" + message, MapView.consoleLogStyle);
-    };
+    }
 
     /**
      * Called to initialize terrain provider, which may not available when
@@ -290,7 +290,7 @@ export class MapView {
             // waiting for onNetworkConnectivityChanged
             console.error("MapView.initTerrainProvider: failed init'ing terrain provider", error);
         }
-    };
+    }
 
     /**
      * Initializes location markers.
@@ -362,7 +362,7 @@ export class MapView {
         } catch (error) {
             console.error("MapView: #8 error creating find result entity: " + error);
         }
-    };
+    }
 
     /**
      * Called when the screen space event handler detected a touch-down event.
@@ -372,7 +372,7 @@ export class MapView {
 
         this.currentLeftDownPosition = movement.position;
         this.currentLeftDownTime = new Date().getTime();
-    };
+    }
 
     /**
      * Called when the screen space event handler detected a touch-up event.
@@ -413,7 +413,7 @@ export class MapView {
                 this.showTrackHeightProfile(trackId);
             }
         }
-    };
+    }
 
     /**
      * Called when the screen space event handler detected a right-click event.
@@ -432,7 +432,7 @@ export class MapView {
                 altitude: cartographic.height
             });
         }
-    };
+    }
 
     /**
      * Creates a new imagery provider that uses the Thermal Skyways from https://thermal.kk7.ch/.
@@ -456,7 +456,7 @@ export class MapView {
             maximumLevel: 12,
             rectangle: tilingScheme.rectangle
         });
-    };
+    }
 
     /**
      * Sets up entity clustering, showing custom pins for clustered locations when
@@ -495,7 +495,7 @@ export class MapView {
             function (clusteredEntities, cluster) {
                 that.onNewCluster(clusteredEntities, cluster);
             });
-    };
+    }
 
     /**
      * Called when a cluster of entities will be displayed
@@ -523,7 +523,7 @@ export class MapView {
         else
             cluster.billboard.image =
                 this.clustering.singleDigitPins[clusteredEntities.length - 2];
-    };
+    }
 
     /**
      * Sets up the live track toolbar to show when one or more live tracks are
@@ -590,7 +590,7 @@ export class MapView {
         toolbarCont.appendChild(resetButton);
 
         toolbar.appendChild(toolbarCont);
-    };
+    }
 
     /**
      * Displays the live track toolbar, e.g. when a live track was loaded.
@@ -603,7 +603,7 @@ export class MapView {
         var toolbar = document.getElementById(this.options.liveTrackToolbarId);
 
         toolbar.style.display = 'flex';
-    };
+    }
 
     /**
      * Hides the live track toolbar, e.g. when no live tracks are displayed anymore.
@@ -616,7 +616,7 @@ export class MapView {
         var toolbar = document.getElementById(this.options.liveTrackToolbarId);
 
         toolbar.style.display = 'none';
-    };
+    }
 
     /**
      * Updates scene by requesting rendering from scene. This can be used to
@@ -625,7 +625,7 @@ export class MapView {
      */
     updateScene(imageryType) {
         this.viewer.scene.requestRender();
-    };
+    }
 
     /**
      * Shows message band with given text.
@@ -648,7 +648,7 @@ export class MapView {
         }, 1);
 
         bandElement.innerHTML = messageText;
-    };
+    }
 
     /**
      * Hides message band again.
@@ -667,7 +667,7 @@ export class MapView {
             }, 700);
         }
 
-    };
+    }
 
     /**
      * Sets new map imagery type
@@ -753,7 +753,7 @@ export class MapView {
         }
 
         this.updateScene();
-    };
+    }
 
     static slopeRamp = [0.0, 0.29, 0.5, Math.sqrt(2) / 2, 0.87, 0.91, 1.0];
 
@@ -828,7 +828,7 @@ export class MapView {
         shadingUniforms.image = MapView.getColorRamp();
 
         this.slopeAndContourLinesMaterial = material;
-    };
+    }
 
     /**
      * Sets new map overlay type
@@ -892,7 +892,7 @@ export class MapView {
         }
 
         this.updateScene();
-    };
+    }
 
     /**
      * Sets new map shading mode
@@ -963,7 +963,7 @@ export class MapView {
             shadingMode === 'None' ? Cesium.ShadowMode.DISABLED : Cesium.ShadowMode.RECEIVE_ONLY;
 
         this.updateScene();
-    };
+    }
 
     /**
      * Sets if entity clustering is used
@@ -982,7 +982,7 @@ export class MapView {
         }
 
         this.updateScene();
-    };
+    }
 
     /**
      * Updates the "my location" marker on the map
@@ -1030,7 +1030,7 @@ export class MapView {
             MapView.log("also zooming to my location");
             this.flyTo(options);
         }
-    };
+    }
 
     /**
      * Returns the current viewing distance from the camera to the terrain in the
@@ -1049,7 +1049,7 @@ export class MapView {
         }
 
         return 5000.0;
-    };
+    }
 
     /**
      * Flies to to given location
@@ -1101,7 +1101,7 @@ export class MapView {
             altitude: options.altitude,
             viewingDistance: that.getCurrentViewingDistance()
         });
-    };
+    }
 
     /**
      * Zooms to given location, by flying to the location
@@ -1117,7 +1117,7 @@ export class MapView {
             ", altitude=" + options.altitude);
 
         this.flyTo(options);
-    };
+    }
 
     /**
      * Zooms to given map rectangle
@@ -1157,7 +1157,7 @@ export class MapView {
                 });
             }
         });
-    };
+    }
 
     /**
      * Adds a new layer to the map
@@ -1205,7 +1205,7 @@ export class MapView {
         } catch (error) {
             console.error("MapView.addLayer: error while loading CZML data source: " + error);
         }
-    };
+    }
 
     /**
      * Gets the bounding sphere of a data source
@@ -1240,7 +1240,7 @@ export class MapView {
         }
 
         return Cesium.BoundingSphere.fromBoundingSpheres(boundingSpheres);
-    };
+    }
 
     /**
      * Zooms to layer with given layer ID
@@ -1280,7 +1280,7 @@ export class MapView {
                 });
             }
         }
-    };
+    }
 
     /**
      * Sets layer visibility
@@ -1306,7 +1306,7 @@ export class MapView {
         }
 
         this.updateScene();
-    };
+    }
 
     /**
      * Exports layer with given ID to KMZ bytestream
@@ -1341,7 +1341,7 @@ export class MapView {
             console.error(error);
             this.onExportLayer(null);
         }
-    };
+    }
 
     /**
      * Removes layer with given layer ID
@@ -1371,7 +1371,7 @@ export class MapView {
         }
 
         this.updateScene();
-    };
+    }
 
     /**
      * Clears list of layers
@@ -1400,7 +1400,7 @@ export class MapView {
         this.clustering.pixelRange = lastPixelRange;
 
         this.updateScene();
-    };
+    }
 
     /**
      * Clears list of locations
@@ -1410,7 +1410,7 @@ export class MapView {
         MapView.log("clearing location list");
 
         this.locationDataSource.entities.removeAll();
-    };
+    }
 
     /**
      * Formats description text for a location
@@ -1445,7 +1445,7 @@ export class MapView {
         text += "<p>" + location.description + "</p>";
 
         return text;
-    };
+    }
 
     /**
      * Adds list of locations to the map, as marker pins
@@ -1496,7 +1496,7 @@ export class MapView {
         this.updateScene();
 
         console.timeEnd("MapView.addLocationList");
-    };
+    }
 
     /**
      * Creates an entity object with given informations that can be placed into
@@ -1535,7 +1535,7 @@ export class MapView {
         } catch (error) {
             console.error("MapView.createEntity: error while generating pin from URL " + url + ": " + error);
         }
-    };
+    }
 
     /**
      * Returns a relative image Url for given location type
@@ -1571,7 +1571,7 @@ export class MapView {
             case 'LiveWaypoint': return 'images/autorenew.svg';
             default: return 'images/map-marker.svg';
         }
-    };
+    }
 
     /**
      * Returns a pin color for given location type
@@ -1587,7 +1587,7 @@ export class MapView {
             case 'Turnpoint': return Cesium.Color.RED;
             default: return Cesium.Color.BLUE;
         }
-    };
+    }
 
     /**
      * Calculates a point on a circle around a given center.
@@ -1687,7 +1687,7 @@ export class MapView {
             outline: false, // when an outline would be present, it would not clamp to ground
             distanceDisplayCondition: distanceDisplayCondition
         };
-    };
+    }
 
     /**
      * Updates a single location
@@ -1721,7 +1721,7 @@ export class MapView {
         entity.description = this.formatLocationText(location);
 
         this.updateScene();
-    };
+    }
 
     /**
      * Removes a single location from map
@@ -1736,7 +1736,7 @@ export class MapView {
         this.locationDataSource.entities.remove(entity);
 
         this.updateScene();
-    };
+    }
 
     /**
      * Shows a find result pin, with a link to add a waypoint for this result.
@@ -1776,7 +1776,7 @@ export class MapView {
         this.findResultMarker.show = true;
 
         this.flyTo(options);
-    };
+    }
 
     /**
      * Shows flying range for a given map point and using flying range parameters.
@@ -1852,7 +1852,7 @@ export class MapView {
                     this.viewer.camera.pitch,
                     20 * 1000.0)
             });
-    };
+    }
 
     /**
      * Samples track point heights from actual map and adjusts the track when it goes below terrain
@@ -1919,7 +1919,7 @@ export class MapView {
         }
 
         MapView.log("sampleTrackHeights: #7: call to sampleTrackHeights() returns.");
-    };
+    }
 
     /**
      * Called when sampling track points has finished.
@@ -1932,7 +1932,7 @@ export class MapView {
 
         if (this.options.callback !== undefined)
             this.options.callback('onSampledTrackHeights', listOfTrackPointHeights);
-    };
+    }
 
     /**
      * Calculates track color from given variometer climb/sink rate value.
@@ -1968,7 +1968,7 @@ export class MapView {
         }
 
         return Cesium.Color.fromBytes(128, 0, 128); // smaller than -4.0
-    };
+    }
 
     /**
      * Calculates an array of track colors based on the altitude changes of the given track points.
@@ -2001,7 +2001,7 @@ export class MapView {
         }
 
         return trackColors;
-    };
+    }
 
     /**
      * Creates a primitive for a flight track
@@ -2033,7 +2033,7 @@ export class MapView {
         });
 
         return primitive;
-    };
+    }
 
     /**
      * Creates a wall primitive for a flight track to display relation to ground
@@ -2065,7 +2065,7 @@ export class MapView {
         });
 
         return wallPrimitive;
-    };
+    }
 
     /**
      * Creates a ground primitive for a non-flight track
@@ -2095,7 +2095,7 @@ export class MapView {
         });
 
         return primitive;
-    };
+    }
 
     /**
      * Adds a track to the map
@@ -2137,7 +2137,7 @@ export class MapView {
 
             this.setLiveTrackTime(this.currentLiveTrackTimeOffset);
         }
-    };
+    }
 
     /**
      * Adds or updates track primitives to display ground track or flight track + wall. When the
@@ -2190,7 +2190,7 @@ export class MapView {
             this.trackPrimitivesCollection.add(trackData.primitive);
 
         trackData.boundingSphere = Cesium.BoundingSphere.fromPoints(trackPointArray, null);
-    };
+    }
 
     /**
      * Adds a live track entity for the given track object
@@ -2268,7 +2268,7 @@ export class MapView {
         } catch (error) {
             console.error("MapView.addLiveTrackEntity: error while generating pin from URL " + url + ": " + error);
         }
-    };
+    }
 
     /**
      * Updates track infos like name and color
@@ -2296,7 +2296,7 @@ export class MapView {
 
             this.updateScene();
         }
-    };
+    }
 
     /**
      * Removes duplicate track points, e.g. when the track position hasn't changed
@@ -2356,7 +2356,7 @@ export class MapView {
             track.groundHeightProfile = newGroundHeightProfile;
 
         return modifiedTrackPointArray;
-    };
+    }
 
     /**
      * When getting back live track data from the web API, it uses a different
@@ -2389,7 +2389,7 @@ export class MapView {
 
         track.trackStart = undefined;
         track.trackPoints = undefined;
-    };
+    }
 
     /**
      * Updates a live track with new track points. The track points are displayed
@@ -2476,7 +2476,7 @@ export class MapView {
             track.id === this.currentHeightProfileTrackId) {
             this.heightProfileView.addTrackPoints(track);
         }
-    };
+    }
 
     /**
      * Merges the track points in given track object with track points already
@@ -2515,7 +2515,7 @@ export class MapView {
 
         track.listOfTrackPoints = trackData.track.listOfTrackPoints;
         track.listOfTimePoints = trackData.track.listOfTimePoints;
-    };
+    }
 
     /**
      * Returns the time of the last (latest) track point of a track.
@@ -2533,7 +2533,7 @@ export class MapView {
             return null;
 
         return trackData.track.listOfTimePoints[trackData.track.listOfTimePoints.length - 1];
-    };
+    }
 
     /**
      * Sets a new time offset from current time ("now")
@@ -2564,7 +2564,7 @@ export class MapView {
         else
             liveTrackSliderText.innerHTML = "-" + new Date(-timeOffset * 1000).toTimeString().substring(3, 8);
 
-    };
+    }
 
     /**
      * Zooms to the current position of a live waypoint with given location ID
@@ -2587,7 +2587,7 @@ export class MapView {
             latitude: Cesium.Math.toDegrees(location.latitude),
             altitude: location.height
         });
-    };
+    }
 
     /**
      * Zooms to a track on the map
@@ -2630,7 +2630,7 @@ export class MapView {
                 });
             }
         }
-    };
+    }
 
     /**
      * Removes a track from the map
@@ -2670,7 +2670,7 @@ export class MapView {
         }
 
         this.updateScene();
-    };
+    }
 
     /**
      * Clears all tracks from the map
@@ -2695,7 +2695,7 @@ export class MapView {
             this.closeHeightProfileView();
 
         this.updateScene();
-    };
+    }
 
     /**
      * Shows track height profile.
@@ -2743,7 +2743,7 @@ export class MapView {
         if (trackData.track.groundHeightProfile !== undefined &&
             trackData.track.groundHeightProfile !== null)
             this.heightProfileView.addGroundProfile(trackData.track.groundHeightProfile);
-    };
+    }
 
     /**
      * Closes height profile view again
@@ -2764,7 +2764,7 @@ export class MapView {
             this.viewer.trackedEntity = null;
 
         this.currentHeightProfileTrackId = undefined;
-    };
+    }
 
     /**
      * Called for an action of the height profile view
@@ -2794,7 +2794,7 @@ export class MapView {
             this.closeHeightProfileView();
             this.inOnCloseHandler = false;
         }
-    };
+    }
 
     /**
      * Updates track marker to be placed on a track point index.
@@ -2818,7 +2818,7 @@ export class MapView {
             Cesium.Cartesian3.fromDegrees(longitude, latitude, altitude);
 
         this.updateScene();
-    };
+    }
 
     /**
      * Called by the map ctor when the map is initialized and ready.
@@ -2829,7 +2829,7 @@ export class MapView {
 
         if (this.options.callback !== undefined)
             this.options.callback('onMapInitialized');
-    };
+    }
 
     /**
      * Called by the marker pin link, in order to show details of the location.
@@ -2841,7 +2841,7 @@ export class MapView {
 
         if (this.options.callback !== undefined)
             this.options.callback('onShowLocationDetails', locationId);
-    };
+    }
 
     /**
      * Called by the marker pin link, in order to start navigating to the location.
@@ -2853,7 +2853,7 @@ export class MapView {
 
         if (this.options.callback !== undefined)
             this.options.callback('onNavigateToLocation', locationId);
-    };
+    }
 
     /**
      * Called by the "my position" pin link, in order to share the current location.
@@ -2864,7 +2864,7 @@ export class MapView {
 
         if (this.options.callback !== undefined)
             this.options.callback('onShareMyLocation');
-    };
+    }
 
     /**
      * Called by the "add find result" pin link, in order to add the find result as a waypoint.
@@ -2886,7 +2886,7 @@ export class MapView {
         this.viewer.selectedEntity = undefined;
 
         this.updateScene();
-    };
+    }
 
     /**
      * Called when a long-tap occured on the map.
@@ -2903,7 +2903,7 @@ export class MapView {
 
         if (this.options.callback !== undefined)
             this.options.callback('onLongTap', options);
-    };
+    }
 
     /**
      * Called by the marker pin link, in order to add the location to tour planning.
@@ -2918,7 +2918,7 @@ export class MapView {
 
         // hide the info box
         this.viewer.selectedEntity = undefined;
-    };
+    }
 
 
     /**
@@ -2929,7 +2929,7 @@ export class MapView {
 
         if (this.options.callback !== undefined)
             this.options.callback('onConsoleErrorMessage', message);
-    };
+    }
 
     /**
      * Called to update the last shown location stored in the app.
@@ -2951,8 +2951,7 @@ export class MapView {
 
         if (this.options.callback !== undefined)
             this.options.callback('onUpdateLastShownLocation', options);
-
-    };
+    }
 
     /**
      * Called by the "hide" link in the info text are of the flying range cone.
@@ -2964,7 +2963,7 @@ export class MapView {
         this.viewer.entities.remove(this.flyingRangeCone);
 
         this.updateScene();
-    };
+    }
 
     /**
      * Called when the network connectivity has changed.
@@ -2976,7 +2975,7 @@ export class MapView {
         if (isAvailable &&
             (this.viewer.terrainProvider === null || this.viewer.terrainProvider instanceof Cesium.EllipsoidTerrainProvider))
             this.initTerrainProvider();
-    };
+    }
 
     /**
      * Called when a layer was successfully exported as KMZ byte stream
@@ -2998,7 +2997,7 @@ export class MapView {
         }
 
         reader.readAsDataURL(blobData);
-    };
+    }
 
     /**
      * AIRAC cycle start dates, by year:
