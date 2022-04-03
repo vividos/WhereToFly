@@ -396,6 +396,12 @@ namespace WhereToFly.App.Core
 
             var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
             liveWaypointRefreshService.StopTimer();
+
+            Task.Run(async () =>
+            {
+                var geolocationService = DependencyService.Get<IGeolocationService>();
+                await geolocationService.StopListeningAsync();
+            });
         }
 
         /// <summary>
@@ -412,6 +418,12 @@ namespace WhereToFly.App.Core
 
             var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
             liveWaypointRefreshService.ResumeTimer();
+
+            Task.Run(async () =>
+            {
+                var geolocationService = DependencyService.Get<IGeolocationService>();
+                await geolocationService.StartListeningAsync();
+            });
         }
         #endregion
     }

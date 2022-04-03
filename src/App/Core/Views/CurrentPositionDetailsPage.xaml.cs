@@ -110,25 +110,23 @@ namespace WhereToFly.App.Core.Views
         {
             base.OnAppearing();
 
-            await this.geolocationService.StartListeningAsync();
-
             this.geolocationService.PositionChanged += this.viewModel.OnPositionChanged;
 
             this.viewModel.StartCompass();
+
+            await this.InitPositionAsync();
         }
 
         /// <summary>
         /// Called when form is disappearing; stop position updates
         /// </summary>
-        protected override async void OnDisappearing()
+        protected override void OnDisappearing()
         {
             base.OnDisappearing();
 
             this.viewModel.StopCompass();
 
             this.geolocationService.PositionChanged -= this.viewModel.OnPositionChanged;
-
-            await this.geolocationService.StopListeningAsync();
         }
         #endregion
     }

@@ -748,11 +748,6 @@ namespace WhereToFly.App.Core.Views
         {
             base.OnAppearing();
 
-            Task.Run(async () =>
-            {
-                await this.geolocationService.StartListeningAsync();
-            });
-
             this.geolocationService.PositionChanged += this.OnPositionChanged;
 
             Xamarin.Essentials.Connectivity.ConnectivityChanged += this.OnConnectivityChanged;
@@ -800,11 +795,6 @@ namespace WhereToFly.App.Core.Views
 
             this.geolocationService.PositionChanged -= this.OnPositionChanged;
             Xamarin.Essentials.Connectivity.ConnectivityChanged -= this.OnConnectivityChanged;
-
-            Task.Run(async () =>
-            {
-                await this.geolocationService.StopListeningAsync();
-            });
         }
         #endregion
 
