@@ -446,7 +446,7 @@ export class MapView {
         var tilingScheme = new Cesium.WebMercatorTilingScheme();
 
         return new Cesium.UrlTemplateImageryProvider({
-            url: Cesium.Resource.createIfNeeded(url),
+            url: url,
             credit: new Cesium.Credit(creditText, false),
             tilingScheme: tilingScheme,
             tileWidth: 256,
