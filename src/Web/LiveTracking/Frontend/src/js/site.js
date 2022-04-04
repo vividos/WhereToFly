@@ -7,12 +7,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome-free/js/solid.js';
 import '@fortawesome/fontawesome-free/js/fontawesome.js';
 
-// Cesium.js
-import "cesium/Build/Cesium/Widgets/widgets.css";
-
 // Site
 import '../css/site.css';
-import '../css/mapView3D.css';
 import LiveTracking from './liveTracking.js';
 
 // Site initialisation

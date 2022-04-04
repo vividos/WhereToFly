@@ -1,5 +1,8 @@
 ﻿import $ from "jquery";
-import MapView from './mapView3D.js';
+
+// wheretofly-weblib
+import { MapView } from 'wheretofly-weblib/mapView.js';
+import 'wheretofly-weblib/mapView.css';
 
 export default class LiveTracking {
     /**

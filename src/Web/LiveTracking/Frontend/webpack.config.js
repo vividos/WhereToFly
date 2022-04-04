@@ -14,15 +14,22 @@ module.exports = {
         path: path.resolve(__dirname, '..', 'wwwroot')
     },
     devtool: 'source-map',
+    resolve: {
+        // resolve rules for some require() calls in CesiumJS
+        fallback: {
+            // these modules are used in loadWithHttpRequest(), which is never used
+            http: false,
+            https: false,
+            url: false,
+            zlib: false,
+        },
+    },
     module: {
         rules: [
             {
                 test: /\.css$/,
                 use: [{ loader: MiniCssExtractPlugin.loader }, "css-loader"],
                 sideEffects: true
-            }, {
-                test: /\.(png|gif|jpg|jpeg|svg|xml|json|czml)$/,
-                use: ['url-loader']
             },
             { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, use: ['file-loader'] },
             { test: /\.(woff|woff2)$/, use: ["url-loader?prefix=font/&limit=5000"] },
@@ -33,30 +40,17 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: "css/[name].css"
         }),
-        // Copy Cesium Assets, Widgets, and Workers to a static directory
+        // Copy images and data files
         new CopyWebpackPlugin({
             patterns: [
                 { from: 'src/favicon.png', to: 'favicon.png' },
                 { from: 'src/data', to: 'data' },
-                { from: 'src/images', to: 'images' },
                 { from: 'node_modules/wheretofly-weblib/dist/images', to: 'images' },
-                { from: 'node_modules/cesium/Build/Cesium/Workers', to: 'js/Workers' },
-                { from: 'node_modules/cesium/Build/Cesium/Assets', to: 'js/Assets' },
-                { from: 'node_modules/cesium/Build/Cesium/Widgets', to: 'js/Widgets' }
-            ],
-        }),
-        new webpack.DefinePlugin({
-            // Define relative base path in cesium for loading assets
-            CESIUM_BASE_URL: JSON.stringify('./js/')
+                { from: 'node_modules/wheretofly-weblib/dist/js/Assets', to: 'js/Assets' },
+                { from: 'node_modules/wheretofly-weblib/dist/js/ThirdParty', to: 'js/ThirdParty' },
+                { from: 'node_modules/wheretofly-weblib/dist/js/Widgets', to: 'js/Widgets' },
+                { from: 'node_modules/wheretofly-weblib/dist/js/Workers', to: 'js/Workers' }
+            ]
         })
     ],
-    amd: {
-        // Enable webpack-friendly use of require in Cesium
-        toUrlUndefined: true
-    },
-    resolve: {
-        // Needed when using webpack 5 until this bug is fixed in CesiumJS:
-        // https://github.com/CesiumGS/cesium/issues/9212
-        exportsFields: []
-    }
 };
