@@ -40,6 +40,14 @@ module.exports = {
                 use: [{ loader: MiniCssExtractPlugin.loader }, "css-loader"],
                 sideEffects: true
             },
+            // add .png files used in .css as inline (there's only one)
+            {
+                test: /\.png/,
+                include: [
+                    path.resolve(__dirname, 'node_modules/cesium/Build/Cesium/')
+                ],
+                type: 'asset/inline'
+            }
         ]
     },
     performance: {
