@@ -21,6 +21,16 @@ module.exports = {
         libraryTarget: "umd",
     },
     devtool: 'source-map',
+    resolve: {
+        // resolve rules for some require() calls in CesiumJS
+        fallback: {
+            // these modules are used in loadWithHttpRequest(), which is never used
+            http: false,
+            https: false,
+            url: false,
+            zlib: false,
+        },
+    },
     module: {
         rules: [
             {
