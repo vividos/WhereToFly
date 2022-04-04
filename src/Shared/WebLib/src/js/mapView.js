@@ -1515,7 +1515,7 @@ export class MapView {
         var url = Cesium.getAbsoluteUri(pinImage, window.location.href);
 
         let canvas = window.location.protocol === "file:" && !window.location.href.includes("android_asset")
-            ? await this.pinBuilder.fromColor(pinColor, 48)
+            ? this.pinBuilder.fromColor(pinColor, 48)
             : await this.pinBuilder.fromUrl(url, pinColor, 48)
 
         try {
@@ -2208,7 +2208,7 @@ export class MapView {
         var url = Cesium.getAbsoluteUri(pinImage, window.location.href);
 
         let canvas = window.location.protocol === "file:" && !window.location.href.includes("android_asset")
-            ? await this.pinBuilder.fromColor(pinColor, 48)
+            ? this.pinBuilder.fromColor(pinColor, 48)
             : await this.pinBuilder.fromUrl(url, pinColor, 48);
 
         try {
