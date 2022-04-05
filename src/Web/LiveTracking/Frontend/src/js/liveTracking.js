@@ -5,12 +5,18 @@ import { MapView } from 'wheretofly-weblib/mapView.js';
 import 'wheretofly-weblib/mapView.css';
 
 export default class LiveTracking {
+
+    /**
+     * Console log style
+     */
+    static consoleLogStyle = "background: yellow; color: indigo; padding: 1px 3px; border-radius: 3px;";
+
     /**
      * Creates a new live tracking object
      */
     constructor() {
 
-        console.log("LiveTracking: initializing live tracking site");
+        LiveTracking.log("initializing live tracking site");
 
         this.liveWaypointToIdMapping = {};
         this.liveTrackToIdMapping = {};
@@ -35,6 +41,13 @@ export default class LiveTracking {
     }
 
     /**
+     * Logs a message to the console, just like console.log, but with styled output.
+     */
+    static log(message) {
+        console.log("%cLiveTracking%c" + message, LiveTracking.consoleLogStyle);
+    }
+
+    /**
      * Initializes find box and sidebar
      */
     initPage() {
@@ -54,7 +67,7 @@ export default class LiveTracking {
      * @param {object} params action params
      */
     callMapAction(funcName, params) {
-        console.log("LiveTracking: call action: " + funcName + ", params: " + JSON.stringify(params));
+        LiveTracking.log("call action: " + funcName + ", params: " + JSON.stringify(params));
     }
 
     /**
@@ -62,7 +75,7 @@ export default class LiveTracking {
      */
     addDefaultLayerAndLocationListsAndTracks() {
 
-        console.log("LiveTracking: loading default data...");
+        LiveTracking.log("loading default data...");
 
         this.addCrossingTheAlpsLayer();
     }
@@ -76,7 +89,7 @@ export default class LiveTracking {
         $.get("/data/x-lakes-2020-wainwrights.czml",
             null,
             function (data) {
-                console.log("LiveTracking: successfully loaded czml file, adding layer");
+                LiveTracking.log("successfully loaded czml file, adding layer");
                 that.map.addLayer({
                     id: 'x-lakes-2020-layer',
                     name: 'X-Lakes 2020 Wainwrights',
@@ -98,7 +111,7 @@ export default class LiveTracking {
         $.get("/data/crossing-the-alps-2021.czml",
             null,
             function (data) {
-                console.log("LiveTracking: successfully loaded czml file, adding layer");
+                LiveTracking.log("successfully loaded czml file, adding layer");
                 that.map.addLayer({
                     id: 'crossing-the-alps-2021-layer',
                     name: 'Crossing the Alps 2021',
@@ -172,7 +185,7 @@ export default class LiveTracking {
      */
     geocodeAndShow(address) {
 
-        console.log("LiveTracking: geocoding find text: " + address);
+        LiveTracking.log("geocoding find text: " + address);
 
         var endpoint = 'https://nominatim.openstreetmap.org/search';
 
@@ -248,7 +261,7 @@ export default class LiveTracking {
      */
     updateLiveWaypoint(liveWaypointUri) {
 
-        console.log("LiveTracking: updating live waypoint " + liveWaypointUri);
+        LiveTracking.log("updating live waypoint " + liveWaypointUri);
 
         var that = this;
         $.ajax({
@@ -269,7 +282,7 @@ export default class LiveTracking {
      */
     onUpdateLiveWaypointResult(liveWaypointUri, result) {
 
-        console.log("LiveTracking: update result: " + JSON.stringify(result));
+        LiveTracking.log("update result: " + JSON.stringify(result));
 
         if (result.data !== undefined) {
             result.data.id = liveWaypointUri;
@@ -311,7 +324,7 @@ export default class LiveTracking {
      */
     updateLiveTrack(liveTrackUri) {
 
-        console.log("LiveTracking: updating live track " + liveTrackUri);
+        LiveTracking.log("updating live track " + liveTrackUri);
 
         var that = this;
         $.ajax({
@@ -370,7 +383,7 @@ export default class LiveTracking {
      */
     scheduleNextUpdate(liveDataUri, nextRequestDate) {
 
-        console.log("LiveTracking: scheduling next update for live waypoint or track " + liveDataUri);
+        LiveTracking.log("scheduling next update for live waypoint or track " + liveDataUri);
 
         if (this.updateTimeoutMapping[liveDataUri] !== undefined)
             clearTimeout(this.updateTimeoutMapping[liveDataUri]);
@@ -382,11 +395,11 @@ export default class LiveTracking {
         if (millisTillUpdate < 0)
             millisTillUpdate = 10 * 1000; // schedule in 10 seconds
 
-        console.log("LiveTracking: scheduling update in " + (millisTillUpdate / 1000.0).toFixed(1) + " seconds");
+        LiveTracking.log("scheduling update in " + (millisTillUpdate / 1000.0).toFixed(1) + " seconds");
 
         var that = this;
         var myTimeout = setTimeout(function () {
-            console.log("LiveTracking: next update for " + liveDataUri + " is due!");
+            LiveTracking.log("next update for " + liveDataUri + " is due!");
             if (liveDataUri in that.liveTrackToIdMapping)
                 that.updateLiveTrack(liveDataUri);
             else
