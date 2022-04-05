@@ -45,17 +45,17 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: "css/[name].css"
         }),
-        // Copy Cesium Assets, Widgets, and Workers to a static directory
+        // Copy images and data files
         new CopyWebpackPlugin({
             patterns: [
                 { from: 'src/favicon.png', to: 'favicon.png' },
                 { from: 'src/data', to: 'data' },
-                { from: 'src/images', to: 'images' },
                 { from: 'node_modules/wheretofly-weblib/dist/images', to: 'images' },
-                { from: 'node_modules/cesium/Build/Cesium/Workers', to: 'js/Workers' },
-                { from: 'node_modules/cesium/Build/Cesium/Assets', to: 'js/Assets' },
-                { from: 'node_modules/cesium/Build/Cesium/Widgets', to: 'js/Widgets' }
-            ],
+                { from: 'node_modules/wheretofly-weblib/dist/js/Assets', to: 'js/Assets' },
+                { from: 'node_modules/wheretofly-weblib/dist/js/ThirdParty', to: 'js/ThirdParty' },
+                { from: 'node_modules/wheretofly-weblib/dist/js/Widgets', to: 'js/Widgets' },
+                { from: 'node_modules/wheretofly-weblib/dist/js/Workers', to: 'js/Workers' }
+            ]
         })
-    ]
+    ],
 };
