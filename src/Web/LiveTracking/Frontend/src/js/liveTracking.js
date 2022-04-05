@@ -164,7 +164,7 @@ export default class LiveTracking {
         });
 
         this.updateLiveTrack(liveTrackId);
-    };
+    }
 
     /**
      * Geocodes entered address and shows pin
@@ -324,7 +324,7 @@ export default class LiveTracking {
             .done(function (result) {
                 that.onUpdateLiveTrackResult(liveTrackUri, result);
             });
-    };
+    }
 
     /**
      * Called when updated live waypoint data is available
@@ -332,8 +332,6 @@ export default class LiveTracking {
      * @param {Object} result ajax result object with updated data, or a string as error message
      */
     onUpdateLiveTrackResult(liveTrackUri, result) {
-
-        //console.log("LiveTracking: update result: " + JSON.stringify(result));
 
         if (result.data !== undefined) {
             result.data.id = liveTrackUri;
@@ -363,7 +361,7 @@ export default class LiveTracking {
         // schedule next update based on reported date
         if (result.nextRequestDate !== undefined)
             this.scheduleNextUpdate(liveTrackUri, result.nextRequestDate);
-    };
+    }
 
     /**
      * Schedules next update for live waypoint, using next request date from query result
