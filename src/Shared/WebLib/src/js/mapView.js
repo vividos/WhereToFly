@@ -248,6 +248,7 @@ export class MapView {
         this.setupLiveTrackToolbar();
 
         // swap out console.error for logging purposes
+        var that = this;
         var oldLog = console.error;
         console.error = function (message) {
             that.onConsoleErrorMessage(message);
