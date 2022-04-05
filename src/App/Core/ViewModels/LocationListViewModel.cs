@@ -24,7 +24,7 @@ namespace WhereToFly.App.Core.ViewModels
         private readonly Dictionary<string, string> includedLocationsList = new Dictionary<string, string>
         {
             { "Example Schliersee locations", "default" },
-            { "Paraglidingspots European Alps Vs. 2.00", "paraglidingspots_european_alps_2020_10_01.kmz" },
+            { "Paraglidingspots European Alps Vs. 2.02", "paraglidingspots_european_alps_2022_03_29.kmz" },
         };
 
         /// <summary>
