@@ -108,7 +108,10 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Returns if the "add tour plan location" menu item is enabled
         /// </summary>
-        public bool IsEnabledAddTourPlanLocation => this.Location?.IsPlanTourLocation ?? false;
+        public bool IsEnabledAddTourPlanLocation
+        {
+            get => this.Location?.IsPlanTourLocation ?? false;
+        }
 
         /// <summary>
         /// Command to execute when "add tour plan location" toolbar item item is selected
