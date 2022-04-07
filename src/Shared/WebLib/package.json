@@ -25,7 +25,7 @@
   "license": "BSD-3-Clause",
   "devDependencies": {
     "@babel/cli": "^7.17.6",
-    "@babel/core": "^7.17.8",
+    "@babel/core": "^7.17.9",
     "@babel/preset-env": "^7.16.11",
     "babel-loader": "^8.2.4",
     "copy-webpack-plugin": "^10.2.4",
@@ -37,7 +37,7 @@
     "terser-webpack-plugin": "^5.3.1",
     "webpack": "^5.71.0",
     "webpack-cli": "^4.9.2",
-    "webpack-dev-server": "^4.7.4"
+    "webpack-dev-server": "^4.8.1"
   },
   "dependencies": {
     "cesium": "^1.92.0",
@@ -46,6 +46,6 @@
     "chartjs-plugin-crosshair": "^1.2.0",
     "chartjs-plugin-zoom": "^1.2.1",
     "core-js": "^3.21.1",
-    "moment": "^2.29.1"
+    "moment": "^2.29.2"
   }
 }
