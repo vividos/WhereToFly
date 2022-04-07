@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="HtmlAgilityPack" Version="1.11.42" />
-    <PackageReference Include="Markdig" Version="0.28.0" />
+    <PackageReference Include="Markdig" Version="0.28.1" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.5.0" />
     <PackageReference Include="Microsoft.AppCenter.Distribute" Version="4.5.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
