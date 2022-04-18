@@ -53,8 +53,9 @@ namespace WhereToFly.App.Core.ViewModels
         {
             get
             {
-                return this.position == null ? string.Empty :
-                    DataFormatter.FormatLatLong(this.position.Longitude, this.appSettings.CoordinateDisplayFormat);
+                return this.position == null
+                    ? string.Empty
+                    : DataFormatter.FormatLatLong(this.position.Longitude, this.appSettings.CoordinateDisplayFormat);
             }
         }
 
@@ -65,8 +66,9 @@ namespace WhereToFly.App.Core.ViewModels
         {
             get
             {
-                return this.position == null ? string.Empty :
-                    DataFormatter.FormatLatLong(this.position.Latitude, this.appSettings.CoordinateDisplayFormat);
+                return this.position == null
+                    ? string.Empty
+                    : DataFormatter.FormatLatLong(this.position.Latitude, this.appSettings.CoordinateDisplayFormat);
             }
         }
 
@@ -77,7 +79,9 @@ namespace WhereToFly.App.Core.ViewModels
         {
             get
             {
-                return this.position == null ? string.Empty : ((int)this.position.Altitude).ToString();
+                return this.position == null || this.position.Altitude == null
+                    ? string.Empty
+                    : ((int)this.position.Altitude.Value).ToString();
             }
         }
 
@@ -88,7 +92,9 @@ namespace WhereToFly.App.Core.ViewModels
         {
             get
             {
-                return this.position == null ? string.Empty : ((int)this.position.Accuracy).ToString();
+                return this.position == null || this.position.Accuracy == null
+                    ? string.Empty
+                    : ((int)this.position.Accuracy.Value).ToString();
             }
         }
 
@@ -99,7 +105,9 @@ namespace WhereToFly.App.Core.ViewModels
         {
             get
             {
-                return this.position == null ? Color.Black : Color.FromHex(ColorFromPositionAccuracy((int)this.position.Accuracy));
+                return this.position == null || this.position.Accuracy == null
+                    ? Color.Black
+                    : Color.FromHex(ColorFromPositionAccuracy((int)this.position.Accuracy.Value));
             }
         }
 
@@ -168,9 +176,9 @@ namespace WhereToFly.App.Core.ViewModels
                     return this.currentCompassHeading;
                 }
 
-                return this.position == null
+                return this.position == null || this.position.Course == null
                     ? 0
-                    : (int)(this.position.Course ?? 0.0);
+                    : (int)this.position.Course.Value;
             }
         }
 
@@ -182,6 +190,7 @@ namespace WhereToFly.App.Core.ViewModels
             get
             {
                 return this.position != null &&
+                    this.position.Accuracy.HasValue &&
                     this.position.Accuracy < 100.0;
             }
         }
@@ -216,7 +225,7 @@ namespace WhereToFly.App.Core.ViewModels
                     return "N/A";
                 }
 
-                return this.currentSolarTimes.Sunrise.HasValue
+                return this.currentSolarTimes.Sunset.HasValue
                   ? DataFormatter.FormatDuration(this.currentSolarTimes.Sunset.Value.ToLocalTime().TimeOfDay)
                   : "No sunset today";
             }
