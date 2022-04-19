@@ -1,5 +1,4 @@
-﻿using WhereToFly.App.Core.ViewModels;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.Views
 {
