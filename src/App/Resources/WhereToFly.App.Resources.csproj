@@ -18,8 +18,6 @@
     <AndroidAsset Include="..\..\..\Changelog.md">
       <Link>Assets\info\Changelog.md</Link>
     </AndroidAsset>
-    <AndroidAsset Remove="Assets\map\charttest.html" />
-    <AndroidAsset Remove="Assets\map\maptest.html" />
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
@@ -30,8 +28,6 @@
     <BundleResource Include="..\..\..\Changelog.md">
       <Link>Assets\info\Changelog.md</Link>
     </BundleResource>
-    <BundleResource Remove="Assets\map\charttest.html" />
-    <BundleResource Remove="Assets\map\maptest.html" />
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('uap10.0')) ">
@@ -42,8 +38,6 @@
     <Content Include="..\..\..\Changelog.md">
       <Link>Assets\info\Changelog.md</Link>
     </Content>
-    <Content Remove="Assets\map\charttest.html" />
-    <Content Remove="Assets\map\maptest.html" />
   </ItemGroup>
 
 </Project>
