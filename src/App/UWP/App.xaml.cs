@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net.Http;
 using WhereToFly.App.Core;
@@ -43,7 +42,6 @@ namespace WhereToFly.App.UWP
         /// </summary>
         /// <param name="args">event args for activation event</param>
         /// <param name="parameters">page parameters</param>
-        [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1126:PrefixCallsCorrectly", Justification = "false positive")]
         private void SetupRootFrame(IActivatedEventArgs args, object parameters)
         {
             // Do not repeat app initialization when the Window already has content,

@@ -12,7 +12,6 @@ using System.Collections.Generic;
 /// </summary>
 namespace WhereToFly.Geo.SunCalcNet
 {
-#pragma warning disable SA1306 // Variable names and private field names must start with a lower-case letter
 #pragma warning disable SA1312 // Variable names should begin with lower-case letter
 
     /// <summary>

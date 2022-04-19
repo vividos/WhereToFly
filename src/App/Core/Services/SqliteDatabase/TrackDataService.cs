@@ -3,7 +3,6 @@ using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,7 +25,6 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         /// Database entry for a track
         /// </summary>
         [Table("tracks")]
-        [SuppressMessage("StyleCop.CSharp.Naming", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "database entry object")]
         private sealed class TrackEntry
         {
             /// <summary>

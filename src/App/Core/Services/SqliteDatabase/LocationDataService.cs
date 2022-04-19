@@ -2,7 +2,6 @@
 using SQLite;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using WhereToFly.App.Model;
@@ -20,7 +19,6 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         /// Database entry for a location
         /// </summary>
         [Table("locations")]
-        [SuppressMessage("StyleCop.CSharp.Naming", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "database entry object")]
         private sealed class LocationEntry
         {
             /// <summary>

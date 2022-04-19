@@ -196,14 +196,6 @@ namespace WhereToFly.Geo.DataFormats
         /// Parses H record, as defined in Annex 1, chapter 3.3
         /// </summary>
         /// <param name="line">line to parse</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "StyleCop.CSharp.ReadabilityRules",
-            "SA1113:CommaMustBeOnSameLineAsPreviousParameter",
-            Justification = "False positive")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "StyleCop.CSharp.ReadabilityRules",
-            "SA1117:ParametersMustBeOnSameLineOrSeparateLines",
-            Justification = "False positive")]
         private void ParseRecordH(string line)
         {
             if (line.StartsWith("HFDTE"))
@@ -276,10 +268,6 @@ namespace WhereToFly.Geo.DataFormats
         /// </summary>
         /// <param name="line">line to parse</param>
         /// <returns>parsed track point</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "StyleCop.CSharp.ReadabilityRules",
-            "SA1117:ParametersMustBeOnSameLineOrSeparateLines",
-            Justification = "False positive")]
         private Model.TrackPoint ParseRecordB(string line)
         {
 #pragma warning disable S125 // Sections of code should not be "commented out"
@@ -342,10 +330,6 @@ namespace WhereToFly.Geo.DataFormats
         /// </summary>
         /// <param name="latLong">latitude or longitude value as text</param>
         /// <returns>parsed latitude or longitude value</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "StyleCop.CSharp.ReadabilityRules",
-            "SA1113:CommaMustBeOnSameLineAsPreviousParameter",
-            Justification = "False positive")]
         private static double ParseLatLong(string latLong)
         {
             int decimalValue = Convert.ToInt32(latLong.Substring(0, 3));

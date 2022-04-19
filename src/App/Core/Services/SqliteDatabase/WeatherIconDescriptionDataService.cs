@@ -1,6 +1,5 @@
 ﻿using SQLite;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using WhereToFly.App.Model;
@@ -16,7 +15,6 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         /// Database entry for a weather icon description
         /// </summary>
         [Table("weather_icons")]
-        [SuppressMessage("StyleCop.CSharp.Naming", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "database entry object")]
         private sealed class WeatherIconDescriptionEntry
         {
             /// <summary>

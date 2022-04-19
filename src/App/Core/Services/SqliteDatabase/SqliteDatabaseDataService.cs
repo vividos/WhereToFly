@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SQLite;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -52,7 +51,6 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         /// Database entry for app data
         /// </summary>
         [Table("appdata")]
-        [SuppressMessage("StyleCop.CSharp.Naming", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "database entry object")]
         internal class AppDataEntry
         {
             /// <summary>
@@ -94,7 +92,6 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         /// Database entry for websites and their favicon urls
         /// </summary>a
         [Table("favicons")]
-        [SuppressMessage("StyleCop.CSharp.Naming", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "database entry object")]
         private sealed class FaviconUrlEntry
         {
             /// <summary>

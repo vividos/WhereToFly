@@ -215,14 +215,6 @@ namespace WhereToFly.Geo.DataFormats
         /// <param name="node">wpt or trkpt node to parse</param>
         /// <param name="latitude">parsed latitude value</param>
         /// <param name="longitude">parsed longitude value</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "StyleCop.CSharp.ReadabilityRules",
-            "SA1113:CommaMustBeOnSameLineAsPreviousParameter",
-            Justification = "False positive")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "StyleCop.CSharp.ReadabilityRules",
-            "SA1117:ParametersMustBeOnSameLineOrSeparateLines",
-            Justification = "False positive")]
         private static void ParseLatLongAttributes(XmlNode node, out double latitude, out double longitude)
         {
             bool canParseLatitude = double.TryParse(
