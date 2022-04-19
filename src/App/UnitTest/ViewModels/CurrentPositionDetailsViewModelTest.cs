@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using WhereToFly.App.Core.ViewModels;
 using WhereToFly.App.Model;
+using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest.ViewModels
 {
@@ -30,7 +32,60 @@ namespace WhereToFly.App.UnitTest.ViewModels
             var viewModel = new CurrentPositionDetailsViewModel(appSettings);
 
             // check
+            Assert.AreEqual(string.Empty, viewModel.Longitude, "longitude text must be correct");
+            Assert.AreEqual(string.Empty, viewModel.Latitude, "latitude text must be correct");
+            Assert.AreEqual(string.Empty, viewModel.Altitude, "altitude text must be correct");
+            Assert.AreEqual(string.Empty, viewModel.Accuracy, "accuracy text must be correct");
+            Assert.AreEqual(Color.Black, viewModel.PositionAccuracyColor, "accuracy color must be black");
+            Assert.AreEqual("Unknown", viewModel.LastPositionFix, "last position fix text must be correct");
+            Assert.AreEqual(0, viewModel.SpeedInKmh, "speed value must be correct");
             Assert.IsFalse(viewModel.IsHeadingAvail, "initially heading is not available");
+            Assert.AreEqual(0, viewModel.HeadingInDegrees, "heading value must be correct");
+            Assert.IsFalse(viewModel.IsSunriseSunsetAvail, "sunrise/sunset must not be available");
+            Assert.AreEqual("N/A", viewModel.SunriseTime, "sunrise time text must be correct");
+            Assert.AreEqual("N/A", viewModel.SunsetTime, "sunset time text must be correct");
+        }
+
+        /// <summary>
+        /// Tests updating the location values
+        /// </summary>
+        [TestMethod]
+        public void TestLocationUpdate()
+        {
+            // set up
+            var appSettings = new AppSettings();
+            appSettings.CoordinateDisplayFormat = CoordinateDisplayFormat.Format_dd_mm_sss;
+
+            var viewModel = new CurrentPositionDetailsViewModel(appSettings);
+
+            // run
+            var location = new Xamarin.Essentials.Location(48.137222, 11.575556, 512)
+            {
+                AltitudeReferenceSystem = Xamarin.Essentials.AltitudeReferenceSystem.Geoid,
+                Accuracy = 42,
+                Course = 64.2,
+                Speed = 4.1,
+                Timestamp = new DateTimeOffset(2022, 4, 19, 7, 44, 0, TimeSpan.FromHours(2)),
+                IsFromMockProvider = true,
+            };
+
+            viewModel.OnPositionChanged(
+                this,
+                new Core.GeolocationEventArgs(location));
+
+            // check
+            Assert.AreEqual("11° 34' 32\"", viewModel.Longitude, "longitude text must be correct");
+            Assert.AreEqual("48° 8' 13\"", viewModel.Latitude, "latitude text must be correct");
+            Assert.AreEqual("512", viewModel.Altitude, "altitude text must be correct");
+            Assert.AreEqual("42", viewModel.Accuracy, "accuracy text must be correct");
+            Assert.AreEqual(Color.FromHex("#E0E000"), viewModel.PositionAccuracyColor, "accuracy color must be black");
+            Assert.IsTrue(viewModel.LastPositionFix.Contains(" ago"), "last position fix text must end with text");
+            Assert.AreEqual(14, viewModel.SpeedInKmh, "speed value must be correct");
+            Assert.IsTrue(viewModel.IsHeadingAvail, "initially heading is not available");
+            Assert.AreEqual(64, viewModel.HeadingInDegrees, "heading value must be correct");
+            Assert.IsTrue(viewModel.IsSunriseSunsetAvail, "sunrise/sunset must not be available");
+            Assert.AreEqual("6:13:05", viewModel.SunriseTime, "sunrise time text must be correct");
+            Assert.AreEqual("20:14:49", viewModel.SunsetTime, "sunset time text must be correct");
         }
 
         /// <summary>
@@ -44,7 +99,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
             var viewModel = new CurrentPositionDetailsViewModel(appSettings);
 
             // run
-            var location = new Xamarin.Essentials.Location(48.1, 11.8);
+            var location = new Xamarin.Essentials.Location(48.137222, 11.575556);
             viewModel.OnPositionChanged(
                 this,
                 new Core.GeolocationEventArgs(location));
