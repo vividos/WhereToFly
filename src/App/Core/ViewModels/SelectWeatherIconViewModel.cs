@@ -107,7 +107,7 @@ namespace WhereToFly.App.Core.ViewModels
             bool IsAppAvailable(WeatherIconDescription weatherIcon)
             {
                 return weatherIcon.Type != WeatherIconDescription.IconType.IconApp ||
-                    appManager.IsAvailable(weatherIcon.WebLink);
+                    (appManager != null && appManager.IsAvailable(weatherIcon.WebLink));
             }
         }
 
