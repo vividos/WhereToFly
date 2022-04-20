@@ -37,7 +37,7 @@ namespace WhereToFly.App.UnitTest.Views
         {
             // set up
             var webView = new WebView();
-            var mapView = new MapView(webView);
+            var mapView = new Core.Views.MapView(webView);
 
             // run
             await mapView.CreateAsync(
@@ -59,7 +59,7 @@ namespace WhereToFly.App.UnitTest.Views
         {
             // set up
             var webView = new WebView();
-            var mapView = new MapView(webView);
+            var mapView = new Core.Views.MapView(webView);
 
             Assert.IsTrue(mapView.UseEntityClustering, "initial settings value must be correct");
 
@@ -88,7 +88,7 @@ namespace WhereToFly.App.UnitTest.Views
         {
             // set up
             var webView = new WebView();
-            var mapView = new MapView(webView);
+            var mapView = new Core.Views.MapView(webView);
             var locationList = DataServiceHelper.GetDefaultLocationList();
 
             // run
@@ -114,7 +114,7 @@ namespace WhereToFly.App.UnitTest.Views
         {
             // set up
             var webView = new WebView();
-            var mapView = new MapView(webView);
+            var mapView = new Core.Views.MapView(webView);
             var track = UnitTestHelper.GetDefaultTrack();
 
             // run
@@ -137,7 +137,7 @@ namespace WhereToFly.App.UnitTest.Views
         {
             // set up
             var webView = new WebView();
-            var mapView = new MapView(webView);
+            var mapView = new Core.Views.MapView(webView);
             var layer = DataServiceHelper.GetInitialLayerList().First();
 
             // run
@@ -159,7 +159,7 @@ namespace WhereToFly.App.UnitTest.Views
             string jsonParameters = "{ name: 'find result', latitude: 48.2, longitude: 11.8 }";
 
             // run
-            var parameters = JsonConvert.DeserializeObject<MapView.AddFindResultParameter>(jsonParameters);
+            var parameters = JsonConvert.DeserializeObject<Core.Views.MapView.AddFindResultParameter>(jsonParameters);
 
             // check
             Assert.AreEqual("find result", parameters.Name, "deserialized name must match");
