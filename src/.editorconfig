@@ -215,6 +215,9 @@ dotnet_diagnostic.CA1031.severity = none
 # SA0001: XML comment analysis is disabled due to project configuration
 dotnet_diagnostic.SA0001.severity = none
 
+# SA1000: Keywords should be spaced correctly
+dotnet_diagnostic.SA1000.severity = none
+
 # SA1124: Do not use regions
 dotnet_diagnostic.SA1124.severity = none
 
@@ -266,7 +269,7 @@ dotnet_diagnostic.SA1649.severity = none
 dotnet_diagnostic.S1172.severity = none
 
 # S3267: Loops should be simplified with "LINQ" expressions
-dotnet_diagnostic.S3267.severity = suggestion
+dotnet_diagnostic.S3267.severity = none
 
 # S3260: Non-derived "private" classes and records should be "sealed"
-dotnet_diagnostic.S3260.severity = suggestion
+dotnet_diagnostic.S3260.severity = none
