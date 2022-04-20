@@ -21,7 +21,7 @@ namespace WhereToFly.App.Core.Controls
         /// initialized
         /// </summary>
         private readonly TaskCompletionSource<bool> taskCompletionSourceViewInitialized
-            = new TaskCompletionSource<bool>();
+            = new();
 
         /// <summary>
         /// Height profile view to display

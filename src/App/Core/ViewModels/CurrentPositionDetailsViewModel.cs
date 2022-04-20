@@ -23,7 +23,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Timer to update LastPositionFix property
         /// </summary>
-        private readonly Timer timerUpdateLastPositionFix = new Timer();
+        private readonly Timer timerUpdateLastPositionFix = new();
 
         /// <summary>
         /// Current position

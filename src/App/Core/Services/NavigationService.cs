@@ -24,7 +24,7 @@ namespace WhereToFly.App.Core.Services
         /// passed
         /// </summary>
         private static readonly Dictionary<PageKey, (Type, Type)> PageKeyToPageMap =
-            new Dictionary<PageKey, (Type, Type)>
+            new()
             {
                 { PageKey.MapPage, (typeof(MapPage), null) },
                 { PageKey.LayerListPage, (typeof(LayerListPage), null) },
@@ -47,7 +47,7 @@ namespace WhereToFly.App.Core.Services
         /// must be passed.
         /// </summary>
         private static readonly Dictionary<PopupPageKey, (Type, Type)> PopupPageKeyToPageMap =
-            new Dictionary<PopupPageKey, (Type, Type)>
+            new()
             {
                 { PopupPageKey.AddLayerPopupPage, (typeof(AddLayerPopupPage), null) },
                 { PopupPageKey.SelectWeatherIconPopupPage, (typeof(SelectWeatherIconPopupPage), typeof(string)) },

@@ -69,25 +69,25 @@ namespace WhereToFly.Geo
         /// Mapping between takeoff direction string to takeoff direction enum value
         /// </summary>
         private static readonly Dictionary<string, TakeoffDirections> MapDirectionToEnum =
-            new Dictionary<string, TakeoffDirections>
-        {
-            { "N", TakeoffDirections.N },
-            { "NNE", TakeoffDirections.NNE },
-            { "NE", TakeoffDirections.NE },
-            { "ENE", TakeoffDirections.ENE },
-            { "E", TakeoffDirections.E },
-            { "ESE", TakeoffDirections.ESE },
-            { "SE", TakeoffDirections.SE },
-            { "SSE", TakeoffDirections.SSE },
-            { "S", TakeoffDirections.S },
-            { "SSW", TakeoffDirections.SSW },
-            { "SW", TakeoffDirections.SW },
-            { "WSW", TakeoffDirections.WSW },
-            { "W", TakeoffDirections.W },
-            { "WNW", TakeoffDirections.WNW },
-            { "NW", TakeoffDirections.NW },
-            { "NNW", TakeoffDirections.NNW },
-        };
+            new()
+            {
+                { "N", TakeoffDirections.N },
+                { "NNE", TakeoffDirections.NNE },
+                { "NE", TakeoffDirections.NE },
+                { "ENE", TakeoffDirections.ENE },
+                { "E", TakeoffDirections.E },
+                { "ESE", TakeoffDirections.ESE },
+                { "SE", TakeoffDirections.SE },
+                { "SSE", TakeoffDirections.SSE },
+                { "S", TakeoffDirections.S },
+                { "SSW", TakeoffDirections.SSW },
+                { "SW", TakeoffDirections.SW },
+                { "WSW", TakeoffDirections.WSW },
+                { "W", TakeoffDirections.W },
+                { "WNW", TakeoffDirections.WNW },
+                { "NW", TakeoffDirections.NW },
+                { "NNW", TakeoffDirections.NNW },
+            };
 
         /// <summary>
         /// Tries to parse a direction or range of directions text

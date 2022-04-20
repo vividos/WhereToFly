@@ -32,27 +32,27 @@ namespace WhereToFly.Geo.Airspace
         /// <summary>
         /// List of all airspaces parsed
         /// </summary>
-        private readonly List<Airspace> allAirspaces = new List<Airspace>();
+        private readonly List<Airspace> allAirspaces = new();
 
         /// <summary>
         /// All parsing warnings or errors
         /// </summary>
-        private readonly List<string> parsingErrors = new List<string>();
+        private readonly List<string> parsingErrors = new();
 
         /// <summary>
         /// All file comment lines collected so far
         /// </summary>
-        private readonly List<string> fileCommentLines = new List<string>();
+        private readonly List<string> fileCommentLines = new();
 
         /// <summary>
         /// Dictionary with current values of defined variables
         /// </summary>
-        private readonly Dictionary<string, string> currentVariables = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> currentVariables = new();
 
         /// <summary>
         /// Currently collected comment lines
         /// </summary>
-        private readonly List<string> currentCommentLines = new List<string>();
+        private readonly List<string> currentCommentLines = new();
 
         /// <summary>
         /// Currently parsed line
@@ -300,7 +300,7 @@ namespace WhereToFly.Geo.Airspace
         /// <summary>
         /// Mapping from OpenAir airspace class as text to AirspaceClass enum
         /// </summary>
-        private static readonly Dictionary<string, AirspaceClass> AirspaceMapping = new Dictionary<string, AirspaceClass>
+        private static readonly Dictionary<string, AirspaceClass> AirspaceMapping = new()
         {
             { "R", AirspaceClass.Restricted },
             { "Q", AirspaceClass.Danger },

@@ -13,7 +13,7 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Task completion source for result
         /// </summary>
-        private readonly TaskCompletionSource<TResult> tcs = new TaskCompletionSource<TResult>();
+        private readonly TaskCompletionSource<TResult> tcs = new();
 
         /// <summary>
         /// Task that resolves to the result object when the popup is closed.

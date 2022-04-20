@@ -34,7 +34,7 @@ namespace WhereToFly.App.Core.Views
         /// Task completion source for when map is fully initialized
         /// </summary>
         private TaskCompletionSource<bool> taskCompletionSourceMapInitialized
-            = new TaskCompletionSource<bool>();
+            = new();
 
         /// <summary>
         /// Task completion source for when SampleTrackHeights() has finished

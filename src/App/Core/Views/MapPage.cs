@@ -24,7 +24,7 @@ namespace WhereToFly.App.Core.Views
         /// Task completion source to signal that the web page has been loaded
         /// </summary>
         private readonly TaskCompletionSource<bool> taskCompletionSourcePageLoaded
-            = new TaskCompletionSource<bool>();
+            = new();
 
         /// <summary>
         /// Geolocation service to use for position updates
@@ -34,7 +34,7 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Tour planning parameters for the map page
         /// </summary>
-        private readonly PlanTourParameters planTourParameters = new PlanTourParameters();
+        private readonly PlanTourParameters planTourParameters = new();
 
         /// <summary>
         /// Indicates if the next position update should also zoom to my position

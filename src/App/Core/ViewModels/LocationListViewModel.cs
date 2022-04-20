@@ -21,7 +21,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// A mapping of display string to locations list filename, stored as Assets in the app
         /// </summary>
-        private readonly Dictionary<string, string> includedLocationsList = new Dictionary<string, string>
+        private readonly Dictionary<string, string> includedLocationsList = new()
         {
             { "Example Schliersee locations", "default" },
             { "Paraglidingspots European Alps Vs. 2.02", "paraglidingspots_european_alps_2022_03_29.kmz" },
@@ -30,7 +30,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// A mapping of display string to website address to open
         /// </summary>
-        private readonly Dictionary<string, string> downloadWebSiteList = new Dictionary<string, string>
+        private readonly Dictionary<string, string> downloadWebSiteList = new()
         {
             { "vividos' Where-to-fly resources", "http://www.vividos.de/wheretofly/index.html" },
             { "Paraglidingspots.com", "https://paraglidingspots.com/downloadselect.aspx" },
@@ -49,7 +49,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Location list
         /// </summary>
-        private List<Location> locationList = new List<Location>();
+        private List<Location> locationList = new();
 
         /// <summary>
         /// Backing field for "IsListRefreshActive" property

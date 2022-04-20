@@ -31,12 +31,12 @@ namespace WhereToFly.Geo.DataFormats
         /// <summary>
         /// Header fields, from H records
         /// </summary>
-        private readonly Dictionary<string, string> headerFields = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> headerFields = new();
 
         /// <summary>
         /// All parsing warnings or errors
         /// </summary>
-        private readonly List<string> parsingErrors = new List<string>();
+        private readonly List<string> parsingErrors = new();
 
         /// <summary>
         /// Currently parsed line

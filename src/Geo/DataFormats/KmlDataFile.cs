@@ -29,17 +29,17 @@ namespace WhereToFly.Geo.DataFormats
         /// <summary>
         /// List of track placemarks
         /// </summary>
-        private readonly List<Placemark> trackPlacemarkList = new List<Placemark>();
+        private readonly List<Placemark> trackPlacemarkList = new();
 
         /// <summary>
         /// List of track display names
         /// </summary>
-        private readonly List<string> trackDisplayNameList = new List<string>();
+        private readonly List<string> trackDisplayNameList = new();
 
         /// <summary>
         /// List of location placemarks
         /// </summary>
-        private readonly List<Placemark> locationPlacemarkList = new List<Placemark>();
+        private readonly List<Placemark> locationPlacemarkList = new();
 
         /// <summary>
         /// Creates a new KML data file from stream
@@ -396,7 +396,7 @@ namespace WhereToFly.Geo.DataFormats
         /// <summary>
         /// Mapping from a text that can occur in a placemark icon link, to a LocationType
         /// </summary>
-        private static readonly Dictionary<string, LocationType> IconLinkToLocationTypeMap = new Dictionary<string, LocationType>
+        private static readonly Dictionary<string, LocationType> IconLinkToLocationTypeMap = new()
         {
             // paraglidingsports.com types
             { "iconpg_sp.png", LocationType.FlyingTakeoff },

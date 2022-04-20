@@ -301,7 +301,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             /// <summary>
             /// Cache for tracks, with track ID as key
             /// </summary>
-            private readonly Dictionary<string, Track> trackCache = new Dictionary<string, Track>();
+            private readonly Dictionary<string, Track> trackCache = new();
 
             /// <summary>
             /// Creates a new track data service

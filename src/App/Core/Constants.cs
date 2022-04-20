@@ -56,7 +56,7 @@ namespace WhereToFly.App.Core
         /// <summary>
         /// Initial center point for the map when no last know position is available
         /// </summary>
-        public static readonly MapPoint InitialCenterPoint = new MapPoint(47.67, 11.88);
+        public static readonly MapPoint InitialCenterPoint = new(47.67, 11.88);
 
         /// <summary>
         /// Bing maps API key; used for displaying Bing maps layer

@@ -34,7 +34,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         /// <summary>
         /// Data service to access backend
         /// </summary>
-        private readonly BackendDataService backendDataService = new BackendDataService();
+        private readonly BackendDataService backendDataService = new();
 
         /// <summary>
         /// Track data service; only created once for caching purposes

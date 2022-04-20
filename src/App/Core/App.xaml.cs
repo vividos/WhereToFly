@@ -33,7 +33,7 @@ namespace WhereToFly.App.Core
         /// initialisation
         /// </summary>
         private static readonly TaskCompletionSource<bool> TaskCompletionSourceInitialized
-            = new TaskCompletionSource<bool>();
+            = new();
 
         /// <summary>
         /// Application settings

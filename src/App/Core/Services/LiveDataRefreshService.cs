@@ -34,33 +34,33 @@ namespace WhereToFly.App.Core.Services
         /// Lock for liveWaypointMap, liveTrackMap, liveTrackLastTrackPointTimeMap,
         /// nextUpdateQueue and nextPossibleUpdateMap
         /// </summary>
-        private readonly object dataLock = new object();
+        private readonly object dataLock = new();
 
         /// <summary>
         /// Mapping of live waypoint IDs and their location objects
         /// </summary>
-        private readonly Dictionary<string, Location> liveWaypointMap = new Dictionary<string, Location>();
+        private readonly Dictionary<string, Location> liveWaypointMap = new();
 
         /// <summary>
         /// Mapping of live track IDs and their track objects
         /// </summary>
-        private readonly Dictionary<string, Track> liveTrackMap = new Dictionary<string, Track>();
+        private readonly Dictionary<string, Track> liveTrackMap = new();
 
         /// <summary>
         /// Mapping of live track IDs and the last track point time
         /// </summary>
         private readonly Dictionary<string, DateTimeOffset> liveTrackLastTrackPointTimeMap =
-            new Dictionary<string, DateTimeOffset>();
+            new();
 
         /// <summary>
         /// Queue with all updates to be due
         /// </summary>
-        private readonly Queue<LiveDataUpdateInfo> nextUpdateQueue = new Queue<LiveDataUpdateInfo>();
+        private readonly Queue<LiveDataUpdateInfo> nextUpdateQueue = new();
 
         /// <summary>
         /// Map with times when a next update can be scheduled
         /// </summary>
-        private readonly Dictionary<string, DateTimeOffset> nextPossibleUpdateMap = new Dictionary<string, DateTimeOffset>();
+        private readonly Dictionary<string, DateTimeOffset> nextPossibleUpdateMap = new();
 
         /// <summary>
         /// Timer to schedule updates

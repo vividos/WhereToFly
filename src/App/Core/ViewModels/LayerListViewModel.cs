@@ -20,7 +20,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// A mapping of display string to website address to open
         /// </summary>
-        private readonly Dictionary<string, string> downloadWebSiteList = new Dictionary<string, string>
+        private readonly Dictionary<string, string> downloadWebSiteList = new()
         {
             { "vividos' Where-to-fly resources", "http://www.vividos.de/wheretofly/index.html" },
             { "XContest Airspaces", "https://airspace.xcontest.org/" },
@@ -32,7 +32,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Layer list backing store
         /// </summary>
-        private List<Layer> layerList = new List<Layer>();
+        private List<Layer> layerList = new();
 
         #region Binding properties
         /// <summary>
