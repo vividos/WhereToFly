@@ -51,25 +51,21 @@ namespace WhereToFly.Geo.DataFormats
         {
             if (isKml)
             {
-                using (var reader = new StreamReader(stream))
+                using var reader = new StreamReader(stream);
+                this.kml = KmlFile.Load(reader);
+
+                if (this.kml.Root == null &&
+                    stream.CanSeek)
                 {
-                    this.kml = KmlFile.Load(reader);
+                    stream.Seek(0, SeekOrigin.Begin);
 
-                    if (this.kml.Root == null &&
-                        stream.CanSeek)
-                    {
-                        stream.Seek(0, SeekOrigin.Begin);
-
-                        this.kml = this.ReadLegacyKmlStream(stream, isKml);
-                    }
+                    this.kml = this.ReadLegacyKmlStream(stream, isKml);
                 }
             }
             else
             {
-                using (var kmz = KmzFile.Open(stream))
-                {
-                    this.kml = kmz.GetDefaultKmlFile();
-                }
+                using var kmz = KmzFile.Open(stream);
+                this.kml = kmz.GetDefaultKmlFile();
             }
 
             this.hasXCTracerTrack = filename.Contains("-XTR-");

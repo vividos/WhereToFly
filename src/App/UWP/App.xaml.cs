@@ -125,10 +125,8 @@ namespace WhereToFly.App.UWP
 
                 Core.App.RunOnUiThread(async () =>
                 {
-                    using (var stream = await file.OpenStreamForReadAsync())
-                    {
-                        await OpenFileHelper.OpenFileAsync(stream, file.Name);
-                    }
+                    using var stream = await file.OpenStreamForReadAsync();
+                    await OpenFileHelper.OpenFileAsync(stream, file.Name);
                 });
             }
         }

@@ -248,10 +248,8 @@ namespace WhereToFly.App.Core.ViewModels
                     return;
                 }
 
-                using (var stream = await result.OpenReadAsync())
-                {
-                    await OpenFileHelper.OpenLayerFileAsync(stream, result.FileName);
-                }
+                using var stream = await result.OpenReadAsync();
+                await OpenFileHelper.OpenLayerFileAsync(stream, result.FileName);
             }
             catch (Exception ex)
             {
@@ -295,10 +293,8 @@ namespace WhereToFly.App.Core.ViewModels
                     return;
                 }
 
-                using (var stream = await result.OpenReadAsync())
-                {
-                    await OpenFileHelper.ImportOpenAirAirspaceFile(stream, result.FileName);
-                }
+                using var stream = await result.OpenReadAsync();
+                await OpenFileHelper.ImportOpenAirAirspaceFile(stream, result.FileName);
             }
             catch (Exception ex)
             {

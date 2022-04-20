@@ -16,10 +16,8 @@ namespace WhereToFly.Geo.DataFormats
         /// <returns>geo data file object</returns>
         public static IGeoDataFile LoadGeoDataFile(string filename)
         {
-            using (Stream stream = new FileStream(filename, FileMode.Open))
-            {
-                return LoadGeoDataFile(stream, filename);
-            }
+            using Stream stream = new FileStream(filename, FileMode.Open);
+            return LoadGeoDataFile(stream, filename);
         }
 
         /// <summary>

@@ -38,32 +38,30 @@ namespace WhereToFly.Geo.DataFormats
         public IEnumerable<Location> Parse()
         {
             bool isFirstLine = true;
-            using (var reader = new StreamReader(this.stream))
+            using var reader = new StreamReader(this.stream);
+            do
             {
-                do
+                string line = reader.ReadLine();
+                if (isFirstLine)
                 {
-                    string line = reader.ReadLine();
-                    if (isFirstLine)
-                    {
-                        isFirstLine = false;
-                        continue;
-                    }
-
-                    if (line.Contains(TaskSeparator))
-                    {
-                        yield break;
-                    }
-
-                    string[] parts = SplitWithQuotes(line).ToArray();
-
-                    Location location = LocationFromParts(parts);
-                    if (location != null)
-                    {
-                        yield return location;
-                    }
+                    isFirstLine = false;
+                    continue;
                 }
-                while (!reader.EndOfStream);
+
+                if (line.Contains(TaskSeparator))
+                {
+                    yield break;
+                }
+
+                string[] parts = SplitWithQuotes(line).ToArray();
+
+                Location location = LocationFromParts(parts);
+                if (location != null)
+                {
+                    yield return location;
+                }
             }
+            while (!reader.EndOfStream);
         }
 
         /// <summary>

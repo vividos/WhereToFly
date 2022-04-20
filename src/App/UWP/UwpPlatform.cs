@@ -68,11 +68,9 @@ namespace WhereToFly.App.UWP
         /// <returns>text content of asset</returns>
         public string LoadAssetText(string assetFilename)
         {
-            using (var stream = this.OpenAssetStream(assetFilename))
-            using (var streamReader = new StreamReader(stream))
-            {
-                return streamReader.ReadToEnd();
-            }
+            using var stream = this.OpenAssetStream(assetFilename);
+            using var streamReader = new StreamReader(stream);
+            return streamReader.ReadToEnd();
         }
 
         /// <summary>

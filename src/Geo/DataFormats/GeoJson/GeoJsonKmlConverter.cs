@@ -65,11 +65,9 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
             this.ConvertElementToKml(folder, this.kmlOptions.DocumentName, rootElement);
 
             var kmlfile = KmlFile.Create(kml, false);
-            using (var stream = new MemoryStream())
-            {
-                kmlfile.Save(stream);
-                return Encoding.UTF8.GetString(stream.ToArray());
-            }
+            using var stream = new MemoryStream();
+            kmlfile.Save(stream);
+            return Encoding.UTF8.GetString(stream.ToArray());
         }
 
         #region KML conversion implementation
