@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Logic;
 using WhereToFly.App.Core.Services;
+using WhereToFly.App.MapView;
 using WhereToFly.App.Model;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
@@ -249,28 +250,8 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task SetupWebViewAsync()
         {
-            var platform = DependencyService.Get<IPlatform>();
-
-            WebViewSource webViewSource = null;
-            if (Device.RuntimePlatform == Device.Android ||
-                Device.RuntimePlatform == Device.iOS)
-            {
-                string htmlText = platform.LoadAssetText("weblib/mapView.html");
-
-                webViewSource = new HtmlWebViewSource
-                {
-                    Html = htmlText,
-                    BaseUrl = platform.WebViewBasePath + "weblib/"
-                };
-            }
-
-            if (Device.RuntimePlatform == Device.UWP)
-            {
-                webViewSource = new UrlWebViewSource
-                {
-                    Url = platform.WebViewBasePath + "weblib/mapView.html"
-                };
-            }
+            WebViewSource webViewSource =
+                WebViewSourceFactory.Default.GetMapViewSource();
 
             var webView = new WebView
             {

@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Views;
+using WhereToFly.App.MapView;
 using WhereToFly.Geo.Model;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -61,28 +62,8 @@ namespace WhereToFly.App.Core.Controls
         /// </summary>
         public HeightProfileWebView()
         {
-            var platform = DependencyService.Get<IPlatform>();
-
-            WebViewSource webViewSource = null;
-            if (Device.RuntimePlatform == Device.Android ||
-                Device.RuntimePlatform == Device.iOS)
-            {
-                string htmlText = platform.LoadAssetText("weblib/heightProfileView.html");
-
-                webViewSource = new HtmlWebViewSource
-                {
-                    Html = htmlText,
-                    BaseUrl = platform.WebViewBasePath + "weblib/"
-                };
-            }
-
-            if (Device.RuntimePlatform == Device.UWP)
-            {
-                webViewSource = new UrlWebViewSource
-                {
-                    Url = platform.WebViewBasePath + "weblib/heightProfileView.html"
-                };
-            }
+            WebViewSource webViewSource =
+                WebViewSourceFactory.Default.GetHeightProfileViewSource();
 
             this.Source = webViewSource;
             this.AutomationId = "HeightProfileWebView";
