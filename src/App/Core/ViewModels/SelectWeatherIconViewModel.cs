@@ -118,14 +118,14 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>group key; an order integer</returns>
         private static int GroupKeyFromGroup(string group)
         {
-            switch (group)
+            return group switch
             {
-                case "Weather forecast": return 0;
-                case "Current weather": return 1;
-                case "Webcams": return 2;
-                case "Android app": return 3;
-                default: return 4;
-            }
+                "Weather forecast" => 0,
+                "Current weather" => 1,
+                "Webcams" => 2,
+                "Android app" => 3,
+                _ => 4,
+            };
         }
     }
 }

@@ -283,10 +283,8 @@ namespace WhereToFly.App.Core.ViewModels
                     return;
                 }
 
-                using (var stream = await result.OpenReadAsync())
-                {
-                    success = await OpenFileHelper.OpenTrackAsync(stream, result.FileName);
-                }
+                using var stream = await result.OpenReadAsync();
+                success = await OpenFileHelper.OpenTrackAsync(stream, result.FileName);
             }
             catch (Exception ex)
             {

@@ -66,15 +66,12 @@ namespace WhereToFly.App.Core
         /// <returns>SVG image path</returns>
         private static string ImagePathFromLayerType(LayerType layerType)
         {
-            switch (layerType)
+            return layerType switch
             {
-                case LayerType.LocationLayer:
-                    return "icons/format-list-bulleted.svg";
-                case LayerType.TrackLayer:
-                    return "icons/map-marker-distance.svg";
-                default:
-                    return "icons/layers-outline.svg";
-            }
+                LayerType.LocationLayer => "icons/format-list-bulleted.svg",
+                LayerType.TrackLayer => "icons/map-marker-distance.svg",
+                _ => "icons/layers-outline.svg",
+            };
         }
 
         /// <summary>
@@ -161,55 +158,32 @@ namespace WhereToFly.App.Core
         /// <returns>SVG image path</returns>
         private static string SvgImagePathFromLocationType(LocationType locationType)
         {
-            switch (locationType)
+            return locationType switch
             {
-                case LocationType.Summit:
-                    return "weblib/images/mountain-15.svg";
-                case LocationType.Pass:
-                    return "weblib/images/mountain-pass.svg";
-                case LocationType.Lake:
-                    return "weblib/images/water-15.svg";
-                case LocationType.Bridge:
-                    return "weblib/images/bridge.svg";
-                case LocationType.Viewpoint:
-                    return "weblib/images/attraction-15.svg";
-                case LocationType.AlpineHut:
-                    return "weblib/images/home-15.svg";
-                case LocationType.Restaurant:
-                    return "weblib/images/restaurant-15.svg";
-                case LocationType.Church:
-                    return "weblib/images/church.svg";
-                case LocationType.Castle:
-                    return "weblib/images/castle.svg";
-                case LocationType.Cave:
-                    return "weblib/images/cave.svg";
-                case LocationType.Information:
-                    return "weblib/images/information-outline.svg";
-                case LocationType.PublicTransportBus:
-                    return "weblib/images/bus.svg";
-                case LocationType.PublicTransportTrain:
-                    return "weblib/images/train.svg";
-                case LocationType.Parking:
-                    return "weblib/images/parking.svg";
-                case LocationType.Webcam:
-                    return "weblib/images/camera-outline.svg";
-                case LocationType.CableCar:
-                    return "weblib/images/aerialway-15.svg";
-                case LocationType.FlyingTakeoff:
-                    return "weblib/images/paragliding.svg";
-                case LocationType.FlyingLandingPlace:
-                    return "weblib/images/paragliding.svg";
-                case LocationType.FlyingWinchTowing:
-                    return "weblib/images/paragliding.svg";
-                case LocationType.LiveWaypoint:
-                    return "weblib/images/autorenew.svg";
-                case LocationType.Thermal:
-                    return "weblib/images/cloud-upload-outline-modified.svg";
-                case LocationType.MeteoStation:
-                    return "weblib/images/weather-partly-cloudy.svg";
-                default:
-                    return "weblib/images/map-marker.svg";
-            }
+                LocationType.Summit => "weblib/images/mountain-15.svg",
+                LocationType.Pass => "weblib/images/mountain-pass.svg",
+                LocationType.Lake => "weblib/images/water-15.svg",
+                LocationType.Bridge => "weblib/images/bridge.svg",
+                LocationType.Viewpoint => "weblib/images/attraction-15.svg",
+                LocationType.AlpineHut => "weblib/images/home-15.svg",
+                LocationType.Restaurant => "weblib/images/restaurant-15.svg",
+                LocationType.Church => "weblib/images/church.svg",
+                LocationType.Castle => "weblib/images/castle.svg",
+                LocationType.Cave => "weblib/images/cave.svg",
+                LocationType.Information => "weblib/images/information-outline.svg",
+                LocationType.PublicTransportBus => "weblib/images/bus.svg",
+                LocationType.PublicTransportTrain => "weblib/images/train.svg",
+                LocationType.Parking => "weblib/images/parking.svg",
+                LocationType.Webcam => "weblib/images/camera-outline.svg",
+                LocationType.CableCar => "weblib/images/aerialway-15.svg",
+                LocationType.FlyingTakeoff => "weblib/images/paragliding.svg",
+                LocationType.FlyingLandingPlace => "weblib/images/paragliding.svg",
+                LocationType.FlyingWinchTowing => "weblib/images/paragliding.svg",
+                LocationType.LiveWaypoint => "weblib/images/autorenew.svg",
+                LocationType.Thermal => "weblib/images/cloud-upload-outline-modified.svg",
+                LocationType.MeteoStation => "weblib/images/weather-partly-cloudy.svg",
+                _ => "weblib/images/map-marker.svg",
+            };
         }
     }
 }

@@ -364,10 +364,8 @@ namespace WhereToFly.App.Core.ViewModels
             else
             {
                 var platform = DependencyService.Get<IPlatform>();
-                using (var stream = platform.OpenAssetStream("locations/" + assetFilename))
-                {
-                    await OpenFileHelper.OpenLocationListAsync(stream, assetFilename);
-                }
+                using var stream = platform.OpenAssetStream("locations/" + assetFilename);
+                await OpenFileHelper.OpenLocationListAsync(stream, assetFilename);
             }
 
             this.UpdateLocationList();
@@ -421,10 +419,8 @@ namespace WhereToFly.App.Core.ViewModels
                     return;
                 }
 
-                using (var stream = await result.OpenReadAsync())
-                {
-                    await OpenFileHelper.OpenLocationListAsync(stream, result.FileName);
-                }
+                using var stream = await result.OpenReadAsync();
+                await OpenFileHelper.OpenLocationListAsync(stream, result.FileName);
             }
             catch (Exception ex)
             {

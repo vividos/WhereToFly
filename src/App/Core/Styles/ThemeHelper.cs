@@ -75,16 +75,12 @@ namespace WhereToFly.App.Core.Styles
         /// <returns>OS app theme value</returns>
         private static OSAppTheme OSAppThemeFromTheme(Theme theme)
         {
-            switch (theme)
+            return theme switch
             {
-                case Theme.Light:
-                    return OSAppTheme.Light;
-                case Theme.Dark:
-                    return OSAppTheme.Dark;
-                case Theme.Device:
-                default:
-                    return OSAppTheme.Unspecified;
-            }
+                Theme.Light => OSAppTheme.Light,
+                Theme.Dark => OSAppTheme.Dark,
+                _ => OSAppTheme.Unspecified,
+            };
         }
     }
 }

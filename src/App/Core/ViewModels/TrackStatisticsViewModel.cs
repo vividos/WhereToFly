@@ -39,9 +39,6 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Property containing number of track points
         /// </summary>
-        /// <summary>
-        /// Property containing number of track points
-        /// </summary>
         public int NumTrackPoints
         {
             get

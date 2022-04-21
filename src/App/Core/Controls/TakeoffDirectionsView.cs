@@ -252,15 +252,13 @@ namespace WhereToFly.App.Core.Controls
                 canvas.DrawCircle(center, radius, borderCircle);
             }
 
-            using (var fillCircle = new SKPaint
+            using var fillCircle = new SKPaint
             {
                 IsAntialias = true,
                 Style = SKPaintStyle.Fill,
                 Color = this.CompassBackgroundColor.ToSKColor(),
-            })
-            {
-                canvas.DrawCircle(center, radius, fillCircle);
-            }
+            };
+            canvas.DrawCircle(center, radius, fillCircle);
         }
 
         /// <summary>
@@ -271,32 +269,30 @@ namespace WhereToFly.App.Core.Controls
         /// <param name="radius">radius of compass</param>
         private void DrawFilledSegments(SKCanvas canvas, SKPoint center, float radius)
         {
-            using (var path = new SKPath())
-            using (var fillPaint = new SKPaint
+            using var path = new SKPath();
+            using var fillPaint = new SKPaint
             {
                 IsAntialias = true,
                 Style = SKPaintStyle.Fill,
                 Color = this.CompassColor.ToSKColor(),
-            })
+            };
+            var rect = new SKRect(center.X - radius, center.Y - radius, center.X + radius, center.Y + radius);
+
+            for (int segmentIndex = 0; segmentIndex < 8; segmentIndex++)
             {
-                var rect = new SKRect(center.X - radius, center.Y - radius, center.X + radius, center.Y + radius);
-
-                for (int segmentIndex = 0; segmentIndex < 8; segmentIndex++)
+                if (!IsSegmentFilled(this.Source, segmentIndex))
                 {
-                    if (!IsSegmentFilled(this.Source, segmentIndex))
-                    {
-                        continue;
-                    }
-
-                    float startAngle = (segmentIndex * SegmentAngle) - (0.5f * SegmentAngle) - 90.0f;
-
-                    path.MoveTo(center);
-                    path.ArcTo(rect, startAngle, SegmentAngle, false);
-                    path.Close();
+                    continue;
                 }
 
-                canvas.DrawPath(path, fillPaint);
+                float startAngle = (segmentIndex * SegmentAngle) - (0.5f * SegmentAngle) - 90.0f;
+
+                path.MoveTo(center);
+                path.ArcTo(rect, startAngle, SegmentAngle, false);
+                path.Close();
             }
+
+            canvas.DrawPath(path, fillPaint);
         }
 
         /// <summary>
@@ -310,25 +306,23 @@ namespace WhereToFly.App.Core.Controls
             float dash = radius < 32.0 ? radius / 8.0f : 3.0f;
             var dashPathEffect = SKPathEffect.CreateDash(new float[] { dash, dash }, 0.0f);
 
-            using (var linePaint = new SKPaint
+            using var linePaint = new SKPaint
             {
                 IsAntialias = true,
                 Style = SKPaintStyle.Stroke,
                 Color = this.CompassBorderColor.ToSKColor(),
                 PathEffect = dashPathEffect
-            })
+            };
+            for (int segmentIndex = 0; segmentIndex < 8; segmentIndex++)
             {
-                for (int segmentIndex = 0; segmentIndex < 8; segmentIndex++)
-                {
-                    float angle = (segmentIndex * SegmentAngle) + (0.5f * SegmentAngle) - 90.0f;
-                    double angleInRad = (angle * Math.PI) / 180.0;
+                float angle = (segmentIndex * SegmentAngle) + (0.5f * SegmentAngle) - 90.0f;
+                double angleInRad = (angle * Math.PI) / 180.0;
 
-                    var endPoint = new SKPoint(
-                        (float)(center.X + (radius * Math.Cos(angleInRad))),
-                        (float)(center.Y + (radius * Math.Sin(angleInRad))));
+                var endPoint = new SKPoint(
+                    (float)(center.X + (radius * Math.Cos(angleInRad))),
+                    (float)(center.Y + (radius * Math.Sin(angleInRad))));
 
-                    canvas.DrawLine(center, endPoint, linePaint);
-                }
+                canvas.DrawLine(center, endPoint, linePaint);
             }
         }
 
@@ -360,22 +354,20 @@ namespace WhereToFly.App.Core.Controls
                     (float)(center.X + (0.8 * radius * Math.Cos(angleInRad))),
                     (float)(center.Y + (0.8 * radius * Math.Sin(angleInRad))));
 
-                using (var textPaint = new SKPaint
+                using var textPaint = new SKPaint
                 {
                     Color = textColor.ToSKColor(),
                     TextAlign = SKTextAlign.Center,
                     TextSize = radius / 5.0f,
-                })
-                {
-                    string text = DirectionText[segmentIndex];
+                };
+                string text = DirectionText[segmentIndex];
 
-                    var textBounds = default(SKRect);
-                    textPaint.MeasureText(text, ref textBounds);
+                var textBounds = default(SKRect);
+                textPaint.MeasureText(text, ref textBounds);
 
-                    textPos.Y += textBounds.Height / 2.0f;
+                textPos.Y += textBounds.Height / 2.0f;
 
-                    canvas.DrawText(text, textPos, textPaint);
-                }
+                canvas.DrawText(text, textPos, textPaint);
             }
         }
         #endregion

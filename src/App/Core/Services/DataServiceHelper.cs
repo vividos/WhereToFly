@@ -67,34 +67,32 @@ namespace WhereToFly.App.Core.Services
         {
             var platform = DependencyService.Get<IPlatform>();
 
-            using (var stream = platform.OpenAssetStream(DefaultLayerFilename))
+            using var stream = platform.OpenAssetStream(DefaultLayerFilename);
+            var parser = new OpenAirFileParser(stream);
+
+            const string LayerName = "OpenAir Schutzzonen Auszug";
+            string czml = CzmlAirspaceWriter.WriteCzml(
+                LayerName,
+                parser.Airspaces,
+                parser.FileCommentLines);
+
+            string description = string.Join("\n", parser.FileCommentLines);
+
+            var airspaceLayer = new Layer
             {
-                var parser = new OpenAirFileParser(stream);
+                Id = Guid.NewGuid().ToString("B"),
+                Name = LayerName,
+                Description = description,
+                IsVisible = true,
+                LayerType = LayerType.CzmlLayer,
+                Data = czml
+            };
 
-                const string LayerName = "OpenAir Schutzzonen Auszug";
-                string czml = CzmlAirspaceWriter.WriteCzml(
-                    LayerName,
-                    parser.Airspaces,
-                    parser.FileCommentLines);
-
-                string description = string.Join("\n", parser.FileCommentLines);
-
-                var airspaceLayer = new Layer
-                {
-                    Id = Guid.NewGuid().ToString("B"),
-                    Name = LayerName,
-                    Description = description,
-                    IsVisible = true,
-                    LayerType = LayerType.CzmlLayer,
-                    Data = czml
-                };
-
-                return new Layer[]
-                {
+            return new Layer[]
+            {
                     GetOpenStreetMapBuildingsLayer(),
                     airspaceLayer,
-                };
-            }
+            };
         }
 
         /// <summary>
