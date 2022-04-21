@@ -43,7 +43,7 @@ namespace WhereToFly.Geo.DataFormats
 
             var objectList = new List<object>
             {
-                new Czml.PacketHeader(name, description)
+                new Czml.PacketHeader(name, description),
             };
 
             foreach (var airspace in allAirspaces)
@@ -86,7 +86,7 @@ namespace WhereToFly.Geo.DataFormats
                         Material = MaterialFromAirspace(airspace),
                         Outline = true,
                         OutlineColor = ColorFromAirspace(airspace, outlineColor: true),
-                    }
+                    },
                 };
             }
 
@@ -112,7 +112,7 @@ namespace WhereToFly.Geo.DataFormats
                         Material = MaterialFromAirspace(airspace),
                         Outline = true,
                         OutlineColor = ColorFromAirspace(airspace, outlineColor: true),
-                    }
+                    },
                 };
             }
 
@@ -179,7 +179,7 @@ namespace WhereToFly.Geo.DataFormats
                 Direction = arc.Direction,
                 Radius = start.DistanceTo(arc.Center.ToMapPoint(height)),
                 StartAngle = center.CourseTo(start),
-                EndAngle = arc.Center.ToMapPoint(height).CourseTo(end)
+                EndAngle = arc.Center.ToMapPoint(height).CourseTo(end),
             };
         }
 
@@ -319,7 +319,7 @@ namespace WhereToFly.Geo.DataFormats
                     coord.Longitude,
                     coord.Latitude,
                     HeightFromAltitude(altitude),
-                }
+                },
             };
         }
 
@@ -358,19 +358,14 @@ namespace WhereToFly.Geo.DataFormats
         /// <returns>height reference value</returns>
         private static Czml.HeightReference HeightReferenceFromAltitude(Altitude altitude)
         {
-            switch (altitude.Type)
+            return altitude.Type switch
             {
-                case AltitudeType.GND:
-                    return Czml.HeightReference.ClampToGround;
-                case AltitudeType.Unlimited:
-                case AltitudeType.Textual:
-                case AltitudeType.AGL:
-                    return Czml.HeightReference.RelativeToGround;
-                case AltitudeType.AMSL:
-                case AltitudeType.FlightLevel:
-                default:
-                    return Czml.HeightReference.None;
-            }
+                AltitudeType.GND => Czml.HeightReference.ClampToGround,
+                AltitudeType.Unlimited or
+                AltitudeType.Textual or
+                AltitudeType.AGL => Czml.HeightReference.RelativeToGround,
+                _ => Czml.HeightReference.None,
+            };
         }
 
         /// <summary>

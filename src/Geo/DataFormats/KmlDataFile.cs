@@ -388,7 +388,7 @@ namespace WhereToFly.Geo.DataFormats
                 Name = placemark.Name ?? "unknown",
                 Description = placemark.Description?.Text ?? string.Empty,
                 Type = MapPlacemarkToType(kml, placemark),
-                MapLocation = new MapPoint(point.Coordinate.Latitude, point.Coordinate.Longitude, point.Coordinate.Altitude)
+                MapLocation = new MapPoint(point.Coordinate.Latitude, point.Coordinate.Longitude, point.Coordinate.Altitude),
             };
         }
 

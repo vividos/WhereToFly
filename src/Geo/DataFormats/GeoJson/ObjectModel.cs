@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 
 #pragma warning disable SA1402 // File may only contain a single type
+#pragma warning disable SA1649 // File name should match first type name
 #pragma warning disable CA1819 // Properties should not return arrays
 
 /// <summary>
@@ -225,38 +226,19 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// <returns>target object</returns>
         private static object CreateTargetObjectFromType(string type)
         {
-            switch (type)
+            return type switch
             {
-                case "Feature":
-                    return new Feature();
-
-                case "FeatureCollection":
-                    return new FeatureCollection();
-
-                case "GeometryCollection":
-                    return new GeometryCollection();
-
-                case "Point":
-                    return new PointGeometry();
-
-                case "LineString":
-                    return new LineStringGeometry();
-
-                case "Polygon":
-                    return new PolygonGeometry();
-
-                case "MultiPoint":
-                    return new MultiPointGeometry();
-
-                case "MultiLineString":
-                    return new MultiLineStringGeometry();
-
-                case "MultiPolygon":
-                    return new MultiPolygonGeometry();
-
-                default:
-                    throw new ArgumentException($"Unknown geometry type '{type}'");
-            }
+                "Feature" => new Feature(),
+                "FeatureCollection" => new FeatureCollection(),
+                "GeometryCollection" => new GeometryCollection(),
+                "Point" => new PointGeometry(),
+                "LineString" => new LineStringGeometry(),
+                "Polygon" => new PolygonGeometry(),
+                "MultiPoint" => new MultiPointGeometry(),
+                "MultiLineString" => new MultiLineStringGeometry(),
+                "MultiPolygon" => new MultiPolygonGeometry(),
+                _ => throw new ArgumentException($"Unknown geometry type '{type}'"),
+            };
         }
     }
 }

@@ -125,7 +125,7 @@ namespace WhereToFly.Geo.Model
             /// <param name="serializer">json serializer</param>
             public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
             {
-                if (!(value is TrackPoint point))
+                if (value is not TrackPoint point)
                 {
                     serializer.Serialize(writer, null);
                 }
@@ -137,7 +137,7 @@ namespace WhereToFly.Geo.Model
                         point.Longitude,
                         point.Altitude ?? InvalidAltitudeValue,
                         point.Heading ?? InvalidHeadingValue,
-                        point.Time.HasValue ? point.Time.Value.ToUnixTimeMilliseconds() : 0.0
+                        point.Time.HasValue ? point.Time.Value.ToUnixTimeMilliseconds() : 0.0,
                     };
 
                     serializer.Serialize(writer, array);

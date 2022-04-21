@@ -124,7 +124,7 @@ namespace WhereToFly.Geo.DataFormats
             var track = new Track
             {
                 Id = Guid.NewGuid().ToString("B"),
-                Name = name
+                Name = name,
             };
 
             foreach (XmlNode trackSegmentNode in trackNode.SelectNodes("x:trkseg", this.namespaceManager))
@@ -158,7 +158,7 @@ namespace WhereToFly.Geo.DataFormats
 
             return new TrackPoint(latitude, longitude, elevation, heading: null)
             {
-                Time = ParseTime(trackPointNode, namespaceManager)
+                Time = ParseTime(trackPointNode, namespaceManager),
             };
         }
 
@@ -203,7 +203,7 @@ namespace WhereToFly.Geo.DataFormats
                 MapLocation = new MapPoint(latitude, longitude, elevation),
                 Description = descNode?.InnerText ?? string.Empty,
                 Type = LocationTypeFromWaypointNode(nameNode),
-                InternetLink = linkHrefNode?.Value ?? string.Empty
+                InternetLink = linkHrefNode?.Value ?? string.Empty,
             };
 
             return location;

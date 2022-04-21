@@ -218,19 +218,15 @@ namespace WhereToFly.Geo.DataFormats
             }
 
             // the values are given in the specification linked in this classes summary
-            switch (Convert.ToInt32(style))
+            return Convert.ToInt32(style) switch
             {
-                case 2:
-                case 3:
-                case 5:
-                    return LocationType.FlyingLandingPlace;
-                case 4: return LocationType.FlyingTakeoff;
-                case 6: return LocationType.Pass;
-                case 7: return LocationType.Summit;
-                case 14: return LocationType.Bridge;
-                default:
-                    return LocationType.Waypoint;
-            }
+                2 or 3 or 5 => LocationType.FlyingLandingPlace,
+                4 => LocationType.FlyingTakeoff,
+                6 => LocationType.Pass,
+                7 => LocationType.Summit,
+                14 => LocationType.Bridge,
+                _ => LocationType.Waypoint,
+            };
         }
     }
 }

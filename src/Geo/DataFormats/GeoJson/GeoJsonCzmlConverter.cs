@@ -38,7 +38,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
                 {
                     Converters =
                     {
-                        new ElementJsonDecoder()
+                        new ElementJsonDecoder(),
                     },
                 });
 
@@ -46,7 +46,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
             {
                 new Czml.PacketHeader(
                     this.czmlOptions.DocumentName,
-                    this.czmlOptions.DocumentDescription)
+                    this.czmlOptions.DocumentDescription),
             };
 
             this.ConvertElementToCzml(rootElement, objectList);
@@ -298,7 +298,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
                     HeightReference = Czml.HeightReference.ClampToGround,
                     OutlineWidth = 3.0,
                     OutlineColor = new Czml.Color(0, 0, 0),
-                }
+                },
             };
         }
 
@@ -357,7 +357,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
                     Material = Czml.Material.FromSolidColor(this.czmlOptions.LineColor),
                     ClampToGround = true,
                     Positions = positionList,
-                }
+                },
             };
         }
 
@@ -397,7 +397,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
                     Material = Czml.Material.FromSolidColor(this.czmlOptions.PolygonColor),
                     Outline = false,
                     OutlineColor = new Czml.Color(0, 0, 0),
-                }
+                },
             };
         }
         #endregion

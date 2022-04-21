@@ -52,7 +52,7 @@ namespace WhereToFly.Geo.SunCalcNet
             {
                 SolarNoon = Formulas.FromJulian(Jnoon - 0.5, offset),
                 Nadir = Formulas.FromJulian(Jnoon - 0.5, offset),
-                SunriseSunsetTimes = sunriseSunsetTimes
+                SunriseSunsetTimes = sunriseSunsetTimes,
             };
 
             var times = new (double time, SunTimeType riseType, SunTimeType setType)[]
@@ -62,7 +62,7 @@ namespace WhereToFly.Geo.SunCalcNet
                 (-6, SunTimeType.Dawn, SunTimeType.Dusk),
                 (-12, SunTimeType.NauticalDawn, SunTimeType.NauticalDusk),
                 (-18, SunTimeType.NightEnd, SunTimeType.Night),
-                (6, SunTimeType.GoldenHourEnd, SunTimeType.GoldenHour)
+                (6, SunTimeType.GoldenHourEnd, SunTimeType.GoldenHour),
             };
 
             foreach (var item in times)

@@ -47,7 +47,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
                 {
                     Converters =
                     {
-                        new ElementJsonDecoder()
+                        new ElementJsonDecoder(),
                     },
                 });
 
@@ -55,7 +55,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
 
             var folder = new Folder
             {
-                Name = this.kmlOptions.DocumentName
+                Name = this.kmlOptions.DocumentName,
             };
 
             kml.Feature = folder;
@@ -83,13 +83,13 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
                 Id = "element_style",
                 Line = new LineStyle
                 {
-                    Width = this.kmlOptions.LineWidth
+                    Width = this.kmlOptions.LineWidth,
                 },
                 Polygon = new PolygonStyle
                 {
                     Fill = true,
                     Outline = true,
-                    Color = this.kmlOptions.PolygonColor
+                    Color = this.kmlOptions.PolygonColor,
                 },
             };
 
@@ -360,9 +360,9 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
                 {
                     LinearRing = new LinearRing
                     {
-                        Coordinates = new CoordinateCollection()
-                    }
-                }
+                        Coordinates = new CoordinateCollection(),
+                    },
+                },
             };
 
             foreach (var coordinates in polygonCollection)

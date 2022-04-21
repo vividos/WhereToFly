@@ -402,7 +402,7 @@ namespace WhereToFly.Geo.Airspace
 
             var textualAltitude = new Altitude(data)
             {
-                OpeningTimes = openingTimes
+                OpeningTimes = openingTimes,
             };
 
             return textualAltitude;
@@ -636,7 +636,7 @@ namespace WhereToFly.Geo.Airspace
 
             this.AddPolygonSegment(new Polygon.PolygonPoint
             {
-                Point = coord
+                Point = coord,
             });
         }
 
@@ -676,7 +676,7 @@ namespace WhereToFly.Geo.Airspace
             this.currentAirspace.Geometry = new Circle
             {
                 Center = centerCoord,
-                Radius = radiusInMeter
+                Radius = radiusInMeter,
             };
         }
 

@@ -31,26 +31,15 @@ namespace WhereToFly.Geo.DataFormats
         {
             string extension = Path.GetExtension(filename);
 
-            switch (extension.ToLowerInvariant())
+            return extension.ToLowerInvariant() switch
             {
-                case ".kml":
-                    return new KmlDataFile(stream, filename, isKml: true);
-
-                case ".kmz":
-                    return new KmlDataFile(stream, filename, isKml: false);
-
-                case ".gpx":
-                    return new GpxDataFile(stream);
-
-                case ".igc":
-                    return new IgcDataFile(stream);
-
-                case ".cup":
-                    return new SeeYouDataFile(stream);
-
-                default:
-                    throw new ArgumentException("file is not a valid .kml, .kmz, .gpx, .igc or .cup file");
-            }
+                ".kml" => new KmlDataFile(stream, filename, isKml: true),
+                ".kmz" => new KmlDataFile(stream, filename, isKml: false),
+                ".gpx" => new GpxDataFile(stream),
+                ".igc" => new IgcDataFile(stream),
+                ".cup" => new SeeYouDataFile(stream),
+                _ => throw new ArgumentException("file is not a valid .kml, .kmz, .gpx, .igc or .cup file"),
+            };
         }
     }
 }
