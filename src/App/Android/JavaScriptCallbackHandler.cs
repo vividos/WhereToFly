@@ -45,7 +45,7 @@ namespace WhereToFly.App.Android
                 // send event via public (but hidden from Intellisense) method
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    renderer.Element.SendNavigating(
+                    renderer?.Element?.SendNavigating(
                         new WebNavigatingEventArgs(
                             WebNavigationEvent.NewPage,
                             new UrlWebViewSource { Url = url },
