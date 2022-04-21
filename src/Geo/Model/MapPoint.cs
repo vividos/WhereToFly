@@ -67,13 +67,22 @@ namespace WhereToFly.Geo.Model
                 return false;
             }
 
-            bool altitudeIsEqual =
-                (this.Altitude == null && other.Altitude == null) ||
-                (this.Altitude.HasValue == other.Altitude.HasValue && Math.Abs(this.Altitude.Value - other.Altitude.Value) < 1e-2);
+            if (this.Altitude.HasValue != other.Altitude.HasValue)
+            {
+                // only one has an altitude set
+                return false;
+            }
 
-            return Math.Abs(this.Latitude - other.Latitude) < 1e-6 &&
-                Math.Abs(this.Longitude - other.Longitude) < 1e-6 &&
-                altitudeIsEqual;
+            bool altitudeIsEqual = true;
+
+            if (this.Altitude.HasValue && other.Altitude.HasValue)
+            {
+                altitudeIsEqual = Math.Abs(this.Altitude.Value - other.Altitude.Value) < 1e-2;
+            }
+
+            return altitudeIsEqual &&
+                Math.Abs(this.Latitude - other.Latitude) < 1e-6 &&
+                Math.Abs(this.Longitude - other.Longitude) < 1e-6;
         }
         #endregion
 

@@ -32,16 +32,22 @@ namespace WhereToFly.Geo
                 maxLocation.Latitude = Math.Max(mapLocation.Latitude, maxLocation.Latitude);
                 minLocation.Longitude = Math.Min(mapLocation.Longitude, minLocation.Longitude);
                 maxLocation.Longitude = Math.Max(mapLocation.Longitude, maxLocation.Longitude);
-                minLocation.Altitude = Math.Min(mapLocation.Altitude ?? defaultMinAltitudeValue, minLocation.Altitude.Value);
-                maxLocation.Altitude = Math.Max(mapLocation.Altitude ?? defaultMaxAltitudeValue, maxLocation.Altitude.Value);
+                minLocation.Altitude = Math.Min(
+                    mapLocation.Altitude ?? defaultMinAltitudeValue,
+                    minLocation.Altitude ?? defaultMinAltitudeValue);
+                maxLocation.Altitude = Math.Max(
+                    mapLocation.Altitude ?? defaultMaxAltitudeValue,
+                    maxLocation.Altitude ?? defaultMaxAltitudeValue);
             }
 
-            if (Math.Abs(minLocation.Altitude.Value - defaultMinAltitudeValue) < 1e-6)
+            if (!minLocation.Altitude.HasValue ||
+                Math.Abs(minLocation.Altitude.Value - defaultMinAltitudeValue) < 1e-6)
             {
                 minLocation.Altitude = 0.0;
             }
 
-            if (Math.Abs(maxLocation.Altitude.Value - defaultMaxAltitudeValue) < 1e-6)
+            if (!maxLocation.Altitude.HasValue ||
+                Math.Abs(maxLocation.Altitude.Value - defaultMaxAltitudeValue) < 1e-6)
             {
                 maxLocation.Altitude = 0.0;
             }

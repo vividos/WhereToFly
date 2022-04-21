@@ -253,6 +253,11 @@ namespace WhereToFly.Geo
         /// <param name="previousPoint">previous track point</param>
         private static void CalcAltitudeStatistics(Track track, TrackPoint trackPoint, TrackPoint previousPoint)
         {
+            if (!trackPoint.Altitude.HasValue)
+            {
+                return;
+            }
+
             double altitude = trackPoint.Altitude.Value;
 
             track.MinHeight = Math.Min(altitude, track.MinHeight);
