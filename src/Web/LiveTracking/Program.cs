@@ -21,6 +21,7 @@ internal static class Program
 
         // Add services to the container.
         builder.Services.AddRazorPages();
+        builder.Services.AddAntiforgery();
 
         var app = builder.Build();
 

@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model IndexModel
 @{
     ViewData["Title"] = "Live Tracking";
@@ -80,6 +80,8 @@
         <div id="liveTrackToolbar" class="livetrack-toolbar-container" style="display:none; bottom:130px"></div>
         <div id="heightProfileView" class="chart-and-toolbar-container chart-and-toolbar-container-outer" style="display:none"></div>
     </div>
+
+    <form>@Html.AntiForgeryToken()</form>
 </div>
 
 <script type="text/javascript">

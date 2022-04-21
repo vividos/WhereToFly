@@ -1,4 +1,4 @@
-﻿import $ from "jquery";
+import $ from "jquery";
 
 // wheretofly-weblib
 import { MapView } from "wheretofly-weblib/mapView.js";
@@ -284,20 +284,29 @@ export default class LiveTracking {
      * Updates a live waypoint
      * @param {string} liveWaypointUri live waypoint uri to update
      */
-    updateLiveWaypoint(liveWaypointUri) {
+    async updateLiveWaypoint(liveWaypointUri) {
 
         LiveTracking.log("updating live waypoint " + liveWaypointUri);
 
-        const that = this;
-        $.ajax({
-            url: "/?handler=UpdateLiveWaypoint",
-            data: {
-                Uri: liveWaypointUri
-            }
-        })
-            .done(function(result) {
-                that.onUpdateLiveWaypointResult(liveWaypointUri, result);
+        const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+        const data = JSON.stringify({
+            Uri: liveWaypointUri
+        });
+
+        const response = await fetch(
+            '/?handler=UpdateLiveWaypoint',
+            {
+                method: 'POST',
+                headers: {
+                    "Content-Type": 'application/json',
+                    "RequestVerificationToken": token
+                },
+                body: data
             });
+
+        const result = await response.json();
+
+        this.onUpdateLiveWaypointResult(liveWaypointUri, result);
     }
 
     /**
@@ -347,21 +356,30 @@ export default class LiveTracking {
      * Updates a live track
      * @param {string} liveTrackUri live track uri to update
      */
-    updateLiveTrack(liveTrackUri) {
+    async updateLiveTrack(liveTrackUri) {
 
         LiveTracking.log("updating live track " + liveTrackUri);
 
-        const that = this;
-        $.ajax({
-            url: "/?handler=UpdateLiveTrack",
-            data: {
-                Uri: liveTrackUri,
-                LastTrackPointTime: that.map.getTrackLastTrackPointTime(liveTrackUri)
-            }
-        })
-            .done(function(result) {
-                that.onUpdateLiveTrackResult(liveTrackUri, result);
+        const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+        const data = JSON.stringify({
+            Uri: liveTrackUri,
+            LastTrackPointTime: this.map.getTrackLastTrackPointTime(liveTrackUri)
+        });
+
+        const response = await fetch(
+            '/?handler=UpdateLiveTrack',
+            {
+                method: 'POST',
+                headers: {
+                    "Content-Type": 'application/json',
+                    "RequestVerificationToken": token
+                },
+                body: data
             });
+
+        const result = await response.json();
+
+        this.onUpdateLiveTrackResult(liveTrackUri, result);
     }
 
     /**

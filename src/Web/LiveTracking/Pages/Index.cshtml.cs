@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Refit;
-using System;
-using System.Collections.Generic;
 using System.Text.Json;
-using System.Threading.Tasks;
 using WhereToFly.Shared.Model;
 using WhereToFly.Shared.Model.Serializers;
 
@@ -121,13 +118,15 @@ namespace WhereToFly.Web.LiveTracking.Pages
         /// <returns>
         /// JSON result of query, either a LiveWaypointQueryResult or an exception text
         /// </returns>
-        public async Task<JsonResult> OnGetUpdateLiveWaypointAsync(UpdateLiveWaypointData data)
+        public async Task<JsonResult> OnPostUpdateLiveWaypointAsync(
+            [FromBody] UpdateLiveWaypointData data)
         {
             string liveWaypointId = data.Uri;
 
             try
             {
-                LiveWaypointQueryResult queryResult = await this.backendWebApi.GetLiveWaypointDataAsync(liveWaypointId);
+                LiveWaypointQueryResult queryResult =
+                    await this.backendWebApi.GetLiveWaypointDataAsync(liveWaypointId);
 
                 return new JsonResult(queryResult);
             }
@@ -144,7 +143,8 @@ namespace WhereToFly.Web.LiveTracking.Pages
         /// <returns>
         /// JSON result of query, either a LiveTrackQueryResult or an exception text
         /// </returns>
-        public async Task<JsonResult> OnGetUpdateLiveTrackAsync(UpdateLiveTrackData data)
+        public async Task<JsonResult> OnPostUpdateLiveTrackAsync(
+            [FromBody] UpdateLiveTrackData data)
         {
             string liveTrackId = data.Uri;
             DateTimeOffset? lastTrackPointTime = data.LastTrackPointTime;
