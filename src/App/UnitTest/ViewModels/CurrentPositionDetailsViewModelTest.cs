@@ -53,8 +53,10 @@ namespace WhereToFly.App.UnitTest.ViewModels
         public void TestLocationUpdate()
         {
             // set up
-            var appSettings = new AppSettings();
-            appSettings.CoordinateDisplayFormat = CoordinateDisplayFormat.Format_dd_mm_sss;
+            var appSettings = new AppSettings
+            {
+                CoordinateDisplayFormat = CoordinateDisplayFormat.Format_dd_mm_sss
+            };
 
             var viewModel = new CurrentPositionDetailsViewModel(appSettings);
 
@@ -79,13 +81,13 @@ namespace WhereToFly.App.UnitTest.ViewModels
             Assert.AreEqual("512", viewModel.Altitude, "altitude text must be correct");
             Assert.AreEqual("42", viewModel.Accuracy, "accuracy text must be correct");
             Assert.AreEqual(Color.FromHex("#E0E000"), viewModel.PositionAccuracyColor, "accuracy color must be black");
-            Assert.IsTrue(viewModel.LastPositionFix.Contains(" ago"), "last position fix text must end with text");
+            Assert.IsTrue(viewModel.LastPositionFix.Length > 0, "last position fix text must contain text");
             Assert.AreEqual(14, viewModel.SpeedInKmh, "speed value must be correct");
             Assert.IsTrue(viewModel.IsHeadingAvail, "initially heading is not available");
             Assert.AreEqual(64, viewModel.HeadingInDegrees, "heading value must be correct");
             Assert.IsTrue(viewModel.IsSunriseSunsetAvail, "sunrise/sunset must not be available");
-            Assert.AreEqual("6:13:05", viewModel.SunriseTime, "sunrise time text must be correct");
-            Assert.AreEqual("20:14:49", viewModel.SunsetTime, "sunset time text must be correct");
+            Assert.AreEqual("6:09:21", viewModel.SunriseTime, "sunrise time text must be correct");
+            Assert.AreEqual("20:17:45", viewModel.SunsetTime, "sunset time text must be correct");
         }
 
         /// <summary>
