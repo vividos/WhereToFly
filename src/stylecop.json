@@ -11,7 +11,7 @@
       "allowBuiltInTypeAliases": false
     },
     "orderingRules": {
-      "elementOrder": [ "constant", "readonly" ],
+      "elementOrder": [ "static", "constant", "readonly" ],
       "systemUsingDirectivesFirst": false,
       "usingDirectivesPlacement": "outsideNamespace",
       "blankLinesBetweenUsingGroups": "omit"
