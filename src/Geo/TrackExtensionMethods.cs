@@ -237,7 +237,9 @@ namespace WhereToFly.Geo
             var lastTrackPointWithTime = track.TrackPoints.LastOrDefault(x => x.Time.HasValue);
 
             if (firstTrackPointWithTime != null &&
-                lastTrackPointWithTime != null)
+                firstTrackPointWithTime.Time != null &&
+                lastTrackPointWithTime != null &&
+                lastTrackPointWithTime.Time != null)
             {
                 track.Duration = lastTrackPointWithTime.Time.Value - firstTrackPointWithTime.Time.Value;
             }

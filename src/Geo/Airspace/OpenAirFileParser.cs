@@ -791,8 +791,10 @@ namespace WhereToFly.Geo.Airspace
                 }
             }
 
-            var polygon = this.currentAirspace.Geometry as Polygon;
-            polygon.Segments.Add(polygonSegment);
+            if (this.currentAirspace.Geometry is Polygon polygon)
+            {
+                polygon.Segments.Add(polygonSegment);
+            }
         }
 
         /// <summary>

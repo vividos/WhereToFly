@@ -377,7 +377,10 @@ namespace WhereToFly.Geo.DataFormats
                 placemark.Geometry is Point,
                 "can only call this method for point placemarks");
 
-            var point = placemark.Geometry as Point;
+            if (placemark.Geometry is not Point point)
+            {
+                throw new FormatException("KML Placemark has no Point geometry; can't create location");
+            }
 
             return new Model.Location
             {

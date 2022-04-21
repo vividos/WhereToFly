@@ -167,7 +167,7 @@ namespace WhereToFly.Geo.Model
             /// <param name="serializer">json serializer</param>
             public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
             {
-                if (!(value is MapPoint point))
+                if (value is not MapPoint point)
                 {
                     serializer.Serialize(writer, null);
                 }
