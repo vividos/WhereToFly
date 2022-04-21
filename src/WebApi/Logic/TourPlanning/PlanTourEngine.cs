@@ -24,7 +24,7 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
         /// Tour graph with all waypoints and tracks that can be visited
         /// </summary>
         private readonly BidirectionalGraph<WaypointInfo, TrackInfo> tourGraph =
-            new BidirectionalGraph<WaypointInfo, TrackInfo>(allowParallelEdges: true);
+            new(allowParallelEdges: true);
 
         /// <summary>
         /// Loads graph by using KML file from given stream

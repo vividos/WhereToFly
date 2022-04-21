@@ -45,12 +45,12 @@ namespace WhereToFly.WebApi.Logic.Services
         /// <summary>
         /// HTTP client used for requests
         /// </summary>
-        private readonly HttpClient client = new HttpClient();
+        private readonly HttpClient client = new();
 
         /// <summary>
         /// Mapping of MapShare identifier to Date/time of last request
         /// </summary>
-        private readonly Dictionary<string, DateTimeOffset> lastRequestByMapShareIdentifier = new Dictionary<string, DateTimeOffset>();
+        private readonly Dictionary<string, DateTimeOffset> lastRequestByMapShareIdentifier = new();
 
         /// <summary>
         /// Date/time of last request, or null when no request was made yet

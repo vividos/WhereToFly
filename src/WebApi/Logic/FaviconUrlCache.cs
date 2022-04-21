@@ -15,12 +15,12 @@ namespace WhereToFly.WebApi.Logic
         /// <summary>
         /// HTTP client to use to download index pages
         /// </summary>
-        private readonly HttpClient client = new HttpClient();
+        private readonly HttpClient client = new();
 
         /// <summary>
         /// Favicon URL cache; key is the base URI, value is the favicon URL
         /// </summary>
-        private readonly Dictionary<string, string> urlCache = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> urlCache = new();
 
         /// <summary>
         /// Creates a new favicon URL cache

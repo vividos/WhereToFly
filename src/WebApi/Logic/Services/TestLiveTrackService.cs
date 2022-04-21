@@ -40,12 +40,12 @@ namespace WhereToFly.WebApi.Logic.Services
         /// <summary>
         /// Starting point of flying to thermal
         /// </summary>
-        private static readonly MapPoint StartingPoint = new MapPoint(47.6735110, 11.9060494, 1850);
+        private static readonly MapPoint StartingPoint = new(47.6735110, 11.9060494, 1850);
 
         /// <summary>
         /// Thermalling circle center point
         /// </summary>
-        private static readonly MapPoint ThermallingPoint = new MapPoint(47.6826, 11.8975, 1500);
+        private static readonly MapPoint ThermallingPoint = new(47.6826, 11.8975, 1500);
 
         /// <summary>
         /// Test track stage

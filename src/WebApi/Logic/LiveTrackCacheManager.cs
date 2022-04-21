@@ -22,12 +22,12 @@ namespace WhereToFly.WebApi.Logic
         /// <summary>
         /// Cache for live track data, keyed by ID
         /// </summary>
-        private readonly Dictionary<string, LiveTrackData> liveTrackCache = new Dictionary<string, LiveTrackData>();
+        private readonly Dictionary<string, LiveTrackData> liveTrackCache = new();
 
         /// <summary>
         /// Lock object for cache and queue
         /// </summary>
-        private readonly object lockCacheAndQueue = new object();
+        private readonly object lockCacheAndQueue = new();
 
         /// <summary>
         /// Creates a new live track cache manager object

@@ -23,22 +23,22 @@ namespace WhereToFly.WebApi.Logic
         /// <summary>
         /// Cache for live waypoint data, keyed by ID
         /// </summary>
-        private readonly Dictionary<string, LiveWaypointData> liveWaypointCache = new Dictionary<string, LiveWaypointData>();
+        private readonly Dictionary<string, LiveWaypointData> liveWaypointCache = new();
 
         /// <summary>
         /// Lock object for cache and queue
         /// </summary>
-        private readonly object lockCacheAndQueue = new object();
+        private readonly object lockCacheAndQueue = new();
 
         /// <summary>
         /// Data service for querying Find Me SPOT service
         /// </summary>
-        private readonly FindMeSpotTrackerDataService findMeSpotTrackerService = new FindMeSpotTrackerDataService();
+        private readonly FindMeSpotTrackerDataService findMeSpotTrackerService = new();
 
         /// <summary>
         /// Data service for querying Garmin inReach services
         /// </summary>
-        private readonly GarminInreachDataService garminInreachService = new GarminInreachDataService();
+        private readonly GarminInreachDataService garminInreachService = new();
 
         /// <summary>
         /// Creates a new live waypoint cache manager object
