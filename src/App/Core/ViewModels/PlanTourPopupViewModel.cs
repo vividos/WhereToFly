@@ -21,93 +21,6 @@ namespace WhereToFly.App.Core.ViewModels
     public class PlanTourPopupViewModel : ViewModelBase
     {
         /// <summary>
-        /// View model for list entries for the tour planning list
-        /// </summary>
-        public class PlanTourListEntryViewModel : ViewModelBase
-        {
-            /// <summary>
-            /// Parent view model
-            /// </summary>
-            private readonly PlanTourPopupViewModel parent;
-
-            /// <summary>
-            /// Unique ID for view model, in order to find and compare them
-            /// </summary>
-            public string Id { get; private set; }
-
-            /// <summary>
-            /// Location for tour planning
-            /// </summary>
-            public Location Location { get; private set; }
-
-            #region Binding properties
-            /// <summary>
-            /// Returns image source for SvgImage in order to display the type image
-            /// </summary>
-            public ImageSource TypeImageSource { get; }
-
-            /// <summary>
-            /// Location name
-            /// </summary>
-            public string Name { get => this.Location.Name; }
-
-            /// <summary>
-            /// Command to move up location in the list
-            /// </summary>
-            public Xamarin.Forms.Command MoveUpCommand { get; set; }
-
-            /// <summary>
-            /// Command to move down location in the list
-            /// </summary>
-            public Xamarin.Forms.Command MoveDownCommand { get; set; }
-
-            /// <summary>
-            /// Command to remove location from the list
-            /// </summary>
-            public ICommand RemoveCommand { get; set; }
-            #endregion
-
-            /// <summary>
-            /// Creates a new view model for a list entry
-            /// </summary>
-            /// <param name="location">location object</param>
-            /// <param name="parent">parent view model</param>
-            public PlanTourListEntryViewModel(Location location, PlanTourPopupViewModel parent)
-            {
-                this.Id = Guid.NewGuid().ToString("B");
-                this.Location = location;
-                this.parent = parent;
-
-                this.TypeImageSource =
-                    SvgImageCache.GetImageSource(this.Location);
-
-                this.MoveUpCommand = new Xamarin.Forms.Command(
-                    (obj) => this.parent.MoveUpLocation(this),
-                    (obj) => !this.parent.IsFirstLocation(this));
-
-                this.MoveDownCommand = new Xamarin.Forms.Command(
-                    (obj) => this.parent.MoveDownLocation(this),
-                    (obj) => !this.parent.IsLastLocation(this));
-
-                this.RemoveCommand = new Xamarin.Forms.Command(
-                    (obj) => this.parent.RemoveLocation(this));
-            }
-
-            /// <summary>
-            /// Updates binding properties, e.g. when list position has changed
-            /// </summary>
-            public void Update()
-            {
-                this.OnPropertyChanged(nameof(this.MoveUpCommand));
-                this.OnPropertyChanged(nameof(this.MoveDownCommand));
-                this.OnPropertyChanged(nameof(this.RemoveCommand));
-
-                this.MoveUpCommand.ChangeCanExecute();
-                this.MoveDownCommand.ChangeCanExecute();
-            }
-        }
-
-        /// <summary>
         /// Tour planning parameters
         /// </summary>
         private readonly PlanTourParameters planTourParameters;
@@ -193,7 +106,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         /// <param name="viewModel">location view model to check</param>
         /// <returns>true when it's the first location, false when not</returns>
-        private bool IsFirstLocation(PlanTourListEntryViewModel viewModel)
+        internal bool IsFirstLocation(PlanTourListEntryViewModel viewModel)
         {
             return this.PlanTourList.FirstOrDefault()?.Id == viewModel.Id;
         }
@@ -203,7 +116,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         /// <param name="viewModel">location view model to check</param>
         /// <returns>true when it's the last location, false when not</returns>
-        private bool IsLastLocation(PlanTourListEntryViewModel viewModel)
+        internal bool IsLastLocation(PlanTourListEntryViewModel viewModel)
         {
             return this.PlanTourList.LastOrDefault()?.Id == viewModel.Id;
         }
@@ -212,7 +125,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// Moves location down one entry in the list
         /// </summary>
         /// <param name="viewModel">location view model to move</param>
-        private void MoveDownLocation(PlanTourListEntryViewModel viewModel)
+        internal void MoveDownLocation(PlanTourListEntryViewModel viewModel)
         {
             Debug.Assert(!this.IsLastLocation(viewModel), "must not be called with the last location");
 
@@ -238,7 +151,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// Moves location up one entry in the list
         /// </summary>
         /// <param name="viewModel">location view model to move</param>
-        private void MoveUpLocation(PlanTourListEntryViewModel viewModel)
+        internal void MoveUpLocation(PlanTourListEntryViewModel viewModel)
         {
             Debug.Assert(!this.IsFirstLocation(viewModel), "must not be called with the first location");
 
@@ -264,7 +177,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// Removes location from list
         /// </summary>
         /// <param name="viewModel">location view model to remove</param>
-        private void RemoveLocation(PlanTourListEntryViewModel viewModel)
+        internal void RemoveLocation(PlanTourListEntryViewModel viewModel)
         {
             var locationViewModel = this.PlanTourList.FirstOrDefault(viewModelToCheck => viewModelToCheck.Id == viewModel.Id);
 
