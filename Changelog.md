@@ -14,6 +14,7 @@ Released on ?.
 🐛 Bugfixes
 
 - Fixed loading weather icons for some pages
+- Fixed map starting location, using last zoomed-to location
 
 ## Version 1.11.0
 
