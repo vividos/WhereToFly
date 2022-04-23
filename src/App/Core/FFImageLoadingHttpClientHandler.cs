@@ -6,10 +6,23 @@ namespace WhereToFly.App.Core
 {
     /// <summary>
     /// HttpClientHandler implementation for FFImageLoading that adds a Referer header to fix
-    /// loading some favicon images that need the header.
+    /// loading some favicon images that need the header. It also ignores server certificate
+    /// errors in case of pages that are misconfigured.
     /// </summary>
     public class FFImageLoadingHttpClientHandler : HttpClientHandler
     {
+        /// <summary>
+        /// Creates a new http client handler object
+        /// </summary>
+        public FFImageLoadingHttpClientHandler()
+        {
+            // allow downloads even if cert checks fail
+#pragma warning disable S4830 // Server certificates should be verified during SSL/TLS connections
+            this.ServerCertificateCustomValidationCallback =
+                (message, certificate, chain, sslPolicyErrors) => true;
+#pragma warning restore S4830 // Server certificates should be verified during SSL/TLS connections
+        }
+
         /// <summary>
         /// Overrides sending requests
         /// </summary>
