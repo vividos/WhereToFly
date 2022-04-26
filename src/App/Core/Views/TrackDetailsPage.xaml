@@ -72,6 +72,7 @@
 
                 <!-- Height profile -->
                 <controls:HeightProfileWebView Track="{Binding Track, Mode=OneWay}"
+                                               UseDarkTheme="{Binding UseDarkTheme, Mode=OneTime}"
                                                WidthRequest="600"
                                                HeightRequest="300"
                                                HorizontalOptions="CenterAndExpand"

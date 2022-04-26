@@ -40,6 +40,17 @@ namespace WhereToFly.App.Core.Controls
                 declaringType: typeof(HeightProfileWebView),
                 defaultBindingMode: BindingMode.OneWay,
                 defaultValue: null);
+
+        /// <summary>
+        /// Binding property for the flag UseDarkTheme
+        /// </summary>
+        public static readonly BindableProperty UseDarkThemeProperty =
+            BindableProperty.Create(
+                propertyName: nameof(UseDarkTheme),
+                returnType: typeof(bool),
+                declaringType: typeof(HeightProfileWebView),
+                defaultBindingMode: BindingMode.OneWay,
+                defaultValue: false);
         #endregion
 
         #region View properties
@@ -54,6 +65,15 @@ namespace WhereToFly.App.Core.Controls
                 this.SetValue(TrackProperty, value);
                 Task.Run(async () => await this.SetTrackAsync(value));
             }
+        }
+
+        /// <summary>
+        /// Indicates if a dark theme should be used to display height profile
+        /// </summary>
+        public bool UseDarkTheme
+        {
+            get => (bool)this.GetValue(UseDarkThemeProperty);
+            set => this.SetValue(UseDarkThemeProperty, value);
         }
         #endregion
 
@@ -83,11 +103,10 @@ namespace WhereToFly.App.Core.Controls
 
             this.Navigated -= this.OnNavigated;
 
-            bool useDarkTheme = Styles.ThemeHelper.CurrentTheme == Model.Theme.Dark;
             this.heightProfileView = new HeightProfileView(
                 this,
                 setBodyBackgroundColor: true,
-                useDarkTheme);
+                this.UseDarkTheme);
 
             this.taskCompletionSourceViewInitialized.SetResult(true);
 

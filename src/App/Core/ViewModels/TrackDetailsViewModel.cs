@@ -90,6 +90,14 @@ namespace WhereToFly.App.Core.ViewModels
         {
             get; private set;
         }
+
+        /// <summary>
+        /// Indicates if the height profile view is displayed using a dark theme
+        /// </summary>
+        public bool UseDarkTheme
+        {
+            get => Styles.ThemeHelper.CurrentTheme == Model.Theme.Dark;
+        }
         #endregion
 
         /// <summary>
