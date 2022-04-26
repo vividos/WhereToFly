@@ -3,13 +3,11 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
-using WhereToFly.App.Core.Views;
-using WhereToFly.App.MapView;
 using WhereToFly.Geo.Model;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
-namespace WhereToFly.App.Core.Controls
+namespace WhereToFly.App.MapView
 {
     /// <summary>
     /// Web view showing a standalone HeightProfileView

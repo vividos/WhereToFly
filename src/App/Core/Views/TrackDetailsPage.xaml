@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
+             xmlns:mapview="clr-namespace:WhereToFly.App.MapView;assembly=WhereToFly.App.MapView"
              x:Class="WhereToFly.App.Core.Views.TrackDetailsPage"
              Title="Details"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
@@ -71,12 +72,12 @@
                 </Grid>
 
                 <!-- Height profile -->
-                <controls:HeightProfileWebView Track="{Binding Track, Mode=OneWay}"
-                                               UseDarkTheme="{Binding UseDarkTheme, Mode=OneTime}"
-                                               WidthRequest="600"
-                                               HeightRequest="300"
-                                               HorizontalOptions="CenterAndExpand"
-                                               VerticalOptions="Start" />
+                <mapview:HeightProfileWebView Track="{Binding Track, Mode=OneWay}"
+                                              UseDarkTheme="{Binding UseDarkTheme, Mode=OneTime}"
+                                              WidthRequest="600"
+                                              HeightRequest="300"
+                                              HorizontalOptions="CenterAndExpand"
+                                              VerticalOptions="Start" />
 
                 <!-- Button to show height profile in new page -->
                 <!--

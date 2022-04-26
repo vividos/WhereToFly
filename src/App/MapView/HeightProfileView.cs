@@ -3,11 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using WhereToFly.App.MapView;
 using WhereToFly.Geo.Model;
 using Xamarin.Forms;
 
-namespace WhereToFly.App.Core.Views
+namespace WhereToFly.App.MapView
 {
     /// <summary>
     /// View that shows a track height profile

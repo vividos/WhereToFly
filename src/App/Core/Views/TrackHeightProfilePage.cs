@@ -1,4 +1,4 @@
-using WhereToFly.App.Core.Controls;
+using WhereToFly.App.MapView;
 using WhereToFly.Geo.Model;
 using Xamarin.Forms;
 
