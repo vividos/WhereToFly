@@ -106,6 +106,11 @@ namespace WhereToFly.App.Core.Controls
         /// <returns>task to wait on</returns>
         private async Task ShowContextMenu()
         {
+            foreach (var item in this.Items)
+            {
+                item.IsEnabled &= item.Command.CanExecute(item.CommandParameter);
+            }
+
             var viewModel = new ContextMenuPopupViewModel(
                 this.Caption,
                 this.Items,
