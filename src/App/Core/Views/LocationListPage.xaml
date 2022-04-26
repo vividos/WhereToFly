@@ -162,7 +162,7 @@
                                 <MenuItem Text="Add tour plan location"
                                           Icon="{Binding Source={StaticResource AddTourPlanLocationImagePath}, Converter={StaticResource SvgImagePathConverter}}"
                                           Command="{Binding AddTourPlanLocationCommand}"
-                                          IsEnabled="{Binding IsEnabledAddTourPlanLocation}"
+                                          IsEnabled="{Binding IsEnabledAddTourPlanLocation, Mode=OneWay}"
                                           AutomationId="AddTourPlanLocation" />
                             </controls:ContextMenu.Items>
                         </controls:ContextMenu>
