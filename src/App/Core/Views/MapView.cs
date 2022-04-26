@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Logic;
+using WhereToFly.App.MapView;
 using WhereToFly.App.Model;
 using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;

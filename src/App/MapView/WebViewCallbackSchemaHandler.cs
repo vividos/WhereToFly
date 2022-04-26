@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Xamarin.Forms;
 
-namespace WhereToFly.App.Core.Views
+namespace WhereToFly.App.MapView
 {
     /// <summary>
     /// Handler for callback:// Uri schemas that can be used in a WebView to call back to the C#

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using WhereToFly.App.MapView;
 using WhereToFly.Geo.Model;
 using Xamarin.Forms;
 
