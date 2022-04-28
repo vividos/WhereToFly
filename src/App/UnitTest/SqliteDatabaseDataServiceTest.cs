@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using WhereToFly.App.Core;
 using WhereToFly.App.Core.Services.SqliteDatabase;
 using WhereToFly.App.Model;
+using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using Xamarin.Forms;
 

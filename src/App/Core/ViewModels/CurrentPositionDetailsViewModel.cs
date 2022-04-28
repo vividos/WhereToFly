@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using WhereToFly.App.Core.Logic;
 using WhereToFly.App.Model;
+using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using WhereToFly.Geo.SunCalcNet;
 using Xamarin.Essentials;
@@ -55,7 +56,7 @@ namespace WhereToFly.App.Core.ViewModels
             {
                 return this.position == null
                     ? string.Empty
-                    : DataFormatter.FormatLatLong(this.position.Longitude, this.appSettings.CoordinateDisplayFormat);
+                    : GeoDataFormatter.FormatLatLong(this.position.Longitude, this.appSettings.CoordinateDisplayFormat);
             }
         }
 
@@ -68,7 +69,7 @@ namespace WhereToFly.App.Core.ViewModels
             {
                 return this.position == null
                     ? string.Empty
-                    : DataFormatter.FormatLatLong(this.position.Latitude, this.appSettings.CoordinateDisplayFormat);
+                    : GeoDataFormatter.FormatLatLong(this.position.Latitude, this.appSettings.CoordinateDisplayFormat);
             }
         }
 

@@ -81,7 +81,7 @@ namespace WhereToFly.App.Core.ViewModels
             get
             {
                 return !this.location.MapLocation.Valid ? string.Empty :
-                    DataFormatter.FormatLatLong(this.location.MapLocation.Latitude, this.appSettings.CoordinateDisplayFormat);
+                    GeoDataFormatter.FormatLatLong(this.location.MapLocation.Latitude, this.appSettings.CoordinateDisplayFormat);
             }
         }
 
@@ -93,7 +93,7 @@ namespace WhereToFly.App.Core.ViewModels
             get
             {
                 return !this.location.MapLocation.Valid ? string.Empty :
-                    DataFormatter.FormatLatLong(this.location.MapLocation.Longitude, this.appSettings.CoordinateDisplayFormat);
+                    GeoDataFormatter.FormatLatLong(this.location.MapLocation.Longitude, this.appSettings.CoordinateDisplayFormat);
             }
         }
 

@@ -5,9 +5,9 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
-using WhereToFly.App.Core.Logic;
 using WhereToFly.App.MapView;
 using WhereToFly.App.Model;
+using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;
 using Xamarin.Forms;
@@ -397,8 +397,8 @@ namespace WhereToFly.App.Core.Views
                 altitude = position.Altitude.GetValueOrDefault(0.0),
                 speed = speedInKmh,
                 timestamp,
-                displayLatitude = DataFormatter.FormatLatLong(position.Latitude, this.CoordinateDisplayFormat),
-                displayLongitude = DataFormatter.FormatLatLong(position.Longitude, this.CoordinateDisplayFormat),
+                displayLatitude = GeoDataFormatter.FormatLatLong(position.Latitude, this.CoordinateDisplayFormat),
+                displayLongitude = GeoDataFormatter.FormatLatLong(position.Longitude, this.CoordinateDisplayFormat),
                 displayTimestamp = timestamp.ToLocalTime().ToString("yyyy-MM-dd HH\\:mm\\:ss"),
                 displaySpeed = string.Format("{0:F1} km/h", speedInKmh),
                 zoomToLocation
@@ -819,8 +819,8 @@ namespace WhereToFly.App.Core.Views
                 name = text,
                 latitude = point.Latitude,
                 longitude = point.Longitude,
-                displayLatitude = DataFormatter.FormatLatLong(point.Latitude, this.CoordinateDisplayFormat),
-                displayLongitude = DataFormatter.FormatLatLong(point.Longitude, this.CoordinateDisplayFormat)
+                displayLatitude = GeoDataFormatter.FormatLatLong(point.Latitude, this.CoordinateDisplayFormat),
+                displayLongitude = GeoDataFormatter.FormatLatLong(point.Longitude, this.CoordinateDisplayFormat)
             };
 
             string js = string.Format(
@@ -842,8 +842,8 @@ namespace WhereToFly.App.Core.Views
             {
                 latitude = point.Latitude,
                 longitude = point.Longitude,
-                displayLatitude = DataFormatter.FormatLatLong(point.Latitude, this.CoordinateDisplayFormat),
-                displayLongitude = DataFormatter.FormatLatLong(point.Longitude, this.CoordinateDisplayFormat),
+                displayLatitude = GeoDataFormatter.FormatLatLong(point.Latitude, this.CoordinateDisplayFormat),
+                displayLongitude = GeoDataFormatter.FormatLatLong(point.Longitude, this.CoordinateDisplayFormat),
                 altitude = point.Altitude ?? 0.0,
                 glideRatio = parameters.GlideRatio,
                 gliderSpeed = parameters.GliderSpeed,

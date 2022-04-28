@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WhereToFly.App.Core.Logic;
 using WhereToFly.App.Model;
+using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using Xamarin.Forms;
 
@@ -78,7 +78,7 @@ namespace WhereToFly.App.Core.ViewModels
             get
             {
                 return !this.location.MapLocation.Valid ? string.Empty :
-                    DataFormatter.FormatLatLong(this.location.MapLocation.Latitude, this.appSettings.CoordinateDisplayFormat);
+                    GeoDataFormatter.FormatLatLong(this.location.MapLocation.Latitude, this.appSettings.CoordinateDisplayFormat);
             }
         }
 
@@ -90,7 +90,7 @@ namespace WhereToFly.App.Core.ViewModels
             get
             {
                 return !this.location.MapLocation.Valid ? string.Empty :
-                    DataFormatter.FormatLatLong(this.location.MapLocation.Longitude, this.appSettings.CoordinateDisplayFormat);
+                    GeoDataFormatter.FormatLatLong(this.location.MapLocation.Longitude, this.appSettings.CoordinateDisplayFormat);
             }
         }
 

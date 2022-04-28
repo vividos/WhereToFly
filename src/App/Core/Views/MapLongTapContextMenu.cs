@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using WhereToFly.App.Core.Logic;
 using WhereToFly.App.Core.ViewModels;
 using WhereToFly.App.Model;
+using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using Xamarin.Forms;
 
@@ -49,8 +49,8 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         public static async ValueTask<Result> ShowAsync(MapPoint point, AppSettings appSettings)
         {
-            string latitudeText = DataFormatter.FormatLatLong(point.Latitude, appSettings.CoordinateDisplayFormat);
-            string longitudeText = DataFormatter.FormatLatLong(point.Longitude, appSettings.CoordinateDisplayFormat);
+            string latitudeText = GeoDataFormatter.FormatLatLong(point.Latitude, appSettings.CoordinateDisplayFormat);
+            string longitudeText = GeoDataFormatter.FormatLatLong(point.Longitude, appSettings.CoordinateDisplayFormat);
 
             string caption =
                 $"Selected point at Latitude: {latitudeText}, Longitude: {longitudeText}, Altitude {point.Altitude.GetValueOrDefault(0.0)} m";
