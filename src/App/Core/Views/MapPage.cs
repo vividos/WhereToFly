@@ -267,6 +267,7 @@ namespace WhereToFly.App.Core.Views
             webView.Navigated += this.OnNavigated_WebView;
 
             this.mapView = new MapView(webView);
+            this.mapView.LogErrorAction = App.LogError;
 
             this.mapView.ShowLocationDetails += async (locationId) => await this.OnMapView_ShowLocationDetails(locationId);
             this.mapView.NavigateToLocation += async (locationId) => await this.OnMapView_NavigateToLocation(locationId);

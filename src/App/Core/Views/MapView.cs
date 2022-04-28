@@ -252,6 +252,11 @@ namespace WhereToFly.App.Core.Views
         }
 
         /// <summary>
+        /// Action to log errors
+        /// </summary>
+        public Action<Exception> LogErrorAction { get; set; }
+
+        /// <summary>
         /// Creates a new MapView C# object
         /// </summary>
         /// <param name="webView">web view to use</param>
@@ -1028,7 +1033,7 @@ namespace WhereToFly.App.Core.Views
             }
             catch (Exception ex)
             {
-                App.LogError(ex);
+                this.LogErrorAction?.Invoke(ex);
             }
 
             this.taskCompletionSourceExportLayer.SetResult(kmzData);
@@ -1040,8 +1045,9 @@ namespace WhereToFly.App.Core.Views
         /// <param name="message">message text</param>
         private void OnConsoleErrorMessage(string message)
         {
-            App.LogError(new InvalidOperationException(
-                "JavaScript error: " + message));
+            this.LogErrorAction?.Invoke(
+                new InvalidOperationException(
+                    "JavaScript error: " + message));
         }
 
 #pragma warning disable S1144 // Unused private types or members should be removed
