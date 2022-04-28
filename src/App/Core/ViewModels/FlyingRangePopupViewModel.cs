@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using WhereToFly.App.MapView;
 using WhereToFly.App.Model;
 using Xamarin.Forms;
 

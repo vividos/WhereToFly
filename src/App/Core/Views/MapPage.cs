@@ -44,7 +44,7 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Map view control on C# side
         /// </summary>
-        private MapView mapView;
+        private MapView.MapView mapView;
 
         /// <summary>
         /// Current app settings object
@@ -266,7 +266,7 @@ namespace WhereToFly.App.Core.Views
             webView.Navigating += this.OnNavigating_WebView;
             webView.Navigated += this.OnNavigated_WebView;
 
-            this.mapView = new MapView(webView);
+            this.mapView = new MapView.MapView(webView);
             this.mapView.LogErrorAction = App.LogError;
 
             this.mapView.ShowLocationDetails += async (locationId) => await this.OnMapView_ShowLocationDetails(locationId);

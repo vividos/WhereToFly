@@ -1,4 +1,4 @@
-﻿namespace WhereToFly.App.Model
+﻿namespace WhereToFly.App.MapView
 {
     /// <summary>
     /// Type of map imagery used to lay over the terrain

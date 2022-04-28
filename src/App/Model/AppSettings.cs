@@ -1,4 +1,5 @@
 ﻿using System;
+using WhereToFly.App.MapView;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 

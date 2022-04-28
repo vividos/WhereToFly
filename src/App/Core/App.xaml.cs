@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.Styles;
 using WhereToFly.App.Core.Views;
+using WhereToFly.App.MapView;
 using WhereToFly.App.Model;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;

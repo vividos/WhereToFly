@@ -5,14 +5,15 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
-using WhereToFly.App.MapView;
-using WhereToFly.App.Model;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;
 using Xamarin.Forms;
 
-namespace WhereToFly.App.Core.Views
+// make MapView internals visible to unit tests
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("WhereToFly.App.UnitTest")]
+
+namespace WhereToFly.App.MapView
 {
     /// <summary>
     /// MapView control; the control is actually implemented as JavsScript code, but can be

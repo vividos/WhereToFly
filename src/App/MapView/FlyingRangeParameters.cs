@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WhereToFly.App.Model
+namespace WhereToFly.App.MapView
 {
     /// <summary>
     /// Parameters for the flying range calculation

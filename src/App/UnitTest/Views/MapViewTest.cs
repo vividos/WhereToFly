@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WhereToFly.App.Core;
 using WhereToFly.App.Core.Services;
-using WhereToFly.App.Core.Views;
+using WhereToFly.App.MapView;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest.Views
@@ -37,7 +37,7 @@ namespace WhereToFly.App.UnitTest.Views
         {
             // set up
             var webView = new WebView();
-            var mapView = new Core.Views.MapView(webView);
+            var mapView = new MapView.MapView(webView);
 
             // run
             await mapView.CreateAsync(
@@ -59,20 +59,20 @@ namespace WhereToFly.App.UnitTest.Views
         {
             // set up
             var webView = new WebView();
-            var mapView = new Core.Views.MapView(webView);
+            var mapView = new MapView.MapView(webView);
 
             Assert.IsTrue(mapView.UseEntityClustering, "initial settings value must be correct");
 
             // run
-            mapView.MapImageryType = Model.MapImageryType.BingMapsAerialWithLabels;
-            mapView.MapOverlayType = Model.MapOverlayType.ContourLines;
-            mapView.MapShadingMode = Model.MapShadingMode.Fixed10Am;
+            mapView.MapImageryType = MapImageryType.BingMapsAerialWithLabels;
+            mapView.MapOverlayType = MapOverlayType.ContourLines;
+            mapView.MapShadingMode = MapShadingMode.Fixed10Am;
             mapView.UseEntityClustering = false;
 
             // check
-            Assert.AreEqual(Model.MapShadingMode.Fixed10Am, mapView.MapShadingMode, "settings value must be correct");
-            Assert.AreEqual(Model.MapOverlayType.ContourLines, mapView.MapOverlayType, "settings value must be correct");
-            Assert.AreEqual(Model.MapImageryType.BingMapsAerialWithLabels, mapView.MapImageryType, "settings value must be correct");
+            Assert.AreEqual(MapShadingMode.Fixed10Am, mapView.MapShadingMode, "settings value must be correct");
+            Assert.AreEqual(MapOverlayType.ContourLines, mapView.MapOverlayType, "settings value must be correct");
+            Assert.AreEqual(MapImageryType.BingMapsAerialWithLabels, mapView.MapImageryType, "settings value must be correct");
             Assert.IsFalse(mapView.UseEntityClustering, "settings value must be correct");
         }
 
@@ -88,7 +88,7 @@ namespace WhereToFly.App.UnitTest.Views
         {
             // set up
             var webView = new WebView();
-            var mapView = new Core.Views.MapView(webView);
+            var mapView = new MapView.MapView(webView);
             var locationList = DataServiceHelper.GetDefaultLocationList();
 
             // run
@@ -114,7 +114,7 @@ namespace WhereToFly.App.UnitTest.Views
         {
             // set up
             var webView = new WebView();
-            var mapView = new Core.Views.MapView(webView);
+            var mapView = new MapView.MapView(webView);
             var track = UnitTestHelper.GetDefaultTrack();
 
             // run
@@ -137,7 +137,7 @@ namespace WhereToFly.App.UnitTest.Views
         {
             // set up
             var webView = new WebView();
-            var mapView = new Core.Views.MapView(webView);
+            var mapView = new MapView.MapView(webView);
             var layer = DataServiceHelper.GetInitialLayerList().First();
 
             // run
@@ -159,7 +159,7 @@ namespace WhereToFly.App.UnitTest.Views
             string jsonParameters = "{ name: 'find result', latitude: 48.2, longitude: 11.8 }";
 
             // run
-            var parameters = JsonConvert.DeserializeObject<Core.Views.MapView.AddFindResultParameter>(jsonParameters);
+            var parameters = JsonConvert.DeserializeObject<WhereToFly.App.MapView.MapView.AddFindResultParameter>(jsonParameters);
 
             // check
             Assert.AreEqual("find result", parameters.Name, "deserialized name must match");
