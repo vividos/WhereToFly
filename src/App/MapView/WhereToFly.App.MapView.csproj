@@ -7,6 +7,15 @@
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>
 
+  <!-- NuGet package properties -->
+  <PropertyGroup>
+    <PackageId>$(NuGetPackagePrefix).$(AssemblyName)</PackageId>
+    <PackageLicenseExpression>BSD-2-Clause</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/vividos/WhereToFly/tree/main/src/App/MapView</PackageProjectUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
+  </PropertyGroup>
+
   <ItemGroup>
     <EmbeddedResource Remove="**" />
     <Compile Include="*.cs" />
@@ -61,8 +70,19 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Geo\WhereToFly.Geo.csproj" />
-    <ProjectReference Include="..\..\Shared\Model\WhereToFly.Shared.Model.csproj" />
-    <ProjectReference Include="..\..\Shared\WebLib\WhereToFly.Shared.WebLib.csproj" />
+    <ProjectReference Include="..\..\Shared\Model\WhereToFly.Shared.Model.csproj">
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <IncludeAssets>WhereToFly.Shared.Model.dll</IncludeAssets>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Shared\WebLib\WhereToFly.Shared.WebLib.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
   </ItemGroup>
+
+  <Target Name="CopyProjectReferencesToPackage" DependsOnTargets="BuildOnlySettings;ResolveReferences">
+    <ItemGroup>
+      <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths->WithMetadataValue('ReferenceSourceTarget', 'ProjectReference')->WithMetadataValue('ReferenceOutputAssembly', 'true'))"/>
+    </ItemGroup>
+  </Target>
 
 </Project>
