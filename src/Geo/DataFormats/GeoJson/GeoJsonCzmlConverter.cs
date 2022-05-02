@@ -280,8 +280,8 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
             double[] coordinates)
         {
             Debug.Assert(
-                coordinates.Length == 2,
-                "there always must be 2 coordinate values");
+                coordinates.Length == 2 || coordinates.Length == 3,
+                "there always must be 2 or 3 coordinate values");
 
             return new Czml.Object
             {
@@ -290,7 +290,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
                 Position = new Czml.PositionList(
                     latitude: coordinates[1],
                     longitude: coordinates[0],
-                    height: null),
+                    height: coordinates.Length == 3 ? coordinates[2] : null),
                 Point = new Czml.Point
                 {
                     PixelSize = this.czmlOptions.PointSize,
@@ -338,13 +338,13 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
             foreach (var coordinates in coordinatesList)
             {
                 Debug.Assert(
-                    coordinates.Length == 2,
-                    "there always must be 2 coordinate values");
+                    coordinates.Length == 2 || coordinates.Length == 3,
+                    "there always must be 2 or 3 coordinate values");
 
                 positionList.Add(
                     latitude: coordinates[1],
                     longitude: coordinates[0],
-                    height: null);
+                    height: coordinates.Length == 3 ? coordinates[2] : null);
             }
 
             return new Czml.Object
