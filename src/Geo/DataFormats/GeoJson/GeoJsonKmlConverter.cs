@@ -41,15 +41,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// <returns>KML text</returns>
         public string ConvertToKml(string geoJsonText)
         {
-            var rootElement = JsonConvert.DeserializeObject<Element>(
-                geoJsonText,
-                new JsonSerializerSettings
-                {
-                    Converters =
-                    {
-                        new ElementJsonDecoder(),
-                    },
-                });
+            var rootElement = Element.Deserialize(geoJsonText);
 
             var kml = new Kml();
 

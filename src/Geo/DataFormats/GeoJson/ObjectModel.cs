@@ -37,6 +37,24 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// </summary>
         [JsonProperty("properties")]
         public Dictionary<string, object> Properties { get; set; }
+
+        /// <summary>
+        /// Deserializes a GeoJSON formatted JSON text to an element hierarchy and returns it.
+        /// </summary>
+        /// <param name="geoJsonText">GeoJSON text</param>
+        /// <returns>root element</returns>
+        public static Element Deserialize(string geoJsonText)
+        {
+            return JsonConvert.DeserializeObject<Element>(
+                geoJsonText,
+                new JsonSerializerSettings
+                {
+                    Converters =
+                    {
+                        new ElementJsonDecoder()
+                    },
+                });
+        }
     }
 
     /// <summary>

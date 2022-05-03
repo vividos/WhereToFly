@@ -32,15 +32,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// <returns>CZML JSON data</returns>
         public string ConvertToCzml(string geoJsonText)
         {
-            var rootElement = JsonConvert.DeserializeObject<Element>(
-                geoJsonText,
-                new JsonSerializerSettings
-                {
-                    Converters =
-                    {
-                        new ElementJsonDecoder(),
-                    },
-                });
+            var rootElement = Element.Deserialize(geoJsonText);
 
             var objectList = new List<object>
             {
