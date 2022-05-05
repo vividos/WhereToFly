@@ -7,7 +7,7 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = merge(common, {
-    mode: 'development',
+    mode: 'production',
     target: ['web', 'es5'],
     output: {
         path: path.resolve(__dirname, 'dist-es5'),
@@ -29,12 +29,35 @@ module.exports = merge(common, {
                         cacheDirectory: true
                     }
                 }
+            },
+            {
+                // Strip cesium pragmas
+                test: /\.js$/,
+                enforce: 'pre',
+                include: path.resolve(__dirname, 'node_modules/cesium/Source'),
+                sideEffects: false,
+                use: [{
+                    loader: 'strip-pragma-loader',
+                    options: {
+                        pragmas: {
+                            debug: false
+                        }
+                    }
+                }]
             }
+        ]
+    },
+    optimization: {
+        usedExports: true,
+        minimize: true,
+        minimizer: [
+            new TerserPlugin(),
+            new CssMinimizerPlugin(),
         ]
     },
     performance: {
         hints: 'error',
-        maxAssetSize: 19200000,
-        maxEntrypointSize: 19200000,
+        maxAssetSize: 4194304,
+        maxEntrypointSize: 4194304,
     },
 });
