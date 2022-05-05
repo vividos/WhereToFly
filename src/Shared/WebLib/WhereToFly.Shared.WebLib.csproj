@@ -16,4 +16,12 @@
   <Import Project="..\..\WhereToFly.NpmBuildProject.targets" />
   <!-- end of npm frontend project integration -->
 
+  <Target Name="NpmRunEs5Build"
+          BeforeTargets="Build"
+          DependsOnTargets="NpmRunBuild"
+          Condition=" '$(OS)' == 'Windows_NT' ">
+    <Exec Condition=" '$(Configuration)' == 'Debug' " WorkingDirectory="$(NpmProjectPath)" Command="npm run build-es5" />
+    <Exec Condition=" '$(Configuration)' == 'Release' " WorkingDirectory="$(NpmProjectPath)" Command="npm run build-es5-release" />
+  </Target>
+
 </Project>
