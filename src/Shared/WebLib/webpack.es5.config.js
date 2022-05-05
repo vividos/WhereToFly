@@ -23,7 +23,12 @@ module.exports = merge(common, {
                         /chart.js/
                     ]
                 },
-                use: 'babel-loader'
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        cacheDirectory: true
+                    }
+                }
             },
             {
                 // Strip cesium pragmas
