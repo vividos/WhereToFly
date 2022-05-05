@@ -31,15 +31,13 @@
   <!-- copy assets from the WebLib project -->
   <Target Name="CopyAssets" BeforeTargets="_CreateManagedLibraryResourceArchive">
     <ItemGroup>
-      <AssetSourceFiles
-        Include="../../Shared/WebLib/dist/**/*.*"
-        Exclude="../../Shared/WebLib/dist/**/*.map" />
+      <AssetSourceFiles Include="../../Shared/WebLib/dist/**/*.*"
+                        Exclude="../../Shared/WebLib/dist/**/*.map" />
     </ItemGroup>
     <Message Text="Copying Assets..." />
-    <Copy
-      UseHardlinksIfPossible="true"
-      SourceFiles="@(AssetSourceFiles)"
-      DestinationFolder="$(MSBuildThisFileDirectory)Assets/weblib/%(RecursiveDir)" />
+    <Copy UseHardlinksIfPossible="true"
+          SourceFiles="@(AssetSourceFiles)"
+          DestinationFolder="$(MSBuildThisFileDirectory)Assets/weblib/%(RecursiveDir)" />
     <!-- dynamically add copied files to the AndroidAsset item group -->
     <CreateItem Include="$(MSBuildThisFileDirectory)Assets/weblib/**/*.*">
       <Output TaskParameter="Include" ItemName="AndroidAsset" />
