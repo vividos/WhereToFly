@@ -9,6 +9,9 @@ const TerserPlugin = require("terser-webpack-plugin");
 module.exports = merge(common, {
     mode: 'production',
     target: ['web', 'es5'],
+    output: {
+        path: path.resolve(__dirname, 'dist-es5'),
+    },
     module: {
         rules: [
             {
