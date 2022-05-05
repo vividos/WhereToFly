@@ -593,6 +593,18 @@ namespace WhereToFly.Geo.DataFormats.Czml
         public string Image { get; set; }
 
         /// <summary>
+        /// Width of image, in meters or pixels
+        /// </summary>
+        [JsonProperty("width", NullValueHandling = NullValueHandling.Ignore)]
+        public int? Width { get; set; }
+
+        /// <summary>
+        /// Height of image, in meters or pixels
+        /// </summary>
+        [JsonProperty("height", NullValueHandling = NullValueHandling.Ignore)]
+        public int? Height { get; set; }
+
+        /// <summary>
         /// Horizontal origin value for the billboard
         /// </summary>
         [JsonProperty("horizontalOrigin")]
@@ -613,8 +625,8 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// <summary>
         /// Indicates if height and width are in meters (when true) or in pixels (when false)
         /// </summary>
-        [JsonProperty("sizeInMeters")]
-        public bool SizeInMeters { get; set; }
+        [JsonProperty("sizeInMeters", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? SizeInMeters { get; set; }
 
         /// <summary>
         /// Viewing distance where depth test is disabled for the billboard
