@@ -1,5 +1,12 @@
 import * as Utils from './utils.js';
 
+// polyfill for UWP
+if (CanvasRenderingContext2D.prototype.resetTransform == undefined) {
+    CanvasRenderingContext2D.prototype.resetTransform = function() {
+        this.setTransform(1, 0, 0, 1, 0, 0);
+    }
+}
+
 // Chart.js
 import {
     Chart,
