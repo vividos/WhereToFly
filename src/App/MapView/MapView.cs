@@ -541,7 +541,24 @@ namespace WhereToFly.App.MapView
         /// <param name="location">location to add</param>
         public void AddLocation(Location location)
         {
-            var jsonLocation = new
+            var jsonLocation = CreateJsonObjectFromLocation(location);
+
+            string js = string.Format(
+                "map.addLocationList([{0}]);",
+                JsonConvert.SerializeObject(jsonLocation));
+
+            this.RunJavaScript(js);
+        }
+
+        /// <summary>
+        /// Creates a C# object suitable for conversion to JSON, in order to use in a JavaScript
+        /// call.
+        /// </summary>
+        /// <param name="location">location to convert</param>
+        /// <returns>C# object</returns>
+        private static object CreateJsonObjectFromLocation(Location location)
+        {
+            return new
             {
                 id = location.Id,
                 name = location.Name,
@@ -554,12 +571,6 @@ namespace WhereToFly.App.MapView
                 isPlanTourLocation = location.IsPlanTourLocation,
                 properties = location.Properties.ToDictionary(kvp => kvp.Key.ToString(), kvp => kvp.Value),
             };
-
-            string js = string.Format(
-                "map.addLocationList([{0}]);",
-                JsonConvert.SerializeObject(jsonLocation));
-
-            this.RunJavaScript(js);
         }
 
         /// <summary>
@@ -583,19 +594,7 @@ namespace WhereToFly.App.MapView
 
             var jsonLocationList =
                 from location in locationList
-                select new
-                {
-                    id = location.Id,
-                    name = location.Name,
-                    description = location.Description,
-                    type = location.Type.ToString(),
-                    latitude = location.MapLocation.Latitude,
-                    longitude = location.MapLocation.Longitude,
-                    altitude = location.MapLocation.Altitude.GetValueOrDefault(0.0),
-                    takeoffDirections = (int)location.TakeoffDirections,
-                    isPlanTourLocation = location.IsPlanTourLocation,
-                    properties = location.Properties.ToDictionary(kvp => kvp.Key.ToString(), kvp => kvp.Value),
-                };
+                select CreateJsonObjectFromLocation(location);
 
             string js = string.Format(
                 "map.addLocationList({0});",
@@ -627,19 +626,7 @@ namespace WhereToFly.App.MapView
         /// <param name="location">location to update</param>
         public void UpdateLocation(Location location)
         {
-            var jsonLocation =
-                new
-                {
-                    id = location.Id,
-                    name = location.Name,
-                    description = location.Description,
-                    type = location.Type.ToString(),
-                    latitude = location.MapLocation.Latitude,
-                    longitude = location.MapLocation.Longitude,
-                    altitude = location.MapLocation.Altitude.GetValueOrDefault(0.0),
-                    isPlanTourLocation = location.IsPlanTourLocation,
-                    properties = location.Properties.ToDictionary(kvp => kvp.Key.ToString(), kvp => kvp.Value),
-                };
+            var jsonLocation = CreateJsonObjectFromLocation(location);
 
             string js = string.Format(
                 "map.updateLocation({0});",
