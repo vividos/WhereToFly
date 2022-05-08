@@ -12,6 +12,7 @@ using WhereToFly.App.Core.Views;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Airspace;
 using WhereToFly.Geo.DataFormats;
+using WhereToFly.Geo.DataFormats.Czml;
 using WhereToFly.Geo.Model;
 using Xamarin.Forms;
 
@@ -617,9 +618,9 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="czml">loaded CZML text</param>
         /// <param name="filename">filename of loaded file</param>
-        /// <param name="description">layer description</param>
+        /// <param name="fileDescription">layer file's description</param>
         /// <returns>task to wait on</returns>
-        private static async Task AddLayerFromCzml(string czml, string filename, string description)
+        private static async Task AddLayerFromCzml(string czml, string filename, string fileDescription)
         {
             if (!IsValidJson(czml))
             {
@@ -631,14 +632,21 @@ namespace WhereToFly.App.Core
                 return;
             }
 
+            ReadCzmlNameAndDescription(czml, out string name, out string description);
+
+            if (string.IsNullOrEmpty(name))
+            {
+                name = Path.GetFileNameWithoutExtension(filename);
+            }
+
             var layer = new Layer
             {
                 Id = Guid.NewGuid().ToString("B"),
-                Name = Path.GetFileNameWithoutExtension(filename),
-                Description = HtmlConverter.Sanitize(description),
+                Name = name,
+                Description = HtmlConverter.Sanitize(description + fileDescription),
                 IsVisible = true,
                 LayerType = LayerType.CzmlLayer,
-                Data = czml
+                Data = czml,
             };
 
             layer = await NavigationService.Instance.NavigateToPopupPageAsync<Layer>(
@@ -664,6 +672,32 @@ namespace WhereToFly.App.Core
             App.MapView.ZoomToLayer(layer);
 
             App.ShowToast("Layer was loaded.");
+        }
+
+        /// <summary>
+        /// Reads name and description fields from the CZML file's packet header, if present.
+        /// </summary>
+        /// <param name="czml">CZML JSON text</param>
+        /// <param name="name">document name to read</param>
+        /// <param name="description">document description to read</param>
+        private static void ReadCzmlNameAndDescription(string czml, out string name, out string description)
+        {
+            var rootArray = JArray.Parse(czml);
+            if (rootArray.Count > 0)
+            {
+                var headerObject = rootArray[0].ToObject<PacketHeader>();
+                if (headerObject != null &&
+                    headerObject.Id == "document")
+                {
+                    name = headerObject.Name;
+                    description = headerObject.Description;
+
+                    return;
+                }
+            }
+
+            name = string.Empty;
+            description = string.Empty;
         }
 
         /// <summary>
