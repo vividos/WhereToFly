@@ -1415,13 +1415,7 @@ export class MapView {
 
     /**
      * Formats description text for a location
-     * @param {string} [location] Location to format text for
-     * @param {string} [location.id] Location ID
-     * @param {string} [location.type] Location type
-     * @param {string} [location.name] Location name
-     * @param {string} [location.description] Location description text
-     * @param {Number} [location.altitude] Altitude of the location
-     * @param {boolean} [location.isPlanTourLocation] Indicates if it's a tour planning location
+     * @param {Location} [location] Location to format text for
      * @returns {string} formatted location text
      */
     formatLocationText(location) {
@@ -1447,6 +1441,20 @@ export class MapView {
 
         return text;
     }
+
+    /**
+     * @typedef {Location} Location object
+     * @property {string} id ID of the location
+     * @property {string} type Location type
+     * @property {string} name Location name
+     * @property {string} description Location description text
+     * @property {number} latitude Latitude of the location
+     * @property {number} longitude Longitude of the location
+     * @property {number} altitude Altitude of the location
+     * @property {number} takeoffDirections Takeoff directions bit values
+     * @property {boolean} [isPlanTourLocation Indicates if it's a tour planning location
+     * @property {Object<string, string>} properties An object containing extra location properties
+     */
 
     /**
      * Adds list of locations to the map, as marker pins
@@ -1640,11 +1648,7 @@ export class MapView {
      * Adds a polyline and polygon entity visualizing the takeoff directions of
      * the given location, to an existing entity.
      * @param {Object} [entity] Entity object to add to
-     * @param {Object} [location] An object with at least the following properties:
-     * @param {String} [location.id] ID of the location to update
-     * @param {Number} [location.latitude] Latitude of the location to update
-     * @param {Number} [location.longitude] Longitude of the location to update
-     * @param {number} [location.takeoffDirections] Takeoff directions bit values
+     * @param {Location} [location] An location object
      */
     addTakeoffEntities(entity, location) {
 
@@ -1692,16 +1696,7 @@ export class MapView {
 
     /**
      * Updates a single location
-     * @param {Object} [location] An object with the following properties:
-     * @param {String} [location.id] ID of the location to update
-     * @param {string} [location.name] Location name
-     * @param {string} [location.type] Location type
-     * @param {Number} [location.latitude] Latitude of the location to update
-     * @param {Number} [location.longitude] Longitude of the location to update
-     * @param {Number} [location.altitude] Altitude of the location to update
-     * @param {string} [location.description] Location description text
-     * @param {boolean} [location.isPlanTourLocation] Indicates if it's a tour planning location
-     * @param {Object} [location.properties] An object containing extra location properties
+     * @param {Location} [location] Location object to update
      */
     updateLocation(location) {
 
