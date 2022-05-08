@@ -3,7 +3,7 @@
     /// <summary>
     /// Factory for WebViewService instances
     /// </summary>
-    public static class WebViewSourceFactory
+    internal static class WebViewSourceFactory
     {
         /// <summary>
         /// Default factory implementation

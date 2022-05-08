@@ -9,7 +9,7 @@ namespace WhereToFly.App.MapView
     /// Handler for callback:// Uri schemas that can be used in a WebView to call back to the C#
     /// part of the app.
     /// </summary>
-    public class WebViewCallbackSchemaHandler
+    internal class WebViewCallbackSchemaHandler
     {
         /// <summary>
         /// Callback Uri scheme to use

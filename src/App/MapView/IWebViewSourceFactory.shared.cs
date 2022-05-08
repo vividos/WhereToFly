@@ -8,7 +8,7 @@ namespace WhereToFly.App.MapView
     /// Factory for WebViewSource objects for the map view controls contained in the weblib npm
     /// project.
     /// </summary>
-    public interface IWebViewSourceFactory
+    internal interface IWebViewSourceFactory
     {
         /// <summary>
         /// Returns web view source for the MapView control
