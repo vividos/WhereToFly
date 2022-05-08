@@ -20,7 +20,7 @@ namespace WhereToFly.App.MapView
     /// controlled using this class. JavaScript code is generated for function calls, and callback
     /// functions are called from JavaScript to C#.
     /// </summary>
-    public class MapView : IMapView
+    public class MapView : IMapView, ITerrainHeightProvider
     {
         /// <summary>
         /// Maximum number of locations that are imported in one JavaScript call
