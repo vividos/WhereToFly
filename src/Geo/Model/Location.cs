@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace WhereToFly.Geo.Model
 {
@@ -48,10 +49,16 @@ namespace WhereToFly.Geo.Model
         /// </summary>
         public bool IsPlanTourLocation { get; set; } = false;
 
+        /// <summary>
+        /// Extra properties of the location, e.g. wind direction for a weather station, etc.
+        /// </summary>
+        public Dictionary<LocationPropertyType, string> Properties { get; set; } = new();
+
         #region IEquatable implementation
 
         /// <summary>
-        /// Compares this location with other location
+        /// Compares this location with other location. Note that properties are not compared,
+        /// since they might change over time when updated live.
         /// </summary>
         /// <param name="other">location to compare to first</param>
         /// <returns>true when locations are equal, false when not</returns>

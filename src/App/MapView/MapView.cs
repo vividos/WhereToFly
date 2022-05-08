@@ -552,6 +552,7 @@ namespace WhereToFly.App.MapView
                 altitude = location.MapLocation.Altitude.GetValueOrDefault(0.0),
                 takeoffDirections = (int)location.TakeoffDirections,
                 isPlanTourLocation = location.IsPlanTourLocation,
+                properties = location.Properties.ToDictionary(kvp => kvp.Key.ToString(), kvp => kvp.Value),
             };
 
             string js = string.Format(
@@ -593,6 +594,7 @@ namespace WhereToFly.App.MapView
                     altitude = location.MapLocation.Altitude.GetValueOrDefault(0.0),
                     takeoffDirections = (int)location.TakeoffDirections,
                     isPlanTourLocation = location.IsPlanTourLocation,
+                    properties = location.Properties.ToDictionary(kvp => kvp.Key.ToString(), kvp => kvp.Value),
                 };
 
             string js = string.Format(
@@ -636,6 +638,7 @@ namespace WhereToFly.App.MapView
                     longitude = location.MapLocation.Longitude,
                     altitude = location.MapLocation.Altitude.GetValueOrDefault(0.0),
                     isPlanTourLocation = location.IsPlanTourLocation,
+                    properties = location.Properties.ToDictionary(kvp => kvp.Key.ToString(), kvp => kvp.Value),
                 };
 
             string js = string.Format(

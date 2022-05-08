@@ -1701,6 +1701,7 @@ export class MapView {
      * @param {Number} [location.altitude] Altitude of the location to update
      * @param {string} [location.description] Location description text
      * @param {boolean} [location.isPlanTourLocation] Indicates if it's a tour planning location
+     * @param {Object} [location.properties] An object containing extra location properties
      */
     updateLocation(location) {
 
