@@ -31,6 +31,7 @@
   <!-- add Android assets using AndroidAsset build action -->
   <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
     <Compile Include="android\*.cs" />
+    <AndroidAsset Include="../../Shared/WebLib/Readme.md" Link="Assets\weblib\Readme.md" />
     <AndroidAsset Include="../../Shared/WebLib/dist/**/*.*"
                   Exclude="../../Shared/WebLib/dist/**/*.map">
       <Link>Assets\weblib\%(RecursiveDir)\%(FileName)%(Extension)</Link>
@@ -40,6 +41,7 @@
   <!-- add UWP assets using Content build action -->
   <ItemGroup Condition=" $(TargetFramework.StartsWith('uap10.0')) ">
     <Compile Include="uwp\*.cs" />
+    <Content Include="../../Shared/WebLib/Readme.md" Link="Assets\weblib\Readme.md" />
     <Content Include="..\..\Shared\WebLib\dist-es5\**\*.*"
              Exclude="..\..\Shared\WebLib\dist-es5\**\*.map">
       <Link>Assets\weblib\%(RecursiveDir)\%(FileName)%(Extension)</Link>
