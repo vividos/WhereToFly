@@ -87,6 +87,22 @@ namespace WhereToFly.Geo.SunCalcNet
 
         #region general calculations for position
         /// <summary>
+        /// Obliquity of the Earth; see https://en.wikipedia.org/wiki/Ecliptic#Obliquity
+        /// </summary>
+        public const double EarthObliquity = 23.4397 * (Math.PI / 180);
+
+        /// <summary>
+        /// Calculates the right ascension for the given ecliptic longitude.
+        /// </summary>
+        /// <param name="l">ecliptic longitude, in radians</param>
+        /// <param name="b">days since january 1st</param>
+        /// <returns>right ascension in radians</returns>
+        public static double RightAscension(double l, int b)
+        {
+            return Math.Atan2((Math.Sin(l) * Math.Cos(EarthObliquity)) - (Math.Tan(b) * Math.Sin(EarthObliquity)), Math.Cos(l));
+        }
+
+        /// <summary>
         /// Calculates the declination for the given ecliptic longitude.
         /// </summary>
         /// <param name="l">ecliptic longitude, in radians</param>
@@ -94,10 +110,42 @@ namespace WhereToFly.Geo.SunCalcNet
         /// <returns>declination in radians</returns>
         public static double Declination(double l, int b)
         {
-            // obliquity of the Earth; see https://en.wikipedia.org/wiki/Ecliptic#Obliquity
-            double e = 23.4397.ToRadians();
+            return Math.Asin((Math.Sin(b) * Math.Cos(EarthObliquity)) + (Math.Cos(b) * Math.Sin(EarthObliquity) * Math.Sin(l)));
+        }
 
-            return Math.Asin((Math.Sin(b) * Math.Cos(e)) + (Math.Cos(b) * Math.Sin(e) * Math.Sin(l)));
+        /// <summary>
+        /// Calculates azimuth angle of a celestial object in the sky
+        /// </summary>
+        /// <param name="H">hour angle, in radians</param>
+        /// <param name="phi">north latitude of the observer, in radians</param>
+        /// <param name="dec">declination of the sky object</param>
+        /// <returns>azimuth angle</returns>
+        public static double Azimuth(double H, double phi, double dec)
+        {
+            return Math.Atan2(Math.Sin(H), (Math.Cos(H) * Math.Sin(phi)) - (Math.Tan(dec) * Math.Cos(phi)));
+        }
+
+        /// <summary>
+        /// Calculates altitude angle of a celestial object in the sky
+        /// </summary>
+        /// <param name="H">hour angle, in radians</param>
+        /// <param name="phi">north latitude of the observer, in radians</param>
+        /// <param name="dec">declination of the sky object</param>
+        /// <returns>altitude angle</returns>
+        public static double Altitude(double H, double phi, double dec)
+        {
+            return Math.Asin((Math.Sin(phi) * Math.Sin(dec)) + (Math.Cos(phi) * Math.Cos(dec) * Math.Cos(H)));
+        }
+
+        /// <summary>
+        /// Calculates sidereal time for the earth
+        /// </summary>
+        /// <param name="d">days since J2000 value</param>
+        /// <param name="lw">longitude of position, in radians</param>
+        /// <returns>sidereal time, in radians</returns>
+        public static double SiderealTime(double d, double lw)
+        {
+            return (280.16 + (360.9856235 * d)).ToRadians() - lw;
         }
         #endregion
 
@@ -138,6 +186,21 @@ namespace WhereToFly.Geo.SunCalcNet
             double P = 102.9372.ToRadians();
 
             return M + C + P + Math.PI;
+        }
+
+        /// <summary>
+        /// Calculates sun coordinates for a given julian date
+        /// </summary>
+        /// <param name="d">days since J2000 value</param>
+        /// <returns>tuple with declination and right ascension of the sun</returns>
+        public static (double dec, double ra) SunCoords(double d)
+        {
+            double M = SolarMeanAnomaly(d);
+            double L = EclipticLongitude(M);
+
+            return (
+                dec: Declination(L, 0),
+                ra: RightAscension(L, 0));
         }
 
         /// <summary>

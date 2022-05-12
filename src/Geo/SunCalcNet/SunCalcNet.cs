@@ -3,10 +3,11 @@ using System.Collections.Generic;
 
 /// <summary>
 /// (c) 2011-2015, Vladimir Agafonkin
-/// (c) 2020 Michael Fink
+/// (c) 2020-2022 Michael Fink
 /// SunCalc.Net is a C# library for calculating sun/moon position and light phases.
 /// The library was ported from the suncalc JavaScript library:
 /// https://github.com/mourner/suncalc
+/// The code is based on version 1.9.0.
 /// Sun calculations are based on https://aa.quae.nl/en/reken/zonpositie.html formulas
 /// Note that moon calculations weren't ported over (yet).
 /// </summary>
@@ -97,6 +98,30 @@ namespace WhereToFly.Geo.SunCalcNet
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Calculates sun position for a given date and latitude/longitude
+        /// </summary>
+        /// <param name="date">date to calculate position for</param>
+        /// <param name="latitude">latitude value, going from greenwich meridian to the east</param>
+        /// <param name="longitude">longitude value, going to the north and the south</param>
+        /// <returns>sun position</returns>
+        public static SunPosition GetPosition(DateTimeOffset date, double latitude, double longitude)
+        {
+            double lw = -longitude.ToRadians();
+            double phi = latitude.ToRadians();
+
+            double d = Formulas.ToDays(date);
+
+            (double dec, double ra) c = Formulas.SunCoords(d);
+            double H = Formulas.SiderealTime(d, lw) - c.ra;
+
+            return new SunPosition
+            {
+                Azimuth = Formulas.Azimuth(H, phi, c.dec),
+                Altitude = Formulas.Altitude(H, phi, c.dec),
+            };
         }
     }
 }
