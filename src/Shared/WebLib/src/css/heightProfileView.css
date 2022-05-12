@@ -73,6 +73,7 @@
     background: rgba(0, 0, 0, .7);
     color: white;
     border-radius: 3px;
+    padding: 4px;
     pointer-events: none;
     transition: all 0.25s ease-in-out;
 }
