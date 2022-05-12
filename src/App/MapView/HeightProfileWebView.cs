@@ -81,7 +81,7 @@ namespace WhereToFly.App.MapView
         public HeightProfileWebView()
         {
             WebViewSource webViewSource =
-                WebViewSourceFactory.Default.GetHeightProfileViewSource();
+                WebViewSourceFactory.Instance.GetHeightProfileViewSource().Result;
 
             this.Source = webViewSource;
             this.AutomationId = "HeightProfileWebView";

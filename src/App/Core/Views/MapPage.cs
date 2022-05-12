@@ -251,7 +251,7 @@ namespace WhereToFly.App.Core.Views
         private async Task SetupWebViewAsync()
         {
             WebViewSource webViewSource =
-                WebViewSourceFactory.Default.GetMapViewSource();
+                await WebViewSourceFactory.Instance.GetMapViewSource();
 
             var webView = new WebView
             {

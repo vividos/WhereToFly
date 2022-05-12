@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.MapView
@@ -6,20 +7,20 @@ namespace WhereToFly.App.MapView
     /// <summary>
     /// Web view source factory implementation for .NET Standard
     /// </summary>
-    public partial class WebViewSourceFactoryImpl : IWebViewSourceFactory
+    internal partial class WebViewSourceFactory
     {
         /// <summary>
         /// Throws NotImplementedException
         /// </summary>
         /// <returns>thrown exception</returns>
-        public WebViewSource GetMapViewSource()
+        public Task<WebViewSource> PlatformGetMapViewSource()
             => throw new NotImplementedException("not implemented in netstandard project");
 
         /// <summary>
         /// Throws NotImplementedException
         /// </summary>
         /// <returns>thrown exception</returns>
-        public WebViewSource GetHeightProfileViewSource()
+        public Task<WebViewSource> PlatformGetHeightProfileViewSource()
             => throw new NotImplementedException("not implemented in netstandard project");
     }
 }
