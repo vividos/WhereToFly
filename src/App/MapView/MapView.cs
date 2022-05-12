@@ -20,17 +20,12 @@ namespace WhereToFly.App.MapView
     /// controlled using this class. JavaScript code is generated for function calls, and callback
     /// functions are called from JavaScript to C#.
     /// </summary>
-    public class MapView : IMapView, ITerrainHeightProvider
+    public class MapView : WebView, IMapView, ITerrainHeightProvider
     {
         /// <summary>
         /// Maximum number of locations that are imported in one JavaScript call
         /// </summary>
         private const int MaxLocationListCount = 100;
-
-        /// <summary>
-        /// Web view where MapView control is used
-        /// </summary>
-        private readonly WebView webView;
 
         /// <summary>
         /// Task completion source for when map is fully initialized
@@ -261,11 +256,22 @@ namespace WhereToFly.App.MapView
         /// Creates a new MapView C# object
         /// </summary>
         /// <param name="webView">web view to use</param>
-        public MapView(WebView webView)
+        public MapView()
         {
-            this.webView = webView;
+            Task.Run(this.InitSourceAsync);
 
             this.RegisterWebViewCallbacks();
+        }
+
+        /// <summary>
+        /// Initializes web view source
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task InitSourceAsync()
+        {
+            this.Source =
+                await WebViewSourceFactory.Instance.GetMapViewSource();
+            this.OnPropertyChanged(nameof(this.Source));
         }
 
         /// <summary>
@@ -880,7 +886,7 @@ namespace WhereToFly.App.MapView
         {
             Debug.WriteLine("run js: " + js.Substring(0, Math.Min(80, js.Length)));
 
-            Device.BeginInvokeOnMainThread(() => this.webView.Eval(js));
+            Device.BeginInvokeOnMainThread(() => this.Eval(js));
         }
 
         /// <summary>
@@ -888,7 +894,7 @@ namespace WhereToFly.App.MapView
         /// </summary>
         private void RegisterWebViewCallbacks()
         {
-            var callbackHandler = new WebViewCallbackSchemaHandler(this.webView);
+            var callbackHandler = new WebViewCallbackSchemaHandler(this);
 
             callbackHandler.RegisterHandler(
                 "onMapInitialized",

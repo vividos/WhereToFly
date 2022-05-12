@@ -1,9 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Xamarin.Forms;
 
-// make factory visible to MapPage
-[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("WhereToFly.App.Core")]
-
 namespace WhereToFly.App.MapView
 {
     /// <summary>

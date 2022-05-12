@@ -250,24 +250,16 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task SetupWebViewAsync()
         {
-            WebViewSource webViewSource =
-                await WebViewSourceFactory.Instance.GetMapViewSource();
-
-            var webView = new WebView
+            this.mapView = new MapView.MapView
             {
-                Source = webViewSource,
-
+                LogErrorAction = App.LogError,
                 VerticalOptions = LayoutOptions.FillAndExpand,
-                HorizontalOptions = LayoutOptions.FillAndExpand
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                AutomationId = "ExploreMapWebView",
             };
 
-            webView.AutomationId = "ExploreMapWebView";
-
-            webView.Navigating += this.OnNavigating_WebView;
-            webView.Navigated += this.OnNavigated_WebView;
-
-            this.mapView = new MapView.MapView(webView);
-            this.mapView.LogErrorAction = App.LogError;
+            this.mapView.Navigating += this.OnNavigating_WebView;
+            this.mapView.Navigated += this.OnNavigated_WebView;
 
             this.mapView.ShowLocationDetails += async (locationId) => await this.OnMapView_ShowLocationDetails(locationId);
             this.mapView.NavigateToLocation += async (locationId) => await this.OnMapView_NavigateToLocation(locationId);
@@ -278,7 +270,7 @@ namespace WhereToFly.App.Core.Views
             this.mapView.UpdateLastShownLocation += async (point, viewingDistance)
                 => await this.OnMapView_UpdateLastShownLocation(point, viewingDistance);
 
-            this.Content = webView;
+            this.Content = this.mapView;
 
             await this.taskCompletionSourcePageLoaded.Task;
         }
