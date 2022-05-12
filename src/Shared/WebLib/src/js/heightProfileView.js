@@ -22,7 +22,6 @@ import * as helpers from 'chart.js/helpers';
 
 // Chart.js plugins
 import 'chartjs-adapter-moment';
-import moment from 'moment';
 
 import CrosshairPlugin from 'chartjs-plugin-crosshair';
 import ZoomPlugin from 'chartjs-plugin-zoom';
@@ -517,13 +516,18 @@ export class HeightProfileView {
      */
     static formatTimeSpan(elapsedTime) {
 
-        var elapsed = moment(new Date((elapsedTime - 60.0 * 60.0) * 1000.0));
+        var elapsed = new Date((elapsedTime - 60.0 * 60.0) * 1000.0);
 
-        if (elapsed.dayOfYear() === 1)
-            return elapsed.format('H:mm:ss');
+        let hour = ('0' + elapsed.getHours()).slice(-2);
+        let minutes = ('0' + elapsed.getMinutes()).slice(-2);
+        let seconds = ('0' + elapsed.getSeconds()).slice(-2);
 
-        var dayElapsed = elapsed.subtract(1, 'days').format('DDD');
-        return dayElapsed + "." + elapsed.format('HH:mm:ss');
+        if (elapsed.getDate() === 1)
+            return (hour + ':' + minutes + ':' + seconds).replace(/^0/, '');
+
+        let days = elapsed.getDate();
+        
+        return days + "." + hour + ':' + minutes + ':' + seconds;
     }
 
     /**
