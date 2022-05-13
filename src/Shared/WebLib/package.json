@@ -36,7 +36,7 @@
     "mini-css-extract-plugin": "^2.5.3",
     "strip-pragma-loader": "^1.0.0",
     "terser-webpack-plugin": "^5.3.1",
-    "webpack": "^5.72.0",
+    "webpack": "^5.72.1",
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.9.0"
   },
@@ -46,7 +46,7 @@
     "chartjs-adapter-moment": "^1.0.0",
     "chartjs-plugin-crosshair": "^1.2.0",
     "chartjs-plugin-zoom": "^1.2.1",
-    "core-js": "^3.22.4",
+    "core-js": "^3.22.5",
     "moment": "^2.29.3"
   }
 }
