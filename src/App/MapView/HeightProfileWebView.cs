@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
@@ -10,7 +12,7 @@ using Xamarin.Forms;
 namespace WhereToFly.App.MapView
 {
     /// <summary>
-    /// Web view showing a standalone HeightProfileView
+    /// Web view showing a track height profile
     /// </summary>
     public class HeightProfileWebView : WebView
     {
@@ -22,14 +24,25 @@ namespace WhereToFly.App.MapView
             = new();
 
         /// <summary>
-        /// Height profile view to display
+        /// Delegate of function to call when user hovers over or clicks on a height profile point
         /// </summary>
-        private HeightProfileView heightProfileView;
+        /// <param name="trackPointIndex">track point index where click occured over</param>
+        public delegate void OnHoverOrClickCallback(int trackPointIndex);
+
+        /// <summary>
+        /// Event that is signaled when user hovers over a height profile point
+        /// </summary>
+        public event OnHoverOrClickCallback Hover;
+
+        /// <summary>
+        /// Event that is signaled when user clicks on a height profile point
+        /// </summary>
+        public event OnHoverOrClickCallback Click;
 
         #region Binding properties
         /// <summary>
-        /// Binding property for the source, specifying the track to display the height profile
-        /// for
+        /// Binding property for the track source, specifying the track to display the height
+        /// profile for
         /// </summary>
         public static readonly BindableProperty TrackProperty =
             BindableProperty.Create(
@@ -80,6 +93,8 @@ namespace WhereToFly.App.MapView
         /// </summary>
         public HeightProfileWebView()
         {
+            this.RegisterWebViewCallbacks();
+
             WebViewSource webViewSource =
                 WebViewSourceFactory.Instance.GetHeightProfileViewSource().Result;
 
@@ -88,6 +103,21 @@ namespace WhereToFly.App.MapView
 
             this.Navigated += this.OnNavigated;
             this.SizeChanged += this.OnSizeChanged;
+        }
+
+        /// <summary>
+        /// Registers callback functions from JavaScript to C#
+        /// </summary>
+        private void RegisterWebViewCallbacks()
+        {
+            var callbackHandler = new WebViewCallbackSchemaHandler(this);
+            callbackHandler.RegisterHandler(
+                "onClick",
+                (jsonParameters) => this.Click?.Invoke(int.Parse(jsonParameters)));
+
+            callbackHandler.RegisterHandler(
+                "onHover",
+                (jsonParameters) => this.Hover?.Invoke(int.Parse(jsonParameters)));
         }
 
         /// <summary>
@@ -101,20 +131,27 @@ namespace WhereToFly.App.MapView
 
             this.Navigated -= this.OnNavigated;
 
-            this.heightProfileView = new HeightProfileView(
-                this,
-                setBodyBackgroundColor: true,
-                this.UseDarkTheme);
+            var options = new
+            {
+                id = "chartElement",
+                containerId = "chartContainer",
+                setBodyBackgroundColor = true,
+                useDarkTheme = this.UseDarkTheme,
+            };
+
+            string jsonOptions = JsonConvert.SerializeObject(options);
+            string js = $"heightProfileView = new WhereToFly.heightProfileView.HeightProfileView({jsonOptions});";
+            this.RunJavaScript(js);
 
             this.taskCompletionSourceViewInitialized.SetResult(true);
 
             if (this.Track != null)
             {
-                this.heightProfileView.SetTrack(this.Track);
+                this.SetTrack(this.Track);
 
                 if (this.Track.GroundHeightProfile.Any())
                 {
-                    this.heightProfileView.AddGroundProfile(this.Track.GroundHeightProfile);
+                    this.AddGroundProfile(this.Track.GroundHeightProfile);
                 }
             }
 
@@ -128,7 +165,8 @@ namespace WhereToFly.App.MapView
         /// <param name="args">event args</param>
         private void OnSizeChanged(object sender, EventArgs args)
         {
-            MainThread.BeginInvokeOnMainThread(async () => await this.ResizeViewHeight());
+            MainThread.BeginInvokeOnMainThread(
+                async () => await this.ResizeViewHeight());
         }
 
         /// <summary>
@@ -142,7 +180,11 @@ namespace WhereToFly.App.MapView
 
             Debug.WriteLine($"ResizeView: set height to {result}");
 
-            if (double.TryParse(result, NumberStyles.Float, NumberFormatInfo.InvariantInfo, out double height))
+            if (double.TryParse(
+                result,
+                NumberStyles.Float,
+                NumberFormatInfo.InvariantInfo,
+                out double height))
             {
                 this.HeightRequest = height;
             }
@@ -156,12 +198,71 @@ namespace WhereToFly.App.MapView
         private async Task SetTrackAsync(Track track)
         {
             await this.taskCompletionSourceViewInitialized.Task;
-            this.heightProfileView.SetTrack(track);
+            this.SetTrack(track);
 
             if (track.GroundHeightProfile.Any())
             {
-                this.heightProfileView.AddGroundProfile(track.GroundHeightProfile);
+                this.AddGroundProfile(track.GroundHeightProfile);
             }
+        }
+
+        /// <summary>
+        /// Sets track to display height profile
+        /// </summary>
+        /// <param name="track">track to use</param>
+        public void SetTrack(Track track)
+        {
+            var trackPointsList =
+                track.TrackPoints.SelectMany(x => new double[]
+                {
+                    x.Longitude,
+                    x.Latitude,
+                    x.Altitude ?? 0.0
+                });
+
+            List<double> timePointsList = null;
+
+            var firstTrackPoint = track.TrackPoints.FirstOrDefault();
+            if (firstTrackPoint != null &&
+                firstTrackPoint.Time.HasValue)
+            {
+                timePointsList = track.TrackPoints.Select(x => x.Time.Value.ToUnixTimeMilliseconds() / 1000.0).ToList();
+            }
+
+            var trackJsonObject = new
+            {
+                id = track.Id,
+                listOfTrackPoints = trackPointsList,
+                listOfTimePoints = timePointsList,
+            };
+
+            string js = $"heightProfileView.setTrack({JsonConvert.SerializeObject(trackJsonObject)});";
+
+            this.RunJavaScript(js);
+        }
+
+        /// <summary>
+        /// Adds a ground profile using given elevations. The number of elevation values must
+        /// match the number of track points from the SetTrack() call.
+        /// </summary>
+        /// <param name="elevationValues">elevation values</param>
+        public void AddGroundProfile(IEnumerable<double> elevationValues)
+        {
+            string elevations = JsonConvert.SerializeObject(elevationValues);
+            string js = $"heightProfileView.addGroundProfile({elevations});";
+
+            this.RunJavaScript(js);
+        }
+
+        /// <summary>
+        /// Runs JavaScript code, in main thread
+        /// </summary>
+        /// <param name="js">javascript code snippet</param>
+        private void RunJavaScript(string js)
+        {
+            Debug.WriteLine("run js: " + js.Substring(0, Math.Min(80, js.Length)));
+
+            Device.BeginInvokeOnMainThread(() => this.Eval(js));
         }
     }
 }
