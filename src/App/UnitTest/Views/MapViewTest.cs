@@ -36,8 +36,7 @@ namespace WhereToFly.App.UnitTest.Views
         public async Task TestMapViewCreate()
         {
             // set up
-            var webView = new WebView();
-            var mapView = new MapView.MapView(webView);
+            var mapView = new MapView.MapView();
 
             // run
             await mapView.CreateAsync(
@@ -58,8 +57,7 @@ namespace WhereToFly.App.UnitTest.Views
         public void TestMapViewSettings()
         {
             // set up
-            var webView = new WebView();
-            var mapView = new MapView.MapView(webView);
+            var mapView = new MapView.MapView();
 
             Assert.IsTrue(mapView.UseEntityClustering, "initial settings value must be correct");
 
@@ -87,8 +85,7 @@ namespace WhereToFly.App.UnitTest.Views
         public void TestMapViewLocationMethods()
         {
             // set up
-            var webView = new WebView();
-            var mapView = new MapView.MapView(webView);
+            var mapView = new MapView.MapView();
             var locationList = DataServiceHelper.GetDefaultLocationList();
 
             // run
@@ -113,8 +110,7 @@ namespace WhereToFly.App.UnitTest.Views
         public void TestMapViewTrackMethods()
         {
             // set up
-            var webView = new WebView();
-            var mapView = new MapView.MapView(webView);
+            var mapView = new MapView.MapView();
             var track = UnitTestHelper.GetDefaultTrack();
 
             // run
@@ -136,8 +132,7 @@ namespace WhereToFly.App.UnitTest.Views
         public void TestMapViewLayerMethods()
         {
             // set up
-            var webView = new WebView();
-            var mapView = new MapView.MapView(webView);
+            var mapView = new MapView.MapView();
             var layer = DataServiceHelper.GetInitialLayerList().First();
 
             // run
@@ -159,7 +154,7 @@ namespace WhereToFly.App.UnitTest.Views
             string jsonParameters = "{ name: 'find result', latitude: 48.2, longitude: 11.8 }";
 
             // run
-            var parameters = JsonConvert.DeserializeObject<WhereToFly.App.MapView.MapView.AddFindResultParameter>(jsonParameters);
+            var parameters = JsonConvert.DeserializeObject<AddFindResultParameter>(jsonParameters);
 
             // check
             Assert.AreEqual("find result", parameters.Name, "deserialized name must match");
