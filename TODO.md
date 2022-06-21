@@ -21,7 +21,6 @@
 - [ ] Analyze flight tracks and show analysis on a new tab
 
 ### Weather
-- [ ] Group weather links
 - [ ] Add filter when adding links
 
 ### Live waypoints
