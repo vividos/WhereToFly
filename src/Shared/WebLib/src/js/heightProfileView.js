@@ -1,7 +1,7 @@
 import * as Utils from './utils.js';
 
 // polyfill for UWP
-if (CanvasRenderingContext2D.prototype.resetTransform == undefined) {
+if (CanvasRenderingContext2D.prototype.resetTransform === undefined) {
     CanvasRenderingContext2D.prototype.resetTransform = function() {
         this.setTransform(1, 0, 0, 1, 0, 0);
     }
@@ -268,18 +268,18 @@ export class HeightProfileView {
 
         var trackData = [];
 
-        if (track.listOfTimePoints == null) {
+        if (track.listOfTimePoints === null) {
             // create time points from 0 to length, in seconds
             track.listOfTimePoints = [];
-            for (var i = 0, len = track.listOfTrackPoints.length / 3; i < len; i++)
-                track.listOfTimePoints[i] = i;
+            for (var timePointIndex = 0, maxTimePointIndex = track.listOfTrackPoints.length / 3; timePointIndex < maxTimePointIndex; timePointIndex++)
+                track.listOfTimePoints[timePointIndex] = timePointIndex;
         }
 
-        for (var i = 0, len = track.listOfTrackPoints.length; i < len; i += 3) {
-            var timePoint = track.listOfTimePoints[i / 3];
+        for (var trackPointIndex = 0, len = track.listOfTrackPoints.length; trackPointIndex < len; trackPointIndex += 3) {
+            var timePoint = track.listOfTimePoints[trackPointIndex / 3];
             trackData.push({
                 x: new Date(timePoint * 1000.0),
-                y: track.listOfTrackPoints[i + 2],
+                y: track.listOfTrackPoints[trackPointIndex + 2],
             });
         }
 
@@ -533,7 +533,7 @@ export class HeightProfileView {
             return (hour + ':' + minutes + ':' + seconds).replace(/^0/, '');
 
         let days = elapsed.getDate();
-        
+
         return days + "." + hour + ':' + minutes + ':' + seconds;
     }
 
