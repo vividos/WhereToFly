@@ -764,14 +764,14 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// <summary>
         /// Indicates if the polygon should also be drawn with an outline
         /// </summary>
-        [JsonProperty("outline")]
-        public bool Outline { get; set; }
+        [JsonProperty("outline", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? Outline { get; set; }
 
         /// <summary>
         /// Specifies the outline color
         /// </summary>
-        [JsonProperty("outlineColor")]
-        public Color OutlineColor { get; set; }
+        [JsonProperty("outlineColor", NullValueHandling = NullValueHandling.Ignore)]
+        public Color? OutlineColor { get; set; }
     }
 
     /// <summary>
@@ -851,8 +851,8 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// <summary>
         /// Solid color for material
         /// </summary>
-        [JsonProperty("solidColor")]
-        public SolidColor SolidColor { get; set; }
+        [JsonProperty("solidColor", NullValueHandling = NullValueHandling.Ignore)]
+        public SolidColor? SolidColor { get; set; }
 
         /// <summary>
         /// Creates a material from a solid color
