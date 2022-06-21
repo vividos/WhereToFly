@@ -855,6 +855,12 @@ namespace WhereToFly.Geo.DataFormats.Czml
         public SolidColor? SolidColor { get; set; }
 
         /// <summary>
+        /// Image based material
+        /// </summary>
+        [JsonProperty("image", NullValueHandling = NullValueHandling.Ignore)]
+        public ImageMaterial? Image { get; set; }
+
+        /// <summary>
         /// Creates a material from a solid color
         /// </summary>
         /// <param name="color">color to use</param>
@@ -867,6 +873,22 @@ namespace WhereToFly.Geo.DataFormats.Czml
                 {
                     Color = color,
                 },
+            };
+        }
+
+        /// <summary>
+        /// Creates an image based material from an image filename or Url
+        /// </summary>
+        /// <param name="imageFilenameOrUrl">image filename or Url to use</param>
+        /// <returns>image material</returns>
+        public static Material FromImageFilename(string imageFilenameOrUrl)
+        {
+            return new Material
+            {
+                Image = new ImageMaterial
+                {
+                    Uri = imageFilenameOrUrl,
+                }
             };
         }
     }
@@ -939,5 +961,17 @@ namespace WhereToFly.Geo.DataFormats.Czml
 
             throw new FormatException("invalid css color string: " + cssColor);
         }
+    }
+
+    /// <summary>
+    /// Image based material
+    /// </summary>
+    public class ImageMaterial
+    {
+        /// <summary>
+        /// Image URI
+        /// </summary>
+        [JsonProperty("uri")]
+        public string Uri { get; set; } = string.Empty;
     }
 }
