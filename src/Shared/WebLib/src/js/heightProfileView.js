@@ -88,16 +88,16 @@ export class HeightProfileView {
         if (this.options.setBodyBackgroundColor)
             document.body.style.backgroundColor = this.backgroundColor;
 
-        var chartContainer = document.getElementById(this.options.containerId);
+        let chartContainer = document.getElementById(this.options.containerId);
         chartContainer.style.display = 'block';
 
         // also style the parent node, in case it's the standalone view
         chartContainer.style.backgroundColor = this.backgroundColor;
 
-        var chartElement = document.getElementById(this.options.id);
-        var ctx = chartElement.getContext('2d');
+        let chartElement = document.getElementById(this.options.id);
+        let ctx = chartElement.getContext('2d');
 
-        var that = this;
+        let that = this;
         this.chart = new Chart(ctx, {
             type: 'line',
             data: {},
@@ -203,7 +203,7 @@ export class HeightProfileView {
             }
         });
 
-        var chartButtonClose = document.getElementById('chartButtonClose');
+        let chartButtonClose = document.getElementById('chartButtonClose');
         chartButtonClose.style.display = this.options.showCloseButton ? 'block' : 'none';
 
         this.setModeZoomAndPan();
@@ -224,10 +224,10 @@ export class HeightProfileView {
         this.chart.update(0);
 
         // update buttons
-        var chartButtonModeHover = document.getElementById('chartButtonModeHover');
+        let chartButtonModeHover = document.getElementById('chartButtonModeHover');
         chartButtonModeHover.classList.remove('chart-toolbar-button-disabled');
 
-        var chartButtonModeZoomAndPan = document.getElementById('chartButtonModeZoomAndPan');
+        let chartButtonModeZoomAndPan = document.getElementById('chartButtonModeZoomAndPan');
         chartButtonModeZoomAndPan.classList.add('chart-toolbar-button-disabled');
     }
 
@@ -245,10 +245,10 @@ export class HeightProfileView {
         this.chart.update(0);
 
         // update buttons
-        var chartButtonModeHover = document.getElementById('chartButtonModeHover');
+        let chartButtonModeHover = document.getElementById('chartButtonModeHover');
         chartButtonModeHover.classList.add('chart-toolbar-button-disabled');
 
-        var chartButtonModeZoomAndPan = document.getElementById('chartButtonModeZoomAndPan');
+        let chartButtonModeZoomAndPan = document.getElementById('chartButtonModeZoomAndPan');
         chartButtonModeZoomAndPan.classList.remove('chart-toolbar-button-disabled');
     }
 
@@ -266,17 +266,17 @@ export class HeightProfileView {
         HeightProfileView.log("setting height profile with " +
             track.listOfTrackPoints.length / 3 + " track points");
 
-        var trackData = [];
+        let trackData = [];
 
         if (track.listOfTimePoints === null) {
             // create time points from 0 to length, in seconds
             track.listOfTimePoints = [];
-            for (var timePointIndex = 0, maxTimePointIndex = track.listOfTrackPoints.length / 3; timePointIndex < maxTimePointIndex; timePointIndex++)
+            for (let timePointIndex = 0, maxTimePointIndex = track.listOfTrackPoints.length / 3; timePointIndex < maxTimePointIndex; timePointIndex++)
                 track.listOfTimePoints[timePointIndex] = timePointIndex;
         }
 
-        for (var trackPointIndex = 0, len = track.listOfTrackPoints.length; trackPointIndex < len; trackPointIndex += 3) {
-            var timePoint = track.listOfTimePoints[trackPointIndex / 3];
+        for (let trackPointIndex = 0, len = track.listOfTrackPoints.length; trackPointIndex < len; trackPointIndex += 3) {
+            let timePoint = track.listOfTimePoints[trackPointIndex / 3];
             trackData.push({
                 x: new Date(timePoint * 1000.0),
                 y: track.listOfTrackPoints[trackPointIndex + 2],
@@ -307,8 +307,8 @@ export class HeightProfileView {
      * */
     updateZoomPanLimits() {
 
-        var scale = this.chart.scales.x;
-        var zoomPanLimits = this.chart.options.plugins.zoom.limits;
+        let scale = this.chart.scales.x;
+        let zoomPanLimits = this.chart.options.plugins.zoom.limits;
         zoomPanLimits.x.min = scale.min.valueOf(); // left value
         zoomPanLimits.x.max = scale.max.valueOf(); // right value
         zoomPanLimits.y.min = 60; // seconds of min. zoom level
@@ -327,9 +327,9 @@ export class HeightProfileView {
         HeightProfileView.log("adding ground profile with " +
             elevationArray.length + " elevation points");
 
-        var trackData = this.chart.data.datasets[0].data;
-        var elevationData = [];
-        for (var i = 0, len = trackData.length; i < len; i++) {
+        let trackData = this.chart.data.datasets[0].data;
+        let elevationData = [];
+        for (let i = 0, len = trackData.length; i < len; i++) {
             elevationData.push({
                 x: trackData[i].x,
                 y: elevationArray[i]
@@ -365,16 +365,16 @@ export class HeightProfileView {
             track.listOfTrackPoints.length !== track.listOfTimePoints.length * 3)
             return;
 
-        var trackData = this.chart.data.datasets[0].data;
+        let trackData = this.chart.data.datasets[0].data;
         if (trackData.length === 0) {
             this.setTrack(track);
             return;
         }
 
-        var lastDate = trackData[trackData.length - 1].x;
-        var lastTimePoint = lastDate.getTime() / 1000;
+        let lastDate = trackData[trackData.length - 1].x;
+        let lastTimePoint = lastDate.getTime() / 1000;
 
-        var newStartTimePos = track.listOfTimePoints.indexOf(lastTimePoint) + 1;
+        let newStartTimePos = track.listOfTimePoints.indexOf(lastTimePoint) + 1;
         if (newStartTimePos === 0 ||
             newStartTimePos >= track.listOfTimePoints.length)
             return;
@@ -383,8 +383,8 @@ export class HeightProfileView {
             (track.listOfTimePoints.length - newStartTimePos) +
             " track points to height profile");
 
-        for (var trackPointIndex = newStartTimePos * 3, len = track.listOfTrackPoints.length; trackPointIndex < len; trackPointIndex += 3) {
-            var timePoint = track.listOfTimePoints[trackPointIndex / 3];
+        for (let trackPointIndex = newStartTimePos * 3, len = track.listOfTrackPoints.length; trackPointIndex < len; trackPointIndex += 3) {
+            let timePoint = track.listOfTimePoints[trackPointIndex / 3];
             trackData.push({
                 x: new Date(timePoint * 1000.0),
                 y: track.listOfTrackPoints[trackPointIndex + 2],
@@ -409,7 +409,7 @@ export class HeightProfileView {
      */
     hide() {
 
-        var chartContainer = document.getElementById(this.options.containerId);
+        let chartContainer = document.getElementById(this.options.containerId);
 
         chartContainer.style.display = 'none';
 
@@ -475,34 +475,34 @@ export class HeightProfileView {
      */
     getTrackTooltipInfos(tooltipModel) {
 
-        var values = {};
+        let values = {};
 
-        var timePoint = this.chart.data.datasets[0].data[tooltipModel.dataPoints[0].dataIndex].x;
+        let timePoint = this.chart.data.datasets[0].data[tooltipModel.dataPoints[0].dataIndex].x;
 
         if (timePoint.getFullYear() === 1970)
             values.elapsedTime = timePoint.valueOf() / 1000.0;
         else {
             values.timePoint = timePoint;
-            var startTime = this.chart.data.datasets[0].data[0].x;
+            let startTime = this.chart.data.datasets[0].data[0].x;
             values.elapsedTime = (values.timePoint - startTime).valueOf() / 1000.0;
         }
 
-        var that = this;
+        let that = this;
         tooltipModel.dataPoints.forEach(function (tooltipItem) {
             if (tooltipItem.datasetIndex === 0) {
 
-                var currentDataPoint = that.chart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex];
+                let currentDataPoint = that.chart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex];
                 values.trackHeight = currentDataPoint.y;
 
                 if (tooltipItem.dataIndex === 0) {
                     values.varioValue = 0.0;
                 }
                 else {
-                    var lastDataPoint = that.chart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex - 1];
+                    let lastDataPoint = that.chart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex - 1];
 
-                    var lastTrackHeight = lastDataPoint.y;
+                    let lastTrackHeight = lastDataPoint.y;
 
-                    var deltaTimeMs = currentDataPoint.x.valueOf() - lastDataPoint.x.valueOf();
+                    let deltaTimeMs = currentDataPoint.x.valueOf() - lastDataPoint.x.valueOf();
                     values.varioValue = (values.trackHeight - lastTrackHeight) / deltaTimeMs * 1000.0;
                 }
             }
@@ -523,7 +523,7 @@ export class HeightProfileView {
      */
     static formatTimeSpan(elapsedTime) {
 
-        var elapsed = new Date((elapsedTime - 60.0 * 60.0) * 1000.0);
+        const elapsed = new Date((elapsedTime - 60.0 * 60.0) * 1000.0);
 
         let hour = ('0' + elapsed.getHours()).slice(-2);
         let minutes = ('0' + elapsed.getMinutes()).slice(-2);
@@ -543,9 +543,9 @@ export class HeightProfileView {
      */
     formatTooltipText(tooltipModel) {
 
-        var values = this.getTrackTooltipInfos(tooltipModel);
+        let values = this.getTrackTooltipInfos(tooltipModel);
 
-        var text = "";
+        let text = "";
 
         if (values.timePoint !== undefined)
             text += "<div>Time: " + values.timePoint.toLocaleTimeString() + "</div>";
@@ -565,7 +565,7 @@ export class HeightProfileView {
             text += "<div>Vario: " + values.varioValue.toFixed(1) + "m/s ";
 
             if (this.options.colorFromVarioValue !== undefined) {
-                var varioColor = this.options.colorFromVarioValue(values.varioValue);
+                const varioColor = this.options.colorFromVarioValue(values.varioValue);
                 text += "<div style='width:12px; height:12px; border:1px white solid; background-color:" + varioColor + "'></div>";
             }
 
@@ -581,7 +581,7 @@ export class HeightProfileView {
      */
     updateTooltipElement(tooltipModel) {
 
-        var tooltipElement = document.getElementById('chartjs-tooltip');
+        let tooltipElement = document.getElementById('chartjs-tooltip');
 
         if (!tooltipElement) {
             tooltipElement = document.createElement('div');
@@ -605,11 +605,11 @@ export class HeightProfileView {
         // set text
         tooltipElement.innerHTML = this.formatTooltipText(tooltipModel);
 
-        var position = this.chart.canvas.getBoundingClientRect();
+        let position = this.chart.canvas.getBoundingClientRect();
 
-        var showLeft = tooltipModel.caretX > position.width / 2;
+        let showLeft = tooltipModel.caretX > position.width / 2;
 
-        var bodyFont = helpers.toFont(tooltipModel.options.bodyFont);
+        let bodyFont = helpers.toFont(tooltipModel.options.bodyFont);
 
         // display, position, and set styles for font
         tooltipElement.style.opacity = 1;

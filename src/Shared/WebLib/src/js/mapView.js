@@ -82,7 +82,7 @@ export class MapView {
         this.sentinel2ImageryProvider = null;
 
         this.openFlightMapsImageryLayer = null;
-        var airacId = MapView.calcCurrentAiracId();
+        const airacId = MapView.calcCurrentAiracId();
         this.openFlightMapsImageryProvider = new Cesium.UrlTemplateImageryProvider({
             url: 'https://nwy-tiles-api.prod.newaydata.com/tiles/{z}/{x}/{y}.png?path=' + airacId + '/aero/latest',
             tileWidth: 512,
@@ -107,11 +107,11 @@ export class MapView {
         this.initTerrainProvider();
 
         console.log("#3 clock");
-        var now = Cesium.JulianDate.now();
-        var start = Cesium.JulianDate.addDays(now, -1, new Cesium.JulianDate());
-        var end = Cesium.JulianDate.addDays(now, 1, new Cesium.JulianDate());
+        let now = Cesium.JulianDate.now();
+        let start = Cesium.JulianDate.addDays(now, -1, new Cesium.JulianDate());
+        let end = Cesium.JulianDate.addDays(now, 1, new Cesium.JulianDate());
 
-        var clock = new Cesium.Clock({
+        let clock = new Cesium.Clock({
             startTime: start,
             endTime: end,
             currentTime: now.clone(),
@@ -120,7 +120,7 @@ export class MapView {
         });
 
         console.log("#4 viewer");
-        var webGLPowerPreference = 'low-power';
+        const webGLPowerPreference = 'low-power';
 
         this.viewer = new Cesium.Viewer(this.options.id, {
             imageryProvider: this.openStreetMapImageryProvider,
@@ -148,7 +148,7 @@ export class MapView {
 
         console.log("#5 globe options");
 
-        var globe = this.viewer.scene.globe;
+        let globe = this.viewer.scene.globe;
         globe.enableLighting = true;
         globe.backFaceCulling = false;
         globe.showSkirts = false;
@@ -172,14 +172,14 @@ export class MapView {
         }
 
         console.log("#7 setView");
-        var longitude = this.options.initialCenterPoint['longitude'];
-        var latitude = this.options.initialCenterPoint['latitude'];
+        let longitude = this.options.initialCenterPoint['longitude'];
+        let latitude = this.options.initialCenterPoint['latitude'];
 
         if (longitude !== 0 && latitude !== 0) {
 
-            var initialHeading = 0.0; // north
-            var initialPitch = Cesium.Math.toRadians(-35);
-            var initialViewingDistance = this.options.initialViewingDistance || 5000.0;
+            let initialHeading = 0.0; // north
+            let initialPitch = Cesium.Math.toRadians(-35);
+            let initialViewingDistance = this.options.initialViewingDistance || 5000.0;
 
             this.viewer.camera.setView({
                 destination: Cesium.Cartesian3.fromDegrees(longitude, latitude, initialViewingDistance),
@@ -190,7 +190,7 @@ export class MapView {
                 }
             });
 
-            var altitude = this.options.initialCenterPoint['altitude'] || 0.0;
+            let altitude = this.options.initialCenterPoint['altitude'] || 0.0;
 
             this.flyTo({
                 longitude: longitude,
@@ -248,8 +248,8 @@ export class MapView {
         this.setupLiveTrackToolbar();
 
         // swap out console.error for logging purposes
-        var that = this;
-        var oldLog = console.error;
+        let that = this;
+        let oldLog = console.error;
         console.error = function (message) {
             that.onConsoleErrorMessage(message);
             oldLog.apply(console, arguments);
@@ -381,20 +381,20 @@ export class MapView {
      */
     onScreenTouchUp(movement) {
 
-        var deltaX = this.currentLeftDownPosition.x - movement.position.x;
-        var deltaY = this.currentLeftDownPosition.y - movement.position.y;
-        var deltaSquared = deltaX * deltaX + deltaY * deltaY;
+        let deltaX = this.currentLeftDownPosition.x - movement.position.x;
+        let deltaY = this.currentLeftDownPosition.y - movement.position.y;
+        let deltaSquared = deltaX * deltaX + deltaY * deltaY;
 
-        var deltaTime = new Date().getTime() - this.currentLeftDownTime;
+        let deltaTime = new Date().getTime() - this.currentLeftDownTime;
 
         // check if tap was longer than 600ms and moved less than 10 pixels
-        var longTapDetected = false;
+        let longTapDetected = false;
         if (deltaTime > 600 && deltaSquared < 10 * 10) {
 
-            var ray = this.viewer.camera.getPickRay(movement.position);
-            var cartesian = this.viewer.scene.globe.pick(ray, this.viewer.scene);
+            let ray = this.viewer.camera.getPickRay(movement.position);
+            let cartesian = this.viewer.scene.globe.pick(ray, this.viewer.scene);
             if (cartesian) {
-                var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+                let cartographic = Cesium.Cartographic.fromCartesian(cartesian);
 
                 longTapDetected = true;
                 this.onLongTap({
@@ -407,9 +407,9 @@ export class MapView {
 
         // check if user tapped a track primitive
         if (!longTapDetected) {
-            var feature = this.viewer.scene.pick(movement.position, 10, 10);
+            let feature = this.viewer.scene.pick(movement.position, 10, 10);
             if (feature !== undefined && feature.id !== undefined && typeof feature.id === 'string') {
-                var trackId = feature.id.replace('track-', '');
+                let trackId = feature.id.replace('track-', '');
                 MapView.log("picked track " + trackId);
                 this.showTrackHeightProfile(trackId);
             }
@@ -422,10 +422,10 @@ export class MapView {
      */
     onScreenRightClick(movement) {
 
-        var ray = this.viewer.camera.getPickRay(movement.position);
-        var cartesian = this.viewer.scene.globe.pick(ray, this.viewer.scene);
+        let ray = this.viewer.camera.getPickRay(movement.position);
+        let cartesian = this.viewer.scene.globe.pick(ray, this.viewer.scene);
         if (cartesian) {
-            var cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+            let cartographic = Cesium.Cartographic.fromCartesian(cartesian);
 
             this.onLongTap({
                 latitude: Cesium.Math.toDegrees(cartographic.latitude),
@@ -441,11 +441,11 @@ export class MapView {
      */
     createThermalImageryProvider() {
 
-        var url = 'https://thermal.kk7.ch/tiles/skyways_all/{z}/{x}/{reverseY}.png?src=https://github.com/vividos/WhereToFly';
+        const url = 'https://thermal.kk7.ch/tiles/skyways_all/{z}/{x}/{reverseY}.png?src=https://github.com/vividos/WhereToFly';
 
-        var creditText = 'Skyways &copy; <a href="https://thermal.kk7.ch/">thermal.kk7.ch</a>';
+        const creditText = 'Skyways &copy; <a href="https://thermal.kk7.ch/">thermal.kk7.ch</a>';
 
-        var tilingScheme = new Cesium.WebMercatorTilingScheme();
+        let tilingScheme = new Cesium.WebMercatorTilingScheme();
 
         return new Cesium.UrlTemplateImageryProvider({
             url: url,
@@ -478,7 +478,7 @@ export class MapView {
             // do nothing
         };
 
-        var pinBuilder = new Cesium.PinBuilder();
+        let pinBuilder = new Cesium.PinBuilder();
         this.clustering.pin50 = pinBuilder.fromText("50+", Cesium.Color.RED, 48).toDataURL();
         this.clustering.pin40 = pinBuilder.fromText("40+", Cesium.Color.RED, 48).toDataURL();
         this.clustering.pin30 = pinBuilder.fromText("30+", Cesium.Color.RED, 48).toDataURL();
@@ -486,12 +486,12 @@ export class MapView {
         this.clustering.pin10 = pinBuilder.fromText("10+", Cesium.Color.RED, 48).toDataURL();
 
         this.clustering.singleDigitPins = new Array(8);
-        for (var i = 0; i < this.clustering.singleDigitPins.length; ++i) {
+        for (let i = 0; i < this.clustering.singleDigitPins.length; ++i) {
             this.clustering.singleDigitPins[i] = pinBuilder
                 .fromText("" + (i + 2), Cesium.Color.RED, 48).toDataURL();
         }
 
-        var that = this;
+        let that = this;
         this.clustering.clusterEvent.addEventListener(
             function (clusteredEntities, cluster) {
                 that.onNewCluster(clusteredEntities, cluster);
@@ -537,46 +537,46 @@ export class MapView {
         if (this.options.liveTrackToolbarId === undefined)
             return;
 
-        var toolbar = document.getElementById(this.options.liveTrackToolbarId);
+        let toolbar = document.getElementById(this.options.liveTrackToolbarId);
 
         // add title
-        var titleDiv = document.createElement('div');
+        let titleDiv = document.createElement('div');
         titleDiv.classList.add('livetrack-toolbar-title');
         titleDiv.innerText = 'Live Tracking';
         toolbar.appendChild(titleDiv);
 
         // add slider
-        var sliderCont = document.createElement('div');
+        let sliderCont = document.createElement('div');
         sliderCont.classList.add('livetrack-slider-container');
         sliderCont.innerHTML = 'Time offset';
 
-        var sliderInput = document.createElement('input');
+        let sliderInput = document.createElement('input');
         sliderInput.type = 'range';
         sliderInput.min = -900;
         sliderInput.max = 0;
         sliderInput.value = this.currentLiveTrackTimeOffset;
         sliderInput.classList.add('livetrack-slider');
 
-        var that = this;
+        let that = this;
         sliderInput.oninput = function () {
-            var timeOffset = parseInt(this.value, 10);
+            let timeOffset = parseInt(this.value, 10);
             that.setLiveTrackTime(timeOffset);
         }
         sliderCont.appendChild(sliderInput);
 
         // slider text
-        var sliderText = document.createElement('div');
+        let sliderText = document.createElement('div');
         sliderText.id = 'liveTrackSliderText';
         sliderCont.appendChild(sliderText);
 
         toolbar.appendChild(sliderCont);
 
         // add toolbar buttons
-        var toolbarCont = document.createElement('div');
+        let toolbarCont = document.createElement('div');
         toolbarCont.classList.add('livetrack-toolbar-button-container');
 
         // reset button
-        var resetButton = document.createElement('div');
+        let resetButton = document.createElement('div');
         resetButton.classList.add('livetrack-toolbar-button');
         resetButton.onclick = function () {
             that.setLiveTrackTime(-180);
@@ -584,7 +584,7 @@ export class MapView {
         }
 
         // reset button image
-        var resetButtonImg = document.createElement('img');
+        let resetButtonImg = document.createElement('img');
         resetButtonImg.src = 'images/timeline-clock-outline.svg';
         resetButtonImg.classList.add('livetrack-toolbar-button-image');
         resetButton.appendChild(resetButtonImg);
@@ -601,7 +601,7 @@ export class MapView {
         if (this.options.liveTrackToolbarId === undefined)
             return;
 
-        var toolbar = document.getElementById(this.options.liveTrackToolbarId);
+        let toolbar = document.getElementById(this.options.liveTrackToolbarId);
 
         toolbar.style.display = 'flex';
     }
@@ -614,7 +614,7 @@ export class MapView {
         if (this.options.liveTrackToolbarId === undefined)
             return;
 
-        var toolbar = document.getElementById(this.options.liveTrackToolbarId);
+        let toolbar = document.getElementById(this.options.liveTrackToolbarId);
 
         toolbar.style.display = 'none';
     }
@@ -637,7 +637,7 @@ export class MapView {
         if (this.options.messageBandId === undefined)
             return;
 
-        var bandElement = document.getElementById(this.options.messageBandId);
+        let bandElement = document.getElementById(this.options.messageBandId);
         if (bandElement === undefined)
             return;
 
@@ -659,7 +659,7 @@ export class MapView {
         if (this.options.messageBandId === undefined)
             return;
 
-        var bandElement = document.getElementById(this.options.messageBandId);
+        let bandElement = document.getElementById(this.options.messageBandId);
         if (bandElement !== undefined) {
             bandElement.style.opacity = '0.0';
 
@@ -679,7 +679,7 @@ export class MapView {
 
         MapView.log("setting new imagery type: " + imageryType);
 
-        var layers = this.viewer.scene.imageryLayers;
+        let layers = this.viewer.scene.imageryLayers;
 
         if (this.openStreetMapImageryLayer !== null)
             layers.remove(this.openStreetMapImageryLayer, false);
@@ -764,14 +764,14 @@ export class MapView {
      * @returns {object} generated canvas object
      */
     static getColorRamp() {
-        var ramp = document.createElement('canvas');
+        let ramp = document.createElement('canvas');
         ramp.width = 100;
         ramp.height = 1;
-        var ctx = ramp.getContext('2d');
+        let ctx = ramp.getContext('2d');
 
-        var values = MapView.slopeRamp;
+        const values = MapView.slopeRamp;
 
-        var grd = ctx.createLinearGradient(0, 0, 100, 0);
+        let grd = ctx.createLinearGradient(0, 0, 100, 0);
         grd.addColorStop(values[0], '#000000'); // black
         grd.addColorStop(values[1], '#2747E0'); // blue
         grd.addColorStop(values[2], '#D33B7D'); // pink
@@ -801,7 +801,7 @@ export class MapView {
         this.contourLinesMaterial.uniforms.color = Cesium.Color.BLUE.clone();
 
         // Creates a composite material with both slope shading and contour lines
-        var material = new Cesium.Material({
+        let material = new Cesium.Material({
             fabric: {
                 type: 'SlopeColorContour',
                 materials: {
@@ -820,12 +820,12 @@ export class MapView {
             translucent: false
         });
 
-        var contourUniforms = material.materials.contourMaterial.uniforms;
+        let contourUniforms = material.materials.contourMaterial.uniforms;
         contourUniforms.width = 1; // in pixels
         contourUniforms.spacing = 100; // in meters
         contourUniforms.color = Cesium.Color.BLUE.clone();
 
-        var shadingUniforms = material.materials.slopeRampMaterial.uniforms;
+        let shadingUniforms = material.materials.slopeRampMaterial.uniforms;
         shadingUniforms.image = MapView.getColorRamp();
 
         this.slopeAndContourLinesMaterial = material;
@@ -840,7 +840,7 @@ export class MapView {
 
         MapView.log("setting new map overlay type: " + overlayType);
 
-        var layers = this.viewer.scene.imageryLayers;
+        let layers = this.viewer.scene.imageryLayers;
 
         if (this.thermalSkywaysLayer !== null)
             layers.remove(this.thermalSkywaysLayer, false);
@@ -911,15 +911,15 @@ export class MapView {
 
         MapView.log("setting new shading mode: " + shadingMode);
 
-        var today = new Date();
-        var now = Cesium.JulianDate.now();
-        var start = Cesium.JulianDate.addDays(now, -1, new Cesium.JulianDate());
+        let today = new Date();
+        let now = Cesium.JulianDate.now();
+        let start = Cesium.JulianDate.addDays(now, -1, new Cesium.JulianDate());
 
         switch (shadingMode) {
             case 'Fixed10Am':
             case 'Fixed3Pm':
                 today.setHours(shadingMode === 'Fixed10Am' ? 10 : 15, 0, 0, 0);
-                var fixedTime = Cesium.JulianDate.fromDate(today);
+                let fixedTime = Cesium.JulianDate.fromDate(today);
 
                 this.viewer.clockViewModel.startTime = fixedTime;
                 this.viewer.clockViewModel.currentTime = fixedTime.clone();
@@ -929,7 +929,7 @@ export class MapView {
                 break;
 
             case 'CurrentTime':
-                var end = Cesium.JulianDate.addDays(now, 1, new Cesium.JulianDate());
+                let end = Cesium.JulianDate.addDays(now, 1, new Cesium.JulianDate());
 
                 this.viewer.clockViewModel.startTime = start;
                 this.viewer.clockViewModel.currentTime = now.clone();
@@ -939,8 +939,8 @@ export class MapView {
                 break;
 
             case 'Ahead6Hours':
-                var ahead = Cesium.JulianDate.addHours(now, 6, new Cesium.JulianDate());
-                var end2 = Cesium.JulianDate.addDays(ahead, 1, new Cesium.JulianDate());
+                let ahead = Cesium.JulianDate.addHours(now, 6, new Cesium.JulianDate());
+                let end2 = Cesium.JulianDate.addDays(ahead, 1, new Cesium.JulianDate());
 
                 this.viewer.clockViewModel.startTime = ahead;
                 this.viewer.clockViewModel.currentTime = ahead.clone();
@@ -977,7 +977,7 @@ export class MapView {
 
         if (useEntityClustering) {
             // force re-clustering
-            var lastPixelRange = this.clustering.pixelRange;
+            let lastPixelRange = this.clustering.pixelRange;
             this.clustering.pixelRange = 0;
             this.clustering.pixelRange = lastPixelRange;
         }
@@ -1013,7 +1013,7 @@ export class MapView {
         this.myLocationMarker.show = true;
         this.myLocationMarker.position = Cesium.Cartesian3.fromDegrees(options.longitude, options.latitude);
 
-        var text = '<h2><img height="48em" width="48em" src="images/map-marker.svg" style="vertical-align:middle" />My Position</h2>' +
+        let text = '<h2><img height="48em" width="48em" src="images/map-marker.svg" style="vertical-align:middle" />My Position</h2>' +
             '<div>Latitude: ' + options.displayLatitude + '<br/>' +
             'Longitude: ' + options.displayLongitude + '<br/>' +
             'Accuracy: <span style="color:' + options.positionAccuracyColor + '">+/- ' + options.positionAccuracy + ' m</span><br/>' +
@@ -1039,11 +1039,11 @@ export class MapView {
      */
     getCurrentViewingDistance() {
 
-        var width = this.viewer.container.clientWidth;
-        var height = this.viewer.container.clientHeight;
+        let width = this.viewer.container.clientWidth;
+        let height = this.viewer.container.clientHeight;
 
-        var ray = this.viewer.camera.getPickRay(new Cesium.Cartesian2(width / 2, height / 2));
-        var position = this.viewer.scene.globe.pick(ray, this.viewer.scene);
+        let ray = this.viewer.camera.getPickRay(new Cesium.Cartesian2(width / 2, height / 2));
+        let position = this.viewer.scene.globe.pick(ray, this.viewer.scene);
 
         if (position !== undefined) {
             return Cesium.Cartesian3.distance(this.viewer.camera.positionWC, position);
@@ -1070,9 +1070,9 @@ export class MapView {
             ", longitude=" + options.longitude +
             ", altitude=" + options.altitude);
 
-        var altitude = options.altitude || 0.0;
+        let altitude = options.altitude || 0.0;
 
-        var viewingDistance = this.getCurrentViewingDistance();
+        let viewingDistance = this.getCurrentViewingDistance();
 
         // zooming works by assinging the zoom entity a new position, making it
         // visible (but transparent), fly there and hiding it again
@@ -1083,7 +1083,7 @@ export class MapView {
 
         this.zoomEntity.show = true;
 
-        var that = this;
+        let that = this;
         await this.viewer.flyTo(
             this.zoomEntity,
             {
@@ -1134,12 +1134,12 @@ export class MapView {
 
         MapView.log("start flying to rectangle");
 
-        var corner = Cesium.Cartesian3.fromDegrees(rectangle.minLongitude, rectangle.minLatitude, rectangle.minAltitude);
-        var oppositeCorner = Cesium.Cartesian3.fromDegrees(rectangle.maxLongitude, rectangle.maxLatitude, rectangle.maxAltitude);
+        let corner = Cesium.Cartesian3.fromDegrees(rectangle.minLongitude, rectangle.minLatitude, rectangle.minAltitude);
+        let oppositeCorner = Cesium.Cartesian3.fromDegrees(rectangle.maxLongitude, rectangle.maxLatitude, rectangle.maxAltitude);
 
-        var boundingSphere = Cesium.BoundingSphere.fromCornerPoints(corner, oppositeCorner);
+        let boundingSphere = Cesium.BoundingSphere.fromCornerPoints(corner, oppositeCorner);
 
-        var that = this;
+        let that = this;
         this.viewer.camera.flyToBoundingSphere(boundingSphere, {
             offset: new Cesium.HeadingPitchRange(
                 this.viewer.camera.heading,
@@ -1148,7 +1148,7 @@ export class MapView {
             complete: function () {
                 MapView.log("flying to rectangle finished");
 
-                var center = Cesium.Cartographic.fromCartesian(boundingSphere.center);
+                let center = Cesium.Cartographic.fromCartesian(boundingSphere.center);
 
                 that.onUpdateLastShownLocation({
                     latitude: Cesium.Math.toDegrees(center.latitude),
@@ -1216,15 +1216,15 @@ export class MapView {
      */
     getDataSourceBoundingSphere(dataSource) {
 
-        var entities = dataSource.entities.values;
+        let entities = dataSource.entities.values;
         MapView.log("getting bounding spheres of " + entities.length + " entities");
 
-        var boundingSphereScratch = new Cesium.BoundingSphere();
+        let boundingSphereScratch = new Cesium.BoundingSphere();
 
-        var boundingSpheres = [];
-        for (var i = 0, len = entities.length; i < len; i++) {
+        let boundingSpheres = [];
+        for (let i = 0, len = entities.length; i < len; i++) {
             try {
-                var state = this.viewer.dataSourceDisplay.getBoundingSphere(entities[i], false, boundingSphereScratch);
+                let state = this.viewer.dataSourceDisplay.getBoundingSphere(entities[i], false, boundingSphereScratch);
 
                 if (state === Cesium.BoundingSphereState.PENDING) {
                     continue;
@@ -1257,7 +1257,7 @@ export class MapView {
             return;
         }
 
-        var dataSource;
+        let dataSource;
         if (layerId === "locationLayer")
             dataSource = this.locationDataSource;
         else if (layerId === "trackLayer")
@@ -1269,9 +1269,9 @@ export class MapView {
 
             this.viewer.flyTo(dataSource);
 
-            var boundingSphere = this.getDataSourceBoundingSphere(dataSource);
+            let boundingSphere = this.getDataSourceBoundingSphere(dataSource);
             if (boundingSphere !== null) {
-                var center = Cesium.Cartographic.fromCartesian(boundingSphere.center);
+                let center = Cesium.Cartographic.fromCartesian(boundingSphere.center);
 
                 this.onUpdateLastShownLocation({
                     latitude: Cesium.Math.toDegrees(center.latitude),
@@ -1301,7 +1301,7 @@ export class MapView {
         else if (layer.id === "osmBuildingsLayer")
             this.osmBuildingsTileset.show = layer.isVisible;
         else {
-            var dataSource = this.dataSourceMap[layer.id];
+            let dataSource = this.dataSourceMap[layer.id];
             if (dataSource !== undefined)
                 dataSource.show = layer.isVisible;
         }
@@ -1326,7 +1326,7 @@ export class MapView {
             return;
         }
 
-        var dataSource = this.dataSourceMap[layerId];
+        let dataSource = this.dataSourceMap[layerId];
         if (dataSource === undefined)
             return;
 
@@ -1360,13 +1360,13 @@ export class MapView {
             return;
         }
 
-        var dataSource = this.dataSourceMap[layerId];
+        let dataSource = this.dataSourceMap[layerId];
         if (dataSource !== undefined) {
             this.viewer.dataSources.remove(dataSource);
             this.dataSourceMap[layerId] = undefined;
 
             // force re-clustering
-            var lastPixelRange = this.clustering.pixelRange;
+            let lastPixelRange = this.clustering.pixelRange;
             this.clustering.pixelRange = 0;
             this.clustering.pixelRange = lastPixelRange;
         }
@@ -1386,8 +1386,8 @@ export class MapView {
             this.osmBuildingsTileset = null;
         }
 
-        for (var layerId in this.dataSourceMap) {
-            var dataSource = this.dataSourceMap[layerId];
+        for (let layerId in this.dataSourceMap) {
+            let dataSource = this.dataSourceMap[layerId];
             if (dataSource !== undefined) {
                 this.viewer.dataSources.remove(dataSource);
             }
@@ -1396,7 +1396,7 @@ export class MapView {
         this.dataSourceMap = {};
 
         // force re-clustering
-        var lastPixelRange = this.clustering.pixelRange;
+        let lastPixelRange = this.clustering.pixelRange;
         this.clustering.pixelRange = 0;
         this.clustering.pixelRange = lastPixelRange;
 
@@ -1420,10 +1420,10 @@ export class MapView {
      */
     formatLocationText(location) {
 
-        var altitudeText =
+        let altitudeText =
             location.altitude !== undefined && location.altitude !== 0 ? ' ' + location.altitude.toFixed(1) + 'm' : '';
 
-        var text = '<h2><img height="48em" width="48em" src="' + this.imageUrlFromLocationType(location.type) + '" style="vertical-align:middle" />' +
+        let text = '<h2><img height="48em" width="48em" src="' + this.imageUrlFromLocationType(location.type) + '" style="vertical-align:middle" />' +
             location.name + altitudeText + '</h2>';
 
         text += '<p><img height="32em" width="32em" src="images/information-outline.svg" style="vertical-align:middle" /> ' +
@@ -1466,20 +1466,20 @@ export class MapView {
         MapView.log("adding location list, with " + locationList.length + " entries");
         console.time("MapView.addLocationList");
 
-        for (var index in locationList) {
+        for (let index in locationList) {
 
-            var location = locationList[index];
+            let location = locationList[index];
 
             if (location.id === undefined) {
                 console.warn("MapView: ignored adding location without ID");
                 continue;
             }
 
-            var text = this.formatLocationText(location);
+            let text = this.formatLocationText(location);
 
-            var imagePath = this.imageUrlFromLocationType(location.type);
+            let imagePath = this.imageUrlFromLocationType(location.type);
 
-            var altitudeText =
+            let altitudeText =
                 location.altitude !== undefined && location.altitude !== 0 ? ' ' + location.altitude.toFixed(1) + 'm' : '';
 
             try {
@@ -1521,7 +1521,7 @@ export class MapView {
      */
     async createEntity(id, name, description, pinColor, pinImage, longitude, latitude) {
 
-        var url = Cesium.getAbsoluteUri(pinImage, window.location.href);
+        let url = Cesium.getAbsoluteUri(pinImage, window.location.href);
 
         let canvas = window.location.protocol === "file:" && !window.location.href.includes("android_asset")
             ? this.pinBuilder.fromColor(pinColor, 48)
@@ -1608,35 +1608,35 @@ export class MapView {
      */
     static pointFromCenterRadiusAngle(center, radius, angleDegrees) {
 
-        var unitPosScratch = new Cesium.Cartesian3();
-        var unitPos = Cesium.Cartesian3.normalize(center, unitPosScratch);
+        let unitPosScratch = new Cesium.Cartesian3();
+        let unitPos = Cesium.Cartesian3.normalize(center, unitPosScratch);
 
-        var eastVecScratch = new Cesium.Cartesian3();
-        var eastVec = Cesium.Cartesian3.cross(Cesium.Cartesian3.UNIT_Z, center, eastVecScratch);
+        let eastVecScratch = new Cesium.Cartesian3();
+        let eastVec = Cesium.Cartesian3.cross(Cesium.Cartesian3.UNIT_Z, center, eastVecScratch);
         eastVec = Cesium.Cartesian3.normalize(eastVec, eastVec);
 
-        var northVecScratch = new Cesium.Cartesian3();
-        var northVec = Cesium.Cartesian3.cross(unitPos, eastVec, northVecScratch);
+        let northVecScratch = new Cesium.Cartesian3();
+        let northVec = Cesium.Cartesian3.cross(unitPos, eastVec, northVecScratch);
 
-        var azimuth = Cesium.Math.toRadians(angleDegrees);
+        let azimuth = Cesium.Math.toRadians(angleDegrees);
 
-        var rotAxis = new Cesium.Cartesian3();
-        var tempVec = new Cesium.Cartesian3();
+        let rotAxis = new Cesium.Cartesian3();
+        let tempVec = new Cesium.Cartesian3();
         Cesium.Cartesian3.multiplyByScalar(eastVec, Math.cos(azimuth), rotAxis);
         Cesium.Cartesian3.multiplyByScalar(northVec, Math.sin(azimuth), tempVec);
         Cesium.Cartesian3.add(rotAxis, tempVec, rotAxis);
 
-        var mag = Cesium.Cartesian3.magnitude(center);
-        var angle = radius / mag;
+        let mag = Cesium.Cartesian3.magnitude(center);
+        let angle = radius / mag;
 
         // Create the quaternion to rotate the position vector to the boundary of the ellipse.
-        var unitQuat = new Cesium.Quaternion();
+        let unitQuat = new Cesium.Quaternion();
         Cesium.Quaternion.fromAxisAngle(rotAxis, angle, unitQuat);
 
-        var rotMtx = new Cesium.Matrix3();
+        let rotMtx = new Cesium.Matrix3();
         Cesium.Matrix3.fromQuaternion(unitQuat, rotMtx);
 
-        var result = new Cesium.Cartesian3();
+        let result = new Cesium.Cartesian3();
         Cesium.Matrix3.multiplyByVector(rotMtx, unitPos, result);
         Cesium.Cartesian3.normalize(result, result);
 
@@ -1652,19 +1652,19 @@ export class MapView {
      */
     addTakeoffEntities(entity, location) {
 
-        var center = Cesium.Cartesian3.fromDegrees(location.longitude, location.latitude);
-        var radius = 50.0; // in meter
+        let center = Cesium.Cartesian3.fromDegrees(location.longitude, location.latitude);
+        let radius = 50.0; // in meter
 
-        var pointArray = [];
-        var takeoffBits = location.takeoffDirections;
-        var sliceAngle = 360.0 / 16.0;
+        let pointArray = [];
+        let takeoffBits = location.takeoffDirections;
+        let sliceAngle = 360.0 / 16.0;
 
         pointArray.push(center);
 
         // from the bits, calculate the takeoff angle and add polygon points
-        for (var angleBit = 0; angleBit <= 16; angleBit++) {
-            var bitmask = 1 << angleBit;
-            var angle = 180.0 - angleBit * sliceAngle;
+        for (let angleBit = 0; angleBit <= 16; angleBit++) {
+            let bitmask = 1 << angleBit;
+            let angle = 180.0 - angleBit * sliceAngle;
 
             if ((takeoffBits & bitmask) !== 0) {
                 pointArray.push(MapView.pointFromCenterRadiusAngle(center, radius, angle - sliceAngle / 2.0));
@@ -1674,7 +1674,7 @@ export class MapView {
             }
         }
 
-        var distanceDisplayCondition =
+        let distanceDisplayCondition =
             new Cesium.DistanceDisplayCondition(0.0, 5000.0);
 
         entity.polyline = {
@@ -1705,7 +1705,7 @@ export class MapView {
             ", longitude " + location.longitude +
             ", altitude " + location.altitude);
 
-        var entity = this.locationDataSource.entities.getById(location.id);
+        let entity = this.locationDataSource.entities.getById(location.id);
 
         if (entity === undefined) {
             console.error("MapView.updateLocation: couldn't find entity for id: " + location.id);
@@ -1728,7 +1728,7 @@ export class MapView {
 
         MapView.log("removing location with ID: " + locationId);
 
-        var entity = this.locationDataSource.entities.getById(locationId);
+        let entity = this.locationDataSource.entities.getById(locationId);
 
         this.locationDataSource.entities.remove(entity);
 
@@ -1755,12 +1755,12 @@ export class MapView {
         MapView.log("showing find result for \"" + options.name +
             "\", at latitude " + options.latitude + ", longitude " + options.longitude);
 
-        var text = '<h2><img height="48em" width="48em" src="images/magnify.svg" style="vertical-align:middle" />' + options.name + '</h2>' +
+        let text = '<h2><img height="48em" width="48em" src="images/magnify.svg" style="vertical-align:middle" />' + options.name + '</h2>' +
             '<div>Latitude: ' + options.displayLatitude + '<br/>' +
             'Longitude: ' + options.displayLongitude +
             '</div>';
 
-        var optionsText = '{ name: \'' + options.name + '\', latitude:' + options.latitude + ', longitude:' + options.longitude + '}';
+        let optionsText = '{ name: \'' + options.name + '\', latitude:' + options.latitude + ', longitude:' + options.longitude + '}';
 
         text += '<img height="32em" width="32em" src="images/map-marker-plus.svg" style="vertical-align:middle" />' +
             '<a href="javascript:parent.map.onAddFindResult(' + optionsText + ');">Add as waypoint</a></p>';
@@ -1798,19 +1798,19 @@ export class MapView {
             options.windSpeed = options.gliderSpeed - 1;
 
         // use wind speed to calculate the angle to pitch the cone
-        var glideAngle = Math.atan(options.glideRatio);
-        var glideRatioWithWind = options.glideRatio * (options.gliderSpeed - options.windSpeed) / options.gliderSpeed;
-        var glideAngleWithWind = Math.atan(glideRatioWithWind);
-        var conePitch = glideAngle - glideAngleWithWind;
+        let glideAngle = Math.atan(options.glideRatio);
+        let glideRatioWithWind = options.glideRatio * (options.gliderSpeed - options.windSpeed) / options.gliderSpeed;
+        let glideAngleWithWind = Math.atan(glideRatioWithWind);
+        let conePitch = glideAngle - glideAngleWithWind;
 
-        var quat = Cesium.Transforms.headingPitchRollQuaternion(
+        let quat = Cesium.Transforms.headingPitchRollQuaternion(
             Cesium.Cartesian3.fromDegrees(options.longitude, options.latitude, options.altitude / 2.0),
             new Cesium.HeadingPitchRoll(
                 Cesium.Math.toRadians(options.windDirection + 90.0),
                 conePitch, 0.0)
         );
 
-        var text = '<p><img height="32em" width="32em" src="images/close-circle-outline.svg" style="vertical-align:middle" />' +
+        let text = '<p><img height="32em" width="32em" src="images/close-circle-outline.svg" style="vertical-align:middle" />' +
             '<a href="javascript:parent.map.hideFlyingRangeCone();">Hide</a></p>';
 
         text += '<p>Flying range for map point at<br/>Latitude: ' + options.displayLatitude + '<br/>' +
@@ -1868,9 +1868,9 @@ export class MapView {
             return;
         }
 
-        var trackPointArray = Cesium.Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints);
+        let trackPointArray = Cesium.Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints);
 
-        var cartographicArray = [];
+        let cartographicArray = [];
         for (let trackPoint of trackPointArray)
             cartographicArray.push(Cesium.Cartographic.fromCartesian(trackPoint));
 
@@ -1896,10 +1896,10 @@ export class MapView {
 
             MapView.log("sampleTrackHeights: #5: terrain provider reports back " + samples.length + " samples");
 
-            var trackPointHeightArray = [];
+            let trackPointHeightArray = [];
 
             for (let sampledValue of samples) {
-                var sampledHeight = sampledValue.height;
+                let sampledHeight = sampledValue.height;
                 trackPointHeightArray.push(sampledHeight);
             }
 
@@ -1938,7 +1938,7 @@ export class MapView {
      */
     trackColorFromVarioValue(varioValue) {
 
-        var varioColorMapping = [
+        const varioColorMapping = [
             5.0, Cesium.Color.RED,
             4.5, Cesium.Color.fromBytes(255, 64, 0),
             4.0, Cesium.Color.fromBytes(255, 128, 0),
@@ -1959,7 +1959,7 @@ export class MapView {
             -4.0, Cesium.Color.fromBytes(64, 0, 128)
         ];
 
-        for (var mappingIndex = 0; mappingIndex < varioColorMapping.length; mappingIndex += 2) {
+        for (let mappingIndex = 0; mappingIndex < varioColorMapping.length; mappingIndex += 2) {
             if (varioValue >= varioColorMapping[mappingIndex])
                 return varioColorMapping[mappingIndex + 1];
         }
@@ -1975,21 +1975,21 @@ export class MapView {
      */
     calcTrackColors(listOfTrackPoints, listOfTimePoints) {
 
-        var trackColors = [];
+        let trackColors = [];
 
         trackColors[0] = this.trackColorFromVarioValue(0.0);
 
-        for (var index = 3; index < listOfTrackPoints.length; index += 3) {
+        for (let index = 3; index < listOfTrackPoints.length; index += 3) {
 
-            var altitudeDiff = listOfTrackPoints[index + 2] - listOfTrackPoints[index - 1];
+            let altitudeDiff = listOfTrackPoints[index + 2] - listOfTrackPoints[index - 1];
 
-            var timeDiff = 1.0;
+            let timeDiff = 1.0;
             if (listOfTimePoints !== null)
                 timeDiff = listOfTimePoints[index / 3] - listOfTimePoints[index / 3 - 1];
 
-            var varioValue = altitudeDiff / timeDiff;
+            let varioValue = altitudeDiff / timeDiff;
 
-            var varioColor = this.trackColorFromVarioValue(varioValue);
+            let varioColor = this.trackColorFromVarioValue(varioValue);
 
             if (varioColor === undefined)
                 MapView.log("undefined color for vario value " + varioValue);
@@ -2010,9 +2010,9 @@ export class MapView {
      */
     getFlightTrackPrimitive(track, trackPointArray) {
 
-        var trackColors = this.calcTrackColors(track.listOfTrackPoints, track.listOfTimePoints);
+        let trackColors = this.calcTrackColors(track.listOfTrackPoints, track.listOfTimePoints);
 
-        var trackPolyline = new Cesium.PolylineGeometry({
+        let trackPolyline = new Cesium.PolylineGeometry({
             positions: trackPointArray,
             width: 5,
             vertexFormat: Cesium.PolylineColorAppearance.VERTEX_FORMAT,
@@ -2020,7 +2020,7 @@ export class MapView {
             colorsPerVertex: false
         });
 
-        var primitive = new Cesium.Primitive({
+        let primitive = new Cesium.Primitive({
             asynchronous: this.options.useAsynchronousPrimitives,
             geometryInstances: new Cesium.GeometryInstance({
                 id: "track-" + track.id,
@@ -2040,15 +2040,15 @@ export class MapView {
      */
     getFlightTrackWallPrimitive(trackId, trackPointArray) {
 
-        var wallGeometry = new Cesium.WallGeometry({
+        let wallGeometry = new Cesium.WallGeometry({
             positions: trackPointArray
         });
 
-        var wallMaterial = Cesium.Material.fromType('Color');
+        let wallMaterial = Cesium.Material.fromType('Color');
 
         wallMaterial.uniforms.color = new Cesium.Color(0.5, 0.5, 1, 0.4);
 
-        var wallPrimitive = new Cesium.Primitive({
+        let wallPrimitive = new Cesium.Primitive({
             asynchronous: this.options.useAsynchronousPrimitives,
             geometryInstances: new Cesium.GeometryInstance({
                 id: "track-" + trackId,
@@ -2074,12 +2074,12 @@ export class MapView {
      */
     getGroundTrackPrimitive(track, trackPointArray) {
 
-        var groundTrackPolyline = new Cesium.GroundPolylineGeometry({
+        let groundTrackPolyline = new Cesium.GroundPolylineGeometry({
             positions: trackPointArray,
             width: 5
         });
 
-        var primitive = new Cesium.GroundPolylinePrimitive({
+        let primitive = new Cesium.GroundPolylinePrimitive({
             asynchronous: this.options.useAsynchronousPrimitives,
             geometryInstances: new Cesium.GeometryInstance({
                 id: "track-" + track.id,
@@ -2149,7 +2149,7 @@ export class MapView {
      */
     addOrUpdateTrackPrimitives(track) {
 
-        var trackPointArray = track.listOfTrackPoints.length > 0
+        let trackPointArray = track.listOfTrackPoints.length > 0
             ? Cesium.Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints)
             : [];
 
@@ -2161,7 +2161,7 @@ export class MapView {
         if (trackPointArray.length < 2)
             return;
 
-        var trackData = this.trackIdToTrackDataMap[track.id];
+        let trackData = this.trackIdToTrackDataMap[track.id];
 
         if (trackData.boundingSphere !== undefined) {
             // remove the existing primitives
@@ -2199,24 +2199,24 @@ export class MapView {
      */
     async addLiveTrackEntity(track) {
 
-        var pinColor = this.pinColorFromLocationType('LiveWaypoint');
-        var pinImage = this.imageUrlFromLocationType('LiveWaypoint');
+        let pinColor = this.pinColorFromLocationType('LiveWaypoint');
+        let pinImage = this.imageUrlFromLocationType('LiveWaypoint');
 
-        var url = Cesium.getAbsoluteUri(pinImage, window.location.href);
+        let url = Cesium.getAbsoluteUri(pinImage, window.location.href);
 
         let canvas = window.location.protocol === "file:" && !window.location.href.includes("android_asset")
             ? this.pinBuilder.fromColor(pinColor, 48)
             : await this.pinBuilder.fromUrl(url, pinColor, 48);
 
         try {
-            var sampledPos = new Cesium.SampledPositionProperty();
+            let sampledPos = new Cesium.SampledPositionProperty();
             sampledPos.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD;
             sampledPos.setInterpolationOptions({
                 interpolationAlgorithm: Cesium.LagrangePolynomialApproximation,
                 interpolationDegree: 3
             });
 
-            var showLabelProperty = new Cesium.TimeIntervalCollectionProperty();
+            let showLabelProperty = new Cesium.TimeIntervalCollectionProperty();
             showLabelProperty.intervals.addInterval(
                 new Cesium.TimeInterval({
                     start: Cesium.JulianDate.now,
@@ -2224,7 +2224,7 @@ export class MapView {
                     data: false // label is not visible
                 }));
 
-            var entityOptions = {
+            let entityOptions = {
                 id: "livetrackpoint-" + track.id,
                 name: track.name,
                 description: track.description,
@@ -2257,9 +2257,9 @@ export class MapView {
                 }
             };
 
-            var entity = this.liveTrackDataSource.entities.add(entityOptions);
+            let entity = this.liveTrackDataSource.entities.add(entityOptions);
 
-            var trackData = this.trackIdToTrackDataMap[track.id];
+            let trackData = this.trackIdToTrackDataMap[track.id];
             trackData.liveTrackEntity = entity;
 
         } catch (error) {
@@ -2278,12 +2278,12 @@ export class MapView {
      */
     updateTrack(track) {
 
-        var trackInfos = this.trackIdToTrackDataMap[track.id];
+        let trackInfos = this.trackIdToTrackDataMap[track.id];
         if (trackInfos !== undefined) {
             trackInfos.track.name = track.name;
 
             if (!track.isFlightTrack) {
-                var attributes = trackInfos.primitive.getGeometryInstanceAttributes(
+                let attributes = trackInfos.primitive.getGeometryInstanceAttributes(
                     "track-" + track.id);
 
                 attributes.color = Cesium.ColorGeometryInstanceAttribute.toValue(
@@ -2314,24 +2314,24 @@ export class MapView {
     removeTrackDuplicatePoints(track, trackPointArray) {
 
         // add index to every track point
-        for (var trackPointIndex = 0; trackPointIndex < trackPointArray.length; trackPointIndex++) {
+        for (let trackPointIndex = 0; trackPointIndex < trackPointArray.length; trackPointIndex++) {
             trackPointArray[trackPointIndex].trackPointIndex = trackPointIndex;
         }
 
-        var modifiedTrackPointArray = Cesium.arrayRemoveDuplicates(trackPointArray, Cesium.Cartesian3.equalsEpsilon);
+        let modifiedTrackPointArray = Cesium.arrayRemoveDuplicates(trackPointArray, Cesium.Cartesian3.equalsEpsilon);
 
         if (trackPointArray.length === modifiedTrackPointArray.length)
             return trackPointArray; // nothing was removed
 
-        var removedTrackPoints = trackPointArray.length - modifiedTrackPointArray.length;
+        let removedTrackPoints = trackPointArray.length - modifiedTrackPointArray.length;
         MapView.log("removed " + removedTrackPoints + " duplicate track points from track");
 
-        var newListOfTrackPoints = [];
-        var newListOfTimePoints = [];
-        var newGroundHeightProfile = [];
+        let newListOfTrackPoints = [];
+        let newListOfTimePoints = [];
+        let newGroundHeightProfile = [];
 
-        for (var modifiedIndex = 0; modifiedIndex < modifiedTrackPointArray.length; modifiedIndex++) {
-            var oldTrackPointIndex = modifiedTrackPointArray[modifiedIndex].trackPointIndex;
+        for (let modifiedIndex = 0; modifiedIndex < modifiedTrackPointArray.length; modifiedIndex++) {
+            let oldTrackPointIndex = modifiedTrackPointArray[modifiedIndex].trackPointIndex;
 
             newListOfTrackPoints.push(track.listOfTrackPoints[oldTrackPointIndex * 3]);
             newListOfTrackPoints.push(track.listOfTrackPoints[oldTrackPointIndex * 3 + 1]);
@@ -2366,16 +2366,16 @@ export class MapView {
      */
     convertResponseDataToTrack(track) {
 
-        var trackStart = typeof track.trackStart === 'string'
+        let trackStart = typeof track.trackStart === 'string'
             ? Math.floor(new Date(track.trackStart).getTime() / 1000.0)
             : track.trackStart;
 
         track.listOfTrackPoints = [];
         track.listOfTimePoints = [];
 
-        for (var trackPointIndex in track.trackPoints) {
+        for (let trackPointIndex in track.trackPoints) {
 
-            var trackPoint = track.trackPoints[trackPointIndex];
+            let trackPoint = track.trackPoints[trackPointIndex];
 
             track.listOfTrackPoints.push(trackPoint.longitude);
             track.listOfTrackPoints.push(trackPoint.latitude);
@@ -2416,7 +2416,7 @@ export class MapView {
             return;
         }
 
-        var trackData = this.trackIdToTrackDataMap[track.id];
+        let trackData = this.trackIdToTrackDataMap[track.id];
 
         if (trackData.liveTrackEntity === undefined) {
             console.warn("called updateLiveTrack(), but track is no live track");
@@ -2435,26 +2435,26 @@ export class MapView {
         this.addOrUpdateTrackPrimitives(track);
 
         // add points to path entity
-        var trackPointArray = Cesium.Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints);
+        let trackPointArray = Cesium.Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints);
 
-        var julianTimePoints = [];
-        for (var index = 0; index < track.listOfTimePoints.length; index++)
+        let julianTimePoints = [];
+        for (let index = 0; index < track.listOfTimePoints.length; index++)
             julianTimePoints.push(
                 Cesium.JulianDate.fromDate(
                     new Date(track.listOfTimePoints[index] * 1000.0)));
 
-        var lastTimePoint = track.listOfTimePoints[track.listOfTimePoints.length - 1];
+        let lastTimePoint = track.listOfTimePoints[track.listOfTimePoints.length - 1];
 
         console.info("MapView: added new track points, from " +
             new Date(track.listOfTimePoints[0] * 1000.0) +
             " to " +
             new Date(lastTimePoint * 1000.0));
 
-        var sampledPos = trackData.liveTrackEntity.position;
+        let sampledPos = trackData.liveTrackEntity.position;
         sampledPos.addSamples(julianTimePoints, trackPointArray);
 
         // update visibility and text of label
-        var showLabelProperty = trackData.liveTrackEntity.label.show;
+        let showLabelProperty = trackData.liveTrackEntity.label.show;
         showLabelProperty.intervals.addInterval(
             new Cesium.TimeInterval({
                 start: julianTimePoints[0],
@@ -2462,7 +2462,7 @@ export class MapView {
                 data: false // label is not visible
             }));
 
-        var text = "out of data\nsince " +
+        let text = "out of data\nsince " +
             new Date(lastTimePoint * 1000.0).toTimeString().substring(0, 8);
 
         trackData.liveTrackEntity.label.text =
@@ -2487,22 +2487,22 @@ export class MapView {
      */
     mergeLiveTrackPoints(track) {
 
-        var trackData = this.trackIdToTrackDataMap[track.id];
+        let trackData = this.trackIdToTrackDataMap[track.id];
 
         if (track.listOfTrackPoints.length === 0 ||
             track.listOfTrackPoints.length !== track.listOfTimePoints.length * 3)
             return;
 
-        var startTimePoint = track.listOfTimePoints[0];
+        let startTimePoint = track.listOfTimePoints[0];
 
-        var timePos = trackData.track.listOfTimePoints.indexOf(startTimePoint);
+        let timePos = trackData.track.listOfTimePoints.indexOf(startTimePoint);
 
-        var removedTrackPoints = (timePos === -1 ? "no " : (trackData.track.listOfTimePoints.length - timePos) + " ");
+        let removedTrackPoints = (timePos === -1 ? "no " : (trackData.track.listOfTimePoints.length - timePos) + " ");
         console.info("MapView: removing " + removedTrackPoints +
             "live track points and adding " + track.listOfTimePoints.length + " new track points");
 
         if (timePos !== -1) {
-            var trackPos = timePos * 3;
+            let trackPos = timePos * 3;
             trackData.track.listOfTrackPoints.splice(trackPos, trackData.track.listOfTrackPoints.length - trackPos);
             trackData.track.listOfTimePoints.splice(timePos, trackData.track.listOfTimePoints.length - timePos);
         }
@@ -2522,7 +2522,7 @@ export class MapView {
      */
     getTrackLastTrackPointTime(trackId) {
 
-        var trackData = this.trackIdToTrackDataMap[trackId];
+        let trackData = this.trackIdToTrackDataMap[trackId];
 
         if (trackData === undefined ||
             trackData.track === undefined ||
@@ -2541,9 +2541,9 @@ export class MapView {
 
         this.currentLiveTrackTimeOffset = timeOffset;
 
-        var now = Cesium.JulianDate.now();
-        var liveTrackTime = Cesium.JulianDate.addSeconds(now, timeOffset, new Cesium.JulianDate());
-        var end = Cesium.JulianDate.addDays(now, 1, new Cesium.JulianDate());
+        let now = Cesium.JulianDate.now();
+        let liveTrackTime = Cesium.JulianDate.addSeconds(now, timeOffset, new Cesium.JulianDate());
+        let end = Cesium.JulianDate.addDays(now, 1, new Cesium.JulianDate());
 
         // note: set clockStep before currentTime, or it will be reset
         this.viewer.clock.clockStep = Cesium.ClockStep.SYSTEM_CLOCK;
@@ -2554,7 +2554,7 @@ export class MapView {
         if (this.options.liveTrackToolbarId === undefined)
             return;
 
-        var liveTrackSliderText = document.getElementById("liveTrackSliderText");
+        let liveTrackSliderText = document.getElementById("liveTrackSliderText");
 
         if (timeOffset === 0)
             liveTrackSliderText.innerHTML = "now";
@@ -2569,15 +2569,15 @@ export class MapView {
      */
     zoomToLiveWaypointCurrentPos(locationId) {
 
-        var entity = this.locationDataSource.entities.getById(locationId);
+        let entity = this.locationDataSource.entities.getById(locationId);
 
         if (entity === undefined) {
             console.error("MapView: couldn't find entity for live waypoint id: " + locationId);
             return;
         }
 
-        var position = entity.position.getValue(this.viewer.clock.currentTime);
-        var location = Cesium.Cartographic.fromCartesian(position);
+        let position = entity.position.getValue(this.viewer.clock.currentTime);
+        let location = Cesium.Cartographic.fromCartesian(position);
 
         this.zoomToLocation({
             longitude: Cesium.Math.toDegrees(location.longitude),
@@ -2592,7 +2592,7 @@ export class MapView {
      */
     zoomToTrack(trackId) {
 
-        var trackData = this.trackIdToTrackDataMap[trackId];
+        let trackData = this.trackIdToTrackDataMap[trackId];
 
         if (trackData !== undefined) {
 
@@ -2600,11 +2600,11 @@ export class MapView {
 
             if (trackData.liveTrackEntity !== undefined) {
 
-                var sampledPos = trackData.liveTrackEntity.position;
+                let sampledPos = trackData.liveTrackEntity.position;
 
-                var currentPosCartesian = sampledPos.getValue(this.viewer.clockViewModel.currentTime, new Cesium.Cartesian3());
+                let currentPosCartesian = sampledPos.getValue(this.viewer.clockViewModel.currentTime, new Cesium.Cartesian3());
                 if (currentPosCartesian !== undefined) {
-                    var currentPos = Cesium.Cartographic.fromCartesian(currentPosCartesian);
+                    let currentPos = Cesium.Cartographic.fromCartesian(currentPosCartesian);
 
                     this.flyTo({
                         latitude: Cesium.Math.toDegrees(currentPos.latitude),
@@ -2617,7 +2617,7 @@ export class MapView {
 
                 this.viewer.camera.flyToBoundingSphere(trackData.boundingSphere);
 
-                var center = Cesium.Cartographic.fromCartesian(trackData.boundingSphere.center);
+                let center = Cesium.Cartographic.fromCartesian(trackData.boundingSphere.center);
 
                 this.onUpdateLastShownLocation({
                     latitude: Cesium.Math.toDegrees(center.latitude),
@@ -2635,7 +2635,7 @@ export class MapView {
      */
     removeTrack(trackId) {
 
-        var trackData = this.trackIdToTrackDataMap[trackId];
+        let trackData = this.trackIdToTrackDataMap[trackId];
 
         if (trackData !== undefined) {
 
@@ -2708,7 +2708,7 @@ export class MapView {
         if (this.currentHeightProfileTrackId === trackId)
             return; // already shown
 
-        var trackData = this.trackIdToTrackDataMap[trackId];
+        let trackData = this.trackIdToTrackDataMap[trackId];
         if (trackData === undefined) {
             console.warn("no track found for track ID " + trackId);
             return;
@@ -2720,7 +2720,7 @@ export class MapView {
             this.heightProfileView.destroy();
         }
 
-        var that = this;
+        let that = this;
         this.heightProfileView = new HeightProfileView({
             id: 'chartElement',
             containerId: 'chartContainer',
@@ -2748,7 +2748,7 @@ export class MapView {
     closeHeightProfileView() {
 
         if (this.heightProfileView !== null) {
-            var view = this.heightProfileView;
+            let view = this.heightProfileView;
             this.heightProfileView = null;
 
             view.hide();
@@ -2800,15 +2800,15 @@ export class MapView {
      */
     updateTrackMarker(trackId, trackPointIndex) {
 
-        var trackData = this.trackIdToTrackDataMap[trackId];
+        let trackData = this.trackIdToTrackDataMap[trackId];
         if (trackData === undefined) {
             console.warn("no track found for track ID " + trackId);
             return;
         }
 
-        var longitude = trackData.track.listOfTrackPoints[trackPointIndex * 3];
-        var latitude = trackData.track.listOfTrackPoints[trackPointIndex * 3 + 1];
-        var altitude = trackData.track.listOfTrackPoints[trackPointIndex * 3 + 2];
+        let longitude = trackData.track.listOfTrackPoints[trackPointIndex * 3];
+        let latitude = trackData.track.listOfTrackPoints[trackPointIndex * 3 + 1];
+        let altitude = trackData.track.listOfTrackPoints[trackPointIndex * 3 + 2];
 
         this.trackMarker.show = true;
         this.trackMarker.position =
@@ -2984,11 +2984,11 @@ export class MapView {
             return;
 
         // convert to base64
-        var reader = new FileReader();
-        var that = this;
+        let reader = new FileReader();
+        let that = this;
         reader.onloadend = function () {
-            var dataUrl = reader.result;
-            var base64data = dataUrl.substr(dataUrl.indexOf(',') + 1);
+            let dataUrl = reader.result;
+            let base64data = dataUrl.substr(dataUrl.indexOf(',') + 1);
 
             that.options.callback('onExportLayer', base64data);
         }
@@ -3014,18 +3014,18 @@ export class MapView {
      * @returns {number} current airac ID
      */
     static calcCurrentAiracId() {
-        var now = new Date();
-        var currentYear = now.getFullYear();
+        let now = new Date();
+        let currentYear = now.getFullYear();
 
-        var baseAirac = new Date(MapView.airacStartDates[currentYear]);
+        let baseAirac = new Date(MapView.airacStartDates[currentYear]);
         if (now < baseAirac) {
             currentYear--;
             baseAirac = new Date(MapView.airacStartDates[currentYear]);
         }
 
-        var diffInDays = (now - baseAirac) / 86400000;
+        let diffInDays = (now - baseAirac) / 86400000;
 
-        var airacId = ((currentYear - 2000) * 100) + 1 + Math.floor(diffInDays / 28);
+        const airacId = ((currentYear - 2000) * 100) + 1 + Math.floor(diffInDays / 28);
         return airacId;
     }
 }
