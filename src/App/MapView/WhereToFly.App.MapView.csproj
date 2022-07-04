@@ -4,6 +4,7 @@
     <TargetFrameworks>netstandard2.0;MonoAndroid12.0</TargetFrameworks>
     <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">$(TargetFrameworks);uap10.0.19041</TargetFrameworks>
     <Description>Where-to-fly App MapView</Description>
+    <Nullable>warnings</Nullable>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>
 

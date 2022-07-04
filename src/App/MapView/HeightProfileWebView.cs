@@ -237,7 +237,9 @@ namespace WhereToFly.App.MapView
             if (firstTrackPoint != null &&
                 firstTrackPoint.Time.HasValue)
             {
-                timePointsList = track.TrackPoints.Select(x => x.Time.Value.ToUnixTimeMilliseconds() / 1000.0).ToList();
+                timePointsList = track.TrackPoints
+                    .Select(x => x.Time?.ToUnixTimeMilliseconds() / 1000.0 ?? 0.0)
+                    .ToList();
             }
 
             var trackJsonObject = new

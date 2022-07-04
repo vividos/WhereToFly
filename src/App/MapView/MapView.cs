@@ -734,7 +734,11 @@ namespace WhereToFly.App.MapView
             {
                 var startTime = firstTrackPoint.Time.Value;
 
-                timePointsList = track.TrackPoints.Select(x => (x.Time.Value - startTime).TotalSeconds).ToList();
+                timePointsList = track.TrackPoints
+                    .Select(x => x.Time.HasValue
+                        ? (x.Time.Value - startTime).TotalSeconds
+                        : 0.0)
+                    .ToList();
             }
 
             List<double> groundHeightProfileList = track.GroundHeightProfile.Any()
@@ -980,7 +984,7 @@ namespace WhereToFly.App.MapView
                 this.taskCompletionSourceMapInitialized != null,
                 "task completion source must have been created");
 
-            this.taskCompletionSourceMapInitialized.SetResult(true);
+            this.taskCompletionSourceMapInitialized?.SetResult(true);
         }
 
         /// <summary>
@@ -990,9 +994,13 @@ namespace WhereToFly.App.MapView
         private void OnAddFindResult(string jsonParameters)
         {
             var parameters = JsonConvert.DeserializeObject<AddFindResultParameter>(jsonParameters);
-            var point = new MapPoint(parameters.Latitude, parameters.Longitude);
 
-            this.AddFindResult?.Invoke(parameters.Name, point);
+            if (parameters != null)
+            {
+                var point = new MapPoint(parameters.Latitude, parameters.Longitude);
+
+                this.AddFindResult?.Invoke(parameters.Name, point);
+            }
         }
 
         /// <summary>
@@ -1002,12 +1010,16 @@ namespace WhereToFly.App.MapView
         private void OnLongTap(string jsonParameters)
         {
             var longTapParameters = JsonConvert.DeserializeObject<LongTapParameter>(jsonParameters);
-            var longTapPoint = new MapPoint(
-                longTapParameters.Latitude,
-                longTapParameters.Longitude,
-                Math.Round(longTapParameters.Altitude));
 
-            this.LongTap?.Invoke(longTapPoint);
+            if (longTapParameters != null)
+            {
+                var longTapPoint = new MapPoint(
+                    longTapParameters.Latitude,
+                    longTapParameters.Longitude,
+                    Math.Round(longTapParameters.Altitude));
+
+                this.LongTap?.Invoke(longTapPoint);
+            }
         }
 
         /// <summary>
@@ -1020,14 +1032,17 @@ namespace WhereToFly.App.MapView
             var updateLastShownLocationParameters =
                 JsonConvert.DeserializeObject<UpdateLastShownLocationParameter>(jsonParameters);
 
-            var updateLastShownLocationPoint = new MapPoint(
-                updateLastShownLocationParameters.Latitude,
-                updateLastShownLocationParameters.Longitude,
-                Math.Round(updateLastShownLocationParameters.Altitude));
+            if (updateLastShownLocationParameters != null)
+            {
+                var updateLastShownLocationPoint = new MapPoint(
+                    updateLastShownLocationParameters.Latitude,
+                    updateLastShownLocationParameters.Longitude,
+                    Math.Round(updateLastShownLocationParameters.Altitude));
 
-            int viewingDistance = updateLastShownLocationParameters.ViewingDistance;
+                int viewingDistance = updateLastShownLocationParameters.ViewingDistance;
 
-            this.UpdateLastShownLocation?.Invoke(updateLastShownLocationPoint, viewingDistance);
+                this.UpdateLastShownLocation?.Invoke(updateLastShownLocationPoint, viewingDistance);
+            }
         }
 
         /// <summary>
