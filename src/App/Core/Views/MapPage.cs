@@ -715,13 +715,10 @@ namespace WhereToFly.App.Core.Views
         /// <param name="args">event args</param>
         private void OnConnectivityChanged(object sender, Xamarin.Essentials.ConnectivityChangedEventArgs args)
         {
-            if (this.mapView.MapInitializedTask.IsCompleted)
-            {
-                bool isConnectivityAvailable =
-                    args.NetworkAccess == Xamarin.Essentials.NetworkAccess.Internet;
+            bool isConnectivityAvailable =
+                args.NetworkAccess == Xamarin.Essentials.NetworkAccess.Internet;
 
-                this.mapView.OnNetworkConnectivityChanged(isConnectivityAvailable);
-            }
+            this.mapView.OnNetworkConnectivityChanged(isConnectivityAvailable);
         }
 
         /// <summary>

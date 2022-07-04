@@ -896,7 +896,15 @@ namespace WhereToFly.App.MapView
         /// <param name="isAvailable">true when available, false when not</param>
         public void OnNetworkConnectivityChanged(bool isAvailable)
         {
-            string js = string.Format("map.onNetworkConnectivityChanged({0});", isAvailable ? "true" : "false");
+            if (!this.MapInitializedTask.IsCompleted)
+            {
+                return;
+            }
+
+            string js = string.Format(
+                "map.onNetworkConnectivityChanged({0});",
+                isAvailable ? "true" : "false");
+
             this.RunJavaScript(js);
         }
 
