@@ -95,14 +95,25 @@ namespace WhereToFly.App.MapView
         {
             this.RegisterWebViewCallbacks();
 
-            WebViewSource webViewSource =
-                WebViewSourceFactory.Instance.GetHeightProfileViewSource().Result;
-
-            this.Source = webViewSource;
             this.AutomationId = "HeightProfileWebView";
 
             this.Navigated += this.OnNavigated;
             this.SizeChanged += this.OnSizeChanged;
+
+            Task.Run(this.InitWebViewSourceAsync);
+        }
+
+        /// <summary>
+        /// Initializes web view source
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task InitWebViewSourceAsync()
+        {
+            WebViewSource webViewSource =
+                await WebViewSourceFactory.Instance.GetHeightProfileViewSource();
+
+            this.Source = webViewSource;
+            this.OnPropertyChanged(nameof(this.Source));
         }
 
         /// <summary>
