@@ -21,12 +21,6 @@ namespace WhereToFly.App.Core.Views
     public class MapPage : ContentPage
     {
         /// <summary>
-        /// Task completion source to signal that the web page has been loaded
-        /// </summary>
-        private readonly TaskCompletionSource<bool> taskCompletionSourcePageLoaded
-            = new();
-
-        /// <summary>
         /// Geolocation service to use for position updates
         /// </summary>
         private readonly IGeolocationService geolocationService;
@@ -101,7 +95,7 @@ namespace WhereToFly.App.Core.Views
         {
             App.RunOnUiThread(() => this.SetupToolbar());
 
-            await this.SetupWebViewAsync();
+            this.SetupWebView();
 
             await this.LoadDataAsync();
 
@@ -245,10 +239,9 @@ namespace WhereToFly.App.Core.Views
 
         /// <summary>
         /// Sets up WebView control. Loads the map html page into the web view, creates the C#
-        /// MapView instance and waits for the page to load.
+        /// MapView instance.
         /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task SetupWebViewAsync()
+        private void SetupWebView()
         {
             this.mapView = new MapView.MapView
             {
@@ -259,7 +252,6 @@ namespace WhereToFly.App.Core.Views
             };
 
             this.mapView.Navigating += this.OnNavigating_WebView;
-            this.mapView.Navigated += this.OnNavigated_WebView;
 
             this.mapView.ShowLocationDetails += async (locationId) => await this.OnMapView_ShowLocationDetails(locationId);
             this.mapView.NavigateToLocation += async (locationId) => await this.OnMapView_NavigateToLocation(locationId);
@@ -271,8 +263,6 @@ namespace WhereToFly.App.Core.Views
                 => await this.OnMapView_UpdateLastShownLocation(point, viewingDistance);
 
             this.Content = this.mapView;
-
-            await this.taskCompletionSourcePageLoaded.Task;
         }
 
         /// <summary>
@@ -290,19 +280,6 @@ namespace WhereToFly.App.Core.Views
                     Xamarin.Essentials.BrowserLaunchMode.External);
 
                 args.Cancel = true;
-            }
-        }
-
-        /// <summary>
-        /// Called when navigation to current page has finished
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="args">event args</param>
-        private void OnNavigated_WebView(object sender, WebNavigatedEventArgs args)
-        {
-            if (!this.taskCompletionSourcePageLoaded.Task.IsCompleted)
-            {
-                this.taskCompletionSourcePageLoaded.SetResult(true);
             }
         }
 

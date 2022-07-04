@@ -28,6 +28,12 @@ namespace WhereToFly.App.MapView
         private const int MaxLocationListCount = 100;
 
         /// <summary>
+        /// Task completion source for when the web page has been loaded
+        /// </summary>
+        private readonly TaskCompletionSource<bool> taskCompletionSourcePageLoaded
+            = new();
+
+        /// <summary>
         /// Task completion source for when map is fully initialized
         /// </summary>
         private TaskCompletionSource<bool> taskCompletionSourceMapInitialized
@@ -269,9 +275,23 @@ namespace WhereToFly.App.MapView
         /// <returns>task to wait on</returns>
         private async Task InitSourceAsync()
         {
+            this.Navigated += this.OnNavigated;
+
             this.Source =
                 await WebViewSourceFactory.Instance.GetMapViewSource();
             this.OnPropertyChanged(nameof(this.Source));
+        }
+
+        /// <summary>
+        /// Called when navigation to the web page has finished
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="args">event args</param>
+        private void OnNavigated(object sender, WebNavigatedEventArgs args)
+        {
+            this.Navigated -= this.OnNavigated;
+
+            this.taskCompletionSourcePageLoaded.SetResult(true);
         }
 
         /// <summary>
@@ -283,6 +303,8 @@ namespace WhereToFly.App.MapView
         /// <returns>task to wait on</returns>
         public async Task CreateAsync(MapPoint initialCenterPoint, int initialViewingDistance, bool useEntityClustering)
         {
+            await this.taskCompletionSourcePageLoaded.Task;
+
             if (this.IsInitialized)
             {
                 this.taskCompletionSourceMapInitialized = new TaskCompletionSource<bool>();
