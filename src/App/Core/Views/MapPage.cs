@@ -285,7 +285,10 @@ namespace WhereToFly.App.Core.Views
             if (args.NavigationEvent == WebNavigationEvent.NewPage &&
                 args.Url.StartsWith("http"))
             {
-                Xamarin.Essentials.Launcher.OpenAsync(args.Url);
+                Xamarin.Essentials.Browser.OpenAsync(
+                    args.Url,
+                    Xamarin.Essentials.BrowserLaunchMode.External);
+
                 args.Cancel = true;
             }
         }

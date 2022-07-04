@@ -382,8 +382,9 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task OnInternetLinkTappedAsync()
         {
-            await Xamarin.Essentials.Launcher.OpenAsync(
-                new Uri(this.location.InternetLink));
+            await Xamarin.Essentials.Browser.OpenAsync(
+                new Uri(this.location.InternetLink),
+                Xamarin.Essentials.BrowserLaunchMode.External);
         }
     }
 }

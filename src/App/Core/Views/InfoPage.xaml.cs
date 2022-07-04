@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.Views
 {
@@ -25,7 +26,7 @@ namespace WhereToFly.App.Core.Views
             if (args.NavigationEvent == WebNavigationEvent.NewPage &&
                 args.Url.StartsWith("http"))
             {
-                Xamarin.Essentials.Launcher.OpenAsync(args.Url);
+                Browser.OpenAsync(args.Url, BrowserLaunchMode.External);
                 args.Cancel = true;
             }
         }

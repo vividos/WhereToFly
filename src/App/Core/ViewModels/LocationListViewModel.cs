@@ -458,7 +458,9 @@ namespace WhereToFly.App.Core.ViewModels
 
             string webSiteToOpen = this.downloadWebSiteList[result];
 
-            await Xamarin.Essentials.Launcher.OpenAsync(webSiteToOpen);
+            await Xamarin.Essentials.Browser.OpenAsync(
+                webSiteToOpen,
+                Xamarin.Essentials.BrowserLaunchMode.External);
         }
 
         /// <summary>
