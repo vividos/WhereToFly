@@ -96,7 +96,7 @@ export class MapView {
 
         this.thermalSkywaysLayer = null;
         this.thermalSkywaysOverlay = this.createThermalImageryProvider();
-        this.thermalSkywaysOverlay.readyPromise.then(success => {
+        this.thermalSkywaysOverlay.readyPromise.then(_success => {
             MapView.log("thermal maps url: " + this.thermalSkywaysOverlay.url);
         });
 
@@ -624,7 +624,7 @@ export class MapView {
      * update the view, e.g. when a pin was added or removed, and CesiumJS
      * wouldn't update the scene itself.
      */
-    updateScene(imageryType) {
+    updateScene() {
         this.viewer.scene.requestRender();
     }
 

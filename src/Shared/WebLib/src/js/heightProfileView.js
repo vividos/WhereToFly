@@ -193,10 +193,10 @@ export class HeightProfileView {
                     intersect: false,
                     axis: 'x'
                 },
-                onHover: function (event, elements, chart) {
+                onHover: function (_event, elements, _chart) {
                     that.onHover(elements);
                 },
-                onClick: function (event, elements, chart) {
+                onClick: function (_event, elements, _chart) {
                     if (!that.isZoomAndPanActive)
                         that.onClick(elements);
                 }
@@ -434,9 +434,6 @@ export class HeightProfileView {
      */
     onHover(elements) {
 
-        //HeightProfileView.log("onHover called, with " +
-        //    elements.length + " elements");
-
         if (elements.length > 0 &&
             this.options.callback !== undefined) {
             this.options.callback('onHover', elements[0].index);
@@ -448,9 +445,6 @@ export class HeightProfileView {
      * @param {array} [elements] array of elements; may be empty
      */
     onClick(elements) {
-
-        //HeightProfileView.log("onClick called, with " +
-        //    elements.length + " elements");
 
         if (elements.length > 0 &&
             this.options.callback !== undefined) {
@@ -613,7 +607,7 @@ export class HeightProfileView {
 
         // display, position, and set styles for font
         tooltipElement.style.opacity = 1;
-        tooltipElement.style.left = showLeft ? (position.x + window.pageXOffset + 50) + 'px' : '';
+        tooltipElement.style.left = showLeft ? (position.x + window.scrollX + 50) + 'px' : '';
         tooltipElement.style.right = !showLeft ? '10px' : '';
         tooltipElement.style.top = '60px';
         tooltipElement.style.font = bodyFont.string;
