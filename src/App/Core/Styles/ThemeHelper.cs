@@ -50,7 +50,7 @@ namespace WhereToFly.App.Core.Styles
             }
 
             ResourceDictionary newTheme =
-                theme == Theme.Dark ? new DarkTheme() : (ResourceDictionary)new LightTheme();
+                theme == Theme.Dark ? new DarkTheme() : new LightTheme();
 
             var resources = Application.Current.Resources;
             foreach (var item in newTheme.Keys)

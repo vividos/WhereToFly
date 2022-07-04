@@ -228,7 +228,7 @@ namespace WhereToFly.App.MapView
                 {
                     x.Longitude,
                     x.Latitude,
-                    x.Altitude ?? 0.0
+                    x.Altitude ?? 0.0,
                 });
 
             List<double> timePointsList = null;

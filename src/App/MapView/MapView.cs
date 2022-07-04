@@ -435,7 +435,7 @@ namespace WhereToFly.App.MapView
                 displayLongitude = GeoDataFormatter.FormatLatLong(position.Longitude, this.CoordinateDisplayFormat),
                 displayTimestamp = timestamp.ToLocalTime().ToString("yyyy-MM-dd HH\\:mm\\:ss"),
                 displaySpeed = string.Format("{0:F1} km/h", speedInKmh),
-                zoomToLocation
+                zoomToLocation,
             };
 
             string js = string.Format(
@@ -512,7 +512,7 @@ namespace WhereToFly.App.MapView
             var options = new
             {
                 id = layer.Id,
-                isVisible = layer.IsVisible
+                isVisible = layer.IsVisible,
             };
 
             string js = string.Format(
@@ -688,13 +688,13 @@ namespace WhereToFly.App.MapView
                 {
                     x.Longitude,
                     x.Latitude,
-                    x.Altitude ?? 0.0
+                    x.Altitude ?? 0.0,
                 });
 
             var trackJsonObject = new
             {
                 id = track.Id,
-                listOfTrackPoints = trackPointsList
+                listOfTrackPoints = trackPointsList,
             };
 
             string js = $"map.sampleTrackHeights({JsonConvert.SerializeObject(trackJsonObject)});";
@@ -723,7 +723,7 @@ namespace WhereToFly.App.MapView
                 {
                     x.Longitude,
                     x.Latitude,
-                    x.Altitude ?? 0.0
+                    x.Altitude ?? 0.0,
                 });
 
             List<double> timePointsList = null;
@@ -750,7 +750,7 @@ namespace WhereToFly.App.MapView
                 listOfTrackPoints = trackPointsList,
                 listOfTimePoints = timePointsList,
                 groundHeightProfile = groundHeightProfileList,
-                color = track.IsFlightTrack && !track.IsLiveTrack ? null : track.Color
+                color = track.IsFlightTrack && !track.IsLiveTrack ? null : track.Color,
             };
 
             string js = $"map.addTrack({JsonConvert.SerializeObject(trackJsonObject)});";
@@ -768,7 +768,7 @@ namespace WhereToFly.App.MapView
             {
                 id = track.Id,
                 name = track.Name,
-                color = track.IsFlightTrack ? null : track.Color
+                color = track.IsFlightTrack ? null : track.Color,
             };
 
             string js = $"map.updateTrack({JsonConvert.SerializeObject(trackJsonObject)});";
@@ -795,7 +795,7 @@ namespace WhereToFly.App.MapView
                         longitude = trackPoint.Longitude,
                         altitude = trackPoint.Altitude,
                         offset = trackPoint.Offset,
-                    }).ToArray()
+                    }).ToArray(),
             };
 
             string js = $"map.updateLiveTrack({JsonConvert.SerializeObject(trackJsonObject)});";
@@ -844,7 +844,7 @@ namespace WhereToFly.App.MapView
                 latitude = point.Latitude,
                 longitude = point.Longitude,
                 displayLatitude = GeoDataFormatter.FormatLatLong(point.Latitude, this.CoordinateDisplayFormat),
-                displayLongitude = GeoDataFormatter.FormatLatLong(point.Longitude, this.CoordinateDisplayFormat)
+                displayLongitude = GeoDataFormatter.FormatLatLong(point.Longitude, this.CoordinateDisplayFormat),
             };
 
             string js = string.Format(
