@@ -2337,8 +2337,8 @@ export class MapView {
         let newListOfTimePoints = [];
         let newGroundHeightProfile = [];
 
-        for (let modifiedIndex = 0; modifiedIndex < modifiedTrackPointArray.length; modifiedIndex++) {
-            let oldTrackPointIndex = modifiedTrackPointArray[modifiedIndex].trackPointIndex;
+        for (let oldTrackPoint in modifiedTrackPointArray) {
+            let oldTrackPointIndex = oldTrackPoint.trackPointIndex;
 
             newListOfTrackPoints.push(track.listOfTrackPoints[oldTrackPointIndex * 3]);
             newListOfTrackPoints.push(track.listOfTrackPoints[oldTrackPointIndex * 3 + 1]);
@@ -2445,10 +2445,10 @@ export class MapView {
         let trackPointArray = Cesium.Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints);
 
         let julianTimePoints = [];
-        for (let index = 0; index < track.listOfTimePoints.length; index++)
+        for (let timePoint in track.listOfTimePoints)
             julianTimePoints.push(
                 Cesium.JulianDate.fromDate(
-                    new Date(track.listOfTimePoints[index] * 1000.0)));
+                    new Date(timePoint * 1000.0)));
 
         let lastTimePoint = track.listOfTimePoints[track.listOfTimePoints.length - 1];
 
