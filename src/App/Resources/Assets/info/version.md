@@ -12,4 +12,4 @@ The Where-to-fly GitHub project can be found here:
 
 Current version: %VERSION%
 
-Image: Above the Kampenwand ridge, Bavaria, Germany.
+Image: Hochries takeoff and Chiemsee lake, Bavaria, Germany.
