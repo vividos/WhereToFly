@@ -40,7 +40,7 @@
             <option value="BlackMarble">NASA Black Marble 2017</option>
         </select>
 
-        <!--<button onclick="addInspector()">Add inspector</button>-->
+        <button onclick="map.addViewerInspector()">Add inspector</button>
 
         <button onclick="map.updateMyLocation({latitude: 47.666283, longitude: 11.886159, zoomToLocation: true})">Fly to my position</button>
 
@@ -161,10 +161,6 @@
                 zoomTo: false
             });
         }, 2000);
-
-        window.addInspector = function () {
-            //    map.viewer.extend(Cesium.viewerCesiumInspectorMixin);
-        }
 
         window.showFindResult = function () {
             map.showFindResult({

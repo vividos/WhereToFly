@@ -671,6 +671,13 @@ export class MapView {
     }
 
     /**
+     * Adds the Cesium inspector window to the viewer
+     */
+    addViewerInspector() {
+        this.viewer.extend(Cesium.viewerCesiumInspectorMixin);
+    }
+
+    /**
      * Sets new map imagery type
      * @param {string} imageryType imagery type constant; the following constants currently can be
      * used: 'OpenStreetMap'.
