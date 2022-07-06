@@ -2337,6 +2337,14 @@ export class MapView {
         let newListOfTimePoints = [];
         let newGroundHeightProfile = [];
 
+        let hasListOfTimePoints =
+            track.listOfTimePoints !== undefined &&
+            track.listOfTimePoints !== null;
+
+        let hasGroundHeightProfile =
+            track.groundHeightProfile !== undefined &&
+            track.groundHeightProfile !== null;
+
         for (let oldTrackPoint in modifiedTrackPointArray) {
             let oldTrackPointIndex = oldTrackPoint.trackPointIndex;
 
@@ -2344,19 +2352,19 @@ export class MapView {
             newListOfTrackPoints.push(track.listOfTrackPoints[oldTrackPointIndex * 3 + 1]);
             newListOfTrackPoints.push(track.listOfTrackPoints[oldTrackPointIndex * 3 + 2]);
 
-            if (track.listOfTimePoints !== null)
+            if (hasListOfTimePoints)
                 newListOfTimePoints.push(track.listOfTimePoints[oldTrackPointIndex]);
 
-            if (track.groundHeightProfile !== null)
+            if (hasGroundHeightProfile)
                 newGroundHeightProfile.push(track.groundHeightProfile[oldTrackPointIndex]);
         }
 
         track.listOfTrackPoints = newListOfTrackPoints;
 
-        if (track.listOfTimePoints !== null)
+        if (hasListOfTimePoints)
             track.listOfTimePoints = newListOfTimePoints;
 
-        if (track.groundHeightProfile !== null)
+        if (hasGroundHeightProfile)
             track.groundHeightProfile = newGroundHeightProfile;
 
         return modifiedTrackPointArray;
