@@ -24,7 +24,7 @@
     <Exec Condition=" '$(Configuration)' == 'Release' " WorkingDirectory="$(NpmProjectPath)" Command="npm run build-es5-release" />
   </Target>
 
-  <Target Name="NpmCleanEs5" AfterTargets="NpmRunEs5Build">
+  <Target Name="NpmCleanEs5" AfterTargets="Clean">
     <RemoveDir Directories="dist-es5\" />
   </Target>
 
