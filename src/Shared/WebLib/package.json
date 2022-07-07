@@ -47,6 +47,6 @@
     "chartjs-plugin-crosshair": "^1.2.0",
     "chartjs-plugin-zoom": "^1.2.1",
     "core-js": "^3.23.3",
-    "moment": "^2.29.3"
+    "moment": "^2.29.4"
   }
 }
