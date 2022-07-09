@@ -221,10 +221,8 @@ export default class LiveTracking {
             Object.keys(this.liveWaypointToIdMapping).find(
                 key => this.liveWaypointToIdMapping[key] === pageIdPrefix);
 
-        if (liveWaypointUri !== undefined) {
-
+        if (liveWaypointUri !== undefined)
             this.map.zoomToLiveWaypointCurrentPos(liveWaypointUri);
-        }
 
         var liveTrackUri =
             Object.keys(this.liveTrackToIdMapping).find(
