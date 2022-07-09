@@ -60,7 +60,7 @@
     <AndroidUseDefaultAotProfile>false</AndroidUseDefaultAotProfile>
     <AndroidLinkMode>Full</AndroidLinkMode>
     <AndroidLinkTool>r8</AndroidLinkTool>
-    <AndroidLinkSkip>WhereToFly.App.Core;WhereToFly.Geo;WhereToFly.App.MapView;WhereToFly.App.Model;WhereToFly.Shared.Base;WhereToFly.Shared.Model;WhereToFly.App.Resources;WhereToFly.App.Android;Xamarin.Forms.Platform.Android;Xamarin.Forms.Platform;Xamarin.Forms.Core;Xamarin.Forms.Xaml;FormsViewGroup;Xamarin.CommunityToolkit;SharpKml.Core</AndroidLinkSkip>
+    <AndroidLinkSkip>WhereToFly.App.Core;WhereToFly.Geo;WhereToFly.App.MapView;WhereToFly.Shared.Base;WhereToFly.Shared.Model;WhereToFly.App.Resources;WhereToFly.App.Android;Xamarin.Forms.Platform.Android;Xamarin.Forms.Platform;Xamarin.Forms.Core;Xamarin.Forms.Xaml;FormsViewGroup;Xamarin.CommunityToolkit;SharpKml.Core</AndroidLinkSkip>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
@@ -142,10 +142,6 @@
     <ProjectReference Include="..\MapView\WhereToFly.App.MapView.csproj">
       <Project>{4653a8f6-77cd-495d-84df-fde19829ba89}</Project>
       <Name>WhereToFly.App.MapView</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Model\WhereToFly.App.Model.csproj">
-      <Project>{6A01E52C-1CF1-48E2-AC01-045A7B82E4B7}</Project>
-      <Name>WhereToFly.App.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\Resources\WhereToFly.App.Resources.csproj">
       <Project>{2f10550e-c477-47d8-a960-d272859efce8}</Project>

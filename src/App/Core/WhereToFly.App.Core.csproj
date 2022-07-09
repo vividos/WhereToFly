@@ -25,8 +25,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Geo\WhereToFly.Geo.csproj" />
+    <ProjectReference Include="..\..\Shared\Model\WhereToFly.Shared.Model.csproj" />
     <ProjectReference Include="..\MapView\WhereToFly.App.MapView.csproj" />
-    <ProjectReference Include="..\Model\WhereToFly.App.Model.csproj" />
   </ItemGroup>
 
   <ItemGroup>
