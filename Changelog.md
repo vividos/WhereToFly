@@ -17,6 +17,7 @@ Released on ?.
 - Fixed loading weather icons for some pages
 - Fixed map starting location, using last zoomed-to location
 - Fixed opening websites in external browser window
+- Fixed finding current position after minimizing app
 
 ## Version 1.11.0
 

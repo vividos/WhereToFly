@@ -64,6 +64,8 @@ namespace WhereToFly.App.Essentials
 
             CrossGeolocator.Current.PositionChanged -= OnPositionChanged;
 
+            isListening = false;
+
             return Task.FromResult(true);
         }
     }
