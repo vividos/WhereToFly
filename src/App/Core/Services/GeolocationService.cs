@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Plugin.Geolocator;
+using System;
 using System.Threading.Tasks;
 using WhereToFly.Geo.Model;
 using Xamarin.Essentials;
@@ -10,6 +11,11 @@ namespace WhereToFly.App.Core.Services
     /// </summary>
     public class GeolocationService : IGeolocationService
     {
+        /// <summary>
+        /// Indicates if the geolocation service is currently listening to position updates
+        /// </summary>
+        private bool isListening;
+
         /// <summary>
         /// Event handler that is called for position changes
         /// </summary>
@@ -90,7 +96,7 @@ namespace WhereToFly.App.Core.Services
         /// <returns>true when successful, false when not</returns>
         public async Task<bool> StartListeningAsync()
         {
-            if (Essentials.Geolocation.IsListening)
+            if (this.isListening)
             {
                 return true;
             }
@@ -100,12 +106,15 @@ namespace WhereToFly.App.Core.Services
                 return false;
             }
 
-            Essentials.Geolocation.LocationChanged += this.OnLocationChanged;
+            CrossGeolocator.Current.PositionChanged += this.OnLocationChanged;
 
-            return await Essentials.Geolocation.StartListeningForegroundAsync(
-                new GeolocationRequest(
-                    GeolocationAccuracy.Best,
-                    Constants.GeoLocationMinimumTimeForUpdate));
+            this.isListening = true;
+
+            return await CrossGeolocator.Current.StartListeningAsync(
+                Constants.GeoLocationMinimumTimeForUpdate,
+                Constants.GeoLocationMinimumDistanceForUpdateInMeters,
+                includeHeading: true,
+                listenerSettings: null);
         }
 
         /// <summary>
@@ -113,11 +122,24 @@ namespace WhereToFly.App.Core.Services
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        private void OnLocationChanged(object sender, WhereToFly.App.Essentials.Geolocation.LocationEventArgs args)
+        private void OnLocationChanged(object sender, Plugin.Geolocator.Abstractions.PositionEventArgs args)
         {
+            var location = new Xamarin.Essentials.Location(
+                args.Position.Latitude,
+                args.Position.Longitude)
+            {
+                Altitude = args.Position.Altitude,
+                Course = args.Position.Heading,
+                Speed = args.Position.Speed,
+                Timestamp = args.Position.Timestamp,
+                AltitudeReferenceSystem = AltitudeReferenceSystem.Geoid,
+                Accuracy = args.Position.Accuracy,
+                VerticalAccuracy = args.Position.AltitudeAccuracy,
+            };
+
             this.PositionChanged?.Invoke(
                 sender,
-                new GeolocationEventArgs(args.Location));
+                new GeolocationEventArgs(location));
         }
 
         /// <summary>
@@ -126,14 +148,16 @@ namespace WhereToFly.App.Core.Services
         /// <returns>task to wait on</returns>
         public async Task StopListeningAsync()
         {
-            if (!Essentials.Geolocation.IsListening)
+            if (!this.isListening)
             {
                 return;
             }
 
-            Essentials.Geolocation.LocationChanged -= this.OnLocationChanged;
+            CrossGeolocator.Current.PositionChanged -= this.OnLocationChanged;
 
-            await Essentials.Geolocation.StopListeningForegroundAsync();
+            this.isListening = false;
+
+            await CrossGeolocator.Current.StopListeningAsync();
         }
     }
 }
