@@ -56,7 +56,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
             // set up
             var appSettings = new AppSettings
             {
-                CoordinateDisplayFormat = CoordinateDisplayFormat.Format_dd_mm_sss
+                CoordinateDisplayFormat = CoordinateDisplayFormat.Format_dd_mm_sss,
             };
 
             var viewModel = new CurrentPositionDetailsViewModel(appSettings);

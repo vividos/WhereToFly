@@ -26,7 +26,7 @@ namespace WhereToFly.App.Core.ViewModels
             { "XContest Airspaces", "https://airspace.xcontest.org/" },
             { "DHV-XC Lufträume", "https://www.dhv-xc.de/xc/modules/leonardo/index.php?name=leonardo&op=luftraum" },
             { "OpenAir Schutzzonen", "https://www.openairschutzzonen.de/" },
-            { "Flyland.ch Lufträume", "http://www.flyland.ch/download.php" }
+            { "Flyland.ch Lufträume", "http://www.flyland.ch/download.php" },
         };
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace WhereToFly.App.Core.ViewModels
                 "Import CZML Layer",
                 "Import OpenAir airspaces",
                 "Add OpenStreetMap Buildings Layer",
-                "Download from web"
+                "Download from web",
             };
 
             string result = await App.Current.MainPage.DisplayActionSheet(
@@ -238,7 +238,7 @@ namespace WhereToFly.App.Core.ViewModels
                             { DevicePlatform.UWP, new string[] { ".czml" } },
                             { DevicePlatform.iOS, null },
                         }),
-                    PickerTitle = "Select a CZML layer file to import"
+                    PickerTitle = "Select a CZML layer file to import",
                 };
 
                 var result = await FilePicker.PickAsync(options);
@@ -283,7 +283,7 @@ namespace WhereToFly.App.Core.ViewModels
                             { DevicePlatform.UWP, new string[] { ".txt" } },
                             { DevicePlatform.iOS, null },
                         }),
-                    PickerTitle = "Select an OpenAir text file to import"
+                    PickerTitle = "Select an OpenAir text file to import",
                 };
 
                 var result = await FilePicker.PickAsync(options);

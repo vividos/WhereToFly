@@ -26,7 +26,7 @@ namespace WhereToFly.App.Core.Logic
                 "b", "i", "strong", "em",
                 "table", "th", "tr", "td", "thead",
                 "ul", "li",
-                "img", "a"
+                "img", "a",
             };
 
             ReplaceUnwantedTags(htmlDocument.DocumentNode, acceptableTags);

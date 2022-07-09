@@ -889,7 +889,7 @@ namespace WhereToFly.Geo.DataFormats.Czml
                 Image = new ImageMaterial
                 {
                     Uri = imageFilenameOrUrl,
-                }
+                },
             };
         }
     }

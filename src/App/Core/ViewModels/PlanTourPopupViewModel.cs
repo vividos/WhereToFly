@@ -316,7 +316,7 @@ namespace WhereToFly.App.Core.ViewModels
                 Name = "Planned Tour",
                 Description = plannedTour.Description,
                 IsFlightTrack = false,
-                TrackPoints = trackPoints.ToList()
+                TrackPoints = trackPoints.ToList(),
             };
 
             track.CalculateStatistics();
@@ -365,7 +365,7 @@ namespace WhereToFly.App.Core.ViewModels
                 MapLocation = startPoint,
                 Description = plannedTour.Description,
                 Type = LocationType.Waypoint,
-                InternetLink = string.Empty
+                InternetLink = string.Empty,
             };
         }
 

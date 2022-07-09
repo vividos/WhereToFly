@@ -111,7 +111,7 @@ namespace WhereToFly.WebApi.Logic.Services
                 Altitude = trackPoint.Altitude.Value,
                 Name = "Live tracking test position",
                 Description = $"Current live tracking stage: {currentStage}",
-                DetailsLink = string.Empty
+                DetailsLink = string.Empty,
             };
         }
 
@@ -157,7 +157,7 @@ namespace WhereToFly.WebApi.Logic.Services
                 Name = "Live tracking test track",
                 Description = "This is a live tracking test track for testing purposes.",
                 TrackStart = trackStart,
-                TrackPoints = trackPoints.ToArray()
+                TrackPoints = trackPoints.ToArray(),
             };
         }
 
@@ -258,7 +258,7 @@ namespace WhereToFly.WebApi.Logic.Services
                         WhereToFly.Shared.Base.Math.Interpolate(startingPoint.Altitude.Value, endingPoint.Altitude.Value, delta),
                         null)
                     {
-                        Time = startTime.AddSeconds(seconds)
+                        Time = startTime.AddSeconds(seconds),
                     });
             }
         }
@@ -310,7 +310,7 @@ namespace WhereToFly.WebApi.Logic.Services
                         WhereToFly.Shared.Base.Math.Interpolate(thermallingPoint.Altitude.Value, thermallingTopPoint.Altitude.Value, delta),
                         null)
                     {
-                        Time = startTime.AddSeconds(seconds)
+                        Time = startTime.AddSeconds(seconds),
                     });
             }
         }

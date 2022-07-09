@@ -65,7 +65,7 @@ namespace WhereToFly.App.Core.Views
                 this.OnClicked_ToolbarButtonImportLocations,
                 ToolbarItemOrder.Primary)
             {
-                AutomationId = "ImportLocations"
+                AutomationId = "ImportLocations",
             };
 
             this.ToolbarItems.Add(importLocationsButton);
@@ -90,7 +90,7 @@ namespace WhereToFly.App.Core.Views
                 async () => await this.OnClicked_ToolbarButtonDeleteLocationList(),
                 ToolbarItemOrder.Primary)
             {
-                AutomationId = "DeleteLocationList"
+                AutomationId = "DeleteLocationList",
             };
 
             this.ToolbarItems.Add(deleteLocationListButton);

@@ -30,13 +30,13 @@ namespace WhereToFly.App.UnitTest.Geo
                 {
                     new TrackPoint(47.754076, 12.352277, 1234.0, null)
                     {
-                        Time = DateTime.Today + TimeSpan.FromHours(1.0)
+                        Time = DateTime.Today + TimeSpan.FromHours(1.0),
                     },
                     new TrackPoint(46.017779, 11.900711, 778.2, null)
                     {
-                        Time = DateTime.Today + TimeSpan.FromHours(2.0)
+                        Time = DateTime.Today + TimeSpan.FromHours(2.0),
                     },
-                }
+                },
             };
 
             // run

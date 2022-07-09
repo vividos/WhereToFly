@@ -54,12 +54,12 @@ namespace WhereToFly.App.Core.ViewModels
                 new InfoPageEntryViewModel
                 {
                     Image = null,
-                    WebViewSource = GetWebViewSource("info/Changelog.md")
+                    WebViewSource = GetWebViewSource("info/Changelog.md"),
                 },
                 new InfoPageEntryViewModel
                 {
                     Image = null,
-                    WebViewSource = GetWebViewSource("info/Credits.md")
+                    WebViewSource = GetWebViewSource("info/Credits.md"),
                 },
             };
         }
@@ -78,7 +78,7 @@ namespace WhereToFly.App.Core.ViewModels
             return new HtmlWebViewSource
             {
                 Html = htmlText,
-                BaseUrl = platform.WebViewBasePath + "info/"
+                BaseUrl = platform.WebViewBasePath + "info/",
             };
         }
 

@@ -37,7 +37,7 @@ namespace WhereToFly.App.Core.Views
 
             var urlSource = new UrlWebViewSource
             {
-                Url = iconDescription.WebLink
+                Url = iconDescription.WebLink,
             };
 
             if (this.Content == null)
@@ -47,7 +47,7 @@ namespace WhereToFly.App.Core.Views
                     Source = urlSource,
 
                     VerticalOptions = LayoutOptions.FillAndExpand,
-                    HorizontalOptions = LayoutOptions.FillAndExpand
+                    HorizontalOptions = LayoutOptions.FillAndExpand,
                 };
 
                 webView.AutomationId = "WeatherDetailsWebView";
@@ -126,7 +126,7 @@ namespace WhereToFly.App.Core.Views
                 () => this.OnClicked_ToolbarButtonRefresh(),
                 ToolbarItemOrder.Primary)
             {
-                AutomationId = "Refresh"
+                AutomationId = "Refresh",
             };
 
             this.ToolbarItems.Add(refreshButton);
@@ -153,7 +153,7 @@ namespace WhereToFly.App.Core.Views
                 async () => await this.OnClicked_ToolbarButtonWeatherForecast(),
                 ToolbarItemOrder.Primary)
             {
-                AutomationId = "Forecast"
+                AutomationId = "Forecast",
             };
 
             this.ToolbarItems.Add(forecastButton);
@@ -179,7 +179,7 @@ namespace WhereToFly.App.Core.Views
                 async () => await this.OnClicked_ToolbarButtonCurrentWeather(),
                 ToolbarItemOrder.Primary)
             {
-                AutomationId = "Weather"
+                AutomationId = "Weather",
             };
 
             this.ToolbarItems.Add(weatherButton);
@@ -205,7 +205,7 @@ namespace WhereToFly.App.Core.Views
                 async () => await this.OnClicked_ToolbarButtonWebcams(),
                 ToolbarItemOrder.Primary)
             {
-                AutomationId = "Webcams"
+                AutomationId = "Webcams",
             };
 
             this.ToolbarItems.Add(webcamsButton);

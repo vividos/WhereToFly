@@ -33,7 +33,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
             {
                 Name = "Windy",
                 Type = WeatherIconDescription.IconType.IconApp,
-                WebLink = "com.windyty.android"
+                WebLink = "com.windyty.android",
             };
 
             // run
@@ -62,7 +62,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
             {
                 Name = "Windy",
                 Type = WeatherIconDescription.IconType.IconApp,
-                WebLink = "com.windyty.android"
+                WebLink = "com.windyty.android",
             };
 
             // run
@@ -87,7 +87,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
             {
                 Name = "Windy",
                 Type = WeatherIconDescription.IconType.IconLink,
-                WebLink = "https://localhost/test/123/"
+                WebLink = "https://localhost/test/123/",
             };
 
             // run

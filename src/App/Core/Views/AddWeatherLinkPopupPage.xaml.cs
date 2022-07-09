@@ -41,7 +41,7 @@ namespace WhereToFly.App.Core.Views
         {
             var popupPage = new AddWeatherLinkPopupPage
             {
-                tcs = new TaskCompletionSource<WeatherIconDescription>()
+                tcs = new TaskCompletionSource<WeatherIconDescription>(),
             };
 
             await popupPage.Navigation.PushPopupAsync(popupPage);

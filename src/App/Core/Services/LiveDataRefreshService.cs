@@ -270,7 +270,7 @@ namespace WhereToFly.App.Core.Services
                 this.nextUpdateQueue.Enqueue(new LiveDataUpdateInfo
                 {
                     LocationOrTrackId = locationOrTrackId,
-                    UpdateTime = nextUpdateTime
+                    UpdateTime = nextUpdateTime,
                 });
             }
         }

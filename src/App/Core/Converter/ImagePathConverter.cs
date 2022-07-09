@@ -72,7 +72,7 @@ namespace WhereToFly.App.Core.Converter
             {
                 return new FileImageSource
                 {
-                    File = imagePath
+                    File = imagePath,
                 };
             }
 

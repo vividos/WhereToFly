@@ -45,7 +45,7 @@ namespace WhereToFly.App.Core.Views
         {
             var popupPage = new FilterTakeoffDirectionsPopupPage(filterSettings)
             {
-                tcs = new TaskCompletionSource<LocationFilterSettings>()
+                tcs = new TaskCompletionSource<LocationFilterSettings>(),
             };
 
             await popupPage.Navigation.PushPopupAsync(popupPage);

@@ -17,7 +17,7 @@ namespace WhereToFly.App.Core.Styles
 
             this["SvgImageFillDark"] = new Dictionary<string, string>
             {
-                { "fill=\"#ffffff", "fill=\"#000000" }
+                { "fill=\"#ffffff", "fill=\"#000000" },
             };
         }
     }

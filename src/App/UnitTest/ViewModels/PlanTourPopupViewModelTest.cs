@@ -43,8 +43,8 @@ namespace WhereToFly.App.UnitTest.ViewModels
                 {
                     WaypointIdList = new List<string>
                     {
-                        "wheretofly-path-rotwand"
-                    }
+                        "wheretofly-path-rotwand",
+                    },
                 },
                 () => Task.CompletedTask);
 

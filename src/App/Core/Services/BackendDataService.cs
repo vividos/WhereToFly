@@ -88,7 +88,7 @@ namespace WhereToFly.App.Core.Services
                 BaseUrl,
                 new RefitSettings
                 {
-                    ContentSerializer = new NewtonsoftJsonContentSerializer()
+                    ContentSerializer = new NewtonsoftJsonContentSerializer(),
                 });
         }
 

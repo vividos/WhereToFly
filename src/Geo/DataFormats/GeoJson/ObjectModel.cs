@@ -51,7 +51,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
                 {
                     Converters =
                     {
-                        new ElementJsonDecoder()
+                        new ElementJsonDecoder(),
                     },
                 });
         }

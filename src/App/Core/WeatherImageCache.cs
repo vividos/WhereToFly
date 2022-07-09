@@ -29,7 +29,7 @@ namespace WhereToFly.App.Core
                             {
                                 var platform = DependencyService.Get<IPlatform>();
                                 return Task.FromResult(platform.OpenAssetStream("alptherm-favicon.png"));
-                            }
+                            },
                         };
                     }
 
@@ -51,7 +51,7 @@ namespace WhereToFly.App.Core
                             byte[] appIconData = appManager.GetAppIcon(iconDescription.WebLink);
 
                             return Task.FromResult<Stream>(new MemoryStream(appIconData));
-                        }
+                        },
                     };
 
                 case WeatherIconDescription.IconType.IconPlaceholder:

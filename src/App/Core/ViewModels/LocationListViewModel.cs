@@ -38,7 +38,7 @@ namespace WhereToFly.App.Core.ViewModels
                 "DHV Gelände-Datenbank",
                 "https://www.dhv.de/web/piloteninfos/gelaende-luftraum-natur/fluggelaendeflugbetrieb/gelaendedaten/gelaendedaten-download"
             },
-            { "Tourenwelt.info Jo's Hüttenliste", "http://www.tourenwelt.info/huettenliste/map.php" }
+            { "Tourenwelt.info Jo's Hüttenliste", "http://www.tourenwelt.info/huettenliste/map.php" },
         };
 
         /// <summary>
@@ -311,7 +311,7 @@ namespace WhereToFly.App.Core.ViewModels
             {
                 "Import included",
                 "Import from storage",
-                "Download from web"
+                "Download from web",
             };
 
             string result = await App.Current.MainPage.DisplayActionSheet(
@@ -409,7 +409,7 @@ namespace WhereToFly.App.Core.ViewModels
                             { Xamarin.Essentials.DevicePlatform.UWP, new string[] { ".kml", ".kmz", ".gpx", ".cup" } },
                             { Xamarin.Essentials.DevicePlatform.iOS, null },
                         }),
-                    PickerTitle = "Select a Location file to import"
+                    PickerTitle = "Select a Location file to import",
                 };
 
                 var result = await Xamarin.Essentials.FilePicker.PickAsync(options);

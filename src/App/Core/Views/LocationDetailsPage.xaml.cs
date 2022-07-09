@@ -48,7 +48,7 @@ namespace WhereToFly.App.Core.Views
                 this.OnClicked_ToolbarButtonRefreshLiveWaypoint,
                 ToolbarItemOrder.Primary)
             {
-                AutomationId = "RefreshLiveWaypoint"
+                AutomationId = "RefreshLiveWaypoint",
             };
 
             this.ToolbarItems.Add(refreshLiveWaypointButton);
@@ -73,7 +73,7 @@ namespace WhereToFly.App.Core.Views
                 this.OnClicked_ToolbarButtonAddTourPlanLocation,
                 ToolbarItemOrder.Secondary)
             {
-                AutomationId = "AddTourPlanLocation"
+                AutomationId = "AddTourPlanLocation",
             };
 
             this.ToolbarItems.Add(addTourPlanLocationButton);

@@ -61,7 +61,7 @@ namespace WhereToFly.WebApi.UnitTest
                 {
                     "wheretofly-path-bahnhof-neuhaus",
                     "wheretofly-path-rauhkopf",
-                }
+                },
             };
 
             var tour = engine.PlanTour(planTourParameters);
@@ -89,7 +89,7 @@ namespace WhereToFly.WebApi.UnitTest
                 WaypointIdList = new List<string>
                 {
                     "wheretofly-path-bahnhof-neuhaus",
-                }
+                },
             };
 
             Assert.ThrowsException<InvalidOperationException>(
@@ -113,7 +113,7 @@ namespace WhereToFly.WebApi.UnitTest
                 {
                     "wheretofly-path-bahnhof-neuhaus",
                     "wheretofly-path-xyz123",
-                }
+                },
             };
 
             Assert.ThrowsException<ArgumentException>(
@@ -156,7 +156,7 @@ namespace WhereToFly.WebApi.UnitTest
                     ////"wheretofly-path-bodenschneid",
                     ////"wheretofly-path-brecherspitz",
                     "wheretofly-path-bahnhof-neuhaus",
-                }
+                },
             };
 
             var tour = engine.PlanTour(planTourParameters);

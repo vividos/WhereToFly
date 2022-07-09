@@ -27,7 +27,7 @@ namespace WhereToFly.App.Core.Views
             // set up flyout menu page
             this.Flyout = new MenuPage
             {
-                BackgroundColor = Constants.PrimaryColor
+                BackgroundColor = Constants.PrimaryColor,
             };
             if (Device.RuntimePlatform == Device.iOS)
             {
@@ -39,7 +39,7 @@ namespace WhereToFly.App.Core.Views
             var navigationPage = new NavigationPage(mapPage)
             {
                 BarBackgroundColor = Constants.PrimaryColor,
-                BarTextColor = Color.White
+                BarTextColor = Color.White,
             };
 
             NavigationPage.SetTitleIconImageSource(navigationPage, "icon.png");

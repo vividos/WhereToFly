@@ -35,8 +35,8 @@ namespace WhereToFly.App.UnitTest.Geo
                     {
                         Center = new Coord { Latitude = 48.137155, Longitude = 11.575416 },
                         Radius = 200.0
-                    }
-                }
+                    },
+                },
             };
 
             // run

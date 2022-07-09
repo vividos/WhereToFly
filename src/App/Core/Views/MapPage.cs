@@ -122,7 +122,7 @@ namespace WhereToFly.App.Core.Views
                 async () => await this.OnClicked_ToolbarButtonLocateMe(),
                 ToolbarItemOrder.Primary)
             {
-                AutomationId = "LocateMe"
+                AutomationId = "LocateMe",
             };
 
             this.ToolbarItems.Add(locateMeButton);
@@ -184,7 +184,7 @@ namespace WhereToFly.App.Core.Views
                 async () => await this.OnClicked_ToolbarButtonFindLocation(),
                 ToolbarItemOrder.Primary)
             {
-                AutomationId = "FindLocation"
+                AutomationId = "FindLocation",
             };
 
             this.ToolbarItems.Add(currentPositionDetailsButton);

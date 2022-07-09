@@ -200,7 +200,7 @@ namespace WhereToFly.App.Core.ViewModels
             this.DescriptionWebViewSource = new HtmlWebViewSource
             {
                 Html = FormatLocationDescription(this.location),
-                BaseUrl = "about:blank"
+                BaseUrl = "about:blank",
             };
 
             this.RefreshLiveWaypointCommand = new AsyncCommand(this.OnRefreshLiveWaypoint);
@@ -270,7 +270,7 @@ namespace WhereToFly.App.Core.ViewModels
                 this.DescriptionWebViewSource = new HtmlWebViewSource
                 {
                     Html = this.location.Description,
-                    BaseUrl = "about:blank"
+                    BaseUrl = "about:blank",
                 };
 
                 this.OnPropertyChanged(nameof(this.Latitude));

@@ -54,7 +54,7 @@ namespace WhereToFly.App.UnitTest
                 CoordinateDisplayFormat = CoordinateDisplayFormat.Format_dd_dddddd,
                 LastLocationFilterSettings = new LocationFilterSettings
                 {
-                    FilterText = "Brecherspitz"
+                    FilterText = "Brecherspitz",
                 },
                 LastShownPosition = new MapPoint(47.6764385, 11.8710533, 1685.0),
                 LastFlyingRangeParameters = new FlyingRangeParameters
@@ -62,8 +62,8 @@ namespace WhereToFly.App.UnitTest
                     GliderSpeed = 35,
                     GlideRatio = 9.0,
                     WindDirection = 270,
-                    WindSpeed = 15.0
-                }
+                    WindSpeed = 15.0,
+                },
             };
         }
 

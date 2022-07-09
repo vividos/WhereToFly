@@ -14,7 +14,7 @@ namespace WhereToFly.App.Core.Views
         {
             this.IconImageSource = new FileImageSource
             {
-                File = Converter.ImagePathConverter.GetDeviceDependentImage("map")
+                File = Converter.ImagePathConverter.GetDeviceDependentImage("map"),
             };
 
             this.InitializeComponent();

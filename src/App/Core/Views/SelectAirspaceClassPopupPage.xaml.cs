@@ -47,7 +47,7 @@ namespace WhereToFly.App.Core.Views
         {
             var popupPage = new SelectAirspaceClassPopupPage(airspaceClassesList)
             {
-                tcs = new TaskCompletionSource<ISet<AirspaceClass>>()
+                tcs = new TaskCompletionSource<ISet<AirspaceClass>>(),
             };
 
             await popupPage.Navigation.PushPopupAsync(popupPage);

@@ -483,7 +483,7 @@ namespace WhereToFly.App.Core
             var choices = new string[2]
                 {
                     "Import Locations",
-                    "Import Tracks"
+                    "Import Tracks",
                 };
 
             string choice = await App.Current.MainPage.DisplayActionSheet(

@@ -172,7 +172,7 @@ namespace WhereToFly.App.UWP
 
             var toast = new ToastNotification(toastXml)
             {
-                ExpirationTime = DateTime.Now.AddSeconds(4)
+                ExpirationTime = DateTime.Now.AddSeconds(4),
             };
             toastNotifier.Show(toast);
         }

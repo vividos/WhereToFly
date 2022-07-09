@@ -131,7 +131,7 @@ namespace WhereToFly.WebApi.Logic
             return new LiveTrackQueryResult
             {
                 Data = cachedData,
-                NextRequestDate = this.GetNextRequestDate(uri)
+                NextRequestDate = this.GetNextRequestDate(uri),
             };
         }
 

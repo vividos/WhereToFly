@@ -108,7 +108,7 @@ namespace WhereToFly.App.Core.ViewModels
             this.DescriptionWebViewSource = new HtmlWebViewSource
             {
                 Html = FormatLayerDescription(this.layer),
-                BaseUrl = "about:blank"
+                BaseUrl = "about:blank",
             };
 
             this.ZoomToLayerCommand = new AsyncCommand(this.OnZoomToLayerAsync, this.OnCanExecuteZoomToLayer);

@@ -311,7 +311,7 @@ namespace WhereToFly.App.Core.Controls
                 IsAntialias = true,
                 Style = SKPaintStyle.Stroke,
                 Color = this.CompassBorderColor.ToSKColor(),
-                PathEffect = dashPathEffect
+                PathEffect = dashPathEffect,
             };
             for (int segmentIndex = 0; segmentIndex < 8; segmentIndex++)
             {
@@ -331,7 +331,7 @@ namespace WhereToFly.App.Core.Controls
         /// </summary>
         private static readonly string[] DirectionText = new string[8]
         {
-            "N", "NE", "E", "SE", "S", "SW", "W", "NW"
+            "N", "NE", "E", "SE", "S", "SW", "W", "NW",
         };
 
         /// <summary>

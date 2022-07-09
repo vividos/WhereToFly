@@ -114,7 +114,7 @@ namespace WhereToFly.App.Core
                 MapLocation = mapPoint,
                 Description = result.Data.Description.Replace("\n", "<br/>"),
                 Type = LocationType.LiveWaypoint,
-                InternetLink = appResourceUri.ToString()
+                InternetLink = appResourceUri.ToString(),
             };
         }
 
@@ -205,7 +205,7 @@ namespace WhereToFly.App.Core
                         null)
                     {
                         Time = result.Data.TrackStart.AddSeconds(trackPoint.Offset),
-                    }).ToList()
+                    }).ToList(),
             };
 
             track.CalculateStatistics();

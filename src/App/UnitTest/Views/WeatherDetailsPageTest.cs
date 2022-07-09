@@ -31,7 +31,7 @@ namespace WhereToFly.App.UnitTest.Views
             {
                 Name = "TestLink",
                 Type = WeatherIconDescription.IconType.IconLink,
-                WebLink = "https://localhost/test/123/"
+                WebLink = "https://localhost/test/123/",
             };
 
             // run

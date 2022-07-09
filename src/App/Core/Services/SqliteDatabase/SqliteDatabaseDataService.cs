@@ -143,7 +143,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
                     select new FaviconUrlEntry
                     {
                         WebsiteUrl = keyAndValue.Key,
-                        FaviconUrl = keyAndValue.Value
+                        FaviconUrl = keyAndValue.Value,
                     };
 
                 await this.connection.InsertAllAsync(defaultEntries, runInTransaction: true);
@@ -223,7 +223,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
 
             await this.connection.InsertOrReplaceAsync(new AppDataEntry
             {
-                AppSettings = appSettings
+                AppSettings = appSettings,
             });
         }
 
@@ -312,7 +312,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
                 await this.connection.InsertAsync(new FaviconUrlEntry
                 {
                     WebsiteUrl = baseUri,
-                    FaviconUrl = faviconUrl
+                    FaviconUrl = faviconUrl,
                 });
 
                 return faviconUrl;

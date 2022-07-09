@@ -77,7 +77,7 @@ namespace WhereToFly.App.Core.Views
                 async () => await this.OnClicked_ToolbarButtonSharePosition(),
                 ToolbarItemOrder.Primary)
             {
-                AutomationId = "SharePosition"
+                AutomationId = "SharePosition",
             };
 
             this.ToolbarItems.Add(sharePositionButton);

@@ -20,7 +20,7 @@ namespace WhereToFly.App.UnitTest.Shared
             // set up
             var dict = new Dictionary<string, int>
             {
-                { "key1", 42 }
+                { "key1", 42 },
             };
 
             Dictionary<string, int> nullDict = null;

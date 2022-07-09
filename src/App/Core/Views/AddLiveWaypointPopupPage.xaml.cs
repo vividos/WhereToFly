@@ -39,7 +39,7 @@ namespace WhereToFly.App.Core.Views
         {
             var popupPage = new AddLiveWaypointPopupPage(liveWaypoint)
             {
-                tcs = new TaskCompletionSource<bool>()
+                tcs = new TaskCompletionSource<bool>(),
             };
 
             await popupPage.Navigation.PushPopupAsync(popupPage);

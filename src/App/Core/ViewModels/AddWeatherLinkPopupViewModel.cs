@@ -78,7 +78,7 @@ namespace WhereToFly.App.Core.ViewModels
                 Name = string.Empty,
                 Group = this.GroupsList.First(),
                 Type = WeatherIconDescription.IconType.IconLink,
-                WebLink = string.Empty
+                WebLink = string.Empty,
             };
         }
     }

@@ -74,7 +74,7 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
                 waypointInfo = new WaypointInfo
                 {
                     Id = waypointId,
-                    Description = string.Empty
+                    Description = string.Empty,
                 };
 
                 this.tourGraph.AddVertex(waypointInfo);

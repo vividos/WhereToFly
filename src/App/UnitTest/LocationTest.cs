@@ -63,7 +63,7 @@ namespace WhereToFly.App.UnitTest
             // set up
             var locationList = new List<Location>
             {
-                UnitTestHelper.GetDefaultLocation()
+                UnitTestHelper.GetDefaultLocation(),
             };
 
             // run

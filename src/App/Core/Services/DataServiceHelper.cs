@@ -38,15 +38,15 @@ namespace WhereToFly.App.Core.Services
                     Id = "locationLayer",
                     Name = "Locations",
                     IsVisible = true,
-                    LayerType = LayerType.LocationLayer
+                    LayerType = LayerType.LocationLayer,
                 },
                 new Layer
                 {
                     Id = "trackLayer",
                     Name = "Tracks",
                     IsVisible = true,
-                    LayerType = LayerType.TrackLayer
-                }
+                    LayerType = LayerType.TrackLayer,
+                },
             };
         }
 
@@ -85,7 +85,7 @@ namespace WhereToFly.App.Core.Services
                 Description = description,
                 IsVisible = true,
                 LayerType = LayerType.CzmlLayer,
-                Data = czml
+                Data = czml,
             };
 
             return new Layer[]
@@ -106,7 +106,7 @@ namespace WhereToFly.App.Core.Services
                 Id = "osmBuildingsLayer",
                 Name = "Cesium OpenStreetMap Buildings",
                 IsVisible = true,
-                LayerType = LayerType.OsmBuildingsLayer
+                LayerType = LayerType.OsmBuildingsLayer,
             };
         }
 
@@ -125,7 +125,7 @@ namespace WhereToFly.App.Core.Services
                     MapLocation = new MapPoint(47.6764385, 11.8710533, 1685.0),
                     Description = "Herrliche Aussicht über die drei Seen Schliersee im Norden, Tegernsee im Westen und den Spitzingsee im Süden.",
                     Type = LocationType.Summit,
-                    InternetLink = "https://de.wikipedia.org/wiki/Brecherspitz"
+                    InternetLink = "https://de.wikipedia.org/wiki/Brecherspitz",
                 },
 
                 new Location
@@ -157,7 +157,7 @@ namespace WhereToFly.App.Core.Services
                     MapLocation = new MapPoint(47.6838571, 11.8687695, 1311.0),
                     Description = "Privat bewirtschaftete Alm; Montag Ruhetag",
                     Type = LocationType.AlpineHut,
-                    InternetLink = string.Empty
+                    InternetLink = string.Empty,
                 },
 
                 new Location
@@ -167,7 +167,7 @@ namespace WhereToFly.App.Core.Services
                     MapLocation = new MapPoint(47.66508, 11.90612, 1410.0),
                     Description = "Alpenvereinshütte der Sektion München des DAV",
                     Type = LocationType.AlpineHut,
-                    InternetLink = "https://www.davplus.de/huetten__wege/bewirtschaftete_huetten/uebersicht/schoenfeldhuette"
+                    InternetLink = "https://www.davplus.de/huetten__wege/bewirtschaftete_huetten/uebersicht/schoenfeldhuette",
                 },
 
                 new Location
@@ -178,7 +178,7 @@ namespace WhereToFly.App.Core.Services
                     Description = "Anschlussmöglichkeiten zum RBO Bus 9562 zum Spitzingsattel",
                     Type = LocationType.PublicTransportTrain,
                     InternetLink = "https://www.brb.de/strecken-fahrplaene/linie/3-munchen-hbf-holzkirchen-bayrischzell",
-                    IsPlanTourLocation = true
+                    IsPlanTourLocation = true,
                 },
 
                 new Location
@@ -189,7 +189,7 @@ namespace WhereToFly.App.Core.Services
                     Description = "Sattel auf halbem Wege zwischen Schliersee und Spitzingsee",
                     Type = LocationType.Pass,
                     InternetLink = string.Empty,
-                    IsPlanTourLocation = true
+                    IsPlanTourLocation = true,
                 },
 
                 new Location
@@ -212,7 +212,7 @@ namespace WhereToFly.App.Core.Services
                     Description = "Großer Landeplatz mit Windsack ",
                     Type = LocationType.FlyingLandingPlace,
                     InternetLink = "https://dc-bayrischzell.jimdosite.com/",
-                    IsPlanTourLocation = false
+                    IsPlanTourLocation = false,
                 },
             };
         }

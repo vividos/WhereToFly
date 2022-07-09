@@ -32,7 +32,7 @@ namespace WhereToFly.App.Core.Views
         {
             var popupPage = new FindLocationPopupPage
             {
-                tcs = new TaskCompletionSource<string>()
+                tcs = new TaskCompletionSource<string>(),
             };
 
             await popupPage.Navigation.PushPopupAsync(popupPage);

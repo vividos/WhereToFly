@@ -120,7 +120,7 @@ namespace WhereToFly.App.Core.ViewModels
             this.DescriptionWebViewSource = new HtmlWebViewSource
             {
                 Html = FormatTrackDescription(this.Track),
-                BaseUrl = "about:blank"
+                BaseUrl = "about:blank",
             };
         }
 

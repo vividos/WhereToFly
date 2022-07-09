@@ -32,7 +32,7 @@ namespace WhereToFly.App.UnitTest
                 Description = "Default description",
                 LayerType = LayerType.CzmlLayer,
                 IsVisible = true,
-                Data = "abc123xyz"
+                Data = "abc123xyz",
             };
         }
 
@@ -49,7 +49,7 @@ namespace WhereToFly.App.UnitTest
                 MapLocation = new MapPoint(47.6764385, 11.8710533, 1685.0),
                 Description = "Herrliche Aussicht über die drei Seen Schliersee im Norden, Tegernsee im Westen und den Spitzingsee im Süden.",
                 Type = LocationType.Summit,
-                InternetLink = "https://de.wikipedia.org/wiki/Brecherspitz"
+                InternetLink = "https://de.wikipedia.org/wiki/Brecherspitz",
             };
         }
 
@@ -70,13 +70,13 @@ namespace WhereToFly.App.UnitTest
                 {
                     new TrackPoint(47.754076, 12.352277, 1234.0, null)
                     {
-                        Time = DateTime.Today + TimeSpan.FromHours(1.0)
+                        Time = DateTime.Today + TimeSpan.FromHours(1.0),
                     },
                     new TrackPoint(46.017779, 11.900711, 778.2, null)
                     {
-                        Time = DateTime.Today + TimeSpan.FromHours(2.0)
+                        Time = DateTime.Today + TimeSpan.FromHours(2.0),
                     },
-                }
+                },
             };
         }
     }

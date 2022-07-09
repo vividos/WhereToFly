@@ -125,7 +125,7 @@ namespace WhereToFly.WebApi.Logic
             return new LiveWaypointQueryResult
             {
                 Data = cachedData,
-                NextRequestDate = this.GetNextRequestDate(uri)
+                NextRequestDate = this.GetNextRequestDate(uri),
             };
         }
 
@@ -214,7 +214,7 @@ namespace WhereToFly.WebApi.Logic
             return new LiveWaypointQueryResult
             {
                 Data = liveWaypointData,
-                NextRequestDate = this.findMeSpotTrackerService.GetNextRequestDate(uri)
+                NextRequestDate = this.findMeSpotTrackerService.GetNextRequestDate(uri),
             };
         }
 
@@ -232,7 +232,7 @@ namespace WhereToFly.WebApi.Logic
             return new LiveWaypointQueryResult
             {
                 Data = liveWaypointData,
-                NextRequestDate = this.garminInreachService.GetNextRequestDate(mapShareIdentifier)
+                NextRequestDate = this.garminInreachService.GetNextRequestDate(mapShareIdentifier),
             };
         }
 
@@ -294,9 +294,9 @@ namespace WhereToFly.WebApi.Logic
                         Description = "Hello from the Where-to-fly backend services!<br/>" +
                             $"Next request date is {nextRequestDate}" +
                             GetCoveredDistanceDescription(mapPoint),
-                        DetailsLink = string.Empty
+                        DetailsLink = string.Empty,
                     },
-                    NextRequestDate = nextRequestDate
+                    NextRequestDate = nextRequestDate,
                 });
         }
 

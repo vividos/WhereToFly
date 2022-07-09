@@ -251,7 +251,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
                     json,
                     new JsonSerializerSettings
                     {
-                        Converters = new List<JsonConverter> { new TrackPoint.Converter() }
+                        Converters = new List<JsonConverter> { new TrackPoint.Converter() },
                     });
             }
 
@@ -281,7 +281,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
                     this.Track.TrackPoints,
                     new JsonSerializerSettings
                     {
-                        Converters = new List<JsonConverter> { new TrackPoint.Converter() }
+                        Converters = new List<JsonConverter> { new TrackPoint.Converter() },
                     });
 
                 File.WriteAllText(filename, json);

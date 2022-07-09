@@ -60,7 +60,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
                 await this.connection.InsertAsync(
                     new WeatherDashboardIconEntry
                     {
-                        WeatherIconDescriptionId = await this.IdFromDescription(weatherIconDescriptionToAdd)
+                        WeatherIconDescriptionId = await this.IdFromDescription(weatherIconDescriptionToAdd),
                     });
             }
 
@@ -133,7 +133,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
                     weatherIconDescriptionEntryList.Add(
                         new WeatherDashboardIconEntry
                         {
-                            WeatherIconDescriptionId = await this.IdFromDescription(weatherIconDescription)
+                            WeatherIconDescriptionId = await this.IdFromDescription(weatherIconDescription),
                         });
                 }
 

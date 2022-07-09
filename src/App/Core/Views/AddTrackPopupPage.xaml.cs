@@ -43,7 +43,7 @@ namespace WhereToFly.App.Core.Views
         {
             var popupPage = new AddTrackPopupPage(track)
             {
-                tcs = new TaskCompletionSource<Track>()
+                tcs = new TaskCompletionSource<Track>(),
             };
 
             await popupPage.Navigation.PushPopupAsync(popupPage);

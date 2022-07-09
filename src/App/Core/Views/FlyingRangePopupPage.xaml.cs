@@ -41,7 +41,7 @@ namespace WhereToFly.App.Core.Views
         {
             var popupPage = new FlyingRangePopupPage()
             {
-                tcs = new TaskCompletionSource<FlyingRangeParameters>()
+                tcs = new TaskCompletionSource<FlyingRangeParameters>(),
             };
 
             await popupPage.Navigation.PushPopupAsync(popupPage);
