@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using WhereToFly.App.Model;
+using WhereToFly.App.Core.Models;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core

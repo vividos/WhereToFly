@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using WhereToFly.App.Model;
+using WhereToFly.App.Core.Models;
 using WhereToFly.Shared.Model;
 
 namespace WhereToFly.App.Core

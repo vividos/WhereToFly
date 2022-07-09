@@ -1,8 +1,8 @@
 ﻿using Rg.Plugins.Popup.Extensions;
 using System;
 using System.Threading.Tasks;
+using WhereToFly.App.Core.Models;
 using WhereToFly.App.Core.ViewModels;
-using WhereToFly.App.Model;
 
 namespace WhereToFly.App.Core.Views
 {

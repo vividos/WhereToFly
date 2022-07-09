@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using WhereToFly.App.Model;
+using WhereToFly.App.Core.Models;
 using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.Core

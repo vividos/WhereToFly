@@ -1,8 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
 using System.Linq;
+using WhereToFly.App.Core.Models;
 using WhereToFly.App.Core.ViewModels;
-using WhereToFly.App.Model;
 
 namespace WhereToFly.App.UnitTest.ViewModels
 {

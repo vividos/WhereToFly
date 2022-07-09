@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WhereToFly.App.Core.Models;
 using WhereToFly.App.Core.Views;
-using WhereToFly.App.Model;
 
 namespace WhereToFly.App.UnitTest.Views
 {

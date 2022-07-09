@@ -2,8 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using WhereToFly.App.Core.Models;
 using WhereToFly.App.Core.ViewModels;
-using WhereToFly.App.Model;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using Xamarin.Forms;

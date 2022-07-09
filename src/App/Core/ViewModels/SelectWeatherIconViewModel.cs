@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using WhereToFly.App.Model;
+using WhereToFly.App.Core.Models;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
 

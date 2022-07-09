@@ -1,4 +1,4 @@
-﻿namespace WhereToFly.App.Model
+﻿namespace WhereToFly.App.Core.Models
 {
     /// <summary>
     /// App style theme enumeration

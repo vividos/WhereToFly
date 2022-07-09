@@ -1,5 +1,5 @@
-﻿using WhereToFly.App.Core.ViewModels;
-using WhereToFly.App.Model;
+﻿using WhereToFly.App.Core.Models;
+using WhereToFly.App.Core.ViewModels;
 
 namespace WhereToFly.App.Core.Views
 {

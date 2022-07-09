@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WhereToFly.App.Model
+namespace WhereToFly.App.Core.Models
 {
     /// <summary>
     /// Description for a single weather icon

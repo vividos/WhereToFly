@@ -3,7 +3,7 @@ using WhereToFly.App.MapView;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 
-namespace WhereToFly.App.Model
+namespace WhereToFly.App.Core.Models
 {
     /// <summary>
     /// Settings for the app

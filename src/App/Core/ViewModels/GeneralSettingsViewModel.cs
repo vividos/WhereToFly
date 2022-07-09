@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using WhereToFly.App.Core.Models;
 using WhereToFly.App.Core.Styles;
-using WhereToFly.App.Model;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 

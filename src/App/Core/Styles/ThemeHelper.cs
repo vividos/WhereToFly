@@ -1,4 +1,4 @@
-﻿using WhereToFly.App.Model;
+﻿using WhereToFly.App.Core.Models;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 

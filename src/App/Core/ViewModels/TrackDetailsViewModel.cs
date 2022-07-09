@@ -96,7 +96,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         public bool UseDarkTheme
         {
-            get => Styles.ThemeHelper.CurrentTheme == Model.Theme.Dark;
+            get => Styles.ThemeHelper.CurrentTheme == Models.Theme.Dark;
         }
         #endregion
 

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Timers;
 using WhereToFly.App.Core.Logic;
-using WhereToFly.App.Model;
+using WhereToFly.App.Core.Models;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using WhereToFly.Geo.SunCalcNet;

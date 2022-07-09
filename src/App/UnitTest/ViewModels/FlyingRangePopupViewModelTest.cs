@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Threading.Tasks;
 using WhereToFly.App.Core;
+using WhereToFly.App.Core.Models;
 using WhereToFly.App.Core.Services.SqliteDatabase;
 using WhereToFly.App.Core.ViewModels;
-using WhereToFly.App.Model;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest.ViewModels

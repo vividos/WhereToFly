@@ -22,7 +22,7 @@ namespace WhereToFly.App.Core.Views
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 Track = track,
-                UseDarkTheme = Styles.ThemeHelper.CurrentTheme == Model.Theme.Dark,
+                UseDarkTheme = Styles.ThemeHelper.CurrentTheme == Models.Theme.Dark,
             };
 
             this.SetDynamicResource(BackgroundColorProperty, "PageBackgroundColor");

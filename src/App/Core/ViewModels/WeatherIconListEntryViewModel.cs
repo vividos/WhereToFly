@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
-using WhereToFly.App.Model;
+using WhereToFly.App.Core.Models;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.ViewModels
