@@ -87,8 +87,8 @@ namespace WhereToFly.App.UnitTest.ViewModels
             Assert.IsTrue(viewModel.IsHeadingAvail, "initially heading is not available");
             Assert.AreEqual(64, viewModel.HeadingInDegrees, "heading value must be correct");
             Assert.IsTrue(viewModel.IsSunriseSunsetAvail, "sunrise/sunset must not be available");
-            Assert.AreEqual("6:09:21", viewModel.SunriseTime, "sunrise time text must be correct");
-            Assert.AreEqual("20:17:45", viewModel.SunsetTime, "sunset time text must be correct");
+            Assert.AreEqual("6:13:05", viewModel.SunriseTime, "sunrise time text must be correct");
+            Assert.AreEqual("20:14:49", viewModel.SunsetTime, "sunset time text must be correct");
         }
 
         /// <summary>

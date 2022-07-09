@@ -285,7 +285,7 @@ namespace WhereToFly.App.Core.ViewModels
             this.OnPropertyChanged(nameof(this.HeadingInDegrees));
 
             this.currentSolarTimes = SunCalc.GetTimes(
-                DateTimeOffset.Now,
+                this.position.Timestamp,
                 this.position.Latitude,
                 this.position.Longitude,
                 this.position.Altitude ?? 0.0);
