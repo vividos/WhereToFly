@@ -1038,6 +1038,8 @@ export class MapView {
             MapView.log("also zooming to my location");
             this.flyTo(options);
         }
+        else
+            this.updateScene();
     }
 
     /**
