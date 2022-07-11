@@ -2339,16 +2339,12 @@ export class MapView {
         let newListOfTimePoints = [];
         let newGroundHeightProfile = [];
 
-        let hasListOfTimePoints =
-            track.listOfTimePoints !== undefined &&
-            track.listOfTimePoints !== null;
+        let hasListOfTimePoints = track.listOfTimePoints !== null;
 
-        let hasGroundHeightProfile =
-            track.groundHeightProfile !== undefined &&
-            track.groundHeightProfile !== null;
+        let hasGroundHeightProfile = track.groundHeightProfile !== null;
 
-        for (let oldTrackPoint in modifiedTrackPointArray) {
-            let oldTrackPointIndex = oldTrackPoint.trackPointIndex;
+        for (let modifiedTrackPoint in modifiedTrackPointArray) {
+            let oldTrackPointIndex = modifiedTrackPoint.trackPointIndex;
 
             newListOfTrackPoints.push(track.listOfTrackPoints[oldTrackPointIndex * 3]);
             newListOfTrackPoints.push(track.listOfTrackPoints[oldTrackPointIndex * 3 + 1]);
