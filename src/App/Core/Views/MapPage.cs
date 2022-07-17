@@ -79,11 +79,16 @@ namespace WhereToFly.App.Core.Views
 
             Task.Run(this.InitLayoutAsync);
 
+            MessagingCenter.Unsubscribe<App, Location>(
+                this,
+                Constants.MessageAddTourPlanLocation);
+
             MessagingCenter.Subscribe<App, Location>(
                 this,
                 Constants.MessageAddTourPlanLocation,
                 async (app, location) => await this.AddTourPlanningLocationAsync(location));
 
+            MessagingCenter.Unsubscribe<App>(this, Constants.MessageUpdateMapSettings);
             MessagingCenter.Subscribe<App>(this, Constants.MessageUpdateMapSettings, (app) => this.OnMessageUpdateMapSettings());
         }
 

@@ -134,6 +134,7 @@ namespace WhereToFly.App.Android
             Plugin.Geolocator.GeolocatorImplementation.ProvidersToUseWhileListening =
                 new string[] { global::Android.Locations.LocationManager.GpsProvider };
 
+            MessagingCenter.Unsubscribe<Core.App, string>(this, Constants.MessageShowToast);
             MessagingCenter.Subscribe<Core.App, string>(this, Constants.MessageShowToast, this.ShowToast);
 
             this.LoadApplication(new Core.App());

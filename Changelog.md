@@ -18,6 +18,7 @@ Released on ?.
 - Fixed map starting location, using last zoomed-to location
 - Fixed opening websites in external browser window
 - Fixed finding current position after minimizing app
+- Fixed showing toast messages and tor plan dialogs multiple times
 
 ## Version 1.11.0
 
