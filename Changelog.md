@@ -2,7 +2,7 @@
 
 ## Version 1.12.0
 
-Released on ?.
+Released on 2022-07-17.
 
 ✨ New Features / Improvements
 
@@ -18,7 +18,7 @@ Released on ?.
 - Fixed map starting location, using last zoomed-to location
 - Fixed opening websites in external browser window
 - Fixed finding current position after minimizing app
-- Fixed showing toast messages and tor plan dialogs multiple times
+- Fixed showing toast messages and tour plan dialogs multiple times
 
 ## Version 1.11.0
 
