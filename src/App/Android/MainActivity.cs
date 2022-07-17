@@ -3,6 +3,7 @@ using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using Android.Widget;
+using Google.Android.Material.Snackbar;
 using System;
 using System.IO;
 using System.Net.Http;
@@ -242,7 +243,21 @@ namespace WhereToFly.App.Android
         private void ShowToast(Core.App app, string message)
         {
             Core.App.RunOnUiThread(
-                () => Toast.MakeText(this, message, ToastLength.Long).Show());
+                () =>
+                {
+                    // Snackbar available from API Level 23 on
+                    if (Build.VERSION.SdkInt >= BuildVersionCodes.M)
+                    {
+                        var view = Core.App.Current?.MainPage?.GetRenderer()?.View;
+
+                        view ??= this.Window.DecorView;
+                        Snackbar.Make(this, view, message, Snackbar.LengthShort).Show();
+                    }
+                    else
+                    {
+                        Toast.MakeText(this, message, ToastLength.Long).Show();
+                    }
+                });
         }
     }
 }
