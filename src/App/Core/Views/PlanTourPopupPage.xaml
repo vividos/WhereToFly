@@ -2,7 +2,7 @@
 <views:BasePopupPage xmlns="http://xamarin.com/schemas/2014/forms"
                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                      xmlns:views="clr-namespace:WhereToFly.App.Core.Views"
-                     xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+                     xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
                      x:Class="WhereToFly.App.Core.Views.PlanTourPopupPage">
 
     <!-- popup content -->
@@ -54,11 +54,11 @@
                         </Grid.ColumnDefinitions>
 
                         <!-- Type image -->
-                        <ffimageloadingsvg:SvgCachedImage Source="{Binding TypeImageSource, Mode=OneWay}"
-                                                          ReplaceStringMap="{DynamicResource SvgImageFillDark}"
-                                                          WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
-                                                          HorizontalOptions="Start" VerticalOptions="Center"
-                                                          Grid.Row="0" Grid.Column="0" />
+                        <controls:SvgImage Source="{Binding TypeImageSource, Mode=OneWay}"
+                                           TintColor="{DynamicResource SvgImageTintColorDark}"
+                                           WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
+                                           HorizontalOptions="Start" VerticalOptions="Center"
+                                           Grid.Row="0" Grid.Column="0" />
 
                         <!-- Name -->
                         <Label Text="{Binding Name, Mode=OneTime}"

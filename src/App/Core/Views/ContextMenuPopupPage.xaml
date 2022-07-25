@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <views:BasePopupPage xmlns="http://xamarin.com/schemas/2014/forms"
                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                     xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
                      xmlns:views="clr-namespace:WhereToFly.App.Core.Views"
-                     xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                      x:Class="WhereToFly.App.Core.Views.ContextMenuPopupPage">
 
     <!-- Popup content -->
@@ -36,11 +36,11 @@
                         </Grid.GestureRecognizers>
 
                         <!-- Menu item icon -->
-                        <ffimageloadingsvg:SvgCachedImage Source="{Binding IconImageSource, Mode=OneWay}"
-                                                          ReplaceStringMap="{DynamicResource SvgImageFillDark}"
-                                                          InputTransparent="True"
-                                                          WidthRequest="32" HeightRequest="32"
-                                                          HorizontalOptions="Center" VerticalOptions="Center" />
+                        <controls:SvgImage Source="{Binding IconImageSource, Mode=OneWay}"
+                                           TintColor="{DynamicResource SvgImageTintColorDark}"
+                                           InputTransparent="True"
+                                           WidthRequest="32" HeightRequest="32"
+                                           HorizontalOptions="Center" VerticalOptions="Center" />
 
                         <!-- Menu item text -->
                         <Label Grid.Column="1" Text="{Binding Text, Mode=OneTime}"

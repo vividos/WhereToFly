@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
              xmlns:viewmodels="clr-namespace:WhereToFly.App.Core.ViewModels"
              x:Class="WhereToFly.App.Core.Views.MenuPage"
              Padding="0,40,0,0"
@@ -20,8 +20,8 @@
                          HorizontalOptions="Start"
                          Padding="16,0,0,16">
                 <!-- app icon -->
-                <ffimageloadingsvg:SvgCachedImage Source="{Binding AppIcon, Mode=OneWay}"
-                                                  WidthRequest="48" HeightRequest="48" VerticalOptions="Start" />
+                <controls:SvgImage Source="{Binding AppIcon, Mode=OneWay}"
+                                   WidthRequest="48" HeightRequest="48" VerticalOptions="Start" />
 
                 <!-- app name and version -->
                 <StackLayout>
@@ -48,11 +48,11 @@
                             </Grid.ColumnDefinitions>
 
                             <!-- menu item icon -->
-                            <ffimageloadingsvg:SvgCachedImage Source="{Binding ImageSource, Mode=OneWay}"
-                                                              ReplaceStringMap="{DynamicResource SvgImageFillDark}"
-                                                              InputTransparent="True"
-                                                              WidthRequest="32" HeightRequest="32"
-                                                              HorizontalOptions="Center" VerticalOptions="Center" />
+                            <controls:SvgImage Source="{Binding ImageSource, Mode=OneWay}"
+                                               TintColor="{DynamicResource SvgImageTintColorDark}"
+                                               InputTransparent="True"
+                                               WidthRequest="32" HeightRequest="32"
+                                               HorizontalOptions="Center" VerticalOptions="Center" />
 
                             <!-- title text -->
                             <Label Grid.Column="1" Text="{Binding Title, Mode=OneTime}"

@@ -43,5 +43,6 @@
     <Color x:Key="EntryPlaceholderTextColor">#9b9b9b</Color>
     <Color x:Key="ButtonBackgroundColor">#D7D7D7</Color>
     <Color x:Key="BorderSelectionColor">Black</Color>
+    <Color x:Key="SvgImageTintColorDark">Black</Color>
 
 </ResourceDictionary>

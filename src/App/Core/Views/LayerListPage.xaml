@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
              xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
              xmlns:viewmodels="clr-namespace:WhereToFly.App.Core.ViewModels"
@@ -77,11 +76,11 @@
                         </Grid.GestureRecognizers>
 
                         <!-- Layer type image -->
-                        <ffimageloadingsvg:SvgCachedImage Source="{Binding TypeImageSource, Mode=OneWay}"
-                                                          ReplaceStringMap="{DynamicResource SvgImageFillDark}"
-                                                          WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
-                                                          HorizontalOptions="Start" VerticalOptions="Center"
-                                                          Grid.Column="0"/>
+                        <controls:SvgImage Source="{Binding TypeImageSource, Mode=OneWay}"
+                                           TintColor="{DynamicResource SvgImageTintColorDark}"
+                                           WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
+                                           HorizontalOptions="Start" VerticalOptions="Center"
+                                           Grid.Column="0"/>
 
                         <!-- Layer visibility image -->
                         <ContentView Margin="0" Padding="0" Grid.Column="1">
@@ -89,11 +88,11 @@
                                 <TapGestureRecognizer Command="{Binding VisibilityTappedCommand}"
                                                       NumberOfTapsRequired="1"/>
                             </ContentView.GestureRecognizers>
-                            <ffimageloadingsvg:SvgCachedImage Source="{Binding VisibilityImageSource, Mode=OneWay}"
-                                                              ReplaceStringMap="{DynamicResource SvgImageFillDark}"
-                                                              WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
-                                                              HorizontalOptions="Start" VerticalOptions="Center"
-                                                              InputTransparent="true" />
+                            <controls:SvgImage Source="{Binding VisibilityImageSource, Mode=OneWay}"
+                                               TintColor="{DynamicResource SvgImageTintColorDark}"
+                                               WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
+                                               HorizontalOptions="Start" VerticalOptions="Center"
+                                               InputTransparent="true" />
                         </ContentView>
 
                         <!-- Name -->

@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
              xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
@@ -107,11 +106,11 @@
                         </Grid.GestureRecognizers>
 
                         <!-- Type image -->
-                        <ffimageloadingsvg:SvgCachedImage Source="{Binding TypeImageSource, Mode=OneWay}"
-                                                          ReplaceStringMap="{DynamicResource SvgImageFillDark}"
-                                                          WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
-                                                          HorizontalOptions="Start" VerticalOptions="Center"
-                                                          Grid.Column="0" Grid.RowSpan="3" />
+                        <controls:SvgImage Source="{Binding TypeImageSource, Mode=OneWay}"
+                                           TintColor="{DynamicResource SvgImageTintColorDark}"
+                                           WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
+                                           HorizontalOptions="Start" VerticalOptions="Center"
+                                           Grid.Column="0" Grid.RowSpan="3" />
 
                         <!-- Takeoff directions -->
                         <controls:TakeoffDirectionsView Grid.Column="1" Grid.RowSpan="3"

@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
              xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
              x:Class="WhereToFly.App.Core.Views.TrackListPage"
@@ -86,11 +85,11 @@
                             </Grid.GestureRecognizers>
 
                             <!-- Track type image -->
-                            <ffimageloadingsvg:SvgCachedImage Source="{Binding TypeImageSource, Mode=OneWay}"
-                                                              ReplaceStringMap="{DynamicResource SvgImageFillDark}"
-                                                              WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
-                                                              HorizontalOptions="Start" VerticalOptions="Center"
-                                                              Grid.Column="0" Grid.RowSpan="2" />
+                            <controls:SvgImage Source="{Binding TypeImageSource, Mode=OneWay}"
+                                               TintColor="{DynamicResource SvgImageTintColorDark}"
+                                               WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
+                                               HorizontalOptions="Start" VerticalOptions="Center"
+                                               Grid.Column="0" Grid.RowSpan="2" />
 
                             <Frame IsVisible="{Binding IsColorBoxVisible, Mode=OneWay}"
                                    BackgroundColor="{Binding TrackColor, Mode=OneTime}"

@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
              xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
              x:Class="WhereToFly.App.Core.Views.LocationDetailsPage"
@@ -67,10 +66,10 @@
                     <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
 
                         <!-- Type image -->
-                        <ffimageloadingsvg:SvgCachedImage Source="{Binding TypeImageSource, Mode=OneWay}"
-                                                          ReplaceStringMap="{DynamicResource SvgImageFillDark}"
-                                                          WidthRequest="64" HeightRequest="64"
-                                                          HorizontalOptions="Start" VerticalOptions="Center" />
+                        <controls:SvgImage Source="{Binding TypeImageSource, Mode=OneWay}"
+                                           TintColor="{DynamicResource SvgImageTintColorDark}"
+                                           WidthRequest="64" HeightRequest="64"
+                                           HorizontalOptions="Start" VerticalOptions="Center" />
 
                         <!-- Takeoff directions -->
                         <controls:TakeoffDirectionsView IsVisible="{Binding IsTakeoffDirectionsVisible, Mode=OneTime}"

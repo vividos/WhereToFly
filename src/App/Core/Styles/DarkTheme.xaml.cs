@@ -14,11 +14,6 @@ namespace WhereToFly.App.Core.Styles
         public DarkTheme()
         {
             this.InitializeComponent();
-
-            this["SvgImageFillDark"] = new Dictionary<string, string>
-            {
-                { "fill=\"#000000", "fill=\"#ffffff" },
-            };
         }
     }
 }
