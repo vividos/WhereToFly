@@ -1,5 +1,4 @@
-﻿using FFImageLoading.Svg.Forms;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using WhereToFly.Geo.Model;
@@ -95,24 +94,15 @@ namespace WhereToFly.App.Core
         /// name.
         /// </summary>
         /// <param name="svgImageName">relative path to the SVG image file</param>
-        /// <param name="noReplaceStringMap">when true, no replace string map is set</param>
         /// <returns>image source</returns>
-        public static ImageSource GetImageSource(string svgImageName, bool noReplaceStringMap = false)
+        public static ImageSource GetImageSource(string svgImageName)
         {
             var cache = DependencyService.Get<SvgImageCache>();
             Debug.Assert(cache != null, "cache object must exist");
 
             string svgText = cache.GetSvgImage(svgImageName);
 
-            Dictionary<string, string> replaceStringMap = null;
-            if (!noReplaceStringMap &&
-                Application.Current?.Resources != null &&
-                Application.Current.Resources.ContainsKey("SvgImageFillDark"))
-            {
-                replaceStringMap = Application.Current.Resources["SvgImageFillDark"] as Dictionary<string, string>;
-            }
-
-            return SvgImageSource.FromSvgString(svgText, replaceStringMap: replaceStringMap);
+            return ImageSource.FromUri(new Uri(Controls.SvgConstants.DataUriPlainPrefix + svgText));
         }
 
         /// <summary>
