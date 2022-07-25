@@ -42,7 +42,9 @@ namespace WhereToFly.App.Core
         /// <returns>image source</returns>
         public static ImageSource GetImageSource(Track track)
         {
-            string svgImagePath = track.IsFlightTrack ? "weblib/images/paragliding.svg" : "icons/map-marker-distance.svg";
+            string svgImagePath = track.IsFlightTrack
+                ? "weblib/images/paragliding.svg"
+                : "icons/map-marker-distance.svg";
 
             return GetImageSource(svgImagePath);
         }
@@ -81,8 +83,9 @@ namespace WhereToFly.App.Core
         /// <returns>image source</returns>
         public static ImageSource GetLayerVisibilityImageSource(Layer layer)
         {
-            string svgImagePath =
-                layer.IsVisible ? "icons/eye.svg" : "icons/eye-off-outline.svg";
+            string svgImagePath = layer.IsVisible
+                ? "icons/eye.svg"
+                : "icons/eye-off-outline.svg";
 
             return GetImageSource(svgImagePath);
         }
