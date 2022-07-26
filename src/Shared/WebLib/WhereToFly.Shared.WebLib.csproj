@@ -28,4 +28,15 @@
     <RemoveDir Directories="dist-es5\" />
   </Target>
 
+  <ItemGroup>
+    <EmbeddedResource Remove="bin\**" />
+    <EmbeddedResource Remove="dist-es5\**" />
+    <EmbeddedResource Remove="dist\**" />
+    <EmbeddedResource Remove="obj\**" />
+    <None Remove="bin\**" />
+    <None Remove="dist-es5\**" />
+    <None Remove="dist\**" />
+    <None Remove="obj\**" />
+  </ItemGroup>
+
 </Project>
