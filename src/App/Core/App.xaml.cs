@@ -306,6 +306,36 @@ namespace WhereToFly.App.Core
         }
 
         /// <summary>
+        /// Sets (or clears) the current compass target
+        /// </summary>
+        /// <param name="compassTarget">compass target; may be null</param>
+        /// <returns>task to wait on</returns>
+        public static async Task SetCompassTarget(CompassTarget compassTarget)
+        {
+            if (Settings == null)
+            {
+                return; // app settings not loaded yet
+            }
+
+            Settings.CurrentCompassTarget = compassTarget;
+
+            var dataService = DependencyService.Get<IDataService>();
+            await dataService.StoreAppSettingsAsync(Settings);
+
+            if (compassTarget == null)
+            {
+                MapView.ClearCompass();
+            }
+            else
+            {
+                if (compassTarget.TargetLocation != null)
+                {
+                    MapView.SetCompassTarget(compassTarget.Title, compassTarget.TargetLocation);
+                }
+            }
+        }
+
+        /// <summary>
         /// Opens app resource URI, e.g. a live waypoint
         /// </summary>
         /// <param name="uri">app resource URI to open</param>
