@@ -26,6 +26,11 @@ namespace WhereToFly.App.Core.Views
             AddNewWaypoint,
 
             /// <summary>
+            /// User selected menu item to set location as compass target
+            /// </summary>
+            SetAsCompassTarget,
+
+            /// <summary>
             /// User selected menu item to navigate here
             /// </summary>
             NavigateHere,
@@ -64,6 +69,12 @@ namespace WhereToFly.App.Core.Views
                     Text = "Add new waypoint",
                     IconImageSource = SvgImageCache.GetImageSource("info/images/playlist-plus.svg"),
                     Command = new Command(() => tcs.TrySetResult(Result.AddNewWaypoint)),
+                },
+                new MenuItem
+                {
+                    Text = "Set as compass target",
+                    IconImageSource = SvgImageCache.GetImageSource("weblib/images/compass-rose.svg"),
+                    Command = new Command(() => tcs.TrySetResult(Result.SetAsCompassTarget)),
                 },
                 new MenuItem
                 {

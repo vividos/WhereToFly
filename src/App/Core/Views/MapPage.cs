@@ -592,6 +592,10 @@ namespace WhereToFly.App.Core.Views
                     await this.AddNewWaypoint(point);
                     break;
 
+                case MapLongTapContextMenu.Result.SetAsCompassTarget:
+                    await this.SetAsCompassTarget(point);
+                    break;
+
                 case MapLongTapContextMenu.Result.NavigateHere:
                     await NavigateToPointAsync(string.Empty, point);
                     break;
@@ -640,6 +644,22 @@ namespace WhereToFly.App.Core.Views
                 parameter: location);
 
             this.MapView.AddLocation(location);
+        }
+
+        /// <summary>
+        /// Sets map point as compass target
+        /// </summary>
+        /// <param name="point">map point to set as target</param>
+        /// <returns>task to wait on</returns>
+        private async Task SetAsCompassTarget(MapPoint point)
+        {
+            var compassTarget = new CompassTarget
+            {
+                Title = "Selected location",
+                TargetLocation = point,
+            };
+
+            await App.SetCompassTarget(compassTarget);
         }
 
         /// <summary>
