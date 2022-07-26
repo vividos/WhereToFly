@@ -302,6 +302,24 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
+        /// Returns to map view and sets the compass target
+        /// </summary>
+        /// <param name="location">location to use as target</param>
+        /// <returns>task to wait on</returns>
+        internal async Task SetAsCompassTarget(Location location)
+        {
+            var compassTarget = new CompassTarget
+            {
+                Title = location.Name,
+                TargetLocation = location.MapLocation,
+            };
+
+            await App.SetCompassTarget(compassTarget);
+
+            await NavigationService.GoToMap();
+        }
+
+        /// <summary>
         /// Shows menu to import location lists
         /// </summary>
         /// <returns>task to wait on</returns>

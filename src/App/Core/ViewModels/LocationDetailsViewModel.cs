@@ -154,6 +154,11 @@ namespace WhereToFly.App.Core.ViewModels
         public ICommand ZoomToLocationCommand { get; set; }
 
         /// <summary>
+        /// Command to execute when "set as compass target" menu item is selected on a location
+        /// </summary>
+        public ICommand SetAsCompassTargetCommand { get; set; }
+
+        /// <summary>
         /// Command to execute when "navigate to" menu item is selected on a location
         /// </summary>
         public ICommand NavigateToLocationCommand { get; set; }
@@ -206,6 +211,7 @@ namespace WhereToFly.App.Core.ViewModels
             this.RefreshLiveWaypointCommand = new AsyncCommand(this.OnRefreshLiveWaypoint);
             this.AddTourPlanLocationCommand = new Command(this.OnAddTourPlanLocation);
             this.ZoomToLocationCommand = new AsyncCommand(this.OnZoomToLocationAsync);
+            this.SetAsCompassTargetCommand = new AsyncCommand(this.OnSetAsCompassTargetAsync);
             this.NavigateToLocationCommand = new AsyncCommand(this.OnNavigateToLocationAsync);
             this.ShareLocationCommand = new AsyncCommand(this.OnShareLocationAsync);
             this.DeleteLocationCommand = new AsyncCommand(this.OnDeleteLocationAsync);
@@ -320,6 +326,23 @@ namespace WhereToFly.App.Core.ViewModels
             await App.UpdateLastShownPositionAsync(this.location.MapLocation);
 
             App.MapView.ZoomToLocation(this.location.MapLocation);
+
+            await NavigationService.GoToMap();
+        }
+
+        /// <summary>
+        /// Called when "Set as compass target" menu item is selected
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task OnSetAsCompassTargetAsync()
+        {
+            var compassTarget = new CompassTarget
+            {
+                Title = this.location.Name,
+                TargetLocation = this.location.MapLocation,
+            };
+
+            await App.SetCompassTarget(compassTarget);
 
             await NavigationService.GoToMap();
         }

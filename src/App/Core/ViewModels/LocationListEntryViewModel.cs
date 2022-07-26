@@ -101,6 +101,11 @@ namespace WhereToFly.App.Core.ViewModels
         public ICommand ZoomToLocationCommand { get; set; }
 
         /// <summary>
+        /// Command to execute when "set as compass target" context menu item is selected on a location
+        /// </summary>
+        public ICommand SetAsCompassTargetCommand { get; set; }
+
+        /// <summary>
         /// Command to execute when "delete" context menu item is selected on a location
         /// </summary>
         public ICommand DeleteLocationCommand { get; set; }
@@ -146,6 +151,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             this.ItemTappedCommand = new AsyncCommand(this.OnShowDetailsLocation);
             this.ZoomToLocationCommand = new AsyncCommand(this.OnZoomToLocationAsync);
+            this.SetAsCompassTargetCommand = new AsyncCommand(this.OnSetAsCompassTargetAsync);
             this.DeleteLocationCommand = new AsyncCommand(this.OnDeleteLocationAsync);
             this.AddTourPlanLocationCommand =
                 new Command(
@@ -169,6 +175,15 @@ namespace WhereToFly.App.Core.ViewModels
         private async Task OnZoomToLocationAsync()
         {
             await this.parentViewModel.ZoomToLocation(this.location);
+        }
+
+        /// <summary>
+        /// Called when "set as compass target" context menu item is selected
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task OnSetAsCompassTargetAsync()
+        {
+            await this.parentViewModel.SetAsCompassTarget(this.location);
         }
 
         /// <summary>

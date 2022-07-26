@@ -12,6 +12,7 @@
             <converter:SvgImagePathConverter x:Key="SvgImagePathConverter" />
             <x:String x:Key="ShowDetailsImagePath">info/images/information-outline.svg</x:String>
             <x:String x:Key="ZoomToImagePath">info/images/magnify-plus-outline.svg</x:String>
+            <x:String x:Key="SetAsCompassTargetPath">weblib/images/compass-rose.svg</x:String>
             <x:String x:Key="DeleteImagePath">info/images/delete.svg</x:String>
             <x:String x:Key="AddTourPlanLocationImagePath">weblib/images/map-marker-plus.svg</x:String>
         </ResourceDictionary>
@@ -155,6 +156,9 @@
                                 <MenuItem Text="Zoom to"
                                           Icon="{Binding Source={StaticResource ZoomToImagePath}, Converter={StaticResource SvgImagePathConverter}}"
                                           Command="{Binding ZoomToLocationCommand}" />
+                                <MenuItem Text="Set as compass target"
+                                          Icon="{Binding Source={StaticResource SetAsCompassTargetPath}, Converter={StaticResource SvgImagePathConverter}}"
+                                          Command="{Binding SetAsCompassTargetCommand}" />
                                 <MenuItem Text="Delete" IsDestructive="True"
                                           Icon="{Binding Source={StaticResource DeleteImagePath}, Converter={StaticResource SvgImagePathConverter}}"
                                           Command="{Binding DeleteLocationCommand}" />
