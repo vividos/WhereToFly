@@ -160,6 +160,7 @@ The following icons in the App are from the
 [Material Design Icons](https://materialdesignicons.com/) page:
 
 - ruler - distance.png - Austin Andrews @Templarian
+- compass-rose - Michael Richins @MrGrigri
 - church - church.png - Austin Andrews @Templarian
 - castle - castle.png - Austin Andrews @Templarian
 - bridge - bridge.png - Austin Andrews @Templarian
