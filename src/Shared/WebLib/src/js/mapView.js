@@ -221,6 +221,8 @@ export class MapView {
 
         console.log("#11 other stuff");
 
+        this.initCompassTarget();
+
         this.heightProfileView = null;
 
         // add a dedicated track primitives collection, as we can't call viewer.scene.primitives.removeAll()
@@ -1044,6 +1046,39 @@ export class MapView {
     }
 
     /**
+     * Initializes compass target variables and entity
+     */
+    async initCompassTarget() {
+
+        this.compassTargetLocation = null;
+
+        let pinImage = 'images/map-marker.svg';
+        let pinColor = Cesium.Color.fromCssColorString('#00ffd5');
+        let pinImageDataUrl = await this.getPinImageDataUrl(pinImage, pinColor);
+
+        this.compassTargetEntity = this.viewer.entities.add({
+            name: 'Compass target',
+            position: this.compassTargetLocation,
+            billboard: {
+                show: false,
+                image: pinImageDataUrl,
+                heightReference: Cesium.HeightReference.NONE,
+                verticalOrigin: Cesium.VerticalOrigin.BOTTOM
+            },
+            polyline: {
+                show: false,
+                clampToGround: true,
+                width: 4,
+                material: pinColor,
+                positions: [
+                    Cesium.Cartesian3.ZERO,
+                    Cesium.Cartesian3.ZERO
+                ]
+            }
+        });
+    }
+
+    /**
      * Sets a compass target, to draw a ground polyline from the current location to the target
      * location. The polyline is shown once the "my location" is set using updateMyLocation().
      * @param {object} [options] Options to use for showing compass target.
@@ -1052,15 +1087,66 @@ export class MapView {
      * @param {double} [options.longitude] Longitude of position
      * @param {double} [options.altitude] Altitude of position
      */
-    setCompassTarget(options) {
-        // TODO implement
+    async setCompassTarget(options) {
+
+        MapView.log("setting new compass target: lat=" +
+            options.latitude + ", long=" + options.longitude + ", alt=" + options.altitude);
+
+        this.compassTargetLocation =
+            Cesium.Cartesian3.fromDegrees(options.longitude, options.latitude, options.altitude);
+
+        this.setCompassTargetPositions();
+    }
+
+    /**
+     * Sets compass target entity position values based on the currently set compass target
+     * location and the current "my location" position.
+     */
+    setCompassTargetPositions() {
+
+        let polylinePositions = [null, null];
+
+        if (this.compassTargetLocation !== null) {
+
+            this.compassTargetEntity.show = true;
+
+            this.compassTargetEntity.position = this.compassTargetLocation;
+
+            this.compassTargetEntity.billboard.show =
+                !this.compassTargetOnlyDirection;
+
+            polylinePositions[0] = this.compassTargetLocation;
+        }
+
+        if (this.myLocationMarker !== null &&
+            this.myLocationMarker.show) {
+            polylinePositions[1] =
+                this.myLocationMarker.position.getValue(this.viewer.clock.currentTime);
+        }
+
+        if (polylinePositions[0] !== null &&
+            polylinePositions[1] !== null) {
+
+            this.compassTargetEntity.show = true;
+
+            this.compassTargetEntity.polyline.positions = polylinePositions;
+            this.compassTargetEntity.polyline.show = true;
+        }
+
+        this.updateScene();
     }
 
     /**
      * Clears showing compass target or direction, hiding the ground polyline
      */
     clearCompass() {
-        // TODO implement
+
+        MapView.log("hiding compass target");
+
+        if (this.compassTargetEntity !== null) {
+            this.compassTargetEntity.show = false;
+            this.updateScene();
+        }
     }
 
     /**

@@ -77,6 +77,9 @@
         <button onclick="zoomToLiveTrack()">Zoom to live track</button>
 
         <button onclick="removeLiveTrack()">Remove live track</button>
+
+        <button onclick="setCompassTarget()">Set compass target</button>
+        <button onclick="clearCompass()">Clear compass</button>
     </div>
 
     <div id="messageBand" class="message-band" style="top: 60px"></div>
@@ -345,6 +348,18 @@
 
         window.removeLiveTrack = function () {
             map.removeTrack(liveTrack.id);
+        }
+
+        window.setCompassTarget = function () {
+            map.setCompassTarget({
+                latitude: 47.675028,
+                longitude: 11.86457,
+                altitude: 1649.0,
+            });
+        }
+
+        window.clearCompass = function () {
+            map.clearCompass();
         }
 
     </script>
