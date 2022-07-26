@@ -72,6 +72,11 @@ namespace WhereToFly.App.Core.Models
         public Theme AppTheme { get; set; }
 
         /// <summary>
+        /// The currently set compass target; may be null
+        /// </summary>
+        public CompassTarget CurrentCompassTarget { get; set; }
+
+        /// <summary>
         /// Creates a new default app settings object
         /// </summary>
         public AppSettings()
@@ -106,7 +111,8 @@ namespace WhereToFly.App.Core.Models
             this.LastFlyingRangeParameters,
             this.LastShownSettingsPage,
             this.ShownFlightPlanningDisclaimer,
-            this.AppTheme).GetHashCode();
+            this.AppTheme,
+            this.CurrentCompassTarget).GetHashCode();
 
         /// <summary>
         /// Compares this app settings to another object
@@ -137,7 +143,8 @@ namespace WhereToFly.App.Core.Models
             this.UseMapEntityClustering,
             this.LastShownSettingsPage,
             this.ShownFlightPlanningDisclaimer,
-            this.AppTheme) ==
+            this.AppTheme,
+            this.CurrentCompassTarget) ==
             (other.LastViewingDistance,
             other.ShadingMode,
             other.MapImageryType,
@@ -146,7 +153,8 @@ namespace WhereToFly.App.Core.Models
             other.UseMapEntityClustering,
             other.LastShownSettingsPage,
             other.ShownFlightPlanningDisclaimer,
-            other.AppTheme);
+            other.AppTheme,
+            other.CurrentCompassTarget);
         #endregion
 
         /// <summary>
