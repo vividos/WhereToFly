@@ -446,6 +446,35 @@ namespace WhereToFly.App.MapView
         }
 
         /// <summary>
+        /// Sets a compass target, displaying a line from the current location to the target
+        /// location. The line is shown as soon as the "my location" is known to the map.
+        /// </summary>
+        /// <param name="title">compass target title</param>
+        /// <param name="position">compass target position</param>
+        public void SetCompassTarget(string title, MapPoint position)
+        {
+            var options = new
+            {
+                name = title,
+                latitude = position.Latitude,
+                longitude = position.Longitude,
+                altitude = position.Altitude.GetValueOrDefault(0.0),
+            };
+
+            string js = $"map.setCompassTarget({JsonConvert.SerializeObject(options)});";
+
+            this.RunJavaScript(js);
+        }
+
+        /// <summary>
+        /// Clears compass target or direction, hiding the line from the current location.
+        /// </summary>
+        public void ClearCompass()
+        {
+            this.RunJavaScript("map.clearCompass();");
+        }
+
+        /// <summary>
         /// Returns an HTML color from a position accuracy value.
         /// </summary>
         /// <param name="positionAccuracyInMeter">position accuracy, in meter</param>

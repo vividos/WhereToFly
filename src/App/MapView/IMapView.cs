@@ -57,6 +57,19 @@ namespace WhereToFly.App.MapView
         /// <param name="zoomToLocation">indicates if view should also zoom to the location</param>
         void UpdateMyLocation(MapPoint position, int positionAccuracyInMeter, double speedInKmh, DateTimeOffset timestamp, bool zoomToLocation);
 
+        /// <summary>
+        /// Sets a compass target, displaying a line from the current location to the target
+        /// location. The line is shown as soon as the "my location" is known to the map.
+        /// </summary>
+        /// <param name="title">compass target title</param>
+        /// <param name="position">compass target position</param>
+        void SetCompassTarget(string title, MapPoint position);
+
+        /// <summary>
+        /// Clears compass target or direction, hiding the line from the current location.
+        /// </summary>
+        void ClearCompass();
+
         #region Layer methods
         /// <summary>
         /// Adds layer to map

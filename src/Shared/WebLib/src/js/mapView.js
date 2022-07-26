@@ -1044,6 +1044,26 @@ export class MapView {
     }
 
     /**
+     * Sets a compass target, to draw a ground polyline from the current location to the target
+     * location. The polyline is shown once the "my location" is set using updateMyLocation().
+     * @param {object} [options] Options to use for showing compass target.
+     * @param {double} [options.title] Title of the compass target
+     * @param {double} [options.latitude] Latitude of position
+     * @param {double} [options.longitude] Longitude of position
+     * @param {double} [options.altitude] Altitude of position
+     */
+    setCompassTarget(options) {
+        // TODO implement
+    }
+
+    /**
+     * Clears showing compass target or direction, hiding the ground polyline
+     */
+    clearCompass() {
+        // TODO implement
+    }
+
+    /**
      * Returns the current viewing distance from the camera to the terrain in the
      * center of the scene.
      */
