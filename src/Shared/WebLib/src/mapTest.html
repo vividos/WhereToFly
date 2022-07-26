@@ -48,6 +48,8 @@
 
         <button onclick="showFindResult()">Show find result</button>
 
+        <button onclick="addManyLocations()">Add many locations</button>
+
         <button onclick="addTrack()">Add track</button>
 
         <button onclick="addFlightTrack()">Add flight track</button>
@@ -241,6 +243,29 @@
             };
             map.addLocationList([theLocation]);
             map.zoomToLocation(theLocation);
+        }
+
+        window.nextLocationIndex = 0;
+        window.addManyLocations = function () {
+
+            map.setEntityClustering(false);
+
+            let locationList = [];
+            for (let index = window.nextLocationIndex; index < window.nextLocationIndex + 1000; index++) {
+                locationList.push({
+                    "id": "location-" + index,
+                    "name": "Location " + index,
+                    "description": "Location " + index,
+                    "type": "Summit",
+                    "latitude": 47.6764385 + 0.1 * (Math.random() - 0.5),
+                    "longitude": 11.8710533 + 0.1 * (Math.random() - 0.5),
+                    "elevation": 0.0
+                });
+            }
+
+            map.addLocationList(locationList);
+
+            window.nextLocationIndex += 1000;
         }
 
         window.addLayer = function () {

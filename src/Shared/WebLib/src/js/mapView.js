@@ -54,6 +54,9 @@ export class MapView {
         if (this.options.callback === undefined)
             this.options.callback = Utils.callAction;
 
+        this.pinImageCache = {};
+        this.pinBuilder = new Cesium.PinBuilder();
+
         this.showMessageBand("Initializing map...");
 
         console.log("#1 imagery provider");
@@ -298,8 +301,6 @@ export class MapView {
      */
     async initLocationMarkers() {
         this.myLocationMarker = null;
-
-        this.pinBuilder = new Cesium.PinBuilder();
 
         try {
             let myLocationEntity = await this.createEntity(
@@ -1530,11 +1531,7 @@ export class MapView {
      */
     async createEntity(id, name, description, pinColor, pinImage, longitude, latitude) {
 
-        let url = Cesium.getAbsoluteUri(pinImage, window.location.href);
-
-        let canvas = window.location.protocol === "file:" && !window.location.href.includes("android_asset")
-            ? this.pinBuilder.fromColor(pinColor, 48)
-            : await this.pinBuilder.fromUrl(url, pinColor, 48)
+        let pinImageDataUrl = await this.getPinImageDataUrl(pinImage, pinColor);
 
         try {
             return {
@@ -1543,7 +1540,7 @@ export class MapView {
                 description: description,
                 position: Cesium.Cartesian3.fromDegrees(longitude, latitude),
                 billboard: {
-                    image: canvas.toDataURL(),
+                    image: pinImageDataUrl,
                     verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
                     heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
                     disableDepthTestDistance: 5000.0
@@ -1553,6 +1550,32 @@ export class MapView {
         } catch (error) {
             console.error("MapView.createEntity: error while generating pin from URL " + url + ": " + error);
         }
+    }
+
+    /**
+     * Creates a 'data:' URL containing the pin image and a pin background color
+     * @param {string} pinImage relative pin image filename
+     * @param {Cesium.Color} pinColor pin background color
+     * @returns data: URI
+     */
+    async getPinImageDataUrl(pinImage, pinColor) {
+
+        const cacheKey = pinImage + '|' + pinColor;
+
+        if (cacheKey in this.pinImageCache)
+            return this.pinImageCache[cacheKey];
+
+        let url = Cesium.getAbsoluteUri(pinImage, window.location.href);
+
+        let canvas = window.location.protocol === "file:" && !window.location.href.includes("android_asset")
+            ? this.pinBuilder.fromColor(pinColor, 48)
+            : await this.pinBuilder.fromUrl(url, pinColor, 48);
+
+        const dataUrl = canvas.toDataURL();
+
+        this.pinImageCache[cacheKey] = dataUrl;
+
+        return dataUrl;
     }
 
     /**
@@ -2211,11 +2234,7 @@ export class MapView {
         let pinColor = this.pinColorFromLocationType('LiveWaypoint');
         let pinImage = this.imageUrlFromLocationType('LiveWaypoint');
 
-        let url = Cesium.getAbsoluteUri(pinImage, window.location.href);
-
-        let canvas = window.location.protocol === "file:" && !window.location.href.includes("android_asset")
-            ? this.pinBuilder.fromColor(pinColor, 48)
-            : await this.pinBuilder.fromUrl(url, pinColor, 48);
+        let pinImageDataUrl = await this.getPinImageDataUrl(pinImage, pinColor);
 
         try {
             let sampledPos = new Cesium.SampledPositionProperty();
@@ -2239,7 +2258,7 @@ export class MapView {
                 description: track.description,
                 position: sampledPos,
                 billboard: {
-                    image: canvas.toDataURL(),
+                    image: pinImageDataUrl,
                     heightReference: Cesium.HeightReference.NONE,
                     verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
                     disableDepthTestDistance: 5000.0

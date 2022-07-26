@@ -6,6 +6,8 @@ Released on ?.
 
 ✨ New Features / Improvements
 
+- Improved performance when adding many locations
+
 🐛 Bugfixes
 
 ## Version 1.12.0
