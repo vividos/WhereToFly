@@ -174,6 +174,17 @@ namespace WhereToFly.App.MapView
         public event OnUpdateLastShownLocationCallback UpdateLastShownLocation;
 
         /// <summary>
+        /// Delegate of function to call when user sets a location as the compass target location
+        /// </summary>
+        /// <param name="locationId">location ID of new target location; may be null</param>
+        public delegate void OnSetLocationAsCompassTargetCallback(string locationId);
+
+        /// <summary>
+        /// Event that is signaled when user sets a location as compass target
+        /// </summary>
+        public event OnSetLocationAsCompassTargetCallback SetLocationAsCompassTarget;
+
+        /// <summary>
         /// Gets or sets map imagery type
         /// </summary>
         public MapImageryType MapImageryType
@@ -1052,6 +1063,10 @@ namespace WhereToFly.App.MapView
                 this.OnUpdateLastShownLocation);
 
             callbackHandler.RegisterHandler(
+                "onSetLocationAsCompassTarget",
+                this.OnSetLocationAsCompassTarget);
+
+            callbackHandler.RegisterHandler(
                 "onSampledTrackHeights",
                 this.OnSampledTrackHeights);
 
@@ -1132,6 +1147,17 @@ namespace WhereToFly.App.MapView
 
                 this.UpdateLastShownLocation?.Invoke(updateLastShownLocationPoint, viewingDistance);
             }
+        }
+
+        /// <summary>
+        /// Called when the "onSetLocationAsCompassTarget" callback has been sent from JavaScript.
+        /// </summary>
+        /// <param name="jsonParameters">location ID as JSON string; may be null</param>
+        private void OnSetLocationAsCompassTarget(string jsonParameters)
+        {
+            string locationId = jsonParameters?.Trim('\"');
+
+            this.SetLocationAsCompassTarget?.Invoke(locationId);
         }
 
         /// <summary>

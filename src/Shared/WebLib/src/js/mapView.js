@@ -3057,6 +3057,21 @@ export class MapView {
     }
 
     /**
+     * Called by the marker pin link, in order to show details of the location.
+     * @param {string} locationId Location ID of location to show
+     */
+    onSetLocationAsCompassTarget(locationId) {
+
+        MapView.log("setting location as compass target, with location ID:" + locationId);
+
+        if (locationId === null)
+            this.viewer.selectedEntity = undefined;
+
+        if (this.options.callback !== undefined)
+            this.options.callback('onSetLocationAsCompassTarget', locationId);
+    }
+
+    /**
      * Called by the marker pin link, in order to start navigating to the location.
      * @param {string} locationId Location ID of location to navigate to
      */
