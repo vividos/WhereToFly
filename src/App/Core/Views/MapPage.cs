@@ -266,6 +266,8 @@ namespace WhereToFly.App.Core.Views
             this.mapView.AddTourPlanLocation += async (locationId) => await this.OnMapView_AddTourPlanLocation(locationId);
             this.mapView.UpdateLastShownLocation += async (point, viewingDistance)
                 => await this.OnMapView_UpdateLastShownLocation(point, viewingDistance);
+            this.mapView.SetLocationAsCompassTarget += async (locationId)
+                => await this.OnMapView_SetLocationAsCompassTarget(locationId);
 
             this.Content = this.mapView;
         }
@@ -575,6 +577,37 @@ namespace WhereToFly.App.Core.Views
         private async Task OnMapView_UpdateLastShownLocation(MapPoint point, int viewingDistance)
         {
             await App.UpdateLastShownPositionAsync(point, viewingDistance);
+        }
+
+        /// <summary>
+        /// Called when a location has been set as the compass target.
+        /// </summary>
+        /// <param name="locationId">location ID of new target location; may be null</param>
+        /// <returns>task to wait on</returns>
+        private async Task OnMapView_SetLocationAsCompassTarget(string locationId)
+        {
+            if (string.IsNullOrEmpty(locationId) ||
+                locationId == "null")
+            {
+                await App.SetCompassTarget(null);
+                return;
+            }
+
+            Location location = this.FindLocationById(locationId);
+
+            if (location == null)
+            {
+                Debug.WriteLine("couldn't set location as compass target, with id=" + locationId);
+                return;
+            }
+
+            var compassTarget = new CompassTarget
+            {
+                Title = location.Name,
+                TargetLocation = location.MapLocation,
+            };
+
+            await App.SetCompassTarget(compassTarget);
         }
 
         /// <summary>

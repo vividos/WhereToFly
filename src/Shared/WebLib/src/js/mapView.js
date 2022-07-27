@@ -1202,6 +1202,9 @@ export class MapView {
             let text = '<h2><img height="48em" width="48em" src="images/compass-rose.svg" style="vertical-align:middle" />' +
              'Compass target: ' + options.title +'</h2>';
 
+            text += '<p><img height="32em" width="32em" src="images/close-circle-outline.svg" style="vertical-align:middle" />' +
+                '<a href="javascript:parent.map.onSetLocationAsCompassTarget(null);">Hide</a></p>';
+
             text += '<div>Latitude: ' + options.displayLatitude + '<br/>' +
                 'Longitude: ' + options.displayLongitude + '<br/>' +
                 (options.altitude !== undefined && options.altitude !== 0 ? 'Altitude: ' + options.altitude.toFixed(1) + 'm<br/>' : '') +
@@ -1622,6 +1625,9 @@ export class MapView {
 
         text += '<p><img height="32em" width="32em" src="images/information-outline.svg" style="vertical-align:middle" /> ' +
             '<a href="javascript:parent.map.onShowLocationDetails(\'' + location.id + '\');">Show details</a> ';
+
+        text += '<p><img height="32em" width="32em" src="images/compass-rose.svg" style="vertical-align:middle" /> ' +
+            '<a href="javascript:parent.map.onSetLocationAsCompassTarget(\'' + location.id + '\');">Set as compass target</a> ';
 
         text += '<img height="32em" width="32em" src="images/directions.svg" style="vertical-align:middle" /> ' +
             '<a href="javascript:parent.map.onNavigateToLocation(\'' + location.id + '\');">Navigate here</a></p>';
