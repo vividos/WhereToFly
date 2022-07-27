@@ -330,7 +330,10 @@ namespace WhereToFly.App.Core
             {
                 if (compassTarget.TargetLocation != null)
                 {
-                    MapView.SetCompassTarget(compassTarget.Title, compassTarget.TargetLocation);
+                    MapView.SetCompassTarget(
+                        compassTarget.Title,
+                        compassTarget.TargetLocation,
+                        zoomToPolyline: true);
                 }
             }
         }

@@ -63,7 +63,10 @@ namespace WhereToFly.App.MapView
         /// </summary>
         /// <param name="title">compass target title</param>
         /// <param name="position">compass target position</param>
-        void SetCompassTarget(string title, MapPoint position);
+        /// <param name="zoomToPolyline">
+        /// indicates if compass target polyline should be zoomed to
+        /// </param>
+        void SetCompassTarget(string title, MapPoint position, bool zoomToPolyline);
 
         /// <summary>
         /// Clears compass target or direction, hiding the line from the current location.

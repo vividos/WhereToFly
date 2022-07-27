@@ -1086,6 +1086,8 @@ export class MapView {
      * @param {double} [options.latitude] Latitude of position
      * @param {double} [options.longitude] Longitude of position
      * @param {double} [options.altitude] Altitude of position
+     * @param {boolean} [options.zoomToPolyline] when true, also zooms to the compass target
+     * polyline
      */
     async setCompassTarget(options) {
 
@@ -1096,6 +1098,13 @@ export class MapView {
             Cesium.Cartesian3.fromDegrees(options.longitude, options.latitude, options.altitude);
 
         this.setCompassTargetPositions();
+
+        if (options.zoomToPolyline &&
+            this.myLocationMarker !== null &&
+            this.myLocationMarker.show &&
+            this.compassTargetEntity !== null &&
+            this.compassTargetEntity.show)
+            await this.zoomToCompassTarget();
     }
 
     /**
@@ -1134,6 +1143,38 @@ export class MapView {
         }
 
         this.updateScene();
+    }
+
+    /**
+     * Zooms to the compass target entity
+     */
+    async zoomToCompassTarget() {
+
+        MapView.log("flying to compass target");
+
+        let boundingSphere = Cesium.BoundingSphere.fromPoints(
+            this.compassTargetEntity.polyline.positions.getValue(
+                this.viewer.clock.currentTime));
+
+        let that = this;
+        this.viewer.camera.flyToBoundingSphere(boundingSphere, {
+            offset: new Cesium.HeadingPitchRange(
+                this.viewer.camera.heading,
+                this.viewer.camera.pitch,
+                0.0),
+            complete: function () {
+                MapView.log("flying to compass target finished");
+
+                let center = Cesium.Cartographic.fromCartesian(boundingSphere.center);
+
+                that.onUpdateLastShownLocation({
+                    latitude: Cesium.Math.toDegrees(center.latitude),
+                    longitude: Cesium.Math.toDegrees(center.longitude),
+                    altitude: center.height,
+                    viewingDistance: that.getCurrentViewingDistance()
+                });
+            }
+        });
     }
 
     /**

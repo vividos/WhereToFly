@@ -451,7 +451,10 @@ namespace WhereToFly.App.MapView
         /// </summary>
         /// <param name="title">compass target title</param>
         /// <param name="position">compass target position</param>
-        public void SetCompassTarget(string title, MapPoint position)
+        /// <param name="zoomToPolyline">
+        /// indicates if compass target polyline should be zoomed to
+        /// </param>
+        public void SetCompassTarget(string title, MapPoint position, bool zoomToPolyline)
         {
             var options = new
             {
@@ -459,6 +462,7 @@ namespace WhereToFly.App.MapView
                 latitude = position.Latitude,
                 longitude = position.Longitude,
                 altitude = position.Altitude.GetValueOrDefault(0.0),
+                zoomToPolyline,
             };
 
             string js = $"map.setCompassTarget({JsonConvert.SerializeObject(options)});";
