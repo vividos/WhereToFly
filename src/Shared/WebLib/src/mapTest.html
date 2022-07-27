@@ -80,6 +80,7 @@
 
         <button onclick="setCompassTarget()">Set compass target</button>
         <button onclick="clearCompass()">Clear compass</button>
+        <button onclick="changeMyPosition()">Change my position</button>
     </div>
 
     <div id="messageBand" class="message-band" style="top: 60px"></div>
@@ -361,6 +362,17 @@
 
         window.clearCompass = function () {
             map.clearCompass();
+        }
+
+        window.changeMyPosition = function () {
+            map.updateMyLocation({
+                latitude: 47.66787,
+                longitude: 11.85125,
+                altitude: 1364.0,
+                zoomToLocation: false
+            });
+
+            window.setCompassTarget();
         }
 
     </script>

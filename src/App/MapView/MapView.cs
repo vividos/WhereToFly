@@ -70,6 +70,21 @@ namespace WhereToFly.App.MapView
         private bool useEntityClustering = true;
 
         /// <summary>
+        /// Last set "my location" position
+        /// </summary>
+        private MapPoint lastMyLocation;
+
+        /// <summary>
+        /// Last used compass target title
+        /// </summary>
+        private string lastCompassTargetTitle;
+
+        /// <summary>
+        /// Last used compass target location
+        /// </summary>
+        private MapPoint lastCompassTargetLocation;
+
+        /// <summary>
         /// Indicates if map control is already initialized
         /// </summary>
         private bool IsInitialized => this.taskCompletionSourceMapInitialized.Task.IsCompleted;
@@ -417,6 +432,8 @@ namespace WhereToFly.App.MapView
             DateTimeOffset timestamp,
             bool zoomToLocation)
         {
+            this.lastMyLocation = position;
+
             if (!this.IsInitialized)
             {
                 return;
@@ -443,6 +460,15 @@ namespace WhereToFly.App.MapView
                 JsonConvert.SerializeObject(options));
 
             this.RunJavaScript(js);
+
+            // also update compass target, if previously set
+            if (this.lastCompassTargetLocation != null)
+            {
+                this.SetCompassTarget(
+                    this.lastCompassTargetTitle,
+                    this.lastCompassTargetLocation,
+                    zoomToPolyline: false);
+            }
         }
 
         /// <summary>
@@ -456,6 +482,9 @@ namespace WhereToFly.App.MapView
         /// </param>
         public void SetCompassTarget(string title, MapPoint position, bool zoomToPolyline)
         {
+            this.lastCompassTargetTitle = title;
+            this.lastCompassTargetLocation = position;
+
             var options = new
             {
                 name = title,
@@ -475,6 +504,9 @@ namespace WhereToFly.App.MapView
         /// </summary>
         public void ClearCompass()
         {
+            this.lastCompassTargetTitle = null;
+            this.lastCompassTargetLocation = null;
+
             this.RunJavaScript("map.clearCompass();");
         }
 
