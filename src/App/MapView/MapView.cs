@@ -485,12 +485,36 @@ namespace WhereToFly.App.MapView
             this.lastCompassTargetTitle = title;
             this.lastCompassTargetLocation = position;
 
+            double? distanceInKm = null;
+            double? heightDifferenceInMeter = null;
+            double? directionAngle = null;
+
+            if (this.lastMyLocation != null)
+            {
+                distanceInKm = this.lastMyLocation.DistanceTo(this.lastCompassTargetLocation) / 1000.0;
+
+                if (this.lastMyLocation.Altitude.HasValue &&
+                    this.lastCompassTargetLocation.Altitude.HasValue)
+                {
+                    heightDifferenceInMeter =
+                        this.lastCompassTargetLocation.Altitude.Value -
+                        this.lastMyLocation.Altitude.Value;
+                }
+
+                directionAngle = this.lastMyLocation.CourseTo(this.lastCompassTargetLocation);
+            }
+
             var options = new
             {
-                name = title,
+                title,
                 latitude = position.Latitude,
                 longitude = position.Longitude,
                 altitude = position.Altitude.GetValueOrDefault(0.0),
+                displayLatitude = GeoDataFormatter.FormatLatLong(position.Latitude, this.CoordinateDisplayFormat),
+                displayLongitude = GeoDataFormatter.FormatLatLong(position.Longitude, this.CoordinateDisplayFormat),
+                distanceInKm,
+                heightDifferenceInMeter,
+                directionAngle,
                 zoomToPolyline,
             };
 

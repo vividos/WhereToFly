@@ -1086,6 +1086,11 @@ export class MapView {
      * @param {double} [options.latitude] Latitude of position
      * @param {double} [options.longitude] Longitude of position
      * @param {double} [options.altitude] Altitude of position
+     * @param {double} [options.displayLatitude] Display text of latitude
+     * @param {double} [options.displayLongitude] Display text of longitude
+     * @param {double} [options.distanceInKm] Distance to target, in km
+     * @param {double} [options.heightDifferenceInMeter] Altitude difference, in meter
+     * @param {double} [options.directionAngle] Direction angle, in degrees
      * @param {boolean} [options.zoomToPolyline] when true, also zooms to the compass target
      * polyline
      */
@@ -1098,6 +1103,7 @@ export class MapView {
             Cesium.Cartesian3.fromDegrees(options.longitude, options.latitude, options.altitude);
 
         this.setCompassTargetPositions();
+        this.updateCompassTargetDescription(options);
 
         if (options.zoomToPolyline &&
             this.myLocationMarker !== null &&
@@ -1175,6 +1181,37 @@ export class MapView {
                 });
             }
         });
+    }
+
+    /** Updates description of compass target entity based on the currently set compass target
+     * location and the current "my location" position.
+     * @param {object} [options] Options to use for updating compass target description.
+     * @param {double} [options.title] Title of the compass target
+     * @param {double} [options.latitude] Latitude of position
+     * @param {double} [options.longitude] Longitude of position
+     * @param {double} [options.altitude] Altitude of position
+     * @param {double} [options.displayLatitude] Display text of latitude
+     * @param {double} [options.displayLongitude] Display text of longitude
+     * @param {double} [options.distanceInKm] Distance to target, in km
+     * @param {double} [options.heightDifferenceInMeter] Altitude difference, in meter
+     * @param {double} [options.directionAngle] Direction angle, in degrees
+     */
+    updateCompassTargetDescription(options) {
+
+        if (options !== null) {
+            let text = '<h2><img height="48em" width="48em" src="images/compass-rose.svg" style="vertical-align:middle" />' +
+             'Compass target: ' + options.title +'</h2>';
+
+            text += '<div>Latitude: ' + options.displayLatitude + '<br/>' +
+                'Longitude: ' + options.displayLongitude + '<br/>' +
+                (options.altitude !== undefined && options.altitude !== 0 ? 'Altitude: ' + options.altitude.toFixed(1) + 'm<br/>' : '') +
+                (options.distanceInKm !== null ? 'Distance: ' + options.distanceInKm.toFixed(1) + ' km<br/>' : '') +
+                (options.heightDifferenceInMeter !== null ? 'Height difference: ' + options.heightDifferenceInMeter.toFixed(0) + ' m<br/>' : '') +
+                (options.directionAngle !== null ? 'Direction: ' + options.directionAngle.toFixed(0) + '&deg;<br/>' : '') +
+                '</div>';
+
+            this.compassTargetEntity.description = text;
+        }
     }
 
     /**
