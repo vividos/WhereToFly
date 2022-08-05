@@ -7,6 +7,7 @@ Released on ?.
 ✨ New Features / Improvements
 
 - Improved performance when adding many locations
+- using CesiumJS version 1.96
 
 🐛 Bugfixes
 
