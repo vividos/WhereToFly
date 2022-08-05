@@ -12,4 +12,4 @@ The Where-to-fly GitHub project can be found here:
 
 Current version: %VERSION%
 
-Image: Hochries takeoff and Chiemsee lake, Bavaria, Germany.
+Image: Abisko National Park and Lapporten valley, Lapland, Sweden.
