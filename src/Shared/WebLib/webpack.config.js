@@ -14,8 +14,8 @@ module.exports = merge(common, {
     },
     performance: {
         hints: 'warning',
-        maxAssetSize: 17900000,
-        maxEntrypointSize: 17900000,
+        maxAssetSize: 18200000,
+        maxEntrypointSize: 18200000,
     },
     plugins: [
         new HtmlWebpackPlugin({
