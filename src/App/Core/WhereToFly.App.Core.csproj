@@ -34,6 +34,9 @@
     <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="App.xaml.cs">
       <DependentUpon>*.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\SetCompassTargetDirectionPopupPage.xaml.cs">
+      <DependentUpon>SetCompassTargetDirectionPopupPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\ContextMenuPopupPage.xaml.cs">
       <DependentUpon>ContextMenuPopupPage.xaml</DependentUpon>
     </Compile>

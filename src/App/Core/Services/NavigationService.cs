@@ -51,6 +51,7 @@ namespace WhereToFly.App.Core.Services
             {
                 { PopupPageKey.AddLayerPopupPage, (typeof(AddLayerPopupPage), null) },
                 { PopupPageKey.SelectWeatherIconPopupPage, (typeof(SelectWeatherIconPopupPage), typeof(string)) },
+                { PopupPageKey.SetCompassTargetDirectionPopupPage, (typeof(SetCompassTargetDirectionPopupPage), null) },
             };
 
         /// <summary>

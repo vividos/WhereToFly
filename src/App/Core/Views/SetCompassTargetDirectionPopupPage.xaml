@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:BasePopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                     xmlns:views="clr-namespace:WhereToFly.App.Core.Views"
+                     xmlns:system="clr-namespace:System;assembly=System.Core"
+                     x:Class="WhereToFly.App.Core.Views.SetCompassTargetDirectionPopupPage"
+                     x:TypeArguments="system:Tuple(system:Int32)">
+
+    <!-- popup content -->
+    <StackLayout
+        VerticalOptions="CenterAndExpand"
+        HorizontalOptions="Center"
+        WidthRequest="320"
+        BackgroundColor="{DynamicResource PageBackgroundColor}"
+        Padding="20">
+
+        <!-- caption -->
+        <Label Text="Set compass direction" FontSize="Large" />
+
+        <!-- Entry for compass direction -->
+        <Label Text="{Binding Path=CompassDirection, Mode=OneWay, StringFormat='Direction: {0}°'}"
+               FontSize="Medium" />
+        <Slider Minimum="0"
+                Maximum="360"
+                Value="{Binding Path=CompassDirection, Mode=TwoWay}" />
+
+        <!-- Button to set compass direction -->
+        <Button Text="Set direction"
+                Clicked="OnClickedSetDirectionButton"
+                AutomationId="SetDirectionButton" />
+    </StackLayout>
+
+</views:BasePopupPage>

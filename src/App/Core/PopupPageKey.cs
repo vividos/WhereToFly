@@ -17,5 +17,11 @@
         /// WeatherIconDescription object as result.
         /// </summary>
         SelectWeatherIconPopupPage,
+
+        /// <summary>
+        /// Popup page key to show a popup to set the compass target direction. The page returns
+        /// a Tuple of a single int with the direction, or null when the popup was dismissed.
+        /// </summary>
+        SetCompassTargetDirectionPopupPage,
     }
 }
