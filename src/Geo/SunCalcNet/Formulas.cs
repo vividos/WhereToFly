@@ -119,7 +119,7 @@ namespace WhereToFly.Geo.SunCalcNet
         /// <param name="H">hour angle, in radians</param>
         /// <param name="phi">north latitude of the observer, in radians</param>
         /// <param name="dec">declination of the sky object</param>
-        /// <returns>azimuth angle</returns>
+        /// <returns>azimuth angle, in radians</returns>
         public static double Azimuth(double H, double phi, double dec)
         {
             return Math.Atan2(Math.Sin(H), (Math.Cos(H) * Math.Sin(phi)) - (Math.Tan(dec) * Math.Cos(phi)));
@@ -131,7 +131,7 @@ namespace WhereToFly.Geo.SunCalcNet
         /// <param name="H">hour angle, in radians</param>
         /// <param name="phi">north latitude of the observer, in radians</param>
         /// <param name="dec">declination of the sky object</param>
-        /// <returns>altitude angle</returns>
+        /// <returns>altitude angle, in radians</returns>
         public static double Altitude(double H, double phi, double dec)
         {
             return Math.Asin((Math.Sin(phi) * Math.Sin(dec)) + (Math.Cos(phi) * Math.Cos(dec) * Math.Cos(H)));
