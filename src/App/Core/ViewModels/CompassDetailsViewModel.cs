@@ -123,6 +123,12 @@ namespace WhereToFly.App.Core.ViewModels
             this.appSettings?.CurrentCompassTarget?.TargetDirection;
 
         /// <summary>
+        /// Set compass target direction, as text
+        /// </summary>
+        public string TargetDirectionText =>
+            this.appSettings?.CurrentCompassTarget?.TargetDirection?.ToString() ?? "N/A";
+
+        /// <summary>
         /// Sunrise direction, in deegrees; may be null
         /// </summary>
         public int? SunriseDirectionInDegrees { get; set; }

@@ -53,7 +53,7 @@
                              Padding="4"
                              BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
                     <Label Text="Direction [°]" />
-                    <Label Text="{Binding DirectionInDegrees, Mode=OneWay}" FontSize="32" />
+                    <Label Text="{Binding TargetDirectionText, Mode=OneWay}" FontSize="32" />
                 </StackLayout>
 
                 <!-- Distance -->
