@@ -17,7 +17,7 @@
                 Wrap="Wrap">
 
                 <!-- Latitude / Longitude -->
-                <Grid WidthRequest="300" HeightRequest="100"
+                <Grid WidthRequest="348" HeightRequest="100"
                       Margin="16,16,0,0"
                       Padding="4"
                       BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
