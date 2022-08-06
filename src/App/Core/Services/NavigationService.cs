@@ -29,7 +29,7 @@ namespace WhereToFly.App.Core.Services
                 { PageKey.MapPage, (typeof(MapPage), null) },
                 { PageKey.LayerListPage, (typeof(LayerListPage), null) },
                 { PageKey.LayerDetailsPage, (typeof(LayerDetailsPage), typeof(Layer)) },
-                { PageKey.CurrentPositionDetailsPage, (typeof(CurrentPositionDetailsPage), null) },
+                { PageKey.CurrentPositionDetailsPage, (typeof(CurrentPositionTabbedPage), null) },
                 { PageKey.LocationListPage, (typeof(LocationListPage), null) },
                 { PageKey.LocationDetailsPage, (typeof(LocationDetailsPage), typeof(Geo.Model.Location)) },
                 { PageKey.EditLocationDetailsPage, (typeof(EditLocationDetailsPage), typeof(Geo.Model.Location)) },

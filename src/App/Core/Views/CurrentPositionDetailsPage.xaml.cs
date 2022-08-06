@@ -27,8 +27,6 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         public CurrentPositionDetailsPage()
         {
-            this.Title = "Current position";
-
             this.InitializeComponent();
 
             this.geolocationService = DependencyService.Get<IGeolocationService>();
