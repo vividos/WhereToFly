@@ -85,6 +85,11 @@ namespace WhereToFly.App.MapView
         private MapPoint lastCompassTargetLocation;
 
         /// <summary>
+        /// Last used compass target direction
+        /// </summary>
+        private int? lastCompassTargetDirection;
+
+        /// <summary>
         /// Indicates if map control is already initialized
         /// </summary>
         private bool IsInitialized => this.taskCompletionSourceMapInitialized.Task.IsCompleted;
@@ -480,6 +485,12 @@ namespace WhereToFly.App.MapView
                     this.lastCompassTargetLocation,
                     zoomToPolyline: false);
             }
+            else if (this.lastCompassTargetDirection != null)
+            {
+                this.SetCompassDirection(
+                    this.lastCompassTargetTitle,
+                    this.lastCompassTargetDirection.Value);
+            }
         }
 
         /// <summary>
@@ -495,6 +506,7 @@ namespace WhereToFly.App.MapView
         {
             this.lastCompassTargetTitle = title;
             this.lastCompassTargetLocation = position;
+            this.lastCompassTargetDirection = null;
 
             double? distanceInKm = null;
             double? heightDifferenceInMeter = null;
@@ -527,6 +539,49 @@ namespace WhereToFly.App.MapView
                 heightDifferenceInMeter,
                 directionAngle,
                 zoomToPolyline,
+                hideTargetLocation = false,
+            };
+
+            string js = $"map.setCompassTarget({JsonConvert.SerializeObject(options)});";
+
+            this.RunJavaScript(js);
+        }
+
+        /// <summary>
+        /// Sets a compass direction, displaying a line from the current location in a specific
+        /// direction. The line is shown as soon as the "my location" is known to the map.
+        /// </summary>
+        /// <param name="title">compass target title</param>
+        /// <param name="directionAngleInDegrees">direction angle, in degrees</param>
+        public void SetCompassDirection(string title, int directionAngleInDegrees)
+        {
+            this.lastCompassTargetTitle = title;
+            this.lastCompassTargetLocation = null;
+            this.lastCompassTargetDirection = directionAngleInDegrees;
+
+            if (this.lastMyLocation == null)
+            {
+                return;
+            }
+
+            var position = this.lastMyLocation.PolarOffset(
+                50.0 * 1000.0,
+                directionAngleInDegrees,
+                0.0);
+
+            double? distanceInKm = null;
+            double? heightDifferenceInMeter = null;
+
+            var options = new
+            {
+                title,
+                latitude = position.Latitude,
+                longitude = position.Longitude,
+                distanceInKm,
+                heightDifferenceInMeter,
+                directionAngle = directionAngleInDegrees,
+                zoomToPolyline = false,
+                hideTargetLocation = false,
             };
 
             string js = $"map.setCompassTarget({JsonConvert.SerializeObject(options)});";
@@ -541,6 +596,7 @@ namespace WhereToFly.App.MapView
         {
             this.lastCompassTargetTitle = null;
             this.lastCompassTargetLocation = null;
+            this.lastCompassTargetDirection = null;
 
             this.RunJavaScript("map.clearCompass();");
         }

@@ -69,6 +69,14 @@ namespace WhereToFly.App.MapView
         void SetCompassTarget(string title, MapPoint position, bool zoomToPolyline);
 
         /// <summary>
+        /// Sets a compass direction, displaying a line from the current location in a specific
+        /// direction. The line is shown as soon as the "my location" is known to the map.
+        /// </summary>
+        /// <param name="title">compass target title</param>
+        /// <param name="directionAngleInDegrees">direction angle, in degrees</param>
+        void SetCompassDirection(string title, int directionAngleInDegrees);
+
+        /// <summary>
         /// Clears compass target or direction, hiding the line from the current location.
         /// </summary>
         void ClearCompass();

@@ -1051,6 +1051,7 @@ export class MapView {
     async initCompassTarget() {
 
         this.compassTargetLocation = null;
+        this.compassTargetHideTargetLocation = false;
 
         let pinImage = 'images/map-marker.svg';
         let pinColor = Cesium.Color.fromCssColorString('#00ffd5');
@@ -1086,12 +1087,13 @@ export class MapView {
      * @param {double} [options.latitude] Latitude of position
      * @param {double} [options.longitude] Longitude of position
      * @param {double} [options.altitude] Altitude of position
-     * @param {double} [options.displayLatitude] Display text of latitude
-     * @param {double} [options.displayLongitude] Display text of longitude
+     * @param {string} [options.displayLatitude] Display text of latitude
+     * @param {string} [options.displayLongitude] Display text of longitude
      * @param {double} [options.distanceInKm] Distance to target, in km
      * @param {double} [options.heightDifferenceInMeter] Altitude difference, in meter
      * @param {double} [options.directionAngle] Direction angle, in degrees
      * @param {boolean} [options.zoomToPolyline] when true, also zooms to the compass target
+     * @param {boolean} [options.hideTargetLocation] when true, the target location is not shown
      * polyline
      */
     async setCompassTarget(options) {
@@ -1099,6 +1101,7 @@ export class MapView {
         MapView.log("setting new compass target: lat=" +
             options.latitude + ", long=" + options.longitude + ", alt=" + options.altitude);
 
+        this.compassTargetHideTargetLocation = options.hideTargetLocation;
         this.compassTargetLocation =
             Cesium.Cartesian3.fromDegrees(options.longitude, options.latitude, options.altitude);
 
@@ -1128,7 +1131,7 @@ export class MapView {
             this.compassTargetEntity.position = this.compassTargetLocation;
 
             this.compassTargetEntity.billboard.show =
-                !this.compassTargetOnlyDirection;
+                !this.compassTargetHideTargetLocation;
 
             polylinePositions[0] = this.compassTargetLocation;
         }
@@ -1190,8 +1193,8 @@ export class MapView {
      * @param {double} [options.latitude] Latitude of position
      * @param {double} [options.longitude] Longitude of position
      * @param {double} [options.altitude] Altitude of position
-     * @param {double} [options.displayLatitude] Display text of latitude
-     * @param {double} [options.displayLongitude] Display text of longitude
+     * @param {string} [options.displayLatitude] Display text of latitude
+     * @param {string} [options.displayLongitude] Display text of longitude
      * @param {double} [options.distanceInKm] Distance to target, in km
      * @param {double} [options.heightDifferenceInMeter] Altitude difference, in meter
      * @param {double} [options.directionAngle] Direction angle, in degrees
@@ -1200,14 +1203,19 @@ export class MapView {
 
         if (options !== null) {
             let text = '<h2><img height="48em" width="48em" src="images/compass-rose.svg" style="vertical-align:middle" />' +
-             'Compass target: ' + options.title +'</h2>';
+                'Compass target: ' + options.title + '</h2>';
 
             text += '<p><img height="32em" width="32em" src="images/close-circle-outline.svg" style="vertical-align:middle" />' +
                 '<a href="javascript:parent.map.onSetLocationAsCompassTarget(null);">Hide</a></p>';
 
-            text += '<div>Latitude: ' + options.displayLatitude + '<br/>' +
-                'Longitude: ' + options.displayLongitude + '<br/>' +
-                (options.altitude !== undefined && options.altitude !== 0 ? 'Altitude: ' + options.altitude.toFixed(1) + 'm<br/>' : '') +
+            if ("displayLatitude" in options &&
+                "displayLongitude" in options) {
+                text += '<div>Latitude: ' + options.displayLatitude + '<br/>' +
+                    'Longitude: ' + options.displayLongitude + '<br/>';
+            }
+
+            text +=
+                (options.altitude !== null && options.altitude !== 0 ? 'Altitude: ' + options.altitude.toFixed(1) + 'm<br/>' : '') +
                 (options.distanceInKm !== null ? 'Distance: ' + options.distanceInKm.toFixed(1) + ' km<br/>' : '') +
                 (options.heightDifferenceInMeter !== null ? 'Height difference: ' + options.heightDifferenceInMeter.toFixed(0) + ' m<br/>' : '') +
                 (options.directionAngle !== null ? 'Direction: ' + options.directionAngle.toFixed(0) + '&deg;<br/>' : '') +

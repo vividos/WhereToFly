@@ -79,6 +79,7 @@
         <button onclick="removeLiveTrack()">Remove live track</button>
 
         <button onclick="setCompassTarget()">Set compass target</button>
+        <button onclick="setCompassDirection()">Set compass direction</button>
         <button onclick="clearCompass()">Clear compass</button>
         <button onclick="changeMyPosition()">Change my position</button>
     </div>
@@ -362,7 +363,21 @@
                 distanceInKm: 0.652,
                 heightDifferenceInMeter: 345,
                 directionAngle: 67,
-                zoomToPolyline: true
+                zoomToPolyline: true,
+                hideTargetLocation: false
+            });
+        }
+
+        window.setCompassDirection = function () {
+            map.setCompassTarget({
+                title: "Fixed direction 240°",
+                latitude: 47.5772,
+                longitude: 12.6537,
+                directionAngle: 240,
+                distanceInKm: null,
+                heightDifferenceInMeter: null,
+                zoomToPolyline: false,
+                hideTargetLocation: true
             });
         }
 

@@ -335,6 +335,16 @@ namespace WhereToFly.App.Core
                         compassTarget.TargetLocation,
                         zoomToPolyline: true);
                 }
+                else
+                {
+                    Debug.Assert(
+                        compassTarget.TargetDirection.HasValue,
+                        "either target location or target direction must be set");
+
+                    MapView.SetCompassDirection(
+                        compassTarget.Title,
+                        compassTarget.TargetDirection ?? 0);
+                }
             }
         }
 
