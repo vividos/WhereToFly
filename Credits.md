@@ -119,6 +119,7 @@ The following icons are from the Google Material icon set:
 
 - autorenew
 - bus
+- close
 - close-circle-outline
 - compass
 - crosshairs-gps

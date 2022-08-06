@@ -123,6 +123,7 @@
     <Content Include="Assets\images\border_none_variant.png" />
     <Content Include="Assets\images\calendar_clock.png" />
     <Content Include="Assets\images\camera.png" />
+    <Content Include="Assets\images\close.png" />
     <Content Include="Assets\images\compass_rose.png" />
     <Content Include="Assets\images\crosshairs_gps.png" />
     <Content Include="Assets\images\delete.png" />
