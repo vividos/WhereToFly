@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using WhereToFly.App.Core.Models;
+using WhereToFly.App.Core.Services;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using WhereToFly.Geo.SunCalcNet;
+using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Essentials;
 
 namespace WhereToFly.App.Core.ViewModels
@@ -137,6 +140,16 @@ namespace WhereToFly.App.Core.ViewModels
         /// Sunset direction, in deegrees; may be null
         /// </summary>
         public int? SunsetDirectionInDegrees { get; set; }
+
+        /// <summary>
+        /// Command to execute when the user clicks on the "set target direction" toolbar icon
+        /// </summary>
+        public ICommand SetTargetDirectionCommand { get; set; }
+
+        /// <summary>
+        /// Command to execute when the user clicks on the "clear compass target" toolbar icon
+        /// </summary>
+        public ICommand ClearCompassTargetCommand { get; set; }
         #endregion
 
         /// <summary>
@@ -146,6 +159,54 @@ namespace WhereToFly.App.Core.ViewModels
         public CompassDetailsViewModel(AppSettings appSettings)
         {
             this.appSettings = appSettings;
+
+            this.SetTargetDirectionCommand = new AsyncCommand(this.SetTargetDirection);
+            this.ClearCompassTargetCommand = new AsyncCommand(this.ClearCompassTarget);
+        }
+
+        /// <summary>
+        /// Called when the user clicked on the "set target direction" toolbar icon
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task SetTargetDirection()
+        {
+            int initialDirection = this.TargetDirectionInDegrees ?? this.HeadingInDegrees;
+
+            int? direction =
+                (await NavigationService.Instance.NavigateToPopupPageAsync<Tuple<int>>(
+                    PopupPageKey.SetCompassTargetDirectionPopupPage,
+                    true,
+                    initialDirection))?.Item1;
+
+            if (direction == null)
+            {
+                return;
+            }
+
+            var compassTarget = new CompassTarget
+            {
+                Title = $"Fixed direction {direction.Value}°",
+                TargetDirection = direction,
+            };
+
+            await App.SetCompassTarget(compassTarget);
+
+            this.OnPropertyChanged(nameof(this.IsDirectionAvail));
+            this.OnPropertyChanged(nameof(this.TargetDirectionInDegrees));
+            this.OnPropertyChanged(nameof(this.TargetDirectionText));
+        }
+
+        /// <summary>
+        /// Called when the user clicked on the "clear compass target" toolbar icon
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task ClearCompassTarget()
+        {
+            await App.SetCompassTarget(null);
+
+            this.OnPropertyChanged(nameof(this.IsDirectionAvail));
+            this.OnPropertyChanged(nameof(this.TargetDirectionInDegrees));
+            this.OnPropertyChanged(nameof(this.TargetDirectionText));
         }
 
         /// <summary>
