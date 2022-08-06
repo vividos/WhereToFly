@@ -114,19 +114,19 @@ namespace WhereToFly.App.Core.ViewModels
         /// Indicates if direction value is available
         /// </summary>
         public bool IsDirectionAvail =>
-            this.appSettings?.CurrentCompassTarget?.TargetDirection.HasValue ?? false;
+            this.CalculateTargetDirection().HasValue;
 
         /// <summary>
         /// Set compass target direction in degrees
         /// </summary>
         public int? TargetDirectionInDegrees =>
-            this.appSettings?.CurrentCompassTarget?.TargetDirection;
+            this.CalculateTargetDirection();
 
         /// <summary>
         /// Set compass target direction, as text
         /// </summary>
         public string TargetDirectionText =>
-            this.appSettings?.CurrentCompassTarget?.TargetDirection?.ToString() ?? "N/A";
+            this.CalculateTargetDirection()?.ToString() ?? "N/A";
 
         /// <summary>
         /// Sunrise direction, in deegrees; may be null
@@ -149,6 +149,36 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
+        /// Calculates the target direction, if available
+        /// </summary>
+        /// <returns>target direction angle, in degrees, or null when not set</returns>
+        private int? CalculateTargetDirection()
+        {
+            CompassTarget compassTarget = this.appSettings?.CurrentCompassTarget;
+            if (compassTarget == null)
+            {
+                return null;
+            }
+
+            // target location was set?
+            if (compassTarget.TargetLocation != null &&
+                compassTarget.TargetLocation.Valid &&
+                this.position != null)
+            {
+                var point = new MapPoint(
+                    this.position.Latitude,
+                    this.position.Longitude,
+                    this.position.Altitude);
+
+                double courseAngleInDegrees = point.CourseTo(compassTarget.TargetLocation);
+                return (int)(courseAngleInDegrees + 0.5);
+            }
+
+            // might be a target direction
+            return compassTarget.TargetDirection;
+        }
+
+        /// <summary>
         /// Called when position has changed
         /// </summary>
         /// <param name="sender">sender object</param>
@@ -163,6 +193,7 @@ namespace WhereToFly.App.Core.ViewModels
             this.OnPropertyChanged(nameof(this.HeadingInDegrees));
             this.OnPropertyChanged(nameof(this.IsDirectionAvail));
             this.OnPropertyChanged(nameof(this.TargetDirectionInDegrees));
+            this.OnPropertyChanged(nameof(this.TargetDirectionText));
 
             this.UpdateSunAngles();
 

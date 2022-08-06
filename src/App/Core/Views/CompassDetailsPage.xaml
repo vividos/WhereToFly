@@ -51,6 +51,7 @@
                              Orientation="Vertical"
                              Margin="16,16,0,0"
                              Padding="4"
+                             IsVisible="{Binding IsDirectionAvail, Mode=OneWay}"
                              BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
                     <Label Text="Direction [°]" />
                     <Label Text="{Binding TargetDirectionText, Mode=OneWay}" FontSize="32" />
