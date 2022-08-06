@@ -218,7 +218,7 @@ namespace WhereToFly.Geo.DataFormats
 
             do
             {
-                var point = center.PolarOffset(arcSegment.Radius, -bearing, height);
+                var point = center.PolarOffset(arcSegment.Radius, bearing, height);
                 positions.Add(point.Latitude, point.Longitude, height);
 
                 bearing += step;
@@ -231,7 +231,7 @@ namespace WhereToFly.Geo.DataFormats
             // add end point when the step angle didn't hit the end angle directly
             if (Math.Abs(bearing - arcSegment.EndAngle) > 1e-6)
             {
-                var point = center.PolarOffset(arcSegment.Radius, -arcSegment.EndAngle, height);
+                var point = center.PolarOffset(arcSegment.Radius, arcSegment.EndAngle, height);
                 positions.Add(point.Latitude, point.Longitude, height);
             }
         }

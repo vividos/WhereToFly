@@ -88,7 +88,7 @@ namespace WhereToFly.Geo
 
             return me.PolarOffset(
                 distanceInMeter,
-                Math.Atan2(northDistanceInMeter, eastDistanceInMeter).ToDegrees(),
+                -Math.Atan2(northDistanceInMeter, eastDistanceInMeter).ToDegrees(),
                 heightDistanceInMeters);
         }
 
@@ -105,12 +105,16 @@ namespace WhereToFly.Geo
         /// </param>
         /// <param name="heightDistanceInMeters">height distance, in meters</param>
         /// <returns>new point</returns>
-        public static MapPoint PolarOffset(this MapPoint me, double distanceInMeter, double bearingInDegrees, double heightDistanceInMeters)
+        public static MapPoint PolarOffset(
+            this MapPoint me,
+            double distanceInMeter,
+            double bearingInDegrees,
+            double heightDistanceInMeters)
         {
             double lat1 = me.Latitude.ToRadians();
             double long1 = me.Longitude.ToRadians();
             double angularDistanceRadians = distanceInMeter / Constants.EarthRadiusInMeter;
-            double trueCourseRadians = bearingInDegrees.ToRadians();
+            double trueCourseRadians = -bearingInDegrees.ToRadians();
 
             double newLat = Math.Asin(
                 (Math.Sin(lat1) * Math.Cos(angularDistanceRadians)) +
