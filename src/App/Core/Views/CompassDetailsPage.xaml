@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WhereToFly.App.Core.Views.CompassDetailsPage"
+             xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
+             BackgroundColor="{DynamicResource PageBackgroundColor}"
+             Title="Compass">
+    <ContentPage.Content>
+
+        <ScrollView Orientation="Vertical">
+
+            <!-- Flex layout with all compass details -->
+            <FlexLayout Direction="Row"
+                        AlignItems="Start"
+                        AlignContent="Start"
+                        JustifyContent="Start"
+                        Wrap="Wrap">
+
+                <!-- Compass -->
+                <StackLayout VerticalOptions="FillAndExpand"
+                             HorizontalOptions="FillAndExpand"
+                             WidthRequest="{OnPlatform Android=348, UWP=600}"
+                             HeightRequest="{OnPlatform Android=348, UWP=600}"
+                             Margin="16,16,0,0"
+                             Padding="4"
+                             BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
+                    <controls:CompassView VerticalOptions="FillAndExpand"
+                                          HorizontalOptions="FillAndExpand"
+                                          Heading="{Binding HeadingInDegrees, Mode=OneWay}"
+                                          TargetDirection="{Binding TargetDirectionInDegrees, Mode=OneWay}"
+                                          SunriseDirection="{Binding SunriseDirectionInDegrees}"
+                                          SunsetDirection="{Binding SunsetDirectionInDegrees}"
+                                          CompassColor="{DynamicResource CompassForegroundColor}"
+                                          TargetDirectionColor="{DynamicResource CompassTargetDirectionColor}"
+                                          SunDirectionColor="{Binding CompassSunDirectionColor}" />
+                </StackLayout>
+
+                <!-- Heading -->
+                <StackLayout WidthRequest="100" HeightRequest="100"
+                             Orientation="Vertical"
+                             Margin="16,16,0,0"
+                             Padding="4"
+                             IsVisible="{Binding IsHeadingAvail, Mode=OneWay}"
+                             BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
+                    <Label Text="Heading [°]" />
+                    <Label Text="{Binding HeadingInDegrees, Mode=OneWay}" FontSize="32" />
+                </StackLayout>
+
+                <!-- Direction -->
+                <StackLayout WidthRequest="100" HeightRequest="100"
+                             Orientation="Vertical"
+                             Margin="16,16,0,0"
+                             Padding="4"
+                             BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
+                    <Label Text="Direction [°]" />
+                    <Label Text="{Binding DirectionInDegrees, Mode=OneWay}" FontSize="32" />
+                </StackLayout>
+
+                <!-- Distance -->
+                <StackLayout WidthRequest="100" HeightRequest="100"
+                             Orientation="Vertical"
+                             Margin="16,16,0,0"
+                             Padding="4"
+                             BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
+                    <Label Text="Distance" />
+                    <Label Text="{Binding Distance, Mode=OneWay}" FontSize="32" />
+                </StackLayout>
+
+                <!-- Height difference -->
+                <StackLayout WidthRequest="120" HeightRequest="100"
+                             Orientation="Vertical"
+                             Margin="16,16,0,0"
+                             Padding="4"
+                             BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
+                    <Label Text="Height difference" />
+                    <Label Text="{Binding HeightDifference, Mode=OneWay}" FontSize="32" />
+                </StackLayout>
+
+            </FlexLayout>
+        </ScrollView>
+
+    </ContentPage.Content>
+</ContentPage>

@@ -48,6 +48,9 @@
     <Compile Update="Styles\DarkTheme.xaml.cs">
       <DependentUpon>DarkTheme.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\CompassDetailsPage.xaml.cs">
+      <DependentUpon>CompassDetailsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\SetTrackInfosPopupPage.xaml.cs">
       <DependentUpon>SetTrackInfosPopupPage.xaml</DependentUpon>
     </Compile>

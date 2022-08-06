@@ -44,5 +44,8 @@
     <Color x:Key="ButtonBackgroundColor">#D7D7D7</Color>
     <Color x:Key="BorderSelectionColor">Black</Color>
     <Color x:Key="SvgImageTintColorDark">Black</Color>
+    <Color x:Key="CompassForegroundColor">#2F299E</Color>
+    <Color x:Key="CompassTargetDirectionColor">#00ffd5</Color>
+    <Color x:Key="CompassSunDirectionColor">#ffc000</Color>
 
 </ResourceDictionary>
