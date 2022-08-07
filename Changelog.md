@@ -6,6 +6,15 @@ Released on ?.
 
 ✨ New Features / Improvements
 
+- The Current Position page now has a second tab with a compass that rotates
+  with the devices' compass, showing sunset and sunrise angles and set target
+  direction
+- Locations and points in the map can now be set as compass target, displaying
+  a line on the ground to the target and a target endpoint pin
+- In the Compass tab, a target direction angle can be set (without showing
+  the target endpoint pin)
+- Split heading into magnetic-north and geographic, true-north compass
+  directions
 - Improved performance when adding many locations
 - using CesiumJS version 1.96
 
