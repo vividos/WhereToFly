@@ -132,9 +132,9 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
-        /// Indicates if direction value is available
+        /// Indicates if target direction value is available
         /// </summary>
-        public bool IsDirectionAvail =>
+        public bool IsTargetDirectionAvail =>
             this.CalculateTargetDirection().HasValue;
 
         /// <summary>
@@ -209,7 +209,9 @@ namespace WhereToFly.App.Core.ViewModels
 
             await App.SetCompassTarget(compassTarget);
 
-            this.OnPropertyChanged(nameof(this.IsDirectionAvail));
+            this.OnPropertyChanged(nameof(this.Distance));
+            this.OnPropertyChanged(nameof(this.HeightDifference));
+            this.OnPropertyChanged(nameof(this.IsTargetDirectionAvail));
             this.OnPropertyChanged(nameof(this.TargetDirectionInDegrees));
             this.OnPropertyChanged(nameof(this.TargetDirectionText));
         }
@@ -222,7 +224,9 @@ namespace WhereToFly.App.Core.ViewModels
         {
             await App.SetCompassTarget(null);
 
-            this.OnPropertyChanged(nameof(this.IsDirectionAvail));
+            this.OnPropertyChanged(nameof(this.Distance));
+            this.OnPropertyChanged(nameof(this.HeightDifference));
+            this.OnPropertyChanged(nameof(this.IsTargetDirectionAvail));
             this.OnPropertyChanged(nameof(this.TargetDirectionInDegrees));
             this.OnPropertyChanged(nameof(this.TargetDirectionText));
         }
@@ -268,9 +272,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             this.OnPropertyChanged(nameof(this.Distance));
             this.OnPropertyChanged(nameof(this.HeightDifference));
-            this.OnPropertyChanged(nameof(this.IsHeadingAvail));
-            this.OnPropertyChanged(nameof(this.HeadingInDegrees));
-            this.OnPropertyChanged(nameof(this.IsDirectionAvail));
+            this.OnPropertyChanged(nameof(this.IsTargetDirectionAvail));
             this.OnPropertyChanged(nameof(this.TargetDirectionInDegrees));
             this.OnPropertyChanged(nameof(this.TargetDirectionText));
 

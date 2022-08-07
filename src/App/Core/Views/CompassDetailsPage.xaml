@@ -78,12 +78,12 @@
                     <Label Text="{Binding TrueNorthHeadingInDegrees, Mode=OneWay}" FontSize="32" />
                 </StackLayout>
 
-                <!-- Direction -->
+                <!-- Target direction -->
                 <StackLayout WidthRequest="100" HeightRequest="100"
                              Orientation="Vertical"
                              Margin="16,16,0,0"
                              Padding="4"
-                             IsVisible="{Binding IsDirectionAvail, Mode=OneWay}"
+                             IsVisible="{Binding IsTargetDirectionAvail, Mode=OneWay}"
                              BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
                     <Label Text="Direction [°]" />
                     <Label Text="{Binding TargetDirectionText, Mode=OneWay}" FontSize="32" />
