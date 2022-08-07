@@ -40,8 +40,8 @@ namespace WhereToFly.App.UnitTest.ViewModels
             Assert.AreEqual(Color.Black, viewModel.PositionAccuracyColor, "accuracy color must be black");
             Assert.AreEqual("Unknown", viewModel.LastPositionFix, "last position fix text must be correct");
             Assert.AreEqual(0, viewModel.SpeedInKmh, "speed value must be correct");
-            Assert.IsFalse(viewModel.IsHeadingAvail, "initially heading is not available");
-            Assert.AreEqual(0, viewModel.HeadingInDegrees, "heading value must be correct");
+            Assert.IsFalse(viewModel.IsMagneticNorthHeadingAvail, "initially heading is not available");
+            Assert.AreEqual(0, viewModel.MagneticNorthHeadingInDegrees, "heading value must be correct");
             Assert.IsFalse(viewModel.IsSunriseSunsetAvail, "sunrise/sunset must not be available");
             Assert.AreEqual("N/A", viewModel.SunriseTime, "sunrise time text must be correct");
             Assert.AreEqual("N/A", viewModel.SunsetTime, "sunset time text must be correct");
@@ -84,8 +84,8 @@ namespace WhereToFly.App.UnitTest.ViewModels
             Assert.AreEqual(Color.FromHex("#E0E000"), viewModel.PositionAccuracyColor, "accuracy color must be black");
             Assert.IsTrue(viewModel.LastPositionFix.Length > 0, "last position fix text must contain text");
             Assert.AreEqual(14, viewModel.SpeedInKmh, "speed value must be correct");
-            Assert.IsTrue(viewModel.IsHeadingAvail, "initially heading is not available");
-            Assert.AreEqual(64, viewModel.HeadingInDegrees, "heading value must be correct");
+            Assert.IsTrue(viewModel.IsMagneticNorthHeadingAvail, "initially heading is not available");
+            Assert.AreEqual(64, viewModel.MagneticNorthHeadingInDegrees, "heading value must be correct");
             Assert.IsTrue(viewModel.IsSunriseSunsetAvail, "sunrise/sunset must not be available");
             Assert.AreEqual("6:13:05", viewModel.SunriseTime, "sunrise time text must be correct");
             Assert.AreEqual("20:14:49", viewModel.SunsetTime, "sunset time text must be correct");
@@ -110,7 +110,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
             // check
             Assert.AreEqual(string.Empty, viewModel.Altitude, "accessing altitude must not crash");
             Assert.AreEqual(string.Empty, viewModel.Accuracy, "accessing accuracy must not crash");
-            Assert.AreEqual(0, viewModel.HeadingInDegrees, "accessing heading must not crash");
+            Assert.AreEqual(0, viewModel.MagneticNorthHeadingInDegrees, "accessing heading must not crash");
         }
     }
 }

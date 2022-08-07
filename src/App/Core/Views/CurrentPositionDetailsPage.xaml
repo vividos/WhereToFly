@@ -79,15 +79,26 @@
                     <Label Text="{Binding SpeedInKmh, Mode=OneWay}" FontSize="32" />
                 </StackLayout>
 
-                <!-- Heading -->
+                <!-- Magnetic-north Heading -->
                 <StackLayout WidthRequest="100" HeightRequest="100"
                              Orientation="Vertical"
                              Margin="16,16,0,0"
                              Padding="4"
-                             IsVisible="{Binding IsHeadingAvail, Mode=OneWay}"
+                             IsVisible="{Binding IsMagneticNorthHeadingAvail, Mode=OneWay}"
                              BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
-                    <Label Text="Heading [°]" />
-                    <Label Text="{Binding HeadingInDegrees, Mode=OneWay}" FontSize="32" />
+                    <Label Text="Magnetic Heading [°]" />
+                    <Label Text="{Binding MagneticNorthHeadingInDegrees, Mode=OneWay}" FontSize="32" />
+                </StackLayout>
+
+                <!-- True-north Heading -->
+                <StackLayout WidthRequest="100" HeightRequest="100"
+                             Orientation="Vertical"
+                             Margin="16,16,0,0"
+                             Padding="4"
+                             IsVisible="{Binding IsTrueNorthHeadingAvail, Mode=OneWay}"
+                             BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
+                    <Label Text="True North Heading [°]" />
+                    <Label Text="{Binding TrueNorthHeadingInDegrees, Mode=OneWay}" FontSize="32" />
                 </StackLayout>
 
                 <!-- Sunrise -->

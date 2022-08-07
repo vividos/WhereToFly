@@ -37,9 +37,14 @@ namespace WhereToFly.App.Core.ViewModels
         private bool isCompassAvailable;
 
         /// <summary>
-        /// Current compass heading; only set if isCompassAvailable is true
+        /// Current magnetic-north compass heading; only set if isCompassAvailable is true
         /// </summary>
         private int currentCompassHeading;
+
+        /// <summary>
+        /// Current true-north heading
+        /// </summary>
+        private int? currentTrueNorthHeading;
 
         /// <summary>
         /// Current solar times data
@@ -155,29 +160,36 @@ namespace WhereToFly.App.Core.ViewModels
         }
 
         /// <summary>
-        /// Indicates if heading value is available
+        /// Indicates if magnetic-north heading value is available
         /// </summary>
-        public bool IsHeadingAvail
-        {
-            get
-            {
-                return this.isCompassAvailable || this.position != null;
-            }
-        }
+        public bool IsMagneticNorthHeadingAvail =>
+            this.isCompassAvailable;
 
         /// <summary>
-        /// Heading in degrees
+        /// Magnetic-north heading in degrees
         /// </summary>
-        public int HeadingInDegrees
+        public int MagneticNorthHeadingInDegrees =>
+            this.isCompassAvailable ? this.currentCompassHeading : 0;
+
+        /// <summary>
+        /// Indicates if true-north heading value is available
+        /// </summary>
+        public bool IsTrueNorthHeadingAvail =>
+            this.currentTrueNorthHeading.HasValue || this.position?.Course != null;
+
+        /// <summary>
+        /// True-north heading in degrees
+        /// </summary>
+        public int TrueNorthHeadingInDegrees
         {
             get
             {
-                if (this.isCompassAvailable)
+                if (this.currentTrueNorthHeading.HasValue)
                 {
-                    return this.currentCompassHeading;
+                    return this.currentTrueNorthHeading.Value;
                 }
 
-                return this.position == null || this.position.Course == null
+                return this.position?.Course == null
                     ? 0
                     : (int)this.position.Course.Value;
             }
@@ -281,8 +293,6 @@ namespace WhereToFly.App.Core.ViewModels
             this.OnPropertyChanged(nameof(this.PositionAccuracyColor));
             this.OnPropertyChanged(nameof(this.LastPositionFix));
             this.OnPropertyChanged(nameof(this.SpeedInKmh));
-            this.OnPropertyChanged(nameof(this.IsHeadingAvail));
-            this.OnPropertyChanged(nameof(this.HeadingInDegrees));
 
             this.currentSolarTimes = SunCalc.GetTimes(
                 this.position.Timestamp,
@@ -389,7 +399,29 @@ namespace WhereToFly.App.Core.ViewModels
             this.currentCompassHeading = (int)(args.Reading.HeadingMagneticNorth + 0.5);
             this.isCompassAvailable = true;
 
-            this.OnPropertyChanged(nameof(this.HeadingInDegrees));
+            this.OnPropertyChanged(nameof(this.IsMagneticNorthHeadingAvail));
+            this.OnPropertyChanged(nameof(this.MagneticNorthHeadingInDegrees));
+
+            // try to translate magnetic north heading to true north
+            var platform = DependencyService.Get<IPlatform>();
+
+            int headingTrueNorth = 0;
+
+            bool translateSuccessful =
+                this.position != null &&
+                platform.TranslateCompassMagneticNorthToTrueNorth(
+                    this.currentCompassHeading,
+                    this.position.Latitude,
+                    this.position.Longitude,
+                    this.position.Altitude ?? 0.0,
+                    out headingTrueNorth);
+
+            this.currentTrueNorthHeading = translateSuccessful
+                ? headingTrueNorth
+                : null;
+
+            this.OnPropertyChanged(nameof(this.IsTrueNorthHeadingAvail));
+            this.OnPropertyChanged(nameof(this.TrueNorthHeadingInDegrees));
         }
     }
 }
