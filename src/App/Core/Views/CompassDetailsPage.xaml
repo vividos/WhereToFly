@@ -53,7 +53,7 @@
                                           SunsetDirection="{Binding SunsetDirectionInDegrees}"
                                           CompassColor="{DynamicResource CompassForegroundColor}"
                                           TargetDirectionColor="{DynamicResource CompassTargetDirectionColor}"
-                                          SunDirectionColor="{Binding CompassSunDirectionColor}" />
+                                          SunDirectionColor="{DynamicResource CompassSunDirectionColor}" />
                 </StackLayout>
 
                 <!-- Magnetic-north Heading -->
