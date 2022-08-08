@@ -66,7 +66,7 @@ namespace WhereToFly.App.Core.ViewModels
                     this.appSettings.CurrentCompassTarget.TargetLocation);
 
                 return distanceInMeter < 500
-                    ? $"{distanceInMeter} m"
+                    ? $"{(int)distanceInMeter} m"
                     : $"{distanceInMeter / 1000.0:F1} km";
             }
         }
