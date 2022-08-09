@@ -56,7 +56,7 @@ namespace WhereToFly.Geo.SunCalcNet
                 SunriseSunsetTimes = sunriseSunsetTimes,
             };
 
-            var times = new (double time, SunTimeType riseType, SunTimeType setType)[]
+            var times = new (double Time, SunTimeType RiseType, SunTimeType SetType)[]
             {
                 (-0.833, SunTimeType.Sunrise, SunTimeType.Sunset),
                 (-0.3, SunTimeType.SunriseEnd, SunTimeType.SunsetStart),
@@ -68,7 +68,7 @@ namespace WhereToFly.Geo.SunCalcNet
 
             foreach (var item in times)
             {
-                double time = item.time;
+                double time = item.Time;
                 double h0 = (time + dh).ToRadians();
 
                 double Jset = Formulas.GetSetJ(h0, lw, phi, dec, n, M, L);
@@ -78,20 +78,20 @@ namespace WhereToFly.Geo.SunCalcNet
                 var set = Formulas.FromJulian(Jset, offset);
                 if (rise.HasValue)
                 {
-                    sunriseSunsetTimes.Add(item.riseType, rise.Value);
+                    sunriseSunsetTimes.Add(item.RiseType, rise.Value);
                 }
 
                 if (set.HasValue)
                 {
-                    sunriseSunsetTimes.Add(item.setType, set.Value);
+                    sunriseSunsetTimes.Add(item.SetType, set.Value);
                 }
 
-                if (item.riseType == SunTimeType.Sunrise)
+                if (item.RiseType == SunTimeType.Sunrise)
                 {
                     result.Sunrise = rise;
                 }
 
-                if (item.setType == SunTimeType.Sunset)
+                if (item.SetType == SunTimeType.Sunset)
                 {
                     result.Sunset = set;
                 }
