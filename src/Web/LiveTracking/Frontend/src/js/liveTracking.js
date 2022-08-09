@@ -105,23 +105,23 @@ export default class LiveTracking {
     /**
      * Adds "Fjällräven Classic" layer
      */
-    addFjallravenClassicLayer() {
+    async addFjallravenClassicLayer() {
 
-        var that = this;
-        $.get("/data/fjallraven-classic-2022.czml",
-            null,
-            function (data) {
-                LiveTracking.log("successfully loaded czml file, adding layer");
-                that.map.addLayer({
-                    id: 'fjallraven-classic-2022-layer',
-                    name: 'Fjällräven Classic 2022',
-                    type: '',
-                    isVisible: true,
-                    data: data
-                });
-                that.map.zoomToLayer('fjallraven-classic-2022-layer');
-            },
-            "text");
+        let result = await fetch("/data/fjallraven-classic-2022.czml");
+
+        let czml = await result.text();
+
+        LiveTracking.log("successfully loaded czml file, adding layer");
+
+        await this.map.addLayer({
+            id: 'fjallraven-classic-2022-layer',
+            name: 'Fjällräven Classic 2022',
+            type: 'CzmlLayer',
+            isVisible: true,
+            data: czml
+        });
+
+        this.map.zoomToLayer('fjallraven-classic-2022-layer');
     }
 
     /**
