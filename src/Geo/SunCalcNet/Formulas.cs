@@ -205,15 +205,17 @@ namespace WhereToFly.Geo.SunCalcNet
         /// Calculates sun coordinates for a given julian date
         /// </summary>
         /// <param name="d">days since J2000 value</param>
-        /// <returns>tuple with declination and right ascension of the sun</returns>
-        public static (double dec, double ra) SunCoords(double d)
+        /// <returns>sun's equatorial coordinates</returns>
+        public static EquatorialCoordinates SunCoords(double d)
         {
             double M = SolarMeanAnomaly(d);
             double L = EclipticLongitude(M);
 
-            return (
-                dec: Declination(L, 0),
-                ra: RightAscension(L, 0));
+            return new EquatorialCoordinates
+            {
+                Declination = Declination(L, 0),
+                RightAscension = RightAscension(L, 0),
+            };
         }
 
         /// <summary>

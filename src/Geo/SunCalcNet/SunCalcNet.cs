@@ -114,13 +114,13 @@ namespace WhereToFly.Geo.SunCalcNet
 
             double d = Formulas.ToDays(date);
 
-            (double dec, double ra) c = Formulas.SunCoords(d);
-            double H = Formulas.SiderealTime(d, lw) - c.ra;
+            EquatorialCoordinates coord = Formulas.SunCoords(d);
+            double H = Formulas.SiderealTime(d, lw) - coord.RightAscension;
 
             return new SunPosition
             {
-                Azimuth = Formulas.Azimuth(H, phi, c.dec),
-                Altitude = Formulas.Altitude(H, phi, c.dec),
+                Azimuth = Formulas.Azimuth(H, phi, coord.Declination),
+                Altitude = Formulas.Altitude(H, phi, coord.Declination),
             };
         }
     }
