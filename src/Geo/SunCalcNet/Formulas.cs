@@ -122,7 +122,10 @@ namespace WhereToFly.Geo.SunCalcNet
         /// <returns>azimuth angle, in radians</returns>
         public static double Azimuth(double H, double phi, double dec)
         {
-            return Math.Atan2(Math.Sin(H), (Math.Cos(H) * Math.Sin(phi)) - (Math.Tan(dec) * Math.Cos(phi)));
+            return Math.Atan2(
+                Math.Sin(H),
+                (Math.Cos(H) * Math.Sin(phi)) - (Math.Tan(dec) * Math.Cos(phi)))
+                + Math.PI; // measure azimuth from south
         }
 
         /// <summary>
