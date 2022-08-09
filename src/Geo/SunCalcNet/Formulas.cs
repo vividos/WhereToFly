@@ -11,7 +11,7 @@ namespace WhereToFly.Geo.SunCalcNet
     /// </summary>
     public static class Formulas
     {
-        #region date/time constants and conversions
+        #region Date/time constants and conversions
         /// <summary>
         /// Date 2000-01-01 at noon UTC, as julian day value
         /// </summary>
@@ -99,7 +99,10 @@ namespace WhereToFly.Geo.SunCalcNet
         /// <returns>right ascension in radians</returns>
         public static double RightAscension(double l, int b)
         {
-            return Math.Atan2((Math.Sin(l) * Math.Cos(EarthObliquity)) - (Math.Tan(b) * Math.Sin(EarthObliquity)), Math.Cos(l));
+            return Math.Atan2(
+                (Math.Sin(l) * Math.Cos(EarthObliquity)) -
+                (Math.Tan(b) * Math.Sin(EarthObliquity)),
+                Math.Cos(l));
         }
 
         /// <summary>
@@ -110,7 +113,9 @@ namespace WhereToFly.Geo.SunCalcNet
         /// <returns>declination in radians</returns>
         public static double Declination(double l, int b)
         {
-            return Math.Asin((Math.Sin(b) * Math.Cos(EarthObliquity)) + (Math.Cos(b) * Math.Sin(EarthObliquity) * Math.Sin(l)));
+            return Math.Asin(
+                (Math.Sin(b) * Math.Cos(EarthObliquity)) +
+                (Math.Cos(b) * Math.Sin(EarthObliquity) * Math.Sin(l)));
         }
 
         /// <summary>
@@ -118,7 +123,7 @@ namespace WhereToFly.Geo.SunCalcNet
         /// </summary>
         /// <param name="H">hour angle, in radians</param>
         /// <param name="phi">north latitude of the observer, in radians</param>
-        /// <param name="dec">declination of the sky object</param>
+        /// <param name="dec">declination of the sky object, in radians</param>
         /// <returns>azimuth angle, in radians</returns>
         public static double Azimuth(double H, double phi, double dec)
         {
@@ -133,11 +138,13 @@ namespace WhereToFly.Geo.SunCalcNet
         /// </summary>
         /// <param name="H">hour angle, in radians</param>
         /// <param name="phi">north latitude of the observer, in radians</param>
-        /// <param name="dec">declination of the sky object</param>
+        /// <param name="dec">declination of the sky object, in radians</param>
         /// <returns>altitude angle, in radians</returns>
         public static double Altitude(double H, double phi, double dec)
         {
-            return Math.Asin((Math.Sin(phi) * Math.Sin(dec)) + (Math.Cos(phi) * Math.Cos(dec) * Math.Cos(H)));
+            return Math.Asin(
+                (Math.Sin(phi) * Math.Sin(dec)) +
+                (Math.Cos(phi) * Math.Cos(dec) * Math.Cos(H)));
         }
 
         /// <summary>
@@ -183,7 +190,10 @@ namespace WhereToFly.Geo.SunCalcNet
         {
             // sun's equation of the center
             // https://en.wikipedia.org/wiki/Equation_of_the_center
-            double C = ((1.9148 * Math.Sin(M)) + (0.02 * Math.Sin(2 * M)) + (0.0003 * Math.Sin(3 * M))).ToRadians();
+            double C =
+                ((1.9148 * Math.Sin(M)) +
+                (0.02 * Math.Sin(2 * M)) +
+                (0.0003 * Math.Sin(3 * M))).ToRadians();
 
             // perihelion of the Earth
             double P = 102.9372.ToRadians();
@@ -217,7 +227,8 @@ namespace WhereToFly.Geo.SunCalcNet
         /// <returns>hour angle, in radians</returns>
         private static double HourAngle(double h, double phi, double dec)
         {
-            return Math.Acos((Math.Sin(h) - (Math.Sin(phi) * Math.Sin(dec))) / (Math.Cos(phi) * Math.Cos(dec)));
+            return Math.Acos(
+                (Math.Sin(h) - (Math.Sin(phi) * Math.Sin(dec))) / (Math.Cos(phi) * Math.Cos(dec)));
         }
 
         /// <summary>
@@ -255,7 +266,14 @@ namespace WhereToFly.Geo.SunCalcNet
         /// <param name="M">solar mean anomaly, in radians</param>
         /// <param name="L">ecliptic longitude, in radians</param>
         /// <returns>set time, as julian day value</returns>
-        public static double GetSetJ(double h, double lw, double phi, double dec, double n, double M, double L)
+        public static double GetSetJ(
+            double h,
+            double lw,
+            double phi,
+            double dec,
+            double n,
+            double M,
+            double L)
         {
             double w = HourAngle(h, phi, dec);
             double a = ApproxTransit(w, lw, n);
