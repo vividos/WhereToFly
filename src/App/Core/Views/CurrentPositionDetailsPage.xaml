@@ -123,6 +123,28 @@
                     <Label Text="{Binding SunsetTime, Mode=OneWay}" FontSize="24" />
                 </StackLayout>
 
+                <!-- Sunrise angle -->
+                <StackLayout WidthRequest="100" HeightRequest="100"
+                             Orientation="Vertical"
+                             Margin="16,16,0,0"
+                             Padding="4"
+                             IsVisible="{Binding IsSunriseDirectionAvail, Mode=OneWay}"
+                             BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
+                    <Label Text="Sunrise angle [°]" />
+                    <Label Text="{Binding SunriseDirectionText, Mode=OneWay}" FontSize="24" />
+                </StackLayout>
+
+                <!-- Sunset angle -->
+                <StackLayout WidthRequest="100" HeightRequest="100"
+                             Orientation="Vertical"
+                             Margin="16,16,0,0"
+                             Padding="4"
+                             IsVisible="{Binding IsSunsetDirectionAvail, Mode=OneWay}"
+                             BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
+                    <Label Text="Sunrise angle [°]" />
+                    <Label Text="{Binding SunsetDirectionText, Mode=OneWay}" FontSize="24" />
+                </StackLayout>
+
             </FlexLayout>
         </ScrollView>
 

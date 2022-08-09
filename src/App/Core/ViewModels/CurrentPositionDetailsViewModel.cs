@@ -51,6 +51,16 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         private SolarTimes currentSolarTimes;
 
+        /// <summary>
+        /// Sunrise direction, in deegrees; may be null
+        /// </summary>
+        private int? sunriseDirectionInDegrees;
+
+        /// <summary>
+        /// Sunset direction, in deegrees; may be null
+        /// </summary>
+        private int? sunsetDirectionInDegrees;
+
         #region Binding properties
         /// <summary>
         /// Longitude value of position
@@ -243,6 +253,34 @@ namespace WhereToFly.App.Core.ViewModels
                   : "No sunset today";
             }
         }
+
+        /// <summary>
+        /// Indicates if the sunrise direction is available
+        /// </summary>
+        public bool IsSunriseDirectionAvail => this.sunriseDirectionInDegrees.HasValue;
+
+        /// <summary>
+        /// Sunrise direction text
+        /// </summary>
+        public string SunriseDirectionText =>
+            this.sunriseDirectionInDegrees.HasValue
+            ? $"{this.sunriseDirectionInDegrees.Value}° " +
+                GetTextDirectionFromAngle(this.sunriseDirectionInDegrees.Value)
+            : "N/A";
+
+        /// <summary>
+        /// Indicates if the sunset direction is available
+        /// </summary>
+        public bool IsSunsetDirectionAvail => this.sunsetDirectionInDegrees.HasValue;
+
+        /// <summary>
+        /// Sunset direction text
+        /// </summary>
+        public string SunsetDirectionText =>
+            this.sunsetDirectionInDegrees.HasValue
+            ? $"{this.sunsetDirectionInDegrees.Value}° " +
+                GetTextDirectionFromAngle(this.sunsetDirectionInDegrees.Value)
+            : "N/A";
         #endregion
 
         /// <summary>
@@ -304,8 +342,49 @@ namespace WhereToFly.App.Core.ViewModels
             this.OnPropertyChanged(nameof(this.SunriseTime));
             this.OnPropertyChanged(nameof(this.SunsetTime));
 
+            this.UpdateSunAngles();
+
             var point = new MapPoint(this.position.Latitude, this.position.Longitude, this.position.Altitude);
             Task.Run(async () => await App.UpdateLastShownPositionAsync(point));
+        }
+
+        /// <summary>
+        /// Updates sunrise/sunset angles
+        /// </summary>
+        private void UpdateSunAngles()
+        {
+            if (this.currentSolarTimes.Sunrise.HasValue)
+            {
+                SunPosition sunrisePosition = SunCalc.GetPosition(
+                    this.currentSolarTimes.Sunrise.Value,
+                    this.position.Latitude,
+                    this.position.Longitude);
+
+                this.sunriseDirectionInDegrees = (int)sunrisePosition.Azimuth.ToDegrees();
+            }
+            else
+            {
+                this.sunriseDirectionInDegrees = null;
+            }
+
+            if (this.currentSolarTimes.Sunset.HasValue)
+            {
+                SunPosition sunsetPosition = SunCalc.GetPosition(
+                    this.currentSolarTimes.Sunset.Value,
+                    this.position.Latitude,
+                    this.position.Longitude);
+
+                this.sunsetDirectionInDegrees = (int)sunsetPosition.Azimuth.ToDegrees();
+            }
+            else
+            {
+                this.sunsetDirectionInDegrees = null;
+            }
+
+            this.OnPropertyChanged(nameof(this.IsSunriseDirectionAvail));
+            this.OnPropertyChanged(nameof(this.IsSunsetDirectionAvail));
+            this.OnPropertyChanged(nameof(this.SunriseDirectionText));
+            this.OnPropertyChanged(nameof(this.SunsetDirectionText));
         }
 
         /// <summary>
@@ -331,6 +410,29 @@ namespace WhereToFly.App.Core.ViewModels
             {
                 return "#c00000"; // red
             }
+        }
+
+        /// <summary>
+        /// Cardinal direction names
+        /// </summary>
+        private static readonly string[] DirectionNames = new string[16]
+        {
+            "N", "NNE", "NE", "ENE",
+            "E", "ESE", "SE", "SSE",
+            "S", "SSW", "SW", "WSW",
+            "W", "WNW", "NW", "NNW",
+        };
+
+        /// <summary>
+        /// Gets a textual direction name from a given angle
+        /// </summary>
+        /// <param name="angleInDegrees">direction angle, in degrees</param>
+        /// <returns>textual direction name</returns>
+        private static string GetTextDirectionFromAngle(int angleInDegrees)
+        {
+            int index = (int)((((angleInDegrees - 11.25) / 22.5) + 16.0) % 16.0);
+
+            return DirectionNames[index];
         }
 
         /// <summary>
