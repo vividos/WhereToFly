@@ -7,7 +7,7 @@
       "@babel/preset-env",
       {
         "useBuiltIns": "usage",
-        "corejs": "3.24.0"
+        "corejs": "3.24.1"
       }
     ]
   ]
