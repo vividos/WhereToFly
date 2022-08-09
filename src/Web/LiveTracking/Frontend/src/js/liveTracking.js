@@ -77,7 +77,7 @@ export default class LiveTracking {
 
         LiveTracking.log("loading default data...");
 
-        this.addCrossingTheAlpsLayer();
+        this.addFjallravenClassicLayer();
     }
 
     /**
@@ -98,6 +98,28 @@ export default class LiveTracking {
                     data: data
                 });
                 that.map.zoomToLayer('x-lakes-2020-layer');
+            },
+            "text");
+    }
+
+    /**
+     * Adds "Fjällräven Classic" layer
+     */
+    addFjallravenClassicLayer() {
+
+        var that = this;
+        $.get("/data/fjallraven-classic-2022.czml",
+            null,
+            function (data) {
+                LiveTracking.log("successfully loaded czml file, adding layer");
+                that.map.addLayer({
+                    id: 'fjallraven-classic-2022-layer',
+                    name: 'Fjällräven Classic 2022',
+                    type: '',
+                    isVisible: true,
+                    data: data
+                });
+                that.map.zoomToLayer('fjallraven-classic-2022-layer');
             },
             "text");
     }
