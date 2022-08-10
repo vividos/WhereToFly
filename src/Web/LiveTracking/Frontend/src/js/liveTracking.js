@@ -194,7 +194,7 @@ export default class LiveTracking {
             isLiveTrack: true,
             listOfTrackPoints: [],
             listOfTimePoints: [],
-            groundHeightProfile: [],
+            groundHeightProfile: null,
             color: "ff8000"
         });
 
@@ -368,6 +368,7 @@ export default class LiveTracking {
 
         if (result.data !== undefined) {
             result.data.id = liveTrackUri;
+            result.data.groundHeightProfile = null;
 
             this.map.updateLiveTrack(result.data);
 
