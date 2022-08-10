@@ -2675,7 +2675,7 @@ export class MapView {
 
         let lastTimePoint = track.listOfTimePoints[track.listOfTimePoints.length - 1];
 
-        console.info("MapView: added new track points, from " +
+        MapView.log("added new track points, from " +
             new Date(track.listOfTimePoints[0] * 1000.0) +
             " to " +
             new Date(lastTimePoint * 1000.0));
@@ -2728,7 +2728,7 @@ export class MapView {
         let timePos = trackData.track.listOfTimePoints.indexOf(startTimePoint);
 
         let removedTrackPoints = (timePos === -1 ? "no " : (trackData.track.listOfTimePoints.length - timePos) + " ");
-        console.info("MapView: removing " + removedTrackPoints +
+        MapView.log("removing " + removedTrackPoints +
             "live track points and adding " + track.listOfTimePoints.length + " new track points");
 
         if (timePos !== -1) {
