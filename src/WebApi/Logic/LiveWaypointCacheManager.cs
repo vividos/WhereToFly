@@ -38,15 +38,19 @@ namespace WhereToFly.WebApi.Logic
         /// <summary>
         /// Data service for querying Garmin inReach services
         /// </summary>
-        private readonly GarminInreachDataService garminInreachService = new();
+        private readonly GarminInreachDataService garminInreachService;
 
         /// <summary>
         /// Creates a new live waypoint cache manager object
         /// </summary>
         /// <param name="logger">logger instance to use</param>
-        public LiveWaypointCacheManager(ILogger<LiveWaypointCacheManager> logger)
+        /// <param name="garminInreachService">Garmin inReach service</param>
+        public LiveWaypointCacheManager(
+            ILogger<LiveWaypointCacheManager> logger,
+            GarminInreachDataService garminInreachService)
         {
             this.logger = logger;
+            this.garminInreachService = garminInreachService;
         }
 
         /// <summary>

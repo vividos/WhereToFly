@@ -7,6 +7,7 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.IO;
 using WhereToFly.WebApi.Logic;
+using WhereToFly.WebApi.Logic.Services;
 using WhereToFly.WebApi.Logic.TourPlanning;
 
 namespace WhereToFly.WebApi.LiveWaypoints
@@ -87,6 +88,7 @@ namespace WhereToFly.WebApi.LiveWaypoints
         /// <param name="services">service collection</param>
         private static void AddLogicServices(IServiceCollection services)
         {
+            services.AddSingleton<GarminInreachDataService>();
             services.AddSingleton<LiveWaypointCacheManager>();
             services.AddSingleton<LiveTrackCacheManager>();
             services.AddSingleton<LocationFindManager>();
