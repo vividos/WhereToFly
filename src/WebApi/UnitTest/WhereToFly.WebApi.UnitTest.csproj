@@ -6,10 +6,14 @@
 
   <ItemGroup>
     <None Remove="Assets\GarminInreachRawKmlData.kml" />
+    <None Remove="Assets\GarminInreachRawKmlTrackData.kml" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Assets\GarminInreachRawKmlData.kml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\GarminInreachRawKmlTrackData.kml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
