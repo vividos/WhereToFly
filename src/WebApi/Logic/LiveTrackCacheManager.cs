@@ -15,6 +15,11 @@ namespace WhereToFly.WebApi.Logic
     public class LiveTrackCacheManager
     {
         /// <summary>
+        /// Time span of track points that are fetched for Garmin inReach live tracks
+        /// </summary>
+        private static readonly TimeSpan GarminInreachLiveTrackTimespan = TimeSpan.FromDays(30);
+
+        /// <summary>
         /// Logger for cache manager
         /// </summary>
         private readonly ILogger<LiveTrackCacheManager> logger;
@@ -30,12 +35,21 @@ namespace WhereToFly.WebApi.Logic
         private readonly object lockCacheAndQueue = new();
 
         /// <summary>
+        /// Data service for querying Garmin inReach services
+        /// </summary>
+        private readonly GarminInreachDataService garminInreachService;
+
+        /// <summary>
         /// Creates a new live track cache manager object
         /// </summary>
         /// <param name="logger">logger instance to use</param>
-        public LiveTrackCacheManager(ILogger<LiveTrackCacheManager> logger)
+        /// <param name="garminInreachService">Garmin inReach service</param>
+        public LiveTrackCacheManager(
+            ILogger<LiveTrackCacheManager> logger,
+            GarminInreachDataService garminInreachService)
         {
             this.logger = logger;
+            this.garminInreachService = garminInreachService;
         }
 
         /// <summary>
@@ -62,7 +76,7 @@ namespace WhereToFly.WebApi.Logic
 
             result = await this.GetLiveTrackQueryResult(uri);
 
-            if (result != null)
+            if (result?.Data != null)
             {
                 this.CacheLiveTrackData(result.Data);
             }
@@ -149,6 +163,10 @@ namespace WhereToFly.WebApi.Logic
                 case AppResourceUri.ResourceType.TestLiveTrack:
                     return true; // request is always possible
 
+                case AppResourceUri.ResourceType.GarminInreachLiveTrack:
+                    DateTimeOffset nextRequestDate = this.GetNextRequestDate(uri);
+                    return nextRequestDate <= DateTimeOffset.Now;
+
                 default:
                     Debug.Assert(false, "invalid app resource URI type");
                     return false;
@@ -166,6 +184,9 @@ namespace WhereToFly.WebApi.Logic
             {
                 case AppResourceUri.ResourceType.TestLiveTrack:
                     return DateTimeOffset.Now.AddSeconds(30);
+
+                case AppResourceUri.ResourceType.GarminInreachLiveTrack:
+                    return this.garminInreachService.GetNextRequestDate(uri.Data);
 
                 default:
                     Debug.Assert(false, "invalid app resource URI type");
@@ -185,12 +206,35 @@ namespace WhereToFly.WebApi.Logic
                 case AppResourceUri.ResourceType.TestLiveTrack:
                     return Task.FromResult(TestLiveTrackService.GetLiveTrackingQueryResult(uri.ToString()));
 
+                case AppResourceUri.ResourceType.GarminInreachLiveTrack:
+                    return this.GetGarminInreachLiveTrackResult(uri);
+
                 default:
                     Debug.Assert(false, "invalid app resource URI type");
                     return Task.FromResult<LiveTrackQueryResult>(null);
             }
         }
 
+        /// <summary>
+        /// Returns a live track from a Garmin inReach device
+        /// </summary>
+        /// <param name="uri">live track ID to use</param>
+        /// <returns>live track query result</returns>
+        private async Task<LiveTrackQueryResult> GetGarminInreachLiveTrackResult(AppResourceUri uri)
+        {
+            string mapShareIdentifier = uri.Data;
+
+            LiveTrackData liveTrackData =
+                await this.garminInreachService.GetTrackAsync(
+                    mapShareIdentifier,
+                    DateTimeOffset.Now - GarminInreachLiveTrackTimespan);
+
+            return new LiveTrackQueryResult
+            {
+                Data = liveTrackData,
+                NextRequestDate = this.garminInreachService.GetNextRequestDate(mapShareIdentifier),
+            };
+        }
         /// <summary>
         /// Caches (new or updated) live track data
         /// </summary>

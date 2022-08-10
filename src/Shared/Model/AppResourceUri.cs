@@ -49,6 +49,12 @@ namespace WhereToFly.Shared.Model
             OpenGliderNetworkPos = 2,
 
             /// <summary>
+            /// Live track from Garmin inReach device; the data property contains the MapShare
+            /// identifier.
+            /// </summary>
+            GarminInreachLiveTrack = 3,
+
+            /// <summary>
             /// Specifies a position for testing
             /// </summary>
             TestPos = 100,
@@ -80,7 +86,8 @@ namespace WhereToFly.Shared.Model
         {
             get
             {
-                return this.Type == ResourceType.TestLiveTrack;
+                return this.Type == ResourceType.TestLiveTrack ||
+                    this.Type == ResourceType.GarminInreachLiveTrack;
             }
         }
 
