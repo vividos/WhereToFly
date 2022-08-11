@@ -196,7 +196,7 @@ export default class LiveTracking {
             listOfTrackPoints: [],
             listOfTimePoints: [],
             groundHeightProfile: null,
-            color: "ff8000"
+            color: "4080ff"
         });
 
         this.updateLiveTrack(liveTrackId);
