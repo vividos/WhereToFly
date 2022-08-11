@@ -33,6 +33,8 @@ have the following options:
 
 - ![Show details](images/information-outline.svg) Show details: Opens a page
   with the location's details
+- ![Set as compass target](images/compass-rose.svg) Set as compass target:
+  Sets location as new compass target
 - ![Navigate here](images/directions.svg) Navigate here: Starts the navigation
   app to show a route to this location
 
@@ -92,6 +94,7 @@ A long tap on the map shows the following menu:
 ![Long-tap menu](images/longtap-menu.png)
 
 - Add new waypoint: Adds a new waypoint location to the location list.
+- Set as compass target: Sets the selected point as new compass target.
 - Navigate here: Starts the navigation app to show a route to this point.
 - Show flying range: Shows a cone at the selected point that visualizes the
   areas that can be reached with a given glide ratio. The following dialog
@@ -183,9 +186,11 @@ locations in the list.
 When long-tapping a single location entry, a context menu appears with the
 following menu entries:
 
-- ![Info](images/information-outline.svg) Shows details for the selected
+- ![Show Detaails](images/information-outline.svg) Shows details for the selected
   location
 - ![Zoom to](images/magnify-plus-outline.svg) Zooms to the location on the map
+- ![Set as compass target](images/compass-rose.svg) Sets location as new
+  compass target
 - ![Delete](images/delete.svg) Deletes the selected location
 
 ### Location details
@@ -199,6 +204,8 @@ Distance field contains the current distance to the location.
 The following title bar icons are available:
 
 - ![Zoom to](images/magnify-plus-outline.svg) Zooms to the location on the map
+- ![Set as compass target](images/compass-rose.svg) Sets location as new
+  compass target
 - ![Navigate](images/directions.svg) Starts the navigation app to
   show a route to this location
 - ![Share](images/share-variant.svg) Shares the location with other apps
@@ -329,15 +336,40 @@ resets the time offset to -3 minutes.
 
 ## ![Current position](images/compass.svg) Current position
 
-![Current Position](images/current-position.png)
+The current position page has two tabs: Detail Infos and Compass.
 
-The current position page shows the coordinates and other infos about the
-current position. If available, the magnetic compass of the device is used
-instead of the heading calculated from GPS. The sunrise and sunset times are
-calculated from the current longitude and latitude.
+### Detail Infos
+
+![Detail Infos](images/current-position.png)
+
+The detail infos tab page shows the coordinates and other infos about the
+current position. If available, the magnetic compass direction is show. In
+addition, the true-north direction, determined by the compass and the current
+location is shown, or the heading from the GPS device is used. The sunrise and
+sunset times are calculated from the current longitude and latitude.
 
 The position data can be shared with other apps using the
 ![Share](images/share-variant.svg) share button.
+
+### Compass
+
+![Compass](images/compass.png)
+
+The compass tab page shows a compass with the cardinal directions, and when
+the current position is available, the sunrise and sunset. As soon as a
+location or position on the map is selected as "compass target", the compass
+also shows the direction to this position. Below, the magnetic and true-north
+heading is displayed, as well as distance and height difference to the
+selected compass target.
+
+The following title bar buttons are available:
+
+- ![Set compass direction](images/compass-rose.svg) Set compass direction:
+  Lets you select a compass direction without a specific target location, e.g
+  to determine landmarks from your current position and then checking the map.
+  The following dialog appears to select the compass target direction:
+
+![Set compass direction dialog](images/compass-direction.png)
 
 ## ![Weather](images/weather-partly-cloudy.svg) Weather
 
