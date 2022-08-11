@@ -1,8 +1,8 @@
 ﻿# Changelog
 
-## Version 1.13.0
+## Version 1.13.0 "FJällräven Classic 2022" edition
 
-Released on ?.
+Released on 2022-08-11.
 
 ✨ New Features / Improvements
 
@@ -17,8 +17,6 @@ Released on ?.
   directions
 - Improved performance when adding many locations
 - using CesiumJS version 1.96
-
-🐛 Bugfixes
 
 ## Version 1.12.0
 
