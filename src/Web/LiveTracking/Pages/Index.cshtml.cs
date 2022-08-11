@@ -71,6 +71,11 @@ namespace WhereToFly.Web.LiveTracking.Pages
             /// Indicates if it's a live track or a live waypoint
             /// </summary>
             public bool IsLiveTrack { get; set; }
+
+            /// <summary>
+            /// Indicates if it's a flight position/track or ground-based tracking
+            /// </summary>
+            public bool IsFlightTrack { get; set; } = true;
         }
 
         /// <summary>
@@ -102,7 +107,8 @@ namespace WhereToFly.Web.LiveTracking.Pages
         /// </summary>
         /// <param name="uri">live waypoint uri to show</param>
         /// <param name="name">name of live waypoint to show</param>
-        public void OnGet(string uri, string name)
+        /// <param name="isFlightTrack">indicates if the live track</param>
+        public void OnGet(string uri, string name, bool isFlightTrack = true)
         {
             if (string.IsNullOrEmpty(uri))
             {
@@ -120,6 +126,7 @@ namespace WhereToFly.Web.LiveTracking.Pages
                         Name = name ?? "Live Waypoint",
                         Uri = liveWaypointUri.ToString(),
                         IsLiveTrack = liveWaypointUri.IsTrackResourceType,
+                        IsFlightTrack = isFlightTrack,
                     }
                 };
             }

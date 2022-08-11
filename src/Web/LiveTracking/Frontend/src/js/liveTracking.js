@@ -177,8 +177,9 @@ export default class LiveTracking {
      * Adds a single live track to map
      * @param {String} name Name of live track
      * @param {String} liveTrackId Live track ID
+     * @param {boolean} isFlightTrack Indicates if it's a flight track
      */
-    addLiveTrack(name, liveTrackId) {
+    addLiveTrack(name, liveTrackId, isFlightTrack) {
 
         var pageIdPrefix = 'liveData';
         this.liveTrackToIdMapping[liveTrackId] = pageIdPrefix;
@@ -190,7 +191,7 @@ export default class LiveTracking {
             id: liveTrackId,
             name: name,
             description: '',
-            isFlightTrack: true,
+            isFlightTrack: isFlightTrack,
             isLiveTrack: true,
             listOfTrackPoints: [],
             listOfTimePoints: [],

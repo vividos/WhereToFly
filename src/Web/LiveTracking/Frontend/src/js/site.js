@@ -23,7 +23,7 @@ function initLiveTracking() {
     for (var key in liveTrackingInfoList) {
         var item = liveTrackingInfoList[key];
         if (item.isLiveTrack)
-            liveTracking.addLiveTrack(item.name, item.uri);
+            liveTracking.addLiveTrack(item.name, item.uri, item.isFlightTrack);
         else
             liveTracking.addLiveWaypoint(item.name, item.uri);
     }
