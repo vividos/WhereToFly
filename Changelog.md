@@ -6,6 +6,8 @@ Released on ?.
 
 ✨ New Features / Improvements
 
+- using CesiumJS version 1.97
+
 🐛 Bugfixes
 
 ## Version 1.13.0 "FJällräven Classic 2022" edition
