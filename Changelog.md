@@ -1,5 +1,13 @@
 ﻿# Changelog
 
+## Version 1.14.0
+
+Released on ?.
+
+✨ New Features / Improvements
+
+🐛 Bugfixes
+
 ## Version 1.13.0 "FJällräven Classic 2022" edition
 
 Released on 2022-08-11.
