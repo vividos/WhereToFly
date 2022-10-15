@@ -6,7 +6,7 @@ Released on ?.
 
 ✨ New Features / Improvements
 
-- using CesiumJS version 1.97
+- using CesiumJS version 1.98.1
 
 🐛 Bugfixes
 

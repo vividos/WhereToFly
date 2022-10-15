@@ -41,7 +41,7 @@
     "webpack-dev-server": "^4.9.3"
   },
   "dependencies": {
-    "cesium": "^1.97.0",
+    "cesium": "^1.98.1",
     "chart.js": "^3.9.1",
     "chartjs-adapter-moment": "^1.0.0",
     "chartjs-plugin-crosshair": "^1.2.0",
