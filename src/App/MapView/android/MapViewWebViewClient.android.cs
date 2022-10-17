@@ -26,6 +26,11 @@ namespace WhereToFly.App.MapView
         private readonly string cacheFolder;
 
         /// <summary>
+        /// Action to log errors
+        /// </summary>
+        private readonly Action<Exception> logErrorAction;
+
+        /// <summary>
         /// Number of cache hits
         /// </summary>
         private int numCacheHit;
@@ -46,9 +51,13 @@ namespace WhereToFly.App.MapView
         /// Creates a new web view client
         /// </summary>
         /// <param name="renderer">web view renderer</param>
-        public MapViewWebViewClient(WebViewRenderer renderer)
+        /// <param name="logErrorAction">action to log errors</param>
+        public MapViewWebViewClient(
+            WebViewRenderer renderer,
+            Action<Exception> logErrorAction)
             : base(renderer)
         {
+            this.logErrorAction = logErrorAction;
             this.cacheFolder = GetCacheFolder();
         }
 
@@ -117,8 +126,7 @@ namespace WhereToFly.App.MapView
             }
             catch (Exception ex)
             {
-                // TODO also use LogErrorAction from MapView
-                Trace.WriteLine(ex.ToString());
+                this.logErrorAction?.Invoke(ex);
                 return null;
             }
         }

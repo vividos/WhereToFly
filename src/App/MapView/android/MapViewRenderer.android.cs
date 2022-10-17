@@ -52,7 +52,9 @@ namespace WhereToFly.App.MapView
         /// <returns>created web view client</returns>
         protected override global::Android.Webkit.WebViewClient GetWebViewClient()
         {
-            var webViewClient = new MapViewWebViewClient(this);
+            var mapView = this.Element as MapView;
+
+            var webViewClient = new MapViewWebViewClient(this, mapView?.LogErrorAction);
             webViewClient.CorsWebsiteHosts.Add("thermal.kk7.ch");
 
             return webViewClient;
