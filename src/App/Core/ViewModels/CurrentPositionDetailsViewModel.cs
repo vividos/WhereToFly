@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Timers;
 using WhereToFly.App.Core.Logic;
@@ -71,7 +72,9 @@ namespace WhereToFly.App.Core.ViewModels
             {
                 return this.position == null
                     ? string.Empty
-                    : GeoDataFormatter.FormatLatLong(this.position.Longitude, this.appSettings.CoordinateDisplayFormat);
+                    : GeoDataFormatter.FormatLatLong(
+                        this.position.Longitude,
+                        this.appSettings.CoordinateDisplayFormat);
             }
         }
 
@@ -84,7 +87,9 @@ namespace WhereToFly.App.Core.ViewModels
             {
                 return this.position == null
                     ? string.Empty
-                    : GeoDataFormatter.FormatLatLong(this.position.Latitude, this.appSettings.CoordinateDisplayFormat);
+                    : GeoDataFormatter.FormatLatLong(
+                        this.position.Latitude,
+                        this.appSettings.CoordinateDisplayFormat);
             }
         }
 
@@ -289,6 +294,8 @@ namespace WhereToFly.App.Core.ViewModels
         /// <param name="appSettings">app settings to use</param>
         public CurrentPositionDetailsViewModel(AppSettings appSettings)
         {
+            Debug.Assert(appSettings != null, "app settings must not be null");
+
             this.appSettings = appSettings;
 
             this.SetupTimer();

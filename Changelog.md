@@ -10,6 +10,9 @@ Released on ?.
 
 🐛 Bugfixes
 
+- Fixed a crash when opening the Current Position page directly after app
+  startup.
+
 ## Version 1.13.0 "FJällräven Classic 2022" edition
 
 Released on 2022-08-11.
