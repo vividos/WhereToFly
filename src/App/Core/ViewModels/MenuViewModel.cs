@@ -115,6 +115,9 @@ namespace WhereToFly.App.Core.ViewModels
 
             App.RunOnUiThread(async () =>
             {
+                // wait for complete app init before shoing a page
+                await App.InitializedTask;
+
                 await NavigationService.Instance.NavigateAsync(this.SelectedMenuItem.PageKey, true);
 
                 await Task.Delay(100);
