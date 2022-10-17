@@ -2,7 +2,7 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
-namespace WhereToFly.App.Android
+namespace WhereToFly.App.MapView
 {
     /// <summary>
     /// JavaScript callback handler for calling from JavaScript to C#

@@ -8,12 +8,12 @@ using System.Net.Http;
 using Xamarin.Essentials;
 using Xamarin.Forms.Platform.Android;
 
-namespace WhereToFly.App.Android
+namespace WhereToFly.App.MapView
 {
     /// <summary>
     /// WebViewClient implementation for Android
     /// </summary>
-    internal class AndroidWebViewClient : FormsWebViewClient
+    internal class MapViewWebViewClient : FormsWebViewClient
     {
         /// <summary>
         /// HTTP client to use to download content when intercepting content
@@ -46,7 +46,7 @@ namespace WhereToFly.App.Android
         /// Creates a new web view client
         /// </summary>
         /// <param name="renderer">web view renderer</param>
-        public AndroidWebViewClient(WebViewRenderer renderer)
+        public MapViewWebViewClient(WebViewRenderer renderer)
             : base(renderer)
         {
             this.cacheFolder = GetCacheFolder();
@@ -57,7 +57,7 @@ namespace WhereToFly.App.Android
         /// </summary>
         /// <param name="javaReference">java reference</param>
         /// <param name="transfer">ownership transfer value</param>
-        protected AndroidWebViewClient(IntPtr javaReference, global::Android.Runtime.JniHandleOwnership transfer)
+        protected MapViewWebViewClient(IntPtr javaReference, global::Android.Runtime.JniHandleOwnership transfer)
             : base(javaReference, transfer)
         {
             this.cacheFolder = GetCacheFolder();
@@ -75,8 +75,8 @@ namespace WhereToFly.App.Android
             Debug.WriteLine(
                 "OnReceivedError: method={0} url={1}, error={2}",
                 request.Method,
-                request.Url.ToString(),
-                error.DescriptionFormatted.ToString());
+                request.Url?.ToString() ?? "N/A",
+                error.DescriptionFormatted?.ToString() ?? "N/A");
 
             base.OnReceivedError(view, request, error);
         }
@@ -98,7 +98,8 @@ namespace WhereToFly.App.Android
 
             string host = request?.Url?.Host?.ToLowerInvariant();
 
-            if (host != null &&
+            if (request?.Url != null &&
+                host != null &&
                 this.CorsWebsiteHosts != null &&
                 this.CorsWebsiteHosts.Any(x => host.Contains(x)))
             {
@@ -116,7 +117,8 @@ namespace WhereToFly.App.Android
             }
             catch (Exception ex)
             {
-                Core.App.LogError(ex);
+                // TODO also use LogErrorAction from MapView
+                Trace.WriteLine(ex.ToString());
                 return null;
             }
         }

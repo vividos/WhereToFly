@@ -2,21 +2,23 @@ using Android.Content;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
-[assembly: ExportRenderer(typeof(WebView), typeof(WhereToFly.App.Android.AndroidWebViewRenderer))]
+[assembly: ExportRenderer(
+    typeof(WhereToFly.App.MapView.MapView),
+    typeof(WhereToFly.App.MapView.MapViewRenderer))]
 
-namespace WhereToFly.App.Android
+namespace WhereToFly.App.MapView
 {
     /// <summary>
     /// Android custom WebView renderer
     /// See https://xamarinhelp.com/webview-rendering-engine-configuration/
     /// </summary>
-    public class AndroidWebViewRenderer : WebViewRenderer
+    public class MapViewRenderer : WebViewRenderer
     {
         /// <summary>
         /// Creates a new web view renderer object
         /// </summary>
         /// <param name="context">context to pass to base class</param>
-        public AndroidWebViewRenderer(Context context)
+        public MapViewRenderer(Context context)
             : base(context)
         {
         }
@@ -35,9 +37,11 @@ namespace WhereToFly.App.Android
                 this.SetupWebViewSettings();
             }
 
-            if (e.OldElement != null)
+            if (this.Control != null &&
+                e.OldElement != null)
             {
-                this.Control.RemoveJavascriptInterface(JavaScriptCallbackHandler.ObjectName);
+                this.Control.RemoveJavascriptInterface(
+                    JavaScriptCallbackHandler.ObjectName);
             }
         }
 
@@ -48,7 +52,7 @@ namespace WhereToFly.App.Android
         /// <returns>created web view client</returns>
         protected override global::Android.Webkit.WebViewClient GetWebViewClient()
         {
-            var webViewClient = new AndroidWebViewClient(this);
+            var webViewClient = new MapViewWebViewClient(this);
             webViewClient.CorsWebsiteHosts.Add("thermal.kk7.ch");
 
             return webViewClient;

@@ -99,10 +99,7 @@
     <Compile Include="AndroidAppManager.cs" />
     <Compile Include="AndroidPlatform.cs" />
     <Compile Include="AndroidWeatherWebViewRenderer.cs" />
-    <Compile Include="AndroidWebViewClient.cs" />
-    <Compile Include="AndroidWebViewRenderer.cs" />
     <Compile Include="IntentFilterHelper.cs" />
-    <Compile Include="JavaScriptCallbackHandler.cs" />
     <Compile Include="LongTapGestureListener.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
