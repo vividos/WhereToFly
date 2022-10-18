@@ -24,6 +24,7 @@
     <AndroidStoreUncompressedFileExtensions>.kmz</AndroidStoreUncompressedFileExtensions>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <NoWarn>MSB3277</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
