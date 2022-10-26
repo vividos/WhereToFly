@@ -1636,18 +1636,18 @@ export class MapView {
         text += '<p><img height="32em" width="32em" src="images/information-outline.svg" style="vertical-align:middle" /> ' +
             '<a href="javascript:parent.map.onShowLocationDetails(\'' + location.id + '\');">Show details</a> ';
 
-        text += '<p><img height="32em" width="32em" src="images/compass-rose.svg" style="vertical-align:middle" /> ' +
+        text += '<img height="32em" width="32em" src="images/compass-rose.svg" style="vertical-align:middle" /> ' +
             '<a href="javascript:parent.map.onSetLocationAsCompassTarget(\'' + location.id + '\');">Set as compass target</a> ';
 
         text += '<img height="32em" width="32em" src="images/directions.svg" style="vertical-align:middle" /> ' +
-            '<a href="javascript:parent.map.onNavigateToLocation(\'' + location.id + '\');">Navigate here</a></p>';
+            '<a href="javascript:parent.map.onNavigateToLocation(\'' + location.id + '\');">Navigate here</a>';
 
         if (location.isPlanTourLocation === true) {
             text += '<img height="32em" width="32em" src="images/map-marker-plus.svg" style="vertical-align:middle" /> ' +
-                '<a href="javascript:parent.map.onAddTourPlanLocation(\'' + location.id + '\');">Plan tour</a></p>';
+                '<a href="javascript:parent.map.onAddTourPlanLocation(\'' + location.id + '\');">Plan tour</a>';
         }
 
-        text += "<p>" + location.description + "</p>";
+        text += "</p><p>" + location.description + "</p>";
 
         return text;
     }
