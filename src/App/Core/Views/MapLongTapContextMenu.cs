@@ -100,6 +100,12 @@ namespace WhereToFly.App.Core.Views
                 items,
                 () =>
                 {
+                    if (popupPage == null)
+                    {
+                        throw new InvalidOperationException(
+                            "popupPage must have been set");
+                    }
+
                     popupPage.Navigation.PopPopupAsync(true);
                     popupPage.BackgroundClicked -= backgroundClicked;
                 });

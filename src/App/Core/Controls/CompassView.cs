@@ -498,6 +498,11 @@ namespace WhereToFly.App.Core.Controls
         /// <param name="radius">compass radius</param>
         private void DrawTargetDirection(SKCanvas canvas, SKPoint center, float radius)
         {
+            if (!this.TargetDirection.HasValue)
+            {
+                return;
+            }
+
             var targetDirectionPaint = new SKPaint
             {
                 IsAntialias = true,

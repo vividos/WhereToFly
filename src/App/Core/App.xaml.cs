@@ -49,7 +49,7 @@ namespace WhereToFly.App.Core
         /// <summary>
         /// Access to the map view instance
         /// </summary>
-        public static IMapView MapView => (Current as App).MapPage.MapView;
+        public static IMapView MapView => (Current as App)?.MapPage?.MapView;
 
         /// <summary>
         /// Task that can be awaited to wait for a completed app initialisation. The task performs

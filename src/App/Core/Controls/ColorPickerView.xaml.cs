@@ -129,7 +129,7 @@ namespace WhereToFly.App.Core.Controls
         private static void OnSelectedColorPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
             var view = bindable as ColorPickerView;
-            view.SelectColor((Color)newValue);
+            view?.SelectColor((Color)newValue);
         }
 
         /// <summary>
@@ -139,8 +139,10 @@ namespace WhereToFly.App.Core.Controls
         /// <param name="args">event args</param>
         private void OnClicked_ColorPickerButton(object sender, EventArgs args)
         {
-            var button = sender as Button;
-            this.SelectColor(button.BackgroundColor);
+            if (sender is Button button)
+            {
+                this.SelectColor(button.BackgroundColor);
+            }
         }
 
         /// <summary>
@@ -175,9 +177,12 @@ namespace WhereToFly.App.Core.Controls
             {
                 Debug.Assert(outerFrame != null, "view element must be a Frame");
 
-                outerFrame.BackgroundColor = outerFrame == selectedFrame
-                    ? this.SelectionBorderColor
-                    : Color.Transparent;
+                if (outerFrame != null)
+                {
+                    outerFrame.BackgroundColor = outerFrame == selectedFrame
+                        ? this.SelectionBorderColor
+                        : Color.Transparent;
+                }
             }
 
             // update view model
@@ -198,9 +203,11 @@ namespace WhereToFly.App.Core.Controls
                 {
                     Debug.Assert(outerFrame != null, "view element must be a Frame");
 
-                    var innerFrame = outerFrame.Content as Frame;
-
-                    innerFrame.BackgroundColor = this.BackgroundColor;
+                    if (outerFrame != null &&
+                        outerFrame.Content is Frame innerFrame)
+                    {
+                        innerFrame.BackgroundColor = this.BackgroundColor;
+                    }
                 }
             }
 

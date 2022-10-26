@@ -35,7 +35,7 @@ namespace WhereToFly.App.Core.Views
             }
 
             // set up detail page
-            var mapPage = (App.Current as App).MapPage;
+            var mapPage = (App.Current as App)?.MapPage;
             var navigationPage = new NavigationPage(mapPage)
             {
                 BarBackgroundColor = Constants.PrimaryColor,
