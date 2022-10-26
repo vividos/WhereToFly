@@ -1994,8 +1994,11 @@ export class MapView {
 
         let optionsText = '{ name: \'' + options.name + '\', latitude:' + options.latitude + ', longitude:' + options.longitude + '}';
 
-        text += '<img height="32em" width="32em" src="images/map-marker-plus.svg" style="vertical-align:middle" />' +
-            '<a href="javascript:parent.map.onAddFindResult(' + optionsText + ');">Add as waypoint</a></p>';
+        text += '<p><img height="32em" width="32em" src="images/map-marker-plus.svg" style="vertical-align:middle" />' +
+            '<a href="javascript:parent.map.onAddFindResult(' + optionsText + ');">Add as waypoint</a>';
+
+        text += '<img height="32em" width="32em" src="images/close-circle-outline.svg" style="vertical-align:middle" />' +
+            '<a href="javascript:parent.map.hideFindResult();">Hide</a></p>';
 
         if (options.description !== undefined)
             text += '<div>' + options.description + '</div>';
@@ -3132,6 +3135,21 @@ export class MapView {
     }
 
     /**
+     * Called by the "hide" link in the info text of the find result pin.
+     */
+     hideFindResult() {
+
+        MapView.log("hiding find result pin");
+
+        this.findResultMarker.show = false;
+
+        // also hide the info box
+        this.viewer.selectedEntity = undefined;
+
+        this.updateScene();
+    }
+
+    /**
      * Called when a long-tap occured on the map.
      * @param {Object} [options] An object with the following properties:
      * @param {Number} [options.latitude] Latitude of the long tap
@@ -3197,7 +3215,7 @@ export class MapView {
     }
 
     /**
-     * Called by the "hide" link in the info text are of the flying range cone.
+     * Called by the "hide" link in the info text of the flying range cone.
      */
     hideFlyingRangeCone() {
 
