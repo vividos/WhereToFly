@@ -52,9 +52,7 @@ export class HeightProfileView {
      * Creates a new instance of HeightProfileView
      * @constructor
      * @param {object} [options] Options to use for initializing height profile view
-     * @param {Number} [options.id] DOM ID of the canvas element to create height profile view in
-     * @param {Number} [options.containerId] DOM ID of the container that contains the chart and the
-     * toolbar
+     * @param {Number} [options.id] DOM ID of the element that will contain the height profile view
      * @param {boolean} [options.useDarkTheme] indicates if a dark theme should be used for the chart
      * @param {boolean} [options.setBodyBackgroundColor] indicates if body background should be themed
      * @param {boolean} [options.showCloseButton] indicates if a close button should be shown
@@ -69,8 +67,7 @@ export class HeightProfileView {
         this.isZoomAndPanActive = true;
 
         this.options = options || {
-            id: 'chartElement',
-            containerId: 'chartContainer',
+            id: 'heightProfileView',
             setBodyBackgroundColor: true,
             useDarkTheme: false,
             showCloseButton: false,
@@ -88,13 +85,9 @@ export class HeightProfileView {
         if (this.options.setBodyBackgroundColor)
             document.body.style.backgroundColor = this.backgroundColor;
 
-        let chartContainer = document.getElementById(this.options.containerId);
-        chartContainer.style.display = 'block';
+        const chartElementId = this.setupHeightProfileElement();
 
-        // also style the parent node, in case it's the standalone view
-        chartContainer.style.backgroundColor = this.backgroundColor;
-
-        let chartElement = document.getElementById(this.options.id);
+        let chartElement = document.getElementById(chartElementId);
         let ctx = chartElement.getContext('2d');
 
         let that = this;
@@ -207,6 +200,92 @@ export class HeightProfileView {
         chartButtonClose.style.display = this.options.showCloseButton ? 'block' : 'none';
 
         this.setModeZoomAndPan();
+    }
+
+    /**
+     * Sets up height profile elements, including toolbar and Chart.js element
+     */
+    setupHeightProfileElement() {
+
+        let heightProfileElement = document.getElementById(this.options.id);
+        heightProfileElement.style.display = 'block';
+
+        // style the parent node, in case it's the standalone view
+        heightProfileElement.style.backgroundColor = this.backgroundColor;
+
+        // add chart toolbar
+        let toolbarDiv = document.createElement('div');
+        toolbarDiv.classList.add('chart-toolbar-container');
+
+        heightProfileElement.appendChild(toolbarDiv);
+
+        // add all toolbar buttons, ordered from left to right
+        let closeButton = HeightProfileView.addChartToolbarButton(toolbarDiv,
+             'chartButtonClose',
+             'images/close.svg',
+             'close');
+        closeButton.addEventListener('click', this.hide.bind(this));
+
+        let resetZoomButton = HeightProfileView.addChartToolbarButton(toolbarDiv,
+            'chartButtonResetZoom',
+            'images/arrow-expand-horizontal.svg',
+            'reset');
+        resetZoomButton.addEventListener('click', this.resetZoom.bind(this));
+
+        let modeHoverButton = HeightProfileView.addChartToolbarButton(toolbarDiv,
+            'chartButtonModeHover',
+            'images/gesture-tap.svg',
+            'hover');
+        modeHoverButton.classList.add('chart-toolbar-button-disabled');
+        modeHoverButton.style = 'margin-left:0px;';
+        modeHoverButton.addEventListener('click', this.setModeHover.bind(this));
+
+        let modeZoomAndPan = HeightProfileView.addChartToolbarButton(toolbarDiv,
+            'chartButtonModeZoomAndPan',
+            'images/gesture-spread.svg',
+            'zoom and pan');
+        modeZoomAndPan.style = 'margin-right:0px;';
+        modeZoomAndPan.addEventListener('click', this.setModeZoomAndPan.bind(this));
+
+        // add the chart canvas inside a div
+        let chartDiv = document.createElement('div');
+        heightProfileElement.appendChild(chartDiv);
+
+        let chartCanvas = document.createElement('canvas');
+        chartCanvas.id = 'chartElement';
+        chartCanvas.classList.add('chart-canvas');
+        chartDiv.appendChild(chartCanvas);
+
+        return chartCanvas.id;
+    }
+
+    /**
+     * Adds a chart toolbar button to the given toolbar div
+     * @param {Element} toolbarDiv toolbar div element
+     * @param {string} toolbarButtonId DOM ID for toolbar button
+     * @param {string} toolbarImageSource image source for toolbar button
+     * @param {string} toolbarImageAltText alt text for image
+     * @returns created and added chart toolbar button
+     */
+    static addChartToolbarButton(toolbarDiv,
+        toolbarButtonId,
+        toolbarImageSource,
+        toolbarImageAltText) {
+
+        let buttonDiv = document.createElement('div');
+        buttonDiv.id = toolbarButtonId;
+        buttonDiv.classList.add('chart-toolbar-button');
+
+        let buttonImage = document.createElement('img');
+        buttonImage.src = toolbarImageSource;
+        buttonImage.alt = toolbarImageAltText;
+        buttonImage.classList.add('chart-toolbar-button-image');
+
+        buttonDiv.appendChild(buttonImage);
+
+        toolbarDiv.appendChild(buttonDiv);
+
+        return buttonDiv;
     }
 
     /**
@@ -409,9 +488,9 @@ export class HeightProfileView {
      */
     hide() {
 
-        let chartContainer = document.getElementById(this.options.containerId);
+        let heightProfileViewElement = document.getElementById(this.options.id);
 
-        chartContainer.style.display = 'none';
+        heightProfileViewElement.style.display = 'none';
 
         if (this.options.callback !== undefined)
             this.options.callback('onClose', null);
@@ -424,6 +503,11 @@ export class HeightProfileView {
 
         this.chart.stop();
         this.chart.destroy();
+
+        let heightProfileElement = document.getElementById(this.options.id);
+        while (heightProfileElement.firstChild)
+            heightProfileElement.removeChild(heightProfileElement.lastChild);
+
         this.options = undefined;
         this.chart = undefined;
     }

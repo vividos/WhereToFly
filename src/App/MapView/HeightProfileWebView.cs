@@ -144,8 +144,7 @@ namespace WhereToFly.App.MapView
 
             var options = new
             {
-                id = "chartElement",
-                containerId = "chartContainer",
+                id = "heightProfileView",
                 setBodyBackgroundColor = true,
                 useDarkTheme = this.UseDarkTheme,
             };
@@ -187,7 +186,7 @@ namespace WhereToFly.App.MapView
         private async Task ResizeViewHeight()
         {
             string result = await this.EvaluateJavaScriptAsync(
-                "javascript:document.getElementById('chartContainer').offsetHeight");
+                "javascript:document.getElementById('heightProfileView').offsetHeight");
 
             Debug.WriteLine($"ResizeView: set height to {result}");
 

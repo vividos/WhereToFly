@@ -21,6 +21,7 @@ export class MapView {
      * @param {String} [options.id] DOM ID of the div element to create map view in
      * @param {String} [options.messageBandId] DOM ID of the message band div element
      * @param {String} [options.liveTrackToolbarId] DOM ID of the live track toolbar div element
+     * @param {String} [options.heightProfileElementId] DOM ID of the height profile div element
      * @param {object} [options.initialCenterPoint] initial center point of map view
      * @param {double} [options.initialCenterPoint.latitude] latitude of center point
      * @param {double} [options.initialCenterPoint.longitude] longitude of center point
@@ -41,6 +42,7 @@ export class MapView {
         this.options = Object.assign({
             id: 'mapElement',
             liveTrackToolbarId: 'liveTrackToolbar',
+            heightProfileElementId: 'heightProfileView',
             initialCenterPoint: { latitude: 47.67, longitude: 11.88 },
             initialViewingDistance: 5000.0,
             hasMouse: false,
@@ -2952,8 +2954,7 @@ export class MapView {
 
         let that = this;
         this.heightProfileView = new HeightProfileView({
-            id: 'chartElement',
-            containerId: 'chartContainer',
+            id: this.options.heightProfileElementId,
             setBodyBackgroundColor: false,
             useDarkTheme: true,
             showCloseButton: true,

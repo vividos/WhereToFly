@@ -90,39 +90,7 @@
 
     <div class="toolbar-container toolbar-container-halftransparent">
         <div id="liveTrackToolbar" class="livetrack-toolbar-container" style="display:none"></div>
-
-        <div id="chartContainer" class="chart-and-toolbar-container chart-and-toolbar-container-outer" style="display:none">
-            <div class="chart-toolbar-container">
-                <div id="chartButtonClose"
-                     class="chart-toolbar-button"
-                     onclick="javascript:map.heightProfileView.hide();">
-                    <img class="chart-toolbar-button-image" src="images/close.svg" alt="close" />
-                </div>
-
-                <div id="chartButtonResetZoom"
-                     class="chart-toolbar-button"
-                     onclick="javascript:map.heightProfileView.resetZoom();">
-                    <img class="chart-toolbar-button-image" src="images/arrow-expand-horizontal.svg" alt="reset" />
-                </div>
-
-                <div id="chartButtonModeHover"
-                     class="chart-toolbar-button chart-toolbar-button-disabled"
-                     style="margin-left:0px;"
-                     onclick="javascript:map.heightProfileView.setModeHover();">
-                    <img class="chart-toolbar-button-image" src="images/gesture-tap.svg" alt="hover" />
-                </div>
-
-                <div id="chartButtonModeZoomAndPan"
-                     class="chart-toolbar-button"
-                     style="margin-right:0px;"
-                     onclick="javascript:map.heightProfileView.setModeZoomAndPan();">
-                    <img class="chart-toolbar-button-image" src="images/gesture-spread.svg" alt="zoom and pan" />
-                </div>
-            </div>
-            <div>
-                <canvas id="chartElement" class="chart-canvas"></canvas>
-            </div>
-        </div>
+        <div id="heightProfileView" class="chart-and-toolbar-container chart-and-toolbar-container-outer" style="display:none"></div>
     </div>
 
     <script type="module">
@@ -136,6 +104,7 @@
             id: 'mapElement',
             messageBandId: 'messageBand',
             liveTrackToolbarId: 'liveTrackToolbar',
+            heightProfileElementId: 'heightProfileView',
             callback: callAction,
             initialCenterPoint: { latitude: 47.6764385, longitude: 11.8710533 },
             initialViewingDistance: 5000.0

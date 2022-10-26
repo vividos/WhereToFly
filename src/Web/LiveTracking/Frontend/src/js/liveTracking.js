@@ -27,6 +27,7 @@ export default class LiveTracking {
         this.map = new MapView({
             id: 'mapElement',
             liveTrackToolbarId: 'liveTrackToolbar',
+            heightProfileElementId: 'heightProfileView',
             initialCenterPoint: { latitude: 47.083, longitude: 12.178 },
             initialViewingDistance: 5000.0,
             hasMouse: true,
