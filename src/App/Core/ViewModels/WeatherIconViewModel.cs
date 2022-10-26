@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -36,6 +37,11 @@ namespace WhereToFly.App.Core.ViewModels
         public ImageSource Icon { get; private set; }
 
         /// <summary>
+        /// Replace string map for SVG image (only used by the placeholder image)
+        /// </summary>
+        public Dictionary<string, string> ReplaceStringMap { get; private set; }
+
+        /// <summary>
         /// Command that is carried out when weather icon has been tapped.
         /// </summary>
         public ICommand Tapped { get; internal set; }
@@ -62,6 +68,16 @@ namespace WhereToFly.App.Core.ViewModels
         private void SetupBindings()
         {
             this.Tapped = new AsyncCommand(this.OpenWeatherIconTargetAsync);
+
+            this.ReplaceStringMap =
+                App.Current.RequestedTheme == OSAppTheme.Dark
+                ? new Dictionary<string, string>
+                {
+                    { "fill=\"#000000", "fill=\"#ffffff" },
+                }
+                : new Dictionary<string, string> {
+                    { "fill=\"#ffffff", "fill=\"#000000" },
+                };
 
             Task.Run(async () =>
             {
