@@ -2961,6 +2961,7 @@ export class MapView {
             setBodyBackgroundColor: false,
             useDarkTheme: true,
             showCloseButton: true,
+            isFlightTrack: trackData.track.isFlightTrack,
             colorFromVarioValue: function (varioValue) {
                 return that.trackColorFromVarioValue(varioValue).toCssColorString();
             },

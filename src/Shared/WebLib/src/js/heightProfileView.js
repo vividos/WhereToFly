@@ -56,6 +56,8 @@ export class HeightProfileView {
      * @param {boolean} [options.useDarkTheme] indicates if a dark theme should be used for the chart
      * @param {boolean} [options.setBodyBackgroundColor] indicates if body background should be themed
      * @param {boolean} [options.showCloseButton] indicates if a close button should be shown
+     * @param {boolean} [options.isFlightTrack] indicates if track is a flight track and vario
+     * value should be shown
      * @param {Function} [options.colorFromVarioValue] function to get a color from vario value; may
      * be undefined
      * @param {Function} [options.callback] action function callback
@@ -71,6 +73,7 @@ export class HeightProfileView {
             setBodyBackgroundColor: true,
             useDarkTheme: false,
             showCloseButton: false,
+            isFlightTrack: false,
             callback: {}
         };
 
@@ -638,7 +641,8 @@ export class HeightProfileView {
             text += "<div>AGL: " + (values.trackHeight - values.groundHeight).toFixed(1) + "m</div>";
         }
 
-        if (values.varioValue !== undefined) {
+        if (this.options.isFlightTrack &&
+            values.varioValue !== undefined) {
 
             text += "<div>Vario: " + values.varioValue.toFixed(1) + "m/s ";
 
