@@ -13,8 +13,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config webpack.config.js",
     "build-release": "webpack --config webpack.prod.config.js",
-    "build-es5": "webpack --config webpack.es5.config.js",
-    "build-es5-release": "webpack --config webpack.es5.prod.config.js",
     "serve": "webpack serve",
     "watch": "webpack --watch"
   },
@@ -25,10 +23,6 @@
   "author": "vividos",
   "license": "BSD-3-Clause",
   "devDependencies": {
-    "@babel/cli": "^7.19.3",
-    "@babel/core": "^7.19.3",
-    "@babel/preset-env": "^7.19.4",
-    "babel-loader": "^8.2.5",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.1",
     "css-minimizer-webpack-plugin": "^4.2.2",
@@ -46,7 +40,6 @@
     "chartjs-adapter-moment": "^1.0.0",
     "chartjs-plugin-crosshair": "^1.2.0",
     "chartjs-plugin-zoom": "^1.2.1",
-    "core-js": "^3.25.5",
     "moment": "^2.29.4"
   }
 }

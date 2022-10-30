@@ -16,25 +16,11 @@
   <Import Project="..\..\WhereToFly.NpmBuildProject.targets" />
   <!-- end of npm frontend project integration -->
 
-  <Target Name="NpmRunEs5Build"
-          BeforeTargets="Build"
-          DependsOnTargets="NpmRunBuild"
-          Condition=" '$(OS)' == 'Windows_NT' ">
-    <Exec Condition=" '$(Configuration)' == 'Debug' " WorkingDirectory="$(NpmProjectPath)" Command="npm run build-es5" />
-    <Exec Condition=" '$(Configuration)' == 'Release' " WorkingDirectory="$(NpmProjectPath)" Command="npm run build-es5-release" />
-  </Target>
-
-  <Target Name="NpmCleanEs5" AfterTargets="Clean">
-    <RemoveDir Directories="dist-es5\" />
-  </Target>
-
   <ItemGroup>
     <EmbeddedResource Remove="bin\**" />
-    <EmbeddedResource Remove="dist-es5\**" />
     <EmbeddedResource Remove="dist\**" />
     <EmbeddedResource Remove="obj\**" />
     <None Remove="bin\**" />
-    <None Remove="dist-es5\**" />
     <None Remove="dist\**" />
     <None Remove="obj\**" />
   </ItemGroup>
