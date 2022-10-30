@@ -320,9 +320,13 @@ namespace WhereToFly.App.MapView
         /// <param name="args">event args</param>
         private void OnNavigated(object sender, WebNavigatedEventArgs args)
         {
-            this.Navigated -= this.OnNavigated;
+            if (args.Url.Contains("/mapView.html") &&
+                args.Result == WebNavigationResult.Success)
+            {
+                this.Navigated -= this.OnNavigated;
 
-            this.taskCompletionSourcePageLoaded.SetResult(true);
+                this.taskCompletionSourcePageLoaded.SetResult(true);
+            }
         }
 
         /// <summary>

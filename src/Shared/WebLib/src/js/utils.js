@@ -7,5 +7,5 @@ export function callAction(funcName, params) {
     else if (typeof callback === "object")
         window.callback.call(funcName, JSON.stringify(params));
     else
-        window.external.notify('callback://' + funcName + '/' + JSON.stringify(params));
+        window.location.href = "callback://" + funcName + "/" + JSON.stringify(params);
 }

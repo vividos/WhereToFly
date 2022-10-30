@@ -62,8 +62,8 @@
   <!-- add UWP assets using Content build action -->
   <ItemGroup Condition=" $(TargetFramework.StartsWith('uap10.0')) ">
     <Compile Include="uwp\*.cs" />
-    <Content Include="..\..\Shared\WebLib\dist-es5\**\*.*"
-             Exclude="..\..\Shared\WebLib\dist-es5\**\*.map">
+    <Content Include="..\..\Shared\WebLib\dist\**\*.*"
+             Exclude="..\..\Shared\WebLib\dist\**\*.map">
       <Link>Assets\weblib\%(RecursiveDir)\%(FileName)%(Extension)</Link>
     </Content>
     <SDKReference Include="WindowsMobile, Version=10.0.19041.0">

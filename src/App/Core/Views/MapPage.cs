@@ -280,7 +280,8 @@ namespace WhereToFly.App.Core.Views
         private void OnNavigating_WebView(object sender, WebNavigatingEventArgs args)
         {
             if (args.NavigationEvent == WebNavigationEvent.NewPage &&
-                args.Url.StartsWith("http"))
+                args.Url.StartsWith("http") &&
+                !args.Url.Contains("https://localapp/"))
             {
                 Xamarin.Essentials.Browser.OpenAsync(
                     args.Url,

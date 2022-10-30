@@ -9,10 +9,10 @@ namespace WhereToFly.App.MapView
     internal partial class WebViewSourceFactory
     {
         /// <summary>
-        /// Base path to use in WebView control, for UWP
+        /// Base path to use in WebView control, for UWP + WebView2
         /// </summary>
 #pragma warning disable S1075 // URIs should not be hardcoded
-        private const string WebViewBasePath = "ms-appx-web:///WhereToFly.App.MapView/Assets/";
+        private const string WebViewBasePath = "https://localapp/WhereToFly.App.MapView/Assets/";
 #pragma warning restore S1075 // URIs should not be hardcoded
 
         /// <summary>
