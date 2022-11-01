@@ -1,4 +1,4 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -63,6 +63,7 @@ namespace WhereToFly.App.UnitTest
                     GlideRatio = 9.0,
                     WindDirection = 270,
                     WindSpeed = 15.0,
+                    AltitudeOffset = 50,
                 },
             };
         }

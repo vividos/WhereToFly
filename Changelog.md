@@ -7,6 +7,7 @@ Released on ?.
 ✨ New Features / Improvements
 
 - The "find result" pin can now be hidden again
+- Added "altitude offset" to Flying Range dialog
 - using CesiumJS version 1.98.1
 
 🐛 Bugfixes

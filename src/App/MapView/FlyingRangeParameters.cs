@@ -27,6 +27,11 @@ namespace WhereToFly.App.MapView
         /// </summary>
         public double WindDirection { get; set; } = 0.0;
 
+        /// <summary>
+        /// Altitude offset, in meter above selected point
+        /// </summary>
+        public int AltitudeOffset { get; set; } = 0;
+
         #region object overridables implementation
 
         /// <summary>
@@ -37,7 +42,8 @@ namespace WhereToFly.App.MapView
             (this.GlideRatio,
             this.GliderSpeed,
             this.WindSpeed,
-            this.WindDirection).GetHashCode();
+            this.WindDirection,
+            this.AltitudeOffset).GetHashCode();
 
         /// <summary>
         /// Compares this app settings to another object
@@ -60,11 +66,13 @@ namespace WhereToFly.App.MapView
             (this.GlideRatio,
             this.GliderSpeed,
             this.WindSpeed,
-            this.WindDirection) ==
+            this.WindDirection,
+            this.AltitudeOffset) ==
             (other.GlideRatio,
             other.GliderSpeed,
             other.WindSpeed,
-            other.WindDirection);
+            other.WindDirection,
+            this.AltitudeOffset);
         #endregion
 
         /// <summary>

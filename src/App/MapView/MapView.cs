@@ -1026,13 +1026,20 @@ namespace WhereToFly.App.MapView
         /// <param name="parameters">flying range parameters</param>
         public void ShowFlyingRange(MapPoint point, FlyingRangeParameters parameters)
         {
+            Debug.Assert(
+                point.Altitude.HasValue,
+                "point must specify an altitude");
+
+            double finalAltitude =
+                (point.Altitude ?? 0.0) + parameters.AltitudeOffset;
+
             var options = new
             {
                 latitude = point.Latitude,
                 longitude = point.Longitude,
                 displayLatitude = GeoDataFormatter.FormatLatLong(point.Latitude, this.CoordinateDisplayFormat),
                 displayLongitude = GeoDataFormatter.FormatLatLong(point.Longitude, this.CoordinateDisplayFormat),
-                altitude = point.Altitude ?? 0.0,
+                altitude = finalAltitude,
                 glideRatio = parameters.GlideRatio,
                 gliderSpeed = parameters.GliderSpeed,
                 windDirection = parameters.WindDirection,

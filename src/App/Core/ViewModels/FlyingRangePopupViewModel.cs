@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Models;
@@ -72,6 +72,22 @@ namespace WhereToFly.App.Core.ViewModels
                 {
                     this.Parameters.WindSpeed = windSpeed;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Altitude offset as text
+        /// </summary>
+        public string AltitudeOffset
+        {
+            get => this.Parameters.AltitudeOffset.ToString();
+            set
+            {
+                this.Parameters.AltitudeOffset = string.IsNullOrEmpty(value)
+                    ? 0
+                    : int.Parse(value);
+
+                this.OnPropertyChanged(nameof(this.AltitudeOffset));
             }
         }
         #endregion
