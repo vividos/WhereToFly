@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using WhereToFly.App.Core.Models;
-using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.ViewModels;
 using Xamarin.Forms;
 
