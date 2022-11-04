@@ -192,7 +192,7 @@
       <Version>2.8.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Web.WebView2">
-      <Version>1.0.1370.28</Version>
+      <Version>1.0.1418.22</Version>
     </PackageReference>
     <PackageReference Include="Rg.Plugins.Popup">
       <Version>2.1.0</Version>
