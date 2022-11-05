@@ -1,6 +1,6 @@
 ﻿# Changelog
 
-## Version 1.14.0
+## Version 1.14.0 "New Zealand 2022/2023" edition
 
 Released on ?.
 
