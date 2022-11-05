@@ -22,9 +22,9 @@ namespace WhereToFly.WebApi.Logic.Services
         /// <summary>
         /// Service URL for inReach service; single parameter is the MapShare identifier which
         /// can be configured on the "Social" tab of the inReach page, at
-        /// https://inreach.garmin.com/Social
+        /// https://explore.garmin.com/Social
         /// </summary>
-        private const string InreachServiceUrl = "https://inreach.garmin.com/feed/Share/{0}";
+        private const string InreachServiceUrl = "https://explore.garmin.com/feed/Share/{0}";
 
         /// <summary>
         /// Web page URL for MapShare
