@@ -12,4 +12,4 @@ The Where-to-fly GitHub project can be found here:
 
 Current version: %VERSION%
 
-Image: Abisko National Park and Lapporten valley, Lapland, Sweden.
+Image: Above Lake Wanaka and Roys Peak, South Island, New Zealand.
