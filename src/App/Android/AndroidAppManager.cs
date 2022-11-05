@@ -134,11 +134,16 @@ namespace WhereToFly.App.Android
             Bitmap bitmap;
             if (drawable.IntrinsicWidth <= 0 || drawable.IntrinsicHeight <= 0)
             {
-                bitmap = Bitmap.CreateBitmap(1, 1, Bitmap.Config.Argb8888); // Single color bitmap will be created of 1x1 pixel
+                bitmap = Bitmap.CreateBitmap(1, 1, Bitmap.Config.Argb8888!); // Single color bitmap will be created of 1x1 pixel
             }
             else
             {
-                bitmap = Bitmap.CreateBitmap(drawable.IntrinsicWidth, drawable.IntrinsicHeight, Bitmap.Config.Argb8888);
+                bitmap = Bitmap.CreateBitmap(drawable.IntrinsicWidth, drawable.IntrinsicHeight, Bitmap.Config.Argb8888!);
+            }
+
+            if (bitmap == null)
+            {
+                return null;
             }
 
             var canvas = new Canvas(bitmap);

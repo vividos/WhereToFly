@@ -112,8 +112,8 @@ namespace WhereToFly.App.Android
         /// <param name="savedInstanceState">bundle parameter; unused</param>
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            FormsAppCompatActivity.TabLayoutResource = Resource.Layout.Tabbar;
-            FormsAppCompatActivity.ToolbarResource = Resource.Layout.Toolbar;
+            TabLayoutResource = Resource.Layout.Tabbar;
+            ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
 
@@ -250,12 +250,12 @@ namespace WhereToFly.App.Android
                     {
                         var view = Core.App.Current?.MainPage?.GetRenderer()?.View;
 
-                        view ??= this.Window.DecorView;
-                        Snackbar.Make(this, view, message, Snackbar.LengthShort).Show();
+                        view ??= this.Window?.DecorView;
+                        Snackbar.Make(this, view, message, Snackbar.LengthShort)?.Show();
                     }
                     else
                     {
-                        Toast.MakeText(this, message, ToastLength.Long).Show();
+                        Toast.MakeText(this, message, ToastLength.Long)?.Show();
                     }
                 });
         }

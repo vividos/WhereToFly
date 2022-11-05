@@ -75,7 +75,8 @@ namespace WhereToFly.App.Core.ViewModels
                 {
                     { "fill=\"#000000", "fill=\"#ffffff" },
                 }
-                : new Dictionary<string, string> {
+                : new Dictionary<string, string>
+                {
                     { "fill=\"#ffffff", "fill=\"#000000" },
                 };
 
@@ -108,7 +109,12 @@ namespace WhereToFly.App.Core.ViewModels
                     break;
 
                 case WeatherIconDescription.IconType.IconPlaceholder:
-                    await this.funcAddWeatherIcon?.Invoke();
+                    var task = this.funcAddWeatherIcon?.Invoke();
+                    if (task != null)
+                    {
+                        await task;
+                    }
+
                     break;
 
                 default:

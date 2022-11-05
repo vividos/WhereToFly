@@ -33,14 +33,14 @@ namespace WhereToFly.App.Core.Controls
         /// </summary>
         /// <param name="value">string value to convert</param>
         /// <returns>converted ImageSource object</returns>
-        public override object? ConvertFromInvariantString(string value)
+        public override object? ConvertFromInvariantString(string? value)
         {
             if (string.IsNullOrWhiteSpace(value))
             {
                 return null;
             }
 
-            string text = value;
+            string text = value!;
 
             if (text.StartsWith(SvgConstants.ResourceUriPrefix, StringComparison.InvariantCultureIgnoreCase))
             {

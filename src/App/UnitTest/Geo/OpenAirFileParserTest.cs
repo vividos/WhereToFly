@@ -125,6 +125,8 @@ namespace WhereToFly.App.UnitTest.Geo
                     Assert.IsFalse(parser.ParsingErrors.Any(), "there must be no parsing errors");
 
                     var circle = parser.Airspaces.First().Geometry as Circle;
+
+                    Assert.IsNotNull(circle, "returned circle must be non-null");
                     Assert.IsNotNull(circle.Center, "circle center must not be null");
 
                     Debug.WriteLine($"coordinates {coordinate} was parsed to: {circle.Center.Latitude}/{circle.Center.Longitude}");

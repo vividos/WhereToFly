@@ -152,12 +152,18 @@ namespace WhereToFly.App.UnitTest
             var mapPoint3a = JsonConvert.DeserializeObject<MapPoint>(json3);
 
             // check
+            Assert.IsNotNull(mapPoint1a, "returned value must not be null");
+            Assert.IsNotNull(mapPoint2a, "returned value must not be null");
+            Assert.IsNotNull(mapPoint3a, "returned value must not be null");
+
             Assert.AreEqual(mapPoint1.Latitude, mapPoint1a.Latitude, 1e-6, "latitude of map point 1 must match");
             Assert.AreEqual(mapPoint1.Longitude, mapPoint1a.Longitude, 1e-6, "longitude of map point 1 must match");
             Assert.AreEqual(mapPoint1.Altitude.HasValue, mapPoint1a.Altitude.HasValue, "altitude of map point 1 must be set");
 
             Assert.AreEqual(mapPoint2.Latitude, mapPoint2a.Latitude, 1e-6, "latitude of map point 2 must match");
             Assert.AreEqual(mapPoint2.Longitude, mapPoint2a.Longitude, 1e-6, "longitude of map point 2 must match");
+            Assert.IsTrue(mapPoint2.Altitude.HasValue, "altitude must be set");
+            Assert.IsTrue(mapPoint2a.Altitude.HasValue, "altitude must be set");
             Assert.AreEqual(mapPoint2.Altitude.HasValue, mapPoint2a.Altitude.HasValue, "altitude of map point 2 must be set");
             Assert.AreEqual(mapPoint2.Altitude.Value, mapPoint2a.Altitude.Value, 1e-6, "altitude of map point 2 must match");
 

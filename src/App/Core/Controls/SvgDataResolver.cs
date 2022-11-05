@@ -19,7 +19,7 @@ namespace WhereToFly.App.Core.Controls
         /// <summary>
         /// Cache for SKSvg objects
         /// </summary>
-        private static Dictionary<string, SKSvg> svgCache = new();
+        private static readonly Dictionary<string, SKSvg> SvgCache = new();
 
         /// <summary>
         /// Loads SVG image from given image source
@@ -27,7 +27,7 @@ namespace WhereToFly.App.Core.Controls
         /// <param name="source">image source to use for loading</param>
         /// <returns>loaded SVG image object</returns>
         /// <exception cref="Exception">thrown when loading has failed</exception>
-        public static async Task<SKSvg?> LoadSvgImage(ImageSource source)
+        public static async Task<SKSvg?> LoadSvgImage(ImageSource? source)
         {
             switch (source)
             {
@@ -65,9 +65,9 @@ namespace WhereToFly.App.Core.Controls
             if (stream is FileStream fileStream)
             {
                 cacheKey = "FileStream:" + fileStream.Name;
-                if (svgCache.ContainsKey(cacheKey))
+                if (SvgCache.ContainsKey(cacheKey))
                 {
-                    return svgCache[cacheKey];
+                    return SvgCache[cacheKey];
                 }
             }
 
@@ -76,7 +76,7 @@ namespace WhereToFly.App.Core.Controls
 
             if (cacheKey != null)
             {
-                svgCache[cacheKey] = svg;
+                SvgCache[cacheKey] = svg;
             }
 
             return svg;
@@ -107,9 +107,9 @@ namespace WhereToFly.App.Core.Controls
             string text = uri.OriginalString;
 
             string cacheKey = "DataUri:" + text;
-            if (svgCache.ContainsKey(cacheKey))
+            if (SvgCache.ContainsKey(cacheKey))
             {
-                return svgCache[cacheKey];
+                return SvgCache[cacheKey];
             }
 
             string? svgText = null;
@@ -121,7 +121,7 @@ namespace WhereToFly.App.Core.Controls
             {
                 svgText = text.Substring(SvgConstants.DataUriBase64Prefix.Length);
 
-                var base64EncodedBytes = Convert.FromBase64String(svgText);
+                byte[] base64EncodedBytes = Convert.FromBase64String(svgText);
                 svgText = Encoding.UTF8.GetString(base64EncodedBytes);
             }
 
@@ -134,7 +134,7 @@ namespace WhereToFly.App.Core.Controls
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(svgText));
             svg.Load(stream);
 
-            svgCache[cacheKey] = svg;
+            SvgCache[cacheKey] = svg;
 
             return svg;
         }
@@ -147,15 +147,15 @@ namespace WhereToFly.App.Core.Controls
         private static SKSvg LoadImageFromFile(string filename)
         {
             string cacheKey = "Filename:" + filename;
-            if (svgCache.ContainsKey(cacheKey))
+            if (SvgCache.ContainsKey(cacheKey))
             {
-                return svgCache[cacheKey];
+                return SvgCache[cacheKey];
             }
 
             var svg = new SKSvg();
             svg.Load(filename);
 
-            svgCache[cacheKey] = svg;
+            SvgCache[cacheKey] = svg;
 
             return svg;
         }

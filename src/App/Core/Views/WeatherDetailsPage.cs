@@ -48,17 +48,19 @@ namespace WhereToFly.App.Core.Views
 
                     VerticalOptions = LayoutOptions.FillAndExpand,
                     HorizontalOptions = LayoutOptions.FillAndExpand,
+                    AutomationId = "WeatherDetailsWebView"
                 };
 
-                webView.AutomationId = "WeatherDetailsWebView";
                 webView.Navigated += async (sender, args) => await this.OnNavigated_WebView(sender, args);
 
                 this.Content = webView;
             }
             else
             {
-                var webView = this.Content as WebView;
-                webView.Source = urlSource;
+                if (this.Content is WebView webView)
+                {
+                    webView.Source = urlSource;
+                }
             }
         }
 
@@ -120,7 +122,7 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         private void AddRefreshToolbarButton()
         {
-            ToolbarItem refreshButton = new ToolbarItem(
+            var refreshButton = new ToolbarItem(
                 "Refresh",
                 Converter.ImagePathConverter.GetDeviceDependentImage("refresh"),
                 () => this.OnClicked_ToolbarButtonRefresh(),
@@ -137,8 +139,10 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         private void OnClicked_ToolbarButtonRefresh()
         {
-            var webView = this.Content as WebView;
-            webView.Reload();
+            if (this.Content is WebView webView)
+            {
+                webView.Reload();
+            }
         }
 
         /// <summary>
@@ -147,7 +151,7 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         private void AddWeatherForecastToolbarButton()
         {
-            ToolbarItem forecastButton = new ToolbarItem(
+            var forecastButton = new ToolbarItem(
                 "Forecast",
                 Converter.ImagePathConverter.GetDeviceDependentImage("calendar_clock"),
                 async () => await this.OnClicked_ToolbarButtonWeatherForecast(),
@@ -173,7 +177,7 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         private void AddCurrentWeatherToolbarButton()
         {
-            ToolbarItem weatherButton = new ToolbarItem(
+            var weatherButton = new ToolbarItem(
                 "Weather",
                 Converter.ImagePathConverter.GetDeviceDependentImage("weather_partlycloudy"),
                 async () => await this.OnClicked_ToolbarButtonCurrentWeather(),
@@ -199,7 +203,7 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         private void AddWebcamsToolbarButton()
         {
-            ToolbarItem webcamsButton = new ToolbarItem(
+            var webcamsButton = new ToolbarItem(
                 "Webcams",
                 Converter.ImagePathConverter.GetDeviceDependentImage("camera"),
                 async () => await this.OnClicked_ToolbarButtonWebcams(),

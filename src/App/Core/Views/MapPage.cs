@@ -121,7 +121,7 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         private void AddLocateMeToolbarButton()
         {
-            ToolbarItem locateMeButton = new ToolbarItem(
+            var locateMeButton = new ToolbarItem(
                 "Locate me",
                 Converter.ImagePathConverter.GetDeviceDependentImage("crosshairs_gps"),
                 async () => await this.OnClicked_ToolbarButtonLocateMe(),
@@ -166,7 +166,7 @@ namespace WhereToFly.App.Core.Views
 
                 this.mapView.UpdateMyLocation(
                     point,
-                    (int)position.Accuracy,
+                    (int)(position.Accuracy ?? 10000),
                     (position.Speed ?? 0.0) * Geo.Constants.FactorMeterPerSecondToKilometerPerHour,
                     position.Timestamp,
                     zoomToLocation: true);
@@ -183,7 +183,7 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         private void AddFindLocationToolbarButton()
         {
-            ToolbarItem currentPositionDetailsButton = new ToolbarItem(
+            var currentPositionDetailsButton = new ToolbarItem(
                 "Find location",
                 Converter.ImagePathConverter.GetDeviceDependentImage("magnify"),
                 async () => await this.OnClicked_ToolbarButtonFindLocation(),
@@ -739,6 +739,10 @@ namespace WhereToFly.App.Core.Views
         private async Task AddTourPlanningLocationAsync(Location location)
         {
             Debug.Assert(location != null, "passed location must be non-null");
+            if (location == null)
+            {
+                return;
+            }
 
             this.planTourParameters.WaypointIdList.Add(location.Id);
 
@@ -825,7 +829,7 @@ namespace WhereToFly.App.Core.Views
             {
                 this.mapView.UpdateMyLocation(
                     point,
-                    (int)args.Position.Accuracy,
+                    (int)(args.Position.Accuracy ?? 10000),
                     (args.Position.Speed ?? 0.0) * Geo.Constants.FactorMeterPerSecondToKilometerPerHour,
                     args.Position.Timestamp,
                     zoomToPosition);

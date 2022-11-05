@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using WhereToFly.Geo.Model;
 
@@ -71,6 +72,7 @@ namespace WhereToFly.App.UnitTest
             var locationList2 = JsonConvert.DeserializeObject<List<Location>>(json);
 
             // check
+            Assert.IsNotNull(locationList2, "returned location list must be non-null");
             Assert.AreEqual(locationList.Count, locationList2.Count, "length of lists must be equal");
             ////Assert.AreEqual(locationList.First(), locationList2.First(), "single entry must be equal");
         }

@@ -46,7 +46,7 @@ namespace WhereToFly.App.UWP
         {
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
-            if (!(Window.Current.Content is Frame rootFrame))
+            if (Window.Current.Content is not Frame rootFrame)
             {
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
@@ -103,10 +103,10 @@ namespace WhereToFly.App.UWP
         /// <param name="args">event args</param>
         protected override void OnActivated(IActivatedEventArgs args)
         {
-            if (args.Kind == ActivationKind.Protocol)
+            if (args.Kind == ActivationKind.Protocol &&
+                args is ProtocolActivatedEventArgs eventArgs &&
+                eventArgs.Uri?.AbsoluteUri != null)
             {
-                var eventArgs = args as ProtocolActivatedEventArgs;
-
                 Core.App.OpenAppResourceUri(eventArgs.Uri.AbsoluteUri);
             }
         }
@@ -119,10 +119,10 @@ namespace WhereToFly.App.UWP
         {
             this.SetupRootFrame(args, null);
 
-            if (args.Files.Count > 0)
+            if (args.Files.Count > 0 &&
+                args.Files[0] is StorageFile file &&
+                !string.IsNullOrEmpty(file.Name))
             {
-                var file = args.Files[0] as StorageFile;
-
                 Core.App.RunOnUiThread(async () =>
                 {
                     using var stream = await file.OpenStreamForReadAsync();

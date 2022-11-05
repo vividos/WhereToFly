@@ -118,6 +118,7 @@ namespace WhereToFly.App.UnitTest.Shared
             AppResourceUri uri2 = JsonConvert.DeserializeObject<AppResourceUri>(json);
 
             // check
+            Assert.IsNotNull(uri2, "returned uri must be non-null");
             Assert.IsTrue(uri2.IsValid, "deserialized uri must be valid");
             Assert.AreEqual(uri, uri2, "uris must be equal");
         }

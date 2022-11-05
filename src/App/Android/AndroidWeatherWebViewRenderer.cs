@@ -135,8 +135,11 @@ namespace WhereToFly.App.Android
             request.SetTitle(filename);
             request.SetDescription("Downloading file...");
 
-            var cookie = CookieManager.Instance.GetCookie(url);
-            request.AddRequestHeader("Cookie", cookie);
+            string cookie = CookieManager.Instance?.GetCookie(url);
+            if (string.IsNullOrEmpty(cookie))
+            {
+                request.AddRequestHeader("Cookie", cookie);
+            }
 
             if (global::Android.OS.Build.VERSION.SdkInt < global::Android.OS.BuildVersionCodes.Q)
             {
@@ -153,10 +156,13 @@ namespace WhereToFly.App.Android
 
             request.SetNotificationVisibility(DownloadVisibility.VisibleNotifyCompleted);
 
-            var downloadManager = (DownloadManager)this.Context.GetSystemService(Context.DownloadService);
-            downloadManager.Enqueue(request);
+            var downloadManager = (DownloadManager)this.Context?.GetSystemService(Context.DownloadService);
+            downloadManager?.Enqueue(request);
 
-            Toast.MakeText(this.Context, "Image download started...", ToastLength.Short).Show();
+            Toast.MakeText(
+                this.Context,
+                "Image download started...",
+                ToastLength.Short)?.Show();
         }
 
         #region IDisposable Support

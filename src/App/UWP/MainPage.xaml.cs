@@ -51,10 +51,10 @@ namespace WhereToFly.App.UWP
             if (args.DataView.Contains(StandardDataFormats.StorageItems))
             {
                 var items = await args.DataView.GetStorageItemsAsync();
-                if (items.Count > 0)
+                if (items.Count > 0 &&
+                    items[0] is StorageFile file &&
+                    !string.IsNullOrEmpty(file.Name))
                 {
-                    var file = items[0] as StorageFile;
-
                     Core.App.RunOnUiThread(async () =>
                     {
                         using var stream = await file.OpenStreamForReadAsync();

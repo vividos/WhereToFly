@@ -1,4 +1,4 @@
-using AndroidX.AppCompat.App;
+﻿using AndroidX.AppCompat.App;
 using System;
 using System.IO;
 using WhereToFly.App.Core;
@@ -27,7 +27,7 @@ namespace WhereToFly.App.Android
         {
             var assetManager = global::Android.App.Application.Context.Assets;
 
-            return assetManager.Open(assetFilename);
+            return assetManager?.Open(assetFilename);
         }
 
         /// <summary>

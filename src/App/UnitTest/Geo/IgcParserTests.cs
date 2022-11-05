@@ -58,7 +58,7 @@ namespace WhereToFly.App.UnitTest.Geo
             };
 
             // run
-            foreach (var lineToParse in lines)
+            foreach (string lineToParse in lines)
             {
                 string line = lineToParse + "\r\n" + "B0903544724034N01052829EA009300100900108000";
 
@@ -73,6 +73,10 @@ namespace WhereToFly.App.UnitTest.Geo
                 Assert.AreEqual(1, track.TrackPoints.Count, "there must be one track point");
 
                 var trackPoint = track.TrackPoints[0];
+
+                Assert.IsNotNull(trackPoint, "track point must be non-null");
+                Assert.IsTrue(trackPoint.Time.HasValue, "track point must have a time value");
+
                 var date = trackPoint.Time.Value.Date;
 
                 Assert.AreEqual(expectedDate, date);

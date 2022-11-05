@@ -80,6 +80,11 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
                 {
                     this.AppSettings = JsonConvert.DeserializeObject<AppSettings>(value);
 
+                    if (this.AppSettings == null)
+                    {
+                        this.AppSettings = new AppSettings();
+                    }
+
                     if (this.AppSettings.LastLocationFilterSettings == null)
                     {
                         this.AppSettings.LastLocationFilterSettings = new LocationFilterSettings();
@@ -200,7 +205,11 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
                 return this.appSettings;
             }
 
-            var appDataEntry = await this.connection.Table<AppDataEntry>()?.FirstOrDefaultAsync();
+            var task = this.connection?
+                .Table<AppDataEntry>()?
+                .FirstOrDefaultAsync();
+
+            AppDataEntry appDataEntry = task != null ? await task : null;
             this.appSettings = appDataEntry?.AppSettings;
 
             if (this.appSettings == null)
@@ -242,10 +251,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         /// <returns>track data service</returns>
         public ITrackDataService GetTrackDataService()
         {
-            if (this.trackDataService == null)
-            {
-                this.trackDataService = new TrackDataService(this.connection);
-            }
+            this.trackDataService ??= new TrackDataService(this.connection);
 
             return this.trackDataService;
         }

@@ -115,7 +115,7 @@ namespace WhereToFly.App.Core.Services
                 Debug.Assert(parameter != null, "passed parameter must be non-null");
 
                 Debug.Assert(
-                    parameterType.FullName == parameter.GetType().FullName,
+                    parameterType.FullName == parameter!.GetType().FullName,
                     "passed parameter must be of the correct type " + parameterType.Name);
             }
 
@@ -137,6 +137,10 @@ namespace WhereToFly.App.Core.Services
             where TResult : class
         {
             Debug.Assert(this.NavigationPage != null, "NavigationPage property must have been set");
+            if (this.NavigationPage == null)
+            {
+                throw new InvalidOperationException("Navigation page wasn't initialized properly");
+            }
 
             if (!MainThread.IsMainThread)
             {
@@ -204,6 +208,10 @@ namespace WhereToFly.App.Core.Services
         public async Task GoBack()
         {
             Debug.Assert(this.NavigationPage != null, "NavigationPage property must have been set");
+            if (this.NavigationPage == null)
+            {
+                throw new InvalidOperationException("Navigation page wasn't initialized properly");
+            }
 
             if (!MainThread.IsMainThread)
             {
@@ -226,6 +234,10 @@ namespace WhereToFly.App.Core.Services
         public async Task NavigateAsync(Type pageType, bool animated, object parameter = null)
         {
             Debug.Assert(this.NavigationPage != null, "NavigationPage property must have been set");
+            if (this.NavigationPage == null)
+            {
+                throw new InvalidOperationException("Navigation page wasn't initialized properly");
+            }
 
             if (!MainThread.IsMainThread)
             {

@@ -157,6 +157,7 @@ namespace WhereToFly.App.UnitTest.Views
             var parameters = JsonConvert.DeserializeObject<AddFindResultParameter>(jsonParameters);
 
             // check
+            Assert.IsNotNull(parameters, "returned parameters must be non-null");
             Assert.AreEqual("find result", parameters.Name, "deserialized name must match");
             Assert.AreEqual(48.2, parameters.Latitude, 1e-6, "deserialized latitude must match");
             Assert.AreEqual(11.8, parameters.Longitude, 1e-6, "deserialized longitude must match");

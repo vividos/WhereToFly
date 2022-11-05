@@ -82,6 +82,14 @@ namespace WhereToFly.App.UnitTest.Geo
             var times2 = SunCalc.GetTimes(date, latitude, longitude, 100.0);
 
             // check
+            Assert.IsNotNull(times1, "times object must be non-null");
+            Assert.IsNotNull(times2, "times object must be non-null");
+
+            Assert.IsTrue(times1.Sunrise.HasValue, "sunrise 1 must have a value");
+            Assert.IsTrue(times2.Sunrise.HasValue, "sunrise 2 must have a value");
+            Assert.IsTrue(times1.Sunset.HasValue, "sunset 1 must have a value");
+            Assert.IsTrue(times2.Sunset.HasValue, "sunset 2 must have a value");
+
             TimeSpan deltaSunrise = times2.Sunrise.Value - times1.Sunrise.Value;
             TimeSpan deltaSunset = times2.Sunset.Value - times1.Sunset.Value;
 

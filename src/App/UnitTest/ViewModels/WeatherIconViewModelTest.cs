@@ -73,6 +73,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
 
             // check
             var appManager = DependencyService.Get<IAppManager>() as UnitTestAppManager;
+            Assert.IsNotNull(appManager, "app manager must be non-null");
             Assert.IsTrue(appManager.AppHasBeenOpened, "app must have been opened");
         }
 

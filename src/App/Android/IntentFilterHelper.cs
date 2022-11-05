@@ -36,20 +36,26 @@ namespace WhereToFly.App.Android
             if (intent.Action == Intent.ActionView ||
                 intent.Action == Intent.ActionOpenDocument)
             {
+                Uri data = intent.Data;
+                if (data == null)
+                {
+                    return null;
+                }
+
                 switch (intent.Scheme)
                 {
                     case ContentResolver.SchemeContent:
-                        return this.GetContentNameFromContentUri(intent.Data);
+                        return this.GetContentNameFromContentUri(data);
 
                     case ContentResolver.SchemeFile:
-                        return intent.Data.LastPathSegment;
+                        return data.LastPathSegment;
 
                     case "http":
                     case "https":
-                        return intent.Data.LastPathSegment;
+                        return data.LastPathSegment;
 
-                    case WhereToFly.Shared.Model.AppResourceUri.DefaultScheme:
-                        return intent.Data.ToString();
+                    case Shared.Model.AppResourceUri.DefaultScheme:
+                        return data.ToString();
 
                     default:
                         System.Diagnostics.Debug.Assert(false, "invalid scheme");
@@ -89,15 +95,21 @@ namespace WhereToFly.App.Android
             if (intent.Action == Intent.ActionView ||
                 intent.Action == Intent.ActionOpenDocument)
             {
+                Uri data = intent.Data;
+                if (data == null)
+                {
+                    return null;
+                }
+
                 switch (intent.Scheme)
                 {
                     case ContentResolver.SchemeContent:
                     case ContentResolver.SchemeFile:
-                        return this.resolver.OpenInputStream(intent.Data);
+                        return this.resolver.OpenInputStream(data);
 
                     case "http":
                     case "https":
-                        return this.GetStreamFromInternetLink(intent.Data.ToString());
+                        return this.GetStreamFromInternetLink(data.ToString());
 
                     default:
                         System.Diagnostics.Debug.Assert(false, "invalid scheme");
