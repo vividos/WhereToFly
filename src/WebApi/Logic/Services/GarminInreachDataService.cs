@@ -81,12 +81,18 @@ namespace WhereToFly.WebApi.Logic.Services
         /// Gets live waypoint data for Garmin inReach device, using the MapShare identifier given
         /// </summary>
         /// <param name="mapShareIdentifier">MapShare identifier</param>
+        /// <param name="password">passwort for accessing MapShare data; may be null</param>
         /// <returns>live waypoint data for device</returns>
-        public async Task<LiveWaypointData> GetDataAsync(string mapShareIdentifier)
+        public async Task<LiveWaypointData> GetDataAsync(
+            string mapShareIdentifier,
+            string password = null)
         {
             string requestUrl = string.Format(InreachServiceUrl, mapShareIdentifier);
 
-            var stream = await this.client.GetStreamAsync(requestUrl);
+            var stream =
+                string.IsNullOrEmpty(password)
+                ? await this.client.GetStreamAsync(requestUrl)
+                : await this.GetStreamWithBasicAuth(requestUrl, string.Empty, password);
 
             var thisRequestTime = DateTimeOffset.Now;
             this.lastRequest = thisRequestTime;
@@ -102,21 +108,51 @@ namespace WhereToFly.WebApi.Logic.Services
         /// <param name="startTime">
         /// indicates the starting date and time of the data queried from the Garmin server
         /// </param>
+        /// <param name="password">passwort for accessing MapShare data; may be null</param>
         /// <returns>live track data for device</returns>
         public async Task<LiveTrackData> GetTrackAsync(
             string mapShareIdentifier,
-            DateTimeOffset startTime)
+            DateTimeOffset startTime,
+            string password = null)
         {
             string requestUrl = string.Format(InreachServiceUrl, mapShareIdentifier);
             requestUrl += "?d1=" + startTime.UtcDateTime.ToString("yyyy'-'MM'-'dd'T'HH':'mmK");
 
-            var stream = await this.client.GetStreamAsync(requestUrl);
+            var stream =
+                string.IsNullOrEmpty(password)
+                ? await this.client.GetStreamAsync(requestUrl)
+                : await this.GetStreamWithBasicAuth(requestUrl, string.Empty, password);
 
             var thisRequestTime = DateTimeOffset.Now;
             this.lastRequest = thisRequestTime;
             this.lastRequestByMapShareIdentifier[mapShareIdentifier] = thisRequestTime;
 
             return this.ParseRawKmlFileTrackData(stream, mapShareIdentifier);
+        }
+
+        /// <summary>
+        /// Returns a stream to get MapShare infos with username and password
+        /// </summary>
+        /// <param name="requestUrl">request URL to send</param>
+        /// <param name="username">username to use</param>
+        /// <param name="password">password to use</param>
+        /// <returns>stream object</returns>
+        private async Task<Stream> GetStreamWithBasicAuth(string requestUrl, string username, string password)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, requestUrl);
+
+            string authenticationString = $"{username}:{password}";
+
+            string base64EncodedAuthenticationString = Convert.ToBase64String(
+                System.Text.Encoding.ASCII.GetBytes(authenticationString));
+
+            request.Headers.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue(
+                    "Basic",
+                    base64EncodedAuthenticationString);
+
+            var response = await this.client.SendAsync(request);
+            return await response.Content.ReadAsStreamAsync();
         }
 
         /// <summary>
