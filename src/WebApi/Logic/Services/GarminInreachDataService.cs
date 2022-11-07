@@ -173,9 +173,14 @@ namespace WhereToFly.WebApi.Logic.Services
 
             var point = placemark.Geometry as Point;
 
-            var when = (placemark.Time as Timestamp).When;
+            if (point?.Coordinate == null)
+            {
+                throw new FormatException("Couldn't find Point geometry in Garmin inReach KML returned from the server");
+            }
 
-            if (when.HasValue)
+            var when = (placemark.Time as Timestamp)?.When;
+
+            if (when != null)
             {
                 this.lastRequestByMapShareIdentifier[mapShareIdentifier] = new DateTimeOffset(when.Value);
             }
@@ -246,13 +251,15 @@ namespace WhereToFly.WebApi.Logic.Services
                 throw new FormatException("No Garmin inReach track points with time references found");
             }
 
-            var trackPoints = track.TrackPoints.Select(
+            var trackPoints = track.TrackPoints
+                .Where(trackPoint => trackPoint.Time.HasValue)
+                .Select(
                 trackPoint => new LiveTrackData.LiveTrackPoint
                 {
                     Latitude = trackPoint.Latitude,
                     Longitude = trackPoint.Longitude,
                     Altitude = trackPoint.Altitude ?? 0.0,
-                    Offset = (trackPoint.Time.Value - trackStart.Value).TotalSeconds,
+                    Offset = (trackPoint.Time!.Value - trackStart.Value).TotalSeconds,
                 });
 
             return new LiveTrackData

@@ -108,7 +108,7 @@ namespace WhereToFly.WebApi.Logic.Services
                 TimeStamp = DateTimeOffset.Now,
                 Longitude = trackPoint.Longitude,
                 Latitude = trackPoint.Latitude,
-                Altitude = trackPoint.Altitude.Value,
+                Altitude = trackPoint.Altitude ?? 0,
                 Name = "Live tracking test position",
                 Description = $"Current live tracking stage: {currentStage}",
                 DetailsLink = string.Empty,
@@ -140,15 +140,22 @@ namespace WhereToFly.WebApi.Logic.Services
         {
             var track = GenerateLiveTrackData(now);
 
-            DateTimeOffset trackStart = track.TrackPoints.First().Time.Value;
+            DateTimeOffset? trackStart = track.TrackPoints.First()?.Time;
 
-            var trackPoints = track.TrackPoints.Select(
+            if (trackStart == null)
+            {
+                throw new InvalidOperationException("invalid generated live track data");
+            }
+
+            var trackPoints = track.TrackPoints
+                .Where(trackPoint => trackPoint.Time.HasValue)
+                .Select(
                 trackPoint => new LiveTrackData.LiveTrackPoint
                 {
                     Latitude = trackPoint.Latitude,
                     Longitude = trackPoint.Longitude,
                     Altitude = trackPoint.Altitude ?? 0.0,
-                    Offset = (trackPoint.Time.Value - trackStart).TotalSeconds,
+                    Offset = (trackPoint.Time!.Value - trackStart.Value).TotalSeconds,
                 });
 
             return new LiveTrackData
@@ -156,7 +163,7 @@ namespace WhereToFly.WebApi.Logic.Services
                 ID = id,
                 Name = "Live tracking test track",
                 Description = "This is a live tracking test track for testing purposes.",
-                TrackStart = trackStart,
+                TrackStart = trackStart.Value,
                 TrackPoints = trackPoints.ToArray(),
             };
         }
@@ -195,6 +202,11 @@ namespace WhereToFly.WebApi.Logic.Services
         /// <returns>generated track</returns>
         private static Track GenerateTrackPoints(Stage stage, DateTimeOffset startTime)
         {
+            if (!ThermallingPoint.Altitude.HasValue)
+            {
+                throw new ArgumentException("invalid thermalling point altitude");
+            }
+
             var track = new Track();
 
             var thermallingTopPoint = ThermallingPoint.Offset(
@@ -245,6 +257,12 @@ namespace WhereToFly.WebApi.Logic.Services
             MapPoint endingPoint,
             DateTimeOffset startTime)
         {
+            if (!startingPoint.Altitude.HasValue ||
+                !endingPoint.Altitude.HasValue)
+            {
+                throw new ArgumentException("invalid starting or ending point");
+            }
+
             const int NumSeconds = 60;
 
             for (int seconds = 0; seconds < NumSeconds; seconds++)
@@ -278,6 +296,12 @@ namespace WhereToFly.WebApi.Logic.Services
             double thermallingStartAngleInDegrees,
             DateTimeOffset startTime)
         {
+            if (!thermallingPoint.Altitude.HasValue ||
+                !thermallingTopPoint.Altitude.HasValue)
+            {
+                throw new ArgumentException("invalid thermalling points");
+            }
+
             double secondsForOneTurn = 60.0 / TurnsPerMinute;
 
             // offset base point into the previous flight direction
@@ -296,7 +320,7 @@ namespace WhereToFly.WebApi.Logic.Services
                     thermallingStartAngleInDegrees +
                     (360.0 * (secondsInThisCircle / secondsForOneTurn));
 
-                currentThermallingCircleAngle = currentThermallingCircleAngle % 360.0;
+                currentThermallingCircleAngle %= 360.0;
 
                 var currentThermallingPoint = thermallingBasePoint.PolarOffset(
                     ThermallingCircleRadius,
@@ -307,7 +331,10 @@ namespace WhereToFly.WebApi.Logic.Services
                     new TrackPoint(
                         currentThermallingPoint.Latitude,
                         currentThermallingPoint.Longitude,
-                        WhereToFly.Shared.Base.Math.Interpolate(thermallingPoint.Altitude.Value, thermallingTopPoint.Altitude.Value, delta),
+                        WhereToFly.Shared.Base.Math.Interpolate(
+                            thermallingPoint.Altitude.Value,
+                            thermallingTopPoint.Altitude.Value,
+                            delta),
                         null)
                     {
                         Time = startTime.AddSeconds(seconds),

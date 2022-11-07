@@ -47,7 +47,9 @@ namespace WhereToFly.WebApi.Logic.Services
         /// <returns>next possible request date</returns>
         public DateTimeOffset GetNextRequestDate(AppResourceUri uri)
         {
-            return this.lastRequest.HasValue ? this.lastRequest.Value + TimeSpan.FromMinutes(1.0) : DateTimeOffset.Now;
+            return this.lastRequest.HasValue
+                ? this.lastRequest.Value + TimeSpan.FromMinutes(1.0)
+                : DateTimeOffset.Now;
         }
 
         /// <summary>
@@ -77,7 +79,13 @@ namespace WhereToFly.WebApi.Logic.Services
                 result = Newtonsoft.Json.JsonConvert.DeserializeObject<Model.RootObject>(feedText);
             }
 
-            var latestMessage = result.Response.FeedMessageResponse.Messages.Message;
+            var latestMessage = result?.Response.FeedMessageResponse.Messages.Message;
+
+            if (result == null ||
+                latestMessage == null)
+            {
+                throw new InvalidOperationException("couldn't get live waypoint data");
+            }
 
             return new LiveWaypointData
             {

@@ -74,11 +74,10 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
         /// <param name="kmlStream">stream containing a .kml file</param>
         public void Load(Stream kmlStream)
         {
-            using (var reader = new StreamReader(kmlStream))
-            {
-                var kml = KmlFile.Load(reader);
-                this.ParseKmlFile(kml);
-            }
+            using var reader = new StreamReader(kmlStream);
+
+            var kml = KmlFile.Load(reader);
+            this.ParseKmlFile(kml);
         }
 
         /// <summary>
@@ -167,9 +166,11 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
 
                     var placemark = singleTrackFolder.Features.First(x => x is Placemark) as Placemark;
 
-                    if (trackInfoTuple.Item1 != null)
+                    if (trackInfoTuple.Item1 != null &&
+                        placemark?.Geometry != null)
                     {
-                        trackInfoTuple.Item1.MapPointList = LoadTrackFromPlacemarkGeometry(placemark.Geometry);
+                        trackInfoTuple.Item1.MapPointList =
+                            LoadTrackFromPlacemarkGeometry(placemark.Geometry);
 
                         this.tourEngine.AddTrack(trackInfoTuple.Item1);
 
@@ -348,7 +349,7 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
             {
                 bool foundItemTitle = false;
 
-                foreach (var itemTitle in ItemTitlesList)
+                foreach (string itemTitle in ItemTitlesList)
                 {
                     if (line.StartsWith(itemTitle + ":"))
                     {

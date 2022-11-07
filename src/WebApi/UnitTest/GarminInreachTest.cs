@@ -20,7 +20,7 @@ namespace WhereToFly.WebApi.UnitTest
             get
             {
                 return Path.Combine(
-                    Path.GetDirectoryName(this.GetType().Assembly.Location),
+                    Path.GetDirectoryName(this.GetType().Assembly.Location)!,
                     "Assets");
             }
         }
@@ -48,7 +48,6 @@ namespace WhereToFly.WebApi.UnitTest
             Assert.IsTrue(data.Name.Length > 0, "name must be non-empty");
             Assert.IsTrue(data.Description.Length > 0, "description must be non-empty");
         }
-
 
         /// <summary>
         /// Test to get live track data using data service

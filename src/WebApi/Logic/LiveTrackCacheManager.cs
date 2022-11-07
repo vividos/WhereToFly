@@ -235,6 +235,7 @@ namespace WhereToFly.WebApi.Logic
                 NextRequestDate = this.garminInreachService.GetNextRequestDate(mapShareIdentifier),
             };
         }
+
         /// <summary>
         /// Caches (new or updated) live track data
         /// </summary>

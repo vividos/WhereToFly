@@ -70,7 +70,7 @@ namespace WhereToFly.WebApi.Logic
         /// <returns>task to wait on</returns>
         private async Task ImportDataAsync()
         {
-            Tuple<string, string>[] importAndPrefixList = new Tuple<string, string>[]
+            var importAndPrefixList = new Tuple<string, string>[]
             {
                 new Tuple<string, string>("paraglidingspots-complete.kmz", "pgspots"),
             };

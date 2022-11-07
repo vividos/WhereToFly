@@ -293,7 +293,7 @@ namespace WhereToFly.WebApi.Logic
                         TimeStamp = DateTimeOffset.Now,
                         Longitude = mapPoint.Longitude,
                         Latitude = mapPoint.Latitude,
-                        Altitude = mapPoint.Altitude.Value,
+                        Altitude = mapPoint.Altitude ?? 0,
                         Name = "Live waypoint test position",
                         Description = "Hello from the Where-to-fly backend services!<br/>" +
                             $"Next request date is {nextRequestDate}" +
