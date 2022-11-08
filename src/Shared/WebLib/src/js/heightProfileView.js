@@ -1,11 +1,4 @@
-import * as Utils from './utils.js';
-
-// polyfill for UWP
-if (CanvasRenderingContext2D.prototype.resetTransform === undefined) {
-    CanvasRenderingContext2D.prototype.resetTransform = function() {
-        this.setTransform(1, 0, 0, 1, 0, 0);
-    }
-}
+﻿import * as Utils from "./utils.js";
 
 // Chart.js
 import {
@@ -16,18 +9,25 @@ import {
     PointElement,
     TimeScale,
     Tooltip
-} from 'chart.js';
+} from "chart.js";
 
-import * as helpers from 'chart.js/helpers';
+import * as helpers from "chart.js/helpers";
 
 // Chart.js plugins
-import 'chartjs-adapter-moment';
+import "chartjs-adapter-moment";
 
-import CrosshairPlugin from 'chartjs-plugin-crosshair';
-import ZoomPlugin from 'chartjs-plugin-zoom';
+import CrosshairPlugin from "chartjs-plugin-crosshair";
+import ZoomPlugin from "chartjs-plugin-zoom";
 
 // local
-import '../css/heightProfileView.css';
+import "../css/heightProfileView.css";
+
+// polyfill for UWP
+if (CanvasRenderingContext2D.prototype.resetTransform === undefined) {
+    CanvasRenderingContext2D.prototype.resetTransform = function() {
+        this.setTransform(1, 0, 0, 1, 0, 0);
+    }
+}
 
 Chart.register(
     LineController, LineElement, LinearScale, PointElement,
@@ -69,7 +69,7 @@ export class HeightProfileView {
         this.isZoomAndPanActive = true;
 
         this.options = options || {
-            id: 'heightProfileView',
+            id: "heightProfileView",
             setBodyBackgroundColor: true,
             useDarkTheme: false,
             showCloseButton: false,
@@ -80,22 +80,22 @@ export class HeightProfileView {
         if (this.options.callback === undefined)
             this.options.callback = Utils.callAction;
 
-        this.trackColor = this.options.useDarkTheme ? '#00ffff' : '#0000ff';
-        this.backgroundColor = this.options.useDarkTheme ? '#202124' : '#F5F5F5';
-        this.axisColor = this.options.useDarkTheme ? '#f5f5f5' : '#202020';
-        this.groundProfileColor = this.options.useDarkTheme ? '#404040C0' : '#808080C0';
+        this.trackColor = this.options.useDarkTheme ? "#00ffff" : "#0000ff";
+        this.backgroundColor = this.options.useDarkTheme ? "#202124" : "#F5F5F5";
+        this.axisColor = this.options.useDarkTheme ? "#f5f5f5" : "#202020";
+        this.groundProfileColor = this.options.useDarkTheme ? "#404040C0" : "#808080C0";
 
         if (this.options.setBodyBackgroundColor)
             document.body.style.backgroundColor = this.backgroundColor;
 
         const chartElementId = this.setupHeightProfileElement();
 
-        let chartElement = document.getElementById(chartElementId);
-        let ctx = chartElement.getContext('2d');
+        const chartElement = document.getElementById(chartElementId);
+        const ctx = chartElement.getContext("2d");
 
-        let that = this;
+        const that = this;
         this.chart = new Chart(ctx, {
-            type: 'line',
+            type: "line",
             data: {},
             options: {
                 responsive: true,
@@ -103,25 +103,25 @@ export class HeightProfileView {
                 aspectRatio: 2,
                 scales: {
                     x: {
-                        id: 'time',
-                        type: 'time',
+                        id: "time",
+                        type: "time",
                         grid: {
                             color: this.axisColor,
                             zeroLineColor: this.axisColor
                         },
                         time: {
-                            unit: 'hour',
+                            unit: "hour",
                             displayFormats: {
-                                hour: 'HH:mm'
+                                hour: "HH:mm"
                             },
                             stepSize: 0.25, // every 15 minutes
-                            minUnit: 'second'
+                            minUnit: "second"
                         }
                     },
                     y: {
-                        id: 'elevation',
-                        type: 'linear',
-                        position: 'left',
+                        id: "elevation",
+                        type: "linear",
+                        position: "left",
                         offset: true,
                         grid: {
                             color: this.axisColor,
@@ -138,17 +138,17 @@ export class HeightProfileView {
                     },
                     tooltip: {
                         enabled: false,
-                        mode: 'nearest',
-                        axis: 'x',
+                        mode: "nearest",
+                        axis: "x",
                         intersect: false,
-                        external: function (context) {
+                        external: function(context) {
                             that.updateTooltipElement(context.tooltip);
                         }
                     },
                     // the crosshair plugin is only used for the line, not for zooming
                     crosshair: {
                         line: {
-                            color: '#ffe666',
+                            color: "#ffe666",
                             width: 2
                         },
                         sync: {
@@ -156,13 +156,13 @@ export class HeightProfileView {
                         },
                         zoom: {
                             enabled: false
-                        },
+                        }
                     },
                     // the zoom plugin is used for panning and zooming
                     zoom: {
                         pan: {
                             enabled: true,
-                            mode: 'x'
+                            mode: "x"
                         },
                         zoom: {
                             wheel: {
@@ -175,7 +175,7 @@ export class HeightProfileView {
                             pinch: {
                                 enabled: true
                             },
-                            mode: 'x'
+                            mode: "x"
                         },
                         limits: {
                             // to be set later
@@ -185,22 +185,22 @@ export class HeightProfileView {
                     }
                 },
                 hover: {
-                    mode: 'nearest',
+                    mode: "nearest",
                     intersect: false,
-                    axis: 'x'
+                    axis: "x"
                 },
-                onHover: function (_event, elements, _chart) {
+                onHover: function(_event, elements, _chart) {
                     that.onHover(elements);
                 },
-                onClick: function (_event, elements, _chart) {
+                onClick: function(_event, elements, _chart) {
                     if (!that.isZoomAndPanActive)
                         that.onClick(elements);
                 }
             }
         });
 
-        let chartButtonClose = document.getElementById('chartButtonClose');
-        chartButtonClose.style.display = this.options.showCloseButton ? 'block' : 'none';
+        const chartButtonClose = document.getElementById("chartButtonClose");
+        chartButtonClose.style.display = this.options.showCloseButton ? "block" : "none";
 
         this.setModeZoomAndPan();
     }
@@ -210,53 +210,53 @@ export class HeightProfileView {
      */
     setupHeightProfileElement() {
 
-        let heightProfileElement = document.getElementById(this.options.id);
-        heightProfileElement.style.display = 'block';
+        const heightProfileElement = document.getElementById(this.options.id);
+        heightProfileElement.style.display = "block";
 
         // style the parent node, in case it's the standalone view
         heightProfileElement.style.backgroundColor = this.backgroundColor;
 
         // add chart toolbar
-        let toolbarDiv = document.createElement('div');
-        toolbarDiv.classList.add('chart-toolbar-container');
+        const toolbarDiv = document.createElement("div");
+        toolbarDiv.classList.add("chart-toolbar-container");
 
         heightProfileElement.appendChild(toolbarDiv);
 
         // add all toolbar buttons, ordered from left to right
-        let closeButton = HeightProfileView.addChartToolbarButton(toolbarDiv,
-             'chartButtonClose',
-             'images/close.svg',
-             'close');
-        closeButton.addEventListener('click', this.hide.bind(this));
+        const closeButton = HeightProfileView.addChartToolbarButton(toolbarDiv,
+            "chartButtonClose",
+            "images/close.svg",
+            "close");
+        closeButton.addEventListener("click", this.hide.bind(this));
 
-        let resetZoomButton = HeightProfileView.addChartToolbarButton(toolbarDiv,
-            'chartButtonResetZoom',
-            'images/arrow-expand-horizontal.svg',
-            'reset');
-        resetZoomButton.addEventListener('click', this.resetZoom.bind(this));
+        const resetZoomButton = HeightProfileView.addChartToolbarButton(toolbarDiv,
+            "chartButtonResetZoom",
+            "images/arrow-expand-horizontal.svg",
+            "reset");
+        resetZoomButton.addEventListener("click", this.resetZoom.bind(this));
 
-        let modeHoverButton = HeightProfileView.addChartToolbarButton(toolbarDiv,
-            'chartButtonModeHover',
-            'images/gesture-tap.svg',
-            'hover');
-        modeHoverButton.classList.add('chart-toolbar-button-disabled');
-        modeHoverButton.style = 'margin-left:0px;';
-        modeHoverButton.addEventListener('click', this.setModeHover.bind(this));
+        const modeHoverButton = HeightProfileView.addChartToolbarButton(toolbarDiv,
+            "chartButtonModeHover",
+            "images/gesture-tap.svg",
+            "hover");
+        modeHoverButton.classList.add("chart-toolbar-button-disabled");
+        modeHoverButton.style = "margin-left:0px;";
+        modeHoverButton.addEventListener("click", this.setModeHover.bind(this));
 
-        let modeZoomAndPan = HeightProfileView.addChartToolbarButton(toolbarDiv,
-            'chartButtonModeZoomAndPan',
-            'images/gesture-spread.svg',
-            'zoom and pan');
-        modeZoomAndPan.style = 'margin-right:0px;';
-        modeZoomAndPan.addEventListener('click', this.setModeZoomAndPan.bind(this));
+        const modeZoomAndPan = HeightProfileView.addChartToolbarButton(toolbarDiv,
+            "chartButtonModeZoomAndPan",
+            "images/gesture-spread.svg",
+            "zoom and pan");
+        modeZoomAndPan.style = "margin-right:0px;";
+        modeZoomAndPan.addEventListener("click", this.setModeZoomAndPan.bind(this));
 
         // add the chart canvas inside a div
-        let chartDiv = document.createElement('div');
+        const chartDiv = document.createElement("div");
         heightProfileElement.appendChild(chartDiv);
 
-        let chartCanvas = document.createElement('canvas');
-        chartCanvas.id = 'chartElement';
-        chartCanvas.classList.add('chart-canvas');
+        const chartCanvas = document.createElement("canvas");
+        chartCanvas.id = "chartElement";
+        chartCanvas.classList.add("chart-canvas");
         chartDiv.appendChild(chartCanvas);
 
         return chartCanvas.id;
@@ -275,14 +275,14 @@ export class HeightProfileView {
         toolbarImageSource,
         toolbarImageAltText) {
 
-        let buttonDiv = document.createElement('div');
+        const buttonDiv = document.createElement("div");
         buttonDiv.id = toolbarButtonId;
-        buttonDiv.classList.add('chart-toolbar-button');
+        buttonDiv.classList.add("chart-toolbar-button");
 
-        let buttonImage = document.createElement('img');
+        const buttonImage = document.createElement("img");
         buttonImage.src = toolbarImageSource;
         buttonImage.alt = toolbarImageAltText;
-        buttonImage.classList.add('chart-toolbar-button-image');
+        buttonImage.classList.add("chart-toolbar-button-image");
 
         buttonDiv.appendChild(buttonImage);
 
@@ -306,11 +306,11 @@ export class HeightProfileView {
         this.chart.update(0);
 
         // update buttons
-        let chartButtonModeHover = document.getElementById('chartButtonModeHover');
-        chartButtonModeHover.classList.remove('chart-toolbar-button-disabled');
+        const chartButtonModeHover = document.getElementById("chartButtonModeHover");
+        chartButtonModeHover.classList.remove("chart-toolbar-button-disabled");
 
-        let chartButtonModeZoomAndPan = document.getElementById('chartButtonModeZoomAndPan');
-        chartButtonModeZoomAndPan.classList.add('chart-toolbar-button-disabled');
+        const chartButtonModeZoomAndPan = document.getElementById("chartButtonModeZoomAndPan");
+        chartButtonModeZoomAndPan.classList.add("chart-toolbar-button-disabled");
     }
 
     /**
@@ -327,11 +327,11 @@ export class HeightProfileView {
         this.chart.update(0);
 
         // update buttons
-        let chartButtonModeHover = document.getElementById('chartButtonModeHover');
-        chartButtonModeHover.classList.add('chart-toolbar-button-disabled');
+        const chartButtonModeHover = document.getElementById("chartButtonModeHover");
+        chartButtonModeHover.classList.add("chart-toolbar-button-disabled");
 
-        let chartButtonModeZoomAndPan = document.getElementById('chartButtonModeZoomAndPan');
-        chartButtonModeZoomAndPan.classList.remove('chart-toolbar-button-disabled');
+        const chartButtonModeZoomAndPan = document.getElementById("chartButtonModeZoomAndPan");
+        chartButtonModeZoomAndPan.classList.remove("chart-toolbar-button-disabled");
     }
 
     /**
@@ -348,7 +348,7 @@ export class HeightProfileView {
         HeightProfileView.log("setting height profile with " +
             track.listOfTrackPoints.length / 3 + " track points");
 
-        let trackData = [];
+        const trackData = [];
 
         if (track.listOfTimePoints === null) {
             // create time points from 0 to length, in seconds
@@ -358,10 +358,10 @@ export class HeightProfileView {
         }
 
         for (let trackPointIndex = 0, len = track.listOfTrackPoints.length; trackPointIndex < len; trackPointIndex += 3) {
-            let timePoint = track.listOfTimePoints[trackPointIndex / 3];
+            const timePoint = track.listOfTimePoints[trackPointIndex / 3];
             trackData.push({
                 x: new Date(timePoint * 1000.0),
-                y: track.listOfTrackPoints[trackPointIndex + 2],
+                y: track.listOfTrackPoints[trackPointIndex + 2]
             });
         }
 
@@ -370,10 +370,10 @@ export class HeightProfileView {
                 data: trackData,
                 backgroundColor: this.backgroundColor,
                 fill: false,
-                label: 'Track',
+                label: "Track",
                 tension: 0.0,
                 pointRadius: 0.0,
-                borderColor: this.trackColor,
+                borderColor: this.trackColor
             }]
         };
 
@@ -389,8 +389,8 @@ export class HeightProfileView {
      * */
     updateZoomPanLimits() {
 
-        let scale = this.chart.scales.x;
-        let zoomPanLimits = this.chart.options.plugins.zoom.limits;
+        const scale = this.chart.scales.x;
+        const zoomPanLimits = this.chart.options.plugins.zoom.limits;
         zoomPanLimits.x.min = scale.min.valueOf(); // left value
         zoomPanLimits.x.max = scale.max.valueOf(); // right value
         zoomPanLimits.y.min = 60; // seconds of min. zoom level
@@ -409,8 +409,8 @@ export class HeightProfileView {
         HeightProfileView.log("adding ground profile with " +
             elevationArray.length + " elevation points");
 
-        let trackData = this.chart.data.datasets[0].data;
-        let elevationData = [];
+        const trackData = this.chart.data.datasets[0].data;
+        const elevationData = [];
         for (let i = 0, len = trackData.length; i < len; i++) {
             elevationData.push({
                 x: trackData[i].x,
@@ -421,12 +421,12 @@ export class HeightProfileView {
         this.chart.data.datasets.push({
             data: elevationData,
             showLine: true,
-            fill: 'start',
-            label: 'Terrain',
+            fill: "start",
+            label: "Terrain",
             tension: 0.0,
             pointRadius: 0.0,
             backgroundColor: this.groundProfileColor,
-            borderColor: 'rgba(0,128,0,255)'
+            borderColor: "rgba(0,128,0,255)"
         });
 
         this.chart.update(0);
@@ -447,16 +447,16 @@ export class HeightProfileView {
             track.listOfTrackPoints.length !== track.listOfTimePoints.length * 3)
             return;
 
-        let trackData = this.chart.data.datasets[0].data;
+        const trackData = this.chart.data.datasets[0].data;
         if (trackData.length === 0) {
             this.setTrack(track);
             return;
         }
 
-        let lastDate = trackData[trackData.length - 1].x;
-        let lastTimePoint = lastDate.getTime() / 1000;
+        const lastDate = trackData[trackData.length - 1].x;
+        const lastTimePoint = lastDate.getTime() / 1000;
 
-        let newStartTimePos = track.listOfTimePoints.indexOf(lastTimePoint) + 1;
+        const newStartTimePos = track.listOfTimePoints.indexOf(lastTimePoint) + 1;
         if (newStartTimePos === 0 ||
             newStartTimePos >= track.listOfTimePoints.length)
             return;
@@ -466,10 +466,10 @@ export class HeightProfileView {
             " track points to height profile");
 
         for (let trackPointIndex = newStartTimePos * 3, len = track.listOfTrackPoints.length; trackPointIndex < len; trackPointIndex += 3) {
-            let timePoint = track.listOfTimePoints[trackPointIndex / 3];
+            const timePoint = track.listOfTimePoints[trackPointIndex / 3];
             trackData.push({
                 x: new Date(timePoint * 1000.0),
-                y: track.listOfTrackPoints[trackPointIndex + 2],
+                y: track.listOfTrackPoints[trackPointIndex + 2]
             });
         }
 
@@ -491,12 +491,12 @@ export class HeightProfileView {
      */
     hide() {
 
-        let heightProfileViewElement = document.getElementById(this.options.id);
+        const heightProfileViewElement = document.getElementById(this.options.id);
 
-        heightProfileViewElement.style.display = 'none';
+        heightProfileViewElement.style.display = "none";
 
         if (this.options.callback !== undefined)
-            this.options.callback('onClose', null);
+            this.options.callback("onClose", null);
     }
 
     /**
@@ -507,7 +507,7 @@ export class HeightProfileView {
         this.chart.stop();
         this.chart.destroy();
 
-        let heightProfileElement = document.getElementById(this.options.id);
+        const heightProfileElement = document.getElementById(this.options.id);
         while (heightProfileElement.firstChild)
             heightProfileElement.removeChild(heightProfileElement.lastChild);
 
@@ -522,9 +522,8 @@ export class HeightProfileView {
     onHover(elements) {
 
         if (elements.length > 0 &&
-            this.options.callback !== undefined) {
-            this.options.callback('onHover', elements[0].index);
-        }
+            this.options.callback !== undefined)
+            this.options.callback("onHover", elements[0].index);
     }
 
     /**
@@ -534,9 +533,8 @@ export class HeightProfileView {
     onClick(elements) {
 
         if (elements.length > 0 &&
-            this.options.callback !== undefined) {
-            this.options.callback('onClick', elements[0].index);
-        }
+            this.options.callback !== undefined)
+            this.options.callback("onClick", elements[0].index);
     }
 
     /**
@@ -556,40 +554,40 @@ export class HeightProfileView {
      */
     getTrackTooltipInfos(tooltipModel) {
 
-        let values = {};
+        const values = {};
 
-        let timePoint = this.chart.data.datasets[0].data[tooltipModel.dataPoints[0].dataIndex].x;
+        const timePoint = this.chart.data.datasets[0].data[tooltipModel.dataPoints[0].dataIndex].x;
 
         if (timePoint.getFullYear() === 1970)
             values.elapsedTime = timePoint.valueOf() / 1000.0;
         else {
             values.timePoint = timePoint;
-            let startTime = this.chart.data.datasets[0].data[0].x;
+            const startTime = this.chart.data.datasets[0].data[0].x;
             values.elapsedTime = (values.timePoint - startTime).valueOf() / 1000.0;
         }
 
-        let that = this;
-        tooltipModel.dataPoints.forEach(function (tooltipItem) {
+        const that = this;
+        tooltipModel.dataPoints.forEach(function(tooltipItem) {
             if (tooltipItem.datasetIndex === 0) {
 
-                let currentDataPoint = that.chart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex];
+                const currentDataPoint = that.chart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex];
                 values.trackHeight = currentDataPoint.y;
 
-                if (tooltipItem.dataIndex === 0) {
+                if (tooltipItem.dataIndex === 0)
                     values.varioValue = 0.0;
-                }
                 else {
-                    let lastDataPoint = that.chart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex - 1];
+                    const lastDataPoint = that.chart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex - 1];
 
-                    let lastTrackHeight = lastDataPoint.y;
+                    const lastTrackHeight = lastDataPoint.y;
 
-                    let deltaTimeMs = currentDataPoint.x.valueOf() - lastDataPoint.x.valueOf();
+                    const deltaTimeMs = currentDataPoint.x.valueOf() - lastDataPoint.x.valueOf();
                     values.varioValue = (values.trackHeight - lastTrackHeight) / deltaTimeMs * 1000.0;
                 }
             }
 
             if (tooltipItem.datasetIndex === 1) {
-                values.groundHeight = that.chart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex].y;
+                values.groundHeight =
+                    that.chart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex].y;
             }
         });
 
@@ -606,16 +604,16 @@ export class HeightProfileView {
 
         const elapsed = new Date((elapsedTime - 60.0 * 60.0) * 1000.0);
 
-        let hour = ('0' + elapsed.getHours()).slice(-2);
-        let minutes = ('0' + elapsed.getMinutes()).slice(-2);
-        let seconds = ('0' + elapsed.getSeconds()).slice(-2);
+        const hour = ("0" + elapsed.getHours()).slice(-2);
+        const minutes = ("0" + elapsed.getMinutes()).slice(-2);
+        const seconds = ("0" + elapsed.getSeconds()).slice(-2);
 
         if (elapsed.getDate() === 1)
-            return (hour + ':' + minutes + ':' + seconds).replace(/^0/, '');
+            return (hour + ":" + minutes + ":" + seconds).replace(/^0/, "");
 
-        let days = elapsed.getDate();
+        const days = elapsed.getDate();
 
-        return days + "." + hour + ':' + minutes + ':' + seconds;
+        return days + "." + hour + ":" + minutes + ":" + seconds;
     }
 
     /**
@@ -624,7 +622,7 @@ export class HeightProfileView {
      */
     formatTooltipText(tooltipModel) {
 
-        let values = this.getTrackTooltipInfos(tooltipModel);
+        const values = this.getTrackTooltipInfos(tooltipModel);
 
         let text = "";
 
@@ -663,11 +661,11 @@ export class HeightProfileView {
      */
     updateTooltipElement(tooltipModel) {
 
-        let tooltipElement = document.getElementById('chartjs-tooltip');
+        let tooltipElement = document.getElementById("chartjs-tooltip");
 
         if (!tooltipElement) {
-            tooltipElement = document.createElement('div');
-            tooltipElement.id = 'chartjs-tooltip';
+            tooltipElement = document.createElement("div");
+            tooltipElement.id = "chartjs-tooltip";
             this.chart.canvas.parentNode.appendChild(tooltipElement);
         }
 
@@ -678,27 +676,27 @@ export class HeightProfileView {
         }
 
         // set caret position
-        tooltipElement.classList.remove('above', 'below', 'no-transform');
+        tooltipElement.classList.remove("above", "below", "no-transform");
         if (tooltipModel.yAlign)
             tooltipElement.classList.add(tooltipModel.yAlign);
         else
-            tooltipElement.classList.add('no-transform');
+            tooltipElement.classList.add("no-transform");
 
         // set text
         tooltipElement.innerHTML = this.formatTooltipText(tooltipModel);
 
-        let position = this.chart.canvas.getBoundingClientRect();
+        const position = this.chart.canvas.getBoundingClientRect();
 
-        let showLeft = tooltipModel.caretX > position.width / 2;
+        const showLeft = tooltipModel.caretX > position.width / 2;
 
-        let bodyFont = helpers.toFont(tooltipModel.options.bodyFont);
+        const bodyFont = helpers.toFont(tooltipModel.options.bodyFont);
 
         // display, position, and set styles for font
         tooltipElement.style.opacity = 1;
-        tooltipElement.style.left = showLeft ? (position.x + window.scrollX + 50) + 'px' : '';
-        tooltipElement.style.right = !showLeft ? '10px' : '';
-        tooltipElement.style.top = '60px';
+        tooltipElement.style.left = showLeft ? (position.x + window.scrollX + 50) + "px" : "";
+        tooltipElement.style.right = !showLeft ? "10px" : "";
+        tooltipElement.style.top = "60px";
         tooltipElement.style.font = bodyFont.string;
-        tooltipElement.style.padding = tooltipModel.padding + 'px ' + tooltipModel.padding + 'px';
+        tooltipElement.style.padding = tooltipModel.padding + "px " + tooltipModel.padding + "px";
     }
 }
