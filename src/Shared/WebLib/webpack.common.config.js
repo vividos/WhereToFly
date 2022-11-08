@@ -1,23 +1,23 @@
-﻿const path = require('path');
+﻿const path = require("path");
 
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require("webpack");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
     entry: {
-        mapView: './src/js/mapView.js',
-        heightProfileView: "./src/js/heightProfileView.js",
+        mapView: "./src/js/mapView.js",
+        heightProfileView: "./src/js/heightProfileView.js"
     },
     output: {
         clean: true,
-        path: path.resolve(__dirname, 'dist'),
-        filename: 'js/WhereToFly.[name].js',
+        path: path.resolve(__dirname, "dist"),
+        filename: "js/WhereToFly.[name].js",
         library: ["WhereToFly", "[name]"],
-        libraryTarget: "umd",
+        libraryTarget: "umd"
     },
-    devtool: 'source-map',
+    devtool: "source-map",
     module: {
         rules: [
             {
@@ -29,9 +29,9 @@ module.exports = {
             {
                 test: /\.png/,
                 include: [
-                    path.resolve(__dirname, 'node_modules/cesium/Build/Cesium/')
+                    path.resolve(__dirname, "node_modules/cesium/Build/Cesium/")
                 ],
-                type: 'asset/inline'
+                type: "asset/inline"
             }
         ]
     },
@@ -52,7 +52,7 @@ module.exports = {
         // Copy images and Cesium files
         new CopyWebpackPlugin({
             patterns: [
-                { from: 'src/images', to: 'images' },
+                { from: "src/images", to: "images" },
                 {
                     context: "node_modules/cesium/Build/Cesium",
                     from: "Assets",
@@ -60,29 +60,29 @@ module.exports = {
                     globOptions: {
                         ignore: [
                             // don't copy textures, as they are not used
-                            "**/Assets/Textures/**",
-                        ],
+                            "**/Assets/Textures/**"
+                        ]
                     }
                 },
                 {
                     from: "node_modules/cesium/Build/Cesium/Widgets/InfoBox",
-                    to: "js/Widgets/InfoBox",
+                    to: "js/Widgets/InfoBox"
                 },
                 {
                     from: "node_modules/cesium/Build/Cesium/Widgets/NavigationHelpButton",
-                    to: "js/Widgets/NavigationHelpButton",
+                    to: "js/Widgets/NavigationHelpButton"
                 },
                 {
                     from: "node_modules/cesium/Build/Cesium/Widgets/Images/NavigationHelp",
-                    to: "js/Widgets/Images/NavigationHelp",
+                    to: "js/Widgets/Images/NavigationHelp"
                 },
                 { from: "node_modules/cesium/Build/Cesium/Workers", to: "js/Workers" },
-                { from: "node_modules/cesium/Build/Cesium/ThirdParty/Workers", to: "js/ThirdParty/Workers" },
-            ],
+                { from: "node_modules/cesium/Build/Cesium/ThirdParty/Workers", to: "js/ThirdParty/Workers" }
+            ]
         }),
         new webpack.DefinePlugin({
             // Define relative base path in cesium for loading assets
-            CESIUM_BASE_URL: JSON.stringify('./js/')
+            CESIUM_BASE_URL: JSON.stringify("./js/")
         })
     ],
     amd: {
@@ -96,7 +96,7 @@ module.exports = {
             http: false,
             https: false,
             url: false,
-            zlib: false,
+            zlib: false
         },
         // Needed when using webpack 5 until this bug is fixed in CesiumJS:
         // https://github.com/CesiumGS/cesium/issues/9212
