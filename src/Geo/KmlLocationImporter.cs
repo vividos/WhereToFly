@@ -120,6 +120,7 @@ namespace WhereToFly.Geo
                 .Replace("</b>", string.Empty)
                 .Replace("(", string.Empty)
                 .Replace(")", string.Empty)
+                .Replace("?", string.Empty)
                 .Replace(" ", string.Empty)
                 .Replace(",", "-")
                 .Replace("/", "-")
