@@ -1744,7 +1744,7 @@ export class MapView {
             };
 
         } catch (error) {
-            console.error("MapView.createEntity: error while generating pin from URL " + url + ": " + error);
+            console.error("MapView.createEntity: error while generating pin from URL " + pinImageDataUrl + ": " + error);
         }
     }
 
@@ -1797,12 +1797,12 @@ export class MapView {
         case "PublicTransportTrain": return "images/train.svg";
         case "Parking": return "images/parking.svg";
         case "Webcam": return "images/camera-outline.svg";
-            //case 'ViaFerrata': return '';
+            // case 'ViaFerrata': return '';
         case "CableCar": return "images/aerialway-15.svg";
         case "FlyingTakeoff": return "images/paragliding.svg";
         case "FlyingLandingPlace": return "images/paragliding.svg";
         case "FlyingWinchTowing": return "images/paragliding.svg";
-            //case 'Turnpoint': return '';
+            // case 'Turnpoint': return '';
         case "Thermal": return "images/weather-partly-cloudy.svg";
         case "MeteoStation": return "images/cloud-upload-outline-modified.svg";
         case "LiveWaypoint": return "images/autorenew.svg";
@@ -2051,10 +2051,10 @@ export class MapView {
         text += "<p>" +
             "Glide ratio: " + options.glideRatio + "<br/>" +
             "Glide angle: " + (90.0 - Cesium.Math.toDegrees(glideAngle)).toFixed(1) + " degrees<br/>" +
-            //'Glider speed: ' + options.gliderSpeed + ' km/h<br/>' +
-            //'Glide ratio with wind: ' + glideRatioWithWind.toFixed(1) + '<br/>' +
-            //'Glide angle with wind: ' + (90.0 - Cesium.Math.toDegrees(glideAngleWithWind)).toFixed(1) + ' degrees<br/>' +
-            //'Wind: ' + options.windSpeed + ' km/h from ' + options.windDirection + ' degrees' +
+            // 'Glider speed: ' + options.gliderSpeed + ' km/h<br/>' +
+            // 'Glide ratio with wind: ' + glideRatioWithWind.toFixed(1) + '<br/>' +
+            // 'Glide angle with wind: ' + (90.0 - Cesium.Math.toDegrees(glideAngleWithWind)).toFixed(1) + ' degrees<br/>' +
+            // 'Wind: ' + options.windSpeed + ' km/h from ' + options.windDirection + ' degrees' +
             "</p>";
 
         this.flyingRangeCone = this.viewer.entities.add({
