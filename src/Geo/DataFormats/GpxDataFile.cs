@@ -202,7 +202,7 @@ namespace WhereToFly.Geo.DataFormats
                 Name = nameNode?.InnerText ?? "Waypoint",
                 MapLocation = new MapPoint(latitude, longitude, elevation),
                 Description = descNode?.InnerText ?? string.Empty,
-                Type = LocationTypeFromWaypointNode(nameNode),
+                Type = LocationTypeFromWaypointNode(nameNode, descNode),
                 InternetLink = linkHrefNode?.Value ?? string.Empty,
             };
 
@@ -278,8 +278,9 @@ namespace WhereToFly.Geo.DataFormats
         /// Determines a location type from given name of waypoint node.
         /// </summary>
         /// <param name="nameNode">name node</param>
+        /// <param name="nameNode">description node</param>
         /// <returns>waypoint type</returns>
-        private static LocationType LocationTypeFromWaypointNode(XmlNode nameNode)
+        private static LocationType LocationTypeFromWaypointNode(XmlNode nameNode, XmlNode descNode)
         {
             // check for some name contents in the DHV Geländedatenbank
             if (nameNode != null &&
@@ -300,6 +301,15 @@ namespace WhereToFly.Geo.DataFormats
                 {
                     return LocationType.Turnpoint;
                 }
+            }
+
+            // also check Wikipedia tags
+            string description = descNode?.InnerText ?? string.Empty;
+
+            if (!string.IsNullOrEmpty(description) &&
+                WikipediaService.TryMapWikipediaTagsToLocationType(description, out var wikipediaLocationType))
+            {
+                return wikipediaLocationType;
             }
 
             return LocationType.Waypoint;

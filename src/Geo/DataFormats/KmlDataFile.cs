@@ -472,6 +472,14 @@ namespace WhereToFly.Geo.DataFormats
                 return LocationType.Turnpoint;
             }
 
+            string description = placemark.Description?.Text?.Trim() ?? string.Empty;
+
+            if (!string.IsNullOrEmpty(description) &&
+                WikipediaService.TryMapWikipediaTagsToLocationType(description, out var wikipediaLocationType))
+            {
+                return wikipediaLocationType;
+            }
+
             return LocationType.Waypoint;
         }
 
