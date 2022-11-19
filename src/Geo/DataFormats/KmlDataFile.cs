@@ -144,8 +144,8 @@ namespace WhereToFly.Geo.DataFormats
         {
             string parentName =
                 element.Parent == null || element.Parent is Kml
-                ? string.Empty
-                : GetElementDisplayPath(element.Parent);
+                    ? string.Empty
+                    : GetElementDisplayPath(element.Parent);
 
             if (element is Feature feature)
             {
@@ -439,7 +439,7 @@ namespace WhereToFly.Geo.DataFormats
                 }
             }
 
-            var name = placemark.Name ?? string.Empty;
+            string name = placemark.Name ?? string.Empty;
 
             // Startplatz, takeoff, takeoff coast, takeoff winch
             if (name.StartsWith("SP ") ||

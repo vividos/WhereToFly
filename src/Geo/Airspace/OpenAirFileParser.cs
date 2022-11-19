@@ -424,7 +424,10 @@ namespace WhereToFly.Geo.Airspace
             if (posOpeningBracket != -1 &&
                 posClosingBracket != -1)
             {
-                openingTimes = data.Substring(posOpeningBracket + 1, posClosingBracket - posOpeningBracket - 1);
+                openingTimes = data.Substring(
+                    posOpeningBracket + 1,
+                    posClosingBracket - posOpeningBracket - 1);
+
                 return data
                     .Remove(posOpeningBracket, posClosingBracket - posOpeningBracket + 1)
                     .TrimEnd();
@@ -647,7 +650,7 @@ namespace WhereToFly.Geo.Airspace
         /// <param name="data">circle radius, in nautical miles</param>
         private void ParseDC(string data)
         {
-            var x = this.currentVariables.GetValueOrDefault("X", null);
+            string x = this.currentVariables.GetValueOrDefault("X", null);
             Coord centerCoord = this.ParseCoord(x);
 
             if (centerCoord == null)
@@ -687,7 +690,7 @@ namespace WhereToFly.Geo.Airspace
         /// <param name="data">data to parse</param>
         private void ParseDA(string data)
         {
-            var x = this.currentVariables.GetValueOrDefault("X", null);
+            string x = this.currentVariables.GetValueOrDefault("X", null);
             Coord centerCoord = this.ParseCoord(x);
 
             if (centerCoord == null)
@@ -731,7 +734,7 @@ namespace WhereToFly.Geo.Airspace
         /// <param name="data">data to parse</param>
         private void ParseDB(string data)
         {
-            var x = this.currentVariables.GetValueOrDefault("X", null);
+            string x = this.currentVariables.GetValueOrDefault("X", null);
             Coord centerCoord = this.ParseCoord(x);
 
             if (centerCoord == null)
@@ -810,7 +813,9 @@ namespace WhereToFly.Geo.Airspace
                 direction = "+";
             }
 
-            return direction == "+" ? Polygon.ArcDirection.Clockwise : Polygon.ArcDirection.CounterClockwise;
+            return direction == "+"
+                ? Polygon.ArcDirection.Clockwise
+                : Polygon.ArcDirection.CounterClockwise;
         }
 
         /// <summary>
@@ -929,7 +934,11 @@ namespace WhereToFly.Geo.Airspace
         {
             var formatProvider = System.Globalization.CultureInfo.InvariantCulture;
 
-            return double.TryParse(text, System.Globalization.NumberStyles.Float, formatProvider, out value);
+            return double.TryParse(
+                text,
+                System.Globalization.NumberStyles.Float,
+                formatProvider,
+                out value);
         }
     }
 }

@@ -11,7 +11,8 @@ namespace WhereToFly.Geo
         /// <summary>
         /// Mapping from wikipedia tags text to location type
         /// </summary>
-        private static readonly Dictionary<string, LocationType> WikipediaTagsToLocationTypeMapping = new()
+        private static readonly Dictionary<string, LocationType>
+            WikipediaTagsToLocationTypeMapping = new()
         {
             { "natural=peak", LocationType.Summit },
             { "natural=saddle", LocationType.Pass },
@@ -24,7 +25,9 @@ namespace WhereToFly.Geo
         /// <param name="text">text to check</param>
         /// <param name="wikipediaLocationType">location type</param>
         /// <returns>true when successful, or false when not</returns>
-        public static bool TryMapWikipediaTagsToLocationType(string text, out LocationType wikipediaLocationType)
+        public static bool TryMapWikipediaTagsToLocationType(
+            string text,
+            out LocationType wikipediaLocationType)
         {
             wikipediaLocationType = LocationType.Waypoint;
 

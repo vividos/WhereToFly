@@ -19,8 +19,8 @@ namespace WhereToFly.Geo
         /// <returns>distance in menter</returns>
         public static double DistanceTo(this MapPoint me, MapPoint other)
         {
-            var lat1 = me.Latitude.ToRadians();
-            var lat2 = other.Latitude.ToRadians();
+            double lat1 = me.Latitude.ToRadians();
+            double lat2 = other.Latitude.ToRadians();
             double deltaLat12 = (me.Latitude - other.Latitude).ToRadians();
             double deltaLong12 = (me.Longitude - other.Longitude).ToRadians();
 
@@ -44,7 +44,7 @@ namespace WhereToFly.Geo
         {
             double trueCourse;
 
-            var lat1 = me.Latitude.ToRadians();
+            double lat1 = me.Latitude.ToRadians();
             if (Math.Abs(Math.Cos(lat1)) < 1e-6)
             {
                 // starting from N or S pole
@@ -55,7 +55,7 @@ namespace WhereToFly.Geo
                 // Note: this delta is reversed from the Aviary formula, in order to get angles
                 // clockwise from North
                 double deltaLong21 = (other.Longitude - me.Longitude).ToRadians();
-                var lat2 = other.Latitude.ToRadians();
+                double lat2 = other.Latitude.ToRadians();
 
                 trueCourse = Math.Atan2(
                     Math.Sin(deltaLong21) * Math.Cos(lat2),
@@ -80,7 +80,11 @@ namespace WhereToFly.Geo
         /// <param name="eastDistanceInMeter">distance in east direction, in meters</param>
         /// <param name="heightDistanceInMeters">height distance, in meters</param>
         /// <returns>new point</returns>
-        public static MapPoint Offset(this MapPoint me, double northDistanceInMeter, double eastDistanceInMeter, double heightDistanceInMeters)
+        public static MapPoint Offset(
+            this MapPoint me,
+            double northDistanceInMeter,
+            double eastDistanceInMeter,
+            double heightDistanceInMeters)
         {
             double distanceInMeter = Math.Sqrt(
                 (northDistanceInMeter * northDistanceInMeter) +

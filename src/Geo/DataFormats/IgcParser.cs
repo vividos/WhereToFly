@@ -109,7 +109,9 @@ namespace WhereToFly.Geo.DataFormats
         /// <returns>formatted track name</returns>
         private string FormatTrackName()
         {
-            string date = this.currentDate.HasValue ? this.currentDate.Value.ToString("yyyy'-'MM'-'dd") : string.Empty;
+            string date = this.currentDate.HasValue
+                ? this.currentDate.Value.ToString("yyyy'-'MM'-'dd")
+                : string.Empty;
 
             string pilotName = this.headerFields.GetValueOrDefault("PILOT", null);
             if (pilotName == null)

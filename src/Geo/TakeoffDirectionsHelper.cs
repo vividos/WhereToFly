@@ -44,7 +44,7 @@ namespace WhereToFly.Geo
 
             text = text.Replace("O", "E"); // replace german east letter
 
-            foreach (var range in text.Split(','))
+            foreach (string range in text.Split(','))
             {
                 if (!TryParseDirectionOrRange(range, ref takeoffDirections))
                 {
@@ -95,7 +95,9 @@ namespace WhereToFly.Geo
         /// <param name="dirOrRange">direction or range of directions</param>
         /// <param name="takeoffDirections">flag enum that contains all directions</param>
         /// <returns>true when parsing was successful, false when not</returns>
-        private static bool TryParseDirectionOrRange(string dirOrRange, ref TakeoffDirections takeoffDirections)
+        private static bool TryParseDirectionOrRange(
+            string dirOrRange,
+            ref TakeoffDirections takeoffDirections)
         {
             int dashIndex = dirOrRange.IndexOf("-");
             if (dashIndex == -1)
@@ -120,14 +122,14 @@ namespace WhereToFly.Geo
         /// <returns>true when parsing was successful, false when not</returns>
         private static bool TryParseRange(string range, ref TakeoffDirections takeoffDirections)
         {
-            var parts = range.Split('-');
+            string[] parts = range.Split('-');
             if (parts.Length != 2)
             {
                 return false;
             }
 
-            var startDirectionText = parts[0];
-            var endDirectionText = parts[1];
+            string startDirectionText = parts[0];
+            string endDirectionText = parts[1];
 
             if (!MapDirectionToEnum.ContainsKey(startDirectionText) ||
                 !MapDirectionToEnum.ContainsKey(endDirectionText))
@@ -154,7 +156,9 @@ namespace WhereToFly.Geo
                 takeoffDirections |= currentDirection;
 
                 // advance direction
-                currentDirection = directionClockwise ? GetNextDirection(currentDirection) : GetPreviousDirection(currentDirection);
+                currentDirection = directionClockwise
+                    ? GetNextDirection(currentDirection)
+                    : GetPreviousDirection(currentDirection);
             }
 
             takeoffDirections |= endDirection;

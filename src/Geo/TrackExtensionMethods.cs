@@ -54,13 +54,17 @@ namespace WhereToFly.Geo
         /// <param name="track">track to modify</param>
         /// <param name="startDate">start date/time</param>
         /// <param name="trackPointInterval">track point interval</param>
-        public static void GenerateTrackPointTimeValues(this Track track, DateTimeOffset startDate, TimeSpan trackPointInterval)
+        public static void GenerateTrackPointTimeValues(
+            this Track track,
+            DateTimeOffset startDate,
+            TimeSpan trackPointInterval)
         {
             for (int trackPointIndex = 0; trackPointIndex < track.TrackPoints.Count; trackPointIndex++)
             {
                 TrackPoint trackPoint = track.TrackPoints[trackPointIndex];
 
-                trackPoint.Time = startDate + TimeSpan.FromSeconds(trackPointIndex * trackPointInterval.TotalSeconds);
+                trackPoint.Time = startDate +
+                    TimeSpan.FromSeconds(trackPointIndex * trackPointInterval.TotalSeconds);
             }
         }
 
@@ -90,7 +94,9 @@ namespace WhereToFly.Geo
         /// </summary>
         /// <param name="track">track to modify</param>
         /// <param name="groundHeightProfile">ground height profile altitudes</param>
-        public static void AdjustTrackPointsByGroundProfile(this Track track, double[] groundHeightProfile)
+        public static void AdjustTrackPointsByGroundProfile(
+            this Track track,
+            double[] groundHeightProfile)
         {
             Debug.Assert(
                 track.TrackPoints.Count == groundHeightProfile.Length,
@@ -99,7 +105,9 @@ namespace WhereToFly.Geo
             int modifiedPoints = 0;
             for (int pointIndex = 0; pointIndex < track.TrackPoints.Count; pointIndex++)
             {
-                double delta = (track.TrackPoints[pointIndex].Altitude ?? 0.0) - groundHeightProfile[pointIndex];
+                double delta = (track.TrackPoints[pointIndex].Altitude ?? 0.0) -
+                    groundHeightProfile[pointIndex];
+
                 if (delta < 0.0)
                 {
                     modifiedPoints++;
@@ -187,7 +195,11 @@ namespace WhereToFly.Geo
 
                 if (previousPoint != null)
                 {
-                    CalcDistanceAndSpeedStatistics(track, trackPoint, previousPoint, ref averageSpeedTrackPointCount);
+                    CalcDistanceAndSpeedStatistics(
+                        track,
+                        trackPoint,
+                        previousPoint,
+                        ref averageSpeedTrackPointCount);
                 }
 
                 previousPoint = trackPoint;
@@ -241,7 +253,8 @@ namespace WhereToFly.Geo
                 lastTrackPointWithTime != null &&
                 lastTrackPointWithTime.Time != null)
             {
-                track.Duration = lastTrackPointWithTime.Time.Value - firstTrackPointWithTime.Time.Value;
+                track.Duration = lastTrackPointWithTime.Time.Value -
+                    firstTrackPointWithTime.Time.Value;
             }
         }
 
@@ -251,7 +264,10 @@ namespace WhereToFly.Geo
         /// <param name="track">track to calculate statistics for</param>
         /// <param name="trackPoint">current track point</param>
         /// <param name="previousPoint">previous track point</param>
-        private static void CalcAltitudeStatistics(Track track, TrackPoint trackPoint, TrackPoint previousPoint)
+        private static void CalcAltitudeStatistics(
+            Track track,
+            TrackPoint trackPoint,
+            TrackPoint previousPoint)
         {
             if (!trackPoint.Altitude.HasValue)
             {
@@ -276,7 +292,9 @@ namespace WhereToFly.Geo
             if (previousHeight.HasValue)
             {
                 double altitudeDelta = altitude - previousHeight.Value;
-                double climbRate = Math.Abs(timeInSeconds) < 1e-6 ? 0.0 : altitudeDelta / timeInSeconds;
+                double climbRate = Math.Abs(timeInSeconds) < 1e-6
+                    ? 0.0
+                    : altitudeDelta / timeInSeconds;
 
                 if (altitudeDelta > 0.0)
                 {
@@ -300,7 +318,11 @@ namespace WhereToFly.Geo
         /// <param name="averageSpeedTrackPointCount">
         /// reference to current track point could for calculating average speed
         /// </param>
-        private static void CalcDistanceAndSpeedStatistics(Track track, TrackPoint trackPoint, TrackPoint previousPoint, ref int averageSpeedTrackPointCount)
+        private static void CalcDistanceAndSpeedStatistics(
+            Track track,
+            TrackPoint trackPoint,
+            TrackPoint previousPoint,
+            ref int averageSpeedTrackPointCount)
         {
             var point1 = new MapPoint(previousPoint.Latitude, previousPoint.Longitude);
             var point2 = new MapPoint(trackPoint.Latitude, trackPoint.Longitude);
@@ -314,7 +336,9 @@ namespace WhereToFly.Geo
                 timeInSeconds = (trackPoint.Time.Value - previousPoint.Time.Value).TotalSeconds;
             }
 
-            double speedInKmh = distanceInMeter / timeInSeconds * Constants.FactorMeterPerSecondToKilometerPerHour;
+            double speedInKmh = distanceInMeter / timeInSeconds *
+                Constants.FactorMeterPerSecondToKilometerPerHour;
+
             if (Math.Abs(timeInSeconds) < 1e-6)
             {
                 speedInKmh = 0.0;
@@ -337,7 +361,11 @@ namespace WhereToFly.Geo
             string startDateText = pos != -1 ? track.Name.Substring(0, pos) : string.Empty;
 
             if (!string.IsNullOrWhiteSpace(startDateText) &&
-                DateTimeOffset.TryParse(startDateText, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTimeOffset startDate))
+                DateTimeOffset.TryParse(
+                startDateText,
+                CultureInfo.InvariantCulture,
+                DateTimeStyles.None,
+                out DateTimeOffset startDate))
             {
                 track.GenerateTrackPointTimeValues(startDate, TimeSpan.FromSeconds(0.2));
             }

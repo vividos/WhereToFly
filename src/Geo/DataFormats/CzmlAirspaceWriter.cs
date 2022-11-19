@@ -31,7 +31,10 @@ namespace WhereToFly.Geo.DataFormats
         /// <param name="allAirspaces">enumerable of airspaces</param>
         /// <param name="descriptionLines">list of description lines; may be empty</param>
         /// <returns>valid .czml file content</returns>
-        public static string WriteCzml(string name, IEnumerable<Airspace.Airspace> allAirspaces, IEnumerable<string> descriptionLines)
+        public static string WriteCzml(
+            string name,
+            IEnumerable<Airspace.Airspace> allAirspaces,
+            IEnumerable<string> descriptionLines)
         {
             string description = string.Join("\n", descriptionLines).Trim();
             description = description.Replace("\n", "<br/>");
@@ -92,7 +95,8 @@ namespace WhereToFly.Geo.DataFormats
 
             if (airspace.Geometry is Airspace.Polygon polygon)
             {
-                Czml.PositionList positions = GetPolygonPointsFromAirspacePolygon(polygon, airspace.Floor);
+                Czml.PositionList positions =
+                    GetPolygonPointsFromAirspacePolygon(polygon, airspace.Floor);
 
                 if (!positions.CartographicDegrees.Any())
                 {
@@ -125,7 +129,9 @@ namespace WhereToFly.Geo.DataFormats
         /// <param name="polygon">airspace polygon</param>
         /// <param name="floor">floor altitude</param>
         /// <returns>position list object with all polygon points</returns>
-        private static Czml.PositionList GetPolygonPointsFromAirspacePolygon(Airspace.Polygon polygon, Altitude floor)
+        private static Czml.PositionList GetPolygonPointsFromAirspacePolygon(
+            Polygon polygon,
+            Altitude floor)
         {
             double height = HeightFromAltitude(floor);
 

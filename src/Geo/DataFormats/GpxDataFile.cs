@@ -56,8 +56,7 @@ namespace WhereToFly.Geo.DataFormats
         {
             string version = this.gpxDocument.DocumentElement.GetAttribute("version");
 
-            return version == null ||
-                version == "1.1";
+            return version is null or "1.1";
         }
 
         /// <summary>
@@ -144,7 +143,9 @@ namespace WhereToFly.Geo.DataFormats
         /// <param name="trackPointNode">track point node to use</param>
         /// <param name="namespaceManager">xml namespace manager to use</param>
         /// <returns>track point object</returns>
-        private static TrackPoint GetTrackPointFromTrackPointNode(XmlNode trackPointNode, XmlNamespaceManager namespaceManager)
+        private static TrackPoint GetTrackPointFromTrackPointNode(
+            XmlNode trackPointNode,
+            XmlNamespaceManager namespaceManager)
         {
             // GPX xml to load:
             // <trkpt lat="46.029650000855327" lon="11.817330038174987">
@@ -186,7 +187,9 @@ namespace WhereToFly.Geo.DataFormats
         /// <param name="waypointNode">waypoint xml node</param>
         /// <param name="namespaceManager">xml namespace manager to use</param>
         /// <returns>location object</returns>
-        private static Location GetLocationFromWaypointNode(XmlNode waypointNode, XmlNamespaceManager namespaceManager)
+        private static Location GetLocationFromWaypointNode(
+            XmlNode waypointNode,
+            XmlNamespaceManager namespaceManager)
         {
             ParseLatLongAttributes(waypointNode, out double latitude, out double longitude);
 
@@ -215,7 +218,10 @@ namespace WhereToFly.Geo.DataFormats
         /// <param name="node">wpt or trkpt node to parse</param>
         /// <param name="latitude">parsed latitude value</param>
         /// <param name="longitude">parsed longitude value</param>
-        private static void ParseLatLongAttributes(XmlNode node, out double latitude, out double longitude)
+        private static void ParseLatLongAttributes(
+            XmlNode node,
+            out double latitude,
+            out double longitude)
         {
             bool canParseLatitude = double.TryParse(
                 node.Attributes["lat"].Value,
@@ -247,7 +253,11 @@ namespace WhereToFly.Geo.DataFormats
             XmlNode elevationNode = node.SelectSingleNode("x:ele", namespaceManager);
             if (elevationNode != null &&
                 !string.IsNullOrEmpty(elevationNode.InnerText) &&
-                double.TryParse(elevationNode.InnerText, NumberStyles.Float, NumberFormatInfo.InvariantInfo, out elevation))
+                double.TryParse(
+                    elevationNode.InnerText,
+                    NumberStyles.Float,
+                    NumberFormatInfo.InvariantInfo,
+                    out elevation))
             {
                 elevation = Math.Round(elevation, 1);
             }
@@ -266,7 +276,11 @@ namespace WhereToFly.Geo.DataFormats
             XmlNode timeNode = trackPointNode.SelectSingleNode("x:time", namespaceManager);
             if (timeNode != null &&
                 !string.IsNullOrEmpty(timeNode.InnerText) &&
-                DateTimeOffset.TryParse(timeNode.InnerText, NumberFormatInfo.InvariantInfo, DateTimeStyles.AssumeUniversal, out DateTimeOffset time))
+                DateTimeOffset.TryParse(
+                    timeNode.InnerText,
+                    NumberFormatInfo.InvariantInfo,
+                    DateTimeStyles.AssumeUniversal,
+                    out DateTimeOffset time))
             {
                 return time;
             }
@@ -278,7 +292,7 @@ namespace WhereToFly.Geo.DataFormats
         /// Determines a location type from given name of waypoint node.
         /// </summary>
         /// <param name="nameNode">name node</param>
-        /// <param name="nameNode">description node</param>
+        /// <param name="descNode">description node</param>
         /// <returns>waypoint type</returns>
         private static LocationType LocationTypeFromWaypointNode(XmlNode nameNode, XmlNode descNode)
         {
@@ -307,7 +321,9 @@ namespace WhereToFly.Geo.DataFormats
             string description = descNode?.InnerText ?? string.Empty;
 
             if (!string.IsNullOrEmpty(description) &&
-                WikipediaService.TryMapWikipediaTagsToLocationType(description, out var wikipediaLocationType))
+                WikipediaService.TryMapWikipediaTagsToLocationType(
+                    description,
+                    out var wikipediaLocationType))
             {
                 return wikipediaLocationType;
             }

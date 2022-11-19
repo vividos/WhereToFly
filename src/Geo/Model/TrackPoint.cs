@@ -69,7 +69,8 @@ namespace WhereToFly.Geo.Model
             /// </summary>
             /// <param name="objectType">object type to convert to</param>
             /// <returns>true when type can be converted to, false when not</returns>
-            public override bool CanConvert(Type objectType) => typeof(TrackPoint).IsAssignableFrom(objectType);
+            public override bool CanConvert(Type objectType) =>
+                typeof(TrackPoint).IsAssignableFrom(objectType);
 
             /// <summary>
             /// Reads track point from JSON
@@ -79,7 +80,11 @@ namespace WhereToFly.Geo.Model
             /// <param name="existingValue">existing value; unused</param>
             /// <param name="serializer">json serializer</param>
             /// <returns>created track point object, or null when reading failed</returns>
-            public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+            public override object ReadJson(
+                JsonReader reader,
+                Type objectType,
+                object existingValue,
+                JsonSerializer serializer)
             {
                 var elements = serializer.Deserialize<double[]>(reader);
 
@@ -123,7 +128,10 @@ namespace WhereToFly.Geo.Model
             /// <param name="writer">json writer</param>
             /// <param name="value">track point object to write</param>
             /// <param name="serializer">json serializer</param>
-            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+            public override void WriteJson(
+                JsonWriter writer,
+                object value,
+                JsonSerializer serializer)
             {
                 if (value is not TrackPoint point)
                 {

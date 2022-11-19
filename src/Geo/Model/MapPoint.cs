@@ -120,11 +120,15 @@ namespace WhereToFly.Geo.Model
                 return "invalid";
             }
 
+            string altitudeText = this.Altitude.HasValue
+                ? this.Altitude.Value.ToString("F2", CultureInfo.InvariantCulture)
+                : "N/A";
+
             return string.Format(
                 "Lat={0}, Long={1}, Alt={2}",
                 this.Latitude.ToString("F6", CultureInfo.InvariantCulture),
                 this.Longitude.ToString("F6", CultureInfo.InvariantCulture),
-                this.Altitude.HasValue ? this.Altitude.Value.ToString("F2", CultureInfo.InvariantCulture) : "N/A");
+                altitudeText);
         }
         #endregion
 
@@ -139,7 +143,8 @@ namespace WhereToFly.Geo.Model
             /// </summary>
             /// <param name="objectType">object type to convert to</param>
             /// <returns>true when type can be converted to, false when not</returns>
-            public override bool CanConvert(Type objectType) => typeof(MapPoint).IsAssignableFrom(objectType);
+            public override bool CanConvert(Type objectType) =>
+                typeof(MapPoint).IsAssignableFrom(objectType);
 
             /// <summary>
             /// Reads map point from JSON
@@ -149,7 +154,11 @@ namespace WhereToFly.Geo.Model
             /// <param name="existingValue">existing value; unused</param>
             /// <param name="serializer">json serializer</param>
             /// <returns>created map point object, or null when reading failed</returns>
-            public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+            public override object ReadJson(
+                JsonReader reader,
+                Type objectType,
+                object existingValue,
+                JsonSerializer serializer)
             {
                 var elements = serializer.Deserialize<double[]>(reader);
 
@@ -174,7 +183,10 @@ namespace WhereToFly.Geo.Model
             /// <param name="writer">json writer</param>
             /// <param name="value">map point object to write</param>
             /// <param name="serializer">json serializer</param>
-            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+            public override void WriteJson(
+                JsonWriter writer,
+                object value,
+                JsonSerializer serializer)
             {
                 if (value is not MapPoint point)
                 {
@@ -187,7 +199,7 @@ namespace WhereToFly.Geo.Model
                 }
                 else
                 {
-                    var array = point.Altitude.HasValue
+                    double[] array = point.Altitude.HasValue
                         ? new double[3] { point.Latitude, point.Longitude, point.Altitude.Value }
                         : new double[2] { point.Latitude, point.Longitude };
 

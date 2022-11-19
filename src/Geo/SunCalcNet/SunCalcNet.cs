@@ -29,7 +29,11 @@ namespace WhereToFly.Geo.SunCalcNet
         /// <param name="longitude">longitude value, going to the north and the south</param>
         /// <param name="height">height relative to the horizon, in meters</param>
         /// <returns>solar times object</returns>
-        public static SolarTimes GetTimes(DateTimeOffset date, double latitude, double longitude, double height = 0.0)
+        public static SolarTimes GetTimes(
+            DateTimeOffset date,
+            double latitude,
+            double longitude,
+            double height = 0.0)
         {
             var offset = date.Offset;
             double lw = -longitude.ToRadians();
@@ -107,7 +111,10 @@ namespace WhereToFly.Geo.SunCalcNet
         /// <param name="latitude">latitude value, going from greenwich meridian to the east</param>
         /// <param name="longitude">longitude value, going to the north and the south</param>
         /// <returns>sun position</returns>
-        public static SunPosition GetPosition(DateTimeOffset date, double latitude, double longitude)
+        public static SunPosition GetPosition(
+            DateTimeOffset date,
+            double latitude,
+            double longitude)
         {
             double lw = -longitude.ToRadians();
             double phi = latitude.ToRadians();
