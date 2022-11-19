@@ -113,13 +113,27 @@ namespace WhereToFly.Geo.DataFormats
                 ? this.currentDate.Value.ToString("yyyy'-'MM'-'dd")
                 : string.Empty;
 
-            string pilotName = this.headerFields.GetValueOrDefault("PILOT", null);
+            string pilotName = this.GetHeaderFieldOrDefault("PILOT", null);
             if (pilotName == null)
             {
-                pilotName = this.headerFields.GetValueOrDefault("PILOTINCHARGE", "???");
+                pilotName = this.GetHeaderFieldOrDefault("PILOTINCHARGE", "???");
             }
 
             return $"{date} {pilotName}";
+        }
+
+
+        /// <summary>
+        /// Returns a header field value, or the default value when not found
+        /// </summary>
+        /// <param name="headerFieldName">name of header field</param>
+        /// <param name="defaultValue">default value</param>
+        /// <returns>found or default value</returns>
+        private string GetHeaderFieldOrDefault(string headerFieldName, string defaultValue)
+        {
+            return this.headerFields.TryGetValue(headerFieldName, out string value)
+                ? value
+                : defaultValue;
         }
 
         /// <summary>

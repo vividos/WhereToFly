@@ -333,12 +333,28 @@ namespace WhereToFly.WebApi.Logic.Services
                 "Event: {5}<br/>" +
                 "Text: {6}",
                 inEmergency,
-                extendedData.GetValueOrDefault("Time UTC", "N/A"),
-                extendedData.GetValueOrDefault("Device Type", "N/A"),
-                extendedData.GetValueOrDefault("Velocity", "N/A"),
-                extendedData.GetValueOrDefault("Course", "N/A"),
-                extendedData.GetValueOrDefault("Event", "N/A"),
-                extendedData.GetValueOrDefault("Text", "N/A"));
+                GetValueOrDefault(extendedData, "Time UTC", "N/A"),
+                GetValueOrDefault(extendedData, "Device Type", "N/A"),
+                GetValueOrDefault(extendedData, "Velocity", "N/A"),
+                GetValueOrDefault(extendedData, "Course", "N/A"),
+                GetValueOrDefault(extendedData, "Event", "N/A"),
+                GetValueOrDefault(extendedData, "Text", "N/A"));
+        }
+
+        /// <summary>
+        /// Returns a dictionary value by key, or the default value when key was not found.
+        /// </summary>
+        /// <param name="key">key value</param>
+        /// <param name="defaultValue">default value</param>
+        /// <returns>found value or default</returns>
+        private static TValue GetValueOrDefault<TKey, TValue>(
+            Dictionary<TKey, TValue> dict,
+            TKey key,
+            TValue defaultValue = default)
+        {
+            return dict.TryGetValue(key, out TValue value)
+                ? value
+                : defaultValue;
         }
     }
 }

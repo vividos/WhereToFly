@@ -136,15 +136,18 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
         {
             var dict = ParseItemList(placemarkDescription);
 
-            string waypointId = dict.GetValueOrDefault(KeyId, null);
-            string description = dict.GetValueOrDefault(KeyDescription, null);
+            if (!dict.TryGetValue(KeyId, out string waypointId) ||
+                !dict.TryGetValue(KeyDescription, out string description))
+            {
+                return null;
+            }
 
             if (waypointId != null)
             {
                 return new WaypointInfo
                 {
                     Id = waypointId,
-                    Description = description,
+                    Description = description ?? string.Empty,
                 };
             }
 
@@ -196,13 +199,13 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
         {
             var dict = ParseItemList(placemarkDescription);
 
-            string fromId = dict.GetValueOrDefault(KeyFrom, null);
-            string toId = dict.GetValueOrDefault(KeyTo, null);
-            string description = dict.GetValueOrDefault(KeyDescription, null);
-            string reverseDescription = dict.GetValueOrDefault(KeyReverseDesc, null);
+            dict.TryGetValue(KeyFrom, out string fromId);
+            dict.TryGetValue(KeyTo, out string toId);
+            dict.TryGetValue(KeyDescription, out string description);
+            dict.TryGetValue(KeyReverseDesc, out string reverseDescription);
 
-            string durationText = dict.GetValueOrDefault(KeyDuration, null);
-            string reverseDurationText = dict.GetValueOrDefault(KeyReverseDuration, null);
+            dict.TryGetValue(KeyDuration, out string durationText);
+            dict.TryGetValue(KeyReverseDuration, out string reverseDurationText);
 
             var source = this.tourEngine.FindOrCreateWaypointInfo(fromId);
             var target = this.tourEngine.FindOrCreateWaypointInfo(toId);

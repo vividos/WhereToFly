@@ -326,7 +326,11 @@ namespace WhereToFly.Geo.Airspace
         /// <returns>parsed airspace class, or Unknown</returns>
         private static AirspaceClass ParseAirspaceClass(string airspaceClassText)
         {
-            return AirspaceMapping.GetValueOrDefault(airspaceClassText, AirspaceClass.Unknown);
+            return AirspaceMapping.TryGetValue(
+                airspaceClassText,
+                out AirspaceClass airspaceClass)
+                ? airspaceClass
+                : AirspaceClass.Unknown;
         }
 
         /// <summary>
@@ -650,7 +654,7 @@ namespace WhereToFly.Geo.Airspace
         /// <param name="data">circle radius, in nautical miles</param>
         private void ParseDC(string data)
         {
-            string x = this.currentVariables.GetValueOrDefault("X", null);
+            string x = this.GetVariableOrDefault("X", null);
             Coord centerCoord = this.ParseCoord(x);
 
             if (centerCoord == null)
@@ -690,7 +694,7 @@ namespace WhereToFly.Geo.Airspace
         /// <param name="data">data to parse</param>
         private void ParseDA(string data)
         {
-            string x = this.currentVariables.GetValueOrDefault("X", null);
+            string x = this.GetVariableOrDefault("X", null);
             Coord centerCoord = this.ParseCoord(x);
 
             if (centerCoord == null)
@@ -734,7 +738,7 @@ namespace WhereToFly.Geo.Airspace
         /// <param name="data">data to parse</param>
         private void ParseDB(string data)
         {
-            string x = this.currentVariables.GetValueOrDefault("X", null);
+            string x = this.GetVariableOrDefault("X", null);
             Coord centerCoord = this.ParseCoord(x);
 
             if (centerCoord == null)
@@ -806,7 +810,7 @@ namespace WhereToFly.Geo.Airspace
         /// <returns>arc direction</returns>
         private Polygon.ArcDirection GetDirectionFromCurrentVariable()
         {
-            string direction = this.currentVariables.GetValueOrDefault("D", "+");
+            string direction = this.GetVariableOrDefault("D", "+");
             if (direction != "+" && direction != "-")
             {
                 this.AddParsingError("invalid direction variable value: " + direction);
@@ -939,6 +943,19 @@ namespace WhereToFly.Geo.Airspace
                 System.Globalization.NumberStyles.Float,
                 formatProvider,
                 out value);
+        }
+
+        /// <summary>
+        /// Returns a variable value, or the default value when not found
+        /// </summary>
+        /// <param name="variableName">name of variable</param>
+        /// <param name="defaultValue">default value</param>
+        /// <returns>found or default value</returns>
+        private string GetVariableOrDefault(string variableName, string defaultValue)
+        {
+            return this.currentVariables.TryGetValue(variableName, out string value)
+                ? value
+                : defaultValue;
         }
     }
 }
