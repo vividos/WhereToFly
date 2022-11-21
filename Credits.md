@@ -177,6 +177,7 @@ The following icons in the App are from the
 - gesture-spread - Michael Richins @MrGrigri
 - gesture-tap - Michael Richins @MrGrigri
 - timeline-clock-outline - Austin Andrews @Templarian
+- magnify-scan - Sascha Wohlgemuth @whlgmth
 
 All custom icons are licensed under the
 [Apache 2.0 license](https://github.com/Templarian/MaterialDesign/blob/master/LICENSE).
