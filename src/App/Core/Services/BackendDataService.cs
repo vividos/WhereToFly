@@ -1,7 +1,9 @@
 ﻿using Refit;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;
 
 namespace WhereToFly.App.Core.Services
@@ -65,6 +67,16 @@ namespace WhereToFly.App.Core.Services
             /// <returns>planned tour</returns>
             [Post("/api/PlanTour")]
             Task<PlannedTour> PlanTourAsync([Body] PlanTourParameters planTourParameters);
+
+            /// <summary>
+            /// Returns a list of nearby POIs in the map rectangle with the same integer latitude
+            /// and longitude values.
+            /// </summary>
+            /// <param name="latitude">integer latitude value</param>
+            /// <param name="longitude">integer longitude value</param>
+            /// <returns>list of locations</returns>
+            [Get("/api/NearbyPois?latitude={latitude}&latitude={latitude}")]
+            Task<IEnumerable<Location>> FindNearbyPoisAsync(int latitude, int longitude);
         }
 
         /// <summary>
@@ -160,6 +172,18 @@ namespace WhereToFly.App.Core.Services
         public async Task<PlannedTour> PlanTourAsync(PlanTourParameters planTourParameters)
         {
             return await this.backendWebApi.PlanTourAsync(planTourParameters);
+        }
+
+        /// <summary>
+        /// Returns a list of nearby POIs in the map rectangle with the same integer latitude
+        /// and longitude values.
+        /// </summary>
+        /// <param name="latitude">integer latitude value</param>
+        /// <param name="longitude">integer longitude value</param>
+        /// <returns>list of locations</returns>
+        public async Task<IEnumerable<Location>> FindNearbyPoisAsync(int latitude, int longitude)
+        {
+            return await this.backendWebApi.FindNearbyPoisAsync(latitude, longitude);
         }
     }
 }
