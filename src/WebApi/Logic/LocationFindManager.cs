@@ -157,5 +157,25 @@ namespace WhereToFly.WebApi.Logic
         {
             return centerPoint.DistanceTo(locationToCheck.MapLocation) < radiusInMeter;
         }
+
+        /// <summary>
+        /// Returns all locations in a map rectangle with the same integer latitude and longitude.
+        /// </summary>
+        /// <param name="latitude">integer latitude value</param>
+        /// <param name="longitude">integer longitude value</param>
+        /// <returns>list of locations</returns>
+        public async Task<IEnumerable<Location>> GetInRectAsync(int latitude, int longitude)
+        {
+            await this.initializedTask;
+
+            var result = await this.connection.QueryAsync<FindLocationEntry>(
+                "select * from locations where latitude >= ? and latitude <= ? and longitude >= ? and longitude <= ?",
+                latitude,
+                latitude + 1,
+                longitude,
+                longitude + 1);
+
+            return result.Select(entry => entry.Location);
+        }
     }
 }
