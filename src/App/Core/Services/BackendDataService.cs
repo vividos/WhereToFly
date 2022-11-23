@@ -75,7 +75,7 @@ namespace WhereToFly.App.Core.Services
             /// <param name="latitude">integer latitude value</param>
             /// <param name="longitude">integer longitude value</param>
             /// <returns>list of locations</returns>
-            [Get("/api/NearbyPois?latitude={latitude}&latitude={latitude}")]
+            [Get("/api/NearbyPois?latitude={latitude}&longitude={longitude}")]
             Task<IEnumerable<Location>> FindNearbyPoisAsync(int latitude, int longitude);
         }
 
