@@ -248,12 +248,19 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         private void SetupWebView()
         {
+            string cacheFolder = Xamarin.Essentials.FileSystem.CacheDirectory;
+
+            var nearbyPoiService = new NearbyPoiCachingService(
+                new BackendDataService(),
+                cacheFolder);
+
             this.mapView = new MapView.MapView
             {
                 LogErrorAction = App.LogError,
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 AutomationId = "ExploreMapWebView",
+                NearbyPoiService = nearbyPoiService,
             };
 
             this.mapView.Navigating += this.OnNavigating_WebView;

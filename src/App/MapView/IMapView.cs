@@ -39,6 +39,11 @@ namespace WhereToFly.App.MapView
         Task MapInitializedTask { get; }
 
         /// <summary>
+        /// Service for finding nearby POIs
+        /// </summary>
+        INearbyPoiService NearbyPoiService { get; set; }
+
+        /// <summary>
         /// Creates the map view; this must be called before any other methods.
         /// </summary>
         /// <param name="initialCenterPoint">initial center point to be used for map view</param>

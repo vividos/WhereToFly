@@ -101,6 +101,11 @@ namespace WhereToFly.App.MapView
         public Task MapInitializedTask => this.taskCompletionSourceMapInitialized.Task;
 
         /// <summary>
+        /// Service for finding nearby POIs
+        /// </summary>
+        public INearbyPoiService NearbyPoiService { get; set; }
+
+        /// <summary>
         /// Delegate of function to call when location details should be shown
         /// </summary>
         /// <param name="locationId">location id of location to navigate to</param>
