@@ -112,8 +112,26 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         private void SetupToolbar()
         {
+            this.AddFindNearbyPoisButton();
             this.AddLocateMeToolbarButton();
             this.AddFindLocationToolbarButton();
+        }
+
+        /// <summary>
+        /// Adds a "find nearby pois" button to the toolbar
+        /// </summary>
+        private void AddFindNearbyPoisButton()
+        {
+            var locateMeButton = new ToolbarItem(
+                "Find nearby POIs",
+                Converter.ImagePathConverter.GetDeviceDependentImage("magnify_scan"),
+                async () => await this.OnClicked_ToolbarButtonFindNearbyPois(),
+                ToolbarItemOrder.Primary)
+            {
+                AutomationId = "FindNearbyPois",
+            };
+
+            this.ToolbarItems.Add(locateMeButton);
         }
 
         /// <summary>
@@ -131,6 +149,27 @@ namespace WhereToFly.App.Core.Views
             };
 
             this.ToolbarItems.Add(locateMeButton);
+        }
+
+        /// <summary>
+        /// Called when toolbar button "Find nearby pois" was clicked
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task OnClicked_ToolbarButtonFindNearbyPois()
+        {
+            try
+            {
+                await App.MapView.FindNearbyPois();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("exception while finding nearby POIs: " + ex.ToString());
+
+                await this.DisplayAlert(
+                    Constants.AppTitle,
+                    "Error while finding nearby POIs: " + ex.Message,
+                    "Close");
+            }
         }
 
         /// <summary>
