@@ -1,4 +1,4 @@
-// Cesium.js
+﻿// Cesium.js
 import * as Cesium from "cesium";
 import "cesium/Build/Cesium/Widgets/widgets.css";
 
@@ -1681,26 +1681,8 @@ export class MapView {
                 continue;
             }
 
-            const text = this.formatLocationText(location);
-
-            const imagePath = this.imageUrlFromLocationType(location.type);
-
-            const altitudeText =
-                location.altitude !== undefined && location.altitude !== 0 ? " " + location.altitude.toFixed(1) + "m" : "";
-
             try {
-                const entity = await this.createEntity(
-                    location.id,
-                    location.name + altitudeText,
-                    text,
-                    this.pinColorFromLocationType(location.type),
-                    imagePath,
-                    location.longitude,
-                    location.latitude);
-
-                if (location.takeoffDirections !== undefined && location.takeoffDirections !== 0)
-                    this.addTakeoffEntities(entity, location);
-
+                const entity = await this.createEntityFromLocation(location);
                 this.locationDataSource.entities.add(entity);
 
             } catch (error) {
@@ -1711,6 +1693,37 @@ export class MapView {
         this.updateScene();
 
         console.timeEnd("MapView.addLocationList");
+    }
+
+    /**
+     * Creates entity from location object
+     * @param {Location} location to use
+     * @returns created entity
+     */
+    async createEntityFromLocation(location) {
+
+        const text = this.formatLocationText(location);
+
+        const imagePath = this.imageUrlFromLocationType(location.type);
+
+        const altitudeText =
+            location.altitude !== undefined && location.altitude !== 0
+                ? " " + location.altitude.toFixed(1) + "m"
+                : "";
+
+        const entity = await this.createEntity(
+            location.id,
+            location.name + altitudeText,
+            text,
+            this.pinColorFromLocationType(location.type),
+            imagePath,
+            location.longitude,
+            location.latitude);
+
+        if (location.takeoffDirections !== undefined && location.takeoffDirections !== 0)
+            this.addTakeoffEntities(entity, location);
+
+        return entity;
     }
 
     /**
