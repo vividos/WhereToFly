@@ -86,8 +86,8 @@
         public bool IsInside(double latitude, double longitude)
         {
             return
-                this.West < latitude && latitude < this.East &&
-                this.South < longitude && longitude < this.North;
+                this.South < latitude && latitude < this.North &&
+                this.West < longitude && longitude < this.East;
         }
     }
 }
