@@ -302,7 +302,6 @@ namespace WhereToFly.App.MapView
         /// <summary>
         /// Creates a new MapView C# object
         /// </summary>
-        /// <param name="webView">web view to use</param>
         public MapView()
         {
             Task.Run(this.InitSourceAsync);
@@ -365,10 +364,10 @@ namespace WhereToFly.App.MapView
                     latitude = initialCenterPoint.Latitude,
                     longitude = initialCenterPoint.Longitude,
                 },
-                initialViewingDistance = initialViewingDistance,
+                initialViewingDistance,
                 hasMouse = Device.RuntimePlatform == Device.UWP,
                 useAsynchronousPrimitives = true,
-                useEntityClustering = useEntityClustering,
+                useEntityClustering,
             };
 
             string js = string.Format(

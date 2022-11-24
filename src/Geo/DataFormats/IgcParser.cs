@@ -122,7 +122,6 @@ namespace WhereToFly.Geo.DataFormats
             return $"{date} {pilotName}";
         }
 
-
         /// <summary>
         /// Returns a header field value, or the default value when not found
         /// </summary>
