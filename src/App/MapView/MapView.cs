@@ -34,6 +34,11 @@ namespace WhereToFly.App.MapView
             = new();
 
         /// <summary>
+        /// List of nearby POIs already added to the map
+        /// </summary>
+        private readonly List<string> nearbyPoiIdList = new();
+
+        /// <summary>
         /// Task completion source for when map is fully initialized
         /// </summary>
         private TaskCompletionSource<bool> taskCompletionSourceMapInitialized
@@ -608,6 +613,78 @@ namespace WhereToFly.App.MapView
             this.lastCompassTargetDirection = null;
 
             this.RunJavaScript("map.clearCompass();");
+        }
+
+        /// <summary>
+        /// Finds nearby POIs in the currently shown camera view rectangle.
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        /// <exception cref="Exception">
+        /// thrown when nearby POIs couldn't be retrieved
+        /// </exception>
+        public async Task FindNearbyPois()
+        {
+            Debug.WriteLine(
+                this.NearbyPoiService != null,
+                "must set a NearbyPoiService before calling");
+
+            if (this.NearbyPoiService == null)
+            {
+                throw new InvalidOperationException("no NearbyPoiService set");
+            }
+
+            try
+            {
+                this.ShowMessageBand("Loading nearby POIs...");
+
+                MapRectangle area = await this.GetViewRectangle();
+
+                IEnumerable<Location> newLocations =
+                    await this.NearbyPoiService.Get(area, this.nearbyPoiIdList);
+
+                this.AddNearbyPoiLocations(newLocations);
+            }
+            finally
+            {
+                this.HideMessageBand();
+            }
+        }
+
+        /// <summary>
+        /// Returns the current view rectangle
+        /// </summary>
+        /// <returns>map rectangle of current view</returns>
+        private async Task<MapRectangle> GetViewRectangle()
+        {
+            string js = "map.getViewRectangle();";
+            string result = await Device.InvokeOnMainThreadAsync(
+                () => this.EvaluateJavaScriptAsync(js));
+
+            result = result
+                .Replace("\\\\", "\\")
+                .Replace("\\\"", "\"");
+
+            return JsonConvert.DeserializeObject<MapRectangle>(result);
+        }
+
+        /// <summary>
+        /// Adds a list of nearby POI locations
+        /// </summary>
+        /// <param name="nearbyPoiLocations">list of nearby POI locations</param>
+        public void AddNearbyPoiLocations(IEnumerable<Location> nearbyPoiLocations)
+        {
+            this.nearbyPoiIdList.AddRange(
+                nearbyPoiLocations.Select(location => location.Id));
+
+            var jsonLocationList =
+                from location in nearbyPoiLocations
+                select CreateJsonObjectFromLocation(location);
+
+            string js = string.Format(
+                "map.addNearbyPoiLocations({0});",
+                JsonConvert.SerializeObject(jsonLocationList));
+
+            this.RunJavaScript(js);
         }
 
         /// <summary>

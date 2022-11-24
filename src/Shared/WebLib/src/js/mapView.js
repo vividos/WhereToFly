@@ -256,6 +256,8 @@ export class MapView {
 
         this.setupLiveTrackToolbar();
 
+        this.setupNearbyPois();
+
         // swap out console.error for logging purposes
         const that = this;
         const oldLog = console.error;
@@ -996,6 +998,66 @@ export class MapView {
         }
 
         this.updateScene();
+    }
+
+    /**
+     * Sets up nearby POIs data source and camera event handler
+     */
+    setupNearbyPois() {
+
+        this.viewer.camera.moveEnd.addEventListener(function() {
+
+            const rect = this.getViewRectangle();
+
+            MapView.log("Camera moved to: West: " + rect.west +
+                "South: " + rect.south +
+                "East: " + rect.east +
+                "North: " + rect.north);
+
+        }.bind(this));
+
+        this.nearbyPoisDataSource = new Cesium.CustomDataSource("nearbyPois");
+        this.viewer.dataSources.add(this.nearbyPoisDataSource);
+    }
+
+    /**
+     * Returns the current camera view rectangle
+     * @returns {object} current view rectangle
+     */
+    getViewRectangle() {
+
+        const currentViewRectangle =
+            this.viewer.camera.computeViewRectangle(
+                this.viewer.scene.globe.ellipsoid);
+
+        return {
+            west: Cesium.Math.toDegrees(currentViewRectangle.west).toFixed(5),
+            south: Cesium.Math.toDegrees(currentViewRectangle.south).toFixed(5),
+            east: Cesium.Math.toDegrees(currentViewRectangle.east).toFixed(5),
+            north: Cesium.Math.toDegrees(currentViewRectangle.north).toFixed(5)
+        };
+    }
+
+    /**
+     * Adds nearby POI locations
+     * @param {array} nearbyPoisList list of nearby POIs to add
+     */
+    async addNearbyPoiLocations(nearbyPoisList) {
+
+        MapView.log("adding nearby POIs list, with " + nearbyPoisList.length + " entries");
+
+        for (const index in nearbyPoisList) {
+
+            const location = nearbyPoisList[index];
+
+            try {
+                const entity = await this.createEntityFromLocation(location);
+                this.nearbyPoisDataSource.entities.add(entity);
+
+            } catch (error) {
+                console.error("MapView.addNearbyPoiLocations: error while adding location entity: " + error);
+            }
+        }
     }
 
     /**

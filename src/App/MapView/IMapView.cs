@@ -86,6 +86,18 @@ namespace WhereToFly.App.MapView
         /// </summary>
         void ClearCompass();
 
+        /// <summary>
+        /// Finds nearby POIs in the currently shown camera view rectangle.
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        Task FindNearbyPois();
+
+        /// <summary>
+        /// Adds a list of nearby POI locations
+        /// </summary>
+        /// <param name="nearbyPoiLocations">list of nearby POI locations</param>
+        void AddNearbyPoiLocations(IEnumerable<Location> nearbyPoiLocations);
+
         #region Layer methods
         /// <summary>
         /// Adds layer to map
