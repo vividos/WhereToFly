@@ -1058,6 +1058,8 @@ export class MapView {
                 console.error("MapView.addNearbyPoiLocations: error while adding location entity: " + error);
             }
         }
+
+        this.updateScene();
     }
 
     /**
