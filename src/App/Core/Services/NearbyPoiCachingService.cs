@@ -33,7 +33,7 @@ namespace WhereToFly.App.Core.Services
         /// <summary>
         /// The cache dictionary
         /// </summary>
-        private Dictionary<(int Latitude, int Longitude), List<Location>> cache = new();
+        private Dictionary<LatLongKey, List<Location>> cache = new();
 
         /// <summary>
         /// Creates a new nearby POI caching service
@@ -88,9 +88,9 @@ namespace WhereToFly.App.Core.Services
         /// </summary>
         /// <param name="area">map area</param>
         /// <returns>
-        /// list of integer latitude longitude combinations in thes map area
+        /// list of integer latitude longitude combinations in the map area
         /// </returns>
-        private static IEnumerable<(int Latitude, int Longitude)> GetLatLongListFromMapArea(
+        private static IEnumerable<LatLongKey> GetLatLongListFromMapArea(
             MapRectangle area)
         {
             int minLatitude = (int)Math.Floor(area.South);
@@ -98,13 +98,13 @@ namespace WhereToFly.App.Core.Services
             int minLongitude = (int)Math.Floor(area.West);
             int maxLongitude = (int)Math.Ceiling(area.East);
 
-            List<(int Latitude, int Longitude)> latLongList = new();
+            List<LatLongKey> latLongList = new();
 
             for (int latitude = minLatitude; latitude < maxLatitude; latitude++)
             {
                 for (int longitude = minLongitude; longitude < maxLongitude; longitude++)
                 {
-                    latLongList.Add((latitude, longitude));
+                    latLongList.Add(new LatLongKey(latitude, longitude));
                 }
             }
 
@@ -117,7 +117,7 @@ namespace WhereToFly.App.Core.Services
         /// <param name="latLongList">lat/long list</param>
         /// <returns>list of locations</returns>
         private async Task<IEnumerable<Location>> GetPoisFromLatLongList(
-            IEnumerable<(int Latitude, int Longitude)> latLongList)
+            IEnumerable<LatLongKey> latLongList)
         {
             var resultList = new List<Location>();
 
@@ -145,7 +145,7 @@ namespace WhereToFly.App.Core.Services
             int latitude,
             int longitude)
         {
-            (int Latitude, int Longitude) combo = (latitude, longitude);
+            var combo = new LatLongKey(latitude, longitude);
 
             if (this.cache.ContainsKey(combo))
             {
@@ -180,7 +180,7 @@ namespace WhereToFly.App.Core.Services
                 string json = File.ReadAllText(cacheFilename);
 
                 this.cache =
-                    JsonConvert.DeserializeObject<Dictionary<(int Latitude, int Longitude), List<Location>>>(json);
+                    JsonConvert.DeserializeObject<Dictionary<LatLongKey, List<Location>>>(json);
             }
             catch (Exception ex)
             {
