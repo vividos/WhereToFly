@@ -315,7 +315,11 @@ namespace WhereToFly.App.Core.Views
             this.mapView.SetLocationAsCompassTarget += async (locationId)
                 => await this.OnMapView_SetLocationAsCompassTarget(locationId);
 
-            this.Content = this.mapView;
+            // UWP needs to create the renderer in the main thread
+            Xamarin.Essentials.MainThread.BeginInvokeOnMainThread(() =>
+            {
+                this.Content = this.mapView;
+            });
         }
 
         /// <summary>
