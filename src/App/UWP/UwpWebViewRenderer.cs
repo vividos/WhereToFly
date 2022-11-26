@@ -145,6 +145,11 @@ namespace WhereToFly.App.UWP
             settings.IsStatusBarEnabled = false;
             settings.IsSwipeNavigationEnabled = false;
             settings.IsZoomControlEnabled = false;
+
+            if (this.Element?.Source is UrlWebViewSource urlWebViewSource)
+            {
+                this.SetupVirtualAppFolder(urlWebViewSource.Url);
+            }
         }
 
         /// <summary>
@@ -172,11 +177,6 @@ namespace WhereToFly.App.UWP
             if (string.IsNullOrEmpty(url))
             {
                 return;
-            }
-
-            if (url.ToLowerInvariant().StartsWith("https"))
-            {
-                this.SetupVirtualAppFolder(url);
             }
 
             var sendNavigatingArgs = new WebNavigatingEventArgs(
@@ -342,6 +342,11 @@ namespace WhereToFly.App.UWP
             Debug.Assert(
                 !url.Contains("ms-appx-web"),
                 "ms-appx-web not supported by WebView2!");
+
+            if (this.Control?.CoreWebView2 != null)
+            {
+                this.SetupVirtualAppFolder(url);
+            }
 
             var uri = new Uri(url, UriKind.RelativeOrAbsolute);
             this.Control.Source = uri;
