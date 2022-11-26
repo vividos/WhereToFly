@@ -170,7 +170,7 @@ namespace WhereToFly.App.Core
 
             await NavigationService.GoToMap();
 
-            App.MapView.AddTrack(liveTrack);
+            await App.MapView.AddTrack(liveTrack);
 
             App.MapView.ZoomToTrack(liveTrack);
         }

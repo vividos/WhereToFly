@@ -327,7 +327,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             await NavigationService.GoToMap();
 
-            App.MapView.AddLayer(layer);
+            await App.MapView.AddLayer(layer);
 
             App.ShowToast("Layer was added.");
         }

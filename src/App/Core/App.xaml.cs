@@ -265,7 +265,7 @@ namespace WhereToFly.App.Core
             var point = track.CalculateCenterPoint();
             await UpdateLastShownPositionAsync(point);
 
-            MapView.AddTrack(track);
+            await MapView.AddTrack(track);
         }
 
         /// <summary>

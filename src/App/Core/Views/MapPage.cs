@@ -382,13 +382,15 @@ namespace WhereToFly.App.Core.Views
             this.mapView.MapShadingMode = this.appSettings.ShadingMode;
             this.mapView.CoordinateDisplayFormat = this.appSettings.CoordinateDisplayFormat;
 
-            this.mapView.AddLocationList(this.locationList);
+            this.mapView.ShowMessageBand("Loading locations...");
+            await this.mapView.AddLocationList(this.locationList);
+            this.mapView.HideMessageBand();
 
             this.mapView.ShowMessageBand("Loading tracks...");
 
             foreach (var track in this.trackList)
             {
-                this.MapView.AddTrack(track);
+                await this.MapView.AddTrack(track);
             }
 
             this.trackList.Clear();
@@ -397,7 +399,7 @@ namespace WhereToFly.App.Core.Views
 
             foreach (var layer in this.layerList)
             {
-                this.mapView.AddLayer(layer);
+                await this.mapView.AddLayer(layer);
             }
 
             this.layerList.Clear();

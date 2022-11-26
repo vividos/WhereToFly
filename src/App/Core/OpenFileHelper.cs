@@ -262,7 +262,7 @@ namespace WhereToFly.App.Core
 
             App.ShowToast("Locations were loaded.");
 
-            App.MapView.AddLocationList(locationList);
+            await App.MapView.AddLocationList(locationList);
 
             ZoomToLocationList(locationList);
         }
@@ -668,7 +668,7 @@ namespace WhereToFly.App.Core
 
             await NavigationService.GoToMap();
 
-            App.MapView.AddLayer(layer);
+            await App.MapView.AddLayer(layer);
             App.MapView.ZoomToLayer(layer);
 
             App.ShowToast("Layer was loaded.");

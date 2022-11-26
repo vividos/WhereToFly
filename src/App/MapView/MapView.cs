@@ -715,7 +715,8 @@ namespace WhereToFly.App.MapView
         /// Adds layer to map
         /// </summary>
         /// <param name="layer">layer to add</param>
-        public void AddLayer(Layer layer)
+        /// <returns>task to wait on</returns>
+        public async Task AddLayer(Layer layer)
         {
             var layerObject = new
             {
@@ -730,7 +731,7 @@ namespace WhereToFly.App.MapView
                 "await map.addLayer({0});",
                 JsonConvert.SerializeObject(layerObject));
 
-            this.RunJavaScript(js);
+            await this.RunJavaScriptAsync(js);
         }
 
         /// <summary>
@@ -846,18 +847,17 @@ namespace WhereToFly.App.MapView
         /// Adds a list of locations to the map, to be displayed as pins.
         /// </summary>
         /// <param name="locationList">list of locations to add</param>
-        public void AddLocationList(List<Location> locationList)
+        /// <returns>task to wait on</returns>
+        public async Task AddLocationList(List<Location> locationList)
         {
             if (!locationList.Any())
             {
                 return;
             }
 
-            this.ShowMessageBand("Loading locations...");
-
             if (locationList.Count > MaxLocationListCount)
             {
-                this.ImportLargeLocationList(locationList);
+                await this.ImportLargeLocationList(locationList);
                 return;
             }
 
@@ -869,23 +869,22 @@ namespace WhereToFly.App.MapView
                 "await map.addLocationList({0});",
                 JsonConvert.SerializeObject(jsonLocationList));
 
-            this.RunJavaScript(js);
-
-            this.HideMessageBand();
+            await this.RunJavaScriptAsync(js);
         }
 
         /// <summary>
         /// Imports large location list
         /// </summary>
         /// <param name="locationList">large location list to import</param>
-        private void ImportLargeLocationList(List<Location> locationList)
+        /// <returns>task to wait on</returns>
+        private async Task ImportLargeLocationList(List<Location> locationList)
         {
             for (int i = 0; i < locationList.Count; i += MaxLocationListCount)
             {
                 int remainingCount = Math.Min(MaxLocationListCount, locationList.Count - i);
                 var locationSubList = locationList.GetRange(i, remainingCount);
 
-                this.AddLocationList(locationSubList);
+                await this.AddLocationList(locationSubList);
             }
         }
 
@@ -952,7 +951,8 @@ namespace WhereToFly.App.MapView
         /// Adds new track with given name and map points
         /// </summary>
         /// <param name="track">track to add</param>
-        public void AddTrack(Track track)
+        /// <returns>task to wait on</returns>
+        public async Task AddTrack(Track track)
         {
             if (!track.TrackPoints.Any() && !track.IsLiveTrack)
             {
@@ -1000,7 +1000,7 @@ namespace WhereToFly.App.MapView
 
             string js = $"await map.addTrack({JsonConvert.SerializeObject(trackJsonObject)});";
 
-            this.RunJavaScript(js);
+            await this.RunJavaScriptAsync(js);
         }
 
         /// <summary>
@@ -1177,6 +1177,29 @@ namespace WhereToFly.App.MapView
             }
 
             Device.BeginInvokeOnMainThread(() => this.Eval(js));
+        }
+
+        /// <summary>
+        /// Runs JavaScript code, in main thread, and returns the result. Waits until the
+        /// JavaScript code finishes. The script may start with the JavaScript async keyword.
+        /// </summary>
+        /// <param name="js">JavasSript code snippet</param>
+        /// <returns>JavaScript object as JSON formatted string</returns>
+        private async Task<string> RunJavaScriptAsync(string js)
+        {
+            Debug.WriteLine("run js: " + js.Substring(0, Math.Min(80, js.Length)));
+
+            // when the command uses await, add an IIFE around it; see:
+            // https://flaviocopes.com/javascript-iife/
+            if (js.StartsWith("await"))
+            {
+                js = "(async function() { const result = " + js + " })();";
+            }
+
+            string result = await Device.InvokeOnMainThreadAsync(
+                () => this.EvaluateJavaScriptAsync(js));
+
+            return result;
         }
 
         /// <summary>

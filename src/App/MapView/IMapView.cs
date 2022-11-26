@@ -103,7 +103,8 @@ namespace WhereToFly.App.MapView
         /// Adds layer to map
         /// </summary>
         /// <param name="layer">layer to add</param>
-        void AddLayer(Layer layer);
+        /// <returns>task to wait on</returns>
+        Task AddLayer(Layer layer);
 
         /// <summary>
         /// Removes layer; built-in layers can't be removed.
@@ -147,7 +148,8 @@ namespace WhereToFly.App.MapView
         /// Adds a list of locations to the map, to be displayed as pins.
         /// </summary>
         /// <param name="locationList">list of locations to add</param>
-        void AddLocationList(List<Location> locationList);
+        /// <returns>task to wait on</returns>
+        Task AddLocationList(List<Location> locationList);
 
         /// <summary>
         /// Updates position and other infos of a single location
@@ -185,7 +187,8 @@ namespace WhereToFly.App.MapView
         /// Adds new track with given name and map points
         /// </summary>
         /// <param name="track">track to add</param>
-        void AddTrack(Track track);
+        /// <returns>task to wait on</returns>
+        Task AddTrack(Track track);
 
         /// <summary>
         /// Updates track infos like name and color
