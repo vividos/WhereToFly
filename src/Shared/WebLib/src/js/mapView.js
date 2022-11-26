@@ -2419,7 +2419,7 @@ export class MapView {
      * @param {string} [track.color] Color as "RRGGBB" string value, or undefined
      * when track should be colored according to climb and sink rate.
      */
-    addTrack(track) {
+    async addTrack(track) {
 
         this.removeTrack(track.id);
 
@@ -2435,7 +2435,7 @@ export class MapView {
         this.addOrUpdateTrackPrimitives(track);
 
         if (track.isLiveTrack) {
-            this.addLiveTrackEntity(track);
+            await this.addLiveTrackEntity(track);
             this.viewer.scene.requestRenderMode = false;
 
             this.showLiveTrackToolbar();

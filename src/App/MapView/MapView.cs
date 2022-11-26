@@ -727,7 +727,7 @@ namespace WhereToFly.App.MapView
             };
 
             string js = string.Format(
-                "map.addLayer({0});",
+                "await map.addLayer({0});",
                 JsonConvert.SerializeObject(layerObject));
 
             this.RunJavaScript(js);
@@ -813,7 +813,7 @@ namespace WhereToFly.App.MapView
             var jsonLocation = CreateJsonObjectFromLocation(location);
 
             string js = string.Format(
-                "map.addLocationList([{0}]);",
+                "await map.addLocationList([{0}]);",
                 JsonConvert.SerializeObject(jsonLocation));
 
             this.RunJavaScript(js);
@@ -866,7 +866,7 @@ namespace WhereToFly.App.MapView
                 select CreateJsonObjectFromLocation(location);
 
             string js = string.Format(
-                "map.addLocationList({0});",
+                "await map.addLocationList({0});",
                 JsonConvert.SerializeObject(jsonLocationList));
 
             this.RunJavaScript(js);
@@ -998,7 +998,7 @@ namespace WhereToFly.App.MapView
                 color = track.IsFlightTrack && !track.IsLiveTrack ? null : track.Color,
             };
 
-            string js = $"map.addTrack({JsonConvert.SerializeObject(trackJsonObject)});";
+            string js = $"await map.addTrack({JsonConvert.SerializeObject(trackJsonObject)});";
 
             this.RunJavaScript(js);
         }
@@ -1161,12 +1161,20 @@ namespace WhereToFly.App.MapView
         }
 
         /// <summary>
-        /// Runs JavaScript code, in main thread
+        /// Runs JavaScript code, in main thread; returns immediately without waiting for the
+        /// script to complete. The script may start with the JavaScript async keyword.
         /// </summary>
-        /// <param name="js">javascript code snippet</param>
+        /// <param name="js">JavasSript code snippet</param>
         private void RunJavaScript(string js)
         {
             Debug.WriteLine("run js: " + js.Substring(0, Math.Min(80, js.Length)));
+
+            // when the command uses await, add an IIFE around it; see:
+            // https://flaviocopes.com/javascript-iife/
+            if (js.StartsWith("await"))
+            {
+                js = "(async function() { " + js + " })();";
+            }
 
             Device.BeginInvokeOnMainThread(() => this.Eval(js));
         }
