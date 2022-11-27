@@ -482,7 +482,6 @@ export class MapView {
         return new Cesium.OpenStreetMapImageryProvider({
             url: "https://tile.waymarkedtrails.org/hiking/",
             credit: new Cesium.Credit(creditText, false),
-            minimumLevel: 13,
             maximumLevel: 17
         });
     }
