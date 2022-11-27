@@ -253,6 +253,7 @@ namespace WhereToFly.App.Core.ViewModels
                 new MapOverlayTypeViewModel { Text = "Contour lines", Value = MapOverlayType.ContourLines },
                 new MapOverlayTypeViewModel { Text = "Slope + contour lines", Value = MapOverlayType.SlopeAndContourLines },
                 new MapOverlayTypeViewModel { Text = "NASA Black Marble 2017", Value = MapOverlayType.BlackMarble },
+                new MapOverlayTypeViewModel { Text = "Waymarked Trails Hiking", Value = MapOverlayType.WaymarkedTrailsHiking },
             };
 
             this.CoordinateDisplayFormatItems = new List<CoordinateDisplayFormatViewModel>

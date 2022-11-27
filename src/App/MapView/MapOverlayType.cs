@@ -29,5 +29,10 @@
         /// Displays Black Marble 2017 imagery courtesy NASA Earth Observatory
         /// </summary>
         BlackMarble = 4,
+
+        /// <summary>
+        /// Displays the Waymarked Trails hiking overlay
+        /// </summary>
+        WaymarkedTrailsHiking = 5,
     }
 }

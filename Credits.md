@@ -109,6 +109,11 @@ The library is licensed using the
 The app uses the Thermal Skyways from [https://thermal.kk7.ch/](https://thermal.kk7.ch/),
 with kind permission from Michael of https://kk7.ch/.
 
+The app uses the Waymarked Trails Hiking overlay imagery from
+[https://waymarkedtrails.org/](https://waymarkedtrails.org/), licensed under the
+[CC BY-SA 3.0 DE](https://creativecommons.org/licenses/by-sa/3.0/de/deed.de)
+license.
+
 ## Resources
 
 ### Icons

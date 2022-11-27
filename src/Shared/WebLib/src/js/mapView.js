@@ -108,6 +108,9 @@ export class MapView {
         this.blackMarbleLayer = null;
         this.blackMarbleOverlay = null;
 
+        this.waymarkedTrailsHikingLayer = null;
+        this.waymarkedTrailsHikingOverlay = this.createWaymarkedTrailsHikingImageryProvider();
+
         console.log("#2 terrain provider");
         this.initTerrainProvider();
 
@@ -465,6 +468,22 @@ export class MapView {
             minimumLevel: 0,
             maximumLevel: 12,
             rectangle: tilingScheme.rectangle
+        });
+    }
+
+    /**
+     * Creates an imagery provider for the Waymarked Trails route overlay, subtype hiking
+     */
+    createWaymarkedTrailsHikingImageryProvider() {
+
+        const creditText = "The Waymarked Trails route overlay is licensed under the " +
+            "<a href=\"https://creativecommons.org/licenses/by-sa/3.0/de/deed.de\">CC BY-SA 3.0 DE</a> license";
+
+        return new Cesium.OpenStreetMapImageryProvider({
+            url: "https://tile.waymarkedtrails.org/hiking/",
+            credit: new Cesium.Credit(creditText, false),
+            minimumLevel: 13,
+            maximumLevel: 17
         });
     }
 
@@ -865,6 +884,9 @@ export class MapView {
         if (this.blackMarbleLayer !== null)
             layers.remove(this.blackMarbleLayer, false);
 
+        if (this.waymarkedTrailsHikingLayer !== null)
+            layers.remove(this.waymarkedTrailsHikingLayer, false);
+
         this.viewer.scene.globe.material = null;
 
         switch (overlayType) {
@@ -901,6 +923,15 @@ export class MapView {
             } else
                 layers.add(this.blackMarbleLayer);
             break;
+
+            case "WaymarkedTrailsHiking":
+                if (this.waymarkedTrailsHikingLayer === null) {
+                    this.waymarkedTrailsHikingLayer = layers.addImageryProvider(this.waymarkedTrailsHikingOverlay);
+                    this.waymarkedTrailsHikingLayer.alpha = 0.8; // 0.0 is transparent.  1.0 is opaque.
+                    this.waymarkedTrailsHikingLayer.brightness = 1.0; // > 1.0 increases brightness.  < 1.0 decreases.
+                } else
+                    layers.add(this.waymarkedTrailsHikingLayer);
+                break;
 
         default:
             console.warn("MapView.setMapOverlayType: invalid map overlay type: " + overlayType);

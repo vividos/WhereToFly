@@ -6,6 +6,7 @@ Released on ?.
 
 ✨ New Features / Improvements
 
+- Added the "Waymarked Trails Hiking" overlay
 - The "find result" pin can now be hidden again
 - Added "altitude offset" to Flying Range dialog
 - using CesiumJS version 1.99
