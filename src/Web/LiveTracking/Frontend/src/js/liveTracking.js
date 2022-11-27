@@ -1,8 +1,8 @@
 ﻿import $ from "jquery";
 
 // wheretofly-weblib
-import { MapView } from 'wheretofly-weblib/mapView.js';
-import 'wheretofly-weblib/mapView.css';
+import { MapView } from "wheretofly-weblib/mapView.js";
+import "wheretofly-weblib/mapView.css";
 
 export default class LiveTracking {
 
@@ -25,9 +25,9 @@ export default class LiveTracking {
         this.initPage();
 
         this.map = new MapView({
-            id: 'mapElement',
-            liveTrackToolbarId: 'liveTrackToolbar',
-            heightProfileElementId: 'heightProfileView',
+            id: "mapElement",
+            liveTrackToolbarId: "liveTrackToolbar",
+            heightProfileElementId: "heightProfileView",
             initialCenterPoint: { latitude: 47.083, longitude: 12.178 },
             initialViewingDistance: 5000.0,
             hasMouse: true,
@@ -36,7 +36,7 @@ export default class LiveTracking {
             callback: this.callMapAction
         });
 
-        this.map.setShadingMode('Fixed10Am');
+        this.map.setShadingMode("Fixed10Am");
 
         this.addDefaultLayerAndLocationListsAndTracks();
     }
@@ -53,12 +53,12 @@ export default class LiveTracking {
      */
     initPage() {
 
-        var that = this;
-        $('#findForm').submit(function (event) {
+        const that = this;
+        $("#findForm").submit(function(event) {
 
             event.preventDefault();
 
-            that.geocodeAndShow($('#findValue')[0].value);
+            that.geocodeAndShow($("#findValue")[0].value);
         });
     }
 
@@ -86,19 +86,19 @@ export default class LiveTracking {
      */
     addXLakesLayer() {
 
-        var that = this;
+        const that = this;
         $.get("/data/x-lakes-2020-wainwrights.czml",
             null,
-            function (data) {
+            function(data) {
                 LiveTracking.log("successfully loaded czml file, adding layer");
                 that.map.addLayer({
-                    id: 'x-lakes-2020-layer',
-                    name: 'X-Lakes 2020 Wainwrights',
-                    type: '',
+                    id: "x-lakes-2020-layer",
+                    name: "X-Lakes 2020 Wainwrights",
+                    type: "",
                     isVisible: true,
-                    data: data
+                    data
                 });
-                that.map.zoomToLayer('x-lakes-2020-layer');
+                that.map.zoomToLayer("x-lakes-2020-layer");
             },
             "text");
     }
@@ -108,21 +108,21 @@ export default class LiveTracking {
      */
     async addFjallravenClassicLayer() {
 
-        let result = await fetch("/data/fjallraven-classic-2022.czml");
+        const result = await fetch("/data/fjallraven-classic-2022.czml");
 
-        let czml = await result.text();
+        const czml = await result.text();
 
         LiveTracking.log("successfully loaded czml file, adding layer");
 
         await this.map.addLayer({
-            id: 'fjallraven-classic-2022-layer',
-            name: 'Fjällräven Classic 2022',
-            type: 'CzmlLayer',
+            id: "fjallraven-classic-2022-layer",
+            name: "Fjällräven Classic 2022",
+            type: "CzmlLayer",
             isVisible: true,
             data: czml
         });
 
-        this.map.zoomToLayer('fjallraven-classic-2022-layer');
+        this.map.zoomToLayer("fjallraven-classic-2022-layer");
     }
 
     /**
@@ -130,19 +130,19 @@ export default class LiveTracking {
      */
     addCrossingTheAlpsLayer() {
 
-        var that = this;
+        const that = this;
         $.get("/data/crossing-the-alps-2021.czml",
             null,
-            function (data) {
+            function(data) {
                 LiveTracking.log("successfully loaded czml file, adding layer");
                 that.map.addLayer({
-                    id: 'crossing-the-alps-2021-layer',
-                    name: 'Crossing the Alps 2021',
-                    type: '',
+                    id: "crossing-the-alps-2021-layer",
+                    name: "Crossing the Alps 2021",
+                    type: "",
                     isVisible: true,
-                    data: data
+                    data
                 });
-                that.map.zoomToLayer('crossing-the-alps-2021-layer');
+                that.map.zoomToLayer("crossing-the-alps-2021-layer");
             },
             "text");
     }
@@ -154,17 +154,17 @@ export default class LiveTracking {
      */
     addLiveWaypoint(name, liveWaypointId) {
 
-        var pageIdPrefix = 'liveData';
+        const pageIdPrefix = "liveData";
         this.liveWaypointToIdMapping[liveWaypointId] = pageIdPrefix;
 
-        var idName = '#' + pageIdPrefix + 'Name';
+        const idName = "#" + pageIdPrefix + "Name";
         $(idName)[0].textContent = name;
 
         this.map.addLocationList([{
             id: liveWaypointId,
-            name: name,
-            description: '',
-            type: 'LiveWaypoint',
+            name,
+            description: "",
+            type: "LiveWaypoint",
             latitude: 0.0,
             longitude: 0.0,
             altitude: 0.0,
@@ -182,17 +182,17 @@ export default class LiveTracking {
      */
     addLiveTrack(name, liveTrackId, isFlightTrack) {
 
-        var pageIdPrefix = 'liveData';
+        const pageIdPrefix = "liveData";
         this.liveTrackToIdMapping[liveTrackId] = pageIdPrefix;
 
-        var idName = '#' + pageIdPrefix + 'Name';
+        const idName = "#" + pageIdPrefix + "Name";
         $(idName)[0].textContent = name;
 
         this.map.addTrack({
             id: liveTrackId,
-            name: name,
-            description: '',
-            isFlightTrack: isFlightTrack,
+            name,
+            description: "",
+            isFlightTrack,
             isLiveTrack: true,
             listOfTrackPoints: [],
             listOfTimePoints: [],
@@ -211,18 +211,18 @@ export default class LiveTracking {
 
         LiveTracking.log("geocoding find text: " + address);
 
-        var endpoint = 'https://nominatim.openstreetmap.org/search';
+        const endpoint = "https://nominatim.openstreetmap.org/search";
 
-        var that = this;
+        const that = this;
         $.ajax({
             url: endpoint,
             data: {
                 q: address
             }
         })
-            .done(function (result) {
+            .done(function(result) {
 
-                return result.data.map(function (resultObject) {
+                return result.data.map(function(resultObject) {
                     that.map.showFindResult({
                         name: address,
                         description: resultObject.display_name,
@@ -241,14 +241,14 @@ export default class LiveTracking {
      */
     zoomToByPrefix(pageIdPrefix) {
 
-        var liveWaypointUri =
+        const liveWaypointUri =
             Object.keys(this.liveWaypointToIdMapping).find(
                 key => this.liveWaypointToIdMapping[key] === pageIdPrefix);
 
         if (liveWaypointUri !== undefined)
             this.map.zoomToLiveWaypointCurrentPos(liveWaypointUri);
 
-        var liveTrackUri =
+        const liveTrackUri =
             Object.keys(this.liveTrackToIdMapping).find(
                 key => this.liveTrackToIdMapping[key] === pageIdPrefix);
 
@@ -262,14 +262,14 @@ export default class LiveTracking {
      */
     updateByPrefix(pageIdPrefix) {
 
-        var liveWaypointUri =
+        const liveWaypointUri =
             Object.keys(this.liveWaypointToIdMapping).find(
                 key => this.liveWaypointToIdMapping[key] === pageIdPrefix);
 
         if (liveWaypointUri !== undefined)
             this.updateLiveWaypoint(liveWaypointUri);
 
-        var liveTrackUri =
+        const liveTrackUri =
             Object.keys(this.liveTrackToIdMapping).find(
                 key => this.liveTrackToIdMapping[key] === pageIdPrefix);
 
@@ -285,14 +285,14 @@ export default class LiveTracking {
 
         LiveTracking.log("updating live waypoint " + liveWaypointUri);
 
-        var that = this;
+        const that = this;
         $.ajax({
-            url: '/?handler=UpdateLiveWaypoint',
+            url: "/?handler=UpdateLiveWaypoint",
             data: {
                 Uri: liveWaypointUri
             }
         })
-            .done(function (result) {
+            .done(function(result) {
                 that.onUpdateLiveWaypointResult(liveWaypointUri, result);
             });
     }
@@ -308,30 +308,30 @@ export default class LiveTracking {
 
         if (result.data !== undefined) {
             result.data.id = liveWaypointUri;
-            result.data.type = 'LiveWaypoint';
+            result.data.type = "LiveWaypoint";
 
             this.map.updateLocation(result.data);
 
             if (this.liveWaypointToIdMapping[liveWaypointUri] !== undefined) {
-                var pageIdPrefix = this.liveWaypointToIdMapping[liveWaypointUri];
+                const pageIdPrefix = this.liveWaypointToIdMapping[liveWaypointUri];
 
-                //var idName = '#' + pageIdPrefix + 'Name';
-                //$(idName)[0].textContent = result.data.name;
+                // var idName = '#' + pageIdPrefix + 'Name';
+                // $(idName)[0].textContent = result.data.name;
 
-                var idDesc = '#' + pageIdPrefix + 'Description';
+                const idDesc = "#" + pageIdPrefix + "Description";
                 $(idDesc)[0].innerHTML = result.data.description;
 
-                var idLastUpdate = '#' + pageIdPrefix + 'LastUpdate';
-                $(idLastUpdate)[0].textContent = 'Last update: ' + new Date().toLocaleTimeString();
+                const idLastUpdate = "#" + pageIdPrefix + "LastUpdate";
+                $(idLastUpdate)[0].textContent = "Last update: " + new Date().toLocaleTimeString();
             }
         }
 
-        if (typeof result === 'string') {
+        if (typeof result === "string") {
 
             if (this.liveWaypointToIdMapping[liveWaypointUri] !== undefined) {
-                var idDesc2 = '#' + this.liveWaypointToIdMapping[liveWaypointUri] + 'Description';
+                const idDesc2 = "#" + this.liveWaypointToIdMapping[liveWaypointUri] + "Description";
 
-                $(idDesc2)[0].textContent = 'Error: ' + result;
+                $(idDesc2)[0].textContent = "Error: " + result;
             }
         }
 
@@ -348,15 +348,15 @@ export default class LiveTracking {
 
         LiveTracking.log("updating live track " + liveTrackUri);
 
-        var that = this;
+        const that = this;
         $.ajax({
-            url: '/?handler=UpdateLiveTrack',
+            url: "/?handler=UpdateLiveTrack",
             data: {
                 Uri: liveTrackUri,
                 LastTrackPointTime: that.map.getTrackLastTrackPointTime(liveTrackUri)
             }
         })
-            .done(function (result) {
+            .done(function(result) {
                 that.onUpdateLiveTrackResult(liveTrackUri, result);
             });
     }
@@ -375,22 +375,22 @@ export default class LiveTracking {
             this.map.updateLiveTrack(result.data);
 
             if (this.liveTrackToIdMapping[liveTrackUri] !== undefined) {
-                var pageIdPrefix = this.liveTrackToIdMapping[liveTrackUri];
+                const pageIdPrefix = this.liveTrackToIdMapping[liveTrackUri];
 
-                var idDesc = '#' + pageIdPrefix + 'Description';
+                const idDesc = "#" + pageIdPrefix + "Description";
                 $(idDesc)[0].innerHTML = result.data.description;
 
-                var idLastUpdate = '#' + pageIdPrefix + 'LastUpdate';
-                $(idLastUpdate)[0].textContent = 'Last update: ' + new Date().toLocaleTimeString();
+                const idLastUpdate = "#" + pageIdPrefix + "LastUpdate";
+                $(idLastUpdate)[0].textContent = "Last update: " + new Date().toLocaleTimeString();
             }
         }
 
-        if (typeof result === 'string') {
+        if (typeof result === "string") {
 
             if (this.liveTrackToIdMapping[liveTrackUri] !== undefined) {
-                var idDesc2 = '#' + this.liveTrackToIdMapping[liveTrackUri] + 'Description';
+                const idDesc2 = "#" + this.liveTrackToIdMapping[liveTrackUri] + "Description";
 
-                $(idDesc2)[0].textContent = 'Error: ' + result;
+                $(idDesc2)[0].textContent = "Error: " + result;
             }
         }
 
@@ -411,17 +411,17 @@ export default class LiveTracking {
         if (this.updateTimeoutMapping[liveDataUri] !== undefined)
             clearTimeout(this.updateTimeoutMapping[liveDataUri]);
 
-        var now = new Date();
-        var nextRequest = new Date(nextRequestDate);
+        const now = new Date();
+        const nextRequest = new Date(nextRequestDate);
 
-        var millisTillUpdate = nextRequest - now;
+        let millisTillUpdate = nextRequest - now;
         if (millisTillUpdate < 0)
             millisTillUpdate = 10 * 1000; // schedule in 10 seconds
 
         LiveTracking.log("scheduling update in " + (millisTillUpdate / 1000.0).toFixed(1) + " seconds");
 
-        var that = this;
-        var myTimeout = setTimeout(function () {
+        const that = this;
+        const myTimeout = setTimeout(function() {
             LiveTracking.log("next update for " + liveDataUri + " is due!");
             if (liveDataUri in that.liveTrackToIdMapping)
                 that.updateLiveTrack(liveDataUri);

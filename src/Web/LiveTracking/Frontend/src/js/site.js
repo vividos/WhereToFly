@@ -1,15 +1,16 @@
-﻿// Bootstrap & jQuery
-import 'bootstrap';
-import $ from 'jquery';
-import 'bootstrap/dist/css/bootstrap.css';
+﻿/* eslint-disable space-before-function-paren */
+// Bootstrap & jQuery
+import "bootstrap";
+import $ from "jquery";
+import "bootstrap/dist/css/bootstrap.css";
 
 // Fontawesome
-import '@fortawesome/fontawesome-free/js/solid.js';
-import '@fortawesome/fontawesome-free/js/fontawesome.js';
+import "@fortawesome/fontawesome-free/js/solid.js";
+import "@fortawesome/fontawesome-free/js/fontawesome.js";
 
 // Site
-import '../css/site.css';
-import LiveTracking from './liveTracking.js';
+import "../css/site.css";
+import LiveTracking from "./liveTracking.js";
 
 // Site initialisation
 $(function () {
@@ -17,11 +18,11 @@ $(function () {
 });
 
 function initLiveTracking() {
-    var liveTracking = new LiveTracking();
+    const liveTracking = new LiveTracking();
 
-    var liveTrackingInfoList = getLiveTrackingInfoList();
-    for (var key in liveTrackingInfoList) {
-        var item = liveTrackingInfoList[key];
+    const liveTrackingInfoList = getLiveTrackingInfoList();
+    for (const key in liveTrackingInfoList) {
+        const item = liveTrackingInfoList[key];
         if (item.isLiveTrack)
             liveTracking.addLiveTrack(item.name, item.uri, item.isFlightTrack);
         else
