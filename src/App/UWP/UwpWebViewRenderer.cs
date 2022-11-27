@@ -353,8 +353,11 @@ namespace WhereToFly.App.UWP
                 this.SetupVirtualAppFolder(url);
             }
 
-            var uri = new Uri(url, UriKind.RelativeOrAbsolute);
-            this.Control.Source = uri;
+            if (this.Control != null)
+            {
+                var uri = new Uri(url, UriKind.RelativeOrAbsolute);
+                this.Control.Source = uri;
+            }
         }
         #endregion
     }
