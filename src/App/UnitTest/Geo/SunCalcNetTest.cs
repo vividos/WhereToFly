@@ -34,7 +34,7 @@ namespace WhereToFly.App.UnitTest.Geo
 
         /// <summary>
         /// Checks solar times of a positive latitude and longitude value.
-        /// https://www.timeanddate.com/sun/@48.137222,11.575556?month=7&year=2020
+        /// <![CDATA[https://www.timeanddate.com/sun/@48.137222,11.575556?month=7&year=2020]]>
         /// </summary>
         [TestMethod]
         public void TestSolarTimes_PositiveLatLong()
@@ -145,7 +145,7 @@ namespace WhereToFly.App.UnitTest.Geo
 
         /// <summary>
         /// Tests solar times for a location that has sun up all day or down all day
-        /// https://www.timeanddate.com/sun/antarctica/neumayer-station-iii?month=6&year=2020
+        /// <![CDATA[https://www.timeanddate.com/sun/antarctica/neumayer-station-iii?month=6&year=2020]]>
         /// </summary>
         [TestMethod]
         public void TestSolarTimes_AllDayUp_AllDayDown()
@@ -177,7 +177,7 @@ namespace WhereToFly.App.UnitTest.Geo
 
         /// <summary>
         /// Some places on earth have a sunset that only occurs after midnight.
-        /// https://www.timeanddate.com/sun/@64.475528,-20.253140?month=6&year=2020
+        /// <![CDATA[https://www.timeanddate.com/sun/@64.475528,-20.253140?month=6&year=2020]]>
         /// </summary>
         [TestMethod]
         public void TestSolarTimes_SunsetOnTheNextDay()
@@ -204,7 +204,7 @@ namespace WhereToFly.App.UnitTest.Geo
         /// <summary>
         /// Checks the solar times above the arctic circle on the day with the last sunrise, but
         /// no sunset.
-        /// https://www.timeanddate.com/sun/canada/eureka?month=4&year=2020
+        /// <![CDATA[https://www.timeanddate.com/sun/canada/eureka?month=4&year=2020]]>
         /// </summary>
         [TestMethod]
         public void TestSolarTimes_DayWithLastSunrise()
@@ -229,7 +229,7 @@ namespace WhereToFly.App.UnitTest.Geo
 
         /// <summary>
         /// Checks solar times near the equator
-        /// https://www.timeanddate.com/sun/@64.475528,-20.253140?month=6&year=2020
+        /// <![CDATA[https://www.timeanddate.com/sun/@64.475528,-20.253140?month=6&year=2020]]>
         /// </summary>
         [TestMethod]
         public void TestSolarTimes_NearEquator()
