@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
-/// <summary>
-/// (c) 2011-2015, Vladimir Agafonkin
-/// (c) 2020-2022 Michael Fink
-/// SunCalc.Net is a C# library for calculating sun/moon position and light phases.
-/// The library was ported from the suncalc JavaScript library:
-/// https://github.com/mourner/suncalc
-/// The code is based on version 1.9.0.
-/// Sun calculations are based on https://aa.quae.nl/en/reken/zonpositie.html formulas
-/// Note that moon calculations weren't ported over (yet).
-/// </summary>
+// (c) 2011-2015, Vladimir Agafonkin
+// (c) 2020-2022 Michael Fink
+// SunCalc.Net is a C# library for calculating sun/moon position and light phases.
+// The library was ported from the suncalc JavaScript library:
+// https://github.com/mourner/suncalc
+// The code is based on version 1.9.0.
+// Sun calculations are based on https://aa.quae.nl/en/reken/zonpositie.html formulas
+// Note that moon calculations weren't ported over (yet).
 namespace WhereToFly.Geo.SunCalcNet
 {
 #pragma warning disable SA1312 // Variable names should begin with lower-case letter

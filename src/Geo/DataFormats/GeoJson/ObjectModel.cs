@@ -7,12 +7,10 @@ using System.Collections.Generic;
 #pragma warning disable SA1649 // File name should match first type name
 #pragma warning disable CA1819 // Properties should not return arrays
 
-/// <summary>
-/// C# object model for deserializing GeoJSON to C#.
-/// See: https://en.wikipedia.org/wiki/GeoJSON and RFC 7946.
-/// GeoJSON can contain Point, LineString, Polygon elements, as well as multi-part variants
-/// of these objects (MultiPoint, MultiLineString and MultiPolygon).
-/// </summary>
+// C# object model for deserializing GeoJSON to C#.
+// See: https://en.wikipedia.org/wiki/GeoJSON and RFC 7946.
+// GeoJSON can contain Point, LineString, Polygon elements, as well as multi-part variants
+// of these objects (MultiPoint, MultiLineString and MultiPolygon).
 namespace WhereToFly.Geo.DataFormats.GeoJson
 {
     /// <summary>

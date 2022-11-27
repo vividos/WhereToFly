@@ -8,9 +8,7 @@ using System.Diagnostics;
 #pragma warning disable CA1819 // Properties should not return arrays
 #pragma warning disable CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
 
-/// <summary>
-/// C# object model for deserializing CZML JSON data.
-/// </summary>
+// C# object model for deserializing CZML JSON data.
 namespace WhereToFly.Geo.DataFormats.Czml
 {
     /// <summary>
