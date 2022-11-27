@@ -4,6 +4,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Platform.UWP;
@@ -145,6 +146,10 @@ namespace WhereToFly.App.UWP
             settings.IsStatusBarEnabled = false;
             settings.IsSwipeNavigationEnabled = false;
             settings.IsZoomControlEnabled = false;
+
+            string userAgent = settings.UserAgent;
+            userAgent += $" WebViewApp {AppInfo.Name}/{AppInfo.VersionString}";
+            settings.UserAgent = userAgent;
 
             if (this.Element?.Source is UrlWebViewSource urlWebViewSource)
             {
