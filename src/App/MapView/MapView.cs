@@ -644,14 +644,14 @@ namespace WhereToFly.App.MapView
                 var areaCenter = area.Center;
                 if (area.Width > NearbyPoisMaxRequestLatitudeLongitude)
                 {
-                    area.West = areaCenter.Longitude - NearbyPoisMaxRequestLatitudeLongitude / 2.0;
-                    area.East = areaCenter.Longitude + NearbyPoisMaxRequestLatitudeLongitude / 2.0;
+                    area.West = areaCenter.Longitude - (NearbyPoisMaxRequestLatitudeLongitude / 2.0);
+                    area.East = areaCenter.Longitude + (NearbyPoisMaxRequestLatitudeLongitude / 2.0);
                 }
 
                 if (area.Height > NearbyPoisMaxRequestLatitudeLongitude)
                 {
-                    area.South = areaCenter.Latitude - NearbyPoisMaxRequestLatitudeLongitude / 2.0;
-                    area.North = areaCenter.Latitude + NearbyPoisMaxRequestLatitudeLongitude / 2.0;
+                    area.South = areaCenter.Latitude - (NearbyPoisMaxRequestLatitudeLongitude / 2.0);
+                    area.North = areaCenter.Latitude + (NearbyPoisMaxRequestLatitudeLongitude / 2.0);
                 }
 
                 IEnumerable<Location> newLocations =
