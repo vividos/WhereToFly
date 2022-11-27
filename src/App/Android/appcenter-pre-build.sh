@@ -7,3 +7,4 @@ export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
 dotnet tool install --global boots
 
 boots https://aka.ms/xamarin-android-commercial-d17-4-macos
+boots --stable Mono
