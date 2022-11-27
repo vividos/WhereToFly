@@ -73,6 +73,7 @@ namespace WhereToFly.WebApi.Logic
             var importAndPrefixList = new Tuple<string, string>[]
             {
                 new Tuple<string, string>("paraglidingspots-complete.kmz", "pgspots"),
+                new Tuple<string, string>("WanakaHikeFly2022.kmz", "wanakahikefly"),
             };
 
             var logicAssembly = typeof(LocationFindManager).Assembly;

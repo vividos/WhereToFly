@@ -7,11 +7,13 @@
   <ItemGroup>
     <None Remove="Assets\paraglidingspots-complete.kmz" />
     <None Remove="Assets\PlanTourPaths.kml" />
+    <None Remove="Assets\WanakaHikeFly2022.kmz" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Assets\paraglidingspots-complete.kmz" />
     <EmbeddedResource Include="Assets\PlanTourPaths.kml" />
+    <EmbeddedResource Include="Assets\WanakaHikeFly2022.kmz" />
   </ItemGroup>
 
   <ItemGroup>
