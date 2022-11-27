@@ -1,13 +1,13 @@
 @echo off
 REM
 REM Where-to-fly - an app to decide where to (hike up and) fly with a paraglider
-REM Copyright (C) 2017-2021 Michael Fink
+REM Copyright (C) 2017-2022 Michael Fink
 REM
 REM Runs Unit tests and coverage analysis
 REM
 
 REM set this to your Visual Studio installation folder
-set VSINSTALL=%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community
+set VSINSTALL=%ProgramFiles%\Microsoft Visual Studio\2022\Community
 
 REM set this to your OpenCover executable
 set OPENCOVER="C:\Projekte\Tools\OpenCover\OpenCover.Console.exe"
@@ -27,11 +27,8 @@ set VSTEST=%VSINSTALL%\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.
 REM
 REM Build projects
 REM
-msbuild App\UnitTest\WhereToFly.App.UnitTest.csproj /m /property:Configuration=Release /target:Build
-
-pushd "%~dp0WebApi\UnitTest\"
-dotnet build -c Release
-popd
+dotnet publish App\UnitTest\WhereToFly.App.UnitTest.csproj --configuration Release
+dotnet publish WebApi\UnitTest\WhereToFly.WebApi.UnitTest.csproj --configuration Release
 
 REM
 REM Run Unit-Tests
@@ -39,7 +36,7 @@ REM
 %OPENCOVER% ^
     -register:user ^
     -target:"%VSTEST%" ^
-    -targetargs:"\"%~dp0App\UnitTest\bin\Release\net462\WhereToFly.App.UnitTest.dll\"" ^
+    -targetargs:"\"%~dp0App\UnitTest\bin\Release\net48\WhereToFly.App.UnitTest.dll\"" ^
     -filter:"+[WhereToFly*]* -[WhereToFly.App.Android]* -[WhereToFly.App.UnitTest]*" ^
     -mergebyhash ^
     -skipautoprops ^

@@ -7,10 +7,7 @@ REM Runs SonarCloud analysis build
 REM
 
 REM set this to your Visual Studio installation folder
-set VSINSTALL=%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Community
-
-REM set this to your SonarQube tools folder
-set SONARQUBE=C:\Projekte\Tools\SonarQube
+set VSINSTALL=%ProgramFiles%\Microsoft Visual Studio\2022\Community
 
 REM set this to your OpenCover executable
 set OPENCOVER="C:\Projekte\Tools\OpenCover\OpenCover.Console.exe"
@@ -25,7 +22,8 @@ call "%VSINSTALL%\Common7\Tools\VsDevCmd.bat"
 
 set DOTNET_CLI_TELEMETRY_OPTOUT=1
 
-set PATH=%PATH%;%SONARQUBE%\build-wrapper-win-x86;%SONARQUBE%\sonar-scanner-msbuild
+REM install SonarScanner, if not available yet
+dotnet tool install --global dotnet-sonarscanner
 
 if "%SONARLOGIN%" == "" echo "Environment variable SONARLOGIN is not set! Obtain a new token and set the environment variable!"
 if "%SONARLOGIN%" == "" exit 1
@@ -37,10 +35,9 @@ REM Build using SonarQube scanner for MSBuild
 REM
 rmdir .\bw-output /s /q 2> nul
 
-SonarScanner.MSBuild.exe begin ^
+dotnet-sonarscanner begin ^
     /k:"WhereToFly" ^
     /v:"1.14.0" ^
-    /d:"sonar.cfamily.build-wrapper-output=%CD%\bw-output" ^
     /d:"sonar.cs.opencover.reportsPaths=%CD%\TestResults\WhereToFly-*-CoverageReport.xml" ^
     /d:"sonar.exclusions=Web\LiveTracking\wwwroot\lib\**\*" ^
     /d:"sonar.host.url=https://sonarcloud.io" ^
@@ -51,7 +48,7 @@ if errorlevel 1 goto end
 REM
 REM Rebuild projects
 REM
-build-wrapper-win-x86-64.exe --out-dir bw-output msbuild WhereToFly.sln /m /property:Configuration=SonarQube /target:Rebuild
+msbuild WhereToFly.sln /m /property:Configuration=SonarQube /target:Restore;Rebuild
 
 REM
 REM Run Unit-Tests
@@ -59,7 +56,7 @@ REM
 %OPENCOVER% ^
     -register:user ^
     -target:"%VSTEST%" ^
-    -targetargs:"\"%~dp0App\UnitTest\bin\Release\net462\WhereToFly.App.UnitTest.dll\"" ^
+    -targetargs:"\"%~dp0App\UnitTest\bin\Release\net48\WhereToFly.App.UnitTest.dll\"" ^
     -filter:"+[WhereToFly*]* -[WhereToFly.App.Android]* -[WhereToFly.App.UnitTest]*" ^
     -mergebyhash ^
     -skipautoprops ^
@@ -80,7 +77,7 @@ REM
     -reports:"%~dp0\TestResults\WhereToFly-*-CoverageReport.xml" ^
     -targetdir:"%~dp0\TestResults\CoverageReport"
 
-SonarScanner.MSBuild.exe end /d:"sonar.login=%SONARLOGIN%"
+dotnet-sonarscanner end /d:"sonar.login=%SONARLOGIN%"
 
 :end
 
