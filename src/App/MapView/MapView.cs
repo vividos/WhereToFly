@@ -638,6 +638,22 @@ namespace WhereToFly.App.MapView
 
                 MapRectangle area = await this.GetViewRectangle();
 
+                // limit size of area
+                const double NearbyPoisMaxRequestLatitudeLongitude = 2.0;
+
+                var areaCenter = area.Center;
+                if (area.Width > NearbyPoisMaxRequestLatitudeLongitude)
+                {
+                    area.West = areaCenter.Longitude - NearbyPoisMaxRequestLatitudeLongitude / 2.0;
+                    area.East = areaCenter.Longitude + NearbyPoisMaxRequestLatitudeLongitude / 2.0;
+                }
+
+                if (area.Height > NearbyPoisMaxRequestLatitudeLongitude)
+                {
+                    area.South = areaCenter.Latitude - NearbyPoisMaxRequestLatitudeLongitude / 2.0;
+                    area.North = areaCenter.Latitude + NearbyPoisMaxRequestLatitudeLongitude / 2.0;
+                }
+
                 IEnumerable<Location> newLocations =
                     await this.NearbyPoiService.Get(area, this.nearbyPoiIdList);
 
