@@ -197,14 +197,6 @@ export class MapView {
                     roll: 0.0
                 }
             });
-
-            const altitude = this.options.initialCenterPoint.altitude || 0.0;
-
-            this.flyTo({
-                longitude,
-                latitude,
-                altitude
-            });
         }
 
         console.log("#8 location markers");
