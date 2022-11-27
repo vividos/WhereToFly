@@ -6,6 +6,8 @@ Released on ?.
 
 ✨ New Features / Improvements
 
+- Added new "Find nearby POIs" button in the map view that shows temporary
+  point of interest markers on the map
 - Added the "Waymarked Trails Hiking" overlay
 - The "find result" pin can now be hidden again
 - Added "altitude offset" to Flying Range dialog
