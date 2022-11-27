@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 #pragma warning disable SA1402 // File may only contain a single type
 #pragma warning disable CA1034 // Nested types should not be visible
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
-/// <summary>
-/// Content classes for the Find Me SPOT REST web services call
-/// See: http://faq.findmespot.com/index.php?action=showEntry&data=69
-/// </summary>
+// Content classes for the Find Me SPOT REST web services call
+// See: http://faq.findmespot.com/index.php?action=showEntry&data=69
 namespace WhereToFly.WebApi.Logic.Services.FindMeSpot
 {
     [SuppressMessage(

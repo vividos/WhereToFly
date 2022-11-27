@@ -275,6 +275,7 @@ namespace WhereToFly.WebApi.Logic.Services
         /// <summary>
         /// Creates track point object from SharpKml Point object with Garmin extra data
         /// </summary>
+        /// <param name="placemark">point placemark</param>
         /// <param name="point">point object</param>
         /// <returns>track point object</returns>
         private static TrackPoint GetTrackPointFromKmlPointGeometry(Placemark placemark, Point point)
@@ -344,6 +345,7 @@ namespace WhereToFly.WebApi.Logic.Services
         /// <summary>
         /// Returns a dictionary value by key, or the default value when key was not found.
         /// </summary>
+        /// <param name="dict">dictionary to use</param>
         /// <param name="key">key value</param>
         /// <param name="defaultValue">default value</param>
         /// <returns>found value or default</returns>
