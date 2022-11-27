@@ -1,4 +1,6 @@
-﻿namespace WhereToFly.Geo.Model
+﻿using System;
+
+namespace WhereToFly.Geo.Model
 {
     /// <summary>
     /// Map rectangle
@@ -50,6 +52,23 @@
             get => this.SouthEast.Longitude;
             set => this.SouthEast.Longitude = value;
         }
+
+        /// <summary>
+        /// Width of rectangle, in degrees longitude
+        /// </summary>
+        public double Width => Math.Abs(this.East - this.West);
+
+        /// <summary>
+        /// Height of rectangle, in degrees latitude
+        /// </summary>
+        public double Height => Math.Abs(this.North - this.South);
+
+        /// <summary>
+        /// Returns the center point of the map rectangle
+        /// </summary>
+        public MapPoint Center => new MapPoint(
+            this.South + (this.Height / 2.0),
+            this.West + (this.Width / 2.0));
 
         /// <summary>
         /// Returns if the rectangle is value
