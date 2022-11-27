@@ -148,7 +148,7 @@ namespace WhereToFly.App.UWP
             settings.IsZoomControlEnabled = false;
 
             string userAgent = settings.UserAgent;
-            userAgent += $" WebViewApp {AppInfo.Name}/{AppInfo.VersionString}";
+            userAgent += $" WebViewApp {AppInfo.Name.Replace(' ', '-')}/{AppInfo.VersionString}";
             settings.UserAgent = userAgent;
 
             if (this.Element?.Source is UrlWebViewSource urlWebViewSource)
