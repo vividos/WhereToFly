@@ -66,6 +66,11 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         private MapPoint currentPosition;
 
+        /// <summary>
+        /// Task that is completed when updating the location list has finished
+        /// </summary>
+        private Task updateLocationListTask = Task.CompletedTask;
+
         #region Binding properties
         /// <summary>
         /// Current location list; may be filtered by filter text
@@ -198,7 +203,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         public void UpdateLocationList()
         {
-            Task.Run(async () =>
+            this.updateLocationListTask = Task.Run(async () =>
             {
                 this.IsListRefreshActive = true;
 
@@ -488,6 +493,9 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         internal async Task DeleteLocation(Location location)
         {
+            // wait for update to complete
+            await this.updateLocationListTask;
+
             this.locationList.Remove(location);
 
             var dataService = DependencyService.Get<IDataService>();
@@ -521,6 +529,9 @@ namespace WhereToFly.App.Core.ViewModels
             {
                 return;
             }
+
+            // wait for update to complete
+            await this.updateLocationListTask;
 
             var dataService = DependencyService.Get<IDataService>();
             var locationDataService = dataService.GetLocationDataService();

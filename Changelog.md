@@ -17,6 +17,8 @@ Released on ?.
 
 - Fixed a crash when opening the Current Position page directly after app
   startup.
+- Fixed crash when deleting the location list while the list is currently
+  being filtered
 - Fixed "Add new..." weather icon color in dark mode
 
 ## Version 1.13.0 "FJällräven Classic 2022" edition
