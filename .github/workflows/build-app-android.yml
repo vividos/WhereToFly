@@ -35,7 +35,7 @@ jobs:
       uses: microsoft/setup-msbuild@v1.1.3
 
     - name: Build MapView NuGet package
-      run: msbuild src/App/MapView/WhereToFly.App.MapView.csproj /restore /t:Pack /p:Configuration=Release
+      run: msbuild src/App/MapView/WhereToFly.App.MapView.csproj /restore /t:Build /p:Configuration=Release
 
     - name: Build Android .apk
       run: msbuild src/App/Android/WhereToFly.App.Android.csproj /restore /t:SignAndroidPackage /p:Configuration=Release
