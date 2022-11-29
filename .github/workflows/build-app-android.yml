@@ -16,17 +16,14 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
-      
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
-    
-    - name: Install Xamarin.Android
-      shell: pwsh
-      run: |
-        dotnet tool install --global boots
-        boots --stable Xamarin.Android
+
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v1.1.3
 
     - name: Build .apk
       run: msbuild src/App/Android/WhereToFly.App.Android.csproj /restore /t:SignAndroidPackage /p:Configuration=Release
