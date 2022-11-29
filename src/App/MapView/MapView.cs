@@ -1180,7 +1180,7 @@ namespace WhereToFly.App.MapView
         /// Runs JavaScript code, in main thread; returns immediately without waiting for the
         /// script to complete. The script may start with the JavaScript async keyword.
         /// </summary>
-        /// <param name="js">JavasSript code snippet</param>
+        /// <param name="js">JavaScript code snippet</param>
         private void RunJavaScript(string js)
         {
             Debug.WriteLine("run js: " + js.Substring(0, Math.Min(80, js.Length)));
@@ -1199,7 +1199,7 @@ namespace WhereToFly.App.MapView
         /// Runs JavaScript code, in main thread, and returns the result. Waits until the
         /// JavaScript code finishes. The script may start with the JavaScript async keyword.
         /// </summary>
-        /// <param name="js">JavasSript code snippet</param>
+        /// <param name="js">JavaScript code snippet</param>
         /// <returns>JavaScript object as JSON formatted string</returns>
         private async Task<string> RunJavaScriptAsync(string js)
         {
