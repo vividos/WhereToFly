@@ -3,8 +3,6 @@
 name: Build Android app
 
 on:
-  pull_request:
-    branches: [ "app-build-github-action" ]
   workflow_dispatch:
 
 jobs:
