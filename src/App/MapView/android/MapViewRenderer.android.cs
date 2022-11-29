@@ -71,7 +71,6 @@ namespace WhereToFly.App.MapView
             global::Android.Webkit.WebView.SetWebContentsDebuggingEnabled(true);
 #endif
             // Note: don't put this.Control.Settings in a local variable, it doesn't work
-
             this.Control.Settings.JavaScriptEnabled = true;
             this.Control.AddJavascriptInterface(new JavaScriptCallbackHandler(this), JavaScriptCallbackHandler.ObjectName);
 
