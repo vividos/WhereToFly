@@ -14,17 +14,47 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
-      
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+
+    - name: Build WebLib npm package
+      run: |
+        cd src/Shared/WebLib
+        npm install
+        npm run build-release
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
-    
-    - name: Install Xamarin.Android
-      shell: pwsh
-      run: |
-        dotnet tool install --global boots
-        boots --stable Xamarin.Android
 
-    - name: Build .apk
-      run: msbuild src/App/Android/WhereToFly.App.Android.csproj /restore /t:SignAndroidPackage /p:Configuration=Release
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v1.1.3
+
+    - name: Build MapView NuGet package
+      run: msbuild src/App/MapView/WhereToFly.App.MapView.csproj /restore /t:Build /p:Configuration=Release
+
+    - name: Prepare app signing
+      uses: joutvhu/write-file@v1.0.2
+      with:
+        path: src/App/Android/keystore.jks
+        contents: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        write_mode: overwrite
+        encoding: base64
+
+    - name: Build and sign Android .apk
+      run: >
+        msbuild src/App/Android/WhereToFly.App.Android.csproj
+        /restore /t:SignAndroidPackage /p:Configuration=Release
+        /p:AndroidKeyStore=true
+        /p:AndroidSigningKeyStore=keystore.jks
+        /p:AndroidSigningStorePass=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        /p:AndroidSigningKeyAlias=${{ secrets.ANDROID_KEYSTORE_ALIAS }}
+        /p:AndroidSigningKeyPass=${{ secrets.ANDROID_KEY_PASSWORD }}
+
+    - name: Publish build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: APK file
+        path: src/App/Android/bin/Release/de.vividos.app.wheretofly.android-Signed.apk

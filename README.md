@@ -11,11 +11,11 @@ See the Changelog for version infos: [Changelog.md](Changelog.md "Changelog")
 
 ## Build
 
-Builds are made by Visual Studio AppCenter:
+Builds are made by GitHub Actions:
 
-[![Build status](https://build.appcenter.ms/v0.1/apps/16016be8-42a6-4542-8f34-56e65803a672/branches/main/badge)](https://appcenter.ms)
+[![Build Android app](https://github.com/vividos/WhereToFly/actions/workflows/build-app-android.yml/badge.svg)](https://github.com/vividos/WhereToFly/actions/workflows/build-app-android.yml)
 
-Test versions are available here:
+Test versions are available via AppCenter:
 https://install.appcenter.ms/users/michael.fink/apps/wheretofly/distribution_groups/beta%20tester
 
 Builds are occasionally checked with SonarCloud:
