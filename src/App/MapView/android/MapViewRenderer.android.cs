@@ -83,10 +83,6 @@ namespace WhereToFly.App.MapView
 
             // set up cache
             this.Control.Settings.CacheMode = global::Android.Webkit.CacheModes.Normal;
-
-            string userAgent = this.Control.Settings.UserAgentString;
-            userAgent += $" WebViewApp {AppInfo.Name}/{AppInfo.VersionString}";
-            this.Control.Settings.UserAgentString = userAgent;
         }
     }
 }
