@@ -48,7 +48,7 @@ jobs:
       with:
         path: src/App/Android/Properties/AndroidManifest.xml
         oldString: versionCode="[0-9]+"
-        newString: 10${{ github.run_number }}
+        newString: 1${{ github.run_number }} # this works until build 100
 
     - name: Build and sign Android .apk
       run: >
