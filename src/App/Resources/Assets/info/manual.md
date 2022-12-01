@@ -1,4 +1,4 @@
-# Manual
+﻿# Manual
 
 Welcome to the manual page for the Where-to-fly app!
 
@@ -78,6 +78,10 @@ tapping on a layer object, details for the object are shown:
 ![Layer object](images/layer-object.png)
 
 ### Title bar icons
+
+The ![Find nearby POIs](images/magnify-scan.svg) button searches for new point
+of interests and adds it to the map temporarily. When zoomed far out, an area
+of maximum 2 degrees latitude and/or longitude are searched.
 
 The ![Locate](images/crosshairs-gps.svg) button lets you zoom to your current
 position, which is marked with a green pin. From the pin info, you can share
@@ -465,6 +469,8 @@ The Map tab has several settings:
   * Slope + contour lines: Displays contour lines and additionally colors the
     ground based on the slope.
   * NASA Black Marble 2017: Displays the night imagery from NASA.
+  * Waymarked Trails Hiking: Displays an overlay with marked hiking trails
+    from [waymarkedtrails.org](https://waymarkedtrails.org/).
 
 - Map Shading: Determines how the map is shaded, based on the sun's position:
   * Fixed at 10 am: The sunlight shines on early SE slopes.
