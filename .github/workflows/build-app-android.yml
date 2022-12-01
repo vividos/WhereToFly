@@ -47,7 +47,7 @@ jobs:
       uses: Nambers/ReplaceStringInFile@v1.1
       with:
         path: src/App/Android/Properties/AndroidManifest.xml
-        oldString: versionCode="[0-9]+"
+        oldString: 200
         newString: 1${{ github.run_number }} # this works until build 100
 
     - name: Build and sign Android .apk
