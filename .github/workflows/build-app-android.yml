@@ -43,6 +43,13 @@ jobs:
         write_mode: overwrite
         encoding: base64
 
+    - name: Set versionCode in AndroidManifest.xml
+      uses: Nambers/ReplaceStringInFile@v1.1
+      with:
+        path: src/App/Android/Properties/AndroidManifest.xml
+        oldString: versionCode="[0-9]+"
+        newString: 1${{ github.run_number }} # this works until build 100
+
     - name: Build and sign Android .apk
       run: >
         msbuild src/App/Android/WhereToFly.App.Android.csproj
