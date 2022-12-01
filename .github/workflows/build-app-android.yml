@@ -44,7 +44,7 @@ jobs:
         encoding: base64
 
     - name: Set versionCode in AndroidManifest.xml
-      uses: Nambers/ReplaceStringInFile@v1
+      uses: Nambers/ReplaceStringInFile@v1.1
       with:
         path: src/App/Android/Properties/AndroidManifest.xml
         oldString: versionCode="[0-9]+"
