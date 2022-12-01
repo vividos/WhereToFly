@@ -2,13 +2,13 @@
 
 ## Version 1.14.0 "New Zealand 2022/2023" edition
 
-Released on ?.
+Released on 2022-12-01.
 
 ✨ New Features / Improvements
 
 - Added new "Find nearby POIs" button in the map view that shows temporary
   point of interest markers on the map
-- Added the "Waymarked Trails Hiking" overlay
+- Added the "Waymarked Trails Hiking" map overlay
 - The "find result" pin can now be hidden again
 - Added "altitude offset" to Flying Range dialog
 - using CesiumJS version 1.99
@@ -16,7 +16,7 @@ Released on ?.
 🐛 Bugfixes
 
 - Fixed a crash when opening the Current Position page directly after app
-  startup.
+  startup
 - Fixed crash when deleting the location list while the list is currently
   being filtered
 - Fixed "Add new..." weather icon color in dark mode
