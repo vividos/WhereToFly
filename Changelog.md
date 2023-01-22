@@ -1,5 +1,13 @@
 ﻿# Changelog
 
+## Version 1.15.0
+
+Released on ?.
+
+✨ New Features / Improvements
+
+🐛 Bugfixes
+
 ## Version 1.14.0 "New Zealand 2022/2023" edition
 
 Released on 2022-12-01.

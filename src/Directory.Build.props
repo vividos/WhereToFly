@@ -1,8 +1,8 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Product>Where-to-fly</Product>
-    <VersionPrefix>1.14.0</VersionPrefix>
-    <Copyright>Copyright © 2017-2022 Michael Fink</Copyright>
+    <VersionPrefix>1.15.0</VersionPrefix>
+    <Copyright>Copyright © 2017-2023 Michael Fink</Copyright>
     <Company></Company>
     <NuGetPackagePrefix>Vividos</NuGetPackagePrefix>
   </PropertyGroup>
