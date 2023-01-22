@@ -25,6 +25,14 @@ indent_size = 2
 [*.xaml]
 indent_size = 4
 
+# DOS command files
+[*.cmd]
+charset = latin1
+
+# Shell script files
+[*.sh]
+charset = utf-8
+
 # .NET files
 [*.{cs,vb}]
 
