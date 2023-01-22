@@ -100,9 +100,6 @@ module.exports = {
             https: false,
             url: false,
             zlib: false
-        },
-        // Needed when using webpack 5 until this bug is fixed in CesiumJS:
-        // https://github.com/CesiumGS/cesium/issues/9212
-        exportsFields: []
+        }
     }
 };
