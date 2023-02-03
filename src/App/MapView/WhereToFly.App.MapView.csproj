@@ -32,8 +32,7 @@
   <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
     <Compile Include="android\*.cs" />
     <AndroidAsset Include="../../Shared/WebLib/Readme.md" />
-    <AndroidAsset Include="..\..\Shared\WebLib\dist\**\*.*"
-                  Exclude="..\..\Shared\WebLib\dist\**\*.map">
+    <AndroidAsset Include="..\..\Shared\WebLib\dist\**\*.*" Exclude="..\..\Shared\WebLib\dist\**\*.map">
         <Link>Assets\weblib\%(RecursiveDir)\%(FileName)%(Extension)</Link>
     </AndroidAsset>
   </ItemGroup>
@@ -41,8 +40,7 @@
   <!-- add UWP assets using Content build action -->
   <ItemGroup Condition=" $(TargetFramework.StartsWith('uap10.0')) ">
     <Compile Include="uwp\*.cs" />
-    <Content Include="..\..\Shared\WebLib\dist\**\*.*"
-             Exclude="..\..\Shared\WebLib\dist\**\*.map">
+    <Content Include="..\..\Shared\WebLib\dist\**\*.*" Exclude="..\..\Shared\WebLib\dist\**\*.map">
       <Link>Assets\weblib\%(RecursiveDir)\%(FileName)%(Extension)</Link>
     </Content>
     <SDKReference Include="WindowsMobile, Version=10.0.19041.0">
@@ -63,7 +61,7 @@
 
   <Target Name="CopyProjectReferencesToPackage" DependsOnTargets="BuildOnlySettings;ResolveReferences">
     <ItemGroup>
-      <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths->WithMetadataValue('ReferenceSourceTarget', 'ProjectReference')->WithMetadataValue('ReferenceOutputAssembly', 'true'))"/>
+      <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths-&gt;WithMetadataValue('ReferenceSourceTarget', 'ProjectReference')-&gt;WithMetadataValue('ReferenceOutputAssembly', 'true'))" />
     </ItemGroup>
   </Target>
 
