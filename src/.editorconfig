@@ -19,6 +19,7 @@ insert_final_newline = true
 
 # JSON files
 [*.json]
+charset = utf-8
 indent_size = 2
 
 # XAML files
