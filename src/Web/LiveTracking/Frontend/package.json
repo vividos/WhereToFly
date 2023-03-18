@@ -21,22 +21,22 @@
   "devDependencies": {
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.3",
-    "eslint": "^8.32.0",
+    "eslint": "^8.36.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^15.6.1",
     "eslint-plugin-promise": "^6.1.1",
     "file-loader": "^6.2.0",
-    "mini-css-extract-plugin": "^2.7.2",
-    "terser-webpack-plugin": "^5.3.6",
-    "webpack": "^5.75.0",
+    "mini-css-extract-plugin": "^2.7.5",
+    "terser-webpack-plugin": "^5.3.7",
+    "webpack": "^5.76.2",
     "webpack-cli": "^5.0.1"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.2.1",
+    "@fortawesome/fontawesome-free": "^6.3.0",
     "@popperjs/core": "^2.11.6",
     "bootstrap": "^5.2.3",
-    "jquery": "^3.6.1",
+    "jquery": "^3.6.4",
     "wheretofly-weblib": "file:../../../Shared/WebLib"
   }
 }
