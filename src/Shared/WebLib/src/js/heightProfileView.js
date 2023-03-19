@@ -16,7 +16,7 @@ import * as helpers from "chart.js/helpers";
 // Chart.js plugins
 import "chartjs-adapter-moment";
 
-import CrosshairPlugin from "chartjs-plugin-crosshair";
+import SimpleCrosshairPlugin from "./chartjs-plugin-simple-crosshair.js";
 import ZoomPlugin from "chartjs-plugin-zoom";
 
 // local
@@ -32,7 +32,8 @@ if (CanvasRenderingContext2D.prototype.resetTransform === undefined) {
 Chart.register(
     LineController, LineElement, LinearScale, PointElement,
     TimeScale, Tooltip,
-    CrosshairPlugin, ZoomPlugin);
+    SimpleCrosshairPlugin,
+    ZoomPlugin);
 
 export class HeightProfileView {
 
@@ -145,17 +146,11 @@ export class HeightProfileView {
                             that.updateTooltipElement(context.tooltip);
                         }
                     },
-                    // the crosshair plugin is only used for the line, not for zooming
+                    // the simple-crosshair plugin used here
                     crosshair: {
                         line: {
                             color: "#ffe666",
                             width: 2
-                        },
-                        sync: {
-                            enabled: false
-                        },
-                        zoom: {
-                            enabled: false
                         }
                     },
                     // the zoom plugin is used for panning and zooming
