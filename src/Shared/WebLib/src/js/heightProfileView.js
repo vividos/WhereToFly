@@ -22,13 +22,6 @@ import ZoomPlugin from "chartjs-plugin-zoom";
 // local
 import "../css/heightProfileView.css";
 
-// polyfill for UWP
-if (CanvasRenderingContext2D.prototype.resetTransform === undefined) {
-    CanvasRenderingContext2D.prototype.resetTransform = function() {
-        this.setTransform(1, 0, 0, 1, 0, 0);
-    }
-}
-
 Chart.register(
     LineController, LineElement, LinearScale, PointElement,
     TimeScale, Tooltip,
