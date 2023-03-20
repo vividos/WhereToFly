@@ -154,55 +154,6 @@
     "WebLink": "http://wetterstationen.meteomedia.de/station=109610&wahl=vorhersage"
   },
   {
-    "Name": "NZ - MetService National",
-    "Group": "Weather forecast",
-    "Type": 0,
-    "Icon": null,
-    "WebLink": "https://www.metservice.com/national"
-  },
-  {
-    "Name": "NZ - MetService Rain Forecast",
-    "Group": "Weather forecast",
-    "Type": 0,
-    "Icon": null,
-    "WebLink": "https://www.metservice.com/maps-radar/rain/forecast/3-days"
-  },
-  {
-    "Name": "NZ - MetService Rain Radar",
-    "Group": "Weather forecast",
-    "Type": 0,
-    "Icon": null,
-    "WebLink": "https://www.metservice.com/maps-radar/rain/radar?range=300&tab=real-time"
-  },
-  {
-    "Name": "NZ - metvuw forecast",
-    "Group": "Weather forecast",
-    "Type": 0,
-    "Icon": null,
-    "WebLink": "https://metvuw.com/forecast/forecast.php?type=rain&region=nzsi"
-  },
-  {
-    "Name": "NZ - Windfinder Map",
-    "Group": "Weather forecast",
-    "Type": 0,
-    "Icon": null,
-    "WebLink": "https://www.windfinder.com/#6/-41.9922/174.0015"
-  },
-  {
-    "Name": "NZ - DrJack RASP BLIPMAPs",
-    "Group": "Weather forecast",
-    "Type": 0,
-    "Icon": null,
-    "WebLink": "http://rasp.nz/rasp/"
-  },
-  {
-    "Name": "NZ - WindGuru Cardrona Snow Farm",
-    "Group": "Weather forecast",
-    "Type": 0,
-    "Icon": null,
-    "WebLink": "https://www.windguru.cz/559647"
-  },
-  {
     "Name": "Regenradar Bayern",
     "Group": "Current weather",
     "Type": 0,
@@ -299,13 +250,6 @@
     "Type": 0,
     "Icon": null,
     "WebLink": "https://www.windfinder.com/weatherforecast/sulzberg"
-  },
-  {
-    "Name": "NZ - Holfuy stations",
-    "Group": "Current weather",
-    "Type": 0,
-    "Icon": null,
-    "WebLink": "https://holfuy.com/en/map/wind&la=-41.00000&lo=176.00000&z=5.0"
   },
   {
     "Name": "Foto-Webcam Karte",
@@ -418,13 +362,6 @@
     "Type": 0,
     "Icon": null,
     "WebLink": "https://colrodella.panomax.com/"
-  },
-  {
-    "Name": "NZ - Webcam Treble Cone",
-    "Group": "Webcams",
-    "Type": 0,
-    "Icon": null,
-    "WebLink": "https://on.windy.com/7b8hl"
   },
   {
     "Name": "Windy",
