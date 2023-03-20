@@ -121,11 +121,11 @@ namespace WhereToFly.App.Core.Services
         {
             var resultList = new List<Location>();
 
-            foreach (var key in latLongList)
+            foreach (var (latitude, longitude) in latLongList)
             {
                 var partResult = await this.FetchNearbyPoiLocations(
-                    key.Latitude,
-                    key.Longitude);
+                    latitude,
+                    longitude);
 
                 resultList.AddRange(partResult);
             }
