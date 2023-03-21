@@ -1,4 +1,4 @@
-﻿[
+[
   {
     "Name": "vividos.de Wetter",
     "Group": "Weather forecast",
@@ -21,14 +21,14 @@
     "WebLink": "https://www.dwd.de/DE/fachnutzer/luftfahrt/teaser/gafor/node_84"
   },
   {
-    "Name": "Alptherm Segelflugwetter",
+    "Name": "AustroControl Übersicht Österreich",
     "Group": "Weather forecast",
     "Type": 0,
     "Icon": null,
-    "WebLink": "https://www.austrocontrol.at/flugwetter/index.php?id=557&lang=de"
+    "WebLink": "https://www.austrocontrol.at/flugwetter/index.php?id=550&lang=de"
   },
   {
-    "Name": "Alptherm Übersicht",
+    "Name": "Alptherm Thermikqualität Übersicht",
     "Group": "Weather forecast",
     "Type": 0,
     "Icon": null,
