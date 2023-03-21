@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using WhereToFly.App.Core.Controls;
 using WhereToFly.App.Core.Models;
 using WhereToFly.App.Core.Services;
@@ -73,10 +75,32 @@ namespace WhereToFly.App.Core.Views
         private async Task OnNavigated_WebView(object sender, WebNavigatedEventArgs args)
         {
             if (sender is WebView webView &&
-                (args.Url.Contains("https://www.austrocontrol.at/flugwetter/start.php") ||
-                args.Url.Contains("https://www.austrocontrol.at/flugwetter/timeout.php")))
+                args.Url.StartsWith("https://www.austrocontrol.at/flugwetter/"))
             {
-                await PasteAlpthermUsernamePassword(webView);
+                await CheckAlpthermLogin(webView);
+            }
+        }
+
+        /// <summary>
+        /// Checks if login for alptherm is needed on the current web view.
+        /// </summary>
+        /// <param name="webView">web view to use</param>
+        /// <returns>task to wait on</returns>
+        private static async Task CheckAlpthermLogin(WebView webView)
+        {
+            try
+            {
+                string result = await webView.EvaluateJavaScriptAsync(
+                    "javascript:document.getElementById('login-form') !== null;");
+
+                if (result == "true")
+                {
+                    await PasteAlpthermUsernamePassword(webView);
+                }
+            }
+            catch (Exception)
+            {
+                // ignore errors from check
             }
         }
 
@@ -100,18 +124,18 @@ namespace WhereToFly.App.Core.Views
 
             if (!string.IsNullOrEmpty(username))
             {
-                js += $"document.getElementById('username').value = '{username}';";
+                js += $"document.getElementById('httpd_username').value = '{username}';";
             }
 
             if (!string.IsNullOrEmpty(password))
             {
-                js += $"document.getElementById('password').value = '{password}';";
+                js += $"document.getElementById('httpd_password').value = '{password}';";
             }
 
             if (!string.IsNullOrEmpty(username) &&
                 !string.IsNullOrEmpty(password))
             {
-                js += "document.getElementById('username').form.submit();";
+                js += "document.getElementById('httpd_username').form.submit();";
             }
 
             await webView.EvaluateJavaScriptAsync(js);
