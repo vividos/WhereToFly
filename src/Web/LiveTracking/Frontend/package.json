@@ -29,12 +29,12 @@
     "file-loader": "^6.2.0",
     "mini-css-extract-plugin": "^2.7.5",
     "terser-webpack-plugin": "^5.3.7",
-    "webpack": "^5.76.2",
+    "webpack": "^5.76.3",
     "webpack-cli": "^5.0.1"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.3.0",
-    "@popperjs/core": "^2.11.6",
+    "@popperjs/core": "^2.11.7",
     "bootstrap": "^5.2.3",
     "jquery": "^3.6.4",
     "wheretofly-weblib": "file:../../../Shared/WebLib"

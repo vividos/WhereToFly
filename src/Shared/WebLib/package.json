@@ -35,15 +35,15 @@
     "mini-css-extract-plugin": "^2.7.5",
     "strip-pragma-loader": "^1.0.1",
     "terser-webpack-plugin": "^5.3.7",
-    "webpack": "^5.76.2",
+    "webpack": "^5.76.3",
     "webpack-cli": "^5.0.1",
-    "webpack-dev-server": "^4.13.0"
+    "webpack-dev-server": "^4.13.1"
   },
   "dependencies": {
     "cesium": "^1.103.0",
     "chart.js": "^4.2.1",
     "chartjs-adapter-moment": "^1.0.0",
-    "chartjs-plugin-zoom": "^2.0.0",
+    "chartjs-plugin-zoom": "^2.0.1",
     "moment": "^2.29.4"
   }
 }
