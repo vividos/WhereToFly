@@ -1,4 +1,4 @@
-using System.IO;
+﻿using System.IO;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core
@@ -26,6 +26,12 @@ namespace WhereToFly.App.Core
         /// <param name="assetFilename">asset filename</param>
         /// <returns>text content of asset</returns>
         string LoadAssetText(string assetFilename);
+
+        /// <summary>
+        /// Shows toast message with given text
+        /// </summary>
+        /// <param name="message">toast message text</param>
+        void ShowToast(string message);
 
         /// <summary>
         /// Sets app theme to use for platform

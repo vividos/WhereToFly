@@ -1,7 +1,8 @@
-using System;
+﻿using System;
 using System.IO;
 using WhereToFly.App.Core;
 using Windows.Storage;
+using Windows.UI.Notifications;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -71,6 +72,26 @@ namespace WhereToFly.App.UWP
             using var stream = this.OpenAssetStream(assetFilename);
             using var streamReader = new StreamReader(stream);
             return streamReader.ReadToEnd();
+        }
+
+        /// <summary>
+        /// Shows toast message with given text
+        /// </summary>
+        /// <param name="message">toast message</param>
+        public void ShowToast(string message)
+        {
+            ToastNotifier toastNotifier = ToastNotificationManager.CreateToastNotifier();
+
+            Windows.Data.Xml.Dom.XmlDocument toastXml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText02);
+            Windows.Data.Xml.Dom.XmlNodeList toastNodeList = toastXml.GetElementsByTagName("text");
+            toastNodeList.Item(0).AppendChild(toastXml.CreateTextNode(Constants.AppTitle));
+            toastNodeList.Item(1).AppendChild(toastXml.CreateTextNode(message));
+
+            var toast = new ToastNotification(toastXml)
+            {
+                ExpirationTime = DateTime.Now.AddSeconds(4),
+            };
+            toastNotifier.Show(toast);
         }
 
         /// <summary>

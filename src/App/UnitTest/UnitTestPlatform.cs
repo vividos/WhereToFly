@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
 using WhereToFly.App.Core;
 using Xamarin.Forms;
 
@@ -41,6 +42,15 @@ namespace WhereToFly.App.UnitTest
                 assetFilename);
 
             return new FileStream(filename, FileMode.Open);
+        }
+
+        /// <summary>
+        /// Shows toast message with given text
+        /// </summary>
+        /// <param name="message">toast message text</param>
+        public void ShowToast(string message)
+        {
+            Debug.WriteLine("Showing toast message: " + message);
         }
 
         /// <summary>

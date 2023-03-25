@@ -1,8 +1,12 @@
-﻿using AndroidX.AppCompat.App;
+﻿using Android.OS;
+using Android.Widget;
+using AndroidX.AppCompat.App;
+using Google.Android.Material.Snackbar;
 using System;
 using System.IO;
 using WhereToFly.App.Core;
 using Xamarin.Forms;
+using Xamarin.Forms.Platform.Android;
 
 [assembly: Dependency(typeof(WhereToFly.App.Android.AndroidPlatform))]
 
@@ -40,6 +44,32 @@ namespace WhereToFly.App.Android
             using var stream = this.OpenAssetStream(assetFilename);
             using var streamReader = new StreamReader(stream);
             return streamReader.ReadToEnd();
+        }
+
+        /// <summary>
+        /// Shows toast message with given text
+        /// </summary>
+        /// <param name="message">toast message</param>
+        public void ShowToast(string message)
+        {
+            Core.App.RunOnUiThread(
+                () =>
+                {
+                    var activity = Xamarin.Essentials.Platform.CurrentActivity;
+
+                    // Snackbar available from API Level 23 on
+                    if (Build.VERSION.SdkInt >= BuildVersionCodes.M)
+                    {
+                        var view = Core.App.Current?.MainPage?.GetRenderer()?.View;
+
+                        view ??= activity.Window?.DecorView;
+                        Snackbar.Make(activity, view, message, Snackbar.LengthShort)?.Show();
+                    }
+                    else
+                    {
+                        Toast.MakeText(activity, message, ToastLength.Long)?.Show();
+                    }
+                });
         }
 
         /// <summary>

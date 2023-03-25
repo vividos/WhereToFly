@@ -2,8 +2,6 @@
 using Android.Content;
 using Android.Content.PM;
 using Android.OS;
-using Android.Widget;
-using Google.Android.Material.Snackbar;
 using System;
 using System.IO;
 using System.Net.Http;
@@ -135,9 +133,6 @@ namespace WhereToFly.App.Android
             Plugin.Geolocator.GeolocatorImplementation.ProvidersToUseWhileListening =
                 new string[] { global::Android.Locations.LocationManager.GpsProvider };
 
-            MessagingCenter.Unsubscribe<Core.App, string>(this, Constants.MessageShowToast);
-            MessagingCenter.Subscribe<Core.App, string>(this, Constants.MessageShowToast, this.ShowToast);
-
             this.LoadApplication(new Core.App());
         }
 
@@ -236,31 +231,6 @@ namespace WhereToFly.App.Android
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-
-        /// <summary>
-        /// Shows toast message with given text
-        /// </summary>
-        /// <param name="app">sender app object</param>
-        /// <param name="message">toast message</param>
-        private void ShowToast(Core.App app, string message)
-        {
-            Core.App.RunOnUiThread(
-                () =>
-                {
-                    // Snackbar available from API Level 23 on
-                    if (Build.VERSION.SdkInt >= BuildVersionCodes.M)
-                    {
-                        var view = Core.App.Current?.MainPage?.GetRenderer()?.View;
-
-                        view ??= this.Window?.DecorView;
-                        Snackbar.Make(this, view, message, Snackbar.LengthShort)?.Show();
-                    }
-                    else
-                    {
-                        Toast.MakeText(this, message, ToastLength.Long)?.Show();
-                    }
-                });
         }
     }
 }

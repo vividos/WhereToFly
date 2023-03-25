@@ -213,9 +213,8 @@ namespace WhereToFly.App.Core
         /// <param name="message">toast message text</param>
         public static void ShowToast(string message)
         {
-            var app = Current as App;
-
-            MessagingCenter.Send(app, Constants.MessageShowToast, message);
+            IPlatform platform = DependencyService.Get<IPlatform>();
+            platform.ShowToast(message);
         }
 
         /// <summary>
