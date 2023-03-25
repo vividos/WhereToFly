@@ -18,6 +18,12 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v3
 
+    - name: Build WebLib npm package
+      run: |
+        cd src/Shared/WebLib
+        npm install
+        npm run build-release
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
