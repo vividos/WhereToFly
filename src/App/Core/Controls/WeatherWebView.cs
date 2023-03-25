@@ -1,5 +1,7 @@
 ﻿using Xamarin.Forms;
 
+#pragma warning disable S2094 // Classes should not be empty
+
 namespace WhereToFly.App.Core.Controls
 {
     /// <summary>

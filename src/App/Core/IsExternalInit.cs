@@ -1,4 +1,6 @@
-﻿namespace System.Runtime.CompilerServices
+﻿#pragma warning disable S2094 // Classes should not be empty
+
+namespace System.Runtime.CompilerServices
 {
     /// <summary>
     /// This class is necessary when using records in C#, when having a .NET runtime before
