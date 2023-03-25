@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Controls;
 using WhereToFly.App.Core.Models;

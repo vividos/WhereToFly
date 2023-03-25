@@ -66,7 +66,7 @@ namespace WhereToFly.App.Core.ViewModels
         public bool IsDeleteTrackEnabled
         {
             get => !this.isListRefreshActive &&
-                (this.trackList != null && this.trackList.Any());
+                this.trackList != null && this.trackList.Any();
         }
 
         /// <summary>

@@ -29,17 +29,13 @@ namespace WhereToFly.App.Core.Controls
         /// <exception cref="Exception">thrown when loading has failed</exception>
         public static async Task<SKSvg?> LoadSvgImage(ImageSource? source)
         {
-            switch (source)
+            return source switch
             {
-                case StreamImageSource streamSource:
-                    return await LoadImageFromStream(streamSource);
-                case UriImageSource uriImageSource:
-                    return LoadImageFromUri(uriImageSource.Uri);
-                case FileImageSource fileImageSource:
-                    return LoadImageFromFile(fileImageSource.File);
-            }
-
-            return null;
+                StreamImageSource streamSource => await LoadImageFromStream(streamSource),
+                UriImageSource uriImageSource => LoadImageFromUri(uriImageSource.Uri),
+                FileImageSource fileImageSource => LoadImageFromFile(fileImageSource.File),
+                _ => null,
+            };
         }
 
         /// <summary>
