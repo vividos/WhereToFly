@@ -914,14 +914,14 @@ export class MapView {
                 layers.add(this.blackMarbleLayer);
             break;
 
-            case "WaymarkedTrailsHiking":
-                if (this.waymarkedTrailsHikingLayer === null) {
-                    this.waymarkedTrailsHikingLayer = layers.addImageryProvider(this.waymarkedTrailsHikingOverlay);
-                    this.waymarkedTrailsHikingLayer.alpha = 0.8; // 0.0 is transparent.  1.0 is opaque.
-                    this.waymarkedTrailsHikingLayer.brightness = 1.0; // > 1.0 increases brightness.  < 1.0 decreases.
-                } else
-                    layers.add(this.waymarkedTrailsHikingLayer);
-                break;
+        case "WaymarkedTrailsHiking":
+            if (this.waymarkedTrailsHikingLayer === null) {
+                this.waymarkedTrailsHikingLayer = layers.addImageryProvider(this.waymarkedTrailsHikingOverlay);
+                this.waymarkedTrailsHikingLayer.alpha = 0.8; // 0.0 is transparent.  1.0 is opaque.
+                this.waymarkedTrailsHikingLayer.brightness = 1.0; // > 1.0 increases brightness.  < 1.0 decreases.
+            } else
+                layers.add(this.waymarkedTrailsHikingLayer);
+            break;
 
         default:
             console.warn("MapView.setMapOverlayType: invalid map overlay type: " + overlayType);
