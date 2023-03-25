@@ -80,7 +80,7 @@ namespace WhereToFly.App.Core.Views
                 this.tcs.SetResult(this.locationEntry.Text);
             }
 
-            await this.Navigation.PopPopupAsync();
+            await this.ClosePopupAsync();
         }
 
         /// <summary>

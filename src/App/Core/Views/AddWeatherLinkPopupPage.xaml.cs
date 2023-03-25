@@ -89,7 +89,7 @@ namespace WhereToFly.App.Core.Views
                 this.tcs.SetResult(this.viewModel.WeatherIconDescription);
             }
 
-            await this.Navigation.PopPopupAsync();
+            await this.ClosePopupAsync();
         }
     }
 }

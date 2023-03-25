@@ -93,7 +93,7 @@ namespace WhereToFly.App.Core.Views
                 this.tcs.SetResult(this.viewModel.FilterSettings);
             }
 
-            await this.Navigation.PopPopupAsync();
+            await this.ClosePopupAsync();
         }
     }
 }

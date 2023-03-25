@@ -21,7 +21,9 @@ namespace WhereToFly.App.Core.Views
 
             this.InitializeComponent();
 
-            this.BindingContext = new PlanTourPopupViewModel(planTourParameters, this.ClosePopupPage);
+            this.BindingContext = new PlanTourPopupViewModel(
+                planTourParameters,
+                this.ClosePopupAsync);
         }
 
         /// <summary>
@@ -34,15 +36,6 @@ namespace WhereToFly.App.Core.Views
             var popupPage = new PlanTourPopupPage(planTourParameters);
 
             await popupPage.Navigation.PushPopupAsync(popupPage);
-        }
-
-        /// <summary>
-        /// Closes popup page
-        /// </summary>
-        /// <returns>task to wait for</returns>
-        private async Task ClosePopupPage()
-        {
-            await this.Navigation.PopPopupAsync();
         }
     }
 }

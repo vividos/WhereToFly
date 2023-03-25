@@ -95,7 +95,7 @@ namespace WhereToFly.App.Core.Views
 
             await this.viewModel.StoreFlyingRangeParameters();
 
-            await this.Navigation.PopPopupAsync();
+            await this.ClosePopupAsync();
         }
     }
 }

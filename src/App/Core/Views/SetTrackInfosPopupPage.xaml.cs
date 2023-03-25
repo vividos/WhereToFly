@@ -91,7 +91,7 @@ namespace WhereToFly.App.Core.Views
                 this.tcs.SetResult(this.viewModel.Track);
             }
 
-            await this.Navigation.PopPopupAsync();
+            await this.ClosePopupAsync();
         }
     }
 }
