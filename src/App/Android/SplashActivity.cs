@@ -2,6 +2,7 @@
 using Android.Content;
 using Android.Content.PM;
 using Android.OS;
+using System;
 
 namespace WhereToFly.App.Android
 {
@@ -41,6 +42,9 @@ namespace WhereToFly.App.Android
         /// <summary>
         /// Called when the user presses the back button.
         /// </summary>
+#pragma warning disable S1133 // Deprecated code should be removed
+        [Obsolete("OnBackPressed will be replaced in a future version")]
+#pragma warning restore S1133 // Deprecated code should be removed
         public override void OnBackPressed()
         {
             // prevent user from navigating back by not calling base

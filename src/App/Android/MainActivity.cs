@@ -145,6 +145,9 @@ namespace WhereToFly.App.Android
         /// Called when back button has been pressed; let the Rg.Plugins.Popup package handle back
         /// navigation first.
         /// </summary>
+#pragma warning disable S1133 // Deprecated code should be removed
+        [Obsolete("OnBackPressed will be replaced in a future version")]
+#pragma warning restore S1133 // Deprecated code should be removed
         public override void OnBackPressed()
         {
             if (!Rg.Plugins.Popup.Popup.SendBackPressed(base.OnBackPressed))
