@@ -12,9 +12,9 @@ namespace WhereToFly.App.Core.Services
     public class GeolocationService : IGeolocationService
     {
         /// <summary>
-        /// Indicates if the geolocation service is currently listening to position updates
+        /// Returns if currently listening to position updates
         /// </summary>
-        private bool isListening;
+        public bool IsListening => CrossGeolocator.Current.IsListening;
 
         /// <summary>
         /// Event handler that is called for position changes
@@ -96,7 +96,7 @@ namespace WhereToFly.App.Core.Services
         /// <returns>true when successful, false when not</returns>
         public async Task<bool> StartListeningAsync()
         {
-            if (this.isListening)
+            if (this.IsListening)
             {
                 return true;
             }
@@ -107,8 +107,6 @@ namespace WhereToFly.App.Core.Services
             }
 
             CrossGeolocator.Current.PositionChanged += this.OnLocationChanged;
-
-            this.isListening = true;
 
             return await CrossGeolocator.Current.StartListeningAsync(
                 Constants.GeoLocationMinimumTimeForUpdate,
@@ -148,14 +146,12 @@ namespace WhereToFly.App.Core.Services
         /// <returns>task to wait on</returns>
         public async Task StopListeningAsync()
         {
-            if (!this.isListening)
+            if (!this.IsListening)
             {
                 return;
             }
 
             CrossGeolocator.Current.PositionChanged -= this.OnLocationChanged;
-
-            this.isListening = false;
 
             await CrossGeolocator.Current.StopListeningAsync();
         }

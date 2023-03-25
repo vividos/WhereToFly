@@ -10,6 +10,11 @@ namespace WhereToFly.App.Core
     public interface IGeolocationService
     {
         /// <summary>
+        /// Returns if currently listening to position updates
+        /// </summary>
+        bool IsListening { get; }
+
+        /// <summary>
         /// Event handler that is called for position changes
         /// </summary>
         event EventHandler<GeolocationEventArgs> PositionChanged;
