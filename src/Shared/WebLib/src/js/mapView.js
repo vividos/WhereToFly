@@ -253,12 +253,11 @@ export class MapView {
         this.setupNearbyPois();
 
         // swap out console.error for logging purposes
-        const that = this;
         const oldLog = console.error;
         console.error = function(message) {
-            that.onConsoleErrorMessage(message);
+            this.onConsoleErrorMessage(message);
             oldLog.apply(console, arguments);
-        };
+        }.bind(this);
 
         this.onMapInitialized();
 
@@ -509,11 +508,8 @@ export class MapView {
                 .fromText("" + (i + 2), Cesium.Color.RED, 48).toDataURL();
         }
 
-        const that = this;
         this.clustering.clusterEvent.addEventListener(
-            function(clusteredEntities, cluster) {
-                that.onNewCluster(clusteredEntities, cluster);
-            });
+            this.onNewCluster.bind(this));
     }
 
     /**
@@ -576,11 +572,10 @@ export class MapView {
         sliderInput.value = this.currentLiveTrackTimeOffset;
         sliderInput.classList.add("livetrack-slider");
 
-        const that = this;
         sliderInput.oninput = function() {
             const timeOffset = parseInt(this.value, 10);
-            that.setLiveTrackTime(timeOffset);
-        }
+            this.setLiveTrackTime(timeOffset);
+        }.bind(this);
         sliderCont.appendChild(sliderInput);
 
         // slider text
@@ -598,9 +593,9 @@ export class MapView {
         const resetButton = document.createElement("div");
         resetButton.classList.add("livetrack-toolbar-button");
         resetButton.onclick = function() {
-            that.setLiveTrackTime(-180);
-            sliderInput.value = that.currentLiveTrackTimeOffset;
-        }
+            this.setLiveTrackTime(-180);
+            sliderInput.value = this.currentLiveTrackTimeOffset;
+        }.bind(this);
 
         // reset button image
         const resetButtonImg = document.createElement("img");
@@ -1275,7 +1270,6 @@ export class MapView {
             this.compassTargetEntity.polyline.positions.getValue(
                 this.viewer.clock.currentTime));
 
-        const that = this;
         this.viewer.camera.flyToBoundingSphere(boundingSphere, {
             offset: new Cesium.HeadingPitchRange(
                 this.viewer.camera.heading,
@@ -1286,13 +1280,13 @@ export class MapView {
 
                 const center = Cesium.Cartographic.fromCartesian(boundingSphere.center);
 
-                that.onUpdateLastShownLocation({
+                this.onUpdateLastShownLocation({
                     latitude: Cesium.Math.toDegrees(center.latitude),
                     longitude: Cesium.Math.toDegrees(center.longitude),
                     altitude: center.height,
-                    viewingDistance: that.getCurrentViewingDistance()
+                    viewingDistance: this.getCurrentViewingDistance()
                 });
-            }
+            }.bind(this)
         });
     }
 
@@ -1397,7 +1391,6 @@ export class MapView {
 
         this.zoomEntity.show = true;
 
-        const that = this;
         await this.viewer.flyTo(
             this.zoomEntity,
             {
@@ -1414,7 +1407,7 @@ export class MapView {
             latitude: options.latitude,
             longitude: options.longitude,
             altitude: options.altitude,
-            viewingDistance: that.getCurrentViewingDistance()
+            viewingDistance: this.getCurrentViewingDistance()
         });
     }
 
@@ -1453,7 +1446,6 @@ export class MapView {
 
         const boundingSphere = Cesium.BoundingSphere.fromCornerPoints(corner, oppositeCorner);
 
-        const that = this;
         this.viewer.camera.flyToBoundingSphere(boundingSphere, {
             offset: new Cesium.HeadingPitchRange(
                 this.viewer.camera.heading,
@@ -1464,11 +1456,11 @@ export class MapView {
 
                 const center = Cesium.Cartographic.fromCartesian(boundingSphere.center);
 
-                that.onUpdateLastShownLocation({
+                this.onUpdateLastShownLocation({
                     latitude: Cesium.Math.toDegrees(center.latitude),
                     longitude: Cesium.Math.toDegrees(center.longitude),
                     altitude: center.height,
-                    viewingDistance: that.getCurrentViewingDistance()
+                    viewingDistance: this.getCurrentViewingDistance()
                 });
             }
         });
@@ -1511,7 +1503,7 @@ export class MapView {
 
             // don't set clustering on CZML data sources, since the object can't be shared;
             // see https://github.com/CesiumGS/cesium/issues/9336
-            // dataSource.clustering = that.clustering;
+            // dataSource.clustering = this.clustering;
             this.viewer.dataSources.add(dataSource);
             this.dataSourceMap[layer.id] = dataSource;
 
@@ -3072,7 +3064,6 @@ export class MapView {
         if (this.heightProfileView !== null)
             this.heightProfileView.destroy();
 
-        const that = this;
         this.heightProfileView = new HeightProfileView({
             id: this.options.heightProfileElementId,
             setBodyBackgroundColor: false,
@@ -3080,11 +3071,9 @@ export class MapView {
             showCloseButton: true,
             isFlightTrack: trackData.track.isFlightTrack,
             colorFromVarioValue: function(varioValue) {
-                return that.trackColorFromVarioValue(varioValue).toCssColorString();
-            },
-            callback: function(funcName, params) {
-                that.heightProfileCallAction(funcName, params);
-            }
+                return this.trackColorFromVarioValue(varioValue).toCssColorString();
+            }.bind(this),
+            callback: this.heightProfileCallAction.bind(this)
         });
 
         this.heightProfileView.setTrack(trackData.track);
@@ -3367,13 +3356,12 @@ export class MapView {
 
         // convert to base64
         const reader = new FileReader();
-        const that = this;
         reader.onloadend = function() {
             const dataUrl = reader.result;
             const base64data = dataUrl.substr(dataUrl.indexOf(",") + 1);
 
-            that.options.callback("onExportLayer", base64data);
-        }
+            this.options.callback("onExportLayer", base64data);
+        }.bind(this);
 
         reader.readAsDataURL(blobData);
     }
