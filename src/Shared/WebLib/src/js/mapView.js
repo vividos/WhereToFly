@@ -947,42 +947,18 @@ export class MapView {
 
         MapView.log("setting new shading mode: " + shadingMode);
 
-        const today = new Date();
-        const now = Cesium.JulianDate.now();
-        const start = Cesium.JulianDate.addDays(now, -1, new Cesium.JulianDate());
-
         switch (shadingMode) {
         case "Fixed10Am":
         case "Fixed3Pm":
-            today.setHours(shadingMode === "Fixed10Am" ? 10 : 15, 0, 0, 0);
-            const fixedTime = Cesium.JulianDate.fromDate(today);
-
-            this.viewer.clockViewModel.startTime = fixedTime;
-            this.viewer.clockViewModel.currentTime = fixedTime.clone();
-            this.viewer.clockViewModel.endTime = fixedTime.clone();
-            this.viewer.clockViewModel.clockStep = 0;
-            this.viewer.clockViewModel.shouldAnimate = false;
+            this.setupFixedClock(shadingMode === "Fixed10Am" ? 10 : 15);
             break;
 
         case "CurrentTime":
-            const end = Cesium.JulianDate.addDays(now, 1, new Cesium.JulianDate());
-
-            this.viewer.clockViewModel.startTime = start;
-            this.viewer.clockViewModel.currentTime = now.clone();
-            this.viewer.clockViewModel.endTime = end;
-            this.viewer.clockViewModel.clockStep = Cesium.ClockStep.SYSTEM_CLOCK;
-            this.viewer.clockViewModel.shouldAnimate = true;
+            this.setupCurrentTimeClock();
             break;
 
         case "Ahead6Hours":
-            const ahead = Cesium.JulianDate.addHours(now, 6, new Cesium.JulianDate());
-            const end2 = Cesium.JulianDate.addDays(ahead, 1, new Cesium.JulianDate());
-
-            this.viewer.clockViewModel.startTime = ahead;
-            this.viewer.clockViewModel.currentTime = ahead.clone();
-            this.viewer.clockViewModel.endTime = end2;
-            this.viewer.clockViewModel.clockStep = Cesium.ClockStep.SYSTEM_CLOCK;
-            this.viewer.clockViewModel.shouldAnimate = true;
+            this.setupAheadCurrentTimeClock(6);
             break;
 
         case "None":
@@ -1000,6 +976,53 @@ export class MapView {
             shadingMode === "None" ? Cesium.ShadowMode.DISABLED : Cesium.ShadowMode.RECEIVE_ONLY;
 
         this.updateScene();
+    }
+
+    /**
+     * Sets up a fixed clock for the viewer, using given hour.
+     * @param {Number} hour hour of day to use for fixed clock
+     */
+    setupFixedClock(hour) {
+        const today = new Date();
+        today.setHours(hour, 0, 0, 0);
+        const fixedTime = Cesium.JulianDate.fromDate(today);
+
+        this.viewer.clockViewModel.startTime = fixedTime;
+        this.viewer.clockViewModel.currentTime = fixedTime.clone();
+        this.viewer.clockViewModel.endTime = fixedTime.clone();
+        this.viewer.clockViewModel.clockStep = 0;
+        this.viewer.clockViewModel.shouldAnimate = false;
+    }
+
+    /**
+     * Sets up a clock that follows the current time.
+     */
+    setupCurrentTimeClock() {
+        const now = Cesium.JulianDate.now();
+        const start = Cesium.JulianDate.addDays(now, -1);
+        const end = Cesium.JulianDate.addDays(now, 1);
+
+        this.viewer.clockViewModel.startTime = start;
+        this.viewer.clockViewModel.currentTime = now.clone();
+        this.viewer.clockViewModel.endTime = end;
+        this.viewer.clockViewModel.clockStep = Cesium.ClockStep.SYSTEM_CLOCK;
+        this.viewer.clockViewModel.shouldAnimate = true;
+    }
+
+    /**
+     * Sets up a clock that is a number of hours ahead from current time.
+     * @param {Number} hours number of hours the clock is ahead
+     */
+    setupAheadCurrentTimeClock(hours) {
+        const now = Cesium.JulianDate.now();
+        const ahead = Cesium.JulianDate.addHours(now, hours);
+        const end = Cesium.JulianDate.addDays(ahead, 1);
+
+        this.viewer.clockViewModel.startTime = ahead;
+        this.viewer.clockViewModel.currentTime = ahead.clone();
+        this.viewer.clockViewModel.endTime = end;
+        this.viewer.clockViewModel.clockStep = Cesium.ClockStep.SYSTEM_CLOCK;
+        this.viewer.clockViewModel.shouldAnimate = true;
     }
 
     /**
