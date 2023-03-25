@@ -22,6 +22,10 @@ insert_final_newline = true
 charset = utf-8
 indent_size = 2
 
+# C# project files
+[*.csproj]
+indent_size = 2
+
 # XAML files
 [*.xaml]
 indent_size = 4
