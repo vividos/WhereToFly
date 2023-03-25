@@ -1,7 +1,7 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras/3.0.44">
 
   <PropertyGroup>
-    <TargetFrameworks>MonoAndroid12.0</TargetFrameworks>
+    <TargetFrameworks>MonoAndroid13.0</TargetFrameworks>
     <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">$(TargetFrameworks);uap10.0.19041</TargetFrameworks>
     <Description>Where-to-fly app resources</Description>
     <Product>WhereToFly.App.Resources</Product>
