@@ -187,6 +187,8 @@ namespace WhereToFly.App.MapView
         /// <returns>task to wait on</returns>
         private async Task ResizeViewHeight()
         {
+            await this.taskCompletionSourceViewInitialized.Task;
+
             string result = await this.EvaluateJavaScriptAsync(
                 "javascript:document.getElementById('heightProfileView').offsetHeight");
 
