@@ -77,7 +77,11 @@ namespace WhereToFly.App.Android
         private void OnTouch(object sender, TouchEventArgs args)
         {
             args.Handled = false;
-            this.gestureDetector?.OnTouchEvent(args.Event);
+
+            if (args?.Event != null)
+            {
+                this.gestureDetector?.OnTouchEvent(args.Event);
+            }
         }
 
         /// <summary>
