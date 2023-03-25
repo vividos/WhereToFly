@@ -994,8 +994,8 @@ export class MapView {
      */
     setupCurrentTimeClock() {
         const now = Cesium.JulianDate.now();
-        const start = Cesium.JulianDate.addDays(now, -1);
-        const end = Cesium.JulianDate.addDays(now, 1);
+        const start = Cesium.JulianDate.addDays(now, -1, new Cesium.JulianDate());
+        const end = Cesium.JulianDate.addDays(now, 1, new Cesium.JulianDate());
 
         this.viewer.clockViewModel.startTime = start;
         this.viewer.clockViewModel.currentTime = now.clone();
@@ -1010,8 +1010,8 @@ export class MapView {
      */
     setupAheadCurrentTimeClock(hours) {
         const now = Cesium.JulianDate.now();
-        const ahead = Cesium.JulianDate.addHours(now, hours);
-        const end = Cesium.JulianDate.addDays(ahead, 1);
+        const ahead = Cesium.JulianDate.addHours(now, hours, new Cesium.JulianDate());
+        const end = Cesium.JulianDate.addDays(ahead, 1, new Cesium.JulianDate());
 
         this.viewer.clockViewModel.startTime = ahead;
         this.viewer.clockViewModel.currentTime = ahead.clone();
