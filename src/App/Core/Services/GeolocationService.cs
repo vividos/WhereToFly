@@ -1,5 +1,7 @@
 ﻿using Plugin.Geolocator;
+using Plugin.Geolocator.Abstractions;
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using WhereToFly.Geo.Model;
 using Xamarin.Essentials;
@@ -107,6 +109,7 @@ namespace WhereToFly.App.Core.Services
             }
 
             CrossGeolocator.Current.PositionChanged += this.OnLocationChanged;
+            CrossGeolocator.Current.PositionError += this.OnLocationError;
 
             return await CrossGeolocator.Current.StartListeningAsync(
                 Constants.GeoLocationMinimumTimeForUpdate,
@@ -141,6 +144,16 @@ namespace WhereToFly.App.Core.Services
         }
 
         /// <summary>
+        /// Called when listening for position resulted in an error
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="args">event args</param>
+        private void OnLocationError(object sender, PositionErrorEventArgs args)
+        {
+            Debug.WriteLine($"PositionError: {args.Error}");
+        }
+
+        /// <summary>
         /// Stops listening for location updates
         /// </summary>
         /// <returns>task to wait on</returns>
@@ -152,6 +165,7 @@ namespace WhereToFly.App.Core.Services
             }
 
             CrossGeolocator.Current.PositionChanged -= this.OnLocationChanged;
+            CrossGeolocator.Current.PositionError -= this.OnLocationError;
 
             await CrossGeolocator.Current.StopListeningAsync();
         }
