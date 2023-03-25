@@ -283,6 +283,8 @@ namespace WhereToFly.App.Core.ViewModels
             await dataService.StoreAppSettingsAsync(this.appSettings);
 
             App.UpdateMapSettings();
+
+            App.ShowToast("Settings were saved.");
         }
     }
 }

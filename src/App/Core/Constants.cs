@@ -24,11 +24,6 @@ namespace WhereToFly.App.Core
         public const string AppCenterKeyUwp = "74bfda82-7b61-4490-ac61-b28ec404c1fc";
 
         /// <summary>
-        /// MessagingCenter message constant to update settings on MapPage
-        /// </summary>
-        public const string MessageUpdateMapSettings = "UpdateMapSettings";
-
-        /// <summary>
         /// GeoLocation: Minimum distance to travel to send the next update
         /// </summary>
         public const double GeoLocationMinimumDistanceForUpdateInMeters = 2;

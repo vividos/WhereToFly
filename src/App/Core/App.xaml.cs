@@ -280,7 +280,7 @@ namespace WhereToFly.App.Core
         {
             var app = Current as App;
 
-            MessagingCenter.Send(app, Constants.MessageUpdateMapSettings);
+            app?.MapPage?.ReloadMapViewAppSettings();
         }
 
         /// <summary>

@@ -78,9 +78,6 @@ namespace WhereToFly.App.Core.Views
             this.geolocationService = DependencyService.Get<IGeolocationService>();
 
             Task.Run(this.InitLayoutAsync);
-
-            MessagingCenter.Unsubscribe<App>(this, Constants.MessageUpdateMapSettings);
-            MessagingCenter.Subscribe<App>(this, Constants.MessageUpdateMapSettings, (app) => this.OnMessageUpdateMapSettings());
         }
 
         /// <summary>
@@ -834,7 +831,7 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Reloads map view app settings
         /// </summary>
-        private void ReloadMapViewAppSettings()
+        public void ReloadMapViewAppSettings()
         {
             this.appSettings = App.Settings;
 
@@ -843,8 +840,6 @@ namespace WhereToFly.App.Core.Views
             this.mapView.MapShadingMode = this.appSettings.ShadingMode;
             this.mapView.CoordinateDisplayFormat = this.appSettings.CoordinateDisplayFormat;
             this.mapView.UseEntityClustering = this.appSettings.UseMapEntityClustering;
-
-            App.ShowToast("Settings were saved.");
         }
 
         /// <summary>
