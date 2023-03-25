@@ -110,7 +110,7 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         private void AddFindNearbyPoisButton()
         {
-            var locateMeButton = new ToolbarItem(
+            var findNearbyPoisButton = new ToolbarItem(
                 "Find nearby POIs",
                 Converter.ImagePathConverter.GetDeviceDependentImage("magnify_scan"),
                 async () => await this.OnClicked_ToolbarButtonFindNearbyPois(),
@@ -119,7 +119,7 @@ namespace WhereToFly.App.Core.Views
                 AutomationId = "FindNearbyPois",
             };
 
-            this.ToolbarItems.Add(locateMeButton);
+            this.ToolbarItems.Add(findNearbyPoisButton);
         }
 
         /// <summary>
