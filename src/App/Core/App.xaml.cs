@@ -37,6 +37,11 @@ namespace WhereToFly.App.Core
             = new();
 
         /// <summary>
+        /// Indicates if listening to location updates should be restarted when resuming the app
+        /// </summary>
+        private bool restartLocationUpdates;
+
+        /// <summary>
         /// Application settings
         /// </summary>
         public static AppSettings Settings { get; internal set; }
@@ -440,11 +445,17 @@ namespace WhereToFly.App.Core
             var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
             liveWaypointRefreshService.StopTimer();
 
-            Task.Run(async () =>
+            var geolocationService = DependencyService.Get<IGeolocationService>();
+
+            if (geolocationService.IsListening)
             {
-                var geolocationService = DependencyService.Get<IGeolocationService>();
-                await geolocationService.StopListeningAsync();
-            });
+                this.restartLocationUpdates = true;
+
+                Task.Run(async () =>
+                {
+                    await geolocationService.StopListeningAsync();
+                });
+            }
         }
 
         /// <summary>
@@ -462,11 +473,16 @@ namespace WhereToFly.App.Core
             var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
             liveWaypointRefreshService.ResumeTimer();
 
-            Task.Run(async () =>
+            if (this.restartLocationUpdates)
             {
-                var geolocationService = DependencyService.Get<IGeolocationService>();
-                await geolocationService.StartListeningAsync();
-            });
+                this.restartLocationUpdates = false;
+
+                Task.Run(async () =>
+                {
+                    var geolocationService = DependencyService.Get<IGeolocationService>();
+                    await geolocationService.StartListeningAsync();
+                });
+            }
         }
         #endregion
     }

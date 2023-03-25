@@ -8,6 +8,7 @@ Released on ?.
 - using CesiumJS version 1.103
 
 🐛 Bugfixes
+- Fixed getting position updates when pressing the "Locate me" toolbar button
 - Fixed Alptherm auto login
 
 ## Version 1.14.0 "New Zealand 2022/2023" edition
