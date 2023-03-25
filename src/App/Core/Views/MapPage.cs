@@ -181,7 +181,8 @@ namespace WhereToFly.App.Core.Views
             Xamarin.Essentials.Location position;
             try
             {
-                position = await this.geolocationService.GetPositionAsync(timeout: TimeSpan.FromMilliseconds(100));
+                position = await this.geolocationService.GetPositionAsync(
+                    timeout: TimeSpan.FromMilliseconds(100));
             }
             catch (Exception ex)
             {
@@ -215,6 +216,9 @@ namespace WhereToFly.App.Core.Views
                 // zoom at next update
                 this.zoomToMyPosition = true;
             }
+
+            // also start listening to location updates
+            await this.geolocationService.StartListeningAsync();
         }
 
         /// <summary>
