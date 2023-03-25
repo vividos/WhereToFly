@@ -2800,8 +2800,10 @@ export class MapView {
 
         // update height profile when shown
         if (this.heightProfileView !== null &&
-            track.id === this.currentHeightProfileTrackId)
+            track.id === this.currentHeightProfileTrackId) {
             this.heightProfileView.addTrackPoints(track);
+            this.heightProfileView.updateView();
+        }
     }
 
     /**
@@ -3067,6 +3069,8 @@ export class MapView {
         if (trackData.track.groundHeightProfile !== undefined &&
             trackData.track.groundHeightProfile !== null)
             this.heightProfileView.addGroundProfile(trackData.track.groundHeightProfile);
+
+        this.heightProfileView.updateView();
     }
 
     /**

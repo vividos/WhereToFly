@@ -163,6 +163,8 @@ namespace WhereToFly.App.MapView
                 {
                     this.AddGroundProfile(this.Track.GroundHeightProfile);
                 }
+
+                this.UpdateView();
             }
 
             MainThread.BeginInvokeOnMainThread(async () => await this.ResizeViewHeight());
@@ -214,6 +216,8 @@ namespace WhereToFly.App.MapView
             {
                 this.AddGroundProfile(track.GroundHeightProfile);
             }
+
+            this.UpdateView();
         }
 
         /// <summary>
@@ -264,6 +268,16 @@ namespace WhereToFly.App.MapView
             string js = $"heightProfileView.addGroundProfile({elevations});";
 
             this.RunJavaScript(js);
+        }
+
+        /// <summary>
+        /// Updates height profile view; this must be called after calling one or more of the
+        /// following methods: <see cref="HeightProfileWebView.SetTrack"/>,
+        /// <see cref="HeightProfileWebView.AddGroundProfile"/>.
+        /// </summary>
+        public void UpdateView()
+        {
+            this.RunJavaScript("heightProfileView.updateView();");
         }
 
         /// <summary>

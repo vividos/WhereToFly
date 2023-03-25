@@ -365,15 +365,12 @@ export class HeightProfileView {
             }]
         };
 
-        // need this to update the scales
-        this.chart.update(0);
-
         this.updateZoomPanLimits();
     }
 
     /**
      * Updates the current zoom and pan limits, based on the current X axis scale.
-     * After adding data, be sure to call chart.update() so that scales are current.
+     * After adding data, be sure to call updateView() so that scales are current.
      * */
     updateZoomPanLimits() {
 
@@ -383,9 +380,6 @@ export class HeightProfileView {
         zoomPanLimits.x.max = scale.max.valueOf(); // right value
         zoomPanLimits.y.min = 60; // seconds of min. zoom level
         zoomPanLimits.y.max = (scale.max - scale.min).valueOf(); // the whole time range
-
-        // need this to update the zoom and pan options
-        this.chart.update(0);
     }
 
     /**
@@ -416,8 +410,6 @@ export class HeightProfileView {
             backgroundColor: this.groundProfileColor,
             borderColor: "rgba(0,128,0,255)"
         });
-
-        this.chart.update(0);
     }
 
     /**
@@ -461,9 +453,17 @@ export class HeightProfileView {
             });
         }
 
-        this.chart.update(0);
-
         this.updateZoomPanLimits();
+    }
+
+    /**
+     * Updates height profile view; this must be called after calling one or
+     * more of the following methods: setTrack(), addGroundProfile() and
+     * addTrackPoints().
+     */
+    updateView() {
+
+        this.chart.update(0);
     }
 
     /**
