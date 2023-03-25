@@ -252,11 +252,12 @@ namespace WhereToFly.App.Core
         /// dialog.
         /// </summary>
         /// <param name="location">location to add</param>
-        public static void AddTourPlanLocation(Location location)
+        /// <returns>task to wait on</returns>
+        public static async Task AddTourPlanLocationAsync(Location location)
         {
             var app = Current as App;
 
-            MessagingCenter.Send(app, Constants.MessageAddTourPlanLocation, location);
+            await app?.MapPage?.AddTourPlanningLocationAsync(location);
         }
 
         /// <summary>

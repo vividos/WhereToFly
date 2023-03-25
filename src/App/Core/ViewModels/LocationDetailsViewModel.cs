@@ -209,7 +209,7 @@ namespace WhereToFly.App.Core.ViewModels
             };
 
             this.RefreshLiveWaypointCommand = new AsyncCommand(this.OnRefreshLiveWaypoint);
-            this.AddTourPlanLocationCommand = new Command(this.OnAddTourPlanLocation);
+            this.AddTourPlanLocationCommand = new AsyncCommand(this.OnAddTourPlanLocationAsync);
             this.ZoomToLocationCommand = new AsyncCommand(this.OnZoomToLocationAsync);
             this.SetAsCompassTargetCommand = new AsyncCommand(this.OnSetAsCompassTargetAsync);
             this.NavigateToLocationCommand = new AsyncCommand(this.OnNavigateToLocationAsync);
@@ -312,9 +312,10 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Called when "Add tour plan location" toolbar button is selected
         /// </summary>
-        private void OnAddTourPlanLocation()
+        /// <returns>task to wait on</returns>
+        private async Task OnAddTourPlanLocationAsync()
         {
-            App.AddTourPlanLocation(this.location);
+            await App.AddTourPlanLocationAsync(this.location);
         }
 
         /// <summary>

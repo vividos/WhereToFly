@@ -154,8 +154,8 @@ namespace WhereToFly.App.Core.ViewModels
             this.SetAsCompassTargetCommand = new AsyncCommand(this.OnSetAsCompassTargetAsync);
             this.DeleteLocationCommand = new AsyncCommand(this.OnDeleteLocationAsync);
             this.AddTourPlanLocationCommand =
-                new Command(
-                    () => App.AddTourPlanLocation(this.location),
+                new AsyncCommand(
+                    () => App.AddTourPlanLocationAsync(this.location),
                     () => this.IsEnabledAddTourPlanLocation);
         }
 

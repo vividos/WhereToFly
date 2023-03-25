@@ -79,15 +79,6 @@ namespace WhereToFly.App.Core.Views
 
             Task.Run(this.InitLayoutAsync);
 
-            MessagingCenter.Unsubscribe<App, Location>(
-                this,
-                Constants.MessageAddTourPlanLocation);
-
-            MessagingCenter.Subscribe<App, Location>(
-                this,
-                Constants.MessageAddTourPlanLocation,
-                async (app, location) => await this.AddTourPlanningLocationAsync(location));
-
             MessagingCenter.Unsubscribe<App>(this, Constants.MessageUpdateMapSettings);
             MessagingCenter.Subscribe<App>(this, Constants.MessageUpdateMapSettings, (app) => this.OnMessageUpdateMapSettings());
         }
@@ -792,7 +783,7 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         /// <param name="location">location to add</param>
         /// <returns>task to wait on</returns>
-        private async Task AddTourPlanningLocationAsync(Location location)
+        public async Task AddTourPlanningLocationAsync(Location location)
         {
             Debug.Assert(location != null, "passed location must be non-null");
             if (location == null)
