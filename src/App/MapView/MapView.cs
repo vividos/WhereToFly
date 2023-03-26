@@ -555,7 +555,7 @@ namespace WhereToFly.App.MapView
                 hideTargetLocation = false,
             };
 
-            string js = $"map.setCompassTarget({JsonConvert.SerializeObject(options)});";
+            string js = $"await map.setCompassTarget({JsonConvert.SerializeObject(options)});";
 
             this.RunJavaScript(js);
         }
@@ -597,7 +597,7 @@ namespace WhereToFly.App.MapView
                 hideTargetLocation = false,
             };
 
-            string js = $"map.setCompassTarget({JsonConvert.SerializeObject(options)});";
+            string js = $"await map.setCompassTarget({JsonConvert.SerializeObject(options)});";
 
             this.RunJavaScript(js);
         }
