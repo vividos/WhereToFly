@@ -1191,7 +1191,7 @@ export class MapView {
      * @param {double} [options.title] Title of the compass target
      * @param {double} [options.latitude] Latitude of position
      * @param {double} [options.longitude] Longitude of position
-     * @param {double} [options.altitude] Altitude of position
+     * @param {double} [options.altitude] Altitude of position; optional
      * @param {string} [options.displayLatitude] Display text of latitude
      * @param {string} [options.displayLongitude] Display text of longitude
      * @param {double} [options.distanceInKm] Distance to target, in km
@@ -1204,7 +1204,10 @@ export class MapView {
     async setCompassTarget(options) {
 
         MapView.log("setting new compass target: lat=" +
-            options.latitude + ", long=" + options.longitude + ", alt=" + options.altitude);
+            options.latitude + ", long=" + options.longitude +
+            (options.altitude !== undefined && options.altitude !== 0
+                ? ", alt=" + options.altitude
+                : ""));
 
         this.compassTargetHideTargetLocation = options.hideTargetLocation;
         this.compassTargetLocation =
@@ -1319,7 +1322,7 @@ export class MapView {
             }
 
             text +=
-                (options.altitude !== null && options.altitude !== 0 ? "Altitude: " + options.altitude.toFixed(1) + "m<br/>" : "") +
+                (options.altitude !== undefined && options.altitude !== 0 ? "Altitude: " + options.altitude.toFixed(1) + "m<br/>" : "") +
                 (options.distanceInKm !== null ? "Distance: " + options.distanceInKm.toFixed(1) + " km<br/>" : "") +
                 (options.heightDifferenceInMeter !== null ? "Height difference: " + options.heightDifferenceInMeter.toFixed(0) + " m<br/>" : "") +
                 (options.directionAngle !== null ? "Direction: " + options.directionAngle.toFixed(0) + "&deg;<br/>" : "") +
