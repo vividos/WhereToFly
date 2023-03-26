@@ -827,7 +827,7 @@ namespace WhereToFly.App.MapView
         /// <param name="location">location to add</param>
         public void AddLocation(Location location)
         {
-            var jsonLocation = CreateJsonObjectFromLocation(location);
+            object jsonLocation = CreateJsonObjectFromLocation(location);
 
             string js = string.Format(
                 "await map.addLocationList([{0}]);",
@@ -910,7 +910,7 @@ namespace WhereToFly.App.MapView
         /// <param name="location">location to update</param>
         public void UpdateLocation(Location location)
         {
-            var jsonLocation = CreateJsonObjectFromLocation(location);
+            object jsonLocation = CreateJsonObjectFromLocation(location);
 
             string js = string.Format(
                 "await map.updateLocation({0});",

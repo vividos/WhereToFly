@@ -799,14 +799,6 @@ namespace WhereToFly.App.Core.Views
             await PlanTourPopupPage.ShowAsync(this.planTourParameters);
         }
 
-        /// <summary>
-        /// Called when message arrives in order to update map settings
-        /// </summary>
-        private void OnMessageUpdateMapSettings()
-        {
-            this.ReloadMapViewAppSettings();
-        }
-
         #region Page lifecycle methods
         /// <summary>
         /// Called when page is appearing; start position updates
@@ -873,15 +865,12 @@ namespace WhereToFly.App.Core.Views
 
             this.zoomToMyPosition = false;
 
-            if (this.mapView != null)
-            {
-                this.mapView.UpdateMyLocation(
-                    point,
-                    (int)(args.Position.Accuracy ?? 10000),
-                    (args.Position.Speed ?? 0.0) * Geo.Constants.FactorMeterPerSecondToKilometerPerHour,
-                    args.Position.Timestamp,
-                    zoomToPosition);
-            }
+            this.mapView?.UpdateMyLocation(
+                point,
+                (int)(args.Position.Accuracy ?? 10000),
+                (args.Position.Speed ?? 0.0) * Geo.Constants.FactorMeterPerSecondToKilometerPerHour,
+                args.Position.Timestamp,
+                zoomToPosition);
 
             if (zoomToPosition)
             {
