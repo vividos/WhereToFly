@@ -1465,7 +1465,7 @@ export class MapView {
                     altitude: center.height,
                     viewingDistance: this.getCurrentViewingDistance()
                 });
-            }
+            }.bind(this)
         });
     }
 
