@@ -913,7 +913,7 @@ namespace WhereToFly.App.MapView
             var jsonLocation = CreateJsonObjectFromLocation(location);
 
             string js = string.Format(
-                "map.updateLocation({0});",
+                "await map.updateLocation({0});",
                 JsonConvert.SerializeObject(jsonLocation));
 
             this.RunJavaScript(js);

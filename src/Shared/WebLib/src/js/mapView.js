@@ -2039,7 +2039,7 @@ export class MapView {
      * Updates a single location
      * @param {Location} [location] Location object to update
      */
-    updateLocation(location) {
+    async updateLocation(location) {
 
         MapView.log("updating location \"" + location.id +
             "\", new position at at latitude " + location.latitude +
@@ -2057,6 +2057,12 @@ export class MapView {
 
         entity.name = location.name;
         entity.description = this.formatLocationText(location);
+
+        const pinImage = this.imageUrlFromLocationType(location.type);
+        const pinColor = this.pinColorFromLocationType(location.type);
+        const pinImageDataUrl = await this.getPinImageDataUrl(pinImage, pinColor);
+
+        entity.billboard.image = pinImageDataUrl;
 
         this.updateScene();
     }
