@@ -234,6 +234,12 @@ namespace WhereToFly.App.Core.Views
         {
             string text = await FindLocationPopupPage.ShowAsync();
 
+            if (text == null)
+            {
+                // user cancelled the popup
+                return;
+            }
+
             if (string.IsNullOrWhiteSpace(text))
             {
                 await this.DisplayAlert(
