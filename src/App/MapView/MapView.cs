@@ -1104,12 +1104,13 @@ namespace WhereToFly.App.MapView
                 name = text,
                 latitude = point.Latitude,
                 longitude = point.Longitude,
+                altitude = point.Altitude,
                 displayLatitude = GeoDataFormatter.FormatLatLong(point.Latitude, this.CoordinateDisplayFormat),
                 displayLongitude = GeoDataFormatter.FormatLatLong(point.Longitude, this.CoordinateDisplayFormat),
             };
 
             string js = string.Format(
-                "map.showFindResult({0});",
+                "await map.showFindResult({0});",
                 JsonConvert.SerializeObject(options));
 
             this.RunJavaScript(js);
@@ -1296,7 +1297,10 @@ namespace WhereToFly.App.MapView
 
             if (parameters != null)
             {
-                var point = new MapPoint(parameters.Latitude, parameters.Longitude);
+                var point = new MapPoint(
+                    parameters.Latitude,
+                    parameters.Longitude,
+                    parameters.Altitude);
 
                 this.AddFindResult?.Invoke(parameters.Name, point);
             }

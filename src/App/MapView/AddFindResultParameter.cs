@@ -19,5 +19,10 @@
         /// Longitude of map point to add
         /// </summary>
         public double Longitude { get; set; }
+
+        /// <summary>
+        /// Altitude of map point to add
+        /// </summary>
+        public double? Altitude { get; set; }
     }
 }

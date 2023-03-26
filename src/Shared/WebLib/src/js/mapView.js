@@ -2092,10 +2092,11 @@ export class MapView {
      * @param {String} [options.description] Description text of the find result
      * @param {Number} [options.latitude] Latitude of the find result
      * @param {Number} [options.longitude] Longitude of the find result
+     * @param {Number} [options.altitude] Altitude of the find result; optional
      * @param {Number} [options.displayLatitude] Display text for latitude
      * @param {Number} [options.displayLongitude] Display text for longitude
      */
-    showFindResult(options) {
+    async showFindResult(options) {
 
         if (this.findResultMarker === undefined) {
             console.warn("MapView.showFindResult: findResultMarker not initialized yet");
@@ -2105,12 +2106,21 @@ export class MapView {
         MapView.log("showing find result for \"" + options.name +
             "\", at latitude " + options.latitude + ", longitude " + options.longitude);
 
+        if (!("altitude" in options) ||
+            options.altitude === null ||
+            options.altitude === 0.0)
+            options.altitude = await this.findAltitude(options);
+
         let text = "<h2><img height=\"48em\" width=\"48em\" src=\"images/magnify.svg\" style=\"vertical-align:middle\" />" + options.name + "</h2>" +
             "<div>Latitude: " + options.displayLatitude + "<br/>" +
-            "Longitude: " + options.displayLongitude +
+            "Longitude: " + options.displayLongitude + "<br/>" +
+            "Altitude: " + options.altitude.toFixed(1) + " m" +
             "</div>";
 
-        const optionsText = "{ name: '" + options.name + "', latitude:" + options.latitude + ", longitude:" + options.longitude + "}";
+        const optionsText = "{ name: '" + options.name +
+            "', latitude:" + options.latitude +
+            ", longitude:" + options.longitude +
+            ", altitude:" + options.altitude.toFixed(1) + "}";
 
         text += "<p><img height=\"32em\" width=\"32em\" src=\"images/map-marker-plus.svg\" style=\"vertical-align:middle\" />" +
             "<a href=\"javascript:parent.map.onAddFindResult(" + optionsText + ");\">Add as waypoint</a>";
@@ -2126,6 +2136,36 @@ export class MapView {
         this.findResultMarker.show = true;
 
         this.flyTo(options);
+    }
+
+    /**
+     * Finds altitude at latitude and longitude, or returns 0.0 when the
+     * altitude couldn't be determined.
+     * @param {Object} [options] Options for finding altitude:
+     * @param {Number} [options.latitude] Latitude of the point to use
+     * @param {Number} [options.longitude] Longitude of the point to use
+     * @returns {Number} altitude in meter, or 0.0
+     */
+    async findAltitude(options) {
+
+        MapView.log("finding altitude at latitude " + location.latitude +
+            ", longitude " + location.longitude);
+
+        try {
+            const samples = await Cesium.sampleTerrainMostDetailed(
+                this.viewer.terrainProvider,
+                [Cesium.Cartographic.fromDegrees(options.longitude, options.latitude)]);
+
+            const altitude = samples[0].height;
+
+            MapView.log("findAltitude: altitude is " + altitude.toFixed(1) + "m");
+
+            return altitude;
+
+        } catch (error) {
+            console.error("findAltitude: error while finding altitude: " + error);
+            return 0.0;
+        }
     }
 
     /**

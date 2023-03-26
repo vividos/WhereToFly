@@ -10,6 +10,7 @@ Released on ?.
 🐛 Bugfixes
 - Fixed getting position updates when pressing the "Locate me" toolbar button
 - Use correct location pin icon when adding a find result as location
+- Determine altitude for "find result" location instead of showing 0 m
 - Fixed Alptherm auto login
 
 ## Version 1.14.0 "New Zealand 2022/2023" edition
