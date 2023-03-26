@@ -11,6 +11,9 @@ namespace WhereToFly.App.UnitTest
     public class UnitTestGeolocationService : IGeolocationService
     {
         /// <inheritdoc />
+        public bool IsListening => true;
+
+        /// <inheritdoc />
         public event EventHandler<GeolocationEventArgs> PositionChanged;
 
         /// <inheritdoc />
