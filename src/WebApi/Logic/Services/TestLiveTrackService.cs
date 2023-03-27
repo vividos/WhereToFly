@@ -271,9 +271,9 @@ namespace WhereToFly.WebApi.Logic.Services
 
                 track.TrackPoints.Add(
                     new TrackPoint(
-                        WhereToFly.Shared.Base.Math.Interpolate(startingPoint.Latitude, endingPoint.Latitude, delta),
-                        WhereToFly.Shared.Base.Math.Interpolate(startingPoint.Longitude, endingPoint.Longitude, delta),
-                        WhereToFly.Shared.Base.Math.Interpolate(startingPoint.Altitude.Value, endingPoint.Altitude.Value, delta),
+                        MathHelper.Interpolate(startingPoint.Latitude, endingPoint.Latitude, delta),
+                        MathHelper.Interpolate(startingPoint.Longitude, endingPoint.Longitude, delta),
+                        MathHelper.Interpolate(startingPoint.Altitude.Value, endingPoint.Altitude.Value, delta),
                         null)
                     {
                         Time = startTime.AddSeconds(seconds),
@@ -331,7 +331,7 @@ namespace WhereToFly.WebApi.Logic.Services
                     new TrackPoint(
                         currentThermallingPoint.Latitude,
                         currentThermallingPoint.Longitude,
-                        WhereToFly.Shared.Base.Math.Interpolate(
+                        MathHelper.Interpolate(
                             thermallingPoint.Altitude.Value,
                             thermallingTopPoint.Altitude.Value,
                             delta),

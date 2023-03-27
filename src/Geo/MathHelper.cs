@@ -1,9 +1,9 @@
-﻿namespace WhereToFly.Shared.Base
+﻿namespace WhereToFly.Geo
 {
     /// <summary>
-    /// Math functions
+    /// Math helper functions
     /// </summary>
-    public static class Math
+    public static class MathHelper
     {
         /// <summary>
         /// Interpolates between two values for a given value delta.

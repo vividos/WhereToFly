@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using WhereToFly.Geo.Model;
-using WhereToFly.Shared.Base;
 
 namespace WhereToFly.WebApi.Logic.TourPlanning
 {

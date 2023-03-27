@@ -258,8 +258,8 @@ namespace WhereToFly.WebApi.Logic
                     double t = (((DateTimeOffset.Now.TimeOfDay.TotalMinutes % 10.0) / 10.0) * 2) - 0.5;
 
                     mapPoint = new MapPoint(
-                        Shared.Base.Math.Interpolate(point1.Latitude, point2.Latitude, t),
-                        Shared.Base.Math.Interpolate(point1.Longitude, point2.Longitude, t),
+                        MathHelper.Interpolate(point1.Latitude, point2.Latitude, t),
+                        MathHelper.Interpolate(point1.Longitude, point2.Longitude, t),
                         0.0);
 
                     break;

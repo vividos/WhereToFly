@@ -1,13 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WhereToFly.Shared.Base;
+using WhereToFly.Geo;
 
-namespace WhereToFly.App.UnitTest.Shared
+namespace WhereToFly.App.UnitTest.Geo
 {
     /// <summary>
-    /// Tests for the Math methods in WhereToFly.Shared.Base
+    /// Tests for the Math helper methods in WhereToFly.Geo
     /// </summary>
     [TestClass]
-    public class MathTest
+    public class MathHelperTest
     {
         /// <summary>
         /// Tests method Interpolate().
@@ -15,10 +15,10 @@ namespace WhereToFly.App.UnitTest.Shared
         [TestMethod]
         public void TestInterpolate()
         {
-            // check
-            var value1 = Math.Interpolate(0.0, 10.0, 0.42);
-            var value2 = Math.Interpolate(0.0, 1.0, -2);
-            var value3 = Math.Interpolate(10.0, 0.0, 0.99);
+            // run
+            double value1 = MathHelper.Interpolate(0.0, 10.0, 0.42);
+            double value2 = MathHelper.Interpolate(0.0, 1.0, -2);
+            double value3 = MathHelper.Interpolate(10.0, 0.0, 0.99);
 
             // check
             Assert.AreEqual(4.2, value1, 1e-5, "interpolated value must match");
