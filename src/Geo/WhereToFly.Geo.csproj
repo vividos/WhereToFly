@@ -20,13 +20,6 @@
     <PackageReference Include="SharpKml.Core" Version="6.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Shared\Base\WhereToFly.Shared.Base.csproj">
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <IncludeAssets>WhereToFly.Shared.Base.dll</IncludeAssets>
-    </ProjectReference>
-  </ItemGroup>
-
   <Target Name="CopyProjectReferencesToPackage" DependsOnTargets="BuildOnlySettings;ResolveReferences">
     <ItemGroup>
       <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths-&gt;WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))" />
