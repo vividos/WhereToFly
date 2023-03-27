@@ -164,10 +164,6 @@ export class MapView {
         // clip walls against terrain
         globe.depthTestAgainstTerrain = true;
 
-        // increase resolution for all image layer
-        // https://github.com/CesiumGS/cesium/issues/3279
-        globe.maximumScreenSpaceError = 1.666;
-
         // allow scripts to run in info box
         console.log("#6 sandboxing");
         this.viewer.infoBox.frame.sandbox = this.viewer.infoBox.frame.sandbox + " allow-scripts";
