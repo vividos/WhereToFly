@@ -1044,10 +1044,10 @@ export class MapView {
 
             const rect = this.getViewRectangle();
 
-            MapView.log("Camera moved to: West: " + rect.west +
-                ", South: " + rect.south +
-                ", East: " + rect.east +
-                ", North: " + rect.north);
+            MapView.log("camera moved to: west: " + rect.west +
+                ", south: " + rect.south +
+                ", east: " + rect.east +
+                ", north: " + rect.north);
 
         }.bind(this));
 
