@@ -1129,7 +1129,7 @@ export class MapView {
             "<div>Latitude: " + options.displayLatitude + "<br/>" +
             "Longitude: " + options.displayLongitude + "<br/>" +
             "Accuracy: <span style=\"color:" + options.positionAccuracyColor + "\">+/- " + options.positionAccuracy + " m</span><br/>" +
-            (options.altitude !== undefined && options.altitude !== 0 ? "Altitude: " + options.altitude.toFixed(1) + "m<br/>" : "") +
+            MapView.formatAltitude(options.altitude, "Altitude: ", " m<br/>") +
             "Speed: " + options.displaySpeed + "<br/>" +
             "Time: " + options.displayTimestamp +
             "</div>";
@@ -1144,6 +1144,26 @@ export class MapView {
             this.flyTo(options);
         } else
             this.updateScene();
+    }
+
+    /**
+     * Formats altitude value as text; handles special cases where altitude is
+     * not set or is 0, which corresponds to "clamp to ground". When altitude
+     * is set, the prefix text is prepended and altitude is formatted with one
+     * fractional digit.
+     * @param {Number} altitude altitude value in meter
+     * @param {string} prefixText prefix text
+     * @param {string} suffixText suffix text; optional
+     * @returns formatted text, or empty string
+     */
+    static formatAltitude(altitude, prefixText, suffixText) {
+        if (typeof altitude === "undefined" ||
+            altitude === null ||
+            altitude === 0)
+            return "";
+
+        suffixText = suffixText || "";
+        return prefixText + altitude.toFixed(1) + suffixText;
     }
 
     /**
@@ -1201,9 +1221,7 @@ export class MapView {
 
         MapView.log("setting new compass target: lat=" +
             options.latitude + ", long=" + options.longitude +
-            (options.altitude !== undefined && options.altitude !== 0
-                ? ", alt=" + options.altitude
-                : ""));
+            MapView.formatAltitude(options.altitude, ", alt="));
 
         this.compassTargetHideTargetLocation = options.hideTargetLocation;
         this.compassTargetLocation =
@@ -1318,7 +1336,7 @@ export class MapView {
             }
 
             text +=
-                (options.altitude !== undefined && options.altitude !== 0 ? "Altitude: " + options.altitude.toFixed(1) + "m<br/>" : "") +
+                MapView.formatAltitude(options.altitude, "Altitude: ", " m<br/>") +
                 (options.distanceInKm !== null ? "Distance: " + options.distanceInKm.toFixed(1) + " km<br/>" : "") +
                 (options.heightDifferenceInMeter !== null ? "Height difference: " + options.heightDifferenceInMeter.toFixed(0) + " m<br/>" : "") +
                 (options.directionAngle !== null ? "Direction: " + options.directionAngle.toFixed(0) + "&deg;<br/>" : "") +
@@ -1375,7 +1393,7 @@ export class MapView {
 
         MapView.log("flying to: latitude=" + options.latitude +
             ", longitude=" + options.longitude +
-            ", altitude=" + options.altitude);
+            MapView.formatAltitude(options.altitude, ", altitude="));
 
         const altitude = options.altitude || 0.0;
 
@@ -1421,7 +1439,7 @@ export class MapView {
 
         MapView.log("zooming to location at: " +
             "latitude=" + options.latitude + ", longitude=" + options.longitude +
-            ", altitude=" + options.altitude);
+            MapView.formatAltitude(options.altitude, ", altitude="));
 
         this.flyTo(options);
     }
@@ -1723,7 +1741,7 @@ export class MapView {
     formatLocationText(location) {
 
         const altitudeText =
-            location.altitude !== undefined && location.altitude !== 0 ? " " + location.altitude.toFixed(1) + "m" : "";
+            MapView.formatAltitude(location.altitude, " ", " m");
 
         let text = "<h2><img height=\"48em\" width=\"48em\" src=\"" + this.imageUrlFromLocationType(location.type) + "\" style=\"vertical-align:middle\" />" +
             location.name + altitudeText + "</h2>";
@@ -1805,10 +1823,7 @@ export class MapView {
 
         const imagePath = this.imageUrlFromLocationType(location.type);
 
-        const altitudeText =
-            location.altitude !== undefined && location.altitude !== 0
-                ? " " + location.altitude.toFixed(1) + "m"
-                : "";
+        const altitudeText = MapView.formatAltitude(location.altitude, " ", " m");
 
         const entity = await this.createEntity(
             location.id,
@@ -2154,7 +2169,7 @@ export class MapView {
 
             const altitude = samples[0].height;
 
-            MapView.log("findAltitude: altitude is " + altitude.toFixed(1) + "m");
+            MapView.log("findAltitude: altitude is " + MapView.formatAltitude(altitude, "", " m"));
 
             return altitude;
 
@@ -2204,7 +2219,7 @@ export class MapView {
 
         text += "<p>Flying range for map point at<br/>Latitude: " + options.displayLatitude + "<br/>" +
             "Longitude: " + options.displayLongitude + "<br/>" +
-            "Altitude: " + options.altitude.toFixed(1) + "m</p>";
+            MapView.formatAltitude(options.altitude, "Altitude: ", " m</p>");
 
         text += "<p>" +
             "Glide ratio: " + options.glideRatio + "<br/>" +
