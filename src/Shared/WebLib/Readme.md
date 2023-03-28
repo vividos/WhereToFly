@@ -1,4 +1,4 @@
-# Where-to-fly web library
+﻿# Where-to-fly web library
 
 This is the npm library project that is used as web page components hosted in
 a WebView inside the Where-to-fly app.
@@ -45,4 +45,4 @@ Create the `MapView` control:
 
 ## License
 
-The library is licensed under the [BSD 2-clause license](../../../LICENSE.md).
+The library is licensed under the [MIT license](../../../LICENSE.md).

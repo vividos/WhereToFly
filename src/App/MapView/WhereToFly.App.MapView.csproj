@@ -10,7 +10,7 @@
   <!-- NuGet package properties -->
   <PropertyGroup>
     <PackageId>$(NuGetPackagePrefix).$(AssemblyName)</PackageId>
-    <PackageLicenseExpression>BSD-2-Clause</PackageLicenseExpression>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/vividos/WhereToFly/tree/main/src/App/MapView</PackageProjectUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>

@@ -23,4 +23,4 @@ Builds are occasionally checked with SonarCloud:
 
 ## License
 
-Licensed under the [BSD 2-clause license](LICENSE.md).
+Licensed under the [MIT license](LICENSE.md).
