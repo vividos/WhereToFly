@@ -1395,7 +1395,9 @@ export class MapView {
             ", longitude=" + options.longitude +
             MapView.formatAltitude(options.altitude, ", altitude="));
 
-        const altitude = options.altitude || 0.0;
+        let altitude = options.altitude || 0.0;
+        if (altitude === 0.0)
+            altitude = await this.findAltitude(options);
 
         const viewingDistance = this.getCurrentViewingDistance();
 
@@ -1423,7 +1425,7 @@ export class MapView {
         this.onUpdateLastShownLocation({
             latitude: options.latitude,
             longitude: options.longitude,
-            altitude: options.altitude,
+            altitude,
             viewingDistance: this.getCurrentViewingDistance()
         });
     }
