@@ -2159,8 +2159,8 @@ export class MapView {
      */
     async findAltitude(options) {
 
-        MapView.log("finding altitude at latitude " + location.latitude +
-            ", longitude " + location.longitude);
+        MapView.log("finding altitude at latitude " + options.latitude +
+            ", longitude " + options.longitude);
 
         try {
             const samples = await Cesium.sampleTerrainMostDetailed(
