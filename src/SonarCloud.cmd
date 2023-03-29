@@ -23,7 +23,7 @@ call "%VSINSTALL%\Common7\Tools\VsDevCmd.bat"
 set DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 REM install SonarScanner, if not available yet
-dotnet tool install --global dotnet-sonarscanner
+dotnet tool update --global dotnet-sonarscanner
 
 if "%SONARLOGIN%" == "" echo "Environment variable SONARLOGIN is not set! Obtain a new token and set the environment variable!"
 if "%SONARLOGIN%" == "" exit 1
