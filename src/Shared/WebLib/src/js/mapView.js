@@ -2157,7 +2157,7 @@ export class MapView {
      * @param {Object} [options] Options for finding altitude:
      * @param {Number} [options.latitude] Latitude of the point to use
      * @param {Number} [options.longitude] Longitude of the point to use
-     * @returns {Number} altitude in meter, or 0.0
+     * @returns {Promise<Number>|Number} altitude in meter, or 0.0
      */
     async findAltitude(options) {
 

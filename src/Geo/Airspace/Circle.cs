@@ -3,7 +3,7 @@
     /// <summary>
     /// A circle geometry with center and radius
     /// </summary>
-    public class Circle : Geometry
+    public class Circle : IGeometry
     {
         /// <summary>
         /// Center coordinates of circle

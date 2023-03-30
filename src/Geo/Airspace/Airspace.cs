@@ -55,7 +55,7 @@
         /// <summary>
         /// Geometry describing the airspace
         /// </summary>
-        public Geometry Geometry { get; set; }
+        public IGeometry Geometry { get; set; }
 
         /// <summary>
         /// Creates new airspace object

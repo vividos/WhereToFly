@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 #pragma warning disable SA1402 // File may only contain a single type
 #pragma warning disable SA1649 // File name should match first type name
@@ -83,6 +84,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
     /// Geometry element; technically the Geometry element may only appear in a feature, but
     /// to keep parsing simple, it is derived from Element, too.
     /// </summary>
+    [DebuggerDisplay("Geometry")]
     public class Geometry : Element
     {
     }

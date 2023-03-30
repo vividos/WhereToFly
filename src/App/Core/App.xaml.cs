@@ -256,8 +256,12 @@ namespace WhereToFly.App.Core
         public static async Task AddTourPlanLocationAsync(Location location)
         {
             var app = Current as App;
+            var mapPage = app?.MapPage;
 
-            await app?.MapPage?.AddTourPlanningLocationAsync(location);
+            if (mapPage != null)
+            {
+                await mapPage.AddTourPlanningLocationAsync(location);
+            }
         }
 
         /// <summary>

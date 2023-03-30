@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 
 #pragma warning disable CA1034 // Nested types should not be visible
 
@@ -7,7 +8,7 @@ namespace WhereToFly.Geo.Airspace
     /// <summary>
     /// Polygon geometry with polygon segments and arcs
     /// </summary>
-    public class Polygon : Geometry
+    public class Polygon : IGeometry
     {
         /// <summary>
         /// Direction of arc
@@ -28,6 +29,7 @@ namespace WhereToFly.Geo.Airspace
         /// <summary>
         /// Base class for a polygon segment
         /// </summary>
+        [DebuggerDisplay("PolygonSegment")]
         public class PolygonSegment
         {
         }
