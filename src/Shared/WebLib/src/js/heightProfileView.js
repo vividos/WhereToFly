@@ -368,8 +368,6 @@ export class HeightProfileView {
                 borderColor: this.trackColor
             }]
         };
-
-        this.updateZoomPanLimits();
     }
 
     /**
@@ -456,8 +454,6 @@ export class HeightProfileView {
                 y: track.listOfTrackPoints[trackPointIndex + 2]
             });
         }
-
-        this.updateZoomPanLimits();
     }
 
     /**
@@ -468,6 +464,7 @@ export class HeightProfileView {
     updateView() {
 
         this.chart.update(0);
+        this.updateZoomPanLimits();
     }
 
     /**
