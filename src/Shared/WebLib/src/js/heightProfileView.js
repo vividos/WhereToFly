@@ -100,17 +100,20 @@ export class HeightProfileView {
                     x: {
                         id: "time",
                         type: "time",
-                        grid: {
-                            color: this.axisColor,
-                            zeroLineColor: this.axisColor
-                        },
                         time: {
-                            unit: "hour",
+                            parsing: false,
                             displayFormats: {
-                                hour: "HH:mm"
+                                hour: "HH:mm",
+                                minute: "HH:mm"
                             },
-                            stepSize: 0.25, // every 15 minutes
-                            minUnit: "second"
+                            minUnit: "minute"
+                        },
+                        grid: {
+                            color: this.axisColor
+                        },
+                        ticks: {
+                            color: this.axisColor,
+                            source: "data"
                         }
                     },
                     y: {
