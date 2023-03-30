@@ -171,8 +171,9 @@ export class HeightProfileView {
                         },
                         limits: {
                             // to be set later
-                            x: { min: null, max: null },
-                            y: { min: null, max: null }
+                            x: { min: "original", max: "original" },
+                            y: { min: "original", max: "original" },
+                            minRange: 10 // zoom up to 10 seconds of track data
                         }
                     }
                 },
