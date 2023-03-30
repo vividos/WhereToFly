@@ -12,4 +12,4 @@ The Where-to-fly GitHub project can be found here:
 
 Current version: %VERSION%
 
-Image: Above Lake Wanaka and Roys Peak, South Island, New Zealand.
+Image: At the Jägerbauernalm takeoff, Schliersee, Bavaria, Germany.
