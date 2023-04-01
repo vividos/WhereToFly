@@ -293,7 +293,8 @@ export class HeightProfileView {
 
         this.isZoomAndPanActive = false;
 
-        this.chart.options.plugins.zoom.zoom.enabled = false;
+        this.chart.options.plugins.zoom.zoom.wheel.enabled = false;
+        this.chart.options.plugins.zoom.zoom.pinch.enabled = false;
         this.chart.options.plugins.zoom.pan.enabled = false;
 
         this.chart.update(0);
@@ -314,7 +315,8 @@ export class HeightProfileView {
 
         this.isZoomAndPanActive = true;
 
-        this.chart.options.plugins.zoom.zoom.enabled = true;
+        this.chart.options.plugins.zoom.zoom.wheel.enabled = true;
+        this.chart.options.plugins.zoom.zoom.pinch.enabled = true;
         this.chart.options.plugins.zoom.pan.enabled = true;
 
         this.chart.update(0);
