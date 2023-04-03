@@ -154,7 +154,9 @@ export class HeightProfileView {
                     zoom: {
                         pan: {
                             enabled: true,
-                            mode: "x"
+                            mode: "x",
+                            onPanStart: this.onPanStart.bind(this),
+                            onPanComplete: this.onPanComplete.bind(this)
                         },
                         zoom: {
                             wheel: {
@@ -196,6 +198,41 @@ export class HeightProfileView {
         chartButtonClose.style.display = this.options.showCloseButton ? "block" : "none";
 
         this.setModeZoomAndPan();
+    }
+
+    /**
+     * Called when panning starts; installs an event listener for "mousemove"
+     * events
+     * @param {object} args event args
+     */
+    onPanStart(args) {
+        this.currentMouseMoveHandler = this.onPanMouseMove.bind(this);
+
+        args.chart.canvas.addEventListener(
+            "mousemove",
+            this.currentMouseMoveHandler);
+    }
+
+    /**
+     * Called during panning for every "mousemove" event
+     * @param {object} args event args
+     */
+    onPanMouseMove(args) {
+        // update crosshair's x value, since afterEvent() is not called during
+        // panning
+        this.chart.crosshair.x = args.x;
+    }
+
+    /**
+     * Called when panning has completed; removes "mousemove" handler again
+     * @param {object} args event args
+     */
+    onPanComplete(args) {
+        args.chart.canvas.removeEventListener(
+            "mousemove",
+            this.currentMouseMoveHandler);
+
+        this.currentMouseMoveHandler = null;
     }
 
     /**
