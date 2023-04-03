@@ -88,7 +88,6 @@ export class HeightProfileView {
         const chartElement = document.getElementById(chartElementId);
         const ctx = chartElement.getContext("2d");
 
-        const that = this;
         this.chart = new Chart(ctx, {
             type: "line",
             data: {},
@@ -140,8 +139,8 @@ export class HeightProfileView {
                         axis: "x",
                         intersect: false,
                         external: function(context) {
-                            that.updateTooltipElement(context.tooltip);
-                        }
+                            this.updateTooltipElement(context.tooltip);
+                        }.bind(this)
                     },
                     // the simple-crosshair plugin used here
                     crosshair: {
@@ -184,13 +183,11 @@ export class HeightProfileView {
                     intersect: false,
                     axis: "x"
                 },
-                onHover: function(_event, elements, _chart) {
-                    that.onHover(elements);
-                },
+                onHover: this.onHover.bind(this),
                 onClick: function(_event, elements, _chart) {
-                    if (!that.isZoomAndPanActive)
-                        that.onClick(elements);
-                }
+                    if (!this.isZoomAndPanActive)
+                        this.onClick(elements);
+                }.bind(this)
             }
         });
 
@@ -548,7 +545,7 @@ export class HeightProfileView {
      * Called by Chart.js when the user hovers over an element in the chart
      * @param {array} [elements] array of elements; may be empty
      */
-    onHover(elements) {
+    onHover(_event, elements, _chart) {
 
         if (elements.length > 0 &&
             this.options.callback !== undefined)
@@ -595,17 +592,16 @@ export class HeightProfileView {
             values.elapsedTime = (values.timePoint - startTime).valueOf() / 1000.0;
         }
 
-        const that = this;
         tooltipModel.dataPoints.forEach(function(tooltipItem) {
             if (tooltipItem.datasetIndex === 0) {
 
-                const currentDataPoint = that.chart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex];
+                const currentDataPoint = this.chart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex];
                 values.trackHeight = currentDataPoint.y;
 
                 if (tooltipItem.dataIndex === 0)
                     values.varioValue = 0.0;
                 else {
-                    const lastDataPoint = that.chart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex - 1];
+                    const lastDataPoint = this.chart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex - 1];
 
                     const lastTrackHeight = lastDataPoint.y;
 
@@ -616,9 +612,9 @@ export class HeightProfileView {
 
             if (tooltipItem.datasetIndex === 1) {
                 values.groundHeight =
-                    that.chart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex].y;
+                    this.chart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex].y;
             }
-        });
+        }.bind(this));
 
         return values;
     }
