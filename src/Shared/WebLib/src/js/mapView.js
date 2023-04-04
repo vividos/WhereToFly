@@ -65,37 +65,58 @@ export class MapView {
 
         Cesium.Ion.defaultAccessToken = this.options.cesiumIonApiKey;
 
-        this.openStreetMapImageryLayer = null;
-        this.openStreetMapImageryProvider = new Cesium.OpenStreetMapImageryProvider({
-            url: "https://{s}.tile.openstreetmap.org/",
-            subdomains: "abc",
-            maximumLevel: 18
-        });
-
-        this.bingMapsAerialWithLabelsImageryLayer = null;
-        this.bingMapsAerialWithLabelsImageryProvider = null;
-
-        this.openTopoMapImageryLayer = null;
-        this.openTopoMapImageryProvider = new Cesium.OpenStreetMapImageryProvider({
-            url: "https://{s}.tile.opentopomap.org/",
-            subdomains: "abc",
-            maximumLevel: 18,
-            credits: "<code>Kartendaten: &copy; <a href=\"https://openstreetmap.org/copyright\">OpenStreetMap</a>-Mitwirkende, SRTM | Kartendarstellung: &copy; <a href=\"https://opentopomap.org\">OpenTopoMap</a> (<a href=\"https://creativecommons.org/licenses/by-sa/3.0/\">CC-BY-SA</a>)</code>"
-        });
-
-        this.sentinel2ImageryLayer = null;
-        this.sentinel2ImageryProvider = null;
-
-        this.openFlightMapsImageryLayer = null;
-        const airacId = MapView.calcCurrentAiracId();
-        this.openFlightMapsImageryProvider = new Cesium.UrlTemplateImageryProvider({
-            url: "https://nwy-tiles-api.prod.newaydata.com/tiles/{z}/{x}/{y}.png?path=" + airacId + "/aero/latest",
-            tileWidth: 512,
-            tileHeight: 512,
-            maximumLevel: 11,
-            enablePickFeatures: false,
-            credit: "(c) <a href=\"https://openflightmaps.org/\" target=\"_blank\">Open Flightmaps association</a>, (c) OpenStreetMap contributors, NASA elevation data"
-        });
+        this.imageryLayerInfos = {
+            OpenStreetMap: {
+                layer: null,
+                provider: new Cesium.OpenStreetMapImageryProvider({
+                    url: "https://{s}.tile.openstreetmap.org/",
+                    subdomains: "abc",
+                    maximumLevel: 18
+                })
+            },
+            BingMapsAerialWithLabels: {
+                layer: null,
+                provider: null,
+                getProvider: () => {
+                    return new Cesium.BingMapsImageryProvider({
+                        url: "https://dev.virtualearth.net",
+                        key: this.options.bingMapsApiKey,
+                        mapStyle: Cesium.BingMapsStyle.AERIAL_WITH_LABELS_ON_DEMAND
+                    });
+                }
+            },
+            OpenTopoMap: {
+                layer: null,
+                provider: new Cesium.OpenStreetMapImageryProvider({
+                    url: "https://{s}.tile.opentopomap.org/",
+                    subdomains: "abc",
+                    maximumLevel: 18,
+                    credits: "<code>Kartendaten: &copy; <a href=\"https://openstreetmap.org/copyright\">OpenStreetMap</a>-Mitwirkende, SRTM | Kartendarstellung: &copy; <a href=\"https://opentopomap.org\">OpenTopoMap</a> (<a href=\"https://creativecommons.org/licenses/by-sa/3.0/\">CC-BY-SA</a>)</code>"
+                })
+            },
+            Sentinel2: {
+                layer: null,
+                provider: null,
+                getProvider: () => {
+                    return new Cesium.IonImageryProvider({ assetId: 3954 });
+                }
+            },
+            OpenFlightMaps: {
+                layer: null,
+                provider: null,
+                getProvider: () => {
+                    const airacId = MapView.calcCurrentAiracId();
+                    return new Cesium.UrlTemplateImageryProvider({
+                        url: "https://nwy-tiles-api.prod.newaydata.com/tiles/{z}/{x}/{y}.png?path=" + airacId + "/aero/latest",
+                        tileWidth: 512,
+                        tileHeight: 512,
+                        maximumLevel: 11,
+                        enablePickFeatures: false,
+                        credit: "(c) <a href=\"https://openflightmaps.org/\" target=\"_blank\">Open Flightmaps association</a>, (c) OpenStreetMap contributors, NASA elevation data"
+                    });
+                }
+            }
+        }
 
         this.setupSlopeAndContourLines();
 
@@ -131,7 +152,7 @@ export class MapView {
         const webGLPowerPreference = "low-power";
 
         this.viewer = new Cesium.Viewer(this.options.id, {
-            imageryProvider: this.openStreetMapImageryProvider,
+            imageryProvider: this.imageryLayerInfos.OpenStreetMap.provider,
             terrainProvider: null, // is later set when readyPromise completes
             clockViewModel: new Cesium.ClockViewModel(clock),
             baseLayerPicker: false,
@@ -152,6 +173,8 @@ export class MapView {
                 }
             }
         });
+
+        this.imageryLayerInfos.OpenStreetMap.layer = this.viewer.imageryLayers.get(0);
 
         console.log("#5 globe options");
 
@@ -690,7 +713,8 @@ export class MapView {
     /**
      * Sets new map imagery type
      * @param {string} imageryType imagery type constant; the following constants currently can be
-     * used: 'OpenStreetMap'.
+     * used: 'OpenStreetMap', 'BingMapsAerialWithLabels', 'OpenTopoMap', 'Sentinel2',
+     * 'OpenFlightMaps'.
      */
     setMapImageryType(imageryType) {
 
@@ -698,79 +722,28 @@ export class MapView {
 
         const layers = this.viewer.scene.imageryLayers;
 
-        if (this.openStreetMapImageryLayer !== null)
-            layers.remove(this.openStreetMapImageryLayer, false);
-
-        if (this.bingMapsAerialWithLabelsImageryLayer !== null)
-            layers.remove(this.bingMapsAerialWithLabelsImageryLayer, false);
-
-        if (this.openTopoMapImageryLayer !== null)
-            layers.remove(this.openTopoMapImageryLayer, false);
-
-        if (this.sentinel2ImageryLayer !== null)
-            layers.remove(this.sentinel2ImageryLayer, false);
-
-        if (this.openFlightMapsImageryLayer !== null)
-            layers.remove(this.openFlightMapsImageryLayer, false);
-
-        switch (imageryType) {
-        case "OpenStreetMap":
-            if (this.openStreetMapImageryLayer === null)
-                this.openStreetMapImageryLayer = layers.addImageryProvider(this.openStreetMapImageryProvider, 1);
-            else
-                layers.add(this.openStreetMapImageryLayer, 1);
-            break;
-
-        case "BingMapsAerialWithLabels":
-            if (this.bingMapsAerialWithLabelsImageryLayer === null) {
-
-                // lazy initialize provider
-                if (this.bingMapsAerialWithLabelsImageryProvider === null) {
-                    this.bingMapsAerialWithLabelsImageryProvider = new Cesium.BingMapsImageryProvider({
-                        url: "https://dev.virtualearth.net",
-                        key: this.options.bingMapsApiKey,
-                        mapStyle: Cesium.BingMapsStyle.AERIAL_WITH_LABELS_ON_DEMAND
-                    });
-                }
-
-                this.bingMapsAerialWithLabelsImageryLayer =
-                    layers.addImageryProvider(this.bingMapsAerialWithLabelsImageryProvider, 1);
-            } else
-                layers.add(this.bingMapsAerialWithLabelsImageryLayer, 1);
-            break;
-
-        case "OpenTopoMap":
-            if (this.openTopoMapImageryLayer === null)
-                this.openTopoMapImageryLayer = layers.addImageryProvider(this.openTopoMapImageryProvider, 1);
-            else
-                layers.add(this.openTopoMapImageryLayer, 1);
-            break;
-
-        case "Sentinel2":
-            if (this.sentinel2ImageryLayer === null) {
-
-                // lazy initialize provider
-                if (this.sentinel2ImageryProvider === null)
-                    this.sentinel2ImageryProvider = new Cesium.IonImageryProvider({ assetId: 3954 });
-
-                this.sentinel2ImageryLayer = layers.addImageryProvider(this.sentinel2ImageryProvider, 1);
-            } else
-                layers.add(this.sentinel2ImageryLayer, 1);
-            break;
-
-        case "OpenFlightMaps":
-            if (this.openFlightMapsImageryLayer === null)
-                this.openFlightMapsImageryLayer = layers.addImageryProvider(this.openFlightMapsImageryProvider, 1);
-            else
-                layers.add(this.openFlightMapsImageryLayer, 1);
-            break;
-
-        default:
-            console.warn("MapView.setMapImageryType: invalid imagery type: " + imageryType);
-            break;
+        for (const key in this.imageryLayerInfos) {
+            if (this.imageryLayerInfos[key].layer !== null)
+                layers.remove(this.imageryLayerInfos[key].layer, false);
         }
 
-        this.updateScene();
+        if (imageryType in this.imageryLayerInfos) {
+
+            const imageryTypeInfo = this.imageryLayerInfos[imageryType];
+            if (imageryTypeInfo.layer === null) {
+
+                if (imageryTypeInfo.provider === null)
+                    imageryTypeInfo.provider = imageryTypeInfo.getProvider();
+
+                imageryTypeInfo.layer =
+                    layers.addImageryProvider(imageryTypeInfo.provider, 0);
+            } else
+                layers.add(imageryTypeInfo.layer, 0);
+
+            this.updateScene();
+
+        } else
+            console.warn("MapView.setMapImageryType: invalid imagery type: " + imageryType);
     }
 
     static slopeRamp = [0.0, 0.29, 0.5, Math.sqrt(2) / 2, 0.87, 0.91, 1.0];
