@@ -50,7 +50,9 @@ namespace WhereToFly.WebApi.Core.Controllers
         public async Task<IEnumerable<Location>> Get(int latitude, int longitude)
         {
             this.logger.LogDebug(
-                $"finding nearby POIs in latitude {latitude}, longitude {longitude} rectangle");
+                "finding nearby POIs in latitude {latitude}, longitude {longitude} rectangle",
+                latitude,
+                longitude);
 
             return await this.locationFindManager.GetInRectAsync(latitude, longitude);
         }

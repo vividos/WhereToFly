@@ -50,7 +50,9 @@ namespace WhereToFly.WebApi.Core.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<PlannedTour> Get([FromBody] PlanTourParameters planTourParameters)
         {
-            this.logger.LogDebug($"Planning tour with {planTourParameters.WaypointIdList.Count} waypoints...");
+            this.logger.LogDebug(
+                "Planning tour with {Count} waypoints...",
+                planTourParameters.WaypointIdList.Count);
 
             var watch = new Stopwatch();
             watch.Start();
@@ -70,7 +72,9 @@ namespace WhereToFly.WebApi.Core.Controllers
             {
                 watch.Stop();
 
-                this.logger.LogDebug($"Planning tour took {watch.ElapsedMilliseconds} ms.");
+                this.logger.LogDebug(
+                    "Planning tour took {ElapsedMilliseconds} ms.",
+                    watch.ElapsedMilliseconds);
             }
         }
     }

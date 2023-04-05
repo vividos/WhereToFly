@@ -45,8 +45,10 @@ namespace WhereToFly.WebApi.Core.Controllers
             };
 
             this.logger.LogDebug(
-                $"Initializing AppConfig controller with Cesium Ion API Key \"{this.appConfig.CesiumIonApiKey}\" " +
-                $"and Bing Maps API key \"{this.appConfig.BingMapsApiKey}\"");
+                "Initializing AppConfig controller with Cesium Ion API Key \"{CesiumIonApiKey}\" " +
+                "and Bing Maps API key \"{BingMapsApiKey}\"",
+                this.appConfig.CesiumIonApiKey,
+                this.appConfig.BingMapsApiKey);
         }
 
         /// <summary>
@@ -61,7 +63,9 @@ namespace WhereToFly.WebApi.Core.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<AppConfig> Get(string appVersion)
         {
-            this.logger.LogInformation($"WhereToFly app config request, with version {appVersion}");
+            this.logger.LogInformation(
+                "WhereToFly app config request, with version {appVersion}",
+                appVersion);
 
             if (string.IsNullOrWhiteSpace(appVersion))
             {

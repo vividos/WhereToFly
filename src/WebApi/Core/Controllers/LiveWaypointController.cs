@@ -52,7 +52,7 @@ namespace WhereToFly.WebApi.Core.Controllers
         {
             this.CheckLiveWaypointId(id);
 
-            this.logger.LogDebug($"getting live waypoint with ID: {id}");
+            this.logger.LogDebug("getting live waypoint with ID: {id}", id);
 
             return await this.cacheManager.GetLiveWaypointData(id);
         }
@@ -65,7 +65,10 @@ namespace WhereToFly.WebApi.Core.Controllers
         {
             if (string.IsNullOrEmpty(liveWaypointId))
             {
-                this.logger.LogWarning($"invalid live waypoint ID: {liveWaypointId}");
+                this.logger.LogWarning(
+                    "invalid live waypoint ID: {liveWaypointId}",
+                    liveWaypointId);
+
                 throw new ArgumentException(
                     "invalid live waypoint ID",
                     nameof(liveWaypointId));

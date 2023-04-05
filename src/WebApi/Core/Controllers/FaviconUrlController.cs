@@ -21,7 +21,7 @@ namespace WhereToFly.WebApi.Core.Controllers
         /// <summary>
         /// Cache for favicon URLs
         /// </summary>
-        private readonly FaviconUrlCache faviconUrlCache = new FaviconUrlCache();
+        private readonly FaviconUrlCache faviconUrlCache = new();
 
         /// <summary>
         /// Creates a new favicon URL controller
@@ -41,7 +41,9 @@ namespace WhereToFly.WebApi.Core.Controllers
         [HttpGet]
         public async Task<string> Get(string websiteUrl)
         {
-            this.logger.LogInformation($"WhereToFly favicon URL request, with website URL: {websiteUrl}");
+            this.logger.LogInformation(
+                "WhereToFly favicon URL request, with website URL: {websiteUrl}",
+                websiteUrl);
 
             try
             {
@@ -49,7 +51,10 @@ namespace WhereToFly.WebApi.Core.Controllers
             }
             catch (Exception ex)
             {
-                this.logger.LogError(ex, $"error while retrieving favicon URL for website: {websiteUrl}");
+                this.logger.LogError(
+                    ex,
+                    "error while retrieving favicon URL for website: {websiteUrl}",
+                    websiteUrl);
 
                 return await Task.FromResult(string.Empty);
             }
