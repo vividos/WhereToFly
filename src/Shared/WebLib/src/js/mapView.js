@@ -116,21 +116,40 @@ export class MapView {
                     });
                 }
             }
-        }
+        };
 
         this.setupSlopeAndContourLines();
 
-        this.thermalSkywaysLayer = null;
-        this.thermalSkywaysOverlay = this.createThermalImageryProvider();
-        this.thermalSkywaysOverlay.readyPromise.then(_success => {
-            MapView.log("thermal maps url: " + this.thermalSkywaysOverlay.url);
-        });
-
-        this.blackMarbleLayer = null;
-        this.blackMarbleOverlay = null;
-
-        this.waymarkedTrailsHikingLayer = null;
-        this.waymarkedTrailsHikingOverlay = this.createWaymarkedTrailsHikingImageryProvider();
+        this.imageryOverlayInfos = {
+            ThermalSkywaysKk7: {
+                layer: null,
+                provider: this.createThermalImageryProvider(),
+                configLayer: (layer) => {
+                    layer.alpha = 0.2; // 0.0 is transparent.  1.0 is opaque.
+                    layer.brightness = 2.0; // > 1.0 increases brightness.  < 1.0 decreases.
+                }
+            },
+            BlackMarble: {
+                layer: null,
+                provider: null,
+                getProvider: () => {
+                    // The Earth at Night, also known as Black Marble 2017 and Night Lights
+                    return new Cesium.IonImageryProvider({ assetId: 3812 });
+                },
+                configLayer: (layer) => {
+                    layer.alpha = 0.5; // 0.0 is transparent.  1.0 is opaque.
+                    layer.brightness = 2.0; // > 1.0 increases brightness.  < 1.0 decreases.
+                }
+            },
+            WaymarkedTrailsHiking: {
+                layer: null,
+                provider: this.createWaymarkedTrailsHikingImageryProvider(),
+                configLayer: (layer) => {
+                    layer.alpha = 0.8; // 0.0 is transparent.  1.0 is opaque.
+                    layer.brightness = 1.0; // > 1.0 increases brightness.  < 1.0 decreases.
+                }
+            }
+        };
 
         console.log("#2 terrain provider");
         this.initTerrainProvider();
@@ -468,7 +487,7 @@ export class MapView {
 
         const tilingScheme = new Cesium.WebMercatorTilingScheme();
 
-        return new Cesium.UrlTemplateImageryProvider({
+        const provider = new Cesium.UrlTemplateImageryProvider({
             url,
             credit: new Cesium.Credit(creditText, false),
             tilingScheme,
@@ -478,6 +497,12 @@ export class MapView {
             maximumLevel: 12,
             rectangle: tilingScheme.rectangle
         });
+
+        provider.readyPromise.then(_success => {
+            MapView.log("thermal maps url: " + provider.url);
+        });
+
+        return provider;
     }
 
     /**
@@ -824,7 +849,8 @@ export class MapView {
     /**
      * Sets new map overlay type
      * @param {string} overlayType overlay type constant; the following constants currently can be
-     * used: 'None', 'ContourLines', 'SlopeAndContourLines', 'ThermalSkywaysKk7', 'BlackMarble'.
+     * used: 'None', 'ContourLines', 'SlopeAndContourLines', 'ThermalSkywaysKk7', 'BlackMarble',
+     * 'WaymarkedTrailsHiking'.
      */
     setMapOverlayType(overlayType) {
 
@@ -832,14 +858,10 @@ export class MapView {
 
         const layers = this.viewer.scene.imageryLayers;
 
-        if (this.thermalSkywaysLayer !== null)
-            layers.remove(this.thermalSkywaysLayer, false);
-
-        if (this.blackMarbleLayer !== null)
-            layers.remove(this.blackMarbleLayer, false);
-
-        if (this.waymarkedTrailsHikingLayer !== null)
-            layers.remove(this.waymarkedTrailsHikingLayer, false);
+        for (const key in this.imageryOverlayInfos) {
+            if (this.imageryOverlayInfos[key].layer !== null)
+                layers.remove(this.imageryOverlayInfos[key].layer, false);
+        }
 
         this.viewer.scene.globe.material = null;
 
@@ -855,40 +877,25 @@ export class MapView {
             this.viewer.scene.globe.material = this.slopeAndContourLinesMaterial;
             break;
 
-        case "ThermalSkywaysKk7":
-            if (this.thermalSkywaysLayer === null) {
-                this.thermalSkywaysLayer = layers.addImageryProvider(this.thermalSkywaysOverlay);
-                this.thermalSkywaysLayer.alpha = 0.2; // 0.0 is transparent.  1.0 is opaque.
-                this.thermalSkywaysLayer.brightness = 2.0; // > 1.0 increases brightness.  < 1.0 decreases.
-            } else
-                layers.add(this.thermalSkywaysLayer);
-            break;
-
-        case "BlackMarble":
-            if (this.blackMarbleLayer === null) {
-                if (this.blackMarbleOverlay === null) {
-                    // The Earth at Night, also known as Black Marble 2017 and Night Lights
-                    this.blackMarbleOverlay = new Cesium.IonImageryProvider({ assetId: 3812 });
-                }
-
-                this.blackMarbleLayer = layers.addImageryProvider(this.blackMarbleOverlay);
-                this.blackMarbleLayer.alpha = 0.5; // 0.0 is transparent.  1.0 is opaque.
-                this.blackMarbleLayer.brightness = 2.0; // > 1.0 increases brightness.  < 1.0 decreases.
-            } else
-                layers.add(this.blackMarbleLayer);
-            break;
-
-        case "WaymarkedTrailsHiking":
-            if (this.waymarkedTrailsHikingLayer === null) {
-                this.waymarkedTrailsHikingLayer = layers.addImageryProvider(this.waymarkedTrailsHikingOverlay);
-                this.waymarkedTrailsHikingLayer.alpha = 0.8; // 0.0 is transparent.  1.0 is opaque.
-                this.waymarkedTrailsHikingLayer.brightness = 1.0; // > 1.0 increases brightness.  < 1.0 decreases.
-            } else
-                layers.add(this.waymarkedTrailsHikingLayer);
-            break;
-
         default:
-            console.warn("MapView.setMapOverlayType: invalid map overlay type: " + overlayType);
+            if (overlayType in this.imageryOverlayInfos) {
+
+                const overlayTypeInfo = this.imageryOverlayInfos[overlayType];
+                if (overlayTypeInfo.layer === null) {
+
+                    if (overlayTypeInfo.provider === null)
+                        overlayTypeInfo.provider = overlayTypeInfo.getProvider();
+
+                    overlayTypeInfo.layer =
+                        layers.addImageryProvider(overlayTypeInfo.provider, 1);
+
+                    overlayTypeInfo.configLayer(overlayTypeInfo.layer);
+
+                } else
+                    layers.add(overlayTypeInfo.layer, 1);
+
+            } else
+                console.warn("MapView.setMapOverlayType: invalid map overlay type: " + overlayType);
             break;
         }
 
