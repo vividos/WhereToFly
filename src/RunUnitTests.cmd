@@ -1,7 +1,7 @@
 @echo off
 REM
 REM Where-to-fly - an app to decide where to (hike up and) fly with a paraglider
-REM Copyright (C) 2017-2022 Michael Fink
+REM Copyright (C) 2017-2023 Michael Fink
 REM
 REM Runs Unit tests and coverage analysis
 REM
@@ -20,6 +20,8 @@ REM Preparations
 REM
 call "%VSINSTALL%\Common7\Tools\VsDevCmd.bat"
 
+mkdir "%~dp0\TestResults" 2> nul
+
 set DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 set VSTEST=%VSINSTALL%\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe
@@ -28,7 +30,6 @@ REM
 REM Build projects
 REM
 dotnet publish App\UnitTest\WhereToFly.App.UnitTest.csproj --configuration Release
-dotnet publish WebApi\UnitTest\WhereToFly.WebApi.UnitTest.csproj --configuration Release
 
 REM
 REM Run Unit-Tests
@@ -42,19 +43,16 @@ REM
     -skipautoprops ^
     -output:"%~dp0\TestResults\WhereToFly-App-CoverageReport.xml"
 
-%OPENCOVER% ^
-    -register:user ^
-    -target:"c:\Program Files\dotnet\dotnet.exe" ^
-    -targetdir:"%~dp0WebApi\UnitTest\\" ^
-    -targetargs:"test -c Release" ^
-    -filter:"+[WhereToFly*]* -[WhereToFly.WebApi.UnitTest]*" ^
-    -mergebyhash ^
-    -skipautoprops ^
-    -oldstyle ^
-    -output:"%~dp0\TestResults\WhereToFly-WebApi-CoverageReport.xml"
+dotnet test ^
+    WebApi\UnitTest\WhereToFly.WebApi.UnitTest.csproj ^
+    --configuration Release ^
+    --collect:"XPlat Code Coverage;Format=opencover" ^
+    --results-directory TestResults ^
+    --logger:trx;LogFileName=WhereToFly-WebApi-Log.trx ^
+    --logger:console;verbosity=detailed
 
 %REPORTGENERATOR% ^
-    -reports:"%~dp0\TestResults\WhereToFly-*-CoverageReport.xml" ^
+    -reports:TestResults\WhereToFly-*-CoverageReport.xml;TestResults\**\*.opencover.xml ^
     -targetdir:"%~dp0\TestResults\CoverageReport"
 
 pause
