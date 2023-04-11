@@ -140,7 +140,7 @@ namespace WhereToFly.App.Android
             request.SetDescription("Downloading file...");
 
             string cookie = CookieManager.Instance?.GetCookie(url);
-            if (string.IsNullOrEmpty(cookie))
+            if (!string.IsNullOrEmpty(cookie))
             {
                 request.AddRequestHeader("Cookie", cookie);
             }

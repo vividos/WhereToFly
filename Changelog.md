@@ -13,6 +13,7 @@ Released on ?.
 - Determine altitude for "find result" location instead of showing 0 m
 - Improved resolution of location pin images
 - Fixed Alptherm auto login
+- Fixed downloading images from weather pages that need a login
 
 ## Version 1.14.0 "New Zealand 2022/2023" edition
 
