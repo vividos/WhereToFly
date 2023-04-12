@@ -1,6 +1,10 @@
-﻿using WhereToFly.App.Core.ViewModels;
+﻿using System.Diagnostics;
+using WhereToFly.App.Core.ViewModels;
 using WhereToFly.Geo.Model;
+using Xamarin.CommunityToolkit.Effects;
+using Xamarin.Essentials;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 
 namespace WhereToFly.App.Core.Views
 {
@@ -17,6 +21,34 @@ namespace WhereToFly.App.Core.Views
         {
             this.BindingContext = new TrackDetailsViewModel(track);
             this.InitializeComponent();
+        }
+
+        /// <summary>
+        /// Called when the height profile view's touch action status has changed. During touch
+        /// events on Android, disable swiping on the tabbed page, to let the user pan and zoom
+        /// the height profile.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="args">event args</param>
+        private void OnTouchStatusChanged(
+            object sender,
+            TouchStatusChangedEventArgs args)
+        {
+            if (DeviceInfo.Platform != DevicePlatform.Android)
+            {
+                return;
+            }
+
+            bool enableTabSwiping =
+                args.Status != TouchStatus.Started;
+
+            Debug.WriteLine($"setting IsSwipePagingEnabled = {enableTabSwiping}");
+
+            var tabbedPage = this.Parent as Xamarin.Forms.TabbedPage;
+
+            tabbedPage?
+                .On<Xamarin.Forms.PlatformConfiguration.Android>()?
+                .SetIsSwipePagingEnabled(enableTabSwiping);
         }
     }
 }

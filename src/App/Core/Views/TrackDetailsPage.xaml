@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
              xmlns:mapview="clr-namespace:WhereToFly.App.MapView;assembly=WhereToFly.App.MapView"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              x:Class="WhereToFly.App.Core.Views.TrackDetailsPage"
              Title="Details"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
@@ -76,7 +77,11 @@
                                               WidthRequest="600"
                                               HeightRequest="300"
                                               HorizontalOptions="CenterAndExpand"
-                                              VerticalOptions="Start" />
+                                              VerticalOptions="Start">
+                    <mapview:HeightProfileWebView.Effects>
+                        <xct:TouchEffect StatusChanged="OnTouchStatusChanged" />
+                    </mapview:HeightProfileWebView.Effects>
+                </mapview:HeightProfileWebView>
 
                 <!-- Button to show height profile in new page -->
                 <!--
