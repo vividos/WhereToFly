@@ -37,7 +37,7 @@
 
                         <!-- Menu item icon -->
                         <controls:SvgImage Source="{Binding IconImageSource, Mode=OneWay}"
-                                           TintColor="{DynamicResource SvgImageTintColorDark}"
+                                           TintColor="{Binding ForegroundColor}"
                                            InputTransparent="True"
                                            WidthRequest="32" HeightRequest="32"
                                            HorizontalOptions="Center" VerticalOptions="Center" />

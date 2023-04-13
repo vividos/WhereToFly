@@ -17,6 +17,7 @@ Released on ?.
 - Disable swiping in track details when hovering over the track's height
   profile
 - Fixed displaying time scale in track height profile
+- Fixed context menu icon color of Delete menu items
 
 ## Version 1.14.0 "New Zealand 2022/2023" edition
 
