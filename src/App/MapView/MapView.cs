@@ -975,15 +975,23 @@ namespace WhereToFly.App.MapView
                 return;
             }
 
+            // round lat/long to 6 digits, getting about 0,1m accuracy
+            Func<double, decimal> getRoundedLatLong =
+                latlong => Math.Round((decimal)latlong, 6);
+
+            // round altitude to 0,1m accuracy
+            Func<double, decimal> getRoundedHeightFromAltitude =
+                altitude => Math.Round((decimal)altitude, 1);
+
             var trackPointsList =
-                track.TrackPoints.SelectMany(x => new double[]
+                track.TrackPoints.SelectMany(x => new decimal[]
                 {
-                    x.Longitude,
-                    x.Latitude,
-                    x.Altitude ?? 0.0,
+                    getRoundedLatLong(x.Longitude),
+                    getRoundedLatLong(x.Latitude),
+                    getRoundedHeightFromAltitude(x.Altitude ?? 0.0),
                 });
 
-            List<double> timePointsList = null;
+            List<decimal> timePointsList = null;
 
             long? trackStart = null;
 
@@ -995,16 +1003,24 @@ namespace WhereToFly.App.MapView
 
                 trackStart = (long)(startTime.ToUnixTimeMilliseconds() / 1000.0);
 
+                // round time delta to 1/10 seconds, or 10Hz sample rate
+                Func<TrackPoint, decimal> getTimeDeltaFromTrackPoint =
+                    x => x.Time.HasValue
+                    ? Math.Round((decimal)(x.Time.Value - startTime).TotalSeconds, 1)
+                    : 0m;
+
                 timePointsList = track.TrackPoints
-                    .Select(x => x.Time.HasValue
-                        ? (x.Time.Value - startTime).TotalSeconds
-                        : 0.0)
+                    .Select(getTimeDeltaFromTrackPoint)
                     .ToList();
             }
 
-            List<double> groundHeightProfileList = track.GroundHeightProfile.Any()
-                ? track.GroundHeightProfile
+            IEnumerable<decimal> groundHeightProfileList = track.GroundHeightProfile.Any()
+                ? track.GroundHeightProfile.Select(getRoundedHeightFromAltitude)
                 : null;
+
+            string color = track.IsFlightTrack && !track.IsLiveTrack
+                ? null
+                : track.Color;
 
             var trackJsonObject = new
             {
@@ -1016,10 +1032,12 @@ namespace WhereToFly.App.MapView
                 listOfTimePoints = timePointsList,
                 trackStart,
                 groundHeightProfile = groundHeightProfileList,
-                color = track.IsFlightTrack && !track.IsLiveTrack ? null : track.Color,
+                color,
             };
 
             string js = $"await map.addTrack({JsonConvert.SerializeObject(trackJsonObject)});";
+
+            js = js.Replace(".0,", string.Empty);
 
             await this.RunJavaScriptAsync(js);
         }
