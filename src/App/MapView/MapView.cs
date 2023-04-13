@@ -985,11 +985,15 @@ namespace WhereToFly.App.MapView
 
             List<double> timePointsList = null;
 
+            long? trackStart = null;
+
             var firstTrackPoint = track.TrackPoints.FirstOrDefault();
             if (firstTrackPoint != null &&
                 firstTrackPoint.Time.HasValue)
             {
                 var startTime = firstTrackPoint.Time.Value;
+
+                trackStart = (long)(startTime.ToUnixTimeMilliseconds() / 1000.0);
 
                 timePointsList = track.TrackPoints
                     .Select(x => x.Time.HasValue
@@ -1010,6 +1014,7 @@ namespace WhereToFly.App.MapView
                 isLiveTrack = track.IsLiveTrack,
                 listOfTrackPoints = trackPointsList,
                 listOfTimePoints = timePointsList,
+                trackStart,
                 groundHeightProfile = groundHeightProfileList,
                 color = track.IsFlightTrack && !track.IsLiveTrack ? null : track.Color,
             };

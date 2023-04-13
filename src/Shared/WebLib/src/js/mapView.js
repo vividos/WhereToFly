@@ -2492,6 +2492,9 @@ export class MapView {
      * lat, alt, long, lat, alt ... order
      * @param {array} [track.listOfTimePoints] An array of time points in seconds;
      * same length as listOfTrackPoints.length / 3; may be null
+     * @param {Number} track.trackStart track start, in seconds from epoch or as
+     * ISO8601 string; optional. This is used to display correct time ticks in
+     * the height profile view
      * @param {array} [track.groundHeightProfile] An array of ground height
      * profile elevations; same length as listOfTimePoints; may be null
      * @param {string} [track.color] Color as "RRGGBB" string value, or undefined

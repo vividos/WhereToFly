@@ -369,8 +369,11 @@ export class HeightProfileView {
      * @param {string} [track.id] unique ID of the track
      * @param {string} [track.name] track name to add
      * @param {array} [track.listOfTrackPoints] An array of track points in long, lat, alt, long, lat, alt ... order
-     * @param {array} [track.listOfTimePoints] An array of time points in seconds since unix epoch;
-     * same length as listOfTrackPoints; may be null
+     * @param {array} [track.listOfTimePoints] An array of time points in seconds since unix epoch
+     * or as delta values from trackStart; same length as listOfTrackPoints; may be null
+     * @param {Number} track.trackStart track start, in seconds from epoch or as
+     * ISO8601 string; when set, will be added to the listOfTimePoints values, which then must be
+     * delta values only, no seconds since epoch.
      */
     setTrack(track) {
 
@@ -378,6 +381,10 @@ export class HeightProfileView {
             track.listOfTrackPoints.length / 3 + " track points");
 
         const trackData = [];
+
+        const trackStart = typeof track.trackStart === "string"
+            ? Math.floor(new Date(track.trackStart).getTime() / 1000.0)
+            : track.trackStart;
 
         if (track.listOfTimePoints === null) {
             // create time points from 0 to length, in seconds
@@ -387,7 +394,11 @@ export class HeightProfileView {
         }
 
         for (let trackPointIndex = 0, len = track.listOfTrackPoints.length; trackPointIndex < len; trackPointIndex += 3) {
-            const timePoint = track.listOfTimePoints[trackPointIndex / 3];
+            let timePoint = track.listOfTimePoints[trackPointIndex / 3];
+
+            if (trackStart !== undefined)
+                timePoint += trackStart;
+
             trackData.push({
                 x: new Date(timePoint * 1000.0),
                 y: track.listOfTrackPoints[trackPointIndex + 2]
