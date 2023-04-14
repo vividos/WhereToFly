@@ -8,10 +8,10 @@ using WhereToFly.App.Core.Services;
 using WhereToFly.App.MapView;
 using Xamarin.Forms;
 
-namespace WhereToFly.App.UnitTest.Views
+namespace WhereToFly.App.UnitTest.MapView
 {
     /// <summary>
-    /// Unit tests for MapView
+    /// Unit tests for <see cref="MapView"/>
     /// </summary>
     [TestClass]
     public class MapViewTest
@@ -36,7 +36,7 @@ namespace WhereToFly.App.UnitTest.Views
         public async Task TestMapViewCreate()
         {
             // set up
-            var mapView = new MapView.MapView();
+            var mapView = new WhereToFly.App.MapView.MapView();
 
             // run
             await mapView.CreateAsync(
@@ -57,7 +57,7 @@ namespace WhereToFly.App.UnitTest.Views
         public void TestMapViewSettings()
         {
             // set up
-            var mapView = new MapView.MapView();
+            var mapView = new WhereToFly.App.MapView.MapView();
 
             Assert.IsTrue(mapView.UseEntityClustering, "initial settings value must be correct");
 
@@ -77,19 +77,20 @@ namespace WhereToFly.App.UnitTest.Views
         /// <summary>
         /// Tests all Location methods of MapView
         /// </summary>
+        /// <returns>task to wait on</returns>
         [TestMethod]
         [SuppressMessage(
             "Blocker Code Smell",
             "S2699:Tests should include assertions",
             Justification = "There's no way to test actions")]
-        public void TestMapViewLocationMethods()
+        public async Task TestMapViewLocationMethods()
         {
             // set up
-            var mapView = new MapView.MapView();
+            var mapView = new WhereToFly.App.MapView.MapView();
             var locationList = DataServiceHelper.GetDefaultLocationList();
 
             // run
-            mapView.AddLocationList(locationList);
+            await mapView.AddLocationList(locationList);
 
             var location = locationList.First();
             mapView.UpdateLocation(location);
@@ -102,19 +103,20 @@ namespace WhereToFly.App.UnitTest.Views
         /// <summary>
         /// Tests all Track methods of MapView
         /// </summary>
+        /// <returns>task to wait on</returns>
         [TestMethod]
         [SuppressMessage(
             "Blocker Code Smell",
             "S2699:Tests should include assertions",
             Justification = "There's no way to test actions")]
-        public void TestMapViewTrackMethods()
+        public async Task TestMapViewTrackMethods()
         {
             // set up
-            var mapView = new MapView.MapView();
+            var mapView = new WhereToFly.App.MapView.MapView();
             var track = UnitTestHelper.GetDefaultTrack();
 
             // run
-            mapView.AddTrack(track);
+            await mapView.AddTrack(track);
             ////mapView.SampleTrackHeights(track);
             mapView.ZoomToTrack(track);
             mapView.RemoveTrack(track);
@@ -124,19 +126,20 @@ namespace WhereToFly.App.UnitTest.Views
         /// <summary>
         /// Tests all Layer methods of MapView
         /// </summary>
+        /// <returns>task to wait on</returns>
         [TestMethod]
         [SuppressMessage(
             "Blocker Code Smell",
             "S2699:Tests should include assertions",
             Justification = "There's no way to test actions")]
-        public void TestMapViewLayerMethods()
+        public async Task TestMapViewLayerMethods()
         {
             // set up
-            var mapView = new MapView.MapView();
+            var mapView = new WhereToFly.App.MapView.MapView();
             var layer = DataServiceHelper.GetInitialLayerList().First();
 
             // run
-            mapView.AddLayer(layer);
+            await mapView.AddLayer(layer);
             mapView.SetLayerVisibility(layer);
             ////mapView.ExportLayerAsync(layer);
             mapView.ZoomToLayer(layer);
