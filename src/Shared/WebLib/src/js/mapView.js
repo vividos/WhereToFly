@@ -3177,6 +3177,8 @@ export class MapView {
             this.inOnCloseHandler = true;
             this.closeHeightProfileView();
             this.inOnCloseHandler = false;
+
+            this.updateScene();
         }
     }
 
