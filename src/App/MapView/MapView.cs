@@ -1037,8 +1037,6 @@ namespace WhereToFly.App.MapView
 
             string js = $"await map.addTrack({JsonConvert.SerializeObject(trackJsonObject)});";
 
-            js = js.Replace(".0,", string.Empty);
-
             await this.RunJavaScriptAsync(js);
         }
 
