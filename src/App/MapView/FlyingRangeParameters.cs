@@ -1,11 +1,9 @@
-﻿using System;
-
-namespace WhereToFly.App.MapView
+﻿namespace WhereToFly.App.MapView
 {
     /// <summary>
     /// Parameters for the flying range calculation
     /// </summary>
-    public sealed class FlyingRangeParameters : IEquatable<FlyingRangeParameters>
+    public record FlyingRangeParameters
     {
         /// <summary>
         /// Specifies the glide ratio, in km gliding per 1000m sinking.
@@ -31,66 +29,5 @@ namespace WhereToFly.App.MapView
         /// Altitude offset, in meter above selected point
         /// </summary>
         public int AltitudeOffset { get; set; } = 0;
-
-        #region object overridables implementation
-
-        /// <summary>
-        /// Returns hash code for app resource URI
-        /// </summary>
-        /// <returns>calculated hash code</returns>
-        public override int GetHashCode() =>
-            (this.GlideRatio,
-            this.GliderSpeed,
-            this.WindSpeed,
-            this.WindDirection,
-            this.AltitudeOffset).GetHashCode();
-
-        /// <summary>
-        /// Compares this app settings to another object
-        /// </summary>
-        /// <param name="obj">object to compare to</param>
-        /// <returns>true when equal app settings, false when not</returns>
-        public override bool Equals(object obj) =>
-            (obj is FlyingRangeParameters flyingRangeParameters) && this.Equals(flyingRangeParameters);
-        #endregion
-
-        #region IEquatable implementation
-
-        /// <summary>
-        /// Compares this app settings to another app settings object
-        /// </summary>
-        /// <param name="other">flying range parameters object to compare to</param>
-        /// <returns>true when equal app settings, false when not</returns>
-        public bool Equals(FlyingRangeParameters other) =>
-            other != null &&
-            (this.GlideRatio,
-            this.GliderSpeed,
-            this.WindSpeed,
-            this.WindDirection,
-            this.AltitudeOffset) ==
-            (other.GlideRatio,
-            other.GliderSpeed,
-            other.WindSpeed,
-            other.WindDirection,
-            this.AltitudeOffset);
-        #endregion
-
-        /// <summary>
-        /// Equality operator
-        /// </summary>
-        /// <param name="left">left operator argument</param>
-        /// <param name="right">right operator argument</param>
-        /// <returns>true when objects are equal, false when not</returns>
-        public static bool operator ==(FlyingRangeParameters left, FlyingRangeParameters right) =>
-            Equals(left, right);
-
-        /// <summary>
-        /// Inequality operator
-        /// </summary>
-        /// <param name="left">left operator argument</param>
-        /// <param name="right">right operator argument</param>
-        /// <returns>true when objects are inequal, false when not</returns>
-        public static bool operator !=(FlyingRangeParameters left, FlyingRangeParameters right) =>
-            !Equals(left, right);
     }
 }
