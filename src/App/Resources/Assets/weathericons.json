@@ -63,6 +63,13 @@
     "WebLink": "https://soaringmeteo.org/GFSw/googleMap.html"
   },
   {
+    "Name": "Soaringmeteo soarV2",
+    "Group": "Weather forecast",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://soarwrf1.soaringmeteo.org/v2/"
+  },
+  {
     "Name": "Paraglidable Alpen",
     "Group": "Weather forecast",
     "Type": 0,
