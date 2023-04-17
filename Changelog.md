@@ -2,7 +2,7 @@
 
 ## Version 1.14.1
 
-Released on ?.
+Released on 2023-04-17.
 
 ✨ New Features / Improvements
 - using CesiumJS version 1.103
