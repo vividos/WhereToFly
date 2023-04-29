@@ -20,16 +20,6 @@
     </AndroidAsset>
   </ItemGroup>
 
-  <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
-    <BundleResource Include="Assets\**\*.*" />
-    <BundleResource Include="..\..\..\Credits.md">
-      <Link>Assets\info\Credits.md</Link>
-    </BundleResource>
-    <BundleResource Include="..\..\..\Changelog.md">
-      <Link>Assets\info\Changelog.md</Link>
-    </BundleResource>
-  </ItemGroup>
-
   <ItemGroup Condition=" $(TargetFramework.StartsWith('uap10.0')) ">
     <Content Include="Assets\**\*.*" />
     <Content Include="..\..\..\Credits.md">
