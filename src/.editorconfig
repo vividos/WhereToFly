@@ -6,7 +6,7 @@ root = true
 #### Core EditorConfig Options ####
 [*.*]
 
-charset = utf-8-bom
+charset = utf-8
 
 # Indentation and spacing
 indent_size = 4
@@ -19,7 +19,6 @@ insert_final_newline = true
 
 # JSON files
 [*.json]
-charset = utf-8
 indent_size = 2
 
 # C# project files
@@ -40,6 +39,7 @@ charset = utf-8
 
 # .NET files
 [*.{cs,vb}]
+charset = utf-8-bom
 
 #### Whitespace ####
 
