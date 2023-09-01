@@ -170,8 +170,12 @@ export class MapView {
         console.log("#4 viewer");
         const webGLPowerPreference = "low-power";
 
+        this.imageryLayerInfos.OpenStreetMap.layer =
+            new Cesium.ImageryLayer(
+                this.imageryLayerInfos.OpenStreetMap.provider);
+
         this.viewer = new Cesium.Viewer(this.options.id, {
-            imageryProvider: this.imageryLayerInfos.OpenStreetMap.provider,
+            baseLayer: this.imageryLayerInfos.OpenStreetMap.layer,
             terrainProvider: null, // is later set when readyPromise completes
             clockViewModel: new Cesium.ClockViewModel(clock),
             baseLayerPicker: false,
@@ -192,8 +196,6 @@ export class MapView {
                 }
             }
         });
-
-        this.imageryLayerInfos.OpenStreetMap.layer = this.viewer.imageryLayers.get(0);
 
         console.log("#5 globe options");
 
@@ -319,12 +321,11 @@ export class MapView {
     async initTerrainProvider() {
 
         try {
-            const terrainProvider = Cesium.createWorldTerrain({
+            const terrainProvider = await Cesium.createWorldTerrainAsync({
                 requestWaterMask: false,
                 requestVertexNormals: true
             });
 
-            await terrainProvider.readyPromise;
             this.viewer.terrainProvider = terrainProvider;
             MapView.log("terrain provider is ready!");
 
@@ -479,9 +480,10 @@ export class MapView {
      * Creates a new imagery provider that uses the Thermal Skyways from https://thermal.kk7.ch/.
      * @returns {object} generated imagery provider object
      */
-    createThermalImageryProvider() {
+    async createThermalImageryProvider() {
 
         const url = "https://thermal.kk7.ch/tiles/skyways_all/{z}/{x}/{reverseY}.png?src=https://github.com/vividos/WhereToFly";
+        MapView.log("thermal maps url: " + url);
 
         const creditText = "Skyways &copy; <a href=\"https://thermal.kk7.ch/\">thermal.kk7.ch</a>";
 
@@ -496,10 +498,6 @@ export class MapView {
             minimumLevel: 0,
             maximumLevel: 12,
             rectangle: tilingScheme.rectangle
-        });
-
-        provider.readyPromise.then(_success => {
-            MapView.log("thermal maps url: " + provider.url);
         });
 
         return provider;
@@ -1485,7 +1483,7 @@ export class MapView {
 
         if (layer.type === "OsmBuildingsLayer") {
             if (this.osmBuildingsTileset === null)
-                this.osmBuildingsTileset = Cesium.createOsmBuildings();
+                this.osmBuildingsTileset = await Cesium.createOsmBuildingsAsync();
 
             this.viewer.scene.primitives.add(this.osmBuildingsTileset);
 
