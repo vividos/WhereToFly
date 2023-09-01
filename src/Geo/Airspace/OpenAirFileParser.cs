@@ -658,7 +658,7 @@ namespace WhereToFly.Geo.Airspace
 
             if (centerCoord == null)
             {
-                this.AddParsingError("invalid center coordinates: " + x ?? "undefined");
+                this.AddParsingError("invalid center coordinates: " + (x ?? "undefined"));
                 return;
             }
 
@@ -698,7 +698,7 @@ namespace WhereToFly.Geo.Airspace
 
             if (centerCoord == null)
             {
-                this.AddParsingError("invalid center coordinates: " + x ?? "undefined");
+                this.AddParsingError("invalid center coordinates: " + (x ?? "undefined"));
                 return;
             }
 
@@ -742,7 +742,7 @@ namespace WhereToFly.Geo.Airspace
 
             if (centerCoord == null)
             {
-                this.AddParsingError("invalid center coordinates: " + x ?? "undefined");
+                this.AddParsingError("invalid center coordinates: " + (x ?? "undefined"));
                 return;
             }
 
