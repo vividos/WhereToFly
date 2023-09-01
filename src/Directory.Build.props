@@ -1,4 +1,4 @@
-﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Product>Where-to-fly</Product>
     <VersionPrefix>1.15.0</VersionPrefix>
@@ -18,13 +18,13 @@
 
   <ItemGroup>
     <!-- Add reference to SonarAnalyzer analyzers to all projects -->
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.*">
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="9.*">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
 
     <!-- Add reference to StyleCop analyzers to all projects -->
-    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435">
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.507">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
