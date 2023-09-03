@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+#if NET7_0_OR_GREATER
+using Microsoft.Maui.Controls;
+#else
 using Xamarin.Forms;
+#endif
 
 namespace WhereToFly.App.MapView
 {

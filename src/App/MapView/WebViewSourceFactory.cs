@@ -1,5 +1,9 @@
 ﻿using System.Threading.Tasks;
+#if NET7_0_OR_GREATER
+using Microsoft.Maui.Controls;
+#else
 using Xamarin.Forms;
+#endif
 
 namespace WhereToFly.App.MapView
 {

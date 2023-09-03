@@ -8,7 +8,12 @@ using System.Threading.Tasks;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;
+#if NET7_0_OR_GREATER
+using Microsoft.Maui;
+using Microsoft.Maui.Controls;
+#else
 using Xamarin.Forms;
+#endif
 
 // make MapView internals visible to unit tests
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("WhereToFly.App.UnitTest")]

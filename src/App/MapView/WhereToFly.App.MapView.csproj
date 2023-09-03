@@ -1,8 +1,8 @@
-﻿<Project Sdk="MSBuild.Sdk.Extras/3.0.44">
+<Project Sdk="MSBuild.Sdk.Extras/3.0.44">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;MonoAndroid13.0</TargetFrameworks>
-    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">$(TargetFrameworks);uap10.0.19041</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;MonoAndroid13.0;net7.0-android33.0</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">$(TargetFrameworks);uap10.0.19041;net7.0-windows10.0.19041.0</TargetFrameworks>
     <Description>Where-to-fly App MapView</Description>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>
@@ -17,17 +17,22 @@
     <PackageReadmeFile>readme.md</PackageReadmeFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" $(TargetFramework.StartsWith('net7')) ">
+    <UseMaui>true</UseMaui>
+  </PropertyGroup>
+
   <ItemGroup>
     <EmbeddedResource Remove="**" />
     <Compile Include="*.cs" />
+    <Compile Remove="WebViewSourceFactory.maui.cs" />
     <None Include="Readme.md" Pack="true" PackagePath="\" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.8.0" />
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2612" />
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
     <Compile Include="netstandard\*.cs" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.8.0" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2612" />
   </ItemGroup>
 
   <!-- add assets as AndroidAsset -->
@@ -37,6 +42,8 @@
     <AndroidAsset Include="..\..\Shared\WebLib\dist\**\*.*" Exclude="..\..\Shared\WebLib\dist\**\*.map">
         <Link>Assets\weblib\%(RecursiveDir)\%(FileName)%(Extension)</Link>
     </AndroidAsset>
+    <PackageReference Include="Xamarin.Essentials" Version="1.8.0" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2612" />
   </ItemGroup>
 
   <!-- add UWP assets using Content build action -->
@@ -48,6 +55,14 @@
     <SDKReference Include="WindowsMobile, Version=10.0.19041.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
+    <PackageReference Include="Xamarin.Essentials" Version="1.8.0" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2612" />
+  </ItemGroup>
+
+  <!-- .NET MAUI -->
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('net7.0')) ">
+    <Compile Include="maui\*.cs" />
+    <MauiAsset Include="..\..\Shared\WebLib\dist\**\*.*" Exclude="..\..\Shared\WebLib\dist\**\*.map" LogicalName="weblib\%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 
   <ItemGroup>

@@ -6,8 +6,13 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using WhereToFly.Geo.Model;
+#if NET7_0_OR_GREATER
+using Microsoft.Maui.ApplicationModel;
+using Microsoft.Maui.Controls;
+#else
 using Xamarin.Essentials;
 using Xamarin.Forms;
+#endif
 
 namespace WhereToFly.App.MapView
 {
