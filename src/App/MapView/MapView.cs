@@ -215,7 +215,7 @@ namespace WhereToFly.App.MapView
                 {
                     this.mapImageryType = value;
 
-                    string js = string.Format("map.setMapImageryType('{0}');", value);
+                    string js = string.Format("await map.setMapImageryType('{0}');", value);
                     this.RunJavaScript(js);
                 }
             }
@@ -237,7 +237,7 @@ namespace WhereToFly.App.MapView
                 {
                     this.mapOverlayType = value;
 
-                    string js = string.Format("map.setMapOverlayType('{0}');", value);
+                    string js = string.Format("await map.setMapOverlayType('{0}');", value);
                     this.RunJavaScript(js);
                 }
             }

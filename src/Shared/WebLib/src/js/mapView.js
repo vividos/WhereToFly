@@ -77,12 +77,13 @@ export class MapView {
             BingMapsAerialWithLabels: {
                 layer: null,
                 provider: null,
-                getProvider: () => {
-                    return new Cesium.BingMapsImageryProvider({
-                        url: "https://dev.virtualearth.net",
-                        key: this.options.bingMapsApiKey,
-                        mapStyle: Cesium.BingMapsStyle.AERIAL_WITH_LABELS_ON_DEMAND
-                    });
+                getProvider: async() => {
+                    return await Cesium.BingMapsImageryProvider.fromUrl(
+                        "https://dev.virtualearth.net",
+                        {
+                            key: this.options.bingMapsApiKey,
+                            mapStyle: Cesium.BingMapsStyle.AERIAL_WITH_LABELS_ON_DEMAND
+                        });
                 }
             },
             OpenTopoMap: {
@@ -97,8 +98,8 @@ export class MapView {
             Sentinel2: {
                 layer: null,
                 provider: null,
-                getProvider: () => {
-                    return new Cesium.IonImageryProvider({ assetId: 3954 });
+                getProvider: async() => {
+                    return await Cesium.IonImageryProvider.fromAssetId(3954);
                 }
             },
             OpenFlightMaps: {
@@ -134,7 +135,7 @@ export class MapView {
                 provider: null,
                 getProvider: () => {
                     // The Earth at Night, also known as Black Marble 2017 and Night Lights
-                    return new Cesium.IonImageryProvider({ assetId: 3812 });
+                    return Cesium.IonImageryProvider.fromAssetId(3812);
                 },
                 configLayer: (layer) => {
                     layer.alpha = 0.5; // 0.0 is transparent.  1.0 is opaque.
@@ -739,7 +740,7 @@ export class MapView {
      * used: 'OpenStreetMap', 'BingMapsAerialWithLabels', 'OpenTopoMap', 'Sentinel2',
      * 'OpenFlightMaps'.
      */
-    setMapImageryType(imageryType) {
+    async setMapImageryType(imageryType) {
 
         MapView.log("setting new imagery type: " + imageryType);
 
@@ -756,7 +757,7 @@ export class MapView {
             if (imageryTypeInfo.layer === null) {
 
                 if (imageryTypeInfo.provider === null)
-                    imageryTypeInfo.provider = imageryTypeInfo.getProvider();
+                    imageryTypeInfo.provider = await imageryTypeInfo.getProvider();
 
                 imageryTypeInfo.layer =
                     layers.addImageryProvider(imageryTypeInfo.provider, 0);
@@ -850,7 +851,7 @@ export class MapView {
      * used: 'None', 'ContourLines', 'SlopeAndContourLines', 'ThermalSkywaysKk7', 'BlackMarble',
      * 'WaymarkedTrailsHiking'.
      */
-    setMapOverlayType(overlayType) {
+    async setMapOverlayType(overlayType) {
 
         MapView.log("setting new map overlay type: " + overlayType);
 
@@ -882,7 +883,7 @@ export class MapView {
                 if (overlayTypeInfo.layer === null) {
 
                     if (overlayTypeInfo.provider === null)
-                        overlayTypeInfo.provider = overlayTypeInfo.getProvider();
+                        overlayTypeInfo.provider = await overlayTypeInfo.getProvider();
 
                     overlayTypeInfo.layer =
                         layers.addImageryProvider(overlayTypeInfo.provider, 1);
