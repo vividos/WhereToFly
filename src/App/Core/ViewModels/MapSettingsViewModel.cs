@@ -105,14 +105,7 @@ namespace WhereToFly.App.Core.ViewModels
                 if (this.appSettings.MapImageryType != value.Value)
                 {
                     this.appSettings.MapImageryType = value.Value;
-                    Task.Run(async () =>
-                    {
-                        await this.SaveSettingsAsync();
-                        if (value.Value == MapImageryType.OpenFlightMaps)
-                        {
-                            await App.ShowFlightPlanningDisclaimerAsync();
-                        }
-                    });
+                    Task.Run(this.SaveSettingsAsync);
                 }
             }
         }
@@ -140,7 +133,14 @@ namespace WhereToFly.App.Core.ViewModels
                 if (this.appSettings.MapOverlayType != value.Value)
                 {
                     this.appSettings.MapOverlayType = value.Value;
-                    Task.Run(async () => await this.SaveSettingsAsync());
+                    Task.Run(async () =>
+                    {
+                        await this.SaveSettingsAsync();
+                        if (value.Value == MapOverlayType.OpenFlightMaps)
+                        {
+                            await App.ShowFlightPlanningDisclaimerAsync();
+                        }
+                    });
                 }
             }
         }
@@ -243,7 +243,6 @@ namespace WhereToFly.App.Core.ViewModels
                 new MapImageryTypeViewModel { Text = "Aerials + Labels (Bing Maps)", Value = MapImageryType.BingMapsAerialWithLabels },
                 new MapImageryTypeViewModel { Text = "Sentinel-2 cloudless", Value = MapImageryType.Sentinel2 },
                 new MapImageryTypeViewModel { Text = "OpenTopoMap", Value = MapImageryType.OpenTopoMap },
-                new MapImageryTypeViewModel { Text = "OpenFlightMaps", Value = MapImageryType.OpenFlightMaps },
             };
 
             this.MapOverlayTypeItems = new List<MapOverlayTypeViewModel>
@@ -254,6 +253,7 @@ namespace WhereToFly.App.Core.ViewModels
                 new MapOverlayTypeViewModel { Text = "Slope + contour lines", Value = MapOverlayType.SlopeAndContourLines },
                 new MapOverlayTypeViewModel { Text = "NASA Black Marble 2017", Value = MapOverlayType.BlackMarble },
                 new MapOverlayTypeViewModel { Text = "Waymarked Trails Hiking", Value = MapOverlayType.WaymarkedTrailsHiking },
+                new MapOverlayTypeViewModel { Text = "OpenFlightMaps", Value = MapOverlayType.OpenFlightMaps },
             };
 
             this.CoordinateDisplayFormatItems = new List<CoordinateDisplayFormatViewModel>

@@ -1,4 +1,4 @@
-﻿# Manual
+# Manual
 
 Welcome to the manual page for the Where-to-fly app!
 
@@ -458,8 +458,6 @@ The Map tab has several settings:
     imagery.
   * OpenTopoMap: Tiles showing topographical maps, from the open source
     project [opentopomap.org](https://opentopomap.org/).
-  * OpenFlightMaps: Tiles showing flight related infos like airspaces, etc.,
-    from the project [openflightmaps.org](https://www.openflightmaps.org/).
 
 - Map Overlay: Shows a second half-transparent layer over the imagery layer:
   * None: No second layer.
@@ -471,6 +469,8 @@ The Map tab has several settings:
   * NASA Black Marble 2017: Displays the night imagery from NASA.
   * Waymarked Trails Hiking: Displays an overlay with marked hiking trails
     from [waymarkedtrails.org](https://waymarkedtrails.org/).
+  * OpenFlightMaps: Tiles showing flight related infos like airspaces, etc.,
+    from the project [openflightmaps.org](https://www.openflightmaps.org/).
 
 - Map Shading: Determines how the map is shaded, based on the sun's position:
   * Fixed at 10 am: The sunlight shines on early SE slopes.

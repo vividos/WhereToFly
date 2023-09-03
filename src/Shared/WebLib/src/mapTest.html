@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <!-- Use correct character set. -->
@@ -31,7 +31,6 @@
             <option value="BingMapsAerialWithLabels">Bing maps Aerial with labels</option>
             <option value="OpenTopoMap">OpenTopoMap</option>
             <option value="Sentinel2">Sentinel 2</option>
-            <option value="OpenFlightMaps">OpenFlightMaps</option>
         </select>
 
         <select name="mapOverlayType" onChange="map.setMapOverlayType(this.value.toString())">
@@ -41,6 +40,7 @@
             <option value="SlopeAndContourLines">Slope + contour lines</option>
             <option value="BlackMarble">NASA Black Marble 2017</option>
             <option value="WaymarkedTrailsHiking">Waymarked trails hiking</option>
+            <option value="OpenFlightMaps">OpenFlightMaps</option>
         </select>
 
         <button onclick="map.addViewerInspector()">Add inspector</button>

@@ -34,5 +34,10 @@
         /// Displays the Waymarked Trails hiking overlay
         /// </summary>
         WaymarkedTrailsHiking = 5,
+
+        /// <summary>
+        /// OpenFlightmaps.org overlay with current flight map data
+        /// </summary>
+        OpenFlightMaps = 6,
     }
 }

@@ -5,6 +5,7 @@
 Released on ?.
 
 ✨ New Features / Improvements
+- moved OpenFlightMaps.org layer to map overlays
 - using CesiumJS version 1.109
 
 🐛 Bugfixes

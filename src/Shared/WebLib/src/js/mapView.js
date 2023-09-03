@@ -1,4 +1,4 @@
-﻿// Cesium.js
+// Cesium.js
 import * as Cesium from "cesium";
 import "cesium/Build/Cesium/Widgets/widgets.css";
 
@@ -101,21 +101,6 @@ export class MapView {
                 getProvider: async() => {
                     return await Cesium.IonImageryProvider.fromAssetId(3954);
                 }
-            },
-            OpenFlightMaps: {
-                layer: null,
-                provider: null,
-                getProvider: () => {
-                    const airacId = MapView.calcCurrentAiracId();
-                    return new Cesium.UrlTemplateImageryProvider({
-                        url: "https://nwy-tiles-api.prod.newaydata.com/tiles/{z}/{x}/{y}.png?path=" + airacId + "/aero/latest",
-                        tileWidth: 512,
-                        tileHeight: 512,
-                        maximumLevel: 11,
-                        enablePickFeatures: false,
-                        credit: "(c) <a href=\"https://openflightmaps.org/\" target=\"_blank\">Open Flightmaps association</a>, (c) OpenStreetMap contributors, NASA elevation data"
-                    });
-                }
             }
         };
 
@@ -149,6 +134,22 @@ export class MapView {
                     layer.alpha = 0.8; // 0.0 is transparent.  1.0 is opaque.
                     layer.brightness = 1.0; // > 1.0 increases brightness.  < 1.0 decreases.
                 }
+            },
+            OpenFlightMaps: {
+                layer: null,
+                provider: null,
+                getProvider: () => {
+                    const airacId = MapView.calcCurrentAiracId();
+                    return new Cesium.UrlTemplateImageryProvider({
+                        url: "https://nwy-tiles-api.prod.newaydata.com/tiles/{z}/{x}/{y}.png?path=" + airacId + "/aero/latest",
+                        tileWidth: 512,
+                        tileHeight: 512,
+                        maximumLevel: 11,
+                        enablePickFeatures: false,
+                        credit: "(c) <a href=\"https://openflightmaps.org/\" target=\"_blank\">Open Flightmaps association</a>, (c) OpenStreetMap contributors, NASA elevation data"
+                    });
+                },
+                configLayer: () => {}
             }
         };
 
@@ -737,8 +738,7 @@ export class MapView {
     /**
      * Sets new map imagery type
      * @param {string} imageryType imagery type constant; the following constants currently can be
-     * used: 'OpenStreetMap', 'BingMapsAerialWithLabels', 'OpenTopoMap', 'Sentinel2',
-     * 'OpenFlightMaps'.
+     * used: 'OpenStreetMap', 'BingMapsAerialWithLabels', 'OpenTopoMap', 'Sentinel2'.
      */
     async setMapImageryType(imageryType) {
 
@@ -849,7 +849,7 @@ export class MapView {
      * Sets new map overlay type
      * @param {string} overlayType overlay type constant; the following constants currently can be
      * used: 'None', 'ContourLines', 'SlopeAndContourLines', 'ThermalSkywaysKk7', 'BlackMarble',
-     * 'WaymarkedTrailsHiking'.
+     * 'WaymarkedTrailsHiking', 'OpenFlightMaps'.
      */
     async setMapOverlayType(overlayType) {
 
