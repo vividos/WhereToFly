@@ -9,6 +9,7 @@ using WhereToFly.Geo.Model;
 #if NET7_0_OR_GREATER
 using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Dispatching;
 #else
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -295,7 +296,11 @@ namespace WhereToFly.App.MapView
         {
             Debug.WriteLine("run js: " + js.Substring(0, Math.Min(80, js.Length)));
 
+#if NET7_0_OR_GREATER
+            this.Dispatcher.DispatchAsync(() => this.Eval(js));
+#else
             Device.BeginInvokeOnMainThread(() => this.Eval(js));
+#endif
         }
     }
 }

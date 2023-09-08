@@ -11,7 +11,10 @@ using WhereToFly.Shared.Model;
 #if NET7_0_OR_GREATER
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Devices;
+using Microsoft.Maui.Dispatching;
 #else
+using Xamarin.Essentials;
 using Xamarin.Forms;
 #endif
 
@@ -370,7 +373,7 @@ namespace WhereToFly.App.MapView
                     longitude = initialCenterPoint.Longitude,
                 },
                 initialViewingDistance,
-                hasMouse = Device.RuntimePlatform == Device.UWP,
+                hasMouse = DeviceInfo.Idiom == DeviceIdiom.Desktop,
                 useAsynchronousPrimitives = true,
                 useEntityClustering,
             };
@@ -677,8 +680,8 @@ namespace WhereToFly.App.MapView
         private async Task<MapRectangle> GetViewRectangle()
         {
             string js = "map.getViewRectangle();";
-            string result = await Device.InvokeOnMainThreadAsync(
-                () => this.EvaluateJavaScriptAsync(js));
+
+            string result = await this.RunJavaScriptAsync(js);
 
             result = result
                 .Replace("\\\\", "\\")
@@ -1219,7 +1222,11 @@ namespace WhereToFly.App.MapView
                 js = "(async function() { " + js + " })();";
             }
 
+#if NET7_0_OR_GREATER
+            this.Dispatcher.DispatchAsync(() => this.Eval(js));
+#else
             Device.BeginInvokeOnMainThread(() => this.Eval(js));
+#endif
         }
 
         /// <summary>
@@ -1239,8 +1246,14 @@ namespace WhereToFly.App.MapView
                 js = "(async function() { const result = " + js + " })();";
             }
 
+#if NET7_0_OR_GREATER
+            string result = await this.Dispatcher.DispatchAsync(
+                () => this.EvaluateJavaScriptAsync(js));
+#else
+
             string result = await Device.InvokeOnMainThreadAsync(
                 () => this.EvaluateJavaScriptAsync(js));
+#endif
 
             return result;
         }
