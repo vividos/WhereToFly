@@ -16,6 +16,7 @@ using Microsoft.Maui.Dispatching;
 #else
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using Location = WhereToFly.Geo.Model.Location;
 #endif
 
 // make MapView internals visible to unit tests
