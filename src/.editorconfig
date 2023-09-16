@@ -1,4 +1,4 @@
-﻿# EditorConfig is awesome: https://EditorConfig.org
+# EditorConfig is awesome: https://EditorConfig.org
 
 # top-most EditorConfig file
 root = true
@@ -23,6 +23,10 @@ indent_size = 2
 
 # C# project files
 [*.csproj]
+indent_size = 2
+
+# JavaScript project files
+[*.esproj]
 indent_size = 2
 
 # XAML files
