@@ -40,7 +40,7 @@ export class HeightProfileView {
      * Logs a message to the console, just like console.log, but with styled output.
      */
     static log(message) {
-        console.log("%cHeightProfileView%c" + message, HeightProfileView.consoleLogStyle);
+        console.log("%cHeightProfileView", HeightProfileView.consoleLogStyle, message);
     }
 
     /**

@@ -36,7 +36,7 @@ export class MapView {
      */
     constructor(options) {
 
-        console.groupCollapsed("%cMapView%ccreating new 3D map view", MapView.consoleLogStyle);
+        console.groupCollapsed("%cMapView", MapView.consoleLogStyle, "creating new 3D map view");
         console.time("ctor");
 
         this.options = Object.assign({
@@ -313,7 +313,7 @@ export class MapView {
      * Logs a message to the console, just like console.log, but with styled output.
      */
     static log(message) {
-        console.log("%cMapView%c" + message, MapView.consoleLogStyle);
+        console.log("%cMapView", MapView.consoleLogStyle, message);
     }
 
     /**
