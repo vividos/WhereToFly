@@ -42,6 +42,11 @@ namespace WhereToFly.App.MapView
         /// <param name="handler">handler action</param>
         public void RegisterHandler(string functionName, Action<string> handler)
         {
+#if NET7_0_OR_GREATER && WINDOWS
+            // the callback links on Windows are made lowercase by WebView2, so add them here
+            // lowercase as well
+            functionName = functionName.ToLowerInvariant();
+#endif
             this.handlerMap.Add(functionName, handler);
         }
 
