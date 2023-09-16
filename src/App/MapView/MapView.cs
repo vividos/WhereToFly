@@ -1320,11 +1320,7 @@ namespace WhereToFly.App.MapView
         /// </summary>
         private void OnMapInitialized()
         {
-            Debug.Assert(
-                this.taskCompletionSourceMapInitialized != null,
-                "task completion source must have been created");
-
-            this.taskCompletionSourceMapInitialized?.SetResult(true);
+            this.taskCompletionSourceMapInitialized.SetResult(true);
         }
 
         /// <summary>
