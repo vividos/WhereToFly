@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net7.0-android33.0;net7.0-windows10.0.19041.0</TargetFrameworks>
@@ -45,6 +45,12 @@
   <ItemGroup>
     <Folder Include="Resources\Images\" />
     <Folder Include="Resources\Raw\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Geo\WhereToFly.Geo.csproj" />
+    <ProjectReference Include="..\..\Shared\Model\WhereToFly.Shared.Model.csproj" />
+    <ProjectReference Include="..\MapView\WhereToFly.App.MapView.Maui.csproj" />
   </ItemGroup>
 
 </Project>
