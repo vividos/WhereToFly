@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net7.0-android33.0;net7.0-windows10.0.19041.0</TargetFrameworks>
+    <Description>Where-to-fly App MapView Maui</Description>
+    <AssemblyName>WhereToFly.App.MapView</AssemblyName>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <UseMaui>true</UseMaui>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="*.cs" />
+    <Compile Include="maui\*.cs" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <MauiAsset Include="..\..\Shared\WebLib\dist\**\*.*" Exclude="..\..\Shared\WebLib\dist\**\*.map" LogicalName="weblib\%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Geo\WhereToFly.Geo.csproj" />
+    <ProjectReference Include="..\..\Shared\Model\WhereToFly.Shared.Model.csproj" />
+    <ProjectReference Include="..\..\Shared\WebLib\WhereToFly.Shared.WebLib.esproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+
+</Project>
