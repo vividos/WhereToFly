@@ -109,7 +109,8 @@ export class MapView {
         this.imageryOverlayInfos = {
             ThermalSkywaysKk7: {
                 layer: null,
-                provider: this.createThermalImageryProvider(),
+                provider: null,
+                getProvider: () => this.createThermalImageryProvider(),
                 configLayer: (layer) => {
                     layer.alpha = 0.2; // 0.0 is transparent.  1.0 is opaque.
                     layer.brightness = 2.0; // > 1.0 increases brightness.  < 1.0 decreases.
@@ -129,7 +130,8 @@ export class MapView {
             },
             WaymarkedTrailsHiking: {
                 layer: null,
-                provider: this.createWaymarkedTrailsHikingImageryProvider(),
+                provider: null,
+                getProvider: () => this.createWaymarkedTrailsHikingImageryProvider(),
                 configLayer: (layer) => {
                     layer.alpha = 0.8; // 0.0 is transparent.  1.0 is opaque.
                     layer.brightness = 1.0; // > 1.0 increases brightness.  < 1.0 decreases.
