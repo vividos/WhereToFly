@@ -1,6 +1,5 @@
 ﻿using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
-using System;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -11,6 +10,17 @@ namespace WhereToFly.App.MapView
     /// </summary>
     internal partial class WebViewSourceFactory
     {
+        /// <summary>
+        /// Base URL for WebLib library in WebView
+        /// </summary>
+#pragma warning disable S1075 // URIs should not be hardcoded
+#if WINDOWS
+        private const string WebLibWebViewBaseUrl = "https://appdir/weblib/";
+#elif ANDROID
+        private const string WebLibWebViewBaseUrl = "file:///android_asset/weblib/";
+#endif
+#pragma warning restore S1075 // URIs should not be hardcoded
+
         /// <summary>
         /// Loads text of MauiAsset file from given filename
         /// </summary>
@@ -38,6 +48,7 @@ namespace WhereToFly.App.MapView
             return new HtmlWebViewSource
             {
                 Html = await LoadAssetText("weblib/mapView.html"),
+                BaseUrl = WebLibWebViewBaseUrl,
             };
         }
 
@@ -50,6 +61,7 @@ namespace WhereToFly.App.MapView
             return new HtmlWebViewSource
             {
                 Html = await LoadAssetText("weblib/heightProfileView.html"),
+                BaseUrl = WebLibWebViewBaseUrl,
             };
         }
     }
