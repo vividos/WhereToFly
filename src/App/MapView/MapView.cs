@@ -338,8 +338,7 @@ namespace WhereToFly.App.MapView
         /// <param name="args">event args</param>
         private void OnNavigated(object sender, WebNavigatedEventArgs args)
         {
-            if ((args.Url.Contains("/mapView.html") || args.Url.Contains("android_asset")) &&
-                args.Result == WebNavigationResult.Success)
+            if (args.Result == WebNavigationResult.Success)
             {
                 this.Navigated -= this.OnNavigated;
 
