@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <!-- NuGet package properties -->
-  <PropertyGroup>
+  <PropertyGroup Condition="!$(SolutionName.Contains('Maui'))">
     <PackageId>$(NuGetPackagePrefix).$(AssemblyName)</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/vividos/WhereToFly/tree/main/src/Geo</PackageProjectUrl>
