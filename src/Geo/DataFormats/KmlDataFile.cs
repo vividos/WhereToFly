@@ -209,7 +209,7 @@ namespace WhereToFly.Geo.DataFormats
             if (this.hasXCTracerTrack)
             {
                 track.IsFlightTrack = true;
-                if (!track.TrackPoints.Any(trackPoint => trackPoint.Time.HasValue))
+                if (!track.TrackPoints.Exists(trackPoint => trackPoint.Time.HasValue))
                 {
                     track.CalcXCTracerTimePoints();
                 }
@@ -569,7 +569,7 @@ namespace WhereToFly.Geo.DataFormats
         private static string GetStyleIconFromStyleCollection(Placemark placemark)
         {
             if (placemark.Styles.FirstOrDefault() is Style style &&
-                style?.Icon?.Icon?.Href != null)
+                style.Icon?.Icon?.Href != null)
             {
                 return style.Icon.Icon.Href.ToString();
             }

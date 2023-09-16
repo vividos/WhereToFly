@@ -138,13 +138,13 @@ namespace WhereToFly.Geo
                 return;
             }
 
-            if (track.TrackPoints.First().Time > trackPointsToJoin.TrackPoints.Last().Time)
+            if (track.TrackPoints[0].Time > trackPointsToJoin.TrackPoints[track.TrackPoints.Count - 1].Time)
             {
                 track.TrackPoints.InsertRange(0, trackPointsToJoin.TrackPoints);
                 return;
             }
 
-            if (track.TrackPoints.Last().Time < trackPointsToJoin.TrackPoints.First().Time)
+            if (track.TrackPoints[track.TrackPoints.Count - 1].Time < trackPointsToJoin.TrackPoints[0].Time)
             {
                 track.TrackPoints.AddRange(trackPointsToJoin.TrackPoints);
                 return;
@@ -245,7 +245,7 @@ namespace WhereToFly.Geo
         /// <param name="track">track to calculate duration for</param>
         private static void CalcTrackDuration(Track track)
         {
-            var firstTrackPointWithTime = track.TrackPoints.FirstOrDefault(x => x.Time.HasValue);
+            var firstTrackPointWithTime = track.TrackPoints.Find(x => x.Time.HasValue);
             var lastTrackPointWithTime = track.TrackPoints.LastOrDefault(x => x.Time.HasValue);
 
             if (firstTrackPointWithTime != null &&
