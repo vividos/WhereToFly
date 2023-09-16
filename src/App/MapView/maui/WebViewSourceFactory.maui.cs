@@ -36,7 +36,15 @@ namespace WhereToFly.App.MapView
             }
 
             using var reader = new StreamReader(stream);
-            return await reader.ReadToEndAsync();
+            string text = await reader.ReadToEndAsync();
+
+#if NET7_0
+            // Workaround: The MAUI WebView implementation fails to set the base URL when there's
+            // already a base tag; as a quick fix, replace it here
+            text = text.Replace("<base ", "<base href='" + WebLibWebViewBaseUrl + "' ");
+#endif
+
+            return text;
         }
 
         /// <summary>
@@ -48,7 +56,14 @@ namespace WhereToFly.App.MapView
             return new HtmlWebViewSource
             {
                 Html = await LoadAssetText("weblib/mapView.html"),
+#if NET7_0 && WINDOWS
+                // Working around another bug: setting the BaseUrl using the LocalScheme
+                // URL fails to set up the virtual folder mapping, so just pass null here.
+                // See: https://github.com/dotnet/maui/issues/16646
+                BaseUrl = null,
+#else
                 BaseUrl = WebLibWebViewBaseUrl,
+#endif
             };
         }
 
@@ -61,7 +76,14 @@ namespace WhereToFly.App.MapView
             return new HtmlWebViewSource
             {
                 Html = await LoadAssetText("weblib/heightProfileView.html"),
+#if NET7_0 && WINDOWS
+                // Working around another bug: setting the BaseUrl using the LocalScheme
+                // URL fails to set up the virtual folder mapping, so just pass null here.
+                // See: https://github.com/dotnet/maui/issues/16646
+                BaseUrl = null,
+#else
                 BaseUrl = WebLibWebViewBaseUrl,
+#endif
             };
         }
     }

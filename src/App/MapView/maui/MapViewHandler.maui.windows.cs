@@ -20,6 +20,7 @@ namespace WhereToFly.App.MapView
             base.ConnectHandler(platformView);
 
             this.PlatformView.CoreWebView2Initialized += this.OnCoreWebView2Initialized;
+            this.PlatformView.NavigationStarting += this.OnNavigationStarting;
         }
 
         /// <summary>
@@ -31,6 +32,7 @@ namespace WhereToFly.App.MapView
             base.DisconnectHandler(platformView);
 
             this.PlatformView.CoreWebView2Initialized -= this.OnCoreWebView2Initialized;
+            this.PlatformView.NavigationStarting -= this.OnNavigationStarting;
         }
 
         /// <summary>
@@ -77,6 +79,30 @@ namespace WhereToFly.App.MapView
             string userAgent = settings.UserAgent;
             userAgent += $" WebViewApp {AppInfo.Name.Replace(' ', '-')}/{AppInfo.VersionString}";
             settings.UserAgent = userAgent;
+        }
+
+        /// <summary>
+        /// Handler for the NavigationStarting event
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="args">event args</param>
+        private void OnNavigationStarting(
+            WebView2 sender,
+            CoreWebView2NavigationStartingEventArgs args)
+        {
+            this.PlatformView.NavigationStarting -= this.OnNavigationStarting;
+
+#if NET7_0
+            // Workaround for the incorrect mapping in MAUI WebView implementation
+            string applicationPath = Windows.ApplicationModel.Package.Current != null
+                ? Windows.ApplicationModel.Package.Current.InstalledLocation.Path
+                : System.AppContext.BaseDirectory;
+
+            sender.CoreWebView2.SetVirtualHostNameToFolderMapping(
+                "appdir",
+                applicationPath,
+                CoreWebView2HostResourceAccessKind.Allow);
+#endif
         }
     }
 }
