@@ -41,6 +41,10 @@ charset = latin1
 [*.sh]
 charset = utf-8
 
+# MAUI generated files
+[*.sg.cs]
+dotnet_diagnostic.CS1591.severity = none
+
 # .NET files
 [*.{cs,vb}]
 charset = utf-8-bom
