@@ -1871,12 +1871,8 @@ export class MapView {
         if (cacheKey in this.pinImageCache)
             return this.pinImageCache[cacheKey];
 
-        const url = Cesium.getAbsoluteUri(pinImage, window.location.href);
-
-        const canvas = window.location.protocol === "file:" && !window.location.href.includes("android_asset")
-            ? this.pinBuilder.fromColor(pinColor, 48)
-            : await this.pinBuilder.fromUrl(url, pinColor, 48);
-
+        const url = Cesium.getAbsoluteUri(pinImage, document.baseURI);
+        const canvas = await this.pinBuilder.fromUrl(url, pinColor, 48);
         const dataUrl = canvas.toDataURL();
 
         this.pinImageCache[cacheKey] = dataUrl;
