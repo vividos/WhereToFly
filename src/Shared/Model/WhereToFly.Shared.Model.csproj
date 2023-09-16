@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>Where-to-fly Models shared between app and backend</Description>
   </PropertyGroup>
 
   <ItemGroup>
