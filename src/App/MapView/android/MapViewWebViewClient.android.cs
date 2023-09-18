@@ -105,9 +105,9 @@ namespace WhereToFly.App.MapView
                 request.Method,
                 request.Url?.ToString());
 
-            string host = request?.Url?.Host?.ToLowerInvariant();
+            string host = request.Url?.Host?.ToLowerInvariant();
 
-            if (request?.Url != null &&
+            if (request.Url != null &&
                 host != null &&
                 this.CorsWebsiteHosts != null &&
                 this.CorsWebsiteHosts.Any(x => host.Contains(x)))

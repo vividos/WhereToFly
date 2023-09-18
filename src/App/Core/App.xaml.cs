@@ -145,9 +145,7 @@ namespace WhereToFly.App.Core
         private void SetupMainPage()
         {
             this.MapPage = new MapPage();
-
-            var rootPage = new RootPage();
-            this.MainPage = rootPage;
+            this.MainPage = new RootPage();
         }
 
         /// <summary>

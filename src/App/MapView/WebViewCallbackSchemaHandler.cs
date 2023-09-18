@@ -23,8 +23,7 @@ namespace WhereToFly.App.MapView
         /// <summary>
         /// Handler map to map function names to actions
         /// </summary>
-        private readonly Dictionary<string, Action<string>> handlerMap =
-            new();
+        private readonly Dictionary<string, Action<string>> handlerMap = new();
 
         /// <summary>
         /// Creates a new web view callback schema handler; attaches itself to the given WebView

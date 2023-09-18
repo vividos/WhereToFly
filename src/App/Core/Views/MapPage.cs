@@ -340,9 +340,9 @@ namespace WhereToFly.App.Core.Views
         }
 
         /// <summary>
-        /// Loads data; async method
+        /// Loads data
         /// </summary>
-        /// <returns>app info object</returns>
+        /// <returns>task to wait on</returns>
         private async Task LoadDataAsync()
         {
             var dataService = DependencyService.Get<IDataService>();

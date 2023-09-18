@@ -29,10 +29,6 @@ namespace WhereToFly.App.Core.Views
             {
                 BackgroundColor = Constants.PrimaryColor,
             };
-            if (Device.RuntimePlatform == Device.iOS)
-            {
-                this.Flyout.IconImageSource = ImageSource.FromFile("Assets/images/menu.png");
-            }
 
             // set up detail page
             var mapPage = (App.Current as App)?.MapPage;
