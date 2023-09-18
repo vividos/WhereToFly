@@ -579,9 +579,9 @@ namespace WhereToFly.App.Core.Views
                 var point = new MapPoint(position.Latitude, position.Longitude, position.Altitude);
                 await App.UpdateLastShownPositionAsync(point);
 
-                await App.ShareMessageAsync(
-                    "Share my position with...",
-                    DataFormatter.FormatMyPositionShareText(point, position.Timestamp));
+                await Xamarin.Essentials.Share.RequestAsync(
+                    DataFormatter.FormatMyPositionShareText(point, position.Timestamp),
+                    "Share my position with...");
             }
         }
 

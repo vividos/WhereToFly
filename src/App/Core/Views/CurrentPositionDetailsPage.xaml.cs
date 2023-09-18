@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using WhereToFly.App.Core.Logic;
 using WhereToFly.App.Core.ViewModels;
 using WhereToFly.Geo.Model;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.Views
@@ -94,9 +95,9 @@ namespace WhereToFly.App.Core.Views
             {
                 var point = new MapPoint(position.Latitude, position.Longitude, position.Altitude);
 
-                await App.ShareMessageAsync(
-                    "Share my position with...",
-                    DataFormatter.FormatMyPositionShareText(point, position.Timestamp));
+                await Share.RequestAsync(
+                    DataFormatter.FormatMyPositionShareText(point, position.Timestamp),
+                    "Share my position with...");
             }
         }
 

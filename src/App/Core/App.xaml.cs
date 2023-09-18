@@ -237,17 +237,6 @@ namespace WhereToFly.App.Core
         }
 
         /// <summary>
-        /// Shares a message with other apps
-        /// </summary>
-        /// <param name="title">title of the share dialog</param>
-        /// <param name="message">message text to share</param>
-        /// <returns>task to wait on</returns>
-        public static async Task ShareMessageAsync(string title, string message)
-        {
-            await Xamarin.Essentials.Share.RequestAsync(message, title);
-        }
-
-        /// <summary>
         /// Adds a tour planning location to the current list of locations and opens the planning
         /// dialog.
         /// </summary>
