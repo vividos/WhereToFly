@@ -189,25 +189,19 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="action">action to run</param>
         /// <returns>task to wait on for completion</returns>
-        public static Task RunOnUiThreadAsync(Action action)
+        public static async Task RunOnUiThreadAsync(Action action)
         {
-            var tcs = new TaskCompletionSource<object>();
-
-            Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
+            await Xamarin.Forms.Device.InvokeOnMainThreadAsync(() =>
             {
                 try
                 {
                     action();
-                    tcs.SetResult(null);
                 }
                 catch (Exception ex)
                 {
                     App.LogError(ex);
-                    tcs.SetException(ex);
                 }
             });
-
-            return tcs.Task;
         }
 
         /// <summary>
