@@ -178,10 +178,15 @@ namespace WhereToFly.App.UWP
             WebView2 sender,
             CoreWebView2NavigationStartingEventArgs args)
         {
-            var url = args.Uri;
+            string url = args.Uri;
             if (string.IsNullOrEmpty(url))
             {
                 return;
+            }
+
+            if (url.StartsWith("callback://", StringComparison.InvariantCultureIgnoreCase))
+            {
+                args.Cancel = true;
             }
 
             var sendNavigatingArgs = new WebNavigatingEventArgs(
