@@ -1,5 +1,4 @@
-﻿using System;
-using WhereToFly.Geo.Model;
+﻿using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.Core.Models
 {
