@@ -188,7 +188,8 @@ namespace WhereToFly.App.Core.ViewModels
 
             await locationDataService.Update(locationToChange);
 
-            App.MapView.UpdateLocation(locationToChange);
+            var appMapService = DependencyService.Get<IAppMapService>();
+            appMapService.MapView.UpdateLocation(locationToChange);
         }
     }
 }

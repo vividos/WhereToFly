@@ -138,7 +138,8 @@ namespace WhereToFly.App.Core.ViewModels
                         await this.SaveSettingsAsync();
                         if (value.Value == MapOverlayType.OpenFlightMaps)
                         {
-                            await App.ShowFlightPlanningDisclaimerAsync();
+                            var appMapService = DependencyService.Get<IAppMapService>();
+                            await appMapService.ShowFlightPlanningDisclaimer();
                         }
                     });
                 }
@@ -282,7 +283,8 @@ namespace WhereToFly.App.Core.ViewModels
             var dataService = DependencyService.Get<IDataService>();
             await dataService.StoreAppSettingsAsync(this.appSettings);
 
-            App.UpdateMapSettings();
+            var appMapService = DependencyService.Get<IAppMapService>();
+            appMapService.UpdateMapSettings();
 
             App.ShowToast("Settings were saved.");
         }

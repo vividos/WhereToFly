@@ -86,11 +86,12 @@ namespace WhereToFly.App.Core
 
             await NavigationService.GoToMap();
 
-            await App.UpdateLastShownPositionAsync(liveWaypoint.MapLocation);
+            var appMapService = DependencyService.Get<IAppMapService>();
+            await appMapService.UpdateLastShownPosition(liveWaypoint.MapLocation);
 
-            App.MapView.AddLocation(liveWaypoint);
+            appMapService.MapView.AddLocation(liveWaypoint);
 
-            App.MapView.ZoomToLocation(liveWaypoint.MapLocation);
+            appMapService.MapView.ZoomToLocation(liveWaypoint.MapLocation);
         }
 
         /// <summary>
@@ -170,9 +171,10 @@ namespace WhereToFly.App.Core
 
             await NavigationService.GoToMap();
 
-            await App.MapView.AddTrack(liveTrack);
+            var appMapService = DependencyService.Get<IAppMapService>();
+            await appMapService.MapView.AddTrack(liveTrack);
 
-            App.MapView.ZoomToTrack(liveTrack);
+            appMapService.MapView.ZoomToTrack(liveTrack);
         }
 
         /// <summary>

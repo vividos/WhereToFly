@@ -170,7 +170,8 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         internal async Task ZoomToTrack(Track track)
         {
-            App.MapView.ZoomToTrack(track);
+            var appMapService = DependencyService.Get<IAppMapService>();
+            appMapService.MapView.ZoomToTrack(track);
 
             await NavigationService.GoToMap();
         }
@@ -207,7 +208,8 @@ namespace WhereToFly.App.Core.ViewModels
 
             this.UpdateTrackList();
 
-            App.MapView.RemoveTrack(track);
+            var appMapService = DependencyService.Get<IAppMapService>();
+            appMapService.MapView.RemoveTrack(track);
 
             App.ShowToast("Selected track was deleted.");
         }
@@ -239,7 +241,8 @@ namespace WhereToFly.App.Core.ViewModels
 
             await this.ReloadTrackListAsync();
 
-            App.MapView.ClearAllTracks();
+            var appMapService = DependencyService.Get<IAppMapService>();
+            appMapService.MapView.ClearAllTracks();
 
             App.ShowToast("Track list was cleared.");
         }

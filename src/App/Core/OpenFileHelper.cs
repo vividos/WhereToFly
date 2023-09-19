@@ -237,6 +237,8 @@ namespace WhereToFly.App.Core
             SanitizeLocationDescriptions(locationList);
             AddTakeoffDirections(locationList);
 
+            var appMapService = DependencyService.Get<IAppMapService>();
+
             var dataService = DependencyService.Get<IDataService>();
             var locationDataService = dataService.GetLocationDataService();
 
@@ -248,7 +250,7 @@ namespace WhereToFly.App.Core
                 if (!appendToList)
                 {
                     await locationDataService.ClearList();
-                    App.MapView.ClearLocationList();
+                    appMapService.MapView.ClearLocationList();
                 }
             }
 
@@ -262,7 +264,7 @@ namespace WhereToFly.App.Core
 
             App.ShowToast("Locations were loaded.");
 
-            await App.MapView.AddLocationList(locationList);
+            await appMapService.MapView.AddLocationList(locationList);
 
             ZoomToLocationList(locationList);
         }
@@ -338,7 +340,8 @@ namespace WhereToFly.App.Core
         {
             locationList.GetBoundingRectangle(out MapPoint minLocation, out MapPoint maxLocation);
 
-            App.MapView.ZoomToRectangle(minLocation, maxLocation);
+            var appMapService = DependencyService.Get<IAppMapService>();
+            appMapService.MapView.ZoomToRectangle(minLocation, maxLocation);
         }
 
         /// <summary>
@@ -425,8 +428,9 @@ namespace WhereToFly.App.Core
                 liveWaypointRefreshService.AddLiveTrack(track);
             }
 
-            await App.AddTrack(track);
-            App.MapView.ZoomToTrack(track);
+            var appMapService = DependencyService.Get<IAppMapService>();
+            await appMapService.AddTrack(track);
+            appMapService.MapView.ZoomToTrack(track);
 
             App.ShowToast("Track was loaded.");
 
@@ -448,9 +452,11 @@ namespace WhereToFly.App.Core
             await App.InitializedTask;
             try
             {
-                var trackPointHeights =
+                var appMapService = DependencyService.Get<IAppMapService>();
+
+                double[] trackPointHeights =
                     await Task.Run(
-                        async () => await App.MapView.SampleTrackHeights(track),
+                        async () => await appMapService.MapView.SampleTrackHeights(track),
                         cts.Token);
 
                 if (cts.IsCancellationRequested)
@@ -664,12 +670,13 @@ namespace WhereToFly.App.Core
 
             await layerDataService.Add(layer);
 
-            await App.ShowFlightPlanningDisclaimerAsync();
+            var appMapService = DependencyService.Get<IAppMapService>();
+            await appMapService.ShowFlightPlanningDisclaimer();
 
             await NavigationService.GoToMap();
 
-            await App.MapView.AddLayer(layer);
-            App.MapView.ZoomToLayer(layer);
+            await appMapService.MapView.AddLayer(layer);
+            appMapService.MapView.ZoomToLayer(layer);
 
             App.ShowToast("Layer was loaded.");
         }

@@ -140,7 +140,9 @@ namespace WhereToFly.App.Core.ViewModels
                 var trackDataService = dataService.GetTrackDataService();
 
                 await trackDataService.Update(this.Track);
-                App.MapView.UpdateTrack(this.Track);
+
+                var appMapService = DependencyService.Get<IAppMapService>();
+                appMapService.MapView.UpdateTrack(this.Track);
 
                 this.OnPropertyChanged(nameof(this.TrackColor));
             }

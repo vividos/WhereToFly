@@ -352,7 +352,9 @@ namespace WhereToFly.App.Core.ViewModels
             this.UpdateSunAngles();
 
             var point = new MapPoint(this.position.Latitude, this.position.Longitude, this.position.Altitude);
-            Task.Run(async () => await App.UpdateLastShownPositionAsync(point));
+
+            var appMapService = DependencyService.Get<IAppMapService>();
+            Task.Run(async () => await appMapService.UpdateLastShownPosition(point));
         }
 
         /// <summary>

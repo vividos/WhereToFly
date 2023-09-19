@@ -147,7 +147,7 @@ namespace WhereToFly.App.Core.Views
         {
             try
             {
-                await App.MapView.FindNearbyPois();
+                await this.mapView.FindNearbyPois();
             }
             catch (Exception ex)
             {
@@ -190,7 +190,8 @@ namespace WhereToFly.App.Core.Views
             {
                 var point = new MapPoint(position.Latitude, position.Longitude, position.Altitude);
 
-                await App.UpdateLastShownPositionAsync(point);
+                var appMapService = DependencyService.Get<IAppMapService>();
+                await appMapService.UpdateLastShownPosition(point);
 
                 this.mapView.UpdateMyLocation(
                     point,
@@ -574,15 +575,19 @@ namespace WhereToFly.App.Core.Views
             var position =
                 await this.geolocationService.GetPositionAsync(timeout: TimeSpan.FromSeconds(0.1));
 
-            if (position != null)
+            if (position == null)
             {
-                var point = new MapPoint(position.Latitude, position.Longitude, position.Altitude);
-                await App.UpdateLastShownPositionAsync(point);
-
-                await Xamarin.Essentials.Share.RequestAsync(
-                    DataFormatter.FormatMyPositionShareText(point, position.Timestamp),
-                    "Share my position with...");
+                return;
             }
+
+            var point = new MapPoint(position.Latitude, position.Longitude, position.Altitude);
+
+            var appMapService = DependencyService.Get<IAppMapService>();
+            await appMapService.UpdateLastShownPosition(point);
+
+            await Xamarin.Essentials.Share.RequestAsync(
+                DataFormatter.FormatMyPositionShareText(point, position.Timestamp),
+                "Share my position with...");
         }
 
         /// <summary>
@@ -627,7 +632,8 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task OnMapView_UpdateLastShownLocation(MapPoint point, int viewingDistance)
         {
-            await App.UpdateLastShownPositionAsync(point, viewingDistance);
+            var appMapService = DependencyService.Get<IAppMapService>();
+            await appMapService.UpdateLastShownPosition(point, viewingDistance);
         }
 
         /// <summary>
@@ -637,10 +643,12 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task OnMapView_SetLocationAsCompassTarget(string locationId)
         {
+            var appMapService = DependencyService.Get<IAppMapService>();
+
             if (string.IsNullOrEmpty(locationId) ||
                 locationId == "null")
             {
-                await App.SetCompassTarget(null);
+                await appMapService.SetCompassTarget(null);
                 return;
             }
 
@@ -658,7 +666,7 @@ namespace WhereToFly.App.Core.Views
                 TargetLocation = location.MapLocation,
             };
 
-            await App.SetCompassTarget(compassTarget);
+            await appMapService.SetCompassTarget(compassTarget);
         }
 
         /// <summary>
@@ -743,7 +751,8 @@ namespace WhereToFly.App.Core.Views
                 TargetLocation = point,
             };
 
-            await App.SetCompassTarget(compassTarget);
+            var appMapService = DependencyService.Get<IAppMapService>();
+            await appMapService.SetCompassTarget(compassTarget);
         }
 
         /// <summary>
@@ -874,7 +883,9 @@ namespace WhereToFly.App.Core.Views
 
             if (zoomToPosition)
             {
-                Task.Run(async () => await App.UpdateLastShownPositionAsync(point));
+                var appMapService = DependencyService.Get<IAppMapService>();
+
+                Task.Run(async () => await appMapService.UpdateLastShownPosition(point));
             }
         }
     }

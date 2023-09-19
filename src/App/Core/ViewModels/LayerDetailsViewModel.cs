@@ -138,7 +138,8 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task OnZoomToLayerAsync()
         {
-            App.MapView.ZoomToLayer(this.layer);
+            var appMapService = DependencyService.Get<IAppMapService>();
+            appMapService.MapView.ZoomToLayer(this.layer);
 
             await NavigationService.GoToMap();
         }
@@ -179,7 +180,8 @@ namespace WhereToFly.App.Core.ViewModels
 
             await layerDataService.Remove(this.layer.Id);
 
-            App.MapView.RemoveLayer(this.layer);
+            var appMapService = DependencyService.Get<IAppMapService>();
+            appMapService.MapView.RemoveLayer(this.layer);
 
             await NavigationService.Instance.GoBack();
 

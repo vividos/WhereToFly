@@ -235,7 +235,8 @@ namespace WhereToFly.App.Core.ViewModels
             var location = StartWaypointFromPlannedTour(plannedTour);
             await this.AddLocation(location);
 
-            App.MapView.AddLocation(location);
+            var appMapService = DependencyService.Get<IAppMapService>();
+            appMapService.MapView.AddLocation(location);
 
             this.planTourParameters.WaypointIdList.Clear();
 
@@ -343,8 +344,9 @@ namespace WhereToFly.App.Core.ViewModels
         /// <param name="track">track to show</param>
         private static void ShowTrack(Track track)
         {
-            App.MapView.AddTrack(track);
-            App.MapView.ZoomToTrack(track);
+            var appMapService = DependencyService.Get<IAppMapService>();
+            appMapService.MapView.AddTrack(track);
+            appMapService.MapView.ZoomToTrack(track);
 
             App.ShowToast("Track was added.");
         }

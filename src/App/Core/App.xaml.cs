@@ -3,16 +3,12 @@ using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Distribute;
 using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Models;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.Styles;
 using WhereToFly.App.Core.Views;
-using WhereToFly.App.MapView;
-using WhereToFly.Geo;
-using WhereToFly.Geo.Model;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -50,11 +46,6 @@ namespace WhereToFly.App.Core
         /// The one and only map page (displaying the map using CesiumJS)
         /// </summary>
         public MapPage MapPage { get; internal set; }
-
-        /// <summary>
-        /// Access to the map view instance
-        /// </summary>
-        public static IMapView MapView => (Current as App)?.MapPage?.MapView;
 
         /// <summary>
         /// Task that can be awaited to wait for a completed app initialisation. The task performs
@@ -132,6 +123,7 @@ namespace WhereToFly.App.Core
         /// </summary>
         private void SetupDepencencyService()
         {
+            DependencyService.Register<IAppMapService, AppMapService>();
             DependencyService.Register<SvgImageCache>();
             DependencyService.Register<NavigationService>();
             DependencyService.Register<IDataService, Services.SqliteDatabase.SqliteDatabaseDataService>();
@@ -160,7 +152,8 @@ namespace WhereToFly.App.Core
 
             ThemeHelper.ChangeTheme(Settings.AppTheme, true);
 
-            await InitLiveWaypointRefreshService();
+            var appMapService = DependencyService.Get<IAppMapService>();
+            await appMapService.InitLiveWaypointRefreshService();
 
             TaskCompletionSourceInitialized.SetResult(true);
         }
@@ -226,185 +219,6 @@ namespace WhereToFly.App.Core
                 value is Color color
                 ? color.ToHex().Replace("#FF", "#")
                 : "#000000";
-        }
-
-        /// <summary>
-        /// Adds a tour planning location to the current list of locations and opens the planning
-        /// dialog.
-        /// </summary>
-        /// <param name="location">location to add</param>
-        /// <returns>task to wait on</returns>
-        public static async Task AddTourPlanLocationAsync(Location location)
-        {
-            var app = Current as App;
-            var mapPage = app?.MapPage;
-
-            if (mapPage != null)
-            {
-                await mapPage.AddTourPlanningLocationAsync(location);
-            }
-        }
-
-        /// <summary>
-        /// Adds track to map view
-        /// </summary>
-        /// <param name="track">track to add</param>
-        /// <returns>task to wait on</returns>
-        public static async Task AddTrack(Track track)
-        {
-            var point = track.CalculateCenterPoint();
-            await UpdateLastShownPositionAsync(point);
-
-            await MapView.AddTrack(track);
-        }
-
-        /// <summary>
-        /// Updates map settings on opened MapPage.
-        /// </summary>
-        public static void UpdateMapSettings()
-        {
-            var app = Current as App;
-
-            app?.MapPage?.ReloadMapViewAppSettings();
-        }
-
-        /// <summary>
-        /// Updates last shown position in app settings
-        /// </summary>
-        /// <param name="point">current position</param>
-        /// <param name="viewingDistance">current viewing distance; may be unset</param>
-        /// <returns>task to wait on</returns>
-        public static async Task UpdateLastShownPositionAsync(MapPoint point, int? viewingDistance = null)
-        {
-            if (Settings == null)
-            {
-                return; // app settings not loaded yet
-            }
-
-            if (point.Valid)
-            {
-                Settings.LastShownPosition = point;
-
-                if (viewingDistance.HasValue)
-                {
-                    Settings.LastViewingDistance = viewingDistance.Value;
-                }
-
-                var dataService = DependencyService.Get<IDataService>();
-                await dataService.StoreAppSettingsAsync(Settings);
-            }
-        }
-
-        /// <summary>
-        /// Sets (or clears) the current compass target
-        /// </summary>
-        /// <param name="compassTarget">compass target; may be null</param>
-        /// <returns>task to wait on</returns>
-        public static async Task SetCompassTarget(CompassTarget compassTarget)
-        {
-            if (Settings == null)
-            {
-                return; // app settings not loaded yet
-            }
-
-            Settings.CurrentCompassTarget = compassTarget;
-
-            var dataService = DependencyService.Get<IDataService>();
-            await dataService.StoreAppSettingsAsync(Settings);
-
-            if (compassTarget == null)
-            {
-                MapView.ClearCompass();
-            }
-            else
-            {
-                if (compassTarget.TargetLocation != null)
-                {
-                    MapView.SetCompassTarget(
-                        compassTarget.Title,
-                        compassTarget.TargetLocation,
-                        zoomToPolyline: true);
-                }
-                else
-                {
-                    Debug.Assert(
-                        compassTarget.TargetDirection.HasValue,
-                        "either target location or target direction must be set");
-
-                    MapView.SetCompassDirection(
-                        compassTarget.Title,
-                        compassTarget.TargetDirection ?? 0);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Opens app resource URI, e.g. a live waypoint
-        /// </summary>
-        /// <param name="uri">app resource URI to open</param>
-        public static void OpenAppResourceUri(string uri)
-        {
-            RunOnUiThread(async () => await OpenAppResourceUriHelper.OpenAsync(uri));
-        }
-
-        /// <summary>
-        /// Initializes live waypoint refresh service with current location list
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        private static async Task InitLiveWaypointRefreshService()
-        {
-            var dataService = DependencyService.Get<IDataService>();
-            var locationDataService = dataService.GetLocationDataService();
-
-            var locationList = await locationDataService.GetList();
-
-            var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
-            liveWaypointRefreshService.DataService = dataService;
-
-            liveWaypointRefreshService.AddLiveWaypointList(locationList);
-
-            var trackDataService = dataService.GetTrackDataService();
-
-            var trackList = await trackDataService.GetList();
-
-            var liveTrackList = trackList.Where(track => track.IsLiveTrack);
-
-            foreach (var liveTrack in liveTrackList)
-            {
-                liveWaypointRefreshService.AddLiveTrack(liveTrack);
-            }
-        }
-
-        /// <summary>
-        /// Shows the flight planning disclaimer dialog, when not already shown to the user.
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        public static async Task ShowFlightPlanningDisclaimerAsync()
-        {
-            var dataService = DependencyService.Get<IDataService>();
-            var appSettings = await dataService.GetAppSettingsAsync(CancellationToken.None);
-
-            if (appSettings.ShownFlightPlanningDisclaimer)
-            {
-                return;
-            }
-
-            await Xamarin.Forms.Device.InvokeOnMainThreadAsync(async () =>
-            {
-                const string DisclaimerMessage =
-                    "The display and use of flight maps and airspace data can contain errors " +
-                    "and their use does not release the pilot from the legal obligation of " +
-                    "thorough and orderly preflight planning, nor from the use of all required " +
-                    "and approved means of navigation (e.g. Aeronautical Chart ICAO 1:500,000).";
-
-                await Current.MainPage.DisplayAlert(
-                    Constants.AppTitle,
-                    DisclaimerMessage,
-                    "Understood");
-            });
-
-            appSettings.ShownFlightPlanningDisclaimer = true;
-            await dataService.StoreAppSettingsAsync(appSettings);
         }
 
         #region App lifecycle methods

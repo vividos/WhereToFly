@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using WhereToFly.Geo.DataFormats;
 using WhereToFly.Geo.Model;
 using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace WhereToFly.App.Core
 {
@@ -20,7 +21,8 @@ namespace WhereToFly.App.Core
         /// <returns>task to wait on</returns>
         public static async Task ExportLayerAsync(Layer layer)
         {
-            byte[] data = await App.MapView.ExportLayerAsync(layer);
+            var appMapService = DependencyService.Get<IAppMapService>();
+            byte[] data = await appMapService.MapView.ExportLayerAsync(layer);
             if (data == null)
             {
                 App.ShowToast("Error occured at layer export.");

@@ -105,7 +105,8 @@ namespace WhereToFly.App.UWP
                 args is ProtocolActivatedEventArgs eventArgs &&
                 eventArgs.Uri?.AbsoluteUri != null)
             {
-                Core.App.OpenAppResourceUri(eventArgs.Uri.AbsoluteUri);
+                var appMapService = Xamarin.Forms.DependencyService.Get<IAppMapService>();
+                appMapService.OpenAppResourceUri(eventArgs.Uri.AbsoluteUri);
             }
         }
 

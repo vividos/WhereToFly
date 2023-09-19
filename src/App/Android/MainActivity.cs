@@ -192,7 +192,8 @@ namespace WhereToFly.App.Android
                 if (intent.DataString != null &&
                     intent.DataString.StartsWith(Shared.Model.AppResourceUri.DefaultScheme))
                 {
-                    Core.App.OpenAppResourceUri(intent.DataString);
+                    var appMapService = DependencyService.Get<IAppMapService>();
+                    appMapService.OpenAppResourceUri(intent.DataString);
                     return;
                 }
 

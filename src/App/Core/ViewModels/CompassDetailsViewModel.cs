@@ -207,7 +207,8 @@ namespace WhereToFly.App.Core.ViewModels
                 TargetDirection = direction,
             };
 
-            await App.SetCompassTarget(compassTarget);
+            var appMapService = DependencyService.Get<IAppMapService>();
+            await appMapService.SetCompassTarget(compassTarget);
 
             this.OnPropertyChanged(nameof(this.Distance));
             this.OnPropertyChanged(nameof(this.HeightDifference));
@@ -222,7 +223,8 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task ClearCompassTarget()
         {
-            await App.SetCompassTarget(null);
+            var appMapService = DependencyService.Get<IAppMapService>();
+            await appMapService.SetCompassTarget(null);
 
             this.OnPropertyChanged(nameof(this.Distance));
             this.OnPropertyChanged(nameof(this.HeightDifference));
@@ -279,7 +281,9 @@ namespace WhereToFly.App.Core.ViewModels
             this.UpdateSunAngles();
 
             var point = new MapPoint(this.position.Latitude, this.position.Longitude, this.position.Altitude);
-            Task.Run(async () => await App.UpdateLastShownPositionAsync(point));
+
+            var appMapService = DependencyService.Get<IAppMapService>();
+            Task.Run(async () => await appMapService.UpdateLastShownPosition(point));
         }
 
         /// <summary>

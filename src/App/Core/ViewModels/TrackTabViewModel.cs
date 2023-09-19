@@ -61,7 +61,8 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task OnZoomToTrackAsync()
         {
-            App.MapView.ZoomToTrack(this.track);
+            var appMapService = DependencyService.Get<IAppMapService>();
+            appMapService.MapView.ZoomToTrack(this.track);
 
             await NavigationService.GoToMap();
         }
@@ -86,7 +87,8 @@ namespace WhereToFly.App.Core.ViewModels
 
             await trackDataService.Remove(this.track.Id);
 
-            App.MapView.RemoveTrack(this.track);
+            var appMapService = DependencyService.Get<IAppMapService>();
+            appMapService.MapView.RemoveTrack(this.track);
 
             await NavigationService.Instance.GoBack();
 

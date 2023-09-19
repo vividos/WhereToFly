@@ -149,13 +149,15 @@ namespace WhereToFly.App.Core.ViewModels
         {
             this.Description = HtmlConverter.StripAllTags(this.location.Description);
 
+            var appMapService = DependencyService.Get<IAppMapService>();
+
             this.ItemTappedCommand = new AsyncCommand(this.OnShowDetailsLocation);
             this.ZoomToLocationCommand = new AsyncCommand(this.OnZoomToLocationAsync);
             this.SetAsCompassTargetCommand = new AsyncCommand(this.OnSetAsCompassTargetAsync);
             this.DeleteLocationCommand = new AsyncCommand(this.OnDeleteLocationAsync);
             this.AddTourPlanLocationCommand =
                 new AsyncCommand(
-                    () => App.AddTourPlanLocationAsync(this.location),
+                    () => appMapService.AddTourPlanLocation(this.location),
                     () => this.IsEnabledAddTourPlanLocation);
         }
 

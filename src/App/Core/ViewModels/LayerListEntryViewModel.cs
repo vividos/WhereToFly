@@ -139,7 +139,8 @@ namespace WhereToFly.App.Core.ViewModels
             var layerDataService = dataService.GetLayerDataService();
             await layerDataService.Update(this.Layer);
 
-            App.MapView.SetLayerVisibility(this.Layer);
+            var appMapService = DependencyService.Get<IAppMapService>();
+            appMapService.MapView.SetLayerVisibility(this.Layer);
 
             this.VisibilityImageSource = SvgImageCache.GetLayerVisibilityImageSource(this.Layer);
             this.OnPropertyChanged(nameof(this.VisibilityImageSource));

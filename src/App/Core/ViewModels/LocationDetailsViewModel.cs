@@ -317,7 +317,8 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task OnAddTourPlanLocationAsync()
         {
-            await App.AddTourPlanLocationAsync(this.location);
+            var appMapService = DependencyService.Get<IAppMapService>();
+            await appMapService.AddTourPlanLocation(this.location);
         }
 
         /// <summary>
@@ -326,9 +327,10 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task OnZoomToLocationAsync()
         {
-            await App.UpdateLastShownPositionAsync(this.location.MapLocation);
+            var appMapService = DependencyService.Get<IAppMapService>();
+            await appMapService.UpdateLastShownPosition(this.location.MapLocation);
 
-            App.MapView.ZoomToLocation(this.location.MapLocation);
+            appMapService.MapView.ZoomToLocation(this.location.MapLocation);
 
             await NavigationService.GoToMap();
         }
@@ -345,7 +347,8 @@ namespace WhereToFly.App.Core.ViewModels
                 TargetLocation = this.location.MapLocation,
             };
 
-            await App.SetCompassTarget(compassTarget);
+            var appMapService = DependencyService.Get<IAppMapService>();
+            await appMapService.SetCompassTarget(compassTarget);
 
             await NavigationService.GoToMap();
         }
@@ -395,7 +398,8 @@ namespace WhereToFly.App.Core.ViewModels
             var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
             liveWaypointRefreshService.RemoveLiveWaypoint(this.location.Id);
 
-            App.MapView.RemoveLocation(this.location.Id);
+            var appMapService = DependencyService.Get<IAppMapService>();
+            appMapService.MapView.RemoveLocation(this.location.Id);
 
             await NavigationService.Instance.GoBack();
 

@@ -146,7 +146,8 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         internal async Task ZoomToLayer(Layer layer)
         {
-            App.MapView.ZoomToLayer(layer);
+            var appMapService = DependencyService.Get<IAppMapService>();
+            appMapService.MapView.ZoomToLayer(layer);
 
             await NavigationService.GoToMap();
         }
@@ -327,7 +328,8 @@ namespace WhereToFly.App.Core.ViewModels
 
             await NavigationService.GoToMap();
 
-            await App.MapView.AddLayer(layer);
+            var appMapService = DependencyService.Get<IAppMapService>();
+            await appMapService.MapView.AddLayer(layer);
 
             App.ShowToast("Layer was added.");
         }
@@ -383,7 +385,8 @@ namespace WhereToFly.App.Core.ViewModels
 
             await this.ReloadLayerListAsync();
 
-            App.MapView.ClearLayerList();
+            var appMapService = DependencyService.Get<IAppMapService>();
+            appMapService.MapView.ClearLayerList();
 
             App.ShowToast("Layer list was cleared.");
         }
@@ -414,7 +417,8 @@ namespace WhereToFly.App.Core.ViewModels
 
             this.UpdateLayerList();
 
-            App.MapView.RemoveLayer(layer);
+            var appMapService = DependencyService.Get<IAppMapService>();
+            appMapService.MapView.RemoveLayer(layer);
 
             App.ShowToast("Selected layer was deleted.");
         }

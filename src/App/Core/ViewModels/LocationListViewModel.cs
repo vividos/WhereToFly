@@ -299,9 +299,10 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         internal async Task ZoomToLocation(Location location)
         {
-            await App.UpdateLastShownPositionAsync(location.MapLocation);
+            var appMapService = DependencyService.Get<IAppMapService>();
+            await appMapService.UpdateLastShownPosition(location.MapLocation);
 
-            App.MapView.ZoomToLocation(location.MapLocation);
+            appMapService.MapView.ZoomToLocation(location.MapLocation);
 
             await NavigationService.GoToMap();
         }
@@ -319,7 +320,8 @@ namespace WhereToFly.App.Core.ViewModels
                 TargetLocation = location.MapLocation,
             };
 
-            await App.SetCompassTarget(compassTarget);
+            var appMapService = DependencyService.Get<IAppMapService>();
+            await appMapService.SetCompassTarget(compassTarget);
 
             await NavigationService.GoToMap();
         }
@@ -508,7 +510,8 @@ namespace WhereToFly.App.Core.ViewModels
 
             this.UpdateLocationList();
 
-            App.MapView.RemoveLocation(location.Id);
+            var appMapService = DependencyService.Get<IAppMapService>();
+            appMapService.MapView.RemoveLocation(location.Id);
 
             App.ShowToast("Selected location was deleted.");
         }
@@ -543,7 +546,8 @@ namespace WhereToFly.App.Core.ViewModels
 
             this.UpdateLocationList();
 
-            App.MapView.ClearLocationList();
+            var appMapService = DependencyService.Get<IAppMapService>();
+            appMapService.MapView.ClearLocationList();
 
             App.ShowToast("Location list was cleared.");
         }
