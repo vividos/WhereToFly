@@ -336,7 +336,8 @@ export class MapView {
         } catch (error) {
 
             // waiting for onNetworkConnectivityChanged
-            console.error("MapView.initTerrainProvider: failed init'ing terrain provider", error);
+            console.warn("MapView.initTerrainProvider: error init'ing terrain provider, " +
+                "waiting for network reconnect: " + error);
         }
     }
 
@@ -1536,8 +1537,8 @@ export class MapView {
                     continue;
                 else if (state !== Cesium.BoundingSphereState.FAILED)
                     boundingSpheres.push(Cesium.BoundingSphere.clone(boundingSphereScratch));
-            } catch (e) {
-                console.warn("MapView.getDataSourceBoundingSphere: " + e.message);
+            } catch (error) {
+                console.warn("MapView.getDataSourceBoundingSphere: " + error);
             }
         }
 
@@ -1643,7 +1644,7 @@ export class MapView {
             this.onExportLayer(result.kmz);
 
         } catch (error) {
-            console.error(error);
+            console.error("MapView.exportLayer: " + error);
             this.onExportLayer(null);
         }
     }
