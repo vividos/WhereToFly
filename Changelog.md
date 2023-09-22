@@ -6,6 +6,7 @@ Released on ?.
 
 ✨ New Features / Improvements
 - moved OpenFlightMaps.org layer to map overlays
+- corrected Sunset angle heading on the current position page
 - using CesiumJS version 1.109
 
 🐛 Bugfixes

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="WhereToFly.App.Core.Views.CurrentPositionDetailsPage"
@@ -141,7 +141,7 @@
                              Padding="4"
                              IsVisible="{Binding IsSunsetDirectionAvail, Mode=OneWay}"
                              BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
-                    <Label Text="Sunrise angle [°]" />
+                    <Label Text="Sunset angle [°]" />
                     <Label Text="{Binding SunsetDirectionText, Mode=OneWay}" FontSize="24" />
                 </StackLayout>
 
