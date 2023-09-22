@@ -5,6 +5,7 @@ using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.Views;
 using WhereToFly.Geo.Model;
 using Xamarin.CommunityToolkit.ObjectModel;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.ViewModels
@@ -96,7 +97,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         public bool UseDarkTheme
         {
-            get => Styles.ThemeHelper.CurrentTheme == Models.Theme.Dark;
+            get => Styles.ThemeHelper.CurrentTheme == AppTheme.Dark;
         }
         #endregion
 

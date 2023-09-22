@@ -1,5 +1,4 @@
-﻿using WhereToFly.App.Core.Models;
-using Xamarin.Essentials;
+﻿using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.Styles
@@ -12,14 +11,14 @@ namespace WhereToFly.App.Core.Styles
         /// <summary>
         /// Theme that was last set using ChangeTheme
         /// </summary>
-        public static Theme CurrentTheme { get; private set; } = Theme.Light;
+        public static AppTheme CurrentTheme { get; private set; } = AppTheme.Light;
 
         /// <summary>
         /// Changes app theme
         /// </summary>
         /// <param name="theme">new theme to use</param>
         /// <param name="forceUpdate">true to force update, false when not</param>
-        public static void ChangeTheme(Theme theme, bool forceUpdate)
+        public static void ChangeTheme(AppTheme theme, bool forceUpdate)
         {
             if (!forceUpdate && CurrentTheme == theme)
             {
@@ -35,7 +34,7 @@ namespace WhereToFly.App.Core.Styles
 
             var platform = DependencyService.Get<IPlatform>();
 
-            if (theme == Theme.Device)
+            if (theme == AppTheme.Unspecified)
             {
                 // we need to set this to Unspecified first, or RequestedTheme would just contain
                 // the last set value, instead of the device's actual theme
@@ -45,23 +44,23 @@ namespace WhereToFly.App.Core.Styles
                 // report the last set platform theme
                 platform?.SetPlatformTheme(OSAppTheme.Unspecified);
 
-                OSAppTheme appTheme = Application.Current.RequestedTheme;
-                theme = appTheme == OSAppTheme.Dark ? Theme.Dark : Theme.Light;
+                var appTheme = Application.Current.RequestedTheme;
+                theme = appTheme == OSAppTheme.Dark ? AppTheme.Dark : AppTheme.Light;
             }
 
             ResourceDictionary newTheme =
-                theme == Theme.Dark ? new DarkTheme() : new LightTheme();
+                theme == AppTheme.Dark ? new global::WhereToFly.App.Core.Styles.DarkTheme() : new global::WhereToFly.App.Core.Styles.LightTheme();
 
             var resources = Application.Current.Resources;
-            foreach (var item in newTheme.Keys)
+            foreach (string item in newTheme.Keys)
             {
                 resources[item] = newTheme[item];
             }
 
-            Application.Current.UserAppTheme = OSAppThemeFromTheme(theme);
+            Application.Current.UserAppTheme = OSAppThemeFromAppTheme(theme);
 
             // apply platform specific changes
-            var platformAppTheme = theme == Theme.Dark ? OSAppTheme.Dark : OSAppTheme.Light;
+            var platformAppTheme = theme == AppTheme.Dark ? OSAppTheme.Dark : OSAppTheme.Light;
             platform?.SetPlatformTheme(platformAppTheme);
 
             // remember new theme
@@ -69,16 +68,16 @@ namespace WhereToFly.App.Core.Styles
         }
 
         /// <summary>
-        /// Translates Theme value to OSAppTheme value
+        /// Translates AppTheme value to OSAppTheme value
         /// </summary>
-        /// <param name="theme">theme value</param>
+        /// <param name="theme">app theme value</param>
         /// <returns>OS app theme value</returns>
-        private static OSAppTheme OSAppThemeFromTheme(Theme theme)
+        private static OSAppTheme OSAppThemeFromAppTheme(AppTheme theme)
         {
             return theme switch
             {
-                Theme.Light => OSAppTheme.Light,
-                Theme.Dark => OSAppTheme.Dark,
+                AppTheme.Light => OSAppTheme.Light,
+                AppTheme.Dark => OSAppTheme.Dark,
                 _ => OSAppTheme.Unspecified,
             };
         }

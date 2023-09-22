@@ -6,6 +6,7 @@ using System.Windows.Input;
 using WhereToFly.App.Core.Models;
 using WhereToFly.App.Core.Services;
 using Xamarin.CommunityToolkit.ObjectModel;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.ViewModels
@@ -70,7 +71,7 @@ namespace WhereToFly.App.Core.ViewModels
             this.Tapped = new AsyncCommand(this.OpenWeatherIconTargetAsync);
 
             this.ReplaceStringMap =
-                Styles.ThemeHelper.CurrentTheme == Models.Theme.Dark
+                Styles.ThemeHelper.CurrentTheme == AppTheme.Dark
                 ? new Dictionary<string, string>
                 {
                     { "fill=\"#000000", "fill=\"#ffffff" },

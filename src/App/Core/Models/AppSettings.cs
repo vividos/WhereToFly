@@ -1,6 +1,7 @@
 ﻿using WhereToFly.App.MapView;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
+using Xamarin.Essentials;
 
 namespace WhereToFly.App.Core.Models
 {
@@ -75,7 +76,7 @@ namespace WhereToFly.App.Core.Models
         /// <summary>
         /// Theme value for the app style
         /// </summary>
-        public Theme AppTheme { get; set; } = Theme.Device;
+        public AppTheme AppTheme { get; set; } = AppTheme.Unspecified;
 
         /// <summary>
         /// The currently set compass target; may be null

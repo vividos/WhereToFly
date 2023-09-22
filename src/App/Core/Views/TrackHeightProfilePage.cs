@@ -1,5 +1,6 @@
-using WhereToFly.App.MapView;
+﻿using WhereToFly.App.MapView;
 using WhereToFly.Geo.Model;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.Views
@@ -22,7 +23,7 @@ namespace WhereToFly.App.Core.Views
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 Track = track,
-                UseDarkTheme = Styles.ThemeHelper.CurrentTheme == Models.Theme.Dark,
+                UseDarkTheme = Styles.ThemeHelper.CurrentTheme == AppTheme.Dark,
             };
 
             this.SetDynamicResource(BackgroundColorProperty, "PageBackgroundColor");
