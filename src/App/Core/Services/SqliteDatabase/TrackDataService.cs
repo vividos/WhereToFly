@@ -344,7 +344,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
 
                 trackEntry.LoadTrackPoints();
 
-                return trackEntry?.Track;
+                return trackEntry.Track;
             }
 
             /// <summary>

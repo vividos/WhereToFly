@@ -43,7 +43,6 @@ namespace WhereToFly.App.UnitTest
 
             // run + check
             var dict = new Dictionary<Location, bool>();
-            Assert.IsFalse(dict.ContainsKey(location1), "location must not be in dictionary yet");
 
             dict.Add(location1, true);
 

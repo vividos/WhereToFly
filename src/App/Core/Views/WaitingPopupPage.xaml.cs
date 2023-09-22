@@ -101,11 +101,7 @@ namespace WhereToFly.App.Core.Views
         /// <param name="args">event args</param>
         private void OnClickedCancelButton(object sender, EventArgs args)
         {
-            Debug.Assert(
-                this.cancellationTokenSource != null,
-                "button can only be clicked when cancellation token source is available");
-
-            this.cancellationTokenSource?.Cancel();
+            this.cancellationTokenSource.Cancel();
         }
     }
 }

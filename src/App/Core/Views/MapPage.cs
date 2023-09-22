@@ -480,7 +480,8 @@ namespace WhereToFly.App.Core.Views
 
             if (trackPoints.Any())
             {
-                DateTimeOffset? trackDataStart = trackPoints.First().Time;
+                DateTimeOffset? trackDataStart = trackPoints[0].Time;
+
                 if (trackDataStart.HasValue)
                 {
                     track.RemoveTrackPointsAfter(trackDataStart.Value);
@@ -797,12 +798,6 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         public async Task AddTourPlanningLocationAsync(Location location)
         {
-            Debug.Assert(location != null, "passed location must be non-null");
-            if (location == null)
-            {
-                return;
-            }
-
             this.planTourParameters.WaypointIdList.Add(location.Id);
 
             await PlanTourPopupPage.ShowAsync(this.planTourParameters);

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -517,7 +517,10 @@ namespace WhereToFly.App.Core.Services
 
                 if (queryResult.Data.TrackPoints.Any())
                 {
-                    double offset = queryResult.Data.TrackPoints.Last().Offset;
+                    double offset = queryResult.Data.
+                        TrackPoints[queryResult.Data.TrackPoints.Length - 1]
+                        .Offset;
+
                     nextLastTrackPointTime = queryResult.Data.TrackStart.AddSeconds(offset);
                 }
             }

@@ -98,13 +98,6 @@ namespace WhereToFly.App.Core
         public static ImageSource GetImageSource(string svgImageName)
         {
             var cache = DependencyService.Get<SvgImageCache>();
-            Debug.Assert(cache != null, "cache object must exist");
-
-            if (cache == null)
-            {
-                throw new InvalidOperationException("SVG image cache was not initialized");
-            }
-
             string svgText = cache.GetSvgImage(svgImageName);
 
             return ImageSource.FromUri(new Uri(Controls.SvgConstants.DataUriPlainPrefix + svgText));

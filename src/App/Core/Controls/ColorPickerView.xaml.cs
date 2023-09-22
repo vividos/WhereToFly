@@ -175,14 +175,9 @@ namespace WhereToFly.App.Core.Controls
             // set all frame colors to white except the selected one
             foreach (Frame outerFrame in this.colorPickerLayout.Children.Cast<Frame>())
             {
-                Debug.Assert(outerFrame != null, "view element must be a Frame");
-
-                if (outerFrame != null)
-                {
-                    outerFrame.BackgroundColor = outerFrame == selectedFrame
-                        ? this.SelectionBorderColor
-                        : Color.Transparent;
-                }
+                outerFrame.BackgroundColor = outerFrame == selectedFrame
+                    ? this.SelectionBorderColor
+                    : Color.Transparent;
             }
 
             // update view model
@@ -201,10 +196,7 @@ namespace WhereToFly.App.Core.Controls
                 // set all inner frame background colors
                 foreach (Frame outerFrame in this.colorPickerLayout.Children.Cast<Frame>())
                 {
-                    Debug.Assert(outerFrame != null, "view element must be a Frame");
-
-                    if (outerFrame != null &&
-                        outerFrame.Content is Frame innerFrame)
+                    if (outerFrame.Content is Frame innerFrame)
                     {
                         innerFrame.BackgroundColor = this.BackgroundColor;
                     }

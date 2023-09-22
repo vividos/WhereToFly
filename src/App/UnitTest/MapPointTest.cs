@@ -113,7 +113,6 @@ namespace WhereToFly.App.UnitTest
 
             // run + check
             var dict = new Dictionary<MapPoint, bool>();
-            Assert.IsFalse(dict.ContainsKey(mapPoint1), "map point must not be in dictionary yet");
 
             dict.Add(mapPoint1, true);
 

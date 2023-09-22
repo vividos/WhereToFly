@@ -134,7 +134,8 @@ namespace WhereToFly.App.Core.ViewModels
         {
             this.Track = track;
 
-            this.IsTrackPointIntervalPickerVisible = !track.TrackPoints.Any(trackPoint => trackPoint.Time.HasValue);
+            this.IsTrackPointIntervalPickerVisible =
+                !track.TrackPoints.Exists(trackPoint => trackPoint.Time.HasValue);
 
             this.TrackPointIntervalList = new List<string>
             {
