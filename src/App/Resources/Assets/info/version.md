@@ -12,4 +12,4 @@ The Where-to-fly GitHub project can be found here:
 
 Current version: %VERSION%
 
-Image: At the Jägerbauernalm takeoff, Schliersee, Bavaria, Germany.
+Image: Soaring above Sulzberg, Bavaria, Germany.
