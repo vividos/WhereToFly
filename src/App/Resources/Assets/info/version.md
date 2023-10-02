@@ -1,4 +1,4 @@
-﻿# Where-to-fly
+# Where-to-fly
 
 Where-to-fly is an Android app that helps decide where to (hike up and) fly
 with a paraglider. It shows the current position on a 3D map, and nearby
@@ -13,3 +13,5 @@ The Where-to-fly GitHub project can be found here:
 Current version: %VERSION%
 
 Image: Soaring above Sulzberg, Bavaria, Germany.
+
+[See all previous version images](https://github.com/vividos/WhereToFly/blob/main/PreviousVersionImages.md)
