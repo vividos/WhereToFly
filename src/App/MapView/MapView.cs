@@ -1401,7 +1401,10 @@ namespace WhereToFly.App.MapView
         /// <param name="jsonParameters">track point heights as JSON array</param>
         private void OnSampledTrackHeights(string jsonParameters)
         {
-            var trackPointHeights = JsonConvert.DeserializeObject<double[]>(jsonParameters);
+            double[] trackPointHeights = string.IsNullOrEmpty(jsonParameters)
+                ? null
+                : JsonConvert.DeserializeObject<double[]>(jsonParameters);
+
             this.taskCompletionSourceSampleTrackHeights.SetResult(trackPointHeights);
         }
 

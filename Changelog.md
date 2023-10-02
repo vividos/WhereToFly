@@ -10,6 +10,7 @@ Released on ?.
 - using CesiumJS version 1.109
 
 🐛 Bugfixes
+- Fixed crash when track height profile can't be sampled at import
 
 ## Version 1.14.1
 
