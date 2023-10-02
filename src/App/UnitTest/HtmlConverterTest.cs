@@ -62,7 +62,7 @@ namespace WhereToFly.App.UnitTest
 ## Sub Heading
 [LocalLink.md](LocalLink.md ""Local Link"")
 https://github.com/vividos/WhereToFly
-[Internet Link](https://cesiumjs.org/)
+[Internet Link](https://www.cesium.com/)
 [![Image Link](https://sonarcloud.io/api/badges/gate?key=WhereToFly)](https://sonarcloud.io/dashboard?id=WhereToFly)
 - [ ] CheckBox
 ";
@@ -79,7 +79,7 @@ https://github.com/vividos/WhereToFly
             Assert.IsTrue(html.Contains("Local Link"), "must contain local link text");
             Assert.IsTrue(html.Contains("github.com/vividos"), "must contain text-less internet link URL");
             Assert.IsTrue(html.Contains("Internet Link"), "must contain internet link text");
-            Assert.IsTrue(html.Contains("cesiumjs.org"), "must contain internet link target");
+            Assert.IsTrue(html.Contains("www.cesium.com"), "must contain internet link target");
             Assert.IsTrue(html.Contains("Image Link"), "must contain image link text");
             Assert.IsTrue(html.Contains("CheckBox"), "must contain checkbox text");
         }
