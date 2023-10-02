@@ -324,11 +324,18 @@ namespace WhereToFly.App.MapView
         /// <returns>task to wait on</returns>
         private async Task InitSourceAsync()
         {
-            this.Navigated += this.OnNavigated;
+            try
+            {
+                this.Navigated += this.OnNavigated;
 
-            this.Source =
-                await WebViewSourceFactory.Instance.GetMapViewSource();
-            this.OnPropertyChanged(nameof(this.Source));
+                this.Source =
+                    await WebViewSourceFactory.Instance.GetMapViewSource();
+                this.OnPropertyChanged(nameof(this.Source));
+            }
+            catch (Exception ex)
+            {
+                this.LogErrorAction(ex);
+            }
         }
 
         /// <summary>
