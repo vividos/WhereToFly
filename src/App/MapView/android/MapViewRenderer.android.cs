@@ -32,17 +32,20 @@ namespace WhereToFly.App.MapView
         {
             base.OnElementChanged(e);
 
-            if (this.Control != null &&
-                e.NewElement != null)
+            if (this.Control == null)
             {
-                this.SetupWebViewSettings();
+                return;
             }
 
-            if (this.Control != null &&
-                e.OldElement != null)
+            if (e.OldElement != null)
             {
                 this.Control.RemoveJavascriptInterface(
                     JavaScriptCallbackHandler.ObjectName);
+            }
+
+            if (e.NewElement != null)
+            {
+                this.SetupWebViewSettings();
             }
         }
 
