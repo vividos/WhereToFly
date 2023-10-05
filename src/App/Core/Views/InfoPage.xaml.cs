@@ -26,8 +26,10 @@ namespace WhereToFly.App.Core.Views
             if (args.NavigationEvent == WebNavigationEvent.NewPage &&
                 args.Url.StartsWith("http"))
             {
-                Browser.OpenAsync(args.Url, BrowserLaunchMode.External);
                 args.Cancel = true;
+
+                MainThread.BeginInvokeOnMainThread(
+                    () => Browser.OpenAsync(args.Url, BrowserLaunchMode.External));
             }
         }
     }
