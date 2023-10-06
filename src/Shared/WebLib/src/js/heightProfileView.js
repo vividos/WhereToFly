@@ -142,6 +142,10 @@ export class HeightProfileView {
                             this.updateTooltipElement(context.tooltip);
                         }.bind(this)
                     },
+                    decimation: {
+                        enabled: true,
+                        algorithm: "min-max"
+                    },
                     // the simple-crosshair plugin used here
                     crosshair: {
                         line: {
