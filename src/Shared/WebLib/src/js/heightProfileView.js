@@ -97,6 +97,7 @@ export class HeightProfileView {
                 responsive: true,
                 maintainAspectRatio: true,
                 aspectRatio: 2,
+                normalized: true,
                 scales: {
                     x: {
                         id: "time",
@@ -417,8 +418,7 @@ export class HeightProfileView {
                 backgroundColor: this.backgroundColor,
                 fill: false,
                 label: "Track",
-                tension: 0.0,
-                pointRadius: 0.0,
+                pointRadius: 0.0, // disable point drawing
                 borderColor: this.trackColor
             }]
         };
