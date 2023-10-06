@@ -1,5 +1,6 @@
 ﻿using Android.Content;
-using Xamarin.Essentials;
+using System;
+using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -46,6 +47,35 @@ namespace WhereToFly.App.MapView
             if (e.NewElement != null)
             {
                 this.SetupWebViewSettings();
+            }
+        }
+
+        /// <summary>
+        /// Called when an element property has changed
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">event args</param>
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            try
+            {
+                if (e.PropertyName == nameof(WebView.Source) &&
+                    this.Control == null)
+                {
+                    var mapView = this.Element as MapView;
+                    mapView?.LogErrorAction(
+                        new InvalidOperationException(
+                            "ignore loading Source when Control is still null"));
+                }
+                else
+                {
+                    base.OnElementPropertyChanged(sender, e);
+                }
+            }
+            catch (Exception ex)
+            {
+                var mapView = this.Element as MapView;
+                mapView?.LogErrorAction(ex);
             }
         }
 
