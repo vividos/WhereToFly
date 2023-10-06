@@ -9,7 +9,8 @@ import {
     PointElement,
     TimeScale,
     Tooltip,
-    Filler
+    Filler,
+    Decimation
 } from "chart.js";
 
 import * as helpers from "chart.js/helpers";
@@ -26,6 +27,7 @@ import "../css/heightProfileView.css";
 Chart.register(
     LineController, LineElement, LinearScale, PointElement,
     TimeScale, Tooltip, Filler,
+    Decimation,
     SimpleCrosshairPlugin,
     ZoomPlugin);
 
