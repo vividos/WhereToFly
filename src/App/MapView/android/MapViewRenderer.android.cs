@@ -57,25 +57,17 @@ namespace WhereToFly.App.MapView
         /// <param name="e">event args</param>
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            try
+            // fix a potential crash in Xamarin.Forms renderer that may not be
+            // fixed anymore
+            if (e.PropertyName == nameof(WebView.Source) &&
+                this.Control == null)
             {
-                if (e.PropertyName == nameof(WebView.Source) &&
-                    this.Control == null)
-                {
-                    var mapView = this.Element as MapView;
-                    mapView?.LogErrorAction(
-                        new InvalidOperationException(
-                            "ignore loading Source when Control is still null"));
-                }
-                else
-                {
-                    base.OnElementPropertyChanged(sender, e);
-                }
+                System.Diagnostics.Debug.WriteLine(
+                    "ignore loading Source when Control is still null");
             }
-            catch (Exception ex)
+            else
             {
-                var mapView = this.Element as MapView;
-                mapView?.LogErrorAction(ex);
+                base.OnElementPropertyChanged(sender, e);
             }
         }
 
