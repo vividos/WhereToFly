@@ -7,7 +7,7 @@ Released on ?.
 ✨ New Features / Improvements
 - moved OpenFlightMaps.org layer to map overlays
 - corrected Sunset angle heading on the current position page
-- using CesiumJS version 1.109
+- using CesiumJS version 1.110.0
 
 🐛 Bugfixes
 - Fixed crash when track height profile can't be sampled at import
