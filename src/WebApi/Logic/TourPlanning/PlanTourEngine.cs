@@ -194,7 +194,7 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
             }
 
             // check if one of the waypoints can't be found
-            string invalidWaypointId = planTourParameters.WaypointIdList.FirstOrDefault(
+            string invalidWaypointId = planTourParameters.WaypointIdList.Find(
                 waypointId => this.FindWaypointInfo(waypointId) == null);
 
             if (invalidWaypointId != null)

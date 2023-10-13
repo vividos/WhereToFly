@@ -140,7 +140,7 @@ namespace WhereToFly.WebApi.Logic.Services
         {
             var track = GenerateLiveTrackData(now);
 
-            DateTimeOffset? trackStart = track.TrackPoints.First()?.Time;
+            DateTimeOffset? trackStart = track.TrackPoints[0]?.Time;
 
             if (trackStart == null)
             {

@@ -128,7 +128,7 @@ namespace WhereToFly.App.UnitTest.Geo
         [TestMethod]
         public void TestConvertToKml()
         {
-            foreach (var geoJsonText in GeoJsonExamples)
+            foreach (string geoJsonText in GeoJsonExamples)
             {
                 try
                 {
@@ -160,7 +160,7 @@ namespace WhereToFly.App.UnitTest.Geo
         [TestMethod]
         public void TestConvertToCzml()
         {
-            foreach (var geoJsonText in GeoJsonExamples)
+            foreach (string geoJsonText in GeoJsonExamples)
             {
                 try
                 {

@@ -88,7 +88,7 @@ namespace WhereToFly.App.UnitTest.Geo
                     // check
                     Assert.IsTrue(parser.Airspaces.Any(), "there must be some airspaces in the file");
 
-                    var ceilingType = parser.Airspaces.First().Ceiling.Type;
+                    AltitudeType? ceilingType = parser.Airspaces?.FirstOrDefault()?.Ceiling?.Type;
                     Debug.WriteLine($"altitude text {altitude} resulted in type {ceilingType}");
 
                     Assert.IsFalse(parser.ParsingErrors.Any(), "there must be no parsing errors");

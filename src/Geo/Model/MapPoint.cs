@@ -60,7 +60,7 @@ namespace WhereToFly.Geo.Model
         /// </summary>
         /// <param name="other">other map point</param>
         /// <returns>true when equal, false when not</returns>
-        public bool Equals(MapPoint other)
+        public bool Equals(MapPoint? other)
         {
             if (other == null)
             {
@@ -93,7 +93,7 @@ namespace WhereToFly.Geo.Model
         /// </summary>
         /// <param name="obj">object to compare to</param>
         /// <returns>true when equal, false when not</returns>
-        public override bool Equals(object obj) =>
+        public override bool Equals(object? obj) =>
             obj is MapPoint other && this.Equals(other);
 
         /// <summary>
