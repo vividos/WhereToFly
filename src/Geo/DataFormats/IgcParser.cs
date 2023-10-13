@@ -20,7 +20,7 @@ namespace WhereToFly.Geo.DataFormats
         /// <summary>
         /// Track that was produced while loading and parsing the IGC file
         /// </summary>
-        public Track Track { get; set; } = new Track();
+        public Track Track { get; set; } = new Track(Guid.NewGuid().ToString("B"));
 
         /// <summary>
         /// All parsing error messages
@@ -64,7 +64,6 @@ namespace WhereToFly.Geo.DataFormats
         /// <param name="stream">IGC data stream</param>
         public IgcParser(Stream stream)
         {
-            this.Track.Id = Guid.NewGuid().ToString("B");
             this.Track.IsFlightTrack = true;
             this.Track.IsLiveTrack = false;
             this.Parse(stream);
@@ -112,7 +111,7 @@ namespace WhereToFly.Geo.DataFormats
                 ? this.currentDate.Value.ToString("yyyy'-'MM'-'dd")
                 : string.Empty;
 
-            string pilotName = this.GetHeaderFieldOrDefault("PILOT", null);
+            string? pilotName = this.GetHeaderFieldOrDefault("PILOT", null);
             if (pilotName == null)
             {
                 pilotName = this.GetHeaderFieldOrDefault("PILOTINCHARGE", "???");
@@ -127,7 +126,7 @@ namespace WhereToFly.Geo.DataFormats
         /// <param name="headerFieldName">name of header field</param>
         /// <param name="defaultValue">default value</param>
         /// <returns>found or default value</returns>
-        private string GetHeaderFieldOrDefault(string headerFieldName, string defaultValue)
+        private string? GetHeaderFieldOrDefault(string headerFieldName, string? defaultValue)
         {
             return this.headerFields.TryGetValue(headerFieldName, out string value)
                 ? value
@@ -172,7 +171,7 @@ namespace WhereToFly.Geo.DataFormats
                     break;
 
                 case 'B': // Fix
-                    var trackPoint = this.ParseRecordB(line);
+                    TrackPoint? trackPoint = this.ParseRecordB(line);
                     if (trackPoint == null)
                     {
                         return;
@@ -282,7 +281,7 @@ namespace WhereToFly.Geo.DataFormats
         /// </summary>
         /// <param name="line">line to parse</param>
         /// <returns>parsed track point</returns>
-        private Model.TrackPoint ParseRecordB(string line)
+        private TrackPoint? ParseRecordB(string line)
         {
 #pragma warning disable S125 // Sections of code should not be "commented out"
             // Record type, B
@@ -310,9 +309,9 @@ namespace WhereToFly.Geo.DataFormats
 
             double altitude = Convert.ToDouble(line.Substring(30, 5));
 
-            if (System.Math.Abs(latitude) < 1e-6 &&
-                System.Math.Abs(longitude) < 1e-6 &&
-                System.Math.Abs(altitude) < 1e-6)
+            if (Math.Abs(latitude) < 1e-6 &&
+                Math.Abs(longitude) < 1e-6 &&
+                Math.Abs(altitude) < 1e-6)
             {
                 this.invalidCoordinateCount++;
                 return null;

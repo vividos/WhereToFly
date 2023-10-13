@@ -27,7 +27,9 @@ namespace WhereToFly.App.UnitTest.Views
         public void TestDefaultCtor()
         {
             // set up
-            var location = new Location
+            var location = new Location(
+                "test-id",
+                new MapPoint(47.6764385, 11.8710533, 1685.0))
             {
                 Name = "Test Live Waypoint",
                 Type = LocationType.LiveWaypoint,

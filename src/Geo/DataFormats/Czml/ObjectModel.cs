@@ -6,7 +6,6 @@ using System.Diagnostics;
 #pragma warning disable SA1402 // File may only contain a single type
 #pragma warning disable SA1649 // File name should match first type name
 #pragma warning disable CA1819 // Properties should not return arrays
-#pragma warning disable CS8632 // The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
 
 // C# object model for deserializing CZML JSON data.
 namespace WhereToFly.Geo.DataFormats.Czml
@@ -32,7 +31,7 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// Packet description; may be null
         /// </summary>
         [JsonProperty("description")]
-        public string Description { get; }
+        public string? Description { get; }
 
         /// <summary>
         /// Packet version
@@ -45,7 +44,7 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// </summary>
         /// <param name="name">name of document</param>
         /// <param name="description">description for packet</param>
-        public PacketHeader(string name, string description)
+        public PacketHeader(string name, string? description)
         {
             this.Name = name;
             this.Description = description;
@@ -67,61 +66,61 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// Object name
         /// </summary>
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         /// <summary>
         /// Object description
         /// </summary>
         [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         /// <summary>
         /// Position; used by Point, Cylinder, etc.
         /// </summary>
         [JsonProperty("position", NullValueHandling = NullValueHandling.Ignore)]
-        public PositionList Position { get; set; }
+        public PositionList? Position { get; set; }
 
         /// <summary>
         /// Point entity
         /// </summary>
         [JsonProperty("point", NullValueHandling = NullValueHandling.Ignore)]
-        public Point Point { get; set; }
+        public Point? Point { get; set; }
 
         /// <summary>
         /// Label entity
         /// </summary>
         [JsonProperty("label", NullValueHandling = NullValueHandling.Ignore)]
-        public Label Label { get; set; }
+        public Label? Label { get; set; }
 
         /// <summary>
         /// Billboard entity
         /// </summary>
         [JsonProperty("billboard", NullValueHandling = NullValueHandling.Ignore)]
-        public Billboard Billboard { get; set; }
+        public Billboard? Billboard { get; set; }
 
         /// <summary>
         /// Polyline entity
         /// </summary>
         [JsonProperty("polyline", NullValueHandling = NullValueHandling.Ignore)]
-        public Polyline Polyline { get; set; }
+        public Polyline? Polyline { get; set; }
 
         /// <summary>
         /// Cylinder entity
         /// </summary>
         [JsonProperty("cylinder", NullValueHandling = NullValueHandling.Ignore)]
-        public Cylinder Cylinder { get; set; }
+        public Cylinder? Cylinder { get; set; }
 
         /// <summary>
         /// Polygon entity
         /// </summary>
         [JsonProperty("polygon", NullValueHandling = NullValueHandling.Ignore)]
-        public Polygon Polygon { get; set; }
+        public Polygon? Polygon { get; set; }
 
         /// <summary>
         /// Model entity
         /// </summary>
         [JsonProperty("model", NullValueHandling = NullValueHandling.Ignore)]
-        public Model Model { get; set; }
+        public Model? Model { get; set; }
     }
 
     /// <summary>
@@ -147,7 +146,11 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// <param name="existingValue">existing value; unused</param>
         /// <param name="serializer">serializer; unused</param>
         /// <returns>throws exception</returns>
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object? ReadJson(
+            JsonReader reader,
+            Type objectType,
+            object? existingValue,
+            JsonSerializer serializer)
         {
             throw new NotImplementedException();
         }
@@ -158,9 +161,9 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// <param name="writer">JSON writer to use</param>
         /// <param name="value">HeightReference value to write</param>
         /// <param name="serializer">serializer; unused</param>
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
-            var heightReference = (HeightReference)value;
+            var heightReference = (HeightReference?)value;
             switch (heightReference)
             {
                 case HeightReference.None:
@@ -224,7 +227,11 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// <param name="existingValue">existing value; unused</param>
         /// <param name="serializer">serializer; unused</param>
         /// <returns>throws exception</returns>
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object? ReadJson(
+            JsonReader reader,
+            Type objectType,
+            object? existingValue,
+            JsonSerializer serializer)
         {
             throw new NotImplementedException();
         }
@@ -235,9 +242,9 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// <param name="writer">JSON writer to use</param>
         /// <param name="value">HorizontalOrigin value to write</param>
         /// <param name="serializer">serializer; unused</param>
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
-            var horizontalOrigin = (HorizontalOrigin)value;
+            var horizontalOrigin = (HorizontalOrigin?)value;
             switch (horizontalOrigin)
             {
                 case HorizontalOrigin.Center:
@@ -301,7 +308,11 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// <param name="existingValue">existing value; unused</param>
         /// <param name="serializer">serializer; unused</param>
         /// <returns>throws exception</returns>
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object? ReadJson(
+            JsonReader reader,
+            Type objectType,
+            object? existingValue,
+            JsonSerializer serializer)
         {
             throw new NotImplementedException();
         }
@@ -312,9 +323,12 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// <param name="writer">JSON writer to use</param>
         /// <param name="value">VerticalOrigin value to write</param>
         /// <param name="serializer">serializer; unused</param>
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override void WriteJson(
+            JsonWriter writer,
+            object? value,
+            JsonSerializer serializer)
         {
-            var verticalOrigin = (VerticalOrigin)value;
+            var verticalOrigin = (VerticalOrigin?)value;
             switch (verticalOrigin)
             {
                 case VerticalOrigin.Center:
@@ -384,19 +398,19 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// Specifies the color
         /// </summary>
         [JsonProperty("color")]
-        public Color Color { get; set; }
+        public Color? Color { get; set; }
 
         /// <summary>
         /// Specifies the outline color
         /// </summary>
         [JsonProperty("outlineColor")]
-        public Color OutlineColor { get; set; }
+        public Color? OutlineColor { get; set; }
 
         /// <summary>
         /// Outline width
         /// </summary>
         [JsonProperty("outlineWidth")]
-        public double OutlineWidth { get; set; }
+        public double? OutlineWidth { get; set; }
     }
 
     /// <summary>
@@ -422,7 +436,11 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// <param name="existingValue">existing value; unused</param>
         /// <param name="serializer">serializer; unused</param>
         /// <returns>throws exception</returns>
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object? ReadJson(
+            JsonReader reader,
+            Type objectType,
+            object? existingValue,
+            JsonSerializer serializer)
         {
             throw new NotImplementedException();
         }
@@ -433,9 +451,12 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// <param name="writer">JSON writer to use</param>
         /// <param name="value">LabelStyle value to write</param>
         /// <param name="serializer">serializer; unused</param>
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override void WriteJson(
+            JsonWriter writer,
+            object? value,
+            JsonSerializer serializer)
         {
-            var verticalOrigin = (LabelStyle)value;
+            var verticalOrigin = (LabelStyle?)value;
             switch (verticalOrigin)
             {
                 case LabelStyle.Fill:
@@ -511,13 +532,13 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// Label text
         /// </summary>
         [JsonProperty("text")]
-        public string Text { get; set; }
+        public string? Text { get; set; }
 
         /// <summary>
         /// Font name, e.g. "12pt Lucida Console"
         /// </summary>
         [JsonProperty("font", NullValueHandling = NullValueHandling.Ignore)]
-        public string Font { get; set; }
+        public string? Font { get; set; }
 
         /// <summary>
         /// Label style
@@ -553,19 +574,19 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// Specifies the fill color
         /// </summary>
         [JsonProperty("fillColor", NullValueHandling = NullValueHandling.Ignore)]
-        public Color FillColor { get; set; }
+        public Color? FillColor { get; set; }
 
         /// <summary>
         /// Specifies the background color
         /// </summary>
         [JsonProperty("backgroundColor", NullValueHandling = NullValueHandling.Ignore)]
-        public Color BackgroundColor { get; set; }
+        public Color? BackgroundColor { get; set; }
 
         /// <summary>
         /// Specifies the outline color
         /// </summary>
         [JsonProperty("outlineColor", NullValueHandling = NullValueHandling.Ignore)]
-        public Color OutlineColor { get; set; }
+        public Color? OutlineColor { get; set; }
 
         /// <summary>
         /// Outline width
@@ -577,7 +598,7 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// Distance display condition
         /// </summary>
         [JsonProperty("distanceDisplayCondition", NullValueHandling = NullValueHandling.Ignore)]
-        public DistanceDisplayCondition DistanceDisplayCondition { get; set; }
+        public DistanceDisplayCondition? DistanceDisplayCondition { get; set; }
     }
 
     /// <summary>
@@ -589,7 +610,7 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// Billboard image URI
         /// </summary>
         [JsonProperty("image")]
-        public string Image { get; set; }
+        public string? Image { get; set; }
 
         /// <summary>
         /// Width of image, in meters or pixels
@@ -637,7 +658,7 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// Distance display condition
         /// </summary>
         [JsonProperty("distanceDisplayCondition", NullValueHandling = NullValueHandling.Ignore)]
-        public DistanceDisplayCondition DistanceDisplayCondition { get; set; }
+        public DistanceDisplayCondition? DistanceDisplayCondition { get; set; }
     }
 
     /// <summary>
@@ -649,7 +670,7 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// All positions of polyline points
         /// </summary>
         [JsonProperty("positions")]
-        public PositionList Positions { get; set; }
+        public PositionList? Positions { get; set; }
 
         /// <summary>
         /// Polyline width
@@ -667,13 +688,13 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// Material used to show the polyline
         /// </summary>
         [JsonProperty("material")]
-        public Material Material { get; set; }
+        public Material? Material { get; set; }
 
         /// <summary>
         /// Distance display condition
         /// </summary>
         [JsonProperty("distanceDisplayCondition", NullValueHandling = NullValueHandling.Ignore)]
-        public DistanceDisplayCondition DistanceDisplayCondition { get; set; }
+        public DistanceDisplayCondition? DistanceDisplayCondition { get; set; }
     }
 
     /// <summary>
@@ -709,7 +730,7 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// Material used to show the cylinder
         /// </summary>
         [JsonProperty("material")]
-        public Material Material { get; set; }
+        public Material? Material { get; set; }
 
         /// <summary>
         /// Indicates if the cylinder should also be drawn with an outline
@@ -721,7 +742,7 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// Specifies the outline color
         /// </summary>
         [JsonProperty("outlineColor")]
-        public Color OutlineColor { get; set; }
+        public Color? OutlineColor { get; set; }
     }
 
     /// <summary>
@@ -734,7 +755,7 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// All positions of polygon points
         /// </summary>
         [JsonProperty("positions")]
-        public PositionList Positions { get; set; }
+        public PositionList? Positions { get; set; }
 
         /// <summary>
         /// Height of polygon, when HeightReference is set to RelativeToGround
@@ -758,7 +779,7 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// Material used to show the polygon
         /// </summary>
         [JsonProperty("material")]
-        public Material Material { get; set; }
+        public Material? Material { get; set; }
 
         /// <summary>
         /// Indicates if the polygon should also be drawn with an outline
@@ -782,7 +803,7 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// The model's URI, usually an URL to a .glb file
         /// </summary>
         [JsonProperty("uri")]
-        public string Uri { get; set; }
+        public string? Uri { get; set; }
 
         /// <summary>
         /// Scale of model
@@ -901,7 +922,7 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// Specifies the color value
         /// </summary>
         [JsonProperty("color")]
-        public Color Color { get; set; }
+        public Color? Color { get; set; }
     }
 
     /// <summary>

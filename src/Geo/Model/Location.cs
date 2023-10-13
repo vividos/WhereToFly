@@ -16,7 +16,7 @@ namespace WhereToFly.Geo.Model
         /// <summary>
         /// Name of location
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         /// <summary>
         /// Location on map
@@ -26,23 +26,23 @@ namespace WhereToFly.Geo.Model
         /// <summary>
         /// Description of location
         /// </summary>
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
         /// <summary>
         /// Type of location
         /// </summary>
-        public LocationType Type { get; set; }
+        public LocationType Type { get; set; } = LocationType.Waypoint;
 
         /// <summary>
         /// When the location is of type FlyingTakeoff, this may specify the possible takeoff
         /// directions.
         /// </summary>
-        public TakeoffDirections TakeoffDirections { get; set; }
+        public TakeoffDirections TakeoffDirections { get; set; } = TakeoffDirections.None;
 
         /// <summary>
         /// Link to external internet page, for more infos about location
         /// </summary>
-        public string InternetLink { get; set; }
+        public string InternetLink { get; set; } = string.Empty;
 
         /// <summary>
         /// Indicates if this location is a start/stop location for planning tours
@@ -53,6 +53,17 @@ namespace WhereToFly.Geo.Model
         /// Extra properties of the location, e.g. wind direction for a weather station, etc.
         /// </summary>
         public Dictionary<LocationPropertyType, string> Properties { get; set; } = new();
+
+        /// <summary>
+        /// Creates a new location object
+        /// </summary>
+        /// <param name="id">location ID</param>
+        /// <param name="mapLocation">map location</param>
+        public Location(string id, MapPoint mapLocation)
+        {
+            this.Id = id;
+            this.MapLocation = mapLocation;
+        }
 
         #region IEquatable implementation
 

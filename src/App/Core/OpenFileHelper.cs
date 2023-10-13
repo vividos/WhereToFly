@@ -362,7 +362,7 @@ namespace WhereToFly.App.Core
 
             var choices = new List<string>();
             int count = 0;
-            foreach (var trackName in trackList)
+            foreach (string trackName in trackList)
             {
                 count++;
                 choices.Add($"{count}. {trackName}");
@@ -486,11 +486,11 @@ namespace WhereToFly.App.Core
         {
             string question = "What do you want to import?";
 
-            var choices = new string[2]
-                {
-                    "Import Locations",
-                    "Import Tracks",
-                };
+            string[] choices = new string[2]
+            {
+                "Import Locations",
+                "Import Tracks",
+            };
 
             string choice = await App.Current.MainPage.DisplayActionSheet(
                 question,
@@ -645,9 +645,8 @@ namespace WhereToFly.App.Core
                 name = Path.GetFileNameWithoutExtension(filename);
             }
 
-            var layer = new Layer
+            var layer = new Layer(Guid.NewGuid().ToString("B"))
             {
-                Id = Guid.NewGuid().ToString("B"),
                 Name = name,
                 Description = HtmlConverter.Sanitize(description + fileDescription),
                 IsVisible = true,

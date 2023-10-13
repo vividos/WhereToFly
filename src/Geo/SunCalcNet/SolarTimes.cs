@@ -34,5 +34,6 @@ namespace WhereToFly.Geo.SunCalcNet
         /// day.
         /// </summary>
         public IDictionary<SunTimeType, DateTimeOffset> SunriseSunsetTimes { get; set; }
+            = new Dictionary<SunTimeType, DateTimeOffset>();
     }
 }

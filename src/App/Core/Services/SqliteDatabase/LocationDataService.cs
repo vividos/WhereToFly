@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -54,7 +55,14 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             public string MapLocation
             {
                 get => JsonConvert.SerializeObject(this.Location.MapLocation);
-                set => this.Location.MapLocation = JsonConvert.DeserializeObject<MapPoint>(value);
+                set
+                {
+                    var mapPoint = JsonConvert.DeserializeObject<MapPoint>(value);
+                    if (mapPoint != null)
+                    {
+                        this.Location.MapLocation = mapPoint;
+                    }
+                }
             }
 
             /// <summary>
@@ -112,7 +120,9 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             /// </summary>
             public LocationEntry()
             {
-                this.Location = new Location();
+                this.Location = new Location(
+                    Guid.NewGuid().ToString("B"),
+                    new MapPoint(0.0, 0.0));
             }
 
             /// <summary>

@@ -108,11 +108,11 @@ namespace WhereToFly.App.Core
 
             var mapPoint = new MapPoint(result.Data.Latitude, result.Data.Longitude, result.Data.Altitude);
 
-            return new Location
+            return new Location(
+                result.Data.ID,
+                mapPoint)
             {
-                Id = result.Data.ID,
                 Name = waypointName ?? result.Data.Name,
-                MapLocation = mapPoint,
                 Description = result.Data.Description.Replace("\n", "<br/>"),
                 Type = LocationType.LiveWaypoint,
                 InternetLink = appResourceUri.ToString(),
@@ -191,9 +191,8 @@ namespace WhereToFly.App.Core
                 appResourceUri.ToString(),
                 null);
 
-            var track = new Track
+            var track = new Track(result.Data.ID)
             {
-                Id = result.Data.ID,
                 Name = trackName ?? result.Data.Name,
                 Description = HtmlConverter.Sanitize(result.Data.Description),
                 IsFlightTrack = true,

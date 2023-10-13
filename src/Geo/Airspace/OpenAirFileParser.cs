@@ -61,7 +61,7 @@ namespace WhereToFly.Geo.Airspace
         /// <summary>
         /// Currently parsed airspace; may be null
         /// </summary>
-        private Airspace currentAirspace;
+        private Airspace? currentAirspace;
 
         /// <summary>
         /// Enumerable with all airspaces that were correctly parsed by this class
@@ -248,15 +248,39 @@ namespace WhereToFly.Geo.Airspace
                     break;
 
                 case "AY": // Naviter extension
-                    this.currentAirspace.AirspaceType = data;
+                    if (this.currentAirspace != null)
+                    {
+                        this.currentAirspace.AirspaceType = data;
+                    }
+                    else
+                    {
+                        this.AddParsingError($"command {command} without a current airspace");
+                    }
+
                     break;
 
                 case "AF": // Naviter extension
-                    this.currentAirspace.Frequency = data;
+                    if (this.currentAirspace != null)
+                    {
+                        this.currentAirspace.Frequency = data;
+                    }
+                    else
+                    {
+                        this.AddParsingError($"command {command} without a current airspace");
+                    }
+
                     break;
 
                 case "AG": // Naviter extension
-                    this.currentAirspace.CallSign = data;
+                    if (this.currentAirspace != null)
+                    {
+                        this.currentAirspace.CallSign = data;
+                    }
+                    else
+                    {
+                        this.AddParsingError($"command {command} without a current airspace");
+                    }
+
                     break;
 
                 case "SP":
@@ -391,13 +415,14 @@ namespace WhereToFly.Geo.Airspace
         /// <returns>altitude object</returns>
         private Altitude ParseAltitude(string data)
         {
-            data = ParseOpeningTimes(data, out string openingTimes);
+            data = ParseOpeningTimes(data, out string? openingTimes);
 
             string localData = data.ToUpperInvariant();
 
-            if (this.TryParseFixedTextAltitude(localData, out Altitude altitude) ||
+            if ((this.TryParseFixedTextAltitude(localData, out Altitude? altitude) ||
                 this.TryParseFlightLevelAltitude(localData, out altitude) ||
-                this.TryParseFixedHeightsAltitude(localData, out altitude))
+                this.TryParseFixedHeightsAltitude(localData, out altitude)) &&
+                    altitude != null)
             {
                 altitude.OpeningTimes = openingTimes;
                 return altitude;
@@ -417,7 +442,7 @@ namespace WhereToFly.Geo.Airspace
         /// <param name="data">altitude data to parse</param>
         /// <param name="openingTimes">contains parsed opening times, or null when none was found</param>
         /// <returns>modified altitude data (without opening times)</returns>
-        private static string ParseOpeningTimes(string data, out string openingTimes)
+        private static string ParseOpeningTimes(string data, out string? openingTimes)
         {
             openingTimes = null;
 
@@ -445,7 +470,7 @@ namespace WhereToFly.Geo.Airspace
         /// <param name="data">uppercase data to parse</param>
         /// <param name="altitude">parsed altitude</param>
         /// <returns>true when successful, false when not</returns>
-        private bool TryParseFixedTextAltitude(string data, out Altitude altitude)
+        private bool TryParseFixedTextAltitude(string data, out Altitude? altitude)
         {
             switch (data)
             {
@@ -476,7 +501,7 @@ namespace WhereToFly.Geo.Airspace
         /// <param name="data">uppercase data to parse</param>
         /// <param name="altitude">parsed altitude</param>
         /// <returns>true when successful, false when not</returns>
-        private bool TryParseFlightLevelAltitude(string data, out Altitude altitude)
+        private bool TryParseFlightLevelAltitude(string data, out Altitude? altitude)
         {
             if (data.StartsWith("FL"))
             {
@@ -503,7 +528,7 @@ namespace WhereToFly.Geo.Airspace
         /// <param name="data">uppercase data to parse</param>
         /// <param name="altitude">parsed altitude</param>
         /// <returns>true when successful, false when not</returns>
-        private bool TryParseFixedHeightsAltitude(string data, out Altitude altitude)
+        private bool TryParseFixedHeightsAltitude(string data, out Altitude? altitude)
         {
             AltitudeType type = AltitudeType.Textual;
             if (data.EndsWith("MSL") ||
@@ -638,12 +663,16 @@ namespace WhereToFly.Geo.Airspace
         /// <param name="data">polygon point to parse</param>
         private void ParseDP(string data)
         {
-            var coord = this.ParseCoord(data);
+            Coord? coord = this.ParseCoord(data);
 
-            this.AddPolygonSegment(new Polygon.PolygonPoint
+            if (coord == null)
             {
-                Point = coord,
-            });
+                this.AddParsingError("invalid coordinates format for DP command: " + data);
+            }
+            else
+            {
+                this.AddPolygonSegment(new Polygon.PolygonPoint(coord));
+            }
         }
 
         /// <summary>
@@ -653,8 +682,14 @@ namespace WhereToFly.Geo.Airspace
         /// <param name="data">circle radius, in nautical miles</param>
         private void ParseDC(string data)
         {
-            string x = this.GetVariableOrDefault("X", null);
-            Coord centerCoord = this.ParseCoord(x);
+            if (this.currentAirspace == null)
+            {
+                this.AddParsingError($"command DC without a current airspace");
+                return;
+            }
+
+            string? x = this.GetVariableOrDefault("X", null);
+            Coord? centerCoord = this.ParseCoord(x);
 
             if (centerCoord == null)
             {
@@ -679,11 +714,9 @@ namespace WhereToFly.Geo.Airspace
                 return;
             }
 
-            this.currentAirspace.Geometry = new Circle
-            {
-                Center = centerCoord,
-                Radius = radiusInMeter,
-            };
+            this.currentAirspace.Geometry = new Circle(
+                centerCoord,
+                radiusInMeter);
         }
 
         /// <summary>
@@ -693,8 +726,8 @@ namespace WhereToFly.Geo.Airspace
         /// <param name="data">data to parse</param>
         private void ParseDA(string data)
         {
-            string x = this.GetVariableOrDefault("X", null);
-            Coord centerCoord = this.ParseCoord(x);
+            string? x = this.GetVariableOrDefault("X", null);
+            Coord? centerCoord = this.ParseCoord(x);
 
             if (centerCoord == null)
             {
@@ -720,14 +753,12 @@ namespace WhereToFly.Geo.Airspace
 
             double radiusInMeter = radiusNauticalMiles * Constants.FactorNauticalMilesToMeter;
 
-            this.AddPolygonSegment(new Polygon.PolygonArcSegment
-            {
-                Center = centerCoord,
-                Radius = radiusInMeter,
-                StartAngle = Convert.ToDouble(elements[1]),
-                EndAngle = Convert.ToDouble(elements[2]),
-                Direction = this.GetDirectionFromCurrentVariable(),
-            });
+            this.AddPolygonSegment(new Polygon.PolygonArcSegment(
+                center: centerCoord,
+                radius: radiusInMeter,
+                startAngle: Convert.ToDouble(elements[1]),
+                endAngle: Convert.ToDouble(elements[2]),
+                direction: this.GetDirectionFromCurrentVariable()));
         }
 
         /// <summary>
@@ -737,8 +768,8 @@ namespace WhereToFly.Geo.Airspace
         /// <param name="data">data to parse</param>
         private void ParseDB(string data)
         {
-            string x = this.GetVariableOrDefault("X", null);
-            Coord centerCoord = this.ParseCoord(x);
+            string? x = this.GetVariableOrDefault("X", null);
+            Coord? centerCoord = this.ParseCoord(x);
 
             if (centerCoord == null)
             {
@@ -762,13 +793,11 @@ namespace WhereToFly.Geo.Airspace
                 return;
             }
 
-            this.AddPolygonSegment(new Polygon.PolygonArc
-            {
-                Center = centerCoord,
-                Start = startCoord,
-                End = endCoord,
-                Direction = this.GetDirectionFromCurrentVariable(),
-            });
+            this.AddPolygonSegment(new Polygon.PolygonArc(
+                centerCoord,
+                startCoord,
+                endCoord,
+                this.GetDirectionFromCurrentVariable()));
         }
 
         /// <summary>
@@ -809,7 +838,7 @@ namespace WhereToFly.Geo.Airspace
         /// <returns>arc direction</returns>
         private Polygon.ArcDirection GetDirectionFromCurrentVariable()
         {
-            string direction = this.GetVariableOrDefault("D", "+");
+            string? direction = this.GetVariableOrDefault("D", "+");
             if (direction != "+" && direction != "-")
             {
                 this.AddParsingError("invalid direction variable value: " + direction);
@@ -834,14 +863,14 @@ namespace WhereToFly.Geo.Airspace
         /// </summary>
         /// <param name="coordinates">coordinates text</param>
         /// <returns>coordinates object, or null when there was a format error</returns>
-        private Coord ParseCoord(string coordinates)
+        private Coord? ParseCoord(string? coordinates)
         {
             if (string.IsNullOrWhiteSpace(coordinates))
             {
                 return null;
             }
 
-            int posSeparator = coordinates.IndexOf('N');
+            int posSeparator = coordinates!.IndexOf('N');
             if (posSeparator == -1)
             {
                 posSeparator = coordinates.IndexOf('S');
@@ -948,9 +977,9 @@ namespace WhereToFly.Geo.Airspace
         /// Returns a variable value, or the default value when not found
         /// </summary>
         /// <param name="variableName">name of variable</param>
-        /// <param name="defaultValue">default value</param>
+        /// <param name="defaultValue">default value, may be null</param>
         /// <returns>found or default value</returns>
-        private string GetVariableOrDefault(string variableName, string defaultValue)
+        private string? GetVariableOrDefault(string variableName, string? defaultValue)
         {
             return this.currentVariables.TryGetValue(variableName, out string value)
                 ? value

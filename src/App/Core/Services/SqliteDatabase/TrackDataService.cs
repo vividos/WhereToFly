@@ -220,7 +220,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             /// </summary>
             public TrackEntry()
             {
-                this.Track = new Track();
+                this.Track = new Track(Guid.NewGuid().ToString("B"));
             }
 
             /// <summary>
@@ -247,12 +247,21 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
                     this.TrackPointFilename);
 
                 string json = File.ReadAllText(filename);
-                this.Track.TrackPoints = JsonConvert.DeserializeObject<List<TrackPoint>>(
+
+                var trackPoints = JsonConvert.DeserializeObject<List<TrackPoint>>(
                     json,
                     new JsonSerializerSettings
                     {
-                        Converters = new List<JsonConverter> { new TrackPoint.Converter() },
+                        Converters = new List<JsonConverter>
+                        {
+                            new TrackPoint.Converter()
+                        },
                     });
+
+                if (trackPoints != null)
+                {
+                    this.Track.TrackPoints = trackPoints;
+                }
             }
 
             /// <summary>

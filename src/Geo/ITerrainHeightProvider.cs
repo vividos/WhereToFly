@@ -13,6 +13,6 @@ namespace WhereToFly.Geo
         /// </summary>
         /// <param name="track">track object</param>
         /// <returns>list of terrain height values for given track points</returns>
-        Task<double[]> SampleTrackHeights(Track track);
+        Task<double[]?> SampleTrackHeights(Track track);
     }
 }

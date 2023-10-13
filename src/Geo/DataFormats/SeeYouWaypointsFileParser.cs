@@ -55,7 +55,7 @@ namespace WhereToFly.Geo.DataFormats
 
                 string[] parts = SplitWithQuotes(line).ToArray();
 
-                Location location = LocationFromParts(parts);
+                Location? location = LocationFromParts(parts);
                 if (location != null)
                 {
                     yield return location;
@@ -98,7 +98,7 @@ namespace WhereToFly.Geo.DataFormats
         /// </summary>
         /// <param name="parts">parts text strings of a line</param>
         /// <returns>newly created location, or null when parts couldn't be parsed</returns>
-        private static Location LocationFromParts(string[] parts)
+        private static Location? LocationFromParts(string[] parts)
         {
 #pragma warning disable S125 // Sections of code should not be "commented out"
             // Waypoint name
@@ -130,14 +130,16 @@ namespace WhereToFly.Geo.DataFormats
                 return null;
             }
 
-            return new Location
+            var mapLocation = new MapPoint(
+                ParseLatLong("0" + parts[3]),
+                ParseLatLong(parts[4]),
+                ParseAltitude(parts[5]));
+
+            return new Location(
+                Guid.NewGuid().ToString("B"),
+                mapLocation)
             {
-                Id = Guid.NewGuid().ToString("B"),
                 Name = parts[0],
-                MapLocation = new MapPoint(
-                    ParseLatLong("0" + parts[3]),
-                    ParseLatLong(parts[4]),
-                    ParseAltitude(parts[5])),
                 Description = parts[10],
                 Type = LocationTypeFromWaypointStyle(parts[7]),
             };

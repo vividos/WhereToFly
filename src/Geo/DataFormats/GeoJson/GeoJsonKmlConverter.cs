@@ -15,14 +15,14 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
     public class GeoJsonKmlConverter
     {
         /// <summary>
+        /// Element style ID for all KML elements
+        /// </summary>
+        private const string KmlElementStyleId = "element_style";
+
+        /// <summary>
         /// KML conversion options
         /// </summary>
         private readonly KmlConvertOptions kmlOptions;
-
-        /// <summary>
-        /// Element style, to be used for all KML elements
-        /// </summary>
-        private Style elementStyle;
 
         /// <summary>
         /// Creates a new GeoJSON to KML converter
@@ -51,9 +51,12 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
 
             kml.Feature = folder;
 
-            this.elementStyle = this.AddElementStyle(kml);
+            this.AddElementStyle(kml);
 
-            this.ConvertElementToKml(folder, this.kmlOptions.DocumentName, rootElement);
+            if (rootElement != null)
+            {
+                this.ConvertElementToKml(folder, this.kmlOptions.DocumentName, rootElement);
+            }
 
             var kmlfile = KmlFile.Create(kml, false);
             using var stream = new MemoryStream();
@@ -66,12 +69,11 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// Adds a Style object to the KML object, to be used for all elements
         /// </summary>
         /// <param name="kml">KML object to add to</param>
-        /// <returns>KML Style object</returns>
-        private Style AddElementStyle(Kml kml)
+        private void AddElementStyle(Kml kml)
         {
             var style = new Style
             {
-                Id = "element_style",
+                Id = KmlElementStyleId,
                 Line = new LineStyle
                 {
                     Width = this.kmlOptions.LineWidth,
@@ -85,8 +87,6 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
             };
 
             kml.Feature.AddStyle(style);
-
-            return style;
         }
 
         /// <summary>
@@ -113,16 +113,31 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
 
                         folder.AddFeature(subFolder);
 
-                        foreach (Feature feature in featureCollection.FeatureList)
+                        if (featureCollection.FeatureList != null)
                         {
-                            this.ConvertElementToKml(subFolder, elementName, feature);
+                            foreach (Feature feature in featureCollection.FeatureList)
+                            {
+                                this.ConvertElementToKml(subFolder, elementName, feature);
+                            }
+                        }
+                        else
+                        {
+                            throw new FormatException("GeoJSON FeatureCollection without feature list");
                         }
 
                         break;
                     }
 
                 case Feature feature:
-                    this.ConvertElementToKml(folder, elementName, feature.Geometry);
+                    if (feature.Geometry != null)
+                    {
+                        this.ConvertElementToKml(folder, elementName, feature.Geometry);
+                    }
+                    else
+                    {
+                        throw new FormatException("GeoJSON Feature without geometry");
+                    }
+
                     break;
 
                 case Geometry geometry:
@@ -130,14 +145,19 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
                     break;
 
                 case GeometryCollection geometryCollection:
+                    if (geometryCollection.GeometryList != null)
                     {
                         foreach (var singleGeometry in geometryCollection.GeometryList)
                         {
                             this.ConvertGeometryToKml(folder, elementName, singleGeometry);
                         }
-
-                        break;
                     }
+                    else
+                    {
+                        throw new FormatException("GeoJSON GeometryCollection without geometry list");
+                    }
+
+                    break;
 
                 default:
                     throw new FormatException("invalid element type");
@@ -171,7 +191,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
 
             if (!string.IsNullOrWhiteSpace(element.Title))
             {
-                return element.Title;
+                return element.Title!;
             }
 
             if (element.Properties != null)
@@ -202,53 +222,97 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
             switch (geometry)
             {
                 case PointGeometry pointGeometry:
-                    this.AddPointPlacemark(
-                        folder,
-                        elementName,
-                        pointGeometry.Coordinates);
-                    break;
-
-                case MultiPointGeometry multiPointGeometry:
-                    foreach (var pointCollection in multiPointGeometry.Coordinates)
+                    if (pointGeometry.Coordinates != null)
                     {
                         this.AddPointPlacemark(
                             folder,
                             elementName,
-                            pointCollection);
+                            pointGeometry.Coordinates);
+                    }
+                    else
+                    {
+                        throw new FormatException("GeoJSON PointGeometry without coordinates");
+                    }
+
+                    break;
+
+                case MultiPointGeometry multiPointGeometry:
+                    if (multiPointGeometry.Coordinates != null)
+                    {
+                        foreach (double[] pointCollection in multiPointGeometry.Coordinates)
+                        {
+                            this.AddPointPlacemark(
+                                folder,
+                                elementName,
+                                pointCollection);
+                        }
+                    }
+                    else
+                    {
+                        throw new FormatException("GeoJSON MultiPointGeometry without coordinates");
                     }
 
                     break;
 
                 case LineStringGeometry lineStringGeometry:
-                    this.AddLineStringPlacemark(
-                        folder,
-                        elementName,
-                        lineStringGeometry.Coordinates);
+                    if (lineStringGeometry.Coordinates != null)
+                    {
+                        this.AddLineStringPlacemark(
+                            folder,
+                            elementName,
+                            lineStringGeometry.Coordinates);
+                    }
+                    else
+                    {
+                        throw new FormatException("GeoJSON LineStringGeometry without coordinates");
+                    }
+
                     break;
 
                 case MultiLineStringGeometry multiLineStringGeometry:
-                    foreach (var lineStringCollection in multiLineStringGeometry.Coordinates)
+                    if (multiLineStringGeometry.Coordinates != null)
                     {
-                        this.AddLineStringPlacemark(folder, elementName, lineStringCollection);
+                        foreach (double[][] lineStringCollection in multiLineStringGeometry.Coordinates)
+                        {
+                            this.AddLineStringPlacemark(folder, elementName, lineStringCollection);
+                        }
+                    }
+                    else
+                    {
+                        throw new FormatException("GeoJSON MultiLineStringGeometry without coordinates");
                     }
 
                     break;
 
                 case PolygonGeometry polygonGeometry:
-                    foreach (var polygonCollection in polygonGeometry.Coordinates)
+                    if (polygonGeometry.Coordinates != null)
                     {
-                        this.AddPolygonPlacemark(folder, elementName, polygonCollection);
+                        foreach (double[][] polygonCollection in polygonGeometry.Coordinates)
+                        {
+                            this.AddPolygonPlacemark(folder, elementName, polygonCollection);
+                        }
+                    }
+                    else
+                    {
+                        throw new FormatException("GeoJSON PolygonGeometry without coordinates");
                     }
 
                     break;
 
                 case MultiPolygonGeometry multiPolygonGeometry:
-                    foreach (var multiPolygonCollection in multiPolygonGeometry.Coordinates)
+                    if (multiPolygonGeometry.Coordinates != null)
                     {
-                        foreach (var polygonCollection in multiPolygonCollection)
+                        foreach (double[][][] multiPolygonCollection in multiPolygonGeometry.Coordinates)
                         {
-                            this.AddPolygonPlacemark(folder, elementName, polygonCollection);
+                            foreach (double[][] polygonCollection in multiPolygonCollection)
+                            {
+                                this.AddPolygonPlacemark(folder, elementName, polygonCollection);
+                            }
                         }
+                    }
+                    else
+                    {
+                        throw new FormatException("GeoJSON MultiPolygonGeometry without coordinates");
                     }
 
                     break;
@@ -286,7 +350,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
             {
                 Name = elementName,
                 Geometry = point,
-                StyleUrl = new Uri($"#{this.elementStyle.Id}", UriKind.Relative),
+                StyleUrl = new Uri($"#{KmlElementStyleId}", UriKind.Relative),
             };
 
             folder.AddFeature(placemark);
@@ -310,7 +374,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
                 Coordinates = new CoordinateCollection(),
             };
 
-            foreach (var coordinates in coordinatesList)
+            foreach (double[] coordinates in coordinatesList)
             {
                 Debug.Assert(
                     coordinates.Length == 2,
@@ -326,7 +390,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
             {
                 Name = elementName,
                 Geometry = lineString,
-                StyleUrl = new Uri($"#{this.elementStyle.Id}", UriKind.Relative),
+                StyleUrl = new Uri($"#{KmlElementStyleId}", UriKind.Relative),
             };
 
             folder.AddFeature(placemark);
@@ -356,7 +420,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
                 },
             };
 
-            foreach (var coordinates in polygonCollection)
+            foreach (double[] coordinates in polygonCollection)
             {
                 Debug.Assert(
                     coordinates.Length == 2,
@@ -372,7 +436,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
             {
                 Name = elementName,
                 Geometry = polygon,
-                StyleUrl = new Uri($"#{this.elementStyle.Id}", UriKind.Relative),
+                StyleUrl = new Uri($"#{KmlElementStyleId}", UriKind.Relative),
             };
 
             folder.AddFeature(placemark);

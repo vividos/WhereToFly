@@ -33,11 +33,11 @@ namespace WhereToFly.App.UnitTest.ViewModels
         public void TestCtor()
         {
             // set up
-            var location = new Location
+            var location = new Location(
+                Guid.NewGuid().ToString("B"),
+                new MapPoint(47.6764385, 11.8710533, 1685.0))
             {
-                Id = Guid.NewGuid().ToString("B"),
                 Name = "Brecherspitz",
-                MapLocation = new MapPoint(47.6764385, 11.8710533, 1685.0),
                 Description = "Herrliche Aussicht über die drei Seen Schliersee im Norden, Tegernsee im Westen und den Spitzingsee im Süden.",
                 Type = LocationType.Summit,
                 InternetLink = "https://de.wikipedia.org/wiki/Brecherspitz",

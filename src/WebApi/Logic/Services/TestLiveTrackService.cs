@@ -175,7 +175,7 @@ namespace WhereToFly.WebApi.Logic.Services
         /// <returns>track with some track points</returns>
         internal static Track GenerateLiveTrackData(DateTimeOffset now)
         {
-            var track = new Track();
+            var track = new Track(Guid.NewGuid().ToString("B"));
             for (int minutes = 0; minutes < NumMinutesToGenerate; minutes++)
             {
                 Stage currentStage = (Stage)((now.Minute + minutes) % 3);
@@ -207,7 +207,7 @@ namespace WhereToFly.WebApi.Logic.Services
                 throw new ArgumentException("invalid thermalling point altitude");
             }
 
-            var track = new Track();
+            var track = new Track("track-id");
 
             var thermallingTopPoint = ThermallingPoint.Offset(
                 0.0,

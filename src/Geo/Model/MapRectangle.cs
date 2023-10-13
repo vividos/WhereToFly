@@ -66,7 +66,7 @@ namespace WhereToFly.Geo.Model
         /// <summary>
         /// Returns the center point of the map rectangle
         /// </summary>
-        public MapPoint Center => new MapPoint(
+        public MapPoint Center => new(
             this.South + (this.Height / 2.0),
             this.West + (this.Width / 2.0));
 

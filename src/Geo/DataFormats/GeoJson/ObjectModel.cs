@@ -23,26 +23,26 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// Type of GeoJSON object
         /// </summary>
         [JsonProperty("type")]
-        public string Type { get; set; }
+        public string? Type { get; set; }
 
         /// <summary>
         /// Element title; may be null
         /// </summary>
         [JsonProperty("title")]
-        public string Title { get; set; }
+        public string? Title { get; set; }
 
         /// <summary>
         /// Properties attached to this element; may be empty
         /// </summary>
         [JsonProperty("properties")]
-        public Dictionary<string, object> Properties { get; set; }
+        public Dictionary<string, object> Properties { get; set; } = new();
 
         /// <summary>
         /// Deserializes a GeoJSON formatted JSON text to an element hierarchy and returns it.
         /// </summary>
         /// <param name="geoJsonText">GeoJSON text</param>
         /// <returns>root element</returns>
-        public static Element Deserialize(string geoJsonText)
+        public static Element? Deserialize(string geoJsonText)
         {
             return JsonConvert.DeserializeObject<Element>(
                 geoJsonText,
@@ -65,7 +65,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// List of features contained in this collection
         /// </summary>
         [JsonProperty("features")]
-        public Feature[] FeatureList { get; set; }
+        public Feature[]? FeatureList { get; set; }
     }
 
     /// <summary>
@@ -77,7 +77,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// Geometry for this feature
         /// </summary>
         [JsonProperty("geometry")]
-        public Geometry Geometry { get; set; }
+        public Geometry? Geometry { get; set; }
     }
 
     /// <summary>
@@ -98,7 +98,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// List of geometries
         /// </summary>
         [JsonProperty("geometries")]
-        public Geometry[] GeometryList { get; set; }
+        public Geometry[]? GeometryList { get; set; }
     }
 
     /// <summary>
@@ -110,7 +110,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// Coordinates for the point geometry
         /// </summary>
         [JsonProperty("coordinates")]
-        public double[] Coordinates { get; set; }
+        public double[]? Coordinates { get; set; }
     }
 
     /// <summary>
@@ -122,7 +122,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// Coordinates for the line string geometry
         /// </summary>
         [JsonProperty("coordinates")]
-        public double[][] Coordinates { get; set; }
+        public double[][]? Coordinates { get; set; }
     }
 
     /// <summary>
@@ -134,7 +134,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// Coordinates for the polygon geometry
         /// </summary>
         [JsonProperty("coordinates")]
-        public double[][][] Coordinates { get; set; }
+        public double[][][]? Coordinates { get; set; }
     }
 
     /// <summary>
@@ -146,7 +146,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// Coordinates for the multi-point geometry
         /// </summary>
         [JsonProperty("coordinates")]
-        public double[][] Coordinates { get; set; }
+        public double[][]? Coordinates { get; set; }
     }
 
     /// <summary>
@@ -158,7 +158,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// Coordinates for the multi line string geometry
         /// </summary>
         [JsonProperty("coordinates")]
-        public double[][][] Coordinates { get; set; }
+        public double[][][]? Coordinates { get; set; }
     }
 
     /// <summary>
@@ -170,7 +170,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// Coordinates for the multi-polygon geometry
         /// </summary>
         [JsonProperty("coordinates")]
-        public double[][][][] Coordinates { get; set; }
+        public double[][][][]? Coordinates { get; set; }
     }
 
     /// <summary>
@@ -200,7 +200,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// <param name="writer">JSON writer</param>
         /// <param name="value">value to write</param>
         /// <param name="serializer">JSON serializer</param>
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
             => throw new NotSupportedException("writing not supported");
 
         /// <summary>
@@ -211,7 +211,11 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// <param name="existingValue">existing object; unused</param>
         /// <param name="serializer">JSON serializer</param>
         /// <returns>read object</returns>
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object? ReadJson(
+            JsonReader reader,
+            Type objectType,
+            object? existingValue,
+            JsonSerializer serializer)
         {
             if (reader.TokenType == JsonToken.Null)
             {
@@ -219,13 +223,13 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
             }
 
             // load JObject from stream
-            JObject jsonObject = JObject.Load(reader);
+            var jsonObject = JObject.Load(reader);
             if (jsonObject == null)
             {
                 return null;
             }
 
-            string type = jsonObject.Value<string>("type");
+            string? type = jsonObject.Value<string>("type");
             if (type == null)
             {
                 throw new ArgumentException($"Unable to parse value object");

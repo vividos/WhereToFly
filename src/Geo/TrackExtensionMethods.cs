@@ -183,7 +183,7 @@ namespace WhereToFly.Geo
 
             CalcTrackDuration(track);
 
-            TrackPoint previousPoint = null;
+            TrackPoint? previousPoint = null;
             int averageSpeedTrackPointCount = 0;
 
             foreach (var trackPoint in track.TrackPoints)
@@ -270,7 +270,7 @@ namespace WhereToFly.Geo
         private static void CalcAltitudeStatistics(
             Track track,
             TrackPoint trackPoint,
-            TrackPoint previousPoint)
+            TrackPoint? previousPoint)
         {
             if (!trackPoint.Altitude.HasValue)
             {

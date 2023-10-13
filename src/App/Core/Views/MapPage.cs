@@ -600,11 +600,11 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task OnMapView_AddFindResult(string name, MapPoint point)
         {
-            var location = new Location
+            var location = new Location(
+                Guid.NewGuid().ToString("B"),
+                point)
             {
-                Id = Guid.NewGuid().ToString("B"),
                 Name = name ?? "Unknown",
-                MapLocation = point,
                 Description = string.Empty,
                 Type = LocationType.Waypoint,
                 InternetLink = string.Empty,
@@ -714,11 +714,11 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task AddNewWaypoint(MapPoint point)
         {
-            var location = new Location
+            var location = new Location(
+                Guid.NewGuid().ToString("B"),
+                point)
             {
-                Id = Guid.NewGuid().ToString("B"),
                 Name = string.Empty,
-                MapLocation = point,
                 Description = string.Empty,
                 Type = LocationType.Waypoint,
                 InternetLink = string.Empty,

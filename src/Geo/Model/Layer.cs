@@ -34,6 +34,15 @@
         /// <summary>
         /// Data for the layer, e.g. the actual .czml text. Only filled for LayerType.CzmlLayer.
         /// </summary>
-        public string Data { get; set; } = null;
+        public string? Data { get; set; } = null;
+
+        /// <summary>
+        /// Creates a new empty layer object
+        /// </summary>
+        /// <param name="id">layer ID</param>
+        public Layer(string id)
+        {
+            this.Id = id;
+        }
     }
 }

@@ -311,9 +311,8 @@ namespace WhereToFly.App.Core.ViewModels
             var trackPoints = from mapPoint in plannedTour.MapPointList
                               select new TrackPoint(mapPoint.Latitude, mapPoint.Longitude, mapPoint.Altitude, null);
 
-            var track = new Track
+            var track = new Track(Guid.NewGuid().ToString("B"))
             {
-                Id = Guid.NewGuid().ToString("B"),
                 Name = "Planned Tour",
                 Description = plannedTour.Description,
                 IsFlightTrack = false,
@@ -360,11 +359,11 @@ namespace WhereToFly.App.Core.ViewModels
         {
             var startPoint = plannedTour.MapPointList.FirstOrDefault();
 
-            return new Location
+            return new Location(
+                Guid.NewGuid().ToString("B"),
+                startPoint)
             {
-                Id = Guid.NewGuid().ToString("B"),
                 Name = "Planned tour start",
-                MapLocation = startPoint,
                 Description = plannedTour.Description,
                 Type = LocationType.Waypoint,
                 InternetLink = string.Empty,

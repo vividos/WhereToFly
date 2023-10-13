@@ -80,13 +80,13 @@ namespace WhereToFly.Geo.Model
             /// <param name="existingValue">existing value; unused</param>
             /// <param name="serializer">json serializer</param>
             /// <returns>created track point object, or null when reading failed</returns>
-            public override object ReadJson(
+            public override object? ReadJson(
                 JsonReader reader,
                 Type objectType,
-                object existingValue,
+                object? existingValue,
                 JsonSerializer serializer)
             {
-                var elements = serializer.Deserialize<double[]>(reader);
+                double[]? elements = serializer.Deserialize<double[]>(reader);
 
                 if (elements == null)
                 {
@@ -130,7 +130,7 @@ namespace WhereToFly.Geo.Model
             /// <param name="serializer">json serializer</param>
             public override void WriteJson(
                 JsonWriter writer,
-                object value,
+                object? value,
                 JsonSerializer serializer)
             {
                 if (value is not TrackPoint point)
@@ -139,7 +139,7 @@ namespace WhereToFly.Geo.Model
                 }
                 else
                 {
-                    var array = new double[5]
+                    double[] array = new double[5]
                     {
                         point.Latitude,
                         point.Longitude,

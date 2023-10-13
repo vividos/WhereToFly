@@ -43,6 +43,15 @@ namespace WhereToFly.Geo.Airspace
             /// Polygon point coordinates
             /// </summary>
             public Coord Point { get; set; }
+
+            /// <summary>
+            /// Creates a new polygon point
+            /// </summary>
+            /// <param name="point">polygon point</param>
+            public PolygonPoint(Coord point)
+            {
+                this.Point = point;
+            }
         }
 
         /// <summary>
@@ -69,6 +78,21 @@ namespace WhereToFly.Geo.Airspace
             /// Arc direction
             /// </summary>
             public ArcDirection Direction { get; set; }
+
+            /// <summary>
+            /// Creates a new polygon arc object
+            /// </summary>
+            /// <param name="center">arc center point</param>
+            /// <param name="start">arc start point</param>
+            /// <param name="end">arc end point</param>
+            /// <param name="direction">arc direction</param>
+            public PolygonArc(Coord center, Coord start, Coord end, ArcDirection direction)
+            {
+                this.Center = center;
+                this.Start = start;
+                this.End = end;
+                this.Direction = direction;
+            }
         }
 
         /// <summary>
@@ -83,7 +107,7 @@ namespace WhereToFly.Geo.Airspace
             public Coord Center { get; set; }
 
             /// <summary>
-            /// Circle radius, in meter
+            /// Arc segment radius, in meter
             /// </summary>
             public double Radius { get; set; }
 
@@ -101,6 +125,28 @@ namespace WhereToFly.Geo.Airspace
             /// Arc segment direction
             /// </summary>
             public ArcDirection Direction { get; set; }
+
+            /// <summary>
+            /// Creates a new polygon arc segment object
+            /// </summary>
+            /// <param name="center">arc segment center point</param>
+            /// <param name="radius">arc segment radius, in meter</param>
+            /// <param name="startAngle">arc segment start angle, in degrees</param>
+            /// <param name="endAngle">arc end point</param>
+            /// <param name="direction">arc direction</param>
+            public PolygonArcSegment(
+                Coord center,
+                double radius,
+                double startAngle,
+                double endAngle,
+                ArcDirection direction)
+            {
+                this.Center = center;
+                this.Radius = radius;
+                this.StartAngle = startAngle;
+                this.EndAngle = endAngle;
+                this.Direction = direction;
+            }
         }
 
         /// <summary>

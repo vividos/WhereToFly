@@ -31,11 +31,9 @@ namespace WhereToFly.App.UnitTest.Geo
                     Floor = new Altitude(AltitudeType.GND),
                     Ceiling = new Altitude(200.0, AltitudeType.AGL),
                     Color = "ff0000",
-                    Geometry = new Circle
-                    {
-                        Center = new Coord { Latitude = 48.137155, Longitude = 11.575416 },
-                        Radius = 200.0
-                    },
+                    Geometry = new Circle(
+                        new Coord { Latitude = 48.137155, Longitude = 11.575416 },
+                        200.0),
                 },
             };
 

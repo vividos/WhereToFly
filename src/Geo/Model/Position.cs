@@ -11,11 +11,11 @@ namespace WhereToFly.Geo
         /// <summary>
         /// Location of pilot in WGS84 coordinates
         /// </summary>
-        public MapPoint Location { get; set; }
+        public MapPoint? Location { get; set; }
 
         /// <summary>
         /// Timestamp of location
         /// </summary>
-        public DateTimeOffset Timestamp { get; set; }
+        public DateTimeOffset? Timestamp { get; set; }
     }
 }

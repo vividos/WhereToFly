@@ -27,11 +27,11 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// <summary>
         /// Custom function to format names for KML elements; may be null
         /// </summary>
-        public Func<Dictionary<string, object>, string> CustomNameFormatter { get; set; } = null;
+        public Func<Dictionary<string, object>, string>? CustomNameFormatter { get; set; } = null;
 
         /// <summary>
         /// Custom function to format description texts for KML elements; may be null
         /// </summary>
-        public Func<Dictionary<string, object>, string> CustomDescriptionFormatter { get; set; } = null;
+        public Func<Dictionary<string, object>, string>? CustomDescriptionFormatter { get; set; } = null;
     }
 }

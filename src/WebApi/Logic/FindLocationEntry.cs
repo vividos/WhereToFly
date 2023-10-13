@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SQLite;
+using System;
 using WhereToFly.Geo.Model;
 
 namespace WhereToFly.WebApi.Logic
@@ -61,7 +62,9 @@ namespace WhereToFly.WebApi.Logic
         /// </summary>
         public FindLocationEntry()
         {
-            this.Location = new Location();
+            this.Location = new Location(
+                Guid.NewGuid().ToString("B"),
+                new MapPoint(0.0, 0.0));
         }
 
         /// <summary>

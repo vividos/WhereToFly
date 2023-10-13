@@ -41,7 +41,10 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
                     this.czmlOptions.DocumentDescription),
             };
 
-            this.ConvertElementToCzml(rootElement, objectList);
+            if (rootElement != null)
+            {
+                this.ConvertElementToCzml(rootElement, objectList);
+            }
 
             return JsonConvert.SerializeObject(objectList);
         }
@@ -57,15 +60,30 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
             switch (element)
             {
                 case FeatureCollection featureCollection:
-                    foreach (Feature feature in featureCollection.FeatureList)
+                    if (featureCollection.FeatureList != null)
                     {
-                        this.ConvertElementToCzml(feature, objectList);
+                        foreach (Feature feature in featureCollection.FeatureList)
+                        {
+                            this.ConvertElementToCzml(feature, objectList);
+                        }
+                    }
+                    else
+                    {
+                        throw new FormatException("GeoJSON FeatureCollection without feature list");
                     }
 
                     break;
 
                 case Feature feature:
-                    this.ConvertGeometryToCzml(feature, feature.Geometry, objectList);
+                    if (feature.Geometry != null)
+                    {
+                        this.ConvertGeometryToCzml(feature, feature.Geometry, objectList);
+                    }
+                    else
+                    {
+                        throw new FormatException("GeoJSON Feature without geometry");
+                    }
+
                     break;
 
                 case Geometry geometry:
@@ -73,14 +91,19 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
                     break;
 
                 case GeometryCollection geometryCollection:
+                    if (geometryCollection.GeometryList != null)
                     {
                         foreach (var singleGeometry in geometryCollection.GeometryList)
                         {
                             this.ConvertGeometryToCzml(element, singleGeometry, objectList);
                         }
-
-                        break;
                     }
+                    else
+                    {
+                        throw new FormatException("GeoJSON GeometryCollection without geometry list");
+                    }
+
+                    break;
 
                 default:
                     throw new FormatException("invalid element type");
@@ -104,63 +127,81 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
             switch (geometry)
             {
                 case PointGeometry pointGeometry:
-                    objectList.Add(
-                        this.GetPointObject(
-                            element,
-                            elementName,
-                            elementDescription,
-                            pointGeometry.Coordinates));
-                    break;
-
-                case MultiPointGeometry multiPointGeometry:
-                    foreach (var pointCollection in multiPointGeometry.Coordinates)
+                    if (pointGeometry.Coordinates != null)
                     {
                         objectList.Add(
                             this.GetPointObject(
                                 element,
                                 elementName,
                                 elementDescription,
-                                pointCollection));
+                                pointGeometry.Coordinates));
+                    }
+                    else
+                    {
+                        throw new FormatException("GeoJSON PointGeometry without coordinates");
+                    }
+
+                    break;
+
+                case MultiPointGeometry multiPointGeometry:
+                    if (multiPointGeometry.Coordinates != null)
+                    {
+                        foreach (double[] pointCollection in multiPointGeometry.Coordinates)
+                        {
+                            objectList.Add(
+                                this.GetPointObject(
+                                    element,
+                                    elementName,
+                                    elementDescription,
+                                    pointCollection));
+                        }
+                    }
+                    else
+                    {
+                        throw new FormatException("GeoJSON MultiPointGeometry without coordinates");
                     }
 
                     break;
 
                 case LineStringGeometry lineStringGeometry:
-                    objectList.Add(
-                        this.GetLineStringPolylineObject(
-                            elementName,
-                            elementDescription,
-                            lineStringGeometry.Coordinates));
-                    break;
-
-                case MultiLineStringGeometry multiLineStringGeometry:
-                    foreach (var lineStringCollection in multiLineStringGeometry.Coordinates)
+                    if (lineStringGeometry.Coordinates != null)
                     {
                         objectList.Add(
                             this.GetLineStringPolylineObject(
                                 elementName,
                                 elementDescription,
-                                lineStringCollection));
+                                lineStringGeometry.Coordinates));
+                    }
+                    else
+                    {
+                        throw new FormatException("GeoJSON LineStringGeometry without coordinates");
+                    }
+
+                    break;
+
+                case MultiLineStringGeometry multiLineStringGeometry:
+                    if (multiLineStringGeometry.Coordinates != null)
+                    {
+                        foreach (double[][] lineStringCollection in multiLineStringGeometry.Coordinates)
+                        {
+                            objectList.Add(
+                                this.GetLineStringPolylineObject(
+                                    elementName,
+                                    elementDescription,
+                                    lineStringCollection));
+                        }
+                    }
+                    else
+                    {
+                        throw new FormatException("GeoJSON MultiLineStringGeometry without coordinates");
                     }
 
                     break;
 
                 case PolygonGeometry polygonGeometry:
-                    foreach (var polygonCollection in polygonGeometry.Coordinates)
+                    if (polygonGeometry.Coordinates != null)
                     {
-                        objectList.Add(
-                            this.GetPolygonPlacemark(
-                                elementName,
-                                elementDescription,
-                                polygonCollection));
-                    }
-
-                    break;
-
-                case MultiPolygonGeometry multiPolygonGeometry:
-                    foreach (var multiPolygonCollection in multiPolygonGeometry.Coordinates)
-                    {
-                        foreach (var polygonCollection in multiPolygonCollection)
+                        foreach (double[][] polygonCollection in polygonGeometry.Coordinates)
                         {
                             objectList.Add(
                                 this.GetPolygonPlacemark(
@@ -168,6 +209,32 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
                                     elementDescription,
                                     polygonCollection));
                         }
+                    }
+                    else
+                    {
+                        throw new FormatException("GeoJSON PolygonGeometry without coordinates");
+                    }
+
+                    break;
+
+                case MultiPolygonGeometry multiPolygonGeometry:
+                    if (multiPolygonGeometry.Coordinates != null)
+                    {
+                        foreach (double[][][] multiPolygonCollection in multiPolygonGeometry.Coordinates)
+                        {
+                            foreach (double[][] polygonCollection in multiPolygonCollection)
+                            {
+                                objectList.Add(
+                                    this.GetPolygonPlacemark(
+                                        elementName,
+                                        elementDescription,
+                                        polygonCollection));
+                            }
+                        }
+                    }
+                    else
+                    {
+                        throw new FormatException("GeoJSON MultiPolygonGeometry without coordinates");
                     }
 
                     break;
@@ -202,7 +269,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
 
             if (!string.IsNullOrWhiteSpace(element.Title))
             {
-                return element.Title;
+                return element.Title!;
             }
 
             if (element.Properties != null)
@@ -327,7 +394,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         {
             var positionList = new Czml.PositionList();
 
-            foreach (var coordinates in coordinatesList)
+            foreach (double[] coordinates in coordinatesList)
             {
                 Debug.Assert(
                     coordinates.Length == 2 || coordinates.Length == 3,
@@ -367,7 +434,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         {
             var positionList = new Czml.PositionList();
 
-            foreach (var coordinates in coordinatesList)
+            foreach (double[] coordinates in coordinatesList)
             {
                 Debug.Assert(
                     coordinates.Length == 2,

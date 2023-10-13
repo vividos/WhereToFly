@@ -23,7 +23,7 @@ namespace WhereToFly.App.UnitTest.Geo
             // set up
             const string TrackName = "Test Track";
 
-            var track = new Track
+            var track = new Track("track-id")
             {
                 Name = TrackName,
                 TrackPoints = new System.Collections.Generic.List<TrackPoint>

@@ -1,4 +1,5 @@
 ﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -88,7 +89,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             /// </summary>
             public LayerEntry()
             {
-                this.Layer = new Layer();
+                this.Layer = new Layer(Guid.NewGuid().ToString("B"));
             }
 
             /// <summary>

@@ -36,7 +36,7 @@ namespace WhereToFly.Geo.DataFormats
             IEnumerable<Airspace.Airspace> allAirspaces,
             IEnumerable<string> descriptionLines)
         {
-            string description = string.Join("\n", descriptionLines).Trim();
+            string? description = string.Join("\n", descriptionLines).Trim();
             description = description.Replace("\n", "<br/>");
 
             if (description.Length == 0)
@@ -68,8 +68,8 @@ namespace WhereToFly.Geo.DataFormats
         /// Creates a Czml.Object from given airspace
         /// </summary>
         /// <param name="airspace">airspace to use</param>
-        /// <returns>created CZML object</returns>
-        private static Czml.Object CzmlObjectFromAirspace(Airspace.Airspace airspace)
+        /// <returns>created CZML object, or null when none can be created</returns>
+        private static Czml.Object? CzmlObjectFromAirspace(Airspace.Airspace airspace)
         {
             double height = HeightFromAltitude(airspace.Ceiling) - HeightFromAltitude(airspace.Floor);
 
@@ -93,7 +93,7 @@ namespace WhereToFly.Geo.DataFormats
                 };
             }
 
-            if (airspace.Geometry is Airspace.Polygon polygon)
+            if (airspace.Geometry is Polygon polygon)
             {
                 Czml.PositionList positions =
                     GetPolygonPointsFromAirspacePolygon(polygon, airspace.Floor);
@@ -131,7 +131,7 @@ namespace WhereToFly.Geo.DataFormats
         /// <returns>position list object with all polygon points</returns>
         private static Czml.PositionList GetPolygonPointsFromAirspacePolygon(
             Polygon polygon,
-            Altitude floor)
+            Altitude? floor)
         {
             double height = HeightFromAltitude(floor);
 
@@ -139,12 +139,12 @@ namespace WhereToFly.Geo.DataFormats
 
             foreach (var segment in polygon.Segments)
             {
-                if (segment is Airspace.Polygon.PolygonPoint point)
+                if (segment is Polygon.PolygonPoint point)
                 {
                     positions.Add(point.Point.Latitude, point.Point.Longitude, height);
                 }
 
-                if (segment is Airspace.Polygon.PolygonArc arc)
+                if (segment is Polygon.PolygonArc arc)
                 {
                     var convertedArcSegment = ConvertPolygonArcToArcSegment(arc, height);
                     AddArcSegmentPolygonPoints(convertedArcSegment, positions, height);
@@ -152,7 +152,7 @@ namespace WhereToFly.Geo.DataFormats
                     positions.Add(arc.End.Latitude, arc.End.Longitude, height);
                 }
 
-                if (segment is Airspace.Polygon.PolygonArcSegment arcSegment)
+                if (segment is Polygon.PolygonArcSegment arcSegment)
                 {
                     AddArcSegmentPolygonPoints(arcSegment, positions, height);
                 }
@@ -171,22 +171,20 @@ namespace WhereToFly.Geo.DataFormats
         /// <param name="arc">arc object</param>
         /// <param name="height">height of arc</param>
         /// <returns>arg segment object</returns>
-        private static Airspace.Polygon.PolygonArcSegment ConvertPolygonArcToArcSegment(
-            Airspace.Polygon.PolygonArc arc,
+        private static Polygon.PolygonArcSegment ConvertPolygonArcToArcSegment(
+            Polygon.PolygonArc arc,
             double height)
         {
             var start = arc.Start.ToMapPoint(height);
             var end = arc.End.ToMapPoint(height);
             var center = arc.Center.ToMapPoint(height);
 
-            return new Airspace.Polygon.PolygonArcSegment
-            {
-                Center = arc.Center,
-                Direction = arc.Direction,
-                Radius = start.DistanceTo(arc.Center.ToMapPoint(height)),
-                StartAngle = center.CourseTo(start),
-                EndAngle = arc.Center.ToMapPoint(height).CourseTo(end),
-            };
+            return new Polygon.PolygonArcSegment(
+                center: arc.Center,
+                radius: start.DistanceTo(arc.Center.ToMapPoint(height)),
+                startAngle: center.CourseTo(start),
+                endAngle: arc.Center.ToMapPoint(height).CourseTo(end),
+                direction: arc.Direction);
         }
 
         /// <summary>
@@ -196,7 +194,7 @@ namespace WhereToFly.Geo.DataFormats
         /// <param name="positions">positions to add to</param>
         /// <param name="height">height value</param>
         private static void AddArcSegmentPolygonPoints(
-            Airspace.Polygon.PolygonArcSegment arcSegment,
+            Polygon.PolygonArcSegment arcSegment,
             Czml.PositionList positions,
             double height)
         {
@@ -315,7 +313,7 @@ namespace WhereToFly.Geo.DataFormats
         /// <param name="coord">coordinates object</param>
         /// <param name="altitude">altitude object</param>
         /// <returns>CZML position object</returns>
-        private static Czml.PositionList PositionFromCoord(Coord coord, Altitude altitude)
+        private static Czml.PositionList PositionFromCoord(Coord coord, Altitude? altitude)
         {
             return new Czml.PositionList
             {
@@ -334,8 +332,13 @@ namespace WhereToFly.Geo.DataFormats
         /// </summary>
         /// <param name="altitude">altitude object</param>
         /// <returns>height value</returns>
-        private static double HeightFromAltitude(Altitude altitude)
+        private static double HeightFromAltitude(Altitude? altitude)
         {
+            if (altitude == null)
+            {
+                throw new FormatException("airspace altitude not set");
+            }
+
             switch (altitude.Type)
             {
                 case AltitudeType.GND:
@@ -362,8 +365,13 @@ namespace WhereToFly.Geo.DataFormats
         /// </summary>
         /// <param name="altitude">altitude object</param>
         /// <returns>height reference value</returns>
-        private static Czml.HeightReference HeightReferenceFromAltitude(Altitude altitude)
+        private static Czml.HeightReference HeightReferenceFromAltitude(Altitude? altitude)
         {
+            if (altitude == null)
+            {
+                throw new FormatException("airspace altitude not set");
+            }
+
             return altitude.Type switch
             {
                 AltitudeType.GND => Czml.HeightReference.ClampToGround,

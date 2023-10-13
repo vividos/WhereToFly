@@ -20,12 +20,12 @@ namespace WhereToFly.Geo.Airspace
         /// <summary>
         /// When the AltitudeType is Textual, this property has the text
         /// </summary>
-        public string Textual { get; private set; }
+        public string? Textual { get; private set; }
 
         /// <summary>
         /// Opening times; may be null.
         /// </summary>
-        public string OpeningTimes { get; set; }
+        public string? OpeningTimes { get; set; }
 
         /// <summary>
         /// Creates a new altitude with a type that needs no value
@@ -87,7 +87,7 @@ namespace WhereToFly.Geo.Airspace
             {
                 case AltitudeType.GND: return "GND";
                 case AltitudeType.Unlimited: return "UNLIMITED";
-                case AltitudeType.Textual: return this.Textual;
+                case AltitudeType.Textual: return this.Textual ?? "???";
                 case AltitudeType.AMSL: return $"{this.Value}ft AMSL";
                 case AltitudeType.AGL: return $"{this.Value}ft AGL";
                 case AltitudeType.FlightLevel:

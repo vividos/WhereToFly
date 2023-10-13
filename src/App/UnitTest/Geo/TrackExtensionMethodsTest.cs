@@ -20,7 +20,7 @@ namespace WhereToFly.App.UnitTest.Geo
         public void TestCalculateStatistics_EmptyTrack()
         {
             // set up
-            var track = new Track();
+            var track = new Track("track-id");
 
             // run
             track.CalculateStatistics();

@@ -120,9 +120,8 @@ namespace WhereToFly.Geo.DataFormats
 
             string name = nameNode?.InnerText ?? "Track";
 
-            var track = new Track
+            var track = new Track(Guid.NewGuid().ToString("B"))
             {
-                Id = Guid.NewGuid().ToString("B"),
                 Name = name,
             };
 
@@ -199,11 +198,11 @@ namespace WhereToFly.Geo.DataFormats
             XmlNode descNode = waypointNode.SelectSingleNode("x:desc", namespaceManager);
             XmlNode linkHrefNode = waypointNode.SelectSingleNode("x:link/@href", namespaceManager);
 
-            var location = new Location
+            var location = new Location(
+                Guid.NewGuid().ToString("B"),
+                new MapPoint(latitude, longitude, elevation))
             {
-                Id = Guid.NewGuid().ToString("B"),
                 Name = nameNode?.InnerText ?? "Waypoint",
-                MapLocation = new MapPoint(latitude, longitude, elevation),
                 Description = descNode?.InnerText ?? string.Empty,
                 Type = LocationTypeFromWaypointNode(nameNode, descNode),
                 InternetLink = linkHrefNode?.Value ?? string.Empty,
@@ -294,7 +293,9 @@ namespace WhereToFly.Geo.DataFormats
         /// <param name="nameNode">name node</param>
         /// <param name="descNode">description node</param>
         /// <returns>waypoint type</returns>
-        private static LocationType LocationTypeFromWaypointNode(XmlNode nameNode, XmlNode descNode)
+        private static LocationType LocationTypeFromWaypointNode(
+            XmlNode? nameNode,
+            XmlNode? descNode)
         {
             // check for some name contents in the DHV Geländedatenbank
             if (nameNode != null &&

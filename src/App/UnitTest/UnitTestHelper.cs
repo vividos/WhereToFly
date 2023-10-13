@@ -25,9 +25,8 @@ namespace WhereToFly.App.UnitTest
         /// <returns>default layer</returns>
         public static Layer GetDefaultLayer()
         {
-            return new Layer
+            return new Layer(Guid.NewGuid().ToString("B"))
             {
-                Id = Guid.NewGuid().ToString("B"),
                 Name = "DefaultLayer",
                 Description = "Default description",
                 LayerType = LayerType.CzmlLayer,
@@ -42,11 +41,11 @@ namespace WhereToFly.App.UnitTest
         /// <returns>default location</returns>
         public static Location GetDefaultLocation()
         {
-            return new Location
+            return new Location(
+                Guid.NewGuid().ToString("B"),
+                new MapPoint(47.6764385, 11.8710533, 1685.0))
             {
-                Id = Guid.NewGuid().ToString("B"),
                 Name = "Brecherspitz",
-                MapLocation = new MapPoint(47.6764385, 11.8710533, 1685.0),
                 Description = "Herrliche Aussicht über die drei Seen Schliersee im Norden, Tegernsee im Westen und den Spitzingsee im Süden.",
                 Type = LocationType.Summit,
                 InternetLink = "https://de.wikipedia.org/wiki/Brecherspitz",
@@ -59,9 +58,8 @@ namespace WhereToFly.App.UnitTest
         /// <returns>default track</returns>
         public static Track GetDefaultTrack()
         {
-            return new Track
+            return new Track("track1")
             {
-                Id = "track1",
                 Name = "Track1",
                 IsFlightTrack = false,
                 IsLiveTrack = false,

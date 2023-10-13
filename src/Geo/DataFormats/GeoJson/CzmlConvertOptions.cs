@@ -26,7 +26,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// <summary>
         /// Color for point elements
         /// </summary>
-        public Color PointColor { get; set; }
+        public Color PointColor { get; set; } = new Color(0, 0, 255);
 
         /// <summary>
         /// Line width for line strings
@@ -36,26 +36,26 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// <summary>
         /// Color for line strings
         /// </summary>
-        public Color LineColor { get; set; }
+        public Color LineColor { get; set; } = new Color(0, 0, 255);
 
         /// <summary>
         /// Color for polygon elements
         /// </summary>
-        public Color PolygonColor { get; set; }
+        public Color PolygonColor { get; set; } = new Color(0, 0, 255);
 
         /// <summary>
         /// Custom function to format names for CZML elements; may be null
         /// </summary>
-        public Func<Element, string> CustomNameFormatter { get; set; } = null;
+        public Func<Element, string>? CustomNameFormatter { get; set; } = null;
 
         /// <summary>
         /// Custom function to format description texts for CZML elements; may be null
         /// </summary>
-        public Func<Element, string> CustomDescriptionFormatter { get; set; } = null;
+        public Func<Element, string>? CustomDescriptionFormatter { get; set; } = null;
 
         /// <summary>
         /// Custom function to get point colors for CZML point elements; may be null
         /// </summary>
-        public Func<Element, Color> CustomPointColorResolver { get; set; } = null;
+        public Func<Element, Color>? CustomPointColorResolver { get; set; } = null;
     }
 }

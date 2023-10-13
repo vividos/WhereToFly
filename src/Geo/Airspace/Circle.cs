@@ -14,5 +14,16 @@
         /// Radius of circle, in meter
         /// </summary>
         public double Radius { get; set; }
+
+        /// <summary>
+        /// Creates a new circle object
+        /// </summary>
+        /// <param name="center">center coordinates of circle</param>
+        /// <param name="radius">radius of circle, in meter</param>
+        public Circle(Coord center, double radius)
+        {
+            this.Center = center;
+            this.Radius = radius;
+        }
     }
 }

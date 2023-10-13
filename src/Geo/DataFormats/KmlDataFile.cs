@@ -19,7 +19,7 @@ namespace WhereToFly.Geo.DataFormats
         /// <summary>
         /// Opened KML file
         /// </summary>
-        private readonly KmlFile kml;
+        private readonly KmlFile? kml;
 
         /// <summary>
         /// Indicates if KML file contains a track from an XC Tracer device
@@ -82,7 +82,7 @@ namespace WhereToFly.Geo.DataFormats
         /// <param name="stream">stream to read</param>
         /// <param name="isKml">indicates if stream contains a kml or a kmz file</param>
         /// <returns>parsed kml file, or null when file couldn't be loaded</returns>
-        private KmlFile ReadLegacyKmlStream(Stream stream, bool isKml)
+        private KmlFile? ReadLegacyKmlStream(Stream stream, bool isKml)
         {
             if (isKml)
             {
@@ -183,7 +183,7 @@ namespace WhereToFly.Geo.DataFormats
 
             var placemark = this.trackPlacemarkList[trackIndex];
 
-            Model.Track track = null;
+            Model.Track? track = null;
 
             if (placemark.Geometry is LineString lineString)
             {
@@ -225,7 +225,12 @@ namespace WhereToFly.Geo.DataFormats
         /// <returns>loaded track</returns>
         private static Model.Track LoadTrackFromLineString(LineString lineString)
         {
-            var track = CreateTrackFromPlacemark(lineString.Parent as Placemark);
+            var track = CreateTrackFromPlacemark(lineString?.Parent as Placemark);
+
+            if (lineString?.Coordinates == null)
+            {
+                throw new FormatException("KML LineString has no coordinates; can't create track");
+            }
 
             foreach (var vector in lineString.Coordinates)
             {
@@ -275,7 +280,12 @@ namespace WhereToFly.Geo.DataFormats
         /// <returns>loaded track </returns>
         private static Model.Track LoadTrackFromGXMultiTrack(MultipleTrack multiTrack)
         {
-            var track = CreateTrackFromPlacemark(multiTrack.Parent as Placemark);
+            var track = CreateTrackFromPlacemark(multiTrack?.Parent as Placemark);
+
+            if (multiTrack?.Tracks == null)
+            {
+                throw new FormatException("KML MultipleTrack element has no tracks list; can't create track");
+            }
 
             foreach (var gxtrack in multiTrack.Tracks)
             {
@@ -292,7 +302,12 @@ namespace WhereToFly.Geo.DataFormats
         /// <returns>loaded track </returns>
         private Model.Track LoadTrackFromMultipleGeometry(MultipleGeometry multiGeometry)
         {
-            var track = CreateTrackFromPlacemark(multiGeometry.Parent as Placemark);
+            var track = CreateTrackFromPlacemark(multiGeometry?.Parent as Placemark);
+
+            if (multiGeometry?.Geometry == null)
+            {
+                throw new FormatException("KML MultipleGeometry element has no geometry; can't create track");
+            }
 
             foreach (var geometry in multiGeometry.Geometry)
             {
@@ -330,12 +345,11 @@ namespace WhereToFly.Geo.DataFormats
         /// </summary>
         /// <param name="placemark">placemark object</param>
         /// <returns>newly created track object</returns>
-        private static Model.Track CreateTrackFromPlacemark(Placemark placemark)
+        private static Model.Track CreateTrackFromPlacemark(Placemark? placemark)
         {
-            return new Model.Track
+            return new Model.Track(Guid.NewGuid().ToString("B"))
             {
-                Id = Guid.NewGuid().ToString("B"),
-                Name = placemark.Name ?? "Track",
+                Name = placemark?.Name ?? "Track",
             };
         }
 
@@ -360,6 +374,11 @@ namespace WhereToFly.Geo.DataFormats
         /// <returns>list of locations found in the file</returns>
         public List<Model.Location> LoadLocationList()
         {
+            if (this.kml == null)
+            {
+                return new List<Model.Location>();
+            }
+
             return
                 (from placemark in this.locationPlacemarkList
                  select LocationFromPlacemark(this.kml, placemark)).ToList();
@@ -382,13 +401,13 @@ namespace WhereToFly.Geo.DataFormats
                 throw new FormatException("KML Placemark has no Point geometry; can't create location");
             }
 
-            return new Model.Location
+            return new Model.Location(
+                placemark.Id ?? Guid.NewGuid().ToString("B"),
+                new MapPoint(point.Coordinate.Latitude, point.Coordinate.Longitude, point.Coordinate.Altitude))
             {
-                Id = placemark.Id ?? Guid.NewGuid().ToString("B"),
                 Name = placemark.Name ?? "unknown",
                 Description = placemark.Description?.Text ?? string.Empty,
                 Type = MapPlacemarkToType(kml, placemark),
-                MapLocation = new MapPoint(point.Coordinate.Latitude, point.Coordinate.Longitude, point.Coordinate.Altitude),
             };
         }
 
@@ -525,10 +544,10 @@ namespace WhereToFly.Geo.DataFormats
                 var style = kml.FindStyle(styleUrl.Substring(1));
                 if (style is StyleMapCollection styleMap)
                 {
-                    string link = GetStyleMapNormalStyleIconLink(kml, styleMap);
+                    string? link = GetStyleMapNormalStyleIconLink(kml, styleMap);
                     if (!string.IsNullOrEmpty(link))
                     {
-                        return link;
+                        return link!;
                     }
                 }
             }
@@ -542,7 +561,7 @@ namespace WhereToFly.Geo.DataFormats
         /// <param name="kml">kml file where the style map is in</param>
         /// <param name="styleMap">style map to search</param>
         /// <returns>style URL, or null when style couldn't be retrieved</returns>
-        private static string GetStyleMapNormalStyleIconLink(KmlFile kml, StyleMapCollection styleMap)
+        private static string? GetStyleMapNormalStyleIconLink(KmlFile kml, StyleMapCollection styleMap)
         {
             var normalStyle = styleMap.First(x => x.State.HasValue && x.State.Value == StyleState.Normal);
             if (normalStyle != null)

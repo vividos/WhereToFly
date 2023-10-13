@@ -102,9 +102,11 @@ namespace WhereToFly.Geo.Model
 
         /// <summary>
         /// Creates a new and empty track object
-        /// </summary>
-        public Track()
+        /// </summary>id;
+        /// <param name="id">track ID</param>
+        public Track(string id)
         {
+            this.Id = id;
         }
 
         #region IEquatable implementation

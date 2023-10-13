@@ -232,7 +232,7 @@ namespace WhereToFly.WebApi.Logic.Services
                 throw new FormatException("No Garmin inReach Point placemarks returned from the server");
             }
 
-            var track = new Track();
+            var track = new Track(Guid.NewGuid().ToString("B"));
 
             foreach (Placemark placemark in allPointPlacemarks.Cast<Placemark>())
             {

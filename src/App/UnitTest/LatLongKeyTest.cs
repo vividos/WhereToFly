@@ -31,7 +31,7 @@ namespace WhereToFly.App.UnitTest
             {
                 {
                     new LatLongKey(42, -64),
-                    new List<Location> { new Location { Id = "42" } }
+                    new List<Location> { new Location("42", new MapPoint(47.6764385, 11.8710533, 1685.0)) }
                 },
             };
 
