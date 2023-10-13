@@ -5,7 +5,7 @@ namespace WhereToFly.Shared.Model
     /// <summary>
     /// Single tour entry in a planned tour
     /// </summary>
-    public class PlannedTourEntry
+    public record PlannedTourEntry
     {
         /// <summary>
         /// Start waypoint ID

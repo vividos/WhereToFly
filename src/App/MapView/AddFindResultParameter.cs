@@ -3,7 +3,7 @@
     /// <summary>
     /// Parameter for AddFindResult JavaScript event
     /// </summary>
-    internal class AddFindResultParameter
+    internal record AddFindResultParameter
     {
         /// <summary>
         /// Name of find result to add

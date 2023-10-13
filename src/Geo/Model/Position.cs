@@ -6,7 +6,7 @@ namespace WhereToFly.Geo
     /// <summary>
     /// Position data
     /// </summary>
-    public class Position
+    public record Position
     {
         /// <summary>
         /// Location of pilot in WGS84 coordinates

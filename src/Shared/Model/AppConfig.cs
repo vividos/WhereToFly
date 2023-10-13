@@ -5,7 +5,7 @@ namespace WhereToFly.Shared.Model
     /// <summary>
     /// Configuration data for the WhereToFly app
     /// </summary>
-    public class AppConfig
+    public record AppConfig
     {
         /// <summary>
         /// API key for Cesium ION
