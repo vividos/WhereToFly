@@ -138,7 +138,7 @@ namespace WhereToFly.Geo
                 return;
             }
 
-            if (track.TrackPoints[0].Time > trackPointsToJoin.TrackPoints[track.TrackPoints.Count - 1].Time)
+            if (track.TrackPoints[0].Time > trackPointsToJoin.TrackPoints[trackPointsToJoin.TrackPoints.Count - 1].Time)
             {
                 track.TrackPoints.InsertRange(0, trackPointsToJoin.TrackPoints);
                 return;
