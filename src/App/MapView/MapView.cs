@@ -56,12 +56,12 @@ namespace WhereToFly.App.MapView
         /// <summary>
         /// Task completion source for when SampleTrackHeights() has finished
         /// </summary>
-        private TaskCompletionSource<double[]> taskCompletionSourceSampleTrackHeights;
+        private TaskCompletionSource<double[]?>? taskCompletionSourceSampleTrackHeights;
 
         /// <summary>
         /// Task completion source for when ExportLayer() has finished
         /// </summary>
-        private TaskCompletionSource<byte[]> taskCompletionSourceExportLayer;
+        private TaskCompletionSource<byte[]?>? taskCompletionSourceExportLayer;
 
         /// <summary>
         /// Current map imagery type
@@ -86,17 +86,17 @@ namespace WhereToFly.App.MapView
         /// <summary>
         /// Last set "my location" position
         /// </summary>
-        private MapPoint lastMyLocation;
+        private MapPoint? lastMyLocation;
 
         /// <summary>
         /// Last used compass target title
         /// </summary>
-        private string lastCompassTargetTitle;
+        private string? lastCompassTargetTitle;
 
         /// <summary>
         /// Last used compass target location
         /// </summary>
-        private MapPoint lastCompassTargetLocation;
+        private MapPoint? lastCompassTargetLocation;
 
         /// <summary>
         /// Last used compass target direction
@@ -117,7 +117,7 @@ namespace WhereToFly.App.MapView
         /// <summary>
         /// Service for finding nearby POIs
         /// </summary>
-        public INearbyPoiService NearbyPoiService { get; set; }
+        public INearbyPoiService? NearbyPoiService { get; set; }
 
         /// <summary>
         /// Delegate of function to call when location details should be shown
@@ -128,7 +128,7 @@ namespace WhereToFly.App.MapView
         /// <summary>
         /// Event that is signaled when location details should be shown
         /// </summary>
-        public event OnShowLocationDetailsCallback ShowLocationDetails;
+        public event OnShowLocationDetailsCallback? ShowLocationDetails;
 
         /// <summary>
         /// Delegate of function to call when navigation to location should be started
@@ -139,7 +139,7 @@ namespace WhereToFly.App.MapView
         /// <summary>
         /// Event that is signaled when navigation to location should be started
         /// </summary>
-        public event OnNavigateToLocationCallback NavigateToLocation;
+        public event OnNavigateToLocationCallback? NavigateToLocation;
 
         /// <summary>
         /// Delegate of function to call when location should be shared
@@ -149,7 +149,7 @@ namespace WhereToFly.App.MapView
         /// <summary>
         /// Event that is signaled when location should be shared
         /// </summary>
-        public event OnShareMyLocationCallback ShareMyLocation;
+        public event OnShareMyLocationCallback? ShareMyLocation;
 
         /// <summary>
         /// Delegate of function to call when find result should be added as waypoint
@@ -161,7 +161,7 @@ namespace WhereToFly.App.MapView
         /// <summary>
         /// Event that is signaled when find result should be should be added as waypoint
         /// </summary>
-        public event OnAddFindResultCallback AddFindResult;
+        public event OnAddFindResultCallback? AddFindResult;
 
         /// <summary>
         /// Delegate of function to call when long tap occured on map
@@ -172,7 +172,7 @@ namespace WhereToFly.App.MapView
         /// <summary>
         /// Event that is signaled when long tap occured on map
         /// </summary>
-        public event OnLongTapCallback LongTap;
+        public event OnLongTapCallback? LongTap;
 
         /// <summary>
         /// Delegate of function to call when adding a location to tour planning
@@ -183,7 +183,7 @@ namespace WhereToFly.App.MapView
         /// <summary>
         /// Event that is signaled when adding a location to tour planning
         /// </summary>
-        public event OnAddTourPlanLocationCallback AddTourPlanLocation;
+        public event OnAddTourPlanLocationCallback? AddTourPlanLocation;
 
         /// <summary>
         /// Delegate of function to call when last shown location should be updated
@@ -195,7 +195,7 @@ namespace WhereToFly.App.MapView
         /// <summary>
         /// Event that is signaled when last shown location should be updated
         /// </summary>
-        public event OnUpdateLastShownLocationCallback UpdateLastShownLocation;
+        public event OnUpdateLastShownLocationCallback? UpdateLastShownLocation;
 
         /// <summary>
         /// Delegate of function to call when user sets a location as the compass target location
@@ -206,7 +206,7 @@ namespace WhereToFly.App.MapView
         /// <summary>
         /// Event that is signaled when user sets a location as compass target
         /// </summary>
-        public event OnSetLocationAsCompassTargetCallback SetLocationAsCompassTarget;
+        public event OnSetLocationAsCompassTargetCallback? SetLocationAsCompassTarget;
 
         /// <summary>
         /// Gets or sets map imagery type
@@ -306,7 +306,7 @@ namespace WhereToFly.App.MapView
         /// <summary>
         /// Action to log errors
         /// </summary>
-        public Action<Exception> LogErrorAction { get; set; }
+        public Action<Exception>? LogErrorAction { get; set; }
 
         /// <summary>
         /// Creates a new MapView C# object
@@ -334,7 +334,7 @@ namespace WhereToFly.App.MapView
             }
             catch (Exception ex)
             {
-                this.LogErrorAction(ex);
+                this.LogErrorAction?.Invoke(ex);
             }
         }
 
@@ -343,7 +343,7 @@ namespace WhereToFly.App.MapView
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        private void OnNavigated(object sender, WebNavigatedEventArgs args)
+        private void OnNavigated(object? sender, WebNavigatedEventArgs args)
         {
             if (args.Result == WebNavigationResult.Success)
             {
@@ -506,18 +506,21 @@ namespace WhereToFly.App.MapView
             this.RunJavaScript(js);
 
             // also update compass target, if previously set
-            if (this.lastCompassTargetLocation != null)
+            if (this.lastCompassTargetTitle != null)
             {
-                this.SetCompassTarget(
-                    this.lastCompassTargetTitle,
-                    this.lastCompassTargetLocation,
-                    zoomToPolyline: false);
-            }
-            else if (this.lastCompassTargetDirection != null)
-            {
-                this.SetCompassDirection(
-                    this.lastCompassTargetTitle,
-                    this.lastCompassTargetDirection.Value);
+                if (this.lastCompassTargetLocation != null)
+                {
+                    this.SetCompassTarget(
+                        this.lastCompassTargetTitle,
+                        this.lastCompassTargetLocation,
+                        zoomToPolyline: false);
+                }
+                else if (this.lastCompassTargetDirection != null)
+                {
+                    this.SetCompassDirection(
+                        this.lastCompassTargetTitle,
+                        this.lastCompassTargetDirection.Value);
+                }
             }
         }
 
@@ -651,7 +654,11 @@ namespace WhereToFly.App.MapView
             {
                 this.ShowMessageBand("Loading nearby POIs...");
 
-                MapRectangle area = await this.GetViewRectangle();
+                MapRectangle? area = await this.GetViewRectangle();
+                if (area == null)
+                {
+                    return;
+                }
 
                 // limit size of area
                 const double NearbyPoisMaxRequestLatitudeLongitude = 2.0;
@@ -684,7 +691,7 @@ namespace WhereToFly.App.MapView
         /// Returns the current view rectangle
         /// </summary>
         /// <returns>map rectangle of current view</returns>
-        private async Task<MapRectangle> GetViewRectangle()
+        private async Task<MapRectangle?> GetViewRectangle()
         {
             string js = "map.getViewRectangle();";
 
@@ -819,9 +826,9 @@ namespace WhereToFly.App.MapView
         /// </summary>
         /// <param name="layer">layer to export</param>
         /// <returns>exported KMZ byte stream</returns>
-        public async Task<byte[]> ExportLayerAsync(Layer layer)
+        public async Task<byte[]?> ExportLayerAsync(Layer layer)
         {
-            this.taskCompletionSourceExportLayer = new TaskCompletionSource<byte[]>();
+            this.taskCompletionSourceExportLayer = new TaskCompletionSource<byte[]?>();
 
             this.RunJavaScript($"map.exportLayer(\"{layer.Id}\");");
 
@@ -948,8 +955,8 @@ namespace WhereToFly.App.MapView
         /// Samples track point heights from actual map and returns it
         /// </summary>
         /// <param name="track">track to modify</param>
-        /// <returns>ground profile heights</returns>
-        public async Task<double[]> SampleTrackHeights(Track track)
+        /// <returns>ground profile heights, or null if there was an error</returns>
+        public async Task<double[]?> SampleTrackHeights(Track track)
         {
             // need an initialized map in order to sample data
             await this.taskCompletionSourceMapInitialized.Task;
@@ -971,7 +978,7 @@ namespace WhereToFly.App.MapView
             string js = $"map.sampleTrackHeights({JsonConvert.SerializeObject(trackJsonObject)});";
 
             this.taskCompletionSourceSampleTrackHeights =
-                new TaskCompletionSource<double[]>();
+                new TaskCompletionSource<double[]?>();
 
             this.RunJavaScript(js);
 
@@ -1006,7 +1013,7 @@ namespace WhereToFly.App.MapView
                     getRoundedHeightFromAltitude(x.Altitude ?? 0.0),
                 });
 
-            List<decimal> timePointsList = null;
+            List<decimal>? timePointsList = null;
 
             long? trackStart = null;
 
@@ -1029,11 +1036,11 @@ namespace WhereToFly.App.MapView
                     .ToList();
             }
 
-            IEnumerable<decimal> groundHeightProfileList = track.GroundHeightProfile.Any()
+            IEnumerable<decimal>? groundHeightProfileList = track.GroundHeightProfile.Any()
                 ? track.GroundHeightProfile.Select(getRoundedHeightFromAltitude)
                 : null;
 
-            string color = track.IsFlightTrack && !track.IsLiveTrack
+            string? color = track.IsFlightTrack && !track.IsLiveTrack
                 ? null
                 : track.Color;
 
@@ -1394,11 +1401,14 @@ namespace WhereToFly.App.MapView
         /// Called when the "onSetLocationAsCompassTarget" callback has been sent from JavaScript.
         /// </summary>
         /// <param name="jsonParameters">location ID as JSON string; may be null</param>
-        private void OnSetLocationAsCompassTarget(string jsonParameters)
+        private void OnSetLocationAsCompassTarget(string? jsonParameters)
         {
-            string locationId = jsonParameters?.Trim('\"');
+            string? locationId = jsonParameters?.Trim('\"');
 
-            this.SetLocationAsCompassTarget?.Invoke(locationId);
+            if (locationId != null)
+            {
+                this.SetLocationAsCompassTarget?.Invoke(locationId);
+            }
         }
 
         /// <summary>
@@ -1408,11 +1418,11 @@ namespace WhereToFly.App.MapView
         /// <param name="jsonParameters">track point heights as JSON array</param>
         private void OnSampledTrackHeights(string jsonParameters)
         {
-            double[] trackPointHeights = string.IsNullOrEmpty(jsonParameters)
+            double[]? trackPointHeights = string.IsNullOrEmpty(jsonParameters)
                 ? null
                 : JsonConvert.DeserializeObject<double[]>(jsonParameters);
 
-            this.taskCompletionSourceSampleTrackHeights.SetResult(trackPointHeights);
+            this.taskCompletionSourceSampleTrackHeights?.SetResult(trackPointHeights);
         }
 
         /// <summary>
@@ -1424,7 +1434,7 @@ namespace WhereToFly.App.MapView
         private void OnExportLayer(string jsonParameters)
         {
             string base64Data = jsonParameters.Trim('"').Replace(' ', '+');
-            byte[] kmzData = null;
+            byte[]? kmzData = null;
             try
             {
                 if (!string.IsNullOrEmpty(base64Data))
@@ -1437,7 +1447,7 @@ namespace WhereToFly.App.MapView
                 this.LogErrorAction?.Invoke(ex);
             }
 
-            this.taskCompletionSourceExportLayer.SetResult(kmzData);
+            this.taskCompletionSourceExportLayer?.SetResult(kmzData);
         }
 
         /// <summary>

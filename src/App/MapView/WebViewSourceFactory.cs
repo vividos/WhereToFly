@@ -15,7 +15,7 @@ namespace WhereToFly.App.MapView
         /// <summary>
         /// Backing store for the factory instance
         /// </summary>
-        private static WebViewSourceFactory instance;
+        private static WebViewSourceFactory? instance;
 
         /// <summary>
         /// Returns the web view source factory instance

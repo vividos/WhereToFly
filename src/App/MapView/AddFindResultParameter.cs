@@ -8,17 +8,17 @@
         /// <summary>
         /// Name of find result to add
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         /// <summary>
         /// Latitude of map point to add
         /// </summary>
-        public double Latitude { get; set; }
+        public double Latitude { get; set; } = 0.0;
 
         /// <summary>
         /// Longitude of map point to add
         /// </summary>
-        public double Longitude { get; set; }
+        public double Longitude { get; set; } = 0.0;
 
         /// <summary>
         /// Altitude of map point to add

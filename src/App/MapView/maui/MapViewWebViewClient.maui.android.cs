@@ -20,7 +20,7 @@ namespace WhereToFly.App.MapView
         /// <summary>
         /// HTTP client to use to download content when intercepting content
         /// </summary>
-        private readonly HttpClient httpClient = new HttpClient();
+        private readonly HttpClient httpClient = new();
 
         /// <summary>
         /// Cache folder name for CORS content
@@ -30,7 +30,7 @@ namespace WhereToFly.App.MapView
         /// <summary>
         /// Action to log errors
         /// </summary>
-        private readonly Action<Exception> logErrorAction;
+        private readonly Action<Exception>? logErrorAction;
 
         /// <summary>
         /// Number of cache hits
@@ -56,7 +56,7 @@ namespace WhereToFly.App.MapView
         /// <param name="logErrorAction">action to log errors</param>
         public MapViewWebViewClient(
             WebViewHandler handler,
-            Action<Exception> logErrorAction)
+            Action<Exception>? logErrorAction)
             : base(handler)
         {
             this.logErrorAction = logErrorAction;
@@ -71,15 +71,15 @@ namespace WhereToFly.App.MapView
         /// <param name="request">web resource request that failed</param>
         /// <param name="error">web resource error</param>
         public override void OnReceivedError(
-            WebView view,
-            IWebResourceRequest request,
-            WebResourceError error)
+            WebView? view,
+            IWebResourceRequest? request,
+            WebResourceError? error)
         {
             Debug.WriteLine(
                 "OnReceivedError: method={0} url={1}, error={2}",
-                request.Method,
-                request.Url?.ToString() ?? "N/A",
-                error.DescriptionFormatted?.ToString() ?? "N/A");
+                request?.Method,
+                request?.Url?.ToString() ?? "N/A",
+                error?.DescriptionFormatted?.ToString() ?? "N/A");
 
             base.OnReceivedError(view, request, error);
         }
@@ -92,23 +92,23 @@ namespace WhereToFly.App.MapView
         /// <param name="view">web view</param>
         /// <param name="request">web resource request to inspect</param>
         /// <returns>new response</returns>
-        public override WebResourceResponse ShouldInterceptRequest(
-            WebView view,
-            IWebResourceRequest request)
+        public override WebResourceResponse? ShouldInterceptRequest(
+            WebView? view,
+            IWebResourceRequest? request)
         {
             Debug.WriteLine(
                 "ShouldInterceptRequest: method={0} url={1}",
-                request.Method,
-                request.Url?.ToString());
+                request?.Method,
+                request?.Url?.ToString());
 
-            string host = request.Url?.Host?.ToLowerInvariant();
+            string? host = request?.Url?.Host?.ToLowerInvariant();
 
-            if (request.Url != null &&
+            if (request?.Url != null &&
                 host != null &&
                 this.CorsWebsiteHosts != null &&
                 this.CorsWebsiteHosts.Any(x => host.Contains(x)))
             {
-                var response = this.BuildCorsResponse(request.Url.ToString());
+                var response = this.BuildCorsResponse(request.Url?.ToString());
                 if (response != null)
                 {
                     return response;
@@ -133,9 +133,14 @@ namespace WhereToFly.App.MapView
         /// </summary>
         /// <param name="url">URL of web resource to get</param>
         /// <returns>newly created web resource response</returns>
-        private WebResourceResponse BuildCorsResponse(string url)
+        private WebResourceResponse? BuildCorsResponse(string? url)
         {
-            Stream stream = this.GetUrlContentStream(url);
+            if (url == null)
+            {
+                return null;
+            }
+
+            Stream? stream = this.GetUrlContentStream(url);
             if (stream == null)
             {
                 return null;
@@ -175,7 +180,7 @@ namespace WhereToFly.App.MapView
         /// <returns>
         /// content stream, or null when there was an error getting the content stream
         /// </returns>
-        private Stream GetUrlContentStream(string url)
+        private Stream? GetUrlContentStream(string url)
         {
             int hashCode = url.GetHashCode();
 

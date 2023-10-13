@@ -26,7 +26,7 @@ namespace WhereToFly.App.MapView
         /// </summary>
         /// <param name="assetFilename">asset filename</param>
         /// <returns>text content of asset</returns>
-        private static async Task<string> LoadAssetText(string assetFilename)
+        private static async Task<string?> LoadAssetText(string assetFilename)
         {
             using var stream = await FileSystem.OpenAppPackageFileAsync(assetFilename);
 

@@ -54,7 +54,7 @@ namespace WhereToFly.App.MapView
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        private void OnNavigating_WebView(object sender, WebNavigatingEventArgs args)
+        private void OnNavigating_WebView(object? sender, WebNavigatingEventArgs args)
         {
             if (!args.Url.ToString().StartsWith(CallbackSchema))
             {
@@ -73,7 +73,7 @@ namespace WhereToFly.App.MapView
 
             jsonParameters = System.Net.WebUtility.UrlDecode(jsonParameters);
 
-            if (this.handlerMap.TryGetValue(functionName, out Action<string> handler) &&
+            if (this.handlerMap.TryGetValue(functionName, out Action<string>? handler) &&
                 handler != null)
             {
                 handler.Invoke(jsonParameters);

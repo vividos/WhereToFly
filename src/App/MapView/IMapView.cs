@@ -41,7 +41,7 @@ namespace WhereToFly.App.MapView
         /// <summary>
         /// Service for finding nearby POIs
         /// </summary>
-        INearbyPoiService NearbyPoiService { get; set; }
+        INearbyPoiService? NearbyPoiService { get; set; }
 
         /// <summary>
         /// Creates the map view; this must be called before any other methods.
@@ -134,7 +134,7 @@ namespace WhereToFly.App.MapView
         /// </summary>
         /// <param name="layer">layer to export</param>
         /// <returns>exported KMZ byte stream</returns>
-        Task<byte[]> ExportLayerAsync(Layer layer);
+        Task<byte[]?> ExportLayerAsync(Layer layer);
         #endregion
 
         #region Location list methods
@@ -218,7 +218,7 @@ namespace WhereToFly.App.MapView
         /// </summary>
         /// <param name="track">track points to use</param>
         /// <returns>sampled ground point elevations for all track points</returns>
-        Task<double[]> SampleTrackHeights(Track track);
+        Task<double[]?> SampleTrackHeights(Track track);
         #endregion
     }
 }

@@ -18,7 +18,7 @@ namespace WhereToFly.App.MapView
         /// <summary>
         /// HTTP client to use to download content when intercepting content
         /// </summary>
-        private readonly HttpClient httpClient = new HttpClient();
+        private readonly HttpClient httpClient = new();
 
         /// <summary>
         /// Cache folder name for CORS content
@@ -28,7 +28,7 @@ namespace WhereToFly.App.MapView
         /// <summary>
         /// Action to log errors
         /// </summary>
-        private readonly Action<Exception> logErrorAction;
+        private readonly Action<Exception>? logErrorAction;
 
         /// <summary>
         /// Number of cache hits
@@ -45,7 +45,7 @@ namespace WhereToFly.App.MapView
         /// order for the WebView to correctly receive content. This must be used in some cases,
         /// since the default Base URL of the WebView is file://
         /// </summary>
-        public HashSet<string> CorsWebsiteHosts { get; set; } = new HashSet<string>();
+        public HashSet<string> CorsWebsiteHosts { get; set; } = new();
 
         /// <summary>
         /// Creates a new web view client
@@ -54,7 +54,7 @@ namespace WhereToFly.App.MapView
         /// <param name="logErrorAction">action to log errors</param>
         public MapViewWebViewClient(
             WebViewRenderer renderer,
-            Action<Exception> logErrorAction)
+            Action<Exception>? logErrorAction)
             : base(renderer)
         {
             this.logErrorAction = logErrorAction;
@@ -98,21 +98,21 @@ namespace WhereToFly.App.MapView
         /// <param name="view">web view</param>
         /// <param name="request">web resource request to inspect</param>
         /// <returns>new response</returns>
-        public override WebResourceResponse ShouldInterceptRequest(WebView view, IWebResourceRequest request)
+        public override WebResourceResponse? ShouldInterceptRequest(WebView? view, IWebResourceRequest? request)
         {
             Debug.WriteLine(
                 "ShouldInterceptRequest: method={0} url={1}",
-                request.Method,
-                request.Url?.ToString());
+                request?.Method,
+                request?.Url?.ToString());
 
-            string host = request.Url?.Host?.ToLowerInvariant();
+            string? host = request?.Url?.Host?.ToLowerInvariant();
 
-            if (request.Url != null &&
+            if (request?.Url != null &&
                 host != null &&
                 this.CorsWebsiteHosts != null &&
                 this.CorsWebsiteHosts.Any(x => host.Contains(x)))
             {
-                var response = this.BuildCorsResponse(request.Url.ToString());
+                var response = this.BuildCorsResponse(request.Url?.ToString());
                 if (response != null)
                 {
                     return response;
@@ -137,9 +137,14 @@ namespace WhereToFly.App.MapView
         /// </summary>
         /// <param name="url">URL of web resource to get</param>
         /// <returns>newly created web resource response</returns>
-        private WebResourceResponse BuildCorsResponse(string url)
+        private WebResourceResponse? BuildCorsResponse(string? url)
         {
-            Stream stream = this.GetUrlContentStream(url);
+            if (url == null)
+            {
+                return null;
+            }
+
+            Stream? stream = this.GetUrlContentStream(url);
             if (stream == null)
             {
                 return null;
@@ -179,7 +184,7 @@ namespace WhereToFly.App.MapView
         /// <returns>
         /// content stream, or null when there was an error getting the content stream
         /// </returns>
-        private Stream GetUrlContentStream(string url)
+        private Stream? GetUrlContentStream(string url)
         {
             int hashCode = url.GetHashCode();
 
@@ -195,7 +200,7 @@ namespace WhereToFly.App.MapView
 
             try
             {
-                var data = this.httpClient.GetByteArrayAsync(url).Result;
+                byte[] data = this.httpClient.GetByteArrayAsync(url).Result;
 
                 File.WriteAllBytes(cacheFilename, data);
 

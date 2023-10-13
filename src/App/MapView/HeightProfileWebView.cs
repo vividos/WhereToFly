@@ -38,12 +38,12 @@ namespace WhereToFly.App.MapView
         /// <summary>
         /// Event that is signaled when user hovers over a height profile point
         /// </summary>
-        public event OnHoverOrClickCallback Hover;
+        public event OnHoverOrClickCallback? Hover;
 
         /// <summary>
         /// Event that is signaled when user clicks on a height profile point
         /// </summary>
-        public event OnHoverOrClickCallback Click;
+        public event OnHoverOrClickCallback? Click;
 
         #region Binding properties
         /// <summary>
@@ -142,7 +142,7 @@ namespace WhereToFly.App.MapView
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        private void OnNavigated(object sender, WebNavigatedEventArgs args)
+        private void OnNavigated(object? sender, WebNavigatedEventArgs args)
         {
             Debug.WriteLine($"OnNavigated: result={args.Result} event={args.NavigationEvent}");
 
@@ -181,7 +181,7 @@ namespace WhereToFly.App.MapView
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        private void OnSizeChanged(object sender, EventArgs args)
+        private void OnSizeChanged(object? sender, EventArgs args)
         {
             MainThread.BeginInvokeOnMainThread(
                 async () => await this.ResizeViewHeight());
@@ -242,7 +242,7 @@ namespace WhereToFly.App.MapView
                     x.Altitude ?? 0.0,
                 });
 
-            List<double> timePointsList = null;
+            List<double>? timePointsList = null;
 
             var firstTrackPoint = track.TrackPoints.FirstOrDefault();
             if (firstTrackPoint != null &&
