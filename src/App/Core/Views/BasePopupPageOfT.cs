@@ -8,17 +8,17 @@ namespace WhereToFly.App.Core.Views
     /// </summary>
     /// <typeparam name="TResult">type of the result</typeparam>
     public class BasePopupPage<TResult> : BasePopupPage, IPageResult<TResult>
-        where TResult : class
+        where TResult : class?
     {
         /// <summary>
         /// Task completion source for result
         /// </summary>
-        private readonly TaskCompletionSource<TResult> tcs = new();
+        private readonly TaskCompletionSource<TResult?> tcs = new();
 
         /// <summary>
         /// Task that resolves to the result object when the popup is closed.
         /// </summary>
-        public Task<TResult> ResultTask => this.tcs.Task;
+        public Task<TResult?> ResultTask => this.tcs.Task;
 
         /// <summary>
         /// Creates a new base popup page

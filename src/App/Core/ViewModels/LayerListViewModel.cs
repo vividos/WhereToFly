@@ -38,7 +38,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Location list view models to display
         /// </summary>
-        public ObservableCollection<LayerListEntryViewModel> LayerList { get; set; }
+        public ObservableCollection<LayerListEntryViewModel>? LayerList { get; set; }
 
         /// <summary>
         /// Indicates if the layer list is empty. Default layers like location and track layer are
@@ -49,7 +49,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Stores the selected layer when an item is tapped
         /// </summary>
-        public LayerListEntryViewModel SelectedLayer { get; set; }
+        public LayerListEntryViewModel? SelectedLayer { get; set; }
 
         /// <summary>
         /// Command to execute when an item in the layer list has been tapped
@@ -76,14 +76,6 @@ namespace WhereToFly.App.Core.ViewModels
         /// Creates a new view model object for the layer list page
         /// </summary>
         public LayerListViewModel()
-        {
-            this.SetupBindings();
-        }
-
-        /// <summary>
-        /// Sets up bindings properties
-        /// </summary>
-        private void SetupBindings()
         {
             Task.Run(this.LoadDataAsync);
 
@@ -157,12 +149,13 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         /// <param name="layer">layer to show</param>
         /// <returns>task to wait on</returns>
-        private async Task NavigateToLayerDetails(Layer layer)
+        private async Task NavigateToLayerDetails(Layer? layer)
         {
             this.SelectedLayer = null;
             this.OnPropertyChanged(nameof(this.SelectedLayer));
 
-            if (layer.LayerType != LayerType.LocationLayer &&
+            if (layer != null &&
+                layer.LayerType != LayerType.LocationLayer &&
                 layer.LayerType != LayerType.TrackLayer)
             {
                 await NavigationService.Instance.NavigateAsync(PageKey.LayerDetailsPage, true, layer);
@@ -233,7 +226,7 @@ namespace WhereToFly.App.Core.ViewModels
                 var options = new PickOptions
                 {
                     FileTypes = new FilePickerFileType(
-                        new Dictionary<DevicePlatform, IEnumerable<string>>
+                        new Dictionary<DevicePlatform, IEnumerable<string>?>
                         {
                             { DevicePlatform.Android, null },
                             { DevicePlatform.UWP, new string[] { ".czml" } },
@@ -278,7 +271,7 @@ namespace WhereToFly.App.Core.ViewModels
                 var options = new PickOptions
                 {
                     FileTypes = new FilePickerFileType(
-                        new Dictionary<DevicePlatform, IEnumerable<string>>
+                        new Dictionary<DevicePlatform, IEnumerable<string>?>
                         {
                             { DevicePlatform.Android, new string[] { "text/plain" } },
                             { DevicePlatform.UWP, new string[] { ".txt" } },

@@ -12,7 +12,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Event that gets signaled when a property has changed
         /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>
         /// Call this method to signal that a property has changed

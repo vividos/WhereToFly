@@ -30,7 +30,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Current track list
         /// </summary>
-        public ObservableCollection<TrackListEntryViewModel> TrackList { get; set; }
+        public ObservableCollection<TrackListEntryViewModel>? TrackList { get; set; }
 
         /// <summary>
         /// Indicates if the refreshing of the track list is currently active, in order to show an
@@ -58,7 +58,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Stores the selected track when an item is tapped
         /// </summary>
-        public TrackListEntryViewModel SelectedTrack { get; set; }
+        public TrackListEntryViewModel? SelectedTrack { get; set; }
 
         /// <summary>
         /// Indicates if the "delete track" button is enabled.
@@ -87,14 +87,6 @@ namespace WhereToFly.App.Core.ViewModels
         {
             this.isListRefreshActive = false;
 
-            this.SetupBindings();
-        }
-
-        /// <summary>
-        /// Sets up bindings properties
-        /// </summary>
-        private void SetupBindings()
-        {
             this.IsListRefreshActive = true;
             this.OnPropertyChanged(nameof(this.IsListEmpty));
 
@@ -270,7 +262,7 @@ namespace WhereToFly.App.Core.ViewModels
                 var options = new Xamarin.Essentials.PickOptions
                 {
                     FileTypes = new Xamarin.Essentials.FilePickerFileType(
-                        new Dictionary<Xamarin.Essentials.DevicePlatform, IEnumerable<string>>
+                        new Dictionary<Xamarin.Essentials.DevicePlatform, IEnumerable<string>?>
                         {
                             { Xamarin.Essentials.DevicePlatform.Android, null },
                             { Xamarin.Essentials.DevicePlatform.UWP, new string[] { ".kml", ".kmz", ".gpx", ".igc" } },

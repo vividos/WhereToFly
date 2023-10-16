@@ -21,7 +21,7 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="layerId">layer ID</param>
         /// <returns>layer from list, or null when none was found</returns>
-        Task<Layer> Get(string layerId);
+        Task<Layer?> Get(string layerId);
 
         /// <summary>
         /// Updates an existing layer in the layer list

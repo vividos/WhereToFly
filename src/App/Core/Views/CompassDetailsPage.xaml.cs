@@ -29,7 +29,7 @@ namespace WhereToFly.App.Core.Views
 
             this.geolocationService = DependencyService.Get<IGeolocationService>();
 
-            this.BindingContext = this.viewModel = new CompassDetailsViewModel(App.Settings);
+            this.BindingContext = this.viewModel = new CompassDetailsViewModel(App.Settings!);
 
             Task.Run(this.InitPositionAsync);
         }

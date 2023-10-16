@@ -11,11 +11,11 @@ namespace WhereToFly.App.Core.Services
         /// <summary>
         /// Updated live waypoint data; may be null
         /// </summary>
-        public LiveWaypointData WaypointData { get; set; }
+        public LiveWaypointData? WaypointData { get; set; }
 
         /// <summary>
         /// Updated live track data; may be null
         /// </summary>
-        public LiveTrackData TrackData { get; set; }
+        public LiveTrackData? TrackData { get; set; }
     }
 }

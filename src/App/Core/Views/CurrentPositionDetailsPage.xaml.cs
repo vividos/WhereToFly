@@ -32,7 +32,7 @@ namespace WhereToFly.App.Core.Views
 
             this.geolocationService = DependencyService.Get<IGeolocationService>();
 
-            this.BindingContext = this.viewModel = new CurrentPositionDetailsViewModel(App.Settings);
+            this.BindingContext = this.viewModel = new CurrentPositionDetailsViewModel(App.Settings!);
 
             this.SetupToolbar();
 

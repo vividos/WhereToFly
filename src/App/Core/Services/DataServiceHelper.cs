@@ -234,7 +234,8 @@ namespace WhereToFly.App.Core.Services
             try
             {
                 string json = platform.LoadAssetText(FaviconUrlCacheFilename);
-                return JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+                return JsonConvert.DeserializeObject<Dictionary<string, string>>(json)
+                    ?? new Dictionary<string, string>();
             }
             catch (Exception)
             {
@@ -248,7 +249,7 @@ namespace WhereToFly.App.Core.Services
         /// to select weather icons for the customized list
         /// </summary>
         /// <returns>repository of all weather icons</returns>
-        public static List<WeatherIconDescription> GetWeatherIconDescriptionRepository()
+        public static IEnumerable<WeatherIconDescription> GetWeatherIconDescriptionRepository()
         {
             try
             {
@@ -257,7 +258,7 @@ namespace WhereToFly.App.Core.Services
                 string json = platform.LoadAssetText("weathericons.json");
 
                 var weatherIconList = JsonConvert.DeserializeObject<List<WeatherIconDescription>>(json);
-                return weatherIconList;
+                return weatherIconList ?? Enumerable.Empty<WeatherIconDescription>();
             }
             catch (Exception ex)
             {

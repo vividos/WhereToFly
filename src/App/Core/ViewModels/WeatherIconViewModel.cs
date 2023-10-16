@@ -35,7 +35,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Icon image source for weather icon
         /// </summary>
-        public ImageSource Icon { get; private set; }
+        public ImageSource? Icon { get; private set; }
 
         /// <summary>
         /// Replace string map for SVG image (only used by the placeholder image)
@@ -60,14 +60,6 @@ namespace WhereToFly.App.Core.ViewModels
             this.funcAddWeatherIcon = funcAddWeatherIcon;
             this.IconDescription = iconDescription;
 
-            this.SetupBindings();
-        }
-
-        /// <summary>
-        /// Sets up bindings properties
-        /// </summary>
-        private void SetupBindings()
-        {
             this.Tapped = new AsyncCommand(this.OpenWeatherIconTargetAsync);
 
             this.ReplaceStringMap =

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Models;
 using WhereToFly.App.MapView;
@@ -26,6 +27,17 @@ namespace WhereToFly.App.Core.ViewModels
             /// Map imagery type value
             /// </summary>
             public MapImageryType Value { get; set; }
+
+            /// <summary>
+            /// Creates a new map imagery type view model
+            /// </summary>
+            /// <param name="text">display text</param>
+            /// <param name="imageryType">imagery type</param>
+            public MapImageryTypeViewModel(string text, MapImageryType imageryType)
+            {
+                this.Text = text;
+                this.Value = imageryType;
+            }
         }
 
         /// <summary>
@@ -42,6 +54,17 @@ namespace WhereToFly.App.Core.ViewModels
             /// Map overlay type value
             /// </summary>
             public MapOverlayType Value { get; set; }
+
+            /// <summary>
+            /// Creates a new map overlay type view model
+            /// </summary>
+            /// <param name="text">display text</param>
+            /// <param name="overlayType">overlay type</param>
+            public MapOverlayTypeViewModel(string text, MapOverlayType overlayType)
+            {
+                this.Text = text;
+                this.Value = overlayType;
+            }
         }
 
         /// <summary>
@@ -58,6 +81,17 @@ namespace WhereToFly.App.Core.ViewModels
             /// Coordinate display format value
             /// </summary>
             public CoordinateDisplayFormat Value { get; set; }
+
+            /// <summary>
+            /// Creates a new coordinates display format view model
+            /// </summary>
+            /// <param name="text">display text</param>
+            /// <param name="displayFormat">coordinate display type</param>
+            public CoordinateDisplayFormatViewModel(string text, CoordinateDisplayFormat displayFormat)
+            {
+                this.Text = text;
+                this.Value = displayFormat;
+            }
         }
 
         /// <summary>
@@ -74,6 +108,17 @@ namespace WhereToFly.App.Core.ViewModels
             /// Map shading mode value
             /// </summary>
             public MapShadingMode Value { get; set; }
+
+            /// <summary>
+            /// Creates a new map shading mode view model
+            /// </summary>
+            /// <param name="text">display text</param>
+            /// <param name="shadingMode">map shading mode display type</param>
+            public MapShadingModeViewModel(string text, MapShadingMode shadingMode)
+            {
+                this.Text = text;
+                this.Value = shadingMode;
+            }
         }
 
         /// <summary>
@@ -228,49 +273,41 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         public MapSettingsViewModel()
         {
-            this.appSettings = App.Settings;
+            this.appSettings = App.Settings!;
 
-            this.SetupBindings();
-        }
-
-        /// <summary>
-        /// Sets up bindings properties
-        /// </summary>
-        private void SetupBindings()
-        {
             this.MapImageryTypeItems = new List<MapImageryTypeViewModel>
             {
-                new MapImageryTypeViewModel { Text = "OpenStreetMap", Value = MapImageryType.OpenStreetMap },
-                new MapImageryTypeViewModel { Text = "Aerials + Labels (Bing Maps)", Value = MapImageryType.BingMapsAerialWithLabels },
-                new MapImageryTypeViewModel { Text = "Sentinel-2 cloudless", Value = MapImageryType.Sentinel2 },
-                new MapImageryTypeViewModel { Text = "OpenTopoMap", Value = MapImageryType.OpenTopoMap },
+                new MapImageryTypeViewModel("OpenStreetMap", MapImageryType.OpenStreetMap),
+                new MapImageryTypeViewModel("Aerials + Labels (Bing Maps)", MapImageryType.BingMapsAerialWithLabels),
+                new MapImageryTypeViewModel("Sentinel-2 cloudless", MapImageryType.Sentinel2),
+                new MapImageryTypeViewModel("OpenTopoMap", MapImageryType.OpenTopoMap),
             };
 
             this.MapOverlayTypeItems = new List<MapOverlayTypeViewModel>
             {
-                new MapOverlayTypeViewModel { Text = "None", Value = MapOverlayType.None },
-                new MapOverlayTypeViewModel { Text = "Thermal Skyways (thermal.kk7.ch)", Value = MapOverlayType.ThermalSkywaysKk7 },
-                new MapOverlayTypeViewModel { Text = "Contour lines", Value = MapOverlayType.ContourLines },
-                new MapOverlayTypeViewModel { Text = "Slope + contour lines", Value = MapOverlayType.SlopeAndContourLines },
-                new MapOverlayTypeViewModel { Text = "NASA Black Marble 2017", Value = MapOverlayType.BlackMarble },
-                new MapOverlayTypeViewModel { Text = "Waymarked Trails Hiking", Value = MapOverlayType.WaymarkedTrailsHiking },
-                new MapOverlayTypeViewModel { Text = "OpenFlightMaps", Value = MapOverlayType.OpenFlightMaps },
+                new MapOverlayTypeViewModel("None", MapOverlayType.None),
+                new MapOverlayTypeViewModel("Thermal Skyways (thermal.kk7.ch)", MapOverlayType.ThermalSkywaysKk7),
+                new MapOverlayTypeViewModel("Contour lines", MapOverlayType.ContourLines),
+                new MapOverlayTypeViewModel("Slope + contour lines", MapOverlayType.SlopeAndContourLines),
+                new MapOverlayTypeViewModel("NASA Black Marble 2017", MapOverlayType.BlackMarble),
+                new MapOverlayTypeViewModel("Waymarked Trails Hiking", MapOverlayType.WaymarkedTrailsHiking),
+                new MapOverlayTypeViewModel("OpenFlightMaps", MapOverlayType.OpenFlightMaps),
             };
 
             this.CoordinateDisplayFormatItems = new List<CoordinateDisplayFormatViewModel>
             {
-                new CoordinateDisplayFormatViewModel { Text = "dd.dddddd°", Value = CoordinateDisplayFormat.Format_dd_dddddd },
-                new CoordinateDisplayFormatViewModel { Text = "dd° mm.mmm'", Value = CoordinateDisplayFormat.Format_dd_mm_mmm },
-                new CoordinateDisplayFormatViewModel { Text = "dd° mm' sss\"", Value = CoordinateDisplayFormat.Format_dd_mm_sss },
+                new CoordinateDisplayFormatViewModel("dd.dddddd°", CoordinateDisplayFormat.Format_dd_dddddd),
+                new CoordinateDisplayFormatViewModel("dd° mm.mmm'", CoordinateDisplayFormat.Format_dd_mm_mmm),
+                new CoordinateDisplayFormatViewModel("dd° mm' sss\"", CoordinateDisplayFormat.Format_dd_mm_sss),
             };
 
             this.MapShadingModeItems = new List<MapShadingModeViewModel>
             {
-                new MapShadingModeViewModel { Text = "Fixed at 10 a.m.", Value = MapShadingMode.Fixed10Am },
-                new MapShadingModeViewModel { Text = "Fixed at 3 p.m.", Value = MapShadingMode.Fixed3Pm },
-                new MapShadingModeViewModel { Text = "Follow current time", Value = MapShadingMode.CurrentTime },
-                new MapShadingModeViewModel { Text = "Current time + 6 hours", Value = MapShadingMode.Ahead6Hours },
-                new MapShadingModeViewModel { Text = "No shading", Value = MapShadingMode.None },
+                new MapShadingModeViewModel("Fixed at 10 a.m.", MapShadingMode.Fixed10Am),
+                new MapShadingModeViewModel("Fixed at 3 p.m.", MapShadingMode.Fixed3Pm),
+                new MapShadingModeViewModel("Follow current time", MapShadingMode.CurrentTime),
+                new MapShadingModeViewModel("Current time + 6 hours", MapShadingMode.Ahead6Hours),
+                new MapShadingModeViewModel("No shading", MapShadingMode.None),
             };
         }
 

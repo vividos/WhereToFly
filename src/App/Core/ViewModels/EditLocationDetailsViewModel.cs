@@ -52,6 +52,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// List of all location types that can be selected
         /// </summary>
         public string[] LocationTypeList { get; private set; }
+            = Array.Empty<string>();
 
         /// <summary>
         /// Property containing location type

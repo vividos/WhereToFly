@@ -19,7 +19,7 @@ namespace WhereToFly.App.Core.Controls
         /// <summary>
         /// Image source for the context menu 3-dot button
         /// </summary>
-        public ImageSource ContextMenuImageSource { get; }
+        public ImageSource? ContextMenuImageSource { get; }
 
         /// <summary>
         /// Context menu command
@@ -29,7 +29,7 @@ namespace WhereToFly.App.Core.Controls
         /// <summary>
         /// Caption text for the context menu
         /// </summary>
-        public string Caption { get; set; }
+        public string Caption { get; set; } = string.Empty;
 
         /// <summary>
         /// Bindable property key for the read-only items property

@@ -121,7 +121,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             /// </summary>
             /// <param name="weatherIconDescriptionId">weather icon description ID</param>
             /// <returns>weather icon description from list, or null when none was found</returns>
-            public async Task<WeatherIconDescription> Get(string weatherIconDescriptionId)
+            public async Task<WeatherIconDescription?> Get(string weatherIconDescriptionId)
             {
                 var weatherIconDescriptionEntry =
                     await this.connection.GetAsync<WeatherIconDescriptionEntry>(weatherIconDescriptionId);

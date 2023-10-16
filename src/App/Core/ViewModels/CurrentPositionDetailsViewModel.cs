@@ -30,7 +30,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Current position
         /// </summary>
-        private Xamarin.Essentials.Location position;
+        private Xamarin.Essentials.Location? position;
 
         /// <summary>
         /// Indicates if the device has a compass that is available
@@ -50,7 +50,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Current solar times data
         /// </summary>
-        private SolarTimes currentSolarTimes;
+        private SolarTimes? currentSolarTimes;
 
         /// <summary>
         /// Sunrise direction, in deegrees; may be null
@@ -294,8 +294,6 @@ namespace WhereToFly.App.Core.ViewModels
         /// <param name="appSettings">app settings to use</param>
         public CurrentPositionDetailsViewModel(AppSettings appSettings)
         {
-            Debug.Assert(appSettings != null, "app settings must not be null");
-
             this.appSettings = appSettings;
 
             this.SetupTimer();
@@ -362,7 +360,9 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         private void UpdateSunAngles()
         {
-            if (this.currentSolarTimes.Sunrise.HasValue)
+            if (this.position != null &&
+                this.currentSolarTimes != null &&
+                this.currentSolarTimes.Sunrise.HasValue)
             {
                 SunPosition sunrisePosition = SunCalc.GetPosition(
                     this.currentSolarTimes.Sunrise.Value,
@@ -376,7 +376,9 @@ namespace WhereToFly.App.Core.ViewModels
                 this.sunriseDirectionInDegrees = null;
             }
 
-            if (this.currentSolarTimes.Sunset.HasValue)
+            if (this.position != null &&
+                this.currentSolarTimes != null &&
+                this.currentSolarTimes.Sunset.HasValue)
             {
                 SunPosition sunsetPosition = SunCalc.GetPosition(
                     this.currentSolarTimes.Sunset.Value,

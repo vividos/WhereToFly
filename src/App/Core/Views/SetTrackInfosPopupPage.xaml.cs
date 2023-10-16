@@ -19,7 +19,7 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Task completion source to report back edited track
         /// </summary>
-        private TaskCompletionSource<Track> tcs;
+        private readonly TaskCompletionSource<Track?> tcs = new();
 
         /// <summary>
         /// Creates a new popup page to edit track infos
@@ -39,12 +39,9 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         /// <param name="track">track to edit</param>
         /// <returns>entered text, or null when user canceled the popup dialog</returns>
-        public static async Task<Track> ShowAsync(Track track)
+        public static async Task<Track?> ShowAsync(Track track)
         {
-            var popupPage = new SetTrackInfosPopupPage(track)
-            {
-                tcs = new TaskCompletionSource<Track>(),
-            };
+            var popupPage = new SetTrackInfosPopupPage(track);
 
             await popupPage.Navigation.PushPopupAsync(popupPage);
 

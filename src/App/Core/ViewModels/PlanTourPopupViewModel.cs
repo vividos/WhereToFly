@@ -223,7 +223,7 @@ namespace WhereToFly.App.Core.ViewModels
         {
             await this.ClosePageAsync();
 
-            PlannedTour plannedTour = await this.CalculateTourAsync();
+            PlannedTour? plannedTour = await this.CalculateTourAsync();
             if (plannedTour == null)
             {
                 return;
@@ -250,7 +250,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// error message when failed.
         /// </summary>
         /// <returns>planned tour, or null when tour couldn't be planned</returns>
-        private async Task<PlannedTour> CalculateTourAsync()
+        private async Task<PlannedTour?> CalculateTourAsync()
         {
             bool retry;
             do
@@ -271,7 +271,7 @@ namespace WhereToFly.App.Core.ViewModels
                     App.LogError(refitException);
                     Debug.WriteLine("Refit exception: " + refitException.Content);
 
-                    string text = refitException.HasContent
+                    string? text = refitException.HasContent
                         ? refitException.Content
                         : refitException.Message;
 

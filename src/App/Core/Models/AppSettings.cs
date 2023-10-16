@@ -81,6 +81,6 @@ namespace WhereToFly.App.Core.Models
         /// <summary>
         /// The currently set compass target; may be null
         /// </summary>
-        public CompassTarget CurrentCompassTarget { get; set; }
+        public CompassTarget? CurrentCompassTarget { get; set; }
     }
 }

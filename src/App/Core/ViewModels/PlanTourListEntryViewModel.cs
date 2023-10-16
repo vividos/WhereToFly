@@ -29,7 +29,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Returns image source for SvgImage in order to display the type image
         /// </summary>
-        public ImageSource TypeImageSource { get; }
+        public ImageSource? TypeImageSource { get; }
 
         /// <summary>
         /// Location name

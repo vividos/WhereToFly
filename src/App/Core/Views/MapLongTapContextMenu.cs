@@ -90,7 +90,7 @@ namespace WhereToFly.App.Core.Views
                 },
             };
 
-            ContextMenuPopupPage popupPage = null;
+            ContextMenuPopupPage? popupPage = null;
 
             EventHandler backgroundClicked =
                 (sender, args) => tcs.TrySetResult(Result.Cancel);

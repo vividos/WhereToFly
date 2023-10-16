@@ -26,7 +26,7 @@ namespace WhereToFly.App.Core
         /// <summary>
         /// Waiting dialog that is currently shown; else it's set to null
         /// </summary>
-        private static WaitingPopupPage waitingDialog;
+        private static WaitingPopupPage? waitingDialog;
 
         /// <summary>
         /// Opens file from given stream.
@@ -454,7 +454,7 @@ namespace WhereToFly.App.Core
             {
                 var appMapService = DependencyService.Get<IAppMapService>();
 
-                double[] trackPointHeights =
+                double[]? trackPointHeights =
                     await Task.Run(
                         async () => await appMapService.MapView.SampleTrackHeights(track),
                         cts.Token);
@@ -696,7 +696,7 @@ namespace WhereToFly.App.Core
                     headerObject.Id == "document")
                 {
                     name = headerObject.Name;
-                    description = headerObject.Description;
+                    description = headerObject.Description ?? string.Empty;
 
                     return;
                 }

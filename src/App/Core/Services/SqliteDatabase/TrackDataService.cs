@@ -197,7 +197,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             /// Track points are stored in internal storage instead of in the database
             /// </summary>
             [Column("filename")]
-            public string TrackPointFilename { get; set; }
+            public string? TrackPointFilename { get; set; }
 
             /// <summary>
             /// Ground height profile
@@ -342,7 +342,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             /// </summary>
             /// <param name="trackId">track ID</param>
             /// <returns>track from list, or null when none was found</returns>
-            public async Task<Track> Get(string trackId)
+            public async Task<Track?> Get(string trackId)
             {
                 if (this.trackCache.ContainsKey(trackId))
                 {
@@ -381,8 +381,11 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             {
                 var trackEntry = await this.connection.GetAsync<TrackEntry>(trackId);
 
-                string filename = trackEntry.TrackPointFilename;
-                File.Delete(filename);
+                string? filename = trackEntry.TrackPointFilename;
+                if (!string.IsNullOrEmpty(filename))
+                {
+                    File.Delete(filename);
+                }
 
                 await this.connection.DeleteAsync<TrackEntry>(trackId);
 

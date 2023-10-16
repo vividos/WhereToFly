@@ -19,12 +19,12 @@ namespace WhereToFly.App.Core.ViewModels
             /// <summary>
             /// Header image of info page entry
             /// </summary>
-            public ImageSource Image { get; set; }
+            public ImageSource? Image { get; set; }
 
             /// <summary>
             /// Web view source for info page entry
             /// </summary>
-            public WebViewSource WebViewSource { get; set; }
+            public WebViewSource? WebViewSource { get; set; }
         }
 
         /// <summary>

@@ -38,14 +38,15 @@ namespace WhereToFly.App.Core
         private bool restartLocationUpdates;
 
         /// <summary>
-        /// Application settings
+        /// Application settings; this is initialized when <see cref="InitializedTask"/> has
+        /// completed, and is available in every content page.
         /// </summary>
-        public static AppSettings Settings { get; internal set; }
+        public static AppSettings? Settings { get; internal set; }
 
         /// <summary>
         /// The one and only map page (displaying the map using CesiumJS)
         /// </summary>
-        public MapPage MapPage { get; internal set; }
+        public MapPage? MapPage { get; internal set; }
 
         /// <summary>
         /// Task that can be awaited to wait for a completed app initialisation. The task performs

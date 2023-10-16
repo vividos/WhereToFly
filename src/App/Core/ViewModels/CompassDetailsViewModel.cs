@@ -25,7 +25,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Current position
         /// </summary>
-        private Xamarin.Essentials.Location position;
+        private Xamarin.Essentials.Location? position;
 
         /// <summary>
         /// Indicates if the device has a compass that is available
@@ -239,7 +239,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>target direction angle, in degrees, or null when not set</returns>
         private int? CalculateTargetDirection()
         {
-            CompassTarget compassTarget = this.appSettings?.CurrentCompassTarget;
+            CompassTarget? compassTarget = this.appSettings?.CurrentCompassTarget;
             if (compassTarget == null)
             {
                 return null;
@@ -291,6 +291,16 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         private void UpdateSunAngles()
         {
+            if (this.position == null)
+            {
+                this.SunriseDirectionInDegrees = null;
+                this.SunsetDirectionInDegrees = null;
+
+                this.OnPropertyChanged(nameof(this.SunriseDirectionInDegrees));
+                this.OnPropertyChanged(nameof(this.SunsetDirectionInDegrees));
+                return;
+            }
+
             SolarTimes currentSolarTimes = SunCalc.GetTimes(
                 this.position.Timestamp,
                 this.position.Latitude,

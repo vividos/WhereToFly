@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,14 +20,16 @@ namespace WhereToFly.App.Core.Services
     internal class AppMapService : IAppMapService
     {
         /// <summary>
-        /// Application settings
+        /// Application settings; this is always available, since AppMapService is created after
+        /// loading app settings
         /// </summary>
-        private AppSettings Settings => App.Settings;
+        private AppSettings Settings => App.Settings!;
 
         /// <summary>
         /// The one and only map page (displaying the map using CesiumJS)
         /// </summary>
-        public MapPage MapPage => (Application.Current as App)?.MapPage;
+        public MapPage MapPage => (Application.Current as App)?.MapPage
+            ?? throw new InvalidOperationException("accessing MapPage before it is initialized");
 
         /// <summary>
         /// Access to the map view instance
@@ -100,7 +103,7 @@ namespace WhereToFly.App.Core.Services
         /// </summary>
         /// <param name="compassTarget">compass target; may be null</param>
         /// <returns>task to wait on</returns>
-        public async Task SetCompassTarget(CompassTarget compassTarget)
+        public async Task SetCompassTarget(CompassTarget? compassTarget)
         {
             if (this.Settings == null)
             {

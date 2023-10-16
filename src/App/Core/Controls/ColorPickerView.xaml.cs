@@ -170,7 +170,7 @@ namespace WhereToFly.App.Core.Controls
         /// </summary>
         /// <param name="color">color to set</param>
         /// <param name="selectedFrame">selected frame</param>
-        private void SelectColorFrame(Color color, Frame selectedFrame)
+        private void SelectColorFrame(Color color, Frame? selectedFrame)
         {
             // set all frame colors to white except the selected one
             foreach (Frame outerFrame in this.colorPickerLayout.Children.Cast<Frame>())
@@ -188,7 +188,7 @@ namespace WhereToFly.App.Core.Controls
         /// Called when a property has changed
         /// </summary>
         /// <param name="propertyName">name of changed property</param>
-        protected override void OnPropertyChanged(string propertyName = null)
+        protected override void OnPropertyChanged(string? propertyName = null)
         {
             Debug.WriteLine($"OnPropertyChanged({propertyName})");
             if (propertyName == nameof(this.BackgroundColor))

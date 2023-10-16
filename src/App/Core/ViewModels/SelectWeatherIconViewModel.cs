@@ -19,12 +19,12 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// List of grouped weather icon view models
         /// </summary>
-        public ObservableCollection<Grouping<string, WeatherIconListEntryViewModel>> GroupedWeatherIconList { get; set; }
+        public ObservableCollection<Grouping<string, WeatherIconListEntryViewModel>>? GroupedWeatherIconList { get; set; }
 
         /// <summary>
         /// Stores the selected weather icon when an item is tapped
         /// </summary>
-        public WeatherIconListEntryViewModel SelectedWeatherIcon { get; set; }
+        public WeatherIconListEntryViewModel? SelectedWeatherIcon { get; set; }
 
         /// <summary>
         /// Command to execute when an item in the weather icon list has been tapped
@@ -39,19 +39,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <param name="group">group to filter by, or null to show all groups</param>
         public SelectWeatherIconViewModel(
             Action<WeatherIconDescription> setResult,
-            string group = null)
-        {
-            Debug.Assert(setResult != null, "action must not be null");
-
-            this.SetupBindings(setResult, group);
-        }
-
-        /// <summary>
-        /// Sets up bindings properties
-        /// </summary>
-        /// <param name="setResult">action to set result</param>
-        /// <param name="group">group to filter by, or null to show all groups</param>
-        private void SetupBindings(Action<WeatherIconDescription> setResult, string group)
+            string? group = null)
         {
             this.ItemTappedCommand = new Command<WeatherIconListEntryViewModel>(
                 (itemViewModel) =>
@@ -70,7 +58,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         /// <param name="group">group to filter by, or null to show all groups</param>
         /// <returns>task to wait on</returns>
-        private async Task LoadData(string group)
+        private async Task LoadData(string? group)
         {
             var dataService = DependencyService.Get<IDataService>();
 
@@ -99,7 +87,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             this.OnPropertyChanged(nameof(this.GroupedWeatherIconList));
 
-            bool IsInGroup(string groupToCheck, WeatherIconDescription weatherIcon)
+            bool IsInGroup(string? groupToCheck, WeatherIconDescription weatherIcon)
             {
                 return groupToCheck == null || groupToCheck == weatherIcon.Group;
             }

@@ -22,14 +22,14 @@ namespace WhereToFly.App.Core
         public static async Task ExportLayerAsync(Layer layer)
         {
             var appMapService = DependencyService.Get<IAppMapService>();
-            byte[] data = await appMapService.MapView.ExportLayerAsync(layer);
+            byte[]? data = await appMapService.MapView.ExportLayerAsync(layer);
             if (data == null)
             {
                 App.ShowToast("Error occured at layer export.");
                 return;
             }
 
-            string exportFilename = await AskUserExportFilenameAsync(layer.Name + ".kmz");
+            string? exportFilename = await AskUserExportFilenameAsync(layer.Name + ".kmz");
             if (exportFilename == null)
             {
                 return;
@@ -62,7 +62,7 @@ namespace WhereToFly.App.Core
         /// <returns>task to wait on</returns>
         public static async Task ExportTrackAsync(Track track)
         {
-            string exportFilename = await AskUserExportFilenameAsync(track.Name + ".gpx");
+            string? exportFilename = await AskUserExportFilenameAsync(track.Name + ".gpx");
             if (exportFilename == null)
             {
                 return;
@@ -94,7 +94,7 @@ namespace WhereToFly.App.Core
         /// <returns>
         /// export filename, or null when editing was cancelled or an invalid path was specified
         /// </returns>
-        private static async Task<string> AskUserExportFilenameAsync(string exportFilename)
+        private static async Task<string?> AskUserExportFilenameAsync(string exportFilename)
         {
             string editedExportFilename = await App.Current.MainPage.DisplayPromptAsync(
                 Constants.AppTitle,

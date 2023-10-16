@@ -39,12 +39,12 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
         /// <summary>
         /// Track data service; only created once for caching purposes
         /// </summary>
-        private TrackDataService trackDataService;
+        private TrackDataService? trackDataService;
 
         /// <summary>
         /// Backing store for app settings
         /// </summary>
-        private AppSettings appSettings;
+        private AppSettings? appSettings;
 
         #region Database entry objects
         /// <summary>
@@ -57,7 +57,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             /// App settings object
             /// </summary>
             [Ignore]
-            public AppSettings AppSettings { get; set; }
+            public AppSettings? AppSettings { get; set; }
 
             /// <summary>
             /// ID; needed for primary key
@@ -103,13 +103,13 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             /// Website URL
             /// </summary>
             [Column("url"), PrimaryKey]
-            public string WebsiteUrl { get; set; }
+            public string? WebsiteUrl { get; set; }
 
             /// <summary>
             /// Favicon address
             /// </summary>
             [Column("favicon"), NotNull]
-            public string FaviconUrl { get; set; }
+            public string? FaviconUrl { get; set; }
         }
         #endregion
 
@@ -209,7 +209,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
                 .Table<AppDataEntry>()?
                 .FirstOrDefaultAsync();
 
-            AppDataEntry appDataEntry = task != null ? await task : null;
+            AppDataEntry? appDataEntry = task != null ? await task : null;
             this.appSettings = appDataEntry?.AppSettings;
 
             if (this.appSettings == null)
@@ -303,12 +303,12 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
                 return $"{uri.Scheme}://{uri.Host}/favicon.ico";
             }
 
-            string faviconUrl =
+            string? faviconUrl =
                 (await this.connection.FindAsync<FaviconUrlEntry>(baseUri))?.FaviconUrl;
 
             if (!string.IsNullOrEmpty(faviconUrl))
             {
-                return faviconUrl;
+                return faviconUrl!;
             }
 
             try

@@ -19,8 +19,10 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Creates a new web link selection popup page
         /// </summary>
-        /// <param name="group">weather icon group to filter by; may be null to show all groups</param>
-        public SelectWeatherIconPopupPage(string group)
+        /// <param name="group">
+        /// weather icon group to filter by; may be null to show all groups
+        /// </param>
+        public SelectWeatherIconPopupPage(string? group)
         {
             this.BindingContext =
                 new SelectWeatherIconViewModel(this.SetResult, group);

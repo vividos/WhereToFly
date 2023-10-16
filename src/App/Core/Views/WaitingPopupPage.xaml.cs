@@ -16,7 +16,7 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Cancellation token source that cen be used to cancel a running task; may be null
         /// </summary>
-        private readonly CancellationTokenSource cancellationTokenSource;
+        private readonly CancellationTokenSource? cancellationTokenSource;
 
         /// <summary>
         /// Indicates if the popup page is currently shown
@@ -31,7 +31,9 @@ namespace WhereToFly.App.Core.Views
         /// cancellation token source; when set, the waiting dialog has a cancel button that can
         /// cancel a running task
         /// </param>
-        public WaitingPopupPage(string waitingMessage, CancellationTokenSource cancellationTokenSource = null)
+        public WaitingPopupPage(
+            string waitingMessage,
+            CancellationTokenSource? cancellationTokenSource = null)
         {
             this.CloseWhenBackgroundIsClicked = cancellationTokenSource != null;
 
@@ -101,7 +103,7 @@ namespace WhereToFly.App.Core.Views
         /// <param name="args">event args</param>
         private void OnClickedCancelButton(object sender, EventArgs args)
         {
-            this.cancellationTokenSource.Cancel();
+            this.cancellationTokenSource?.Cancel();
         }
     }
 }

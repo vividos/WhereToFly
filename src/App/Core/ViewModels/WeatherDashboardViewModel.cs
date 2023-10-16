@@ -19,7 +19,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// List of weather icon descriptions to display
         /// </summary>
-        private List<WeatherIconDescription> weatherIconDescriptionList;
+        private List<WeatherIconDescription> weatherIconDescriptionList = new();
 
         #region Bindings properties
         /// <summary>
@@ -49,7 +49,11 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         public WeatherDashboardViewModel()
         {
-            this.SetupBindings();
+            this.AddIconCommand = new AsyncCommand(this.AddIconAsync);
+            this.AddWebLinkCommand = new AsyncCommand(this.AddWebLinkAsync);
+            this.ClearAllCommand = new AsyncCommand(this.ClearAllWeatherIcons);
+
+            Task.Run(async () => await this.InitWeatherIconDescriptionList());
         }
 
         /// <summary>
@@ -82,18 +86,6 @@ namespace WhereToFly.App.Core.ViewModels
             await weatherDashboardIconDataService.ClearList();
             await weatherDashboardIconDataService.AddList(
                 this.weatherIconDescriptionList);
-        }
-
-        /// <summary>
-        /// Sets up bindings properties
-        /// </summary>
-        private void SetupBindings()
-        {
-            this.AddIconCommand = new AsyncCommand(this.AddIconAsync);
-            this.AddWebLinkCommand = new AsyncCommand(this.AddWebLinkAsync);
-            this.ClearAllCommand = new AsyncCommand(this.ClearAllWeatherIcons);
-
-            Task.Run(async () => await this.InitWeatherIconDescriptionList());
         }
 
         /// <summary>
@@ -134,7 +126,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task AddWebLinkAsync()
         {
-            WeatherIconDescription weatherIconDescription =
+            WeatherIconDescription? weatherIconDescription =
                 await AddWeatherLinkPopupPage.ShowAsync();
 
             if (weatherIconDescription == null)

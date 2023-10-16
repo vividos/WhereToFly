@@ -19,7 +19,7 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Task completion source to report back filter settings
         /// </summary>
-        private TaskCompletionSource<LocationFilterSettings> tcs;
+        private readonly TaskCompletionSource<LocationFilterSettings?> tcs = new();
 
         /// <summary>
         /// Creates a new popup page to edit filter settings
@@ -41,12 +41,9 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         /// <param name="filterSettings">filter settings to edit</param>
         /// <returns>filter settings, or null when user canceled the popup dialog</returns>
-        public static async Task<LocationFilterSettings> ShowAsync(LocationFilterSettings filterSettings)
+        public static async Task<LocationFilterSettings?> ShowAsync(LocationFilterSettings filterSettings)
         {
-            var popupPage = new FilterTakeoffDirectionsPopupPage(filterSettings)
-            {
-                tcs = new TaskCompletionSource<LocationFilterSettings>(),
-            };
+            var popupPage = new FilterTakeoffDirectionsPopupPage(filterSettings);
 
             await popupPage.Navigation.PushPopupAsync(popupPage);
 

@@ -42,14 +42,6 @@ namespace WhereToFly.App.Core.ViewModels
         {
             this.track = track;
 
-            this.SetupBindings();
-        }
-
-        /// <summary>
-        /// Sets up bindings for this view model
-        /// </summary>
-        private void SetupBindings()
-        {
             this.ZoomToTrackCommand = new AsyncCommand(this.OnZoomToTrackAsync);
             this.ExportTrackCommand = new AsyncCommand(this.OnExportTrackAsync);
             this.DeleteTrackCommand = new AsyncCommand(this.OnDeleteTrackAsync);

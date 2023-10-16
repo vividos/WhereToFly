@@ -64,7 +64,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Current position of user; may be null when not retrieved yet
         /// </summary>
-        private MapPoint currentPosition;
+        private MapPoint? currentPosition;
 
         /// <summary>
         /// Task that is completed when updating the location list has finished
@@ -75,7 +75,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Current location list; may be filtered by filter text
         /// </summary>
-        public ObservableCollection<LocationListEntryViewModel> LocationList { get; set; }
+        public ObservableCollection<LocationListEntryViewModel>? LocationList { get; set; }
 
         /// <summary>
         /// Filter text string that filters entries by text
@@ -140,7 +140,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Stores the selected location when an item is tapped
         /// </summary>
-        public LocationListEntryViewModel SelectedLocation { get; set; }
+        public LocationListEntryViewModel? SelectedLocation { get; set; }
 
         /// <summary>
         /// Command to execute when "import locations" toolbar item is selected
@@ -158,7 +158,15 @@ namespace WhereToFly.App.Core.ViewModels
 
             this.isListRefreshActive = false;
 
-            this.SetupBindings();
+            this.UpdateLocationList();
+
+            this.FindTextEnteredCommand =
+                new AsyncCommand(this.OnFindTextEntered);
+
+            this.FilterTakeoffDirectionsCommand =
+                new AsyncCommand(this.FilterTakeoffDirectionsAsync);
+
+            this.ImportLocationsCommand = new AsyncCommand(this.ImportLocationsAsync);
         }
 
         /// <summary>
@@ -169,22 +177,6 @@ namespace WhereToFly.App.Core.ViewModels
         {
             var dataService = DependencyService.Get<IDataService>();
             await dataService.StoreAppSettingsAsync(this.appSettings);
-        }
-
-        /// <summary>
-        /// Sets up bindings properties
-        /// </summary>
-        private void SetupBindings()
-        {
-            this.UpdateLocationList();
-
-            this.FindTextEnteredCommand =
-                new AsyncCommand(this.OnFindTextEntered);
-
-            this.FilterTakeoffDirectionsCommand =
-                new AsyncCommand(this.FilterTakeoffDirectionsAsync);
-
-            this.ImportLocationsCommand = new AsyncCommand(this.ImportLocationsAsync);
         }
 
         /// <summary>
@@ -376,7 +368,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task ImportIncludedAsync()
         {
-            string assetFilename = await this.AskIncludedLocationListAsync();
+            string? assetFilename = await this.AskIncludedLocationListAsync();
             if (assetFilename == null)
             {
                 return;
@@ -400,7 +392,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// Asks user for included location list and returns the asset filename.
         /// </summary>
         /// <returns>asset filename, or null when no location list was selected</returns>
-        private async Task<string> AskIncludedLocationListAsync()
+        private async Task<string?> AskIncludedLocationListAsync()
         {
             string result = await App.Current.MainPage.DisplayActionSheet(
                 "Select a location list",
@@ -428,7 +420,7 @@ namespace WhereToFly.App.Core.ViewModels
                 var options = new Xamarin.Essentials.PickOptions
                 {
                     FileTypes = new Xamarin.Essentials.FilePickerFileType(
-                        new Dictionary<Xamarin.Essentials.DevicePlatform, IEnumerable<string>>
+                        new Dictionary<Xamarin.Essentials.DevicePlatform, IEnumerable<string>?>
                         {
                             { Xamarin.Essentials.DevicePlatform.Android, null },
                             { Xamarin.Essentials.DevicePlatform.UWP, new string[] { ".kml", ".kmz", ".gpx", ".cup" } },

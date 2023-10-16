@@ -169,7 +169,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             /// </summary>
             /// <param name="locationId">location ID</param>
             /// <returns>location from list, or null when none was found</returns>
-            public async Task<Location> Get(string locationId)
+            public async Task<Location?> Get(string locationId)
             {
                 return (await this.connection.GetAsync<LocationEntry>(locationId))?.Location;
             }
@@ -209,12 +209,12 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             /// <param name="filterSettings">filter settings; may be null</param>
             /// <returns>list of locations</returns>
             public async Task<IEnumerable<Location>> GetList(
-                LocationFilterSettings filterSettings = null)
+                LocationFilterSettings? filterSettings = null)
             {
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
 
-                List<LocationEntry> locationEntryList = null;
+                List<LocationEntry>? locationEntryList = null;
                 if (filterSettings == null ||
                     (string.IsNullOrEmpty(filterSettings.FilterText) &&
                      TakeoffDirectionsHelper.ModifyAdjacentDirectionsFromView(

@@ -19,7 +19,7 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Task completion source to report back weather icon description
         /// </summary>
-        private TaskCompletionSource<WeatherIconDescription> tcs;
+        private readonly TaskCompletionSource<WeatherIconDescription?> tcs = new();
 
         /// <summary>
         /// Creates a new popup page to add weather link
@@ -37,12 +37,9 @@ namespace WhereToFly.App.Core.Views
         /// Shows "add weather link" popup page and lets the user type or paste a link.
         /// </summary>
         /// <returns>weather icon description, or null when the popup page was cancelled</returns>
-        public static async Task<WeatherIconDescription> ShowAsync()
+        public static async Task<WeatherIconDescription?> ShowAsync()
         {
-            var popupPage = new AddWeatherLinkPopupPage
-            {
-                tcs = new TaskCompletionSource<WeatherIconDescription>(),
-            };
+            var popupPage = new AddWeatherLinkPopupPage();
 
             await popupPage.Navigation.PushPopupAsync(popupPage);
 

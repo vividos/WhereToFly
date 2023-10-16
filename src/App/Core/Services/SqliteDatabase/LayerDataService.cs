@@ -78,7 +78,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             /// Layer data
             /// </summary>
             [Column("data")]
-            public string Data
+            public string? Data
             {
                 get => this.Layer.Data;
                 set => this.Layer.Data = value;
@@ -136,7 +136,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             /// </summary>
             /// <param name="layerId">layer ID</param>
             /// <returns>layer from list, or null when none was found</returns>
-            public async Task<Layer> Get(string layerId)
+            public async Task<Layer?> Get(string layerId)
             {
                 var layerEntry = await this.connection.GetAsync<LayerEntry>(layerId);
 

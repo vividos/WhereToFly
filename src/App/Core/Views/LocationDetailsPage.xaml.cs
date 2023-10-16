@@ -24,7 +24,7 @@ namespace WhereToFly.App.Core.Views
 
             this.InitializeComponent();
 
-            this.BindingContext = this.viewModel = new LocationDetailsViewModel(App.Settings, location);
+            this.BindingContext = this.viewModel = new LocationDetailsViewModel(App.Settings!, location);
 
             if (location.Type == LocationType.LiveWaypoint)
             {

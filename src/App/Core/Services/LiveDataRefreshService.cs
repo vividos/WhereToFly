@@ -28,6 +28,19 @@ namespace WhereToFly.App.Core.Services
             /// Location or track ID of live waypoint/track to update
             /// </summary>
             public string LocationOrTrackId { get; set; }
+
+            /// <summary>
+            /// Creates a new live data update info object
+            /// </summary>
+            /// <param name="updateTime">update time</param>
+            /// <param name="locationOrTrackId">location or track ID</param>
+            public LiveDataUpdateInfo(
+                DateTimeOffset updateTime,
+                string locationOrTrackId)
+            {
+                this.UpdateTime = updateTime;
+                this.LocationOrTrackId = locationOrTrackId;
+            }
         }
 
         /// <summary>
@@ -65,12 +78,12 @@ namespace WhereToFly.App.Core.Services
         /// <summary>
         /// Timer to schedule updates
         /// </summary>
-        private Timer timer;
+        private Timer? timer;
 
         /// <summary>
         /// Data service instance
         /// </summary>
-        public IDataService DataService { get; set; }
+        public IDataService? DataService { get; set; }
 
         /// <summary>
         /// Delegate of event that is triggered when live waypoint or track data was updated
@@ -82,14 +95,7 @@ namespace WhereToFly.App.Core.Services
         /// <summary>
         /// Event that is triggered when data for a live waypoint or a live track was updated
         /// </summary>
-        public event OnUpdateLiveData UpdateLiveData;
-
-        /// <summary>
-        /// Creates a new live data refresh service
-        /// </summary>
-        public LiveDataRefreshService()
-        {
-        }
+        public event OnUpdateLiveData? UpdateLiveData;
 
         /// <summary>
         /// Adds location list, to be checked for live waypoints to be updated periodically.
@@ -213,7 +219,7 @@ namespace WhereToFly.App.Core.Services
             lock (this.dataLock)
             {
                 DateTimeOffset nextUpdateTime = DateTimeOffset.MaxValue;
-                string nextLocationOrTrackId = null;
+                string? nextLocationOrTrackId = null;
                 foreach (var item in this.nextPossibleUpdateMap)
                 {
                     if (item.Value < nextUpdateTime)
@@ -267,11 +273,9 @@ namespace WhereToFly.App.Core.Services
                     return; // already scheduled
                 }
 
-                this.nextUpdateQueue.Enqueue(new LiveDataUpdateInfo
-                {
-                    LocationOrTrackId = locationOrTrackId,
-                    UpdateTime = nextUpdateTime,
-                });
+                this.nextUpdateQueue.Enqueue(new LiveDataUpdateInfo(
+                    nextUpdateTime,
+                    locationOrTrackId));
             }
         }
 
@@ -359,7 +363,7 @@ namespace WhereToFly.App.Core.Services
 
             Debug.WriteLine("LiveDataRefreshService: checking all live waypoints in queue");
 
-            LiveDataUpdateInfo updateInfo;
+            LiveDataUpdateInfo? updateInfo;
             while ((updateInfo = this.GetNextUpdateInfo()) != null)
             {
                 bool isLocation = false;
@@ -403,7 +407,7 @@ namespace WhereToFly.App.Core.Services
         /// the queue is empty.
         /// </summary>
         /// <returns>update info object, or null when no object is available</returns>
-        private LiveDataUpdateInfo GetNextUpdateInfo()
+        private LiveDataUpdateInfo? GetNextUpdateInfo()
         {
             lock (this.dataLock)
             {
@@ -426,10 +430,13 @@ namespace WhereToFly.App.Core.Services
         {
             Debug.WriteLine($"LiveDataRefreshService: updating live waypoint for {liveWaypointId}");
 
-            LiveWaypointQueryResult queryResult = null;
+            LiveWaypointQueryResult? queryResult = null;
             try
             {
-                queryResult = await this.DataService.GetLiveWaypointDataAsync(liveWaypointId);
+                if (this.DataService != null)
+                {
+                    queryResult = await this.DataService.GetLiveWaypointDataAsync(liveWaypointId);
+                }
             }
             catch (Exception ex)
             {
@@ -480,12 +487,15 @@ namespace WhereToFly.App.Core.Services
         {
             Debug.WriteLine($"LiveDataRefreshService: updating live track for {liveTrackId}");
 
-            LiveTrackQueryResult queryResult = null;
+            LiveTrackQueryResult? queryResult = null;
             try
             {
-                queryResult = await this.DataService.GetLiveTrackDataAsync(
-                    liveTrackId,
-                    lastTrackPointTime);
+                if (this.DataService != null)
+                {
+                    queryResult = await this.DataService.GetLiveTrackDataAsync(
+                        liveTrackId,
+                        lastTrackPointTime);
+                }
             }
             catch (Exception ex)
             {

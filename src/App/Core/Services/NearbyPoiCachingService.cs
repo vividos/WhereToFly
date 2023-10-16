@@ -47,10 +47,6 @@ namespace WhereToFly.App.Core.Services
             string cacheFolder)
         {
             Debug.Assert(
-                backendDataService != null,
-                "backend data service must be non-null");
-
-            Debug.Assert(
                 Directory.Exists(cacheFolder),
                 "cache folder must already exist");
 
@@ -179,8 +175,15 @@ namespace WhereToFly.App.Core.Services
             {
                 string json = File.ReadAllText(cacheFilename);
 
-                this.cache =
-                    JsonConvert.DeserializeObject<Dictionary<LatLongKey, List<Location>>>(json);
+                var localCache = JsonConvert.DeserializeObject<Dictionary<LatLongKey, List<Location>>>(json);
+                if (localCache != null)
+                {
+                    this.cache = localCache;
+                }
+                else
+                {
+                    Debug.WriteLine("Error while deserializing JSON for nearby POIs cache: " + json);
+                }
             }
             catch (Exception ex)
             {

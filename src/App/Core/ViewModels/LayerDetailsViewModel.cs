@@ -28,7 +28,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Returns image source for SvgImage in order to display the type image
         /// </summary>
-        public ImageSource TypeImageSource { get; }
+        public ImageSource? TypeImageSource { get; }
 
         /// <summary>
         /// Property containing layer type
@@ -45,7 +45,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Property containing layer description web view source
         /// </summary>
-        public WebViewSource DescriptionWebViewSource
+        public WebViewSource? DescriptionWebViewSource
         {
             get; private set;
         }
@@ -97,14 +97,6 @@ namespace WhereToFly.App.Core.ViewModels
 
             this.TypeImageSource = SvgImageCache.GetImageSource(layer);
 
-            this.SetupBindings();
-        }
-
-        /// <summary>
-        /// Sets up bindings for this view model
-        /// </summary>
-        private void SetupBindings()
-        {
             this.DescriptionWebViewSource = new HtmlWebViewSource
             {
                 Html = FormatLayerDescription(this.layer),
@@ -150,7 +142,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         /// <param name="arg">argument; unused</param>
         /// <returns>true when context action can be executed, false when not</returns>
-        private bool OnCanExecuteZoomToLayer(object arg) => this.IsEnabledZoomToLayer;
+        private bool OnCanExecuteZoomToLayer(object? arg) => this.IsEnabledZoomToLayer;
 
         /// <summary>
         /// Called when "Export" menu item is selected
@@ -167,7 +159,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         /// <param name="arg">argument; unused</param>
         /// <returns>true when context action can be executed, false when not</returns>
-        private bool OnCanExecuteExportLayer(object arg) => this.IsEnabledExportLayer;
+        private bool OnCanExecuteExportLayer(object? arg) => this.IsEnabledExportLayer;
 
         /// <summary>
         /// Called when "Delete" menu item is selected
@@ -194,6 +186,6 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         /// <param name="arg">argument; unused</param>
         /// <returns>true when context action can be executed, false when not</returns>
-        private bool OnCanExecuteDeleteLayer(object arg) => this.IsEnabledDeleteLayer;
+        private bool OnCanExecuteDeleteLayer(object? arg) => this.IsEnabledDeleteLayer;
     }
 }

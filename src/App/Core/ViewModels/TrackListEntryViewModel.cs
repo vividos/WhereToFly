@@ -41,7 +41,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Returns image source for SvgImage in order to display the type image
         /// </summary>
-        public ImageSource TypeImageSource { get; }
+        public ImageSource? TypeImageSource { get; }
 
         /// <summary>
         /// Property that specifies if the color box is visible
@@ -105,14 +105,6 @@ namespace WhereToFly.App.Core.ViewModels
 
             this.TypeImageSource = SvgImageCache.GetImageSource(track);
 
-            this.SetupBindings();
-        }
-
-        /// <summary>
-        /// Sets up bindings for this view model
-        /// </summary>
-        private void SetupBindings()
-        {
             this.ItemTappedCommand = new AsyncCommand(this.OnShowDetailsLocation);
             this.ZoomToTrackCommand = new AsyncCommand(this.OnZoomToTrackAsync);
             this.ExportTrackCommand = new AsyncCommand(this.OnExportTrackAsync);

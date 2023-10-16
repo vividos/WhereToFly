@@ -18,7 +18,7 @@ namespace WhereToFly.App.Core.Views
             this.Children.Add(new GeneralSettingsPage());
             this.Children.Add(new MapSettingsPage());
 
-            var currentPageIndex = App.Settings.LastShownSettingsPage;
+            int currentPageIndex = App.Settings!.LastShownSettingsPage;
 
             if (currentPageIndex < 0 || currentPageIndex >= this.Children.Count)
             {
@@ -42,7 +42,9 @@ namespace WhereToFly.App.Core.Views
                 return;
             }
 
-            App.Settings.LastShownSettingsPage = currentPageIndex;
+            await App.InitializedTask;
+
+            App.Settings!.LastShownSettingsPage = currentPageIndex;
 
             var dataService = DependencyService.Get<IDataService>();
             await dataService.StoreAppSettingsAsync(App.Settings);

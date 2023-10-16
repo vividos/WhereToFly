@@ -31,39 +31,40 @@ namespace WhereToFly.App.Core.Views
         private readonly PlanTourParameters planTourParameters = new();
 
         /// <summary>
+        /// Map view control on C# side
+        /// </summary>
+        private readonly MapView.MapView mapView;
+
+        /// <summary>
         /// Indicates if the next position update should also zoom to my position
         /// </summary>
         private bool zoomToMyPosition;
 
         /// <summary>
-        /// Map view control on C# side
-        /// </summary>
-        private MapView.MapView mapView;
-
-        /// <summary>
         /// Current app settings object
         /// </summary>
-        private AppSettings appSettings;
+        private AppSettings? appSettings;
 
         /// <summary>
         /// List of locations on the map
         /// </summary>
-        private List<Location> locationList;
+        private List<Location>? locationList;
 
         /// <summary>
         /// List of tracks on the map
         /// </summary>
-        private List<Track> trackList;
+        private List<Track>? trackList;
 
         /// <summary>
         /// List of layers on the map
         /// </summary>
-        private List<Layer> layerList;
+        private List<Layer>? layerList;
 
         /// <summary>
         /// Access to the map view instance
         /// </summary>
-        internal IMapView MapView => this.mapView;
+        internal IMapView MapView => this.mapView
+            ?? throw new InvalidOperationException("accessing MapView before it is initialized");
 
         /// <summary>
         /// Creates a new maps page
@@ -76,6 +77,21 @@ namespace WhereToFly.App.Core.Views
             this.zoomToMyPosition = false;
 
             this.geolocationService = DependencyService.Get<IGeolocationService>();
+
+            string cacheFolder = Xamarin.Essentials.FileSystem.CacheDirectory;
+
+            var nearbyPoiService = new NearbyPoiCachingService(
+                new BackendDataService(),
+                cacheFolder);
+
+            this.mapView = new MapView.MapView
+            {
+                LogErrorAction = App.LogError,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                AutomationId = "ExploreMapWebView",
+                NearbyPoiService = nearbyPoiService,
+            };
 
             Task.Run(this.InitLayoutAsync);
         }
@@ -147,7 +163,7 @@ namespace WhereToFly.App.Core.Views
         {
             try
             {
-                await this.mapView.FindNearbyPois();
+                await this.MapView.FindNearbyPois();
             }
             catch (Exception ex)
             {
@@ -166,7 +182,7 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task OnClicked_ToolbarButtonLocateMe()
         {
-            Xamarin.Essentials.Location position;
+            Xamarin.Essentials.Location? position;
             try
             {
                 position = await this.geolocationService.GetPositionAsync(
@@ -233,7 +249,7 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task OnClicked_ToolbarButtonFindLocation()
         {
-            string text = await FindLocationPopupPage.ShowAsync();
+            string? text = await FindLocationPopupPage.ShowAsync();
 
             if (text == null)
             {
@@ -251,7 +267,7 @@ namespace WhereToFly.App.Core.Views
                 return;
             }
 
-            IEnumerable<Xamarin.Essentials.Location> foundLocationsList = null;
+            IEnumerable<Xamarin.Essentials.Location>? foundLocationsList = null;
 
             try
             {
@@ -286,21 +302,6 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         private void SetupWebView()
         {
-            string cacheFolder = Xamarin.Essentials.FileSystem.CacheDirectory;
-
-            var nearbyPoiService = new NearbyPoiCachingService(
-                new BackendDataService(),
-                cacheFolder);
-
-            this.mapView = new MapView.MapView
-            {
-                LogErrorAction = App.LogError,
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                AutomationId = "ExploreMapWebView",
-                NearbyPoiService = nearbyPoiService,
-            };
-
             this.mapView.Navigating += this.OnNavigating_WebView;
 
             this.mapView.ShowLocationDetails += async (locationId) => await this.OnMapView_ShowLocationDetails(locationId);
@@ -363,6 +364,15 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task CreateMapViewAsync()
         {
+            if (this.appSettings == null ||
+                this.locationList == null ||
+                this.trackList == null ||
+                this.layerList == null)
+            {
+                Debug.Assert(false, "must load data before calling CreateMapViewAsync()!");
+                return;
+            }
+
             MapPoint initialCenter = this.appSettings.LastShownPosition ?? Constants.InitialCenterPoint;
             if (!initialCenter.Valid)
             {
@@ -393,7 +403,7 @@ namespace WhereToFly.App.Core.Views
 
             foreach (var track in this.trackList)
             {
-                await this.MapView.AddTrack(track);
+                await this.mapView.AddTrack(track);
             }
 
             this.trackList.Clear();
@@ -420,17 +430,17 @@ namespace WhereToFly.App.Core.Views
         /// <param name="args">event args</param>
         private void OnUpdateLiveData(object sender, LiveDataUpdateEventArgs args)
         {
-            LiveWaypointData waypointData = args.WaypointData;
+            LiveWaypointData? waypointData = args.WaypointData;
             if (waypointData != null)
             {
-                var location = this.FindLocationById(waypointData.ID);
+                Location? location = this.FindLocationById(waypointData.ID);
                 if (location != null)
                 {
                     location.MapLocation = new MapPoint(waypointData.Latitude, waypointData.Longitude, waypointData.Altitude);
                     location.Description = waypointData.Description;
                     location.Name = waypointData.Name;
 
-                    this.mapView.UpdateLocation(location);
+                    this.MapView.UpdateLocation(location);
 
                     var dataService = DependencyService.Get<IDataService>();
                     var locationDataService = dataService.GetLocationDataService();
@@ -447,6 +457,11 @@ namespace WhereToFly.App.Core.Views
                 Task.Run(async () =>
                 {
                     var track = await trackDataService.Get(args.TrackData.ID);
+
+                    if (track == null)
+                    {
+                        return;
+                    }
 
                     track.Name = args.TrackData.Name;
                     track.Description = args.TrackData.Description;
@@ -498,7 +513,7 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task OnMapView_ShowLocationDetails(string locationId)
         {
-            Location location = this.FindLocationById(locationId);
+            Location? location = this.FindLocationById(locationId);
 
             if (location == null)
             {
@@ -520,7 +535,7 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task OnMapView_NavigateToLocation(string locationId)
         {
-            Location location = this.FindLocationById(locationId);
+            Location? location = this.FindLocationById(locationId);
 
             if (location == null)
             {
@@ -557,7 +572,7 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         /// <param name="locationId">location id to use</param>
         /// <returns>found location, or null when no location could be found</returns>
-        private Location FindLocationById(string locationId)
+        private Location? FindLocationById(string locationId)
         {
             if (this.locationList == null)
             {
@@ -600,6 +615,12 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task OnMapView_AddFindResult(string name, MapPoint point)
         {
+            if (this.locationList == null)
+            {
+                Debug.Assert(false, "calling OnMapView_AddFindResult() before data was loaded!");
+                return;
+            }
+
             var location = new Location(
                 Guid.NewGuid().ToString("B"),
                 point)
@@ -622,7 +643,7 @@ namespace WhereToFly.App.Core.Views
                 animated: true,
                 parameter: location);
 
-            this.MapView.AddLocation(location);
+            this.mapView.AddLocation(location);
         }
 
         /// <summary>
@@ -653,7 +674,7 @@ namespace WhereToFly.App.Core.Views
                 return;
             }
 
-            Location location = this.FindLocationById(locationId);
+            Location? location = this.FindLocationById(locationId);
 
             if (location == null)
             {
@@ -677,6 +698,12 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task OnMapView_LongTap(MapPoint point)
         {
+            if (this.appSettings == null)
+            {
+                Debug.Assert(false, "calling OnMapView_LongTap() before data was loaded!");
+                return;
+            }
+
             var result = await MapLongTapContextMenu.ShowAsync(point, this.appSettings);
 
             switch (result)
@@ -714,6 +741,12 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task AddNewWaypoint(MapPoint point)
         {
+            if (this.locationList == null)
+            {
+                Debug.Assert(false, "calling AddNewWaypoint() before data was loaded!");
+                return;
+            }
+
             var location = new Location(
                 Guid.NewGuid().ToString("B"),
                 point)
@@ -736,7 +769,7 @@ namespace WhereToFly.App.Core.Views
                 animated: true,
                 parameter: location);
 
-            this.MapView.AddLocation(location);
+            this.mapView.AddLocation(location);
         }
 
         /// <summary>
@@ -764,7 +797,7 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task ShowFlyingRange(MapPoint point)
         {
-            FlyingRangeParameters parameters = await FlyingRangePopupPage.ShowAsync();
+            FlyingRangeParameters? parameters = await FlyingRangePopupPage.ShowAsync();
 
             if (parameters != null)
             {
@@ -780,7 +813,7 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task OnMapView_AddTourPlanLocation(string locationId)
         {
-            Location location = this.FindLocationById(locationId);
+            Location? location = this.FindLocationById(locationId);
 
             if (location == null)
             {
@@ -836,6 +869,12 @@ namespace WhereToFly.App.Core.Views
         public void ReloadMapViewAppSettings()
         {
             this.appSettings = App.Settings;
+
+            if (this.appSettings == null)
+            {
+                Debug.Assert(false, "calling ReloadMapViewAppSettings() before data was loaded!");
+                return;
+            }
 
             this.mapView.MapImageryType = this.appSettings.MapImageryType;
             this.mapView.MapOverlayType = this.appSettings.MapOverlayType;

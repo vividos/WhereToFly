@@ -56,7 +56,7 @@ namespace WhereToFly.App.Core.Converter
         /// <param name="parameter">parameter to use, from ConverterParameter</param>
         /// <param name="culture">specific culture to use; unused</param>
         /// <returns>boolean true value when value greater-or-equal parameter, false else</returns>
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             Debug.Assert(
                 targetType == typeof(string) ||

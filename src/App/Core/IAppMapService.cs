@@ -54,7 +54,7 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="compassTarget">compass target; may be null</param>
         /// <returns>task to wait on</returns>
-        Task SetCompassTarget(CompassTarget compassTarget);
+        Task SetCompassTarget(CompassTarget? compassTarget);
 
         /// <summary>
         /// Opens app resource URI, e.g. a live waypoint

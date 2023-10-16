@@ -21,7 +21,7 @@ namespace WhereToFly.App.Core.Services
         /// <summary>
         /// Event handler that is called for position changes
         /// </summary>
-        public event EventHandler<GeolocationEventArgs> PositionChanged;
+        public event EventHandler<GeolocationEventArgs>? PositionChanged;
 
         /// <summary>
         /// Checks for permission to use location.
@@ -66,7 +66,7 @@ namespace WhereToFly.App.Core.Services
         /// </summary>
         /// <param name="timeout">timeout for waiting for position</param>
         /// <returns>current position, or null when none could be retrieved</returns>
-        public async Task<Xamarin.Essentials.Location> GetPositionAsync(TimeSpan timeout)
+        public async Task<Xamarin.Essentials.Location?> GetPositionAsync(TimeSpan timeout)
         {
             if (!await CheckPermissionAsync())
             {
@@ -81,7 +81,7 @@ namespace WhereToFly.App.Core.Services
         /// Returns last known position
         /// </summary>
         /// <returns>last known position, or null when none could be retrieved</returns>
-        public async Task<MapPoint> GetLastKnownPositionAsync()
+        public async Task<MapPoint?> GetLastKnownPositionAsync()
         {
             var location = await Geolocation.GetLastKnownLocationAsync();
             if (location == null)

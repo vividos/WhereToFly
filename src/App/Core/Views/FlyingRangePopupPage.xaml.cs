@@ -19,7 +19,7 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Task completion source to report back flying range parameters
         /// </summary>
-        private TaskCompletionSource<FlyingRangeParameters> tcs;
+        private readonly TaskCompletionSource<FlyingRangeParameters?> tcs = new();
 
         /// <summary>
         /// Creates a new popup page to edit flying range parameters
@@ -30,19 +30,16 @@ namespace WhereToFly.App.Core.Views
 
             this.InitializeComponent();
 
-            this.BindingContext = this.viewModel = new FlyingRangePopupViewModel(App.Settings);
+            this.BindingContext = this.viewModel = new FlyingRangePopupViewModel(App.Settings!);
         }
 
         /// <summary>
         /// Shows "flying parameters" popup page and lets the user edit the values.
         /// </summary>
         /// <returns>flying range parameters</returns>
-        public static async Task<FlyingRangeParameters> ShowAsync()
+        public static async Task<FlyingRangeParameters?> ShowAsync()
         {
-            var popupPage = new FlyingRangePopupPage()
-            {
-                tcs = new TaskCompletionSource<FlyingRangeParameters>(),
-            };
+            var popupPage = new FlyingRangePopupPage();
 
             await popupPage.Navigation.PushPopupAsync(popupPage);
 

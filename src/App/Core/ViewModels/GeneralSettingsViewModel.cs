@@ -26,6 +26,17 @@ namespace WhereToFly.App.Core.ViewModels
             /// App theme value
             /// </summary>
             public AppTheme Value { get; set; }
+
+            /// <summary>
+            /// Creates a new app theme view model
+            /// </summary>
+            /// <param name="text">display text</param>
+            /// <param name="appTheme">app theme</param>
+            public AppThemeViewModel(string text, AppTheme appTheme)
+            {
+                this.Text = text;
+                this.Value = appTheme;
+            }
         }
 
         /// <summary>
@@ -57,7 +68,7 @@ namespace WhereToFly.App.Core.ViewModels
                 if (this.appSettings.AppTheme != value.Value)
                 {
                     this.appSettings.AppTheme = value.Value;
-                    App.Settings.AppTheme = value.Value;
+                    App.Settings!.AppTheme = value.Value;
                     Task.Run(async () => await this.SaveThemeSettingsAsync());
                 }
             }
@@ -66,12 +77,12 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Username for the alptherm web page
         /// </summary>
-        public string AlpthermUsername { get; set; }
+        public string AlpthermUsername { get; set; } = string.Empty;
 
         /// <summary>
         /// Password for the alptherm web page
         /// </summary>
-        public string AlpthermPassword { get; set; }
+        public string AlpthermPassword { get; set; } = string.Empty;
         #endregion
 
         /// <summary>
@@ -79,13 +90,13 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         public GeneralSettingsViewModel()
         {
-            this.appSettings = App.Settings;
+            this.appSettings = App.Settings!;
 
             this.AppThemeItems = new List<AppThemeViewModel>
             {
-                new AppThemeViewModel { Text = "Same as device", Value = AppTheme.Unspecified },
-                new AppThemeViewModel { Text = "Light theme", Value = AppTheme.Light },
-                new AppThemeViewModel { Text = "Dark theme", Value = AppTheme.Dark },
+                new AppThemeViewModel("Same as device", AppTheme.Unspecified),
+                new AppThemeViewModel("Light theme", AppTheme.Light),
+                new AppThemeViewModel("Dark theme", AppTheme.Dark),
             };
 
             Task.Run(this.LoadDataAsync);

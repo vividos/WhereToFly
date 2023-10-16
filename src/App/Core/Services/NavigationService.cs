@@ -23,7 +23,7 @@ namespace WhereToFly.App.Core.Services
         /// Mapping from page key to page type and, optionally, the type of parameter that must be
         /// passed
         /// </summary>
-        private static readonly Dictionary<PageKey, (Type, Type)> PageKeyToPageMap =
+        private static readonly Dictionary<PageKey, (Type, Type?)> PageKeyToPageMap =
             new()
             {
                 { PageKey.MapPage, (typeof(MapPage), null) },
@@ -46,7 +46,7 @@ namespace WhereToFly.App.Core.Services
         /// Mapping from popup page key to page type and, optionally, the type of parameter that
         /// must be passed.
         /// </summary>
-        private static readonly Dictionary<PopupPageKey, (Type, Type)> PopupPageKeyToPageMap =
+        private static readonly Dictionary<PopupPageKey, (Type, Type?)> PopupPageKeyToPageMap =
             new()
             {
                 { PopupPageKey.AddLayerPopupPage, (typeof(AddLayerPopupPage), null) },
@@ -65,7 +65,7 @@ namespace WhereToFly.App.Core.Services
         /// <summary>
         /// Navigation page to use to navigate between pages
         /// </summary>
-        public NavigationPage NavigationPage { get; internal set; }
+        public NavigationPage? NavigationPage { get; internal set; }
 
         /// <summary>
         /// Navigates to the map page
@@ -83,7 +83,7 @@ namespace WhereToFly.App.Core.Services
         /// <param name="animated">indicates if page navigation should be animated</param>
         /// <param name="parameter">parameter object to pass; may be null</param>
         /// <returns>task to wait on</returns>
-        public async Task NavigateAsync(PageKey pageKey, bool animated, object parameter = null)
+        public async Task NavigateAsync(PageKey pageKey, bool animated, object? parameter = null)
         {
             Type pageType = GetPageTypeFromPageKey(pageKey, parameter);
 
@@ -100,7 +100,7 @@ namespace WhereToFly.App.Core.Services
         /// <param name="pageKey">page key</param>
         /// <param name="parameter">parameter; mandatory for some pages</param>
         /// <returns>page type</returns>
-        private static Type GetPageTypeFromPageKey(PageKey pageKey, object parameter)
+        private static Type GetPageTypeFromPageKey(PageKey pageKey, object? parameter)
         {
             Debug.Assert(
                 PageKeyToPageMap.ContainsKey(pageKey),
@@ -109,7 +109,7 @@ namespace WhereToFly.App.Core.Services
             var tuple = PageKeyToPageMap[pageKey];
             Type pageType = tuple.Item1;
 
-            Type parameterType = tuple.Item2;
+            Type? parameterType = tuple.Item2;
             if (parameterType != null)
             {
                 Debug.Assert(parameter != null, "passed parameter must be non-null");
@@ -130,10 +130,10 @@ namespace WhereToFly.App.Core.Services
         /// <param name="animated">indicates if popup page navigation should be animated</param>
         /// <param name="parameter">parameter; mandatory for some popup pages</param>
         /// <returns>result object</returns>
-        public async Task<TResult> NavigateToPopupPageAsync<TResult>(
+        public async Task<TResult?> NavigateToPopupPageAsync<TResult>(
             PopupPageKey popupPageKey,
             bool animated,
-            object parameter = null)
+            object? parameter = null)
             where TResult : class
         {
             Debug.Assert(this.NavigationPage != null, "NavigationPage property must have been set");
@@ -148,14 +148,14 @@ namespace WhereToFly.App.Core.Services
                     async () => await this.NavigateToPopupPageAsync<TResult>(popupPageKey, animated, parameter));
             }
 
-            if (!PopupPageKeyToPageMap.TryGetValue(popupPageKey, out (Type, Type) typeTuple))
+            if (!PopupPageKeyToPageMap.TryGetValue(popupPageKey, out (Type, Type?) typeTuple))
             {
                 throw new ArgumentException(
                     nameof(popupPageKey),
                     $"invalid popup page key: {popupPageKey}");
             }
 
-            Type parameterType = typeTuple.Item2;
+            Type? parameterType = typeTuple.Item2;
 
             if (parameterType != null &&
                 parameter != null &&
@@ -168,7 +168,7 @@ namespace WhereToFly.App.Core.Services
 
             Type popupPageType = typeTuple.Item1;
 
-            PopupPage popupPage = null;
+            PopupPage? popupPage = null;
             if (parameter == null)
             {
                 popupPage = (PopupPage)Activator.CreateInstance(popupPageType);
@@ -231,7 +231,7 @@ namespace WhereToFly.App.Core.Services
         /// <param name="animated">indicates if page navigation should be animated</param>
         /// <param name="parameter">parameter object to pass; may be null</param>
         /// <returns>task to wait on</returns>
-        public async Task NavigateAsync(Type pageType, bool animated, object parameter = null)
+        public async Task NavigateAsync(Type pageType, bool animated, object? parameter = null)
         {
             Debug.Assert(this.NavigationPage != null, "NavigationPage property must have been set");
             if (this.NavigationPage == null)
@@ -252,7 +252,7 @@ namespace WhereToFly.App.Core.Services
                 flyoutPage.IsPresented = false;
             }
 
-            Page displayPage = null;
+            Page? displayPage = null;
             if (pageType == typeof(MapPage))
             {
                 await this.NavigationPage.Navigation.PopToRootAsync();

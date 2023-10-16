@@ -43,7 +43,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Returns image source for SvgImage in order to display the type image
         /// </summary>
-        public ImageSource TypeImageSource { get; }
+        public ImageSource? TypeImageSource { get; }
 
         /// <summary>
         /// Returns if takeoff directions view should be visible at all
@@ -129,24 +129,21 @@ namespace WhereToFly.App.Core.ViewModels
         /// <param name="parentViewModel">parent view model</param>
         /// <param name="location">location object</param>
         /// <param name="myCurrentPosition">the user's current position; may be null</param>
-        public LocationListEntryViewModel(LocationListViewModel parentViewModel, Location location, MapPoint myCurrentPosition)
+        public LocationListEntryViewModel(
+            LocationListViewModel parentViewModel,
+            Location location,
+            MapPoint? myCurrentPosition)
         {
             this.parentViewModel = parentViewModel;
             this.location = location;
 
-            this.Distance = myCurrentPosition != null ? myCurrentPosition.DistanceTo(this.location.MapLocation) : 0.0;
+            this.Distance = myCurrentPosition != null
+                ? myCurrentPosition.DistanceTo(this.location.MapLocation)
+                : 0.0;
 
             this.TypeImageSource =
                 SvgImageCache.GetImageSource(this.location);
 
-            this.SetupBindings();
-        }
-
-        /// <summary>
-        /// Sets up bindings for this view model
-        /// </summary>
-        private void SetupBindings()
-        {
             this.Description = HtmlConverter.StripAllTags(this.location.Description);
 
             var appMapService = DependencyService.Get<IAppMapService>();

@@ -23,7 +23,7 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="location">location to use</param>
         /// <returns>image source</returns>
-        public static ImageSource GetImageSource(Location location)
+        public static ImageSource? GetImageSource(Location location)
         {
             if (location == null)
             {
@@ -39,7 +39,7 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="track">track to use</param>
         /// <returns>image source</returns>
-        public static ImageSource GetImageSource(Track track)
+        public static ImageSource? GetImageSource(Track track)
         {
             string svgImagePath = track.IsFlightTrack
                 ? "weblib/images/paragliding.svg"
@@ -53,7 +53,7 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="layer">layer to use</param>
         /// <returns>image source</returns>
-        public static ImageSource GetImageSource(Layer layer)
+        public static ImageSource? GetImageSource(Layer layer)
         {
             string svgImagePath = ImagePathFromLayerType(layer.LayerType);
 
@@ -80,7 +80,7 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="layer">layer to use</param>
         /// <returns>image source</returns>
-        public static ImageSource GetLayerVisibilityImageSource(Layer layer)
+        public static ImageSource? GetLayerVisibilityImageSource(Layer layer)
         {
             string svgImagePath = layer.IsVisible
                 ? "icons/eye.svg"
@@ -94,21 +94,23 @@ namespace WhereToFly.App.Core
         /// name.
         /// </summary>
         /// <param name="svgImageName">relative path to the SVG image file</param>
-        /// <returns>image source</returns>
-        public static ImageSource GetImageSource(string svgImageName)
+        /// <returns>image source, or null when it couldn't be loaded</returns>
+        public static ImageSource? GetImageSource(string svgImageName)
         {
             var cache = DependencyService.Get<SvgImageCache>();
-            string svgText = cache.GetSvgImage(svgImageName);
+            string? svgText = cache.GetSvgImage(svgImageName);
 
-            return ImageSource.FromUri(new Uri(Controls.SvgConstants.DataUriPlainPrefix + svgText));
+            return svgText != null
+                ? ImageSource.FromUri(new Uri(Controls.SvgConstants.DataUriPlainPrefix + svgText))
+                : null;
         }
 
         /// <summary>
         /// Returns an SVG image xml text from an image path
         /// </summary>
         /// <param name="imagePath">image path</param>
-        /// <returns>SVG image xml text, or </returns>
-        public string GetSvgImage(string imagePath)
+        /// <returns>SVG image xml text, or null when it couldn't be loaded</returns>
+        public string? GetSvgImage(string imagePath)
         {
             if (this.allImages.ContainsKey(imagePath))
             {
@@ -117,7 +119,7 @@ namespace WhereToFly.App.Core
 
             var platform = DependencyService.Get<IPlatform>();
 
-            string svgText = null;
+            string? svgText = null;
             try
             {
                 svgText = platform.LoadAssetText(imagePath);
@@ -127,7 +129,10 @@ namespace WhereToFly.App.Core
                 // ignore load errors
             }
 
-            this.AddImage(imagePath, svgText);
+            if (svgText != null)
+            {
+                this.AddImage(imagePath, svgText);
+            }
 
             return svgText;
         }

@@ -87,7 +87,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             /// </summary>
             /// <param name="weatherIconDescriptionId">weather icon description ID</param>
             /// <returns>retrieved weather icon description</returns>
-            public Task<WeatherIconDescription> Get(string weatherIconDescriptionId)
+            public Task<WeatherIconDescription?> Get(string weatherIconDescriptionId)
             {
                 throw new NotImplementedException();
             }

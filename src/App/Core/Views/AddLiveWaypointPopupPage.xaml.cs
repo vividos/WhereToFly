@@ -14,7 +14,7 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Task completion source to report back if live waypoint should be added
         /// </summary>
-        private TaskCompletionSource<bool> tcs;
+        private readonly TaskCompletionSource<bool> tcs = new();
 
         /// <summary>
         /// Creates a new popup page to edit live waypoint properties
@@ -37,10 +37,7 @@ namespace WhereToFly.App.Core.Views
         /// <returns>entered text, or null when user canceled the popup dialog</returns>
         public static async Task<bool> ShowAsync(Location liveWaypoint)
         {
-            var popupPage = new AddLiveWaypointPopupPage(liveWaypoint)
-            {
-                tcs = new TaskCompletionSource<bool>(),
-            };
+            var popupPage = new AddLiveWaypointPopupPage(liveWaypoint);
 
             await popupPage.Navigation.PushPopupAsync(popupPage);
 

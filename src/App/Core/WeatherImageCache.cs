@@ -16,7 +16,7 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="iconDescription">weather icon description to load image for</param>
         /// <returns>image source, or null when no image was found or could be loaded</returns>
-        public static async Task<ImageSource> GetImageAsync(WeatherIconDescription iconDescription)
+        public static async Task<ImageSource?> GetImageAsync(WeatherIconDescription iconDescription)
         {
             switch (iconDescription.Type)
             {

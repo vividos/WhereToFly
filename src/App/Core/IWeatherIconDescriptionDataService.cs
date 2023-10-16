@@ -21,7 +21,7 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="weatherIconDescriptionId">weather icon description ID</param>
         /// <returns>weather icon description from list, or null when none was found</returns>
-        Task<WeatherIconDescription> Get(string weatherIconDescriptionId);
+        Task<WeatherIconDescription?> Get(string weatherIconDescriptionId);
 
         /// <summary>
         /// Removes a specific weather icon description

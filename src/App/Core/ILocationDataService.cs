@@ -22,7 +22,7 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="locationId">location ID</param>
         /// <returns>location from list, or null when none was found</returns>
-        Task<Location> Get(string locationId);
+        Task<Location?> Get(string locationId);
 
         /// <summary>
         /// Updates an existing location in the location list
@@ -49,7 +49,7 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="filterSettings">filter settings; may be null</param>
         /// <returns>list of locations</returns>
-        Task<IEnumerable<Location>> GetList(LocationFilterSettings filterSettings = null);
+        Task<IEnumerable<Location>> GetList(LocationFilterSettings? filterSettings = null);
 
         /// <summary>
         /// Adds new location list

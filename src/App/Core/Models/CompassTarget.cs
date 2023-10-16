@@ -12,12 +12,12 @@ namespace WhereToFly.App.Core.Models
         /// <summary>
         /// Title of compass target
         /// </summary>
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
 
         /// <summary>
         /// Target location map point
         /// </summary>
-        public MapPoint TargetLocation { get; set; }
+        public MapPoint? TargetLocation { get; set; }
 
         /// <summary>
         /// Target direction angle, in degrees

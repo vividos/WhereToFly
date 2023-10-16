@@ -49,7 +49,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Returns image source for SvgImage in order to display the type image
         /// </summary>
-        public ImageSource TypeImageSource { get; }
+        public ImageSource? TypeImageSource { get; }
 
         /// <summary>
         /// Returns if takeoff directions view should be visible at all
@@ -178,7 +178,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Command to execute when user tapped on the internet link
         /// </summary>
-        public ICommand InternetLinkTappedCommand { get; set; }
+        public ICommand? InternetLinkTappedCommand { get; set; }
         #endregion
 
         /// <summary>
@@ -196,14 +196,6 @@ namespace WhereToFly.App.Core.ViewModels
             this.TypeImageSource =
                 SvgImageCache.GetImageSource(location);
 
-            this.SetupBindings();
-        }
-
-        /// <summary>
-        /// Sets up bindings for this view model
-        /// </summary>
-        private void SetupBindings()
-        {
             this.DescriptionWebViewSource = new HtmlWebViewSource
             {
                 Html = FormatLocationDescription(this.location),
@@ -290,15 +282,18 @@ namespace WhereToFly.App.Core.ViewModels
                 // store new infos in location list
                 var locationDataService = dataService.GetLocationDataService();
 
-                var locationInList = await locationDataService.Get(this.location.Id);
-                locationInList.MapLocation = this.location.MapLocation;
-                locationInList.Description = this.location.Description;
+                Location? locationInList = await locationDataService.Get(this.location.Id);
+                if (locationInList != null)
+                {
+                    locationInList.MapLocation = this.location.MapLocation;
+                    locationInList.Description = this.location.Description;
 
-                await locationDataService.Update(locationInList);
+                    await locationDataService.Update(locationInList);
 
-                var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
-                liveWaypointRefreshService.RemoveLiveWaypoint(locationInList.Id);
-                liveWaypointRefreshService.AddLiveWaypoint(locationInList);
+                    var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
+                    liveWaypointRefreshService.RemoveLiveWaypoint(locationInList.Id);
+                    liveWaypointRefreshService.AddLiveWaypoint(locationInList);
+                }
             }
             catch (Exception ex)
             {

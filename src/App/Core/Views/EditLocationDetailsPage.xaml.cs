@@ -25,7 +25,7 @@ namespace WhereToFly.App.Core.Views
 
             this.InitializeComponent();
 
-            this.BindingContext = this.viewModel = new EditLocationDetailsViewModel(App.Settings, location);
+            this.BindingContext = this.viewModel = new EditLocationDetailsViewModel(App.Settings!, location);
         }
 
         #region Page lifecycle methods

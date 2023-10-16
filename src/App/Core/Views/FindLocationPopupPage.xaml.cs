@@ -12,7 +12,7 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Task completion source to report back typed in location name to a task.
         /// </summary>
-        private TaskCompletionSource<string> tcs;
+        private readonly TaskCompletionSource<string?> tcs = new();
 
         /// <summary>
         /// Creates a new popup page
@@ -28,12 +28,9 @@ namespace WhereToFly.App.Core.Views
         /// Shows "Find location" popup page, lets the user enter text and returns the text.
         /// </summary>
         /// <returns>entered text, or null when user canceled the popup dialog</returns>
-        public static async Task<string> ShowAsync()
+        public static async Task<string?> ShowAsync()
         {
-            var popupPage = new FindLocationPopupPage
-            {
-                tcs = new TaskCompletionSource<string>(),
-            };
+            var popupPage = new FindLocationPopupPage();
 
             await popupPage.Navigation.PushPopupAsync(popupPage);
 

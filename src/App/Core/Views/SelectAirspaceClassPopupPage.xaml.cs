@@ -20,7 +20,7 @@ namespace WhereToFly.App.Core.Views
         /// <summary>
         /// Task completion source to report back selected airspace classes
         /// </summary>
-        private TaskCompletionSource<ISet<AirspaceClass>> tcs;
+        private readonly TaskCompletionSource<ISet<AirspaceClass>?> tcs = new();
 
         /// <summary>
         /// Creates a new popup page to select airspace classes
@@ -43,12 +43,9 @@ namespace WhereToFly.App.Core.Views
         /// <returns>
         /// set of all selected airspace classes, or null when user canceled the popup dialog
         /// </returns>
-        public static async Task<ISet<AirspaceClass>> ShowAsync(IEnumerable<AirspaceClass> airspaceClassesList)
+        public static async Task<ISet<AirspaceClass>?> ShowAsync(IEnumerable<AirspaceClass> airspaceClassesList)
         {
-            var popupPage = new SelectAirspaceClassPopupPage(airspaceClassesList)
-            {
-                tcs = new TaskCompletionSource<ISet<AirspaceClass>>(),
-            };
+            var popupPage = new SelectAirspaceClassPopupPage(airspaceClassesList);
 
             await popupPage.Navigation.PushPopupAsync(popupPage);
 
