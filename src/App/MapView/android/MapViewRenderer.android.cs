@@ -1,5 +1,4 @@
 ﻿using Android.Content;
-using System;
 using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;

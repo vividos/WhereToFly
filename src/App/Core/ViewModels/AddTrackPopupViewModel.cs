@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using Xamarin.Forms;
