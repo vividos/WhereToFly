@@ -12,6 +12,13 @@
         AddLayerPopupPage,
 
         /// <summary>
+        /// Popup page key to show the "add live waypoint" popup page. The Location object to be
+        /// added must be passed as parameter to the NavigationService. The page returns the
+        /// edited Location object or null when editing was cancelled.
+        /// </summary>
+        AddLiveWaypointPopupPage,
+
+        /// <summary>
         /// Popup page key to show the weather icon selection popup page. The group (or null) must
         /// be passed as parameter to the NavigationService. The page returns the selected
         /// WeatherIconDescription object as result.

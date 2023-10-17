@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Logic;
 using WhereToFly.App.Core.Services;
-using WhereToFly.App.Core.Views;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;
@@ -124,9 +123,19 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="liveWaypoint">live waypoint</param>
         /// <returns>true when live waypoint should be added, false when not</returns>
-        private static async Task<bool> ShowAddLiveWaypointDialog(Location liveWaypoint)
+        private static async Task<bool> ShowAddLiveWaypointDialog(Location? liveWaypoint)
         {
-            return await AddLiveWaypointPopupPage.ShowAsync(liveWaypoint);
+            var editedLiveWaypoint = await NavigationService.Instance.NavigateToPopupPageAsync<Location?>(
+                PopupPageKey.AddLiveWaypointPopupPage,
+                true,
+                liveWaypoint);
+
+            if (editedLiveWaypoint != null)
+            {
+                liveWaypoint = editedLiveWaypoint;
+            }
+
+            return liveWaypoint != null;
         }
 
         /// <summary>

@@ -11,7 +11,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Live waypoint being edited
         /// </summary>
-        private readonly Location liveWaypoint;
+        public Location LiveWaypoint { get; }
 
         #region Binding properties
         /// <summary>
@@ -19,10 +19,10 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         public string Name
         {
-            get => this.liveWaypoint.Name;
+            get => this.LiveWaypoint.Name;
             set
             {
-                this.liveWaypoint.Name = value;
+                this.LiveWaypoint.Name = value;
                 this.OnPropertyChanged(nameof(this.Name));
             }
         }
@@ -34,7 +34,7 @@ namespace WhereToFly.App.Core.ViewModels
         {
             get
             {
-                var uri = new AppResourceUri(this.liveWaypoint.InternetLink);
+                var uri = new AppResourceUri(this.LiveWaypoint.InternetLink);
                 return uri.Type.ToString();
             }
         }
@@ -46,7 +46,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <param name="liveWaypoint">live waypoint to edit</param>
         public AddLiveWaypointPopupViewModel(Location liveWaypoint)
         {
-            this.liveWaypoint = liveWaypoint;
+            this.LiveWaypoint = liveWaypoint;
         }
     }
 }

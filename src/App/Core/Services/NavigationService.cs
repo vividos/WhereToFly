@@ -9,6 +9,7 @@ using WhereToFly.App.Core.Views;
 using WhereToFly.Geo.Model;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using Location = WhereToFly.Geo.Model.Location;
 
 #pragma warning disable S4136 // All 'NavigateAsync' method overloads should be adjacent.
 
@@ -50,6 +51,7 @@ namespace WhereToFly.App.Core.Services
             new()
             {
                 { PopupPageKey.AddLayerPopupPage, (typeof(AddLayerPopupPage), null) },
+                { PopupPageKey.AddLiveWaypointPopupPage, (typeof(AddLiveWaypointPopupPage), typeof(Location)) },
                 { PopupPageKey.SelectWeatherIconPopupPage, (typeof(SelectWeatherIconPopupPage), typeof(string)) },
                 { PopupPageKey.SetCompassTargetDirectionPopupPage, (typeof(SetCompassTargetDirectionPopupPage), null) },
             };
@@ -134,7 +136,7 @@ namespace WhereToFly.App.Core.Services
             PopupPageKey popupPageKey,
             bool animated,
             object? parameter = null)
-            where TResult : class
+            where TResult : class?
         {
             Debug.Assert(this.NavigationPage != null, "NavigationPage property must have been set");
             if (this.NavigationPage == null)
