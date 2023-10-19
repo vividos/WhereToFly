@@ -11,7 +11,9 @@ using WhereToFly.App.MapView;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;
+using Xamarin.Essentials;
 using Xamarin.Forms;
+using Location = WhereToFly.Geo.Model.Location;
 
 namespace WhereToFly.App.Core.Views
 {
@@ -78,7 +80,7 @@ namespace WhereToFly.App.Core.Views
 
             this.geolocationService = DependencyService.Get<IGeolocationService>();
 
-            string cacheFolder = Xamarin.Essentials.FileSystem.CacheDirectory;
+            string cacheFolder = FileSystem.CacheDirectory;
 
             var nearbyPoiService = new NearbyPoiCachingService(
                 new BackendDataService(),
@@ -271,7 +273,7 @@ namespace WhereToFly.App.Core.Views
 
             try
             {
-                foundLocationsList = await Xamarin.Essentials.Geocoding.GetLocationsAsync(text);
+                foundLocationsList = await Geocoding.GetLocationsAsync(text);
             }
             catch (Exception ex)
             {
@@ -316,7 +318,7 @@ namespace WhereToFly.App.Core.Views
                 => await this.OnMapView_SetLocationAsCompassTarget(locationId);
 
             // UWP needs to create the renderer in the main thread
-            Xamarin.Essentials.MainThread.BeginInvokeOnMainThread(() =>
+            MainThread.BeginInvokeOnMainThread(() =>
             {
                 this.Content = this.mapView;
             });
@@ -333,9 +335,9 @@ namespace WhereToFly.App.Core.Views
                 args.Url.StartsWith("http") &&
                 !args.Url.Contains("https://localapp/"))
             {
-                Xamarin.Essentials.Browser.OpenAsync(
+                Browser.OpenAsync(
                     args.Url,
-                    Xamarin.Essentials.BrowserLaunchMode.External);
+                    BrowserLaunchMode.External);
 
                 args.Cancel = true;
             }
@@ -558,13 +560,13 @@ namespace WhereToFly.App.Core.Views
                 latitude: point.Latitude,
                 longitude: point.Longitude);
 
-            var options = new Xamarin.Essentials.MapLaunchOptions
+            var options = new MapLaunchOptions
             {
                 Name = name,
-                NavigationMode = Xamarin.Essentials.NavigationMode.Driving,
+                NavigationMode = NavigationMode.Driving,
             };
 
-            await Xamarin.Essentials.Map.OpenAsync(navigateLocation, options);
+            await Map.OpenAsync(navigateLocation, options);
         }
 
         /// <summary>
@@ -601,7 +603,7 @@ namespace WhereToFly.App.Core.Views
             var appMapService = DependencyService.Get<IAppMapService>();
             await appMapService.UpdateLastShownPosition(point);
 
-            await Xamarin.Essentials.Share.RequestAsync(
+            await Share.RequestAsync(
                 DataFormatter.FormatMyPositionShareText(point, position.Timestamp),
                 "Share my position with...");
         }
@@ -846,7 +848,7 @@ namespace WhereToFly.App.Core.Views
 
             this.geolocationService.PositionChanged += this.OnPositionChanged;
 
-            Xamarin.Essentials.Connectivity.ConnectivityChanged += this.OnConnectivityChanged;
+            Connectivity.ConnectivityChanged += this.OnConnectivityChanged;
         }
 
         /// <summary>
@@ -855,10 +857,10 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        private void OnConnectivityChanged(object sender, Xamarin.Essentials.ConnectivityChangedEventArgs args)
+        private void OnConnectivityChanged(object sender, ConnectivityChangedEventArgs args)
         {
             bool isConnectivityAvailable =
-                args.NetworkAccess == Xamarin.Essentials.NetworkAccess.Internet;
+                args.NetworkAccess == NetworkAccess.Internet;
 
             this.mapView.OnNetworkConnectivityChanged(isConnectivityAvailable);
         }
@@ -891,7 +893,7 @@ namespace WhereToFly.App.Core.Views
             base.OnDisappearing();
 
             this.geolocationService.PositionChanged -= this.OnPositionChanged;
-            Xamarin.Essentials.Connectivity.ConnectivityChanged -= this.OnConnectivityChanged;
+            Connectivity.ConnectivityChanged -= this.OnConnectivityChanged;
         }
         #endregion
 

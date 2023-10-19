@@ -358,13 +358,13 @@ namespace WhereToFly.App.Core.ViewModels
                 latitude: this.location.MapLocation.Latitude,
                 longitude: this.location.MapLocation.Longitude);
 
-            var options = new Xamarin.Essentials.MapLaunchOptions
+            var options = new MapLaunchOptions
             {
                 Name = this.location.Name,
-                NavigationMode = Xamarin.Essentials.NavigationMode.Driving,
+                NavigationMode = NavigationMode.Driving,
             };
 
-            await Xamarin.Essentials.Map.OpenAsync(navigateLocation, options);
+            await Map.OpenAsync(navigateLocation, options);
         }
 
         /// <summary>
@@ -407,9 +407,9 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task OnInternetLinkTappedAsync()
         {
-            await Xamarin.Essentials.Browser.OpenAsync(
+            await Browser.OpenAsync(
                 new Uri(this.location.InternetLink),
-                Xamarin.Essentials.BrowserLaunchMode.External);
+                BrowserLaunchMode.External);
         }
     }
 }

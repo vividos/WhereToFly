@@ -9,7 +9,9 @@ using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.Views;
 using WhereToFly.Geo.Model;
 using Xamarin.CommunityToolkit.ObjectModel;
+using Xamarin.Essentials;
 using Xamarin.Forms;
+using Location = WhereToFly.Geo.Model.Location;
 
 namespace WhereToFly.App.Core.ViewModels
 {
@@ -417,19 +419,19 @@ namespace WhereToFly.App.Core.ViewModels
         {
             try
             {
-                var options = new Xamarin.Essentials.PickOptions
+                var options = new PickOptions
                 {
-                    FileTypes = new Xamarin.Essentials.FilePickerFileType(
-                        new Dictionary<Xamarin.Essentials.DevicePlatform, IEnumerable<string>?>
+                    FileTypes = new FilePickerFileType(
+                        new Dictionary<DevicePlatform, IEnumerable<string>?>
                         {
-                            { Xamarin.Essentials.DevicePlatform.Android, null },
-                            { Xamarin.Essentials.DevicePlatform.UWP, new string[] { ".kml", ".kmz", ".gpx", ".cup" } },
-                            { Xamarin.Essentials.DevicePlatform.iOS, null },
+                            { DevicePlatform.Android, null },
+                            { DevicePlatform.UWP, new string[] { ".kml", ".kmz", ".gpx", ".cup" } },
+                            { DevicePlatform.iOS, null },
                         }),
                     PickerTitle = "Select a Location file to import",
                 };
 
-                var result = await Xamarin.Essentials.FilePicker.PickAsync(options);
+                var result = await FilePicker.PickAsync(options);
                 if (result == null ||
                     string.IsNullOrEmpty(result.FullPath))
                 {
@@ -475,9 +477,9 @@ namespace WhereToFly.App.Core.ViewModels
 
             string webSiteToOpen = this.downloadWebSiteList[result];
 
-            await Xamarin.Essentials.Browser.OpenAsync(
+            await Browser.OpenAsync(
                 webSiteToOpen,
-                Xamarin.Essentials.BrowserLaunchMode.External);
+                BrowserLaunchMode.External);
         }
 
         /// <summary>

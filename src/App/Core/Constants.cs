@@ -1,5 +1,6 @@
 ﻿using System;
 using WhereToFly.Geo.Model;
+using Xamarin.Forms;
 
 namespace WhereToFly.App.Core
 {
@@ -36,7 +37,7 @@ namespace WhereToFly.App.Core
         /// <summary>
         /// Primary color for User Interface
         /// </summary>
-        public static readonly Xamarin.Forms.Color PrimaryColor = Xamarin.Forms.Color.FromHex("2F299E");
+        public static readonly Color PrimaryColor = Color.FromHex("2F299E");
 
         /// <summary>
         /// Initial center point for the map when no last know position is available

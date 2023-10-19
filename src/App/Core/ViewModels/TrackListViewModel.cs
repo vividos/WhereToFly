@@ -7,6 +7,7 @@ using System.Windows.Input;
 using WhereToFly.App.Core.Services;
 using WhereToFly.Geo.Model;
 using Xamarin.CommunityToolkit.ObjectModel;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.ViewModels
@@ -259,19 +260,19 @@ namespace WhereToFly.App.Core.ViewModels
 
             try
             {
-                var options = new Xamarin.Essentials.PickOptions
+                var options = new PickOptions
                 {
-                    FileTypes = new Xamarin.Essentials.FilePickerFileType(
-                        new Dictionary<Xamarin.Essentials.DevicePlatform, IEnumerable<string>?>
+                    FileTypes = new FilePickerFileType(
+                        new Dictionary<DevicePlatform, IEnumerable<string>?>
                         {
-                            { Xamarin.Essentials.DevicePlatform.Android, null },
-                            { Xamarin.Essentials.DevicePlatform.UWP, new string[] { ".kml", ".kmz", ".gpx", ".igc" } },
-                            { Xamarin.Essentials.DevicePlatform.iOS, null },
+                            { DevicePlatform.Android, null },
+                            { DevicePlatform.UWP, new string[] { ".kml", ".kmz", ".gpx", ".igc" } },
+                            { DevicePlatform.iOS, null },
                         }),
                     PickerTitle = "Select a Track file to import",
                 };
 
-                var result = await Xamarin.Essentials.FilePicker.PickAsync(options);
+                var result = await FilePicker.PickAsync(options);
                 if (result == null ||
                     string.IsNullOrEmpty(result.FullPath))
                 {
