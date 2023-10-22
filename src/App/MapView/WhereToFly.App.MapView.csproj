@@ -25,7 +25,6 @@
   <ItemGroup>
     <EmbeddedResource Remove="**" />
     <Compile Include="*.cs" />
-    <Compile Remove="WebViewSourceFactory.maui.cs" />
     <None Include="Readme.md" Pack="true" PackagePath="\" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>

@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <EmbeddedResource Remove="**" />
     <Compile Include="*.cs" />
     <Compile Include="maui\*.cs" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
