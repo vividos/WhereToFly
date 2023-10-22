@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CommunityToolkit.Maui;
+using Microsoft.Extensions.Logging;
 using WhereToFly.App.MapView;
 
 namespace WhereToFly.App.Maui
@@ -17,6 +18,7 @@ namespace WhereToFly.App.Maui
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .UseMapView();
 
 #if DEBUG
