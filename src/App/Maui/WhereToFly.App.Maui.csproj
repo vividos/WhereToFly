@@ -46,10 +46,10 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Maui" Version="6.0.0" />
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.52" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.54" />
     <PackageReference Include="Markdig" Version="0.33.0" />
-    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.2" />
-    <PackageReference Include="Microsoft.AppCenter.Distribute" Version="5.0.2" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.3" />
+    <PackageReference Include="Microsoft.AppCenter.Distribute" Version="5.0.3" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Refit" Version="7.0.0" />
