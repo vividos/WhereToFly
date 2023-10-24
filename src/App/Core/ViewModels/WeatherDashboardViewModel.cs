@@ -127,7 +127,9 @@ namespace WhereToFly.App.Core.ViewModels
         private async Task AddWebLinkAsync()
         {
             WeatherIconDescription? weatherIconDescription =
-                await AddWeatherLinkPopupPage.ShowAsync();
+                await NavigationService.Instance.NavigateToPopupPageAsync<WeatherIconDescription?>(
+                    PopupPageKey.AddWeatherLinkPopupPage,
+                    true);
 
             if (weatherIconDescription == null)
             {

@@ -131,7 +131,10 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task EditTrackInfos()
         {
-            var editedTrack = await SetTrackInfosPopupPage.ShowAsync(this.Track);
+            var editedTrack = await NavigationService.Instance.NavigateToPopupPageAsync<Track?>(
+                PopupPageKey.SetTrackInfosPopupPage,
+                true,
+                this.Track);
 
             if (editedTrack != null)
             {

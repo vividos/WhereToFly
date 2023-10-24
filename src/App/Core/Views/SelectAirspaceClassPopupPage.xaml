@@ -1,8 +1,11 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <views:BasePopupPage xmlns="http://xamarin.com/schemas/2014/forms"
                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                      xmlns:views="clr-namespace:WhereToFly.App.Core.Views"
-                     x:Class="WhereToFly.App.Core.Views.SelectAirspaceClassPopupPage">
+                     xmlns:generic="clr-namespace:System.Collections.Generic"
+                     xmlns:airspace="clr-namespace:WhereToFly.Geo.Airspace"
+                     x:Class="WhereToFly.App.Core.Views.SelectAirspaceClassPopupPage"
+                     x:TypeArguments="generic:ISet(airspace:AirspaceClass)">
 
     <!-- popup content -->
     <StackLayout

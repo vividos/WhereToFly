@@ -251,7 +251,9 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task OnClicked_ToolbarButtonFindLocation()
         {
-            string? text = await FindLocationPopupPage.ShowAsync();
+            string? text = await NavigationService.Instance.NavigateToPopupPageAsync<string>(
+                PopupPageKey.FindLocationPopupPage,
+                true);
 
             if (text == null)
             {
@@ -799,7 +801,9 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task ShowFlyingRange(MapPoint point)
         {
-            FlyingRangeParameters? parameters = await FlyingRangePopupPage.ShowAsync();
+            var parameters = await NavigationService.Instance.NavigateToPopupPageAsync<FlyingRangeParameters>(
+                PopupPageKey.FlyingRangePopupPage,
+                true);
 
             if (parameters != null)
             {

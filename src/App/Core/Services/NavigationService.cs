@@ -6,7 +6,10 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Models;
 using WhereToFly.App.Core.Views;
+using WhereToFly.App.MapView;
+using WhereToFly.Geo.Airspace;
 using WhereToFly.Geo.Model;
+using WhereToFly.Shared.Model;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Location = WhereToFly.Geo.Model.Location;
@@ -44,16 +47,24 @@ namespace WhereToFly.App.Core.Services
             };
 
         /// <summary>
-        /// Mapping from popup page key to page type and, optionally, the type of parameter that
-        /// must be passed.
+        /// Mapping from popup page key to page type, the return type, and optionally, the type of
+        /// parameter that must be passed.
         /// </summary>
-        private static readonly Dictionary<PopupPageKey, (Type, Type?)> PopupPageKeyToPageMap =
+        private static readonly Dictionary<PopupPageKey, (Type, Type?, Type?)> PopupPageKeyToPageMap =
             new()
             {
-                { PopupPageKey.AddLayerPopupPage, (typeof(AddLayerPopupPage), null) },
-                { PopupPageKey.AddLiveWaypointPopupPage, (typeof(AddLiveWaypointPopupPage), typeof(Location)) },
-                { PopupPageKey.SelectWeatherIconPopupPage, (typeof(SelectWeatherIconPopupPage), typeof(string)) },
-                { PopupPageKey.SetCompassTargetDirectionPopupPage, (typeof(SetCompassTargetDirectionPopupPage), null) },
+                { PopupPageKey.AddLayerPopupPage, (typeof(AddLayerPopupPage), typeof(Layer), typeof(Layer)) },
+                { PopupPageKey.AddLiveWaypointPopupPage, (typeof(AddLiveWaypointPopupPage), typeof(Location), typeof(Location)) },
+                { PopupPageKey.AddTrackPopupPage, (typeof(AddTrackPopupPage), typeof(Track), typeof(Track)) },
+                { PopupPageKey.AddWeatherLinkPopupPage, (typeof(AddWeatherLinkPopupPage), typeof(AddWeatherLinkPopupPage), null) },
+                { PopupPageKey.FilterTakeoffDirectionsPopupPage, (typeof(FilterTakeoffDirectionsPopupPage), typeof(LocationFilterSettings), typeof(LocationFilterSettings)) },
+                { PopupPageKey.FindLocationPopupPage, (typeof(FindLocationPopupPage), typeof(string), null) },
+                { PopupPageKey.FlyingRangePopupPage, (typeof(FlyingRangePopupPage), typeof(FlyingRangeParameters), null) },
+                { PopupPageKey.PlanTourPopupPage, (typeof(PlanTourPopupPage), null, typeof(PlanTourParameters)) },
+                { PopupPageKey.SelectAirspaceClassPopupPage, (typeof(SelectAirspaceClassPopupPage), typeof(ISet<AirspaceClass>), typeof(IEnumerable<AirspaceClass>)) },
+                { PopupPageKey.SelectWeatherIconPopupPage, (typeof(SelectWeatherIconPopupPage), typeof(WeatherIconDescription), typeof(string)) },
+                { PopupPageKey.SetCompassTargetDirectionPopupPage, (typeof(SetCompassTargetDirectionPopupPage), typeof(Tuple<int>), null) },
+                { PopupPageKey.SetTrackInfosPopupPage, (typeof(SetTrackInfosPopupPage), typeof(Track), typeof(Track)) },
             };
 
         /// <summary>
@@ -150,14 +161,14 @@ namespace WhereToFly.App.Core.Services
                     async () => await this.NavigateToPopupPageAsync<TResult>(popupPageKey, animated, parameter));
             }
 
-            if (!PopupPageKeyToPageMap.TryGetValue(popupPageKey, out (Type, Type?) typeTuple))
+            if (!PopupPageKeyToPageMap.TryGetValue(popupPageKey, out (Type, Type?, Type?) typeTuple))
             {
                 throw new ArgumentException(
                     nameof(popupPageKey),
                     $"invalid popup page key: {popupPageKey}");
             }
 
-            Type? parameterType = typeTuple.Item2;
+            Type? parameterType = typeTuple.Item3;
 
             if (parameterType != null &&
                 parameter != null &&
@@ -189,7 +200,10 @@ namespace WhereToFly.App.Core.Services
                 throw new InvalidOperationException("couldn't create popup page for popup page key " + popupPageKey);
             }
 
-            if (popupPage is IPageResult<TResult> pageResult)
+            Type? returnType = typeTuple.Item2;
+            if (popupPage is IPageResult<TResult> pageResult &&
+                returnType != null &&
+                typeof(TResult) == returnType)
             {
                 return await pageResult.ResultTask;
             }

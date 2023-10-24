@@ -262,7 +262,9 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         public async Task FilterTakeoffDirectionsAsync()
         {
-            var result = await FilterTakeoffDirectionsPopupPage.ShowAsync(
+            var result = await NavigationService.Instance.NavigateToPopupPageAsync<LocationFilterSettings>(
+                PopupPageKey.FilterTakeoffDirectionsPopupPage,
+                true,
                 this.appSettings.LastLocationFilterSettings);
 
             if (result != null)

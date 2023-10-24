@@ -404,7 +404,11 @@ namespace WhereToFly.App.Core
 
             await CloseWaitingPopupPageAsync();
 
-            track = await AddTrackPopupPage.ShowAsync(track);
+            track = await NavigationService.Instance.NavigateToPopupPageAsync<Track?>(
+                PopupPageKey.AddTrackPopupPage,
+                true,
+                track);
+
             if (track == null)
             {
                 return false; // user canceled editing track properties
@@ -607,7 +611,11 @@ namespace WhereToFly.App.Core
         {
             var airspaceClasses = airspacesList.Select(airspace => airspace.Class).Distinct();
 
-            var selectedAirspaceClasses = await SelectAirspaceClassPopupPage.ShowAsync(airspaceClasses);
+            var selectedAirspaceClasses = await NavigationService.Instance.NavigateToPopupPageAsync<ISet<AirspaceClass>>(
+                PopupPageKey.SelectAirspaceClassPopupPage,
+                true,
+                airspaceClasses);
+
             if (selectedAirspaceClasses == null)
             {
                 return Enumerable.Empty<Airspace>();
