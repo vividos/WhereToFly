@@ -56,7 +56,7 @@ namespace WhereToFly.App.Core.Services
                 { PopupPageKey.AddLayerPopupPage, (typeof(AddLayerPopupPage), typeof(Layer), typeof(Layer)) },
                 { PopupPageKey.AddLiveWaypointPopupPage, (typeof(AddLiveWaypointPopupPage), typeof(Location), typeof(Location)) },
                 { PopupPageKey.AddTrackPopupPage, (typeof(AddTrackPopupPage), typeof(Track), typeof(Track)) },
-                { PopupPageKey.AddWeatherLinkPopupPage, (typeof(AddWeatherLinkPopupPage), typeof(AddWeatherLinkPopupPage), null) },
+                { PopupPageKey.AddWeatherLinkPopupPage, (typeof(AddWeatherLinkPopupPage), typeof(WeatherIconDescription), null) },
                 { PopupPageKey.FilterTakeoffDirectionsPopupPage, (typeof(FilterTakeoffDirectionsPopupPage), typeof(LocationFilterSettings), typeof(LocationFilterSettings)) },
                 { PopupPageKey.FindLocationPopupPage, (typeof(FindLocationPopupPage), typeof(string), null) },
                 { PopupPageKey.FlyingRangePopupPage, (typeof(FlyingRangePopupPage), typeof(FlyingRangeParameters), null) },
