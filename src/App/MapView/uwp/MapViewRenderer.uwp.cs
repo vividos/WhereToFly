@@ -4,24 +4,31 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using WhereToFly.App.MapView;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Platform.UWP;
 
-[assembly: ExportRenderer(typeof(WebView), typeof(WhereToFly.App.UWP.UwpWebViewRenderer))]
+[assembly: ExportRenderer(typeof(MapView), typeof(WhereToFly.App.MapView.MapViewRenderer))]
+[assembly: ExportRenderer(typeof(HeightProfileWebView), typeof(WhereToFly.App.MapView.MapViewRenderer))]
 
-namespace WhereToFly.App.UWP
+namespace WhereToFly.App.MapView
 {
     /// <summary>
     /// UWP custom Forms WebView renderer that uses WebView2
     /// See https://xamarinhelp.com/webview-rendering-engine-configuration/
     /// and https://stackoverflow.com/questions/67067055/can-i-use-webview2-in-xamarin-forms-i-need-to-use-it-in-android-ios-windows
     /// </summary>
-    public class UwpWebViewRenderer :
+    public class MapViewRenderer :
         ViewRenderer<WebView, WebView2>,
         IWebViewDelegate
     {
+        /// <summary>
+        /// Hostname for virtual mapping to local app folder
+        /// </summary>
+        private const string LocalAppHostname = "localapp";
+
         /// <summary>
         /// Called when web view element has been changed
         /// </summary>
@@ -50,7 +57,10 @@ namespace WhereToFly.App.UWP
                 newElement.EvalRequested += this.OnEvalRequested;
                 newElement.EvaluateJavaScriptRequested += this.OnEvaluateJavaScriptRequested;
 
-                newElement.Source?.Load(this);
+                if (newElement.Source != null)
+                {
+                    newElement.Source.Load(this);
+                }
             }
         }
 
@@ -87,6 +97,7 @@ namespace WhereToFly.App.UWP
             webView.CoreProcessFailed += this.OnCoreProcessFailed;
             webView.NavigationStarting += this.OnNavigationStarting;
             webView.NavigationCompleted += this.OnNavigationCompleted;
+            webView.WebMessageReceived += this.OnWebMessageReceived;
         }
 
         /// <summary>
@@ -104,6 +115,7 @@ namespace WhereToFly.App.UWP
             webView.CoreProcessFailed -= this.OnCoreProcessFailed;
             webView.NavigationStarting -= this.OnNavigationStarting;
             webView.NavigationCompleted -= this.OnNavigationCompleted;
+            webView.WebMessageReceived -= this.OnWebMessageReceived;
         }
 
         /// <summary>
@@ -140,6 +152,11 @@ namespace WhereToFly.App.UWP
             string userAgent = settings.UserAgent;
             userAgent += $" WebViewApp {AppInfo.Name.Replace(' ', '-')}/{AppInfo.VersionString}";
             settings.UserAgent = userAgent;
+
+            if (this.Element?.Source is UrlWebViewSource urlWebViewSource)
+            {
+                this.SetupVirtualAppFolder(urlWebViewSource.Url);
+            }
         }
 
         /// <summary>
@@ -169,12 +186,42 @@ namespace WhereToFly.App.UWP
                 return;
             }
 
+            if (url.StartsWith("callback://", StringComparison.InvariantCultureIgnoreCase))
+            {
+                args.Cancel = true;
+            }
+
             var sendNavigatingArgs = new WebNavigatingEventArgs(
                 WebNavigationEvent.NewPage,
                 new UrlWebViewSource { Url = url },
                 url);
 
             this.Element.SendNavigating(sendNavigatingArgs);
+        }
+
+        /// <summary>
+        /// Sets up virtual app folder to access locally stored pages
+        /// </summary>
+        /// <param name="url">URL to check if virtual app folder should be set up or not</param>
+        private void SetupVirtualAppFolder(string url)
+        {
+            const string LocalAppUrlScheme = $"https://{LocalAppHostname}/";
+            if (url.ToLowerInvariant().StartsWith(LocalAppUrlScheme.ToLowerInvariant()))
+            {
+                // no ms-appx-web:// support in WebView2, but allow access to local app data
+                // see also: https://github.com/dotnet/maui/pull/7672
+                string localAppFolder =
+                    Windows.ApplicationModel.Package.Current.InstalledLocation.Path;
+
+                this.Control.CoreWebView2.SetVirtualHostNameToFolderMapping(
+                    LocalAppHostname,
+                    localAppFolder,
+                    CoreWebView2HostResourceAccessKind.Allow);
+            }
+            else
+            {
+                this.Control.CoreWebView2.ClearVirtualHostNameToFolderMapping(LocalAppHostname);
+            }
         }
 
         /// <summary>
@@ -236,6 +283,34 @@ namespace WhereToFly.App.UWP
         }
 
         /// <summary>
+        /// Called when a web message has been received from JavaScript, by calling
+        /// window.chrome.webview.postMessage(...)
+        /// The message is packaged into a callback:// link with the "webMessage" verb.
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="args">event args</param>
+        private void OnWebMessageReceived(
+            WebView2 sender,
+            CoreWebView2WebMessageReceivedEventArgs args)
+        {
+            Debug.WriteLine($"WebMessageReceived: {sender}, Source={args.Source}, WebMessage={args.WebMessageAsJson}");
+
+#pragma warning disable S1075 // URIs should not be hardcoded
+            string url = "callback://webMessage/" + args.WebMessageAsJson;
+#pragma warning restore S1075 // URIs should not be hardcoded
+
+            // send event via public (but hidden from Intellisense) method
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                this.Element.SendNavigating(
+                    new WebNavigatingEventArgs(
+                        WebNavigationEvent.NewPage,
+                        new UrlWebViewSource { Url = url },
+                        url));
+            });
+        }
+
+        /// <summary>
         /// Disposes of managed resources of the renderer
         /// </summary>
         /// <param name="disposing">
@@ -279,6 +354,11 @@ namespace WhereToFly.App.UWP
             Debug.Assert(
                 !url.Contains("ms-appx-web"),
                 "ms-appx-web not supported by WebView2!");
+
+            if (this.Control?.CoreWebView2 != null)
+            {
+                this.SetupVirtualAppFolder(url);
+            }
 
             if (this.Control != null)
             {

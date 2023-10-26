@@ -22,6 +22,11 @@
     <UseMaui>true</UseMaui>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" $(TargetFramework.StartsWith('uap10.0')) ">
+    <!-- Needed to resolve an error MSB3779 about using "Any CPU" and SDK "Microsoft.VCLibs.Desktop, Version=14.0". -->
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+  </PropertyGroup>
+
   <ItemGroup>
     <EmbeddedResource Remove="**" />
     <Compile Include="*.cs" />
@@ -55,6 +60,12 @@
     <SDKReference Include="WindowsMobile, Version=10.0.19041.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
+    <PackageReference Include="Microsoft.UI.Xaml">
+      <Version>2.8.5</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Web.WebView2">
+      <Version>1.0.2088.41</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Essentials" Version="1.8.0" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2612" />
   </ItemGroup>
