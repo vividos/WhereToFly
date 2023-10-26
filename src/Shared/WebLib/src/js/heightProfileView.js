@@ -97,13 +97,13 @@ export class HeightProfileView {
                 responsive: true,
                 maintainAspectRatio: true,
                 aspectRatio: 2,
+                parsing: false,
                 normalized: true,
                 scales: {
                     x: {
                         id: "time",
                         type: "time",
                         time: {
-                            parsing: false,
                             displayFormats: {
                                 hour: "HH:mm",
                                 minute: "HH:mm"
@@ -407,7 +407,7 @@ export class HeightProfileView {
                 timePoint += trackStart;
 
             trackData.push({
-                x: new Date(timePoint * 1000.0),
+                x: timePoint * 1000.0,
                 y: track.listOfTrackPoints[trackPointIndex + 2]
             });
         }
@@ -489,7 +489,7 @@ export class HeightProfileView {
             return;
         }
 
-        const lastDate = trackData[trackData.length - 1].x;
+        const lastDate = new Date(trackData[trackData.length - 1].x);
         const lastTimePoint = lastDate.getTime() / 1000;
 
         const newStartTimePos = track.listOfTimePoints.indexOf(lastTimePoint) + 1;
@@ -599,13 +599,13 @@ export class HeightProfileView {
 
         const values = {};
 
-        const timePoint = this.chart.data.datasets[0].data[tooltipModel.dataPoints[0].dataIndex].x;
+        const timePoint = new Date(this.chart.data.datasets[0].data[tooltipModel.dataPoints[0].dataIndex].x);
 
         if (timePoint.getFullYear() === 1970)
             values.elapsedTime = timePoint.valueOf() / 1000.0;
         else {
             values.timePoint = timePoint;
-            const startTime = this.chart.data.datasets[0].data[0].x;
+            const startTime = new Date(this.chart.data.datasets[0].data[0].x);
             values.elapsedTime = (values.timePoint - startTime).valueOf() / 1000.0;
         }
 
