@@ -700,7 +700,8 @@ export class HeightProfileView {
 
         if (values.groundHeight !== undefined) {
             text += "<div>Ground: " + values.groundHeight.toFixed(1) + "m</div>";
-            text += "<div>AGL: " + (values.trackHeight - values.groundHeight).toFixed(1) + "m</div>";
+            if (values.trackHeight !== undefined)
+                text += "<div>AGL: " + (values.trackHeight - values.groundHeight).toFixed(1) + "m</div>";
         }
 
         if (this.options.isFlightTrack &&
