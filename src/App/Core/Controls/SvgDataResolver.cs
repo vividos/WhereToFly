@@ -7,8 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-#nullable enable
-
 namespace WhereToFly.App.Core.Controls
 {
     /// <summary>

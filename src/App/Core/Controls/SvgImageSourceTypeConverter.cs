@@ -3,8 +3,6 @@ using System.Reflection;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-#nullable enable
-
 namespace WhereToFly.App.Core.Controls
 {
     /// <summary>
