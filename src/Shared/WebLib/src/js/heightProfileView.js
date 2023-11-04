@@ -446,10 +446,11 @@ export class HeightProfileView {
 
         const trackData = this.getTrackDataArray();
         const elevationData = [];
-        for (let i = 0, len = trackData.length; i < len; i++) {
+        for (let trackDataIndex = 0, len = trackData.length; trackDataIndex < len; trackDataIndex++) {
             elevationData.push({
-                x: trackData[i].x,
-                y: elevationArray[i]
+                x: trackData[trackDataIndex].x,
+                y: elevationArray[trackDataIndex],
+                trackDataIndex
             });
         }
 
@@ -584,6 +585,44 @@ export class HeightProfileView {
     }
 
     /**
+     * Gets the track data point from undecimated data, based on the original
+     * track data index
+     * @param {Number} trackDataIndex index into original track data
+     * @returns track data point
+     */
+    getTrackDataPoint(trackDataIndex) {
+        return this.getTrackDataArray()[trackDataIndex];
+    }
+
+    /**
+     * Gets the ground profile data array with undecimated data, if set
+     * @returns ground profile data array, or null when not set
+     */
+    getGroundProfileDataArray() {
+        if (this.chart.data.datasets.length < 2)
+            return null;
+
+        const groundProfileDataset = this.chart.data.datasets[1];
+        return "_decimated" in groundProfileDataset
+            ? groundProfileDataset._data
+            : groundProfileDataset.data;
+    }
+
+    /**
+     * Gets the ground profile data point from undecimated data, based on the
+     * original ground profile data index
+     * @param {Number} ground profileDataIndex index into original ground
+     * profile data
+     * @returns ground profile data point
+     */
+    getGroundProfileDataPoint(groundProfileDataIndex) {
+        const dataset = this.getGroundProfileDataArray();
+        return dataset !== null
+            ? dataset[groundProfileDataIndex]
+            : null;
+    }
+
+    /**
      * Called by Chart.js when the user hovers over an element in the chart
      * @param {array} [elements] array of elements; may be empty
      */
@@ -632,39 +671,37 @@ export class HeightProfileView {
 
         const values = {};
 
-        const timePoint = new Date(this.chart.data.datasets[0].data[tooltipModel.dataPoints[0].dataIndex].x);
+        const trackDataIndex = tooltipModel.dataPoints[0].dataset.data[
+            tooltipModel.dataPoints[0].dataIndex].trackDataIndex;
+
+        const currentDataPoint = this.getTrackDataPoint(trackDataIndex);
+
+        const timePoint = new Date(currentDataPoint.x);
 
         if (timePoint.getFullYear() === 1970)
             values.elapsedTime = timePoint.valueOf() / 1000.0;
         else {
             values.timePoint = timePoint;
-            const startTime = new Date(this.chart.data.datasets[0].data[0].x);
+            const startTime = new Date(this.getTrackDataPoint(0).x);
             values.elapsedTime = (values.timePoint - startTime).valueOf() / 1000.0;
         }
 
-        tooltipModel.dataPoints.forEach(function(tooltipItem) {
-            if (tooltipItem.datasetIndex === 0) {
+        values.trackHeight = currentDataPoint.y;
 
-                const currentDataPoint = this.chart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex];
-                values.trackHeight = currentDataPoint.y;
+        if (trackDataIndex === 0)
+            values.varioValue = 0.0;
+        else {
+            const lastDataPoint = this.getTrackDataPoint(trackDataIndex - 1);
 
-                if (tooltipItem.dataIndex === 0)
-                    values.varioValue = 0.0;
-                else {
-                    const lastDataPoint = this.chart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex - 1];
+            const lastTrackHeight = lastDataPoint.y;
 
-                    const lastTrackHeight = lastDataPoint.y;
+            const deltaTimeMs = currentDataPoint.x.valueOf() - lastDataPoint.x.valueOf();
+            values.varioValue = (values.trackHeight - lastTrackHeight) / deltaTimeMs * 1000.0;
+        }
 
-                    const deltaTimeMs = currentDataPoint.x.valueOf() - lastDataPoint.x.valueOf();
-                    values.varioValue = (values.trackHeight - lastTrackHeight) / deltaTimeMs * 1000.0;
-                }
-            }
-
-            if (tooltipItem.datasetIndex === 1) {
-                values.groundHeight =
-                    this.chart.data.datasets[tooltipItem.datasetIndex].data[tooltipItem.dataIndex].y;
-            }
-        }.bind(this));
+        const groundProfileDataPoint = this.getGroundProfileDataPoint(trackDataIndex);
+        if (groundProfileDataPoint !== null)
+            values.groundHeight = groundProfileDataPoint.y;
 
         return values;
     }
