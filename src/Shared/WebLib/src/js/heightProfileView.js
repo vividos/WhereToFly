@@ -338,8 +338,6 @@ export class HeightProfileView {
         this.chart.options.plugins.zoom.zoom.pinch.enabled = false;
         this.chart.options.plugins.zoom.pan.enabled = false;
 
-        this.chart.update("none");
-
         // update buttons
         const chartButtonModeHover = document.getElementById("chartButtonModeHover");
         chartButtonModeHover.classList.remove("chart-toolbar-button-disabled");
@@ -359,8 +357,6 @@ export class HeightProfileView {
         this.chart.options.plugins.zoom.zoom.wheel.enabled = true;
         this.chart.options.plugins.zoom.zoom.pinch.enabled = true;
         this.chart.options.plugins.zoom.pan.enabled = true;
-
-        this.chart.update("none");
 
         // update buttons
         const chartButtonModeHover = document.getElementById("chartButtonModeHover");
