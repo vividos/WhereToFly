@@ -11,7 +11,7 @@ using Xamarin.Forms.Internals;
 using Xamarin.Forms.Platform.UWP;
 
 [assembly: ExportRenderer(typeof(MapView), typeof(WhereToFly.App.MapView.MapViewRenderer))]
-[assembly: ExportRenderer(typeof(HeightProfileWebView), typeof(WhereToFly.App.MapView.MapViewRenderer))]
+[assembly: ExportRenderer(typeof(HeightProfileView), typeof(WhereToFly.App.MapView.MapViewRenderer))]
 
 namespace WhereToFly.App.MapView
 {

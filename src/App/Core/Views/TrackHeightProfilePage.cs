@@ -18,7 +18,7 @@ namespace WhereToFly.App.Core.Views
         {
             this.Title = "Track height profile";
 
-            this.Content = new HeightProfileWebView
+            this.Content = new HeightProfileView
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,

@@ -17,7 +17,7 @@ In `XAML` files, specify the namespace to use and reference the controls:
         VerticalOptions="FillAndExpand"
         HorizontalOptions="FillAndExpand" />
     ...
-    <mapView:HeightProfileWebView
+    <mapView:HeightProfileView
        VerticalOptions="FillAndExpand"
        HorizontalOptions="FillAndExpand"
        Track="{Binding Track}"
@@ -34,7 +34,7 @@ Or use the controls from `C#`:
 
 and
 
-    Content = new HeightProfileWebView
+    Content = new HeightProfileView
     {
         HorizontalOptions = LayoutOptions.FillAndExpand,
         VerticalOptions = LayoutOptions.FillAndExpand,

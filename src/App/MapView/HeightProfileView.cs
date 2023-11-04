@@ -20,7 +20,7 @@ namespace WhereToFly.App.MapView
     /// <summary>
     /// Web view showing a track height profile
     /// </summary>
-    public class HeightProfileWebView : WebView
+    public class HeightProfileView : WebView
     {
         /// <summary>
         /// Task completion source that completes a task when the height profile view is
@@ -54,7 +54,7 @@ namespace WhereToFly.App.MapView
             BindableProperty.Create(
                 propertyName: nameof(Track),
                 returnType: typeof(Track),
-                declaringType: typeof(HeightProfileWebView),
+                declaringType: typeof(HeightProfileView),
                 defaultBindingMode: BindingMode.OneWay,
                 defaultValue: null);
 
@@ -65,7 +65,7 @@ namespace WhereToFly.App.MapView
             BindableProperty.Create(
                 propertyName: nameof(UseDarkTheme),
                 returnType: typeof(bool),
-                declaringType: typeof(HeightProfileWebView),
+                declaringType: typeof(HeightProfileView),
                 defaultBindingMode: BindingMode.OneWay,
                 defaultValue: false);
         #endregion
@@ -97,11 +97,11 @@ namespace WhereToFly.App.MapView
         /// <summary>
         /// Creates a new height profile WebView object
         /// </summary>
-        public HeightProfileWebView()
+        public HeightProfileView()
         {
             this.RegisterWebViewCallbacks();
 
-            this.AutomationId = "HeightProfileWebView";
+            this.AutomationId = "HeightProfileView";
 
             this.Navigated += this.OnNavigated;
             this.SizeChanged += this.OnSizeChanged;
@@ -280,8 +280,8 @@ namespace WhereToFly.App.MapView
 
         /// <summary>
         /// Updates height profile view; this must be called after calling one or more of the
-        /// following methods: <see cref="HeightProfileWebView.SetTrack"/>,
-        /// <see cref="HeightProfileWebView.AddGroundProfile"/>.
+        /// following methods: <see cref="HeightProfileView.SetTrack"/>,
+        /// <see cref="HeightProfileView.AddGroundProfile"/>.
         /// </summary>
         public void UpdateView()
         {

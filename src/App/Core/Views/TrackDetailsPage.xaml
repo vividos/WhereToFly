@@ -72,16 +72,16 @@
                 </Grid>
 
                 <!-- Height profile -->
-                <mapview:HeightProfileWebView Track="{Binding Track, Mode=OneWay}"
+                <mapview:HeightProfileView Track="{Binding Track, Mode=OneWay}"
                                               UseDarkTheme="{Binding UseDarkTheme, Mode=OneTime}"
                                               WidthRequest="600"
                                               HeightRequest="300"
                                               HorizontalOptions="CenterAndExpand"
                                               VerticalOptions="Start">
-                    <mapview:HeightProfileWebView.Effects>
+                    <mapview:HeightProfileView.Effects>
                         <xct:TouchEffect StatusChanged="OnTouchStatusChanged" />
-                    </mapview:HeightProfileWebView.Effects>
-                </mapview:HeightProfileWebView>
+                    </mapview:HeightProfileView.Effects>
+                </mapview:HeightProfileView>
 
                 <!-- Button to show height profile in new page -->
                 <!--
