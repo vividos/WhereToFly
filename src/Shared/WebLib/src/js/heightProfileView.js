@@ -404,7 +404,8 @@ export class HeightProfileView {
 
             trackData.push({
                 x: timePoint * 1000.0,
-                y: track.listOfTrackPoints[trackPointIndex + 2]
+                y: track.listOfTrackPoints[trackPointIndex + 2],
+                trackDataIndex: trackPointIndex / 3
             });
         }
 
@@ -555,14 +556,35 @@ export class HeightProfileView {
     }
 
     /**
+     * Gets the index into the track data from given track elements. When
+     * Chart.js uses decimation, returns the original track index, not the
+     * index into chart.dataset[0].data
+     * @param {array} [elements] array of elements; may be empty
+     * @returns track data index, or -1 when elements didn't contain a track
+     * data element
+     */
+    getTrackDataIndex(elements) {
+        for (const element of elements) {
+            if (element.datasetIndex === 0)
+                return this.chart.data.datasets[0].data[element.index].trackDataIndex;
+        }
+
+        return -1;
+    }
+
+    /**
      * Called by Chart.js when the user hovers over an element in the chart
      * @param {array} [elements] array of elements; may be empty
      */
     onHover(_event, elements, _chart) {
 
-        if (elements.length > 0 &&
-            this.options.callback !== undefined)
-            this.options.callback("onHover", elements[0].index);
+        if (this.options.callback === undefined)
+            return;
+
+        const trackDataIndex = this.getTrackDataIndex(elements);
+
+        if (trackDataIndex !== -1)
+            this.options.callback("onHover", trackDataIndex);
     }
 
     /**
@@ -571,9 +593,13 @@ export class HeightProfileView {
      */
     onClick(elements) {
 
-        if (elements.length > 0 &&
-            this.options.callback !== undefined)
-            this.options.callback("onClick", elements[0].index);
+        if (this.options.callback === undefined)
+            return;
+
+        const trackDataIndex = this.getTrackDataIndex(elements);
+
+        if (trackDataIndex !== -1)
+            this.options.callback("onClick", trackDataIndex);
     }
 
     /**
