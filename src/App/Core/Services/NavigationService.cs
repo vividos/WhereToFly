@@ -96,7 +96,7 @@ namespace WhereToFly.App.Core.Services
         /// <param name="animated">indicates if page navigation should be animated</param>
         /// <param name="parameter">parameter object to pass; may be null</param>
         /// <returns>task to wait on</returns>
-        public async Task NavigateAsync(PageKey pageKey, bool animated, object? parameter = null)
+        public async Task NavigateAsync(PageKey pageKey, bool animated = true, object? parameter = null)
         {
             Type pageType = GetPageTypeFromPageKey(pageKey, parameter);
 
@@ -145,7 +145,7 @@ namespace WhereToFly.App.Core.Services
         /// <returns>result object</returns>
         public async Task<TResult?> NavigateToPopupPageAsync<TResult>(
             PopupPageKey popupPageKey,
-            bool animated,
+            bool animated = true,
             object? parameter = null)
             where TResult : class?
         {
@@ -247,7 +247,7 @@ namespace WhereToFly.App.Core.Services
         /// <param name="animated">indicates if page navigation should be animated</param>
         /// <param name="parameter">parameter object to pass; may be null</param>
         /// <returns>task to wait on</returns>
-        public async Task NavigateAsync(Type pageType, bool animated, object? parameter = null)
+        public async Task NavigateAsync(Type pageType, bool animated = true, object? parameter = null)
         {
             Debug.Assert(this.NavigationPage != null, "NavigationPage property must have been set");
             if (this.NavigationPage == null)
