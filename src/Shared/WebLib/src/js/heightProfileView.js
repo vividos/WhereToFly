@@ -444,7 +444,7 @@ export class HeightProfileView {
         HeightProfileView.log("adding ground profile with " +
             elevationArray.length + " elevation points");
 
-        const trackData = this.chart.data.datasets[0].data;
+        const trackData = this.getTrackDataArray();
         const elevationData = [];
         for (let i = 0, len = trackData.length; i < len; i++) {
             elevationData.push({
@@ -480,7 +480,7 @@ export class HeightProfileView {
             track.listOfTrackPoints.length !== track.listOfTimePoints.length * 3)
             return;
 
-        const trackData = this.chart.data.datasets[0].data;
+        const trackData = this.getTrackDataArray();
         if (trackData.length === 0) {
             this.setTrack(track);
             return;
@@ -553,6 +553,17 @@ export class HeightProfileView {
 
         this.options = undefined;
         this.chart = undefined;
+    }
+
+    /**
+     * Gets the track data array with undecimated data
+     * @returns track data array
+     */
+    getTrackDataArray() {
+        const trackDataset = this.chart.data.datasets[0];
+        return "_decimated" in trackDataset
+            ? trackDataset._data
+            : trackDataset.data;
     }
 
     /**
