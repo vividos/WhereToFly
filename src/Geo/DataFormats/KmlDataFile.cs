@@ -416,11 +416,13 @@ namespace WhereToFly.Geo.DataFormats
         /// </summary>
         private static readonly Dictionary<string, LocationType> IconLinkToLocationTypeMap = new()
         {
-            // paraglidingsports.com types
+            // paraglidingspots.com types
             { "iconpg_sp.png", LocationType.FlyingTakeoff },
-            { "iconpg_spk.png", LocationType.FlyingTakeoff },
-            { "iconpg_spw.png", LocationType.FlyingWinchTowing },
+            { "iconpg_spk.png", LocationType.FlyingTakeoff }, // takeoff coast
+            { "iconpg_spw.png", LocationType.FlyingWinchTowing }, // takeoff winch
             { "iconpg_lp.png", LocationType.FlyingLandingPlace },
+            { "iconpg_gh.png", LocationType.FlyingLandingPlace }, // groundhandling
+            { "iconpg_uh.png", LocationType.FlyingLandingPlace }, // practice slope
 
             // DHV Geländedatenbank
             { "windsack_rot", LocationType.FlyingTakeoff },
