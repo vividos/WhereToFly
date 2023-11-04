@@ -25,7 +25,6 @@ namespace WhereToFly.App.Core.ViewModels
             { "vividos' Where-to-fly resources", "http://www.vividos.de/wheretofly/index.html" },
             { "XContest Airspaces", "https://airspace.xcontest.org/" },
             { "DHV-XC Lufträume", "https://www.dhv-xc.de/xc/modules/leonardo/index.php?name=leonardo&op=luftraum" },
-            { "OpenAir Schutzzonen", "https://www.openairschutzzonen.de/" },
             { "Flyland.ch Lufträume", "http://www.flyland.ch/download.php" },
         };
 
