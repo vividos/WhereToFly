@@ -12,6 +12,7 @@ Released on ?.
 
 🐛 Bugfixes
 - Fixed crash when track height profile can't be sampled at import
+- Fixed crash on location list page when location permission was not given yet
 
 ## Version 1.14.1
 

@@ -83,6 +83,11 @@ namespace WhereToFly.App.Core.Services
         /// <returns>last known position, or null when none could be retrieved</returns>
         public async Task<MapPoint?> GetLastKnownPositionAsync()
         {
+            if (!await CheckPermissionAsync())
+            {
+                return null;
+            }
+
             var location = await Geolocation.GetLastKnownLocationAsync();
             if (location == null)
             {
