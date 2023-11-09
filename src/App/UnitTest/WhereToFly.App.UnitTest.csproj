@@ -46,6 +46,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Geo\WhereToFly.Geo.csproj" />
     <ProjectReference Include="..\Core\WhereToFly.App.Core.csproj" />
+    <ProjectReference Include="..\Resources\WhereToFly.App.Resources.csproj" />
   </ItemGroup>
 
 </Project>

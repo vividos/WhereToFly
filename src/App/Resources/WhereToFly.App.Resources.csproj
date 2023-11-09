@@ -1,16 +1,46 @@
-﻿<Project Sdk="MSBuild.Sdk.Extras/3.0.44">
+<Project Sdk="MSBuild.Sdk.Extras/3.0.44">
 
   <PropertyGroup>
-    <TargetFrameworks>MonoAndroid13.0;net7.0-android33.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;MonoAndroid13.0;net7.0-android33.0</TargetFrameworks>
     <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">$(TargetFrameworks);uap10.0.19041;net7.0-windows10.0.19041</TargetFrameworks>
     <Description>Where-to-fly app resources</Description>
     <Product>WhereToFly.App.Resources</Product>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <SonarQubeExclude>true</SonarQubeExclude>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) Or $(TargetFramework.Contains('-android')) ">
+  <PropertyGroup Condition=" $(TargetFramework.StartsWith('net7')) ">
+    <UseMaui>true</UseMaui>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Assets.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(TargetFramework) == 'netstandard2.0'">
+    <EmbeddedResource Include="Assets\**\*.*" />
+    <EmbeddedResource Include="..\..\..\Credits.md">
+      <Link>Assets\info\Credits.md</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\..\Changelog.md">
+      <Link>Assets\info\Changelog.md</Link>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('net7.0')) ">
+    <MauiAsset Include="Assets\**\*.*" />
+    <MauiAsset Include="..\..\..\Credits.md">
+      <Link>Assets\info\Credits.md</Link>
+    </MauiAsset>
+    <MauiAsset Include="..\..\..\Changelog.md">
+      <Link>Assets\info\Changelog.md</Link>
+    </MauiAsset>
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
     <AndroidAsset Include="Assets\**\*.*" />
     <AndroidAsset Include="..\..\..\Credits.md">
       <Link>Assets\info\Credits.md</Link>
@@ -18,9 +48,10 @@
     <AndroidAsset Include="..\..\..\Changelog.md">
       <Link>Assets\info\Changelog.md</Link>
     </AndroidAsset>
+    <PackageReference Include="Xamarin.Essentials" Version="1.8.0" />
   </ItemGroup>
 
-  <ItemGroup Condition=" $(TargetFramework.StartsWith('uap10.0')) Or $(TargetFramework.Contains('-windows')) ">
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('uap10.0'))  ">
     <Content Include="Assets\**\*.*" />
     <Content Include="..\..\..\Credits.md">
       <Link>Assets\info\Credits.md</Link>
@@ -28,6 +59,7 @@
     <Content Include="..\..\..\Changelog.md">
       <Link>Assets\info\Changelog.md</Link>
     </Content>
+    <PackageReference Include="Xamarin.Essentials" Version="1.8.0" />
   </ItemGroup>
 
 </Project>
