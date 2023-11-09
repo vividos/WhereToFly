@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using WhereToFly.App.Core.Logic;
+using WhereToFly.App.Resources;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -37,13 +38,12 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         public InfoPageViewModel()
         {
-            var platform = DependencyService.Get<IPlatform>();
-
             this.Pages = new List<InfoPageEntryViewModel>
             {
                 new InfoPageEntryViewModel
                 {
-                    Image = ImageSource.FromStream(() => platform.OpenAssetStream("info/version.jpg")),
+                    Image = ImageSource.FromStream(
+                        async (cancellationToken) => await Assets.Get("info/version.jpg")),
                     WebViewSource = GetWebViewSource("info/version.md"),
                 },
                 new InfoPageEntryViewModel

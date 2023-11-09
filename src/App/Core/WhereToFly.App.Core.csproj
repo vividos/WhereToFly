@@ -29,6 +29,7 @@
     <ProjectReference Include="..\..\Geo\WhereToFly.Geo.csproj" />
     <ProjectReference Include="..\..\Shared\Model\WhereToFly.Shared.Model.csproj" />
     <ProjectReference Include="..\MapView\WhereToFly.App.MapView.csproj" />
+    <ProjectReference Include="..\Resources\WhereToFly.App.Resources.csproj" />
   </ItemGroup>
 
   <ItemGroup>

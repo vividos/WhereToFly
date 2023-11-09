@@ -7,6 +7,7 @@ using System.Windows.Input;
 using WhereToFly.App.Core.Models;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.Views;
+using WhereToFly.App.Resources;
 using WhereToFly.Geo.Model;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Essentials;
@@ -384,9 +385,11 @@ namespace WhereToFly.App.Core.ViewModels
             }
             else
             {
-                var platform = DependencyService.Get<IPlatform>();
-                using var stream = platform.OpenAssetStream("locations/" + assetFilename);
-                await OpenFileHelper.OpenLocationListAsync(stream, assetFilename);
+                using var stream = await Assets.Get("locations/" + assetFilename);
+                if (stream != null)
+                {
+                    await OpenFileHelper.OpenLocationListAsync(stream, assetFilename);
+                }
             }
 
             this.UpdateLocationList();

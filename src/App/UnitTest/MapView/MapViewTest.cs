@@ -136,7 +136,7 @@ namespace WhereToFly.App.UnitTest.MapView
         {
             // set up
             var mapView = new WhereToFly.App.MapView.MapView();
-            var layer = DataServiceHelper.GetInitialLayerList().First();
+            var layer = (await DataServiceHelper.GetInitialLayerList()).First();
 
             // run
             await mapView.AddLayer(layer);

@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using WhereToFly.App.Core.Models;
+using WhereToFly.App.Resources;
 using WhereToFly.Geo.Airspace;
 using WhereToFly.Geo.DataFormats;
 using WhereToFly.Geo.Model;
@@ -52,20 +54,23 @@ namespace WhereToFly.App.Core.Services
         /// Returns initial layer list, containing the built-in layers and example layer(s)
         /// </summary>
         /// <returns>initial layer list</returns>
-        internal static IEnumerable<Layer> GetInitialLayerList()
+        internal static async Task<IEnumerable<Layer>> GetInitialLayerList()
         {
-            return GetDefaultLayerList().Concat(LoadExampleLayerList());
+            return GetDefaultLayerList().Concat(await LoadExampleLayerList());
         }
 
         /// <summary>
         /// Loads example layer list that is used as the initial layer(s)
         /// </summary>
         /// <returns>layer list</returns>
-        private static IEnumerable<Layer> LoadExampleLayerList()
+        private static async Task<IEnumerable<Layer>> LoadExampleLayerList()
         {
-            var platform = DependencyService.Get<IPlatform>();
+            using var stream = await Assets.Get(DefaultLayerFilename);
+            if (stream == null)
+            {
+                return Enumerable.Empty<Layer>();
+            }
 
-            using var stream = platform.OpenAssetStream(DefaultLayerFilename);
             var parser = new OpenAirFileParser(stream);
 
             const string LayerName = "OpenAir Schutzzonen Auszug";

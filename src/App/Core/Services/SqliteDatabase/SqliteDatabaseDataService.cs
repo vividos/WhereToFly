@@ -169,7 +169,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             if (await this.connection.CreateTableAsync<LayerEntry>() == CreateTableResult.Created)
             {
                 await this.GetLayerDataService().AddList(
-                    DataServiceHelper.GetInitialLayerList());
+                    await DataServiceHelper.GetInitialLayerList());
             }
 
             if (await this.connection.CreateTableAsync<WeatherIconDescriptionEntry>() == CreateTableResult.Created ||

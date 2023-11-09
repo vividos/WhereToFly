@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Models;
+using WhereToFly.App.Resources;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core
@@ -23,13 +24,10 @@ namespace WhereToFly.App.Core
                 case WeatherIconDescription.IconType.IconLink:
                     if (iconDescription.WebLink.StartsWith("https://www.austrocontrol.at"))
                     {
-                        return new StreamImageSource()
+                        return new StreamImageSource
                         {
-                            Stream = (cancellationToken) =>
-                            {
-                                var platform = DependencyService.Get<IPlatform>();
-                                return Task.FromResult(platform.OpenAssetStream("alptherm-favicon.png"));
-                            },
+                            Stream = async (cancellationToken) =>
+                                await Assets.Get("alptherm-favicon.png"),
                         };
                     }
 

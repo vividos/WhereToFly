@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
+using System.Threading.Tasks;
 using WhereToFly.App.Core;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.Views;
@@ -28,11 +29,12 @@ namespace WhereToFly.App.UnitTest.Views
         /// <summary>
         /// Tests default ctor of LayerDetailsPage
         /// </summary>
+        /// <returns>task to wait on</returns>
         [TestMethod]
-        public void TestDefaultCtor()
+        public async Task TestDefaultCtor()
         {
             // set up
-            var layerList = DataServiceHelper.GetInitialLayerList();
+            var layerList = await DataServiceHelper.GetInitialLayerList();
             var page = new LayerDetailsPage(layerList.First());
 
             // check
