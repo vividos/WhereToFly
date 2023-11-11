@@ -22,32 +22,6 @@ namespace WhereToFly.App.Android
         public string WebViewBasePath => "file:///android_asset/";
 
         /// <summary>
-        /// Shows toast message with given text
-        /// </summary>
-        /// <param name="message">toast message</param>
-        public void ShowToast(string message)
-        {
-            Core.App.RunOnUiThread(
-                () =>
-                {
-                    var activity = Xamarin.Essentials.Platform.CurrentActivity;
-
-                    // Snackbar available from API Level 23 on
-                    if (Build.VERSION.SdkInt >= BuildVersionCodes.M)
-                    {
-                        var view = Core.App.Current?.MainPage?.GetRenderer()?.View;
-
-                        view ??= activity.Window?.DecorView;
-                        Snackbar.Make(activity, view, message, Snackbar.LengthShort)?.Show();
-                    }
-                    else
-                    {
-                        Toast.MakeText(activity, message, ToastLength.Long)?.Show();
-                    }
-                });
-        }
-
-        /// <summary>
         /// Sets app theme to use for platform. This ensures that platform dependent dialogs are
         /// themed correctly when switching themes.
         /// </summary>

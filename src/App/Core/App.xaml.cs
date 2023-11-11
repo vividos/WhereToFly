@@ -9,6 +9,9 @@ using WhereToFly.App.Core.Models;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.Styles;
 using WhereToFly.App.Core.Views;
+using Xamarin.CommunityToolkit.Extensions;
+using Xamarin.CommunityToolkit.UI.Views.Options;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -204,8 +207,17 @@ namespace WhereToFly.App.Core
         /// <param name="message">toast message text</param>
         public static void ShowToast(string message)
         {
-            IPlatform platform = DependencyService.Get<IPlatform>();
-            platform.ShowToast(message);
+            MainThread.BeginInvokeOnMainThread(
+                () => App.Current.MainPage.DisplayToastAsync(
+                    new ToastOptions
+                    {
+                        MessageOptions = new MessageOptions
+                        {
+                            Message = message,
+                            Foreground = Color.White,
+                        },
+                        BackgroundColor = Constants.PrimaryColor,
+                    }));
         }
 
         /// <summary>

@@ -19,26 +19,6 @@ namespace WhereToFly.App.UWP
         public string WebViewBasePath => "ms-appx-web:///WhereToFly.App.MapView/Assets/";
 
         /// <summary>
-        /// Shows toast message with given text
-        /// </summary>
-        /// <param name="message">toast message</param>
-        public void ShowToast(string message)
-        {
-            ToastNotifier toastNotifier = ToastNotificationManager.CreateToastNotifier();
-
-            Windows.Data.Xml.Dom.XmlDocument toastXml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText02);
-            Windows.Data.Xml.Dom.XmlNodeList toastNodeList = toastXml.GetElementsByTagName("text");
-            toastNodeList.Item(0).AppendChild(toastXml.CreateTextNode(Constants.AppTitle));
-            toastNodeList.Item(1).AppendChild(toastXml.CreateTextNode(message));
-
-            var toast = new ToastNotification(toastXml)
-            {
-                ExpirationTime = DateTime.Now.AddSeconds(4),
-            };
-            toastNotifier.Show(toast);
-        }
-
-        /// <summary>
         /// Sets app theme to use for platform. This ensures that platform dependent dialogs are
         /// themed correctly when switching themes.
         /// </summary>

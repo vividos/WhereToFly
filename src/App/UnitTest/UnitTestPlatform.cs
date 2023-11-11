@@ -15,15 +15,6 @@ namespace WhereToFly.App.UnitTest
         public string WebViewBasePath => "about:blank";
 
         /// <summary>
-        /// Shows toast message with given text
-        /// </summary>
-        /// <param name="message">toast message text</param>
-        public void ShowToast(string message)
-        {
-            Debug.WriteLine("Showing toast message: " + message);
-        }
-
-        /// <summary>
         /// Sets app theme to use for platform
         /// </summary>
         /// <param name="requestedTheme">requested theme</param>

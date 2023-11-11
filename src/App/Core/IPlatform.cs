@@ -13,12 +13,6 @@ namespace WhereToFly.App.Core
         string WebViewBasePath { get; }
 
         /// <summary>
-        /// Shows toast message with given text
-        /// </summary>
-        /// <param name="message">toast message text</param>
-        void ShowToast(string message);
-
-        /// <summary>
         /// Sets app theme to use for platform
         /// </summary>
         /// <param name="requestedTheme">requested theme</param>
