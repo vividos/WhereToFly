@@ -1,5 +1,4 @@
-﻿using System.IO;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace WhereToFly.App.Core
 {
@@ -12,20 +11,6 @@ namespace WhereToFly.App.Core
         /// Base path to use in WebView control
         /// </summary>
         string WebViewBasePath { get; }
-
-        /// <summary>
-        /// Opens asset stream and returns it
-        /// </summary>
-        /// <param name="assetFilename">asset filename</param>
-        /// <returns>stream to read from file</returns>
-        Stream OpenAssetStream(string assetFilename);
-
-        /// <summary>
-        /// Loads text of asset file from given filename
-        /// </summary>
-        /// <param name="assetFilename">asset filename</param>
-        /// <returns>text content of asset</returns>
-        string LoadAssetText(string assetFilename);
 
         /// <summary>
         /// Shows toast message with given text
