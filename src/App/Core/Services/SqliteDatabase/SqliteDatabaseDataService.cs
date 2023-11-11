@@ -143,8 +143,10 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
 
             if (await this.connection.CreateTableAsync<FaviconUrlEntry>() == CreateTableResult.Created)
             {
+                var defaultFaviconCache = await DataServiceHelper.GetDefaultFaviconCache();
+
                 var defaultEntries =
-                    from keyAndValue in DataServiceHelper.GetDefaultFaviconCache()
+                    from keyAndValue in defaultFaviconCache
                     select new FaviconUrlEntry
                     {
                         WebsiteUrl = keyAndValue.Key,
@@ -176,7 +178,7 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
                 !(await this.GetWeatherIconDescriptionDataService().GetList()).Any())
             {
                 await this.GetWeatherIconDescriptionDataService().AddList(
-                    DataServiceHelper.GetWeatherIconDescriptionRepository());
+                    await DataServiceHelper.GetWeatherIconDescriptionRepository());
             }
 
             await this.connection.CreateTableAsync<WeatherDashboardIconEntry>();

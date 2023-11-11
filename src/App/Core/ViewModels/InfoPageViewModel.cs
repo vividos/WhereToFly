@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 using WhereToFly.App.Core.Logic;
 using WhereToFly.App.Resources;
 using Xamarin.Essentials;
@@ -10,7 +12,7 @@ namespace WhereToFly.App.Core.ViewModels
     /// <summary>
     /// View model for the info page
     /// </summary>
-    public class InfoPageViewModel
+    public class InfoPageViewModel : ViewModelBase
     {
         /// <summary>
         /// View model for one info page entry
@@ -31,12 +33,21 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// All info pages
         /// </summary>
-        public List<InfoPageEntryViewModel> Pages { get; set; }
+        public List<InfoPageEntryViewModel>? Pages { get; set; }
 
         /// <summary>
         /// Creates a new info page view model
         /// </summary>
         public InfoPageViewModel()
+        {
+            Task.Run(this.InitViewModel);
+        }
+
+        /// <summary>
+        /// Initializes view model
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task InitViewModel()
         {
             this.Pages = new List<InfoPageEntryViewModel>
             {
@@ -44,24 +55,26 @@ namespace WhereToFly.App.Core.ViewModels
                 {
                     Image = ImageSource.FromStream(
                         async (cancellationToken) => await Assets.Get("info/version.jpg")),
-                    WebViewSource = GetWebViewSource("info/version.md"),
+                    WebViewSource = await GetWebViewSource("info/version.md"),
                 },
                 new InfoPageEntryViewModel
                 {
                     Image = null,
-                    WebViewSource = GetWebViewSource("info/manual.md"),
+                    WebViewSource = await GetWebViewSource("info/manual.md"),
                 },
                 new InfoPageEntryViewModel
                 {
                     Image = null,
-                    WebViewSource = GetWebViewSource("info/Changelog.md"),
+                    WebViewSource = await GetWebViewSource("info/Changelog.md"),
                 },
                 new InfoPageEntryViewModel
                 {
                     Image = null,
-                    WebViewSource = GetWebViewSource("info/Credits.md"),
+                    WebViewSource = await GetWebViewSource("info/Credits.md"),
                 },
             };
+
+            this.OnPropertyChanged(nameof(this.Pages));
         }
 
         /// <summary>
@@ -69,9 +82,10 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         /// <param name="markdownFilename">markdown filename, relative to the asset folder</param>
         /// <returns>web view source</returns>
-        private static WebViewSource GetWebViewSource(string markdownFilename)
+        private static async Task<WebViewSource> GetWebViewSource(
+            string markdownFilename)
         {
-            string htmlText = GetHtmlText(markdownFilename);
+            string htmlText = await GetHtmlText(markdownFilename);
 
             IPlatform platform = DependencyService.Get<IPlatform>();
 
@@ -87,10 +101,11 @@ namespace WhereToFly.App.Core.ViewModels
         /// </summary>
         /// <param name="markdownFilename">markdown filename, relative to the asset folder</param>
         /// <returns>HTML text</returns>
-        private static string GetHtmlText(string markdownFilename)
+        private static async Task<string> GetHtmlText(string markdownFilename)
         {
-            IPlatform platform = DependencyService.Get<IPlatform>();
-            string markdownText = platform.LoadAssetText(markdownFilename);
+            using var stream = await Assets.Get(markdownFilename);
+            using var reader = new StreamReader(stream);
+            string markdownText = await reader.ReadToEndAsync();
 
             if (markdownFilename.EndsWith("version.md"))
             {

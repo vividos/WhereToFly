@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Models;
@@ -232,13 +233,14 @@ namespace WhereToFly.App.Core.Services
         /// the first time.
         /// </summary>
         /// <returns>mapping from base URL to favicon URL</returns>
-        internal static Dictionary<string, string> GetDefaultFaviconCache()
+        internal static async Task<Dictionary<string, string>> GetDefaultFaviconCache()
         {
-            var platform = DependencyService.Get<IPlatform>();
-
             try
             {
-                string json = platform.LoadAssetText(FaviconUrlCacheFilename);
+                using var stream = await Assets.Get(FaviconUrlCacheFilename);
+                using var reader = new StreamReader(stream);
+                string json = await reader.ReadToEndAsync();
+
                 return JsonConvert.DeserializeObject<Dictionary<string, string>>(json)
                     ?? new Dictionary<string, string>();
             }
@@ -254,13 +256,13 @@ namespace WhereToFly.App.Core.Services
         /// to select weather icons for the customized list
         /// </summary>
         /// <returns>repository of all weather icons</returns>
-        public static IEnumerable<WeatherIconDescription> GetWeatherIconDescriptionRepository()
+        public static async Task<IEnumerable<WeatherIconDescription>> GetWeatherIconDescriptionRepository()
         {
             try
             {
-                var platform = DependencyService.Get<IPlatform>();
-
-                string json = platform.LoadAssetText("weathericons.json");
+                using var stream = await Assets.Get("weathericons.json");
+                using var reader = new StreamReader(stream);
+                string json = await reader.ReadToEndAsync();
 
                 var weatherIconList = JsonConvert.DeserializeObject<List<WeatherIconDescription>>(json);
                 return weatherIconList ?? Enumerable.Empty<WeatherIconDescription>();

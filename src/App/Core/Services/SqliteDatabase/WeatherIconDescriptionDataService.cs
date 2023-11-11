@@ -180,7 +180,8 @@ namespace WhereToFly.App.Core.Services.SqliteDatabase
             {
                 await this.connection.DeleteAllAsync<WeatherIconDescriptionEntry>();
 
-                await this.AddList(DataServiceHelper.GetWeatherIconDescriptionRepository());
+                await this.AddList(
+                    await DataServiceHelper.GetWeatherIconDescriptionRepository());
             }
         }
     }
