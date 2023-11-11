@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
@@ -30,9 +31,18 @@ namespace WhereToFly.App.Resources
             return await Xamarin.Essentials.
                 FileSystem.OpenAppPackageFileAsync(assetRelativeFilename);
 #elif WINDOWS_UWP
-            return await Xamarin.Essentials.
-                FileSystem.OpenAppPackageFileAsync(
-                    "WhereToFly.App.Resources/Assets/" + assetRelativeFilename);
+            try
+            {
+                return await Xamarin.Essentials.
+                    FileSystem.OpenAppPackageFileAsync(
+                        "WhereToFly.App.Resources/Assets/" + assetRelativeFilename);
+            }
+            catch (Exception)
+            {
+                return await Xamarin.Essentials.
+                    FileSystem.OpenAppPackageFileAsync(
+                        "WhereToFly.App.MapView/Assets/" + assetRelativeFilename);
+            }
 #endif
         }
     }
