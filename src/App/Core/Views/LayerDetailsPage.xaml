@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
@@ -17,20 +17,20 @@
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="Zoom to"
-                     Icon="{Binding Source={StaticResource ZoomToImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+        <ToolbarItem Text="Zoom to"
+                     IconImageSource="{Binding Source={StaticResource ZoomToImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                      IsEnabled="{Binding IsEnabledZoomToLayer}"
                      Command="{Binding ZoomToLayerCommand}"
                      Order="Primary" Priority="0" />
 
-        <ToolbarItem Name="Export"
-                     Icon="{Binding Source={StaticResource ExportImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+        <ToolbarItem Text="Export"
+                     IconImageSource="{Binding Source={StaticResource ExportImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                      IsEnabled="{Binding IsEnabledExportLayer}"
                      Command="{Binding ExportLayerCommand}"
                      Order="Primary" Priority="1" />
 
-        <ToolbarItem Name="Delete"
-                     Icon="{Binding Source={StaticResource DeleteImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+        <ToolbarItem Text="Delete"
+                     IconImageSource="{Binding Source={StaticResource DeleteImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                      IsEnabled="{Binding IsEnabledDeleteLayer}"
                      Command="{Binding DeleteLayerCommand}"
                      IsDestructive="True"

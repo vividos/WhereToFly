@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
@@ -21,13 +21,13 @@
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="Import track"
-                     Icon="{Binding Source={StaticResource ImportTrackImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+        <ToolbarItem Text="Import track"
+                     IconImageSource="{Binding Source={StaticResource ImportTrackImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                      Command="{Binding ImportTrackCommand}"
                      Order="Primary" Priority="0" />
 
-        <ToolbarItem Name="Delete track list"
-                     Icon="{Binding Source={StaticResource DeleteTrackListImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+        <ToolbarItem Text="Delete track list"
+                     IconImageSource="{Binding Source={StaticResource DeleteTrackListImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                      Command="{Binding DeleteTrackListCommand}"
                      IsDestructive="True"
                      Order="Primary" Priority="1" />
@@ -120,16 +120,16 @@
                                                   VerticalOptions="Center">
                                 <controls:ContextMenu.Items>
                                     <MenuItem Text="Show Details"
-                                              Icon="{Binding Source={StaticResource ShowDetailsImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                              IconImageSource="{Binding Source={StaticResource ShowDetailsImagePath}, Converter={StaticResource SvgImagePathConverter}}"
                                               Command="{Binding ShowTrackDetailsCommand}" />
                                     <MenuItem Text="Zoom to"
-                                              Icon="{Binding Source={StaticResource ZoomToImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                              IconImageSource="{Binding Source={StaticResource ZoomToImagePath}, Converter={StaticResource SvgImagePathConverter}}"
                                               Command="{Binding ZoomToTrackCommand}" />
                                     <MenuItem Text="Export"
-                                              Icon="{Binding Source={StaticResource ExportImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                              IconImageSource="{Binding Source={StaticResource ExportImagePath}, Converter={StaticResource SvgImagePathConverter}}"
                                               Command="{Binding ExportTrackCommand}" />
                                     <MenuItem Text="Delete" IsDestructive="True"
-                                              Icon="{Binding Source={StaticResource DeleteImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                              IconImageSource="{Binding Source={StaticResource DeleteImagePath}, Converter={StaticResource SvgImagePathConverter}}"
                                               Command="{Binding DeleteTrackCommand}" />
                                 </controls:ContextMenu.Items>
                             </controls:ContextMenu>

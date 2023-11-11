@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="WhereToFly.App.Core.Views.CompassDetailsPage"
@@ -16,13 +16,13 @@
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="Set target direction"
-                     Icon="{Binding Source={StaticResource SetTargetDirectionImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+        <ToolbarItem Text="Set target direction"
+                     IconImageSource="{Binding Source={StaticResource SetTargetDirectionImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                      Command="{Binding SetTargetDirectionCommand}"
                      Order="Primary" Priority="0" />
 
-        <ToolbarItem Name="Clear compass target"
-                     Icon="{Binding Source={StaticResource ClearCompassTargetImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+        <ToolbarItem Text="Clear compass target"
+                     IconImageSource="{Binding Source={StaticResource ClearCompassTargetImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                      Command="{Binding ClearCompassTargetCommand}"
                      Order="Primary" Priority="0" />
     </ContentPage.ToolbarItems>

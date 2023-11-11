@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
@@ -151,19 +151,19 @@
                                               VerticalOptions="Center">
                             <controls:ContextMenu.Items>
                                 <MenuItem Text="Show Details"
-                                          Icon="{Binding Source={StaticResource ShowDetailsImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                          IconImageSource="{Binding Source={StaticResource ShowDetailsImagePath}, Converter={StaticResource SvgImagePathConverter}}"
                                           Command="{Binding ShowDetailsLocationCommand}" />
                                 <MenuItem Text="Zoom to"
-                                          Icon="{Binding Source={StaticResource ZoomToImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                          IconImageSource="{Binding Source={StaticResource ZoomToImagePath}, Converter={StaticResource SvgImagePathConverter}}"
                                           Command="{Binding ZoomToLocationCommand}" />
                                 <MenuItem Text="Set as compass target"
-                                          Icon="{Binding Source={StaticResource SetAsCompassTargetPath}, Converter={StaticResource SvgImagePathConverter}}"
+                                          IconImageSource="{Binding Source={StaticResource SetAsCompassTargetPath}, Converter={StaticResource SvgImagePathConverter}}"
                                           Command="{Binding SetAsCompassTargetCommand}" />
                                 <MenuItem Text="Delete" IsDestructive="True"
-                                          Icon="{Binding Source={StaticResource DeleteImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                          IconImageSource="{Binding Source={StaticResource DeleteImagePath}, Converter={StaticResource SvgImagePathConverter}}"
                                           Command="{Binding DeleteLocationCommand}" />
                                 <MenuItem Text="Add tour plan location"
-                                          Icon="{Binding Source={StaticResource AddTourPlanLocationImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                          IconImageSource="{Binding Source={StaticResource AddTourPlanLocationImagePath}, Converter={StaticResource SvgImagePathConverter}}"
                                           Command="{Binding AddTourPlanLocationCommand}"
                                           IsEnabled="{Binding IsEnabledAddTourPlanLocation, Mode=OneWay}"
                                           AutomationId="AddTourPlanLocation" />

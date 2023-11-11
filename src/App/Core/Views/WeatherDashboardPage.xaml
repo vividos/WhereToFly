@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
@@ -22,18 +22,18 @@
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="Add icon"
-                     Icon="{Binding Source={StaticResource AddIconImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+        <ToolbarItem Text="Add icon"
+                     IconImageSource="{Binding Source={StaticResource AddIconImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                      Command="{Binding AddIconCommand}"
                      Order="Primary" Priority="0" />
 
-        <ToolbarItem Name="Add web link"
-                     Icon="{Binding Source={StaticResource AddWebLinkImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+        <ToolbarItem Text="Add web link"
+                     IconImageSource="{Binding Source={StaticResource AddWebLinkImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                      Command="{Binding AddWebLinkCommand}"
                      Order="Primary" Priority="0" />
 
-        <ToolbarItem Name="Clear all"
-                     Icon="{Binding Source={StaticResource ClearAllImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+        <ToolbarItem Text="Clear all"
+                     IconImageSource="{Binding Source={StaticResource ClearAllImageBaseName}, Converter={StaticResource ImagePathConverter}}"
                      Command="{Binding ClearAllCommand}"
                      IsDestructive="True"
                      Order="Primary" Priority="1" />
