@@ -30,7 +30,7 @@ namespace WhereToFly.App.Core.ViewModels
             /// <summary>
             /// Returns image source for SvgImage in order to display the type image
             /// </summary>
-            public ImageSource? ImageSource { get; }
+            public ImageSource ImageSource { get; }
 
             /// <summary>
             /// Creates a new menu item view model object
@@ -50,7 +50,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Image source for app icon
         /// </summary>
-        public ImageSource? AppIcon { get; private set; }
+        public ImageSource AppIcon { get; private set; }
 
         /// <summary>
         /// Version text to display under the app icon and name

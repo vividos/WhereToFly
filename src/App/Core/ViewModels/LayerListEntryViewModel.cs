@@ -36,7 +36,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Returns image source for SvgImage in order to display the type image
         /// </summary>
-        public ImageSource? TypeImageSource { get; private set; }
+        public ImageSource TypeImageSource { get; private set; }
 
         /// <summary>
         /// Command to execute when an item in the layer list has been tapped
@@ -46,7 +46,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Returns image source for SvgImage in order to display the visibility of the layer
         /// </summary>
-        public ImageSource? VisibilityImageSource { get; private set; }
+        public ImageSource VisibilityImageSource { get; private set; }
 
         /// <summary>
         /// Returns if the layer can be zoomed to

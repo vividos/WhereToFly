@@ -41,7 +41,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Returns image source for SvgImage in order to display the type image
         /// </summary>
-        public ImageSource? TypeImageSource { get; }
+        public ImageSource TypeImageSource { get; }
 
         /// <summary>
         /// Property that specifies if the color box is visible
