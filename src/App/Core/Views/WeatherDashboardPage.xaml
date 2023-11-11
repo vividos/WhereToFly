@@ -51,8 +51,8 @@
                         Wrap="Wrap">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
-                        <!-- Square/rectangular layout -->
-                        <StackLayout WidthRequest="{OnPlatform Android=90, UWP=120}"
+                        <!-- Square layout -->
+                        <StackLayout WidthRequest="{OnPlatform Android=110, UWP=120}"
                                      HeightRequest="{OnPlatform Android=110, UWP=120}"
                                      Margin="16,16,0,0"
                                      BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
