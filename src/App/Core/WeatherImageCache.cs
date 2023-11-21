@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FFImageLoading.Svg.Forms;
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using WhereToFly.App.Core.Models;
@@ -53,7 +54,11 @@ namespace WhereToFly.App.Core
                     };
 
                 case WeatherIconDescription.IconType.IconPlaceholder:
-                    return SvgImageCache.GetImageSource("icons/border-none-variant.svg");
+                    return new SvgImageSource(
+                        SvgImageCache.GetImageSource("icons/border-none-variant.svg"),
+                        50,
+                        50,
+                        useDipUnits: true);
 
                 default:
                     break;
