@@ -25,11 +25,9 @@ namespace WhereToFly.App.Core
                 case WeatherIconDescription.IconType.IconLink:
                     if (iconDescription.WebLink.StartsWith("https://www.austrocontrol.at"))
                     {
-                        return new StreamImageSource
-                        {
-                            Stream = async (cancellationToken) =>
-                                await Assets.Get("alptherm-favicon.png"),
-                        };
+                        return ImageSource.FromStream(
+                            async (cancellationToken) =>
+                                await Assets.Get("alptherm-favicon.png"));
                     }
 
                     string faviconLink = await GetFaviconFromLinkAsync(iconDescription.WebLink);
@@ -42,16 +40,14 @@ namespace WhereToFly.App.Core
                     break;
 
                 case WeatherIconDescription.IconType.IconApp:
-                    return new StreamImageSource()
-                    {
-                        Stream = (cancellationToken) =>
+                    return ImageSource.FromStream(
+                        (cancellationToken) =>
                         {
                             var appManager = DependencyService.Get<IAppManager>();
                             byte[] appIconData = appManager.GetAppIcon(iconDescription.WebLink);
 
                             return Task.FromResult<Stream>(new MemoryStream(appIconData));
-                        },
-                    };
+                        });
 
                 case WeatherIconDescription.IconType.IconPlaceholder:
                     return new SvgImageSource(
