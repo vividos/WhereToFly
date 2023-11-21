@@ -2,7 +2,7 @@
 
 ## Version 1.14.2
 
-Released on ?.
+Released on 2023-11-21.
 
 ✨ New Features / Improvements
 - Improved performance of track height profile view
