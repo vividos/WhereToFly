@@ -624,7 +624,7 @@ export class HeightProfileView {
 
     /**
      * Called by Chart.js when the user hovers over an element in the chart
-     * @param {array} [elements] array of elements; may be empty
+     * @param {Array.<ActiveElement>} [elements] array of elements; may be empty
      */
     onHover(_event, elements, _chart) {
 
@@ -639,7 +639,7 @@ export class HeightProfileView {
 
     /**
      * Called by Chart.js when the user clicked on an element in the chart
-     * @param {array} [elements] array of elements; may be empty
+     * @param {Array.<ActiveElement>} [elements] array of elements; may be empty
      */
     onClick(elements) {
 
