@@ -85,6 +85,8 @@ export class HeightProfileView {
         if (this.options.setBodyBackgroundColor)
             document.body.style.backgroundColor = this.backgroundColor;
 
+        this.currentMouseMoveHandler = null;
+
         const chartElementId = this.setupHeightProfileElement();
 
         const chartElement = document.getElementById(chartElementId);
@@ -210,6 +212,9 @@ export class HeightProfileView {
      * @param {object} args event args
      */
     onPanStart(args) {
+        if (this.currentMouseMoveHandler !== null)
+            return;
+
         this.currentMouseMoveHandler = this.onPanMouseMove.bind(this);
 
         args.chart.canvas.addEventListener(
