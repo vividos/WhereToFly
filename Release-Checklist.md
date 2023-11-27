@@ -14,6 +14,6 @@
 - [ ] Run SonarCloud build and fix all warnings
 - [ ] Run Release build and check out all pages
 - [ ] Carry out all [test cases](TestCases.md)
-- [ ] Build app using Microsoft App Center
+- [ ] Build app using GitHub actions
 - [ ] Distribute Release using App Center
 - [ ] Tag git change with version tag, in the format `version-1.2.3` and push tag to github
