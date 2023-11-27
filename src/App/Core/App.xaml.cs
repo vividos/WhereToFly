@@ -67,8 +67,8 @@ namespace WhereToFly.App.Core
         /// </summary>
         public App()
         {
-            if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android ||
-                Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.UWP)
+            if (DeviceInfo.Platform == DevicePlatform.Android ||
+                DeviceInfo.Platform == DevicePlatform.UWP)
             {
                 AppCenter.Start(
                     $"android={Constants.AppCenterKeyAndroid};" +

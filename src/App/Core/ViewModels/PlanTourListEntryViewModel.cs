@@ -39,12 +39,12 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Command to move up location in the list
         /// </summary>
-        public Xamarin.Forms.Command MoveUpCommand { get; set; }
+        public Command MoveUpCommand { get; set; }
 
         /// <summary>
         /// Command to move down location in the list
         /// </summary>
-        public Xamarin.Forms.Command MoveDownCommand { get; set; }
+        public Command MoveDownCommand { get; set; }
 
         /// <summary>
         /// Command to remove location from the list
@@ -66,15 +66,15 @@ namespace WhereToFly.App.Core.ViewModels
             this.TypeImageSource =
                 SvgImageCache.GetImageSource(this.Location);
 
-            this.MoveUpCommand = new Xamarin.Forms.Command(
+            this.MoveUpCommand = new Command(
                 (obj) => this.parent.MoveUpLocation(this),
                 (obj) => !this.parent.IsFirstLocation(this));
 
-            this.MoveDownCommand = new Xamarin.Forms.Command(
+            this.MoveDownCommand = new Command(
                 (obj) => this.parent.MoveDownLocation(this),
                 (obj) => !this.parent.IsLastLocation(this));
 
-            this.RemoveCommand = new Xamarin.Forms.Command(
+            this.RemoveCommand = new Command(
                 (obj) => this.parent.RemoveLocation(this));
         }
 

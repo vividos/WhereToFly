@@ -5,6 +5,7 @@ using Xamarin.CommunityToolkit.Effects;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
+using TabbedPage = Xamarin.Forms.TabbedPage;
 
 namespace WhereToFly.App.Core.Views
 {
@@ -44,7 +45,7 @@ namespace WhereToFly.App.Core.Views
 
             Debug.WriteLine($"setting IsSwipePagingEnabled = {enableTabSwiping}");
 
-            var tabbedPage = this.Parent as Xamarin.Forms.TabbedPage;
+            var tabbedPage = this.Parent as TabbedPage;
 
             tabbedPage?
                 .On<Xamarin.Forms.PlatformConfiguration.Android>()?
