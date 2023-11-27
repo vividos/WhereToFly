@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.111-alpha">
+<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.169151-alpha">
 
   <PropertyGroup>
     <!-- Allows the build (or compile) script located on package.json to run on Build -->
