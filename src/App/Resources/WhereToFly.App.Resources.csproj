@@ -1,10 +1,10 @@
 <Project Sdk="MSBuild.Sdk.Extras/3.0.44">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;MonoAndroid13.0;net7.0-android33.0</TargetFrameworks>
-    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">$(TargetFrameworks);uap10.0.19041;net7.0-windows10.0.19041</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;MonoAndroid13.0;net8.0-android34.0</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">$(TargetFrameworks);uap10.0.19041;net8.0-windows10.0.19041</TargetFrameworks>
     <Description>Where-to-fly app resources</Description>
-    <Product>WhereToFly.App.Resources</Product>
+    <AssemblyName>WhereToFly.App.Resources</AssemblyName>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <SonarQubeExclude>true</SonarQubeExclude>
@@ -12,7 +12,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" $(TargetFramework.StartsWith('net7')) ">
+  <PropertyGroup Condition=" $(TargetFramework.StartsWith('net8.0')) ">
     <UseMaui>true</UseMaui>
   </PropertyGroup>
 
@@ -30,7 +30,7 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <ItemGroup Condition=" $(TargetFramework.StartsWith('net7.0')) ">
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('net8.0')) ">
     <MauiAsset Include="Assets\**\*.*" />
     <MauiAsset Include="..\..\..\Credits.md">
       <Link>Assets\info\Credits.md</Link>
@@ -38,6 +38,7 @@
     <MauiAsset Include="..\..\..\Changelog.md">
       <Link>Assets\info\Changelog.md</Link>
     </MauiAsset>
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.3" />
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">

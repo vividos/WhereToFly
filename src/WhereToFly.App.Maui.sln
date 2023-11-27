@@ -31,6 +31,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.App.MapView.Maui
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.App.Maui", "App\Maui\WhereToFly.App.Maui.csproj", "{C3027A83-669C-49FC-B334-090F4B2849D0}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.App.Resources.Maui", "App\Resources\WhereToFly.App.Resources.Maui.csproj", "{65D9C7D7-4B3E-49DF-8982-CF8162EF4C96}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{C3027A83-669C-49FC-B334-090F4B2849D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3027A83-669C-49FC-B334-090F4B2849D0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C3027A83-669C-49FC-B334-090F4B2849D0}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{65D9C7D7-4B3E-49DF-8982-CF8162EF4C96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65D9C7D7-4B3E-49DF-8982-CF8162EF4C96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65D9C7D7-4B3E-49DF-8982-CF8162EF4C96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65D9C7D7-4B3E-49DF-8982-CF8162EF4C96}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,6 +77,7 @@ Global
 		{74CF6914-CA78-48CF-8289-2E8CB32EEAF2} = {60BE5B8E-A229-488F-A893-379E323EBB3E}
 		{4653A8F6-77CD-495D-84DF-FDE19829BA89} = {A443B9B2-B8C9-44F0-A7F5-DF2466E0E0FE}
 		{C3027A83-669C-49FC-B334-090F4B2849D0} = {A443B9B2-B8C9-44F0-A7F5-DF2466E0E0FE}
+		{65D9C7D7-4B3E-49DF-8982-CF8162EF4C96} = {A443B9B2-B8C9-44F0-A7F5-DF2466E0E0FE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D13F3BD1-E396-49C7-BD98-2F3BC15F6E7C}
