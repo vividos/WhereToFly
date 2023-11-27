@@ -37,7 +37,7 @@ rmdir .\bw-output /s /q 2> nul
 
 dotnet-sonarscanner begin ^
     /k:"WhereToFly" ^
-    /v:"1.14.2" ^
+    /v:"1.14.3" ^
     /d:"sonar.cs.opencover.reportsPaths=%CD%\TestResults\WhereToFly-*-CoverageReport.xml" ^
     /d:"sonar.exclusions=Web\LiveTracking\wwwroot\lib\**\*" ^
     /d:"sonar.host.url=https://sonarcloud.io" ^
