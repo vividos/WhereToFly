@@ -70,16 +70,19 @@ namespace WhereToFly.App.MapView
         /// <param name="view">web view</param>
         /// <param name="request">web resource request that failed</param>
         /// <param name="error">web resource error</param>
+        [System.Runtime.Versioning.SupportedOSPlatform("android23.0")]
         public override void OnReceivedError(
             WebView? view,
             IWebResourceRequest? request,
             WebResourceError? error)
         {
+            string errorDescription = error?.DescriptionFormatted?.ToString() ?? "N/A";
+
             Debug.WriteLine(
                 "OnReceivedError: method={0} url={1}, error={2}",
                 request?.Method,
                 request?.Url?.ToString() ?? "N/A",
-                error?.DescriptionFormatted?.ToString() ?? "N/A");
+                errorDescription);
 
             base.OnReceivedError(view, request, error);
         }
