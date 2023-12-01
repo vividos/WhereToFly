@@ -78,7 +78,7 @@ namespace WhereToFly.App.Core.Views
         }
 
         /// <summary>
-        /// Called when user naviaged back with the back button, dismissing the popup page.
+        /// Called when user navigated back with the back button, dismissing the popup page.
         /// </summary>
         /// <returns>true in order to disable action on back button press</returns>
         protected override bool OnBackButtonPressed()
