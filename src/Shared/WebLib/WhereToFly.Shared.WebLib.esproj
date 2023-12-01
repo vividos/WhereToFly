@@ -1,6 +1,9 @@
-<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.169151-alpha">
+<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.174023-alpha">
 
   <PropertyGroup>
+    <!-- No NuGet packages in here -->
+    <ResolveNuGetPackages>false</ResolveNuGetPackages>
+
     <!-- Allows the build (or compile) script located on package.json to run on Build -->
     <ShouldRunBuildScript>true</ShouldRunBuildScript>
 
