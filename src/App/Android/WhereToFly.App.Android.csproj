@@ -84,13 +84,13 @@
       <Version>1.8.116</Version>
     </PackageReference>
     <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3.android">
-      <Version>2.1.6</Version>
+      <Version>2.1.7</Version>
     </PackageReference>
     <PackageReference Include="System.Net.Http">
       <Version>4.3.4</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.AndroidX.Annotation">
-      <Version>1.7.0.2</Version>
+      <Version>1.7.0.3</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Essentials">
       <Version>1.8.0</Version>
