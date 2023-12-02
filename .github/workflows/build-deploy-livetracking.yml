@@ -1,0 +1,37 @@
+# Build and Deployment for the Where-to-fly Live Tracking Webpage
+
+name: Build + Deploy Live Tracking
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: 'true'
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Publish
+      run: dotnet publish src/Web/LiveTracking/WhereToFly.Web.LiveTracking.csproj --output "published"
+
+    - name: Deploy to Azure WebApp
+      uses: azure/webapps-deploy@v3
+      with:
+        app-name: WhereToFly-LiveTracking
+        publish-profile: ${{ secrets.AZURE_LIVETRACKING_PUBLISH_PROFILE }}
+        package: "published"
+
+    - name: Publish Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: LiveTracking
+        path: "published"
