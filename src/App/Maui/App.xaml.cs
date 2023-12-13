@@ -14,5 +14,18 @@
 
             this.MainPage = new MainPage();
         }
+
+        /// <summary>
+        /// Called when the app's window is about to be created. Sets the app's title.
+        /// </summary>
+        /// <param name="activationState">activation state</param>
+        /// <returns>window object</returns>
+        protected override Window CreateWindow(IActivationState? activationState)
+        {
+            var window = base.CreateWindow(activationState);
+            window.Title = "Where-to-fly";
+
+            return window;
+        }
     }
 }
