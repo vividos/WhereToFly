@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
-             xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
+             xmlns:local="clr-namespace:WhereToFly.App.Core"
              xmlns:viewmodels="clr-namespace:WhereToFly.App.Core.ViewModels"
              x:Class="WhereToFly.App.Core.Views.WeatherDashboardPage"
              Title="Weather"
@@ -12,28 +12,19 @@
         <viewmodels:WeatherDashboardViewModel />
     </ContentPage.BindingContext>
 
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <converter:ImagePathConverter x:Key="ImagePathConverter" />
-            <x:String x:Key="AddIconImageBaseName">playlist_plus</x:String>
-            <x:String x:Key="AddWebLinkImageBaseName">bookmark_plus_outline</x:String>
-            <x:String x:Key="ClearAllImageBaseName">delete</x:String>
-        </ResourceDictionary>
-    </ContentPage.Resources>
-
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add icon"
-                     IconImageSource="{Binding Source={StaticResource AddIconImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+                     IconImageSource="{local:Image playlist_plus}"
                      Command="{Binding AddIconCommand}"
                      Order="Primary" Priority="0" />
 
         <ToolbarItem Text="Add web link"
-                     IconImageSource="{Binding Source={StaticResource AddWebLinkImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+                     IconImageSource="{local:Image bookmark_plus_outline}"
                      Command="{Binding AddWebLinkCommand}"
                      Order="Primary" Priority="0" />
 
         <ToolbarItem Text="Clear all"
-                     IconImageSource="{Binding Source={StaticResource ClearAllImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+                     IconImageSource="{local:Image delete}"
                      Command="{Binding ClearAllCommand}"
                      IsDestructive="True"
                      Order="Primary" Priority="1" />

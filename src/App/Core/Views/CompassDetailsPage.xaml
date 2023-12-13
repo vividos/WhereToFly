@@ -3,26 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="WhereToFly.App.Core.Views.CompassDetailsPage"
              xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
-             xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
+             xmlns:local="clr-namespace:WhereToFly.App.Core"
              BackgroundColor="{DynamicResource PageBackgroundColor}"
              Title="Compass">
 
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <converter:ImagePathConverter x:Key="ImagePathConverter" />
-            <x:String x:Key="SetTargetDirectionImageBaseName">compass_rose</x:String>
-            <x:String x:Key="ClearCompassTargetImageBaseName">close</x:String>
-        </ResourceDictionary>
-    </ContentPage.Resources>
-
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Set target direction"
-                     IconImageSource="{Binding Source={StaticResource SetTargetDirectionImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+                     IconImageSource="{local:Image compass_rose}"
                      Command="{Binding SetTargetDirectionCommand}"
                      Order="Primary" Priority="0" />
 
         <ToolbarItem Text="Clear compass target"
-                     IconImageSource="{Binding Source={StaticResource ClearCompassTargetImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+                     IconImageSource="{local:Image close}"
                      Command="{Binding ClearCompassTargetCommand}"
                      Order="Primary" Priority="0" />
     </ContentPage.ToolbarItems>

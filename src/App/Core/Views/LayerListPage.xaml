@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
              xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
+             xmlns:local="clr-namespace:WhereToFly.App.Core"
              xmlns:viewmodels="clr-namespace:WhereToFly.App.Core.ViewModels"
              x:Class="WhereToFly.App.Core.Views.LayerListPage"
              Title="Layer list"
@@ -14,10 +15,7 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <converter:ImagePathConverter x:Key="ImagePathConverter" />
             <converter:SvgImagePathConverter x:Key="SvgImagePathConverter" />
-            <x:String x:Key="ImportLayerImageBaseName">layers_plus</x:String>
-            <x:String x:Key="DeleteLayerListImageBaseName">delete_forever</x:String>
             <x:String x:Key="ZoomToLayerImagePath">info/images/magnify-plus-outline.svg</x:String>
             <x:String x:Key="ExportImagePath">info/images/export-variant.svg</x:String>
             <x:String x:Key="DeleteLayerImagePath">info/images/delete.svg</x:String>
@@ -26,12 +24,12 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Import layer"
-                     IconImageSource="{Binding Source={StaticResource ImportLayerImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+                     IconImageSource="{local:Image layers_plus}"
                      Command="{Binding ImportLayerCommand}"
                      Order="Primary" Priority="0" />
 
         <ToolbarItem Text="Delete layer list"
-                     IconImageSource="{Binding Source={StaticResource DeleteLayerListImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+                     IconImageSource="{local:Image delete_forever}"
                      Command="{Binding DeleteLayerListCommand}"
                      IsDestructive="True"
                      Order="Primary" Priority="1" />

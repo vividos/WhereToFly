@@ -3,16 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
              xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
+             xmlns:local="clr-namespace:WhereToFly.App.Core"
              x:Class="WhereToFly.App.Core.Views.TrackListPage"
              Title="Track list"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <converter:ImagePathConverter x:Key="ImagePathConverter" />
             <converter:SvgImagePathConverter x:Key="SvgImagePathConverter" />
-            <x:String x:Key="ImportTrackImageBaseName">playlist_plus</x:String>
-            <x:String x:Key="DeleteTrackListImageBaseName">delete_forever</x:String>
             <x:String x:Key="ShowDetailsImagePath">info/images/information-outline.svg</x:String>
             <x:String x:Key="ZoomToImagePath">info/images/magnify-plus-outline.svg</x:String>
             <x:String x:Key="ExportImagePath">info/images/export-variant.svg</x:String>
@@ -22,12 +20,12 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Import track"
-                     IconImageSource="{Binding Source={StaticResource ImportTrackImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+                     IconImageSource="{local:Image playlist_plus}"
                      Command="{Binding ImportTrackCommand}"
                      Order="Primary" Priority="0" />
 
         <ToolbarItem Text="Delete track list"
-                     IconImageSource="{Binding Source={StaticResource DeleteTrackListImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+                     IconImageSource="{local:Image delete_forever}"
                      Command="{Binding DeleteTrackListCommand}"
                      IsDestructive="True"
                      Order="Primary" Priority="1" />

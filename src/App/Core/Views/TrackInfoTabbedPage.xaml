@@ -3,34 +3,25 @@
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-            xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
+            xmlns:local="clr-namespace:WhereToFly.App.Core"
             mc:Ignorable="d"
             x:Class="WhereToFly.App.Core.Views.TrackInfoTabbedPage"
             Title = "Track infos"
             BackgroundColor="{DynamicResource PageBackgroundColor}">
 
-    <TabbedPage.Resources>
-        <ResourceDictionary>
-            <converter:ImagePathConverter x:Key="ImagePathConverter" />
-            <x:String x:Key="ZoomToImageBaseName">magnify_plus_outline</x:String>
-            <x:String x:Key="ExportImageBaseName">export_variant</x:String>
-            <x:String x:Key="DeleteImageBaseName">delete</x:String>
-        </ResourceDictionary>
-    </TabbedPage.Resources>
-
     <TabbedPage.ToolbarItems>
         <ToolbarItem Text="Zoom to"
-                     IconImageSource="{Binding Source={StaticResource ZoomToImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+                     IconImageSource="{local:Image magnify_plus_outline}"
                      Command="{Binding ZoomToTrackCommand}"
                      Order="Primary" Priority="0" />
 
         <ToolbarItem Text="Export"
-                     IconImageSource="{Binding Source={StaticResource ExportImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+                     IconImageSource="{local:Image export_variant}"
                      Command="{Binding ExportTrackCommand}"
                      Order="Primary" Priority="0" />
 
         <ToolbarItem Text="Delete"
-                     IconImageSource="{Binding Source={StaticResource DeleteImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+                     IconImageSource="{local:Image delete}"
                      Command="{Binding DeleteTrackCommand}"
                      IsDestructive="True"
                      Order="Primary" Priority="1" />

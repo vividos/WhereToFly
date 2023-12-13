@@ -2,44 +2,33 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
-             xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
+             xmlns:local="clr-namespace:WhereToFly.App.Core"
              x:Class="WhereToFly.App.Core.Views.LocationDetailsPage"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
 
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <converter:ImagePathConverter x:Key="ImagePathConverter" />
-            <x:String x:Key="ZoomToImageBaseName">magnify_plus_outline</x:String>
-            <x:String x:Key="SetAsCompassTargetImageBaseName">compass_rose</x:String>
-            <x:String x:Key="DirectionsImageBaseName">directions</x:String>
-            <x:String x:Key="ShareImageBaseName">share_variant</x:String>
-            <x:String x:Key="DeleteImageBaseName">delete</x:String>
-        </ResourceDictionary>
-    </ContentPage.Resources>
-
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Zoom to"
-                     IconImageSource="{Binding Source={StaticResource ZoomToImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+                     IconImageSource="{local:Image magnify_plus_outline}"
                      Command="{Binding ZoomToLocationCommand}"
                      Order="Primary" Priority="0" />
 
         <ToolbarItem Text="Set as compass target"
-                     IconImageSource="{Binding Source={StaticResource SetAsCompassTargetImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+                     IconImageSource="{local:Image compass_rose}"
                      Command="{Binding SetAsCompassTargetCommand}"
                      Order="Primary" Priority="1" />
 
         <ToolbarItem Text="Navigate here"
-                     IconImageSource="{Binding Source={StaticResource DirectionsImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+                     IconImageSource="{local:Image directions}"
                      Command="{Binding NavigateToLocationCommand}"
                      Order="Primary" Priority="2" />
 
         <ToolbarItem Text="Share"
-                     IconImageSource="{Binding Source={StaticResource ShareImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+                     IconImageSource="{local:Image share_variant}"
                      Command="{Binding ShareLocationCommand}"
                      Order="Primary" Priority="3" />
 
         <ToolbarItem Text="Delete"
-                     IconImageSource="{Binding Source={StaticResource DeleteImageBaseName}, Converter={StaticResource ImagePathConverter}}"
+                     IconImageSource="{local:Image delete}"
                      Command="{Binding DeleteLocationCommand}"
                      IsDestructive="True"
                      Order="Primary" Priority="4" />
