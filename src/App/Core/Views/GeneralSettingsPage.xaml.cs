@@ -19,12 +19,6 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         public GeneralSettingsPage()
         {
-            this.Title = "General";
-            this.IconImageSource = new FileImageSource
-            {
-                File = Converter.ImagePathConverter.GetDeviceDependentImage("settings_outline"),
-            };
-
             this.BindingContext = this.viewModel = new GeneralSettingsViewModel();
 
             this.InitializeComponent();

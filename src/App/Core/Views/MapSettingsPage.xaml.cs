@@ -12,11 +12,6 @@ namespace WhereToFly.App.Core.Views
         /// </summary>
         public MapSettingsPage()
         {
-            this.IconImageSource = new FileImageSource
-            {
-                File = Converter.ImagePathConverter.GetDeviceDependentImage("map"),
-            };
-
             this.InitializeComponent();
         }
     }
