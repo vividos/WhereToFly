@@ -130,7 +130,7 @@ namespace WhereToFly.App.Core.Views
         {
             var findNearbyPoisButton = new ToolbarItem(
                 "Find nearby POIs",
-                Converter.ImagePathConverter.GetDeviceDependentImage("magnify_scan"),
+                ImageExtension.GetDeviceDependentImage("magnify_scan"),
                 async () => await this.OnClicked_ToolbarButtonFindNearbyPois(),
                 ToolbarItemOrder.Primary)
             {
@@ -147,7 +147,7 @@ namespace WhereToFly.App.Core.Views
         {
             var locateMeButton = new ToolbarItem(
                 "Locate me",
-                Converter.ImagePathConverter.GetDeviceDependentImage("crosshairs_gps"),
+                ImageExtension.GetDeviceDependentImage("crosshairs_gps"),
                 async () => await this.OnClicked_ToolbarButtonLocateMe(),
                 ToolbarItemOrder.Primary)
             {
@@ -235,7 +235,7 @@ namespace WhereToFly.App.Core.Views
         {
             var currentPositionDetailsButton = new ToolbarItem(
                 "Find location",
-                Converter.ImagePathConverter.GetDeviceDependentImage("magnify"),
+                ImageExtension.GetDeviceDependentImage("magnify"),
                 async () => await this.OnClicked_ToolbarButtonFindLocation(),
                 ToolbarItemOrder.Primary)
             {

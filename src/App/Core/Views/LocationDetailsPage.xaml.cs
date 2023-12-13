@@ -44,7 +44,7 @@ namespace WhereToFly.App.Core.Views
         {
             var refreshLiveWaypointButton = new ToolbarItem(
                 "Refresh live waypoint",
-                Converter.ImagePathConverter.GetDeviceDependentImage("refresh"),
+                ImageExtension.GetDeviceDependentImage("refresh"),
                 this.OnClicked_ToolbarButtonRefreshLiveWaypoint,
                 ToolbarItemOrder.Primary)
             {
@@ -69,7 +69,7 @@ namespace WhereToFly.App.Core.Views
         {
             var addTourPlanLocationButton = new ToolbarItem(
                 "Add tour plan location",
-                Converter.ImagePathConverter.GetDeviceDependentImage("map_marker_plus"),
+                ImageExtension.GetDeviceDependentImage("map_marker_plus"),
                 this.OnClicked_ToolbarButtonAddTourPlanLocation,
                 ToolbarItemOrder.Secondary)
             {

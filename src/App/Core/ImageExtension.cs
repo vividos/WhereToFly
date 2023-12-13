@@ -60,7 +60,7 @@ namespace WhereToFly.App.Core
         /// </summary>
         /// <param name="imageBaseName">image base name</param>
         /// <returns>image path</returns>
-        private static string GetDeviceDependentImage(string imageBaseName)
+        internal static string GetDeviceDependentImage(string imageBaseName)
         {
             switch (Device.RuntimePlatform)
             {
