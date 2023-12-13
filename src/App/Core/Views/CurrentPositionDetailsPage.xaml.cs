@@ -34,8 +34,6 @@ namespace WhereToFly.App.Core.Views
 
             this.BindingContext = this.viewModel = new CurrentPositionDetailsViewModel(App.Settings!);
 
-            this.SetupToolbar();
-
             Task.Run(this.InitPositionAsync);
         }
 
@@ -54,50 +52,6 @@ namespace WhereToFly.App.Core.Views
                 this.viewModel.OnPositionChanged(
                     this,
                     new GeolocationEventArgs(position));
-            }
-        }
-
-        /// <summary>
-        /// Sets up toolbar for this page
-        /// </summary>
-        private void SetupToolbar()
-        {
-            this.AddSharePositionToolbarButton();
-        }
-
-        /// <summary>
-        /// Adds a "Share position" button to the toolbar
-        /// </summary>
-        private void AddSharePositionToolbarButton()
-        {
-            var sharePositionButton = new ToolbarItem(
-                "Share position",
-                Converter.ImagePathConverter.GetDeviceDependentImage("share_variant"),
-                async () => await this.OnClicked_ToolbarButtonSharePosition(),
-                ToolbarItemOrder.Primary)
-            {
-                AutomationId = "SharePosition",
-            };
-
-            this.ToolbarItems.Add(sharePositionButton);
-        }
-
-        /// <summary>
-        /// Called when toolbar button "Share" was clicked
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task OnClicked_ToolbarButtonSharePosition()
-        {
-            var position =
-                await this.geolocationService.GetPositionAsync(timeout: TimeSpan.FromSeconds(0.1));
-
-            if (position != null)
-            {
-                var point = new MapPoint(position.Latitude, position.Longitude, position.Altitude);
-
-                await Share.RequestAsync(
-                    DataFormatter.FormatMyPositionShareText(point, position.Timestamp),
-                    "Share my position with...");
             }
         }
 

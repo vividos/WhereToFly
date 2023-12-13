@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows.Input;
 using WhereToFly.App.Core.Logic;
 using WhereToFly.App.Core.Models;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using WhereToFly.Geo.SunCalcNet;
+using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -285,6 +287,11 @@ namespace WhereToFly.App.Core.ViewModels
             ? $"{this.sunsetDirectionInDegrees.Value}° " +
                 GetTextDirectionFromAngle(this.sunsetDirectionInDegrees.Value)
             : "N/A";
+
+        /// <summary>
+        /// Command that is executed to share the current position
+        /// </summary>
+        public ICommand SharePositionCommand { get; }
         #endregion
 
         /// <summary>
@@ -296,6 +303,34 @@ namespace WhereToFly.App.Core.ViewModels
             this.appSettings = appSettings;
 
             this.SetupTimer();
+
+            this.SharePositionCommand = new AsyncCommand(this.SharePosition);
+        }
+
+        /// <summary>
+        /// Called when toolbar button "Share" was clicked
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task SharePosition()
+        {
+            var geolocationService = DependencyService.Get<IGeolocationService>();
+
+            var currentPosition =
+                await geolocationService.GetPositionAsync(timeout: TimeSpan.FromSeconds(0.1));
+
+            if (currentPosition != null)
+            {
+                var point = new MapPoint(
+                    currentPosition.Latitude,
+                    currentPosition.Longitude,
+                    currentPosition.Altitude);
+
+                await Share.RequestAsync(
+                    DataFormatter.FormatMyPositionShareText(
+                        point,
+                        currentPosition.Timestamp),
+                    "Share my position with...");
+            }
         }
 
         /// <summary>

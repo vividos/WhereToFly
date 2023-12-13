@@ -2,8 +2,18 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="WhereToFly.App.Core.Views.CurrentPositionDetailsPage"
+             xmlns:local="clr-namespace:WhereToFly.App.Core"
              Title="Detail infos"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Share position"
+                     IconImageSource="{local:Image share_variant}"
+                     Command="{Binding SharePositionCommand}"
+                     Order="Primary" Priority="0"
+                     AutomationId="SharePosition" />
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Content>
 
         <ScrollView Orientation="Vertical">

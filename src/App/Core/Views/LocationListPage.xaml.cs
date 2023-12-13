@@ -40,69 +40,7 @@ namespace WhereToFly.App.Core.Views
 
             this.BindingContext = this.viewModel = new LocationListViewModel(App.Settings!);
 
-            this.SetupToolbar();
-
             Task.Run(this.InitPositionAsync);
-        }
-
-        /// <summary>
-        /// Sets up toolbar for this page
-        /// </summary>
-        private void SetupToolbar()
-        {
-            this.AddImportLocationsToolbarButton();
-            this.AddDeleteLocationListToolbarButton();
-        }
-
-        /// <summary>
-        /// Adds "Import locations" toolbar button
-        /// </summary>
-        private void AddImportLocationsToolbarButton()
-        {
-            var importLocationsButton = new ToolbarItem(
-                "Import locations",
-                Converter.ImagePathConverter.GetDeviceDependentImage("playlist_plus"),
-                this.OnClicked_ToolbarButtonImportLocations,
-                ToolbarItemOrder.Primary)
-            {
-                AutomationId = "ImportLocations",
-            };
-
-            this.ToolbarItems.Add(importLocationsButton);
-        }
-
-        /// <summary>
-        /// Called when toolbar button "Import locations" was clicked
-        /// </summary>
-        private void OnClicked_ToolbarButtonImportLocations()
-        {
-            this.viewModel.ImportLocationsCommand.Execute(null);
-        }
-
-        /// <summary>
-        /// Adds "Delete location list" toolbar button
-        /// </summary>
-        private void AddDeleteLocationListToolbarButton()
-        {
-            var deleteLocationListButton = new ToolbarItem(
-                "Delete location list",
-                Converter.ImagePathConverter.GetDeviceDependentImage("delete_forever"),
-                async () => await this.OnClicked_ToolbarButtonDeleteLocationList(),
-                ToolbarItemOrder.Primary)
-            {
-                AutomationId = "DeleteLocationList",
-            };
-
-            this.ToolbarItems.Add(deleteLocationListButton);
-        }
-
-        /// <summary>
-        /// Called when toolbar button "Delete location list" was clicked
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task OnClicked_ToolbarButtonDeleteLocationList()
-        {
-            await this.viewModel.ClearLocationsAsync();
         }
 
         /// <summary>

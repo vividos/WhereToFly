@@ -148,7 +148,12 @@ namespace WhereToFly.App.Core.ViewModels
         /// <summary>
         /// Command to execute when "import locations" toolbar item is selected
         /// </summary>
-        public ICommand ImportLocationsCommand { get; set; }
+        public ICommand ImportLocationsCommand { get; }
+
+        /// <summary>
+        /// Command to execute when "delete location list" toolbar item is selected
+        /// </summary>
+        public ICommand DeleteLocationListCommand { get; }
         #endregion
 
         /// <summary>
@@ -170,6 +175,7 @@ namespace WhereToFly.App.Core.ViewModels
                 new AsyncCommand(this.FilterTakeoffDirectionsAsync);
 
             this.ImportLocationsCommand = new AsyncCommand(this.ImportLocationsAsync);
+            this.DeleteLocationListCommand = new AsyncCommand(this.ClearLocationsAsync);
         }
 
         /// <summary>
@@ -519,7 +525,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// Clears all locations
         /// </summary>
         /// <returns>task to wait on</returns>
-        public async Task ClearLocationsAsync()
+        private async Task ClearLocationsAsync()
         {
             bool result = await App.Current.MainPage.DisplayAlert(
                 Constants.AppTitle,

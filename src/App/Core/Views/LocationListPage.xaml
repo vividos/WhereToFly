@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
              xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
+             xmlns:local="clr-namespace:WhereToFly.App.Core"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              x:Class="WhereToFly.App.Core.Views.LocationListPage"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
@@ -17,6 +18,21 @@
             <x:String x:Key="AddTourPlanLocationImagePath">weblib/images/map-marker-plus.svg</x:String>
         </ResourceDictionary>
     </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Import locations"
+                     IconImageSource="{local:Image playlist_plus}"
+                     Command="{Binding ImportLocationsCommand}"
+                     Order="Primary"
+                     Priority="0"
+                     AutomationId="ImportLocations" />
+        <ToolbarItem Text="Delete location list"
+                     IconImageSource="{local:Image delete_forever}"
+                     Command="{Binding DeleteLocationListCommand}"
+                     Order="Primary"
+                     Priority="1"
+                     AutomationId="DeleteLocationList" />
+    </ContentPage.ToolbarItems>
 
     <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
 
