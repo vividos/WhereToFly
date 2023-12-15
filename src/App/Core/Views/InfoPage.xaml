@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
@@ -7,6 +7,7 @@
              xmlns:viewmodels="clr-namespace:WhereToFly.App.Core.ViewModels"
              mc:Ignorable="d"
              x:Class="WhereToFly.App.Core.Views.InfoPage"
+             x:DataType="viewmodels:InfoPageViewModel"
              Title="Info"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
 
@@ -37,7 +38,7 @@
                 </CarouselView.ItemsLayout>
 
                 <CarouselView.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="viewmodels:InfoPageViewModel+InfoPageEntryViewModel">
 
                         <!-- Header image and a webview, both scrollable -->
                         <StackLayout VerticalOptions="Fill" Margin="20">

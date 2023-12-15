@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <views:BasePopupPage xmlns="http://xamarin.com/schemas/2014/forms"
                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                     xmlns:mapview="clr-namespace:WhereToFly.App.MapView;assembly=WhereToFly.App.MapView"
+                     xmlns:viewmodels="clr-namespace:WhereToFly.App.Core.ViewModels"
                      xmlns:views="clr-namespace:WhereToFly.App.Core.Views"
-                     xmlns:mapview="clr-namespace:WhereToFly.App.MapView"
                      x:Class="WhereToFly.App.Core.Views.FlyingRangePopupPage"
-                     x:TypeArguments="mapview:FlyingRangeParameters">
+                     x:TypeArguments="mapview:FlyingRangeParameters"
+                     x:DataType="viewmodels:FlyingRangePopupViewModel">
 
     <!-- popup content -->
     <StackLayout

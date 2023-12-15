@@ -1,9 +1,11 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <views:BasePopupPage xmlns="http://xamarin.com/schemas/2014/forms"
                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                     xmlns:views="clr-namespace:WhereToFly.App.Core.Views"
                      xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
-                     x:Class="WhereToFly.App.Core.Views.PlanTourPopupPage">
+                     xmlns:viewmodels="clr-namespace:WhereToFly.App.Core.ViewModels"
+                     xmlns:views="clr-namespace:WhereToFly.App.Core.Views"
+                     x:Class="WhereToFly.App.Core.Views.PlanTourPopupPage"
+                     x:DataType="viewmodels:PlanTourPopupViewModel">
 
     <!-- popup content -->
     <StackLayout
@@ -40,7 +42,7 @@
             </CollectionView.ItemsLayout>
 
             <CollectionView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="viewmodels:PlanTourListEntryViewModel">
                     <!-- Template for a single entry -->
                     <Grid BackgroundColor="{DynamicResource ListViewItemBackgroundColor}"
                           HeightRequest="90" Margin="8,4">

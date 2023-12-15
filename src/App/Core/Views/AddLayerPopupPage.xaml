@@ -1,10 +1,12 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <views:BasePopupPage xmlns="http://xamarin.com/schemas/2014/forms"
                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                     xmlns:views="clr-namespace:WhereToFly.App.Core.Views"
                      xmlns:geo="clr-namespace:WhereToFly.Geo.Model;assembly=WhereToFly.Geo"
+                     xmlns:viewmodels="clr-namespace:WhereToFly.App.Core.ViewModels"
+                     xmlns:views="clr-namespace:WhereToFly.App.Core.Views"
                      x:Class="WhereToFly.App.Core.Views.AddLayerPopupPage"
-                     x:TypeArguments="geo:Layer">
+                     x:TypeArguments="geo:Layer"
+                     x:DataType="viewmodels:AddLayerPopupViewModel">
 
     <!-- popup content -->
     <StackLayout

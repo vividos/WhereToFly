@@ -1,9 +1,11 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <views:BasePopupPage xmlns="http://xamarin.com/schemas/2014/forms"
                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                      xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
+                     xmlns:viewmodels="clr-namespace:WhereToFly.App.Core.ViewModels"
                      xmlns:views="clr-namespace:WhereToFly.App.Core.Views"
-                     x:Class="WhereToFly.App.Core.Views.ContextMenuPopupPage">
+                     x:Class="WhereToFly.App.Core.Views.ContextMenuPopupPage"
+                     x:DataType="viewmodels:ContextMenuPopupViewModel">
 
     <!-- Popup content -->
     <StackLayout
@@ -23,7 +25,7 @@
                         HeightRequest="{Binding ContextMenuListHeight, Mode=OneTime}">
 
             <CollectionView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="viewmodels:ContextMenuItemViewModel">
                     <!-- Context menu item -->
                     <Grid Padding="4"
                           ColumnDefinitions="40,Auto"

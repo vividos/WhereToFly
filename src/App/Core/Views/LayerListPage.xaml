@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:WhereToFly.App.Core"
              xmlns:viewmodels="clr-namespace:WhereToFly.App.Core.ViewModels"
              x:Class="WhereToFly.App.Core.Views.LayerListPage"
+             x:DataType="viewmodels:LayerListViewModel"
              Title="Layer list"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
 
@@ -60,7 +61,7 @@
             </CollectionView.ItemsLayout>
 
             <CollectionView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="viewmodels:LayerListEntryViewModel">
                     <!-- Template for a single view cell -->
                     <Grid BackgroundColor="{DynamicResource ListViewItemBackgroundColor}"
                           HeightRequest="45"

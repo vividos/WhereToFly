@@ -1,9 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <views:BasePopupPage xmlns="http://xamarin.com/schemas/2014/forms"
                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                     xmlns:views="clr-namespace:WhereToFly.App.Core.Views"
-                     xmlns:model="clr-namespace:WhereToFly.App.Core.Models"
                      xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+                     xmlns:model="clr-namespace:WhereToFly.App.Core.Models"
+                     xmlns:viewmodels="clr-namespace:WhereToFly.App.Core.ViewModels"
+                     xmlns:views="clr-namespace:WhereToFly.App.Core.Views"
                      x:Class="WhereToFly.App.Core.Views.SelectWeatherIconPopupPage"
                      x:TypeArguments="model:WeatherIconDescription">
 
@@ -42,7 +43,7 @@
             </CollectionView.GroupHeaderTemplate>
 
             <CollectionView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="viewmodels:WeatherIconListEntryViewModel">
                     <!-- Template for a single view cell -->
                     <StackLayout Orientation="Horizontal"
                                  BackgroundColor="{DynamicResource ListViewItemBackgroundColor}"

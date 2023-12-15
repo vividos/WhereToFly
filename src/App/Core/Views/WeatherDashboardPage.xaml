@@ -5,6 +5,7 @@
              xmlns:local="clr-namespace:WhereToFly.App.Core"
              xmlns:viewmodels="clr-namespace:WhereToFly.App.Core.ViewModels"
              x:Class="WhereToFly.App.Core.Views.WeatherDashboardPage"
+             x:DataType="viewmodels:WeatherDashboardViewModel"
              Title="Weather"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
 
@@ -41,7 +42,7 @@
                         JustifyContent="Start"
                         Wrap="Wrap">
                 <BindableLayout.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="viewmodels:WeatherIconViewModel">
                         <!-- Square layout -->
                         <StackLayout WidthRequest="{OnPlatform Android=110, UWP=120}"
                                      HeightRequest="{OnPlatform Android=110, UWP=120}"

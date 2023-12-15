@@ -4,7 +4,9 @@
              xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
              xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
              xmlns:local="clr-namespace:WhereToFly.App.Core"
+             xmlns:viewmodels="clr-namespace:WhereToFly.App.Core.ViewModels"
              x:Class="WhereToFly.App.Core.Views.TrackListPage"
+             x:DataType="viewmodels:TrackListViewModel"
              Title="Track list"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
 
@@ -69,7 +71,7 @@
                 </CollectionView.ItemsLayout>
 
                 <CollectionView.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="viewmodels:TrackListEntryViewModel">
                         <!-- Template for a single item -->
                         <Grid BackgroundColor="{DynamicResource ListViewItemBackgroundColor}"
                               HeightRequest="{OnPlatform Android=45, UWP=55}"

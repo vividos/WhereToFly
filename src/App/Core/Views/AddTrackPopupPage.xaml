@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <views:BasePopupPage xmlns="http://xamarin.com/schemas/2014/forms"
                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                     xmlns:views="clr-namespace:WhereToFly.App.Core.Views"
                      xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
                      xmlns:geo="clr-namespace:WhereToFly.Geo.Model;assembly=WhereToFly.Geo"
+                     xmlns:viewmodels="clr-namespace:WhereToFly.App.Core.ViewModels"
+                     xmlns:views="clr-namespace:WhereToFly.App.Core.Views"
                      x:Class="WhereToFly.App.Core.Views.AddTrackPopupPage"
-                     x:TypeArguments="geo:Track">
+                     x:TypeArguments="geo:Track"
+                     x:DataType="viewmodels:AddTrackPopupViewModel">
 
     <!-- popup content -->
     <StackLayout

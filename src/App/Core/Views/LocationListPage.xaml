@@ -4,8 +4,10 @@
              xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
              xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
              xmlns:local="clr-namespace:WhereToFly.App.Core"
+             xmlns:viewmodels="clr-namespace:WhereToFly.App.Core.ViewModels"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              x:Class="WhereToFly.App.Core.Views.LocationListPage"
+             x:DataType="viewmodels:LocationListViewModel"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
 
     <ContentPage.Resources>
@@ -109,7 +111,7 @@
             </CollectionView.ItemsLayout>
 
             <CollectionView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="viewmodels:LocationListEntryViewModel">
                     <!-- Template for a single item -->
                     <Grid RowDefinitions="Auto,Auto,Auto"
                           ColumnDefinitions="Auto,Auto,1*,40"

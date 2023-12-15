@@ -4,6 +4,7 @@
              xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
              xmlns:viewmodels="clr-namespace:WhereToFly.App.Core.ViewModels"
              x:Class="WhereToFly.App.Core.Views.MenuPage"
+             x:DataType="viewmodels:MenuViewModel"
              Padding="0,40,0,0"
              IconImageSource="icon.png"
              Title="Where-to-fly"
@@ -39,7 +40,7 @@
                             VerticalOptions="FillAndExpand"
                             HorizontalOptions="StartAndExpand">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="viewmodels:MenuViewModel+MenuItemViewModel">
                         <!-- single view cell for menu items -->
                         <Grid Padding="5">
                             <Grid.ColumnDefinitions>
