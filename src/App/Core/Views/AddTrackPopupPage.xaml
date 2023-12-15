@@ -34,7 +34,7 @@
         <StackLayout Orientation="Horizontal" Margin="0, 10, 0, 0" >
             <Switch IsToggled="{Binding IsFlightTrack, Mode=TwoWay}"
                     AutomationId="IsFlightTrackSwitch" />
-            <Label Text="Track is a flight" Font="Medium" />
+            <Label Text="Track is a flight" FontSize="Medium" />
         </StackLayout>
 
         <!-- Track offset -->

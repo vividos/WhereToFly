@@ -37,7 +37,7 @@
         <StackLayout Orientation="Horizontal" Margin="0, 10, 0, 0" >
             <Switch IsToggled="{Binding AlsoShowOtherLocations, Mode=TwoWay}"
                     AutomationId="AlsoShowOtherLocationsSwitch" />
-            <Label Text="Also show other locations" Font="Medium" />
+            <Label Text="Also show other locations" FontSize="Medium" />
         </StackLayout>
 
         <!-- Button to accept filter -->
