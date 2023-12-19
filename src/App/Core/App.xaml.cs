@@ -127,6 +127,7 @@ namespace WhereToFly.App.Core
         /// </summary>
         private void SetupDepencencyService()
         {
+            DependencyService.Register<IUserInterface, UserInterface>();
             DependencyService.Register<IAppMapService, AppMapService>();
             DependencyService.Register<SvgImageCache>();
             DependencyService.Register<NavigationService>();
