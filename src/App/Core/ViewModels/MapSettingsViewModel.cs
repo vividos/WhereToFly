@@ -322,7 +322,7 @@ namespace WhereToFly.App.Core.ViewModels
             var appMapService = DependencyService.Get<IAppMapService>();
             appMapService.UpdateMapSettings();
 
-            App.ShowToast("Settings were saved.");
+            this.UserInterface.DisplayToast("Settings were saved.");
         }
     }
 }

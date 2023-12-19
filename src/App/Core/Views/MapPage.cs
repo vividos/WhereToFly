@@ -171,8 +171,9 @@ namespace WhereToFly.App.Core.Views
             {
                 Debug.WriteLine("exception while finding nearby POIs: " + ex.ToString());
 
-                await this.DisplayAlert(
-                    Constants.AppTitle,
+                var userInterface = DependencyService.Get<IUserInterface>();
+
+                await userInterface.DisplayAlert(
                     "Error while finding nearby POIs: " + ex.Message,
                     "Close");
             }
@@ -263,8 +264,9 @@ namespace WhereToFly.App.Core.Views
 
             if (string.IsNullOrWhiteSpace(text))
             {
-                await this.DisplayAlert(
-                    Constants.AppTitle,
+                var userInterface = DependencyService.Get<IUserInterface>();
+
+                await userInterface.DisplayAlert(
                     "No location text was entered",
                     "Cancel");
 
@@ -286,8 +288,9 @@ namespace WhereToFly.App.Core.Views
             if (foundLocationsList == null ||
                 !foundLocationsList.Any())
             {
-                await this.DisplayAlert(
-                    Constants.AppTitle,
+                var userInterface = DependencyService.Get<IUserInterface>();
+
+                await userInterface.DisplayAlert(
                     "The location could not be found",
                     "OK");
 

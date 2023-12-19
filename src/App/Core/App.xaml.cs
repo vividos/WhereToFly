@@ -203,25 +203,6 @@ namespace WhereToFly.App.Core
         }
 
         /// <summary>
-        /// Shows toast message with given text
-        /// </summary>
-        /// <param name="message">toast message text</param>
-        public static void ShowToast(string message)
-        {
-            MainThread.BeginInvokeOnMainThread(
-                () => App.Current.MainPage.DisplayToastAsync(
-                    new ToastOptions
-                    {
-                        MessageOptions = new MessageOptions
-                        {
-                            Message = message,
-                            Foreground = Color.White,
-                        },
-                        BackgroundColor = Constants.PrimaryColor,
-                    }));
-        }
-
-        /// <summary>
         /// Returns color hex string for given resource color key
         /// </summary>
         /// <param name="colorKey">resource color key</param>

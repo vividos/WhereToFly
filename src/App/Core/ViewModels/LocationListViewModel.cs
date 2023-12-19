@@ -342,7 +342,7 @@ namespace WhereToFly.App.Core.ViewModels
                 "Download from web",
             };
 
-            string result = await App.Current.MainPage.DisplayActionSheet(
+            string result = await this.UserInterface.DisplayActionSheet(
                 $"Import location",
                 "Cancel",
                 null,
@@ -407,7 +407,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>asset filename, or null when no location list was selected</returns>
         private async Task<string?> AskIncludedLocationListAsync()
         {
-            string result = await App.Current.MainPage.DisplayActionSheet(
+            string result = await this.UserInterface.DisplayActionSheet(
                 "Select a location list",
                 "Cancel",
                 null,
@@ -456,8 +456,7 @@ namespace WhereToFly.App.Core.ViewModels
             {
                 App.LogError(ex);
 
-                await App.Current.MainPage.DisplayAlert(
-                    Constants.AppTitle,
+                await this.UserInterface.DisplayAlert(
                     "Error while picking a file: " + ex.Message,
                     "OK");
 
@@ -474,7 +473,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task DownloadFromWebAsync()
         {
-            string result = await App.Current.MainPage.DisplayActionSheet(
+            string result = await this.UserInterface.DisplayActionSheet(
                 "Select a web page to open",
                 "Cancel",
                 null,
@@ -518,7 +517,7 @@ namespace WhereToFly.App.Core.ViewModels
             var appMapService = DependencyService.Get<IAppMapService>();
             appMapService.MapView.RemoveLocation(location.Id);
 
-            App.ShowToast("Selected location was deleted.");
+            this.UserInterface.DisplayToast("Selected location was deleted.");
         }
 
         /// <summary>
@@ -527,8 +526,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task ClearLocationsAsync()
         {
-            bool result = await App.Current.MainPage.DisplayAlert(
-                Constants.AppTitle,
+            bool result = await this.UserInterface.DisplayAlert(
                 "Really clear all locations?",
                 "Clear",
                 "Cancel");
@@ -554,7 +552,7 @@ namespace WhereToFly.App.Core.ViewModels
             var appMapService = DependencyService.Get<IAppMapService>();
             appMapService.MapView.ClearLocationList();
 
-            App.ShowToast("Location list was cleared.");
+            this.UserInterface.DisplayToast("Location list was cleared.");
         }
 
         /// <summary>

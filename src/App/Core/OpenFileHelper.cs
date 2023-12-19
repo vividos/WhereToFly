@@ -24,6 +24,12 @@ namespace WhereToFly.App.Core
     public static class OpenFileHelper
     {
         /// <summary>
+        /// Access to the user interface
+        /// </summary>
+        private static IUserInterface UserInterface
+            => DependencyService.Get<IUserInterface>();
+
+        /// <summary>
         /// Waiting dialog that is currently shown; else it's set to null
         /// </summary>
         private static WaitingPopupPage? waitingDialog;
@@ -70,8 +76,7 @@ namespace WhereToFly.App.Core
 
                 if (!geoDataFile.HasLocations() && !hasTracks)
                 {
-                    await App.Current.MainPage.DisplayAlert(
-                        Constants.AppTitle,
+                    await UserInterface.DisplayAlert(
                         "No locations or tracks were found in the file",
                         "OK");
 
@@ -85,8 +90,7 @@ namespace WhereToFly.App.Core
             {
                 App.LogError(ex);
 
-                await App.Current.MainPage.DisplayAlert(
-                    Constants.AppTitle,
+                await UserInterface.DisplayAlert(
                     "Error while opening file: " + ex.Message,
                     "OK");
             }
@@ -108,8 +112,7 @@ namespace WhereToFly.App.Core
             {
                 App.LogError(ex);
 
-                await App.Current.MainPage.DisplayAlert(
-                    Constants.AppTitle,
+                await UserInterface.DisplayAlert(
                     "Error while loading default locations: " + ex.Message,
                     "OK");
             }
@@ -138,8 +141,7 @@ namespace WhereToFly.App.Core
                 if (locationList == null ||
                     !locationList.Any())
                 {
-                    await App.Current.MainPage.DisplayAlert(
-                        Constants.AppTitle,
+                    await UserInterface.DisplayAlert(
                         "No locations were found in the file",
                         "OK");
 
@@ -152,8 +154,7 @@ namespace WhereToFly.App.Core
             {
                 App.LogError(ex);
 
-                await App.Current.MainPage.DisplayAlert(
-                    Constants.AppTitle,
+                await UserInterface.DisplayAlert(
                     "Error while loading locations: " + ex.Message,
                     "OK");
             }
@@ -184,8 +185,7 @@ namespace WhereToFly.App.Core
                 bool hasTracks = geoDataFile.GetTrackList().Any();
                 if (!hasTracks)
                 {
-                    await App.Current.MainPage.DisplayAlert(
-                        Constants.AppTitle,
+                    await UserInterface.DisplayAlert(
                         "No tracks were found in the file",
                         "OK");
 
@@ -198,8 +198,7 @@ namespace WhereToFly.App.Core
             {
                 App.LogError(ex);
 
-                await App.Current.MainPage.DisplayAlert(
-                    Constants.AppTitle,
+                await UserInterface.DisplayAlert(
                     $"Error while loading track: {ex.Message}",
                     "OK");
             }
@@ -218,8 +217,7 @@ namespace WhereToFly.App.Core
         /// replaced</returns>
         private static async Task<bool> AskAppendToList()
         {
-            bool appendToList = await App.Current.MainPage.DisplayAlert(
-                Constants.AppTitle,
+            bool appendToList = await UserInterface.DisplayAlert(
                 "Append to current location list or replace list?",
                 "Append",
                 "Replace");
@@ -262,7 +260,7 @@ namespace WhereToFly.App.Core
 
             await NavigationService.GoToMap();
 
-            App.ShowToast("Locations were loaded.");
+            UserInterface.DisplayToast("Locations were loaded.");
 
             await appMapService.MapView.AddLocationList(locationList);
 
@@ -368,7 +366,7 @@ namespace WhereToFly.App.Core
                 choices.Add($"{count}. {trackName}");
             }
 
-            string choice = await App.Current.MainPage.DisplayActionSheet(
+            string choice = await UserInterface.DisplayActionSheet(
                 question,
                 "Cancel",
                 null,
@@ -436,7 +434,7 @@ namespace WhereToFly.App.Core
             await appMapService.AddTrack(track);
             appMapService.MapView.ZoomToTrack(track);
 
-            App.ShowToast("Track was loaded.");
+            UserInterface.DisplayToast("Track was loaded.");
 
             return true;
         }
@@ -496,7 +494,7 @@ namespace WhereToFly.App.Core
                 "Import Tracks",
             };
 
-            string choice = await App.Current.MainPage.DisplayActionSheet(
+            string choice = await UserInterface.DisplayActionSheet(
                 question,
                 null,
                 null,
@@ -523,8 +521,7 @@ namespace WhereToFly.App.Core
         {
             if (Path.GetExtension(filename).ToLowerInvariant() != ".czml")
             {
-                await App.Current.MainPage.DisplayAlert(
-                    Constants.AppTitle,
+                await UserInterface.DisplayAlert(
                     "The file is not a CZML layer data file",
                     "OK");
 
@@ -594,8 +591,7 @@ namespace WhereToFly.App.Core
             {
                 App.LogError(ex);
 
-                await App.Current.MainPage.DisplayAlert(
-                    Constants.AppTitle,
+                await UserInterface.DisplayAlert(
                     $"Error while loading OpenAir airspaces: {ex.Message}",
                     "OK");
             }
@@ -638,8 +634,7 @@ namespace WhereToFly.App.Core
         {
             if (!IsValidJson(czml))
             {
-                await App.Current.MainPage.DisplayAlert(
-                    Constants.AppTitle,
+                await UserInterface.DisplayAlert(
                     "The file contained no valid CZML layer data",
                     "OK");
 
@@ -685,7 +680,7 @@ namespace WhereToFly.App.Core
             await appMapService.MapView.AddLayer(layer);
             appMapService.MapView.ZoomToLayer(layer);
 
-            App.ShowToast("Layer was loaded.");
+            UserInterface.DisplayToast("Layer was loaded.");
         }
 
         /// <summary>

@@ -12,7 +12,7 @@ namespace WhereToFly.App.Core.ViewModels
     /// <summary>
     /// View model for the edit location details page
     /// </summary>
-    public class EditLocationDetailsViewModel
+    public class EditLocationDetailsViewModel : ViewModelBase
     {
         /// <summary>
         /// App settings object
@@ -173,8 +173,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             if (locationToChange == null)
             {
-                await App.Current.MainPage.DisplayAlert(
-                    Constants.AppTitle,
+                await this.UserInterface.DisplayAlert(
                     "Error while saving location; not in location list!",
                     "OK");
 

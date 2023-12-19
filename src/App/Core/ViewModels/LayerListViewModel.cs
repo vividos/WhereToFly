@@ -161,7 +161,7 @@ namespace WhereToFly.App.Core.ViewModels
             }
             else
             {
-                App.ShowToast("No details for this layer available.");
+                this.UserInterface.DisplayToast("No details for this layer available.");
             }
         }
 
@@ -179,7 +179,7 @@ namespace WhereToFly.App.Core.ViewModels
                 "Download from web",
             };
 
-            string result = await App.Current.MainPage.DisplayActionSheet(
+            string result = await this.UserInterface.DisplayActionSheet(
                 $"Import layer",
                 "Cancel",
                 null,
@@ -248,8 +248,7 @@ namespace WhereToFly.App.Core.ViewModels
             {
                 App.LogError(ex);
 
-                await App.Current.MainPage.DisplayAlert(
-                    Constants.AppTitle,
+                await this.UserInterface.DisplayAlert(
                     "Error while picking a file: " + ex.Message,
                     "OK");
 
@@ -293,8 +292,7 @@ namespace WhereToFly.App.Core.ViewModels
             {
                 App.LogError(ex);
 
-                await App.Current.MainPage.DisplayAlert(
-                    Constants.AppTitle,
+                await this.UserInterface.DisplayAlert(
                     "Error while picking a file: " + ex.Message,
                     "OK");
 
@@ -323,7 +321,7 @@ namespace WhereToFly.App.Core.ViewModels
             var appMapService = DependencyService.Get<IAppMapService>();
             await appMapService.MapView.AddLayer(layer);
 
-            App.ShowToast("Layer was added.");
+            this.UserInterface.DisplayToast("Layer was added.");
         }
 
         /// <summary>
@@ -333,7 +331,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         private async Task DownloadFromWebAsync()
         {
-            string result = await App.Current.MainPage.DisplayActionSheet(
+            string result = await this.UserInterface.DisplayActionSheet(
                 "Select a web page to open",
                 "Cancel",
                 null,
@@ -356,8 +354,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         public async Task ClearLayersAsync()
         {
-            bool result = await App.Current.MainPage.DisplayAlert(
-                Constants.AppTitle,
+            bool result = await this.UserInterface.DisplayAlert(
                 "Really clear all layers?",
                 "Clear",
                 "Cancel");
@@ -380,7 +377,7 @@ namespace WhereToFly.App.Core.ViewModels
             var appMapService = DependencyService.Get<IAppMapService>();
             appMapService.MapView.ClearLayerList();
 
-            App.ShowToast("Layer list was cleared.");
+            this.UserInterface.DisplayToast("Layer list was cleared.");
         }
 
         /// <summary>
@@ -412,7 +409,7 @@ namespace WhereToFly.App.Core.ViewModels
             var appMapService = DependencyService.Get<IAppMapService>();
             appMapService.MapView.RemoveLayer(layer);
 
-            App.ShowToast("Selected layer was deleted.");
+            this.UserInterface.DisplayToast("Selected layer was deleted.");
         }
 
         /// <summary>

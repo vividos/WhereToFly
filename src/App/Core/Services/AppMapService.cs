@@ -201,8 +201,9 @@ namespace WhereToFly.App.Core.Services
                     "thorough and orderly preflight planning, nor from the use of all required " +
                     "and approved means of navigation (e.g. Aeronautical Chart ICAO 1:500,000).";
 
-                await this.MapPage.DisplayAlert(
-                    Constants.AppTitle,
+                var userInterface = DependencyService.Get<IUserInterface>();
+
+                await userInterface.DisplayAlert(
                     DisclaimerMessage,
                     "Understood");
             });

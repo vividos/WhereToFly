@@ -242,7 +242,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             await NavigationService.GoToMap();
 
-            ShowTrack(track);
+            this.ShowTrack(track);
         }
 
         /// <summary>
@@ -275,8 +275,7 @@ namespace WhereToFly.App.Core.ViewModels
                         ? refitException.Content
                         : refitException.Message;
 
-                    retry = await App.Current.MainPage.DisplayAlert(
-                        Constants.AppTitle,
+                    retry = await this.UserInterface.DisplayAlert(
                         "Error while planning tour: " + text,
                         "Retry",
                         "Close");
@@ -285,8 +284,7 @@ namespace WhereToFly.App.Core.ViewModels
                 {
                     App.LogError(ex);
 
-                    retry = await App.Current.MainPage.DisplayAlert(
-                        Constants.AppTitle,
+                    retry = await this.UserInterface.DisplayAlert(
                         "Error while planning tour: " + ex.Message,
                         "Retry",
                         "Close");
@@ -341,13 +339,13 @@ namespace WhereToFly.App.Core.ViewModels
         /// Shows track on map
         /// </summary>
         /// <param name="track">track to show</param>
-        private static void ShowTrack(Track track)
+        private void ShowTrack(Track track)
         {
             var appMapService = DependencyService.Get<IAppMapService>();
             appMapService.MapView.AddTrack(track);
             appMapService.MapView.ZoomToTrack(track);
 
-            App.ShowToast("Track was added.");
+            this.UserInterface.DisplayToast("Track was added.");
         }
 
         /// <summary>

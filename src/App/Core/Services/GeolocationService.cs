@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using WhereToFly.Geo.Model;
 using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.Services
 {
@@ -46,8 +47,9 @@ namespace WhereToFly.App.Core.Services
                 if (Permissions.ShouldShowRationale<Permissions.LocationWhenInUse>() &&
                     status != PermissionStatus.Granted)
                 {
-                    await Xamarin.Forms.Application.Current.MainPage.DisplayAlert(
-                        Constants.AppTitle,
+                    var userInterface = DependencyService.Get<IUserInterface>();
+
+                    await userInterface.DisplayAlert(
                         "The location permission is needed in order to locate your position on the map",
                         "OK");
                 }

@@ -204,7 +204,7 @@ namespace WhereToFly.App.Core.ViewModels
             var appMapService = DependencyService.Get<IAppMapService>();
             appMapService.MapView.RemoveTrack(track);
 
-            App.ShowToast("Selected track was deleted.");
+            this.UserInterface.DisplayToast("Selected track was deleted.");
         }
 
         /// <summary>
@@ -213,8 +213,7 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         public async Task ClearTracksAsync()
         {
-            bool result = await App.Current.MainPage.DisplayAlert(
-                Constants.AppTitle,
+            bool result = await this.UserInterface.DisplayAlert(
                 "Really clear all tracks?",
                 "Clear",
                 "Cancel");
@@ -237,7 +236,7 @@ namespace WhereToFly.App.Core.ViewModels
             var appMapService = DependencyService.Get<IAppMapService>();
             appMapService.MapView.ClearAllTracks();
 
-            App.ShowToast("Track list was cleared.");
+            this.UserInterface.DisplayToast("Track list was cleared.");
         }
 
         /// <summary>
@@ -286,8 +285,7 @@ namespace WhereToFly.App.Core.ViewModels
             {
                 App.LogError(ex);
 
-                await App.Current.MainPage.DisplayAlert(
-                    Constants.AppTitle,
+                await this.UserInterface.DisplayAlert(
                     "Error while picking a file: " + ex.Message,
                     "OK");
 

@@ -25,7 +25,9 @@ namespace WhereToFly.App.Core
             byte[]? data = await appMapService.MapView.ExportLayerAsync(layer);
             if (data == null)
             {
-                App.ShowToast("Error occured at layer export.");
+                var userInterface = DependencyService.Get<IUserInterface>();
+
+                userInterface.DisplayToast("Error occured at layer export.");
                 return;
             }
 
@@ -47,8 +49,9 @@ namespace WhereToFly.App.Core
             {
                 App.LogError(ex);
 
-                await App.Current.MainPage.DisplayAlert(
-                    Constants.AppTitle,
+                var userInterface = DependencyService.Get<IUserInterface>();
+
+                await userInterface.DisplayAlert(
                     "Error while exporting layer: " + ex.Message,
                     "OK");
             }
@@ -80,8 +83,9 @@ namespace WhereToFly.App.Core
             {
                 App.LogError(ex);
 
-                await App.Current.MainPage.DisplayAlert(
-                    Constants.AppTitle,
+                var userInterface = DependencyService.Get<IUserInterface>();
+
+                await userInterface.DisplayAlert(
                     "Error while exporting track: " + ex.Message,
                     "OK");
             }

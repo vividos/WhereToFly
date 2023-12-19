@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.ViewModels
 {
@@ -8,6 +9,12 @@ namespace WhereToFly.App.Core.ViewModels
     /// </summary>
     public class ViewModelBase : INotifyPropertyChanged
     {
+        /// <summary>
+        /// Access to the user interface
+        /// </summary>
+        public IUserInterface UserInterface
+            => DependencyService.Get<IUserInterface>();
+
         #region INotifyPropertyChanged implementation
         /// <summary>
         /// Event that gets signaled when a property has changed

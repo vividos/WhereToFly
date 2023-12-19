@@ -28,8 +28,9 @@ namespace WhereToFly.App.Core
 
                 if (!appResourceUri.IsValid)
                 {
-                    await App.Current.MainPage.DisplayAlert(
-                        Constants.AppTitle,
+                    var userInterface = DependencyService.Get<IUserInterface>();
+
+                    await userInterface.DisplayAlert(
                         "Not a valid Where-to-fly weblink: " + uri,
                         "OK");
 
@@ -49,8 +50,9 @@ namespace WhereToFly.App.Core
             {
                 App.LogError(ex);
 
-                await App.Current.MainPage.DisplayAlert(
-                    Constants.AppTitle,
+                var userInterface = DependencyService.Get<IUserInterface>();
+
+                await userInterface.DisplayAlert(
                     "Error while opening weblink: " + ex.Message,
                     "OK");
             }
@@ -81,7 +83,8 @@ namespace WhereToFly.App.Core
 
             await StoreLiveWaypoint(liveWaypoint);
 
-            App.ShowToast("Live waypoint was loaded.");
+            var userInterface = DependencyService.Get<IUserInterface>();
+            userInterface.DisplayToast("Live waypoint was loaded.");
 
             await NavigationService.GoToMap();
 
@@ -176,7 +179,8 @@ namespace WhereToFly.App.Core
 
             await StoreLiveTrack(liveTrack);
 
-            App.ShowToast("Live track was loaded.");
+            var userInterface = DependencyService.Get<IUserInterface>();
+            userInterface.DisplayToast("Live track was loaded.");
 
             await NavigationService.GoToMap();
 

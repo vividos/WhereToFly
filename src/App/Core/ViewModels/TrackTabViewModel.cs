@@ -10,7 +10,7 @@ namespace WhereToFly.App.Core.ViewModels
     /// <summary>
     /// View model for the track details page
     /// </summary>
-    public class TrackTabViewModel
+    public class TrackTabViewModel : ViewModelBase
     {
         /// <summary>
         /// Track to show
@@ -84,7 +84,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             await NavigationService.Instance.GoBack();
 
-            App.ShowToast("Selected track was deleted.");
+            this.UserInterface.DisplayToast("Selected track was deleted.");
         }
     }
 }

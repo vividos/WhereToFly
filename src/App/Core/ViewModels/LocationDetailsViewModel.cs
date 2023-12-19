@@ -299,8 +299,7 @@ namespace WhereToFly.App.Core.ViewModels
             {
                 App.LogError(ex);
 
-                await App.Current.MainPage.DisplayAlert(
-                    Constants.AppTitle,
+                await this.UserInterface.DisplayAlert(
                     "Error while refreshing live waypoint: " + ex.Message,
                     "OK");
             }
@@ -398,7 +397,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             await NavigationService.Instance.GoBack();
 
-            App.ShowToast("Selected location was deleted.");
+            this.UserInterface.DisplayToast("Selected location was deleted.");
         }
 
         /// <summary>
