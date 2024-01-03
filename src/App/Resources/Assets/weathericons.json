@@ -126,6 +126,13 @@
     "WebLink": "https://www.zamg.ac.at/cms/de/umwelt/luftqualitaetsvorhersagen/schadstofftransport/?imgtype=0"
   },
   {
+    "Name": "NOAA Aurora 30 minutes forecast",
+    "Group": "Weather forecast",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://www.swpc.noaa.gov/products/aurora-30-minute-forecast"
+  },
+  {
     "Name": "Wetter3 Vertikalschnitt Europa",
     "Group": "Weather forecast",
     "Type": 0,
@@ -168,11 +175,11 @@
     "WebLink": "https://www.wetteronline.de/regenradar/bayern"
   },
   {
-    "Name": "Wind Lawinendienst Bayern",
+    "Name": "Lawinenwarndienst Bayern Messstationen",
     "Group": "Current weather",
     "Type": 0,
     "Icon": null,
-    "WebLink": "https://www.lawinenwarndienst-bayern.de/res/daten_meldungen/messdaten/"
+    "WebLink": "https://lawinenwarndienst.bayern.de/schnee-wetter-bayern/wetter-schnee-messstationen/"
   },
   {
     "Name": "Holfuy Map Alpen",
@@ -235,14 +242,14 @@
     "Group": "Current weather",
     "Type": 0,
     "Icon": null,
-    "WebLink": "https://www.lawinenwarndienst-bayern.de/res/daten_meldungen/messdaten/messstation.php?rid=16"
+    "WebLink": "https://lawinenwarndienst.bayern.de/webclient/weather-station/16"
   },
   {
     "Name": "Brauneck Wind",
     "Group": "Current weather",
     "Type": 0,
     "Icon": null,
-    "WebLink": "https://www.lawinenwarndienst-bayern.de/res/daten_meldungen/messdaten/messstation.php?rid=9"
+    "WebLink": "https://lawinenwarndienst.bayern.de/webclient/weather-station/9"
   },
   {
     "Name": "Windfinder Neubiberg",
