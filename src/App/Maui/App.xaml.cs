@@ -12,7 +12,10 @@
         {
             this.InitializeComponent();
 
-            this.MainPage = new MainPage();
+            this.MainPage = new NavigationPage(new MainPage())
+            {
+                BarBackgroundColor = Color.FromRgb(0x2f, 0x29, 0x9e),
+            };
         }
 
         /// <summary>
