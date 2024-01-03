@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace WhereToFly.Shared.Model
 {
@@ -8,14 +9,9 @@ namespace WhereToFly.Shared.Model
     public record AppConfig
     {
         /// <summary>
-        /// API key for Cesium ION
+        /// Mapping of API key names to values
         /// </summary>
-        public string CesiumIonApiKey { get; set; }
-
-        /// <summary>
-        /// API key for Bing maps
-        /// </summary>
-        public string BingMapsApiKey { get; set; }
+        public Dictionary<string, string> ApiKeys { get; set; } = new();
 
         /// <summary>
         /// Date/time when validity of infos expire

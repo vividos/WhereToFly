@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using WhereToFly.Shared.Model;
 
 namespace WhereToFly.WebApi.Core.Controllers
@@ -40,15 +41,18 @@ namespace WhereToFly.WebApi.Core.Controllers
 
             this.appConfig = new AppConfig
             {
-                CesiumIonApiKey = config["CESIUM_ION_API_KEY"] ?? string.Empty,
-                BingMapsApiKey = config["BING_MAPS_API_KEY"] ?? string.Empty,
+                ApiKeys = new Dictionary<string, string>
+                {
+                    ["CesiumIonApiKey"] = config["CESIUM_ION_API_KEY"] ?? string.Empty,
+                    ["BingMapsApiKey"] = config["BING_MAPS_API_KEY"] ?? string.Empty,
+                },
             };
 
             this.logger.LogDebug(
                 "Initializing AppConfig controller with Cesium Ion API Key \"{CesiumIonApiKey}\" " +
                 "and Bing Maps API key \"{BingMapsApiKey}\"",
-                this.appConfig.CesiumIonApiKey,
-                this.appConfig.BingMapsApiKey);
+                this.appConfig.ApiKeys["CesiumIonApiKey"],
+                this.appConfig.ApiKeys["BingMapsApiKey"]);
         }
 
         /// <summary>
