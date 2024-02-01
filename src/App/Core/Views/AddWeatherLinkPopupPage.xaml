@@ -29,8 +29,8 @@
 
         <!-- Group selection -->
         <Label Text="Group" FontSize="Medium" />
-        <Picker SelectedItem="{Binding SelectedGroup, Mode=OneWay}"
-                ItemsSource="{Binding GroupsList, Mode=OneTime}" />
+        <Picker ItemsSource="{Binding GroupsList, Mode=OneTime}"
+                SelectedItem="{Binding SelectedGroup, Mode=TwoWay}" />
 
         <!-- Button to add web link -->
         <Button Text="Add weather link"

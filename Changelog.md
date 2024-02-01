@@ -11,6 +11,7 @@ Released on ?.
 🐛 Bugfixes
 
 - Fixed saving added weather web links
+- When adding a weather web link, pre-select the Group field
 
 ## Version 1.14.2
 
