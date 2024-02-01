@@ -10,6 +10,8 @@ Released on ?.
 
 🐛 Bugfixes
 
+- Fixed saving added weather web links
+
 ## Version 1.14.2
 
 Released on 2023-11-23.

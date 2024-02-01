@@ -138,17 +138,12 @@ namespace WhereToFly.App.Core.ViewModels
 
             var dataService = DependencyService.Get<IDataService>();
             var weatherIconDescriptionDataService = dataService.GetWeatherIconDescriptionDataService();
+
+            // add the new icon description
             await weatherIconDescriptionDataService.Add(weatherIconDescription);
 
-            int insertIndex = this.WeatherDashboardItems.Any()
-                ? this.WeatherDashboardItems.Count - 1
-                : 0;
-
-            this.WeatherDashboardItems.Insert(
-                insertIndex,
-                new WeatherIconViewModel(this.AddIconAsync, weatherIconDescription));
-
-            this.OnPropertyChanged(nameof(this.WeatherDashboardItems));
+            // and also update the dashboard icons list
+            await this.AddWeatherIcon(weatherIconDescription);
         }
 
         /// <summary>
