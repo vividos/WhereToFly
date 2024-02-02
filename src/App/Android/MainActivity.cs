@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Net.Http;
 using WhereToFly.App.Core;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -209,7 +210,8 @@ namespace WhereToFly.App.Android
 
                 if (stream != null)
                 {
-                    Core.App.RunOnUiThread(async () => await OpenFileHelper.OpenFileAsync(stream, filename));
+                    MainThread.BeginInvokeOnMainThread(
+                        async () => await OpenFileHelper.OpenFileAsync(stream, filename));
                 }
             }
             catch (Exception)

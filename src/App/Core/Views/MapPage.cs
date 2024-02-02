@@ -104,7 +104,7 @@ namespace WhereToFly.App.Core.Views
         /// <returns>task to wait on</returns>
         private async Task InitLayoutAsync()
         {
-            App.RunOnUiThread(() => this.SetupToolbar());
+            MainThread.BeginInvokeOnMainThread(this.SetupToolbar);
 
             this.SetupWebView();
 

@@ -115,7 +115,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             PageKey pageKey = this.SelectedMenuItem.PageKey;
 
-            App.RunOnUiThread(async () =>
+            MainThread.BeginInvokeOnMainThread(async () =>
             {
                 // wait for complete app init before showing a page
                 await App.InitializedTask;

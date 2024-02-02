@@ -126,7 +126,7 @@ namespace WhereToFly.App.Core.ViewModels
                 this.OnPropertyChanged(nameof(this.LayerList));
                 this.OnPropertyChanged(nameof(this.IsListEmpty));
                 this.OnPropertyChanged(nameof(this.IsClearLayerListEnabled));
-                App.RunOnUiThread(this.DeleteLayerListCommand.RaiseCanExecuteChanged);
+                MainThread.BeginInvokeOnMainThread(this.DeleteLayerListCommand.RaiseCanExecuteChanged);
             });
         }
 

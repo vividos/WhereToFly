@@ -8,6 +8,7 @@ using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Xamarin.Essentials;
 
 namespace WhereToFly.App.UWP
 {
@@ -121,7 +122,7 @@ namespace WhereToFly.App.UWP
                 args.Files[0] is StorageFile file &&
                 !string.IsNullOrEmpty(file.Name))
             {
-                Core.App.RunOnUiThread(async () =>
+                MainThread.BeginInvokeOnMainThread(async () =>
                 {
                     using var stream = await file.OpenStreamForReadAsync();
                     await OpenFileHelper.OpenFileAsync(stream, file.Name);

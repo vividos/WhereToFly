@@ -174,35 +174,6 @@ namespace WhereToFly.App.Core
         }
 
         /// <summary>
-        /// Runs action on the UI thread
-        /// </summary>
-        /// <param name="action">action to run</param>
-        public static void RunOnUiThread(Action action)
-        {
-            Xamarin.Forms.Device.BeginInvokeOnMainThread(action);
-        }
-
-        /// <summary>
-        /// Runs action on the UI thread and waits for completion; async version
-        /// </summary>
-        /// <param name="action">action to run</param>
-        /// <returns>task to wait on for completion</returns>
-        public static async Task RunOnUiThreadAsync(Action action)
-        {
-            await Xamarin.Forms.Device.InvokeOnMainThreadAsync(() =>
-            {
-                try
-                {
-                    action();
-                }
-                catch (Exception ex)
-                {
-                    App.LogError(ex);
-                }
-            });
-        }
-
-        /// <summary>
         /// Returns color hex string for given resource color key
         /// </summary>
         /// <param name="colorKey">resource color key</param>

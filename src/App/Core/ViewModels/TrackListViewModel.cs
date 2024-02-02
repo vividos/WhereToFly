@@ -245,8 +245,15 @@ namespace WhereToFly.App.Core.ViewModels
         /// <returns>task to wait on</returns>
         public async Task ReloadTrackListAsync()
         {
-            await this.LoadDataAsync();
-            await App.RunOnUiThreadAsync(this.UpdateTrackList);
+            try
+            {
+                await this.LoadDataAsync();
+                await MainThread.InvokeOnMainThreadAsync(this.UpdateTrackList);
+            }
+            catch (Exception ex)
+            {
+                App.LogError(ex);
+            }
         }
 
         /// <summary>
@@ -317,7 +324,7 @@ namespace WhereToFly.App.Core.ViewModels
                 {
                     this.trackList = newTrackList;
 
-                    await App.RunOnUiThreadAsync(this.UpdateTrackList);
+                    await MainThread.InvokeOnMainThreadAsync(this.UpdateTrackList);
                 }
             }
             catch (Exception ex)

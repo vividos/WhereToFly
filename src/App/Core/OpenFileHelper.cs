@@ -14,7 +14,9 @@ using WhereToFly.Geo.Airspace;
 using WhereToFly.Geo.DataFormats;
 using WhereToFly.Geo.DataFormats.Czml;
 using WhereToFly.Geo.Model;
+using Xamarin.Essentials;
 using Xamarin.Forms;
+using Location = WhereToFly.Geo.Model.Location;
 
 namespace WhereToFly.App.Core
 {
@@ -449,11 +451,14 @@ namespace WhereToFly.App.Core
             var cts = new CancellationTokenSource();
 
             waitingDialog = new WaitingPopupPage("Sampling track point heights...", cts);
-            await App.RunOnUiThreadAsync(async () => await waitingDialog.ShowAsync());
 
-            await App.InitializedTask;
             try
             {
+                await MainThread.InvokeOnMainThreadAsync(
+                    async () => await waitingDialog.ShowAsync());
+
+                await App.InitializedTask;
+
                 var appMapService = DependencyService.Get<IAppMapService>();
 
                 double[]? trackPointHeights =
