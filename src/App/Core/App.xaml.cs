@@ -47,11 +47,6 @@ namespace WhereToFly.App.Core
         public static AppSettings? Settings { get; internal set; }
 
         /// <summary>
-        /// The one and only map page (displaying the map using CesiumJS)
-        /// </summary>
-        public MapPage? MapPage { get; internal set; }
-
-        /// <summary>
         /// Task that can be awaited to wait for a completed app initialisation. The task performs
         /// the following:
         /// - sets up dependency service objects
@@ -141,7 +136,6 @@ namespace WhereToFly.App.Core
         /// </summary>
         private void SetupMainPage()
         {
-            this.MapPage = new MapPage();
             this.MainPage = new RootPage();
         }
 

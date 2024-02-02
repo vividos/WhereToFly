@@ -10,17 +10,14 @@ namespace WhereToFly.App.Core.Views
     public class RootPage : FlyoutPage
     {
         /// <summary>
+        /// Map page
+        /// </summary>
+        public MapPage MapPage { get; private set; }
+
+        /// <summary>
         /// Creates a new root page
         /// </summary>
         public RootPage()
-        {
-            this.InitLayout();
-        }
-
-        /// <summary>
-        /// Initializes layout of page
-        /// </summary>
-        private void InitLayout()
         {
             this.FlyoutLayoutBehavior = FlyoutLayoutBehavior.Popover;
 
@@ -31,8 +28,8 @@ namespace WhereToFly.App.Core.Views
             };
 
             // set up detail page
-            var mapPage = (App.Current as App)?.MapPage;
-            var navigationPage = new NavigationPage(mapPage)
+            this.MapPage = new MapPage();
+            var navigationPage = new NavigationPage(this.MapPage)
             {
                 BarBackgroundColor = Constants.PrimaryColor,
                 BarTextColor = Color.White,

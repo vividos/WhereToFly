@@ -28,7 +28,8 @@ namespace WhereToFly.App.Core.Services
         /// <summary>
         /// The one and only map page (displaying the map using CesiumJS)
         /// </summary>
-        public MapPage MapPage => (Application.Current as App)?.MapPage
+        public MapPage MapPage =>
+            ((Application.Current as App)?.MainPage as RootPage)?.MapPage
             ?? throw new InvalidOperationException("accessing MapPage before it is initialized");
 
         /// <summary>
