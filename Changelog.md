@@ -12,6 +12,7 @@ Released on ?.
 
 - Fixed saving added weather web links
 - When adding a weather web link, pre-select the Group field
+- When zoomed out far, fly nearer to the ground when flying to current position
 
 ## Version 1.14.2
 

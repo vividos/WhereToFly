@@ -1381,7 +1381,10 @@ export class MapView {
         if (altitude === 0.0)
             altitude = await this.findAltitude(options);
 
-        const viewingDistance = this.getCurrentViewingDistance();
+        let viewingDistance = this.getCurrentViewingDistance();
+
+        if (viewingDistance > 10000.0)
+            viewingDistance = 10000.0;
 
         // zooming works by assinging the zoom entity a new position, making it
         // visible (but transparent), fly there and hiding it again
@@ -2126,7 +2129,7 @@ export class MapView {
         this.findResultMarker.position = Cesium.Cartesian3.fromDegrees(options.longitude, options.latitude);
         this.findResultMarker.show = true;
 
-        this.flyTo(options);
+        await this.flyTo(options);
     }
 
     /**
