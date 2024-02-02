@@ -1,4 +1,4 @@
-﻿const path = require('path');
+const path = require('path');
 
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -14,16 +14,6 @@ module.exports = {
         path: path.resolve(__dirname, '..', 'wwwroot')
     },
     devtool: 'source-map',
-    resolve: {
-        // resolve rules for some require() calls in CesiumJS
-        fallback: {
-            // these modules are used in loadWithHttpRequest(), which is never used
-            http: false,
-            https: false,
-            url: false,
-            zlib: false,
-        },
-    },
     module: {
         unknownContextCritical: false,
         rules: [
@@ -53,7 +43,6 @@ module.exports = {
                 { from: 'src/data', to: 'data' },
                 { from: 'node_modules/wheretofly-weblib/dist/images', to: 'images' },
                 { from: 'node_modules/wheretofly-weblib/dist/js/Assets', to: 'js/Assets' },
-                { from: 'node_modules/wheretofly-weblib/dist/js/ThirdParty', to: 'js/ThirdParty' },
                 { from: 'node_modules/wheretofly-weblib/dist/js/Widgets', to: 'js/Widgets' },
                 { from: 'node_modules/wheretofly-weblib/dist/js/Workers', to: 'js/Workers' }
             ]
