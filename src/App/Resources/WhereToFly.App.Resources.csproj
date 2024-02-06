@@ -38,7 +38,7 @@
     <MauiAsset Include="..\..\..\Changelog.md">
       <Link>Assets\info\Changelog.md</Link>
     </MauiAsset>
-    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.3" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.6" />
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
@@ -49,7 +49,7 @@
     <AndroidAsset Include="..\..\..\Changelog.md">
       <Link>Assets\info\Changelog.md</Link>
     </AndroidAsset>
-    <PackageReference Include="Xamarin.Essentials" Version="1.8.0" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.8.1" />
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('uap10.0'))  ">
@@ -60,7 +60,7 @@
     <Content Include="..\..\..\Changelog.md">
       <Link>Assets\info\Changelog.md</Link>
     </Content>
-    <PackageReference Include="Xamarin.Essentials" Version="1.8.0" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.8.1" />
   </ItemGroup>
 
 </Project>
