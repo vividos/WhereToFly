@@ -6,6 +6,7 @@ Released on ?.
 
 ✨ New Features / Improvements
 
+- Finding locations can now also parse coordinates in various formats
 - Using CesiumJS version 1.114.0
 
 🐛 Bugfixes

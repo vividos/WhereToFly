@@ -273,6 +273,13 @@ namespace WhereToFly.App.Core.Views
                 return;
             }
 
+            if (CoordinatesParser.TryParse(text, out var parsedCoordinates) &&
+                parsedCoordinates != null)
+            {
+                this.mapView.ShowFindResult(text, parsedCoordinates);
+                return;
+            }
+
             IEnumerable<Xamarin.Essentials.Location>? foundLocationsList = null;
 
             try
