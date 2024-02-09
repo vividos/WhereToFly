@@ -25,15 +25,15 @@ jobs:
         npm run build-release
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 7.0.x
 
     - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v1.3.1
+      uses: microsoft/setup-msbuild@v2
 
     - name: Set up Java 11
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         distribution: 'temurin'
         java-version: '11'
@@ -64,7 +64,7 @@ jobs:
         /p:AndroidSigningKeyPass=${{ secrets.ANDROID_KEY_PASSWORD }}
 
     - name: Publish build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: APK file
         path: src/App/Android/bin/Release/de.vividos.app.wheretofly.android-Signed.apk
