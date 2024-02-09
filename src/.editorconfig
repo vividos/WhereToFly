@@ -335,3 +335,6 @@ dotnet_diagnostic.S3267.severity = none
 
 # S3260: Non-derived "private" classes and records should be "sealed"
 dotnet_diagnostic.S3260.severity = none
+
+# S6605: Collection-specific "Exists" method should be used instead of the "Any" extension
+dotnet_diagnostic.S6605.severity = suggestion
