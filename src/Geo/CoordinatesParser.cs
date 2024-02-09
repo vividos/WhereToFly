@@ -215,7 +215,7 @@ namespace WhereToFly.Geo
             out MapPoint? mapPoint)
         {
             if (!TryParseSingleDmsValue(latitude, out double parsedLatitude) ||
-                !TryParseSingleDmsValue(latitude, out double parsedLongitude))
+                !TryParseSingleDmsValue(longitude, out double parsedLongitude))
             {
                 mapPoint = null;
                 return false;
