@@ -2,7 +2,7 @@
 
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Where-to-fly")]
-[assembly: AssemblyCopyright("Copyright © 2017-2023 Michael Fink")]
+[assembly: AssemblyCopyright("Copyright © 2017-2024 Michael Fink")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -15,5 +15,5 @@
 //
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("1.14.3.*")]
-[assembly: AssemblyFileVersion("1.14.3.0")]
+[assembly: AssemblyVersion("1.14.4.*")]
+[assembly: AssemblyFileVersion("1.14.4.0")]
