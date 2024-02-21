@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using WhereToFly.App.Core;
+using WhereToFly.App.Core.Logic;
 using WhereToFly.App.Core.Services.SqliteDatabase;
 using WhereToFly.App.Core.ViewModels;
 using Xamarin.Forms;

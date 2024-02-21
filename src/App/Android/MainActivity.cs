@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Net.Http;
 using WhereToFly.App.Core;
+using WhereToFly.App.Core.Logic;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;

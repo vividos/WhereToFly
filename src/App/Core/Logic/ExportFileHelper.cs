@@ -6,7 +6,7 @@ using WhereToFly.Geo.Model;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
-namespace WhereToFly.App.Core
+namespace WhereToFly.App.Core.Logic
 {
     /// <summary>
     /// Helper for exporting files

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
+using WhereToFly.App.Core.Logic;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.Core.Converter

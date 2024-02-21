@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using WhereToFly.App.Core.Logic;
 using WhereToFly.App.Core.Models;
 using WhereToFly.App.Core.Services;
 using Xamarin.CommunityToolkit.ObjectModel;

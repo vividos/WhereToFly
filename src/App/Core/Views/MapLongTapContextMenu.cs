@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using WhereToFly.App.Core.Logic;
 using WhereToFly.App.Core.Models;
 using WhereToFly.App.Core.ViewModels;
 using WhereToFly.Geo;

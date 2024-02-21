@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
+using WhereToFly.App.Core.Logic;
 using WhereToFly.Geo.Model;
 using Xamarin.Forms;
 

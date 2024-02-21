@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using WhereToFly.App.Core;
+using WhereToFly.App.Core.Logic;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.Views;
 using Xamarin.Forms;

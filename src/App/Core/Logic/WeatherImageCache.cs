@@ -6,7 +6,7 @@ using WhereToFly.App.Core.Models;
 using WhereToFly.App.Resources;
 using Xamarin.Forms;
 
-namespace WhereToFly.App.Core
+namespace WhereToFly.App.Core.Logic
 {
     /// <summary>
     /// Image cache for weather images

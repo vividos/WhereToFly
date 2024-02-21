@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using WhereToFly.App.Core.Logic;
 using WhereToFly.App.Core.Models;
 using WhereToFly.App.Core.Services;
 using WhereToFly.App.Core.Views;

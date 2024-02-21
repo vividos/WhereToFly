@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WhereToFly.App.Core;
+using WhereToFly.App.Core.Logic;
 using WhereToFly.App.Core.Models;
 using WhereToFly.App.Core.Views;
 using Xamarin.Forms;

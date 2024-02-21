@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using WhereToFly.App.Core;
+using WhereToFly.App.Core.Logic;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using Windows.UI.ViewManagement;
