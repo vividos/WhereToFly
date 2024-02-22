@@ -320,10 +320,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             if (currentPosition != null)
             {
-                var point = new MapPoint(
-                    currentPosition.Latitude,
-                    currentPosition.Longitude,
-                    currentPosition.Altitude);
+                var point = currentPosition.ToMapPoint();
 
                 await Share.RequestAsync(
                     DataFormatter.FormatMyPositionShareText(
@@ -383,7 +380,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             this.UpdateSunAngles();
 
-            var point = new MapPoint(this.position.Latitude, this.position.Longitude, this.position.Altitude);
+            var point = this.position.ToMapPoint();
 
             var appMapService = DependencyService.Get<IAppMapService>();
             Task.Run(async () => await appMapService.UpdateLastShownPosition(point));

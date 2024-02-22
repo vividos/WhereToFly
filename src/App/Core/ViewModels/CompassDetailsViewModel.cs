@@ -57,10 +57,7 @@ namespace WhereToFly.App.Core.ViewModels
                     return "-";
                 }
 
-                var point = new MapPoint(
-                    this.position.Latitude,
-                    this.position.Longitude,
-                    this.position.Altitude);
+                var point = this.position.ToMapPoint();
 
                 double distanceInMeter = point.DistanceTo(
                     this.appSettings.CurrentCompassTarget.TargetLocation);
@@ -250,10 +247,7 @@ namespace WhereToFly.App.Core.ViewModels
                 compassTarget.TargetLocation.Valid &&
                 this.position != null)
             {
-                var point = new MapPoint(
-                    this.position.Latitude,
-                    this.position.Longitude,
-                    this.position.Altitude);
+                var point = this.position.ToMapPoint();
 
                 double courseAngleInDegrees = point.CourseTo(compassTarget.TargetLocation);
                 return (int)(courseAngleInDegrees + 0.5);
@@ -280,7 +274,7 @@ namespace WhereToFly.App.Core.ViewModels
 
             this.UpdateSunAngles();
 
-            var point = new MapPoint(this.position.Latitude, this.position.Longitude, this.position.Altitude);
+            var point = this.position.ToMapPoint();
 
             var appMapService = DependencyService.Get<IAppMapService>();
             Task.Run(async () => await appMapService.UpdateLastShownPosition(point));

@@ -96,7 +96,7 @@ namespace WhereToFly.App.Core.Services
                 return null;
             }
 
-            return new MapPoint(location.Latitude, location.Longitude, location.Altitude);
+            return location.ToMapPoint();
         }
 
         /// <summary>

@@ -207,7 +207,7 @@ namespace WhereToFly.App.Core.Views
                 Math.Abs(position.Longitude) < 1e5 &&
                 this.mapView != null)
             {
-                var point = new MapPoint(position.Latitude, position.Longitude, position.Altitude);
+                var point = position.ToMapPoint();
 
                 var appMapService = DependencyService.Get<IAppMapService>();
                 await appMapService.UpdateLastShownPosition(point);
@@ -305,7 +305,7 @@ namespace WhereToFly.App.Core.Views
             }
 
             var location = foundLocationsList.First();
-            var point = new MapPoint(location.Latitude, location.Longitude, location.Altitude);
+            var point = location.ToMapPoint();
 
             this.mapView.ShowFindResult(text, point);
         }
@@ -610,7 +610,7 @@ namespace WhereToFly.App.Core.Views
                 return;
             }
 
-            var point = new MapPoint(position.Latitude, position.Longitude, position.Altitude);
+            var point = position.ToMapPoint();
 
             var appMapService = DependencyService.Get<IAppMapService>();
             await appMapService.UpdateLastShownPosition(point);

@@ -14,10 +14,7 @@ namespace WhereToFly.App.Core
         /// <param name="position">position object</param>
         public GeolocationEventArgs(Xamarin.Essentials.Location position)
         {
-            this.Point = new MapPoint(
-                position.Latitude,
-                position.Longitude,
-                position.Altitude);
+            this.Point = position.ToMapPoint();
 
             this.Position = position;
         }
