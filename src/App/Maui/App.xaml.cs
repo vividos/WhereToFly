@@ -1,4 +1,8 @@
-﻿namespace WhereToFly.App.Maui
+﻿using Microsoft.AppCenter;
+using Microsoft.AppCenter.Crashes;
+using Microsoft.AppCenter.Distribute;
+
+namespace WhereToFly.App.Maui
 {
     /// <summary>
     /// MAUI app
@@ -10,6 +14,18 @@
         /// </summary>
         public App()
         {
+            if (DeviceInfo.Platform == DevicePlatform.Android ||
+                DeviceInfo.Platform == DevicePlatform.WinUI)
+            {
+                AppCenter.Start(
+                    $"android={Constants.AppCenterKeyAndroid};" +
+                    $"uwp={Constants.AppCenterKeyWindows}",
+                    typeof(Distribute),
+                    typeof(Crashes));
+            }
+
+            TaskScheduler.UnobservedTaskException += this.TaskScheduler_UnobservedTaskException;
+
             this.InitializeComponent();
 
             this.MainPage = new NavigationPage(new MainPage())
@@ -29,6 +45,32 @@
             window.Title = "Where-to-fly";
 
             return window;
+        }
+
+        /// <summary>
+        /// Called when an exception was thrown in a Task and nobody caught it
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="args">event args</param>
+        private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs args)
+        {
+            Exception ex = args.Exception.InnerExceptions.Count == 1
+                ? args.Exception.InnerException
+                : args.Exception;
+
+            Debug.WriteLine($"UnobservedTaskException: {ex}");
+
+            LogError(ex);
+        }
+
+        /// <summary>
+        /// Logs exception that is occured and was caught, but is not presented to the user. Send
+        /// it to AppCenter for further analysis.
+        /// </summary>
+        /// <param name="ex">exception to log</param>
+        public static void LogError(Exception ex)
+        {
+            Crashes.TrackError(ex);
         }
     }
 }
