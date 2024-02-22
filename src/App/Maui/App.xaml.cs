@@ -10,6 +10,11 @@ namespace WhereToFly.App.Maui
     public partial class App : Application
     {
         /// <summary>
+        /// Task that can be awaited to wait for a completed app initialisation.
+        /// </summary>
+        public static Task InitializedTask { get; private set; }
+
+        /// <summary>
         /// Creates a new MAUI app object
         /// </summary>
         public App()
@@ -28,6 +33,8 @@ namespace WhereToFly.App.Maui
 
             this.InitializeComponent();
 
+            InitializedTask = Task.Run(this.LoadAppDataAsync);
+
             this.MainPage = new NavigationPage(new MainPage())
             {
                 BarBackgroundColor = Color.FromRgb(0x2f, 0x29, 0x9e),
@@ -45,6 +52,16 @@ namespace WhereToFly.App.Maui
             window.Title = "Where-to-fly";
 
             return window;
+        }
+
+        /// <summary>
+        /// Loads app data needed for running, e.g. app settings, caches and location list for
+        /// live waypoint refresh services.
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private Task LoadAppDataAsync()
+        {
+            return Task.CompletedTask;
         }
 
         /// <summary>
