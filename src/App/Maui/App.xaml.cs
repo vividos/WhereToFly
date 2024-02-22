@@ -5,7 +5,7 @@ using Microsoft.AppCenter.Distribute;
 namespace WhereToFly.App.Maui
 {
     /// <summary>
-    /// MAUI app
+    /// WhereToFly MAUI app
     /// </summary>
     public partial class App : Application
     {
@@ -49,7 +49,7 @@ namespace WhereToFly.App.Maui
         protected override Window CreateWindow(IActivationState? activationState)
         {
             var window = base.CreateWindow(activationState);
-            window.Title = "Where-to-fly";
+            window.Title = Constants.AppTitle;
 
             return window;
         }
