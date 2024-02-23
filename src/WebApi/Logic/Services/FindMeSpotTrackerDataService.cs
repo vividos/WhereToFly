@@ -87,9 +87,8 @@ namespace WhereToFly.WebApi.Logic.Services
                 throw new InvalidOperationException("couldn't get live waypoint data");
             }
 
-            return new LiveWaypointData
+            return new LiveWaypointData(uri.ToString())
             {
-                ID = uri.ToString(),
                 TimeStamp = new DateTimeOffset(latestMessage.DateTime),
                 Latitude = latestMessage.Latitude,
                 Longitude = latestMessage.Longitude,

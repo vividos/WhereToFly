@@ -184,9 +184,8 @@ namespace WhereToFly.WebApi.Logic.Services
                 this.lastRequestByMapShareIdentifier[mapShareIdentifier] = new DateTimeOffset(when.Value);
             }
 
-            return new LiveWaypointData
+            return new LiveWaypointData(FormatLiveWaypointId(mapShareIdentifier))
             {
-                ID = FormatLiveWaypointId(mapShareIdentifier),
                 Name = "Garmin inReach " + placemark.Name,
                 Latitude = point.Coordinate.Latitude,
                 Longitude = point.Coordinate.Longitude,
@@ -261,10 +260,10 @@ namespace WhereToFly.WebApi.Logic.Services
                     Offset = (trackPoint.Time!.Value - trackStart.Value).TotalSeconds,
                 });
 
-            return new LiveTrackData
+            return new LiveTrackData(
+                FormatLiveWaypointId(mapShareIdentifier),
+                "Garmin inReach " + lastLineStringPlacemark.Name)
             {
-                ID = FormatLiveWaypointId(mapShareIdentifier),
-                Name = "Garmin inReach " + lastLineStringPlacemark.Name,
                 Description = lastLineStringPlacemark.Description.Text,
                 TrackStart = trackStart.Value,
                 TrackPoints = trackPoints.ToArray(),

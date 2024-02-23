@@ -35,16 +35,25 @@ namespace WhereToFly.Shared.Model
         /// <summary>
         /// Name of live waypoint
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         /// <summary>
         /// Detailed description, in MarkDown format
         /// </summary>
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
         /// <summary>
         /// Details link, e.g. to external website
         /// </summary>
-        public string DetailsLink { get; set; }
+        public string DetailsLink { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Creates a new live waypoint data object
+        /// </summary>
+        /// <param name="id">live waypoint ID</param>
+        public LiveWaypointData(string id)
+        {
+            this.ID = id;
+        }
     }
 }

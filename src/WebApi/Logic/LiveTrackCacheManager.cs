@@ -142,11 +142,9 @@ namespace WhereToFly.WebApi.Logic
                 return null;
             }
 
-            return new LiveTrackQueryResult
-            {
-                Data = cachedData,
-                NextRequestDate = this.GetNextRequestDate(uri),
-            };
+            return new LiveTrackQueryResult(
+                cachedData,
+                this.GetNextRequestDate(uri));
         }
 
         /// <summary>
@@ -229,11 +227,9 @@ namespace WhereToFly.WebApi.Logic
                     mapShareIdentifier,
                     DateTimeOffset.Now - GarminInreachLiveTrackTimespan);
 
-            return new LiveTrackQueryResult
-            {
-                Data = liveTrackData,
-                NextRequestDate = this.garminInreachService.GetNextRequestDate(mapShareIdentifier),
-            };
+            return new LiveTrackQueryResult(
+                liveTrackData,
+                this.garminInreachService.GetNextRequestDate(mapShareIdentifier));
         }
 
         /// <summary>

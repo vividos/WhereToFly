@@ -248,7 +248,7 @@ namespace WhereToFly.WebApi.Logic
         private Task<LiveWaypointQueryResult> GetTestPosResult(AppResourceUri uri)
         {
             MapPoint mapPoint;
-            switch (uri.Data.ToLowerInvariant())
+            switch (uri.Data?.ToLowerInvariant())
             {
                 case "crossingthealps2019":
                     var point1 = new MapPoint(47.754076, 12.352277, 0.0); // Kampenwand
@@ -287,9 +287,8 @@ namespace WhereToFly.WebApi.Logic
             return Task.FromResult(
                 new LiveWaypointQueryResult
                 {
-                    Data = new LiveWaypointData
+                    Data = new LiveWaypointData(uri.ToString())
                     {
-                        ID = uri.ToString(),
                         TimeStamp = DateTimeOffset.Now,
                         Longitude = mapPoint.Longitude,
                         Latitude = mapPoint.Latitude,

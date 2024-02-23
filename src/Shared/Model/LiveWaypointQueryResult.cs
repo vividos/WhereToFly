@@ -11,7 +11,7 @@ namespace WhereToFly.Shared.Model
         /// <summary>
         /// Live waypoint data; may be null when it couldn't be retrieved yet
         /// </summary>
-        public LiveWaypointData Data { get; set; }
+        public LiveWaypointData? Data { get; set; }
 
         /// <summary>
         /// Date where next request for the requested live waypoint will be most probably

@@ -142,10 +142,10 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
                     Debug.WriteLine(edge);
 
                     tour.TourEntriesList.Add(
-                        new PlannedTourEntry
+                        new PlannedTourEntry(
+                            edge.Source.Id,
+                            edge.Target.Id)
                         {
-                            StartWaypointId = edge.Source.Id,
-                            EndWaypointId = edge.Target.Id,
                             TrackStartIndex = tour.MapPointList.Count,
                             Duration = edge.Duration,
                         });

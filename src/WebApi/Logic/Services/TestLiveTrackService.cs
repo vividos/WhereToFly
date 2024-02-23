@@ -102,9 +102,8 @@ namespace WhereToFly.WebApi.Logic.Services
 
             TrackPoint trackPoint = track.TrackPoints[now.Second % 60];
 
-            return new LiveWaypointData
+            return new LiveWaypointData(id)
             {
-                ID = id,
                 TimeStamp = DateTimeOffset.Now,
                 Longitude = trackPoint.Longitude,
                 Latitude = trackPoint.Latitude,
@@ -123,11 +122,9 @@ namespace WhereToFly.WebApi.Logic.Services
         public static LiveTrackQueryResult GetLiveTrackingQueryResult(string id)
         {
             var now = DateTimeOffset.Now;
-            return new LiveTrackQueryResult
-            {
-                Data = GetLiveTrackingData(id, now),
-                NextRequestDate = now.AddMinutes(3.0),
-            };
+            return new LiveTrackQueryResult(
+                GetLiveTrackingData(id, now),
+                now.AddMinutes(3.0));
         }
 
         /// <summary>
@@ -158,10 +155,8 @@ namespace WhereToFly.WebApi.Logic.Services
                     Offset = (trackPoint.Time!.Value - trackStart.Value).TotalSeconds,
                 });
 
-            return new LiveTrackData
+            return new LiveTrackData(id, "Live tracking test track")
             {
-                ID = id,
-                Name = "Live tracking test track",
                 Description = "This is a live tracking test track for testing purposes.",
                 TrackStart = trackStart.Value,
                 TrackPoints = trackPoints.ToArray(),

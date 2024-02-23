@@ -20,7 +20,7 @@ namespace WhereToFly.Shared.Model
         /// <summary>
         /// Detailed description, in MarkDown format
         /// </summary>
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
         /// <summary>
         /// Track starting point
@@ -57,5 +57,16 @@ namespace WhereToFly.Shared.Model
         /// List of all track points
         /// </summary>
         public LiveTrackPoint[] TrackPoints { get; set; } = Array.Empty<LiveTrackPoint>();
+
+        /// <summary>
+        /// Creates a new live track data object
+        /// </summary>
+        /// <param name="id">ID to use</param>
+        /// <param name="name">name to use</param>
+        public LiveTrackData(string id, string name)
+        {
+            this.ID = id;
+            this.Name = name;
+        }
     }
 }

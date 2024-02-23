@@ -9,6 +9,19 @@ namespace WhereToFly.Shared.Model
     public class LiveTrackQueryResult
     {
         /// <summary>
+        /// Creates a new live track query result
+        /// </summary>
+        /// <param name="data">live track data</param>
+        /// <param name="nextRequestDate">next request date</param>
+        public LiveTrackQueryResult(
+            LiveTrackData data,
+            DateTimeOffset nextRequestDate)
+        {
+            this.Data = data;
+            this.NextRequestDate = nextRequestDate;
+        }
+
+        /// <summary>
         /// Live track data; always set, but may contain zero live track points
         /// </summary>
         public LiveTrackData Data { get; set; }

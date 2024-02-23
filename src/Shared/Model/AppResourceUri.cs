@@ -100,13 +100,13 @@ namespace WhereToFly.Shared.Model
         /// Custom data; the meaning is specific for different resource types. This property is
         /// only valid when not null.
         /// </summary>
-        public string Data { get; private set; } = null;
+        public string? Data { get; private set; } = null;
 
         /// <summary>
         /// Creates a new app resource URI object from a given URI to parse
         /// </summary>
         /// <param name="uriToParse">URI to parse</param>
-        public AppResourceUri(string uriToParse)
+        public AppResourceUri(string? uriToParse)
         {
             if (uriToParse == null)
             {
@@ -122,7 +122,7 @@ namespace WhereToFly.Shared.Model
         /// </summary>
         /// <param name="type">resource type to use</param>
         /// <param name="data">data to use</param>
-        public AppResourceUri(ResourceType type, string data)
+        public AppResourceUri(ResourceType type, string? data)
         {
             if (type == ResourceType.None)
             {
@@ -160,7 +160,7 @@ namespace WhereToFly.Shared.Model
         /// <returns>found resource type, or None when it is unknown</returns>
         private static ResourceType FindResourceTypeFromString(string resourceType)
         {
-            foreach (var item in Enum.GetValues(typeof(ResourceType)))
+            foreach (object? item in Enum.GetValues(typeof(ResourceType)))
             {
                 if (item.ToString().ToLowerInvariant() == resourceType)
                 {
@@ -208,7 +208,6 @@ namespace WhereToFly.Shared.Model
         /// <param name="other">other URI to compare to</param>
         /// <returns>true when equal URIs, false when not</returns>
         public bool Equals(AppResourceUri other) =>
-            other != null &&
             this.uri == other.uri;
 
         /// <summary>
@@ -247,10 +246,16 @@ namespace WhereToFly.Shared.Model
             /// <param name="existingValue">existing value; unused</param>
             /// <param name="serializer">json serializer</param>
             /// <returns>created app resource URI object, or null when reading failed</returns>
-            public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+            public override object? ReadJson(
+                JsonReader reader,
+                Type objectType,
+                object? existingValue,
+                JsonSerializer serializer)
             {
-                string uriAsText = serializer.Deserialize<string>(reader);
-                return string.IsNullOrEmpty(uriAsText) ? null : new AppResourceUri(uriAsText);
+                string? uriAsText = serializer.Deserialize<string>(reader);
+                return string.IsNullOrEmpty(uriAsText)
+                    ? null
+                    : new AppResourceUri(uriAsText!);
             }
 
             /// <summary>
@@ -259,7 +264,10 @@ namespace WhereToFly.Shared.Model
             /// <param name="writer">json writer</param>
             /// <param name="value">app resource URI object to write</param>
             /// <param name="serializer">json serializer</param>
-            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+            public override void WriteJson(
+                JsonWriter writer,
+                object? value,
+                JsonSerializer serializer)
             {
                 var uri = value as AppResourceUri;
                 writer.WriteValue(uri?.ToString() ?? string.Empty);

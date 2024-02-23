@@ -262,6 +262,11 @@ namespace WhereToFly.App.Core.ViewModels
                 var dataService = DependencyService.Get<IDataService>();
                 var result = await dataService.GetLiveWaypointDataAsync(this.location.InternetLink);
 
+                if (result.Data == null)
+                {
+                    return;
+                }
+
                 this.location.MapLocation =
                     new MapPoint(result.Data.Latitude, result.Data.Longitude, result.Data.Altitude);
 

@@ -73,7 +73,12 @@ namespace WhereToFly.App.Core.Logic
                     System.Net.WebUtility.UrlDecode(rawUri.Fragment.TrimStart('#'));
             }
 
-            Location liveWaypoint = await GetLiveWaypointLocation(waypointName, appResourceUri);
+            Location? liveWaypoint = await GetLiveWaypointLocation(waypointName, appResourceUri);
+
+            if (liveWaypoint == null)
+            {
+                return;
+            }
 
             if (!await ShowAddLiveWaypointDialog(liveWaypoint))
             {
@@ -100,12 +105,17 @@ namespace WhereToFly.App.Core.Logic
         /// </summary>
         /// <param name="waypointName">waypoint name to use</param>
         /// <param name="appResourceUri">app resource uri to use</param>
-        /// <returns>map location, or invalid location when it couldn't be retrieved</returns>
-        private static async Task<Location> GetLiveWaypointLocation(string waypointName, AppResourceUri appResourceUri)
+        /// <returns>map location, or null when it couldn't be retrieved</returns>
+        private static async Task<Location?> GetLiveWaypointLocation(string waypointName, AppResourceUri appResourceUri)
         {
             var dataService = DependencyService.Get<IDataService>();
 
             LiveWaypointQueryResult result = await dataService.GetLiveWaypointDataAsync(appResourceUri.ToString());
+
+            if (result.Data == null)
+            {
+                return null;
+            }
 
             var mapPoint = new MapPoint(result.Data.Latitude, result.Data.Longitude, result.Data.Altitude);
 

@@ -135,7 +135,10 @@ namespace WhereToFly.App.Core.Services
         {
             LiveWaypointQueryResult result = await this.backendWebApi.GetLiveWaypointDataAsync(liveWaypointId);
 
-            result.Data.ID = System.Net.WebUtility.UrlDecode(result.Data.ID);
+            if (result.Data != null)
+            {
+                result.Data.ID = System.Net.WebUtility.UrlDecode(result.Data.ID);
+            }
 
             return result;
         }
