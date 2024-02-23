@@ -47,7 +47,11 @@ namespace WhereToFly.App.UnitTest
                     }
                 }));
 
-            return tcs.Task.Result;
+            bool result = tcs.Task.Result;
+
+            cts.Dispose();
+
+            return result;
         }
     }
 }
