@@ -4,7 +4,7 @@ using System.IO;
 using WhereToFly.Geo.Model;
 
 // make Geo internals visible to unit tests
-[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("WhereToFly.App.UnitTest")]
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("WhereToFly.Geo.UnitTest")]
 
 namespace WhereToFly.Geo.DataFormats
 {

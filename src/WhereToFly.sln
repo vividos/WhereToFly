@@ -59,6 +59,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.App.MapView", "A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.App.Maui", "App\Maui\WhereToFly.App.Maui.csproj", "{4F0EC297-A5C2-44DA-904A-5A67A9FE30B0}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.Geo.UnitTest", "Geo\UnitTest\WhereToFly.Geo.UnitTest.csproj", "{28161F63-9154-428B-90B5-8002316BD3E2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -162,6 +164,12 @@ Global
 		{4F0EC297-A5C2-44DA-904A-5A67A9FE30B0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4F0EC297-A5C2-44DA-904A-5A67A9FE30B0}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{4F0EC297-A5C2-44DA-904A-5A67A9FE30B0}.SonarQube|Any CPU.ActiveCfg = Release|Any CPU
+		{28161F63-9154-428B-90B5-8002316BD3E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28161F63-9154-428B-90B5-8002316BD3E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28161F63-9154-428B-90B5-8002316BD3E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28161F63-9154-428B-90B5-8002316BD3E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28161F63-9154-428B-90B5-8002316BD3E2}.SonarQube|Any CPU.ActiveCfg = Release|Any CPU
+		{28161F63-9154-428B-90B5-8002316BD3E2}.SonarQube|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -182,6 +190,7 @@ Global
 		{B8A5FD37-AB5E-4641-B9A7-E529167F9496} = {60BE5B8E-A229-488F-A893-379E323EBB3E}
 		{1D18C7D3-F3F3-4830-953B-6C23814BAC9B} = {A443B9B2-B8C9-44F0-A7F5-DF2466E0E0FE}
 		{4F0EC297-A5C2-44DA-904A-5A67A9FE30B0} = {A443B9B2-B8C9-44F0-A7F5-DF2466E0E0FE}
+		{28161F63-9154-428B-90B5-8002316BD3E2} = {60BE5B8E-A229-488F-A893-379E323EBB3E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D13F3BD1-E396-49C7-BD98-2F3BC15F6E7C}

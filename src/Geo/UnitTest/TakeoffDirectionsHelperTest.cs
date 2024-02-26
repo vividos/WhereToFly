@@ -3,7 +3,7 @@ using System.Diagnostics;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 
-namespace WhereToFly.App.UnitTest.Geo
+namespace WhereToFly.Geo.UnitTest
 {
     /// <summary>
     /// Tests for TakeoffDirectionsHelper class methods

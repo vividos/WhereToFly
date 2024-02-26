@@ -6,7 +6,7 @@ using System.Linq;
 using WhereToFly.Geo.Airspace;
 using WhereToFly.Geo.DataFormats;
 
-namespace WhereToFly.App.UnitTest.Geo
+namespace WhereToFly.Geo.UnitTest
 {
     /// <summary>
     /// Tests CzmlAirspaceWriter class
@@ -20,9 +20,9 @@ namespace WhereToFly.App.UnitTest.Geo
         [TestMethod]
         public void TestWriteCzmlCircle()
         {
-            var airspacesList = new List<Airspace>
+            var airspacesList = new List<Airspace.Airspace>
             {
-                new Airspace(AirspaceClass.C)
+                new Airspace.Airspace(AirspaceClass.C)
                 {
                     Name = "MyAirspace",
                     AirspaceType = "RMZ",

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using WhereToFly.Geo.Airspace;
 
-namespace WhereToFly.App.UnitTest.Geo
+namespace WhereToFly.Geo.UnitTest
 {
     /// <summary>
     /// Tests for OpenAirFileParser class
@@ -34,7 +34,7 @@ namespace WhereToFly.App.UnitTest.Geo
                     Assert.IsTrue(parser.Airspaces.Any(), "there must be some airspaces in the file");
                     Assert.IsFalse(parser.ParsingErrors.Any(), "there must be no parsing errors");
 
-                    foreach (Airspace airspace in parser.Airspaces)
+                    foreach (Airspace.Airspace airspace in parser.Airspaces)
                     {
                         string airspaceText = airspace.ToString();
                         Debug.WriteLine($"checking airspace: {airspaceText})");

@@ -47,6 +47,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.Shared.WebLib", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.App.MapView", "App\MapView\WhereToFly.App.MapView.csproj", "{4653A8F6-77CD-495D-84DF-FDE19829BA89}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.Geo.UnitTest", "Geo\UnitTest\WhereToFly.Geo.UnitTest.csproj", "{5AC91E79-A62D-409B-A705-1A157403D0CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,10 @@ Global
 		{4653A8F6-77CD-495D-84DF-FDE19829BA89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4653A8F6-77CD-495D-84DF-FDE19829BA89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4653A8F6-77CD-495D-84DF-FDE19829BA89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AC91E79-A62D-409B-A705-1A157403D0CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AC91E79-A62D-409B-A705-1A157403D0CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AC91E79-A62D-409B-A705-1A157403D0CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AC91E79-A62D-409B-A705-1A157403D0CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -112,6 +118,7 @@ Global
 		{D2D784D3-9893-4649-AFDA-75CE643B4BED} = {60BE5B8E-A229-488F-A893-379E323EBB3E}
 		{74CF6914-CA78-48CF-8289-2E8CB32EEAF2} = {60BE5B8E-A229-488F-A893-379E323EBB3E}
 		{4653A8F6-77CD-495D-84DF-FDE19829BA89} = {A443B9B2-B8C9-44F0-A7F5-DF2466E0E0FE}
+		{5AC91E79-A62D-409B-A705-1A157403D0CE} = {60BE5B8E-A229-488F-A893-379E323EBB3E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D13F3BD1-E396-49C7-BD98-2F3BC15F6E7C}

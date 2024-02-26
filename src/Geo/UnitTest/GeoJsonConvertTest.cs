@@ -2,7 +2,7 @@
 using System;
 using WhereToFly.Geo.DataFormats.GeoJson;
 
-namespace WhereToFly.App.UnitTest.Geo
+namespace WhereToFly.Geo.UnitTest
 {
     /// <summary>
     /// Unit tests for GeoJSON converter classes

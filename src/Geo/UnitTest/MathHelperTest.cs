@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WhereToFly.Geo;
 
-namespace WhereToFly.App.UnitTest.Geo
+namespace WhereToFly.Geo.UnitTest
 {
     /// <summary>
     /// Tests for the Math helper methods in WhereToFly.Geo

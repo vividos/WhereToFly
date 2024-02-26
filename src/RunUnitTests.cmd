@@ -1,7 +1,7 @@
 @echo off
 REM
 REM Where-to-fly - an app to decide where to (hike up and) fly with a paraglider
-REM Copyright (C) 2017-2023 Michael Fink
+REM Copyright (C) 2017-2024 Michael Fink
 REM
 REM Runs Unit tests and coverage analysis
 REM
@@ -42,6 +42,14 @@ REM
     -mergebyhash ^
     -skipautoprops ^
     -output:"%~dp0\TestResults\WhereToFly-App-CoverageReport.xml"
+
+dotnet test ^
+    Geo\UnitTest\WhereToFly.Geo.UnitTest.csproj ^
+    --configuration Release ^
+    --collect:"XPlat Code Coverage;Format=opencover" ^
+    --results-directory TestResults ^
+    --logger:trx;LogFileName=WhereToFly-Geo-Log.trx ^
+    --logger:console;verbosity=detailed
 
 dotnet test ^
     WebApi\UnitTest\WhereToFly.WebApi.UnitTest.csproj ^

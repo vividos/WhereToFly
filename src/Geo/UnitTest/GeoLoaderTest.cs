@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using WhereToFly.Geo.DataFormats;
 
-namespace WhereToFly.App.UnitTest.Geo
+namespace WhereToFly.Geo.UnitTest
 {
     /// <summary>
     /// Tests GeoLoader class

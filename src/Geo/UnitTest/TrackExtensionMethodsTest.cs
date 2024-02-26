@@ -5,7 +5,7 @@ using WhereToFly.Geo;
 using WhereToFly.Geo.DataFormats;
 using WhereToFly.Geo.Model;
 
-namespace WhereToFly.App.UnitTest.Geo
+namespace WhereToFly.Geo.UnitTest
 {
     /// <summary>
     /// Tests for track extension methods

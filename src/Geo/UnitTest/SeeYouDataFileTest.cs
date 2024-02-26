@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using WhereToFly.Geo.DataFormats;
 
-namespace WhereToFly.App.UnitTest.Geo
+namespace WhereToFly.Geo.UnitTest
 {
     /// <summary>
     /// Tests for SeeYouDataFile class
