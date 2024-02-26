@@ -40,7 +40,7 @@ namespace WhereToFly.App.UnitTest.Geo
             // run
             string filename = Path.Combine(UnitTestHelper.TestAssetsPath, "85QA3ET1.igc");
 
-            Track track = null;
+            Track? track = null;
             using (var stream = new FileStream(filename, FileMode.Open))
             {
                 var igcFile = new IgcDataFile(stream);

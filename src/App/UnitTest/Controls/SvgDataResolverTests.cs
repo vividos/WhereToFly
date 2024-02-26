@@ -79,7 +79,7 @@ namespace WhereToFly.App.UnitTest.Controls
         {
             // set up
             var imageSource = ImageSource.FromStream(
-                (ct) => Task.FromResult<Stream>(null));
+                (ct) => Task.FromResult<Stream?>(null));
 
             // run + check
             Assert.ThrowsExceptionAsync<InvalidOperationException>(

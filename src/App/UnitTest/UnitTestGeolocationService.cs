@@ -14,18 +14,18 @@ namespace WhereToFly.App.UnitTest
         public bool IsListening => true;
 
         /// <inheritdoc />
-        public event EventHandler<GeolocationEventArgs> PositionChanged;
+        public event EventHandler<GeolocationEventArgs>? PositionChanged;
 
         /// <inheritdoc />
-        public Task<MapPoint> GetLastKnownPositionAsync()
+        public Task<MapPoint?> GetLastKnownPositionAsync()
         {
-            return Task.FromResult<MapPoint>(null);
+            return Task.FromResult<MapPoint?>(null);
         }
 
         /// <inheritdoc />
-        public Task<Xamarin.Essentials.Location> GetPositionAsync(TimeSpan timeout)
+        public Task<Xamarin.Essentials.Location?> GetPositionAsync(TimeSpan timeout)
         {
-            return Task.FromResult<Xamarin.Essentials.Location>(null);
+            return Task.FromResult<Xamarin.Essentials.Location?>(null);
         }
 
         /// <inheritdoc />

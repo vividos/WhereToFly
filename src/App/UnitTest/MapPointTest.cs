@@ -88,10 +88,10 @@ namespace WhereToFly.App.UnitTest
             Assert.IsFalse(mapPoint1.Equals(mapPoint3), "map points 1 and 3 must not be equal");
             Assert.IsFalse(mapPoint1.Equals(mapPoint4), "map point must not be equal to invalid map point");
 
-            MapPoint noPoint = null;
+            MapPoint? noPoint = null;
             Assert.IsFalse(mapPoint1.Equals(noPoint), "map point must not be equal to null");
 
-            object noObject = null;
+            object? noObject = null;
             Assert.IsFalse(mapPoint1.Equals(noObject), "map point must not be equal to null");
             Assert.IsFalse(mapPoint1.Equals("text"), "map point must not be equal to different type");
         }

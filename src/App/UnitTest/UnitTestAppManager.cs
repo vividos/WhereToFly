@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using WhereToFly.App.Core;
 
 namespace WhereToFly.App.UnitTest
@@ -26,7 +27,9 @@ namespace WhereToFly.App.UnitTest
         {
             Debug.WriteLine("unit test: getting app icon for app " + packageName);
 
-            return this.AppExists ? new byte[] { 0x12, 0x34 } : null;
+            return this.AppExists
+                ? new byte[] { 0x12, 0x34 }
+                : Array.Empty<byte>();
         }
 
         /// <inheritdoc />

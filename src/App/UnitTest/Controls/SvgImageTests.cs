@@ -70,7 +70,7 @@ namespace WhereToFly.App.UnitTest.Controls
             var image = new SvgImage();
 
             var imageSource = ImageSource.FromStream(
-                (ct) => Task.FromResult<Stream>(null));
+                (ct) => Task.FromResult<Stream?>(null));
 
             // run
             image.Source = imageSource;

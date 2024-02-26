@@ -222,9 +222,11 @@ namespace WhereToFly.App.UnitTest.Geo
                     Assert.IsTrue(parser.Airspaces.Any(), "there must be some airspaces in the file");
 
                     var ceiling = parser.Airspaces.First().Ceiling;
-                    Debug.WriteLine($"altitude text {openingTimes} resulted in type {ceiling.Type} and opening times {ceiling.OpeningTimes}");
+                    Debug.WriteLine($"altitude text {openingTimes} resulted in type {ceiling?.Type} and opening times {ceiling?.OpeningTimes}");
 
-                    Assert.IsTrue(ceiling.Type != AltitudeType.Textual, "ceiling must not be a textual value");
+                    Assert.IsTrue(
+                        ceiling != null && ceiling.Type != AltitudeType.Textual,
+                        "ceiling must not be a textual value");
 
                     Assert.IsTrue(ceiling.OpeningTimes.Any(), "there must be an opening times text");
                 }

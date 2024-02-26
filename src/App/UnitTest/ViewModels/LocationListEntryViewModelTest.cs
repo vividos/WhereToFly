@@ -2,6 +2,7 @@
 using System;
 using WhereToFly.App.Core;
 using WhereToFly.App.Core.Logic;
+using WhereToFly.App.Core.Models;
 using WhereToFly.App.Core.ViewModels;
 using WhereToFly.Geo.Model;
 using Xamarin.Forms;
@@ -44,7 +45,8 @@ namespace WhereToFly.App.UnitTest.ViewModels
                 InternetLink = "https://de.wikipedia.org/wiki/Brecherspitz",
             };
 
-            var viewModel = new LocationListEntryViewModel(null, location, null);
+            var parentViewModel = new LocationListViewModel(new AppSettings());
+            var viewModel = new LocationListEntryViewModel(parentViewModel, location, null);
 
             // check
             Assert.IsTrue(viewModel.Name.Length > 0, "name text must not be empty");

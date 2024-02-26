@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Threading.Tasks;
 using WhereToFly.App.Core;
 using WhereToFly.App.Core.Models;
 using WhereToFly.App.Core.ViewModels;
@@ -37,7 +38,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
             };
 
             // run
-            var viewModel = new WeatherIconViewModel(null, description);
+            var viewModel = new WeatherIconViewModel(() => Task.CompletedTask, description);
 
             ////Assert.IsTrue(
             ////    viewModel.WaitForPropertyChange(
@@ -66,7 +67,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
             };
 
             // run
-            var viewModel = new WeatherIconViewModel(null, description);
+            var viewModel = new WeatherIconViewModel(() => Task.CompletedTask, description);
             Assert.IsTrue(viewModel.Tapped.CanExecute(null), "command must be able to executed");
 
             viewModel.Tapped.Execute(null);
@@ -92,7 +93,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
             };
 
             // run
-            var viewModel = new WeatherIconViewModel(null, description);
+            var viewModel = new WeatherIconViewModel(() => Task.CompletedTask, description);
             Assert.IsTrue(viewModel.Tapped.CanExecute(null), "command must be able to executed");
 
             viewModel.Tapped.Execute(null);

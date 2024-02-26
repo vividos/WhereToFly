@@ -24,7 +24,7 @@ namespace WhereToFly.App.UnitTest.Geo
             string filename = Path.Combine(UnitTestHelper.TestAssetsPath, "85QA3ET1.igc");
 
             // run
-            Track track = null;
+            Track? track = null;
             IEnumerable<string> parsingErrors;
             using (var stream = new FileStream(filename, FileMode.Open))
             {
@@ -62,7 +62,7 @@ namespace WhereToFly.App.UnitTest.Geo
             {
                 string line = lineToParse + "\r\n" + "B0903544724034N01052829EA009300100900108000";
 
-                Track track = null;
+                Track? track = null;
                 using (var stream = new MemoryStream(System.Text.Encoding.ASCII.GetBytes(line)))
                 {
                     var igcParser = new IgcParser(stream);
@@ -97,7 +97,7 @@ namespace WhereToFly.App.UnitTest.Geo
                 "B1746484650918N01205513EV014790000000\n";
 
             // run
-            Track track = null;
+            Track? track = null;
             using (var stream = new MemoryStream(System.Text.Encoding.ASCII.GetBytes(line)))
             {
                 var igcParser = new IgcParser(stream);
