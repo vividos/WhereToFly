@@ -1,4 +1,4 @@
-﻿namespace WhereToFly.App.Maui
+﻿namespace WhereToFly.App
 {
     /// <summary>
     /// Constants for the app

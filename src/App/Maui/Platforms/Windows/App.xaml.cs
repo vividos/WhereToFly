@@ -1,4 +1,4 @@
-﻿namespace WhereToFly.App.Maui.WinUI
+﻿namespace WhereToFly.App.WinUI
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.

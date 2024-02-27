@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using WhereToFly.App.MapView;
 
-namespace WhereToFly.App.Maui
+namespace WhereToFly.App
 {
     /// <summary>
     /// MAUI program

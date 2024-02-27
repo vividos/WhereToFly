@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace WhereToFly.App.Maui
+namespace WhereToFly.App
 {
     /// <summary>
     /// Android MAUI app application

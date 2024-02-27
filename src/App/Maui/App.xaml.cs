@@ -3,7 +3,7 @@ using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Distribute;
 using System.Diagnostics;
 
-namespace WhereToFly.App.Maui
+namespace WhereToFly.App
 {
     /// <summary>
     /// WhereToFly MAUI app

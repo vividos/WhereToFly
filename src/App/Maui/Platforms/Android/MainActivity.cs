@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Content.PM;
 
-namespace WhereToFly.App.Maui
+namespace WhereToFly.App
 {
     /// <summary>
     /// Android MAUI app main activity
