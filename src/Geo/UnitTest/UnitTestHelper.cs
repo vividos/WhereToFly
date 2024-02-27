@@ -13,7 +13,7 @@ namespace WhereToFly.Geo.UnitTest
         /// </summary>
         public static string TestAssetsPath =>
             Path.Combine(
-                Path.GetDirectoryName(typeof(UnitTestHelper).Assembly.Location),
+                Path.GetDirectoryName(typeof(UnitTestHelper).Assembly.Location)!,
                 "Assets");
     }
 }

@@ -228,7 +228,9 @@ namespace WhereToFly.Geo.UnitTest
                         ceiling != null && ceiling.Type != AltitudeType.Textual,
                         "ceiling must not be a textual value");
 
-                    Assert.IsTrue(ceiling.OpeningTimes.Any(), "there must be an opening times text");
+                    Assert.IsTrue(
+                        ceiling.OpeningTimes != null && ceiling.OpeningTimes.Any(),
+                        "there must be an opening times text");
                 }
             }
         }
