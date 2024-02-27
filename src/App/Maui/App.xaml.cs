@@ -1,6 +1,7 @@
 ﻿using Microsoft.AppCenter;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Distribute;
+using System.Diagnostics;
 
 namespace WhereToFly.App.Maui
 {
@@ -10,9 +11,14 @@ namespace WhereToFly.App.Maui
     public partial class App : Application
     {
         /// <summary>
+        /// Task completion source used for the InitializedTask property
+        /// </summary>
+        private static readonly TaskCompletionSource<bool> TaskCompletionSourceInitialized = new();
+
+        /// <summary>
         /// Task that can be awaited to wait for a completed app initialisation.
         /// </summary>
-        public static Task InitializedTask { get; private set; }
+        public static Task InitializedTask => TaskCompletionSourceInitialized.Task;
 
         /// <summary>
         /// Creates a new MAUI app object
@@ -33,7 +39,7 @@ namespace WhereToFly.App.Maui
 
             this.InitializeComponent();
 
-            InitializedTask = Task.Run(this.LoadAppDataAsync);
+            Task.Run(this.LoadAppDataAsync);
 
             this.MainPage = new NavigationPage(new MainPage())
             {
@@ -61,6 +67,8 @@ namespace WhereToFly.App.Maui
         /// <returns>task to wait on</returns>
         private Task LoadAppDataAsync()
         {
+            TaskCompletionSourceInitialized.SetResult(true);
+
             return Task.CompletedTask;
         }
 
@@ -69,15 +77,20 @@ namespace WhereToFly.App.Maui
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs args)
+        private void TaskScheduler_UnobservedTaskException(
+            object? sender,
+            UnobservedTaskExceptionEventArgs args)
         {
-            Exception ex = args.Exception.InnerExceptions.Count == 1
+            Exception? ex = args.Exception.InnerExceptions.Count == 1
                 ? args.Exception.InnerException
                 : args.Exception;
 
             Debug.WriteLine($"UnobservedTaskException: {ex}");
 
-            LogError(ex);
+            if (ex != null)
+            {
+                LogError(ex);
+            }
         }
 
         /// <summary>
