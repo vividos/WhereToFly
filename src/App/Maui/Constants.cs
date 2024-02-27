@@ -1,6 +1,4 @@
-﻿using WhereToFly.Geo.Model;
-
-namespace WhereToFly.App.Maui
+﻿namespace WhereToFly.App.Maui
 {
     /// <summary>
     /// Constants for the app

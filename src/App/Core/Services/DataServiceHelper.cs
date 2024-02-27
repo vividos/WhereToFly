@@ -9,7 +9,6 @@ using WhereToFly.App.Resources;
 using WhereToFly.Geo.Airspace;
 using WhereToFly.Geo.DataFormats;
 using WhereToFly.Geo.Model;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.Services
 {

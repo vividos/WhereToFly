@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
-using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 
 namespace WhereToFly.Geo.UnitTest

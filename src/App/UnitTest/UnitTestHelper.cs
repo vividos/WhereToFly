@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.UnitTest

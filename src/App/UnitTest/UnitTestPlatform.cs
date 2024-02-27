@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using WhereToFly.App;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest
 {

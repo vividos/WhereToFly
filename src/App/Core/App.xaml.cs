@@ -10,8 +10,6 @@ using WhereToFly.App.Models;
 using WhereToFly.App.Services;
 using WhereToFly.App.Styles;
 using WhereToFly.App.Views;
-using Xamarin.CommunityToolkit.Extensions;
-using Xamarin.CommunityToolkit.UI.Views.Options;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;

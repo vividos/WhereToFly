@@ -5,7 +5,6 @@ using System.Windows.Input;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Models;
 using WhereToFly.Geo;
-using WhereToFly.Geo.Model;
 using WhereToFly.Geo.SunCalcNet;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Essentials;

@@ -1,5 +1,4 @@
 ﻿using System;
-using Windows.UI.Notifications;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 

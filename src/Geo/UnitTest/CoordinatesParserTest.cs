@@ -1,6 +1,5 @@
 ﻿#nullable enable
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 
 namespace WhereToFly.Geo.UnitTest

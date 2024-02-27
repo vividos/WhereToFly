@@ -1,10 +1,6 @@
-﻿using Android.OS;
-using Android.Widget;
-using AndroidX.AppCompat.App;
-using Google.Android.Material.Snackbar;
+﻿using AndroidX.AppCompat.App;
 using System;
 using Xamarin.Forms;
-using Xamarin.Forms.Platform.Android;
 
 [assembly: Dependency(typeof(WhereToFly.App.Android.AndroidPlatform))]
 
