@@ -1,7 +1,7 @@
-﻿using WhereToFly.App.Core.Models;
+﻿using WhereToFly.App.Models;
 using WhereToFly.Geo.Model;
 
-namespace WhereToFly.App.Core.ViewModels
+namespace WhereToFly.App.ViewModels
 {
     /// <summary>
     /// View model for the "filter by takeoff directions" popup page

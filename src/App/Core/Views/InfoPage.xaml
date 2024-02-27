@@ -3,10 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
-             xmlns:viewmodels="clr-namespace:WhereToFly.App.Core.ViewModels"
+             xmlns:controls="clr-namespace:WhereToFly.App.Controls"
+             xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
              mc:Ignorable="d"
-             x:Class="WhereToFly.App.Core.Views.InfoPage"
+             x:Class="WhereToFly.App.Views.InfoPage"
              x:DataType="viewmodels:InfoPageViewModel"
              Title="Info"
              BackgroundColor="{DynamicResource PageBackgroundColor}">

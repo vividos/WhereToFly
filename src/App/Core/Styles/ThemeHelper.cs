@@ -1,7 +1,7 @@
 ﻿using Xamarin.Essentials;
 using Xamarin.Forms;
 
-namespace WhereToFly.App.Core.Styles
+namespace WhereToFly.App.Styles
 {
     /// <summary>
     /// Helper for app themes
@@ -49,7 +49,7 @@ namespace WhereToFly.App.Core.Styles
             }
 
             ResourceDictionary newTheme =
-                theme == AppTheme.Dark ? new global::WhereToFly.App.Core.Styles.DarkTheme() : new global::WhereToFly.App.Core.Styles.LightTheme();
+                theme == AppTheme.Dark ? new global::WhereToFly.App.Styles.DarkTheme() : new global::WhereToFly.App.Styles.LightTheme();
 
             var resources = Application.Current.Resources;
             foreach (string item in newTheme.Keys)

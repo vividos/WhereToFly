@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
-using WhereToFly.App.Core.Services;
+using WhereToFly.App.Services;
 using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.UnitTest

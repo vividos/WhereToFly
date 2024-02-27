@@ -2,11 +2,11 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using WhereToFly.App.Core.Models;
+using WhereToFly.App.Models;
 using WhereToFly.App.Resources;
 using Xamarin.Forms;
 
-namespace WhereToFly.App.Core.Logic
+namespace WhereToFly.App.Logic
 {
     /// <summary>
     /// Image cache for weather images

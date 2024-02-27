@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-using WhereToFly.App.Core.ViewModels;
+using WhereToFly.App.ViewModels;
 using WhereToFly.Geo.Model;
 using Xamarin.CommunityToolkit.Effects;
 using Xamarin.Essentials;
@@ -7,7 +7,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 using TabbedPage = Xamarin.Forms.TabbedPage;
 
-namespace WhereToFly.App.Core.Views
+namespace WhereToFly.App.Views
 {
     /// <summary>
     /// Page to display track details

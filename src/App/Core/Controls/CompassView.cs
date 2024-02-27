@@ -4,7 +4,7 @@ using System;
 using WhereToFly.Geo;
 using Xamarin.Forms;
 
-namespace WhereToFly.App.Core.Controls
+namespace WhereToFly.App.Controls
 {
     /// <summary>
     /// Compass view, showing a compass rose, cardinal directions, sunrise and sunset points and

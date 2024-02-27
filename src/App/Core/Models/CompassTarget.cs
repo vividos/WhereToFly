@@ -1,6 +1,6 @@
 ﻿using WhereToFly.Geo.Model;
 
-namespace WhereToFly.App.Core.Models
+namespace WhereToFly.App.Models
 {
     /// <summary>
     /// Specifies the current compass target, either a fixed location or a direction angle from

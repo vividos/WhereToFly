@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using WhereToFly.App.Core.Models;
-using WhereToFly.App.Core.Styles;
+using WhereToFly.App.Models;
+using WhereToFly.App.Styles;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
-namespace WhereToFly.App.Core.ViewModels
+namespace WhereToFly.App.ViewModels
 {
     /// <summary>
     /// View model for the map settings page

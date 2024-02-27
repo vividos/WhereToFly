@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace WhereToFly.App.Core
+namespace WhereToFly.App
 {
     /// <summary>
     /// HttpClientHandler implementation for FFImageLoading that adds a Referer header to fix

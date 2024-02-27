@@ -1,9 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
-using WhereToFly.App.Core;
-using WhereToFly.App.Core.Logic;
-using WhereToFly.App.Core.Models;
-using WhereToFly.App.Core.Services.SqliteDatabase;
+using WhereToFly.App.Logic;
+using WhereToFly.App.Models;
+using WhereToFly.App.Services.SqliteDatabase;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest

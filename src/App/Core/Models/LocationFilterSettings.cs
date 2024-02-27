@@ -1,6 +1,6 @@
 ﻿using WhereToFly.Geo.Model;
 
-namespace WhereToFly.App.Core.Models
+namespace WhereToFly.App.Models
 {
     /// <summary>
     /// Location filter settings

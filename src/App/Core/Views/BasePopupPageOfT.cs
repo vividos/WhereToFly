@@ -1,7 +1,7 @@
 ﻿using Rg.Plugins.Popup.Extensions;
 using System.Threading.Tasks;
 
-namespace WhereToFly.App.Core.Views
+namespace WhereToFly.App.Views
 {
     /// <summary>
     /// Base class for all popup pages that want to return a result.

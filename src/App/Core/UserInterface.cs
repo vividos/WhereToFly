@@ -1,11 +1,11 @@
 ﻿using System.Threading.Tasks;
-using WhereToFly.App.Core.Services;
+using WhereToFly.App.Services;
 using Xamarin.CommunityToolkit.Extensions;
 using Xamarin.CommunityToolkit.UI.Views.Options;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
-namespace WhereToFly.App.Core
+namespace WhereToFly.App
 {
     /// <summary>
     /// User interface implementation for the Forms app

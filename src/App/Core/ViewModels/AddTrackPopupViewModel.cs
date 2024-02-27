@@ -4,7 +4,7 @@ using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using Xamarin.Forms;
 
-namespace WhereToFly.App.Core.ViewModels
+namespace WhereToFly.App.ViewModels
 {
     /// <summary>
     /// View model for the "add track" popup page

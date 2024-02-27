@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using WhereToFly.App.Core.ViewModels;
+using WhereToFly.App.ViewModels;
 using WhereToFly.Geo.Model;
 
-namespace WhereToFly.App.Core.Views
+namespace WhereToFly.App.Views
 {
     /// <summary>
     /// Popup page for setting track infos.

@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
-using WhereToFly.App.Core.ViewModels;
+using WhereToFly.App.ViewModels;
 using WhereToFly.Geo.Model;
 using Xamarin.Forms;
 
-namespace WhereToFly.App.Core.Views
+namespace WhereToFly.App.Views
 {
     /// <summary>
     /// Page to edit location details, such as name, type, internet link and description text.

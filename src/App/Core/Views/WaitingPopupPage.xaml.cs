@@ -4,7 +4,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace WhereToFly.App.Core.Views
+namespace WhereToFly.App.Views
 {
     /// <summary>
     /// Popup page showing a waiting dialog. Show the dialog using ShowAsync(), hide again with

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WhereToFly.App.Core.Models;
+using WhereToFly.App.Models;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using Xamarin.Forms;
 
-namespace WhereToFly.App.Core.ViewModels
+namespace WhereToFly.App.ViewModels
 {
     /// <summary>
     /// View model for the edit location details page

@@ -2,10 +2,9 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using WhereToFly.App.Core;
-using WhereToFly.App.Core.Models;
-using WhereToFly.App.Core.Services.SqliteDatabase;
 using WhereToFly.App.MapView;
+using WhereToFly.App.Models;
+using WhereToFly.App.Services.SqliteDatabase;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using Xamarin.Forms;

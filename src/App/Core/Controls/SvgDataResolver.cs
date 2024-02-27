@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace WhereToFly.App.Core.Controls
+namespace WhereToFly.App.Controls
 {
     /// <summary>
     /// Resolves loading SVG image data from various image sources

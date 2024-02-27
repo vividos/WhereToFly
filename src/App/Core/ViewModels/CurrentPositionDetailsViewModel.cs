@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Input;
-using WhereToFly.App.Core.Logic;
-using WhereToFly.App.Core.Models;
+using WhereToFly.App.Logic;
+using WhereToFly.App.Models;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using WhereToFly.Geo.SunCalcNet;
@@ -11,7 +11,7 @@ using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
-namespace WhereToFly.App.Core.ViewModels
+namespace WhereToFly.App.ViewModels
 {
     /// <summary>
     /// View model for the current position details page

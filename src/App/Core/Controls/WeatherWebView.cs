@@ -2,7 +2,7 @@
 
 #pragma warning disable S2094 // Classes should not be empty
 
-namespace WhereToFly.App.Core.Controls
+namespace WhereToFly.App.Controls
 {
     /// <summary>
     /// Web view that shows the selected weather page. The web view's platform dependent renderer

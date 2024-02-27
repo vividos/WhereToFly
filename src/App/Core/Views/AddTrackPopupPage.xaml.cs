@@ -1,8 +1,8 @@
 ﻿using System;
-using WhereToFly.App.Core.ViewModels;
+using WhereToFly.App.ViewModels;
 using WhereToFly.Geo.Model;
 
-namespace WhereToFly.App.Core.Views
+namespace WhereToFly.App.Views
 {
     /// <summary>
     /// Popup page for adding a newly loaded track and edit its properties.

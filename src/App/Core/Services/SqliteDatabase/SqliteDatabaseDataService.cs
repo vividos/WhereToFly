@@ -5,11 +5,11 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using WhereToFly.App.Core.Models;
+using WhereToFly.App.Models;
 using WhereToFly.Shared.Model;
 using Xamarin.Essentials;
 
-namespace WhereToFly.App.Core.Services.SqliteDatabase
+namespace WhereToFly.App.Services.SqliteDatabase
 {
     /// <summary>
     /// Data service implementation that stores data in an SQLite database

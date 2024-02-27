@@ -1,7 +1,7 @@
-﻿using WhereToFly.App.Core.Services;
+﻿using WhereToFly.App.Services;
 using Xamarin.Forms;
 
-namespace WhereToFly.App.Core.Views
+namespace WhereToFly.App.Views
 {
     /// <summary>
     /// The root page of the app, showing a slide-out menu on the left, and the map page in

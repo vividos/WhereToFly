@@ -1,4 +1,4 @@
-﻿using WhereToFly.App.Core.Controls;
+﻿using WhereToFly.App.Controls;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.UWP;
 

@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using WhereToFly.App.Core.Models;
+using WhereToFly.App.Models;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 
-namespace WhereToFly.App.Core.Services.SqliteDatabase
+namespace WhereToFly.App.Services.SqliteDatabase
 {
     /// <summary>
     /// Location data service implementation of SQLite database data service

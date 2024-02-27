@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-using WhereToFly.App.Core;
+using WhereToFly.App;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest

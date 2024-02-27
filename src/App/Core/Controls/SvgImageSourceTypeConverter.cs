@@ -3,7 +3,7 @@ using System.Reflection;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace WhereToFly.App.Core.Controls
+namespace WhereToFly.App.Controls
 {
     /// <summary>
     /// Type converter for SVG based image sources; takes a string representation of an SVG image

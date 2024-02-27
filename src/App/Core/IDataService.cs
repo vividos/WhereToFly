@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using WhereToFly.App.Core.Models;
+using WhereToFly.App.Models;
 using WhereToFly.Shared.Model;
 
-namespace WhereToFly.App.Core
+namespace WhereToFly.App
 {
     /// <summary>
     /// Data service for the app; provides access to data storage.

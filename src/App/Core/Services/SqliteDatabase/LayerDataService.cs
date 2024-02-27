@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WhereToFly.Geo.Model;
 
-namespace WhereToFly.App.Core.Services.SqliteDatabase
+namespace WhereToFly.App.Services.SqliteDatabase
 {
     /// <summary>
     /// Layer data service implementation of SQLite database data service

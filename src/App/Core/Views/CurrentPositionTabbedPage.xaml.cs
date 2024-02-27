@@ -1,6 +1,6 @@
 ﻿using Xamarin.Forms;
 
-namespace WhereToFly.App.Core.Views
+namespace WhereToFly.App.Views
 {
     /// <summary>
     /// Tabbed page showing current position details and compass details

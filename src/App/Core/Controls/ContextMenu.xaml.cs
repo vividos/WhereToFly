@@ -2,13 +2,13 @@
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using WhereToFly.App.Core.Logic;
-using WhereToFly.App.Core.ViewModels;
-using WhereToFly.App.Core.Views;
+using WhereToFly.App.Logic;
+using WhereToFly.App.ViewModels;
+using WhereToFly.App.Views;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
 
-namespace WhereToFly.App.Core.Controls
+namespace WhereToFly.App.Controls
 {
     /// <summary>
     /// Context menu; provides a 3-dot button that opens a popup with the context menu items when

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
-using WhereToFly.App.Core.Logic;
+using WhereToFly.App.Logic;
 using Xamarin.Forms;
 
-namespace WhereToFly.App.Core.Converter
+namespace WhereToFly.App.Converter
 {
     /// <summary>
     /// Converts a path to an svg image to an SvgImageSource. Use

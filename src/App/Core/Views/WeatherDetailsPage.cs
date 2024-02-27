@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using WhereToFly.App.Core.Controls;
-using WhereToFly.App.Core.Models;
-using WhereToFly.App.Core.Services;
+using WhereToFly.App.Controls;
+using WhereToFly.App.Models;
+using WhereToFly.App.Services;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
-namespace WhereToFly.App.Core.Views
+namespace WhereToFly.App.Views
 {
     /// <summary>
     /// Page showing weather details by showing an external web page. Also the page has quick

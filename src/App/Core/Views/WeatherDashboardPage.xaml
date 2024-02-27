@@ -2,9 +2,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
-             xmlns:local="clr-namespace:WhereToFly.App.Core"
-             xmlns:viewmodels="clr-namespace:WhereToFly.App.Core.ViewModels"
-             x:Class="WhereToFly.App.Core.Views.WeatherDashboardPage"
+             xmlns:local="clr-namespace:WhereToFly.App"
+             xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
+             x:Class="WhereToFly.App.Views.WeatherDashboardPage"
              x:DataType="viewmodels:WeatherDashboardViewModel"
              Title="Weather"
              BackgroundColor="{DynamicResource PageBackgroundColor}">

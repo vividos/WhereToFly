@@ -3,9 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WhereToFly.App.Core;
-using WhereToFly.App.Core.Services.SqliteDatabase;
-using WhereToFly.App.Core.ViewModels;
+using WhereToFly.App.Services.SqliteDatabase;
+using WhereToFly.App.ViewModels;
 using WhereToFly.Shared.Model;
 using Xamarin.Forms;
 

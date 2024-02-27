@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using WhereToFly.App.Core.Controls;
+using WhereToFly.App.Controls;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest.Controls

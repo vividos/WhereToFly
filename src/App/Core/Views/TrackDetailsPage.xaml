@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
+             xmlns:controls="clr-namespace:WhereToFly.App.Controls"
              xmlns:mapview="clr-namespace:WhereToFly.App.MapView;assembly=WhereToFly.App.MapView"
-             xmlns:viewmodels="clr-namespace:WhereToFly.App.Core.ViewModels"
+             xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
-             x:Class="WhereToFly.App.Core.Views.TrackDetailsPage"
+             x:Class="WhereToFly.App.Views.TrackDetailsPage"
              x:DataType="viewmodels:TrackDetailsViewModel"
              Title="Details"
              BackgroundColor="{DynamicResource PageBackgroundColor}">

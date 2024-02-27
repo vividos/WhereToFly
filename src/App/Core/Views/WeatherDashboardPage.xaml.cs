@@ -1,6 +1,6 @@
 ﻿using Xamarin.Forms;
 
-namespace WhereToFly.App.Core.Views
+namespace WhereToFly.App.Views
 {
     /// <summary>
     /// Dashboard page showing one or more weather icon controls. Tapping the icons opens the

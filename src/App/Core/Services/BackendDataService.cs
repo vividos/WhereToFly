@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;
 
-namespace WhereToFly.App.Core.Services
+namespace WhereToFly.App.Services
 {
     /// <summary>
     /// Data service that communicates with the backend data service (the project

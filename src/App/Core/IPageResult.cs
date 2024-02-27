@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace WhereToFly.App.Core
+namespace WhereToFly.App
 {
     /// <summary>
     /// Interface for pages and popup pages that wish to return a result

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using WhereToFly.App.MapView;
 using WhereToFly.Geo.Model;
 
-namespace WhereToFly.App.Core.Services
+namespace WhereToFly.App.Services
 {
     /// <summary>
     /// Caching nearby POI service that uses the backend data service to load more POIs

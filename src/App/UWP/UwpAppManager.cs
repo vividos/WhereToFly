@@ -1,5 +1,4 @@
 ﻿using System;
-using WhereToFly.App.Core;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(WhereToFly.App.UWP.UwpAppManager))]

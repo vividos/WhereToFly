@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WhereToFly.App.Core;
-using WhereToFly.App.Core.Models;
-using WhereToFly.App.Core.Views;
+using WhereToFly.App.Models;
+using WhereToFly.App.Views;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest.Views
@@ -21,7 +20,7 @@ namespace WhereToFly.App.UnitTest.Views
             Xamarin.Forms.Mocks.MockForms.Init();
             DependencyService.Register<IPlatform, UnitTestPlatform>();
             DependencyService.Register<IGeolocationService, UnitTestGeolocationService>();
-            Core.App.Settings = new AppSettings();
+            App.Settings = new AppSettings();
         }
 
         /// <summary>

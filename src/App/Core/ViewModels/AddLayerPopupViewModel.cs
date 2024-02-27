@@ -1,6 +1,6 @@
 ﻿using WhereToFly.Geo.Model;
 
-namespace WhereToFly.App.Core.ViewModels
+namespace WhereToFly.App.ViewModels
 {
     /// <summary>
     /// View model for the "add layer" popup page

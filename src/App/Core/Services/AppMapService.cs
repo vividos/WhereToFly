@@ -3,17 +3,17 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using WhereToFly.App.Core.Logic;
-using WhereToFly.App.Core.Models;
-using WhereToFly.App.Core.Views;
+using WhereToFly.App.Logic;
 using WhereToFly.App.MapView;
+using WhereToFly.App.Models;
+using WhereToFly.App.Views;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Location = WhereToFly.Geo.Model.Location;
 
-namespace WhereToFly.App.Core.Services
+namespace WhereToFly.App.Services
 {
     /// <summary>
     /// The app's map services implementation

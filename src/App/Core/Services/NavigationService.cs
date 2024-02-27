@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using WhereToFly.App.Core.Models;
-using WhereToFly.App.Core.Views;
 using WhereToFly.App.MapView;
+using WhereToFly.App.Models;
+using WhereToFly.App.Views;
 using WhereToFly.Geo.Airspace;
 using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;
@@ -16,7 +16,7 @@ using Location = WhereToFly.Geo.Model.Location;
 
 #pragma warning disable S4136 // All 'NavigateAsync' method overloads should be adjacent.
 
-namespace WhereToFly.App.Core.Services
+namespace WhereToFly.App.Services
 {
     /// <summary>
     /// Navigation service for the app; manages navigating to pages from any place in the app.

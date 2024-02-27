@@ -1,8 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
 using System.Linq;
-using WhereToFly.App.Core.Models;
-using WhereToFly.App.Core.ViewModels;
+using WhereToFly.App.Models;
+using WhereToFly.App.ViewModels;
 
 namespace WhereToFly.App.UnitTest.ViewModels
 {
@@ -18,7 +18,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
         [TestInitialize]
         public void SetUp()
         {
-            Core.App.Settings = new AppSettings();
+            App.Settings = new AppSettings();
         }
 
         /// <summary>

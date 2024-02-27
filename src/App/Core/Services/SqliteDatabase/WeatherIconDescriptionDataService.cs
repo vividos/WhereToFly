@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WhereToFly.App.Core.Models;
+using WhereToFly.App.Models;
 
-namespace WhereToFly.App.Core.Services.SqliteDatabase
+namespace WhereToFly.App.Services.SqliteDatabase
 {
     /// <summary>
     /// Weather icon description data service implementation of SQLite database data service

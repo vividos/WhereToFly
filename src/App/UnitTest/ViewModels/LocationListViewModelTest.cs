@@ -1,10 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
-using WhereToFly.App.Core;
-using WhereToFly.App.Core.Models;
-using WhereToFly.App.Core.Services.SqliteDatabase;
-using WhereToFly.App.Core.ViewModels;
+using WhereToFly.App.Models;
+using WhereToFly.App.Services.SqliteDatabase;
+using WhereToFly.App.ViewModels;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest.ViewModels

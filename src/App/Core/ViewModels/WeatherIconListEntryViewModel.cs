@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
-using WhereToFly.App.Core.Logic;
-using WhereToFly.App.Core.Models;
+using WhereToFly.App.Logic;
+using WhereToFly.App.Models;
 using Xamarin.Forms;
 
-namespace WhereToFly.App.Core.ViewModels
+namespace WhereToFly.App.ViewModels
 {
     /// <summary>
     /// View model for a weather icon as a list entry

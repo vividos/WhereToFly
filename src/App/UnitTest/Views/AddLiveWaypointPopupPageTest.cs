@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WhereToFly.App.Core.Views;
+using WhereToFly.App.Views;
 using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.UnitTest.Views

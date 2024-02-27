@@ -3,9 +3,8 @@ using Newtonsoft.Json;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-using WhereToFly.App.Core;
-using WhereToFly.App.Core.Services;
 using WhereToFly.App.MapView;
+using WhereToFly.App.Services;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest.MapView

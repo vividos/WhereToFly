@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using WhereToFly.Geo.Model;
 
-namespace WhereToFly.App.Core
+namespace WhereToFly.App
 {
     /// <summary>
     /// Data service for Track objects

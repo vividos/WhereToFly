@@ -1,4 +1,4 @@
-﻿namespace WhereToFly.App.Core.Models
+﻿namespace WhereToFly.App.Models
 {
     /// <summary>
     /// Description for a single weather icon

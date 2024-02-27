@@ -1,4 +1,4 @@
-﻿namespace WhereToFly.App.Core
+﻿namespace WhereToFly.App
 {
     /// <summary>
     /// Popup page keys for use in navigation service

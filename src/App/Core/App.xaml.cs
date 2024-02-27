@@ -5,11 +5,11 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using WhereToFly.App.Core.Logic;
-using WhereToFly.App.Core.Models;
-using WhereToFly.App.Core.Services;
-using WhereToFly.App.Core.Styles;
-using WhereToFly.App.Core.Views;
+using WhereToFly.App.Logic;
+using WhereToFly.App.Models;
+using WhereToFly.App.Services;
+using WhereToFly.App.Styles;
+using WhereToFly.App.Views;
 using Xamarin.CommunityToolkit.Extensions;
 using Xamarin.CommunityToolkit.UI.Views.Options;
 using Xamarin.Essentials;
@@ -22,7 +22,7 @@ using Xamarin.Forms.Xaml;
 // compile all xaml pages
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 
-namespace WhereToFly.App.Core
+namespace WhereToFly.App
 {
     /// <summary>
     /// Xamarin.Forms application for the WhereToFly app

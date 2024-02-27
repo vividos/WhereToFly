@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Windows.Input;
-using WhereToFly.App.Core.Logic;
+using WhereToFly.App.Logic;
 using WhereToFly.Geo.Model;
 using Xamarin.Forms;
 
-namespace WhereToFly.App.Core.ViewModels
+namespace WhereToFly.App.ViewModels
 {
     /// <summary>
     /// View model for list entries for the tour planning list

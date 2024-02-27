@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace WhereToFly.App.Core.Services
+namespace WhereToFly.App.Services
 {
     /// <summary>
     /// Type of key that contains a latitude and longitude value

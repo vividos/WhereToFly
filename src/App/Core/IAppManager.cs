@@ -1,4 +1,4 @@
-﻿namespace WhereToFly.App.Core
+﻿namespace WhereToFly.App
 {
     /// <summary>
     /// Interface to app manager that provides operations on external apps

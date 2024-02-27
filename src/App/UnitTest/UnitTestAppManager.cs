@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using WhereToFly.App.Core;
 
 namespace WhereToFly.App.UnitTest
 {

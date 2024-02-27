@@ -3,7 +3,7 @@ using WhereToFly.Geo.Model;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
-namespace WhereToFly.App.Core.Views
+namespace WhereToFly.App.Views
 {
     /// <summary>
     /// Page showing a track height profile

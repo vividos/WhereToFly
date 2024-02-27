@@ -1,6 +1,6 @@
-﻿using WhereToFly.App.Core.ViewModels;
+﻿using WhereToFly.App.ViewModels;
 
-namespace WhereToFly.App.Core.Views
+namespace WhereToFly.App.Views
 {
     /// <summary>
     /// Popup to display context menu items list

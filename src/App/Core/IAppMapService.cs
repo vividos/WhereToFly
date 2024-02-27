@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
-using WhereToFly.App.Core.Models;
-using WhereToFly.App.Core.Views;
 using WhereToFly.App.MapView;
+using WhereToFly.App.Models;
+using WhereToFly.App.Views;
 using WhereToFly.Geo.Model;
 
-namespace WhereToFly.App.Core
+namespace WhereToFly.App
 {
     /// <summary>
     /// The app's globally available map services

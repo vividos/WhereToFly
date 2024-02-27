@@ -2,7 +2,7 @@
 using System.Globalization;
 using WhereToFly.Geo.Model;
 
-namespace WhereToFly.App.Core.Logic
+namespace WhereToFly.App.Logic
 {
     /// <summary>
     /// Formatter for different data structures

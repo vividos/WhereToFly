@@ -2,14 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using WhereToFly.App.Core.Logic;
-using WhereToFly.App.Core.Models;
-using WhereToFly.App.Core.ViewModels;
+using WhereToFly.App.Logic;
+using WhereToFly.App.Models;
+using WhereToFly.App.ViewModels;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using Xamarin.Forms;
 
-namespace WhereToFly.App.Core.Views
+namespace WhereToFly.App.Views
 {
     /// <summary>
     /// Context menu for a long-tap on a map point

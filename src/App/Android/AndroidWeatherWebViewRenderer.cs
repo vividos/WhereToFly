@@ -5,7 +5,7 @@ using Android.Webkit;
 using Android.Widget;
 using System;
 using System.Linq;
-using WhereToFly.App.Core.Controls;
+using WhereToFly.App.Controls;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 

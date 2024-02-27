@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WhereToFly.App.Core.Views
+namespace WhereToFly.App.Views
 {
     /// <summary>
     /// Popup page for "Find location" function in order to input a location name.

@@ -3,7 +3,7 @@ using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using Xamarin.Essentials;
 
-namespace WhereToFly.App.Core.Models
+namespace WhereToFly.App.Models
 {
     /// <summary>
     /// Settings for the app

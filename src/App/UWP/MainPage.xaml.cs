@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
-using WhereToFly.App.Core;
-using WhereToFly.App.Core.Logic;
+using WhereToFly.App.Logic;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using Windows.UI.ViewManagement;
@@ -30,7 +29,7 @@ namespace WhereToFly.App.UWP
             this.DragOver += this.OnDragOver;
             this.Drop += this.OnDrop;
 
-            this.LoadApplication(new Core.App());
+            this.LoadApplication(new WhereToFly.App.App());
         }
 
         /// <summary>

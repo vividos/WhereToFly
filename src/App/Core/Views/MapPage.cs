@@ -4,10 +4,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using WhereToFly.App.Core.Logic;
-using WhereToFly.App.Core.Models;
-using WhereToFly.App.Core.Services;
+using WhereToFly.App.Logic;
 using WhereToFly.App.MapView;
+using WhereToFly.App.Models;
+using WhereToFly.App.Services;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;
@@ -15,7 +15,7 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using Location = WhereToFly.Geo.Model.Location;
 
-namespace WhereToFly.App.Core.Views
+namespace WhereToFly.App.Views
 {
     /// <summary>
     /// Page showing a map, with pins for locations loaded into the app.

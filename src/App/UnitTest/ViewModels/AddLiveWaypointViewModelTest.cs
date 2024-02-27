@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
-using WhereToFly.App.Core.ViewModels;
+using WhereToFly.App.ViewModels;
 using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.UnitTest.ViewModels

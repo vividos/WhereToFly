@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
+             xmlns:controls="clr-namespace:WhereToFly.App.Controls"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="WhereToFly.App.Core.Controls.ContextMenu">
+             x:Class="WhereToFly.App.Controls.ContextMenu">
     <Grid>
         <!-- Context menu 3-dot button -->
         <controls:SvgImage Source="{Binding ContextMenuImageSource, Mode=OneWay}"

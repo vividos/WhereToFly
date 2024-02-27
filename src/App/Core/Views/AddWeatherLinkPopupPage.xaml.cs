@@ -1,8 +1,8 @@
 ﻿using System;
-using WhereToFly.App.Core.Models;
-using WhereToFly.App.Core.ViewModels;
+using WhereToFly.App.Models;
+using WhereToFly.App.ViewModels;
 
-namespace WhereToFly.App.Core.Views
+namespace WhereToFly.App.Views
 {
     /// <summary>
     /// Popup page for adding a new weather link.

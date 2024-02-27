@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using WhereToFly.App.Core.Logic;
-using WhereToFly.App.Core.ViewModels;
+using WhereToFly.App.Logic;
+using WhereToFly.App.ViewModels;
 using WhereToFly.Geo.Model;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
-namespace WhereToFly.App.Core.Views
+namespace WhereToFly.App.Views
 {
     /// <summary>
     /// Page to display current position details, such as coordinates, speed, heading and accuracy

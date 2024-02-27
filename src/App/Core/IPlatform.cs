@@ -1,6 +1,6 @@
 ﻿using Xamarin.Forms;
 
-namespace WhereToFly.App.Core
+namespace WhereToFly.App
 {
     /// <summary>
     /// Platform abstraction interface

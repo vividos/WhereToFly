@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using WhereToFly.Geo.Model;
 using Xamarin.Essentials;
 
-namespace WhereToFly.App.Core.Services.SqliteDatabase
+namespace WhereToFly.App.Services.SqliteDatabase
 {
     /// <summary>
     /// Track data service implementation of SQLite database data service

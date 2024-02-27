@@ -5,7 +5,7 @@ using System.Windows.Input;
 using WhereToFly.Geo.Airspace;
 using Xamarin.Forms;
 
-namespace WhereToFly.App.Core.ViewModels
+namespace WhereToFly.App.ViewModels
 {
     /// <summary>
     /// View model for the "select airspace classes" popup page

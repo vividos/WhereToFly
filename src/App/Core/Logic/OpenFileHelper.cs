@@ -6,8 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using WhereToFly.App.Core.Services;
-using WhereToFly.App.Core.Views;
+using WhereToFly.App.Services;
+using WhereToFly.App.Views;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Airspace;
 using WhereToFly.Geo.DataFormats;
@@ -17,7 +17,7 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using Location = WhereToFly.Geo.Model.Location;
 
-namespace WhereToFly.App.Core.Logic
+namespace WhereToFly.App.Logic
 {
     /// <summary>
     /// Helper for opening files, which can either contain locations, tracks or both

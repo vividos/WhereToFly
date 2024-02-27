@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WhereToFly.App.Core.ViewModels;
+using WhereToFly.App.ViewModels;
 
 namespace WhereToFly.App.UnitTest.ViewModels
 {

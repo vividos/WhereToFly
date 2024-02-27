@@ -1,7 +1,7 @@
 ﻿using System;
 using WhereToFly.Shared.Model;
 
-namespace WhereToFly.App.Core.Services
+namespace WhereToFly.App.Services
 {
     /// <summary>
     /// Event arguments for the event when live data has been updated

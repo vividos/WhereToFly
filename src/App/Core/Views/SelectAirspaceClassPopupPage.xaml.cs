@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using WhereToFly.App.Core.ViewModels;
+using WhereToFly.App.ViewModels;
 using WhereToFly.Geo.Airspace;
 
-namespace WhereToFly.App.Core.Views
+namespace WhereToFly.App.Views
 {
     /// <summary>
     /// Popup page for selecting airspace classes to import.

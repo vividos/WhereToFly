@@ -1,7 +1,7 @@
 ﻿using System;
-using WhereToFly.App.Core.ViewModels;
+using WhereToFly.App.ViewModels;
 
-namespace WhereToFly.App.Core.Views
+namespace WhereToFly.App.Views
 {
     /// <summary>
     /// Popup page for setting a compass target direction

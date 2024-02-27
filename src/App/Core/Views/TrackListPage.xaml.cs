@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using WhereToFly.App.Core.ViewModels;
+using WhereToFly.App.ViewModels;
 using Xamarin.Forms;
 
-namespace WhereToFly.App.Core.Views
+namespace WhereToFly.App.Views
 {
     /// <summary>
     /// Page to display track list; a single location entry can be tapped to get more infos.

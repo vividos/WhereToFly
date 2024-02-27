@@ -1,7 +1,7 @@
 ﻿using System;
 using WhereToFly.Geo.Model;
 
-namespace WhereToFly.App.Core
+namespace WhereToFly.App
 {
     /// <summary>
     /// Event args for position updates

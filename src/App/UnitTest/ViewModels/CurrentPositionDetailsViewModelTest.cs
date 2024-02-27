@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using WhereToFly.App.Core.Models;
-using WhereToFly.App.Core.ViewModels;
+using WhereToFly.App.Models;
+using WhereToFly.App.ViewModels;
 using WhereToFly.Geo;
 using Xamarin.Forms;
 
@@ -74,7 +74,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
 
             viewModel.OnPositionChanged(
                 this,
-                new Core.GeolocationEventArgs(location));
+                new GeolocationEventArgs(location));
 
             // check
             Assert.AreEqual("11° 34' 32\"", viewModel.Longitude, "longitude text must be correct");
@@ -107,7 +107,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
             var location = new Xamarin.Essentials.Location(48.137222, 11.575556);
             viewModel.OnPositionChanged(
                 this,
-                new Core.GeolocationEventArgs(location));
+                new GeolocationEventArgs(location));
 
             // check
             Assert.AreEqual(string.Empty, viewModel.Altitude, "accessing altitude must not crash");

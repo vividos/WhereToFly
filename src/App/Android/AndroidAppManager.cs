@@ -5,7 +5,6 @@ using Android.Graphics.Drawables;
 using System;
 using System.Diagnostics;
 using System.IO;
-using WhereToFly.App.Core;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(WhereToFly.App.Android.AndroidAppManager))]

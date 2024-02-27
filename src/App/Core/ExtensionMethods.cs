@@ -1,6 +1,6 @@
 ﻿using WhereToFly.Geo.Model;
 
-namespace WhereToFly.App.Core
+namespace WhereToFly.App
 {
     /// <summary>
     /// Extension methods for the app

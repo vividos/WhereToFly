@@ -1,7 +1,7 @@
 ﻿using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;
 
-namespace WhereToFly.App.Core.ViewModels
+namespace WhereToFly.App.ViewModels
 {
     /// <summary>
     /// View model for the "add live waypoint" popup page

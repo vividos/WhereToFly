@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using WhereToFly.App.Core.Services;
+using WhereToFly.App.Services;
 
-namespace WhereToFly.App.Core
+namespace WhereToFly.App
 {
     /// <summary>
     /// Interface to the user interface

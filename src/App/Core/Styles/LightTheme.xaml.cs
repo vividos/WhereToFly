@@ -1,6 +1,6 @@
 ﻿using Xamarin.Forms;
 
-namespace WhereToFly.App.Core.Styles
+namespace WhereToFly.App.Styles
 {
     /// <summary>
     /// Light theme style

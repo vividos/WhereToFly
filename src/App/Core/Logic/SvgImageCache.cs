@@ -9,7 +9,7 @@ using Xamarin.Forms;
 
 #pragma warning disable S4136 // All 'GetImageSource' method overloads should be adjacent.
 
-namespace WhereToFly.App.Core.Logic
+namespace WhereToFly.App.Logic
 {
     /// <summary>
     /// Cache for SVG images

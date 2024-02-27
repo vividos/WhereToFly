@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;
 
-namespace WhereToFly.App.Core.Services
+namespace WhereToFly.App.Services
 {
     /// <summary>
     /// Service for refreshing live waypoint data and live track data

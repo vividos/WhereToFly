@@ -1,9 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using System.Threading.Tasks;
-using WhereToFly.App.Core;
-using WhereToFly.App.Core.Services;
-using WhereToFly.App.Core.Views;
+using WhereToFly.App.Services;
+using WhereToFly.App.Views;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest.Views

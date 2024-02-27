@@ -4,7 +4,7 @@ using System.Xml;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace WhereToFly.App.Core
+namespace WhereToFly.App
 {
     /// <summary>
     /// Markup extension to specify an image name (without extension) and the

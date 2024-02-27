@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="clr-namespace:WhereToFly.App.Core.Controls"
-             xmlns:converter="clr-namespace:WhereToFly.App.Core.Converter"
-             xmlns:local="clr-namespace:WhereToFly.App.Core"
-             xmlns:viewmodels="clr-namespace:WhereToFly.App.Core.ViewModels"
-             x:Class="WhereToFly.App.Core.Views.LayerListPage"
+             xmlns:controls="clr-namespace:WhereToFly.App.Controls"
+             xmlns:converter="clr-namespace:WhereToFly.App.Converter"
+             xmlns:local="clr-namespace:WhereToFly.App"
+             xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
+             x:Class="WhereToFly.App.Views.LayerListPage"
              x:DataType="viewmodels:LayerListViewModel"
              Title="Layer list"
              BackgroundColor="{DynamicResource PageBackgroundColor}">

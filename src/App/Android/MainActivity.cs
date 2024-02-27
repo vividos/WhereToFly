@@ -5,8 +5,7 @@ using Android.OS;
 using System;
 using System.IO;
 using System.Net.Http;
-using WhereToFly.App.Core;
-using WhereToFly.App.Core.Logic;
+using WhereToFly.App.Logic;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
@@ -135,7 +134,7 @@ namespace WhereToFly.App.Android
             Plugin.Geolocator.GeolocatorImplementation.ProvidersToUseWhileListening =
                 new string[] { global::Android.Locations.LocationManager.GpsProvider };
 
-            this.LoadApplication(new Core.App());
+            this.LoadApplication(new App());
         }
 
         /// <summary>

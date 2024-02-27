@@ -6,7 +6,7 @@ using System.Windows.Input;
 using WhereToFly.Geo.Model;
 using Xamarin.Forms;
 
-namespace WhereToFly.App.Core.Controls
+namespace WhereToFly.App.Controls
 {
     /// <summary>
     /// View that displays a compass with all takeoff directions specified in the Source

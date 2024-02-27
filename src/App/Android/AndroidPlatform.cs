@@ -3,7 +3,6 @@ using Android.Widget;
 using AndroidX.AppCompat.App;
 using Google.Android.Material.Snackbar;
 using System;
-using WhereToFly.App.Core;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 

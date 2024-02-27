@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using WhereToFly.App.Core.Logic;
+using WhereToFly.App.Logic;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using Xamarin.CommunityToolkit.ObjectModel;
 using Xamarin.Forms;
 
-namespace WhereToFly.App.Core.ViewModels
+namespace WhereToFly.App.ViewModels
 {
     /// <summary>
     /// View model for a single location list entry

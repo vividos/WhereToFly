@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using WhereToFly.App.Core.Logic;
-using WhereToFly.App.Core.Services;
+using WhereToFly.App.Logic;
+using WhereToFly.App.Services;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
-namespace WhereToFly.App.Core.ViewModels
+namespace WhereToFly.App.ViewModels
 {
     /// <summary>
     /// View model for the menu appearing in the "hamburger menu" in the flyout page layout.
