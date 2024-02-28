@@ -42,8 +42,8 @@
   "dependencies": {
     "cesium": "^1.114.0",
     "chart.js": "^4.4.0",
-    "chartjs-adapter-moment": "^1.0.0",
+    "chartjs-adapter-dayjs-4": "^1.0.4",
     "chartjs-plugin-zoom": "^2.0.1",
-    "moment": "^2.29.4"
+    "dayjs": "^1.11.10"
   }
 }

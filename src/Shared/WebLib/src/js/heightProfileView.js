@@ -16,7 +16,7 @@ import {
 import * as helpers from "chart.js/helpers";
 
 // Chart.js plugins
-import "chartjs-adapter-moment";
+import "chartjs-adapter-dayjs-4";
 
 import SimpleCrosshairPlugin from "./chartjs-plugin-simple-crosshair.js";
 import ZoomPlugin from "chartjs-plugin-zoom";
