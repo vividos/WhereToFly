@@ -20,7 +20,7 @@
     <AndroidAsset Include="..\..\..\Changelog.md">
       <Link>Assets\info\Changelog.md</Link>
     </AndroidAsset>
-    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.3" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.7" />
   </ItemGroup>
 
 </Project>
