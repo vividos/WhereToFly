@@ -59,7 +59,7 @@ namespace WhereToFly.App.Views
         }
 
         /// <summary>
-        /// Sets result value for popup page
+        /// Sets result value for popup page and closes the popup
         /// </summary>
         /// <param name="result">result value</param>
         protected void SetResult(TResult result)

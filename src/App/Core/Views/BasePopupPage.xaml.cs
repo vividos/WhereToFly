@@ -13,7 +13,7 @@ namespace WhereToFly.App.Views
         /// Closes popup
         /// </summary>
         /// <returns>task to wait on</returns>
-        protected async Task ClosePopupAsync()
+        protected async Task CloseAsync()
         {
             await this.Navigation.PopPopupAsync(animate: true);
         }

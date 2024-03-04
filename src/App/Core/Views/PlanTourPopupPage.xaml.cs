@@ -23,7 +23,7 @@ namespace WhereToFly.App.Views
 
             this.BindingContext = new PlanTourPopupViewModel(
                 planTourParameters,
-                this.ClosePopupAsync);
+                this.CloseAsync);
         }
 
         /// <summary>
