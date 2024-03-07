@@ -1,11 +1,15 @@
-﻿/*!
-  * chartjs-plugin-simple-crosshair v1.0.0
+/*!
+  * chartjs-plugin-simple-crosshair v1.0.1
   * https://www.chartjs.org
   * (c) Abel Heinsbroek, vividos
   * Released under the MIT license
   * This is a simplified version of the chartjs-plugin-crosshair from Abel
-  * Heinsbroek, modified to work under ChartJS 3.x/4.x and to remove zoom and sync
-  * features.
+  * Heinsbroek, modified to work under ChartJS 3.x/4.x and to remove zoom and
+  * sync features.
+  * History:
+  * 1.0.0: Initial version, forked and removed zoom and sync features
+  * 1.0.1: Set args.changed instead of calling chart.draw(); also cleaned up
+  *        code.
   */
 import { valueOrDefault } from "chart.js/helpers";
 
@@ -28,7 +32,11 @@ export default {
 
         const xScaleType = chart.config.options.scales.x.type
 
-        if (xScaleType !== "linear" && xScaleType !== "time" && xScaleType !== "category" && xScaleType !== "logarithmic" && xScaleType !== "timeseries")
+        if (xScaleType !== "linear" &&
+            xScaleType !== "time" &&
+            xScaleType !== "category" &&
+            xScaleType !== "logarithmic" &&
+            xScaleType !== "timeseries")
             return;
 
         if (chart.options.plugins.crosshair === undefined)
@@ -48,7 +56,9 @@ export default {
             this.defaults[category][name]);
     },
     getXScale: function(chart) {
-        return chart.data.datasets.length ? chart.scales[chart.getDatasetMeta(0).xAxisID] : null;
+        return chart.data.datasets.length
+            ? chart.scales[chart.getDatasetMeta(0).xAxisID]
+            : null;
     },
     getYScale: function(chart) {
         return chart.scales[chart.getDatasetMeta(0).yAxisID];
@@ -63,7 +73,11 @@ export default {
 
         const xScaleType = chart.config.options.scales.x.type;
 
-        if (xScaleType !== "linear" && xScaleType !== "time" && xScaleType !== "category" && xScaleType !== "logarithmic" && xScaleType !== "timeseries")
+        if (xScaleType !== "linear" &&
+            xScaleType !== "time" &&
+            xScaleType !== "category" &&
+            xScaleType !== "logarithmic" &&
+            xScaleType !== "timeseries")
             return;
 
         const xScale = this.getXScale(chart);
@@ -71,15 +85,16 @@ export default {
         if (!xScale)
             return;
 
-        chart.crosshair.enabled = (e.type !== "mouseout" && (e.x > xScale.getPixelForValue(xScale.min) && e.x < xScale.getPixelForValue(xScale.max)));
+        chart.crosshair.enabled = (e.type !== "mouseout" &&
+            (e.x > xScale.getPixelForValue(xScale.min) &&
+                e.x < xScale.getPixelForValue(xScale.max)));
 
         if (!chart.crosshair.enabled)
-            return true;
+            return;
 
         chart.crosshair.x = e.x;
 
-        chart.draw();
-
+        args.changed = true;
     },
 
     afterDraw: function(chart) {
@@ -88,8 +103,6 @@ export default {
             return;
 
         this.drawTraceLine(chart);
-
-        return true;
     },
 
     drawTraceLine: function(chart) {
