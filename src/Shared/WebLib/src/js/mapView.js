@@ -3150,6 +3150,8 @@ export class MapView {
             this.viewer.trackedEntity = null;
 
         this.currentHeightProfileTrackId = undefined;
+    
+        this.updateScene();
     }
 
     /**

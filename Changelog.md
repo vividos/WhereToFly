@@ -10,6 +10,8 @@ Released on ?.
 
 🐛 Bugfixes
 
+- Hide track pin when closing track height profile view
+
 ## Version 1.14.3
 
 Released on 2024-02-09.
