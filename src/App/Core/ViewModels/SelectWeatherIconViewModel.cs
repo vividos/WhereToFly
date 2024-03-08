@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WhereToFly.App.Models;
-using Xamarin.CommunityToolkit.ObjectModel;
+using WhereToFly.App.Views;
 using Xamarin.Forms;
 
 namespace WhereToFly.App.ViewModels
@@ -18,7 +18,7 @@ namespace WhereToFly.App.ViewModels
         /// <summary>
         /// List of grouped weather icon view models
         /// </summary>
-        public ObservableCollection<Grouping<string, WeatherIconListEntryViewModel>>? GroupedWeatherIconList { get; set; }
+        public ObservableCollection<WeatherIconListViewModelGrouping>? GroupedWeatherIconList { get; set; }
 
         /// <summary>
         /// Stores the selected weather icon when an item is tapped
@@ -77,11 +77,11 @@ namespace WhereToFly.App.ViewModels
                 from weatherIconViewModel in ungroupedWeatherIconList
                 orderby GroupKeyFromGroup(weatherIconViewModel.Group)
                 group weatherIconViewModel by weatherIconViewModel.Group into weatherIconGroup
-                select new Grouping<string, WeatherIconListEntryViewModel>(
-                    weatherIconGroup.Key, weatherIconGroup);
+                select new WeatherIconListViewModelGrouping(
+                    weatherIconGroup);
 
             this.GroupedWeatherIconList =
-                new ObservableCollection<Grouping<string, WeatherIconListEntryViewModel>>(
+                new ObservableCollection<WeatherIconListViewModelGrouping>(
                     groupedWeatherIconList);
 
             this.OnPropertyChanged(nameof(this.GroupedWeatherIconList));
