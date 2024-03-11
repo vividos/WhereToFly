@@ -6,8 +6,7 @@
              xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              x:Class="WhereToFly.App.Views.LocationListPage"
-             x:DataType="viewmodels:LocationListViewModel"
-             BackgroundColor="{DynamicResource PageBackgroundColor}">
+             x:DataType="viewmodels:LocationListViewModel">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Import locations"

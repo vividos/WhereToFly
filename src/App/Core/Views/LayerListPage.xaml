@@ -6,8 +6,7 @@
              xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
              x:Class="WhereToFly.App.Views.LayerListPage"
              x:DataType="viewmodels:LayerListViewModel"
-             Title="Layer list"
-             BackgroundColor="{DynamicResource PageBackgroundColor}">
+             Title="Layer list">
 
     <ContentPage.BindingContext>
         <viewmodels:LayerListViewModel />

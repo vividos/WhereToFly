@@ -6,8 +6,7 @@
              xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
              x:Class="WhereToFly.App.Views.WeatherDashboardPage"
              x:DataType="viewmodels:WeatherDashboardViewModel"
-             Title="Weather"
-             BackgroundColor="{DynamicResource PageBackgroundColor}">
+             Title="Weather">
 
     <ContentPage.BindingContext>
         <viewmodels:WeatherDashboardViewModel />

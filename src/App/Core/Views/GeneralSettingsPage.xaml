@@ -9,8 +9,7 @@
              x:Class="WhereToFly.App.Views.GeneralSettingsPage"
              x:DataType="viewmodels:GeneralSettingsViewModel"
              Title="General"
-             IconImageSource="{local:Image settings_outline}"
-             BackgroundColor="{DynamicResource PageBackgroundColor}">
+             IconImageSource="{local:Image settings_outline}">
     <ContentPage.Content>
 
         <ScrollView Orientation="Vertical" HorizontalOptions="Center">

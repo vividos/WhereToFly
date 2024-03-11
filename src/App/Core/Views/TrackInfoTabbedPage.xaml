@@ -8,8 +8,7 @@
             mc:Ignorable="d"
             x:Class="WhereToFly.App.Views.TrackInfoTabbedPage"
             x:DataType="viewmodels:TrackTabViewModel"
-            Title = "Track infos"
-            BackgroundColor="{DynamicResource PageBackgroundColor}">
+            Title = "Track infos">
 
     <TabbedPage.ToolbarItems>
         <ToolbarItem Text="Zoom to"

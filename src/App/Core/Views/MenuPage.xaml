@@ -7,8 +7,7 @@
              x:DataType="viewmodels:MenuViewModel"
              Padding="0,40,0,0"
              IconImageSource="icon.png"
-             Title="Where-to-fly"
-             BackgroundColor="{DynamicResource PageBackgroundColor}">
+             Title="Where-to-fly">
 
     <ContentPage.BindingContext>
         <viewmodels:MenuViewModel />

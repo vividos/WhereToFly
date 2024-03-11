@@ -6,8 +6,7 @@
              xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
              x:Class="WhereToFly.App.Views.TrackListPage"
              x:DataType="viewmodels:TrackListViewModel"
-             Title="Track list"
-             BackgroundColor="{DynamicResource PageBackgroundColor}">
+             Title="Track list">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Import track"

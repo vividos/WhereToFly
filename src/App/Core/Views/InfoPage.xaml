@@ -8,8 +8,7 @@
              mc:Ignorable="d"
              x:Class="WhereToFly.App.Views.InfoPage"
              x:DataType="viewmodels:InfoPageViewModel"
-             Title="Info"
-             BackgroundColor="{DynamicResource PageBackgroundColor}">
+             Title="Info">
 
     <ContentPage.BindingContext>
         <viewmodels:InfoPageViewModel />

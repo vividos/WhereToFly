@@ -6,8 +6,7 @@
              xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
              x:Class="WhereToFly.App.Views.LayerDetailsPage"
              x:DataType="viewmodels:LayerDetailsViewModel"
-             Title="Layer details"
-             BackgroundColor="{DynamicResource PageBackgroundColor}">
+             Title="Layer details">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Zoom to"

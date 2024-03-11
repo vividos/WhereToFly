@@ -5,8 +5,7 @@
              xmlns:local="clr-namespace:WhereToFly.App"
              xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
              x:Class="WhereToFly.App.Views.LocationDetailsPage"
-             x:DataType="viewmodels:LocationDetailsViewModel"
-             BackgroundColor="{DynamicResource PageBackgroundColor}">
+             x:DataType="viewmodels:LocationDetailsViewModel">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Zoom to"

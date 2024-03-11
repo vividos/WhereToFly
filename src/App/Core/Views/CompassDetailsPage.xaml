@@ -6,7 +6,6 @@
              xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
              x:Class="WhereToFly.App.Views.CompassDetailsPage"
              x:DataType="viewmodels:CompassDetailsViewModel"
-             BackgroundColor="{DynamicResource PageBackgroundColor}"
              Title="Compass">
 
     <ContentPage.ToolbarItems>

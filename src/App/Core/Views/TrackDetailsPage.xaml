@@ -7,8 +7,7 @@
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              x:Class="WhereToFly.App.Views.TrackDetailsPage"
              x:DataType="viewmodels:TrackDetailsViewModel"
-             Title="Details"
-             BackgroundColor="{DynamicResource PageBackgroundColor}">
+             Title="Details">
 
     <ContentPage.Content>
 

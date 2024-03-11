@@ -5,8 +5,7 @@
              xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
              x:Class="WhereToFly.App.Views.CurrentPositionDetailsPage"
              x:DataType="viewmodels:CurrentPositionDetailsViewModel"
-             Title="Detail infos"
-             BackgroundColor="{DynamicResource PageBackgroundColor}">
+             Title="Detail infos">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Share position"

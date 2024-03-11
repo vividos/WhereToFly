@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
              x:Class="WhereToFly.App.Views.EditLocationDetailsPage"
-             x:DataType="viewmodels:EditLocationDetailsViewModel"
-             BackgroundColor="{DynamicResource PageBackgroundColor}">
+             x:DataType="viewmodels:EditLocationDetailsViewModel">
     <ContentPage.Content>
 
         <!-- stack layout with location details grid and details multiline edit control -->

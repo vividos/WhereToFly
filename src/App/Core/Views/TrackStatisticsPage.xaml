@@ -4,8 +4,7 @@
              xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
              x:Class="WhereToFly.App.Views.TrackStatisticsPage"
              x:DataType="viewmodels:TrackStatisticsViewModel"
-             Title="Statistics"
-             BackgroundColor="{DynamicResource PageBackgroundColor}">
+             Title="Statistics">
 
     <ContentPage.Content>
 
