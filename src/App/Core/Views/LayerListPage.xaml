@@ -2,7 +2,6 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:WhereToFly.App.Controls"
-             xmlns:converter="clr-namespace:WhereToFly.App.Converter"
              xmlns:local="clr-namespace:WhereToFly.App"
              xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
              x:Class="WhereToFly.App.Views.LayerListPage"
@@ -13,15 +12,6 @@
     <ContentPage.BindingContext>
         <viewmodels:LayerListViewModel />
     </ContentPage.BindingContext>
-
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <converter:SvgImagePathConverter x:Key="SvgImagePathConverter" />
-            <x:String x:Key="ZoomToLayerImagePath">info/images/magnify-plus-outline.svg</x:String>
-            <x:String x:Key="ExportImagePath">info/images/export-variant.svg</x:String>
-            <x:String x:Key="DeleteLayerImagePath">info/images/delete.svg</x:String>
-        </ResourceDictionary>
-    </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Import layer"
@@ -111,17 +101,17 @@
                                               VerticalOptions="Center">
                             <controls:ContextMenu.Items>
                                 <MenuItem Text="Zoom to"
-                                          IconImageSource="{Binding Source={StaticResource ZoomToLayerImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                          IconImageSource="{local:Image info/images/magnify-plus-outline.svg}"
                                           IsEnabled="{Binding IsEnabledZoomToLayer}"
                                           Command="{Binding ZoomToLayerCommand}"
                                           CommandParameter="{Binding .}" />
                                 <MenuItem Text="Export"
-                                          IconImageSource="{Binding Source={StaticResource ExportImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                          IconImageSource="{local:Image info/images/export-variant.svg}"
                                           IsEnabled="{Binding IsEnabledExportLayer}"
                                           Command="{Binding ExportLayerCommand}"
                                           CommandParameter="{Binding .}" />
                                 <MenuItem Text="Delete" IsDestructive="True"
-                                          IconImageSource="{Binding Source={StaticResource DeleteLayerImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                          IconImageSource="{local:Image info/images/delete.svg}"
                                           IsEnabled="{Binding IsEnabledDeleteLayer}"
                                           Command="{Binding DeleteLayerCommand}"
                                           CommandParameter="{Binding .}" />

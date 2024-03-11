@@ -2,24 +2,12 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:WhereToFly.App.Controls"
-             xmlns:converter="clr-namespace:WhereToFly.App.Converter"
              xmlns:local="clr-namespace:WhereToFly.App"
              xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              x:Class="WhereToFly.App.Views.LocationListPage"
              x:DataType="viewmodels:LocationListViewModel"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
-
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <converter:SvgImagePathConverter x:Key="SvgImagePathConverter" />
-            <x:String x:Key="ShowDetailsImagePath">info/images/information-outline.svg</x:String>
-            <x:String x:Key="ZoomToImagePath">info/images/magnify-plus-outline.svg</x:String>
-            <x:String x:Key="SetAsCompassTargetPath">weblib/images/compass-rose.svg</x:String>
-            <x:String x:Key="DeleteImagePath">info/images/delete.svg</x:String>
-            <x:String x:Key="AddTourPlanLocationImagePath">weblib/images/map-marker-plus.svg</x:String>
-        </ResourceDictionary>
-    </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Import locations"
@@ -169,19 +157,19 @@
                                               VerticalOptions="Center">
                             <controls:ContextMenu.Items>
                                 <MenuItem Text="Show Details"
-                                          IconImageSource="{Binding Source={StaticResource ShowDetailsImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                          IconImageSource="{local:Image info/images/information-outline.svg}"
                                           Command="{Binding ShowDetailsLocationCommand}" />
                                 <MenuItem Text="Zoom to"
-                                          IconImageSource="{Binding Source={StaticResource ZoomToImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                          IconImageSource="{local:Image info/images/magnify-plus-outline.svg}"
                                           Command="{Binding ZoomToLocationCommand}" />
                                 <MenuItem Text="Set as compass target"
-                                          IconImageSource="{Binding Source={StaticResource SetAsCompassTargetPath}, Converter={StaticResource SvgImagePathConverter}}"
+                                          IconImageSource="{local:Image weblib/images/compass-rose.svg}"
                                           Command="{Binding SetAsCompassTargetCommand}" />
                                 <MenuItem Text="Delete" IsDestructive="True"
-                                          IconImageSource="{Binding Source={StaticResource DeleteImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                          IconImageSource="{local:Image info/images/delete.svg}"
                                           Command="{Binding DeleteLocationCommand}" />
                                 <MenuItem Text="Add tour plan location"
-                                          IconImageSource="{Binding Source={StaticResource AddTourPlanLocationImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                          IconImageSource="{local:Image weblib/images/map-marker-plus.svg}"
                                           Command="{Binding AddTourPlanLocationCommand}"
                                           IsEnabled="{Binding IsEnabledAddTourPlanLocation, Mode=OneWay}"
                                           AutomationId="AddTourPlanLocation" />

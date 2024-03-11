@@ -2,23 +2,12 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:WhereToFly.App.Controls"
-             xmlns:converter="clr-namespace:WhereToFly.App.Converter"
              xmlns:local="clr-namespace:WhereToFly.App"
              xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
              x:Class="WhereToFly.App.Views.TrackListPage"
              x:DataType="viewmodels:TrackListViewModel"
              Title="Track list"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
-
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <converter:SvgImagePathConverter x:Key="SvgImagePathConverter" />
-            <x:String x:Key="ShowDetailsImagePath">info/images/information-outline.svg</x:String>
-            <x:String x:Key="ZoomToImagePath">info/images/magnify-plus-outline.svg</x:String>
-            <x:String x:Key="ExportImagePath">info/images/export-variant.svg</x:String>
-            <x:String x:Key="DeleteImagePath">info/images/delete.svg</x:String>
-        </ResourceDictionary>
-    </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Import track"
@@ -120,16 +109,16 @@
                                                   VerticalOptions="Center">
                                 <controls:ContextMenu.Items>
                                     <MenuItem Text="Show Details"
-                                              IconImageSource="{Binding Source={StaticResource ShowDetailsImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                              IconImageSource="{local:Image info/images/information-outline.svg}"
                                               Command="{Binding ShowTrackDetailsCommand}" />
                                     <MenuItem Text="Zoom to"
-                                              IconImageSource="{Binding Source={StaticResource ZoomToImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                              IconImageSource="{local:Image info/images/magnify-plus-outline.svg}"
                                               Command="{Binding ZoomToTrackCommand}" />
                                     <MenuItem Text="Export"
-                                              IconImageSource="{Binding Source={StaticResource ExportImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                              IconImageSource="{local:Image info/images/export-variant.svg}"
                                               Command="{Binding ExportTrackCommand}" />
                                     <MenuItem Text="Delete" IsDestructive="True"
-                                              IconImageSource="{Binding Source={StaticResource DeleteImagePath}, Converter={StaticResource SvgImagePathConverter}}"
+                                              IconImageSource="{local:Image info/images/delete.svg}"
                                               Command="{Binding DeleteTrackCommand}" />
                                 </controls:ContextMenu.Items>
                             </controls:ContextMenu>
