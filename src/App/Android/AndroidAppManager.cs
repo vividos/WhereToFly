@@ -1,4 +1,5 @@
-﻿using Android.Content;
+﻿#nullable enable
+using Android.Content;
 using Android.Content.PM;
 using Android.Graphics;
 using Android.Graphics.Drawables;
@@ -19,7 +20,7 @@ namespace WhereToFly.App.Android
         /// <summary>
         /// Android package manager
         /// </summary>
-        private static PackageManager PackageManager
+        private static PackageManager? PackageManager
             => global::Android.App.Application.Context.PackageManager;
 
         /// <summary>
@@ -31,7 +32,7 @@ namespace WhereToFly.App.Android
         {
             try
             {
-                var intent = PackageManager.GetLaunchIntentForPackage(packageName);
+                Intent? intent = PackageManager?.GetLaunchIntentForPackage(packageName);
                 return intent != null;
             }
             catch (ActivityNotFoundException ex)
@@ -51,7 +52,7 @@ namespace WhereToFly.App.Android
         {
             try
             {
-                var intent = PackageManager.GetLaunchIntentForPackage(packageName);
+                var intent = PackageManager?.GetLaunchIntentForPackage(packageName);
 
                 if (intent == null)
                 {
@@ -74,10 +75,10 @@ namespace WhereToFly.App.Android
         /// </summary>
         /// <param name="packageName">package name of app to get icon</param>
         /// <returns>image data bytes, or null when no image could be retrieved</returns>
-        public byte[] GetAppIcon(string packageName)
+        public byte[]? GetAppIcon(string packageName)
         {
             var stream = this.LoadAppIcon(packageName);
-            return stream.ToArray();
+            return stream?.ToArray();
         }
 
         /// <summary>
@@ -85,12 +86,12 @@ namespace WhereToFly.App.Android
         /// </summary>
         /// <param name="packageName">package name of app icon to load</param>
         /// <returns>stream containing a PNG image, or null when no bitmap could be loaded</returns>
-        private MemoryStream LoadAppIcon(string packageName)
+        private MemoryStream? LoadAppIcon(string packageName)
         {
-            Drawable drawable = null;
+            Drawable? drawable = null;
             try
             {
-                drawable = PackageManager.GetApplicationIcon(packageName);
+                drawable = PackageManager?.GetApplicationIcon(packageName);
             }
             catch (Exception)
             {
@@ -102,7 +103,7 @@ namespace WhereToFly.App.Android
                 return null;
             }
 
-            Bitmap bitmap = BitmapFromDrawable(drawable);
+            Bitmap? bitmap = BitmapFromDrawable(drawable);
             if (bitmap == null)
             {
                 return null;
@@ -122,22 +123,27 @@ namespace WhereToFly.App.Android
         /// canvas and return canvas bitmap.
         /// </summary>
         /// <param name="drawable">drawable to convert</param>
-        /// <returns>bitmap to convert to</returns>
-        private static Bitmap BitmapFromDrawable(Drawable drawable)
+        /// <returns>bitmap to convert to; may return null</returns>
+        private static Bitmap? BitmapFromDrawable(Drawable drawable)
         {
             if (drawable is BitmapDrawable bitmapDrawable)
             {
                 return bitmapDrawable.Bitmap;
             }
 
-            Bitmap bitmap;
-            if (drawable.IntrinsicWidth <= 0 || drawable.IntrinsicHeight <= 0)
+            Bitmap? bitmap;
+            if (drawable.IntrinsicWidth <= 0 ||
+                drawable.IntrinsicHeight <= 0)
             {
-                bitmap = Bitmap.CreateBitmap(1, 1, Bitmap.Config.Argb8888!); // Single color bitmap will be created of 1x1 pixel
+                // Single color bitmap will be created of 1x1 pixel
+                bitmap = Bitmap.CreateBitmap(1, 1, Bitmap.Config.Argb8888!);
             }
             else
             {
-                bitmap = Bitmap.CreateBitmap(drawable.IntrinsicWidth, drawable.IntrinsicHeight, Bitmap.Config.Argb8888!);
+                bitmap = Bitmap.CreateBitmap(
+                    drawable.IntrinsicWidth,
+                    drawable.IntrinsicHeight,
+                    Bitmap.Config.Argb8888!);
             }
 
             if (bitmap == null)

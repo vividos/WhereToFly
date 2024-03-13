@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(WhereToFly.App.UWP.UwpAppManager))]
@@ -35,7 +36,7 @@ namespace WhereToFly.App.UWP
         /// </summary>
         /// <param name="packageName">package name of app to get icon</param>
         /// <returns>image data bytes, or null when no image could be retrieved</returns>
-        public byte[] GetAppIcon(string packageName)
+        public byte[]? GetAppIcon(string packageName)
         {
             return Array.Empty<byte>();
         }

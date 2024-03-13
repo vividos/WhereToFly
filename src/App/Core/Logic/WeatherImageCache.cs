@@ -44,9 +44,12 @@ namespace WhereToFly.App.Logic
                         (cancellationToken) =>
                         {
                             var appManager = DependencyService.Get<IAppManager>();
-                            byte[] appIconData = appManager.GetAppIcon(iconDescription.WebLink);
+                            byte[]? appIconData = appManager.GetAppIcon(iconDescription.WebLink);
 
-                            return Task.FromResult<Stream>(new MemoryStream(appIconData));
+                            return Task.FromResult<Stream?>(
+                                appIconData != null
+                                ? new MemoryStream(appIconData)
+                                : null);
                         });
 
                 case WeatherIconDescription.IconType.IconPlaceholder:

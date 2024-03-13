@@ -1,4 +1,5 @@
-﻿using Android.App;
+﻿#nullable enable
+using Android.App;
 using Android.Content;
 using Android.Views;
 using Android.Webkit;
@@ -9,7 +10,9 @@ using WhereToFly.App.Controls;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
-[assembly: ExportRenderer(typeof(WeatherWebView), typeof(WhereToFly.App.Android.AndroidWeatherWebViewRenderer))]
+[assembly: ExportRenderer(
+    typeof(WeatherWebView),
+    typeof(WhereToFly.App.Android.AndroidWeatherWebViewRenderer))]
 
 namespace WhereToFly.App.Android
 {
@@ -92,6 +95,10 @@ namespace WhereToFly.App.Android
         private void OnLongTap(object sender, GestureDetector.LongPressEventArgs args)
         {
             var hitTestResult = this.Control.GetHitTestResult();
+            if (hitTestResult == null)
+            {
+                return;
+            }
 
             System.Diagnostics.Debug.WriteLine($"HitTestResult: Type={hitTestResult.Type} Extra={hitTestResult.Extra}");
 
@@ -101,7 +108,7 @@ namespace WhereToFly.App.Android
                 return;
             }
 
-            string imageLink = hitTestResult.Extra;
+            string? imageLink = hitTestResult.Extra;
 
             var baseUri = new Uri(this.Control.Url);
             var uri = new Uri(baseUri, imageLink);
@@ -139,7 +146,7 @@ namespace WhereToFly.App.Android
             request.SetTitle(filename);
             request.SetDescription("Downloading file...");
 
-            string cookie = CookieManager.Instance?.GetCookie(url);
+            string? cookie = CookieManager.Instance?.GetCookie(url);
             if (!string.IsNullOrEmpty(cookie))
             {
                 request.AddRequestHeader("Cookie", cookie);
@@ -160,7 +167,7 @@ namespace WhereToFly.App.Android
 
             request.SetNotificationVisibility(DownloadVisibility.VisibleNotifyCompleted);
 
-            var downloadManager = (DownloadManager)this.Context?.GetSystemService(Context.DownloadService);
+            var downloadManager = (DownloadManager?)this.Context?.GetSystemService(Context.DownloadService);
             downloadManager?.Enqueue(request);
 
             Toast.MakeText(

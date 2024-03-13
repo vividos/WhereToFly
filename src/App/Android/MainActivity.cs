@@ -1,4 +1,5 @@
-﻿using Android.App;
+﻿#nullable enable
+using Android.App;
 using Android.Content;
 using Android.Content.PM;
 using Android.OS;
@@ -200,13 +201,13 @@ namespace WhereToFly.App.Android
 
                 var helper = new IntentFilterHelper(this.ContentResolver);
 
-                string filename = Path.GetFileName(helper.GetFilenameFromIntent(intent));
+                string? filename = Path.GetFileName(helper.GetFilenameFromIntent(intent));
                 if (filename == null)
                 {
                     return;
                 }
 
-                var stream = helper.GetStreamFromIntent(intent);
+                Stream? stream = helper.GetStreamFromIntent(intent);
 
                 if (stream != null)
                 {

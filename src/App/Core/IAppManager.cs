@@ -24,6 +24,6 @@
         /// </summary>
         /// <param name="packageName">package name of app to get icon</param>
         /// <returns>image data bytes, or null when no image could be retrieved</returns>
-        byte[] GetAppIcon(string packageName);
+        byte[]? GetAppIcon(string packageName);
     }
 }

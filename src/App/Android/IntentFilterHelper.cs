@@ -1,4 +1,5 @@
-﻿using Android.Content;
+﻿#nullable enable
+using Android.Content;
 using Android.Database;
 using Android.Net;
 using System.IO;
@@ -15,13 +16,13 @@ namespace WhereToFly.App.Android
         /// <summary>
         /// Content resolver used to resolve file:// and content:// intents
         /// </summary>
-        private readonly ContentResolver resolver;
+        private readonly ContentResolver? resolver;
 
         /// <summary>
         /// Creates a new IntentFilter helper object
         /// </summary>
         /// <param name="resolver">content resolver to use</param>
-        internal IntentFilterHelper(ContentResolver resolver)
+        internal IntentFilterHelper(ContentResolver? resolver)
         {
             this.resolver = resolver;
         }
@@ -31,12 +32,12 @@ namespace WhereToFly.App.Android
         /// </summary>
         /// <param name="intent">intent object</param>
         /// <returns>filename or null when filename couldn't be retrieved</returns>
-        internal string GetFilenameFromIntent(Intent intent)
+        internal string? GetFilenameFromIntent(Intent intent)
         {
             if (intent.Action == Intent.ActionView ||
                 intent.Action == Intent.ActionOpenDocument)
             {
-                Uri data = intent.Data;
+                Uri? data = intent.Data;
                 if (data == null)
                 {
                     return null;
@@ -71,9 +72,9 @@ namespace WhereToFly.App.Android
         /// </summary>
         /// <param name="uri">content URI</param>
         /// <returns>filename-only part</returns>
-        private string GetContentNameFromContentUri(Uri uri)
+        private string? GetContentNameFromContentUri(Uri uri)
         {
-            ICursor cursor = this.resolver.Query(uri, null, null, null, null);
+            ICursor? cursor = this.resolver?.Query(uri, null, null, null, null);
             if (cursor == null)
             {
                 return null;
@@ -81,8 +82,12 @@ namespace WhereToFly.App.Android
 
             cursor.MoveToFirst();
 
-            int nameIndex = cursor.GetColumnIndex(global::Android.Provider.MediaStore.IMediaColumns.DisplayName);
-            return nameIndex >= 0 ? cursor.GetString(nameIndex) : null;
+            int nameIndex = cursor.GetColumnIndex(
+                global::Android.Provider.MediaStore.IMediaColumns.DisplayName);
+
+            return nameIndex >= 0
+                ? cursor.GetString(nameIndex)
+                : null;
         }
 
         /// <summary>
@@ -90,12 +95,12 @@ namespace WhereToFly.App.Android
         /// </summary>
         /// <param name="intent">intent object</param>
         /// <returns>file stream, or null when none could be retrieved</returns>
-        internal Stream GetStreamFromIntent(Intent intent)
+        internal Stream? GetStreamFromIntent(Intent intent)
         {
             if (intent.Action == Intent.ActionView ||
                 intent.Action == Intent.ActionOpenDocument)
             {
-                Uri data = intent.Data;
+                Uri? data = intent.Data;
                 if (data == null)
                 {
                     return null;
@@ -105,7 +110,7 @@ namespace WhereToFly.App.Android
                 {
                     case ContentResolver.SchemeContent:
                     case ContentResolver.SchemeFile:
-                        return this.resolver.OpenInputStream(data);
+                        return this.resolver?.OpenInputStream(data);
 
                     case "http":
                     case "https":
@@ -125,8 +130,13 @@ namespace WhereToFly.App.Android
         /// </summary>
         /// <param name="url">internet link</param>
         /// <returns>stream object, or null when download is not possible</returns>
-        private Stream GetStreamFromInternetLink(string url)
+        private Stream? GetStreamFromInternetLink(string? url)
         {
+            if (url == null)
+            {
+                return null;
+            }
+
             var client = new HttpClient();
 
             return client.GetStreamAsync(url).Result;
