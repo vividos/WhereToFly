@@ -238,7 +238,7 @@ namespace WhereToFly.WebApi.Logic
         /// <param name="data">live track data to cache</param>
         public void CacheLiveTrackData(LiveTrackData data)
         {
-            this.logger.LogDebug($"caching live track data for id: {data.ID}");
+            this.logger.LogDebug("caching live track data for id: {ID}", data.ID);
 
             lock (this.lockCacheAndQueue)
             {

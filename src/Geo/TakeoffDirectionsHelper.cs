@@ -155,10 +155,12 @@ namespace WhereToFly.Geo
             {
                 takeoffDirections |= currentDirection;
 
+#pragma warning disable S127 // "for" loop stop conditions should be invariant
                 // advance direction
                 currentDirection = directionClockwise
                     ? GetNextDirection(currentDirection)
                     : GetPreviousDirection(currentDirection);
+#pragma warning restore S127 // "for" loop stop conditions should be invariant
             }
 
             takeoffDirections |= endDirection;

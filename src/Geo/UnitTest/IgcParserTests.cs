@@ -47,7 +47,7 @@ namespace WhereToFly.Geo.UnitTest
         public void TestParseStartDate()
         {
             // set up
-            var expectedDate = new DateTime(2021, 2, 7);
+            var expectedDate = new DateTime(2021, 2, 7, 0, 0, 0, DateTimeKind.Local);
             var lines = new string[]
             {
                 "HFDTE070221",

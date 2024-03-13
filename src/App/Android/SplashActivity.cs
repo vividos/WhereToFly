@@ -25,7 +25,7 @@ namespace WhereToFly.App.Android
         /// switches to the main activity once the Android app has been loaded.
         /// </summary>
         /// <param name="savedInstanceState">instance state; unused</param>
-        protected override void OnCreate(Bundle savedInstanceState)
+        protected override void OnCreate(Bundle? savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 

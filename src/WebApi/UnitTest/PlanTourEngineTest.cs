@@ -22,6 +22,12 @@ namespace WhereToFly.WebApi.UnitTest
         {
             var logicAssembly = typeof(PlanTourEngine).Assembly;
             var kmlStream = logicAssembly.GetManifestResourceStream("WhereToFly.WebApi.Logic.Assets.PlanTourPaths.kml");
+
+            if (kmlStream == null)
+            {
+                throw new InvalidOperationException("PlanTourPaths.kml is not available");
+            }
+
             return kmlStream;
         }
 

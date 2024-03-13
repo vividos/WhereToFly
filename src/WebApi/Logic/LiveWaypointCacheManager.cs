@@ -340,7 +340,7 @@ namespace WhereToFly.WebApi.Logic
         /// <param name="data">live waypoint data to cache</param>
         public void CacheLiveWaypointData(LiveWaypointData data)
         {
-            this.logger.LogDebug($"caching live waypoint data for id: {data.ID}");
+            this.logger.LogDebug("caching live waypoint data for id: {ID}", data.ID);
 
             lock (this.lockCacheAndQueue)
             {

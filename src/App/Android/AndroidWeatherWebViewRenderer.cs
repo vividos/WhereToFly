@@ -23,7 +23,7 @@ namespace WhereToFly.App.Android
         /// <summary>
         /// Gesture detector to detect long taps
         /// </summary>
-        private GestureDetector gestureDetector;
+        private GestureDetector? gestureDetector;
 
         /// <summary>
         /// Creates a new renderer for the WeatherWebView class

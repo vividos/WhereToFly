@@ -28,55 +28,24 @@ namespace WhereToFly.Web.LiveTracking.Pages
         /// <summary>
         /// Data sent by UpdateLiveWaypoint GET request from page
         /// </summary>
-        public class UpdateLiveWaypointData
-        {
-            /// <summary>
-            /// The URI of the live waypoint to update
-            /// </summary>
-            public string Uri { get; set; }
-        }
+        /// <param name="Uri">the URI of the live waypoint to update</param>
+        public record UpdateLiveWaypointData(string Uri);
 
         /// <summary>
         /// Data sent by UpdateLiveTrack GET request from page
         /// </summary>
-        public class UpdateLiveTrackData
-        {
-            /// <summary>
-            /// The URI of the live track to update
-            /// </summary>
-            public string Uri { get; set; }
-
-            /// <summary>
-            /// Last track point time; may be null
-            /// </summary>
-            public DateTimeOffset? LastTrackPointTime { get; set; }
-        }
+        /// <param name="Uri">the URI of the live track to update</param>
+        /// <param name="LastTrackPointTime">last track point time; may be null</param>
+        public record UpdateLiveTrackData(string Uri, DateTimeOffset? LastTrackPointTime);
 
         /// <summary>
         /// Infos about a single live tracking object
         /// </summary>
-        public class LiveTrackingInfo
-        {
-            /// <summary>
-            /// Name of live tracking waypoint
-            /// </summary>
-            public string Name { get; set; }
-
-            /// <summary>
-            /// Live tracking waypoint URI
-            /// </summary>
-            public string Uri { get; set; }
-
-            /// <summary>
-            /// Indicates if it's a live track or a live waypoint
-            /// </summary>
-            public bool IsLiveTrack { get; set; }
-
-            /// <summary>
-            /// Indicates if it's a flight position/track or ground-based tracking
-            /// </summary>
-            public bool IsFlightTrack { get; set; } = true;
-        }
+        /// <param name="Name">name of live tracking waypoint</param>
+        /// <param name="Uri">live tracking waypoint URI</param>
+        /// <param name="IsLiveTrack">indicates if it's a live track or a live waypoint</param>
+        /// <param name="IsFlightTrack">indicates if it's a flight position/track or ground-based tracking</param>
+        public record LiveTrackingInfo(string Name, string Uri, bool IsLiveTrack, bool IsFlightTrack = true);
 
         /// <summary>
         /// List of live tracking infos; used as the view data of the page
@@ -91,13 +60,16 @@ namespace WhereToFly.Web.LiveTracking.Pages
         {
             this.backendWebApi = RestService.For<IBackendWebApi>(BaseUrl);
 
+#pragma warning disable S1075 // URIs should not be hardcoded
+            const string TestPosDataUri = "where-to-fly://TestPos/data";
+#pragma warning restore S1075 // URIs should not be hardcoded
+
             this.LiveTrackingInfoList = new List<LiveTrackingInfo>
             {
-                new LiveTrackingInfo
-                {
-                    Name = "TestPos Schliersee",
-                    Uri = "where-to-fly://TestPos/data"
-                }
+                new LiveTrackingInfo(
+                    "TestPos Schliersee",
+                    TestPosDataUri,
+                    default)
             };
         }
 
@@ -121,13 +93,11 @@ namespace WhereToFly.Web.LiveTracking.Pages
             {
                 this.LiveTrackingInfoList = new List<LiveTrackingInfo>
                 {
-                    new LiveTrackingInfo
-                    {
-                        Name = name ?? "Live Waypoint",
-                        Uri = liveWaypointUri.ToString(),
-                        IsLiveTrack = liveWaypointUri.IsTrackResourceType,
-                        IsFlightTrack = isFlightTrack,
-                    }
+                    new LiveTrackingInfo(
+                        name ?? "Live Waypoint",
+                        liveWaypointUri.ToString(),
+                        liveWaypointUri.IsTrackResourceType,
+                        isFlightTrack)
                 };
             }
         }

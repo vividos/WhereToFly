@@ -70,8 +70,8 @@ namespace WhereToFly.WebApi.LiveWaypoints
                     });
 
                 // Set the comments path for the Swagger JSON and UI.
-                var basePath = AppContext.BaseDirectory;
-                var xmlPath = Path.Combine(basePath, "WhereToFly.WebApi.Core.xml");
+                string basePath = AppContext.BaseDirectory;
+                string xmlPath = Path.Combine(basePath, "WhereToFly.WebApi.Core.xml");
 
                 if (File.Exists(xmlPath))
                 {
@@ -98,7 +98,10 @@ namespace WhereToFly.WebApi.LiveWaypoints
             var kmlStream = logicAssembly.GetManifestResourceStream("WhereToFly.WebApi.Logic.Assets.PlanTourPaths.kml");
 
             var engine = new PlanTourEngine();
-            engine.LoadGraph(kmlStream);
+            if (kmlStream != null)
+            {
+                engine.LoadGraph(kmlStream);
+            }
 
             services.AddSingleton(engine);
         }

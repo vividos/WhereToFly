@@ -42,7 +42,7 @@ namespace WhereToFly.App.UWP
         /// </summary>
         /// <param name="args">event args for activation event</param>
         /// <param name="parameters">page parameters</param>
-        private void SetupRootFrame(IActivatedEventArgs args, object parameters)
+        private void SetupRootFrame(IActivatedEventArgs args, object? parameters)
         {
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active

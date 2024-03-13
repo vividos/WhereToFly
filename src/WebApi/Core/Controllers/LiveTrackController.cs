@@ -56,7 +56,7 @@ namespace WhereToFly.WebApi.Core.Controllers
         {
             this.CheckLiveTrackId(id);
 
-            this.logger.LogDebug("getting live track with ID: {id}", id);
+            this.logger.LogDebug("getting live track with ID: {ID}", id);
 
             return await this.cacheManager.GetLiveTrackDataAsync(id, lastTrackPointTime);
         }
@@ -70,7 +70,7 @@ namespace WhereToFly.WebApi.Core.Controllers
             if (string.IsNullOrEmpty(liveTrackId))
             {
                 this.logger.LogWarning(
-                    "invalid live track ID: {liveTrackId}",
+                    "invalid live track ID: {LiveTrackId}",
                     liveTrackId);
 
                 throw new ArgumentException(

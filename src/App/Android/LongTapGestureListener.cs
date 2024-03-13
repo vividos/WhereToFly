@@ -12,7 +12,7 @@ namespace WhereToFly.App.Android
         /// <summary>
         /// Event handler that is called when a long tap occured
         /// </summary>
-        public event EventHandler<GestureDetector.LongPressEventArgs> LongTap;
+        public event EventHandler<GestureDetector.LongPressEventArgs>? LongTap;
 
         /// <summary>
         /// Default ctor

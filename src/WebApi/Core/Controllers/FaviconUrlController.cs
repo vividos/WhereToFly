@@ -42,7 +42,7 @@ namespace WhereToFly.WebApi.Core.Controllers
         public async Task<string> Get(string websiteUrl)
         {
             this.logger.LogInformation(
-                "WhereToFly favicon URL request, with website URL: {websiteUrl}",
+                "WhereToFly favicon URL request, with website URL: {WebsiteUrl}",
                 websiteUrl);
 
             try
@@ -53,7 +53,7 @@ namespace WhereToFly.WebApi.Core.Controllers
             {
                 this.logger.LogError(
                     ex,
-                    "error while retrieving favicon URL for website: {websiteUrl}",
+                    "error while retrieving favicon URL for website: {WebsiteUrl}",
                     websiteUrl);
 
                 return await Task.FromResult(string.Empty);
