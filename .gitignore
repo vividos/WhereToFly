@@ -303,3 +303,4 @@ stuff/
 /src/Shared/WebLib/dist-es5/
 /src/App/Android/WhereToFly.App.Android.xml
 /src/App/UWP/WhereToFly.App.UWP.xml
+.dotnet-tools/
