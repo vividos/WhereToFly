@@ -6,14 +6,11 @@ REM
 REM Runs SonarCloud analysis build
 REM
 
+echo SonarCloud.cmd - Runs SonarCloud analysis build
+echo.
+
 REM set this to your Visual Studio installation folder
 set VSINSTALL=%ProgramFiles%\Microsoft Visual Studio\2022\Community
-
-REM set this to your OpenCover executable
-set OPENCOVER="C:\Projekte\Tools\OpenCover\OpenCover.Console.exe"
-
-REM set this to your ReportGenerator executable
-set REPORTGENERATOR="C:\Projekte\Tools\ReportGenerator\ReportGenerator.exe"
 
 REM
 REM Preparations
@@ -23,12 +20,13 @@ call "%VSINSTALL%\Common7\Tools\VsDevCmd.bat"
 set DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 REM install SonarScanner, if not available yet
-dotnet tool update --global dotnet-sonarscanner
+dotnet tool install dotnet-sonarscanner --tool-path .dotnet-tools
 
+set PATH=%PATH%;"%CD%\.dotnet-tools"
+
+REM check for SONARLOGIN env var
 if "%SONARLOGIN%" == "" echo "Environment variable SONARLOGIN is not set! Obtain a new token and set the environment variable!"
 if "%SONARLOGIN%" == "" exit 1
-
-set VSTEST=%VSINSTALL%\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe
 
 REM
 REM Build using SonarQube scanner for MSBuild
@@ -38,7 +36,7 @@ rmdir .\bw-output /s /q 2> nul
 dotnet-sonarscanner begin ^
     /k:"WhereToFly" ^
     /v:"1.14.4" ^
-    /d:"sonar.cs.opencover.reportsPaths=%CD%\TestResults\WhereToFly-*-CoverageReport.xml" ^
+    /d:"sonar.cs.opencover.reportsPaths=%CD%\TestResults\**\*.opencover.xml" ^
     /d:"sonar.exclusions=Web\LiveTracking\wwwroot\lib\**\*" ^
     /d:"sonar.host.url=https://sonarcloud.io" ^
     /o:"vividos-github" ^
@@ -48,34 +46,15 @@ if errorlevel 1 goto end
 REM
 REM Rebuild projects
 REM
-msbuild WhereToFly.sln /m /property:Configuration=SonarQube /target:Restore;Rebuild
+msbuild WhereToFly.sln ^
+    /m  ^
+    /property:Configuration=SonarQube ^
+    /target:Restore;Rebuild
 
 REM
 REM Run Unit-Tests
 REM
-%OPENCOVER% ^
-    -register:user ^
-    -target:"%VSTEST%" ^
-    -targetargs:"\"%~dp0App\UnitTest\bin\Release\net48\WhereToFly.App.UnitTest.dll\"" ^
-    -filter:"+[WhereToFly*]* -[WhereToFly.App.Android]* -[WhereToFly.App.UnitTest]*" ^
-    -mergebyhash ^
-    -skipautoprops ^
-    -output:"%~dp0\TestResults\WhereToFly-App-CoverageReport.xml"
-
-%OPENCOVER% ^
-    -register:user ^
-    -target:"c:\Program Files\dotnet\dotnet.exe" ^
-    -targetdir:"%~dp0WebApi\UnitTest\\" ^
-    -targetargs:"test -c Release" ^
-    -filter:"+[WhereToFly*]* -[WhereToFly.WebApi.UnitTest]*" ^
-    -mergebyhash ^
-    -skipautoprops ^
-    -oldstyle ^
-    -output:"%~dp0\TestResults\WhereToFly-WebApi-CoverageReport.xml"
-
-%REPORTGENERATOR% ^
-    -reports:"%~dp0\TestResults\WhereToFly-*-CoverageReport.xml" ^
-    -targetdir:"%~dp0\TestResults\CoverageReport"
+call RunUnitTests.cmd
 
 dotnet-sonarscanner end /d:"sonar.login=%SONARLOGIN%"
 
