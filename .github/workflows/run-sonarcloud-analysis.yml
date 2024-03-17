@@ -31,6 +31,6 @@ jobs:
 
     - name: Run SonarCloud analysis and unit tests
       env:
-        : ${{ secrets.SONARLOGIN }}
+        SONARLOGIN: ${{ secrets.SONARLOGIN }}
       run: >
         cd src && call SonarCloud.cmd
