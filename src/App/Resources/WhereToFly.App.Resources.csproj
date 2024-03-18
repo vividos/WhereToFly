@@ -38,7 +38,8 @@
     <MauiAsset Include="..\..\..\Changelog.md">
       <Link>Assets\info\Changelog.md</Link>
     </MauiAsset>
-    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.7" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.10" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.10" />
   </ItemGroup>
 
   <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">

@@ -70,7 +70,8 @@
   <!-- .NET MAUI -->
   <ItemGroup Condition=" $(TargetFramework.StartsWith('net8.0')) ">
     <Compile Include="maui\*.cs" />
-    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.7" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.10" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.10" />
     <MauiAsset Include="..\..\Shared\WebLib\dist\**\*.*" Exclude="..\..\Shared\WebLib\dist\**\*.map" LogicalName="weblib\%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 
