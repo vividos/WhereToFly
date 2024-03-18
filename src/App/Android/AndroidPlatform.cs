@@ -1,4 +1,5 @@
-﻿using AndroidX.AppCompat.App;
+﻿#nullable enable
+using AndroidX.AppCompat.App;
 using System;
 using Xamarin.Forms;
 

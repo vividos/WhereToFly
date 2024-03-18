@@ -1,4 +1,5 @@
-﻿using Android.Runtime;
+﻿#nullable enable
+using Android.Runtime;
 using Android.Views;
 using System;
 
