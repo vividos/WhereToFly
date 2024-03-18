@@ -40,7 +40,7 @@ dotnet-sonarscanner begin ^
     /d:"sonar.exclusions=Web\LiveTracking\wwwroot\lib\**\*" ^
     /d:"sonar.host.url=https://sonarcloud.io" ^
     /o:"vividos-github" ^
-    /d:"sonar.login=%SONARLOGIN%"
+    /d:"sonar.token=%SONARLOGIN%"
 if errorlevel 1 goto end
 
 REM
