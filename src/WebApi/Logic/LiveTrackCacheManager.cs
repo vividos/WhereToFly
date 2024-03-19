@@ -62,13 +62,13 @@ namespace WhereToFly.WebApi.Logic
         /// are known yet
         /// </param>
         /// <returns>live track query result</returns>
-        public async Task<LiveTrackQueryResult> GetLiveTrackDataAsync(
+        public async Task<LiveTrackQueryResult?> GetLiveTrackDataAsync(
             string rawId,
             DateTimeOffset? lastTrackPointTime)
         {
             AppResourceUri uri = GetAndCheckLiveTrackId(rawId);
 
-            LiveTrackQueryResult result = this.CheckCache(uri);
+            LiveTrackQueryResult? result = this.CheckCache(uri);
             if (result != null)
             {
                 return result;
@@ -121,7 +121,7 @@ namespace WhereToFly.WebApi.Logic
         /// query result from cache, or null when there's no request in cache or when a request
         /// can be made online
         /// </returns>
-        private LiveTrackQueryResult CheckCache(AppResourceUri uri)
+        private LiveTrackQueryResult? CheckCache(AppResourceUri uri)
         {
             if (this.IsNextRequestPossible(uri))
             {
@@ -131,10 +131,12 @@ namespace WhereToFly.WebApi.Logic
             // ask cache
             string id = uri.ToString();
 
-            LiveTrackData cachedData;
+            LiveTrackData? cachedData;
             lock (this.lockCacheAndQueue)
             {
-                cachedData = this.liveTrackCache.ContainsKey(id) ? this.liveTrackCache[id] : null;
+                cachedData = this.liveTrackCache.ContainsKey(id)
+                    ? this.liveTrackCache[id]
+                    : null;
             }
 
             if (cachedData == null)
@@ -184,7 +186,13 @@ namespace WhereToFly.WebApi.Logic
                     return DateTimeOffset.Now.AddSeconds(30);
 
                 case AppResourceUri.ResourceType.GarminInreachLiveTrack:
-                    return this.garminInreachService.GetNextRequestDate(uri.Data);
+                    string? mapShareIdentifier = uri.Data;
+                    if (mapShareIdentifier == null)
+                    {
+                        throw new ArgumentNullException("uri.Data", "MapShare Identifier was null");
+                    }
+
+                    return this.garminInreachService.GetNextRequestDate(mapShareIdentifier);
 
                 default:
                     Debug.Assert(false, "invalid app resource URI type");
@@ -197,19 +205,19 @@ namespace WhereToFly.WebApi.Logic
         /// </summary>
         /// <param name="uri">live track ID</param>
         /// <returns>query result</returns>
-        private Task<LiveTrackQueryResult> GetLiveTrackQueryResult(AppResourceUri uri)
+        private async Task<LiveTrackQueryResult?> GetLiveTrackQueryResult(AppResourceUri uri)
         {
             switch (uri.Type)
             {
                 case AppResourceUri.ResourceType.TestLiveTrack:
-                    return Task.FromResult(TestLiveTrackService.GetLiveTrackingQueryResult(uri.ToString()));
+                    return TestLiveTrackService.GetLiveTrackingQueryResult(uri.ToString());
 
                 case AppResourceUri.ResourceType.GarminInreachLiveTrack:
-                    return this.GetGarminInreachLiveTrackResult(uri);
+                    return await this.GetGarminInreachLiveTrackResult(uri);
 
                 default:
                     Debug.Assert(false, "invalid app resource URI type");
-                    return Task.FromResult<LiveTrackQueryResult>(null);
+                    return null;
             }
         }
 
@@ -220,7 +228,12 @@ namespace WhereToFly.WebApi.Logic
         /// <returns>live track query result</returns>
         private async Task<LiveTrackQueryResult> GetGarminInreachLiveTrackResult(AppResourceUri uri)
         {
-            string mapShareIdentifier = uri.Data;
+            string? mapShareIdentifier = uri.Data;
+
+            if (mapShareIdentifier == null)
+            {
+                throw new ArgumentNullException("uri.Data", "MapShare Identifier was null");
+            }
 
             LiveTrackData liveTrackData =
                 await this.garminInreachService.GetTrackAsync(

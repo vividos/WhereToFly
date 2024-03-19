@@ -39,6 +39,25 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
         #endregion
 
         /// <summary>
+        /// Creates a new track info object
+        /// </summary>
+        /// <param name="source">edge source waypoint</param>
+        /// <param name="target">edge target waypoint</param>
+        /// <param name="description">track description</param>
+        /// <param name="duration">track duration</param>
+        public TrackInfo(
+            WaypointInfo source,
+            WaypointInfo target,
+            string description,
+            TimeSpan duration)
+        {
+            this.Source = source;
+            this.Target = target;
+            this.Description = description;
+            this.Duration = duration;
+        }
+
+        /// <summary>
         /// Returns a displayable text for the track info
         /// </summary>
         /// <returns>displayable text</returns>

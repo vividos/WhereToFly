@@ -16,6 +16,17 @@
         public string Description { get; set; }
 
         /// <summary>
+        /// Creates a new waypoint info object
+        /// </summary>
+        /// <param name="id">waypoint ID</param>
+        /// <param name="description">waypoint description</param>
+        public WaypointInfo(string id, string description)
+        {
+            this.Id = id;
+            this.Description = description;
+        }
+
+        /// <summary>
         /// Returns a displayable text for the waypoint info
         /// </summary>
         /// <returns>displayable text</returns>

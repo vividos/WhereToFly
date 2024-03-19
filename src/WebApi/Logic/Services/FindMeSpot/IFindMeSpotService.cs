@@ -20,13 +20,13 @@ namespace WhereToFly.WebApi.Logic.Services.FindMeSpot
     {
         public class Feed
         {
-            public string Id { get; set; }
+            public string? Id { get; set; }
 
-            public string Name { get; set; }
+            public string? Name { get; set; }
 
-            public string Description { get; set; }
+            public string? Description { get; set; }
 
-            public string Status { get; set; }
+            public string? Status { get; set; }
 
             public int Usage { get; set; }
 
@@ -34,35 +34,35 @@ namespace WhereToFly.WebApi.Logic.Services.FindMeSpot
 
             public bool DetailedMessageShown { get; set; }
 
-            public string Type { get; set; }
+            public string? Type { get; set; }
         }
 
         public class Message
         {
             [JsonProperty(PropertyName = "@clientUnixTime")]
-            public string ClientUnixTime { get; set; }
+            public string? ClientUnixTime { get; set; }
 
             public int Id { get; set; }
 
-            public string MessengerId { get; set; }
+            public string? MessengerId { get; set; }
 
-            public string MessengerName { get; set; }
+            public string? MessengerName { get; set; }
 
             public int UnixTime { get; set; }
 
-            public string MessageType { get; set; }
+            public string? MessageType { get; set; }
 
             public double Latitude { get; set; }
 
             public double Longitude { get; set; }
 
-            public string ModelId { get; set; }
+            public string? ModelId { get; set; }
 
-            public string ShowCustomMsg { get; set; }
+            public string? ShowCustomMsg { get; set; }
 
             public DateTime DateTime { get; set; }
 
-            public string BatteryState { get; set; }
+            public string? BatteryState { get; set; }
 
             public int Hidden { get; set; }
 
@@ -71,30 +71,30 @@ namespace WhereToFly.WebApi.Logic.Services.FindMeSpot
 
         public class Messages
         {
-            public Message Message { get; set; }
+            public Message? Message { get; set; }
         }
 
         public class FeedMessageResponse
         {
             public int Count { get; set; }
 
-            public Feed Feed { get; set; }
+            public Feed? Feed { get; set; }
 
             public int TotalCount { get; set; }
 
             public int ActivityCount { get; set; }
 
-            public Messages Messages { get; set; }
+            public Messages? Messages { get; set; }
         }
 
         public class Response
         {
-            public FeedMessageResponse FeedMessageResponse { get; set; }
+            public FeedMessageResponse? FeedMessageResponse { get; set; }
         }
 
         public class RootObject
         {
-            public Response Response { get; set; }
+            public Response? Response { get; set; }
         }
     }
 

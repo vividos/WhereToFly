@@ -94,14 +94,14 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
 
                 if (waypointsFolder != null)
                 {
-                    this.LoadWaypoints(waypointsFolder as Folder);
+                    this.LoadWaypoints((waypointsFolder as Folder)!);
                 }
 
                 var trackFolder = kmlDocument.Features.First(x => x is Folder folder && folder.Name == "Tracks");
 
                 if (trackFolder != null)
                 {
-                    this.LoadTracks(trackFolder as Folder);
+                    this.LoadTracks((trackFolder as Folder)!);
                 }
             }
         }
@@ -131,7 +131,7 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
         /// </summary>
         /// <param name="placemarkDescription">description text of placemark</param>
         /// <returns>waypoint info, or null when description couldn't be parsed</returns>
-        private static WaypointInfo WaypointInfoFromDescription(string placemarkDescription)
+        private static WaypointInfo? WaypointInfoFromDescription(string placemarkDescription)
         {
             var dict = ParseItemList(placemarkDescription);
 
@@ -143,11 +143,9 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
 
             if (waypointId != null)
             {
-                return new WaypointInfo
-                {
-                    Id = waypointId,
-                    Description = description ?? string.Empty,
-                };
+                return new WaypointInfo(
+                    waypointId,
+                    description ?? string.Empty);
             }
 
             return null;
@@ -194,7 +192,7 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
         /// </summary>
         /// <param name="placemarkDescription">placemark description text to parse</param>
         /// <returns>tuple with track info and a reverse track info, which both may be null</returns>
-        private Tuple<TrackInfo, TrackInfo> TrackInfoFromDescription(string placemarkDescription)
+        private Tuple<TrackInfo?, TrackInfo?> TrackInfoFromDescription(string placemarkDescription)
         {
             var dict = ParseItemList(placemarkDescription);
 
@@ -209,27 +207,23 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
             var source = this.tourEngine.FindOrCreateWaypointInfo(fromId);
             var target = this.tourEngine.FindOrCreateWaypointInfo(toId);
 
-            var trackInfo = new TrackInfo
-            {
-                Source = source,
-                Target = target,
-                Description = description,
-                Duration = ParseDurationText(durationText),
-            };
+            var trackInfo = new TrackInfo(
+                source,
+                target,
+                description,
+                ParseDurationText(durationText));
 
-            TrackInfo reverseTrackInfo = null;
+            TrackInfo? reverseTrackInfo = null;
             if (reverseDescription != null)
             {
-                reverseTrackInfo = new TrackInfo
-                {
-                    Source = trackInfo.Target,
-                    Target = trackInfo.Source,
-                    Description = reverseDescription,
-                    Duration = ParseDurationText(reverseDurationText),
-                };
+                reverseTrackInfo = new TrackInfo(
+                    source: trackInfo.Target,
+                    target: trackInfo.Source,
+                    reverseDescription,
+                    ParseDurationText(reverseDurationText));
             }
 
-            return new Tuple<TrackInfo, TrackInfo>(trackInfo, reverseTrackInfo);
+            return new Tuple<TrackInfo?, TrackInfo?>(trackInfo, reverseTrackInfo);
         }
 
         /// <summary>
@@ -344,7 +338,7 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
 
             string[] lines = text.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
-            string currentItemTitle = null;
+            string? currentItemTitle = null;
             var currentItemText = new StringBuilder();
 
             foreach (string line in lines)

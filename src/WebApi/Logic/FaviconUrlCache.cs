@@ -48,7 +48,7 @@ namespace WhereToFly.WebApi.Logic
 
             var htmlDocument = await this.DownloadIndexPage(baseUri);
 
-            string iconUrl = FindShortcutIconInDocument(baseUri, htmlDocument);
+            string? iconUrl = FindShortcutIconInDocument(baseUri, htmlDocument);
             if (iconUrl == null)
             {
                 var faviconUri = new Uri(new Uri(baseUri), "favicon.ico");
@@ -87,7 +87,7 @@ namespace WhereToFly.WebApi.Logic
         /// <param name="baseUri">base URI to use</param>
         /// <param name="htmlDocument">HTML document to check</param>
         /// <returns>shortcut icon, or null when none was found</returns>
-        private static string FindShortcutIconInDocument(string baseUri, HtmlDocument htmlDocument)
+        private static string? FindShortcutIconInDocument(string baseUri, HtmlDocument htmlDocument)
         {
             string[] htmlQueriesList = new string[]
             {
@@ -97,11 +97,11 @@ namespace WhereToFly.WebApi.Logic
                 "//link[@rel='icon']",
             };
 
-            foreach (var htmlQuery in htmlQueriesList)
+            foreach (string htmlQuery in htmlQueriesList)
             {
                 try
                 {
-                    var iconUrl = TryGetDocumentIcon(htmlDocument, baseUri, htmlQuery, "href");
+                    string? iconUrl = TryGetDocumentIcon(htmlDocument, baseUri, htmlQuery, "href");
                     if (iconUrl != null)
                     {
                         return iconUrl;
@@ -124,7 +124,11 @@ namespace WhereToFly.WebApi.Logic
         /// <param name="htmlQuery">HTML query to use</param>
         /// <param name="attributeName">attribute's name to get value for</param>
         /// <returns>found document icon URI, or null when not found</returns>
-        private static string TryGetDocumentIcon(HtmlDocument htmlDocument, string baseUri, string htmlQuery, string attributeName)
+        private static string? TryGetDocumentIcon(
+            HtmlDocument htmlDocument,
+            string baseUri,
+            string htmlQuery,
+            string attributeName)
         {
             var rootNode = htmlDocument.DocumentNode;
 
@@ -132,7 +136,7 @@ namespace WhereToFly.WebApi.Logic
             if (selectedNode != null &&
                 selectedNode.Attributes.Contains(attributeName))
             {
-                var linkUri = selectedNode.Attributes[attributeName].Value;
+                string linkUri = selectedNode.Attributes[attributeName].Value;
                 var completeUri = new Uri(new Uri(baseUri), linkUri);
 
                 return completeUri.AbsoluteUri;

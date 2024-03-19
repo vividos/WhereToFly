@@ -54,7 +54,9 @@ namespace WhereToFly.WebApi.Logic
         public string Json
         {
             get => JsonConvert.SerializeObject(this.Location);
-            set => this.Location = JsonConvert.DeserializeObject<Location>(value);
+            set => this.Location =
+                JsonConvert.DeserializeObject<Location>(value)
+                ?? throw new FormatException("invalid location JSON");
         }
 
         /// <summary>

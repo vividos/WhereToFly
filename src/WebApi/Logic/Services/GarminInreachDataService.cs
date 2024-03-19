@@ -84,14 +84,17 @@ namespace WhereToFly.WebApi.Logic.Services
         /// <returns>live waypoint data for device</returns>
         public async Task<LiveWaypointData> GetDataAsync(
             string mapShareIdentifier,
-            string password = null)
+            string? password = null)
         {
             string requestUrl = string.Format(InreachServiceUrl, mapShareIdentifier);
 
             var stream =
                 string.IsNullOrEmpty(password)
                 ? await this.client.GetStreamAsync(requestUrl)
-                : await this.GetStreamWithBasicAuth(requestUrl, string.Empty, password);
+                : await this.GetStreamWithBasicAuth(
+                    requestUrl,
+                    string.Empty,
+                    password!);
 
             var thisRequestTime = DateTimeOffset.Now;
             this.lastRequest = thisRequestTime;
@@ -112,7 +115,7 @@ namespace WhereToFly.WebApi.Logic.Services
         public async Task<LiveTrackData> GetTrackAsync(
             string mapShareIdentifier,
             DateTimeOffset startTime,
-            string password = null)
+            string? password = null)
         {
             string requestUrl = string.Format(InreachServiceUrl, mapShareIdentifier);
             requestUrl += "?d1=" + startTime.UtcDateTime.ToString("yyyy'-'MM'-'dd'T'HH':'mmK");
@@ -120,7 +123,10 @@ namespace WhereToFly.WebApi.Logic.Services
             var stream =
                 string.IsNullOrEmpty(password)
                 ? await this.client.GetStreamAsync(requestUrl)
-                : await this.GetStreamWithBasicAuth(requestUrl, string.Empty, password);
+                : await this.GetStreamWithBasicAuth(
+                    requestUrl,
+                    string.Empty,
+                    password!);
 
             var thisRequestTime = DateTimeOffset.Now;
             this.lastRequest = thisRequestTime;
@@ -136,7 +142,10 @@ namespace WhereToFly.WebApi.Logic.Services
         /// <param name="username">username to use</param>
         /// <param name="password">password to use</param>
         /// <returns>stream object</returns>
-        private async Task<Stream> GetStreamWithBasicAuth(string requestUrl, string username, string password)
+        private async Task<Stream> GetStreamWithBasicAuth(
+            string requestUrl,
+            string username,
+            string password)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, requestUrl);
 
@@ -192,7 +201,10 @@ namespace WhereToFly.WebApi.Logic.Services
                 Altitude = (int)(point.Coordinate.Altitude ?? 0.0),
                 TimeStamp = when.HasValue ? new DateTimeOffset(when.Value) : DateTimeOffset.Now,
                 Description = FormatDescriptionFromPlacemark(placemark) +
-                    LiveWaypointCacheManager.GetCoveredDistanceDescription(new MapPoint(point.Coordinate.Latitude, point.Coordinate.Longitude)),
+                    LiveWaypointCacheManager.GetCoveredDistanceDescription(
+                        new MapPoint(
+                            point.Coordinate.Latitude,
+                            point.Coordinate.Longitude)),
                 DetailsLink = string.Format(MapSharePublicUrl, mapShareIdentifier),
             };
         }
@@ -235,11 +247,13 @@ namespace WhereToFly.WebApi.Logic.Services
 
             foreach (Placemark placemark in allPointPlacemarks.Cast<Placemark>())
             {
-                var point = placemark.Geometry as Point;
+                if (placemark.Geometry is Point point)
+                {
+                    TrackPoint trackPoint =
+                        GetTrackPointFromKmlPointGeometry(placemark, point);
 
-                TrackPoint trackPoint =
-                    GetTrackPointFromKmlPointGeometry(placemark, point);
-                track.TrackPoints.Add(trackPoint);
+                    track.TrackPoints.Add(trackPoint);
+                }
             }
 
             DateTimeOffset? trackStart = track.TrackPoints.FirstOrDefault()?.Time;
@@ -347,10 +361,10 @@ namespace WhereToFly.WebApi.Logic.Services
         /// <param name="key">key value</param>
         /// <param name="defaultValue">default value</param>
         /// <returns>found value or default</returns>
-        private static TValue GetValueOrDefault<TKey, TValue>(
+        private static TValue? GetValueOrDefault<TKey, TValue>(
             Dictionary<TKey, TValue> dict,
             TKey key,
-            TValue defaultValue = default)
+            TValue? defaultValue = default)
         {
             return dict.TryGetValue(key, out TValue value)
                 ? value

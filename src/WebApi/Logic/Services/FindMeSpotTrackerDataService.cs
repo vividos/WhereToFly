@@ -63,7 +63,11 @@ namespace WhereToFly.WebApi.Logic.Services
                 uri.Type == AppResourceUri.ResourceType.FindMeSpotPos,
                 "app resource URI must be of FindMeSpotPos type!");
 
-            string liveFeedId = uri.Data;
+            string? liveFeedId = uri.Data;
+            if (liveFeedId == null)
+            {
+                throw new ArgumentNullException("uri.Data", "live feed ID is null");
+            }
 
             Model.RootObject result;
             if (liveFeedId != "xxx")
@@ -76,10 +80,10 @@ namespace WhereToFly.WebApi.Logic.Services
             {
                 // support for unit test
                 string feedText = @"{""response"":{""feedMessageResponse"":{""count"":1,""feed"":{""id"":""abc123"",""name"":""name1"",""description"":""desc1"",""status"":""ACTIVE"",""usage"":0,""daysRange"":7,""detailedMessageShown"":true,""type"":""SHARED_PAGE""},""totalCount"":1,""activityCount"":0,""messages"":{""message"":{""@clientUnixTime"":""0"",""id"":942821234,""messengerId"":""0-123456"",""messengerName"":""Spot"",""unixTime"":1521991234,""messageType"":""UNLIMITED-TRACK"",""latitude"":48.12345,""longitude"":11.12345,""modelId"":""SPOT3"",""showCustomMsg"":""Y"",""dateTime"":""2018-03-26T20:52:00+0000"",""batteryState"":""GOOD"",""hidden"":0,""altitude"":1234}}}}}";
-                result = Newtonsoft.Json.JsonConvert.DeserializeObject<Model.RootObject>(feedText);
+                result = Newtonsoft.Json.JsonConvert.DeserializeObject<Model.RootObject>(feedText)!;
             }
 
-            var latestMessage = result?.Response.FeedMessageResponse.Messages.Message;
+            var latestMessage = result?.Response?.FeedMessageResponse?.Messages?.Message;
 
             if (result == null ||
                 latestMessage == null)
@@ -87,15 +91,17 @@ namespace WhereToFly.WebApi.Logic.Services
                 throw new InvalidOperationException("couldn't get live waypoint data");
             }
 
+            var feed = result.Response?.FeedMessageResponse?.Feed;
+
             return new LiveWaypointData(uri.ToString())
             {
                 TimeStamp = new DateTimeOffset(latestMessage.DateTime),
                 Latitude = latestMessage.Latitude,
                 Longitude = latestMessage.Longitude,
                 Altitude = latestMessage.Altitude,
-                Name = "FindMeSpot " + result.Response.FeedMessageResponse.Feed.Name,
+                Name = "FindMeSpot " + (feed?.Name ?? "unknown"),
                 Description = FormatDescription(
-                    result.Response.FeedMessageResponse.Feed,
+                    feed,
                     latestMessage),
                 DetailsLink = FormatSpotLink(liveFeedId),
             };
@@ -104,12 +110,12 @@ namespace WhereToFly.WebApi.Logic.Services
         /// <summary>
         /// Formats a description based on feed and latest message
         /// </summary>
-        /// <param name="feed">feed object</param>
+        /// <param name="feed">feed object; may be null</param>
         /// <param name="latestMessage">latest message</param>
         /// <returns>markdown-formatted description of feed and latest message</returns>
-        private static string FormatDescription(Model.Feed feed, Model.Message latestMessage)
+        private static string FormatDescription(Model.Feed? feed, Model.Message latestMessage)
         {
-            return $"FindMeSpot feed for {feed.Name}\n" +
+            return $"FindMeSpot feed for {feed?.Name}\n" +
                 $"Current coordinates: Latitude: {latestMessage.Latitude}\n" +
                 $"Longitude: {latestMessage.Longitude}\n" +
                 $"Altitude: {latestMessage.Altitude}\n" +

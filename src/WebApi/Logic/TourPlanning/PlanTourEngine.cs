@@ -71,11 +71,9 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
             if (waypointInfo == null)
             {
                 // create an intermediate waypoint that isn't used as tour point
-                waypointInfo = new WaypointInfo
-                {
-                    Id = waypointId,
-                    Description = string.Empty,
-                };
+                waypointInfo = new WaypointInfo(
+                    waypointId,
+                    string.Empty);
 
                 this.tourGraph.AddVertex(waypointInfo);
             }

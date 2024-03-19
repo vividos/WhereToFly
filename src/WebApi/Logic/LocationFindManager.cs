@@ -29,7 +29,7 @@ namespace WhereToFly.WebApi.Logic
         /// <summary>
         /// Memory database connection
         /// </summary>
-        private SQLiteAsyncConnection connection;
+        private SQLiteAsyncConnection? connection;
 
         /// <summary>
         /// Creates a new location find manager
@@ -98,7 +98,7 @@ namespace WhereToFly.WebApi.Logic
 
                 var entriesList = locationList.Select(location => new FindLocationEntry(location));
 
-                await this.connection.InsertAllAsync(entriesList);
+                await this.connection!.InsertAllAsync(entriesList);
             }
         }
 
@@ -107,11 +107,11 @@ namespace WhereToFly.WebApi.Logic
         /// </summary>
         /// <param name="locationId">location ID</param>
         /// <returns>location object</returns>
-        public async Task<Location> GetAsync(string locationId)
+        public async Task<Location?> GetAsync(string locationId)
         {
             await this.initializedTask;
 
-            var layerEntry = await this.connection.FindAsync<FindLocationEntry>(locationId);
+            var layerEntry = await this.connection!.FindAsync<FindLocationEntry>(locationId);
 
             return layerEntry?.Location;
         }
@@ -129,7 +129,7 @@ namespace WhereToFly.WebApi.Logic
             MapPoint minMapPoint = mapPoint.Offset(rangeInMeter, -rangeInMeter, 0.0);
             MapPoint maxMapPoint = mapPoint.Offset(-rangeInMeter, rangeInMeter, 0.0);
 
-            var result = await this.connection.QueryAsync<FindLocationEntry>(
+            var result = await this.connection!.QueryAsync<FindLocationEntry>(
                 "select * from locations where latitude >= ? and latitude <= ? and longitude >= ? and longitude <= ?",
                 minMapPoint.Latitude,
                 maxMapPoint.Latitude,
@@ -169,7 +169,7 @@ namespace WhereToFly.WebApi.Logic
         {
             await this.initializedTask;
 
-            var result = await this.connection.QueryAsync<FindLocationEntry>(
+            var result = await this.connection!.QueryAsync<FindLocationEntry>(
                 "select * from locations where latitude >= ? and latitude <= ? and longitude >= ? and longitude <= ?",
                 latitude,
                 latitude + 1,

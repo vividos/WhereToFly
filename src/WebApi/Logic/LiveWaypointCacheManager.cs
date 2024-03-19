@@ -59,11 +59,11 @@ namespace WhereToFly.WebApi.Logic
         /// </summary>
         /// <param name="rawId">live waypoint ID (maybe urlencoded)</param>
         /// <returns>live waypoint query result</returns>
-        public async Task<LiveWaypointQueryResult> GetLiveWaypointData(string rawId)
+        public async Task<LiveWaypointQueryResult?> GetLiveWaypointData(string rawId)
         {
             AppResourceUri uri = GetAndCheckLiveWaypointId(rawId);
 
-            LiveWaypointQueryResult result = this.CheckCache(uri);
+            LiveWaypointQueryResult? result = this.CheckCache(uri);
             if (result != null)
             {
                 return result;
@@ -71,7 +71,7 @@ namespace WhereToFly.WebApi.Logic
 
             result = await this.GetLiveWaypointQueryResult(uri);
 
-            if (result != null)
+            if (result?.Data != null)
             {
                 this.CacheLiveWaypointData(result.Data);
             }
@@ -105,7 +105,7 @@ namespace WhereToFly.WebApi.Logic
         /// query result from cache, or null when there's no request in cache or when a request
         /// can be made online
         /// </returns>
-        private LiveWaypointQueryResult CheckCache(AppResourceUri uri)
+        private LiveWaypointQueryResult? CheckCache(AppResourceUri uri)
         {
             if (this.IsNextRequestPossible(uri))
             {
@@ -115,10 +115,12 @@ namespace WhereToFly.WebApi.Logic
             // ask cache
             string id = uri.ToString();
 
-            LiveWaypointData cachedData;
+            LiveWaypointData? cachedData;
             lock (this.lockCacheAndQueue)
             {
-                cachedData = this.liveWaypointCache.ContainsKey(id) ? this.liveWaypointCache[id] : null;
+                cachedData = this.liveWaypointCache.ContainsKey(id)
+                    ? this.liveWaypointCache[id]
+                    : null;
             }
 
             if (cachedData == null)
@@ -171,7 +173,14 @@ namespace WhereToFly.WebApi.Logic
                     return this.findMeSpotTrackerService.GetNextRequestDate(uri);
 
                 case AppResourceUri.ResourceType.GarminInreachPos:
-                    return this.garminInreachService.GetNextRequestDate(uri.Data);
+                    string? mapShareIdentifier = uri.Data;
+
+                    if (mapShareIdentifier == null)
+                    {
+                        throw new ArgumentNullException("uri.Data", "MapShare Identifier was null");
+                    }
+
+                    return this.garminInreachService.GetNextRequestDate(mapShareIdentifier);
 
                 case AppResourceUri.ResourceType.TestPos:
                     return DateTimeOffset.Now + TimeSpan.FromMinutes(1.0);
@@ -187,7 +196,7 @@ namespace WhereToFly.WebApi.Logic
         /// </summary>
         /// <param name="uri">live waypoint ID</param>
         /// <returns>query result</returns>
-        private async Task<LiveWaypointQueryResult> GetLiveWaypointQueryResult(AppResourceUri uri)
+        private async Task<LiveWaypointQueryResult?> GetLiveWaypointQueryResult(AppResourceUri uri)
         {
             switch (uri.Type)
             {
@@ -229,7 +238,12 @@ namespace WhereToFly.WebApi.Logic
         /// <returns>live waypoint query result</returns>
         private async Task<LiveWaypointQueryResult> GetGarminInreachPosResult(AppResourceUri uri)
         {
-            string mapShareIdentifier = uri.Data;
+            string? mapShareIdentifier = uri.Data;
+
+            if (mapShareIdentifier == null)
+            {
+                throw new ArgumentNullException("uri.Data", "MapShare Identifier was null");
+            }
 
             var liveWaypointData = await this.garminInreachService.GetDataAsync(mapShareIdentifier);
 
