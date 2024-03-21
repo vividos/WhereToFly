@@ -4,7 +4,6 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Title>Where-to-fly Geo</Title>
     <Description>Where-to-fly Geography related classes</Description>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <!-- NuGet package properties -->

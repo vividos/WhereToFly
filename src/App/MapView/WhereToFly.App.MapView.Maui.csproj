@@ -6,7 +6,6 @@
     <AssemblyName>WhereToFly.App.MapView</AssemblyName>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
     <UseMaui>true</UseMaui>
   </PropertyGroup>
 

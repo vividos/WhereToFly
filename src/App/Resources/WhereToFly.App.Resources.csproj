@@ -9,7 +9,6 @@
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <SonarQubeExclude>true</SonarQubeExclude>
     <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <PropertyGroup Condition=" $(TargetFramework.StartsWith('net8.0')) ">

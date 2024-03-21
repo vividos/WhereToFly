@@ -34,7 +34,7 @@ namespace WhereToFly.WebApi.UnitTest
             // run
             string filename = Path.Combine(this.TestAssetsPath, "GarminInreachRawKmlData.kml");
 
-            LiveWaypointData data = null;
+            LiveWaypointData? data = null;
             using (var stream = new FileStream(filename, FileMode.Open))
             {
                 var dataService = new GarminInreachDataService();

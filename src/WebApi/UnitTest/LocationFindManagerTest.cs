@@ -25,7 +25,7 @@ namespace WhereToFly.WebApi.UnitTest
             var mgr = new LocationFindManager();
 
             // run
-            Location location = await mgr.GetAsync("xyz123");
+            Location? location = await mgr.GetAsync("xyz123");
 
             // check
             Assert.IsNull(location, "location must not exist");

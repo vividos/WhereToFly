@@ -48,7 +48,7 @@ namespace WhereToFly.WebApi.Core.Controllers
         /// <returns>live waypoint query result</returns>
         /// <exception cref="ArgumentException">thrown when invalid live waypoint ID was passed</exception>
         [HttpGet]
-        public async Task<LiveWaypointQueryResult> Get(string id)
+        public async Task<LiveWaypointQueryResult?> Get(string id)
         {
             this.CheckLiveWaypointId(id);
 

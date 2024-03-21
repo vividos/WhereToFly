@@ -9,7 +9,6 @@ namespace WhereToFly.App.UITest
     /// User Interface tests for the WhereToFly app
     /// </summary>
     [TestFixture(Platform.Android)]
-    ////[TestFixture(Platform.iOS)]
     public class UserInterfaceTests
     {
         /// <summary>
@@ -20,7 +19,7 @@ namespace WhereToFly.App.UITest
         /// <summary>
         /// App under test
         /// </summary>
-        private IApp app;
+        private IApp? app;
 
         /// <summary>
         /// Creates a new UI test object
@@ -38,7 +37,7 @@ namespace WhereToFly.App.UITest
         {
             if (this.platform == Platform.Android)
             {
-                this.app.Tap(x => x.Class("AppCompatImageButton"));
+                this.app?.Tap(x => x.Class("AppCompatImageButton"));
             }
         }
 
@@ -57,10 +56,10 @@ namespace WhereToFly.App.UITest
         [Test]
         public void AppStartsUp()
         {
-            AppResult[] results = this.app.WaitForElement(c => c.Marked("ExploreMapWebView"));
-            this.app.Screenshot("Map screen.");
+            AppResult[]? results = this.app?.WaitForElement(c => c.Marked("ExploreMapWebView"));
+            this.app?.Screenshot("Map screen.");
 
-            Assert.IsTrue(results.Any());
+            Assert.IsTrue(results != null && results.Any());
         }
 
         /// <summary>
@@ -70,7 +69,7 @@ namespace WhereToFly.App.UITest
         public void VisitAllPages()
         {
             // wait for map
-            this.app.WaitForElement(c => c.Marked("ExploreMapWebView"));
+            this.app!.WaitForElement(c => c.Marked("ExploreMapWebView"));
 
             string[] markedList = new string[]
             {
@@ -84,7 +83,7 @@ namespace WhereToFly.App.UITest
                 "Map",
             };
 
-            foreach (var markedItem in markedList)
+            foreach (string markedItem in markedList)
             {
                 bool showsMap = markedItem == "Map";
 
@@ -96,7 +95,9 @@ namespace WhereToFly.App.UITest
                     this.app.WaitForNoElement(c => c.Marked("ExploreMapWebView"));
                 }
 
+#pragma warning disable S2925 // "Thread.Sleep" should not be used in tests
                 System.Threading.Thread.Sleep(100);
+#pragma warning restore S2925 // "Thread.Sleep" should not be used in tests
 
                 var fileInfo = this.app.Screenshot($"Screen: {markedItem}");
                 Assert.IsNotNull(fileInfo);
