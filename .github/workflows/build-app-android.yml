@@ -1,6 +1,6 @@
-# Build for the Where-to-fly Android app
+# Build for the Where-to-fly Android Forms app
 
-name: Build Android app
+name: Build Android Forms app
 
 on:
   workflow_dispatch:
@@ -27,7 +27,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 7.0.x
+        dotnet-version: 8.0.x
 
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v2
