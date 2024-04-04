@@ -59,7 +59,9 @@ namespace WhereToFly.App.UITest
             AppResult[]? results = this.app?.WaitForElement(c => c.Marked("ExploreMapWebView"));
             this.app?.Screenshot("Map screen.");
 
-            Assert.IsTrue(results != null && results.Any());
+            Assert.That(
+                results != null && results.Any(),
+                "map view must have been found");
         }
 
         /// <summary>
@@ -100,7 +102,10 @@ namespace WhereToFly.App.UITest
 #pragma warning restore S2925 // "Thread.Sleep" should not be used in tests
 
                 var fileInfo = this.app.Screenshot($"Screen: {markedItem}");
-                Assert.IsNotNull(fileInfo);
+                Assert.That(
+                    fileInfo,
+                    Is.Not.Null,
+                    "screenshot file info must not be null");
 
                 if (!showsMap)
                 {
