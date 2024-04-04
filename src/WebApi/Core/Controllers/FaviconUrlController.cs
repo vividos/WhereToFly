@@ -16,7 +16,7 @@ namespace WhereToFly.WebApi.Core.Controllers
         /// <summary>
         /// Logger instance
         /// </summary>
-        private readonly ILogger<AppConfigController> logger;
+        private readonly ILogger<FaviconUrlController> logger;
 
         /// <summary>
         /// Cache for favicon URLs
@@ -27,7 +27,7 @@ namespace WhereToFly.WebApi.Core.Controllers
         /// Creates a new favicon URL controller
         /// </summary>
         /// <param name="logger">logging instance</param>
-        public FaviconUrlController(ILogger<AppConfigController> logger)
+        public FaviconUrlController(ILogger<FaviconUrlController> logger)
         {
             this.logger = logger;
         }
