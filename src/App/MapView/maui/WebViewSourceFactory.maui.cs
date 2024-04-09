@@ -38,7 +38,7 @@ namespace WhereToFly.App.MapView
             using var reader = new StreamReader(stream);
             string text = await reader.ReadToEndAsync();
 
-#if NET7_0
+#if NET7_0_OR_GREATER
             // Workaround: The MAUI WebView implementation fails to set the base URL when there's
             // already a base tag; as a quick fix, replace it here
             text = text.Replace("<base ", "<base href='" + WebLibWebViewBaseUrl + "' ");
