@@ -6,6 +6,7 @@
                      xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
                      xmlns:views="clr-namespace:WhereToFly.App.Views"
                      x:Class="WhereToFly.App.Views.SelectWeatherIconPopupPage"
+                     x:DataType="viewmodels:SelectWeatherIconViewModel"
                      x:TypeArguments="model:WeatherIconDescription">
 
     <!-- popup content -->
@@ -33,7 +34,7 @@
             </CollectionView.ItemsLayout>
 
             <CollectionView.GroupHeaderTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="views:WeatherIconListViewModelGrouping">
                     <Label Text="{Binding Key}"
                            VerticalOptions="Center"
                            Padding="8,4"
