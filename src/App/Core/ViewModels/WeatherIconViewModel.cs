@@ -63,8 +63,10 @@ namespace WhereToFly.App.ViewModels
 
             this.Tapped = new AsyncCommand(this.OpenWeatherIconTargetAsync);
 
+            var userInterface = DependencyService.Get<IUserInterface>();
+
             this.ReplaceStringMap =
-                Styles.ThemeHelper.CurrentTheme == AppTheme.Dark
+                userInterface.UserAppTheme == AppTheme.Dark
                 ? new Dictionary<string, string>
                 {
                     { "fill=\"#000000", "fill=\"#ffffff" },

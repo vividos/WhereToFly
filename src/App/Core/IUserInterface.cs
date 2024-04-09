@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using WhereToFly.App.Services;
+using Xamarin.Essentials;
 
 namespace WhereToFly.App
 {
@@ -8,6 +9,11 @@ namespace WhereToFly.App
     /// </summary>
     public interface IUserInterface
     {
+        /// <summary>
+        /// Gets or sets the user's selected app theme
+        /// </summary>
+        AppTheme UserAppTheme { get; set; }
+
         /// <summary>
         /// Returns the navigation service that can be used to navigate to pages and show popup
         /// pages.

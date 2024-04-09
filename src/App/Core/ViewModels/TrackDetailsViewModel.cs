@@ -96,7 +96,11 @@ namespace WhereToFly.App.ViewModels
         /// </summary>
         public bool UseDarkTheme
         {
-            get => Styles.ThemeHelper.CurrentTheme == AppTheme.Dark;
+            get
+            {
+                var userInterface = DependencyService.Get<IUserInterface>();
+                return userInterface.UserAppTheme == AppTheme.Dark;
+            }
         }
         #endregion
 

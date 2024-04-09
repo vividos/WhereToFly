@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using WhereToFly.App.Services;
+using WhereToFly.App.Styles;
 using Xamarin.CommunityToolkit.Extensions;
 using Xamarin.CommunityToolkit.UI.Views.Options;
 using Xamarin.Essentials;
@@ -12,6 +13,15 @@ namespace WhereToFly.App
     /// </summary>
     internal class UserInterface : IUserInterface
     {
+        /// <summary>
+        /// Gets or sets the user's selected app theme
+        /// </summary>
+        public AppTheme UserAppTheme
+        {
+            get => ThemeHelper.CurrentTheme;
+            set => ThemeHelper.ChangeTheme(value, true);
+        }
+
         /// <summary>
         /// Returns current navigation service instance
         /// </summary>

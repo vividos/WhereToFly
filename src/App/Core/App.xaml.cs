@@ -112,7 +112,8 @@ namespace WhereToFly.App
 
             if (Settings != null)
             {
-                ThemeHelper.ChangeTheme(Settings.AppTheme, true);
+                var userInterface = DependencyService.Get<IUserInterface>();
+                userInterface.UserAppTheme = Settings.AppTheme;
             }
         }
 
@@ -148,7 +149,8 @@ namespace WhereToFly.App
             var dataService = DependencyService.Get<IDataService>();
             Settings = await dataService.GetAppSettingsAsync(CancellationToken.None);
 
-            ThemeHelper.ChangeTheme(Settings.AppTheme, true);
+            var userInterface = DependencyService.Get<IUserInterface>();
+            userInterface.UserAppTheme = Settings.AppTheme;
 
             var appMapService = DependencyService.Get<IAppMapService>();
             await appMapService.InitLiveWaypointRefreshService();
@@ -190,7 +192,8 @@ namespace WhereToFly.App
 
             if (Settings != null)
             {
-                ThemeHelper.ChangeTheme(Settings.AppTheme, true);
+                var userInterface = DependencyService.Get<IUserInterface>();
+                userInterface.UserAppTheme = Settings.AppTheme;
             }
         }
 
@@ -226,7 +229,8 @@ namespace WhereToFly.App
 
             if (Settings != null)
             {
-                ThemeHelper.ChangeTheme(Settings.AppTheme, true);
+                var userInterface = DependencyService.Get<IUserInterface>();
+                userInterface.UserAppTheme = Settings.AppTheme;
             }
 
             var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();

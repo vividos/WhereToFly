@@ -18,12 +18,14 @@ namespace WhereToFly.App.Views
         {
             this.Title = "Track height profile";
 
+            var userInterface = DependencyService.Get<IUserInterface>();
+
             this.Content = new HeightProfileView
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 Track = track,
-                UseDarkTheme = Styles.ThemeHelper.CurrentTheme == AppTheme.Dark,
+                UseDarkTheme = userInterface.UserAppTheme == AppTheme.Dark,
             };
 
             this.SetDynamicResource(BackgroundColorProperty, "PageBackgroundColor");

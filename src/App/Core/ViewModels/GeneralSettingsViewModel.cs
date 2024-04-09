@@ -138,7 +138,8 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         private async Task SaveThemeSettingsAsync()
         {
-            ThemeHelper.ChangeTheme(this.appSettings.AppTheme, true);
+            var userInterface = DependencyService.Get<IUserInterface>();
+            userInterface.UserAppTheme = this.appSettings.AppTheme;
 
             var dataService = DependencyService.Get<IDataService>();
             await dataService.StoreAppSettingsAsync(this.appSettings);
