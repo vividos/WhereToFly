@@ -74,7 +74,7 @@
     "Group": "Weather forecast",
     "Type": 0,
     "Icon": null,
-    "WebLink": "http://www.paraglidable.com/?lat=47.036&lon=11.805&zoom=8"
+    "WebLink": "https://paraglidable.com/?lat=47.036&lon=11.805&zoom=8"
   },
   {
     "Name": "Meteo.guru (Velivole.fr)",
@@ -109,7 +109,7 @@
     "Group": "Weather forecast",
     "Type": 0,
     "Icon": null,
-    "WebLink": "http://www.unwetterzentrale.de/uwz/lagebericht.html"
+    "WebLink": "https://www.unwetterzentrale.de/uwz/lagebericht.html"
   },
   {
     "Name": "Dust forecast",
@@ -165,7 +165,7 @@
     "Group": "Weather forecast",
     "Type": 0,
     "Icon": null,
-    "WebLink": "http://wetterstationen.meteomedia.de/station=109610&wahl=vorhersage"
+    "WebLink": "https://wetterstationen.meteomedia.de/station=109610&wahl=vorhersage"
   },
   {
     "Name": "Regenradar Bayern",
