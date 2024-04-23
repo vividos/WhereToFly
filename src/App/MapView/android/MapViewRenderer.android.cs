@@ -79,8 +79,9 @@ namespace WhereToFly.App.MapView
         {
             var mapView = this.Element as MapView;
 
-            var webViewClient = new MapViewWebViewClient(this, mapView?.LogErrorAction);
-            webViewClient.CorsWebsiteHosts.Add("thermal.kk7.ch");
+            var webViewClient = new MapViewWebViewClient(
+                this,
+                mapView?.LogErrorAction);
 
             return webViewClient;
         }
