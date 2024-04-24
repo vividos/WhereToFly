@@ -30,7 +30,7 @@ namespace WhereToFly.App
             {
                 AppCenter.Start(
                     $"android={Constants.AppCenterKeyAndroid};" +
-                    $"uwp={Constants.AppCenterKeyWindows}",
+                    $"windowsdesktop={Constants.AppCenterKeyWindows}",
                     typeof(Distribute),
                     typeof(Crashes));
             }
