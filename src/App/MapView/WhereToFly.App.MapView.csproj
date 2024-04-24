@@ -63,7 +63,7 @@
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.6" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2420.47" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2478.35" />
     <PackageReference Include="Xamarin.Essentials" Version="1.8.1" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2662" />
   </ItemGroup>
@@ -71,8 +71,8 @@
   <!-- .NET MAUI -->
   <ItemGroup Condition=" $(TargetFramework.StartsWith('net8.0')) ">
     <Compile Include="maui\*.cs" />
-    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.14" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.14" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.21" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.21" />
     <MauiAsset Include="..\..\Shared\WebLib\dist\**\*.*" Exclude="..\..\Shared\WebLib\dist\**\*.map" LogicalName="weblib\%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 

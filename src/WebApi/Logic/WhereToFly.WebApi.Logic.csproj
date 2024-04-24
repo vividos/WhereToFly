@@ -21,7 +21,7 @@
     <PackageReference Include="HtmlAgilityPack" Version="1.11.60" />
     <PackageReference Include="Refit" Version="7.0.0" />
     <PackageReference Include="Sandwych.QuickGraph.Core" Version="1.0.0" />
-    <PackageReference Include="SharpKml.Core" Version="6.0.0" />
+    <PackageReference Include="SharpKml.Core" Version="6.1.0" />
     <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
   </ItemGroup>
 
