@@ -1,6 +1,5 @@
 ﻿#if ANDROID
 using Microsoft.Maui.Handlers;
-using static Google.Android.Material.Tabs.TabLayout;
 
 namespace WhereToFly.App.MapView
 {
@@ -9,16 +8,6 @@ namespace WhereToFly.App.MapView
     /// </summary>
     internal partial class MapViewHandler : WebViewHandler
     {
-        /// <summary>
-        /// Called to create platform view
-        /// </summary>
-        /// <returns>Android WebView</returns>
-        protected override Android.Webkit.WebView CreatePlatformView()
-        {
-            var webView = base.CreatePlatformView();
-            return webView;
-        }
-
         /// <summary>
         /// Called when handlers are connected to the platform view
         /// </summary>
@@ -53,8 +42,11 @@ namespace WhereToFly.App.MapView
         {
             var mapView = virtualView as MapView;
 
+            var context = platformView.Context ?? Android.App.Application.Context;
+
             platformView.SetWebViewClient(
                 new MapViewWebViewClient(
+                    context,
                     this,
                     mapView?.LogErrorAction));
 
@@ -69,13 +61,11 @@ namespace WhereToFly.App.MapView
                 new JavaScriptCallbackHandler(virtualView),
                 JavaScriptCallbackHandler.ObjectName);
 
-            // enable this to ensure CesiumJS web worker are able to function
-            // https://stackoverflow.com/questions/32020039/using-a-web-worker-in-a-local-file-webview
-            platformView.Settings.AllowFileAccessFromFileURLs = true;
-
-            // this is needed to mix local content with https
-            platformView.Settings.MixedContentMode =
-                Android.Webkit.MixedContentHandling.CompatibilityMode;
+            // set secure settings
+            platformView.Settings.AllowFileAccess = false;
+            platformView.Settings.AllowContentAccess = false;
+            platformView.Settings.AllowFileAccessFromFileURLs = false;
+            platformView.Settings.AllowUniversalAccessFromFileURLs = false;
 
             // set up cache
             platformView.Settings.CacheMode =

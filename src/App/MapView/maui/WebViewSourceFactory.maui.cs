@@ -3,6 +3,8 @@ using Microsoft.Maui.Storage;
 using System.IO;
 using System.Threading.Tasks;
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+
 namespace WhereToFly.App.MapView
 {
     /// <summary>
@@ -17,7 +19,7 @@ namespace WhereToFly.App.MapView
 #if WINDOWS
         private const string WebLibWebViewBaseUrl = "https://appdir/weblib/";
 #elif ANDROID
-        private const string WebLibWebViewBaseUrl = "file:///android_asset/weblib/";
+        private const string WebLibWebViewBaseUrl = "https://appassets.androidplatform.net/assets/weblib/";
 #endif
 #pragma warning restore S1075 // URIs should not be hardcoded
 
@@ -38,7 +40,7 @@ namespace WhereToFly.App.MapView
             using var reader = new StreamReader(stream);
             string text = await reader.ReadToEndAsync();
 
-#if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER && WINDOWS
             // Workaround: The MAUI WebView implementation fails to set the base URL when there's
             // already a base tag; as a quick fix, replace it here
             text = text.Replace("<base ", "<base href='" + WebLibWebViewBaseUrl + "' ");
@@ -53,10 +55,16 @@ namespace WhereToFly.App.MapView
         /// <returns>web view source</returns>
         public async Task<WebViewSource> PlatformGetMapViewSource()
         {
+#if ANDROID
+            return new UrlWebViewSource
+            {
+                Url = WebLibWebViewBaseUrl + "weblib/mapView.html",
+            };
+#elif WINDOWS
             return new HtmlWebViewSource
             {
                 Html = await LoadAssetText("weblib/mapView.html"),
-#if NET7_0 && WINDOWS
+#if NET7_0
                 // Working around another bug: setting the BaseUrl using the LocalScheme
                 // URL fails to set up the virtual folder mapping, so just pass null here.
                 // See: https://github.com/dotnet/maui/issues/16646
@@ -65,6 +73,7 @@ namespace WhereToFly.App.MapView
                 BaseUrl = WebLibWebViewBaseUrl,
 #endif
             };
+#endif
         }
 
         /// <summary>
@@ -73,10 +82,16 @@ namespace WhereToFly.App.MapView
         /// <returns>web view source</returns>
         public async Task<WebViewSource> PlatformGetHeightProfileViewSource()
         {
+#if ANDROID
+            return new UrlWebViewSource
+            {
+                Url = WebLibWebViewBaseUrl + "weblib/heightProfileView.html",
+            };
+#elif WINDOWS
             return new HtmlWebViewSource
             {
                 Html = await LoadAssetText("weblib/heightProfileView.html"),
-#if NET7_0 && WINDOWS
+#if NET7_0
                 // Working around another bug: setting the BaseUrl using the LocalScheme
                 // URL fails to set up the virtual folder mapping, so just pass null here.
                 // See: https://github.com/dotnet/maui/issues/16646
@@ -85,6 +100,7 @@ namespace WhereToFly.App.MapView
                 BaseUrl = WebLibWebViewBaseUrl,
 #endif
             };
+#endif
         }
     }
 }

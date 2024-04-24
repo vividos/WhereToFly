@@ -14,7 +14,7 @@ namespace WhereToFly.App.MapView
         /// Base path to use in WebView control, for Android
         /// </summary>
 #pragma warning disable S1075 // URIs should not be hardcoded
-        private const string WebViewBasePath = "file:///android_asset/weblib/";
+        private const string WebLibWebViewBaseUrl = "https://appassets.androidplatform.net/assets/weblib/";
 #pragma warning restore S1075 // URIs should not be hardcoded
 
         /// <summary>
@@ -36,29 +36,27 @@ namespace WhereToFly.App.MapView
         }
 
         /// <summary>
-        /// Returns HTML web view source for MapView
+        /// Returns web view source for MapView
         /// </summary>
         /// <returns>web view source</returns>
-        public async Task<WebViewSource> PlatformGetMapViewSource()
+        public Task<WebViewSource> PlatformGetMapViewSource()
         {
-            return new HtmlWebViewSource
+            return Task.FromResult<WebViewSource>(new UrlWebViewSource
             {
-                Html = await this.LoadAssetText("weblib/mapView.html"),
-                BaseUrl = WebViewBasePath,
-            };
+                Url = WebLibWebViewBaseUrl + "mapView.html",
+            });
         }
 
         /// <summary>
-        /// Returns HTML web view source for HeightProfileView
+        /// Returns web view source for HeightProfileView
         /// </summary>
         /// <returns>web view source</returns>
-        public async Task<WebViewSource> PlatformGetHeightProfileViewSource()
+        public Task<WebViewSource> PlatformGetHeightProfileViewSource()
         {
-            return new HtmlWebViewSource
+            return Task.FromResult<WebViewSource>(new UrlWebViewSource
             {
-                Html = await this.LoadAssetText("weblib/heightProfileView.html"),
-                BaseUrl = WebViewBasePath,
-            };
+                Url = WebLibWebViewBaseUrl + "heightProfileView.html",
+            });
         }
     }
 }

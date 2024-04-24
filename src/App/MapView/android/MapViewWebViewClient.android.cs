@@ -1,5 +1,6 @@
 ﻿using Android.Runtime;
 using Android.Webkit;
+using AndroidX.WebKit;
 using System;
 using System.Diagnostics;
 using Xamarin.Forms.Platform.Android;
@@ -15,6 +16,11 @@ namespace WhereToFly.App.MapView
         /// Action to log errors
         /// </summary>
         private readonly Action<Exception>? logErrorAction;
+
+        /// <summary>
+        /// Asset loader
+        /// </summary>
+        private readonly WebViewAssetLoader assetLoader;
 
         /// <summary>
         /// CORS website cache
@@ -34,6 +40,15 @@ namespace WhereToFly.App.MapView
             this.logErrorAction = logErrorAction;
 
             this.corsWebsiteCache.CorsWebsiteHosts.Add("thermal.kk7.ch");
+
+            var context = renderer.Context ?? Android.App.Application.Context;
+
+            this.assetLoader = new WebViewAssetLoader
+                .Builder()
+                .AddPathHandler(
+                    "/assets/",
+                    new WebViewAssetLoader.AssetsPathHandler(context))
+                .Build();
         }
 
         /// <summary>
@@ -89,6 +104,11 @@ namespace WhereToFly.App.MapView
                 request?.Method,
                 request?.Url?.ToString());
 
+            if (request?.Url == null)
+            {
+                return null;
+            }
+
             var corsResponse = this.corsWebsiteCache.ShouldInterceptRequest(request);
             if (corsResponse != null)
             {
@@ -98,7 +118,7 @@ namespace WhereToFly.App.MapView
             // AppCenter infrequently reports an exception; try to fix this
             try
             {
-                return base.ShouldInterceptRequest(view, request);
+                return this.assetLoader.ShouldInterceptRequest(request.Url);
             }
             catch (Exception ex)
             {

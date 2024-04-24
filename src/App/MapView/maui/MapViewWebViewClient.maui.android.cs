@@ -1,5 +1,7 @@
 ﻿#if ANDROID
+using Android.Content;
 using Android.Webkit;
+using AndroidX.WebKit;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 using System;
@@ -18,6 +20,11 @@ namespace WhereToFly.App.MapView
         private readonly Action<Exception>? logErrorAction;
 
         /// <summary>
+        /// Asset loader
+        /// </summary>
+        private readonly WebViewAssetLoader assetLoader;
+
+        /// <summary>
         /// CORS website cache
         /// </summary>
         private readonly CorsWebsiteCache corsWebsiteCache = new();
@@ -25,9 +32,11 @@ namespace WhereToFly.App.MapView
         /// <summary>
         /// Creates a new web view client
         /// </summary>
+        /// <param name="context">context where the Android's WebView is running on</param>
         /// <param name="handler">web view handler</param>
         /// <param name="logErrorAction">action to log errors</param>
         public MapViewWebViewClient(
+            Context context,
             WebViewHandler handler,
             Action<Exception>? logErrorAction)
             : base(handler)
@@ -35,6 +44,13 @@ namespace WhereToFly.App.MapView
             this.logErrorAction = logErrorAction;
 
             this.corsWebsiteCache.CorsWebsiteHosts.Add("thermal.kk7.ch");
+
+            this.assetLoader = new WebViewAssetLoader
+                .Builder()
+                .AddPathHandler(
+                    "/assets/",
+                    new WebViewAssetLoader.AssetsPathHandler(context))
+                .Build();
         }
 
         /// <summary>
@@ -78,6 +94,11 @@ namespace WhereToFly.App.MapView
                 request?.Method,
                 request?.Url?.ToString());
 
+            if (request?.Url == null)
+            {
+                return null;
+            }
+
             var corsResponse = this.corsWebsiteCache.ShouldInterceptRequest(request);
             if (corsResponse != null)
             {
@@ -87,7 +108,7 @@ namespace WhereToFly.App.MapView
             // AppCenter infrequently reports an exception; try to fix this
             try
             {
-                return base.ShouldInterceptRequest(view, request);
+                return this.assetLoader.ShouldInterceptRequest(request.Url);
             }
             catch (Exception ex)
             {

@@ -97,14 +97,15 @@ namespace WhereToFly.App.MapView
 #endif
             // Note: don't put this.Control.Settings in a local variable, it doesn't work
             this.Control.Settings.JavaScriptEnabled = true;
-            this.Control.AddJavascriptInterface(new JavaScriptCallbackHandler(this), JavaScriptCallbackHandler.ObjectName);
+            this.Control.AddJavascriptInterface(
+                new JavaScriptCallbackHandler(this),
+                JavaScriptCallbackHandler.ObjectName);
 
-            // enable this to ensure CesiumJS web worker are able to function
-            // https://stackoverflow.com/questions/32020039/using-a-web-worker-in-a-local-file-webview
-            this.Control.Settings.AllowFileAccessFromFileURLs = true;
-
-            // this is needed to mix local content with https
-            this.Control.Settings.MixedContentMode = global::Android.Webkit.MixedContentHandling.CompatibilityMode;
+            // set secure settings
+            this.Control.Settings.AllowFileAccess = false;
+            this.Control.Settings.AllowContentAccess = false;
+            this.Control.Settings.AllowFileAccessFromFileURLs = false;
+            this.Control.Settings.AllowUniversalAccessFromFileURLs = false;
 
             // set up cache
             this.Control.Settings.CacheMode = global::Android.Webkit.CacheModes.Normal;
