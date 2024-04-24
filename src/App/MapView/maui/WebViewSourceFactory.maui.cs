@@ -58,7 +58,7 @@ namespace WhereToFly.App.MapView
 #if ANDROID
             return new UrlWebViewSource
             {
-                Url = WebLibWebViewBaseUrl + "weblib/mapView.html",
+                Url = WebLibWebViewBaseUrl + "mapView.html",
             };
 #elif WINDOWS
             return new HtmlWebViewSource
@@ -85,7 +85,7 @@ namespace WhereToFly.App.MapView
 #if ANDROID
             return new UrlWebViewSource
             {
-                Url = WebLibWebViewBaseUrl + "weblib/heightProfileView.html",
+                Url = WebLibWebViewBaseUrl + "heightProfileView.html",
             };
 #elif WINDOWS
             return new HtmlWebViewSource

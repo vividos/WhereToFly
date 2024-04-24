@@ -1,4 +1,5 @@
-﻿using Microsoft.Maui.Hosting;
+﻿using Microsoft.Maui;
+using Microsoft.Maui.Hosting;
 
 namespace WhereToFly.App.MapView
 {
@@ -18,6 +19,12 @@ namespace WhereToFly.App.MapView
                 .ConfigureMauiHandlers((handlers) =>
                  {
                      handlers.AddHandler(typeof(MapView), typeof(MapViewHandler));
+
+#if ANDROID
+                     MapViewHandler.Mapper.ModifyMapping(
+                         nameof(Android.Webkit.WebViewClient),
+                         MapViewHandler.SetupWebViewClient);
+#endif
                  });
         }
     }

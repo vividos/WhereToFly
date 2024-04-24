@@ -1,5 +1,7 @@
 ﻿#if ANDROID
+using Microsoft.Maui;
 using Microsoft.Maui.Handlers;
+using System;
 
 namespace WhereToFly.App.MapView
 {
@@ -38,18 +40,8 @@ namespace WhereToFly.App.MapView
         /// <param name="virtualView">Maui WebView</param>
         private void SetupWebViewSettings(
             Android.Webkit.WebView platformView,
-            Microsoft.Maui.IWebView virtualView)
+            IWebView virtualView)
         {
-            var mapView = virtualView as MapView;
-
-            var context = platformView.Context ?? Android.App.Application.Context;
-
-            platformView.SetWebViewClient(
-                new MapViewWebViewClient(
-                    context,
-                    this,
-                    mapView?.LogErrorAction));
-
             // use this to debug WebView from Chrome running on PC
 #if DEBUG
             Android.Webkit.WebView.SetWebContentsDebuggingEnabled(true);
@@ -70,6 +62,32 @@ namespace WhereToFly.App.MapView
             // set up cache
             platformView.Settings.CacheMode =
                 Android.Webkit.CacheModes.Normal;
+        }
+
+        /// <summary>
+        /// Sets up web view client
+        /// </summary>
+        /// <param name="handler">web view handler</param>
+        /// <param name="view">web view</param>
+        /// <param name="action">previous handler</param>
+        internal static void SetupWebViewClient(
+            IWebViewHandler handler,
+            IWebView view,
+            Action<IElementHandler, IElement>? action)
+        {
+            if (handler is MapViewHandler mauiHandler)
+            {
+                var mapView = view as MapView;
+
+                var context = handler.PlatformView.Context
+                    ?? Android.App.Application.Context;
+
+                handler.PlatformView.SetWebViewClient(
+                    new MapViewWebViewClient(
+                        context,
+                        mauiHandler,
+                        mapView?.LogErrorAction));
+            }
         }
     }
 }
