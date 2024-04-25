@@ -35,8 +35,8 @@
             </Style>
 
             <Style TargetType="TabbedPage" ApplyToDerivedTypes="True">
-                <Setter Property="BarBackgroundColor" Value="{DynamicResource ElementBackgroundColor}" />
-                <Setter Property="BarTextColor" Value="{DynamicResource ElementTextColor}" />
+                <Setter Property="BarBackgroundColor" Value="{DynamicResource PrimaryColor}" />
+                <Setter Property="BarTextColor" Value="White" />
             </Style>
 
             <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
