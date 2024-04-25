@@ -12,7 +12,7 @@
         VerticalOptions="Center"
         HorizontalOptions="Center"
         WidthRequest="320"
-        BackgroundColor="{DynamicResource PageBackgroundColor}"
+        BackgroundColor="{DynamicResource PopupPageBackgroundColor}"
         Padding="20">
 
         <!-- Caption text -->

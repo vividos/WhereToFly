@@ -37,7 +37,8 @@
                 <Picker Grid.Row="1" Grid.Column="1"
                         VerticalOptions="StartAndExpand"
                         ItemsSource="{Binding LocationTypeList, Mode=OneWay}"
-                        SelectedItem="{Binding Type}" />
+                        SelectedItem="{Binding Type}"
+                        BackgroundColor="{DynamicResource ElementOnPopupPageBackgroundColor}" />
 
                 <!-- Latitude -->
                 <Label Grid.Row="2" Grid.Column="0" Text="Latitude" />

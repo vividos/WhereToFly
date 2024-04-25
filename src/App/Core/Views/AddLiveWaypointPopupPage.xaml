@@ -13,7 +13,7 @@
         VerticalOptions="CenterAndExpand"
         HorizontalOptions="Center"
         WidthRequest="320"
-        BackgroundColor="{DynamicResource PageBackgroundColor}"
+        BackgroundColor="{DynamicResource PopupPageBackgroundColor}"
         Padding="20">
 
         <!-- caption -->
@@ -21,7 +21,9 @@
 
         <!-- Entry for live waypoint name -->
         <Label Text="Name" FontSize="Medium" />
-        <Entry Placeholder="enter live waypoint name" Text="{Binding Path=Name, Mode=TwoWay}" />
+        <Entry Placeholder="enter live waypoint name"
+               Text="{Binding Path=Name, Mode=TwoWay}"
+               BackgroundColor="{DynamicResource ElementOnPopupPageBackgroundColor}" />
 
         <Label Text="Type" FontSize="Medium" />
         <Label Text="{Binding Type, Mode=OneTime}" />

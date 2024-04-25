@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     x:Class="WhereToFly.App.Styles.DarkTheme">
@@ -11,6 +11,7 @@
 
     <!-- Background colors -->
     <Color x:Key="PageBackgroundColor">#202124</Color>
+    <Color x:Key="PopupPageBackgroundColor">#404144</Color>
     <Color x:Key="MenuBackgroundColor">Black</Color>
     <Color x:Key="SectionHeaderBackgroundColor">#2B3032</Color>
     <Color x:Key="ManualBackgroundColor">#3f484c</Color>
@@ -38,10 +39,11 @@
 
     <!-- Colors for different elements -->
     <Color x:Key="ElementBackgroundColor">#202124</Color>
+    <Color x:Key="ElementOnPopupPageBackgroundColor">#404144</Color>
     <Color x:Key="ElementTextColor">#ceced3</Color>
     <Color x:Key="LabelTextColor">White</Color>
     <Color x:Key="EntryPlaceholderTextColor">#7c7c7c</Color>
-    <Color x:Key="ButtonBackgroundColor">#2B3032</Color>
+    <Color x:Key="ButtonBackgroundColor">#606164</Color>
     <Color x:Key="BorderSelectionColor">White</Color>
     <Color x:Key="SvgImageTintColorDark">White</Color>
     <Color x:Key="CompassForegroundColor">DeepSkyBlue</Color>

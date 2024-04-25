@@ -13,7 +13,7 @@
         VerticalOptions="CenterAndExpand"
         HorizontalOptions="Center"
         WidthRequest="320"
-        BackgroundColor="{DynamicResource PageBackgroundColor}"
+        BackgroundColor="{DynamicResource PopupPageBackgroundColor}"
         Padding="20">
 
         <!-- caption -->
@@ -21,7 +21,9 @@
 
         <!-- Entry for layer name -->
         <Label Text="Name" FontSize="Medium" />
-        <Entry Placeholder="enter layer name" Text="{Binding Path=LayerName, Mode=TwoWay}" />
+        <Entry Placeholder="enter layer name"
+               Text="{Binding Path=LayerName, Mode=TwoWay}"
+               BackgroundColor="{DynamicResource ElementOnPopupPageBackgroundColor}" />
 
         <!-- Button to add layer -->
         <Button Text="Add layer"

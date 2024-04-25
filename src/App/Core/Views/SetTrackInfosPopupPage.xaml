@@ -14,7 +14,7 @@
         VerticalOptions="CenterAndExpand"
         HorizontalOptions="Center"
         WidthRequest="320"
-        BackgroundColor="{DynamicResource PageBackgroundColor}"
+        BackgroundColor="{DynamicResource PopupPageBackgroundColor}"
         Padding="20">
 
         <!-- caption -->
@@ -22,7 +22,9 @@
 
         <!-- Entry for track name -->
         <Label Text="Name" FontSize="Medium" />
-        <Entry Placeholder="enter track name" Text="{Binding Path=TrackName, Mode=TwoWay}" />
+        <Entry Placeholder="enter track name"
+               Text="{Binding Path=TrackName, Mode=TwoWay}"
+               BackgroundColor="{DynamicResource ElementOnPopupPageBackgroundColor}" />
 
         <!-- Colors to choose from -->
         <Label Text="Color" FontSize="Medium" Margin="0, 10, 0, 0" />

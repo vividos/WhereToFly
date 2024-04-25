@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     x:Class="WhereToFly.App.Styles.LightTheme">
@@ -11,6 +11,7 @@
 
     <!-- Background colors -->
     <Color x:Key="PageBackgroundColor">#F5F5F5</Color>
+    <Color x:Key="PopupPageBackgroundColor">#F5F5F5</Color>
     <Color x:Key="MenuBackgroundColor">LightGray</Color>
     <Color x:Key="SectionHeaderBackgroundColor">LightGray</Color>
     <Color x:Key="ManualBackgroundColor">#d0d0d0</Color>
@@ -38,6 +39,7 @@
 
     <!-- Colors for different elements -->
     <Color x:Key="ElementBackgroundColor">#F5F5F5</Color>
+    <Color x:Key="ElementOnPopupPageBackgroundColor">#F5F5F5</Color>
     <Color x:Key="ElementTextColor">#1C1C1C</Color>
     <Color x:Key="LabelTextColor">#707070</Color>
     <Color x:Key="EntryPlaceholderTextColor">#9b9b9b</Color>

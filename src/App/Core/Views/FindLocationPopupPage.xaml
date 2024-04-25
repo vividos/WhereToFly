@@ -11,12 +11,14 @@
         HorizontalOptions="Center"
         HeightRequest="140"
         WidthRequest="300"
-        BackgroundColor="{DynamicResource PageBackgroundColor}"
+        BackgroundColor="{DynamicResource PopupPageBackgroundColor}"
         Padding="20">
 
         <!-- text, entry control to enter location text and button -->
         <Label Text="Find location" FontSize="Large" />
-        <Entry Placeholder="enter location" x:Name="locationEntry" />
+        <Entry x:Name="locationEntry"
+               Placeholder="enter location"
+               BackgroundColor="{DynamicResource ElementOnPopupPageBackgroundColor}" />
         <Button Text="Find" Clicked="OnClickedFindButton" />
     </StackLayout>
 

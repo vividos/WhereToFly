@@ -6,6 +6,7 @@ Released on ?.
 
 ✨ New Features / Improvements
 
+- Made popup dialogs a bit lighter in dark mode
 - Using CesiumJS version 1.115.0
 
 🐛 Bugfixes
