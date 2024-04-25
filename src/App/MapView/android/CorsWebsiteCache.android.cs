@@ -37,7 +37,7 @@ namespace WhereToFly.App.MapView
         /// <summary>
         /// List of website host addresses (or parts) where CORS headers should be replaced in
         /// order for the WebView to correctly receive content. This must be used in some cases,
-        /// since the default Base URL of the WebView is file://
+        /// since some web sites don't send CORS headers.
         /// </summary>
         public HashSet<string> CorsWebsiteHosts { get; set; } = new();
 
@@ -63,9 +63,9 @@ namespace WhereToFly.App.MapView
             if (request?.Url != null &&
                 host != null &&
                 this.CorsWebsiteHosts != null &&
-                this.CorsWebsiteHosts.Any(x => host.Contains(x)))
+                this.CorsWebsiteHosts.Any(host.Contains))
             {
-                var response = this.BuildCorsResponse(request.Url?.ToString());
+                var response = this.BuildCorsResponse(request.Url.ToString());
                 if (response != null)
                 {
                     return response;
@@ -95,7 +95,7 @@ namespace WhereToFly.App.MapView
             }
 
             string date = DateTime.Now.ToUniversalTime().ToString("r");
-            string domainName = "file://";
+            string domainName = "https://appassets.androidplatform.net";
 
             var responseHeaders = new Dictionary<string, string>()
             {
