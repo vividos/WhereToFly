@@ -18,24 +18,6 @@ namespace WhereToFly.App.MapView
 #pragma warning restore S1075 // URIs should not be hardcoded
 
         /// <summary>
-        /// Loads text of Android asset file from given filename
-        /// </summary>
-        /// <param name="assetFilename">asset filename</param>
-        /// <returns>text content of asset</returns>
-        private async Task<string> LoadAssetText(string assetFilename)
-        {
-            var assetManager = Android.App.Application.Context.Assets;
-            if (assetManager == null)
-            {
-                throw new InvalidOperationException("can't access Android asset manager");
-            }
-
-            using var stream = assetManager.Open(assetFilename);
-            using var streamReader = new StreamReader(stream);
-            return await streamReader.ReadToEndAsync();
-        }
-
-        /// <summary>
         /// Returns web view source for MapView
         /// </summary>
         /// <returns>web view source</returns>
