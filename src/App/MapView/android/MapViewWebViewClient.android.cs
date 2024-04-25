@@ -62,6 +62,15 @@ namespace WhereToFly.App.MapView
             : base(javaReference, transfer)
         {
             this.corsWebsiteCache.CorsWebsiteHosts.Add("thermal.kk7.ch");
+
+            var context = Android.App.Application.Context;
+
+            this.assetLoader = new WebViewAssetLoader
+                .Builder()
+                .AddPathHandler(
+                    "/assets/",
+                    new WebViewAssetLoader.AssetsPathHandler(context))
+                .Build();
         }
 
         /// <summary>
