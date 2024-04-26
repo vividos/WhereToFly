@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;
+using Xamarin.Forms;
 
 namespace WhereToFly.App.Services
 {
@@ -79,11 +80,6 @@ namespace WhereToFly.App.Services
         /// Timer to schedule updates
         /// </summary>
         private Timer? timer;
-
-        /// <summary>
-        /// Data service instance
-        /// </summary>
-        public IDataService? DataService { get; set; }
 
         /// <summary>
         /// Delegate of event that is triggered when live waypoint or track data was updated
@@ -433,9 +429,10 @@ namespace WhereToFly.App.Services
             LiveWaypointQueryResult? queryResult = null;
             try
             {
-                if (this.DataService != null)
+                var dataService = DependencyService.Get<IDataService>();
+                if (dataService != null)
                 {
-                    queryResult = await this.DataService.GetLiveWaypointDataAsync(liveWaypointId);
+                    queryResult = await dataService.GetLiveWaypointDataAsync(liveWaypointId);
                 }
             }
             catch (Exception ex)
@@ -490,9 +487,11 @@ namespace WhereToFly.App.Services
             LiveTrackQueryResult? queryResult = null;
             try
             {
-                if (this.DataService != null)
+                var dataService = DependencyService.Get<IDataService>();
+
+                if (dataService != null)
                 {
-                    queryResult = await this.DataService.GetLiveTrackDataAsync(
+                    queryResult = await dataService.GetLiveTrackDataAsync(
                         liveTrackId,
                         lastTrackPointTime);
                 }
