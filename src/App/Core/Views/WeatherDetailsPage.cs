@@ -71,7 +71,7 @@ namespace WhereToFly.App.Views
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
         /// <returns>task to wait on</returns>
-        private async Task OnNavigated_WebView(object sender, WebNavigatedEventArgs args)
+        private async Task OnNavigated_WebView(object? sender, WebNavigatedEventArgs args)
         {
             if (sender is WebView webView &&
                 args.Url.StartsWith("https://www.austrocontrol.at/flugwetter/"))

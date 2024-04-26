@@ -341,7 +341,7 @@ namespace WhereToFly.App.Views
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        private void OnNavigating_WebView(object sender, WebNavigatingEventArgs args)
+        private void OnNavigating_WebView(object? sender, WebNavigatingEventArgs args)
         {
             if (args.NavigationEvent == WebNavigationEvent.NewPage &&
                 args.Url.StartsWith("http") &&
@@ -442,7 +442,7 @@ namespace WhereToFly.App.Views
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        private void OnUpdateLiveData(object sender, LiveDataUpdateEventArgs args)
+        private void OnUpdateLiveData(object? sender, LiveDataUpdateEventArgs args)
         {
             LiveWaypointData? waypointData = args.WaypointData;
             if (waypointData != null)
@@ -871,7 +871,7 @@ namespace WhereToFly.App.Views
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        private void OnConnectivityChanged(object sender, ConnectivityChangedEventArgs args)
+        private void OnConnectivityChanged(object? sender, ConnectivityChangedEventArgs args)
         {
             bool isConnectivityAvailable =
                 args.NetworkAccess == NetworkAccess.Internet;
@@ -916,7 +916,7 @@ namespace WhereToFly.App.Views
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args, including position</param>
-        private void OnPositionChanged(object sender, GeolocationEventArgs args)
+        private void OnPositionChanged(object? sender, GeolocationEventArgs args)
         {
             MapPoint point = args.Point;
 

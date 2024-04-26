@@ -15,7 +15,7 @@ namespace WhereToFly.App.Services
         /// <param name="context">context; unused</param>
         /// <param name="sourceType">source type</param>
         /// <returns>true when source type is convertible</returns>
-        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
+        public override bool CanConvertFrom(ITypeDescriptorContext? context, Type sourceType)
             => sourceType == typeof(string);
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace WhereToFly.App.Services
         /// <param name="context">context; unused</param>
         /// <param name="destinationType">destination type</param>
         /// <returns>true when destination type is convertible</returns>
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
+        public override bool CanConvertTo(ITypeDescriptorContext? context, Type? destinationType)
             => destinationType == typeof(string);
 
         /// <summary>
@@ -35,9 +35,9 @@ namespace WhereToFly.App.Services
         /// <param name="value">string value to convert</param>
         /// <returns>converted LatLongKey object</returns>
         public override object ConvertFrom(
-            ITypeDescriptorContext context,
-            CultureInfo culture,
-            object value)
+            ITypeDescriptorContext? context,
+            CultureInfo? culture,
+            object? value)
         {
             if (value is string text)
             {

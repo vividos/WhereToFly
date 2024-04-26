@@ -137,7 +137,7 @@ namespace WhereToFly.App.Controls
         /// </summary>
         /// <param name="sender">sender object; the button being clicked</param>
         /// <param name="args">event args</param>
-        private void OnClicked_ColorPickerButton(object sender, EventArgs args)
+        private void OnClicked_ColorPickerButton(object? sender, EventArgs args)
         {
             if (sender is Button button)
             {

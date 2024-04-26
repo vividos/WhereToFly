@@ -561,7 +561,7 @@ namespace WhereToFly.App.ViewModels
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args, including position</param>
-        public void OnPositionChanged(object sender, GeolocationEventArgs args)
+        public void OnPositionChanged(object? sender, GeolocationEventArgs args)
         {
             this.currentPosition = args.Point;
 

@@ -88,7 +88,7 @@ namespace WhereToFly.App.Controls
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        private void OnParentBindingContextChanged(object sender, EventArgs args)
+        private void OnParentBindingContextChanged(object? sender, EventArgs args)
         {
             this.Parent.BindingContextChanged -= this.OnParentBindingContextChanged;
 

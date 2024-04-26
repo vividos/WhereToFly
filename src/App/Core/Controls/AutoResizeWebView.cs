@@ -22,7 +22,7 @@ namespace WhereToFly.App.Controls
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        private async void OnNavigated(object sender, WebNavigatedEventArgs args)
+        private async void OnNavigated(object? sender, WebNavigatedEventArgs args)
         {
             Debug.WriteLine($"OnNavigated: result={args.Result} event={args.NavigationEvent}");
 

@@ -134,7 +134,7 @@ namespace WhereToFly.App.Controls
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        private void CanvasViewOnPaintSurface(object sender, SKPaintSurfaceEventArgs args)
+        private void CanvasViewOnPaintSurface(object? sender, SKPaintSurfaceEventArgs args)
         {
             SKCanvas canvas = args.Surface.Canvas;
             canvas.Clear();

@@ -345,7 +345,7 @@ namespace WhereToFly.App.ViewModels
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        private void OnElapsed_TimerUpdateLastPositionFix(object sender, ElapsedEventArgs args)
+        private void OnElapsed_TimerUpdateLastPositionFix(object? sender, ElapsedEventArgs args)
         {
             this.OnPropertyChanged(nameof(this.LastPositionFix));
         }
@@ -355,7 +355,7 @@ namespace WhereToFly.App.ViewModels
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args, including position</param>
-        public void OnPositionChanged(object sender, GeolocationEventArgs args)
+        public void OnPositionChanged(object? sender, GeolocationEventArgs args)
         {
             this.position = args.Position;
 
@@ -537,7 +537,7 @@ namespace WhereToFly.App.ViewModels
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        private void OnCompassReadingChanged(object sender, CompassChangedEventArgs args)
+        private void OnCompassReadingChanged(object? sender, CompassChangedEventArgs args)
         {
             this.currentCompassHeading = (int)(args.Reading.HeadingMagneticNorth + 0.5);
             this.isCompassAvailable = true;
