@@ -8,7 +8,7 @@ using Xamarin.Forms;
 namespace WhereToFly.App.Controls
 {
     /// <summary>
-    /// SVG image control for Xamarin.Forms, using the SkiaSharp.Extended.Svg NuGet package.
+    /// SVG image control, using the SkiaSharp.Extended.Svg NuGet package.
     /// </summary>
     public class SvgImage : SKCanvasView
     {

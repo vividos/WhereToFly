@@ -107,7 +107,7 @@ namespace WhereToFly.App.Services
         }
 
         /// <summary>
-        /// Returns Xamarin.Forms page type from given page key; also checks if needed parameters
+        /// Returns content page type from given page key; also checks if needed parameters
         /// were passed.
         /// </summary>
         /// <param name="pageKey">page key</param>

@@ -6,7 +6,7 @@ using System.Diagnostics;
 namespace WhereToFly.App
 {
     /// <summary>
-    /// WhereToFly MAUI app
+    /// WhereToFly app
     /// </summary>
     public partial class App : Application
     {

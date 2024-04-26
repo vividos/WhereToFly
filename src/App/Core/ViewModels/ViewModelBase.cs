@@ -4,7 +4,7 @@ using Xamarin.Forms;
 namespace WhereToFly.App.ViewModels
 {
     /// <summary>
-    /// Common view model base class; supports notifying Xamarin.Forms xaml via
+    /// Common view model base class; supports notifying xaml via
     /// INotifyPropertyChanged
     /// </summary>
     public class ViewModelBase : INotifyPropertyChanged
