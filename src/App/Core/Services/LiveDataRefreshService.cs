@@ -374,7 +374,8 @@ namespace WhereToFly.App.Services
                         {
                             lastTrackPointTime = this.liveTrackLastTrackPointTimeMap[updateInfo.LocationOrTrackId];
                         }
-                        else if (this.liveTrackMap.TryGetValue(updateInfo.LocationOrTrackId, out Track liveTrack))
+                        else if (this.liveTrackMap.TryGetValue(updateInfo.LocationOrTrackId, out Track? liveTrack) &&
+                            liveTrack != null)
                         {
                             lastTrackPointTime =
                                 liveTrack.TrackPoints.LastOrDefault(

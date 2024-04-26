@@ -149,7 +149,6 @@ namespace WhereToFly.App.Services
             object? parameter = null)
             where TResult : class?
         {
-            Debug.Assert(this.NavigationPage != null, "NavigationPage property must have been set");
             if (this.NavigationPage == null)
             {
                 throw new InvalidOperationException("Navigation page wasn't initialized properly");
@@ -184,11 +183,11 @@ namespace WhereToFly.App.Services
             PopupPage? popupPage = null;
             if (parameter == null)
             {
-                popupPage = (PopupPage)Activator.CreateInstance(popupPageType);
+                popupPage = (PopupPage?)Activator.CreateInstance(popupPageType);
             }
             else
             {
-                popupPage = (PopupPage)Activator.CreateInstance(popupPageType, parameter);
+                popupPage = (PopupPage?)Activator.CreateInstance(popupPageType, parameter);
             }
 
             if (popupPage != null)
@@ -223,7 +222,6 @@ namespace WhereToFly.App.Services
         /// <returns>task to wait on</returns>
         public async Task GoBack()
         {
-            Debug.Assert(this.NavigationPage != null, "NavigationPage property must have been set");
             if (this.NavigationPage == null)
             {
                 throw new InvalidOperationException("Navigation page wasn't initialized properly");
@@ -249,7 +247,6 @@ namespace WhereToFly.App.Services
         /// <returns>task to wait on</returns>
         public async Task NavigateAsync(Type pageType, bool animated = true, object? parameter = null)
         {
-            Debug.Assert(this.NavigationPage != null, "NavigationPage property must have been set");
             if (this.NavigationPage == null)
             {
                 throw new InvalidOperationException("Navigation page wasn't initialized properly");
@@ -275,11 +272,11 @@ namespace WhereToFly.App.Services
             }
             else if (parameter == null)
             {
-                displayPage = (Page)Activator.CreateInstance(pageType);
+                displayPage = (Page?)Activator.CreateInstance(pageType);
             }
             else
             {
-                displayPage = (Page)Activator.CreateInstance(pageType, parameter);
+                displayPage = (Page?)Activator.CreateInstance(pageType, parameter);
             }
 
             if (displayPage != null)
