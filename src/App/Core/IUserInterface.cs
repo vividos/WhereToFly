@@ -15,6 +15,12 @@ namespace WhereToFly.App
         AppTheme UserAppTheme { get; set; }
 
         /// <summary>
+        /// Returns if the app is currently using a dark theme. This takes into account when the
+        /// app theme is set to "Same as device".
+        /// </summary>
+        bool IsDarkTheme { get; }
+
+        /// <summary>
         /// Returns the navigation service that can be used to navigate to pages and show popup
         /// pages.
         /// </summary>

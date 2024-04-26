@@ -66,7 +66,7 @@ namespace WhereToFly.App.ViewModels
             var userInterface = DependencyService.Get<IUserInterface>();
 
             this.ReplaceStringMap =
-                userInterface.UserAppTheme == AppTheme.Dark
+                userInterface.IsDarkTheme
                 ? new Dictionary<string, string>
                 {
                     { "fill=\"#000000", "fill=\"#ffffff" },

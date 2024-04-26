@@ -122,7 +122,7 @@ namespace WhereToFly.App.ViewModels
             htmlText = htmlText.Replace(".svg\"", ".svg\" class=\"svg-img\"");
 
             var userInterface = DependencyService.Get<IUserInterface>();
-            if (userInterface.UserAppTheme == AppTheme.Light)
+            if (!userInterface.IsDarkTheme)
             {
                 htmlText = "<style> body { color: black; background-color: white; } .svg-img { filter: invert(100%); } </style>" + htmlText;
             }

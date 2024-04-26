@@ -99,7 +99,7 @@ namespace WhereToFly.App.ViewModels
             get
             {
                 var userInterface = DependencyService.Get<IUserInterface>();
-                return userInterface.UserAppTheme == AppTheme.Dark;
+                return userInterface.IsDarkTheme;
             }
         }
         #endregion

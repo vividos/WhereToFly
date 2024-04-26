@@ -25,7 +25,7 @@ namespace WhereToFly.App.Views
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 Track = track,
-                UseDarkTheme = userInterface.UserAppTheme == AppTheme.Dark,
+                UseDarkTheme = userInterface.IsDarkTheme,
             };
 
             this.SetDynamicResource(BackgroundColorProperty, "PageBackgroundColor");
