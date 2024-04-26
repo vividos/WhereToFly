@@ -39,7 +39,10 @@ namespace WhereToFly.App.ViewModels
         /// <summary>
         /// Property that contains the track's color
         /// </summary>
-        public Color TrackColor => this.Track.IsFlightTrack ? Color.Transparent : Color.FromHex(this.Track.Color);
+        public Color TrackColor
+            => this.Track.IsFlightTrack
+            ? Color.Transparent
+            : Color.FromHex(this.Track.Color);
 
         /// <summary>
         /// Command that is called when the user taps on the color box

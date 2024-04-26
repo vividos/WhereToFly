@@ -51,7 +51,10 @@ namespace WhereToFly.App.ViewModels
         /// <summary>
         /// Property that contains the track's color
         /// </summary>
-        public Color TrackColor => this.track.IsFlightTrack ? Color.Transparent : Color.FromHex(this.track.Color);
+        public Color TrackColor
+            => this.track.IsFlightTrack
+            ? Color.Transparent
+            : Color.FromHex(this.track.Color);
 
         /// <summary>
         /// Property containing detail infos for track

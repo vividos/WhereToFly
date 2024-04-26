@@ -22,9 +22,7 @@ namespace WhereToFly.App.Controls
         /// <param name="sourceType">source type</param>
         /// <returns>true when type can be converted, or false when not</returns>
         public override bool CanConvertFrom(Type sourceType)
-        {
-            return sourceType == typeof(string);
-        }
+            => sourceType == typeof(string);
 
         /// <summary>
         /// Converts a string value to a suitable ImageSource object.

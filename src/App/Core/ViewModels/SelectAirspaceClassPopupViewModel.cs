@@ -51,12 +51,18 @@ namespace WhereToFly.App.ViewModels
             /// <summary>
             /// Text color for the item
             /// </summary>
-            public Color TextColor => this.IsSelected ? Color.White : Color.FromHex("#2f2f2f");
+            public Color TextColor
+                => this.IsSelected
+                ? Color.White
+                : Color.FromHex("#2f2f2f");
 
             /// <summary>
             /// Background color for the item
             /// </summary>
-            public Color BackgroundColor => this.IsSelected ? Constants.PrimaryColor : Color.FromHex("#cfcfcf");
+            public Color BackgroundColor
+                => this.IsSelected
+                ? Constants.PrimaryColor
+                : Color.FromHex("#cfcfcf");
 
             /// <summary>
             /// Command that is carried out when weather icon has been tapped.
