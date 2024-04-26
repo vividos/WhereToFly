@@ -200,17 +200,19 @@ namespace WhereToFly.App.Services
             }
 
             Type? returnType = typeTuple.Item2;
-            if (popupPage is IPageResult<TResult> pageResult &&
-                returnType != null &&
-                typeof(TResult) == returnType)
+            if (popupPage is IPageResult<TResult> pageResult)
             {
-                return await pageResult.ResultTask;
-            }
-            else
-            {
-                Debug.Assert(
-                    false,
-                    $"the page's {popupPage.GetType().FullName} result type doesn't match the calling NavigateToPopupPageAsync result type {typeof(TResult).FullName}");
+                if (returnType != null &&
+                    typeof(TResult) == returnType)
+                {
+                    return await pageResult.ResultTask;
+                }
+                else
+                {
+                    Debug.Assert(
+                        false,
+                        $"the page's {popupPage.GetType().FullName} result type doesn't match the calling NavigateToPopupPageAsync result type {typeof(TResult).FullName}");
+                }
             }
 
             return null;
