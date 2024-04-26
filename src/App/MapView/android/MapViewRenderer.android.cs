@@ -7,6 +7,10 @@ using Xamarin.Forms.Platform.Android;
     typeof(WhereToFly.App.MapView.MapView),
     typeof(WhereToFly.App.MapView.MapViewRenderer))]
 
+[assembly: ExportRenderer(
+    typeof(WhereToFly.App.MapView.HeightProfileView),
+    typeof(WhereToFly.App.MapView.MapViewRenderer))]
+
 namespace WhereToFly.App.MapView
 {
     /// <summary>
