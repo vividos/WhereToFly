@@ -17,6 +17,9 @@ $(function () {
     initLiveTracking();
 });
 
+/**
+ * Initializes live tracking
+ */
 function initLiveTracking() {
     const liveTracking = new LiveTracking();
 

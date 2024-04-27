@@ -9,7 +9,8 @@ export default [
     {
         languageOptions: {
             globals: {
-                ...globals.browser
+                ...globals.browser,
+                "getLiveTrackingInfoList": "readonly"
             }
         },
         plugins: {

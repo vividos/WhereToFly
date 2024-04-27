@@ -43,6 +43,7 @@ export default class LiveTracking {
 
     /**
      * Logs a message to the console, just like console.log, but with styled output.
+     * @param {string} message message to log
      */
     static log(message) {
         console.log("%cLiveTracking%c" + message, LiveTracking.consoleLogStyle);
@@ -64,7 +65,7 @@ export default class LiveTracking {
 
     /**
      * Function for MapView for map actions
-     * @param {String} funcName function name of action
+     * @param {string} funcName function name of action
      * @param {object} params action params
      */
     callMapAction(funcName, params) {
@@ -149,8 +150,8 @@ export default class LiveTracking {
 
     /**
      * Adds a single live waypoint to track
-     * @param {String} name Name of live waypoint
-     * @param {String} liveWaypointId Live waypoint ID
+     * @param {string} name Name of live waypoint
+     * @param {string} liveWaypointId Live waypoint ID
      */
     addLiveWaypoint(name, liveWaypointId) {
 
@@ -176,8 +177,8 @@ export default class LiveTracking {
 
     /**
      * Adds a single live track to map
-     * @param {String} name Name of live track
-     * @param {String} liveTrackId Live track ID
+     * @param {string} name Name of live track
+     * @param {string} liveTrackId Live track ID
      * @param {boolean} isFlightTrack Indicates if it's a flight track
      */
     addLiveTrack(name, liveTrackId, isFlightTrack) {
@@ -205,7 +206,7 @@ export default class LiveTracking {
 
     /**
      * Geocodes entered address and shows pin
-     * @param {String} address entered address to find
+     * @param {string} address entered address to find
      */
     geocodeAndShow(address) {
 
@@ -237,7 +238,7 @@ export default class LiveTracking {
 
     /**
      * Zooms to a live waypoint by given page ID prefix
-     * @param {String} pageIdPrefix page ID prefix of live waypoint
+     * @param {string} pageIdPrefix page ID prefix of live waypoint
      */
     zoomToByPrefix(pageIdPrefix) {
 
@@ -258,7 +259,7 @@ export default class LiveTracking {
 
     /**
      * Updates a live waypoint or track by given page ID prefix
-     * @param {String} pageIdPrefix page ID prefix of live waypoint
+     * @param {string} pageIdPrefix page ID prefix of live waypoint
      */
     updateByPrefix(pageIdPrefix) {
 
@@ -279,7 +280,7 @@ export default class LiveTracking {
 
     /**
      * Updates a live waypoint
-     * @param {String} liveWaypointUri live waypoint uri to update
+     * @param {string} liveWaypointUri live waypoint uri to update
      */
     updateLiveWaypoint(liveWaypointUri) {
 
@@ -299,8 +300,8 @@ export default class LiveTracking {
 
     /**
      * Called when updated live waypoint data is available
-     * @param {String} liveWaypointUri live waypoint uri to update
-     * @param {Object} result ajax result object with updated data, or a string as error message
+     * @param {string} liveWaypointUri live waypoint uri to update
+     * @param {object} result ajax result object with updated data, or a string as error message
      */
     onUpdateLiveWaypointResult(liveWaypointUri, result) {
 
@@ -342,7 +343,7 @@ export default class LiveTracking {
 
     /**
      * Updates a live track
-     * @param {String} liveTrackUri live track uri to update
+     * @param {string} liveTrackUri live track uri to update
      */
     updateLiveTrack(liveTrackUri) {
 
@@ -363,8 +364,8 @@ export default class LiveTracking {
 
     /**
      * Called when updated live waypoint data is available
-     * @param {String} liveTrackUri live track uri to update
-     * @param {Object} result ajax result object with updated data, or a string as error message
+     * @param {string} liveTrackUri live track uri to update
+     * @param {object} result ajax result object with updated data, or a string as error message
      */
     onUpdateLiveTrackResult(liveTrackUri, result) {
 
@@ -401,8 +402,8 @@ export default class LiveTracking {
 
     /**
      * Schedules next update for live waypoint, using next request date from query result
-     * @param {String} liveDataUri live waypoint or track uri to use
-     * @param {String} nextRequestDate ISO 8601 formatted next request date
+     * @param {string} liveDataUri live waypoint or track uri to use
+     * @param {string} nextRequestDate ISO 8601 formatted next request date
      */
     scheduleNextUpdate(liveDataUri, nextRequestDate) {
 
