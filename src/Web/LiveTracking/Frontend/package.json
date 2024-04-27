@@ -6,10 +6,9 @@
   "sideEffects": [
     "./src/css/site.css"
   ],
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint --config eslint.config.js src",
+    "lint": "eslint --config eslint.config.mjs src",
     "build": "webpack --config webpack.config.js",
     "build-release": "webpack --config webpack.release.config.js",
     "watch": "webpack --watch"

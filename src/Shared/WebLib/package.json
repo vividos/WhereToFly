@@ -3,7 +3,6 @@
   "version": "1.14.4",
   "description": "Where-to-fly web library",
   "sideEffects": false,
-  "type": "module",
   "exports": {
     "./mapView.js": "./dist/js/WhereToFly.mapView.js",
     "./mapView.css": "./dist/css/mapView.css",
@@ -12,7 +11,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint --config eslint.config.js src",
+    "lint": "eslint --config eslint.config.mjs src",
     "build": "webpack --config webpack.config.js",
     "build-release": "webpack --config webpack.prod.config.js",
     "serve": "webpack serve",
