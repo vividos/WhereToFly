@@ -193,7 +193,7 @@ export class HeightProfileView {
                     axis: "x"
                 },
                 onHover: this.onHover.bind(this),
-                onClick: function(_event, elements, _chart) {
+                onClick: function(_event, elements) {
                     if (!this.isZoomAndPanActive)
                         this.onClick(elements);
                 }.bind(this)
@@ -631,7 +631,7 @@ export class HeightProfileView {
      * Called by Chart.js when the user hovers over an element in the chart
      * @param {Array.<ActiveElement>} [elements] array of elements; may be empty
      */
-    onHover(_event, elements, _chart) {
+    onHover(_event, elements) {
 
         if (this.options.callback === undefined)
             return;
