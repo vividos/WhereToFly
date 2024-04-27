@@ -6,8 +6,10 @@
   "sideEffects": [
     "./src/css/site.css"
   ],
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --config eslint.config.js src",
     "build": "webpack --config webpack.config.js",
     "build-release": "webpack --config webpack.release.config.js",
     "watch": "webpack --watch"
@@ -19,14 +21,13 @@
   "author": "vividos",
   "license": "MIT",
   "devDependencies": {
+    "@eslint/js": "^9.1.1",
     "copy-webpack-plugin": "^12.0.2",
     "css-loader": "^6.9.1",
-    "eslint": "^8.56.0",
-    "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-n": "^16.6.2",
-    "eslint-plugin-promise": "^6.1.1",
+    "eslint": "^9.1.1",
+    "eslint-plugin-jsdoc": "^48.2.3",
     "file-loader": "^6.2.0",
+    "globals": "^15.0.0",
     "mini-css-extract-plugin": "^2.7.7",
     "terser-webpack-plugin": "^5.3.10",
     "webpack": "^5.89.0",
