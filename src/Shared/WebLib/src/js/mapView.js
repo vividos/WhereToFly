@@ -16,22 +16,22 @@ export class MapView {
 
     /**
      * Creates a new instance of MapView
-     * @constructor
+     * @class
      * @param {object} [options] Options to use for initializing map view
-     * @param {String} [options.id] DOM ID of the div element to create map view in
-     * @param {String} [options.messageBandId] DOM ID of the message band div element
-     * @param {String} [options.liveTrackToolbarId] DOM ID of the live track toolbar div element
-     * @param {String} [options.heightProfileElementId] DOM ID of the height profile div element
+     * @param {string} [options.id] DOM ID of the div element to create map view in
+     * @param {string} [options.messageBandId] DOM ID of the message band div element
+     * @param {string} [options.liveTrackToolbarId] DOM ID of the live track toolbar div element
+     * @param {string} [options.heightProfileElementId] DOM ID of the height profile div element
      * @param {object} [options.initialCenterPoint] initial center point of map view
-     * @param {double} [options.initialCenterPoint.latitude] latitude of center point
-     * @param {double} [options.initialCenterPoint.longitude] longitude of center point
-     * @param {Number} [options.initialViewingDistance] initial viewing distance
-     * @param {Boolean} [options.hasMouse] indicates if the device this is running supports a mouse
-     * @param {Boolean} [options.useAsynchronousPrimitives] indicates if asynchronous primitives
+     * @param {number} [options.initialCenterPoint.latitude] latitude of center point
+     * @param {number} [options.initialCenterPoint.longitude] longitude of center point
+     * @param {number} [options.initialViewingDistance] initial viewing distance
+     * @param {boolean} [options.hasMouse] indicates if the device this is running supports a mouse
+     * @param {boolean} [options.useAsynchronousPrimitives] indicates if asynchronous primitives
      * should be used
-     * @param {Boolean} [options.useEntityClustering] indicates if entity clustering should be used
-     * @param {String} [options.bingMapsApiKey] Bing maps API key to use
-     * @param {String} [options.cesiumIonApiKey] Cesium Ion API key to use
+     * @param {boolean} [options.useEntityClustering] indicates if entity clustering should be used
+     * @param {string} [options.bingMapsApiKey] Bing maps API key to use
+     * @param {string} [options.cesiumIonApiKey] Cesium Ion API key to use
      * @param {Function} [options.callback] callback function to use for calling back to C# code
      */
     constructor(options) {
@@ -313,6 +313,7 @@ export class MapView {
 
     /**
      * Logs a message to the console, just like console.log, but with styled output.
+     * @param {string} message to log
      */
     static log(message) {
         console.log("%cMapView", MapView.consoleLogStyle, message);
@@ -510,6 +511,7 @@ export class MapView {
 
     /**
      * Creates an imagery provider for the Waymarked Trails route overlay, subtype hiking
+     * @returns {object} imagery provider
      */
     createWaymarkedTrailsHikingImageryProvider() {
 
@@ -561,8 +563,8 @@ export class MapView {
 
     /**
      * Called when a cluster of entities will be displayed
-     * @param {any} clusteredEntities
-     * @param {any} cluster
+     * @param {any} clusteredEntities list of clustered objects
+     * @param {any} cluster cluster object
      */
     onNewCluster(clusteredEntities, cluster) {
 
@@ -691,7 +693,7 @@ export class MapView {
 
     /**
      * Shows message band with given text.
-     * @param {String} messageText message text to show
+     * @param {string} messageText message text to show
      */
     showMessageBand(messageText) {
 
@@ -953,7 +955,7 @@ export class MapView {
 
     /**
      * Sets up a fixed clock for the viewer, using given hour.
-     * @param {Number} hour hour of day to use for fixed clock
+     * @param {number} hour hour of day to use for fixed clock
      */
     setupFixedClock(hour) {
         const today = new Date();
@@ -984,7 +986,7 @@ export class MapView {
 
     /**
      * Sets up a clock that is a number of hours ahead from current time.
-     * @param {Number} hours number of hours the clock is ahead
+     * @param {number} hours number of hours the clock is ahead
      */
     setupAheadCurrentTimeClock(hours) {
         const now = Cesium.JulianDate.now();
@@ -1057,7 +1059,7 @@ export class MapView {
 
     /**
      * Adds nearby POI locations
-     * @param {array} nearbyPoisList list of nearby POIs to add
+     * @param {Array} nearbyPoisList list of nearby POIs to add
      */
     async addNearbyPoiLocations(nearbyPoisList) {
 
@@ -1082,18 +1084,18 @@ export class MapView {
     /**
      * Updates the "my location" marker on the map
      * @param {object} [options] Options to use for updating "my location" pin.
-     * @param {double} [options.latitude] Latitude of position
-     * @param {double} [options.longitude] Longitude of position
-     * @param {double} [options.displayLatitude] Display text of latitude
-     * @param {double} [options.displayLongitude] Display text of longitude
-     * @param {double} [options.altitude] Altitude of position
-     * @param {double} [options.speed] Current speed, in km/h
-     * @param {double} [options.displaySpeed] Display text for current speed
+     * @param {number} [options.latitude] Latitude of position
+     * @param {number} [options.longitude] Longitude of position
+     * @param {number} [options.displayLatitude] Display text of latitude
+     * @param {number} [options.displayLongitude] Display text of longitude
+     * @param {number} [options.altitude] Altitude of position
+     * @param {number} [options.speed] Current speed, in km/h
+     * @param {number} [options.displaySpeed] Display text for current speed
      * @param {string} [options.timestamp] Timestamp of position, as parseable date string
      * @param {string} [options.displayTimestamp] Display text of timestamp
-     * @param {Number} [options.positionAccuracy] Accuracy of position, in meter
+     * @param {number} [options.positionAccuracy] Accuracy of position, in meter
      * @param {string} [options.positionAccuracyColor] Hex color in format #rrggbb for position accuracy
-     * @param {Boolean} [options.zoomToLocation] indicates if view should also zoom to this position
+     * @param {boolean} [options.zoomToLocation] indicates if view should also zoom to this position
      */
     updateMyLocation(options) {
 
@@ -1133,10 +1135,10 @@ export class MapView {
      * not set or is 0, which corresponds to "clamp to ground". When altitude
      * is set, the prefix text is prepended and altitude is formatted with one
      * fractional digit.
-     * @param {Number} altitude altitude value in meter
+     * @param {number} altitude altitude value in meter
      * @param {string} prefixText prefix text
      * @param {string} suffixText suffix text; optional
-     * @returns formatted text, or empty string
+     * @returns {string} formatted text, or empty string
      */
     static formatAltitude(altitude, prefixText, suffixText) {
         if (typeof altitude === "undefined" ||
@@ -1186,15 +1188,15 @@ export class MapView {
      * Sets a compass target, to draw a ground polyline from the current location to the target
      * location. The polyline is shown once the "my location" is set using updateMyLocation().
      * @param {object} [options] Options to use for showing compass target.
-     * @param {double} [options.title] Title of the compass target
-     * @param {double} [options.latitude] Latitude of position
-     * @param {double} [options.longitude] Longitude of position
-     * @param {double} [options.altitude] Altitude of position; optional
+     * @param {number} [options.title] Title of the compass target
+     * @param {number} [options.latitude] Latitude of position
+     * @param {number} [options.longitude] Longitude of position
+     * @param {number} [options.altitude] Altitude of position; optional
      * @param {string} [options.displayLatitude] Display text of latitude
      * @param {string} [options.displayLongitude] Display text of longitude
-     * @param {double} [options.distanceInKm] Distance to target, in km
-     * @param {double} [options.heightDifferenceInMeter] Altitude difference, in meter
-     * @param {double} [options.directionAngle] Direction angle, in degrees
+     * @param {number} [options.distanceInKm] Distance to target, in km
+     * @param {number} [options.heightDifferenceInMeter] Altitude difference, in meter
+     * @param {number} [options.directionAngle] Direction angle, in degrees
      * @param {boolean} [options.zoomToPolyline] when true, also zooms to the compass target
      * @param {boolean} [options.hideTargetLocation] when true, the target location is not shown
      * polyline
@@ -1289,18 +1291,19 @@ export class MapView {
         });
     }
 
-    /** Updates description of compass target entity based on the currently set compass target
+    /**
+     * Updates description of compass target entity based on the currently set compass target
      * location and the current "my location" position.
      * @param {object} [options] Options to use for updating compass target description.
-     * @param {double} [options.title] Title of the compass target
-     * @param {double} [options.latitude] Latitude of position
-     * @param {double} [options.longitude] Longitude of position
-     * @param {double} [options.altitude] Altitude of position
+     * @param {number} [options.title] Title of the compass target
+     * @param {number} [options.latitude] Latitude of position
+     * @param {number} [options.longitude] Longitude of position
+     * @param {number} [options.altitude] Altitude of position
      * @param {string} [options.displayLatitude] Display text of latitude
      * @param {string} [options.displayLongitude] Display text of longitude
-     * @param {double} [options.distanceInKm] Distance to target, in km
-     * @param {double} [options.heightDifferenceInMeter] Altitude difference, in meter
-     * @param {double} [options.directionAngle] Direction angle, in degrees
+     * @param {number} [options.distanceInKm] Distance to target, in km
+     * @param {number} [options.heightDifferenceInMeter] Altitude difference, in meter
+     * @param {number} [options.directionAngle] Direction angle, in degrees
      */
     updateCompassTargetDescription(options) {
 
@@ -1344,6 +1347,7 @@ export class MapView {
     /**
      * Returns the current viewing distance from the camera to the terrain in the
      * center of the scene.
+     * @returns {number} viewing distance
      */
     getCurrentViewingDistance() {
 
@@ -1362,9 +1366,9 @@ export class MapView {
     /**
      * Flies to to given location
      * @param {object} [options] Options to use for zooming
-     * @param {double} [options.latitude] Latitude of zoom target
-     * @param {double} [options.longitude] Longitude of zoom target
-     * @param {double} [options.altitude] Altitude of zoom target; optional
+     * @param {number} [options.latitude] Latitude of zoom target
+     * @param {number} [options.longitude] Longitude of zoom target
+     * @param {number} [options.altitude] Altitude of zoom target; optional
      */
     async flyTo(options) {
 
@@ -1418,9 +1422,9 @@ export class MapView {
     /**
      * Zooms to given location, by flying to the location
      * @param {object} [options] Options to use for zooming
-     * @param {double} [options.latitude] Latitude of zoom target
-     * @param {double} [options.longitude] Longitude of zoom target
-     * @param {double} [options.altitude] Altitude of zoom target
+     * @param {number} [options.latitude] Latitude of zoom target
+     * @param {number} [options.longitude] Longitude of zoom target
+     * @param {number} [options.altitude] Altitude of zoom target
      */
     zoomToLocation(options) {
 
@@ -1434,12 +1438,12 @@ export class MapView {
     /**
      * Zooms to given map rectangle
      * @param {object} [rectangle] map rectangle to zoom to
-     * @param {double} [rectangle.minLatitude] minimum latitude
-     * @param {double} [rectangle.maxLatitude] maximum latitude
-     * @param {double} [rectangle.minLongitude] minimum longitude
-     * @param {double} [rectangle.maxLongitude] maximum longitude
-     * @param {double} [rectangle.minAltitude] minimum altitude
-     * @param {double} [rectangle.maxAltitude] maximum altitude
+     * @param {number} [rectangle.minLatitude] minimum latitude
+     * @param {number} [rectangle.maxLatitude] maximum latitude
+     * @param {number} [rectangle.minLongitude] minimum longitude
+     * @param {number} [rectangle.maxLongitude] maximum longitude
+     * @param {number} [rectangle.minAltitude] minimum altitude
+     * @param {number} [rectangle.maxAltitude] maximum altitude
      */
     zoomToRectangle(rectangle) {
 
@@ -1619,8 +1623,7 @@ export class MapView {
 
     /**
      * Exports layer with given ID to KMZ bytestream
-     *
-     * @param {string} layerId
+     * @param {string} layerId layer ID of layer to export
      */
     async exportLayer(layerId) {
 
@@ -1762,13 +1765,14 @@ export class MapView {
      * @property {number} longitude Longitude of the location
      * @property {number} altitude Altitude of the location
      * @property {number} takeoffDirections Takeoff directions bit values
-     * @property {boolean} [isPlanTourLocation Indicates if it's a tour planning location
-     * @property {Object<string, string>} properties An object containing extra location properties
+     * @property {boolean} isPlanTourLocation Indicates if it's a tour planning location
+     * @property {object} properties An object containing extra location
+     * properties as string keys and string values
      */
 
     /**
      * Adds list of locations to the map, as marker pins
-     * @param {array} locationList An array of location, each with the following object layout:
+     * @param {Array} locationList An array of location, each with the following object layout:
      * { id:"location-id", name:"Location Name", type:"LocationType", latitude: 123.45678, longitude: 9.87654, altitude:1234.5 }
      */
     async addLocationList(locationList) {
@@ -1802,7 +1806,7 @@ export class MapView {
     /**
      * Creates entity from location object
      * @param {Location} location to use
-     * @returns created entity
+     * @returns {Cesium.Entity} created entity
      */
     async createEntityFromLocation(location) {
 
@@ -1835,8 +1839,8 @@ export class MapView {
      * @param {string} description Longer description text
      * @param {string} pinColor Pin color, one of the Cesium.Color.Xxx constants
      * @param {string} pinImage Relative link URL to SVG image to use in pin
-     * @param {double} longitude Longitude of entity
-     * @param {double} latitude Latitude of entity
+     * @param {number} longitude Longitude of entity
+     * @param {number} latitude Latitude of entity
      * @returns {Promise<object>} entity description, usable for viewer.entities.add()
      */
     async createEntity(id, name, description, pinColor, pinImage, longitude, latitude) {
@@ -1863,10 +1867,10 @@ export class MapView {
     }
 
     /**
-     * Creates a 'data:' URL containing the pin image and a pin background color
+     * Creates a "data:" URL containing the pin image and a pin background color
      * @param {string} pinImage relative pin image filename
      * @param {Cesium.Color} pinColor pin background color
-     * @returns data: URI
+     * @returns {string} a "data:" URI
      */
     async getPinImageDataUrl(pinImage, pinColor) {
 
@@ -1985,7 +1989,7 @@ export class MapView {
     /**
      * Adds a polyline and polygon entity visualizing the takeoff directions of
      * the given location, to an existing entity.
-     * @param {Object} [entity] Entity object to add to
+     * @param {object} [entity] Entity object to add to
      * @param {Location} [location] An location object
      */
     addTakeoffEntities(entity, location) {
@@ -2066,7 +2070,7 @@ export class MapView {
 
     /**
      * Removes a single location from map
-     * @param {String} [locationId] ID of the location to remove
+     * @param {string} [locationId] ID of the location to remove
      */
     removeLocation(locationId) {
 
@@ -2081,14 +2085,14 @@ export class MapView {
 
     /**
      * Shows a find result pin, with a link to add a waypoint for this result.
-     * @param {Object} [options] An object with the following properties:
-     * @param {String} [options.name] Name of the find result
-     * @param {String} [options.description] Description text of the find result
-     * @param {Number} [options.latitude] Latitude of the find result
-     * @param {Number} [options.longitude] Longitude of the find result
-     * @param {Number} [options.altitude] Altitude of the find result; optional
-     * @param {Number} [options.displayLatitude] Display text for latitude
-     * @param {Number} [options.displayLongitude] Display text for longitude
+     * @param {object} [options] An object with the following properties:
+     * @param {string} [options.name] Name of the find result
+     * @param {string} [options.description] Description text of the find result
+     * @param {number} [options.latitude] Latitude of the find result
+     * @param {number} [options.longitude] Longitude of the find result
+     * @param {number} [options.altitude] Altitude of the find result; optional
+     * @param {number} [options.displayLatitude] Display text for latitude
+     * @param {number} [options.displayLongitude] Display text for longitude
      */
     async showFindResult(options) {
 
@@ -2135,10 +2139,10 @@ export class MapView {
     /**
      * Finds altitude at latitude and longitude, or returns 0.0 when the
      * altitude couldn't be determined.
-     * @param {Object} [options] Options for finding altitude:
-     * @param {Number} [options.latitude] Latitude of the point to use
-     * @param {Number} [options.longitude] Longitude of the point to use
-     * @returns {Promise<Number>|Number} altitude in meter, or 0.0
+     * @param {object} [options] Options for finding altitude:
+     * @param {number} [options.latitude] Latitude of the point to use
+     * @param {number} [options.longitude] Longitude of the point to use
+     * @returns {Promise<number>|number} altitude in meter, or 0.0
      */
     async findAltitude(options) {
 
@@ -2164,16 +2168,16 @@ export class MapView {
 
     /**
      * Shows flying range for a given map point and using flying range parameters.
-     * @param {Object} [options] Options for showing flying range:
-     * @param {Number} [options.latitude] Latitude of the point to show flying range
-     * @param {Number} [options.longitude] Longitude of the point to show flying range
-     * @param {double} [options.displayLatitude] Display text of latitude
-     * @param {double} [options.displayLongitude] Display text of longitude
-     * @param {Number} [options.altitude] Altitude of the point to show flying range
-     * @param {Number} [options.glideRatio] Glide ratio, in km flying per 1000m sink
-     * @param {Number} [options.gliderSpeed] Glider speed, in km/h; must be above wind speed
-     * @param {Number} [options.windDirection] Wind direction, in degrees
-     * @param {Number} [options.windSpeed] Wind speed, in km/h
+     * @param {object} [options] Options for showing flying range:
+     * @param {number} [options.latitude] Latitude of the point to show flying range
+     * @param {number} [options.longitude] Longitude of the point to show flying range
+     * @param {number} [options.displayLatitude] Display text of latitude
+     * @param {number} [options.displayLongitude] Display text of longitude
+     * @param {number} [options.altitude] Altitude of the point to show flying range
+     * @param {number} [options.glideRatio] Glide ratio, in km flying per 1000m sink
+     * @param {number} [options.gliderSpeed] Glider speed, in km/h; must be above wind speed
+     * @param {number} [options.windDirection] Wind direction, in degrees
+     * @param {number} [options.windSpeed] Wind speed, in km/h
      */
     showFlyingRange(options) {
 
@@ -2243,7 +2247,7 @@ export class MapView {
      * height.
      * @param {object} [track] Track object to add
      * @param {string} [track.id] unique ID of the track
-     * @param {array} [track.listOfTrackPoints] An array of track points in long, lat, alt, long, lat, alt ... order
+     * @param {Array} [track.listOfTrackPoints] An array of track points in long, lat, alt, long, lat, alt ... order
      */
     async sampleTrackHeights(track) {
 
@@ -2307,7 +2311,7 @@ export class MapView {
 
     /**
      * Called when sampling track points has finished.
-     * @param {array} [listOfTrackPointHeights] An array of track point heights for all track points
+     * @param {Array} [listOfTrackPointHeights] An array of track point heights for all track points
      * that were passed to sampleTrackHeights().
      */
     onSampledTrackHeights(listOfTrackPointHeights) {
@@ -2320,7 +2324,7 @@ export class MapView {
 
     /**
      * Calculates track color from given variometer climb/sink rate value.
-     * @param {double} varioValue variometer value, in m/s
+     * @param {number} varioValue variometer value, in m/s
      * @returns {Cesium.Color} Track color
      */
     trackColorFromVarioValue(varioValue) {
@@ -2356,9 +2360,9 @@ export class MapView {
 
     /**
      * Calculates an array of track colors based on the altitude changes of the given track points.
-     * @param {array} listOfTrackPoints An array of track points in long, lat, alt, long, lat, alt ... order
-     * @param {array} listOfTimePoints An array of time points in seconds; same length as listOfTrackPoints; may be null
-     * @returns {array} Array with same number of entries as track points in the given list
+     * @param {Array} listOfTrackPoints An array of track points in long, lat, alt, long, lat, alt ... order
+     * @param {Array} listOfTimePoints An array of time points in seconds; same length as listOfTrackPoints; may be null
+     * @returns {Array} Array with same number of entries as track points in the given list
      */
     calcTrackColors(listOfTrackPoints, listOfTimePoints) {
 
@@ -2390,9 +2394,9 @@ export class MapView {
     /**
      * Creates a primitive for a flight track
      * @param {object} [track] Track object to add
-     * @param {array} [track.listOfTrackPoints] An array of track points in long, lat, alt, long, lat, alt ... order
-     * @param {array} [track.listOfTimePoints] An array of time points in seconds; same length as listOfTrackPoints; may be null
-     * @param {array} [trackPointArray] An array of track points to use
+     * @param {Array} [track.listOfTrackPoints] An array of track points in long, lat, alt, long, lat, alt ... order
+     * @param {Array} [track.listOfTimePoints] An array of time points in seconds; same length as listOfTrackPoints; may be null
+     * @param {Array} [trackPointArray] An array of track points to use
      * @returns {Cesium.Primitive} created primitive object
      */
     getFlightTrackPrimitive(track, trackPointArray) {
@@ -2422,7 +2426,7 @@ export class MapView {
     /**
      * Creates a wall primitive for a flight track to display relation to ground
      * @param {string} [trackId] unique ID of the track
-     * @param {array} [trackPointArray] An array of track points to use
+     * @param {Array} [trackPointArray] An array of track points to use
      * @returns {Cesium.Primitive} created wall primitive object
      */
     getFlightTrackWallPrimitive(trackId, trackPointArray) {
@@ -2456,7 +2460,7 @@ export class MapView {
      * @param {object} [track] Track object to add
      * @param {string} [track.id] unique ID of the track
      * @param {string} [track.color] Color as "RRGGBB" string value
-     * @param {array} [trackPointArray] An array of track points to use
+     * @param {Array} [trackPointArray] An array of track points to use
      * @returns {Cesium.Primitive} created primitive object
      */
     getGroundTrackPrimitive(track, trackPointArray) {
@@ -2489,14 +2493,14 @@ export class MapView {
      * @param {boolean} [track.isFlightTrack] indicates if track is a flight
      * @param {boolean} [track.isLiveTrack] indicates if track is a live track
      * that is updated periodically
-     * @param {array} [track.listOfTrackPoints] An array of track points in long,
+     * @param {Array} [track.listOfTrackPoints] An array of track points in long,
      * lat, alt, long, lat, alt ... order
-     * @param {array} [track.listOfTimePoints] An array of time points in seconds;
+     * @param {Array} [track.listOfTimePoints] An array of time points in seconds;
      * same length as listOfTrackPoints.length / 3; may be null
-     * @param {Number} track.trackStart track start, in seconds from epoch or as
+     * @param {number} track.trackStart track start, in seconds from epoch or as
      * ISO8601 string; optional. This is used to display correct time ticks in
      * the height profile view
-     * @param {array} [track.groundHeightProfile] An array of ground height
+     * @param {Array} [track.groundHeightProfile] An array of ground height
      * profile elevations; same length as listOfTimePoints; may be null
      * @param {string} [track.color] Color as "RRGGBB" string value, or undefined
      * when track should be colored according to climb and sink rate.
@@ -2532,9 +2536,9 @@ export class MapView {
      * @param {object} [track] Track object to use
      * @param {string} [track.id] unique ID of the track
      * @param {boolean} [track.isFlightTrack] indicates if track is a flight
-     * @param {array} [track.listOfTrackPoints] An array of track points in long,
+     * @param {Array} [track.listOfTrackPoints] An array of track points in long,
      * lat, alt, long, lat, alt ... order
-     * @param {array} [track.listOfTimePoints] An array of time points in seconds;
+     * @param {Array} [track.listOfTimePoints] An array of time points in seconds;
      * same length as listOfTrackPoints.length / 3; may be null
      */
     addOrUpdateTrackPrimitives(track) {
@@ -2689,14 +2693,14 @@ export class MapView {
      * See also: https://github.com/CesiumGS/cesium/issues/9379
      * @param {object} track Track object to modify, with at least the following
      * properties:
-     * @param {array} [track.listOfTrackPoints] An array of track points in long,
+     * @param {Array} [track.listOfTrackPoints] An array of track points in long,
      * lat, alt, long, lat, alt ... order
-     * @param {array} [track.listOfTimePoints] An array of time points in seconds;
+     * @param {Array} [track.listOfTimePoints] An array of time points in seconds;
      * same length as listOfTrackPoints.length / 3; may be null
-     * @param {array} [track.groundHeightProfile] An array of ground height
+     * @param {Array} [track.groundHeightProfile] An array of ground height
      * profile elevations; same length as listOfTimePoints; may be null
-     * @param {array} [trackPointArray] An array of track points to modify
-     * @returns {array} new trackPointArray array
+     * @param {Array} [trackPointArray] An array of track points to modify
+     * @returns {Array} new trackPointArray array
      */
     removeTrackDuplicatePoints(track, trackPointArray) {
 
@@ -2749,7 +2753,7 @@ export class MapView {
      * When getting back live track data from the web API, it uses a different
      * format for track points; convert here to the track format.
      * @param {object} track Track object to modify
-     * @param {Number} track.trackStart track start, in seconds from epoch or as
+     * @param {number} track.trackStart track start, in seconds from epoch or as
      * ISO8601 string
      * @param {Array} track.trackPoints track points, with latitude, longitude,
      * altitude and offset values
@@ -2785,13 +2789,13 @@ export class MapView {
      * @param {object} track Track object to modify, with at least the following
      * @param {string} track.id unique ID of the track to add more track points
      * properties:
-     * @param {array} [track.listOfTrackPoints] An array of track points in long,
+     * @param {Array} [track.listOfTrackPoints] An array of track points in long,
      * lat, alt, long, lat, alt ... order
-     * @param {array} [track.listOfTimePoints] An array of time points in seconds;
+     * @param {Array} [track.listOfTimePoints] An array of time points in seconds;
      * same length as listOfTrackPoints.length / 3; must not be null
      * Also the following properties can be set, which will be converted to
      * listOfTrackPoints and listOfTimePoints internally:
-     * @param {Number} track.trackStart track start, in seconds from epoch or as
+     * @param {number} track.trackStart track start, in seconds from epoch or as
      * ISO8601 string
      * @param {Array} track.trackPoints track points, with latitude, longitude,
      * altitude and offset values
@@ -2872,9 +2876,9 @@ export class MapView {
      * stored in the trackData mapping. Used for live tracking.
      * @param {object} track Track object to use
      * @param {string} track.id unique ID of the track to add more track points
-     * @param {array} [track.listOfTrackPoints] An array of track points in long,
+     * @param {Array} [track.listOfTrackPoints] An array of track points in long,
      * lat, alt, long, lat, alt ... order
-     * @param {array} [track.listOfTimePoints] An array of time points in seconds;
+     * @param {Array} [track.listOfTimePoints] An array of time points in seconds;
      * same length as listOfTrackPoints.length / 3; must not be null
      */
     mergeLiveTrackPoints(track) {
@@ -2909,7 +2913,7 @@ export class MapView {
     /**
      * Returns the time of the last (latest) track point of a track.
      * @param {string} trackId track ID of track
-     * @returns track point time, in seconds since epoch, or null when no track
+     * @returns {number} track point time, in seconds since epoch, or null when no track
      * points are available yet
      */
     getTrackLastTrackPointTime(trackId) {
@@ -2926,7 +2930,7 @@ export class MapView {
 
     /**
      * Sets a new time offset from current time ("now")
-     * @param {Number} timeOffset time offset from now, in seconds; usually
+     * @param {number} timeOffset time offset from now, in seconds; usually
      * negative, since most live tracking data is sent from the past
      */
     setLiveTrackTime(timeOffset) {
@@ -3272,10 +3276,10 @@ export class MapView {
 
     /**
      * Called by the "add find result" pin link, in order to add the find result as a waypoint.
-     * @param {Object} [options] An object with the following properties:
-     * @param {String} [options.name] Name of the find result
-     * @param {Number} [options.latitude] Latitude of the find result
-     * @param {Number} [options.longitude] Longitude of the find result
+     * @param {object} [options] An object with the following properties:
+     * @param {string} [options.name] Name of the find result
+     * @param {number} [options.latitude] Latitude of the find result
+     * @param {number} [options.longitude] Longitude of the find result
      */
     onAddFindResult(options) {
 
@@ -3309,10 +3313,10 @@ export class MapView {
 
     /**
      * Called when a long-tap occured on the map.
-     * @param {Object} [options] An object with the following properties:
-     * @param {Number} [options.latitude] Latitude of the long tap
-     * @param {Number} [options.longitude] Longitude of the long tap
-     * @param {Number} [options.altitude] Altitude of the long tap
+     * @param {object} [options] An object with the following properties:
+     * @param {number} [options.latitude] Latitude of the long tap
+     * @param {number} [options.longitude] Longitude of the long tap
+     * @param {number} [options.altitude] Altitude of the long tap
      */
     onLongTap(options) {
 
@@ -3351,11 +3355,11 @@ export class MapView {
 
     /**
      * Called to update the last shown location stored in the app.
-     * @param {Object} [options] An object with the following properties:
-     * @param {Number} [options.latitude] Latitude of the position
-     * @param {Number} [options.longitude] Longitude of the position
-     * @param {Number} [options.altitude] Altitude of the position
-     * @param {Number} [options.viewingDistance] viewing distance of camera; optional
+     * @param {object} [options] An object with the following properties:
+     * @param {number} [options.latitude] Latitude of the position
+     * @param {number} [options.longitude] Longitude of the position
+     * @param {number} [options.altitude] Altitude of the position
+     * @param {number} [options.viewingDistance] viewing distance of camera; optional
      */
     onUpdateLastShownLocation(options) {
 

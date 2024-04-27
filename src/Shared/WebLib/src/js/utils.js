@@ -1,5 +1,8 @@
-﻿
-// function used to call to C# WebView
+﻿/**
+ *  function used to call to C# WebView
+ * @param {string} funcName callback function name
+ * @param {object} params parameter as object
+ */
 export function callAction(funcName, params) {
     const ios = /iphone|ipod|ipad/.test(window.navigator.userAgent.toLowerCase());
     if (ios)

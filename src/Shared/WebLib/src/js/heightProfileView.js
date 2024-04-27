@@ -40,6 +40,7 @@ export class HeightProfileView {
 
     /**
      * Logs a message to the console, just like console.log, but with styled output.
+     * @param {string} message to log
      */
     static log(message) {
         console.log("%cHeightProfileView", HeightProfileView.consoleLogStyle, message);
@@ -47,9 +48,9 @@ export class HeightProfileView {
 
     /**
      * Creates a new instance of HeightProfileView
-     * @constructor
+     * @class
      * @param {object} [options] Options to use for initializing height profile view
-     * @param {Number} [options.id] DOM ID of the element that will contain the height profile view
+     * @param {number} [options.id] DOM ID of the element that will contain the height profile view
      * @param {boolean} [options.useDarkTheme] indicates if a dark theme should be used for the chart
      * @param {boolean} [options.setBodyBackgroundColor] indicates if body background should be themed
      * @param {boolean} [options.showCloseButton] indicates if a close button should be shown
@@ -246,6 +247,7 @@ export class HeightProfileView {
 
     /**
      * Sets up height profile elements, including toolbar and Chart.js element
+     * @returns {string} chart canvas DOM ID to use
      */
     setupHeightProfileElement() {
 
@@ -307,7 +309,7 @@ export class HeightProfileView {
      * @param {string} toolbarButtonId DOM ID for toolbar button
      * @param {string} toolbarImageSource image source for toolbar button
      * @param {string} toolbarImageAltText alt text for image
-     * @returns created and added chart toolbar button
+     * @returns {HTMLElement} created and added chart toolbar button
      */
     static addChartToolbarButton(toolbarDiv,
         toolbarButtonId,
@@ -376,10 +378,10 @@ export class HeightProfileView {
      * @param {object} [track] Track object to add
      * @param {string} [track.id] unique ID of the track
      * @param {string} [track.name] track name to add
-     * @param {array} [track.listOfTrackPoints] An array of track points in long, lat, alt, long, lat, alt ... order
-     * @param {array} [track.listOfTimePoints] An array of time points in seconds since unix epoch
+     * @param {Array} [track.listOfTrackPoints] An array of track points in long, lat, alt, long, lat, alt ... order
+     * @param {Array} [track.listOfTimePoints] An array of time points in seconds since unix epoch
      * or as delta values from trackStart; same length as listOfTrackPoints; may be null
-     * @param {Number} track.trackStart track start, in seconds from epoch or as
+     * @param {number} track.trackStart track start, in seconds from epoch or as
      * ISO8601 string; when set, will be added to the listOfTimePoints values, which then must be
      * delta values only, no seconds since epoch.
      */
@@ -429,7 +431,7 @@ export class HeightProfileView {
     /**
      * Updates the current zoom and pan limits, based on the current X axis scale.
      * After adding data, be sure to call updateView() so that scales are current.
-     * */
+     */
     updateZoomPanLimits() {
 
         const scale = this.chart.scales.x;
@@ -475,9 +477,9 @@ export class HeightProfileView {
      * Adds new track points to the height profile view, for the currently displayed track.
      * @param {object} [track] Track data to add
      * @param {string} [track.id] unique ID of the track
-     * @param {array} [track.listOfTrackPoints] An array of additional track points in long, lat, alt,
+     * @param {Array} [track.listOfTrackPoints] An array of additional track points in long, lat, alt,
      * long, lat, alt ... order
-     * @param {array} [track.listOfTimePoints] An array of additional time points in seconds since
+     * @param {Array} [track.listOfTimePoints] An array of additional time points in seconds since
      * unix epoch; * same length as listOfTrackPoints; may be null
      */
     addTrackPoints(track) {
@@ -563,7 +565,7 @@ export class HeightProfileView {
 
     /**
      * Gets the track data array with undecimated data
-     * @returns track data array
+     * @returns {Array} track data array
      */
     getTrackDataArray() {
         const trackDataset = this.chart.data.datasets[0];
@@ -576,8 +578,8 @@ export class HeightProfileView {
      * Gets the index into the track data from given track elements. When
      * Chart.js uses decimation, returns the original track index, not the
      * index into chart.dataset[0].data
-     * @param {array} [elements] array of elements; may be empty
-     * @returns track data index, or -1 when elements didn't contain a track
+     * @param {Array} [elements] array of elements; may be empty
+     * @returns {number} track data index, or -1 when elements didn't contain a track
      * data element
      */
     getTrackDataIndex(elements) {
@@ -592,8 +594,8 @@ export class HeightProfileView {
     /**
      * Gets the track data point from undecimated data, based on the original
      * track data index
-     * @param {Number} trackDataIndex index into original track data
-     * @returns track data point
+     * @param {number} trackDataIndex index into original track data
+     * @returns {object} track data point
      */
     getTrackDataPoint(trackDataIndex) {
         return this.getTrackDataArray()[trackDataIndex];
@@ -601,7 +603,7 @@ export class HeightProfileView {
 
     /**
      * Gets the ground profile data array with undecimated data, if set
-     * @returns ground profile data array, or null when not set
+     * @returns {Array} ground profile data array, or null when not set
      */
     getGroundProfileDataArray() {
         if (this.chart.data.datasets.length < 2)
@@ -616,9 +618,9 @@ export class HeightProfileView {
     /**
      * Gets the ground profile data point from undecimated data, based on the
      * original ground profile data index
-     * @param {Number} ground profileDataIndex index into original ground
+     * @param {number} groundProfileDataIndex index into original ground
      * profile data
-     * @returns ground profile data point
+     * @returns {object} ground profile data point
      */
     getGroundProfileDataPoint(groundProfileDataIndex) {
         const dataset = this.getGroundProfileDataArray();
@@ -629,7 +631,9 @@ export class HeightProfileView {
 
     /**
      * Called by Chart.js when the user hovers over an element in the chart
-     * @param {Array.<ActiveElement>} [elements] array of elements; may be empty
+     * @param {object} _event event object
+     * @param {Array.<import("chart.js").ActiveElement>} [elements] array of
+     * elements; may be empty
      */
     onHover(_event, elements) {
 
@@ -644,7 +648,8 @@ export class HeightProfileView {
 
     /**
      * Called by Chart.js when the user clicked on an element in the chart
-     * @param {Array.<ActiveElement>} [elements] array of elements; may be empty
+     * @param {Array.<import("chart.js").ActiveElement>} [elements] array of
+     * elements; may be empty
      */
     onClick(elements) {
 
@@ -658,7 +663,7 @@ export class HeightProfileView {
     }
 
     /**
-     * @typedef {Object} TooltipTrackPointInfo
+     * @typedef {object} TooltipTrackPointInfo
      * @property {Date} timePoint time point of track; may be undefined
      * @property {number} elapsedTime elapsed time, in seconds since track start
      * @property {number} trackHeight track altitude, in m
@@ -714,8 +719,8 @@ export class HeightProfileView {
     /**
      * Formats an elapsed time value as time span, in the format h:mm:ss; when the
      * elapsed time is greater than a day, the format is d.hh:mm:ss.
-     * @param {any} elapsedTime elapsed time in milliseconds
-     * @returns formatted time span text
+     * @param {number} elapsedTime elapsed time in milliseconds
+     * @returns {string} formatted time span text
      */
     static formatTimeSpan(elapsedTime) {
 
@@ -735,7 +740,8 @@ export class HeightProfileView {
 
     /**
      * Formats the tooltip text from given tooltip model
-     * @param {object} tooltipModel tooltip model
+     * @param {import("chart.js").TooltipModel} tooltipModel tooltip model
+     * @returns {string} tooltip text
      */
     formatTooltipText(tooltipModel) {
 
@@ -775,7 +781,7 @@ export class HeightProfileView {
 
     /**
      * Updates the tooltip DOM element
-     * @param {object} tooltipModel tooltip model
+     * @param {import("chart.js").TooltipModel} tooltipModel tooltip model
      */
     updateTooltipElement(tooltipModel) {
 
