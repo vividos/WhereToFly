@@ -79,7 +79,7 @@ export default class LiveTracking {
 
         LiveTracking.log("loading default data...");
 
-        this.addFjallravenClassicLayer();
+        this.addCrossingTheAlpsLayer();
     }
 
     /**
