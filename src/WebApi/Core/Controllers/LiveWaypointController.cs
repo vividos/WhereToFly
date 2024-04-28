@@ -15,7 +15,7 @@ namespace WhereToFly.WebApi.Core.Controllers
     [Route("api/[controller]")]
     [Produces("application/json")]
     [ApiController]
-    public class LiveWaypointController : Controller
+    public class LiveWaypointController : ControllerBase
     {
         /// <summary>
         /// Logging instance

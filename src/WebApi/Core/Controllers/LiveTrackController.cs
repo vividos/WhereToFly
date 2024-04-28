@@ -14,7 +14,7 @@ namespace WhereToFly.WebApi.Core.Controllers
     [Route("api/[controller]")]
     [Produces("application/json")]
     [ApiController]
-    public class LiveTrackController : Controller
+    public class LiveTrackController : ControllerBase
     {
         /// <summary>
         /// Logging instance

@@ -11,7 +11,7 @@ namespace WhereToFly.WebApi.Core.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class FaviconUrlController : Controller
+    public class FaviconUrlController : ControllerBase
     {
         /// <summary>
         /// Logger instance
