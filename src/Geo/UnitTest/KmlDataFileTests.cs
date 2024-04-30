@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
-using System.Linq;
 using WhereToFly.Geo.DataFormats;
 
 namespace WhereToFly.Geo.UnitTest
@@ -25,7 +24,7 @@ namespace WhereToFly.Geo.UnitTest
             var trackList = kmlFile.GetTrackList();
 
             // check
-            Assert.IsTrue(trackList.Any(), "track list must contain any tracks");
+            Assert.IsTrue(trackList.Count > 0, "track list must contain any tracks");
         }
 
         /// <summary>
@@ -44,8 +43,8 @@ namespace WhereToFly.Geo.UnitTest
             var track1 = kmlFile.LoadTrack(1);
 
             // check
-            Assert.IsTrue(track0.TrackPoints.Any(), "track points list must not be empty");
-            Assert.IsTrue(track1.TrackPoints.Any(), "track points list must not be empty");
+            Assert.IsTrue(track0.TrackPoints.Count > 0, "track points list must not be empty");
+            Assert.IsTrue(track1.TrackPoints.Count > 0, "track points list must not be empty");
         }
 
         /// <summary>
@@ -63,7 +62,7 @@ namespace WhereToFly.Geo.UnitTest
             var locationList = kmlFile.LoadLocationList();
 
             // check
-            Assert.IsTrue(locationList.Any(), "loaded location list must contain locations");
+            Assert.IsTrue(locationList.Count > 0, "loaded location list must contain locations");
         }
 
         /// <summary>
@@ -81,7 +80,7 @@ namespace WhereToFly.Geo.UnitTest
             var locationList = kmlFile.LoadLocationList();
 
             // check
-            Assert.IsTrue(locationList.Any(), "loaded location list must contain locations");
+            Assert.IsTrue(locationList.Count != 0, "loaded location list must contain locations");
         }
 
         /// <summary>
@@ -99,7 +98,7 @@ namespace WhereToFly.Geo.UnitTest
 
             // check
             Assert.IsFalse(kmlFile.HasLocations(), "kml file must not contain locations");
-            Assert.IsFalse(locationList.Any(), "loaded location list must not contain locations");
+            Assert.IsFalse(locationList.Count != 0, "loaded location list must not contain locations");
         }
 
         /// <summary>

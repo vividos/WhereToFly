@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
-using System.Linq;
 using WhereToFly.Geo.DataFormats;
 
 namespace WhereToFly.Geo.UnitTest
@@ -26,7 +25,7 @@ namespace WhereToFly.Geo.UnitTest
 
                 // check
                 Assert.IsFalse(cupFile.HasLocations(), "loaded file must have no locations");
-                Assert.IsFalse(cupFile.LoadLocationList().Any(), "locations list must contain no locations");
+                Assert.IsTrue(cupFile.LoadLocationList().Count == 0, "locations list must contain no locations");
             }
         }
 

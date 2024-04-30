@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
-using System.Linq;
 using WhereToFly.Geo.DataFormats;
 using WhereToFly.Geo.Model;
 
@@ -50,7 +49,7 @@ namespace WhereToFly.Geo.UnitTest
             // check
             Assert.IsNotNull(track, "track must not be null");
             Assert.IsNotNull(track.Name, "track name must be set");
-            Assert.IsTrue(track.TrackPoints.Any(), "there must be any track points");
+            Assert.IsTrue(track.TrackPoints.Count > 0, "there must be any track points");
         }
 
         /// <summary>

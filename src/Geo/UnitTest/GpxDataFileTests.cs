@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
-using System.Linq;
 using WhereToFly.Geo.DataFormats;
 
 namespace WhereToFly.Geo.UnitTest
@@ -25,7 +24,7 @@ namespace WhereToFly.Geo.UnitTest
                 var trackList = gpxFile.GetTrackList();
 
                 // check
-                Assert.IsTrue(trackList.Any(), "track list list must at least one track");
+                Assert.IsTrue(trackList.Count != 0, "track list list must at least one track");
             }
         }
 
@@ -44,7 +43,7 @@ namespace WhereToFly.Geo.UnitTest
                 var track = gpxFile.LoadTrack(0);
 
                 // check
-                Assert.IsTrue(track.TrackPoints.Any(), "track points list must not be empty");
+                Assert.IsTrue(track.TrackPoints.Count != 0, "track points list must not be empty");
             }
         }
 
@@ -64,7 +63,7 @@ namespace WhereToFly.Geo.UnitTest
                 var locationList = gpxFile.LoadLocationList();
 
                 // check
-                Assert.IsTrue(locationList.Any(), "loaded location list must contain locations");
+                Assert.IsTrue(locationList.Count != 0, "loaded location list must contain locations");
             }
         }
     }

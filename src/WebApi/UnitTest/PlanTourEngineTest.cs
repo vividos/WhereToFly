@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using WhereToFly.Shared.Model;
 using WhereToFly.WebApi.Logic.TourPlanning;
 
@@ -73,10 +72,10 @@ namespace WhereToFly.WebApi.UnitTest
             var tour = engine.PlanTour(planTourParameters);
 
             // check
-            Assert.IsTrue(tour.Description.Any(), "description must contain text");
+            Assert.IsTrue(tour.Description.Length > 0, "description must contain text");
             Assert.IsTrue(tour.TotalDuration.TotalMinutes > 0, "total duration must contain value");
-            Assert.IsTrue(tour.TourEntriesList.Any(), "tour entries list must be filled");
-            Assert.IsTrue(tour.MapPointList.Any(), "map point list must be filled");
+            Assert.IsTrue(tour.TourEntriesList.Count > 0, "tour entries list must be filled");
+            Assert.IsTrue(tour.MapPointList.Count > 0, "map point list must be filled");
         }
 
         /// <summary>
@@ -168,10 +167,10 @@ namespace WhereToFly.WebApi.UnitTest
             var tour = engine.PlanTour(planTourParameters);
 
             // check
-            Assert.IsTrue(tour.Description.Any(), "description must contain text");
+            Assert.IsTrue(tour.Description.Length > 0, "description must contain text");
             Assert.IsTrue(tour.TotalDuration.TotalMinutes > 0, "total duration must contain value");
-            Assert.IsTrue(tour.TourEntriesList.Any(), "tour entries list must be filled");
-            Assert.IsTrue(tour.MapPointList.Any(), "map point list must be filled");
+            Assert.IsTrue(tour.TourEntriesList.Count > 0, "tour entries list must be filled");
+            Assert.IsTrue(tour.MapPointList.Count > 0, "map point list must be filled");
         }
     }
 }

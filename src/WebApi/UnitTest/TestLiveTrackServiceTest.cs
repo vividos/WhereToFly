@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Linq;
 using WhereToFly.WebApi.Logic.Services;
 
 namespace WhereToFly.WebApi.UnitTest
@@ -22,7 +21,7 @@ namespace WhereToFly.WebApi.UnitTest
 
             // check
             Assert.IsTrue(
-                data.TrackPoints.Any(),
+                data.TrackPoints.Length > 0,
                 "there must be any track points");
         }
 
@@ -37,7 +36,7 @@ namespace WhereToFly.WebApi.UnitTest
 
             // check
             Assert.IsTrue(
-                track.TrackPoints.Any(),
+                track.TrackPoints.Count > 0,
                 "there must be any track points");
 
             ////GpxWriter.WriteTrack("...\\testlivetrack.gpx", track);
