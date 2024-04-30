@@ -8,6 +8,14 @@ Here are all the version images of previous Where-to-fly versions.
 
 Above Kössen, Unterberghorn, Tyrol, Austria.
 
+## Version 1.14.3
+
+Released on 2023-11-23.
+
+![](https://raw.githubusercontent.com/vividos/WhereToFly/version-1.14.3/src/App/Resources/Assets/info/version.jpg)
+
+Above Kössen, Unterberghorn, Tyrol, Austria.
+
 ## Version 1.14.2
 
 Released on 2023-11-23.
