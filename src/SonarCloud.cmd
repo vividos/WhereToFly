@@ -56,7 +56,7 @@ REM Run Unit-Tests
 REM
 call RunUnitTests.cmd
 
-dotnet-sonarscanner end /d:"sonar.login=%SONARLOGIN%"
+dotnet-sonarscanner end /d:"sonar.token=%SONARLOGIN%"
 
 :end
 
