@@ -12,6 +12,6 @@ The Where-to-fly GitHub project can be found here:
 
 Current version: %VERSION%
 
-Image: Above Kössen, Unterberghorn, Tyrol, Austria.
+Image: Soaring at Wallberg, Tegernsee, Germany.
 
 [See all previous version images](https://github.com/vividos/WhereToFly/blob/main/PreviousVersionImages.md)
