@@ -849,7 +849,10 @@ namespace WhereToFly.App.Views
         {
             this.planTourParameters.WaypointIdList.Add(location.Id);
 
-            await PlanTourPopupPage.ShowAsync(this.planTourParameters);
+            await NavigationService.Instance.NavigateToPopupPageAsync<object>(
+                PopupPageKey.PlanTourPopupPage,
+                true,
+                this.planTourParameters);
         }
 
         #region Page lifecycle methods

@@ -25,17 +25,5 @@ namespace WhereToFly.App.Views
                 planTourParameters,
                 this.CloseAsync);
         }
-
-        /// <summary>
-        /// Shows "Plan tour" popup page and lets the user edit the tour location list.
-        /// </summary>
-        /// <param name="planTourParameters">tour planning parameters</param>
-        /// <returns>task to wait for</returns>
-        public static async Task ShowAsync(PlanTourParameters planTourParameters)
-        {
-            var popupPage = new PlanTourPopupPage(planTourParameters);
-
-            await popupPage.Navigation.PushPopupAsync(popupPage);
-        }
     }
 }
