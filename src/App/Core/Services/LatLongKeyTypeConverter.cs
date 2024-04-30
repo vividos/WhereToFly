@@ -37,7 +37,7 @@ namespace WhereToFly.App.Services
         public override object ConvertFrom(
             ITypeDescriptorContext? context,
             CultureInfo? culture,
-            object? value)
+            object value)
         {
             if (value is string text)
             {

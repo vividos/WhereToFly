@@ -94,7 +94,8 @@ namespace WhereToFly.App.Controls
         /// <returns>data URI image source</returns>
         private static ImageSource ParseDataUri(string dataUri)
         {
-            if (Uri.TryCreate(dataUri, UriKind.Absolute, out Uri uri))
+            if (Uri.TryCreate(dataUri, UriKind.Absolute, out Uri? uri) &&
+                uri != null)
             {
                 return ImageSource.FromUri(uri);
             }
