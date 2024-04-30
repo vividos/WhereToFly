@@ -95,7 +95,8 @@ namespace WhereToFly.App.Views
                 NearbyPoiService = nearbyPoiService,
             };
 
-            Task.Run(this.InitLayoutAsync);
+            MainThread.BeginInvokeOnMainThread(
+                async () => await this.InitLayoutAsync());
         }
 
         /// <summary>
@@ -104,7 +105,7 @@ namespace WhereToFly.App.Views
         /// <returns>task to wait on</returns>
         private async Task InitLayoutAsync()
         {
-            MainThread.BeginInvokeOnMainThread(this.SetupToolbar);
+            this.SetupToolbar();
 
             this.SetupWebView();
 
