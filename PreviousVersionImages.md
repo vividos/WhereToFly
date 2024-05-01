@@ -6,11 +6,19 @@ Here are all the version images of previous Where-to-fly versions.
 
 ![](src/App/Resources/Assets/info/version.jpg)
 
-Above Kössen, Unterberghorn, Tyrol, Austria.
+Soaring at Wallberg, Tegernsee, Germany.
+
+## Version 1.14.4
+
+Released on 2024-05-01.
+
+![](https://raw.githubusercontent.com/vividos/WhereToFly/version-1.14.4/src/App/Resources/Assets/info/version.jpg)
+
+Soaring at Wallberg, Tegernsee, Germany.
 
 ## Version 1.14.3
 
-Released on 2023-11-23.
+Released on 2024-02-09.
 
 ![](https://raw.githubusercontent.com/vividos/WhereToFly/version-1.14.3/src/App/Resources/Assets/info/version.jpg)
 
