@@ -15,7 +15,7 @@
     <ApplicationId>de.vividos.app.wheretofly.android</ApplicationId>
 
     <!-- Versions -->
-    <ApplicationDisplayVersion>1.14.4</ApplicationDisplayVersion>
+    <ApplicationDisplayVersion>1.15.0</ApplicationDisplayVersion>
     <ApplicationVersion>300</ApplicationVersion>
 
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
