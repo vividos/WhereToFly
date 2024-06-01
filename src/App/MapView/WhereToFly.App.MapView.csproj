@@ -1,11 +1,10 @@
-<Project Sdk="MSBuild.Sdk.Extras/3.0.44">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;MonoAndroid13.0;net8.0-android34.0</TargetFrameworks>
-    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">$(TargetFrameworks);uap10.0.19041;net8.0-windows10.0.19041</TargetFrameworks>
+    <TargetFrameworks>net8.0-android34.0;net8.0-windows10.0.19041.0</TargetFrameworks>
     <Description>Where-to-fly App MapView</Description>
-    <LangVersion>latest</LangVersion>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <UseMaui>true</UseMaui>
   </PropertyGroup>
 
   <!-- NuGet package properties -->
@@ -14,86 +13,32 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/vividos/WhereToFly/tree/main/src/App/MapView</PackageProjectUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" $(TargetFramework.StartsWith('net8.0')) ">
-    <UseMaui>true</UseMaui>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" $(TargetFramework.StartsWith('uap10.0')) ">
-    <!-- Needed to resolve an error MSB3779 about using "Any CPU" and SDK "Microsoft.VCLibs.Desktop, Version=14.0". -->
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
   </PropertyGroup>
 
   <ItemGroup>
     <EmbeddedResource Remove="**" />
     <Compile Include="*.cs" />
-    <None Include="Readme.md" Pack="true" PackagePath="\" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
-    <Compile Include="netstandard\*.cs" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.8.1" />
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2662" />
-  </ItemGroup>
-
-  <!-- add assets as AndroidAsset -->
-  <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
-    <Compile Include="android\*.cs" />
-    <AndroidAsset Include="../../Shared/WebLib/Readme.md" />
-    <AndroidAsset Include="..\..\Shared\WebLib\dist\**\*.*" Exclude="..\..\Shared\WebLib\dist\**\*.map">
-        <Link>Assets\weblib\%(RecursiveDir)\%(FileName)%(Extension)</Link>
-    </AndroidAsset>
-    <PackageReference Include="Xamarin.AndroidX.RecyclerView" Version="1.3.2.2" />
-    <PackageReference Include="Xamarin.AndroidX.WebKit" Version="1.10.0.1" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.8.1" />
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2662" />
-  </ItemGroup>
-
-  <!-- add UWP assets using Content build action -->
-  <ItemGroup Condition=" $(TargetFramework.StartsWith('uap10.0')) ">
-    <Compile Include="uwp\*.cs" />
-    <Content Include="..\..\Shared\WebLib\dist\**\*.*" Exclude="..\..\Shared\WebLib\dist\**\*.map">
-      <Link>Assets\weblib\%(RecursiveDir)\%(FileName)%(Extension)</Link>
-    </Content>
-    <SDKReference Include="WindowsMobile, Version=10.0.19041.0">
-      <Name>Windows Mobile Extensions for the UWP</Name>
-    </SDKReference>
-    <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.6" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2478.35" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.8.1" />
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2662" />
-  </ItemGroup>
-
-  <!-- .NET MAUI -->
-  <ItemGroup Condition=" $(TargetFramework.StartsWith('net8.0')) ">
     <Compile Include="maui\*.cs" />
-    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.21" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.21" />
+    <None Include="Readme.md" Pack="true" PackagePath="\" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.40" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.40" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <MauiAsset Include="..\..\Shared\WebLib\dist\**\*.*" Exclude="..\..\Shared\WebLib\dist\**\*.map" LogicalName="weblib\%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Geo\WhereToFly.Geo.csproj" />
     <ProjectReference Include="..\..\Shared\Model\WhereToFly.Shared.Model.csproj" />
-    <ProjectReference Include="..\..\Shared\WebLib\WhereToFly.Shared.WebLib.csproj">
+    <ProjectReference Include="..\..\Shared\WebLib\WhereToFly.Shared.WebLib.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
 
-  <Target Name="CopyProjectReferencesToPackage" DependsOnTargets="BuildOnlySettings;ResolveReferences">
-    <ItemGroup>
-      <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths-&gt;WithMetadataValue('ReferenceSourceTarget', 'ProjectReference')-&gt;WithMetadataValue('ReferenceOutputAssembly', 'true'))" />
-    </ItemGroup>
-  </Target>
-
   <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
-    <PackageReference Include="Xamarin.AndroidX.WebKit" Version="1.10.0.1" />
+    <PackageReference Include="Xamarin.AndroidX.WebKit" Version="1.10.0.2" />
     <!-- also need this package to fix an error in R8 with the above package -->
-    <PackageReference Include="Xamarin.AndroidX.Fragment.Ktx" Version="1.6.2.2" />
+    <PackageReference Include="Xamarin.AndroidX.Fragment.Ktx" Version="1.6.2.3" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,15 @@
+{
+  "solution": {
+    "path": "WhereToFly.sln",
+    "projects": [
+      "App\\MapView\\WhereToFly.App.MapView.csproj",
+      "App\\Maui\\WhereToFly.App.Maui.csproj",
+      "App\\UITest\\WhereToFly.App.UITest.csproj",
+      "App\\UnitTest\\WhereToFly.App.UnitTest.csproj",
+      "Geo\\UnitTest\\WhereToFly.Geo.UnitTest.csproj",
+      "Geo\\WhereToFly.Geo.csproj",
+      "Shared\\Model\\WhereToFly.Shared.Model.csproj",
+      "Shared\\WebLib\\WhereToFly.Shared.WebLib.esproj"
+    ]
+  }
+}

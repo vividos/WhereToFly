@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0-android34.0;net8.0-windows10.0.19041</TargetFrameworks>
+    <TargetFrameworks>net8.0-android34.0;net8.0-windows10.0.19041.0</TargetFrameworks>
     <OutputType>Exe</OutputType>
     <RootNamespace>WhereToFly.App</RootNamespace>
     <UseMaui>true</UseMaui>
@@ -10,6 +10,7 @@
 
     <!-- Display name -->
     <ApplicationTitle>Where-to-fly</ApplicationTitle>
+    <Description>Where-to-fly is an app that helps decide where to (hike up and) fly with a paraglider.</Description>
 
     <!-- App Identifier -->
     <ApplicationId>de.vividos.app.wheretofly.android</ApplicationId>
@@ -24,15 +25,14 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' And '$(Configuration)' == 'Debug' ">
+    <AndroidStoreUncompressedFileExtensions>.kmz</AndroidStoreUncompressedFileExtensions>
     <RuntimeIdentifiers>android-arm64;android-x64</RuntimeIdentifiers>
   </PropertyGroup>
 
   <PropertyGroup Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' And '$(Configuration)' == 'Release' ">
-    <RuntimeIdentifiers>android-arm64</RuntimeIdentifiers>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android34.0|AnyCPU'">
     <AndroidPackageFormat>apk</AndroidPackageFormat>
+    <AndroidStoreUncompressedFileExtensions>.kmz</AndroidStoreUncompressedFileExtensions>
+    <RuntimeIdentifiers>android-arm64</RuntimeIdentifiers>
   </PropertyGroup>
 
   <ItemGroup>
@@ -47,6 +47,14 @@
 
     <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
     <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+
+    <!-- More assets -->
+    <MauiAsset Include="..\..\..\Credits.md">
+      <Link>info\Credits.md</Link>
+    </MauiAsset>
+    <MauiAsset Include="..\..\..\Changelog.md">
+      <Link>info\Changelog.md</Link>
+    </MauiAsset>
   </ItemGroup>
 
   <ItemGroup>
@@ -57,16 +65,16 @@
 
   <ItemGroup>
     <PackageReference Include="AsyncAwaitBestPractices.MVVM" Version="7.0.0" />
-    <PackageReference Include="CommunityToolkit.Maui" Version="8.0.1" />
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.60" />
+    <PackageReference Include="CommunityToolkit.Maui" Version="9.0.0" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.61" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-    <PackageReference Include="FFImageLoading.Maui" Version="1.2.1" />
+    <PackageReference Include="FFImageLoading.Maui" Version="1.2.5" />
     <PackageReference Include="Markdig" Version="0.37.0" />
-    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.3" />
-    <PackageReference Include="Microsoft.AppCenter.Distribute" Version="5.0.3" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.4" />
+    <PackageReference Include="Microsoft.AppCenter.Distribute" Version="5.0.4" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
-    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.21" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.21" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.40" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.40" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Refit" Version="7.0.0" />
     <PackageReference Include="Refit.Newtonsoft.Json" Version="7.0.0" />
@@ -78,8 +86,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Geo\WhereToFly.Geo.csproj" />
     <ProjectReference Include="..\..\Shared\Model\WhereToFly.Shared.Model.csproj" />
-    <ProjectReference Include="..\MapView\WhereToFly.App.MapView.Maui.csproj" />
-    <ProjectReference Include="..\Resources\WhereToFly.App.Resources.Maui.csproj" />
+    <ProjectReference Include="..\MapView\WhereToFly.App.MapView.csproj" />
   </ItemGroup>
 
 </Project>
