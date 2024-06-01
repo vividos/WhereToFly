@@ -69,16 +69,13 @@ namespace WhereToFly.App.MapView
         /// </summary>
         /// <param name="handler">web view handler</param>
         /// <param name="view">web view</param>
-        /// <param name="action">previous handler</param>
         internal static void SetupWebViewClient(
             IWebViewHandler handler,
-            IWebView view,
-            Action<IElementHandler, IElement>? action)
+            IWebView view)
         {
-            if (handler is MapViewHandler mauiHandler)
+            if (view is MapView mapView &&
+                handler is WebViewHandler mauiHandler)
             {
-                var mapView = view as MapView;
-
                 var context = handler.PlatformView.Context
                     ?? Android.App.Application.Context;
 
@@ -86,7 +83,7 @@ namespace WhereToFly.App.MapView
                     new MapViewWebViewClient(
                         context,
                         mauiHandler,
-                        mapView?.LogErrorAction));
+                        mapView.LogErrorAction));
             }
         }
     }

@@ -21,8 +21,11 @@ namespace WhereToFly.App.MapView
                      handlers.AddHandler(typeof(MapView), typeof(MapViewHandler));
 
 #if ANDROID
-                     MapViewHandler.Mapper.ModifyMapping(
-                         nameof(Android.Webkit.WebViewClient),
+                     // Note: Using AppendToMapping() instead of ModifyMapping(), since this would
+                     // interfere with other handlers, despite suggested here:
+                     // https://github.com/dotnet/maui/pull/16032
+                     MapViewHandler.Mapper.AppendToMapping(
+                         "MapView-" + nameof(Android.Webkit.WebViewClient),
                          MapViewHandler.SetupWebViewClient);
 #endif
                  });
