@@ -1,6 +1,4 @@
-﻿using Xamarin.Forms;
-
-namespace WhereToFly.App.Views
+﻿namespace WhereToFly.App.Views
 {
     /// <summary>
     /// Page to display menu for the flyout page

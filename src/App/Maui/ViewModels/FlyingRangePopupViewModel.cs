@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using WhereToFly.App.MapView;
 using WhereToFly.App.Models;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.ViewModels
 {

@@ -1,10 +1,6 @@
-﻿using FFImageLoading.Svg.Forms;
-using System;
-using System.IO;
-using System.Threading.Tasks;
+﻿using FFImageLoading.Maui;
 using WhereToFly.App.Models;
 using WhereToFly.App.Resources;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.Logic
 {

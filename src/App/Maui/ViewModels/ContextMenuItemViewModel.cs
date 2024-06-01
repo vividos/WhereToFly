@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows.Input;
-using Xamarin.Forms;
+﻿using System.Windows.Input;
 
 namespace WhereToFly.App.ViewModels
 {
@@ -48,7 +46,7 @@ namespace WhereToFly.App.ViewModels
         /// <summary>
         /// Background color for the menu item; red when it is a destructive operation
         /// </summary>
-        public Color BackgroundColor { get; } = Color.Transparent;
+        public Color BackgroundColor { get; } = Colors.Transparent;
         #endregion
 
         /// <summary>
@@ -76,12 +74,12 @@ namespace WhereToFly.App.ViewModels
             }
 
             this.ForegroundColor =
-                Color.FromHex(App.GetResourceColor(foregroundColorName));
+                Color.FromArgb(App.GetResourceColor(foregroundColorName, true));
 
             if (backgroundColorName != null)
             {
                 this.BackgroundColor =
-                    Color.FromHex(App.GetResourceColor(backgroundColorName));
+                    Color.FromArgb(App.GetResourceColor(backgroundColorName, true));
             }
 
             this.Command = new Command(

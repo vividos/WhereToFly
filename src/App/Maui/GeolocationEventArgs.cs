@@ -1,5 +1,4 @@
-﻿using System;
-using WhereToFly.Geo.Model;
+﻿using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App
 {
@@ -12,7 +11,7 @@ namespace WhereToFly.App
         /// Creates a new event args object
         /// </summary>
         /// <param name="position">position object</param>
-        public GeolocationEventArgs(Xamarin.Essentials.Location position)
+        public GeolocationEventArgs(Microsoft.Maui.Devices.Sensors.Location position)
         {
             this.Point = position.ToMapPoint();
 
@@ -27,6 +26,6 @@ namespace WhereToFly.App
         /// <summary>
         /// Position object
         /// </summary>
-        public Xamarin.Essentials.Location Position { get; }
+        public Microsoft.Maui.Devices.Sensors.Location Position { get; }
     }
 }

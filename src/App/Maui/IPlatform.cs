@@ -1,6 +1,4 @@
-﻿using Xamarin.Forms;
-
-namespace WhereToFly.App
+﻿namespace WhereToFly.App
 {
     /// <summary>
     /// Platform abstraction interface
@@ -11,12 +9,6 @@ namespace WhereToFly.App
         /// Base path to use in WebView control
         /// </summary>
         string WebViewBasePath { get; }
-
-        /// <summary>
-        /// Sets app theme to use for platform
-        /// </summary>
-        /// <param name="requestedTheme">requested theme</param>
-        void SetPlatformTheme(OSAppTheme requestedTheme);
 
         /// <summary>
         /// Translates the compass' magnetic north heading (e.g. from Xamarin.Essentials.Compass

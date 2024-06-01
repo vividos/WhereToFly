@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using WhereToFly.App.Services;
 using WhereToFly.App.Views;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;
-using Xamarin.CommunityToolkit.ObjectModel;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.ViewModels
 {
@@ -261,7 +255,7 @@ namespace WhereToFly.App.ViewModels
 
                 try
                 {
-                    await waitingDialog.ShowAsync();
+                    waitingDialog.Show();
 
                     var dataService = DependencyService.Get<IDataService>();
                     return await dataService.PlanTourAsync(this.planTourParameters);

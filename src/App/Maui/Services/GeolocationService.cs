@@ -1,11 +1,6 @@
-﻿using Plugin.Geolocator;
-using Plugin.Geolocator.Abstractions;
-using System;
+﻿using Microsoft.Maui.Devices.Sensors;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using WhereToFly.Geo.Model;
-using Xamarin.Essentials;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.Services
 {
@@ -15,9 +10,14 @@ namespace WhereToFly.App.Services
     public class GeolocationService : IGeolocationService
     {
         /// <summary>
+        /// Interface to the geolocation implementation
+        /// </summary>
+        private readonly IGeolocation geolocation = Geolocation.Default;
+
+        /// <summary>
         /// Returns if currently listening to position updates
         /// </summary>
-        public bool IsListening => CrossGeolocator.Current.IsListening;
+        public bool IsListening => this.geolocation.IsListeningForeground;
 
         /// <summary>
         /// Event handler that is called for position changes
@@ -68,7 +68,7 @@ namespace WhereToFly.App.Services
         /// </summary>
         /// <param name="timeout">timeout for waiting for position</param>
         /// <returns>current position, or null when none could be retrieved</returns>
-        public async Task<Xamarin.Essentials.Location?> GetPositionAsync(TimeSpan timeout)
+        public async Task<Microsoft.Maui.Devices.Sensors.Location?> GetPositionAsync(TimeSpan timeout)
         {
             if (!await CheckPermissionAsync())
             {
@@ -115,14 +115,13 @@ namespace WhereToFly.App.Services
                 return false;
             }
 
-            CrossGeolocator.Current.PositionChanged += this.OnLocationChanged;
-            CrossGeolocator.Current.PositionError += this.OnLocationError;
+            this.geolocation.LocationChanged += this.OnLocationChanged;
+            this.geolocation.ListeningFailed += this.OnLocationError;
 
-            return await CrossGeolocator.Current.StartListeningAsync(
-                Constants.GeoLocationMinimumTimeForUpdate,
-                Constants.GeoLocationMinimumDistanceForUpdateInMeters,
-                includeHeading: true,
-                listenerSettings: null);
+            return await this.geolocation.StartListeningForegroundAsync(
+                new GeolocationListeningRequest(
+                    Constants.GeoLocationAccuracy,
+                    Constants.GeoLocationMinimumTimeForUpdate));
         }
 
         /// <summary>
@@ -130,24 +129,14 @@ namespace WhereToFly.App.Services
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        private void OnLocationChanged(object sender, Plugin.Geolocator.Abstractions.PositionEventArgs args)
+        private void OnLocationChanged(object? sender, GeolocationLocationChangedEventArgs args)
         {
-            var location = new Xamarin.Essentials.Location(
-                args.Position.Latitude,
-                args.Position.Longitude)
+            if (args.Location != null)
             {
-                Altitude = args.Position.Altitude,
-                Course = args.Position.Heading,
-                Speed = args.Position.Speed,
-                Timestamp = args.Position.Timestamp,
-                AltitudeReferenceSystem = AltitudeReferenceSystem.Geoid,
-                Accuracy = args.Position.Accuracy,
-                VerticalAccuracy = args.Position.AltitudeAccuracy,
-            };
-
-            this.PositionChanged?.Invoke(
-                sender,
-                new GeolocationEventArgs(location));
+                this.PositionChanged?.Invoke(
+                    sender,
+                    new GeolocationEventArgs(args.Location));
+            }
         }
 
         /// <summary>
@@ -155,7 +144,7 @@ namespace WhereToFly.App.Services
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        private void OnLocationError(object sender, PositionErrorEventArgs args)
+        private void OnLocationError(object? sender, GeolocationListeningFailedEventArgs args)
         {
             Debug.WriteLine($"PositionError: {args.Error}");
         }
@@ -163,18 +152,17 @@ namespace WhereToFly.App.Services
         /// <summary>
         /// Stops listening for location updates
         /// </summary>
-        /// <returns>task to wait on</returns>
-        public async Task StopListeningAsync()
+        public void StopListening()
         {
             if (!this.IsListening)
             {
                 return;
             }
 
-            CrossGeolocator.Current.PositionChanged -= this.OnLocationChanged;
-            CrossGeolocator.Current.PositionError -= this.OnLocationError;
+            this.geolocation.LocationChanged -= this.OnLocationChanged;
+            this.geolocation.ListeningFailed -= this.OnLocationError;
 
-            await CrossGeolocator.Current.StopListeningAsync();
+            this.geolocation.StopListeningForeground();
         }
     }
 }

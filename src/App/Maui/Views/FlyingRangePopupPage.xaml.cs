@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using WhereToFly.App.MapView;
+﻿using WhereToFly.App.MapView;
 using WhereToFly.App.ViewModels;
 
 namespace WhereToFly.App.Views
@@ -36,12 +34,22 @@ namespace WhereToFly.App.Views
         }
 
         /// <summary>
-        /// Called when page is about to disappear
+        /// Called when the popup was closed
         /// </summary>
-        protected override void OnDisappearing()
+        /// <param name="result">result object</param>
+        /// <param name="wasDismissedByTappingOutsideOfPopup">
+        /// true when dismissed by tapping outside of popup
+        /// </param>
+        /// <param name="token">cancellation token; unused</param>
+        /// <returns>task to wait on</returns>
+        protected override async Task OnClosed(
+            object? result,
+            bool wasDismissedByTappingOutsideOfPopup,
+            CancellationToken token = default)
         {
-            base.OnDisappearing();
-            Task.Run(this.viewModel.StoreFlyingRangeParameters);
+            await this.viewModel.StoreFlyingRangeParameters();
+
+            await base.OnClosed(result, wasDismissedByTappingOutsideOfPopup, token);
         }
     }
 }

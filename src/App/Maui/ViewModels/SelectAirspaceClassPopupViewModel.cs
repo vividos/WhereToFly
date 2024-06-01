@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Windows.Input;
 using WhereToFly.Geo.Airspace;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.ViewModels
 {
@@ -53,8 +50,8 @@ namespace WhereToFly.App.ViewModels
             /// </summary>
             public Color TextColor
                 => this.IsSelected
-                ? Color.White
-                : Color.FromHex("#2f2f2f");
+                ? Colors.White
+                : Color.FromArgb("#2f2f2f");
 
             /// <summary>
             /// Background color for the item
@@ -62,7 +59,7 @@ namespace WhereToFly.App.ViewModels
             public Color BackgroundColor
                 => this.IsSelected
                 ? Constants.PrimaryColor
-                : Color.FromHex("#cfcfcf");
+                : Color.FromArgb("#cfcfcf");
 
             /// <summary>
             /// Command that is carried out when weather icon has been tapped.

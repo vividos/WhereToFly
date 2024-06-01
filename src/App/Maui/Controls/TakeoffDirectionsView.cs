@@ -1,10 +1,9 @@
 ﻿using SkiaSharp;
-using SkiaSharp.Views.Forms;
-using System;
+using SkiaSharp.Views.Maui;
+using SkiaSharp.Views.Maui.Controls;
 using System.Diagnostics;
 using System.Windows.Input;
 using WhereToFly.Geo.Model;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.Controls
 {
@@ -90,7 +89,7 @@ namespace WhereToFly.App.Controls
                 propertyName: nameof(CompassColor),
                 returnType: typeof(Color),
                 declaringType: typeof(TakeoffDirectionsView),
-                defaultValue: Color.Green,
+                defaultValue: Colors.Green,
                 validateValue: (_, value) => value != null,
                 propertyChanged: InvalidateSurfaceOnChange);
 
@@ -102,7 +101,7 @@ namespace WhereToFly.App.Controls
                 propertyName: nameof(CompassBorderColor),
                 returnType: typeof(Color),
                 declaringType: typeof(TakeoffDirectionsView),
-                defaultValue: Color.Accent,
+                defaultValue: Constants.AccentColor,
                 validateValue: (_, value) => value != null,
                 propertyChanged: InvalidateSurfaceOnChange);
 
@@ -114,7 +113,7 @@ namespace WhereToFly.App.Controls
                 propertyName: nameof(CompassBackgroundColor),
                 returnType: typeof(Color),
                 declaringType: typeof(TakeoffDirectionsView),
-                defaultValue: Color.Transparent,
+                defaultValue: Colors.Transparent,
                 validateValue: (_, value) => value != null,
                 propertyChanged: InvalidateSurfaceOnChange);
 

@@ -1,7 +1,4 @@
-﻿using System.Threading.Tasks;
-using Xamarin.Forms;
-
-namespace WhereToFly.App.Views
+﻿namespace WhereToFly.App.Views
 {
     /// <summary>
     /// Tabbed settings page to show all settings pages

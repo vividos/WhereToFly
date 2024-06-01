@@ -1,8 +1,7 @@
 ﻿using SkiaSharp;
-using SkiaSharp.Views.Forms;
-using System;
+using SkiaSharp.Views.Maui;
+using SkiaSharp.Views.Maui.Controls;
 using WhereToFly.Geo;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.Controls
 {
@@ -65,7 +64,7 @@ namespace WhereToFly.App.Controls
                 propertyName: nameof(CompassColor),
                 returnType: typeof(Color),
                 declaringType: typeof(CompassView),
-                defaultValue: Color.White,
+                defaultValue: Colors.White,
                 validateValue: (_, value) => value != null,
                 propertyChanged: InvalidateSurfaceOnChange);
 
@@ -77,7 +76,7 @@ namespace WhereToFly.App.Controls
                 propertyName: nameof(TargetDirectionColor),
                 returnType: typeof(Color),
                 declaringType: typeof(CompassView),
-                defaultValue: Color.Red,
+                defaultValue: Colors.Red,
                 validateValue: (_, value) => value != null,
                 propertyChanged: InvalidateSurfaceOnChange);
 
@@ -89,7 +88,7 @@ namespace WhereToFly.App.Controls
                 propertyName: nameof(SunDirectionColor),
                 returnType: typeof(Color),
                 declaringType: typeof(CompassView),
-                defaultValue: Color.Yellow,
+                defaultValue: Colors.Yellow,
                 validateValue: (_, value) => value != null,
                 propertyChanged: InvalidateSurfaceOnChange);
         #endregion

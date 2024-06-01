@@ -1,11 +1,7 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using WhereToFly.App.Services;
+﻿using WhereToFly.App.Services;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.Logic
 {

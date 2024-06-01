@@ -2,6 +2,16 @@
 using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Distribute;
 using System.Diagnostics;
+using WhereToFly.App.Logic;
+using WhereToFly.App.Models;
+using WhereToFly.App.Services;
+using WhereToFly.App.Views;
+
+// make app internals visible to unit tests
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("WhereToFly.App.UnitTest")]
+
+// compile all xaml pages
+[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 
 namespace WhereToFly.App
 {
@@ -16,12 +26,29 @@ namespace WhereToFly.App
         private static readonly TaskCompletionSource<bool> TaskCompletionSourceInitialized = new();
 
         /// <summary>
-        /// Task that can be awaited to wait for a completed app initialisation.
+        /// Task that can be awaited to wait for a completed app initialisation. The task performs
+        /// the following:
+        /// - sets up dependency service objects
+        /// - sets up main page and map page
+        /// - loads app data
+        /// - initializes live waypoint refresh service
+        /// Note that MapPage also has a task to wait for initialized page.
         /// </summary>
         public static Task InitializedTask => TaskCompletionSourceInitialized.Task;
 
         /// <summary>
-        /// Creates a new MAUI app object
+        /// Application settings; this is initialized when <see cref="InitializedTask"/> has
+        /// completed, and is available in every content page.
+        /// </summary>
+        public static AppSettings? Settings { get; internal set; }
+
+        /// <summary>
+        /// Indicates if listening to location updates should be restarted when resuming the app
+        /// </summary>
+        private bool restartLocationUpdates;
+
+        /// <summary>
+        /// Creates a new app object
         /// </summary>
         public App()
         {
@@ -39,12 +66,13 @@ namespace WhereToFly.App
 
             this.InitializeComponent();
 
+            this.SetupDepencencyService();
+
+            this.MainPage = new RootPage();
+
             Task.Run(this.LoadAppDataAsync);
 
-            this.MainPage = new NavigationPage(new MainPage())
-            {
-                BarBackgroundColor = Color.FromRgb(0x2f, 0x29, 0x9e),
-            };
+            this.RequestedThemeChanged += this.OnRequestedThemeChanged;
         }
 
         /// <summary>
@@ -61,15 +89,52 @@ namespace WhereToFly.App
         }
 
         /// <summary>
+        /// Called when the requested theme of the operating system has changed
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="args">event args</param>
+        private void OnRequestedThemeChanged(object? sender, AppThemeChangedEventArgs args)
+        {
+            Debug.WriteLine($"OS App Theme changed to {args.RequestedTheme}");
+
+            if (Settings != null)
+            {
+                var userInterface = DependencyService.Get<IUserInterface>();
+                userInterface.UserAppTheme = Settings.AppTheme;
+            }
+        }
+
+        /// <summary>
+        /// Sets up DependencyService
+        /// </summary>
+        private void SetupDepencencyService()
+        {
+            DependencyService.Register<IUserInterface, UserInterface>();
+            DependencyService.Register<IAppMapService, AppMapService>();
+            DependencyService.Register<SvgImageCache>();
+            DependencyService.Register<NavigationService>();
+            DependencyService.Register<IDataService, Services.SqliteDatabase.SqliteDatabaseDataService>();
+            DependencyService.Register<IGeolocationService, GeolocationService>();
+            DependencyService.Register<LiveDataRefreshService>();
+        }
+
+        /// <summary>
         /// Loads app data needed for running, e.g. app settings, caches and location list for
         /// live waypoint refresh services.
         /// </summary>
         /// <returns>task to wait on</returns>
-        private Task LoadAppDataAsync()
+        private async Task LoadAppDataAsync()
         {
-            TaskCompletionSourceInitialized.SetResult(true);
+            var dataService = DependencyService.Get<IDataService>();
+            Settings = await dataService.GetAppSettingsAsync(CancellationToken.None);
 
-            return Task.CompletedTask;
+            var userInterface = DependencyService.Get<IUserInterface>();
+            userInterface.UserAppTheme = Settings.AppTheme;
+
+            var appMapService = DependencyService.Get<IAppMapService>();
+            await appMapService.InitLiveWaypointRefreshService();
+
+            TaskCompletionSourceInitialized.SetResult(true);
         }
 
         /// <summary>
@@ -102,5 +167,101 @@ namespace WhereToFly.App
         {
             Crashes.TrackError(ex);
         }
+
+        /// <summary>
+        /// Returns color hex string for given resource color key
+        /// </summary>
+        /// <param name="colorKey">resource color key</param>
+        /// <param name="addThemeSuffix">
+        /// when true, adds the theme specific suffix to the resource color key, e.g. Dark or
+        /// Light
+        /// </param>
+        /// <returns>hex color string, in the format #RRGGBB</returns>
+        public static string GetResourceColor(string colorKey, bool addThemeSuffix)
+        {
+            if (addThemeSuffix)
+            {
+                bool isDarkTheme =
+                    Current!.UserAppTheme == AppTheme.Dark ||
+                    (Current!.UserAppTheme == AppTheme.Unspecified &&
+                     Current!.RequestedTheme == AppTheme.Dark);
+
+                string themeSuffix = isDarkTheme
+                    ? "Dark"
+                    : "Light";
+
+                colorKey += themeSuffix;
+            }
+
+            return Current?.Resources != null &&
+                Current.Resources.TryGetValue(colorKey, out object value) &&
+                value is Color color
+                ? color.ToHex()
+                : "#000000";
+        }
+
+        #region App lifecycle methods
+        /// <summary>
+        /// Called when application is starting
+        /// </summary>
+        protected override void OnStart()
+        {
+            base.OnStart();
+
+            if (Settings != null)
+            {
+                var userInterface = DependencyService.Get<IUserInterface>();
+                userInterface.UserAppTheme = Settings.AppTheme;
+            }
+        }
+
+        /// <summary>
+        /// Called when application is paused
+        /// </summary>
+        protected override void OnSleep()
+        {
+            base.OnSleep();
+
+            var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
+            liveWaypointRefreshService.StopTimer();
+
+            var geolocationService = DependencyService.Get<IGeolocationService>();
+
+            if (geolocationService.IsListening)
+            {
+                this.restartLocationUpdates = true;
+
+                geolocationService.StopListening();
+            }
+        }
+
+        /// <summary>
+        /// Called when application is resumed
+        /// </summary>
+        protected override void OnResume()
+        {
+            base.OnResume();
+
+            if (Settings != null)
+            {
+                var userInterface = DependencyService.Get<IUserInterface>();
+                userInterface.UserAppTheme = Settings.AppTheme;
+            }
+
+            var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
+            liveWaypointRefreshService.ResumeTimer();
+
+            if (this.restartLocationUpdates)
+            {
+                this.restartLocationUpdates = false;
+
+                Task.Run(async () =>
+                {
+                    var geolocationService = DependencyService.Get<IGeolocationService>();
+                    await geolocationService.StartListeningAsync();
+                });
+            }
+        }
+        #endregion
     }
 }

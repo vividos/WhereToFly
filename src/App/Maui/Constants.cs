@@ -36,12 +36,12 @@ namespace WhereToFly.App
         /// <summary>
         /// Primary color for User Interface
         /// </summary>
-        public static readonly Color PrimaryColor = Color.FromHex("2F299E");
+        public static readonly Color PrimaryColor = Color.FromArgb("2F299E");
 
         /// <summary>
         /// Accent color for User Interface
         /// </summary>
-        public static readonly Color AccentColor = Color.FromHex("2F299E");
+        public static readonly Color AccentColor = Color.FromArgb("2F299E");
 
         /// <summary>
         /// Initial center point for the map when no last know position is available

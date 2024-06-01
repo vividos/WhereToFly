@@ -1,4 +1,4 @@
-﻿using System;
+﻿using CommunityToolkit.Maui.Core;
 
 namespace WhereToFly.App.Views
 {
@@ -12,6 +12,8 @@ namespace WhereToFly.App.Views
         /// </summary>
         public FindLocationPopupPage()
         {
+            this.Opened += this.OnPopupPageOpened;
+
             this.InitializeComponent();
         }
 
@@ -26,11 +28,11 @@ namespace WhereToFly.App.Views
         }
 
         /// <summary>
-        /// Called when popup page is about to appear; sets focus to the entry field.
+        /// Called when popup is opened; sets focus to the entry field.
         /// </summary>
-        protected override void OnAppearing()
+        private void OnPopupPageOpened(object? sender, PopupOpenedEventArgs args)
         {
-            base.OnAppearing();
+            this.Opened -= this.OnPopupPageOpened;
 
             this.locationEntry.Focus();
         }

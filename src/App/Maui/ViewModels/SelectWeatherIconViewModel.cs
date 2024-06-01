@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using WhereToFly.App.Models;
 using WhereToFly.App.Views;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.ViewModels
 {

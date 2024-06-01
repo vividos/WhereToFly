@@ -1,9 +1,6 @@
-﻿using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using WhereToFly.App.Logic;
 using WhereToFly.Geo.Model;
-using Xamarin.CommunityToolkit.ObjectModel;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.ViewModels
 {
@@ -53,8 +50,8 @@ namespace WhereToFly.App.ViewModels
         /// </summary>
         public Color TrackColor
             => this.track.IsFlightTrack
-            ? Color.Transparent
-            : Color.FromHex(this.track.Color);
+            ? Colors.Transparent
+            : Color.FromArgb(this.track.Color);
 
         /// <summary>
         /// Property containing detail infos for track

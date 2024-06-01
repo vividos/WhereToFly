@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using Xamarin.Forms;
+﻿using System.Diagnostics;
 
 namespace WhereToFly.App.Controls
 {
@@ -30,7 +27,7 @@ namespace WhereToFly.App.Controls
                 propertyName: nameof(SelectionBorderColor),
                 returnType: typeof(Color),
                 declaringType: typeof(ColorPickerView),
-                defaultValue: Color.Default);
+                defaultValue: null);
 
         /// <summary>
         /// Binding property for the selected color
@@ -40,8 +37,8 @@ namespace WhereToFly.App.Controls
                 propertyName: nameof(SelectedColor),
                 returnType: typeof(Color),
                 declaringType: typeof(ColorPickerView),
-                defaultBindingMode: BindingMode.TwoWay,
-                defaultValue: Color.Default,
+                defaultBindingMode: BindingMode.OneWay,
+                defaultValue: null,
                 propertyChanged: OnSelectedColorPropertyChanged);
         #endregion
 
@@ -91,7 +88,7 @@ namespace WhereToFly.App.Controls
                 {
                     WidthRequest = 40.0,
                     HeightRequest = 40.0,
-                    BackgroundColor = Color.FromHex(color),
+                    BackgroundColor = Color.FromArgb(color),
                 };
 
                 button.Clicked += this.OnClicked_ColorPickerButton;
@@ -111,7 +108,7 @@ namespace WhereToFly.App.Controls
                     Padding = new Thickness(0),
                     Margin = new Thickness(0),
                     CornerRadius = 5.0f,
-                    BackgroundColor = Color.Transparent,
+                    BackgroundColor = Colors.Transparent,
                     HasShadow = false,
                     Content = innerFrame,
                 };
@@ -151,12 +148,14 @@ namespace WhereToFly.App.Controls
         /// <param name="color">color value</param>
         private void SelectColor(Color color)
         {
-            int selectedIndex = color != Color.Default
-                ? Array.IndexOf(AllColorPickerColors, color.ToHex().Replace("#FF", string.Empty))
+            int selectedIndex = color != null
+                ? Array.IndexOf(AllColorPickerColors, color.ToHex().TrimStart('#'))
                 : -1;
 
-            if (selectedIndex == -1)
+            if (color == null ||
+                selectedIndex == -1)
             {
+                color = Color.FromArgb(AllColorPickerColors[0]);
                 selectedIndex = 0;
             }
 
@@ -177,7 +176,7 @@ namespace WhereToFly.App.Controls
             {
                 outerFrame.BackgroundColor = outerFrame == selectedFrame
                     ? this.SelectionBorderColor
-                    : Color.Transparent;
+                    : Colors.Transparent;
             }
 
             // update view model

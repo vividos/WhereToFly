@@ -1,9 +1,6 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Xml;
 using WhereToFly.App.Logic;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace WhereToFly.App
 {
@@ -42,13 +39,12 @@ namespace WhereToFly.App
                 throw new XamlParseException("ImageExtension requires Source property to be set", lineInfo);
             }
 
-            if (this.BaseName!.EndsWith(".svg"))
+            if (this.BaseName.EndsWith(".svg"))
             {
-                return SvgImageCache.GetImageSource(this.BaseName!);
+                return SvgImageCache.GetImageSource(this.BaseName);
             }
 
-            return ImageSource.FromFile(
-                GetDeviceDependentImage(this.BaseName!));
+            return ImageSource.FromFile(this.BaseName);
         }
 
         /// <summary>

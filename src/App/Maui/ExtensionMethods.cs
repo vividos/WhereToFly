@@ -12,7 +12,7 @@ namespace WhereToFly.App
         /// </summary>
         /// <param name="location">geo location object; must not be null</param>
         /// <returns>map point</returns>
-        public static MapPoint ToMapPoint(this Xamarin.Essentials.Location location)
+        public static MapPoint ToMapPoint(this Microsoft.Maui.Devices.Sensors.Location location)
         {
             return new MapPoint(
                 location.Latitude,

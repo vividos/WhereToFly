@@ -1,17 +1,11 @@
-﻿using Rg.Plugins.Popup.Extensions;
-using Rg.Plugins.Popup.Pages;
-using System;
-using System.Collections.Generic;
+﻿using CommunityToolkit.Maui.Views;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using WhereToFly.App.MapView;
 using WhereToFly.App.Models;
 using WhereToFly.App.Views;
 using WhereToFly.Geo.Airspace;
 using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;
-using Xamarin.Essentials;
-using Xamarin.Forms;
 using Location = WhereToFly.Geo.Model.Location;
 
 #pragma warning disable S4136 // All 'NavigateAsync' method overloads should be adjacent.
@@ -61,7 +55,7 @@ namespace WhereToFly.App.Services
                 { PopupPageKey.FindLocationPopupPage, (typeof(FindLocationPopupPage), typeof(string), null) },
                 { PopupPageKey.FlyingRangePopupPage, (typeof(FlyingRangePopupPage), typeof(FlyingRangeParameters), null) },
                 { PopupPageKey.PlanTourPopupPage, (typeof(PlanTourPopupPage), null, typeof(PlanTourParameters)) },
-                { PopupPageKey.SelectAirspaceClassPopupPage, (typeof(SelectAirspaceClassPopupPage), typeof(ISet<AirspaceClass>), typeof(IEnumerable<AirspaceClass>)) },
+                { PopupPageKey.SelectAirspaceClassPopupPage, (typeof(SelectAirspaceClassPopupPage), typeof(ISet<AirspaceClass>), typeof(List<AirspaceClass>)) },
                 { PopupPageKey.SelectWeatherIconPopupPage, (typeof(SelectWeatherIconPopupPage), typeof(WeatherIconDescription), typeof(string)) },
                 { PopupPageKey.SetCompassTargetDirectionPopupPage, (typeof(SetCompassTargetDirectionPopupPage), typeof(Tuple<int>), null) },
                 { PopupPageKey.SetTrackInfosPopupPage, (typeof(SetTrackInfosPopupPage), typeof(Track), typeof(Track)) },
@@ -171,7 +165,8 @@ namespace WhereToFly.App.Services
 
             if (parameterType != null &&
                 parameter != null &&
-                !parameterType.Equals(parameter.GetType()))
+                !(parameterType.Equals(parameter.GetType()) ||
+                  parameter.GetType().IsSubclassOf(parameterType)))
             {
                 throw new ArgumentException(
                     nameof(parameter),
@@ -180,19 +175,22 @@ namespace WhereToFly.App.Services
 
             Type popupPageType = typeTuple.Item1;
 
-            PopupPage? popupPage = null;
+            BasePopupPage? popupPage = null;
             if (parameter == null)
             {
-                popupPage = (PopupPage?)Activator.CreateInstance(popupPageType);
+                popupPage = (BasePopupPage?)Activator.CreateInstance(popupPageType);
             }
             else
             {
-                popupPage = (PopupPage?)Activator.CreateInstance(popupPageType, parameter);
+                popupPage = (BasePopupPage?)Activator.CreateInstance(popupPageType, parameter);
             }
 
             if (popupPage != null)
             {
-                await popupPage.Navigation.PushPopupAsync(popupPage, animated);
+                var mainPage = App.Current?.MainPage
+                    ?? throw new InvalidOperationException("MainPage is not available");
+
+                mainPage!.ShowPopup(popupPage);
             }
             else
             {
@@ -261,7 +259,10 @@ namespace WhereToFly.App.Services
             }
 
             // close flyout if necessary
-            if (App.Current.MainPage is FlyoutPage flyoutPage &&
+            var mainPage = App.Current?.MainPage
+                ?? throw new InvalidOperationException("MainPage is not available");
+
+            if (mainPage is FlyoutPage flyoutPage &&
                 flyoutPage.IsPresented)
             {
                 flyoutPage.IsPresented = false;

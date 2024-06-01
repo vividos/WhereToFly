@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using WhereToFly.Geo;
+﻿using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.ViewModels
 {
@@ -116,7 +113,7 @@ namespace WhereToFly.App.ViewModels
         /// </summary>
         public Color SelectedTrackColor
         {
-            get => Color.FromHex("#" + this.Track.Color);
+            get => Color.FromArgb("#" + this.Track.Color);
             set
             {
                 this.Track.Color = value.ToHex().Replace("#FF", string.Empty);

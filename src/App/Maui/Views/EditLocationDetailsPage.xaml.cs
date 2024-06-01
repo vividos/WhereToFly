@@ -1,7 +1,5 @@
-﻿using System.Threading.Tasks;
-using WhereToFly.App.ViewModels;
+﻿using WhereToFly.App.ViewModels;
 using WhereToFly.Geo.Model;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.Views
 {

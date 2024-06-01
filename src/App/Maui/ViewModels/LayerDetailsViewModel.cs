@@ -1,11 +1,8 @@
-﻿using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Resources;
 using WhereToFly.App.Services;
 using WhereToFly.Geo.Model;
-using Xamarin.CommunityToolkit.ObjectModel;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.ViewModels
 {
@@ -119,9 +116,9 @@ namespace WhereToFly.App.ViewModels
 
             return HtmlConverter.AddTextColorStyles(
                 desc,
-                App.GetResourceColor("ElementTextColor"),
-                App.GetResourceColor("PageBackgroundColor"),
-                App.GetResourceColor("AccentColor"));
+                App.GetResourceColor("ElementTextColor", true),
+                App.GetResourceColor("PageBackgroundColor", true),
+                App.GetResourceColor("AccentColor", true));
         }
 
         /// <summary>

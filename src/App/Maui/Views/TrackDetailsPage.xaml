@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:WhereToFly.App.Controls"
              xmlns:mapview="clr-namespace:WhereToFly.App.MapView;assembly=WhereToFly.App.MapView"
              xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
-             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="WhereToFly.App.Views.TrackDetailsPage"
              x:DataType="viewmodels:TrackDetailsViewModel"
              Title="Details">
@@ -79,9 +79,9 @@
                                               HeightRequest="300"
                                               HorizontalOptions="CenterAndExpand"
                                               VerticalOptions="Start">
-                    <mapview:HeightProfileView.Effects>
-                        <xct:TouchEffect StatusChanged="OnTouchStatusChanged" />
-                    </mapview:HeightProfileView.Effects>
+                    <mapview:HeightProfileView.Behaviors>
+                        <toolkit:TouchBehavior CurrentTouchStatusChanged="OnTouchStatusChanged" />
+                    </mapview:HeightProfileView.Behaviors>
                 </mapview:HeightProfileView>
 
                 <!-- Button to show height profile in new page -->

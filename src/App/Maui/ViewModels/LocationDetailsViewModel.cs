@@ -1,15 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Models;
 using WhereToFly.App.Resources;
 using WhereToFly.App.Services;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
-using Xamarin.CommunityToolkit.ObjectModel;
-using Xamarin.Essentials;
-using Xamarin.Forms;
 using Location = WhereToFly.Geo.Model.Location;
 
 namespace WhereToFly.App.ViewModels
@@ -229,9 +224,9 @@ namespace WhereToFly.App.ViewModels
 
             return HtmlConverter.AddTextColorStyles(
                 desc,
-                App.GetResourceColor("ElementTextColor"),
-                App.GetResourceColor("PageBackgroundColor"),
-                App.GetResourceColor("AccentColor"));
+                App.GetResourceColor("ElementTextColor", true),
+                App.GetResourceColor("PageBackgroundColor", true),
+                App.GetResourceColor("AccentColor", true));
         }
 
         /// <summary>
@@ -358,7 +353,7 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         private async Task OnNavigateToLocationAsync()
         {
-            var navigateLocation = new Xamarin.Essentials.Location(
+            var navigateLocation = new Microsoft.Maui.Devices.Sensors.Location(
                 latitude: this.location.MapLocation.Latitude,
                 longitude: this.location.MapLocation.Longitude);
 

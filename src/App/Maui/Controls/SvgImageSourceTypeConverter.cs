@@ -1,7 +1,5 @@
-﻿using System;
+﻿using System.ComponentModel;
 using System.Reflection;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace WhereToFly.App.Controls
 {
@@ -13,23 +11,28 @@ namespace WhereToFly.App.Controls
     /// data:image/svg+xml,SvgText
     /// data:image/svg+xml;base64,Base64EncodedSvgText
     /// </summary>
-    [TypeConversion(typeof(ImageSource))]
-    public sealed class SvgImageSourceTypeConverter : TypeConverter
+    public sealed class SvgImageSourceTypeConverter :
+        TypeConverter,
+        IExtendedTypeConverter
     {
         /// <summary>
         /// Returns which types can be converted
         /// </summary>
+        /// <param name="context">type descriptor context</param>
         /// <param name="sourceType">source type</param>
         /// <returns>true when type can be converted, or false when not</returns>
-        public override bool CanConvertFrom(Type sourceType)
+        public override bool CanConvertFrom(ITypeDescriptorContext? context, Type sourceType)
             => sourceType == typeof(string);
 
         /// <summary>
         /// Converts a string value to a suitable ImageSource object.
         /// </summary>
         /// <param name="value">string value to convert</param>
+        /// <param name="serviceProvider">service provider</param>
         /// <returns>converted ImageSource object</returns>
-        public override object? ConvertFromInvariantString(string? value)
+        object? IExtendedTypeConverter.ConvertFromInvariantString(
+            string? value,
+            IServiceProvider serviceProvider)
         {
             if (string.IsNullOrWhiteSpace(value))
             {

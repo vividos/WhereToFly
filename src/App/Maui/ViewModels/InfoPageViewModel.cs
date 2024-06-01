@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
-using WhereToFly.App.Logic;
+﻿using WhereToFly.App.Logic;
 using WhereToFly.App.Resources;
-using Xamarin.Essentials;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.ViewModels
 {
@@ -132,7 +126,7 @@ namespace WhereToFly.App.ViewModels
                     htmlText,
                     "white",
                     "black",
-                    App.GetResourceColor("AccentColor"));
+                    App.GetResourceColor("AccentColor", true));
             }
 
             return htmlText;

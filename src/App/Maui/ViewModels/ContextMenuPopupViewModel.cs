@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Xamarin.CommunityToolkit.ObjectModel;
-using Xamarin.Forms;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace WhereToFly.App.ViewModels
 {

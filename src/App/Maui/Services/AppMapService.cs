@@ -1,16 +1,10 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using WhereToFly.App.Logic;
 using WhereToFly.App.MapView;
 using WhereToFly.App.Models;
 using WhereToFly.App.Views;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
-using Xamarin.Essentials;
-using Xamarin.Forms;
 using Location = WhereToFly.Geo.Model.Location;
 
 namespace WhereToFly.App.Services
@@ -194,20 +188,17 @@ namespace WhereToFly.App.Services
                 return;
             }
 
-            await Device.InvokeOnMainThreadAsync(async () =>
-            {
-                const string DisclaimerMessage =
-                    "The display and use of flight maps and airspace data can contain errors " +
-                    "and their use does not release the pilot from the legal obligation of " +
-                    "thorough and orderly preflight planning, nor from the use of all required " +
-                    "and approved means of navigation (e.g. Aeronautical Chart ICAO 1:500,000).";
+            const string DisclaimerMessage =
+                "The display and use of flight maps and airspace data can contain errors " +
+                "and their use does not release the pilot from the legal obligation of " +
+                "thorough and orderly preflight planning, nor from the use of all required " +
+                "and approved means of navigation (e.g. Aeronautical Chart ICAO 1:500,000).";
 
-                var userInterface = DependencyService.Get<IUserInterface>();
+            var userInterface = DependencyService.Get<IUserInterface>();
 
-                await userInterface.DisplayAlert(
-                    DisclaimerMessage,
-                    "Understood");
-            });
+            await userInterface.DisplayAlert(
+                DisclaimerMessage,
+                "Understood");
 
             appSettings.ShownFlightPlanningDisclaimer = true;
             await dataService.StoreAppSettingsAsync(appSettings);

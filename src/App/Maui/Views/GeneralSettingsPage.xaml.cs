@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-using WhereToFly.App.ViewModels;
-using Xamarin.Forms;
+﻿using WhereToFly.App.ViewModels;
 
 namespace WhereToFly.App.Views
 {

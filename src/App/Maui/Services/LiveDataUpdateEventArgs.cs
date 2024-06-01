@@ -1,5 +1,4 @@
-﻿using System;
-using WhereToFly.Shared.Model;
+﻿using WhereToFly.Shared.Model;
 
 namespace WhereToFly.App.Services
 {

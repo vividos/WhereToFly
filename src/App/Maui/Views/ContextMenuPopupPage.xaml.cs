@@ -13,8 +13,6 @@ namespace WhereToFly.App.Views
         /// <param name="viewModel">view model for the popup</param>
         public ContextMenuPopupPage(ContextMenuPopupViewModel viewModel)
         {
-            this.CloseWhenBackgroundIsClicked = true;
-
             this.BindingContext = viewModel;
             this.InitializeComponent();
         }

@@ -1,13 +1,9 @@
-﻿using Rg.Plugins.Popup.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using CommunityToolkit.Maui.Views;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Models;
 using WhereToFly.App.ViewModels;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.Views
 {
@@ -61,7 +57,7 @@ namespace WhereToFly.App.Views
             string caption =
                 $"Selected point at Latitude: {latitudeText}, Longitude: {longitudeText}, Altitude {point.Altitude.GetValueOrDefault(0.0)} m";
 
-            var tcs = new TaskCompletionSource<Result>();
+            ContextMenuPopupPage? popupPage = null;
 
             var items = new List<MenuItem>
             {
@@ -69,54 +65,41 @@ namespace WhereToFly.App.Views
                 {
                     Text = "Add new waypoint",
                     IconImageSource = SvgImageCache.GetImageSource("info/images/playlist-plus.svg"),
-                    Command = new Command(() => tcs.TrySetResult(Result.AddNewWaypoint)),
+                    Command = new Command(() => popupPage?.Close(Result.AddNewWaypoint)),
                 },
                 new MenuItem
                 {
                     Text = "Set as compass target",
                     IconImageSource = SvgImageCache.GetImageSource("weblib/images/compass-rose.svg"),
-                    Command = new Command(() => tcs.TrySetResult(Result.SetAsCompassTarget)),
+                    Command = new Command(() => popupPage?.Close(Result.SetAsCompassTarget)),
                 },
                 new MenuItem
                 {
                     Text = "Navigate here",
                     IconImageSource = SvgImageCache.GetImageSource("info/images/directions.svg"),
-                    Command = new Command(() => tcs.TrySetResult(Result.NavigateHere)),
+                    Command = new Command(() => popupPage?.Close(Result.NavigateHere)),
                 },
                 new MenuItem
                 {
                     Text = "Show flying range",
                     IconImageSource = SvgImageCache.GetImageSource("info/images/arrow-expand-horizontal.svg"),
-                    Command = new Command(() => tcs.TrySetResult(Result.ShowFlyingRange)),
+                    Command = new Command(() => popupPage?.Close(Result.ShowFlyingRange)),
                 },
             };
-
-            ContextMenuPopupPage? popupPage = null;
-
-            EventHandler backgroundClicked =
-                (sender, args) => tcs.TrySetResult(Result.Cancel);
 
             var viewModel = new ContextMenuPopupViewModel(
                 caption,
                 items,
-                () =>
-                {
-                    if (popupPage == null)
-                    {
-                        throw new InvalidOperationException(
-                            "popupPage must have been set");
-                    }
-
-                    popupPage.Navigation.PopPopupAsync(true);
-                    popupPage.BackgroundClicked -= backgroundClicked;
-                });
+                () => { });
 
             popupPage = new ContextMenuPopupPage(viewModel);
-            popupPage.BackgroundClicked += backgroundClicked;
 
-            await popupPage.Navigation.PushPopupAsync(popupPage, true);
+            var mainPage = App.Current?.MainPage
+                ?? throw new InvalidOperationException("MainPage is not available");
 
-            return await tcs.Task;
+            object? result = await mainPage.ShowPopupAsync(popupPage);
+
+            return (Result?)result ?? Result.Cancel;
         }
     }
 }

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using WhereToFly.App.Resources;
 using WhereToFly.Geo.Model;
-using Xamarin.Forms;
 
 #pragma warning disable S4136 // All 'GetImageSource' method overloads should be adjacent.
 

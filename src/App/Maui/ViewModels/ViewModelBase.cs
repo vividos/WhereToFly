@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.ViewModels
 {
     /// <summary>
-    /// Common view model base class; supports notifying xaml via
+    /// Common view model base class; supports notifying user interface via
     /// INotifyPropertyChanged
     /// </summary>
     public class ViewModelBase : INotifyPropertyChanged

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.Maui.Devices.Sensors;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using WhereToFly.App.Logic;
 using WhereToFly.App.MapView;
 using WhereToFly.App.Models;
@@ -11,8 +7,6 @@ using WhereToFly.App.Services;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;
-using Xamarin.Essentials;
-using Xamarin.Forms;
 using Location = WhereToFly.Geo.Model.Location;
 
 namespace WhereToFly.App.Views
@@ -74,7 +68,7 @@ namespace WhereToFly.App.Views
         public MapPage()
         {
             this.Title = Constants.AppTitle;
-            this.BackgroundColor = Color.Black;
+            this.BackgroundColor = Colors.Black;
 
             this.zoomToMyPosition = false;
 
@@ -95,8 +89,7 @@ namespace WhereToFly.App.Views
                 NearbyPoiService = nearbyPoiService,
             };
 
-            MainThread.BeginInvokeOnMainThread(
-                async () => await this.InitLayoutAsync());
+            this.Dispatcher.DispatchAsync(this.InitLayoutAsync);
         }
 
         /// <summary>
@@ -186,7 +179,7 @@ namespace WhereToFly.App.Views
         /// <returns>task to wait on</returns>
         private async Task OnClicked_ToolbarButtonLocateMe()
         {
-            Xamarin.Essentials.Location? position;
+            Microsoft.Maui.Devices.Sensors.Location? position;
             try
             {
                 position = await this.geolocationService.GetPositionAsync(
@@ -281,7 +274,7 @@ namespace WhereToFly.App.Views
                 return;
             }
 
-            IEnumerable<Xamarin.Essentials.Location>? foundLocationsList = null;
+            IEnumerable<Microsoft.Maui.Devices.Sensors.Location>? foundLocationsList = null;
 
             try
             {
@@ -346,7 +339,7 @@ namespace WhereToFly.App.Views
         {
             if (args.NavigationEvent == WebNavigationEvent.NewPage &&
                 args.Url.StartsWith("http") &&
-                !args.Url.Contains("https://localapp/"))
+                !args.Url.Contains("https://appdir/"))
             {
                 Browser.OpenAsync(
                     args.Url,
@@ -569,7 +562,7 @@ namespace WhereToFly.App.Views
         /// <returns>task to wait on</returns>
         private static async Task NavigateToPointAsync(string name, MapPoint point)
         {
-            var navigateLocation = new Xamarin.Essentials.Location(
+            var navigateLocation = new Microsoft.Maui.Devices.Sensors.Location(
                 latitude: point.Latitude,
                 longitude: point.Longitude);
 

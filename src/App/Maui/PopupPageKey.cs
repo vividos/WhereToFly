@@ -61,7 +61,7 @@
 
         /// <summary>
         /// Popup page key to show the popup for selecting airspace classes to import.
-        /// Parameter: IEnumerable of AirspaceClass
+        /// Parameter: List of AirspaceClass
         /// Returns: ISet of AirspaceClass, or null when popup was dismissed
         /// </summary>
         SelectAirspaceClassPopupPage,

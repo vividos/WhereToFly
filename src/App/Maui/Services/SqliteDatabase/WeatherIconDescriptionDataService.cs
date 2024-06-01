@@ -1,7 +1,4 @@
 ﻿using SQLite;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using WhereToFly.App.Models;
 
 namespace WhereToFly.App.Services.SqliteDatabase

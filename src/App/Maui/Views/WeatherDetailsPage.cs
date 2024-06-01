@@ -1,10 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
-using WhereToFly.App.Controls;
+﻿using WhereToFly.App.Controls;
 using WhereToFly.App.Models;
 using WhereToFly.App.Services;
-using Xamarin.Essentials;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.Views
 {

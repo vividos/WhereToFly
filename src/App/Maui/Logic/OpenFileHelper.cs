@@ -1,11 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using WhereToFly.App.Services;
 using WhereToFly.App.Views;
 using WhereToFly.Geo;
@@ -13,8 +7,6 @@ using WhereToFly.Geo.Airspace;
 using WhereToFly.Geo.DataFormats;
 using WhereToFly.Geo.DataFormats.Czml;
 using WhereToFly.Geo.Model;
-using Xamarin.Essentials;
-using Xamarin.Forms;
 using Location = WhereToFly.Geo.Model.Location;
 
 namespace WhereToFly.App.Logic
@@ -134,7 +126,7 @@ namespace WhereToFly.App.Logic
 
             try
             {
-                await waitingDialog.ShowAsync();
+                waitingDialog.Show();
 
                 var geoDataFile = GeoLoader.LoadGeoDataFile(stream, filename);
                 var locationList = geoDataFile.HasLocations() ? geoDataFile.LoadLocationList() : null;
@@ -179,7 +171,7 @@ namespace WhereToFly.App.Logic
 
             try
             {
-                await waitingDialog.ShowAsync();
+                waitingDialog.Show();
 
                 var geoDataFile = GeoLoader.LoadGeoDataFile(stream, filename);
 
@@ -454,7 +446,7 @@ namespace WhereToFly.App.Logic
             try
             {
                 await MainThread.InvokeOnMainThreadAsync(
-                    async () => await waitingDialog.ShowAsync());
+                    () => waitingDialog.Show());
 
                 await App.InitializedTask;
 
@@ -609,7 +601,10 @@ namespace WhereToFly.App.Logic
         /// <returns>filtered list of all airspaces</returns>
         private static async Task<IEnumerable<Airspace>> SelectAirspaceClassesToImport(IEnumerable<Airspace> airspacesList)
         {
-            var airspaceClasses = airspacesList.Select(airspace => airspace.Class).Distinct();
+            var airspaceClasses = airspacesList
+                .Select(airspace => airspace.Class)
+                .Distinct()
+                .ToList();
 
             var selectedAirspaceClasses = await NavigationService.Instance.NavigateToPopupPageAsync<ISet<AirspaceClass>>(
                 PopupPageKey.SelectAirspaceClassPopupPage,

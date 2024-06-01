@@ -1,6 +1,4 @@
-﻿using Xamarin.Forms;
-
-namespace WhereToFly.App.Views
+﻿namespace WhereToFly.App.Views
 {
     /// <summary>
     /// Page to display layer list; the layers' visibility can be set, and a layer can be zoomed

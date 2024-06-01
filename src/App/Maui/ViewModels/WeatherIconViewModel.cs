@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using System.Windows.Input;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Models;
 using WhereToFly.App.Services;
-using Xamarin.CommunityToolkit.ObjectModel;
-using Xamarin.Essentials;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.ViewModels
 {

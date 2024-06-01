@@ -1,9 +1,8 @@
 ﻿using SkiaSharp;
-using SkiaSharp.Views.Forms;
-using System;
+using SkiaSharp.Views.Maui;
+using SkiaSharp.Views.Maui.Controls;
+using System.ComponentModel;
 using System.Diagnostics;
-using System.Threading.Tasks;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.Controls
 {
@@ -22,7 +21,7 @@ namespace WhereToFly.App.Controls
         /// </summary>
         public SvgImage()
         {
-            this.BackgroundColor = Color.Transparent;
+            this.BackgroundColor = Colors.Transparent;
             this.PaintSurface += this.CanvasViewOnPaintSurface;
         }
 
@@ -56,7 +55,7 @@ namespace WhereToFly.App.Controls
             nameof(TintColor),
             typeof(Color),
             typeof(SvgImage),
-            Color.Default,
+            defaultValue: null,
             propertyChanged: OnTintColorPropertyChanged);
 
         /// <summary>
@@ -90,7 +89,7 @@ namespace WhereToFly.App.Controls
                 try
                 {
                     image.svgImage = await SvgDataResolver.LoadSvgImage(image.Source);
-                    Device.BeginInvokeOnMainThread(image.InvalidateSurface);
+                    bindable.Dispatcher.Dispatch(image.InvalidateSurface);
                 }
                 catch (Exception ex)
                 {
@@ -113,7 +112,7 @@ namespace WhereToFly.App.Controls
                 return;
             }
 
-            Device.BeginInvokeOnMainThread(image.InvalidateSurface);
+            bindable.Dispatcher.Dispatch(image.InvalidateSurface);
         }
 
         /// <summary>
@@ -157,7 +156,7 @@ namespace WhereToFly.App.Controls
             canvas.Scale(ratio);
             canvas.Translate(-bounds.MidX, -bounds.MidY);
 
-            if (this.TintColor == Color.Default)
+            if (this.TintColor == null)
             {
                 canvas.DrawPicture(this.svgImage.Picture);
             }

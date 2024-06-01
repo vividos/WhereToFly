@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.Controls
 {

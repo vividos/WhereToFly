@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Models;
 using WhereToFly.App.Resources;
 using WhereToFly.App.Services;
 using WhereToFly.Geo.Model;
-using Xamarin.CommunityToolkit.ObjectModel;
-using Xamarin.Essentials;
-using Xamarin.Forms;
 using Location = WhereToFly.Geo.Model.Location;
 
 namespace WhereToFly.App.ViewModels

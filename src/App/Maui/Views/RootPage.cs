@@ -1,5 +1,4 @@
 ﻿using WhereToFly.App.Services;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.Views
 {
@@ -32,7 +31,7 @@ namespace WhereToFly.App.Views
             var navigationPage = new NavigationPage(this.MapPage)
             {
                 BarBackgroundColor = Constants.PrimaryColor,
-                BarTextColor = Color.White,
+                BarTextColor = Colors.White,
             };
 
             NavigationPage.SetTitleIconImageSource(navigationPage, "icon.png");

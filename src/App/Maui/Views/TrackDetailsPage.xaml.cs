@@ -1,11 +1,8 @@
-﻿using System.Diagnostics;
+﻿using CommunityToolkit.Maui.Core;
+using Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;
+using System.Diagnostics;
 using WhereToFly.App.ViewModels;
 using WhereToFly.Geo.Model;
-using Xamarin.CommunityToolkit.Effects;
-using Xamarin.Essentials;
-using Xamarin.Forms;
-using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
-using TabbedPage = Xamarin.Forms.TabbedPage;
 
 namespace WhereToFly.App.Views
 {
@@ -35,21 +32,17 @@ namespace WhereToFly.App.Views
             object sender,
             TouchStatusChangedEventArgs args)
         {
-            if (DeviceInfo.Platform != DevicePlatform.Android)
-            {
-                return;
-            }
-
+#if ANDROID
             bool enableTabSwiping =
                 args.Status != TouchStatus.Started;
 
             Debug.WriteLine($"setting IsSwipePagingEnabled = {enableTabSwiping}");
 
-            var tabbedPage = this.Parent as TabbedPage;
+            var tabbedPage = this.Parent as Microsoft.Maui.Controls.TabbedPage;
 
-            tabbedPage?
-                .On<Xamarin.Forms.PlatformConfiguration.Android>()?
+            tabbedPage?.On<Microsoft.Maui.Controls.PlatformConfiguration.Android>()
                 .SetIsSwipePagingEnabled(enableTabSwiping);
+#endif
         }
     }
 }

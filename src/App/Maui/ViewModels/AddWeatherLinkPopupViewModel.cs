@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using WhereToFly.App.Models;
+﻿using WhereToFly.App.Models;
 
 namespace WhereToFly.App.ViewModels
 {

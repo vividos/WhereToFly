@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Maui;
+using FFImageLoading.Maui;
 using Microsoft.Extensions.Logging;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 using WhereToFly.App.MapView;
 
 namespace WhereToFly.App
@@ -19,6 +21,8 @@ namespace WhereToFly.App
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
+                .UseSkiaSharp()
+                .UseFFImageLoading()
                 .UseMapView();
 
 #if DEBUG

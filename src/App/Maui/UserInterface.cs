@@ -1,11 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
 using WhereToFly.App.Services;
-using WhereToFly.App.Styles;
-using Xamarin.CommunityToolkit.Extensions;
-using Xamarin.CommunityToolkit.UI.Views.Options;
-using Xamarin.Essentials;
-using Xamarin.Forms;
 
 namespace WhereToFly.App
 {
@@ -33,8 +28,8 @@ namespace WhereToFly.App
         /// </summary>
         public AppTheme UserAppTheme
         {
-            get => ThemeHelper.CurrentTheme;
-            set => ThemeHelper.ChangeTheme(value, true);
+            get => App.UserAppTheme;
+            set => App.UserAppTheme = value;
         }
 
         /// <summary>
@@ -42,7 +37,8 @@ namespace WhereToFly.App
         /// app theme is set to "Same as device".
         /// </summary>
         public bool IsDarkTheme
-            => ThemeHelper.CurrentTheme == AppTheme.Dark;
+            => App.UserAppTheme == AppTheme.Dark ||
+            (App.UserAppTheme == AppTheme.Unspecified && App.RequestedTheme == AppTheme.Dark);
 
         /// <summary>
         /// Returns current navigation service instance
@@ -56,25 +52,48 @@ namespace WhereToFly.App
         /// <param name="message">message text</param>
         public void DisplayToast(string message)
         {
+#if WINDOWS
             MainThread.BeginInvokeOnMainThread(
-                () => MainPage.DisplayToastAsync(
-                    new ToastOptions
+                async () =>
+                {
+                    var toast = Toast.Make(
+                        message,
+                        ToastDuration.Short);
+
+                    await toast.Show();
+                });
+#else
+            MainThread.BeginInvokeOnMainThread(
+                async () =>
+                {
+                    var options = new SnackbarOptions
                     {
-                        MessageOptions = new MessageOptions
-                        {
-                            Message = message,
-                            Foreground = Color.White,
-                        },
                         BackgroundColor = Constants.PrimaryColor,
-                    }));
+                        ActionButtonTextColor = Colors.White,
+                        TextColor = Colors.White,
+                    };
+
+                    var snackbar = Snackbar.Make(
+                        message,
+                        duration: TimeSpan.FromSeconds(5),
+                        visualOptions: options);
+
+                    await snackbar.Show();
+                });
+#endif
         }
 
         /// <inheritdoc />
-        public Task DisplayAlert(string message, string cancel)
-            => MainPage.DisplayAlert(
-                Constants.AppTitle,
-                message,
-                cancel);
+        public async Task DisplayAlert(string message, string cancel)
+        {
+            await MainPage.Dispatcher.DispatchAsync(async () =>
+            {
+                await MainPage.DisplayAlert(
+                        Constants.AppTitle,
+                        message,
+                        cancel);
+            });
+        }
 
         /// <inheritdoc />
         public Task<bool> DisplayAlert(

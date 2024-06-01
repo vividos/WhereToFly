@@ -1,5 +1,4 @@
-﻿using System;
-using WhereToFly.App.Models;
+﻿using WhereToFly.App.Models;
 using WhereToFly.App.ViewModels;
 
 namespace WhereToFly.App.Views

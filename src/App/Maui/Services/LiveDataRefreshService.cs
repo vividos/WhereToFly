@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.Services
 {

@@ -1,7 +1,4 @@
-﻿using Xamarin.Essentials;
-using Xamarin.Forms;
-
-namespace WhereToFly.App.Views
+﻿namespace WhereToFly.App.Views
 {
     /// <summary>
     /// Shows an info page displaying a CarouselView with the info (sub) pages.

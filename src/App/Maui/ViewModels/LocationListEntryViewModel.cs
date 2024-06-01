@@ -1,11 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using WhereToFly.App.Logic;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
-using Xamarin.CommunityToolkit.ObjectModel;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.ViewModels
 {
@@ -155,7 +151,7 @@ namespace WhereToFly.App.ViewModels
             this.AddTourPlanLocationCommand =
                 new AsyncCommand(
                     () => appMapService.AddTourPlanLocation(this.location),
-                    () => this.IsEnabledAddTourPlanLocation);
+                    (obj) => this.IsEnabledAddTourPlanLocation);
         }
 
         /// <summary>

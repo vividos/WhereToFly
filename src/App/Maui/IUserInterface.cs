@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-using WhereToFly.App.Services;
-using Xamarin.Essentials;
+﻿using WhereToFly.App.Services;
 
 namespace WhereToFly.App
 {

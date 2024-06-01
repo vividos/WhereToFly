@@ -1,7 +1,6 @@
 ﻿using WhereToFly.App.MapView;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
-using Xamarin.Essentials;
 
 namespace WhereToFly.App.Models
 {

@@ -1,13 +1,7 @@
 ﻿using Newtonsoft.Json;
 using SQLite;
-using System;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using WhereToFly.App.Models;
 using WhereToFly.Shared.Model;
-using Xamarin.Essentials;
 
 namespace WhereToFly.App.Services.SqliteDatabase
 {

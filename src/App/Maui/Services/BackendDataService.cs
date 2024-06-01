@@ -1,8 +1,5 @@
 ﻿using Refit;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;
 

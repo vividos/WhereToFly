@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using WhereToFly.App.ViewModels;
+﻿using WhereToFly.App.ViewModels;
 using WhereToFly.Geo.Airspace;
 
 namespace WhereToFly.App.Views
@@ -19,7 +17,7 @@ namespace WhereToFly.App.Views
         /// Creates a new popup page to select airspace classes
         /// </summary>
         /// <param name="airspaceClassesList">airspace classes to choose from</param>
-        public SelectAirspaceClassPopupPage(IEnumerable<AirspaceClass> airspaceClassesList)
+        public SelectAirspaceClassPopupPage(List<AirspaceClass> airspaceClassesList)
         {
             this.BindingContext = this.viewModel =
                 new SelectAirspaceClassPopupViewModel(airspaceClassesList);

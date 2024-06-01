@@ -1,10 +1,5 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using WhereToFly.Geo.DataFormats;
+﻿using WhereToFly.Geo.DataFormats;
 using WhereToFly.Geo.Model;
-using Xamarin.Essentials;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.Logic
 {

@@ -1,6 +1,4 @@
-﻿using Rg.Plugins.Popup.Extensions;
-using System.Threading.Tasks;
-using WhereToFly.App.ViewModels;
+﻿using WhereToFly.App.ViewModels;
 using WhereToFly.Shared.Model;
 
 namespace WhereToFly.App.Views
@@ -17,13 +15,11 @@ namespace WhereToFly.App.Views
         /// <param name="planTourParameters">tour planning parameters</param>
         public PlanTourPopupPage(PlanTourParameters planTourParameters)
         {
-            this.CloseWhenBackgroundIsClicked = true;
-
             this.InitializeComponent();
 
             this.BindingContext = new PlanTourPopupViewModel(
                 planTourParameters,
-                this.CloseAsync);
+                () => this.CloseAsync());
         }
     }
 }

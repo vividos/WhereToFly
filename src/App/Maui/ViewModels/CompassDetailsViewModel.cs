@@ -1,13 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using Microsoft.Maui.Devices.Sensors;
 using System.Windows.Input;
 using WhereToFly.App.Models;
 using WhereToFly.App.Services;
 using WhereToFly.Geo;
 using WhereToFly.Geo.SunCalcNet;
-using Xamarin.CommunityToolkit.ObjectModel;
-using Xamarin.Essentials;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.ViewModels
 {
@@ -24,7 +20,7 @@ namespace WhereToFly.App.ViewModels
         /// <summary>
         /// Current position
         /// </summary>
-        private Xamarin.Essentials.Location? position;
+        private Microsoft.Maui.Devices.Sensors.Location? position;
 
         /// <summary>
         /// Indicates if the device has a compass that is available

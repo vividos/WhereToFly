@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using WhereToFly.App.MapView;
+﻿using WhereToFly.App.MapView;
 using WhereToFly.App.Models;
 using WhereToFly.App.Views;
 using WhereToFly.Geo.Model;

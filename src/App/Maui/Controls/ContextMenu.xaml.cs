@@ -1,12 +1,8 @@
-﻿using Rg.Plugins.Popup.Extensions;
-using System;
-using System.Threading.Tasks;
+﻿using CommunityToolkit.Maui.Views;
 using System.Windows.Input;
 using WhereToFly.App.Logic;
 using WhereToFly.App.ViewModels;
 using WhereToFly.App.Views;
-using Xamarin.CommunityToolkit.ObjectModel;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.Controls
 {
@@ -67,7 +63,7 @@ namespace WhereToFly.App.Controls
             this.ContextMenuImageSource =
                 SvgImageCache.GetImageSource("icons/dots-vertical.svg");
 
-            this.ContextMenuCommand = new AsyncCommand(this.ShowContextMenu);
+            this.ContextMenuCommand = new Command(this.ShowContextMenu);
 
             this.InitializeComponent();
         }
@@ -104,22 +100,29 @@ namespace WhereToFly.App.Controls
         /// <summary>
         /// Shows context menu
         /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task ShowContextMenu()
+        private void ShowContextMenu()
         {
             foreach (var item in this.Items)
             {
                 item.IsEnabled &= item.Command.CanExecute(item.CommandParameter);
             }
 
+            ContextMenuPopupPage? popupPage = null;
+
             var viewModel = new ContextMenuPopupViewModel(
                 this.Caption,
                 this.Items,
-                () => { this.Navigation.PopPopupAsync(true); });
+                () =>
+                {
+                    popupPage?.Close();
+                });
 
-            var popupPage = new ContextMenuPopupPage(viewModel);
+            popupPage = new ContextMenuPopupPage(viewModel);
 
-            await popupPage.Navigation.PushPopupAsync(popupPage, true);
+            var mainPage = App.Current?.MainPage
+                ?? throw new InvalidOperationException("MainPage is not available");
+
+            mainPage.ShowPopup(popupPage);
         }
     }
 }
