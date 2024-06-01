@@ -8,6 +8,8 @@ Released on ?.
 
 🐛 Bugfixes
 
+- Fixed exporting layers
+
 ## Version 1.14.4
 
 Released on 2024-05-01.
