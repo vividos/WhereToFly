@@ -9,14 +9,6 @@ REM
 echo SonarCloud.cmd - Runs SonarCloud analysis build
 echo.
 
-REM set this to your Visual Studio installation folder
-set VSINSTALL=%ProgramFiles%\Microsoft Visual Studio\2022\Community
-
-REM
-REM Preparations
-REM
-call "%VSINSTALL%\Common7\Tools\VsDevCmd.bat"
-
 set DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 REM install SonarScanner, if not available yet
@@ -46,10 +38,7 @@ if errorlevel 1 goto end
 REM
 REM Rebuild projects
 REM
-msbuild WhereToFly.sln ^
-    /m  ^
-    /property:Configuration=SonarQube ^
-    /target:Restore;Rebuild
+dotnet build WhereToFly.sln -c Release
 
 REM
 REM Run Unit-Tests
