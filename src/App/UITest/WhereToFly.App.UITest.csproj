@@ -1,7 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net48</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Description>Where-to-fly UI tests</Description>
   </PropertyGroup>
 
@@ -14,9 +14,9 @@
 
   <PropertyGroup>
     <PostBuildEvent>if "$(ConfigurationName)" == "Debug" echo Info: Even in debug mode, only Release .apk is used.
-if not exist "$(ProjectDir)..\Android\bin\Release\de.vividos.app.wheretofly.android.apk" echo Error: File de.vividos.app.wheretofly.android.apk is missing! Please build and deploy the Release version at least once.
-if not exist "$(ProjectDir)..\Android\bin\Release\de.vividos.app.wheretofly.android.apk" exit 1
-echo "$(ProjectDir)..\Android\bin\Release\de.vividos.app.wheretofly.android.apk -&gt; $(TargetDir)"
-copy "$(ProjectDir)..\Android\bin\Release\de.vividos.app.wheretofly.android.apk" "$(TargetDir)"</PostBuildEvent>
+if not exist "$(ProjectDir)..\Maui\bin\Release\net8.0-android34.0\de.vividos.app.wheretofly.android.apk" echo Error: File de.vividos.app.wheretofly.android.apk is missing! Please build and deploy the Release version at least once.
+if not exist "$(ProjectDir)..\Maui\bin\Release\net8.0-android34.0\de.vividos.app.wheretofly.android.apk" exit 1
+echo "$(ProjectDir)..\Maui\bin\Release\net8.0-android34.0\de.vividos.app.wheretofly.android.apk -&gt; $(TargetDir)"
+copy "$(ProjectDir)..\Maui\bin\Release\net8.0-android34.0\de.vividos.app.wheretofly.android.apk" "$(TargetDir)"</PostBuildEvent>
   </PropertyGroup>
 </Project>

@@ -18,7 +18,7 @@ namespace WhereToFly.App.UITest
             if (platform == Platform.Android)
             {
                 string apkFilename = Path.Combine(
-                    Path.GetDirectoryName(typeof(AppInitializer).Assembly.Location),
+                    Path.GetDirectoryName(typeof(AppInitializer).Assembly.Location)!,
                     "de.vividos.app.wheretofly.android.apk");
 
                 return
