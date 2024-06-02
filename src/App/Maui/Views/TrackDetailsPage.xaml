@@ -34,7 +34,6 @@
 
                         <!-- Type image -->
                         <controls:SvgImage Source="{Binding TypeImageSource, Mode=OneWay}"
-                                           TintColor="{DynamicResource SvgImageTintColorDark}"
                                            WidthRequest="64" HeightRequest="64"
                                            HorizontalOptions="Start" VerticalOptions="Center" />
 

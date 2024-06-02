@@ -22,50 +22,58 @@
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
-        <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        <Grid RowDefinitions="Auto, Auto, 1*">
 
             <!-- Activity indicator to show while refreshing list -->
-            <StackLayout Padding="4" BackgroundColor="{DynamicResource LoadingBandBackgroundColor}"
-                         HeightRequest="32"
-                         HorizontalOptions="FillAndExpand"
-                         Orientation="Horizontal"
-                         IsVisible="{Binding IsListRefreshActive, Mode=OneWay}" >
-                <ActivityIndicator IsRunning="True" WidthRequest="20" />
+            <HorizontalStackLayout Grid.Row="0"
+                                   Padding="8"
+                                   BackgroundColor="{StaticResource LoadingBandBackgroundColor}"
+                                   HorizontalOptions="Fill"
+                                   IsVisible="{Binding IsListRefreshActive, Mode=OneWay}" >
+                <ActivityIndicator IsRunning="True"
+                                   Color="{StaticResource LoadingBandActivityIndicatorColor}"
+                                   WidthRequest="20"
+                                   HeightRequest="20"
+                                   Margin="0,0,8,0" />
                 <Label Text="List is being refreshed"
-                       VerticalTextAlignment="Center" FontSize="Medium"
-                       TextColor="{DynamicResource LoadingBandTextColor}" />
-            </StackLayout>
+                       VerticalTextAlignment="Center"
+                       FontSize="Medium"
+                       TextColor="{StaticResource LoadingBandTextColor}" />
+            </HorizontalStackLayout>
 
             <!-- Message to show when list is empty -->
-            <StackLayout Padding="4" BackgroundColor="{DynamicResource MessageBandBackgroundColor}"
-                         HeightRequest="32"
-                         HorizontalOptions="FillAndExpand"
-                         Orientation="Horizontal"
-                         IsVisible="{Binding IsListEmpty, Mode=OneWay}" >
+            <HorizontalStackLayout Grid.Row="1"
+                                   Padding="8"
+                                   BackgroundColor="{StaticResource MessageBandBackgroundColor}"
+                                   HorizontalOptions="Fill"
+                                   IsVisible="{Binding IsListEmpty, Mode=OneWay}" >
                 <Label Text="There are no tracks in the list."
                        VerticalTextAlignment="Center" FontSize="Medium"
-                       TextColor="{DynamicResource MessageBandTextColor}" />
-            </StackLayout>
+                       TextColor="{StaticResource MessageBandTextColor}" />
+            </HorizontalStackLayout>
 
             <!-- Track list -->
-            <CollectionView ItemsSource="{Binding Path=TrackList, Mode=OneWay}"
+            <CollectionView Grid.Row="2"
+                            ItemsSource="{Binding Path=TrackList, Mode=OneWay}"
                             SelectionMode="Single"
                             SelectedItem="{Binding SelectedTrack}"
                             ItemSizingStrategy="MeasureFirstItem"
                             AutomationId="TrackList">
 
                 <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="4" />
+                    <LinearItemsLayout Orientation="Vertical"
+                                       ItemSpacing="0" />
                 </CollectionView.ItemsLayout>
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="viewmodels:TrackListEntryViewModel">
                         <!-- Template for a single item -->
-                        <Grid BackgroundColor="{DynamicResource ListViewItemBackgroundColor}"
-                              HeightRequest="{OnPlatform Android=45, UWP=55}"
-                              Margin="8,4"
-                              RowDefinitions="Auto,Auto"
-                              ColumnDefinitions="Auto,Auto,1*,40">
+
+                        <Grid HeightRequest="{OnPlatform Android=45, WinUI=55}"
+                              Margin="4,2"
+                              RowDefinitions="Auto, Auto"
+                              ColumnDefinitions="Auto, Auto, 1*, 40"
+                              Style="{StaticResource ListViewItemStyle}">
 
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ItemTappedCommand}"
@@ -74,36 +82,46 @@
 
                             <!-- Track type image -->
                             <controls:SvgImage Source="{Binding TypeImageSource, Mode=OneWay}"
-                                               TintColor="{DynamicResource SvgImageTintColorDark}"
-                                               WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
-                                               HorizontalOptions="Start" VerticalOptions="Center"
-                                               Grid.Column="0" Grid.RowSpan="2" />
+                                               WidthRequest="32"
+                                               HeightRequest="32"
+                                               Margin="4,0,0,0"
+                                               HorizontalOptions="Start"
+                                               VerticalOptions="Center"
+                                               Grid.Column="0"
+                                               Grid.RowSpan="2" />
 
+                            <!-- Track color -->
                             <Frame IsVisible="{Binding IsColorBoxVisible, Mode=OneWay}"
                                    BackgroundColor="{Binding TrackColor, Mode=OneTime}"
                                    VerticalOptions="Center"
-                                   WidthRequest="12" HeightRequest="32"
+                                   WidthRequest="12"
+                                   HeightRequest="32"
                                    Padding="5"
                                    CornerRadius="3"
                                    HasShadow="False"
-                                   Grid.Column="1" Grid.RowSpan="2" />
+                                   Grid.Column="1"
+                                   Grid.RowSpan="2" />
 
                             <!-- Details -->
                             <Label Text="{Binding Name}"
-                                   Style="{DynamicResource ListItemTextStyle}"
+                                   Style="{StaticResource ListItemTextStyle}"
                                    FontSize="Medium"
                                    LineBreakMode="TailTruncation"
-                                   Grid.Column="2" Grid.Row="0" />
+                                   Grid.Column="2"
+                                   Grid.Row="0" />
                             <Label Text="{Binding DetailInfos}"
-                                   Style="{DynamicResource ListItemDetailTextStyle}"
+                                   Style="{StaticResource ListItemDetailTextStyle}"
                                    FontSize="Small"
                                    LineBreakMode="TailTruncation"
-                                   Grid.Column="2" Grid.Row="1" />
+                                   Grid.Column="2"
+                                   Grid.Row="1" />
 
                             <!-- Context menu for an item -->
-                            <controls:ContextMenu Grid.Column="3" Grid.RowSpan="2"
+                            <controls:ContextMenu Grid.Column="3"
+                                                  Grid.RowSpan="2"
                                                   Caption="Track"
-                                                  WidthRequest="40" HeightRequest="40"
+                                                  WidthRequest="40"
+                                                  HeightRequest="40"
                                                   HorizontalOptions="Center"
                                                   VerticalOptions="Center">
                                 <controls:ContextMenu.Items>
@@ -127,6 +145,6 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-        </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

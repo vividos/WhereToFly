@@ -28,19 +28,11 @@
                 Wrap="Wrap">
 
                 <!-- Latitude / Longitude -->
-                <Grid WidthRequest="348" HeightRequest="100"
-                      Margin="16,16,0,0"
-                      Padding="4"
-                      BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="1*" />
-                    </Grid.ColumnDefinitions>
-
+                <Grid WidthRequest="356"
+                      HeightRequest="108"
+                      RowDefinitions="Auto, Auto"
+                      ColumnDefinitions="1*, 1*"
+                      Style="{StaticResource PositionInfoTileStyle}">
                     <Label Grid.Row="0" Grid.Column="0" Text="Longitude" />
                     <Label Grid.Row="1" Grid.Column="0" Text="{Binding Longitude, Mode=OneWay}" FontSize="24" />
 
@@ -50,111 +42,71 @@
                 </Grid>
 
                 <!-- Altitude -->
-                <StackLayout WidthRequest="100" HeightRequest="100"
-                             Orientation="Vertical"
-                             Margin="16,16,0,0"
-                             Padding="4"
-                             BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
+                <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}">
                     <Label Text="Altitude [m]" />
                     <Label Text="{Binding Altitude, Mode=OneWay}" FontSize="32" />
-                </StackLayout>
+                </VerticalStackLayout>
 
                 <!-- Accuracy -->
-                <StackLayout WidthRequest="100" HeightRequest="100"
-                             Orientation="Vertical"
-                             Margin="16,16,0,0"
-                             Padding="4"
-                             BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
+                <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}">
                     <Label Text="Accuracy [m]" />
                     <Label Text="{Binding Accuracy, Mode=OneWay}" FontSize="32"
                            TextColor="{Binding PositionAccuracyColor, Mode=OneWay}" />
-                </StackLayout>
+                </VerticalStackLayout>
 
                 <!-- Last position fix -->
-                <StackLayout WidthRequest="100" HeightRequest="100"
-                             Orientation="Vertical"
-                             Margin="16,16,0,0"
-                             Padding="4"
-                             BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
+                <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}">
                     <Label Text="Last position fix" />
                     <Label Text="{Binding LastPositionFix, Mode=OneWay}" FontSize="24" />
-                </StackLayout>
+                </VerticalStackLayout>
 
                 <!-- Speed -->
-                <StackLayout WidthRequest="100" HeightRequest="100"
-                             Orientation="Vertical"
-                             Margin="16,16,0,0"
-                             Padding="4"
-                             BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
+                <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}">
                     <Label Text="Speed [km/h]" />
                     <Label Text="{Binding SpeedInKmh, Mode=OneWay}" FontSize="32" />
-                </StackLayout>
+                </VerticalStackLayout>
 
                 <!-- Magnetic-north Heading -->
-                <StackLayout WidthRequest="100" HeightRequest="100"
-                             Orientation="Vertical"
-                             Margin="16,16,0,0"
-                             Padding="4"
-                             IsVisible="{Binding IsMagneticNorthHeadingAvail, Mode=OneWay}"
-                             BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
+                <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}"
+                                     IsVisible="{Binding IsMagneticNorthHeadingAvail, Mode=OneWay}">
                     <Label Text="Magnetic Heading [°]" />
                     <Label Text="{Binding MagneticNorthHeadingInDegrees, Mode=OneWay}" FontSize="32" />
-                </StackLayout>
+                </VerticalStackLayout>
 
                 <!-- True-north Heading -->
-                <StackLayout WidthRequest="100" HeightRequest="100"
-                             Orientation="Vertical"
-                             Margin="16,16,0,0"
-                             Padding="4"
-                             IsVisible="{Binding IsTrueNorthHeadingAvail, Mode=OneWay}"
-                             BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
+                <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}"
+                                     IsVisible="{Binding IsTrueNorthHeadingAvail, Mode=OneWay}">
                     <Label Text="True North Heading [°]" />
                     <Label Text="{Binding TrueNorthHeadingInDegrees, Mode=OneWay}" FontSize="32" />
-                </StackLayout>
+                </VerticalStackLayout>
 
                 <!-- Sunrise -->
-                <StackLayout WidthRequest="100" HeightRequest="100"
-                             Orientation="Vertical"
-                             Margin="16,16,0,0"
-                             Padding="4"
-                             IsVisible="{Binding IsSunriseSunsetAvail, Mode=OneWay}"
-                             BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
+                <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}"
+                                     IsVisible="{Binding IsSunriseSunsetAvail, Mode=OneWay}">
                     <Label Text="Sunrise" />
                     <Label Text="{Binding SunriseTime, Mode=OneWay}" FontSize="24" />
-                </StackLayout>
+                </VerticalStackLayout>
 
                 <!-- Sunset -->
-                <StackLayout WidthRequest="100" HeightRequest="100"
-                             Orientation="Vertical"
-                             Margin="16,16,0,0"
-                             Padding="4"
-                             IsVisible="{Binding IsSunriseSunsetAvail, Mode=OneWay}"
-                             BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
+                <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}"
+                             IsVisible="{Binding IsSunriseSunsetAvail, Mode=OneWay}">
                     <Label Text="Sunset" />
                     <Label Text="{Binding SunsetTime, Mode=OneWay}" FontSize="24" />
-                </StackLayout>
+                </VerticalStackLayout>
 
                 <!-- Sunrise angle -->
-                <StackLayout WidthRequest="100" HeightRequest="100"
-                             Orientation="Vertical"
-                             Margin="16,16,0,0"
-                             Padding="4"
-                             IsVisible="{Binding IsSunriseDirectionAvail, Mode=OneWay}"
-                             BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
+                <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}"
+                                     IsVisible="{Binding IsSunriseDirectionAvail, Mode=OneWay}">
                     <Label Text="Sunrise angle [°]" />
                     <Label Text="{Binding SunriseDirectionText, Mode=OneWay}" FontSize="24" />
-                </StackLayout>
+                </VerticalStackLayout>
 
                 <!-- Sunset angle -->
-                <StackLayout WidthRequest="100" HeightRequest="100"
-                             Orientation="Vertical"
-                             Margin="16,16,0,0"
-                             Padding="4"
-                             IsVisible="{Binding IsSunsetDirectionAvail, Mode=OneWay}"
-                             BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
+                <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}"
+                                     IsVisible="{Binding IsSunsetDirectionAvail, Mode=OneWay}">
                     <Label Text="Sunset angle [°]" />
                     <Label Text="{Binding SunsetDirectionText, Mode=OneWay}" FontSize="24" />
-                </StackLayout>
+                </VerticalStackLayout>
 
             </FlexLayout>
         </ScrollView>

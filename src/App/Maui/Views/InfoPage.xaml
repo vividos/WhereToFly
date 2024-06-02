@@ -17,16 +17,18 @@
     <ContentPage.Content>
 
         <!-- Stacked carousel and indicator views -->
-        <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand">
+        <Grid RowDefinitions="*,60"
+              VerticalOptions="Fill">
 
             <!-- Carousel showing the info pages -->
             <CarouselView ItemsSource="{Binding Pages}"
+                          Grid.Row="0"
                           Loop="False"
                           IndicatorView="indicatorView"
                           PeekAreaInsets="10"
                           HorizontalOptions="Start"
                           ItemsUpdatingScrollMode="KeepItemsInView"
-                          BackgroundColor="{DynamicResource ManualBackgroundColor}">
+                          Style="{StaticResource ManualCarouselStyle}">
 
                 <!-- Stop on full carousel items -->
                 <CarouselView.ItemsLayout>
@@ -40,18 +42,18 @@
                     <DataTemplate x:DataType="viewmodels:InfoPageViewModel+InfoPageEntryViewModel">
 
                         <!-- Header image and a webview, both scrollable -->
-                        <StackLayout VerticalOptions="Fill" Margin="20">
-                            <ScrollView>
-                                <StackLayout Padding="0,0,0,10">
-                                    <Image Source="{Binding Image, Mode=OneTime}" />
-                                    <controls:AutoResizeWebView HorizontalOptions="FillAndExpand"
-                                                                VerticalOptions="FillAndExpand"
-                                                                HeightRequest="20"
-                                                                Navigating="OnNavigating_WebView"
-                                                                Source="{Binding WebViewSource}" />
-                                </StackLayout>
-                            </ScrollView>
-                        </StackLayout>
+                        <ScrollView VerticalOptions="Fill" Margin="0,10,0,0">
+                            <Grid Padding="0,0,0,10" RowDefinitions="Auto,*">
+                                <Image Source="{Binding Image, Mode=OneTime}"
+                                       Grid.Row="0" />
+                                <controls:AutoResizeWebView HorizontalOptions="Start"
+                                                            VerticalOptions="Start"
+                                                            HeightRequest="20"
+                                                            Navigating="OnNavigating_WebView"
+                                                            Source="{Binding WebViewSource}"
+                                                            Grid.Row="1" />
+                            </Grid>
+                        </ScrollView>
                     </DataTemplate>
 
                 </CarouselView.ItemTemplate>
@@ -59,13 +61,16 @@
 
             <!-- Indicator showing current position in carousel -->
             <IndicatorView x:Name="indicatorView"
+                           Grid.Row="1"
                            IndicatorColor="LightGray"
-                           SelectedIndicatorColor="{DynamicResource PrimaryColor}"
+                           SelectedIndicatorColor="{StaticResource Primary}"
                            IndicatorSize="16"
                            HeightRequest="40"
+                           Margin="0"
+                           Padding="0"
                            HorizontalOptions="Center"
                            VerticalOptions="End" />
-        </StackLayout>
+        </Grid>
 
     </ContentPage.Content>
 </ContentPage>

@@ -43,10 +43,10 @@
                 <BindableLayout.ItemTemplate>
                     <DataTemplate x:DataType="viewmodels:WeatherIconViewModel">
                         <!-- Square layout -->
-                        <StackLayout WidthRequest="{OnPlatform Android=110, UWP=120}"
-                                     HeightRequest="{OnPlatform Android=110, UWP=120}"
-                                     Margin="16,16,0,0"
-                                     BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
+                        <StackLayout WidthRequest="{OnPlatform Android=110, WinUI=120}"
+                                     HeightRequest="{OnPlatform Android=110, WinUI=120}"
+                                     Margin="8,8,0,0"
+                                     Style="{StaticResource ListViewItemStyle}">
 
                             <!-- Recognize taps anywhere in the layout -->
                             <StackLayout.GestureRecognizers>
@@ -59,8 +59,8 @@
                                                            WidthRequest="50" HeightRequest="50" Margin="4,4,0,0" />
 
                             <Label Text="{Binding Title, Mode=OneTime}"
-                                   FontSize="{OnPlatform Android=Medium, UWP=Small}"
-                                   TextColor="{DynamicResource ElementTextColor}"
+                                   FontSize="{OnPlatform Android=Medium, WinUI=Small}"
+                                   TextColor="{AppThemeBinding Light={StaticResource ElementTextColorLight}, Dark={StaticResource ElementTextColorDark}}"
                                    LineBreakMode="WordWrap"
                                    HorizontalTextAlignment="Center" VerticalTextAlignment="Start"
                                    HeightRequest="48" Margin="4,0,4,4"

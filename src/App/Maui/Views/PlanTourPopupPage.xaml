@@ -7,34 +7,38 @@
                      x:Class="WhereToFly.App.Views.PlanTourPopupPage"
                      x:DataType="viewmodels:PlanTourPopupViewModel">
 
-    <!-- popup content -->
-    <StackLayout
-        VerticalOptions="CenterAndExpand"
+    <Grid RowDefinitions="Auto, Auto, 1*, Auto"
+        VerticalOptions="Center"
         HorizontalOptions="Center"
-        WidthRequest="320"
+        WidthRequest="360"
         HeightRequest="400"
-        BackgroundColor="{DynamicResource PopupPageBackgroundColor}"
+        RowSpacing="10"
         Padding="20">
 
-        <!-- caption -->
-        <Label Text="Plan tour" FontSize="Large" VerticalOptions="Start" />
+        <!-- Caption -->
+        <Label Grid.Row="0"
+               Text="Plan tour"
+               FontSize="Large" />
 
         <!-- Message to show that more locations are needed for tour planning -->
-        <StackLayout Padding="8" Margin="0"
-                     BackgroundColor="{DynamicResource WarningBandBackgroundColor}"
-                     HorizontalOptions="FillAndExpand"
-                     IsVisible="{Binding Path=ShowWarningForMoreLocations, Mode=OneWay}">
-            <Label Text="At least two locations are needed for tour planning" FontSize="Medium"
-                   TextColor="{DynamicResource WarningBandTextColor}"
+        <VerticalStackLayout Grid.Row="1"
+                             Padding="8"
+                             BackgroundColor="{StaticResource WarningBandBackgroundColor}"
+                             HorizontalOptions="Fill"
+                             IsVisible="{Binding Path=ShowWarningForMoreLocations, Mode=OneWay}">
+            <Label Text="At least two locations are needed for tour planning"
+                   FontSize="Medium"
+                   TextColor="{StaticResource WarningBandTextColor}"
                    AutomationId="ShowWarningForMoreLocationsLabel" />
-        </StackLayout>
+        </VerticalStackLayout>
 
         <!-- Tour plan location list -->
-        <CollectionView ItemsSource="{Binding Path=PlanTourList, Mode=OneWay}"
+        <CollectionView Grid.Row="2"
+                        ItemsSource="{Binding Path=PlanTourList, Mode=OneWay}"
                         ItemSizingStrategy="MeasureFirstItem"
                         SelectionMode="None"
-                        VerticalOptions="FillAndExpand"
-                        HorizontalOptions="StartAndExpand"
+                        VerticalOptions="Fill"
+                        HorizontalOptions="Start"
                         AutomationId="PlanTourList">
 
             <CollectionView.ItemsLayout>
@@ -44,54 +48,55 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="viewmodels:PlanTourListEntryViewModel">
                     <!-- Template for a single entry -->
-                    <Grid BackgroundColor="{DynamicResource ListViewItemBackgroundColor}"
-                          HeightRequest="90" Margin="8,4">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="40" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
+                    <Grid Style="{StaticResource ListViewItemStyle}"
+                          RowDefinitions="Auto, Auto"
+                          ColumnDefinitions="40, Auto"
+                          HeightRequest="90">
 
                         <!-- Type image -->
                         <controls:SvgImage Source="{Binding TypeImageSource, Mode=OneWay}"
-                                           TintColor="{DynamicResource SvgImageTintColorDark}"
-                                           WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
+                                           WidthRequest="32"
+                                           HeightRequest="32"
+                                           Margin="4,4,0,0"
                                            HorizontalOptions="Start" VerticalOptions="Center"
                                            Grid.Row="0" Grid.Column="0" />
 
                         <!-- Name -->
                         <Label Text="{Binding Name, Mode=OneTime}"
-                               Style="{DynamicResource ListItemTextStyle}"
+                               Style="{StaticResource ListItemTextStyle}"
                                FontSize="Medium"
                                LineBreakMode="TailTruncation"
-                               HorizontalOptions="Fill" VerticalOptions="Center"
+                               HorizontalOptions="Fill"
+                               VerticalOptions="Center"
                                Grid.Row="0" Grid.Column="1" />
 
                         <!-- Up/down buttons -->
-                        <StackLayout Orientation="Horizontal"
-                                     HorizontalOptions="Fill" VerticalOptions="Center"
-                                     HeightRequest="40"
-                                     Grid.Row="1" Grid.Column="1">
+                        <HorizontalStackLayout HorizontalOptions="Fill"
+                                               VerticalOptions="Center"
+                                               HeightRequest="40"
+                                               Spacing="4"
+                                               Grid.Row="1" Grid.Column="1">
                             <Button Text="Up" WidthRequest="80" Command="{Binding MoveUpCommand}" />
                             <Button Text="Down" WidthRequest="80" Command="{Binding MoveDownCommand}" />
                             <Button Text="X" WidthRequest="60" Command="{Binding RemoveCommand}" />
-                        </StackLayout>
+                        </HorizontalStackLayout>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
 
         <!-- Buttons -->
-        <StackLayout Orientation="Horizontal">
-            <Button Text="Close" Command="{Binding CloseCommand}"
-                    HorizontalOptions="FillAndExpand" VerticalOptions="Center" />
-            <Button Text="Plan Tour" Command="{Binding PlanTourCommand}"
-                    HorizontalOptions="FillAndExpand" VerticalOptions="Center" />
-        </StackLayout>
+        <HorizontalStackLayout Grid.Row="3"
+                               Spacing="4"
+                               HorizontalOptions="Center">
+            <Button Text="Close"
+                    Command="{Binding CloseCommand}"
+                    WidthRequest="100" />
+            <Button Text="Plan Tour"
+                    Command="{Binding PlanTourCommand}"
+                    WidthRequest="100" />
+        </HorizontalStackLayout>
 
-    </StackLayout>
+    </Grid>
 
 </views:BasePopupPage>

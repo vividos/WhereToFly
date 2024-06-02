@@ -9,34 +9,32 @@
                      x:TypeArguments="geo:Track"
                      x:DataType="viewmodels:SetTrackInfoPopupViewModel">
 
-    <!-- popup content -->
-    <StackLayout
-        VerticalOptions="CenterAndExpand"
+    <VerticalStackLayout
+        VerticalOptions="Center"
         HorizontalOptions="Center"
-        WidthRequest="320"
-        BackgroundColor="{DynamicResource PopupPageBackgroundColor}"
+        WidthRequest="360"
+        Spacing="10"
         Padding="20">
 
-        <!-- caption -->
+        <!-- Caption -->
         <Label Text="Set track infos" FontSize="Large" />
 
         <!-- Entry for track name -->
         <Label Text="Name" FontSize="Medium" />
         <Entry Placeholder="enter track name"
                Text="{Binding Path=TrackName, Mode=TwoWay}"
-               BackgroundColor="{DynamicResource ElementOnPopupPageBackgroundColor}" />
+               Style="{StaticResource EntryOnPopupPageStyle}" />
 
         <!-- Colors to choose from -->
         <Label Text="Color" FontSize="Medium" Margin="0, 10, 0, 0" />
         <controls:ColorPickerView x:Name="colorPickerLayout"
-                                  SelectionBorderColor="{DynamicResource BorderSelectionColor}"
-                                  SelectedColor="{Binding SelectedTrackColor}"
-                                  BackgroundColor="{DynamicResource PageBackgroundColor}" />
+                                  Style="{StaticResource ColorPickerStyle}"
+                                  SelectedColor="{Binding SelectedTrackColor}" />
 
         <!-- Button to set track infos -->
         <Button Text="OK"
                 Clicked="OnClickedSetTrackInfoButton"
                 AutomationId="SetTrackInfoButton" />
-    </StackLayout>
+    </VerticalStackLayout>
 
 </views:BasePopupPage>

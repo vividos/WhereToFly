@@ -8,40 +8,39 @@
                      x:TypeArguments="models:WeatherIconDescription"
                      x:DataType="viewmodels:AddWeatherLinkPopupViewModel">
 
-    <!-- popup content -->
-    <StackLayout
-        VerticalOptions="CenterAndExpand"
+    <VerticalStackLayout
+        VerticalOptions="Center"
         HorizontalOptions="Center"
-        WidthRequest="320"
-        BackgroundColor="{DynamicResource PopupPageBackgroundColor}"
+        WidthRequest="360"
+        Spacing="10"
         Padding="20">
 
-        <!-- caption -->
+        <!-- Caption -->
         <Label Text="Add weather link" FontSize="Large" />
 
         <!-- Entry for name -->
         <Label Text="Name" FontSize="Medium" />
         <Entry Placeholder="enter name for link"
                Text="{Binding Path=Name, Mode=TwoWay}"
-               BackgroundColor="{DynamicResource ElementOnPopupPageBackgroundColor}" />
+               Style="{StaticResource EntryOnPopupPageStyle}" />
 
         <!-- Entry for weblink URL -->
         <Label Text="Link" FontSize="Medium" />
         <Entry Placeholder="enter weather link"
                Text="{Binding Path=WebLink, Mode=TwoWay}"
-               BackgroundColor="{DynamicResource ElementOnPopupPageBackgroundColor}" />
+               Style="{StaticResource EntryOnPopupPageStyle}" />
 
         <!-- Group selection -->
         <Label Text="Group" FontSize="Medium" />
         <Picker ItemsSource="{Binding GroupsList, Mode=OneTime}"
                 SelectedItem="{Binding SelectedGroup, Mode=TwoWay}"
-                BackgroundColor="{DynamicResource ElementOnPopupPageBackgroundColor}" />
+                Style="{StaticResource PickerOnPopupPageStyle}" />
 
         <!-- Button to add web link -->
         <Button Text="Add weather link"
                 IsEnabled="{Binding IsValidWebLink, Mode=OneWay}"
                 Clicked="OnClickedAddWeatherLinkButton"
                 AutomationId="AddWeatherLinkButton" />
-    </StackLayout>
+    </VerticalStackLayout>
 
 </views:BasePopupPage>

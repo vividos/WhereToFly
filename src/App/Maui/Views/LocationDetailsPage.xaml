@@ -40,50 +40,45 @@
         <ScrollView Orientation="Vertical">
 
             <!-- stack layout with location details grid and details web view -->
-            <StackLayout Orientation="Vertical">
+            <VerticalStackLayout>
 
                 <!-- Grid with all location details -->
-                <Grid WidthRequest="350" MinimumWidthRequest="350"
-                      VerticalOptions="Start" HorizontalOptions="Center" Padding="8"
-                  ColumnSpacing="16" RowSpacing="16">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="1*" />
-                    </Grid.ColumnDefinitions>
+                <Grid WidthRequest="350"
+                      MinimumWidthRequest="350"
+                      VerticalOptions="Start"
+                      HorizontalOptions="Center"
+                      Padding="8"
+                      ColumnSpacing="16"
+                      RowSpacing="16"
+                      RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+                      ColumnDefinitions="1*,1*">
 
-                    <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                    <HorizontalStackLayout Grid.Row="0"
+                                           Grid.Column="0"
+                                           Grid.ColumnSpan="2">
 
                         <!-- Type image -->
                         <controls:SvgImage Source="{Binding TypeImageSource, Mode=OneWay}"
-                                           TintColor="{DynamicResource SvgImageTintColorDark}"
                                            WidthRequest="64" HeightRequest="64"
                                            HorizontalOptions="Start" VerticalOptions="Center" />
 
                         <!-- Takeoff directions -->
-                        <controls:TakeoffDirectionsView IsVisible="{Binding IsTakeoffDirectionsVisible, Mode=OneTime}"
-                                                    WidthRequest="64" HeightRequest="64"
-                                                    HorizontalOptions="Start" VerticalOptions="Center"
-                                                    Source="{Binding TakeoffDirections, Mode=OneTime}"
-                                                    IsReadOnly="True"
-                                                    BackgroundColor="Transparent"
-                                                    CompassBorderColor="Black"
-                                                    CompassBackgroundColor="DarkGray"
-                                                    CompassColor="Green"
-                                                    ShowLabels="True" />
+                        <controls:TakeoffDirectionsView
+                            IsVisible="{Binding IsTakeoffDirectionsVisible, Mode=OneTime}"
+                            WidthRequest="64" HeightRequest="64"
+                            HorizontalOptions="Start" VerticalOptions="Center"
+                            Source="{Binding TakeoffDirections, Mode=OneTime}"
+                            IsReadOnly="True"
+                            BackgroundColor="Transparent"
+                            ShowLabels="True"
+                            Style="{StaticResource TakeoffDirectionsStyle}" />
 
                         <!-- Name -->
                         <Label Text="{Binding Name, Mode=OneTime}"
-                           FontSize="Large" FontAttributes="Bold"
-                           VerticalOptions="Center" />
-                    </StackLayout>
+                               FontSize="Large"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center" />
+                    </HorizontalStackLayout>
 
                     <!-- Type -->
                     <Label Grid.Row="1" Grid.Column="0" Text="Type" />
@@ -108,7 +103,7 @@
                     <!-- Internet link -->
                     <Label Grid.Row="6" Grid.Column="0" Text="Internet link" />
                     <Label Grid.Row="6" Grid.Column="1" Text="{Binding InternetLink, Mode=OneTime}"
-                           TextColor="{DynamicResource AccentColor}"
+                           TextColor="{StaticResource AccentColor}"
                            TextDecorations="Underline">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding InternetLinkTappedCommand}" />
@@ -121,7 +116,7 @@
                                             HeightRequest="200"
                                             Source="{Binding DescriptionWebViewSource}" />
 
-            </StackLayout>
+            </VerticalStackLayout>
         </ScrollView>
 
     </ContentPage.Content>

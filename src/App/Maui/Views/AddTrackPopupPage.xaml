@@ -9,22 +9,21 @@
                      x:TypeArguments="geo:Track"
                      x:DataType="viewmodels:AddTrackPopupViewModel">
 
-    <!-- popup content -->
-    <StackLayout
-        VerticalOptions="CenterAndExpand"
+    <VerticalStackLayout
+        VerticalOptions="Center"
         HorizontalOptions="Center"
-        WidthRequest="320"
-        BackgroundColor="{DynamicResource PopupPageBackgroundColor}"
+        WidthRequest="360"
+        Spacing="10"
         Padding="20">
 
-        <!-- caption -->
+        <!-- Caption -->
         <Label Text="Add track" FontSize="Large" />
 
         <!-- Entry for track name -->
         <Label Text="Name" FontSize="Medium" />
         <Entry Placeholder="enter track name"
                Text="{Binding Path=TrackName, Mode=TwoWay}"
-               BackgroundColor="{DynamicResource ElementOnPopupPageBackgroundColor}" />
+               Style="{StaticResource EntryOnPopupPageStyle}" />
 
         <!-- Picker for track point interval -->
         <Label Text="Track point time interval" FontSize="Medium"
@@ -33,43 +32,47 @@
                 IsVisible="{Binding IsTrackPointIntervalPickerVisible, Mode=OneWay}"
                 ItemsSource="{Binding Path=TrackPointIntervalList, Mode=OneTime}"
                 SelectedItem="{Binding Path=TrackPointIntervalText, Mode=TwoWay}"
-                BackgroundColor="{DynamicResource ElementOnPopupPageBackgroundColor}" />
+                Style="{StaticResource PickerOnPopupPageStyle}" />
 
         <!-- Switch to select if it's a flight track -->
-        <StackLayout Orientation="Horizontal" Margin="0, 10, 0, 0" >
+        <StackLayout Orientation="Horizontal">
             <Switch IsToggled="{Binding IsFlightTrack, Mode=TwoWay}"
                     AutomationId="IsFlightTrackSwitch" />
-            <Label Text="Track is a flight" FontSize="Medium" />
+            <Label Text="Track is a flight"
+                   VerticalTextAlignment="Center"
+                   FontSize="Medium" />
         </StackLayout>
 
         <!-- Track offset -->
-        <Label Text="Track offset" FontSize="Medium" Margin="0, 10, 0, 0"
+        <Label Text="Track offset"
+               FontSize="Medium"
                IsVisible="{Binding IsTrackOffsetPickerVisible, Mode=OneWay}" />
-        <StackLayout Orientation="Horizontal" Margin="0, 10, 0, 0"
-                     IsVisible="{Binding IsTrackOffsetPickerVisible, Mode=OneWay}">
+        <HorizontalStackLayout IsVisible="{Binding IsTrackOffsetPickerVisible, Mode=OneWay}">
             <Entry Text="{Binding Path=TrackOffset, Mode=TwoWay}"
                    Keyboard="Numeric"
                    ClearButtonVisibility="Never"
-                   BackgroundColor="{DynamicResource ElementOnPopupPageBackgroundColor}"
+                   Style="{StaticResource EntryOnPopupPageStyle}"
                    WidthRequest="70" />
-            <Label Text="meter" VerticalTextAlignment="Center" />
+            <Label Text="meter"
+                   VerticalTextAlignment="Center" />
             <Stepper Value="{Binding Path=TrackOffset, Mode=OneWayToSource}"
-                     Minimum="-100" Maximum="100" Increment="10" />
-        </StackLayout>
+                     Minimum="-100"
+                     Maximum="100"
+                     Increment="10" />
+        </HorizontalStackLayout>
 
         <!-- Colors to choose from -->
-        <Label Text="Color" FontSize="Medium" Margin="0, 10, 0, 0"
+        <Label Text="Color" FontSize="Medium"
                IsVisible="{Binding IsColorPickerVisible, Mode=OneWay}" />
         <controls:ColorPickerView x:Name="colorPickerLayout"
-                                  SelectionBorderColor="{DynamicResource BorderSelectionColor}"
+                                  Style="{StaticResource ColorPickerStyle}"
                                   SelectedColor="{Binding SelectedTrackColor}"
-                                  BackgroundColor="{DynamicResource PageBackgroundColor}"
                                   IsVisible="{Binding IsColorPickerVisible, Mode=OneWay}" />
 
         <!-- Button to add track -->
         <Button Text="Add track"
                 Clicked="OnClickedAddTrackButton"
                 AutomationId="AddTrackButton" />
-    </StackLayout>
+    </VerticalStackLayout>
 
 </views:BasePopupPage>

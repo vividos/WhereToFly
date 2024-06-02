@@ -23,70 +23,87 @@
                      AutomationId="DeleteLocationList" />
     </ContentPage.ToolbarItems>
 
-    <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+    <Grid RowDefinitions="Auto, Auto, Auto, *">
 
         <!-- Filter controls -->
-        <StackLayout Orientation="Horizontal">
-            <Label Text="Filter" VerticalTextAlignment="Center" />
-            <Entry Text="{Binding Path=FilterText, Mode=TwoWay}"
+        <Grid Grid.Row="0"
+              ColumnDefinitions="Auto, 1*, Auto"
+              Margin="8,4">
+
+            <!-- Filter edit box -->
+            <Label Grid.Column="0"
+                   Text="Filter"
+                   VerticalTextAlignment="Center" />
+            <Entry Grid.Column="1"
+                   Text="{Binding Path=FilterText, Mode=TwoWay}"
                    Placeholder="Type here to filter"
                    HorizontalOptions="FillAndExpand"
                    AutomationId="FilterText">
                 <Entry.Behaviors>
-                    <toolkit:UserStoppedTypingBehavior Command="{Binding FindTextEnteredCommand}"
-                                                       StoppedTypingTimeThreshold="1000"
-                                                       ShouldDismissKeyboardAutomatically="False" />
+                    <toolkit:UserStoppedTypingBehavior
+                        Command="{Binding FindTextEnteredCommand}"
+                        StoppedTypingTimeThreshold="1000"
+                        ShouldDismissKeyboardAutomatically="False" />
                 </Entry.Behaviors>
             </Entry>
 
             <!-- Takeoff directions view -->
-            <controls:TakeoffDirectionsView IsVisible="True"
-                                            WidthRequest="40" HeightRequest="40"
-                                            HorizontalOptions="End" VerticalOptions="Center"
-                                            Source="{Binding FilterTakeoffDirections, Mode=TwoWay}"
-                                            IsReadOnly="True"
-                                            TouchCommand="{Binding FilterTakeoffDirectionsCommand}"
-                                            BackgroundColor="Transparent"
-                                            CompassBorderColor="Black"
-                                            CompassBackgroundColor="DarkGray"
-                                            CompassColor="Green"
-                                            ShowLabels="False" />
-        </StackLayout>
+            <controls:TakeoffDirectionsView
+                Grid.Column="2"
+                IsVisible="True"
+                WidthRequest="40"
+                HeightRequest="40"
+                Source="{Binding FilterTakeoffDirections, Mode=TwoWay}"
+                IsReadOnly="True"
+                TouchCommand="{Binding FilterTakeoffDirectionsCommand}"
+                BackgroundColor="Transparent"
+                ShowLabels="False"
+                Style="{StaticResource TakeoffDirectionsStyle}" />
+        </Grid>
 
-        <!-- activity indicator to show while refreshing list -->
-        <StackLayout Padding="4" BackgroundColor="{DynamicResource LoadingBandBackgroundColor}"
-                     HeightRequest="32"
-                     HorizontalOptions="FillAndExpand"
-                     Orientation="Horizontal"
-                     IsVisible="{Binding IsListRefreshActive, Mode=OneWay}" >
-            <ActivityIndicator IsRunning="True" WidthRequest="20" />
+        <!-- Activity indicator to show while refreshing list -->
+        <HorizontalStackLayout Grid.Row="1"
+                               Padding="8"
+                               BackgroundColor="{StaticResource LoadingBandBackgroundColor}"
+                               HorizontalOptions="Fill"
+                               IsVisible="{Binding IsListRefreshActive, Mode=OneWay}" >
+            <ActivityIndicator IsRunning="True"
+                               Color="{StaticResource LoadingBandActivityIndicatorColor}"
+                               WidthRequest="20"
+                               HeightRequest="20"
+                               Margin="0,0,8,0" />
             <Label Text="List is being refreshed"
-                   VerticalTextAlignment="Center" FontSize="Medium"
-                   TextColor="{DynamicResource LoadingBandTextColor}" />
-        </StackLayout>
+                   VerticalTextAlignment="Center"
+                   FontSize="Medium"
+                   TextColor="{StaticResource LoadingBandTextColor}" />
+        </HorizontalStackLayout>
 
         <!-- Message to show when list is empty -->
-        <StackLayout Padding="4" BackgroundColor="{DynamicResource MessageBandBackgroundColor}"
-                     HeightRequest="32"
-                     HorizontalOptions="FillAndExpand"
-                     Orientation="Horizontal"
-                     IsVisible="{Binding IsListEmpty, Mode=OneWay}" >
+        <HorizontalStackLayout Grid.Row="2"
+                               Padding="8"
+                               BackgroundColor="{StaticResource MessageBandBackgroundColor}"
+                               HorizontalOptions="Fill"
+                               IsVisible="{Binding IsListEmpty, Mode=OneWay}" >
             <Label Text="There are no locations in the list."
-                   VerticalTextAlignment="Center" FontSize="Medium"
-                   TextColor="{DynamicResource MessageBandTextColor}" />
-        </StackLayout>
+                   VerticalTextAlignment="Center"
+                   FontSize="Medium"
+                   TextColor="{StaticResource MessageBandTextColor}" />
+        </HorizontalStackLayout>
 
         <!-- Message to show when all locations were filtered out -->
-        <StackLayout Padding="8" BackgroundColor="{DynamicResource WarningBandBackgroundColor}"
-                     HorizontalOptions="FillAndExpand"
-                     IsVisible="{Binding Path=AreAllLocationsFilteredOut, Mode=OneWay}">
+        <VerticalStackLayout Grid.Row="2"
+                             Padding="8"
+                             BackgroundColor="{StaticResource WarningBandBackgroundColor}"
+                             HorizontalOptions="Fill"
+                             IsVisible="{Binding Path=AreAllLocationsFilteredOut, Mode=OneWay}">
             <Label Text="All locations filtered out" FontSize="Medium"
-                   TextColor="{DynamicResource WarningBandTextColor}"
+                   TextColor="{StaticResource WarningBandTextColor}"
                    AutomationId="AllFilteredOutLabel" />
-        </StackLayout>
+        </VerticalStackLayout>
 
         <!-- Location list -->
-        <CollectionView x:Name="locationsListView"
+        <CollectionView Grid.Row="3"
+                        x:Name="locationsListView"
                         ItemsSource="{Binding Path=LocationList, Mode=OneWay}"
                         SelectionMode="Single"
                         SelectedItem="{Binding SelectedLocation}"
@@ -94,64 +111,71 @@
                         AutomationId="LocationList">
 
             <CollectionView.ItemsLayout>
-                <LinearItemsLayout Orientation="Vertical" ItemSpacing="4" />
+                <LinearItemsLayout Orientation="Vertical"
+                                   ItemSpacing="0" />
             </CollectionView.ItemsLayout>
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="viewmodels:LocationListEntryViewModel">
                     <!-- Template for a single item -->
-                    <Grid RowDefinitions="Auto,Auto,Auto"
-                          ColumnDefinitions="Auto,Auto,1*,40"
-                          BackgroundColor="{DynamicResource ListViewItemBackgroundColor}"
-                          HeightRequest="{OnPlatform Android=85, UWP=105}"
-                          Margin="8,4">
+
+                    <Grid HeightRequest="{OnPlatform Android=65, WinUI=85}"
+                          Margin="4,2"
+                          RowDefinitions="Auto, Auto, Auto"
+                          ColumnDefinitions="Auto, Auto, 1*, 40"
+                          Style="{StaticResource ListViewItemStyle}">
 
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding ItemTappedCommand}"
                                                   NumberOfTapsRequired="1" />
                         </Grid.GestureRecognizers>
 
-                        <!-- Type image -->
+                        <!-- Location type image -->
                         <controls:SvgImage Source="{Binding TypeImageSource, Mode=OneWay}"
-                                           TintColor="{DynamicResource SvgImageTintColorDark}"
-                                           WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
-                                           HorizontalOptions="Start" VerticalOptions="Center"
-                                           Grid.Column="0" Grid.RowSpan="3" />
+                                           WidthRequest="32"
+                                           HeightRequest="32"
+                                           Margin="4"
+                                           HorizontalOptions="Start"
+                                           VerticalOptions="Center"
+                                           Grid.Column="0"
+                                           Grid.RowSpan="3" />
 
                         <!-- Takeoff directions -->
-                        <controls:TakeoffDirectionsView Grid.Column="1" Grid.RowSpan="3"
-                                                        IsVisible="{Binding IsTakeoffDirectionsVisible, Mode=OneTime}"
-                                                        WidthRequest="40" HeightRequest="40"
-                                                        HorizontalOptions="Start" VerticalOptions="Center"
-                                                        Source="{Binding TakeoffDirections, Mode=OneTime}"
-                                                        IsReadOnly="True"
-                                                        BackgroundColor="Transparent"
-                                                        CompassBorderColor="Black"
-                                                        CompassBackgroundColor="DarkGray"
-                                                        CompassColor="Green"
-                                                        ShowLabels="False" />
+                        <controls:TakeoffDirectionsView
+                            Grid.Column="1" Grid.RowSpan="3"
+                            IsVisible="{Binding IsTakeoffDirectionsVisible, Mode=OneTime}"
+                            WidthRequest="40" HeightRequest="40"
+                            Source="{Binding TakeoffDirections, Mode=OneTime}"
+                            IsReadOnly="True"
+                            BackgroundColor="Transparent"
+                            ShowLabels="False"
+                            Style="{StaticResource TakeoffDirectionsStyle}" />
 
                         <!-- Details -->
                         <Label Text="{Binding Name}"
-                               Style="{DynamicResource ListItemTextStyle}"
+                               Style="{StaticResource ListItemTextStyle}"
                                FontSize="Medium"
                                LineBreakMode="TailTruncation"
                                Grid.Column="2" Grid.Row="0" />
                         <Label Text="{Binding DetailInfos}"
-                               Style="{DynamicResource ListItemDetailTextStyle}"
+                               Style="{StaticResource ListItemDetailTextStyle}"
                                FontSize="Small"
                                LineBreakMode="TailTruncation"
                                Grid.Column="2" Grid.Row="1" />
                         <Label Text="{Binding Description}"
-                               Style="{DynamicResource ListItemDetailTextStyle}"
+                               Style="{StaticResource ListItemDetailTextStyle}"
                                FontSize="Small"
                                LineBreakMode="TailTruncation"
-                               Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" />
+                               Grid.Column="2"
+                               Grid.Row="2"
+                               Grid.ColumnSpan="2" />
 
                         <!-- Context menu for an item -->
-                        <controls:ContextMenu Grid.Column="3" Grid.RowSpan="2"
+                        <controls:ContextMenu Grid.Column="3"
+                                              Grid.RowSpan="2"
                                               Caption="Location"
-                                              WidthRequest="40" HeightRequest="40"
+                                              WidthRequest="40"
+                                              HeightRequest="40"
                                               HorizontalOptions="Center"
                                               VerticalOptions="Center">
                             <controls:ContextMenu.Items>
@@ -179,5 +203,5 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-    </StackLayout>
+    </Grid>
 </ContentPage>

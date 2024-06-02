@@ -5,16 +5,14 @@
                x:Class="WhereToFly.App.Views.WaitingPopupPage">
 
     <!-- Popup page showing a waiting message and an activity indicator -->
-    <VerticalStackLayout VerticalOptions="Center"
-                         HorizontalOptions="Center"
-                         HeightRequest="400"
-                         WidthRequest="400"
-                         BackgroundColor="{DynamicResource PageBackgroundColor}"
-                         Padding="16"
-                         Spacing="16">
+    <Grid RowDefinitions="Auto, Auto"
+          VerticalOptions="Center"
+          HorizontalOptions="Center"
+          WidthRequest="320"
+          RowSpacing="10"
+          Padding="20">
 
-        <HorizontalStackLayout HorizontalOptions="Center"
-                               Margin="16"
+        <HorizontalStackLayout Grid.Row="0" HorizontalOptions="Center"
                                Spacing="16">
 
             <ActivityIndicator IsRunning="True"
@@ -28,18 +26,18 @@
                    Text="Waiting..."
                    FontSize="Medium"
                    VerticalOptions="Start"
-                   HorizontalOptions="Center"
-                   Padding="0,0,32,0"/>
+                   HorizontalOptions="Center" />
 
         </HorizontalStackLayout>
 
         <!-- Cancel button -->
-        <Button x:Name="cancelButton"
+        <Button Grid.Row="1"
+                x:Name="cancelButton"
                 WidthRequest="100"
                 Text="Cancel"
                 IsVisible="false"
                 Clicked="OnClickedCancelButton"/>
 
-    </VerticalStackLayout>
+    </Grid>
 
 </toolkit:Popup>

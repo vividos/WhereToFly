@@ -83,8 +83,8 @@ namespace WhereToFly.App.Views
             this.mapView = new MapView.MapView
             {
                 LogErrorAction = App.LogError,
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.Fill,
+                HorizontalOptions = LayoutOptions.Fill,
                 AutomationId = "ExploreMapWebView",
                 NearbyPoiService = nearbyPoiService,
             };

@@ -21,6 +21,7 @@
                          Padding="16,0,0,16">
                 <!-- app icon -->
                 <controls:SvgImage Source="{Binding AppIcon, Mode=OneWay}"
+                                   TintColor="{x:Null}"
                                    WidthRequest="48" HeightRequest="48" VerticalOptions="Start" />
 
                 <!-- app name and version -->
@@ -35,7 +36,7 @@
                             SelectedItem="{Binding SelectedMenuItem}"
                             SelectionChangedCommand="{Binding MenuItemSelectedCommand}"
                             SelectionMode="Single"
-                            BackgroundColor="{DynamicResource MenuBackgroundColor}"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource MenuBackgroundColorLight}, Dark={StaticResource MenuBackgroundColorDark}}"
                             VerticalOptions="FillAndExpand"
                             HorizontalOptions="StartAndExpand">
                 <CollectionView.ItemTemplate>
@@ -49,7 +50,6 @@
 
                             <!-- menu item icon -->
                             <controls:SvgImage Source="{Binding ImageSource, Mode=OneWay}"
-                                               TintColor="{DynamicResource SvgImageTintColorDark}"
                                                InputTransparent="True"
                                                WidthRequest="32" HeightRequest="32"
                                                HorizontalOptions="Center" VerticalOptions="Center" />

@@ -38,7 +38,7 @@
                         VerticalOptions="StartAndExpand"
                         ItemsSource="{Binding LocationTypeList, Mode=OneWay}"
                         SelectedItem="{Binding Type}"
-                        BackgroundColor="{DynamicResource ElementOnPopupPageBackgroundColor}" />
+                        Style="{StaticResource PickerOnPopupPageStyle}" />
 
                 <!-- Latitude -->
                 <Label Grid.Row="2" Grid.Column="0" Text="Latitude" />
@@ -67,8 +67,7 @@
             <!-- Description editor -->
             <Label Text="Description" HorizontalOptions="Start" VerticalOptions="Start" />
             <Editor HorizontalOptions="Fill" VerticalOptions="FillAndExpand"
-                    Text="{Binding Description}"
-                    BackgroundColor="{DynamicResource ElementBackgroundColor}" />
+                    Text="{Binding Description}" />
 
         </StackLayout>
 

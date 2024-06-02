@@ -38,9 +38,9 @@
 
                 <!-- Alptherm section header -->
                 <Label Grid.Row="1" Grid.ColumnSpan="2"
-                   FontSize="Large" Text="Alptherm" Padding="4"
-                   BackgroundColor="{DynamicResource SectionHeaderBackgroundColor}"
-                   HorizontalOptions="FillAndExpand" />
+                       FontSize="Large" Text="Alptherm" Padding="4"
+                       Style="{StaticResource SectionHeaderStyle}"
+                       HorizontalOptions="FillAndExpand" />
 
                 <!-- Alptherm username -->
                 <Label Grid.Row="2" Grid.Column="0" FontSize="Medium" Text="Username" />

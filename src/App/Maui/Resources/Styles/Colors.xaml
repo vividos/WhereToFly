@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <Color x:Key="Primary">#2F299E</Color>
-    <Color x:Key="Secondary">#2F299E</Color>
+    <Color x:Key="Secondary">#1D1961</Color>
     <Color x:Key="Tertiary">#2F299E</Color>
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>
@@ -40,5 +40,68 @@
     <Color x:Key="Blue100Accent">#3E8EED</Color>
     <Color x:Key="Blue200Accent">#72ACF1</Color>
     <Color x:Key="Blue300Accent">#A7CBF6</Color>
+
+    <!-- Where-to-fly specific colors -->
+
+    <Color x:Key="AccentColor">#2F299E</Color>
+    <Color x:Key="AccentColorLight">#2F299E</Color>
+    <Color x:Key="AccentColorDark">#6059d4</Color>
+
+    <!-- Background colors -->
+    <Color x:Key="PageBackgroundColorLight">#F5F5F5</Color>
+    <Color x:Key="PageBackgroundColorDark">#202124</Color>
+    <Color x:Key="PopupPageBackgroundColorLight">#F5F5F5</Color>
+    <Color x:Key="PopupPageBackgroundColorDark">#606164</Color>
+    <Color x:Key="MenuBackgroundColorLight">LightGray</Color>
+    <Color x:Key="MenuBackgroundColorDark">Black</Color>
+    <Color x:Key="SectionHeaderBackgroundColorLight">LightGray</Color>
+    <Color x:Key="SectionHeaderBackgroundColorDark">#2B3032</Color>
+    <Color x:Key="ManualBackgroundColorLight">#d0d0d0</Color>
+    <Color x:Key="ManualBackgroundColorDark">#3f484c</Color>
+
+    <!-- Colors for green message band -->
+    <Color x:Key="MessageBandBackgroundColor">LightGreen</Color>
+    <Color x:Key="MessageBandTextColor">Black</Color>
+
+    <!-- Colors for yellow warning band -->
+    <Color x:Key="WarningBandBackgroundColor">Yellow</Color>
+    <Color x:Key="WarningBandTextColor">Black</Color>
+
+    <!-- Colors for light blue loading band -->
+    <Color x:Key="LoadingBandBackgroundColor">LightBlue</Color>
+    <Color x:Key="LoadingBandActivityIndicatorColor">Black</Color>
+    <Color x:Key="LoadingBandTextColor">Black</Color>
+
+    <!-- List view colors -->
+    <Color x:Key="ListViewItemBackgroundColorLight">#e0e0e0</Color>
+    <Color x:Key="ListViewItemBackgroundColorDark">#404040</Color>
+
+    <!-- Menu item colors -->
+    <Color x:Key="MenuItemNormalForegroundColorLight">#212121</Color>
+    <Color x:Key="MenuItemNormalForegroundColorDark">White</Color>
+    <Color x:Key="MenuItemDestructiveBackgroundColorLight">Red</Color>
+    <Color x:Key="MenuItemDestructiveBackgroundColorDark">Red</Color>
+    <Color x:Key="MenuItemDestructiveForegroundColorLight">White</Color>
+    <Color x:Key="MenuItemDestructiveForegroundColorDark">White</Color>
+    <Color x:Key="MenuItemDisabledBackgroundColorLight">#9b9b9b</Color>
+    <Color x:Key="MenuItemDisabledBackgroundColorDark">#2B3032</Color>
+    <Color x:Key="MenuItemDisabledForegroundColorLight">#2B3032</Color>
+    <Color x:Key="MenuItemDisabledForegroundColorDark">#9b9b9b</Color>
+
+    <!-- Colors for different elements -->
+    <Color x:Key="ElementTextColorLight">#1C1C1C</Color>
+    <Color x:Key="ElementTextColorDark">#ceced3</Color>
+    <Color x:Key="ElementOnPopupPageBackgroundColorLight">#F5F5F5</Color>
+    <Color x:Key="ElementOnPopupPageBackgroundColorDark">#404144</Color>
+    <Color x:Key="SvgImageTintColorLight">Black</Color>
+    <Color x:Key="SvgImageTintColorDark">White</Color>
+    <Color x:Key="ColorPickerBorderSelectionColorLight">Black</Color>
+    <Color x:Key="ColorPickerBorderSelectionColorDark">White</Color>
+    <Color x:Key="CompassForegroundColorLight">#2F299E</Color>
+    <Color x:Key="CompassForegroundColorDark">DeepSkyBlue</Color>
+    <Color x:Key="CompassTargetDirectionColorLight">#00ffd5</Color>
+    <Color x:Key="CompassTargetDirectionColorDark">#00ffd5</Color>
+    <Color x:Key="CompassSunDirectionColorLight">#ffc000</Color>
+    <Color x:Key="CompassSunDirectionColorDark">#ffea00</Color>
 
 </ResourceDictionary>

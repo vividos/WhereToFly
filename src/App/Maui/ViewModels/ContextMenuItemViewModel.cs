@@ -58,7 +58,7 @@ namespace WhereToFly.App.ViewModels
         {
             this.menuItem = menuItem;
 
-            string foregroundColorName = "LabelTextColor";
+            string foregroundColorName = "MenuItemNormalForegroundColor";
             string? backgroundColorName = null;
 
             if (this.menuItem.IsDestructive)

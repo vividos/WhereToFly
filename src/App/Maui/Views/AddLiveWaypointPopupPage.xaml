@@ -8,23 +8,23 @@
                      x:TypeArguments="geo:Location"
                      x:DataType="viewmodels:AddLiveWaypointPopupViewModel">
 
-    <!-- popup content -->
-    <StackLayout
-        VerticalOptions="CenterAndExpand"
+    <VerticalStackLayout
+        VerticalOptions="Center"
         HorizontalOptions="Center"
-        WidthRequest="320"
-        BackgroundColor="{DynamicResource PopupPageBackgroundColor}"
+        WidthRequest="360"
+        Spacing="10"
         Padding="20">
 
-        <!-- caption -->
+        <!-- Caption -->
         <Label Text="Add live waypoint" FontSize="Large" />
 
         <!-- Entry for live waypoint name -->
         <Label Text="Name" FontSize="Medium" />
         <Entry Placeholder="enter live waypoint name"
                Text="{Binding Path=Name, Mode=TwoWay}"
-               BackgroundColor="{DynamicResource ElementOnPopupPageBackgroundColor}" />
+               Style="{StaticResource EntryOnPopupPageStyle}" />
 
+        <!-- Label showing live waypoint type -->
         <Label Text="Type" FontSize="Medium" />
         <Label Text="{Binding Type, Mode=OneTime}" />
 
@@ -32,6 +32,6 @@
         <Button Text="Add live waypoint"
                 Clicked="OnClickedAddLiveWaypointButton"
                 AutomationId="AddLiveWaypointButton" />
-    </StackLayout>
+    </VerticalStackLayout>
 
 </views:BasePopupPage>

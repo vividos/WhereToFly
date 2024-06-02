@@ -25,38 +25,42 @@
                      Order="Primary" Priority="1" />
     </ContentPage.ToolbarItems>
 
-    <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+    <Grid RowDefinitions="Auto, Auto">
 
         <!-- Message to show when list is empty -->
-        <StackLayout Padding="4" BackgroundColor="{DynamicResource MessageBandBackgroundColor}"
-                     HeightRequest="32"
-                     HorizontalOptions="FillAndExpand"
-                     Orientation="Horizontal"
-                     IsVisible="{Binding IsListEmpty, Mode=OneWay}" >
+        <HorizontalStackLayout Grid.Row="0"
+                               Padding="8"
+                               BackgroundColor="{StaticResource MessageBandBackgroundColor}"
+                               HorizontalOptions="Fill"
+                               IsVisible="{Binding IsListEmpty, Mode=OneWay}" >
             <Label Text="There are no layers in the list."
-                   VerticalTextAlignment="Center" FontSize="Medium"
-                   TextColor="{DynamicResource MessageBandTextColor}" />
-        </StackLayout>
+                   VerticalTextAlignment="Center"
+                   FontSize="Medium"
+                   TextColor="{StaticResource MessageBandTextColor}" />
+        </HorizontalStackLayout>
 
         <!-- Layer list -->
-        <CollectionView ItemsSource="{Binding Path=LayerList, Mode=OneWay}"
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding Path=LayerList, Mode=OneWay}"
                         SelectionMode="Single"
                         SelectedItem="{Binding SelectedLayer}"
                         ItemSizingStrategy="MeasureFirstItem"
                         AutomationId="LayerList">
 
             <CollectionView.ItemsLayout>
-                <LinearItemsLayout Orientation="Vertical" ItemSpacing="4" />
+                <LinearItemsLayout Orientation="Vertical"
+                                   ItemSpacing="0" />
             </CollectionView.ItemsLayout>
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="viewmodels:LayerListEntryViewModel">
-                    <!-- Template for a single view cell -->
-                    <Grid BackgroundColor="{DynamicResource ListViewItemBackgroundColor}"
+                    <!-- Template for a single item -->
+
+                    <Grid RowDefinitions="*"
+                          ColumnDefinitions="Auto, Auto, 1*, 40"
                           HeightRequest="45"
-                          Margin="8,4"
-                          RowDefinitions="*"
-                          ColumnDefinitions="Auto,Auto,1*,40">
+                          Margin="4,2"
+                          Style="{StaticResource ListViewItemStyle}">
 
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding ItemTappedCommand}"
@@ -65,21 +69,28 @@
 
                         <!-- Layer type image -->
                         <controls:SvgImage Source="{Binding TypeImageSource, Mode=OneWay}"
-                                           TintColor="{DynamicResource SvgImageTintColorDark}"
-                                           WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
-                                           HorizontalOptions="Start" VerticalOptions="Center"
-                                           Grid.Column="0"/>
+                                           WidthRequest="32"
+                                           HeightRequest="32"
+                                           Margin="4,0,0,0"
+                                           HorizontalOptions="Start"
+                                           VerticalOptions="Center"
+                                           Grid.Column="0" />
 
                         <!-- Layer visibility image -->
-                        <ContentView Margin="0" Padding="0" Grid.Column="1">
+                        <ContentView Margin="0"
+                                     Padding="0"
+                                     Grid.Column="1">
                             <ContentView.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding VisibilityTappedCommand}"
                                                       NumberOfTapsRequired="1"/>
                             </ContentView.GestureRecognizers>
+
                             <controls:SvgImage Source="{Binding VisibilityImageSource, Mode=OneWay}"
-                                               TintColor="{DynamicResource SvgImageTintColorDark}"
-                                               WidthRequest="32" HeightRequest="32" Margin="4,0,0,0"
-                                               HorizontalOptions="Start" VerticalOptions="Center"
+                                               WidthRequest="32"
+                                               HeightRequest="32"
+                                               Margin="4,0"
+                                               HorizontalOptions="Start"
+                                               VerticalOptions="Center"
                                                InputTransparent="true" />
                         </ContentView>
 
@@ -87,7 +98,7 @@
                         <Label Text="{Binding Name}"
                                VerticalOptions="Center"
                                HorizontalOptions="Fill"
-                               Style="{DynamicResource ListItemTextStyle}"
+                               Style="{StaticResource ListItemTextStyle}"
                                FontSize="Medium"
                                LineBreakMode="TailTruncation"
                                Grid.Column="2" />
@@ -95,7 +106,8 @@
                         <!-- Context menu for an item -->
                         <controls:ContextMenu Grid.Column="3"
                                               Caption="Layer"
-                                              WidthRequest="40" HeightRequest="40"
+                                              WidthRequest="40"
+                                              HeightRequest="40"
                                               HorizontalOptions="Center"
                                               VerticalOptions="Center">
                             <controls:ContextMenu.Items>
@@ -123,5 +135,5 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-    </StackLayout>
+    </Grid>
 </ContentPage>

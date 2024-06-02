@@ -20,8 +20,8 @@ namespace WhereToFly.App.Views
 
             this.Content = new HeightProfileView
             {
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Fill,
                 Track = track,
                 UseDarkTheme = userInterface.IsDarkTheme,
             };

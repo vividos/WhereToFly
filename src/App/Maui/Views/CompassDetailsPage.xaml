@@ -31,76 +31,53 @@
                         Wrap="Wrap">
 
                 <!-- Compass -->
-                <StackLayout VerticalOptions="FillAndExpand"
-                             HorizontalOptions="FillAndExpand"
-                             WidthRequest="{OnPlatform Android=348, UWP=600}"
-                             HeightRequest="{OnPlatform Android=348, UWP=600}"
-                             Margin="16,16,0,0"
-                             Padding="4"
-                             BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
-                    <controls:CompassView VerticalOptions="FillAndExpand"
-                                          HorizontalOptions="FillAndExpand"
+                <Grid VerticalOptions="Fill"
+                      HorizontalOptions="Fill"
+                      WidthRequest="{OnPlatform Android=356, WinUI=600}"
+                      HeightRequest="{OnPlatform Android=356, WinUI=600}"
+                      Style="{StaticResource PositionInfoTileStyle}">
+                    <controls:CompassView VerticalOptions="Fill"
+                                          HorizontalOptions="Fill"
                                           Heading="{Binding TrueNorthHeadingInDegrees, Mode=OneWay}"
                                           TargetDirection="{Binding TargetDirectionInDegrees, Mode=OneWay}"
                                           SunriseDirection="{Binding SunriseDirectionInDegrees}"
                                           SunsetDirection="{Binding SunsetDirectionInDegrees}"
-                                          CompassColor="{DynamicResource CompassForegroundColor}"
-                                          TargetDirectionColor="{DynamicResource CompassTargetDirectionColor}"
-                                          SunDirectionColor="{DynamicResource CompassSunDirectionColor}" />
-                </StackLayout>
+                                          Style="{StaticResource CompassStyle}" />
+                </Grid>
 
                 <!-- Magnetic-north Heading -->
-                <StackLayout WidthRequest="100" HeightRequest="100"
-                             Orientation="Vertical"
-                             Margin="16,16,0,0"
-                             Padding="4"
-                             IsVisible="{Binding IsMagneticNorthHeadingAvail, Mode=OneWay}"
-                             BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
+                <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}"
+                                     IsVisible="{Binding IsMagneticNorthHeadingAvail, Mode=OneWay}">
                     <Label Text="Magnetic Heading [°]" />
                     <Label Text="{Binding MagneticNorthHeadingInDegrees, Mode=OneWay}" FontSize="32" />
-                </StackLayout>
+                </VerticalStackLayout>
 
                 <!-- True-north Heading -->
-                <StackLayout WidthRequest="100" HeightRequest="100"
-                             Orientation="Vertical"
-                             Margin="16,16,0,0"
-                             Padding="4"
-                             IsVisible="{Binding IsTrueNorthHeadingAvail, Mode=OneWay}"
-                             BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
+                <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}"
+                                     IsVisible="{Binding IsTrueNorthHeadingAvail, Mode=OneWay}">
                     <Label Text="True North Heading [°]" />
                     <Label Text="{Binding TrueNorthHeadingInDegrees, Mode=OneWay}" FontSize="32" />
-                </StackLayout>
+                </VerticalStackLayout>
 
                 <!-- Target direction -->
-                <StackLayout WidthRequest="100" HeightRequest="100"
-                             Orientation="Vertical"
-                             Margin="16,16,0,0"
-                             Padding="4"
-                             IsVisible="{Binding IsTargetDirectionAvail, Mode=OneWay}"
-                             BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
+                <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}"
+                                     IsVisible="{Binding IsTargetDirectionAvail, Mode=OneWay}">
                     <Label Text="Direction [°]" />
                     <Label Text="{Binding TargetDirectionText, Mode=OneWay}" FontSize="32" />
-                </StackLayout>
+                </VerticalStackLayout>
 
                 <!-- Distance -->
-                <StackLayout WidthRequest="100" HeightRequest="100"
-                             Orientation="Vertical"
-                             Margin="16,16,0,0"
-                             Padding="4"
-                             BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
+                <StackLayout Style="{StaticResource PositionInfoSquareTileStyle}">
                     <Label Text="Distance" />
                     <Label Text="{Binding Distance, Mode=OneWay}" FontSize="32" />
                 </StackLayout>
 
                 <!-- Height difference -->
-                <StackLayout WidthRequest="120" HeightRequest="100"
-                             Orientation="Vertical"
-                             Margin="16,16,0,0"
-                             Padding="4"
-                             BackgroundColor="{DynamicResource ListViewItemBackgroundColor}">
+                <VerticalStackLayout WidthRequest="120"
+                                     Style="{StaticResource PositionInfoSquareTileStyle}">
                     <Label Text="Height difference" />
                     <Label Text="{Binding HeightDifference, Mode=OneWay}" FontSize="32" />
-                </StackLayout>
+                </VerticalStackLayout>
 
             </FlexLayout>
         </ScrollView>

@@ -9,18 +9,17 @@
                      x:TypeArguments="generic:ISet(airspace:AirspaceClass)"
                      x:DataType="viewmodels:SelectAirspaceClassPopupViewModel">
 
-    <!-- popup content -->
-    <StackLayout
-        VerticalOptions="CenterAndExpand"
+    <VerticalStackLayout
+        VerticalOptions="Center"
         HorizontalOptions="Center"
-        WidthRequest="320"
-        BackgroundColor="{DynamicResource PopupPageBackgroundColor}"
+        WidthRequest="360"
+        Spacing="10"
         Padding="20">
 
-        <!-- caption -->
+        <!-- Caption -->
         <Label Text="Select airspace classes" FontSize="Large" />
 
-        <!-- flex layout with airspace classes -->
+        <!-- Flex layout with airspace classes -->
         <FlexLayout BindableLayout.ItemsSource="{Binding AirspaceClassList}"
                     VerticalOptions="StartAndExpand"
                     Direction="Row"
@@ -30,25 +29,27 @@
                     Wrap="Wrap">
             <BindableLayout.ItemTemplate>
                 <DataTemplate x:DataType="viewmodels:SelectAirspaceClassPopupViewModel+AirspaceClassViewModel">
-                    <StackLayout
-                        HeightRequest="64"
-                        MinimumWidthRequest="64"
+                    <VerticalStackLayout
+                        HeightRequest="48"
+                        MinimumWidthRequest="48"
                         VerticalOptions="FillAndExpand"
-                        Margin="8"
+                        Margin="1"
                         BackgroundColor="{Binding BackgroundColor, Mode=OneWay}">
 
                         <!-- Recognize taps anywhere in the layout -->
-                        <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Tapped}" />
-                        </StackLayout.GestureRecognizers>
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                  Command="{Binding Tapped}" />
+                        </VerticalStackLayout.GestureRecognizers>
 
-                        <Label Text="{Binding Text, Mode=OneTime}" FontSize="Large"
+                        <Label Text="{Binding Text, Mode=OneTime}"
+                               FontSize="Large"
                                TextColor="{Binding TextColor, Mode=OneWay}"
                                VerticalOptions="Fill"
                                VerticalTextAlignment="Center"
                                HorizontalTextAlignment="Center"
                                Padding="8" />
-                    </StackLayout>
+                    </VerticalStackLayout>
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </FlexLayout>
@@ -57,6 +58,6 @@
         <Button Text="Filter airspaces"
                 Clicked="OnClickedFilterAirspacesButton"
                 AutomationId="FilterAirspacesButton" />
-    </StackLayout>
+    </VerticalStackLayout>
 
 </views:BasePopupPage>

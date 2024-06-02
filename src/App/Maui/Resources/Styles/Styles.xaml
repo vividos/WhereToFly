@@ -3,6 +3,7 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:WhereToFly.App.Controls"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
 
     <Style TargetType="ActivityIndicator">
@@ -32,6 +33,7 @@
         <Setter Property="Padding" Value="14,10"/>
         <Setter Property="MinimumHeightRequest" Value="44"/>
         <Setter Property="MinimumWidthRequest" Value="44"/>
+        <Setter Property="TextTransform" Value="None"/>
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
@@ -373,15 +375,91 @@
         <Setter Property="IconColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource White}}" />
     </Style>
 
-    <Style TargetType="TabbedPage">
-        <Setter Property="BarBackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray950}}" />
-        <Setter Property="BarTextColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
-        <Setter Property="UnselectedTabColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray950}}" />
-        <Setter Property="SelectedTabColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
+    <Style TargetType="TabbedPage" ApplyToDerivedTypes="True">
+        <Setter Property="BarBackgroundColor" Value="{StaticResource Primary}" />
+        <Setter Property="BarTextColor" Value="{StaticResource White}" />
+        <Setter Property="UnselectedTabColor" Value="{StaticResource Gray300}" />
+        <Setter Property="SelectedTabColor" Value="{StaticResource White}" />
     </Style>
 
-    <Style TargetType="{x:Type toolkit:Popup}" ApplyToDerivedTypes="True">
-        <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray600}}" />
+    <!-- Where-to-fly specific styles -->
+    <Style TargetType="toolkit:Popup" ApplyToDerivedTypes="True">
+        <Setter Property="Color"
+                Value="{AppThemeBinding Light={StaticResource PopupPageBackgroundColorLight}, Dark={StaticResource PopupPageBackgroundColorDark}}" />
+    </Style>
+
+    <Style TargetType="controls:SvgImage" ApplyToDerivedTypes="True">
+        <Setter Property="TintColor"
+                Value="{AppThemeBinding Light={StaticResource SvgImageTintColorLight}, Dark={StaticResource SvgImageTintColorDark}}" />
+    </Style>
+
+    <Style x:Key="ColorPickerStyle" TargetType="controls:ColorPickerView" ApplyToDerivedTypes="True">
+        <Setter Property="SelectionBorderColor"
+                Value="{AppThemeBinding Light={StaticResource ColorPickerBorderSelectionColorLight}, Dark={StaticResource ColorPickerBorderSelectionColorDark}}" />
+    </Style>
+
+    <Style x:Key="CompassStyle" TargetType="controls:CompassView" ApplyToDerivedTypes="True">
+        <Setter Property="CompassColor"
+                Value="{AppThemeBinding Light={StaticResource CompassForegroundColorLight}, Dark={StaticResource CompassForegroundColorDark}}" />
+        <Setter Property="TargetDirectionColor"
+                Value="{AppThemeBinding Light={StaticResource CompassTargetDirectionColorLight}, Dark={StaticResource CompassTargetDirectionColorDark}}" />
+        <Setter Property="SunDirectionColor"
+                Value="{AppThemeBinding Light={StaticResource CompassSunDirectionColorLight}, Dark={StaticResource CompassSunDirectionColorDark}}" />
+    </Style>
+
+    <Style x:Key="TakeoffDirectionsStyle" TargetType="controls:TakeoffDirectionsView">
+        <Setter Property="CompassBorderColor" Value="Black" />
+        <Setter Property="CompassBackgroundColor" Value="DarkGray" />
+        <Setter Property="CompassColor" Value="Green" />
+    </Style>
+
+    <Style x:Key="ListViewItemStyle" TargetType="ContentView">
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Light={StaticResource ListViewItemBackgroundColorLight}, Dark={StaticResource ListViewItemBackgroundColorDark}}" />
+    </Style>
+
+    <Style x:Key="ListItemTextStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="Large" />
+    </Style>
+
+    <Style x:Key="ListItemDetailTextStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="Small" />
+    </Style>
+
+    <Style x:Key="SectionHeaderStyle" TargetType="Label">
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Light={StaticResource SectionHeaderBackgroundColorLight}, Dark={StaticResource SectionHeaderBackgroundColorDark}}" />
+    </Style>
+
+    <Style x:Key="EntryOnPopupPageStyle" TargetType="Entry">
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Light={StaticResource ElementOnPopupPageBackgroundColorLight}, Dark={StaticResource ElementOnPopupPageBackgroundColorDark}}" />
+    </Style>
+
+    <Style x:Key="PickerOnPopupPageStyle" TargetType="Picker">
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Light={StaticResource ElementOnPopupPageBackgroundColorLight}, Dark={StaticResource ElementOnPopupPageBackgroundColorDark}}" />
+    </Style>
+
+    <Style x:Key="PositionInfoTileStyle" TargetType="Grid">
+        <Setter Property="Margin" Value="8,8,0,0" />
+        <Setter Property="Padding" Value="4" />
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Light={StaticResource ListViewItemBackgroundColorLight}, Dark={StaticResource ListViewItemBackgroundColorDark}}" />
+    </Style>
+
+    <Style x:Key="PositionInfoSquareTileStyle" TargetType="VerticalStackLayout">
+        <Setter Property="WidthRequest" Value="108" />
+        <Setter Property="HeightRequest" Value="108" />
+        <Setter Property="Margin" Value="8,8,0,0" />
+        <Setter Property="Padding" Value="4" />
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Light={StaticResource ListViewItemBackgroundColorLight}, Dark={StaticResource ListViewItemBackgroundColorDark}}" />
+    </Style>
+
+    <Style x:Key="ManualCarouselStyle" TargetType="CarouselView">
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Light={StaticResource ManualBackgroundColorLight}, Dark={StaticResource ManualBackgroundColorDark}}" />
     </Style>
 
 </ResourceDictionary>

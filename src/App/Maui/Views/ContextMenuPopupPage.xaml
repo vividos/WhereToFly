@@ -7,19 +7,21 @@
                      x:Class="WhereToFly.App.Views.ContextMenuPopupPage"
                      x:DataType="viewmodels:ContextMenuPopupViewModel">
 
-    <!-- Popup content -->
-    <StackLayout
-        VerticalOptions="Center"
-        HorizontalOptions="Center"
-        WidthRequest="320"
-        BackgroundColor="{DynamicResource PopupPageBackgroundColor}"
-        Padding="20">
+    <Grid RowDefinitions="Auto, 1*"
+          VerticalOptions="Center"
+          HorizontalOptions="Center"
+          WidthRequest="360"
+          RowSpacing="10"
+          Padding="20">
 
-        <!-- Caption text -->
-        <Label Text="{Binding Caption}" FontSize="Medium" />
+        <!-- Caption -->
+        <Label Grid.Row="0"
+               Text="{Binding Caption}"
+               FontSize="Medium" />
 
         <!-- Context menu list -->
-        <CollectionView ItemsSource="{Binding ContextMenuItems, Mode=OneTime}"
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding ContextMenuItems, Mode=OneTime}"
                         VerticalOptions="Start"
                         HorizontalOptions="FillAndExpand"
                         HeightRequest="{Binding ContextMenuListHeight, Mode=OneTime}">
@@ -41,8 +43,10 @@
                         <controls:SvgImage Source="{Binding IconImageSource, Mode=OneWay}"
                                            TintColor="{Binding ForegroundColor}"
                                            InputTransparent="True"
-                                           WidthRequest="32" HeightRequest="32"
-                                           HorizontalOptions="Center" VerticalOptions="Center" />
+                                           WidthRequest="32"
+                                           HeightRequest="32"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center" />
 
                         <!-- Menu item text -->
                         <Label Grid.Column="1" Text="{Binding Text, Mode=OneTime}"
@@ -59,5 +63,5 @@
 
         </CollectionView>
 
-    </StackLayout>
+    </Grid>
 </views:BasePopupPage>

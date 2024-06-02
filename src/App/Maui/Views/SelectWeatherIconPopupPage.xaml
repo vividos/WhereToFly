@@ -9,24 +9,28 @@
                      x:DataType="viewmodels:SelectWeatherIconViewModel"
                      x:TypeArguments="model:WeatherIconDescription">
 
-    <!-- popup content -->
-    <StackLayout
-        VerticalOptions="Center"
-        HorizontalOptions="Center"
-        WidthRequest="300"
-        HeightRequest="400"
-        BackgroundColor="{DynamicResource PopupPageBackgroundColor}"
-        Padding="20">
+    <Grid RowDefinitions="Auto, 1*"
+          VerticalOptions="Center"
+          HorizontalOptions="Center"
+          WidthRequest="360"
+          HeightRequest="400"
+          RowSpacing="10"
+          Padding="20">
 
-        <!-- caption -->
-        <Label Text="Select weather icon" FontSize="Large" />
+        <!-- Caption -->
+        <Label Grid.Row="0"
+               Text="Select weather icon"
+               FontSize="Large" />
 
         <!-- List showing all weather icons that can be added -->
-        <CollectionView ItemsSource="{Binding Path=GroupedWeatherIconList, Mode=OneWay}"
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding Path=GroupedWeatherIconList, Mode=OneWay}"
                         SelectionMode="Single"
                         SelectedItem="{Binding SelectedWeatherIcon}"
                         ItemSizingStrategy="MeasureFirstItem"
                         IsGrouped="True"
+                        VerticalOptions="Fill"
+                        HorizontalOptions="Fill"
                         AutomationId="WeatherIconList">
 
             <CollectionView.ItemsLayout>
@@ -46,15 +50,14 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="viewmodels:WeatherIconListEntryViewModel">
                     <!-- Template for a single view cell -->
-                    <StackLayout Orientation="Horizontal"
-                                 BackgroundColor="{DynamicResource ListViewItemBackgroundColor}"
-                                 HeightRequest="{OnPlatform Android=65, iOS=65, UWP=45}"
-                                 Padding="2,1">
-                        <StackLayout.GestureRecognizers>
+                    <HorizontalStackLayout Style="{StaticResource ListViewItemStyle}"
+                                           HeightRequest="{OnPlatform Android=65, WinUI=45}"
+                                           Padding="2,1">
+                        <HorizontalStackLayout.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1"
                                                   Command="{Binding ItemTappedCommand}"
                                                   CommandParameter="{Binding .}" />
-                        </StackLayout.GestureRecognizers>
+                        </HorizontalStackLayout.GestureRecognizers>
 
                         <!-- Weather icon -->
                         <ffimageloading:SvgCachedImage Source="{Binding Icon, Mode=OneWay}"
@@ -63,16 +66,16 @@
 
                         <!-- Title -->
                         <Label Text="{Binding Title, Mode=OneWay}"
-                               Style="{DynamicResource ListItemTextStyle}"
+                               Style="{StaticResource ListItemTextStyle}"
                                FontSize="Medium"
                                LineBreakMode="TailTruncation"
                                HorizontalOptions="FillAndExpand" VerticalOptions="Center" />
 
-                    </StackLayout>
+                    </HorizontalStackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-    </StackLayout>
+    </Grid>
 
 </views:BasePopupPage>

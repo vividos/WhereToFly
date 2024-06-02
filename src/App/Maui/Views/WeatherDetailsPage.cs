@@ -43,8 +43,8 @@ namespace WhereToFly.App.Views
                 {
                     Source = urlSource,
 
-                    VerticalOptions = LayoutOptions.FillAndExpand,
-                    HorizontalOptions = LayoutOptions.FillAndExpand,
+                    VerticalOptions = LayoutOptions.Fill,
+                    HorizontalOptions = LayoutOptions.Fill,
                     AutomationId = "WeatherDetailsWebView"
                 };
 

@@ -5,21 +5,27 @@
                      x:Class="WhereToFly.App.Views.FindLocationPopupPage"
                      x:TypeArguments="x:String">
 
-    <!-- popup content -->
-    <StackLayout
-        VerticalOptions="Center"
-        HorizontalOptions="Center"
-        HeightRequest="140"
-        WidthRequest="300"
-        BackgroundColor="{DynamicResource PopupPageBackgroundColor}"
-        Padding="20">
+    <Grid RowDefinitions="Auto, Auto, Auto"
+          VerticalOptions="Center"
+          HorizontalOptions="Center"
+          WidthRequest="360"
+          RowSpacing="10"
+          Padding="20">
 
-        <!-- text, entry control to enter location text and button -->
-        <Label Text="Find location" FontSize="Large" />
-        <Entry x:Name="locationEntry"
+        <!-- Caption -->
+        <Label Grid.Row="0"
+               Text="Find location"
+               FontSize="Large" />
+
+        <!-- Location to find -->
+        <Entry Grid.Row="1"
+               x:Name="locationEntry"
                Placeholder="enter location"
-               BackgroundColor="{DynamicResource ElementOnPopupPageBackgroundColor}" />
-        <Button Text="Find" Clicked="OnClickedFindButton" />
-    </StackLayout>
+               Style="{StaticResource EntryOnPopupPageStyle}"/>
+
+        <Button Grid.Row="2"
+                Text="Find"
+                Clicked="OnClickedFindButton" />
+    </Grid>
 
 </views:BasePopupPage>
