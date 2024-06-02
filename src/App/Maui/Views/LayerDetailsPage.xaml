@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behaviors="clr-namespace:WhereToFly.App.Behaviors"
              xmlns:controls="clr-namespace:WhereToFly.App.Controls"
              xmlns:local="clr-namespace:WhereToFly.App"
              xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
@@ -68,9 +69,14 @@
                 </Grid>
 
                 <!-- Description web view -->
-                <controls:AutoResizeWebView HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand"
-                                            HeightRequest="200"
-                                            Source="{Binding DescriptionWebViewSource}" />
+                <WebView HorizontalOptions="CenterAndExpand"
+                         VerticalOptions="FillAndExpand"
+                         HeightRequest="200"
+                         Source="{Binding DescriptionWebViewSource}">
+                    <WebView.Behaviors>
+                        <behaviors:AutoResizeWebViewBehavior />
+                    </WebView.Behaviors>
+                </WebView>
 
             </StackLayout>
         </ScrollView>

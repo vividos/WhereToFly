@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:controls="clr-namespace:WhereToFly.App.Controls"
+             xmlns:behaviors="clr-namespace:WhereToFly.App.Behaviors"
              xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
              mc:Ignorable="d"
              x:Class="WhereToFly.App.Views.InfoPage"
@@ -46,12 +46,16 @@
                             <Grid Padding="0,0,0,10" RowDefinitions="Auto,*">
                                 <Image Source="{Binding Image, Mode=OneTime}"
                                        Grid.Row="0" />
-                                <controls:AutoResizeWebView HorizontalOptions="Start"
-                                                            VerticalOptions="Start"
-                                                            HeightRequest="20"
-                                                            Navigating="OnNavigating_WebView"
-                                                            Source="{Binding WebViewSource}"
-                                                            Grid.Row="1" />
+                                <WebView HorizontalOptions="Start"
+                                         VerticalOptions="Start"
+                                         HeightRequest="20"
+                                         Navigating="OnNavigating_WebView"
+                                         Source="{Binding WebViewSource}"
+                                         Grid.Row="1">
+                                    <WebView.Behaviors>
+                                        <behaviors:AutoResizeWebViewBehavior />
+                                    </WebView.Behaviors>
+                                </WebView>
                             </Grid>
                         </ScrollView>
                     </DataTemplate>
