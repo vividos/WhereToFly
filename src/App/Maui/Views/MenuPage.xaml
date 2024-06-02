@@ -42,11 +42,19 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="viewmodels:MenuViewModel+MenuItemViewModel">
                         <!-- single view cell for menu items -->
-                        <Grid Padding="5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="40"/>
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
+                        <Grid Padding="5" ColumnDefinitions="40, 1*">
+
+                            <!-- Selection background color -->
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup Name="CommonStates">
+                                    <VisualState Name="Normal" />
+                                    <VisualState Name="Selected">
+                                        <VisualState.Setters>
+                                            <Setter Property="BackgroundColor" Value="{StaticResource AccentColor}" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
 
                             <!-- menu item icon -->
                             <controls:SvgImage Source="{Binding ImageSource, Mode=OneWay}"
