@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using FFImageLoading.Maui;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.LifecycleEvents;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using WhereToFly.App.MapView;
 
@@ -23,7 +24,19 @@ namespace WhereToFly.App
                 .UseMauiCommunityToolkit()
                 .UseSkiaSharp()
                 .UseFFImageLoading()
-                .UseMapView();
+                .UseMapView()
+#if WINDOWS
+                .ConfigureEssentials(essentials =>
+                {
+                    essentials.UseMapServiceToken(Constants.BingMapsKeyWindows);
+                })
+#endif
+                .ConfigureLifecycleEvents(events =>
+                {
+#if WINDOWS
+                    WhereToFly.App.WinUI.App.AddLifecycleEvents(events);
+#endif
+                });
 
 #if DEBUG
             builder.Logging.AddDebug();

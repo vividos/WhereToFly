@@ -119,6 +119,8 @@ namespace WhereToFly.App
 
 #if ANDROID
             DependencyService.Register<IPlatform, AndroidPlatform>();
+#elif WINDOWS
+            DependencyService.Register<IPlatform, WindowsPlatform>();
 #endif
         }
 

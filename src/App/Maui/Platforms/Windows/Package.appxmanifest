@@ -36,11 +36,39 @@
         <uap:DefaultTile Square71x71Logo="$placeholder$.png" Wide310x150Logo="$placeholder$.png" Square310x310Logo="$placeholder$.png" />
         <uap:SplashScreen Image="$placeholder$.png" />
       </uap:VisualElements>
+
+      <Extensions>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="where-to-fly">
+            <uap:Logo>Assets\Square44x44Logo.png</uap:Logo>
+            <uap:DisplayName>Where-to-fly Weblink</uap:DisplayName>
+          </uap:Protocol>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="wheretofly">
+            <uap:DisplayName>Where-to-fly file</uap:DisplayName>
+            <uap:Logo>Assets\Square44x44Logo.png</uap:Logo>
+            <uap:InfoTip>Opens the file with Where-to-fly</uap:InfoTip>
+            <uap:EditFlags OpenIsSafe="true" />
+            <uap:SupportedFileTypes>
+              <uap:FileType>.kml</uap:FileType>
+              <uap:FileType>.kmz</uap:FileType>
+              <uap:FileType>.gpx</uap:FileType>
+              <uap:FileType>.igc</uap:FileType>
+              <uap:FileType>.czml</uap:FileType>
+              <uap:FileType>.cup</uap:FileType>
+              <uap:FileType>.txt</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+      </Extensions>
+
     </Application>
   </Applications>
 
   <Capabilities>
     <rescap:Capability Name="runFullTrust" />
+    <Capability Name="internetClient" />
     <DeviceCapability Name="location"/>
   </Capabilities>
 

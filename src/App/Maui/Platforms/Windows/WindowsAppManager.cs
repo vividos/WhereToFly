@@ -1,15 +1,11 @@
-﻿#nullable enable
-using System;
-using Xamarin.Forms;
+﻿[assembly: Dependency(typeof(WhereToFly.App.WindowsAppManager))]
 
-[assembly: Dependency(typeof(WhereToFly.App.UWP.UwpAppManager))]
-
-namespace WhereToFly.App.UWP
+namespace WhereToFly.App
 {
     /// <summary>
-    /// UWP app manager implementation that provides operations on external UWP apps.
+    /// Windows app manager implementation that provides operations on external Windows apps.
     /// </summary>
-    public class UwpAppManager : IAppManager
+    public class WindowsAppManager : IAppManager
     {
         /// <summary>
         /// Determines if the app with given package name is available
