@@ -671,7 +671,7 @@ namespace WhereToFly.App.MapView
         {
             string js = "map.getViewRectangle();";
 
-            string result = await this.RunJavaScriptAsync(js);
+            string result = await this.RunJavaScriptWithResultAsync(js);
 
             result = result
                 .Replace("\\\\", "\\")
@@ -745,7 +745,7 @@ namespace WhereToFly.App.MapView
                 "await map.addLayer({0});",
                 JsonConvert.SerializeObject(layerObject));
 
-            await this.RunJavaScriptAsync(js);
+            await this.RunJavaScriptWithResultAsync(js);
         }
 
         /// <summary>
@@ -883,7 +883,7 @@ namespace WhereToFly.App.MapView
                 "await map.addLocationList({0});",
                 JsonConvert.SerializeObject(jsonLocationList));
 
-            await this.RunJavaScriptAsync(js);
+            await this.RunJavaScriptWithResultAsync(js);
         }
 
         /// <summary>
@@ -1035,7 +1035,7 @@ namespace WhereToFly.App.MapView
 
             string js = $"await map.addTrack({JsonConvert.SerializeObject(trackJsonObject)});";
 
-            await this.RunJavaScriptAsync(js);
+            await this.RunJavaScriptWithResultAsync(js);
         }
 
         /// <summary>
@@ -1221,7 +1221,7 @@ namespace WhereToFly.App.MapView
         /// </summary>
         /// <param name="js">JavaScript code snippet</param>
         /// <returns>JavaScript object as JSON formatted string</returns>
-        private async Task<string> RunJavaScriptAsync(string js)
+        private async Task<string> RunJavaScriptWithResultAsync(string js)
         {
             Debug.WriteLine("run js: " + js.Substring(0, Math.Min(80, js.Length)));
 
