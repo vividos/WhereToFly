@@ -9,7 +9,7 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Share position"
-                     IconImageSource="{local:Image share_variant}"
+                     IconImageSource="share_variant.png"
                      Command="{Binding SharePositionCommand}"
                      Order="Primary" Priority="0"
                      AutomationId="SharePosition" />

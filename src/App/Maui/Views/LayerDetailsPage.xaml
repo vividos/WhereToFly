@@ -10,19 +10,19 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Zoom to"
-                     IconImageSource="{local:Image magnify_plus_outline}"
+                     IconImageSource="magnify_plus_outline.png"
                      IsEnabled="{Binding IsEnabledZoomToLayer}"
                      Command="{Binding ZoomToLayerCommand}"
                      Order="Primary" Priority="0" />
 
         <ToolbarItem Text="Export"
-                     IconImageSource="{local:Image export_variant}"
+                     IconImageSource="export_variant.png"
                      IsEnabled="{Binding IsEnabledExportLayer}"
                      Command="{Binding ExportLayerCommand}"
                      Order="Primary" Priority="1" />
 
         <ToolbarItem Text="Delete"
-                     IconImageSource="{local:Image delete}"
+                     IconImageSource="delete.png"
                      IsEnabled="{Binding IsEnabledDeleteLayer}"
                      Command="{Binding DeleteLayerCommand}"
                      IsDestructive="True"

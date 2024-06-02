@@ -10,12 +10,12 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Import track"
-                     IconImageSource="{local:Image playlist_plus}"
+                     IconImageSource="playlist_plus.png"
                      Command="{Binding ImportTrackCommand}"
                      Order="Primary" Priority="0" />
 
         <ToolbarItem Text="Delete track list"
-                     IconImageSource="{local:Image delete_forever}"
+                     IconImageSource="delete_forever.png"
                      Command="{Binding DeleteTrackListCommand}"
                      IsDestructive="True"
                      Order="Primary" Priority="1" />

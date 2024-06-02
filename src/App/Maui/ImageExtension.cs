@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Xml;
+﻿using System.Xml;
 using WhereToFly.App.Logic;
 
 namespace WhereToFly.App
@@ -56,33 +55,6 @@ namespace WhereToFly.App
         {
             return (this as IMarkupExtension<ImageSource>)
                 .ProvideValue(serviceProvider);
-        }
-
-        /// <summary>
-        /// Gets the image path for a specific device, by using image base name and adding
-        /// necessary paths and extensions. The path is suitable for ToolbarItem, MenuItem and
-        /// Image elements.
-        /// </summary>
-        /// <param name="imageBaseName">image base name</param>
-        /// <returns>image path</returns>
-        internal static string GetDeviceDependentImage(string imageBaseName)
-        {
-            switch (Device.RuntimePlatform)
-            {
-                case Device.Android:
-                    return imageBaseName + ".xml";
-
-                case Device.UWP:
-                case Device.iOS:
-                    return $"Assets/images/{imageBaseName}.png";
-
-                case "Test": // returned by Xamarin.Forms.Mocks
-                    return imageBaseName;
-
-                default:
-                    Debug.Assert(false, "invalid runtime platform");
-                    return string.Empty;
-            }
         }
     }
 }

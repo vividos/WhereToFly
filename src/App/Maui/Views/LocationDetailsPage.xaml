@@ -9,27 +9,27 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Zoom to"
-                     IconImageSource="{local:Image magnify_plus_outline}"
+                     IconImageSource="magnify_plus_outline.png"
                      Command="{Binding ZoomToLocationCommand}"
                      Order="Primary" Priority="0" />
 
         <ToolbarItem Text="Set as compass target"
-                     IconImageSource="{local:Image compass_rose}"
+                     IconImageSource="compass_rose.png"
                      Command="{Binding SetAsCompassTargetCommand}"
                      Order="Primary" Priority="1" />
 
         <ToolbarItem Text="Navigate here"
-                     IconImageSource="{local:Image directions}"
+                     IconImageSource="directions.png"
                      Command="{Binding NavigateToLocationCommand}"
                      Order="Primary" Priority="2" />
 
         <ToolbarItem Text="Share"
-                     IconImageSource="{local:Image share_variant}"
+                     IconImageSource="share_variant.png"
                      Command="{Binding ShareLocationCommand}"
                      Order="Primary" Priority="3" />
 
         <ToolbarItem Text="Delete"
-                     IconImageSource="{local:Image delete}"
+                     IconImageSource="delete.png"
                      Command="{Binding DeleteLocationCommand}"
                      IsDestructive="True"
                      Order="Primary" Priority="4" />

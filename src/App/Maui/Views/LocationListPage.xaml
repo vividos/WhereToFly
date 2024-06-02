@@ -10,13 +10,13 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Import locations"
-                     IconImageSource="{local:Image playlist_plus}"
+                     IconImageSource="playlist_plus.png"
                      Command="{Binding ImportLocationsCommand}"
                      Order="Primary"
                      Priority="0"
                      AutomationId="ImportLocations" />
         <ToolbarItem Text="Delete location list"
-                     IconImageSource="{local:Image delete_forever}"
+                     IconImageSource="delete_forever.png"
                      Command="{Binding DeleteLocationListCommand}"
                      Order="Primary"
                      Priority="1"

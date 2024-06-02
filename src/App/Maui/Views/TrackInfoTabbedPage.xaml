@@ -12,17 +12,17 @@
 
     <TabbedPage.ToolbarItems>
         <ToolbarItem Text="Zoom to"
-                     IconImageSource="{local:Image magnify_plus_outline}"
+                     IconImageSource="magnify_plus_outline.png"
                      Command="{Binding ZoomToTrackCommand}"
                      Order="Primary" Priority="0" />
 
         <ToolbarItem Text="Export"
-                     IconImageSource="{local:Image export_variant}"
+                     IconImageSource="export_variant.png"
                      Command="{Binding ExportTrackCommand}"
                      Order="Primary" Priority="0" />
 
         <ToolbarItem Text="Delete"
-                     IconImageSource="{local:Image delete}"
+                     IconImageSource="delete.png"
                      Command="{Binding DeleteTrackCommand}"
                      IsDestructive="True"
                      Order="Primary" Priority="1" />

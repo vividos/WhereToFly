@@ -6,7 +6,7 @@
              x:Class="WhereToFly.App.Views.MapSettingsPage"
              x:DataType="viewmodels:MapSettingsViewModel"
              Title="Map"
-             IconImageSource="{local:Image map}">
+             IconImageSource="map.png">
 
     <ContentPage.BindingContext>
         <viewmodels:MapSettingsViewModel />

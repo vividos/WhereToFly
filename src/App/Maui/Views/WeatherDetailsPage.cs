@@ -143,8 +143,8 @@ namespace WhereToFly.App.Views
         {
             var refreshButton = new ToolbarItem(
                 "Refresh",
-                ImageExtension.GetDeviceDependentImage("refresh"),
-                () => this.OnClicked_ToolbarButtonRefresh(),
+                "refresh.png",
+                this.OnClicked_ToolbarButtonRefresh,
                 ToolbarItemOrder.Primary)
             {
                 AutomationId = "Refresh",
@@ -172,7 +172,7 @@ namespace WhereToFly.App.Views
         {
             var forecastButton = new ToolbarItem(
                 "Forecast",
-                ImageExtension.GetDeviceDependentImage("calendar_clock"),
+                "calendar_clock.png",
                 async () => await this.OnClicked_ToolbarButtonWeatherForecast(),
                 ToolbarItemOrder.Primary)
             {
@@ -198,7 +198,7 @@ namespace WhereToFly.App.Views
         {
             var weatherButton = new ToolbarItem(
                 "Weather",
-                ImageExtension.GetDeviceDependentImage("weather_partlycloudy"),
+                "weather_partlycloudy.png",
                 async () => await this.OnClicked_ToolbarButtonCurrentWeather(),
                 ToolbarItemOrder.Primary)
             {
@@ -224,7 +224,7 @@ namespace WhereToFly.App.Views
         {
             var webcamsButton = new ToolbarItem(
                 "Webcams",
-                ImageExtension.GetDeviceDependentImage("camera"),
+                "camera.png",
                 async () => await this.OnClicked_ToolbarButtonWebcams(),
                 ToolbarItemOrder.Primary)
             {

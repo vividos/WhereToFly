@@ -14,12 +14,12 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Import layer"
-                     IconImageSource="{local:Image layers_plus}"
+                     IconImageSource="layers_plus.png"
                      Command="{Binding ImportLayerCommand}"
                      Order="Primary" Priority="0" />
 
         <ToolbarItem Text="Delete layer list"
-                     IconImageSource="{local:Image delete_forever}"
+                     IconImageSource="delete_forever.png"
                      Command="{Binding DeleteLayerListCommand}"
                      IsDestructive="True"
                      Order="Primary" Priority="1" />

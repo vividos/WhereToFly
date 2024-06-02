@@ -10,12 +10,12 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Set target direction"
-                     IconImageSource="{local:Image compass_rose}"
+                     IconImageSource="compass_rose.png"
                      Command="{Binding SetTargetDirectionCommand}"
                      Order="Primary" Priority="0" />
 
         <ToolbarItem Text="Clear compass target"
-                     IconImageSource="{local:Image close}"
+                     IconImageSource="close.png"
                      Command="{Binding ClearCompassTargetCommand}"
                      Order="Primary" Priority="0" />
     </ContentPage.ToolbarItems>

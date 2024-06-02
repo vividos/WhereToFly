@@ -14,20 +14,20 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add icon"
-                     IconImageSource="{local:Image playlist_plus}"
+                     IconImageSource="playlist_plus.png"
                      Command="{Binding AddIconCommand}"
                      Order="Primary" Priority="0" />
 
         <ToolbarItem Text="Add web link"
-                     IconImageSource="{local:Image bookmark_plus_outline}"
+                     IconImageSource="bookmark_plus_outline.png"
                      Command="{Binding AddWebLinkCommand}"
-                     Order="Primary" Priority="0" />
+                     Order="Primary" Priority="1" />
 
         <ToolbarItem Text="Clear all"
-                     IconImageSource="{local:Image delete}"
+                     IconImageSource="delete.png"
                      Command="{Binding ClearAllCommand}"
                      IsDestructive="True"
-                     Order="Primary" Priority="1" />
+                     Order="Primary" Priority="2" />
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
