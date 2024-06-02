@@ -113,7 +113,7 @@ namespace WhereToFly.App.Services.SqliteDatabase
         public SqliteDatabaseDataService()
         {
             string folder = DeviceInfo.Platform == DevicePlatform.Unknown
-                ? Path.GetDirectoryName(this.GetType().Assembly.Location)
+                ? System.AppContext.BaseDirectory
                 : FileSystem.AppDataDirectory;
 
             string databaseFilename = Path.Combine(

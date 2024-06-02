@@ -106,8 +106,8 @@ namespace WhereToFly.App.Views
         /// <returns>task to wait on</returns>
         private static async Task PasteAlpthermUsernamePassword(WebView webView)
         {
-            string username = await SecureStorage.GetAsync(Constants.SecureSettingsAlpthermUsername);
-            string password = await SecureStorage.GetAsync(Constants.SecureSettingsAlpthermPassword);
+            string? username = await SecureStorage.GetAsync(Constants.SecureSettingsAlpthermUsername);
+            string? password = await SecureStorage.GetAsync(Constants.SecureSettingsAlpthermPassword);
 
             if (string.IsNullOrEmpty(username) &&
                 string.IsNullOrEmpty(password))

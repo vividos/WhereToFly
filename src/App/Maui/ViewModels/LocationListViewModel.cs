@@ -426,11 +426,10 @@ namespace WhereToFly.App.ViewModels
                 var options = new PickOptions
                 {
                     FileTypes = new FilePickerFileType(
-                        new Dictionary<DevicePlatform, IEnumerable<string>?>
+                        new Dictionary<DevicePlatform, IEnumerable<string>>
                         {
-                            { DevicePlatform.Android, null },
-                            { DevicePlatform.UWP, new string[] { ".kml", ".kmz", ".gpx", ".cup" } },
-                            { DevicePlatform.iOS, null },
+                            { DevicePlatform.Android, new string[] { } },
+                            { DevicePlatform.WinUI, new string[] { ".kml", ".kmz", ".gpx", ".cup" } },
                         }),
                     PickerTitle = "Select a Location file to import",
                 };

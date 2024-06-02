@@ -263,11 +263,10 @@ namespace WhereToFly.App.ViewModels
                 var options = new PickOptions
                 {
                     FileTypes = new FilePickerFileType(
-                        new Dictionary<DevicePlatform, IEnumerable<string>?>
+                        new Dictionary<DevicePlatform, IEnumerable<string>>
                         {
-                            { DevicePlatform.Android, null },
-                            { DevicePlatform.UWP, new string[] { ".kml", ".kmz", ".gpx", ".igc" } },
-                            { DevicePlatform.iOS, null },
+                            { DevicePlatform.Android, new string[] { } },
+                            { DevicePlatform.WinUI, new string[] { ".kml", ".kmz", ".gpx", ".igc" } },
                         }),
                     PickerTitle = "Select a Track file to import",
                 };

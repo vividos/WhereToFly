@@ -146,7 +146,7 @@ namespace WhereToFly.App.Controls
         /// Selects a color frame based on the given color
         /// </summary>
         /// <param name="color">color value</param>
-        private void SelectColor(Color color)
+        private void SelectColor(Color? color)
         {
             int selectedIndex = color != null
                 ? Array.IndexOf(AllColorPickerColors, color.ToHex().TrimStart('#'))

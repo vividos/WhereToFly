@@ -447,7 +447,10 @@ namespace WhereToFly.App.Services.SqliteDatabase
                 var trackEntryList = await this.connection.QueryAsync<TrackEntry>(
                     "select filename from tracks");
 
-                trackEntryList.ToList().ForEach(trackEntry => File.Delete(trackEntry.TrackPointFilename));
+                trackEntryList
+                    .Where(trackEntry => trackEntry.TrackPointFilename != null)
+                    .ToList()
+                    .ForEach(trackEntry => File.Delete(trackEntry.TrackPointFilename!));
 
                 await this.connection.DeleteAllAsync<TrackEntry>();
 

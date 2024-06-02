@@ -232,6 +232,11 @@ namespace WhereToFly.App.Services
             try
             {
                 using var stream = await Assets.Get(FaviconUrlCacheFilename);
+                if (stream == null)
+                {
+                    return new Dictionary<string, string>();
+                }
+
                 using var reader = new StreamReader(stream);
                 string json = await reader.ReadToEndAsync();
 
@@ -255,6 +260,11 @@ namespace WhereToFly.App.Services
             try
             {
                 using var stream = await Assets.Get("weathericons.json");
+                if (stream == null)
+                {
+                    return Enumerable.Empty<WeatherIconDescription>();
+                }
+
                 using var reader = new StreamReader(stream);
                 string json = await reader.ReadToEndAsync();
 

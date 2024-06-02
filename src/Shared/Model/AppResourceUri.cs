@@ -83,13 +83,8 @@ namespace WhereToFly.Shared.Model
         /// Property that returns if the URI is a track resource uri
         /// </summary>
         public bool IsTrackResourceType
-        {
-            get
-            {
-                return this.Type == ResourceType.TestLiveTrack ||
-                    this.Type == ResourceType.GarminInreachLiveTrack;
-            }
-        }
+            => this.Type is ResourceType.TestLiveTrack
+            or ResourceType.GarminInreachLiveTrack;
 
         /// <summary>
         /// Resource type of the app resource URI; invalid when it contains None.
@@ -108,10 +103,7 @@ namespace WhereToFly.Shared.Model
         /// <param name="uriToParse">URI to parse</param>
         public AppResourceUri(string? uriToParse)
         {
-            if (uriToParse == null)
-            {
-                throw new ArgumentNullException(nameof(uriToParse));
-            }
+            ArgumentNullException.ThrowIfNull(uriToParse);
 
             this.uri = new Uri(uriToParse);
             this.ParseUri(this.uri);
@@ -162,7 +154,8 @@ namespace WhereToFly.Shared.Model
         {
             foreach (object? item in Enum.GetValues(typeof(ResourceType)))
             {
-                if (item.ToString().ToLowerInvariant() == resourceType)
+                if (item != null &&
+                    item.ToString()?.ToLowerInvariant() == resourceType)
                 {
                     return (ResourceType)item;
                 }
@@ -193,21 +186,24 @@ namespace WhereToFly.Shared.Model
         /// Returns hash code for app resource URI
         /// </summary>
         /// <returns>calculated hash code</returns>
-        public override int GetHashCode() => this.uri.GetHashCode();
+        public override int GetHashCode()
+            => this.uri.GetHashCode();
 
         /// <summary>
         /// Compares this app resource URI to another object
         /// </summary>
         /// <param name="obj">object to compare to</param>
         /// <returns>true when equal URIs, false when not</returns>
-        public override bool Equals(object obj) => obj is AppResourceUri other && this.Equals(other);
+        public override bool Equals(object? obj)
+            => obj is AppResourceUri other && this.Equals(other);
 
         /// <summary>
         /// Compares this app resource URI to another app resource URI
         /// </summary>
         /// <param name="other">other URI to compare to</param>
         /// <returns>true when equal URIs, false when not</returns>
-        public bool Equals(AppResourceUri other) =>
+        public bool Equals(AppResourceUri? other)
+            => other is not null &&
             this.uri == other.uri;
 
         /// <summary>
@@ -216,7 +212,8 @@ namespace WhereToFly.Shared.Model
         /// <param name="left">left operator argument</param>
         /// <param name="right">right operator argument</param>
         /// <returns>true when objects are equal, false when not</returns>
-        public static bool operator ==(AppResourceUri left, AppResourceUri right) => Equals(left, right);
+        public static bool operator ==(AppResourceUri left, AppResourceUri right)
+            => Equals(left, right);
 
         /// <summary>
         /// Inequality operator

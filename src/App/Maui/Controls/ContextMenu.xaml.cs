@@ -75,7 +75,10 @@ namespace WhereToFly.App.Controls
         {
             base.OnParentSet();
 
-            this.Parent.BindingContextChanged += this.OnParentBindingContextChanged;
+            if (this.Parent != null)
+            {
+                this.Parent.BindingContextChanged += this.OnParentBindingContextChanged;
+            }
         }
 
         /// <summary>

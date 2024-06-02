@@ -173,7 +173,13 @@ namespace WhereToFly.App.ViewModels
         /// <param name="viewModel">location view model to remove</param>
         internal void RemoveLocation(PlanTourListEntryViewModel viewModel)
         {
-            var locationViewModel = this.PlanTourList.FirstOrDefault(viewModelToCheck => viewModelToCheck.Id == viewModel.Id);
+            var locationViewModel = this.PlanTourList.FirstOrDefault(
+                viewModelToCheck => viewModelToCheck.Id == viewModel.Id);
+
+            if (locationViewModel == null)
+            {
+                return;
+            }
 
             this.PlanTourList.Remove(locationViewModel);
             this.OnPropertyChanged(nameof(this.PlanTourList));
@@ -227,10 +233,13 @@ namespace WhereToFly.App.ViewModels
             await AddTrack(track);
 
             var location = StartWaypointFromPlannedTour(plannedTour);
-            await this.AddLocation(location);
+            if (location != null)
+            {
+                await this.AddLocation(location);
 
-            var appMapService = DependencyService.Get<IAppMapService>();
-            appMapService.MapView.AddLocation(location);
+                var appMapService = DependencyService.Get<IAppMapService>();
+                appMapService.MapView.AddLocation(location);
+            }
 
             this.planTourParameters.WaypointIdList.Clear();
 
@@ -346,10 +355,16 @@ namespace WhereToFly.App.ViewModels
         /// Creates a starting waypoint from planned tour, including description
         /// </summary>
         /// <param name="plannedTour">planned tour</param>
-        /// <returns>newly created start location</returns>
-        private static Location StartWaypointFromPlannedTour(PlannedTour plannedTour)
+        /// <returns>
+        /// newly created start location, or null when the tour contains no map points
+        /// </returns>
+        private static Location? StartWaypointFromPlannedTour(PlannedTour plannedTour)
         {
             var startPoint = plannedTour.MapPointList.FirstOrDefault();
+            if (startPoint == null)
+            {
+                return null;
+            }
 
             return new Location(
                 Guid.NewGuid().ToString("B"),

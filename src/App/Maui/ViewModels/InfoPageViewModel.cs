@@ -98,6 +98,11 @@ namespace WhereToFly.App.ViewModels
         private static async Task<string> GetHtmlText(string markdownFilename)
         {
             using var stream = await Assets.Get(markdownFilename);
+            if (stream == null)
+            {
+                return string.Empty;
+            }
+
             using var reader = new StreamReader(stream);
             string markdownText = await reader.ReadToEndAsync();
 

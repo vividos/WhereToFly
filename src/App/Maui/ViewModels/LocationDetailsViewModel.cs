@@ -66,7 +66,7 @@ namespace WhereToFly.App.ViewModels
             get
             {
                 string key = $"LocationType_{this.location.Type}";
-                return Strings.ResourceManager.GetString(key);
+                return Strings.ResourceManager.GetString(key) ?? "???";
             }
         }
 
@@ -205,7 +205,7 @@ namespace WhereToFly.App.ViewModels
             this.ShareLocationCommand = new AsyncCommand(this.OnShareLocationAsync);
             this.DeleteLocationCommand = new AsyncCommand(this.OnDeleteLocationAsync);
 
-            if (Uri.TryCreate(this.InternetLink, UriKind.Absolute, out Uri _))
+            if (Uri.TryCreate(this.InternetLink, UriKind.Absolute, out Uri? _))
             {
                 this.InternetLinkTappedCommand = new AsyncCommand(this.OnInternetLinkTappedAsync);
             }

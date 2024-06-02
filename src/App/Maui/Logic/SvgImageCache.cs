@@ -113,15 +113,21 @@ namespace WhereToFly.App.Logic
         /// <returns>SVG image xml text, or null when it couldn't be loaded</returns>
         public async Task<string?> GetSvgImage(string imagePath)
         {
-            if (this.allImages.ContainsKey(imagePath))
+            if (this.allImages.TryGetValue(imagePath, out string? cachedSvgImageText) &&
+                cachedSvgImageText != null)
             {
-                return this.allImages[imagePath];
+                return cachedSvgImageText;
             }
 
             string? svgText = null;
             try
             {
                 using var stream = await Assets.Get(imagePath);
+                if (stream == null)
+                {
+                    return null;
+                }
+
                 using var reader = new StreamReader(stream);
                 svgText = await reader.ReadToEndAsync();
             }

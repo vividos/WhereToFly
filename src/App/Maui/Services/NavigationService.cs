@@ -190,7 +190,7 @@ namespace WhereToFly.App.Services
                 var mainPage = App.Current?.MainPage
                     ?? throw new InvalidOperationException("MainPage is not available");
 
-                mainPage!.ShowPopup(popupPage);
+                await mainPage.ShowPopupAsync(popupPage);
             }
             else
             {

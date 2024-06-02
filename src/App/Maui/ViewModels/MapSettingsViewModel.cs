@@ -134,16 +134,18 @@ namespace WhereToFly.App.ViewModels
         /// <summary>
         /// Currently selected map imagery type
         /// </summary>
-        public MapImageryTypeViewModel SelectedMapImageryType
+        public MapImageryTypeViewModel? SelectedMapImageryType
         {
             get
             {
-                return this.MapImageryTypeItems.Find(x => x.Value == this.appSettings.MapImageryType);
+                return this.MapImageryTypeItems.Find(
+                    x => x.Value == this.appSettings.MapImageryType);
             }
 
             set
             {
-                if (this.appSettings.MapImageryType != value.Value)
+                if (value?.Value != null &&
+                    this.appSettings.MapImageryType != value.Value)
                 {
                     this.appSettings.MapImageryType = value.Value;
                     Task.Run(this.SaveSettingsAsync);
@@ -162,16 +164,18 @@ namespace WhereToFly.App.ViewModels
         /// <summary>
         /// Currently selected map overlay type
         /// </summary>
-        public MapOverlayTypeViewModel SelectedMapOverlayType
+        public MapOverlayTypeViewModel? SelectedMapOverlayType
         {
             get
             {
-                return this.MapOverlayTypeItems.Find(x => x.Value == this.appSettings.MapOverlayType);
+                return this.MapOverlayTypeItems.Find(
+                    x => x.Value == this.appSettings.MapOverlayType);
             }
 
             set
             {
-                if (this.appSettings.MapOverlayType != value.Value)
+                if (value?.Value != null &&
+                    this.appSettings.MapOverlayType != value.Value)
                 {
                     this.appSettings.MapOverlayType = value.Value;
                     Task.Run(async () =>
@@ -198,16 +202,18 @@ namespace WhereToFly.App.ViewModels
         /// <summary>
         /// Currently selected coordinate display format
         /// </summary>
-        public CoordinateDisplayFormatViewModel SelectedCoordinateDisplayFormatItem
+        public CoordinateDisplayFormatViewModel? SelectedCoordinateDisplayFormatItem
         {
             get
             {
-                return this.CoordinateDisplayFormatItems.Find(x => x.Value == this.appSettings.CoordinateDisplayFormat);
+                return this.CoordinateDisplayFormatItems.Find(
+                    x => x.Value == this.appSettings.CoordinateDisplayFormat);
             }
 
             set
             {
-                if (this.appSettings.CoordinateDisplayFormat != value.Value)
+                if (value?.Value != null &&
+                    this.appSettings.CoordinateDisplayFormat != value.Value)
                 {
                     this.appSettings.CoordinateDisplayFormat = value.Value;
                     Task.Run(async () => await this.SaveSettingsAsync());
@@ -226,16 +232,18 @@ namespace WhereToFly.App.ViewModels
         /// <summary>
         /// Currently selected map shading mode
         /// </summary>
-        public MapShadingModeViewModel SelectedMapShadingModeItem
+        public MapShadingModeViewModel? SelectedMapShadingModeItem
         {
             get
             {
-                return this.MapShadingModeItems.Find(x => x.Value == this.appSettings.ShadingMode);
+                return this.MapShadingModeItems.Find(
+                    x => x.Value == this.appSettings.ShadingMode);
             }
 
             set
             {
-                if (this.appSettings.ShadingMode != value.Value)
+                if (value?.Value != null &&
+                    this.appSettings.ShadingMode != value.Value)
                 {
                     this.appSettings.ShadingMode = value.Value;
                     Task.Run(async () => await this.SaveSettingsAsync());

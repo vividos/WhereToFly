@@ -51,16 +51,18 @@ namespace WhereToFly.App.ViewModels
         /// <summary>
         /// Currently selected app theme
         /// </summary>
-        public AppThemeViewModel SelectedAppTheme
+        public AppThemeViewModel? SelectedAppTheme
         {
             get
             {
-                return this.AppThemeItems.Find(x => x.Value == this.appSettings.AppTheme);
+                return this.AppThemeItems.Find(
+                    x => x.Value == this.appSettings.AppTheme);
             }
 
             set
             {
-                if (this.appSettings.AppTheme != value.Value)
+                if (value?.Value != null &&
+                    this.appSettings.AppTheme != value.Value)
                 {
                     this.appSettings.AppTheme = value.Value;
                     App.Settings!.AppTheme = value.Value;
@@ -103,10 +105,16 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         private async Task LoadDataAsync()
         {
-            this.AlpthermUsername = await SecureStorage.GetAsync(Constants.SecureSettingsAlpthermUsername);
+            this.AlpthermUsername =
+                await SecureStorage.GetAsync(Constants.SecureSettingsAlpthermUsername)
+                ?? string.Empty;
+
             this.OnPropertyChanged(nameof(this.AlpthermUsername));
 
-            this.AlpthermPassword = await SecureStorage.GetAsync(Constants.SecureSettingsAlpthermPassword);
+            this.AlpthermPassword =
+                await SecureStorage.GetAsync(Constants.SecureSettingsAlpthermPassword)
+                ?? string.Empty;
+
             this.OnPropertyChanged(nameof(this.AlpthermPassword));
         }
 

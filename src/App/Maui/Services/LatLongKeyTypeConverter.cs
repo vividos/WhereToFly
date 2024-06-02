@@ -33,7 +33,7 @@ namespace WhereToFly.App.Services
         /// <param name="culture">culture; unused</param>
         /// <param name="value">string value to convert</param>
         /// <returns>converted LatLongKey object</returns>
-        public override object ConvertFrom(
+        public override object? ConvertFrom(
             ITypeDescriptorContext? context,
             CultureInfo? culture,
             object value)
@@ -58,10 +58,10 @@ namespace WhereToFly.App.Services
         /// <param name="value">LatLongKey value to convert</param>
         /// <param name="destinationType">destination type</param>
         /// <returns>converted string</returns>
-        public override object ConvertTo(
-            ITypeDescriptorContext context,
-            CultureInfo culture,
-            object value,
+        public override object? ConvertTo(
+            ITypeDescriptorContext? context,
+            CultureInfo? culture,
+            object? value,
             Type destinationType)
         {
             if (value is LatLongKey key &&

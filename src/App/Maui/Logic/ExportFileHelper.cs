@@ -36,7 +36,7 @@ namespace WhereToFly.App.Logic
 
             try
             {
-                File.WriteAllBytes(exportPath, data);
+                await File.WriteAllBytesAsync(exportPath, data);
 
                 await ShareFile(exportPath, "application/vnd.google-earth.kmz");
             }
@@ -95,7 +95,10 @@ namespace WhereToFly.App.Logic
         /// </returns>
         private static async Task<string?> AskUserExportFilenameAsync(string exportFilename)
         {
-            string editedExportFilename = await App.Current.MainPage.DisplayPromptAsync(
+            var mainPage = App.Current?.MainPage
+                ?? throw new InvalidOperationException("MainPage is not available");
+
+            string editedExportFilename = await mainPage.DisplayPromptAsync(
                 Constants.AppTitle,
                 "Export filename",
                 "Export",

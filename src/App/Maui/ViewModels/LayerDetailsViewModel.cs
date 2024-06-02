@@ -35,7 +35,7 @@ namespace WhereToFly.App.ViewModels
             get
             {
                 string key = $"LayerType_{this.layer.LayerType}";
-                return Strings.ResourceManager.GetString(key);
+                return Strings.ResourceManager.GetString(key) ?? "???";
             }
         }
 

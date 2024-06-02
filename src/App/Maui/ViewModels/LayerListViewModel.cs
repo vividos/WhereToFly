@@ -219,11 +219,10 @@ namespace WhereToFly.App.ViewModels
                 var options = new PickOptions
                 {
                     FileTypes = new FilePickerFileType(
-                        new Dictionary<DevicePlatform, IEnumerable<string>?>
+                        new Dictionary<DevicePlatform, IEnumerable<string>>
                         {
-                            { DevicePlatform.Android, null },
-                            { DevicePlatform.UWP, new string[] { ".czml" } },
-                            { DevicePlatform.iOS, null },
+                            { DevicePlatform.Android, new string[] { } },
+                            { DevicePlatform.WinUI, new string[] { ".czml" } },
                         }),
                     PickerTitle = "Select a CZML layer file to import",
                 };
@@ -263,11 +262,10 @@ namespace WhereToFly.App.ViewModels
                 var options = new PickOptions
                 {
                     FileTypes = new FilePickerFileType(
-                        new Dictionary<DevicePlatform, IEnumerable<string>?>
+                        new Dictionary<DevicePlatform, IEnumerable<string>>
                         {
                             { DevicePlatform.Android, new string[] { "text/plain" } },
-                            { DevicePlatform.UWP, new string[] { ".txt" } },
-                            { DevicePlatform.iOS, null },
+                            { DevicePlatform.WinUI, new string[] { ".txt" } },
                         }),
                     PickerTitle = "Select an OpenAir text file to import",
                 };

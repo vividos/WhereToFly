@@ -538,7 +538,7 @@ namespace WhereToFly.App.Logic
             string czml;
             using (var streamReader = new StreamReader(stream))
             {
-                czml = streamReader.ReadToEnd();
+                czml = await streamReader.ReadToEndAsync();
             }
 
             await AddLayerFromCzml(czml, filename, string.Empty);
@@ -718,8 +718,8 @@ namespace WhereToFly.App.Logic
             json = json.Trim();
 
             // check for object or array syntax
-            if ((!json.StartsWith("{") || !json.EndsWith("}")) &&
-                (!json.StartsWith("[") || !json.EndsWith("]")))
+            if ((!json.StartsWith('{') || !json.EndsWith('}')) &&
+                (!json.StartsWith('[') || !json.EndsWith(']')))
             {
                 return false;
             }

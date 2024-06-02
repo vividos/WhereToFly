@@ -54,7 +54,7 @@ namespace WhereToFly.App.ViewModels
         /// </summary>
         public bool IsValidWebLink
         {
-            get => Uri.TryCreate(this.WebLink, UriKind.Absolute, out Uri _);
+            get => Uri.TryCreate(this.WebLink, UriKind.Absolute, out Uri? _);
         }
         #endregion
 
