@@ -18,20 +18,9 @@ format and parse JSON objects.
 The component is licensed using the
 [MIT License](https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md).
 
-The app uses the [Xamarin.Essentials](https://github.com/xamarin/Essentials) library to
-access all sorts of platform specific APIs.
-The library is licensed using the
-[MIT License](https://github.com/xamarin/Essentials/blob/master/LICENSE).
-
-The app uses the [Xamarin Community Toolkit](https://github.com/xamarin/XamarinCommunityToolkit)
+The app uses the [.NET MAUI Community Toolkit](https://github.com/CommunityToolkit/Maui)
 library. The library is licensed using the
-[MIT License](https://github.com/xamarin/XamarinCommunityToolkit/blob/main/LICENSE).
-
-The app uses the following [Xamarin Plugins](https://github.com/jamesmontemagno/Xamarin.Plugins):
-- Xam.Plugin.Geolocator: Geo-location of user
-
-All plugins are licensed using the
-[MIT License](https://github.com/jamesmontemagno/GeolocatorPlugin/blob/master/LICENSE).
+[MIT License](https://github.com/CommunityToolkit/Maui?tab=MIT-1-ov-file).
 
 The app uses the [Markdig](https://github.com/lunet-io/markdig)
 library to format MarkDown as HTML.
@@ -53,15 +42,10 @@ HTML content.
 The library is licensed using the
 [MIT License](https://github.com/zzzprojects/html-agility-pack/blob/master/LICENSE).
 
-The app uses the [Rg.Plugins.Popup](https://github.com/rotorgames/Rg.Plugins.Popup)
-library to show popup dialogs.
-The library is licensed using the
-[MIT License](https://github.com/rotorgames/Rg.Plugins.Popup/blob/master/LICENSE.md).
-
-The app uses the [Xamarin.FFImageLoading](https://github.com/luberda-molinet/FFImageLoading)
+The app uses the [FFImageLoading.Maui](https://github.com/microspaze/FFImageLoading.Maui)
 library to show and cache SVG images.
 The library is licensed using the
-[MIT License](https://github.com/luberda-molinet/FFImageLoading/blob/master/LICENSE.md).
+[MIT License](https://github.com/microspaze/FFImageLoading.Maui?tab=MIT-1-ov-file).
 
 The app uses the [sqlite-net](https://github.com/praeclarum/sqlite-net)
 library to store all data.

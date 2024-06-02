@@ -4,7 +4,7 @@ Here are all the version images of previous Where-to-fly versions.
 
 ## Current version
 
-![](src/App/Resources/Assets/info/version.jpg)
+![](src/App/Maui/Resources/Raw/info/version.jpg)
 
 Soaring at Wallberg, Tegernsee, Germany.
 
