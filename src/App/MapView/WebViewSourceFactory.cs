@@ -1,40 +1,46 @@
-﻿using System.Threading.Tasks;
-#if NET7_0_OR_GREATER
-using Microsoft.Maui.Controls;
-#else
-using Xamarin.Forms;
-#endif
+﻿using Microsoft.Maui.Controls;
+using System.Threading.Tasks;
 
 namespace WhereToFly.App.MapView
 {
     /// <summary>
-    /// Factory for WebViewService instances
+    /// Factory for WebViewSource instances
     /// </summary>
-    internal partial class WebViewSourceFactory
+    internal static class WebViewSourceFactory
     {
         /// <summary>
-        /// Backing store for the factory instance
+        /// Base URL for WebLib library in WebView
         /// </summary>
-        private static WebViewSourceFactory? instance;
+#pragma warning disable S1075 // URIs should not be hardcoded
+#if WINDOWS
+        private static readonly string WebLibWebViewBaseUrl = "https://appdir/weblib/";
+#elif ANDROID
+        private static readonly string WebLibWebViewBaseUrl = "https://appassets.androidplatform.net/assets/weblib/";
+#endif
+#pragma warning restore S1075 // URIs should not be hardcoded
 
         /// <summary>
-        /// Returns the web view source factory instance
-        /// </summary>
-        public static WebViewSourceFactory Instance
-            => instance ??= new WebViewSourceFactory();
-
-        /// <summary>
-        /// Returns web view source for the MapView control
+        /// Returns HTML web view source for <see cref="MapView"/>
         /// </summary>
         /// <returns>web view source</returns>
-        public Task<WebViewSource> GetMapViewSource()
-            => this.PlatformGetMapViewSource();
+        public static WebViewSource GetMapViewSource()
+        {
+            return new UrlWebViewSource
+            {
+                Url = WebLibWebViewBaseUrl + "mapView.html",
+            };
+        }
 
         /// <summary>
-        /// Returns web view source for the HeightProfileView control
+        /// Returns HTML web view source for <see cref="HeightProfileView"/>
         /// </summary>
         /// <returns>web view source</returns>
-        public Task<WebViewSource> GetHeightProfileViewSource()
-            => this.PlatformGetHeightProfileViewSource();
+        public static WebViewSource GetHeightProfileViewSource()
+        {
+            return new UrlWebViewSource
+            {
+                Url = WebLibWebViewBaseUrl + "heightProfileView.html",
+            };
+        }
     }
 }

@@ -1,11 +1,7 @@
-﻿using System;
+﻿using Microsoft.Maui.Controls;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-#if NET7_0_OR_GREATER
-using Microsoft.Maui.Controls;
-#else
-using Xamarin.Forms;
-#endif
 
 namespace WhereToFly.App.MapView
 {
@@ -41,7 +37,7 @@ namespace WhereToFly.App.MapView
         /// <param name="handler">handler action</param>
         public void RegisterHandler(string functionName, Action<string> handler)
         {
-#if NET7_0_OR_GREATER && WINDOWS
+#if WINDOWS
             // the callback links on Windows are made lowercase by WebView2, so add them here
             // lowercase as well
             functionName = functionName.ToLowerInvariant();

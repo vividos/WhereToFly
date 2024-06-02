@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Maui.ApplicationModel;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Dispatching;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -6,14 +9,6 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using WhereToFly.Geo.Model;
-#if NET7_0_OR_GREATER
-using Microsoft.Maui.ApplicationModel;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Dispatching;
-#else
-using Xamarin.Essentials;
-using Xamarin.Forms;
-#endif
 
 namespace WhereToFly.App.MapView
 {
@@ -99,27 +94,14 @@ namespace WhereToFly.App.MapView
         /// </summary>
         public HeightProfileView()
         {
+            this.Source = WebViewSourceFactory.GetHeightProfileViewSource();
+
             this.RegisterWebViewCallbacks();
 
             this.AutomationId = "HeightProfileView";
 
             this.Navigated += this.OnNavigated;
             this.SizeChanged += this.OnSizeChanged;
-
-            Task.Run(this.InitWebViewSourceAsync);
-        }
-
-        /// <summary>
-        /// Initializes web view source
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task InitWebViewSourceAsync()
-        {
-            WebViewSource webViewSource =
-                await WebViewSourceFactory.Instance.GetHeightProfileViewSource();
-
-            this.Source = webViewSource;
-            this.OnPropertyChanged(nameof(this.Source));
         }
 
         /// <summary>
@@ -296,11 +278,7 @@ namespace WhereToFly.App.MapView
         {
             Debug.WriteLine("run js: " + js.Substring(0, Math.Min(80, js.Length)));
 
-#if NET7_0_OR_GREATER
             this.Dispatcher.DispatchAsync(() => this.Eval(js));
-#else
-            Device.BeginInvokeOnMainThread(() => this.Eval(js));
-#endif
         }
     }
 }

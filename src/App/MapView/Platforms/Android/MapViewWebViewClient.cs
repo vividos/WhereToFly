@@ -1,16 +1,17 @@
-﻿using Android.Runtime;
+﻿using Android.Content;
 using Android.Webkit;
 using AndroidX.WebKit;
+using Microsoft.Maui.Handlers;
+using Microsoft.Maui.Platform;
 using System;
 using System.Diagnostics;
-using Xamarin.Forms.Platform.Android;
 
 namespace WhereToFly.App.MapView
 {
     /// <summary>
     /// WebViewClient implementation for Android
     /// </summary>
-    internal class MapViewWebViewClient : FormsWebViewClient
+    internal class MapViewWebViewClient : MauiWebViewClient
     {
         /// <summary>
         /// Action to log errors
@@ -30,40 +31,18 @@ namespace WhereToFly.App.MapView
         /// <summary>
         /// Creates a new web view client
         /// </summary>
-        /// <param name="renderer">web view renderer</param>
+        /// <param name="context">context where the Android's WebView is running on</param>
+        /// <param name="handler">web view handler</param>
         /// <param name="logErrorAction">action to log errors</param>
         public MapViewWebViewClient(
-            WebViewRenderer renderer,
+            Context context,
+            WebViewHandler handler,
             Action<Exception>? logErrorAction)
-            : base(renderer)
+            : base(handler)
         {
             this.logErrorAction = logErrorAction;
 
             this.corsWebsiteCache.CorsWebsiteHosts.Add("thermal.kk7.ch");
-
-            var context = renderer.Context ?? Android.App.Application.Context;
-
-            this.assetLoader = new WebViewAssetLoader
-                .Builder()
-                .AddPathHandler(
-                    "/assets/",
-                    new WebViewAssetLoader.AssetsPathHandler(context))
-                .Build();
-        }
-
-        /// <summary>
-        /// Constructor needed when the web view client is copied by Java
-        /// </summary>
-        /// <param name="javaReference">java reference</param>
-        /// <param name="transfer">ownership transfer value</param>
-        protected MapViewWebViewClient(
-            IntPtr javaReference,
-            JniHandleOwnership transfer)
-            : base(javaReference, transfer)
-        {
-            this.corsWebsiteCache.CorsWebsiteHosts.Add("thermal.kk7.ch");
-
-            var context = Android.App.Application.Context;
 
             this.assetLoader = new WebViewAssetLoader
                 .Builder()
@@ -80,17 +59,18 @@ namespace WhereToFly.App.MapView
         /// <param name="view">web view</param>
         /// <param name="request">web resource request that failed</param>
         /// <param name="error">web resource error</param>
+        [System.Runtime.Versioning.SupportedOSPlatform("android23.0")]
         public override void OnReceivedError(
-            WebView view,
-            IWebResourceRequest request,
-            WebResourceError error)
+            WebView? view,
+            IWebResourceRequest? request,
+            WebResourceError? error)
         {
-            string errorDescription = error.DescriptionFormatted?.ToString() ?? "N/A";
+            string errorDescription = error?.DescriptionFormatted?.ToString() ?? "N/A";
 
             Debug.WriteLine(
                 "OnReceivedError: method={0} url={1}, error={2}",
-                request.Method,
-                request.Url?.ToString() ?? "N/A",
+                request?.Method,
+                request?.Url?.ToString() ?? "N/A",
                 errorDescription);
 
             base.OnReceivedError(view, request, error);

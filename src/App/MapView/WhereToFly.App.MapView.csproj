@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFrameworks>net8.0-android34.0;net8.0-windows10.0.19041.0</TargetFrameworks>
     <Description>Where-to-fly App MapView</Description>
-    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <UseMaui>true</UseMaui>
+    <SingleProject>true</SingleProject>
   </PropertyGroup>
 
   <!-- NuGet package properties -->
@@ -17,9 +17,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Remove="**" />
-    <Compile Include="*.cs" />
-    <Compile Include="maui\*.cs" />
     <None Include="Readme.md" Pack="true" PackagePath="\" />
     <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.40" />
     <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.40" />

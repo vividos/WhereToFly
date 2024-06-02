@@ -1,5 +1,4 @@
-﻿#if ANDROID
-using Android.Webkit;
+﻿using Android.Webkit;
 using Microsoft.Maui.Storage;
 using System;
 using System.Collections.Generic;
@@ -188,4 +187,3 @@ namespace WhereToFly.App.MapView
         }
     }
 }
-#endif

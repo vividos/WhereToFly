@@ -1,4 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Maui;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Devices;
+using Microsoft.Maui.Dispatching;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,16 +12,6 @@ using System.Threading.Tasks;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;
-#if NET7_0_OR_GREATER
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Devices;
-using Microsoft.Maui.Dispatching;
-#else
-using Xamarin.Essentials;
-using Xamarin.Forms;
-using Location = WhereToFly.Geo.Model.Location;
-#endif
 
 // make MapView internals visible to unit tests
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("WhereToFly.App.UnitTest")]
@@ -313,29 +307,11 @@ namespace WhereToFly.App.MapView
         /// </summary>
         public MapView()
         {
-            Task.Run(this.InitSourceAsync);
+            this.Source = WebViewSourceFactory.GetMapViewSource();
+
+            this.Navigated += this.OnNavigated;
 
             this.RegisterWebViewCallbacks();
-        }
-
-        /// <summary>
-        /// Initializes web view source
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task InitSourceAsync()
-        {
-            try
-            {
-                this.Navigated += this.OnNavigated;
-
-                this.Source =
-                    await WebViewSourceFactory.Instance.GetMapViewSource();
-                this.OnPropertyChanged(nameof(this.Source));
-            }
-            catch (Exception ex)
-            {
-                this.LogErrorAction?.Invoke(ex);
-            }
         }
 
         /// <summary>
@@ -1236,11 +1212,7 @@ namespace WhereToFly.App.MapView
                 js = "(async function() { " + js + " })();";
             }
 
-#if NET7_0_OR_GREATER
             this.Dispatcher.DispatchAsync(() => this.Eval(js));
-#else
-            Device.BeginInvokeOnMainThread(() => this.Eval(js));
-#endif
         }
 
         /// <summary>
@@ -1260,14 +1232,8 @@ namespace WhereToFly.App.MapView
                 js = "(async function() { const result = " + js + " })();";
             }
 
-#if NET7_0_OR_GREATER
             string result = await this.Dispatcher.DispatchAsync(
                 () => this.EvaluateJavaScriptAsync(js));
-#else
-
-            string result = await Device.InvokeOnMainThreadAsync(
-                () => this.EvaluateJavaScriptAsync(js));
-#endif
 
             return result;
         }

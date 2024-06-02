@@ -1,5 +1,4 @@
-﻿#if ANDROID
-using Microsoft.Maui;
+﻿using Microsoft.Maui;
 
 namespace WhereToFly.App.MapView
 {
@@ -45,4 +44,3 @@ namespace WhereToFly.App.MapView
         }
     }
 }
-#endif
