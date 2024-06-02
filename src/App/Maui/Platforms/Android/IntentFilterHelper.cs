@@ -1,11 +1,8 @@
-﻿#nullable enable
-using Android.Content;
+﻿using Android.Content;
 using Android.Database;
-using Android.Net;
-using System.IO;
-using System.Net.Http;
+using Uri = Android.Net.Uri;
 
-namespace WhereToFly.App.Android
+namespace WhereToFly.App
 {
     /// <summary>
     /// Helper for intent filter functions

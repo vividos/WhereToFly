@@ -1,12 +1,10 @@
-﻿#nullable enable
-using Android.Content;
+﻿using Android.Content;
 using Android.Content.PM;
 using Android.Graphics;
 using Android.Graphics.Drawables;
 using System;
 using System.Diagnostics;
 using System.IO;
-using Xamarin.Forms;
 
 [assembly: Dependency(typeof(WhereToFly.App.Android.AndroidAppManager))]
 
@@ -59,7 +57,7 @@ namespace WhereToFly.App.Android
                     return false;
                 }
 
-                Xamarin.Essentials.Platform.CurrentActivity.StartActivity(intent);
+                Platform.CurrentActivity?.StartActivity(intent);
 
                 return true;
             }

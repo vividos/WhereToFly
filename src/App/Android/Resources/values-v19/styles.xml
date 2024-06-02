@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<resources>
-  <!-- Style theme for API level 19: take advantage of the translucent navigation and status to go full screen -->
-  <style name="SplashTheme" parent="SplashTheme.Base">
-    <item name="android:windowTranslucentNavigation">true</item>
-    <item name="android:windowTranslucentStatus">true</item>
-  </style>
-</resources>

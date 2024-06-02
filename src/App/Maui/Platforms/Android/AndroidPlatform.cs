@@ -1,11 +1,9 @@
-﻿#nullable enable
-using AndroidX.AppCompat.App;
+﻿using AndroidX.AppCompat.App;
 using System;
-using Xamarin.Forms;
 
-[assembly: Dependency(typeof(WhereToFly.App.Android.AndroidPlatform))]
+[assembly: Dependency(typeof(WhereToFly.App.AndroidPlatform))]
 
-namespace WhereToFly.App.Android
+namespace WhereToFly.App
 {
     /// <summary>
     /// Platform specific functions
@@ -16,21 +14,6 @@ namespace WhereToFly.App.Android
         /// Base path to use in WebView control, for Android
         /// </summary>
         public string WebViewBasePath => "file:///android_asset/";
-
-        /// <summary>
-        /// Sets app theme to use for platform. This ensures that platform dependent dialogs are
-        /// themed correctly when switching themes.
-        /// </summary>
-        /// <param name="requestedTheme">requested theme</param>
-        public void SetPlatformTheme(OSAppTheme requestedTheme)
-        {
-            AppCompatDelegate.DefaultNightMode = requestedTheme switch
-            {
-                OSAppTheme.Dark => AppCompatDelegate.ModeNightYes,
-                OSAppTheme.Light => AppCompatDelegate.ModeNightNo,
-                _ => AppCompatDelegate.ModeNightFollowSystem,
-            };
-        }
 
         /// <summary>
         /// Translates the compass' magnetic north heading (e.g. from Xamarin.Essentials.Compass

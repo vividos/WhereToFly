@@ -116,6 +116,10 @@ namespace WhereToFly.App
             DependencyService.Register<IDataService, Services.SqliteDatabase.SqliteDatabaseDataService>();
             DependencyService.Register<IGeolocationService, GeolocationService>();
             DependencyService.Register<LiveDataRefreshService>();
+
+#if ANDROID
+            DependencyService.Register<IPlatform, AndroidPlatform>();
+#endif
         }
 
         /// <summary>

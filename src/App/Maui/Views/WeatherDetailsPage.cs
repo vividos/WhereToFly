@@ -1,4 +1,5 @@
-﻿using WhereToFly.App.Controls;
+﻿using WhereToFly.App.Behaviors;
+using WhereToFly.App.Controls;
 using WhereToFly.App.Models;
 using WhereToFly.App.Services;
 
@@ -45,8 +46,11 @@ namespace WhereToFly.App.Views
 
                     VerticalOptions = LayoutOptions.Fill,
                     HorizontalOptions = LayoutOptions.Fill,
-                    AutomationId = "WeatherDetailsWebView"
+                    AutomationId = "WeatherDetailsWebView",
                 };
+
+                webView.Behaviors.Add(
+                    new WebViewLongTapToSaveImageBehavior());
 
                 webView.Navigated += async (sender, args) => await this.OnNavigated_WebView(sender, args);
 
