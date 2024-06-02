@@ -3,6 +3,7 @@ using FFImageLoading.Maui;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.LifecycleEvents;
 using SkiaSharp.Views.Maui.Controls.Hosting;
+using WhereToFly.App.Controls;
 using WhereToFly.App.MapView;
 
 namespace WhereToFly.App
@@ -37,6 +38,8 @@ namespace WhereToFly.App
                     WhereToFly.App.WinUI.App.AddLifecycleEvents(events);
 #endif
                 });
+
+            builder = WeatherWebView.UseWeatherWebView(builder);
 
 #if DEBUG
             builder.Logging.AddDebug();
