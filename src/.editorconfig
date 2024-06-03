@@ -338,7 +338,7 @@ dotnet_diagnostic.S3267.severity = none
 dotnet_diagnostic.S3260.severity = none
 
 # S6605: Collection-specific "Exists" method should be used instead of the "Any" extension
-dotnet_diagnostic.S6605.severity = suggestion
+dotnet_diagnostic.S6605.severity = silent
 
 # S6608: Prefer indexing instead of "Enumerable" methods on types implementing "IList"
 dotnet_diagnostic.S6608.severity = suggestion
