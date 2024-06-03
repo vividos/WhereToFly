@@ -25,6 +25,10 @@ indent_size = 2
 [*.csproj]
 indent_size = 2
 
+# Props files
+[*.props]
+indent_size = 2
+
 # JavaScript project files
 [*.esproj]
 indent_size = 2
