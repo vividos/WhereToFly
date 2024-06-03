@@ -9,6 +9,11 @@ namespace WhereToFly.App
     public interface IDataService
     {
         /// <summary>
+        /// Task that is completed when database initialiation has finished
+        /// </summary>
+        Task InitCompleteTask { get; }
+
+        /// <summary>
         /// Gets the current app settings object
         /// </summary>
         /// <param name="token">cancellation token</param>

@@ -202,6 +202,8 @@ namespace WhereToFly.App.ViewModels
                 this.IsListRefreshActive = true;
 
                 IDataService dataService = DependencyService.Get<IDataService>();
+                await dataService.InitCompleteTask;
+
                 var locationDataService = dataService.GetLocationDataService();
 
                 this.isListEmpty = await locationDataService.IsListEmpty();

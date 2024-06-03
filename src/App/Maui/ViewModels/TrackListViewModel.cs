@@ -103,6 +103,8 @@ namespace WhereToFly.App.ViewModels
             try
             {
                 IDataService dataService = DependencyService.Get<IDataService>();
+                await dataService.InitCompleteTask;
+
                 var trackDataService = dataService.GetTrackDataService();
 
                 this.trackList = (await trackDataService.GetList()).ToList();

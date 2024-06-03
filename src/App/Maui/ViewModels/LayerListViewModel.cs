@@ -92,6 +92,8 @@ namespace WhereToFly.App.ViewModels
             try
             {
                 IDataService dataService = DependencyService.Get<IDataService>();
+                await dataService.InitCompleteTask;
+
                 var layerDataService = dataService.GetLayerDataService();
 
                 var localLayerList = await layerDataService.GetList();

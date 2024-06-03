@@ -108,6 +108,11 @@ namespace WhereToFly.App.Services.SqliteDatabase
         #endregion
 
         /// <summary>
+        /// Task that is completed when database initialiation has finished
+        /// </summary>
+        public Task InitCompleteTask => this.initCompleteTask;
+
+        /// <summary>
         /// Creates a new data service, opens and initializes database
         /// </summary>
         public SqliteDatabaseDataService()

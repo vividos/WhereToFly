@@ -56,6 +56,7 @@ namespace WhereToFly.App.ViewModels
         private async Task LoadData(string? group)
         {
             var dataService = DependencyService.Get<IDataService>();
+            await dataService.InitCompleteTask;
 
             var weatherIconDescriptionDataService = dataService.GetWeatherIconDescriptionDataService();
             var weatherIconList = await weatherIconDescriptionDataService.GetList();
