@@ -18,7 +18,9 @@ namespace WhereToFly.App.MapView
             return builder
                 .ConfigureMauiHandlers((handlers) =>
                  {
+#if ANDROID || WINDOWS
                      handlers.AddHandler(typeof(MapView), typeof(MapViewHandler));
+#endif
 
 #if ANDROID
                      // Note: Using AppendToMapping() instead of ModifyMapping(), since this would

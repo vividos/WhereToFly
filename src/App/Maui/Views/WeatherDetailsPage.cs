@@ -49,8 +49,10 @@ namespace WhereToFly.App.Views
                     AutomationId = "WeatherDetailsWebView",
                 };
 
+#if ANROID || WINDOWS
                 webView.Behaviors.Add(
                     new WebViewLongTapToSaveImageBehavior());
+#endif
 
                 webView.Navigated += async (sender, args) => await this.OnNavigated_WebView(sender, args);
 

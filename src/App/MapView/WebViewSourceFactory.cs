@@ -16,6 +16,8 @@ namespace WhereToFly.App.MapView
         private static readonly string WebLibWebViewBaseUrl = "https://appdir/weblib/";
 #elif ANDROID
         private static readonly string WebLibWebViewBaseUrl = "https://appassets.androidplatform.net/assets/weblib/";
+#else
+        private static readonly string WebLibWebViewBaseUrl = "https://weblib/";
 #endif
 #pragma warning restore S1075 // URIs should not be hardcoded
 
