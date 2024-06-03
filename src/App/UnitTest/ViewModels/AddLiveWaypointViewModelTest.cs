@@ -12,15 +12,6 @@ namespace WhereToFly.App.UnitTest.ViewModels
     public class AddLiveWaypointPopupViewModelTest
     {
         /// <summary>
-        /// Sets up tests by initializing Xamarin.Forms.Mocks.
-        /// </summary>
-        [TestInitialize]
-        public void SetUp()
-        {
-            Xamarin.Forms.Mocks.MockForms.Init();
-        }
-
-        /// <summary>
         /// Tests default ctor of view model
         /// </summary>
         [TestMethod]

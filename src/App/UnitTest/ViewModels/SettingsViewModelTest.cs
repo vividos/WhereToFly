@@ -13,7 +13,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
     public class SettingsViewModelTest
     {
         /// <summary>
-        /// Sets up tests by initializing app settings object
+        /// Sets up tests by
         /// </summary>
         [TestInitialize]
         public void SetUp()

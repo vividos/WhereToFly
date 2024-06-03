@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net48</TargetFramework>
+    <TargetFramework>net8.0-windows10.0.19041</TargetFramework>
     <Description>Where-to-fly unit tests</Description>
   </PropertyGroup>
 
@@ -9,11 +9,11 @@
     <Content Include="Assets\**\*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Resources\Assets\defaultLayerOpenAir.txt">
+    <Content Include="..\Maui\Resources\Raw\defaultLayerOpenAir.txt">
       <Link>Assets\defaultLayerOpenAir.txt</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Resources\Assets\info\manual.md">
+    <Content Include="..\Maui\Resources\Raw\info\manual.md">
       <Link>Assets\info\manual.md</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -35,18 +35,14 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="3.3.1" />
     <PackageReference Include="MSTest.TestFramework" Version="3.3.1" />
-    <PackageReference Include="SkiaSharp.Views.Forms" Version="2.88.8" />
-    <PackageReference Include="SkiaSharp.Views.Forms.WPF" Version="2.88.8" />
+    <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.8" />
     <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
     <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.8" />
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2662" />
-    <PackageReference Include="Xamarin.Forms.Mocks" Version="4.7.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Geo\WhereToFly.Geo.csproj" />
-    <ProjectReference Include="..\Core\WhereToFly.App.Core.csproj" />
-    <ProjectReference Include="..\Resources\WhereToFly.App.Resources.csproj" />
+    <ProjectReference Include="..\Maui\WhereToFly.App.Maui.csproj" />
   </ItemGroup>
 
 </Project>

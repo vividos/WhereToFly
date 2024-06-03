@@ -1,10 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.Maui.Controls;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using System.Threading.Tasks;
 using WhereToFly.App.Models;
 using WhereToFly.App.Services.SqliteDatabase;
 using WhereToFly.App.ViewModels;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest.ViewModels
 {
@@ -15,13 +15,11 @@ namespace WhereToFly.App.UnitTest.ViewModels
     public class FlyingRangePopupViewModelTest
     {
         /// <summary>
-        /// Sets up tests by initializing Xamarin.Forms.Mocks and DependencyService with
-        /// DataService and Platform.
+        /// Sets up tests
         /// </summary>
         [TestInitialize]
         public void SetUp()
         {
-            Xamarin.Forms.Mocks.MockForms.Init();
             DependencyService.Register<IDataService, SqliteDatabaseDataService>();
             DependencyService.Register<IPlatform, UnitTestPlatform>();
         }

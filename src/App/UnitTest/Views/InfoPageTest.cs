@@ -1,6 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.Maui.Controls;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WhereToFly.App.Views;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest.Views
 {
@@ -11,12 +11,11 @@ namespace WhereToFly.App.UnitTest.Views
     public class InfoPageTest
     {
         /// <summary>
-        /// Sets up tests by initializing Xamarin.Forms.Mocks
+        /// Sets up tests
         /// </summary>
         [TestInitialize]
         public void SetUp()
         {
-            Xamarin.Forms.Mocks.MockForms.Init();
             DependencyService.Register<IPlatform, UnitTestPlatform>();
         }
 

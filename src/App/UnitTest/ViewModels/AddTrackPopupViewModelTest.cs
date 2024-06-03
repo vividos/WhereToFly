@@ -1,7 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WhereToFly.App.ViewModels;
 using WhereToFly.Geo;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest.ViewModels
 {
@@ -12,13 +13,11 @@ namespace WhereToFly.App.UnitTest.ViewModels
     public class AddTrackPopupViewModelTest
     {
         /// <summary>
-        /// Sets up tests by initializing Xamarin.Forms.Mocks and DependencyService with
-        /// DataService.
+        /// Sets up tests
         /// </summary>
         [TestInitialize]
         public void SetUp()
         {
-            Xamarin.Forms.Mocks.MockForms.Init();
             DependencyService.Register<IPlatform, UnitTestPlatform>();
         }
 
@@ -43,7 +42,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
 
             // modify values
             viewModel.TrackName = "Track2";
-            viewModel.SelectedTrackColor = Color.FromHex("#0000FF");
+            viewModel.SelectedTrackColor = Color.FromArgb("#0000FF");
             viewModel.IsFlightTrack = false;
         }
     }

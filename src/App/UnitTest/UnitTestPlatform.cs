@@ -1,6 +1,4 @@
-﻿using Xamarin.Forms;
-
-namespace WhereToFly.App.UnitTest
+﻿namespace WhereToFly.App.UnitTest
 {
     /// <summary>
     /// IPlatform implementation for unit tests
@@ -11,15 +9,6 @@ namespace WhereToFly.App.UnitTest
         /// Returns web view base path; always "about:blank"
         /// </summary>
         public string WebViewBasePath => "about:blank";
-
-        /// <summary>
-        /// Sets app theme to use for platform
-        /// </summary>
-        /// <param name="requestedTheme">requested theme</param>
-        public void SetPlatformTheme(OSAppTheme requestedTheme)
-        {
-            // nothing to do
-        }
 
         /// <summary>
         /// Translates the compass' magnetic north heading (e.g. from Xamarin.Essentials.Compass

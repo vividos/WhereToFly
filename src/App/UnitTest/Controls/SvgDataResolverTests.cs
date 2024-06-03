@@ -1,9 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.Maui.Controls;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using WhereToFly.App.Controls;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest.Controls
 {
@@ -13,15 +14,6 @@ namespace WhereToFly.App.UnitTest.Controls
     [TestClass]
     public class SvgDataResolverTests
     {
-        /// <summary>
-        /// Sets up unit tests by initializing Xamarin.Forms
-        /// </summary>
-        [TestInitialize]
-        public void Setup()
-        {
-            Xamarin.Forms.Mocks.MockForms.Init();
-        }
-
         /// <summary>
         /// Tests calling LoadSvgImage() with a null image source; this must result in a null
         /// SKSvg instance being returned. No exception is thrown.
@@ -95,7 +87,7 @@ namespace WhereToFly.App.UnitTest.Controls
         public async Task TestStreamImageSource_MemoryStream()
         {
             // set up
-            var imageBytes = System.Text.Encoding.UTF8.GetBytes(
+            byte[] imageBytes = Encoding.UTF8.GetBytes(
                 SvgTestImages.TestSvgImageText);
 
             var imageSource = ImageSource.FromStream(
@@ -193,7 +185,9 @@ namespace WhereToFly.App.UnitTest.Controls
         [TestMethod]
         public async Task TestFileImageSource_FileImageSource()
         {
-            var testPath = Path.GetDirectoryName(this.GetType().Assembly.Location);
+            string? testPath = Path.GetDirectoryName(this.GetType().Assembly.Location);
+            Assert.IsNotNull(testPath, "test path must be available");
+
             var imageSource = ImageSource.FromFile(
                 Path.Combine(testPath, "Assets/svg/cog-outline.svg"));
 

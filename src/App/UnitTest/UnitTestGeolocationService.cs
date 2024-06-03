@@ -22,22 +22,26 @@ namespace WhereToFly.App.UnitTest
         }
 
         /// <inheritdoc />
-        public Task<Xamarin.Essentials.Location?> GetPositionAsync(TimeSpan timeout)
+        public Task<Microsoft.Maui.Devices.Sensors.Location?> GetPositionAsync(TimeSpan timeout)
         {
-            return Task.FromResult<Xamarin.Essentials.Location?>(null);
+            return Task.FromResult<Microsoft.Maui.Devices.Sensors.Location?>(null);
         }
 
         /// <inheritdoc />
         public Task<bool> StartListeningAsync()
         {
-            this.PositionChanged?.Invoke(this, new GeolocationEventArgs(new Xamarin.Essentials.Location()));
+            this.PositionChanged?.Invoke(
+                this,
+                new GeolocationEventArgs(
+                    new Microsoft.Maui.Devices.Sensors.Location()));
+
             return Task.FromResult(true);
         }
 
         /// <inheritdoc />
-        public Task StopListeningAsync()
+        public void StopListening()
         {
-            return Task.CompletedTask;
+            // do nothing
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.Maui.Controls;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,7 +8,6 @@ using WhereToFly.App.Models;
 using WhereToFly.App.Services.SqliteDatabase;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest
 {
@@ -18,16 +18,16 @@ namespace WhereToFly.App.UnitTest
     public class SqliteDatabaseDataServiceTest
     {
         /// <summary>
-        /// Sets up tests by initializing Xamarin.Forms.Mocks.
+        /// Sets up tests
         /// </summary>
         [TestInitialize]
         public void SetUp()
         {
-            Xamarin.Forms.Mocks.MockForms.Init();
             DependencyService.Register<IPlatform, UnitTestPlatform>();
 
             // start with a new database
-            string folder = Path.GetDirectoryName(this.GetType().Assembly.Location);
+            string? folder = Path.GetDirectoryName(this.GetType().Assembly.Location);
+            Assert.IsNotNull(folder, "test folder must be available");
 
             string databaseFilename = Path.Combine(
                 folder,

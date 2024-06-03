@@ -45,9 +45,13 @@ namespace WhereToFly.App.UnitTest
             var dict2 = JsonConvert.DeserializeObject<Dictionary<LatLongKey, List<Location>>>(jsonDict);
 
             // check
+            Assert.IsNotNull(key2, "deserialized key must not be null");
+            Assert.IsNotNull(list2, "deserialized list must not be null");
+            Assert.IsNotNull(dict2, "deserialized dictionary must not be null");
+
             Assert.AreEqual(key, key2, "keys must be equal");
             Assert.IsTrue(list.SequenceEqual(list2), "lists must be equal");
-            Assert.IsTrue(dict.Keys.SequenceEqual(dict2?.Keys), "dictionaries must be equal");
+            Assert.IsTrue(dict.Keys.SequenceEqual(dict2.Keys), "dictionaries must be equal");
         }
     }
 }

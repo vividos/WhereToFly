@@ -1,9 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.Maui.Graphics;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using WhereToFly.App.Models;
 using WhereToFly.App.ViewModels;
 using WhereToFly.Geo;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest.ViewModels
 {
@@ -13,15 +13,6 @@ namespace WhereToFly.App.UnitTest.ViewModels
     [TestClass]
     public class CurrentPositionDetailsViewModelTest
     {
-        /// <summary>
-        /// Sets up tests by initializing Xamarin.Forms.Mocks
-        /// </summary>
-        [TestInitialize]
-        public void SetUp()
-        {
-            Xamarin.Forms.Mocks.MockForms.Init();
-        }
-
         /// <summary>
         /// Tests ctor
         /// </summary>
@@ -37,7 +28,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
             Assert.AreEqual(string.Empty, viewModel.Latitude, "latitude text must be correct");
             Assert.AreEqual(string.Empty, viewModel.Altitude, "altitude text must be correct");
             Assert.AreEqual(string.Empty, viewModel.Accuracy, "accuracy text must be correct");
-            Assert.AreEqual(Color.Black, viewModel.PositionAccuracyColor, "accuracy color must be black");
+            Assert.AreEqual(Colors.Black, viewModel.PositionAccuracyColor, "accuracy color must be black");
             Assert.AreEqual("Unknown", viewModel.LastPositionFix, "last position fix text must be correct");
             Assert.AreEqual(0, viewModel.SpeedInKmh, "speed value must be correct");
             Assert.IsFalse(viewModel.IsMagneticNorthHeadingAvail, "initially heading is not available");
@@ -62,9 +53,9 @@ namespace WhereToFly.App.UnitTest.ViewModels
             var viewModel = new CurrentPositionDetailsViewModel(appSettings);
 
             // run
-            var location = new Xamarin.Essentials.Location(48.137222, 11.575556, 512)
+            var location = new Microsoft.Maui.Devices.Sensors.Location(48.137222, 11.575556, 512)
             {
-                AltitudeReferenceSystem = Xamarin.Essentials.AltitudeReferenceSystem.Geoid,
+                AltitudeReferenceSystem = Microsoft.Maui.Devices.Sensors.AltitudeReferenceSystem.Geoid,
                 Accuracy = 42,
                 Course = 64.2,
                 Speed = 4.1,
@@ -81,7 +72,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
             Assert.AreEqual("48° 8' 13\"", viewModel.Latitude, "latitude text must be correct");
             Assert.AreEqual("512", viewModel.Altitude, "altitude text must be correct");
             Assert.AreEqual("42", viewModel.Accuracy, "accuracy text must be correct");
-            Assert.AreEqual(Color.FromHex("#E0E000"), viewModel.PositionAccuracyColor, "accuracy color must be black");
+            Assert.AreEqual(Color.FromArgb("#E0E000"), viewModel.PositionAccuracyColor, "accuracy color must be black");
             Assert.IsTrue(viewModel.LastPositionFix.Length > 0, "last position fix text must contain text");
             Assert.AreEqual(14, viewModel.SpeedInKmh, "speed value must be correct");
             Assert.IsFalse(viewModel.IsMagneticNorthHeadingAvail, "initially magnetic-north heading is not available");
@@ -104,7 +95,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
             var viewModel = new CurrentPositionDetailsViewModel(appSettings);
 
             // run
-            var location = new Xamarin.Essentials.Location(48.137222, 11.575556);
+            var location = new Microsoft.Maui.Devices.Sensors.Location(48.137222, 11.575556);
             viewModel.OnPositionChanged(
                 this,
                 new GeolocationEventArgs(location));

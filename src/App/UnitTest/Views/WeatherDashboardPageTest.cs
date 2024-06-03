@@ -10,16 +10,6 @@ namespace WhereToFly.App.UnitTest.Views
     public class WeatherDashboardPageTest
     {
         /// <summary>
-        /// Sets up tests by initializing Xamarin.Forms.Mocks
-        /// </summary>
-        [TestInitialize]
-        public void SetUp()
-        {
-            Xamarin.Forms.Mocks.MockForms.Init();
-            FFImageLoading.ImageService.EnableMockImageService = true;
-        }
-
-        /// <summary>
         /// Tests default ctor of WeatherDashboardPage
         /// </summary>
         [TestMethod]

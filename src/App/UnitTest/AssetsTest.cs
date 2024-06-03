@@ -21,6 +21,8 @@ namespace WhereToFly.App.UnitTest
         {
             // run
             using var stream = await Assets.Get("info/Changelog.md");
+            Assert.IsNotNull(stream, "stream must be available");
+
             using var reader = new StreamReader(stream);
             string text = await reader.ReadToEndAsync();
 

@@ -1,10 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.Maui.Controls;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Services.SqliteDatabase;
 using WhereToFly.App.ViewModels;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest.ViewModels
 {
@@ -15,12 +15,11 @@ namespace WhereToFly.App.UnitTest.ViewModels
     public class LayerListViewModelTest
     {
         /// <summary>
-        /// Sets up tests by initializing Xamarin.Forms.Mocks, IPlatform and IDataService.
+        /// Sets up tests
         /// </summary>
         [TestInitialize]
         public void SetUp()
         {
-            Xamarin.Forms.Mocks.MockForms.Init();
             DependencyService.Register<IPlatform, UnitTestPlatform>();
             DependencyService.Register<IDataService, SqliteDatabaseDataService>();
             DependencyService.Register<SvgImageCache>();
@@ -40,6 +39,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
 
             // check
             Assert.IsTrue(result, "LayerList property must have been changed");
+            Assert.IsNotNull(viewModel.LayerList, "layer list must be available");
             Assert.IsTrue(viewModel.LayerList.Any(), "layer list must not be empty");
             Assert.IsFalse(viewModel.IsListEmpty, "layer list must not be empty");
             Assert.IsTrue(viewModel.IsClearLayerListEnabled, "layer list must not be empty");

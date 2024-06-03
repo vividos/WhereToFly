@@ -1,11 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.Maui.Controls;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using WhereToFly.App.MapView;
 using WhereToFly.App.Services;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest.MapView
 {
@@ -16,12 +16,11 @@ namespace WhereToFly.App.UnitTest.MapView
     public class MapViewTest
     {
         /// <summary>
-        /// Sets up tests by initializing Xamarin.Forms.Mocks
+        /// Sets up tests
         /// </summary>
         [TestInitialize]
         public void SetUp()
         {
-            Xamarin.Forms.Mocks.MockForms.Init();
             DependencyService.Register<IPlatform, UnitTestPlatform>();
         }
 

@@ -1,9 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 using WhereToFly.App.Controls;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest.Controls
 {
@@ -18,15 +19,6 @@ namespace WhereToFly.App.UnitTest.Controls
         /// </summary>
         private const string ResourceUri =
             "resource://WhereToFly.App.UnitTest.Assets.svg.colibri.svg?assembly=WhereToFly.App.UnitTest";
-
-        /// <summary>
-        /// Sets up unit tests by initializing Xamarin.Forms
-        /// </summary>
-        [TestInitialize]
-        public void Setup()
-        {
-            Xamarin.Forms.Mocks.MockForms.Init();
-        }
 
         /// <summary>
         /// Tests SvgImage default ctor
@@ -93,10 +85,10 @@ namespace WhereToFly.App.UnitTest.Controls
             image.Source = imageSource;
 
             // run
-            image.TintColor = Color.Goldenrod;
+            image.TintColor = Colors.Goldenrod;
 
             // check
-            Assert.AreEqual(Color.Goldenrod, image.TintColor, "tint color must match");
+            Assert.AreEqual(Colors.Goldenrod, image.TintColor, "tint color must match");
         }
     }
 }

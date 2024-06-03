@@ -1,7 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.Maui.Controls;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using WhereToFly.App.Controls;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest.Controls
 {
@@ -11,15 +11,6 @@ namespace WhereToFly.App.UnitTest.Controls
     [TestClass]
     public class SvgImageSourceTypeConverterTests
     {
-        /// <summary>
-        /// Sets up unit tests by initializing Xamarin.Forms
-        /// </summary>
-        [TestInitialize]
-        public void Setup()
-        {
-            Xamarin.Forms.Mocks.MockForms.Init();
-        }
-
         /// <summary>
         /// Tests CanConvertFrom() method
         /// </summary>
@@ -49,8 +40,8 @@ namespace WhereToFly.App.UnitTest.Controls
             var converter = new SvgImageSourceTypeConverter();
 
             // run + check
-            var imageSource1 = converter.ConvertFromInvariantString(null);
-            var imageSource2 = converter.ConvertFromInvariantString(string.Empty);
+            object? imageSource1 = converter.ConvertFromInvariantString(null!);
+            object? imageSource2 = converter.ConvertFromInvariantString(string.Empty);
 
             // check
             Assert.IsNull(imageSource1, "null value must be converted to null ImageSource");
@@ -68,7 +59,7 @@ namespace WhereToFly.App.UnitTest.Controls
 
             // run
             string resourceUri = $"resource://{SvgTestImages.ResourcePathColibriSvg}";
-            var imageSource = converter.ConvertFromInvariantString(resourceUri);
+            object? imageSource = converter.ConvertFromInvariantString(resourceUri);
 
             // check
             Assert.IsNotNull(imageSource, "non-null ImageSource must have been returned");
@@ -87,7 +78,7 @@ namespace WhereToFly.App.UnitTest.Controls
 
             // run
             string resourceUri = $"resource://{SvgTestImages.ResourcePathColibriSvg}?assembly={assembly.GetName().Name}";
-            var imageSource = converter.ConvertFromInvariantString(resourceUri);
+            object? imageSource = converter.ConvertFromInvariantString(resourceUri);
 
             // check
             Assert.IsNotNull(imageSource, "non-null ImageSource must have been returned");
@@ -105,7 +96,7 @@ namespace WhereToFly.App.UnitTest.Controls
 
             // run
             string svgImageText = SvgTestImages.TestSvgImageText;
-            var imageSource = converter.ConvertFromInvariantString(svgImageText);
+            object? imageSource = converter.ConvertFromInvariantString(svgImageText);
 
             // check
             Assert.IsNotNull(imageSource, "non-null ImageSource must have been returned");
@@ -123,7 +114,7 @@ namespace WhereToFly.App.UnitTest.Controls
 
             // run
             string dataUri = SvgConstants.DataUriPlainPrefix + SvgTestImages.TestSvgImageText;
-            var imageSource = converter.ConvertFromInvariantString(dataUri);
+            object? imageSource = converter.ConvertFromInvariantString(dataUri);
 
             // check
             Assert.IsNotNull(imageSource, "non-null ImageSource must have been returned");
@@ -142,7 +133,7 @@ namespace WhereToFly.App.UnitTest.Controls
             // run
             string dataUri = SvgConstants.DataUriBase64Prefix +
                 SvgTestImages.EncodeBase64(SvgTestImages.TestSvgImageText);
-            var imageSource = converter.ConvertFromInvariantString(dataUri);
+            object? imageSource = converter.ConvertFromInvariantString(dataUri);
 
             // check
             Assert.IsNotNull(imageSource, "non-null ImageSource must have been returned");
@@ -178,7 +169,7 @@ namespace WhereToFly.App.UnitTest.Controls
 
             // run
             string filePath = "Assets/svg/colibri.svg";
-            var imageSource = converter.ConvertFromInvariantString(filePath);
+            object? imageSource = converter.ConvertFromInvariantString(filePath);
 
             // check
             Assert.IsNotNull(imageSource, "non-null ImageSource must have been returned");

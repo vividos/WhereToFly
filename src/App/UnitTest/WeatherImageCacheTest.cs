@@ -1,9 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.Maui.Controls;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Models;
 using WhereToFly.App.Services.SqliteDatabase;
-using Xamarin.Forms;
 
 namespace WhereToFly.App.UnitTest
 {
@@ -14,12 +14,11 @@ namespace WhereToFly.App.UnitTest
     public class WeatherImageCacheTest
     {
         /// <summary>
-        /// Sets up tests by initializing Xamarin.Forms.Mocks and app manager instance
+        /// Sets up tests
         /// </summary>
         [TestInitialize]
         public void SetUp()
         {
-            Xamarin.Forms.Mocks.MockForms.Init();
             DependencyService.Register<IAppManager, UnitTestAppManager>();
             DependencyService.Register<IDataService, SqliteDatabaseDataService>();
             DependencyService.Register<SvgImageCache>();
