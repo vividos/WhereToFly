@@ -12,7 +12,7 @@
     <PackageReference Include="Xamarin.UITest" Version="4.3.4" />
   </ItemGroup>
 
-  <PropertyGroup>
+  <PropertyGroup Condition="'$(SonarQubeTargetsImported)' == ''">
     <PostBuildEvent>if "$(ConfigurationName)" == "Debug" echo Info: Even in debug mode, only Release .apk is used.
 if not exist "$(ProjectDir)..\Maui\bin\Release\net8.0-android34.0\de.vividos.app.wheretofly.android.apk" echo Error: File de.vividos.app.wheretofly.android.apk is missing! Please build and deploy the Release version at least once.
 if not exist "$(ProjectDir)..\Maui\bin\Release\net8.0-android34.0\de.vividos.app.wheretofly.android.apk" exit 1
