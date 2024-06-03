@@ -1,4 +1,4 @@
-using HtmlAgilityPack;
+﻿using HtmlAgilityPack;
 
 namespace WhereToFly.App.Logic
 {
@@ -93,7 +93,7 @@ namespace WhereToFly.App.Logic
         /// <param name="fontName">font name for whole text; may be null</param>
         /// <param name="fontSize">font size; used when font name is specified</param>
         /// <returns>HTML text</returns>
-        public static string FromMarkdown(string markdownText, string fontName = "sans-serif", int fontSize = 14)
+        public static string FromMarkdown(string markdownText, string? fontName = "sans-serif", int fontSize = 14)
         {
             string htmlText = Markdig.Markdown.ToHtml(markdownText);
 

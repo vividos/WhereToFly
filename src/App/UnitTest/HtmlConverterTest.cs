@@ -10,13 +10,13 @@ namespace WhereToFly.App.UnitTest
     public class HtmlConverterTest
     {
         /// <summary>
-        /// Tests method FromMarkdown(), with empty text
+        /// Tests method FromMarkdown(), with empty text and no font set
         /// </summary>
         [TestMethod]
         public void TestFromMarkdown_EmptyText()
         {
             // run
-            string html = HtmlConverter.FromMarkdown(string.Empty);
+            string html = HtmlConverter.FromMarkdown(string.Empty, null);
 
             // check
             Assert.IsTrue(html.Length == 0, "html text must also be empty");
