@@ -1,0 +1,49 @@
+# Build for the Where-to-fly Android app
+
+name: Build Android app
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: 'true'
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Prepare app signing
+      uses: timheuer/base64-to-file@v1.2
+      with:
+        fileName: 'keystore.jks'
+        fileDir: 'src/App/Maui/'
+        encodedString: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+
+    - name: Build Android .apk
+      run: >
+        dotnet publish
+        src/App/Maui/WhereToFly.App.Maui.csproj
+        -f net8.0-android34.0
+        -p:AndroidKeyStore=true
+        -p:AndroidPackageFormats=apk
+        -p:AndroidSigningKeyStore=keystore.jks
+        -p:AndroidSigningStorePass=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        -p:AndroidSigningKeyAlias=${{ secrets.ANDROID_KEYSTORE_ALIAS }}
+        -p:AndroidSigningKeyPass=${{ secrets.ANDROID_KEY_PASSWORD }}
+
+    - name: Publish build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: APK file
+        path: src/App/Maui/bin/Release/net8.0-android34.0/publish/de.vividos.app.wheretofly.android-Signed.apk
