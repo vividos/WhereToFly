@@ -219,8 +219,8 @@ namespace WhereToFly.App.Behaviors
             var context = this.webView?.Context
                 ?? global::Android.App.Application.Context;
 
-            var downloadManager = (DownloadManager?)
-                context.GetSystemService(Context.DownloadService);
+            var downloadManager =
+                (DownloadManager?)context.GetSystemService(Context.DownloadService);
 
             downloadManager?.Enqueue(request);
 

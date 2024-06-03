@@ -36,9 +36,11 @@ namespace WhereToFly.App
             IWebResourceRequest? request)
         {
             // always open normal web links in the WebView
+#pragma warning disable S1125 // Boolean literals should not be redundant
             return request?.Url?.Scheme == "https"
                 ? false
                 : base.ShouldOverrideUrlLoading(view, request);
+#pragma warning restore S1125 // Boolean literals should not be redundant
         }
     }
 }
