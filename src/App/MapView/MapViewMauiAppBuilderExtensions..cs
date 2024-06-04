@@ -20,6 +20,7 @@ namespace WhereToFly.App.MapView
                  {
 #if ANDROID || WINDOWS
                      handlers.AddHandler(typeof(MapView), typeof(MapViewHandler));
+                     handlers.AddHandler(typeof(HeightProfileView), typeof(MapViewHandler));
 #endif
 
 #if ANDROID

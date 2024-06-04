@@ -72,17 +72,29 @@ namespace WhereToFly.App.MapView
             IWebViewHandler handler,
             IWebView view)
         {
-            if (view is MapView mapView &&
-                handler is WebViewHandler mauiHandler)
+            if (handler is not WebViewHandler mauiHandler)
             {
-                var context = handler.PlatformView.Context
-                    ?? Android.App.Application.Context;
+                return;
+            }
 
+            var context = handler.PlatformView.Context
+                ?? Android.App.Application.Context;
+
+            if (view is MapView mapView)
+            {
                 handler.PlatformView.SetWebViewClient(
                     new MapViewWebViewClient(
                         context,
                         mauiHandler,
                         mapView.LogErrorAction));
+            }
+
+            if (view is HeightProfileView)
+            {
+                handler.PlatformView.SetWebViewClient(
+                    new HeightProfileViewWebViewClient(
+                        context,
+                        mauiHandler));
             }
         }
     }
