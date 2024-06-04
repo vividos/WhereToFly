@@ -45,7 +45,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.Web.LiveTracking
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.Geo", "Geo\WhereToFly.Geo.csproj", "{C6F67B7C-1893-4E40-8A6D-4665EF86F5B9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.Shared.WebLib", "Shared\WebLib\WhereToFly.Shared.WebLib.esproj", "{B8A5FD37-AB5E-4641-B9A7-E529167F9496}"
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "WhereToFly.Shared.WebLib", "Shared\WebLib\WhereToFly.Shared.WebLib.esproj", "{B8A5FD37-AB5E-4641-B9A7-E529167F9496}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.App.MapView", "App\MapView\WhereToFly.App.MapView.csproj", "{1D18C7D3-F3F3-4830-953B-6C23814BAC9B}"
 EndProject
