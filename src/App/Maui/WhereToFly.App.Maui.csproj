@@ -57,6 +57,12 @@
     </MauiAsset>
   </ItemGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
+    <EmbeddedResource Include="Resources\Raw\**" Link="Resources\Assets\%(RecursiveDir)%(Filename)%(Extension)" />
+    <EmbeddedResource Include="..\..\..\Credits.md" Link="Resources\Assets\info\Credits.md" />
+    <EmbeddedResource Include="..\..\..\Changelog.md" Link="Resources\Assets\info\Changelog.md" />
+  </ItemGroup>
+
   <ItemGroup>
     <Compile Update="Resources\Strings.Designer.cs">
       <DesignTime>True</DesignTime>

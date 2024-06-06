@@ -14,31 +14,15 @@ namespace WhereToFly.App.Resources
         /// <returns>stream, or null when asset file couldn't be found</returns>
         public static async Task<Stream?> Get(string assetRelativeFilename)
         {
-#if NET7_0_OR_GREATER
+#if ANDROID || WINDOWS
             return await Microsoft.Maui.Storage.
                 FileSystem.OpenAppPackageFileAsync(assetRelativeFilename);
-#elif NETSTANDARD
+#else
             string dottedFilename = "WhereToFly.App.Resources.Assets." +
                 assetRelativeFilename.Replace("/", ".");
 
             return typeof(Assets).Assembly.GetManifestResourceStream(
                 dottedFilename);
-#elif MONOANDROID
-            return await Xamarin.Essentials.
-                FileSystem.OpenAppPackageFileAsync(assetRelativeFilename);
-#elif WINDOWS_UWP
-            try
-            {
-                return await Xamarin.Essentials.
-                    FileSystem.OpenAppPackageFileAsync(
-                        "WhereToFly.App.Resources/Assets/" + assetRelativeFilename);
-            }
-            catch (Exception)
-            {
-                return await Xamarin.Essentials.
-                    FileSystem.OpenAppPackageFileAsync(
-                        "WhereToFly.App.MapView/Assets/" + assetRelativeFilename);
-            }
 #endif
         }
     }
