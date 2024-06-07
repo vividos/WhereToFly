@@ -33,9 +33,9 @@
   </ItemGroup>
 
   <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
-    <PackageReference Include="Xamarin.AndroidX.WebKit" Version="1.10.0.2" />
-    <!-- also need this package to fix an error in R8 with the above package -->
-    <PackageReference Include="Xamarin.AndroidX.Fragment.Ktx" Version="1.6.2.3" />
+    <PackageReference Include="Xamarin.AndroidX.WebKit" Version="1.11.0" />
+    <!-- workaround: also need this package to fix an error in R8 with the above package -->
+    <PackageReference Include="Xamarin.AndroidX.Fragment.Ktx" Version="1.7.0" />
   </ItemGroup>
 
 </Project>

@@ -83,13 +83,13 @@
 
   <ItemGroup>
     <PackageReference Include="AsyncAwaitBestPractices.MVVM" Version="7.0.0" />
-    <PackageReference Include="CommunityToolkit.Maui" Version="9.0.0" />
+    <PackageReference Include="CommunityToolkit.Maui" Version="9.0.1" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.61" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
     <PackageReference Include="FFImageLoading.Maui" Version="1.2.5" />
     <PackageReference Include="Markdig" Version="0.37.0" />
-    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.4" />
-    <PackageReference Include="Microsoft.AppCenter.Distribute" Version="5.0.4" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.5" />
+    <PackageReference Include="Microsoft.AppCenter.Distribute" Version="5.0.5" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
     <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.40" />
     <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.40" />
