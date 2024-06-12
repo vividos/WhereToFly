@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;
+using TimeSpan = System.TimeSpan;
 
 namespace WhereToFly.WebApi.Logic.Services
 {
@@ -34,12 +35,12 @@ namespace WhereToFly.WebApi.Logic.Services
         /// <summary>
         /// Minimum distance in time span between two requests to web service
         /// </summary>
-        private static System.TimeSpan minRequestDistance = System.TimeSpan.FromMinutes(1.0);
+        private static readonly TimeSpan MinRequestDistance = TimeSpan.FromMinutes(1.0);
 
         /// <summary>
         /// The minimum tracking time that a Garmin inReach user can have
         /// </summary>
-        private static System.TimeSpan minTrackingInterval = System.TimeSpan.FromMinutes(10.0);
+        private static readonly TimeSpan MinTrackingInterval = TimeSpan.FromMinutes(10.0);
 
         /// <summary>
         /// HTTP client used for requests
@@ -64,12 +65,14 @@ namespace WhereToFly.WebApi.Logic.Services
         public DateTimeOffset GetNextRequestDate(string mapShareIdentifier)
         {
             DateTimeOffset nextSystemWideRequest = this.lastRequest.HasValue
-                ? this.lastRequest.Value + minRequestDistance
+                ? this.lastRequest.Value + MinRequestDistance
                 : DateTimeOffset.Now;
 
-            if (this.lastRequestByMapShareIdentifier.ContainsKey(mapShareIdentifier))
+            if (this.lastRequestByMapShareIdentifier.TryGetValue(
+                mapShareIdentifier,
+                out var lastRequestDate))
             {
-                var nextUserRequest = this.lastRequestByMapShareIdentifier[mapShareIdentifier] + minTrackingInterval;
+                var nextUserRequest = lastRequestDate + MinTrackingInterval;
                 return nextUserRequest < nextSystemWideRequest ? nextSystemWideRequest : nextUserRequest;
             }
 
@@ -132,7 +135,7 @@ namespace WhereToFly.WebApi.Logic.Services
             this.lastRequest = thisRequestTime;
             this.lastRequestByMapShareIdentifier[mapShareIdentifier] = thisRequestTime;
 
-            return this.ParseRawKmlFileTrackData(stream, mapShareIdentifier);
+            return ParseRawKmlFileTrackData(stream, mapShareIdentifier);
         }
 
         /// <summary>
@@ -216,7 +219,7 @@ namespace WhereToFly.WebApi.Logic.Services
         /// <param name="stream">stream to read kml from</param>
         /// <param name="mapShareIdentifier">MapShare identifier used for request</param>
         /// <returns>live track data</returns>
-        internal LiveTrackData ParseRawKmlFileTrackData(
+        internal static LiveTrackData ParseRawKmlFileTrackData(
             Stream stream,
             string mapShareIdentifier)
         {
@@ -327,10 +330,16 @@ namespace WhereToFly.WebApi.Logic.Services
         private static string FormatDescriptionFromPlacemark(Placemark placemark)
         {
             var extendedData =
-                placemark.ExtendedData.Data.ToDictionary(data => data.Name, data => data.Value);
+                placemark.ExtendedData.Data.ToDictionary(
+                    data => data.Name,
+                    data => data.Value);
 
             string inEmergency =
-                extendedData.ContainsKey("In Emergency") ? extendedData["In Emergency"] : "Unknown";
+                extendedData.TryGetValue(
+                    "In Emergency",
+                    out string? value)
+                ? value
+                : "Unknown";
 
             inEmergency = inEmergency.Replace("False", "no")
                 .Replace("false", "no")
@@ -365,8 +374,9 @@ namespace WhereToFly.WebApi.Logic.Services
             Dictionary<TKey, TValue> dict,
             TKey key,
             TValue? defaultValue = default)
+            where TKey : notnull
         {
-            return dict.TryGetValue(key, out TValue value)
+            return dict.TryGetValue(key, out TValue? value)
                 ? value
                 : defaultValue;
         }

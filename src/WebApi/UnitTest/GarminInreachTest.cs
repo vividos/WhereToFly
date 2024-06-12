@@ -61,9 +61,10 @@ namespace WhereToFly.WebApi.UnitTest
             using var stream = new FileStream(filename, FileMode.Open);
 
             // run
-            var dataService = new GarminInreachDataService();
-
-            LiveTrackData data = dataService.ParseRawKmlFileTrackData(stream, "test123");
+            LiveTrackData data =
+                GarminInreachDataService.ParseRawKmlFileTrackData(
+                    stream,
+                    "test123");
 
             // check
             Assert.IsNotNull(data, "returned data must not be null");

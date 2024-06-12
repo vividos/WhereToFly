@@ -135,8 +135,8 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
         {
             var dict = ParseItemList(placemarkDescription);
 
-            if (!dict.TryGetValue(KeyId, out string waypointId) ||
-                !dict.TryGetValue(KeyDescription, out string description))
+            if (!dict.TryGetValue(KeyId, out string? waypointId) ||
+                !dict.TryGetValue(KeyDescription, out string? description))
             {
                 return null;
             }
@@ -196,21 +196,24 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
         {
             var dict = ParseItemList(placemarkDescription);
 
-            dict.TryGetValue(KeyFrom, out string fromId);
-            dict.TryGetValue(KeyTo, out string toId);
-            dict.TryGetValue(KeyDescription, out string description);
-            dict.TryGetValue(KeyReverseDesc, out string reverseDescription);
+            if (!dict.TryGetValue(KeyFrom, out string? fromId) ||
+                !dict.TryGetValue(KeyTo, out string? toId) ||
+                !dict.TryGetValue(KeyDescription, out string? description) ||
+                !dict.TryGetValue(KeyReverseDesc, out string? reverseDescription) ||
+                !dict.TryGetValue(KeyDuration, out string? durationText) ||
+                !dict.TryGetValue(KeyReverseDuration, out string? reverseDurationText))
+            {
+                throw new FormatException(
+                    "placemark description didn't have all necessary items");
+            }
 
-            dict.TryGetValue(KeyDuration, out string durationText);
-            dict.TryGetValue(KeyReverseDuration, out string reverseDurationText);
-
-            var source = this.tourEngine.FindOrCreateWaypointInfo(fromId);
-            var target = this.tourEngine.FindOrCreateWaypointInfo(toId);
+            WaypointInfo source = this.tourEngine.FindOrCreateWaypointInfo(fromId);
+            WaypointInfo target = this.tourEngine.FindOrCreateWaypointInfo(toId);
 
             var trackInfo = new TrackInfo(
                 source,
                 target,
-                description,
+                description ?? string.Empty,
                 ParseDurationText(durationText));
 
             TrackInfo? reverseTrackInfo = null;
@@ -234,12 +237,12 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
         /// <exception cref="FormatException">thrown duration text format wasn't correct</exception>
         private static System.TimeSpan ParseDurationText(string durationText)
         {
-            if (durationText.EndsWith("m") &&
+            if (durationText.EndsWith('m') &&
                 int.TryParse(durationText.TrimEnd('m'), out int durationInMinutes))
             {
                 return System.TimeSpan.FromMinutes(durationInMinutes);
             }
-            else if (durationText.EndsWith("h") &&
+            else if (durationText.EndsWith('h') &&
                 int.TryParse(durationText.TrimEnd('h'), out int durationInHours))
             {
                 return System.TimeSpan.FromHours(durationInHours);
@@ -313,8 +316,8 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
         /// <summary>
         /// Valid item titles in an item list
         /// </summary>
-        private static readonly string[] ItemTitlesList = new string[]
-        {
+        private static readonly string[] ItemTitlesList =
+        [
             KeyId,
             KeyDescription,
             KeyFrom,
@@ -322,7 +325,7 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
             KeyReverseDesc,
             KeyDuration,
             KeyReverseDuration,
-        };
+        ];
 
         /// <summary>
         /// Parses an item list; a multi-line text where lines may start with an item title, e.g.
@@ -367,7 +370,7 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
                 if (!foundItemTitle &&
                     currentItemTitle != null)
                 {
-                    currentItemText.Append("\n");
+                    currentItemText.Append('\n');
                     currentItemText.Append(line.Trim());
                 }
             }

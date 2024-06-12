@@ -89,13 +89,13 @@ namespace WhereToFly.WebApi.Logic
         /// <returns>shortcut icon, or null when none was found</returns>
         private static string? FindShortcutIconInDocument(string baseUri, HtmlDocument htmlDocument)
         {
-            string[] htmlQueriesList = new string[]
-            {
+            string[] htmlQueriesList =
+            [
                 "//link[@rel='apple-touch-icon']",
                 "//link[@rel='apple-touch-icon-precomposed']",
                 "//link[@rel='shortcut icon']",
                 "//link[@rel='icon']",
-            };
+            ];
 
             foreach (string htmlQuery in htmlQueriesList)
             {

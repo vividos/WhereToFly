@@ -72,12 +72,12 @@ namespace WhereToFly.WebApi.Logic
         {
             var importAndPrefixList = new Tuple<string, string>[]
             {
-                new Tuple<string, string>("paraglidingspots-complete.kmz", "pgspots"),
-                new Tuple<string, string>("WanakaHikeFly2022.kmz", "wanakahikefly"),
+                new("paraglidingspots-complete.kmz", "pgspots"),
+                new("WanakaHikeFly2022.kmz", "wanakahikefly"),
             };
 
             var logicAssembly = typeof(LocationFindManager).Assembly;
-            string namespaceName = typeof(LocationFindManager).Namespace;
+            string namespaceName = typeof(LocationFindManager).Namespace!;
 
             foreach (var importAndPrefix in importAndPrefixList)
             {
@@ -86,6 +86,12 @@ namespace WhereToFly.WebApi.Logic
 
                 var kmlStream = logicAssembly.GetManifestResourceStream(
                     $"{namespaceName}.Assets.{importFilename}");
+
+                if (kmlStream == null)
+                {
+                    throw new InvalidOperationException(
+                        $"couldn't import location data from {importFilename}");
+                }
 
                 bool isKml = Path.GetExtension(importFilename).ToLowerInvariant() == "kml";
 

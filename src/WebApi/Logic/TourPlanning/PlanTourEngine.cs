@@ -40,22 +40,25 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
         /// Adds new waypoint to the graph. Used by the graph loader.
         /// </summary>
         /// <param name="waypointInfo">waypoint info to add</param>
-        internal void AddWaypoint(WaypointInfo waypointInfo) => this.tourGraph.AddVertex(waypointInfo);
+        internal void AddWaypoint(WaypointInfo waypointInfo)
+            => this.tourGraph.AddVertex(waypointInfo);
 
         /// <summary>
         /// Adds new track to the graph. Used by the graph loader.
         /// </summary>
         /// <param name="trackInfo">track info to add</param>
-        internal void AddTrack(TrackInfo trackInfo) => this.tourGraph.AddEdge(trackInfo);
+        internal void AddTrack(TrackInfo trackInfo)
+            => this.tourGraph.AddEdge(trackInfo);
 
         /// <summary>
         /// Finds waypoint info for given waypoint ID
         /// </summary>
         /// <param name="waypointId">waypoint ID to find</param>
         /// <returns>waypoint info, or null when not found</returns>
-        internal WaypointInfo FindWaypointInfo(string waypointId)
+        internal WaypointInfo? FindWaypointInfo(string waypointId)
         {
-            return this.tourGraph.Vertices.FirstOrDefault(x => x.Id == waypointId);
+            return this.tourGraph.Vertices.FirstOrDefault(
+                x => x.Id == waypointId);
         }
 
         /// <summary>
@@ -102,7 +105,12 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
                 var source = vertexList[index - 1];
                 var target = vertexList[index];
 
-                this.PlanSingleTourStep(source, target, tour, descriptionText, ref totalDuration);
+                this.PlanSingleTourStep(
+                    source,
+                    target,
+                    tour,
+                    descriptionText,
+                    ref totalDuration);
 
                 if (index + 1 == vertexList.Count)
                 {
@@ -179,25 +187,26 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
         /// Checks all tour planning arguments for validity
         /// </summary>
         /// <param name="planTourParameters">tour planning parameters</param>
-        private void CheckTourPlanningArguments(PlanTourParameters planTourParameters)
+        private void CheckTourPlanningArguments(
+            PlanTourParameters planTourParameters)
         {
-            if (planTourParameters == null)
-            {
-                throw new ArgumentNullException(nameof(planTourParameters));
-            }
+            ArgumentNullException.ThrowIfNull(planTourParameters);
 
             if (planTourParameters.WaypointIdList.Count < 2)
             {
-                throw new InvalidOperationException("there must be at least two waypoints for tour planning");
+                throw new InvalidOperationException(
+                    "there must be at least two waypoints for tour planning");
             }
 
             // check if one of the waypoints can't be found
-            string invalidWaypointId = planTourParameters.WaypointIdList.Find(
-                waypointId => this.FindWaypointInfo(waypointId) == null);
+            string? invalidWaypointId =
+                planTourParameters.WaypointIdList.Find(
+                    waypointId => this.FindWaypointInfo(waypointId) == null);
 
             if (invalidWaypointId != null)
             {
-                throw new ArgumentException($"invalid waypoint id for tour planning: {invalidWaypointId}");
+                throw new ArgumentException(
+                    $"invalid waypoint ID for tour planning: {invalidWaypointId}");
             }
         }
     }
