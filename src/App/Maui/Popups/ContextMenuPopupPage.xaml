@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<popups:BasePopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                     xmlns:controls="clr-namespace:WhereToFly.App.Controls"
+                     xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
+                     xmlns:popups="clr-namespace:WhereToFly.App.Popups"
+                     x:Class="WhereToFly.App.Popups.ContextMenuPopupPage"
+                     x:DataType="viewmodels:ContextMenuPopupViewModel">
+
+    <Grid RowDefinitions="Auto, 1*"
+          VerticalOptions="Center"
+          HorizontalOptions="Center"
+          WidthRequest="360"
+          RowSpacing="10"
+          Padding="20">
+
+        <!-- Caption -->
+        <Label Grid.Row="0"
+               Text="{Binding Caption}"
+               FontSize="Medium" />
+
+        <!-- Context menu list -->
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding ContextMenuItems, Mode=OneTime}"
+                        VerticalOptions="Start"
+                        HorizontalOptions="FillAndExpand"
+                        HeightRequest="{Binding ContextMenuListHeight, Mode=OneTime}">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="viewmodels:ContextMenuItemViewModel">
+                    <!-- Context menu item -->
+                    <Grid Padding="4"
+                          ColumnDefinitions="40,Auto"
+                          BackgroundColor="{Binding BackgroundColor}">
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                  Command="{Binding Command}"
+                                                  CommandParameter="{Binding CommandParameter}" />
+                        </Grid.GestureRecognizers>
+
+                        <!-- Menu item icon -->
+                        <controls:SvgImage Source="{Binding IconImageSource, Mode=OneWay}"
+                                           TintColor="{Binding ForegroundColor}"
+                                           InputTransparent="True"
+                                           WidthRequest="32"
+                                           HeightRequest="32"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center" />
+
+                        <!-- Menu item text -->
+                        <Label Grid.Column="1" Text="{Binding Text, Mode=OneTime}"
+                               InputTransparent="True"
+                               TextColor="{Binding ForegroundColor}"
+                               IsEnabled="{Binding IsEnabled, Mode=OneWay}"
+                               FontSize="Medium"
+                               VerticalOptions="FillAndExpand"
+                               VerticalTextAlignment="Center" />
+                    </Grid>
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+
+    </Grid>
+</popups:BasePopupPage>

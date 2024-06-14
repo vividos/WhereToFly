@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<popups:BasePopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                     xmlns:controls="clr-namespace:WhereToFly.App.Controls"
+                     xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
+                     xmlns:popups="clr-namespace:WhereToFly.App.Popups"
+                     x:Class="WhereToFly.App.Popups.PlanTourPopupPage"
+                     x:DataType="viewmodels:PlanTourPopupViewModel">
+
+    <Grid RowDefinitions="Auto, Auto, 1*, Auto"
+        VerticalOptions="Center"
+        HorizontalOptions="Center"
+        WidthRequest="360"
+        HeightRequest="400"
+        RowSpacing="10"
+        Padding="20">
+
+        <!-- Caption -->
+        <Label Grid.Row="0"
+               Text="Plan tour"
+               FontSize="Large" />
+
+        <!-- Message to show that more locations are needed for tour planning -->
+        <VerticalStackLayout Grid.Row="1"
+                             Padding="8"
+                             BackgroundColor="{StaticResource WarningBandBackgroundColor}"
+                             HorizontalOptions="Fill"
+                             IsVisible="{Binding Path=ShowWarningForMoreLocations, Mode=OneWay}">
+            <Label Text="At least two locations are needed for tour planning"
+                   FontSize="Medium"
+                   TextColor="{StaticResource WarningBandTextColor}"
+                   AutomationId="ShowWarningForMoreLocationsLabel" />
+        </VerticalStackLayout>
+
+        <!-- Tour plan location list -->
+        <CollectionView Grid.Row="2"
+                        ItemsSource="{Binding Path=PlanTourList, Mode=OneWay}"
+                        ItemSizingStrategy="MeasureFirstItem"
+                        SelectionMode="None"
+                        VerticalOptions="Fill"
+                        HorizontalOptions="Start"
+                        AutomationId="PlanTourList">
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="4" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="viewmodels:PlanTourListEntryViewModel">
+                    <!-- Template for a single entry -->
+                    <Grid Style="{StaticResource ListViewItemStyle}"
+                          RowDefinitions="Auto, Auto"
+                          ColumnDefinitions="40, Auto"
+                          HeightRequest="90">
+
+                        <!-- Type image -->
+                        <controls:SvgImage Source="{Binding TypeImageSource, Mode=OneWay}"
+                                           WidthRequest="32"
+                                           HeightRequest="32"
+                                           Margin="4,4,0,0"
+                                           HorizontalOptions="Start" VerticalOptions="Center"
+                                           Grid.Row="0" Grid.Column="0" />
+
+                        <!-- Name -->
+                        <Label Text="{Binding Name, Mode=OneTime}"
+                               Style="{StaticResource ListItemTextStyle}"
+                               FontSize="Medium"
+                               LineBreakMode="TailTruncation"
+                               HorizontalOptions="Fill"
+                               VerticalOptions="Center"
+                               Grid.Row="0" Grid.Column="1" />
+
+                        <!-- Up/down buttons -->
+                        <HorizontalStackLayout HorizontalOptions="Fill"
+                                               VerticalOptions="Center"
+                                               HeightRequest="40"
+                                               Spacing="4"
+                                               Grid.Row="1" Grid.Column="1">
+                            <Button Text="Up" WidthRequest="80" Command="{Binding MoveUpCommand}" />
+                            <Button Text="Down" WidthRequest="80" Command="{Binding MoveDownCommand}" />
+                            <Button Text="X" WidthRequest="60" Command="{Binding RemoveCommand}" />
+                        </HorizontalStackLayout>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Buttons -->
+        <HorizontalStackLayout Grid.Row="3"
+                               Spacing="4"
+                               HorizontalOptions="Center">
+            <Button Text="Close"
+                    Command="{Binding CloseCommand}"
+                    WidthRequest="100" />
+            <Button Text="Plan Tour"
+                    Command="{Binding PlanTourCommand}"
+                    WidthRequest="100" />
+        </HorizontalStackLayout>
+
+    </Grid>
+
+</popups:BasePopupPage>

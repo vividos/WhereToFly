@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<popups:BasePopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                     xmlns:controls="clr-namespace:WhereToFly.App.Controls"
+                     xmlns:models="clr-namespace:WhereToFly.App.Models"
+                     xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
+                     xmlns:popups="clr-namespace:WhereToFly.App.Popups"
+                     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     mc:Ignorable="d"
+                     x:Class="WhereToFly.App.Popups.FilterTakeoffDirectionsPopupPage"
+                     x:TypeArguments="models:LocationFilterSettings"
+                     x:DataType="viewmodels:FilterTakeoffDirectionsPopupViewModel">
+
+    <VerticalStackLayout
+        VerticalOptions="Center"
+        HorizontalOptions="Center"
+        WidthRequest="360"
+        Spacing="10"
+        Padding="20">
+
+        <!-- Caption -->
+        <Label Text="Filter by takeoff direction" FontSize="Large" />
+
+        <!-- Takeoff directions -->
+        <controls:TakeoffDirectionsView
+            IsVisible="True"
+            WidthRequest="240" HeightRequest="240"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            Source="{Binding TakeoffDirections, Mode=TwoWay}"
+            IsReadOnly="False"
+            BackgroundColor="Transparent"
+            ShowLabels="True"
+            Style="{StaticResource TakeoffDirectionsStyle}" />
+
+        <!-- Switch to select if it's a flight track -->
+        <HorizontalStackLayout>
+            <Switch IsToggled="{Binding AlsoShowOtherLocations, Mode=TwoWay}"
+                    AutomationId="AlsoShowOtherLocationsSwitch" />
+            <Label Text="Also show other locations"
+                   FontSize="Medium"
+                   VerticalTextAlignment="Center" />
+        </HorizontalStackLayout>
+
+        <!-- Button to accept filter -->
+        <Button Text="Filter"
+                Clicked="OnClickedFilterButton"
+                AutomationId="FilterButton" />
+    </VerticalStackLayout>
+
+</popups:BasePopupPage>

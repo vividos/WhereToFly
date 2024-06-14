@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<popups:BasePopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                     xmlns:models="clr-namespace:WhereToFly.App.Models"
+                     xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
+                     xmlns:popups="clr-namespace:WhereToFly.App.Popups"
+                     x:Class="WhereToFly.App.Popups.AddWeatherLinkPopupPage"
+                     x:TypeArguments="models:WeatherIconDescription"
+                     x:DataType="viewmodels:AddWeatherLinkPopupViewModel">
+
+    <VerticalStackLayout
+        VerticalOptions="Center"
+        HorizontalOptions="Center"
+        WidthRequest="360"
+        Spacing="10"
+        Padding="20">
+
+        <!-- Caption -->
+        <Label Text="Add weather link" FontSize="Large" />
+
+        <!-- Entry for name -->
+        <Label Text="Name" FontSize="Medium" />
+        <Entry Placeholder="enter name for link"
+               Text="{Binding Path=Name, Mode=TwoWay}"
+               Style="{StaticResource EntryOnPopupPageStyle}" />
+
+        <!-- Entry for weblink URL -->
+        <Label Text="Link" FontSize="Medium" />
+        <Entry Placeholder="enter weather link"
+               Text="{Binding Path=WebLink, Mode=TwoWay}"
+               Style="{StaticResource EntryOnPopupPageStyle}" />
+
+        <!-- Group selection -->
+        <Label Text="Group" FontSize="Medium" />
+        <Picker ItemsSource="{Binding GroupsList, Mode=OneTime}"
+                SelectedItem="{Binding SelectedGroup, Mode=TwoWay}"
+                Style="{StaticResource PickerOnPopupPageStyle}" />
+
+        <!-- Button to add web link -->
+        <Button Text="Add weather link"
+                IsEnabled="{Binding IsValidWebLink, Mode=OneWay}"
+                Clicked="OnClickedAddWeatherLinkButton"
+                AutomationId="AddWeatherLinkButton" />
+    </VerticalStackLayout>
+
+</popups:BasePopupPage>

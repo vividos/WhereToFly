@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<popups:BasePopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                     xmlns:mapview="clr-namespace:WhereToFly.App.MapView;assembly=WhereToFly.App.MapView"
+                     xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
+                     xmlns:popups="clr-namespace:WhereToFly.App.Popups"
+                     x:Class="WhereToFly.App.Popups.FlyingRangePopupPage"
+                     x:TypeArguments="mapview:FlyingRangeParameters"
+                     x:DataType="viewmodels:FlyingRangePopupViewModel">
+
+    <VerticalStackLayout
+        VerticalOptions="Center"
+        HorizontalOptions="Center"
+        WidthRequest="360"
+        Spacing="10"
+        Padding="20">
+
+        <!-- Caption -->
+        <Label Text="Flying range" FontSize="Large" />
+
+        <!-- Entry and Stepper for glide ratio -->
+        <Label Text="Glide ratio" FontSize="Medium" />
+
+        <HorizontalStackLayout>
+            <Entry Placeholder="enter glide ratio"
+                   IsReadOnly="True"
+                   Text="{Binding Path=GlideRatio, Mode=OneWay}"
+                   Style="{StaticResource EntryOnPopupPageStyle}"
+                   WidthRequest="70" />
+            <Stepper Value="{Binding Path=GlideRatio, Mode=TwoWay}"
+                     Minimum="1.0" Maximum="12" Increment="0.5" />
+        </HorizontalStackLayout>
+
+        <!-- Picker for wind direction --><!--
+        <Label Text="Wind direction" FontSize="Medium" />
+        <Picker Title="Select a wind direction"
+                ItemsSource="{Binding Path=WindDirectionList, Mode=OneTime}"
+                SelectedItem="{Binding Path=WindDirection, Mode=TwoWay}"
+                Style="{StaticResource PickerOnPopupPageStyle}" />
+
+        --><!-- Picker for wind speed --><!--
+        <Label Text="Wind speed" FontSize="Medium" />
+        <Picker Title="Select a wind speed"
+                SelectedItem="{Binding Path=WindSpeed, Mode=TwoWay}"
+                Style="{StaticResource PickerOnPopupPageStyle}">
+            <Picker.Items>
+                <x:String>0 km/h</x:String>
+                <x:String>5 km/h</x:String>
+                <x:String>10 km/h</x:String>
+                <x:String>15 km/h</x:String>
+                <x:String>20 km/h</x:String>
+                <x:String>25 km/h</x:String>
+                <x:String>30 km/h</x:String>
+            </Picker.Items>
+        </Picker>-->
+
+        <!-- Entry and stepper for altitude offset -->
+        <Label Text="Altitude offset"
+               FontSize="Medium" />
+        <HorizontalStackLayout>
+            <Entry Text="{Binding Path=AltitudeOffset, Mode=OneWay}"
+                   Keyboard="Numeric"
+                   ClearButtonVisibility="Never"
+                   Style="{StaticResource EntryOnPopupPageStyle}"
+                   WidthRequest="70" />
+            <Label Text="meter"
+                   VerticalTextAlignment="Center" />
+            <Stepper Value="{Binding Path=AltitudeOffset, Mode=TwoWay}"
+                     Minimum="0"
+                     Maximum="1000"
+                     Increment="50" />
+        </HorizontalStackLayout>
+
+        <!-- Button to show range -->
+        <Button Text="Show range"
+                Clicked="OnClickedShowFlyingRange"
+                AutomationId="ShowFlyingRange" />
+    </VerticalStackLayout>
+
+</popups:BasePopupPage>

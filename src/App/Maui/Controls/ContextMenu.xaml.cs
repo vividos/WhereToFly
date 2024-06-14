@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Maui.Views;
 using System.Windows.Input;
 using WhereToFly.App.Logic;
+using WhereToFly.App.Popups;
 using WhereToFly.App.ViewModels;
-using WhereToFly.App.Views;
 
 namespace WhereToFly.App.Controls
 {
