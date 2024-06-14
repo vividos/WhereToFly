@@ -1,4 +1,5 @@
-﻿using Microsoft.Maui.Controls;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Maui.Controls;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using WhereToFly.App.Controls;
@@ -38,10 +39,11 @@ namespace WhereToFly.App.UnitTest.Controls
         {
             // set up
             var converter = new SvgImageSourceTypeConverter();
+            var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
             // run + check
-            object? imageSource1 = converter.ConvertFromInvariantString(null!);
-            object? imageSource2 = converter.ConvertFromInvariantString(string.Empty);
+            object? imageSource1 = converter.ConvertFromInvariantString(null!, serviceProvider);
+            object? imageSource2 = converter.ConvertFromInvariantString(string.Empty, serviceProvider);
 
             // check
             Assert.IsNull(imageSource1, "null value must be converted to null ImageSource");
@@ -56,10 +58,11 @@ namespace WhereToFly.App.UnitTest.Controls
         {
             // set up
             var converter = new SvgImageSourceTypeConverter();
+            var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
             // run
             string resourceUri = $"resource://{SvgTestImages.ResourcePathColibriSvg}";
-            object? imageSource = converter.ConvertFromInvariantString(resourceUri);
+            object? imageSource = converter.ConvertFromInvariantString(resourceUri, serviceProvider);
 
             // check
             Assert.IsNotNull(imageSource, "non-null ImageSource must have been returned");
@@ -74,11 +77,12 @@ namespace WhereToFly.App.UnitTest.Controls
         {
             // set up
             var converter = new SvgImageSourceTypeConverter();
+            var serviceProvider = new ServiceCollection().BuildServiceProvider();
             var assembly = typeof(SvgImageSourceTypeConverter).Assembly;
 
             // run
             string resourceUri = $"resource://{SvgTestImages.ResourcePathColibriSvg}?assembly={assembly.GetName().Name}";
-            object? imageSource = converter.ConvertFromInvariantString(resourceUri);
+            object? imageSource = converter.ConvertFromInvariantString(resourceUri, serviceProvider);
 
             // check
             Assert.IsNotNull(imageSource, "non-null ImageSource must have been returned");
@@ -93,10 +97,11 @@ namespace WhereToFly.App.UnitTest.Controls
         {
             // set up
             var converter = new SvgImageSourceTypeConverter();
+            var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
             // run
             string svgImageText = SvgTestImages.TestSvgImageText;
-            object? imageSource = converter.ConvertFromInvariantString(svgImageText);
+            object? imageSource = converter.ConvertFromInvariantString(svgImageText, serviceProvider);
 
             // check
             Assert.IsNotNull(imageSource, "non-null ImageSource must have been returned");
@@ -111,10 +116,11 @@ namespace WhereToFly.App.UnitTest.Controls
         {
             // set up
             var converter = new SvgImageSourceTypeConverter();
+            var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
             // run
             string dataUri = SvgConstants.DataUriPlainPrefix + SvgTestImages.TestSvgImageText;
-            object? imageSource = converter.ConvertFromInvariantString(dataUri);
+            object? imageSource = converter.ConvertFromInvariantString(dataUri, serviceProvider);
 
             // check
             Assert.IsNotNull(imageSource, "non-null ImageSource must have been returned");
@@ -129,11 +135,12 @@ namespace WhereToFly.App.UnitTest.Controls
         {
             // set up
             var converter = new SvgImageSourceTypeConverter();
+            var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
             // run
             string dataUri = SvgConstants.DataUriBase64Prefix +
                 SvgTestImages.EncodeBase64(SvgTestImages.TestSvgImageText);
-            object? imageSource = converter.ConvertFromInvariantString(dataUri);
+            object? imageSource = converter.ConvertFromInvariantString(dataUri, serviceProvider);
 
             // check
             Assert.IsNotNull(imageSource, "non-null ImageSource must have been returned");
@@ -148,13 +155,14 @@ namespace WhereToFly.App.UnitTest.Controls
         {
             // set up
             var converter = new SvgImageSourceTypeConverter();
+            var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
             // run + check
             string dataUri = SvgConstants.DataUriPlainPrefix +
                 new string('-', 65536);
 
             Assert.ThrowsException<FormatException>(
-                () => converter.ConvertFromInvariantString(dataUri),
+                () => converter.ConvertFromInvariantString(dataUri, serviceProvider),
                 "must throw format exception on invalid URI");
         }
 
@@ -166,10 +174,11 @@ namespace WhereToFly.App.UnitTest.Controls
         {
             // set up
             var converter = new SvgImageSourceTypeConverter();
+            var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
             // run
             string filePath = "Assets/svg/colibri.svg";
-            object? imageSource = converter.ConvertFromInvariantString(filePath);
+            object? imageSource = converter.ConvertFromInvariantString(filePath, serviceProvider);
 
             // check
             Assert.IsNotNull(imageSource, "non-null ImageSource must have been returned");
