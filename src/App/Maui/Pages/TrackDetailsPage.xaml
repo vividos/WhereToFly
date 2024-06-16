@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behaviors="clr-namespace:WhereToFly.App.Behaviors"
+             xmlns:controls="clr-namespace:WhereToFly.App.Controls"
+             xmlns:mapview="clr-namespace:WhereToFly.App.MapView;assembly=WhereToFly.App.MapView"
+             xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="WhereToFly.App.Pages.TrackDetailsPage"
+             x:DataType="viewmodels:TrackDetailsViewModel"
+             Title="Details">
+
+    <ContentPage.Content>
+
+        <ScrollView Orientation="Vertical">
+
+            <!-- stack layout with track details grid, height profile view and track description -->
+            <StackLayout Orientation="Vertical">
+
+                <!-- Grid with all track details -->
+                <Grid WidthRequest="350" MinimumWidthRequest="350"
+                      HorizontalOptions="Center" Padding="8"
+                      ColumnSpacing="16" RowSpacing="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+
+                        <!-- Type image -->
+                        <controls:SvgImage Source="{Binding TypeImageSource, Mode=OneWay}"
+                                           WidthRequest="64" HeightRequest="64"
+                                           HorizontalOptions="Start" VerticalOptions="Center" />
+
+                        <Frame IsVisible="{Binding IsColorBoxVisible, Mode=OneWay}"
+                           BackgroundColor="{Binding TrackColor, Mode=OneWay}"
+                           WidthRequest="32" HeightRequest="32"
+                           VerticalOptions="Center"
+                           Padding="5"
+                           BorderColor="White"
+                           CornerRadius="3"
+                           HasShadow="False">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ColorBoxTappedCommand}"
+                                                      NumberOfTapsRequired="1"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+
+                        <!-- Name -->
+                        <Label Text="{Binding Name, Mode=OneTime}"
+                           FontSize="Large" FontAttributes="Bold"
+                           VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding TrackNameTappedCommand}"
+                                                      NumberOfTapsRequired="1"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </StackLayout>
+
+                    <!-- Distance -->
+                    <Label Grid.Row="1" Grid.Column="0" Text="Distance" />
+                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Distance, Mode=OneTime}" />
+
+                    <!-- Duration -->
+                    <Label Grid.Row="2" Grid.Column="0" Text="Duration" />
+                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding Duration, Mode=OneTime}" />
+                </Grid>
+
+                <!-- Height profile -->
+                <mapview:HeightProfileView Track="{Binding Track, Mode=OneWay}"
+                                              UseDarkTheme="{Binding UseDarkTheme, Mode=OneTime}"
+                                              WidthRequest="600"
+                                              HeightRequest="300"
+                                              HorizontalOptions="CenterAndExpand"
+                                              VerticalOptions="Start">
+                    <mapview:HeightProfileView.Behaviors>
+                        <toolkit:TouchBehavior CurrentTouchStatusChanged="OnTouchStatusChanged" />
+                    </mapview:HeightProfileView.Behaviors>
+                </mapview:HeightProfileView>
+
+                <!-- Button to show height profile in new page -->
+                <!--
+                <Button Text="Show full screen"
+                        HorizontalOptions="Center"
+                        WidthRequest="300"
+                        Command="{Binding OpenHeightProfileCommand}" />
+                -->
+
+                <!-- Track description web view -->
+                <WebView HorizontalOptions="CenterAndExpand"
+                         VerticalOptions="FillAndExpand"
+                         WidthRequest="600"
+                         HeightRequest="200"
+                         Source="{Binding DescriptionWebViewSource}">
+                    <WebView.Behaviors>
+                        <behaviors:AutoResizeWebViewBehavior />
+                    </WebView.Behaviors>
+                </WebView>
+
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

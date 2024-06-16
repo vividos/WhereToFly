@@ -4,8 +4,8 @@ using Microsoft.AppCenter.Distribute;
 using System.Diagnostics;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Models;
+using WhereToFly.App.Pages;
 using WhereToFly.App.Services;
-using WhereToFly.App.Views;
 
 // make app internals visible to unit tests
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("WhereToFly.App.UnitTest")]

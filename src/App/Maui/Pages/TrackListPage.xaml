@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:WhereToFly.App.Controls"
+             xmlns:local="clr-namespace:WhereToFly.App"
+             xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
+             x:Class="WhereToFly.App.Pages.TrackListPage"
+             x:DataType="viewmodels:TrackListViewModel"
+             Title="Track list">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Import track"
+                     IconImageSource="playlist_plus.png"
+                     Command="{Binding ImportTrackCommand}"
+                     Order="Primary" Priority="0" />
+
+        <ToolbarItem Text="Delete track list"
+                     IconImageSource="delete_forever.png"
+                     Command="{Binding DeleteTrackListCommand}"
+                     IsDestructive="True"
+                     Order="Primary" Priority="1" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <Grid RowDefinitions="Auto, Auto, 1*">
+
+            <!-- Activity indicator to show while refreshing list -->
+            <HorizontalStackLayout Grid.Row="0"
+                                   Padding="8"
+                                   BackgroundColor="{StaticResource LoadingBandBackgroundColor}"
+                                   HorizontalOptions="Fill"
+                                   IsVisible="{Binding IsListRefreshActive, Mode=OneWay}" >
+                <ActivityIndicator IsRunning="True"
+                                   Color="{StaticResource LoadingBandActivityIndicatorColor}"
+                                   WidthRequest="20"
+                                   HeightRequest="20"
+                                   Margin="0,0,8,0" />
+                <Label Text="List is being refreshed"
+                       VerticalTextAlignment="Center"
+                       FontSize="Medium"
+                       TextColor="{StaticResource LoadingBandTextColor}" />
+            </HorizontalStackLayout>
+
+            <!-- Message to show when list is empty -->
+            <HorizontalStackLayout Grid.Row="1"
+                                   Padding="8"
+                                   BackgroundColor="{StaticResource MessageBandBackgroundColor}"
+                                   HorizontalOptions="Fill"
+                                   IsVisible="{Binding IsListEmpty, Mode=OneWay}" >
+                <Label Text="There are no tracks in the list."
+                       VerticalTextAlignment="Center" FontSize="Medium"
+                       TextColor="{StaticResource MessageBandTextColor}" />
+            </HorizontalStackLayout>
+
+            <!-- Track list -->
+            <CollectionView Grid.Row="2"
+                            ItemsSource="{Binding Path=TrackList, Mode=OneWay}"
+                            SelectionMode="Single"
+                            SelectedItem="{Binding SelectedTrack}"
+                            ItemSizingStrategy="MeasureFirstItem"
+                            AutomationId="TrackList">
+
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical"
+                                       ItemSpacing="0" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="viewmodels:TrackListEntryViewModel">
+                        <!-- Template for a single item -->
+
+                        <Grid HeightRequest="{OnPlatform Android=45, WinUI=55}"
+                              Margin="4,2"
+                              RowDefinitions="Auto, Auto"
+                              ColumnDefinitions="Auto, Auto, 1*, 40"
+                              Style="{StaticResource ListViewItemStyle}">
+
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ItemTappedCommand}"
+                                                      NumberOfTapsRequired="1" />
+                            </Grid.GestureRecognizers>
+
+                            <!-- Track type image -->
+                            <controls:SvgImage Source="{Binding TypeImageSource, Mode=OneWay}"
+                                               WidthRequest="32"
+                                               HeightRequest="32"
+                                               Margin="4,0,0,0"
+                                               HorizontalOptions="Start"
+                                               VerticalOptions="Center"
+                                               Grid.Column="0"
+                                               Grid.RowSpan="2" />
+
+                            <!-- Track color -->
+                            <Frame IsVisible="{Binding IsColorBoxVisible, Mode=OneWay}"
+                                   BackgroundColor="{Binding TrackColor, Mode=OneTime}"
+                                   VerticalOptions="Center"
+                                   WidthRequest="12"
+                                   HeightRequest="32"
+                                   Padding="5"
+                                   CornerRadius="3"
+                                   HasShadow="False"
+                                   Grid.Column="1"
+                                   Grid.RowSpan="2" />
+
+                            <!-- Details -->
+                            <Label Text="{Binding Name}"
+                                   Style="{StaticResource ListItemTextStyle}"
+                                   FontSize="Medium"
+                                   LineBreakMode="TailTruncation"
+                                   Grid.Column="2"
+                                   Grid.Row="0" />
+                            <Label Text="{Binding DetailInfos}"
+                                   Style="{StaticResource ListItemDetailTextStyle}"
+                                   FontSize="Small"
+                                   LineBreakMode="TailTruncation"
+                                   Grid.Column="2"
+                                   Grid.Row="1" />
+
+                            <!-- Context menu for an item -->
+                            <controls:ContextMenu Grid.Column="3"
+                                                  Grid.RowSpan="2"
+                                                  Caption="Track"
+                                                  WidthRequest="40"
+                                                  HeightRequest="40"
+                                                  HorizontalOptions="Center"
+                                                  VerticalOptions="Center">
+                                <controls:ContextMenu.Items>
+                                    <MenuItem Text="Show Details"
+                                              IconImageSource="{local:Image info/images/information-outline.svg}"
+                                              Command="{Binding ShowTrackDetailsCommand}" />
+                                    <MenuItem Text="Zoom to"
+                                              IconImageSource="{local:Image info/images/magnify-plus-outline.svg}"
+                                              Command="{Binding ZoomToTrackCommand}" />
+                                    <MenuItem Text="Export"
+                                              IconImageSource="{local:Image info/images/export-variant.svg}"
+                                              Command="{Binding ExportTrackCommand}" />
+                                    <MenuItem Text="Delete" IsDestructive="True"
+                                              IconImageSource="{local:Image info/images/delete.svg}"
+                                              Command="{Binding DeleteTrackCommand}" />
+                                </controls:ContextMenu.Items>
+                            </controls:ContextMenu>
+                        </Grid>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

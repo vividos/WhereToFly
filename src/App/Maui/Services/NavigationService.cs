@@ -2,8 +2,8 @@
 using System.Diagnostics;
 using WhereToFly.App.MapView;
 using WhereToFly.App.Models;
+using WhereToFly.App.Pages;
 using WhereToFly.App.Popups;
-using WhereToFly.App.Views;
 using WhereToFly.Geo.Airspace;
 using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;

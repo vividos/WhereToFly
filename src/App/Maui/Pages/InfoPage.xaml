@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:behaviors="clr-namespace:WhereToFly.App.Behaviors"
+             xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
+             mc:Ignorable="d"
+             x:Class="WhereToFly.App.Pages.InfoPage"
+             x:DataType="viewmodels:InfoPageViewModel"
+             Title="Info">
+
+    <ContentPage.BindingContext>
+        <viewmodels:InfoPageViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+
+        <!-- Stacked carousel and indicator views -->
+        <Grid RowDefinitions="*,60"
+              VerticalOptions="Fill">
+
+            <!-- Carousel showing the info pages -->
+            <CarouselView ItemsSource="{Binding Pages}"
+                          Grid.Row="0"
+                          Loop="False"
+                          IndicatorView="indicatorView"
+                          PeekAreaInsets="10"
+                          HorizontalOptions="Start"
+                          ItemsUpdatingScrollMode="KeepItemsInView"
+                          Style="{StaticResource ManualCarouselStyle}">
+
+                <!-- Stop on full carousel items -->
+                <CarouselView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal"
+                                       ItemSpacing="10"
+                                       SnapPointsAlignment="Start"
+                                       SnapPointsType="MandatorySingle" />
+                </CarouselView.ItemsLayout>
+
+                <CarouselView.ItemTemplate>
+                    <DataTemplate x:DataType="viewmodels:InfoPageViewModel+InfoPageEntryViewModel">
+
+                        <!-- Header image and a webview, both scrollable -->
+                        <ScrollView VerticalOptions="Fill" Margin="0,10,0,0">
+                            <Grid Padding="0,0,0,10" RowDefinitions="Auto,*">
+                                <Image Source="{Binding Image, Mode=OneTime}"
+                                       Grid.Row="0" />
+                                <WebView HorizontalOptions="Start"
+                                         VerticalOptions="Start"
+                                         HeightRequest="20"
+                                         Navigating="OnNavigating_WebView"
+                                         Source="{Binding WebViewSource}"
+                                         Grid.Row="1">
+                                    <WebView.Behaviors>
+                                        <behaviors:AutoResizeWebViewBehavior />
+                                    </WebView.Behaviors>
+                                </WebView>
+                            </Grid>
+                        </ScrollView>
+                    </DataTemplate>
+
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+
+            <!-- Indicator showing current position in carousel -->
+            <IndicatorView x:Name="indicatorView"
+                           Grid.Row="1"
+                           IndicatorColor="LightGray"
+                           SelectedIndicatorColor="{StaticResource Primary}"
+                           IndicatorSize="16"
+                           HeightRequest="40"
+                           Margin="0"
+                           Padding="0"
+                           HorizontalOptions="Center"
+                           VerticalOptions="End" />
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

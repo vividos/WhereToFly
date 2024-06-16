@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WhereToFly.App.Popups;
-using WhereToFly.App.Views;
 using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.UnitTest.Popups

@@ -2,7 +2,7 @@
 using WhereToFly.App.Logic;
 using WhereToFly.App.MapView;
 using WhereToFly.App.Models;
-using WhereToFly.App.Views;
+using WhereToFly.App.Pages;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using Location = WhereToFly.Geo.Model.Location;

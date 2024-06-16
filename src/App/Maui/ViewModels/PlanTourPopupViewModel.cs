@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Windows.Input;
 using WhereToFly.App.Popups;
 using WhereToFly.App.Services;
-using WhereToFly.App.Views;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;

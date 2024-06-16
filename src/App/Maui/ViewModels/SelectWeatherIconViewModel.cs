@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using WhereToFly.App.Models;
-using WhereToFly.App.Views;
+using WhereToFly.App.Pages;
 
 namespace WhereToFly.App.ViewModels
 {

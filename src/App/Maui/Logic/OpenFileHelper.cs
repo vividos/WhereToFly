@@ -2,7 +2,6 @@
 using Newtonsoft.Json.Linq;
 using WhereToFly.App.Popups;
 using WhereToFly.App.Services;
-using WhereToFly.App.Views;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Airspace;
 using WhereToFly.Geo.DataFormats;

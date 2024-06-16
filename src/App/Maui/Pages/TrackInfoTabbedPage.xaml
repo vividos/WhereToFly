@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:local="clr-namespace:WhereToFly.App"
+            xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
+            mc:Ignorable="d"
+            x:Class="WhereToFly.App.Pages.TrackInfoTabbedPage"
+            x:DataType="viewmodels:TrackTabViewModel"
+            Title = "Track infos">
+
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem Text="Zoom to"
+                     IconImageSource="magnify_plus_outline.png"
+                     Command="{Binding ZoomToTrackCommand}"
+                     Order="Primary" Priority="0" />
+
+        <ToolbarItem Text="Export"
+                     IconImageSource="export_variant.png"
+                     Command="{Binding ExportTrackCommand}"
+                     Order="Primary" Priority="0" />
+
+        <ToolbarItem Text="Delete"
+                     IconImageSource="delete.png"
+                     Command="{Binding DeleteTrackCommand}"
+                     IsDestructive="True"
+                     Order="Primary" Priority="1" />
+    </TabbedPage.ToolbarItems>
+
+</TabbedPage>

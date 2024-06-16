@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
+             xmlns:local="clr-namespace:WhereToFly.App"
+             xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
+             x:Class="WhereToFly.App.Pages.WeatherDashboardPage"
+             x:DataType="viewmodels:WeatherDashboardViewModel"
+             Title="Weather">
+
+    <ContentPage.BindingContext>
+        <viewmodels:WeatherDashboardViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add icon"
+                     IconImageSource="playlist_plus.png"
+                     Command="{Binding AddIconCommand}"
+                     Order="Primary" Priority="0" />
+
+        <ToolbarItem Text="Add web link"
+                     IconImageSource="bookmark_plus_outline.png"
+                     Command="{Binding AddWebLinkCommand}"
+                     Order="Primary" Priority="1" />
+
+        <ToolbarItem Text="Clear all"
+                     IconImageSource="delete.png"
+                     Command="{Binding ClearAllCommand}"
+                     IsDestructive="True"
+                     Order="Primary" Priority="2" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <!-- Scrollable flex layout containing all weather icons -->
+        <ScrollView Orientation="Vertical">
+            <FlexLayout x:Name="dashboardFlexLayout"
+                        BindableLayout.ItemsSource="{Binding WeatherDashboardItems}"
+                        Direction="Row"
+                        AlignItems="Start"
+                        AlignContent="Start"
+                        JustifyContent="Start"
+                        Wrap="Wrap">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="viewmodels:WeatherIconViewModel">
+                        <!-- Square layout -->
+                        <StackLayout WidthRequest="{OnPlatform Android=110, WinUI=120}"
+                                     HeightRequest="{OnPlatform Android=110, WinUI=120}"
+                                     Margin="8,8,0,0"
+                                     Style="{StaticResource ListViewItemStyle}">
+
+                            <!-- Recognize taps anywhere in the layout -->
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Tapped}" />
+                            </StackLayout.GestureRecognizers>
+
+                            <!-- Controls -->
+                            <ffimageloading:SvgCachedImage Source="{Binding Icon, Mode=OneWay}"
+                                                           ReplaceStringMap="{Binding ReplaceStringMap}"
+                                                           WidthRequest="50" HeightRequest="50" Margin="4,4,0,0" />
+
+                            <Label Text="{Binding Title, Mode=OneTime}"
+                                   FontSize="{OnPlatform Android=Medium, WinUI=Small}"
+                                   TextColor="{AppThemeBinding Light={StaticResource ElementTextColorLight}, Dark={StaticResource ElementTextColorDark}}"
+                                   LineBreakMode="WordWrap"
+                                   HorizontalTextAlignment="Center" VerticalTextAlignment="Start"
+                                   HeightRequest="48" Margin="4,0,4,4"
+                                   VerticalOptions="FillAndExpand" />
+                        </StackLayout>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </FlexLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

@@ -4,7 +4,7 @@
                      xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
                      xmlns:model="clr-namespace:WhereToFly.App.Models"
                      xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
-                     xmlns:views="clr-namespace:WhereToFly.App.Views"
+                     xmlns:views="clr-namespace:WhereToFly.App.Pages"
                      xmlns:popups="clr-namespace:WhereToFly.App.Popups"
                      x:Class="WhereToFly.App.Popups.SelectWeatherIconPopupPage"
                      x:DataType="viewmodels:SelectWeatherIconViewModel"

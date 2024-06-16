@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:WhereToFly.App"
+             xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
+             mc:Ignorable="d"
+             x:Class="WhereToFly.App.Pages.GeneralSettingsPage"
+             x:DataType="viewmodels:GeneralSettingsViewModel"
+             Title="General"
+             IconImageSource="cog_outline.png">
+    <ContentPage.Content>
+
+        <ScrollView Orientation="Vertical" HorizontalOptions="Center">
+
+            <!-- Grid with all settings -->
+            <Grid WidthRequest="350" MinimumWidthRequest="350"
+              HorizontalOptions="Center" VerticalOptions="FillAndExpand"
+              ColumnSpacing="16" RowSpacing="16" Padding="8">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- App theme picker -->
+                <Label Grid.Row="0" Grid.Column="0" FontSize="Medium" Text="App theme" />
+                <Picker Grid.Row="0" Grid.Column="1" Title="App theme"
+                    ItemsSource="{Binding AppThemeItems, Mode=OneWay}"
+                    ItemDisplayBinding="{Binding Text}"
+                    SelectedItem="{Binding SelectedAppTheme, Mode=TwoWay}" />
+
+                <!-- Alptherm section header -->
+                <Label Grid.Row="1" Grid.ColumnSpan="2"
+                       FontSize="Large" Text="Alptherm" Padding="4"
+                       Style="{StaticResource SectionHeaderStyle}"
+                       HorizontalOptions="FillAndExpand" />
+
+                <!-- Alptherm username -->
+                <Label Grid.Row="2" Grid.Column="0" FontSize="Medium" Text="Username" />
+                <Entry Grid.Row="2" Grid.Column="1"
+                   Placeholder="Alptherm username"
+                   Text="{Binding AlpthermUsername}"
+                   IsSpellCheckEnabled="False" IsTextPredictionEnabled="false"
+                   ClearButtonVisibility="WhileEditing" />
+
+                <!-- Alptherm password -->
+                <Label Grid.Row="3" Grid.Column="0" FontSize="Medium" Text="Password" />
+                <Entry Grid.Row="3" Grid.Column="1"
+                   Placeholder="Alptherm password"
+                   Text="{Binding AlpthermPassword}"
+                   IsPassword="True"
+                   ClearButtonVisibility="WhileEditing" />
+            </Grid>
+
+        </ScrollView>
+
+    </ContentPage.Content>
+</ContentPage>
