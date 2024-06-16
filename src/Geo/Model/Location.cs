@@ -52,7 +52,7 @@ namespace WhereToFly.Geo.Model
         /// <summary>
         /// Extra properties of the location, e.g. wind direction for a weather station, etc.
         /// </summary>
-        public Dictionary<LocationPropertyType, string> Properties { get; set; } = new();
+        public Dictionary<LocationPropertyType, string> Properties { get; set; } = [];
 
         /// <summary>
         /// Creates a new location object

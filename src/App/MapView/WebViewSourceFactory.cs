@@ -1,5 +1,4 @@
 ﻿using Microsoft.Maui.Controls;
-using System.Threading.Tasks;
 
 namespace WhereToFly.App.MapView
 {

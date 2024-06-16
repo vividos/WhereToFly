@@ -23,7 +23,7 @@ namespace WhereToFly.WebApi.Logic
         /// <summary>
         /// Cache for live waypoint data, keyed by ID
         /// </summary>
-        private readonly Dictionary<string, LiveWaypointData> liveWaypointCache = new();
+        private readonly Dictionary<string, LiveWaypointData> liveWaypointCache = [];
 
         /// <summary>
         /// Lock object for cache and queue

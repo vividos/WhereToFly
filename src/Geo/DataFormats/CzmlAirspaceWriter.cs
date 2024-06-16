@@ -317,13 +317,13 @@ namespace WhereToFly.Geo.DataFormats
         {
             return new Czml.PositionList
             {
-                CartographicDegrees = new List<double>
-                {
+                CartographicDegrees =
+                [
                     // note the reversal of latitude and longitude
                     coord.Longitude,
                     coord.Latitude,
                     HeightFromAltitude(altitude),
-                },
+                ],
             };
         }
 

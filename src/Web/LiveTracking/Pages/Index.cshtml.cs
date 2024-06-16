@@ -64,13 +64,13 @@ namespace WhereToFly.Web.LiveTracking.Pages
             const string TestPosDataUri = "where-to-fly://TestPos/data";
 #pragma warning restore S1075 // URIs should not be hardcoded
 
-            this.LiveTrackingInfoList = new List<LiveTrackingInfo>
-            {
+            this.LiveTrackingInfoList =
+            [
                 new LiveTrackingInfo(
                     "TestPos Schliersee",
                     TestPosDataUri,
                     default)
-            };
+            ];
         }
 
         /// <summary>
@@ -91,14 +91,14 @@ namespace WhereToFly.Web.LiveTracking.Pages
 
             if (liveWaypointUri.IsValid)
             {
-                this.LiveTrackingInfoList = new List<LiveTrackingInfo>
-                {
+                this.LiveTrackingInfoList =
+                [
                     new LiveTrackingInfo(
                         name ?? "Live Waypoint",
                         liveWaypointUri.ToString(),
                         liveWaypointUri.IsTrackResourceType,
                         isFlightTrack)
-                };
+                ];
             }
         }
 

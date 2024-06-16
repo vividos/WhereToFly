@@ -14,7 +14,7 @@ namespace WhereToFly.App.ViewModels
         /// <summary>
         /// Track list
         /// </summary>
-        private List<Track> trackList = new();
+        private List<Track> trackList = [];
 
         /// <summary>
         /// Backing field for "IsListRefreshActive" property

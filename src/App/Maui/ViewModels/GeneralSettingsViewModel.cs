@@ -89,12 +89,12 @@ namespace WhereToFly.App.ViewModels
         {
             this.appSettings = App.Settings!;
 
-            this.AppThemeItems = new List<AppThemeViewModel>
-            {
+            this.AppThemeItems =
+            [
                 new AppThemeViewModel("Same as device", AppTheme.Unspecified),
                 new AppThemeViewModel("Light theme", AppTheme.Light),
                 new AppThemeViewModel("Dark theme", AppTheme.Dark),
-            };
+            ];
 
             Task.Run(this.LoadDataAsync);
         }

@@ -12,12 +12,12 @@ namespace WhereToFly.Shared.Model
         /// <summary>
         /// All tour entires as list
         /// </summary>
-        public List<PlannedTourEntry> TourEntriesList { get; set; } = new List<PlannedTourEntry>();
+        public List<PlannedTourEntry> TourEntriesList { get; set; } = [];
 
         /// <summary>
         /// List of map points for the whole tour
         /// </summary>
-        public List<MapPoint> MapPointList { get; set; } = new List<MapPoint>();
+        public List<MapPoint> MapPointList { get; set; } = [];
 
         /// <summary>
         /// Total duration for all tour entires

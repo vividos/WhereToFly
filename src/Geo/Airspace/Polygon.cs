@@ -152,6 +152,6 @@ namespace WhereToFly.Geo.Airspace
         /// <summary>
         /// List of all segments in this polygon
         /// </summary>
-        public List<PolygonSegment> Segments { get; set; } = new List<PolygonSegment>();
+        public List<PolygonSegment> Segments { get; set; } = [];
     }
 }

@@ -13,14 +13,13 @@ namespace WhereToFly.App.ViewModels
         /// <summary>
         /// List of weather icon descriptions to display
         /// </summary>
-        private List<WeatherIconDescription> weatherIconDescriptionList = new();
+        private List<WeatherIconDescription> weatherIconDescriptionList = [];
 
         #region Bindings properties
         /// <summary>
         /// List of weather icon view models for all weather icons to display
         /// </summary>
-        public ObservableCollection<WeatherIconViewModel> WeatherDashboardItems { get; set; } =
-            new ObservableCollection<WeatherIconViewModel>();
+        public ObservableCollection<WeatherIconViewModel> WeatherDashboardItems { get; set; } = [];
 
         /// <summary>
         /// Command to execute when "add bookmark" menu item is selected

@@ -43,8 +43,8 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         private async Task InitViewModel()
         {
-            this.Pages = new List<InfoPageEntryViewModel>
-            {
+            this.Pages =
+            [
                 new InfoPageEntryViewModel
                 {
                     Image = ImageSource.FromStream(
@@ -66,7 +66,7 @@ namespace WhereToFly.App.ViewModels
                     Image = null,
                     WebViewSource = await GetWebViewSource("info/Credits.md"),
                 },
-            };
+            ];
 
             this.OnPropertyChanged(nameof(this.Pages));
         }

@@ -66,7 +66,7 @@ namespace WhereToFly.WebApi.LiveWaypoints
                     new OpenApiInfo
                     {
                         Title = "WhereToFly Web API",
-                        Version = "v1"
+                        Version = "v1",
                     });
 
                 // Set the comments path for the Swagger JSON and UI.

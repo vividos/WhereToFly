@@ -39,7 +39,7 @@ namespace WhereToFly.App.MapView
         /// order for the WebView to correctly receive content. This must be used in some cases,
         /// since some web sites don't send CORS headers.
         /// </summary>
-        public HashSet<string> CorsWebsiteHosts { get; set; } = new();
+        public HashSet<string> CorsWebsiteHosts { get; set; } = [];
 
         /// <summary>
         /// Creates new CORS website cache

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Maui;
 using Microsoft.Maui.Handlers;
-using System;
 
 namespace WhereToFly.App.MapView
 {

@@ -11,7 +11,7 @@ namespace WhereToFly.Shared.Model
         /// <summary>
         /// Mapping of API key names to values
         /// </summary>
-        public Dictionary<string, string> ApiKeys { get; set; } = new();
+        public Dictionary<string, string> ApiKeys { get; set; } = [];
 
         /// <summary>
         /// Date/time when validity of infos expire

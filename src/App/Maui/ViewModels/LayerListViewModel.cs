@@ -25,7 +25,7 @@ namespace WhereToFly.App.ViewModels
         /// <summary>
         /// Layer list backing store
         /// </summary>
-        private List<Layer> layerList = new();
+        private List<Layer> layerList = [];
 
         #region Binding properties
         /// <summary>

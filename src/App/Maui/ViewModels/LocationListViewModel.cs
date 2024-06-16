@@ -45,7 +45,7 @@ namespace WhereToFly.App.ViewModels
         /// <summary>
         /// Location list
         /// </summary>
-        private List<Location> locationList = new();
+        private List<Location> locationList = [];
 
         /// <summary>
         /// Backing field for "IsListRefreshActive" property

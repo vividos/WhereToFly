@@ -24,7 +24,7 @@ namespace WhereToFly.App.UnitTest
             var list = new List<LatLongKey>
             {
                 new LatLongKey(42, -64),
-                new LatLongKey(-128, 1)
+                new LatLongKey(-128, 1),
             };
 
             var dict = new Dictionary<LatLongKey, List<Location>>

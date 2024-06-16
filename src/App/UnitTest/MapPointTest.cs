@@ -112,9 +112,10 @@ namespace WhereToFly.App.UnitTest
             var mapPoint4 = new MapPoint(0.0, 0.0);
 
             // run + check
-            var dict = new Dictionary<MapPoint, bool>();
-
-            dict.Add(mapPoint1, true);
+            var dict = new Dictionary<MapPoint, bool>
+            {
+                { mapPoint1, true },
+            };
 
             Assert.IsTrue(dict.ContainsKey(mapPoint1), "map point must be in dictionary now");
             Assert.IsTrue(dict.ContainsKey(mapPoint2), "map point in different reference must also be found in dict");

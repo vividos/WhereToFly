@@ -31,27 +31,27 @@ namespace WhereToFly.Geo.Airspace
         /// <summary>
         /// List of all airspaces parsed
         /// </summary>
-        private readonly List<Airspace> allAirspaces = new();
+        private readonly List<Airspace> allAirspaces = [];
 
         /// <summary>
         /// All parsing warnings or errors
         /// </summary>
-        private readonly List<string> parsingErrors = new();
+        private readonly List<string> parsingErrors = [];
 
         /// <summary>
         /// All file comment lines collected so far
         /// </summary>
-        private readonly List<string> fileCommentLines = new();
+        private readonly List<string> fileCommentLines = [];
 
         /// <summary>
         /// Dictionary with current values of defined variables
         /// </summary>
-        private readonly Dictionary<string, string> currentVariables = new();
+        private readonly Dictionary<string, string> currentVariables = [];
 
         /// <summary>
         /// Currently collected comment lines
         /// </summary>
-        private readonly List<string> currentCommentLines = new();
+        private readonly List<string> currentCommentLines = [];
 
         /// <summary>
         /// Currently parsed line

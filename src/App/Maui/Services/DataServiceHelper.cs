@@ -112,8 +112,8 @@ namespace WhereToFly.App.Services
         /// <returns>default location list</returns>
         internal static List<Location> GetDefaultLocationList()
         {
-            return new List<Location>
-            {
+            return
+            [
                 new Location(
                     Guid.NewGuid().ToString("B"),
                     new MapPoint(47.6764385, 11.8710533, 1685.0))
@@ -210,7 +210,7 @@ namespace WhereToFly.App.Services
                     InternetLink = "https://dc-bayrischzell.jimdosite.com/",
                     IsPlanTourLocation = false,
                 },
-            };
+            ];
         }
 
         /// <summary>
@@ -219,7 +219,7 @@ namespace WhereToFly.App.Services
         /// <returns>default track list</returns>
         internal static List<Track> GetDefaultTrackList()
         {
-            return new List<Track>();
+            return [];
         }
 
         /// <summary>
@@ -234,19 +234,19 @@ namespace WhereToFly.App.Services
                 using var stream = await Assets.Get(FaviconUrlCacheFilename);
                 if (stream == null)
                 {
-                    return new Dictionary<string, string>();
+                    return [];
                 }
 
                 using var reader = new StreamReader(stream);
                 string json = await reader.ReadToEndAsync();
 
                 return JsonConvert.DeserializeObject<Dictionary<string, string>>(json)
-                    ?? new Dictionary<string, string>();
+                    ?? [];
             }
             catch (Exception)
             {
                 // this code path is only used in unit tests
-                return new Dictionary<string, string>();
+                return [];
             }
         }
 

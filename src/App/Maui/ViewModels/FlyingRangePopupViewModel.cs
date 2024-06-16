@@ -104,8 +104,8 @@ namespace WhereToFly.App.ViewModels
 
             // the wind direction list is specified so that the direction angle can directly be
             // calculated from the entries index
-            this.WindDirectionList = new List<string>
-            {
+            this.WindDirectionList =
+            [
                 "N",
                 "NE",
                 "E",
@@ -114,7 +114,7 @@ namespace WhereToFly.App.ViewModels
                 "SW",
                 "W",
                 "NW",
-            };
+            ];
         }
 
         /// <summary>

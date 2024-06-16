@@ -371,7 +371,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
             {
                 AltitudeMode = AltitudeMode.ClampToGround,
                 Extrude = false,
-                Coordinates = new CoordinateCollection(),
+                Coordinates = [],
             };
 
             foreach (double[] coordinates in coordinatesList)
@@ -415,7 +415,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
                 {
                     LinearRing = new LinearRing
                     {
-                        Coordinates = new CoordinateCollection(),
+                        Coordinates = [],
                     },
                 },
             };

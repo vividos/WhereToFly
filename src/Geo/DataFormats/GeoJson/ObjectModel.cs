@@ -35,7 +35,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// Properties attached to this element; may be empty
         /// </summary>
         [JsonProperty("properties")]
-        public Dictionary<string, object> Properties { get; set; } = new();
+        public Dictionary<string, object> Properties { get; set; } = [];
 
         /// <summary>
         /// Deserializes a GeoJSON formatted JSON text to an element hierarchy and returns it.

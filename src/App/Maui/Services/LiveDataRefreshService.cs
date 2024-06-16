@@ -47,18 +47,17 @@ namespace WhereToFly.App.Services
         /// <summary>
         /// Mapping of live waypoint IDs and their location objects
         /// </summary>
-        private readonly Dictionary<string, Location> liveWaypointMap = new();
+        private readonly Dictionary<string, Location> liveWaypointMap = [];
 
         /// <summary>
         /// Mapping of live track IDs and their track objects
         /// </summary>
-        private readonly Dictionary<string, Track> liveTrackMap = new();
+        private readonly Dictionary<string, Track> liveTrackMap = [];
 
         /// <summary>
         /// Mapping of live track IDs and the last track point time
         /// </summary>
-        private readonly Dictionary<string, DateTimeOffset> liveTrackLastTrackPointTimeMap =
-            new();
+        private readonly Dictionary<string, DateTimeOffset> liveTrackLastTrackPointTimeMap = [];
 
         /// <summary>
         /// Queue with all updates to be due
@@ -68,7 +67,7 @@ namespace WhereToFly.App.Services
         /// <summary>
         /// Map with times when a next update can be scheduled
         /// </summary>
-        private readonly Dictionary<string, DateTimeOffset> nextPossibleUpdateMap = new();
+        private readonly Dictionary<string, DateTimeOffset> nextPossibleUpdateMap = [];
 
         /// <summary>
         /// Timer to schedule updates

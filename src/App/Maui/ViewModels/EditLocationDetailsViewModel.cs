@@ -132,7 +132,7 @@ namespace WhereToFly.App.ViewModels
         {
             this.appSettings = appSettings;
             this.location = location;
-            this.allLocationTypes = new List<LocationType>();
+            this.allLocationTypes = [];
 
             this.SetupBindings();
         }

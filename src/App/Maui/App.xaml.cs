@@ -66,7 +66,7 @@ namespace WhereToFly.App
 
             this.InitializeComponent();
 
-            this.SetupDepencencyService();
+            SetupDepencencyService();
 
             this.MainPage = new RootPage();
 
@@ -107,7 +107,7 @@ namespace WhereToFly.App
         /// <summary>
         /// Sets up DependencyService
         /// </summary>
-        private void SetupDepencencyService()
+        private static void SetupDepencencyService()
         {
             DependencyService.Register<IUserInterface, UserInterface>();
             DependencyService.Register<IAppMapService, AppMapService>();

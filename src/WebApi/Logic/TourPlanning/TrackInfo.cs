@@ -23,7 +23,7 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
         /// <summary>
         /// List of map points for this track
         /// </summary>
-        public List<MapPoint> MapPointList { get; set; } = new List<MapPoint>();
+        public List<MapPoint> MapPointList { get; set; } = [];
 
         #region IEdge implementation
 

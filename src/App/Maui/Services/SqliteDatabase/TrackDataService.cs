@@ -205,7 +205,7 @@ namespace WhereToFly.App.Services.SqliteDatabase
                     var list = value == null
                         ? null
                         : JsonConvert.DeserializeObject<List<double>>(value);
-                    this.Track.GroundHeightProfile = list ?? new List<double>();
+                    this.Track.GroundHeightProfile = list ?? [];
                 }
             }
 
@@ -248,7 +248,7 @@ namespace WhereToFly.App.Services.SqliteDatabase
                     {
                         Converters = new List<JsonConverter>
                         {
-                            new TrackPoint.Converter()
+                            new TrackPoint.Converter(),
                         },
                     });
 
@@ -304,7 +304,7 @@ namespace WhereToFly.App.Services.SqliteDatabase
             /// <summary>
             /// Cache for tracks, with track ID as key
             /// </summary>
-            private readonly Dictionary<string, Track> trackCache = new();
+            private readonly Dictionary<string, Track> trackCache = [];
 
             /// <summary>
             /// Creates a new track data service

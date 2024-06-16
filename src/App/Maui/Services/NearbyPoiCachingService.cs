@@ -28,7 +28,7 @@ namespace WhereToFly.App.Services
         /// <summary>
         /// The cache dictionary
         /// </summary>
-        private Dictionary<LatLongKey, List<Location>> cache = new();
+        private Dictionary<LatLongKey, List<Location>> cache = [];
 
         /// <summary>
         /// Creates a new nearby POI caching service
@@ -89,7 +89,7 @@ namespace WhereToFly.App.Services
             int minLongitude = (int)Math.Floor(area.West);
             int maxLongitude = (int)Math.Ceiling(area.East);
 
-            List<LatLongKey> latLongList = new();
+            List<LatLongKey> latLongList = [];
 
             for (int latitude = minLatitude; latitude < maxLatitude; latitude++)
             {

@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using Android.Runtime;
 using Android.Views;
-using System;
 
 namespace WhereToFly.App.Android
 {

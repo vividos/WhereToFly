@@ -10,6 +10,6 @@ namespace WhereToFly.Shared.Model
         /// <summary>
         /// List of waypoint IDs of tour locations to visit
         /// </summary>
-        public List<string> WaypointIdList { get; set; } = new List<string>();
+        public List<string> WaypointIdList { get; set; } = [];
     }
 }

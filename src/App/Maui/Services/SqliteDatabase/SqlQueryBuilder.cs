@@ -16,7 +16,7 @@ namespace WhereToFly.App.Services.SqliteDatabase
         /// <summary>
         /// List of bound objects
         /// </summary>
-        private readonly List<object> boundObjects = new();
+        private readonly List<object> boundObjects = [];
 
         /// <summary>
         /// Indicates if where clause was already added

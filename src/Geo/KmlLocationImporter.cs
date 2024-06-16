@@ -28,7 +28,7 @@ namespace WhereToFly.Geo
         /// <summary>
         /// Set with all location IDs used so far
         /// </summary>
-        private readonly HashSet<string> allLocationIds = new();
+        private readonly HashSet<string> allLocationIds = [];
 
         /// <summary>
         /// Creates a new KML location importer from given stream

@@ -38,7 +38,7 @@ namespace WhereToFly.App.UnitTest.Controls
             // set up
             var imageSource = new StreamImageSource
             {
-                Stream = null
+                Stream = null,
             };
 
             // run

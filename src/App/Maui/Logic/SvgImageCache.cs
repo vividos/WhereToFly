@@ -14,7 +14,7 @@ namespace WhereToFly.App.Logic
         /// <summary>
         /// All SVG images in the cache
         /// </summary>
-        private readonly Dictionary<string, string> allImages = new();
+        private readonly Dictionary<string, string> allImages = [];
 
         /// <summary>
         /// Returns an image source for SvgImage that loads an image based on the location's type.

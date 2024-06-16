@@ -50,7 +50,7 @@ namespace WhereToFly.WebApi.Logic.Services
         /// <summary>
         /// Mapping of MapShare identifier to Date/time of last request
         /// </summary>
-        private readonly Dictionary<string, DateTimeOffset> lastRequestByMapShareIdentifier = new();
+        private readonly Dictionary<string, DateTimeOffset> lastRequestByMapShareIdentifier = [];
 
         /// <summary>
         /// Date/time of last request, or null when no request was made yet

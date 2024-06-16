@@ -279,16 +279,16 @@ namespace WhereToFly.App.ViewModels
         {
             this.appSettings = App.Settings!;
 
-            this.MapImageryTypeItems = new List<MapImageryTypeViewModel>
-            {
+            this.MapImageryTypeItems =
+            [
                 new MapImageryTypeViewModel("OpenStreetMap", MapImageryType.OpenStreetMap),
                 new MapImageryTypeViewModel("Aerials + Labels (Bing Maps)", MapImageryType.BingMapsAerialWithLabels),
                 new MapImageryTypeViewModel("Sentinel-2 cloudless", MapImageryType.Sentinel2),
                 new MapImageryTypeViewModel("OpenTopoMap", MapImageryType.OpenTopoMap),
-            };
+            ];
 
-            this.MapOverlayTypeItems = new List<MapOverlayTypeViewModel>
-            {
+            this.MapOverlayTypeItems =
+            [
                 new MapOverlayTypeViewModel("None", MapOverlayType.None),
                 new MapOverlayTypeViewModel("Thermal Skyways (thermal.kk7.ch)", MapOverlayType.ThermalSkywaysKk7),
                 new MapOverlayTypeViewModel("Contour lines", MapOverlayType.ContourLines),
@@ -296,23 +296,23 @@ namespace WhereToFly.App.ViewModels
                 new MapOverlayTypeViewModel("NASA Black Marble 2017", MapOverlayType.BlackMarble),
                 new MapOverlayTypeViewModel("Waymarked Trails Hiking", MapOverlayType.WaymarkedTrailsHiking),
                 new MapOverlayTypeViewModel("OpenFlightMaps", MapOverlayType.OpenFlightMaps),
-            };
+            ];
 
-            this.CoordinateDisplayFormatItems = new List<CoordinateDisplayFormatViewModel>
-            {
+            this.CoordinateDisplayFormatItems =
+            [
                 new CoordinateDisplayFormatViewModel("dd.dddddd°", CoordinateDisplayFormat.Format_dd_dddddd),
                 new CoordinateDisplayFormatViewModel("dd° mm.mmm'", CoordinateDisplayFormat.Format_dd_mm_mmm),
                 new CoordinateDisplayFormatViewModel("dd° mm' sss\"", CoordinateDisplayFormat.Format_dd_mm_sss),
-            };
+            ];
 
-            this.MapShadingModeItems = new List<MapShadingModeViewModel>
-            {
+            this.MapShadingModeItems =
+            [
                 new MapShadingModeViewModel("Fixed at 10 a.m.", MapShadingMode.Fixed10Am),
                 new MapShadingModeViewModel("Fixed at 3 p.m.", MapShadingMode.Fixed3Pm),
                 new MapShadingModeViewModel("Follow current time", MapShadingMode.CurrentTime),
                 new MapShadingModeViewModel("Current time + 6 hours", MapShadingMode.Ahead6Hours),
                 new MapShadingModeViewModel("No shading", MapShadingMode.None),
-            };
+            ];
         }
 
         /// <summary>

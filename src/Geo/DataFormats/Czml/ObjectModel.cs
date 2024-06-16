@@ -846,7 +846,7 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// List of positions, 3 double values each, longitude/latitude/altitude
         /// </summary>
         [JsonProperty("cartographicDegrees")]
-        public List<double> CartographicDegrees { get; set; } = new List<double>();
+        public List<double> CartographicDegrees { get; set; } = [];
 
         /// <summary>
         /// Adds a new point to the list of cartographic positions

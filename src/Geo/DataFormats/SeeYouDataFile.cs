@@ -51,7 +51,7 @@ namespace WhereToFly.Geo.DataFormats
         /// <returns>list of track descriptions</returns>
         public List<string> GetTrackList()
         {
-            return new List<string>();
+            return [];
         }
 
         /// <summary>

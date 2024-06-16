@@ -28,8 +28,7 @@ namespace WhereToFly.App.ViewModels
         /// <summary>
         /// List of locations to plan a tour for
         /// </summary>
-        public ObservableCollection<PlanTourListEntryViewModel> PlanTourList { get; private set; } =
-            new ObservableCollection<PlanTourListEntryViewModel>();
+        public ObservableCollection<PlanTourListEntryViewModel> PlanTourList { get; private set; } = [];
 
         /// <summary>
         /// Command to start tour planning

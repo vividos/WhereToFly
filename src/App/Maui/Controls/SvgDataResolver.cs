@@ -11,7 +11,7 @@ namespace WhereToFly.App.Controls
         /// <summary>
         /// Cache for SKSvg objects
         /// </summary>
-        private static readonly Dictionary<string, SKSvg> SvgCache = new();
+        private static readonly Dictionary<string, SKSvg> SvgCache = [];
 
         /// <summary>
         /// Loads SVG image from given image source

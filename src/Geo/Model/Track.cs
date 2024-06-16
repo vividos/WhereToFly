@@ -92,13 +92,13 @@ namespace WhereToFly.Geo.Model
         /// <summary>
         /// List of track points
         /// </summary>
-        public List<TrackPoint> TrackPoints { get; set; } = new List<TrackPoint>();
+        public List<TrackPoint> TrackPoints { get; set; } = [];
 
         /// <summary>
         /// List of altitude values, specifying the ground height profile; only set for flight
         /// tracks
         /// </summary>
-        public List<double> GroundHeightProfile { get; set; } = new List<double>();
+        public List<double> GroundHeightProfile { get; set; } = [];
 
         /// <summary>
         /// Creates a new and empty track object

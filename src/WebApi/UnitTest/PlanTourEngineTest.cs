@@ -62,11 +62,11 @@ namespace WhereToFly.WebApi.UnitTest
             // run
             var planTourParameters = new PlanTourParameters
             {
-                WaypointIdList = new List<string>
-                {
+                WaypointIdList =
+                [
                     "wheretofly-path-bahnhof-neuhaus",
                     "wheretofly-path-rauhkopf",
-                },
+                ],
             };
 
             var tour = engine.PlanTour(planTourParameters);
@@ -91,10 +91,10 @@ namespace WhereToFly.WebApi.UnitTest
             // run
             var planTourParameters = new PlanTourParameters
             {
-                WaypointIdList = new List<string>
-                {
+                WaypointIdList =
+                [
                     "wheretofly-path-bahnhof-neuhaus",
-                },
+                ],
             };
 
             Assert.ThrowsException<InvalidOperationException>(
@@ -114,11 +114,11 @@ namespace WhereToFly.WebApi.UnitTest
             // run
             var planTourParameters = new PlanTourParameters
             {
-                WaypointIdList = new List<string>
-                {
+                WaypointIdList =
+                [
                     "wheretofly-path-bahnhof-neuhaus",
                     "wheretofly-path-xyz123",
-                },
+                ],
             };
 
             Assert.ThrowsException<ArgumentException>(
@@ -138,8 +138,8 @@ namespace WhereToFly.WebApi.UnitTest
             // run
             var planTourParameters = new PlanTourParameters
             {
-                WaypointIdList = new List<string>
-                {
+                WaypointIdList =
+                [
                     "wheretofly-path-bahnhof-neuhaus",
                     "wheretofly-path-spitzingsattel",
                     "wheretofly-path-jagerkamp",
@@ -161,7 +161,7 @@ namespace WhereToFly.WebApi.UnitTest
                     ////"wheretofly-path-bodenschneid",
                     ////"wheretofly-path-brecherspitz",
                     "wheretofly-path-bahnhof-neuhaus",
-                },
+                ],
             };
 
             var tour = engine.PlanTour(planTourParameters);

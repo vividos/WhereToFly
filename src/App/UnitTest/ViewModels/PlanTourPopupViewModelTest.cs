@@ -38,10 +38,10 @@ namespace WhereToFly.App.UnitTest.ViewModels
             var viewModel = new PlanTourPopupViewModel(
                 new PlanTourParameters
                 {
-                    WaypointIdList = new List<string>
-                    {
+                    WaypointIdList =
+                    [
                         "wheretofly-path-rotwand",
-                    },
+                    ],
                 },
                 () => Task.CompletedTask);
 

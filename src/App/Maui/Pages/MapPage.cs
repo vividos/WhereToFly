@@ -319,7 +319,7 @@ namespace WhereToFly.App.Pages
             this.mapView.LongTap += async (point) => await this.OnMapView_LongTap(point);
             this.mapView.AddTourPlanLocation += async (locationId) => await this.OnMapView_AddTourPlanLocation(locationId);
             this.mapView.UpdateLastShownLocation += async (point, viewingDistance)
-                => await this.OnMapView_UpdateLastShownLocation(point, viewingDistance);
+                => await OnMapView_UpdateLastShownLocation(point, viewingDistance);
             this.mapView.SetLocationAsCompassTarget += async (locationId)
                 => await this.OnMapView_SetLocationAsCompassTarget(locationId);
 
@@ -473,7 +473,7 @@ namespace WhereToFly.App.Pages
 
                     track.Name = args.TrackData.Name;
                     track.Description = args.TrackData.Description;
-                    this.MergeTrackPoints(track, args.TrackData);
+                    MergeTrackPoints(track, args.TrackData);
 
                     track.CalculateStatistics();
 
@@ -489,7 +489,7 @@ namespace WhereToFly.App.Pages
         /// </summary>
         /// <param name="track">track to merge new track points to</param>
         /// <param name="trackData">newly received track data</param>
-        private void MergeTrackPoints(Track track, LiveTrackData trackData)
+        private static void MergeTrackPoints(Track track, LiveTrackData trackData)
         {
             var trackPoints = trackData.TrackPoints.Select(
                     trackPoint => new TrackPoint(
@@ -660,7 +660,7 @@ namespace WhereToFly.App.Pages
         /// <param name="point">map point to store</param>
         /// <param name="viewingDistance">current viewing distance</param>
         /// <returns>task to wait on</returns>
-        private async Task OnMapView_UpdateLastShownLocation(MapPoint point, int viewingDistance)
+        private static async Task OnMapView_UpdateLastShownLocation(MapPoint point, int viewingDistance)
         {
             var appMapService = DependencyService.Get<IAppMapService>();
             await appMapService.UpdateLastShownPosition(point, viewingDistance);
@@ -721,7 +721,7 @@ namespace WhereToFly.App.Pages
                     break;
 
                 case MapLongTapContextMenu.Result.SetAsCompassTarget:
-                    await this.SetAsCompassTarget(point);
+                    await SetAsCompassTarget(point);
                     break;
 
                 case MapLongTapContextMenu.Result.NavigateHere:
@@ -785,7 +785,7 @@ namespace WhereToFly.App.Pages
         /// </summary>
         /// <param name="point">map point to set as target</param>
         /// <returns>task to wait on</returns>
-        private async Task SetAsCompassTarget(MapPoint point)
+        private static async Task SetAsCompassTarget(MapPoint point)
         {
             var compassTarget = new CompassTarget
             {

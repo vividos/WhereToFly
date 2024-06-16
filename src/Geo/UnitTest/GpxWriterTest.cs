@@ -26,8 +26,8 @@ namespace WhereToFly.Geo.UnitTest
             var track = new Track("track-id")
             {
                 Name = TrackName,
-                TrackPoints = new System.Collections.Generic.List<TrackPoint>
-                {
+                TrackPoints =
+                [
                     new TrackPoint(47.754076, 12.352277, 1234.0, null)
                     {
                         Time = DateTime.Today + TimeSpan.FromHours(1.0),
@@ -36,7 +36,7 @@ namespace WhereToFly.Geo.UnitTest
                     {
                         Time = DateTime.Today + TimeSpan.FromHours(2.0),
                     },
-                },
+                ],
             };
 
             // run

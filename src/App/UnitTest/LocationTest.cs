@@ -41,9 +41,10 @@ namespace WhereToFly.App.UnitTest
             var location3 = UnitTestHelper.GetDefaultLocation();
 
             // run + check
-            var dict = new Dictionary<Location, bool>();
-
-            dict.Add(location1, true);
+            var dict = new Dictionary<Location, bool>
+            {
+                { location1, true },
+            };
 
             Assert.IsTrue(dict.ContainsKey(location1), "location must be in dictionary now");
             ////Assert.IsTrue(dict.ContainsKey(location2), "location in different reference must also be found in dict");

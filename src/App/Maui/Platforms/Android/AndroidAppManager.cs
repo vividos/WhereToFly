@@ -2,9 +2,7 @@
 using Android.Content.PM;
 using Android.Graphics;
 using Android.Graphics.Drawables;
-using System;
 using System.Diagnostics;
-using System.IO;
 
 [assembly: Dependency(typeof(WhereToFly.App.Android.AndroidAppManager))]
 

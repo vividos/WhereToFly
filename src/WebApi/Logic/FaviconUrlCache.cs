@@ -20,7 +20,7 @@ namespace WhereToFly.WebApi.Logic
         /// <summary>
         /// Favicon URL cache; key is the base URI, value is the favicon URL
         /// </summary>
-        private readonly Dictionary<string, string> urlCache = new();
+        private readonly Dictionary<string, string> urlCache = [];
 
         /// <summary>
         /// Creates a new favicon URL cache

@@ -39,7 +39,7 @@ namespace WhereToFly.App.MapView
         /// <summary>
         /// List of nearby POIs already added to the map
         /// </summary>
-        private readonly List<string> nearbyPoiIdList = new();
+        private readonly List<string> nearbyPoiIdList = [];
 
         /// <summary>
         /// Task completion source for when map is fully initialized

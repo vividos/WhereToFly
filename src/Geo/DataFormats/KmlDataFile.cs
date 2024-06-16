@@ -29,17 +29,17 @@ namespace WhereToFly.Geo.DataFormats
         /// <summary>
         /// List of track placemarks
         /// </summary>
-        private readonly List<Placemark> trackPlacemarkList = new();
+        private readonly List<Placemark> trackPlacemarkList = [];
 
         /// <summary>
         /// List of track display names
         /// </summary>
-        private readonly List<string> trackDisplayNameList = new();
+        private readonly List<string> trackDisplayNameList = [];
 
         /// <summary>
         /// List of location placemarks
         /// </summary>
-        private readonly List<Placemark> locationPlacemarkList = new();
+        private readonly List<Placemark> locationPlacemarkList = [];
 
         /// <summary>
         /// Creates a new KML data file from stream
@@ -376,7 +376,7 @@ namespace WhereToFly.Geo.DataFormats
         {
             if (this.kml == null)
             {
-                return new List<Model.Location>();
+                return [];
             }
 
             return
