@@ -136,10 +136,10 @@ namespace WhereToFly.App.UnitTest.Shared
             var dict = new Dictionary<AppResourceUri, int>();
 
             // run + check
-            Assert.IsFalse(dict.Any(), "there must be no items in the dictionary");
+            Assert.IsFalse(dict.Count != 0, "there must be no items in the dictionary");
 
             dict[uri1] = 42;
-            Assert.IsTrue(dict.Any(), "there must be an item in the dictionary");
+            Assert.IsTrue(dict.Count != 0, "there must be an item in the dictionary");
             Assert.IsTrue(dict.ContainsKey(uri1), "dict must contain value for uri1");
             Assert.IsFalse(dict.ContainsKey(uri2), "dict must not contain value for uri1");
 

@@ -53,7 +53,7 @@ namespace WhereToFly.App.Logic
             {
                 var geoDataFile = GeoLoader.LoadGeoDataFile(stream, filename);
 
-                bool hasTracks = geoDataFile.GetTrackList().Any();
+                bool hasTracks = geoDataFile.GetTrackList().Count != 0;
 
                 if (geoDataFile.HasLocations() && !hasTracks)
                 {
@@ -132,7 +132,7 @@ namespace WhereToFly.App.Logic
                 var locationList = geoDataFile.HasLocations() ? geoDataFile.LoadLocationList() : null;
 
                 if (locationList == null ||
-                    !locationList.Any())
+                    locationList.Count == 0)
                 {
                     await UserInterface.DisplayAlert(
                         "No locations were found in the file",
@@ -175,7 +175,7 @@ namespace WhereToFly.App.Logic
 
                 var geoDataFile = GeoLoader.LoadGeoDataFile(stream, filename);
 
-                bool hasTracks = geoDataFile.GetTrackList().Any();
+                bool hasTracks = geoDataFile.GetTrackList().Count != 0;
                 if (!hasTracks)
                 {
                     await UserInterface.DisplayAlert(

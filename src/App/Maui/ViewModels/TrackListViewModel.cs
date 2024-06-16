@@ -47,7 +47,7 @@ namespace WhereToFly.App.ViewModels
         public bool IsListEmpty
         {
             get => !this.isListRefreshActive &&
-                (this.trackList == null || !this.trackList.Any());
+                (this.trackList == null || this.trackList.Count == 0);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace WhereToFly.App.ViewModels
         public bool IsDeleteTrackEnabled
         {
             get => !this.isListRefreshActive &&
-                this.trackList != null && this.trackList.Any();
+                this.trackList != null && this.trackList.Count != 0;
         }
 
         /// <summary>

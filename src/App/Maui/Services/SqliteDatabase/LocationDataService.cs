@@ -229,7 +229,7 @@ namespace WhereToFly.App.Services.SqliteDatabase
                 Debug.WriteLine($"Location query with params {filterSettings?.ToString()} took {stopwatch.ElapsedMilliseconds} ms");
 
                 if (locationEntryList == null ||
-                    !locationEntryList.Any())
+                    locationEntryList.Count == 0)
                 {
                     return Enumerable.Empty<Location>();
                 }

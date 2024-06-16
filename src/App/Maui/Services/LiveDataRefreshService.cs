@@ -224,7 +224,7 @@ namespace WhereToFly.App.Services
                     this.EnqueueNextUpdate(nextLocationOrTrackId, nextUpdateTime);
                     this.StartTimer(nextUpdateTime);
                 }
-                else if (this.liveWaypointMap.Any() || this.liveTrackMap.Any())
+                else if (this.liveWaypointMap.Count != 0 || this.liveTrackMap.Count != 0)
                 {
                     // no locations or tracks in the map; update all
                     Debug.WriteLine("LiveDataRefreshService: schedule update for all live waypoints and live tracks");

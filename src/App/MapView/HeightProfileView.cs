@@ -147,7 +147,7 @@ namespace WhereToFly.App.MapView
             {
                 this.SetTrack(this.Track);
 
-                if (this.Track.GroundHeightProfile.Any())
+                if (this.Track.GroundHeightProfile.Count != 0)
                 {
                     this.AddGroundProfile(this.Track.GroundHeightProfile);
                 }
@@ -202,7 +202,7 @@ namespace WhereToFly.App.MapView
             await this.taskCompletionSourceViewInitialized.Task;
             this.SetTrack(track);
 
-            if (track.GroundHeightProfile.Any())
+            if (track.GroundHeightProfile.Count != 0)
             {
                 this.AddGroundProfile(track.GroundHeightProfile);
             }

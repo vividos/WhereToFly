@@ -864,7 +864,7 @@ namespace WhereToFly.App.MapView
         /// <returns>task to wait on</returns>
         public async Task AddLocationList(List<Location> locationList)
         {
-            if (!locationList.Any())
+            if (locationList.Count == 0)
             {
                 return;
             }
@@ -968,7 +968,7 @@ namespace WhereToFly.App.MapView
         /// <returns>task to wait on</returns>
         public async Task AddTrack(Track track)
         {
-            if (!track.TrackPoints.Any() && !track.IsLiveTrack)
+            if (track.TrackPoints.Count == 0 && !track.IsLiveTrack)
             {
                 return;
             }
@@ -1012,7 +1012,7 @@ namespace WhereToFly.App.MapView
                     .ToList();
             }
 
-            IEnumerable<decimal>? groundHeightProfileList = track.GroundHeightProfile.Any()
+            IEnumerable<decimal>? groundHeightProfileList = track.GroundHeightProfile.Count != 0
                 ? track.GroundHeightProfile.Select(getRoundedHeightFromAltitude)
                 : null;
 

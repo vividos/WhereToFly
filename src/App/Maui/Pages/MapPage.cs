@@ -501,7 +501,7 @@ namespace WhereToFly.App.Pages
                         Time = trackData.TrackStart.AddSeconds(trackPoint.Offset),
                     }).ToList();
 
-            if (trackPoints.Any())
+            if (trackPoints.Count != 0)
             {
                 DateTimeOffset? trackDataStart = trackPoints[0].Time;
 
