@@ -5,6 +5,7 @@
     <OutputType Condition="$(TargetFramework) != 'net8.0'">Exe</OutputType>
     <RootNamespace>WhereToFly.App</RootNamespace>
     <UseMaui>true</UseMaui>
+    <UseMauiCompat>false</UseMauiCompat>
     <SingleProject>true</SingleProject>
     <ImplicitUsings>enable</ImplicitUsings>
 
@@ -91,8 +92,7 @@
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.5" />
     <PackageReference Include="Microsoft.AppCenter.Distribute" Version="5.0.5" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
-    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.40" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.40" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.60" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Refit" Version="7.0.0" />
     <PackageReference Include="Refit.Newtonsoft.Json" Version="7.0.0" />
