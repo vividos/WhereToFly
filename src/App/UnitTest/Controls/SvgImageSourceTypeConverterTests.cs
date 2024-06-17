@@ -7,7 +7,7 @@ using WhereToFly.App.Controls;
 namespace WhereToFly.App.UnitTest.Controls
 {
     /// <summary>
-    /// Unit tests for the SvgImageSourceTypeConverter class
+    /// Unit tests for the <see cref="SvgImageSourceTypeConverter"/> class
     /// </summary>
     [TestClass]
     public class SvgImageSourceTypeConverterTests
@@ -38,7 +38,7 @@ namespace WhereToFly.App.UnitTest.Controls
         public void TestConvertNullOrWhitespace()
         {
             // set up
-            var converter = new SvgImageSourceTypeConverter();
+            IExtendedTypeConverter converter = new SvgImageSourceTypeConverter();
             var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
             // run + check
@@ -57,7 +57,7 @@ namespace WhereToFly.App.UnitTest.Controls
         public void TestConvertFromResourceUri()
         {
             // set up
-            var converter = new SvgImageSourceTypeConverter();
+            IExtendedTypeConverter converter = new SvgImageSourceTypeConverter();
             var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
             // run
@@ -76,7 +76,7 @@ namespace WhereToFly.App.UnitTest.Controls
         public void TestConvertFromResourceUriWithAssembly()
         {
             // set up
-            var converter = new SvgImageSourceTypeConverter();
+            IExtendedTypeConverter converter = new SvgImageSourceTypeConverter();
             var serviceProvider = new ServiceCollection().BuildServiceProvider();
             var assembly = typeof(SvgImageSourceTypeConverter).Assembly;
 
@@ -96,7 +96,7 @@ namespace WhereToFly.App.UnitTest.Controls
         public void TestConvertFromSvgImageText()
         {
             // set up
-            var converter = new SvgImageSourceTypeConverter();
+            IExtendedTypeConverter converter = new SvgImageSourceTypeConverter();
             var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
             // run
@@ -115,7 +115,7 @@ namespace WhereToFly.App.UnitTest.Controls
         public void TestConvertFromDataUriPlainText()
         {
             // set up
-            var converter = new SvgImageSourceTypeConverter();
+            IExtendedTypeConverter converter = new SvgImageSourceTypeConverter();
             var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
             // run
@@ -134,7 +134,7 @@ namespace WhereToFly.App.UnitTest.Controls
         public void TestConvertFromDataUriBase64()
         {
             // set up
-            var converter = new SvgImageSourceTypeConverter();
+            IExtendedTypeConverter converter = new SvgImageSourceTypeConverter();
             var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
             // run
@@ -154,7 +154,7 @@ namespace WhereToFly.App.UnitTest.Controls
         public void TestConvertFromInvalidDataUri()
         {
             // set up
-            var converter = new SvgImageSourceTypeConverter();
+            IExtendedTypeConverter converter = new SvgImageSourceTypeConverter();
             var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
             // run + check
@@ -173,7 +173,7 @@ namespace WhereToFly.App.UnitTest.Controls
         public void TestConvertFromFilename()
         {
             // set up
-            var converter = new SvgImageSourceTypeConverter();
+            IExtendedTypeConverter converter = new SvgImageSourceTypeConverter();
             var serviceProvider = new ServiceCollection().BuildServiceProvider();
 
             // run
