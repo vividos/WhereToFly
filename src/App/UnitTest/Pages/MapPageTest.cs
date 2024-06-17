@@ -21,7 +21,7 @@ namespace WhereToFly.App.UnitTest.Pages
         }
 
         /// <summary>
-        /// Tests default ctor of MapPage
+        /// Tests default ctor of page
         /// </summary>
         [TestMethod]
         public void TestDefaultCtor()

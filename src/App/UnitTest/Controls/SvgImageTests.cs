@@ -12,7 +12,7 @@ namespace WhereToFly.App.UnitTest.Controls
     /// Unit tests for the SvgImage class
     /// </summary>
     [TestClass]
-    public class SvgImageTests
+    public class SvgImageTests : UserInterfaceTestBase
     {
         /// <summary>
         /// Resource URI for a valid image to use for testing

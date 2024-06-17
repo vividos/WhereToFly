@@ -5,13 +5,13 @@ using WhereToFly.App.Pages;
 namespace WhereToFly.App.UnitTest.Pages
 {
     /// <summary>
-    /// Tests for WeatherDetailsPage class
+    /// Tests for <see cref="WeatherDetailsPage"/> class
     /// </summary>
     [TestClass]
-    public class WeatherDetailsPageTest
+    public class WeatherDetailsPageTest : UserInterfaceTestBase
     {
         /// <summary>
-        /// Tests default ctor of WeatherDetailsPage
+        /// Tests default ctor of page
         /// </summary>
         [TestMethod]
         public void TestDefaultCtor()
@@ -28,7 +28,9 @@ namespace WhereToFly.App.UnitTest.Pages
             var page = new WeatherDetailsPage(iconDescription);
 
             // check
-            Assert.IsTrue(page.Title.Length > 0, "page title must have been set");
+            Assert.IsTrue(
+                page.Title.Length > 0,
+                "page title must have been set");
         }
     }
 }

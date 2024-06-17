@@ -1,26 +1,16 @@
-﻿using Microsoft.Maui.Controls;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WhereToFly.App.Pages;
 
 namespace WhereToFly.App.UnitTest.Pages
 {
     /// <summary>
-    /// Tests for InfoPage class
+    /// Tests for <see cref="InfoPage"/> class
     /// </summary>
     [TestClass]
-    public class InfoPageTest
+    public class InfoPageTest : UserInterfaceTestBase
     {
         /// <summary>
-        /// Sets up tests
-        /// </summary>
-        [TestInitialize]
-        public void SetUp()
-        {
-            DependencyService.Register<IPlatform, UnitTestPlatform>();
-        }
-
-        /// <summary>
-        /// Tests default ctor of InfoPage
+        /// Tests default ctor of page
         /// </summary>
         [TestMethod]
         public void TestDefaultCtor()

@@ -5,13 +5,13 @@ using WhereToFly.Geo.Model;
 namespace WhereToFly.App.UnitTest.Popups
 {
     /// <summary>
-    /// Tests for AddLiveWaypointPopupPage class
+    /// Tests for <see cref="AddLiveWaypointPopupPage"/> class
     /// </summary>
     [TestClass]
-    public class AddLiveWaypointPopupPageTest
+    public class AddLiveWaypointPopupPageTest : UserInterfaceTestBase
     {
         /// <summary>
-        /// Tests default ctor of AddLiveWaypointPopupPage
+        /// Tests default ctor of popup page
         /// </summary>
         [TestMethod]
         public void TestDefaultCtor()

@@ -1,30 +1,16 @@
-﻿using Microsoft.Maui.Controls;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WhereToFly.App.Logic;
-using WhereToFly.App.Models;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WhereToFly.App.Pages;
 
 namespace WhereToFly.App.UnitTest.Pages
 {
     /// <summary>
-    /// Tests for LocationDetailsPage class
+    /// Tests for <see cref="LocationDetailsPage"/> class
     /// </summary>
     [TestClass]
-    public class LocationDetailsPageTest
+    public class LocationDetailsPageTest : UserInterfaceTestBase
     {
         /// <summary>
-        /// Sets up tests
-        /// </summary>
-        [TestInitialize]
-        public void SetUp()
-        {
-            DependencyService.Register<IPlatform, UnitTestPlatform>();
-            DependencyService.Register<SvgImageCache>();
-            App.Settings = new AppSettings();
-        }
-
-        /// <summary>
-        /// Tests default ctor of LocationDetailsPage
+        /// Tests default ctor of page
         /// </summary>
         [TestMethod]
         public void TestDefaultCtor()

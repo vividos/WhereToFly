@@ -1,29 +1,18 @@
 ﻿using Microsoft.Maui.Controls;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
-using WhereToFly.App.Models;
 using WhereToFly.App.Pages;
 
 namespace WhereToFly.App.UnitTest.Pages
 {
     /// <summary>
-    /// Tests for EditLocationDetailsPage class
+    /// Tests for <see cref="EditLocationDetailsPage"/> class
     /// </summary>
     [TestClass]
-    public class EditLocationDetailsPageTest
+    public class EditLocationDetailsPageTest : UserInterfaceTestBase
     {
         /// <summary>
-        /// Sets up tests
-        /// </summary>
-        [TestInitialize]
-        public void SetUp()
-        {
-            DependencyService.Register<IPlatform, UnitTestPlatform>();
-            App.Settings = new AppSettings();
-        }
-
-        /// <summary>
-        /// Tests default ctor of EditLocationDetailsPage
+        /// Tests default ctor of page
         /// </summary>
         /// <returns>task to wait on</returns>
         [TestMethod]

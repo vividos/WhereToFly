@@ -1,5 +1,4 @@
-﻿using Microsoft.Maui.Controls;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using System.Threading.Tasks;
 using WhereToFly.App.Popups;
@@ -8,22 +7,13 @@ using WhereToFly.App.Services;
 namespace WhereToFly.App.UnitTest.Popups
 {
     /// <summary>
-    /// Tests for AddLayerPopupPage class
+    /// Tests for <see cref="AddLayerPopupPage"/> class
     /// </summary>
     [TestClass]
-    public class AddLayerPopupPageTest
+    public class AddLayerPopupPageTest : UserInterfaceTestBase
     {
         /// <summary>
-        /// Sets up tests
-        /// </summary>
-        [TestInitialize]
-        public void SetUp()
-        {
-            DependencyService.Register<IPlatform, UnitTestPlatform>();
-        }
-
-        /// <summary>
-        /// Tests default ctor of AddLayerPopupPage
+        /// Tests default ctor of popup page
         /// </summary>
         /// <returns>task to wait on</returns>
         [TestMethod]

@@ -9,10 +9,10 @@ using WhereToFly.App.Services;
 namespace WhereToFly.App.UnitTest.Pages
 {
     /// <summary>
-    /// Tests for LayerDetailsPage class
+    /// Tests for <see cref="LayerDetailsPage"/> class
     /// </summary>
     [TestClass]
-    public class LayerDetailsPageTest
+    public class LayerDetailsPageTest : UserInterfaceTestBase
     {
         /// <summary>
         /// Sets up tests
@@ -25,7 +25,7 @@ namespace WhereToFly.App.UnitTest.Pages
         }
 
         /// <summary>
-        /// Tests default ctor of LayerDetailsPage
+        /// Tests default ctor of page
         /// </summary>
         /// <returns>task to wait on</returns>
         [TestMethod]
