@@ -1,7 +1,4 @@
-﻿using AndroidX.AppCompat.App;
-using System;
-
-[assembly: Dependency(typeof(WhereToFly.App.AndroidPlatform))]
+﻿[assembly: Dependency(typeof(WhereToFly.App.AndroidPlatform))]
 
 namespace WhereToFly.App
 {
