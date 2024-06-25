@@ -408,13 +408,13 @@ namespace WhereToFly.App.ViewModels
                 null,
                 this.includedLocationsList.Keys.ToArray());
 
-            if (result == null ||
-                !this.includedLocationsList.ContainsKey(result))
+            if (result != null &&
+                this.includedLocationsList.TryGetValue(result, out string? filename))
             {
-                return null;
+                return filename;
             }
 
-            return this.includedLocationsList[result];
+            return null;
         }
 
         /// <summary>
@@ -474,12 +474,10 @@ namespace WhereToFly.App.ViewModels
                 this.downloadWebSiteList.Keys.ToArray());
 
             if (result == null ||
-                !this.downloadWebSiteList.ContainsKey(result))
+                !this.downloadWebSiteList.TryGetValue(result, out string? webSiteToOpen))
             {
                 return;
             }
-
-            string webSiteToOpen = this.downloadWebSiteList[result];
 
             await Browser.OpenAsync(
                 webSiteToOpen,

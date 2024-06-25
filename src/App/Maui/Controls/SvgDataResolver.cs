@@ -53,9 +53,9 @@ namespace WhereToFly.App.Controls
             if (stream is FileStream fileStream)
             {
                 cacheKey = "FileStream:" + fileStream.Name;
-                if (SvgCache.ContainsKey(cacheKey))
+                if (SvgCache.TryGetValue(cacheKey, out var value))
                 {
-                    return SvgCache[cacheKey];
+                    return value;
                 }
             }
 
@@ -95,9 +95,9 @@ namespace WhereToFly.App.Controls
             string text = uri.OriginalString;
 
             string cacheKey = "DataUri:" + text;
-            if (SvgCache.ContainsKey(cacheKey))
+            if (SvgCache.TryGetValue(cacheKey, out var value))
             {
-                return SvgCache[cacheKey];
+                return value;
             }
 
             string? svgText = null;
@@ -135,9 +135,9 @@ namespace WhereToFly.App.Controls
         private static SKSvg LoadImageFromFile(string filename)
         {
             string cacheKey = "Filename:" + filename;
-            if (SvgCache.ContainsKey(cacheKey))
+            if (SvgCache.TryGetValue(cacheKey, out var value))
             {
-                return SvgCache[cacheKey];
+                return value;
             }
 
             var svg = new SKSvg();

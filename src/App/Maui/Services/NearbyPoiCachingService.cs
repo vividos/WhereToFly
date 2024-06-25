@@ -138,9 +138,9 @@ namespace WhereToFly.App.Services
         {
             var combo = new LatLongKey(latitude, longitude);
 
-            if (this.cache.ContainsKey(combo))
+            if (this.cache.TryGetValue(combo, out var locationList))
             {
-                return this.cache[combo];
+                return locationList;
             }
 
             IEnumerable<Location> result =

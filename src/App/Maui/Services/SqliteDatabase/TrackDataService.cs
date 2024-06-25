@@ -338,9 +338,9 @@ namespace WhereToFly.App.Services.SqliteDatabase
             /// <returns>track from list, or null when none was found</returns>
             public async Task<Track?> Get(string trackId)
             {
-                if (this.trackCache.ContainsKey(trackId))
+                if (this.trackCache.TryGetValue(trackId, out Track? track))
                 {
-                    return this.trackCache[trackId];
+                    return track;
                 }
 
                 var trackEntry = await this.connection.GetAsync<TrackEntry>(trackId);
@@ -396,9 +396,9 @@ namespace WhereToFly.App.Services.SqliteDatabase
 
                 foreach (var trackEntry in trackList)
                 {
-                    if (this.trackCache.ContainsKey(trackEntry.Id))
+                    if (this.trackCache.TryGetValue(trackEntry.Id, out Track? track))
                     {
-                        trackEntry.Track = this.trackCache[trackEntry.Id];
+                        trackEntry.Track = track;
                     }
                     else
                     {

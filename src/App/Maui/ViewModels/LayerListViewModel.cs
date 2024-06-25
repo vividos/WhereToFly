@@ -332,14 +332,14 @@ namespace WhereToFly.App.ViewModels
                 this.downloadWebSiteList.Keys.ToArray());
 
             if (result == null ||
-                !this.downloadWebSiteList.ContainsKey(result))
+                !this.downloadWebSiteList.TryGetValue(result, out string? webSiteToOpen))
             {
                 return;
             }
 
-            string webSiteToOpen = this.downloadWebSiteList[result];
-
-            await Browser.OpenAsync(webSiteToOpen, BrowserLaunchMode.External);
+            await Browser.OpenAsync(
+                webSiteToOpen,
+                BrowserLaunchMode.External);
         }
 
         /// <summary>

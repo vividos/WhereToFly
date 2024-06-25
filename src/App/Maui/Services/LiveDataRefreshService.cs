@@ -363,11 +363,15 @@ namespace WhereToFly.App.Services
 
                     if (!isLocation)
                     {
-                        if (this.liveTrackLastTrackPointTimeMap.ContainsKey(updateInfo.LocationOrTrackId))
+                        if (this.liveTrackLastTrackPointTimeMap.TryGetValue(
+                            updateInfo.LocationOrTrackId,
+                            out DateTimeOffset value))
                         {
-                            lastTrackPointTime = this.liveTrackLastTrackPointTimeMap[updateInfo.LocationOrTrackId];
+                            lastTrackPointTime = value;
                         }
-                        else if (this.liveTrackMap.TryGetValue(updateInfo.LocationOrTrackId, out Track? liveTrack) &&
+                        else if (this.liveTrackMap.TryGetValue(
+                            updateInfo.LocationOrTrackId,
+                            out Track? liveTrack) &&
                             liveTrack != null)
                         {
                             lastTrackPointTime =
