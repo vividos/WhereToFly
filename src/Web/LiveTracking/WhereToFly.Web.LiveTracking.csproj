@@ -9,22 +9,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Frontend\**" />
+    <Content Remove="Frontend\**" />
+    <EmbeddedResource Remove="Frontend\**" />
+    <None Remove="Frontend\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Refit" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\Model\WhereToFly.Shared.Model.csproj" />
     <ProjectReference Include="..\..\Shared\WebLib\WhereToFly.Shared.WebLib.esproj" />
+    <ProjectReference Include="Frontend\WhereToFly.Web.LiveTracking.Frontend.esproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
   </ItemGroup>
-
-  <!-- npm frontend project integration for ASP.NET Core based projects -->
-  <PropertyGroup>
-    <NpmProjectPath>Frontend\</NpmProjectPath>
-    <NpmOutputPath>wwwroot\</NpmOutputPath>
-    <NpmMainEntryPointFilename>js\site.bundle.js</NpmMainEntryPointFilename>
-  </PropertyGroup>
-
-  <Import Project="..\..\WhereToFly.NpmBuildProject.targets" />
-  <!-- end of npm frontend project integration -->
 
 </Project>

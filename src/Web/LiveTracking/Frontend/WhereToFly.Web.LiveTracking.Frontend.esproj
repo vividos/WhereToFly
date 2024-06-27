@@ -1,0 +1,56 @@
+<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/1.0.1088444">
+
+  <PropertyGroup>
+    <!-- No NuGet packages in here -->
+    <ResolveNuGetPackages>false</ResolveNuGetPackages>
+
+    <!-- Command to create a debug build of the project -->
+    <BuildCommand Condition="'$(Configuration)' == 'Debug'">npm run build</BuildCommand>
+
+    <!-- Command to create an optimized build of the project that's ready for publishing -->
+    <BuildCommand Condition="'$(Configuration)' == 'Release'">npm run build-release</BuildCommand>
+
+    <!-- command used when "dotnet publish" -->
+    <PublishCommand>$(BuildCommand)</PublishCommand>
+
+    <!-- Folder where production build objects will be placed -->
+    <BuildOutputFolder>$(MSBuildProjectDirectory)\..\wwwroot\</BuildOutputFolder>
+  </PropertyGroup>
+
+  <!-- Support for skipping unnecessary rebuilds -->
+  <ItemGroup>
+    <!-- This lists all files that when modified, trigger a new build -->
+    <NpmSourceFiles Include="$(MSBuildProjectFile)" />
+    <NpmSourceFiles Include="$(PackageJsonDirectory)src\**" />
+    <NpmSourceFiles Include="$(PackageJsonDirectory)package.json" />
+    <NpmSourceFiles Include="$(PackageJsonDirectory)package-lock.json" />
+    <NpmSourceFiles Include="$(PackageJsonDirectory)webpack.*.json" />
+
+    <!-- This lists (a subset of) files that are output by the build; the list
+         doesn't need to be exhaustive, but at least one file that's always
+         created/modified by the build -->
+    <NpmOutputFiles Include="$(BuildOutputFolder)js\site.bundle.js" />
+  </ItemGroup>
+
+  <!-- This targets check if the project files or source files are newer than
+       the output files (by using Target's Inputs and Outputs parameters) and
+       sets ShouldRunBuildScript accordingly (build or no build). -->
+  <Target Name="AssumeNoBuildIsNecessary" BeforeTargets="CheckIfNpmBuildIsNecessary">
+    <CreateProperty Value="false">
+      <!-- ValueSetByTask is needed here, or the CoreCompile task would not pick
+           up the modified property value.-->
+      <Output TaskParameter="ValueSetByTask" PropertyName="ShouldRunBuildScript" />
+    </CreateProperty>
+  </Target>
+
+  <Target Name="CheckIfNpmBuildIsNecessary" BeforeTargets="CoreCompile" Inputs="@(NpmSourceFiles)" Outputs="@(NpmOutputFiles)">
+    <CreateProperty Value="true">
+      <Output TaskParameter="ValueSetByTask" PropertyName="ShouldRunBuildScript" />
+    </CreateProperty>
+  </Target>
+
+  <Target Name="OutputSkipBuildMessageWhenNoBuildIsNecessary" AfterTargets="CoreCompile" Condition="'$(ShouldRunBuildScript)' == 'false'">
+    <Message Importance="High" Text="Skipping npm build because output files are up-to-date with respect to the project and source files." />
+  </Target>
+
+</Project>
