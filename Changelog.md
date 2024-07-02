@@ -6,6 +6,8 @@ Released on ?.
 
 ✨ New Features / Improvements
 
+- Using CesiumJS version 1.119.0
+
 🐛 Bugfixes
 
 - Fixed exporting layers
