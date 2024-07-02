@@ -10,9 +10,6 @@
     <!-- Command to create an optimized build of the project that's ready for publishing -->
     <BuildCommand Condition="'$(Configuration)' == 'Release'">npm run build-release</BuildCommand>
 
-    <!-- command used when "dotnet publish" -->
-    <PublishCommand>$(BuildCommand)</PublishCommand>
-
     <!-- Folder where production build objects will be placed -->
     <BuildOutputFolder>$(MSBuildProjectDirectory)\..\wwwroot\</BuildOutputFolder>
   </PropertyGroup>
