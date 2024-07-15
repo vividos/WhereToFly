@@ -83,8 +83,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AsyncAwaitBestPractices.MVVM" Version="7.0.0" />
-    <PackageReference Include="CommunityToolkit.Maui" Version="9.0.1" />
+    <PackageReference Include="AsyncAwaitBestPractices.MVVM" Version="8.0.0" />
+    <PackageReference Include="CommunityToolkit.Maui" Version="9.0.2" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.61" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
     <PackageReference Include="FFImageLoading.Maui" Version="1.2.6" />
@@ -92,7 +92,7 @@
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.5" />
     <PackageReference Include="Microsoft.AppCenter.Distribute" Version="5.0.5" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
-    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.61" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.70" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Refit" Version="7.1.2" />
     <PackageReference Include="Refit.Newtonsoft.Json" Version="7.1.2" />
