@@ -32,11 +32,7 @@ namespace WhereToFly.App.ViewModels
         public Color SelectedTrackColor
         {
             get => Color.FromArgb("#" + this.Track.Color);
-            set
-            {
-                this.Track.Color = value.ToHex().Replace("#FF", string.Empty);
-                this.OnPropertyChanged(nameof(this.SelectedTrackColor));
-            }
+            set => this.Track.Color = value.ToHex().TrimStart('#');
         }
         #endregion
 

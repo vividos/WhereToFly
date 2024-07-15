@@ -37,7 +37,7 @@ namespace WhereToFly.App.Controls
                 propertyName: nameof(SelectedColor),
                 returnType: typeof(Color),
                 declaringType: typeof(ColorPickerView),
-                defaultBindingMode: BindingMode.OneWay,
+                defaultBindingMode: BindingMode.TwoWay,
                 defaultValue: null,
                 propertyChanged: OnSelectedColorPropertyChanged);
         #endregion
