@@ -8,17 +8,12 @@ namespace WhereToFly.App.Controls
     /// </summary>
     public partial class ColorPickerView : ContentView
     {
+        #region Binding properties
         /// <summary>
         /// All colors to display in the color picker
         /// </summary>
-        private static readonly string[] AllColorPickerColors = new string[]
-        {
-            "C70039", "FF5733", "FF8D1A", "FFC300",
-            "EDDD52", "ADD45D", "56C785", "00BAAD",
-            "2A7A9B", "3C3D6B", "52184A", "900C3E",
-        };
+        public Color[] AllColorPickerColors { get; }
 
-        #region Binding properties
         /// <summary>
         /// Binding property for the border color of the selected color frame
         /// </summary>
@@ -71,50 +66,19 @@ namespace WhereToFly.App.Controls
         /// </summary>
         public ColorPickerView()
         {
+            string[] colors =
+            [
+                "#C70039", "#FF5733", "#FF8D1A", "#FFC300",
+                "#EDDD52", "#ADD45D", "#56C785", "#00BAAD",
+                "#2A7A9B", "#3C3D6B", "#52184A", "#900C3E",
+            ];
+
+            this.AllColorPickerColors =
+                colors.Select(c => Color.FromArgb(c)).ToArray();
+
             this.InitializeComponent();
 
-            this.SetupColorPicker();
-        }
-
-        /// <summary>
-        /// Sets up color picker control, which actually is a FlexLayout containing several
-        /// buttons with a border.
-        /// </summary>
-        private void SetupColorPicker()
-        {
-            foreach (string color in AllColorPickerColors)
-            {
-                var button = new Button
-                {
-                    WidthRequest = 40.0,
-                    HeightRequest = 40.0,
-                    BackgroundColor = Color.FromArgb(color),
-                };
-
-                button.Clicked += this.OnClicked_ColorPickerButton;
-
-                var innerFrame = new Frame
-                {
-                    Padding = new Thickness(2, 2, 2.5, 2.5), // distance to button
-                    Margin = new Thickness(2), // border width
-                    CornerRadius = 3.0f,
-                    BackgroundColor = this.BackgroundColor,
-                    HasShadow = false,
-                    Content = button,
-                };
-
-                var outerFrame = new Frame
-                {
-                    Padding = new Thickness(0),
-                    Margin = new Thickness(0),
-                    CornerRadius = 5.0f,
-                    BackgroundColor = Colors.Transparent,
-                    HasShadow = false,
-                    Content = innerFrame,
-                };
-
-                this.colorPickerLayout.Children.Add(outerFrame);
-            }
+            this.colorPickerLayout.BindingContext = this;
         }
 
         /// <summary>
@@ -123,7 +87,10 @@ namespace WhereToFly.App.Controls
         /// <param name="bindable">bindable object</param>
         /// <param name="oldValue">old color value</param>
         /// <param name="newValue">new color value</param>
-        private static void OnSelectedColorPropertyChanged(BindableObject bindable, object oldValue, object newValue)
+        private static void OnSelectedColorPropertyChanged(
+            BindableObject bindable,
+            object oldValue,
+            object newValue)
         {
             var view = bindable as ColorPickerView;
             view?.SelectColor((Color)newValue);
@@ -149,34 +116,34 @@ namespace WhereToFly.App.Controls
         private void SelectColor(Color? color)
         {
             int selectedIndex = color != null
-                ? Array.IndexOf(AllColorPickerColors, color.ToHex().TrimStart('#'))
+                ? Array.IndexOf(this.AllColorPickerColors, color)
                 : -1;
 
             if (color == null ||
                 selectedIndex == -1)
             {
-                color = Color.FromArgb(AllColorPickerColors[0]);
+                color = this.AllColorPickerColors[0];
                 selectedIndex = 0;
             }
 
             this.SelectColorFrame(
                 color,
-                this.colorPickerLayout.Children[selectedIndex] as Frame);
+                this.colorPickerLayout.Children[selectedIndex] as Border);
         }
 
         /// <summary>
-        /// Marks a new color element (button inside a frame) as the selected element.
+        /// Marks a new color element (button inside a border) as the selected element.
         /// </summary>
         /// <param name="color">color to set</param>
-        /// <param name="selectedFrame">selected frame</param>
-        private void SelectColorFrame(Color color, Frame? selectedFrame)
+        /// <param name="selectedBorder">selected border</param>
+        private void SelectColorFrame(Color color, Border? selectedBorder)
         {
             // set all frame colors to white except the selected one
-            foreach (Frame outerFrame in this.colorPickerLayout.Children.Cast<Frame>())
+            foreach (Border border in this.colorPickerLayout.Children.Cast<Border>())
             {
-                outerFrame.BackgroundColor = outerFrame == selectedFrame
-                    ? this.SelectionBorderColor
-                    : Colors.Transparent;
+                border.Stroke = border == selectedBorder
+                    ? new SolidColorBrush(this.SelectionBorderColor)
+                    : SolidColorBrush.Transparent;
             }
 
             // update view model

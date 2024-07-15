@@ -1,14 +1,37 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:WhereToFly.App.Controls"
              x:Class="WhereToFly.App.Controls.ColorPickerView">
     <!-- flex layout with buttons for each color -->
     <FlexLayout x:Name="colorPickerLayout"
+                x:DataType="controls:ColorPickerView"
+                BindableLayout.ItemsSource="{Binding AllColorPickerColors}"
                 VerticalOptions="FillAndExpand"
                 HorizontalOptions="FillAndExpand"
                 Direction="Row"
                 AlignItems="Start"
                 AlignContent="Start"
                 JustifyContent="Start"
-                Wrap="Wrap" />
+                Wrap="Wrap">
+        <BindableLayout.ItemTemplate>
+            <DataTemplate x:DataType="x:String">
+                <Border StrokeThickness="2"
+                        Stroke="Transparent"
+                        Margin="0"
+                        Padding="2">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="4" />
+                    </Border.StrokeShape>
+
+                    <Button WidthRequest="40"
+                            HeightRequest="40"
+                            CornerRadius="4"
+                            BackgroundColor="{Binding .}"
+                            Clicked="OnClicked_ColorPickerButton" />
+                </Border>
+
+            </DataTemplate>
+        </BindableLayout.ItemTemplate>
+    </FlexLayout>
 </ContentView>
