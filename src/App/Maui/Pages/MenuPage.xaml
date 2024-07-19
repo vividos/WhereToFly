@@ -42,7 +42,8 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="viewmodels:MenuViewModel+MenuItemViewModel">
                         <!-- single view cell for menu items -->
-                        <Grid Padding="5" ColumnDefinitions="40, 1*">
+                        <Grid Padding="5" ColumnDefinitions="40, 1*"
+                              AutomationId="{Binding PageKey}">
 
                             <!-- Selection background color -->
                             <VisualStateManager.VisualStateGroups>
