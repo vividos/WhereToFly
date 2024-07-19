@@ -1,45 +1,19 @@
 ﻿using NUnit.Framework;
-using System.Linq;
+using System.IO;
 using Xamarin.UITest;
-using Xamarin.UITest.Queries;
 
 namespace WhereToFly.App.UITest
 {
     /// <summary>
     /// User Interface tests for the WhereToFly app
     /// </summary>
-    [TestFixture(Platform.Android)]
+    [TestFixture]
     public class UserInterfaceTests
     {
-        /// <summary>
-        /// Platform to run test for
-        /// </summary>
-        private readonly Platform platform;
-
         /// <summary>
         /// App under test
         /// </summary>
         private IApp? app;
-
-        /// <summary>
-        /// Creates a new UI test object
-        /// </summary>
-        /// <param name="platform">platform to use</param>
-        public UserInterfaceTests(Platform platform)
-        {
-            this.platform = platform;
-        }
-
-        /// <summary>
-        /// Taps on the menu button, showing the menu from anywhere in the app
-        /// </summary>
-        private void TapMenuButton()
-        {
-            if (this.platform == Platform.Android)
-            {
-                this.app?.Tap(x => x.Class("AppCompatImageButton"));
-            }
-        }
 
         /// <summary>
         /// Sets up test by starting app
@@ -47,7 +21,15 @@ namespace WhereToFly.App.UITest
         [SetUp]
         public void SetUp()
         {
-            this.app = AppInitializer.StartApp(this.platform);
+            string apkFilename = Path.Combine(
+                Path.GetDirectoryName(typeof(UserInterfaceTests).Assembly.Location)!,
+                "de.vividos.app.wheretofly.android.apk");
+
+            this.app =
+                ConfigureApp.Android
+                .ApkFile(apkFilename)
+                .EnableLocalScreenshots()
+                .StartApp();
         }
 
         /// <summary>
@@ -56,12 +38,19 @@ namespace WhereToFly.App.UITest
         [Test]
         public void AppStartsUp()
         {
-            AppResult[]? results = this.app?.WaitForElement(c => c.Marked("ExploreMapWebView"));
-            this.app?.Screenshot("Map screen.");
+            Assert.That(
+                this.app,
+                Is.Not.Null,
+                "app must have been initialized");
+
+            var mapPage = new MapPage(this.app!);
 
             Assert.That(
-                results != null && results.Any(),
-                "map view must have been found");
+                mapPage,
+                Is.Not.Null,
+                "map page must not be null");
+
+            this.app?.Screenshot("Map screen.");
         }
 
         /// <summary>
@@ -70,27 +59,41 @@ namespace WhereToFly.App.UITest
         [Test]
         public void VisitAllPages()
         {
+            Assert.That(
+                this.app,
+                Is.Not.Null,
+                "app must have been initialized");
+
+            if (this.app == null)
+            {
+                return;
+            }
+
             // wait for map
-            this.app!.WaitForElement(c => c.Marked("ExploreMapWebView"));
+            var mapPage = new MapPage(this.app);
 
-            string[] markedList = new string[]
+            PageToOpen[] pagesToOpenList =
+            [
+                PageToOpen.Info,
+                PageToOpen.Settings,
+                PageToOpen.LayerList,
+                PageToOpen.LocationList,
+                PageToOpen.TrackList,
+                PageToOpen.CurrentPositionDetails,
+                PageToOpen.WeatherDashboard,
+                PageToOpen.Map,
+            ];
+
+            foreach (PageToOpen pageToOpen in pagesToOpenList)
             {
-                "Info",
-                "Settings",
-                "Layers",
-                "Locations",
-                "Tracks",
-                "Current Position",
-                "Weather",
-                "Map",
-            };
+                bool showsMap = pageToOpen == PageToOpen.Map;
 
-            foreach (string markedItem in markedList)
-            {
-                bool showsMap = markedItem == "Map";
+                var newPage = mapPage.OpenPage(pageToOpen);
 
-                this.TapMenuButton();
-                this.app.Tap(x => x.Marked(markedItem));
+                Assert.That(
+                    newPage,
+                    Is.Not.Null,
+                    "newly opened page must not be null");
 
                 if (!showsMap)
                 {
@@ -101,7 +104,7 @@ namespace WhereToFly.App.UITest
                 System.Threading.Thread.Sleep(100);
 #pragma warning restore S2925 // "Thread.Sleep" should not be used in tests
 
-                var fileInfo = this.app.Screenshot($"Screen: {markedItem}");
+                var fileInfo = this.app.Screenshot($"Page: {pageToOpen}");
                 Assert.That(
                     fileInfo,
                     Is.Not.Null,
