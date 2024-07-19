@@ -17,7 +17,7 @@
         <ToolbarItem Text="Clear compass target"
                      IconImageSource="close.png"
                      Command="{Binding ClearCompassTargetCommand}"
-                     Order="Primary" Priority="0" />
+                     Order="Primary" Priority="1" />
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>

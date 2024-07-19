@@ -19,13 +19,13 @@
         <ToolbarItem Text="Export"
                      IconImageSource="export_variant.png"
                      Command="{Binding ExportTrackCommand}"
-                     Order="Primary" Priority="0" />
+                     Order="Primary" Priority="1" />
 
         <ToolbarItem Text="Delete"
                      IconImageSource="delete.png"
                      Command="{Binding DeleteTrackCommand}"
                      IsDestructive="True"
-                     Order="Primary" Priority="1" />
+                     Order="Primary" Priority="2" />
     </TabbedPage.ToolbarItems>
 
 </TabbedPage>
