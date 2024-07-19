@@ -41,7 +41,7 @@ namespace WhereToFly.App
         /// <summary>
         /// Accent color for User Interface
         /// </summary>
-        public static readonly Color AccentColor = Color.FromArgb("2F299E");
+        public static readonly Color AccentColor = Color.FromArgb("45C8CF");
 
         /// <summary>
         /// Initial center point for the map when no last know position is available
