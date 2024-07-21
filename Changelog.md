@@ -11,6 +11,7 @@ Released on ?.
 🐛 Bugfixes
 
 - Fixed exporting layers
+- Hide color selection when editing a flight track
 
 ## Version 1.14.4
 

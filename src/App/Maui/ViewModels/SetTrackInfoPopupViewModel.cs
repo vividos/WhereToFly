@@ -27,6 +27,11 @@ namespace WhereToFly.App.ViewModels
         }
 
         /// <summary>
+        /// Property that specifies if the color box is visible
+        /// </summary>
+        public bool IsColorBoxVisible => !this.Track.IsFlightTrack;
+
+        /// <summary>
         /// Property containing the color of the track
         /// </summary>
         public Color SelectedTrackColor
