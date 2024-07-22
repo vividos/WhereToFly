@@ -142,6 +142,9 @@ namespace WhereToFly.App.ViewModels
             {
                 this.Track = editedTrack;
 
+                this.OnPropertyChanged(nameof(this.Name));
+                this.OnPropertyChanged(nameof(this.TrackColor));
+
                 var dataService = DependencyService.Get<IDataService>();
                 var trackDataService = dataService.GetTrackDataService();
 
@@ -149,8 +152,6 @@ namespace WhereToFly.App.ViewModels
 
                 var appMapService = DependencyService.Get<IAppMapService>();
                 appMapService.MapView.UpdateTrack(this.Track);
-
-                this.OnPropertyChanged(nameof(this.TrackColor));
             }
         }
 
