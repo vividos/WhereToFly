@@ -40,6 +40,7 @@ namespace WhereToFly.App.UnitTest
 #pragma warning restore CS0612 // Type or member is obsolete
 
             DependencyService.Register<IPlatform, UnitTestPlatform>();
+            DependencyService.Register<IUserInterface, UnitTestUserInterface>();
             DependencyService.Register<IGeolocationService, UnitTestGeolocationService>();
             DependencyService.Register<SvgImageCache>();
 

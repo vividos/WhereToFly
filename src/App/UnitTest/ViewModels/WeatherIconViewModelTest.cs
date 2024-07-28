@@ -18,6 +18,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
         [TestInitialize]
         public void SetUp()
         {
+            DependencyService.Register<IUserInterface, UnitTestUserInterface>();
             DependencyService.Register<IAppManager, UnitTestAppManager>();
 
             App.Settings = new AppSettings();
