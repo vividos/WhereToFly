@@ -51,10 +51,12 @@
 
     <!-- More assets -->
     <MauiAsset Include="..\..\..\Credits.md">
-      <Link>info\Credits.md</Link>
+      <Link>Resources\Assets\info\Credits.md</Link>
+      <LogicalName>info\Credits.md</LogicalName>
     </MauiAsset>
     <MauiAsset Include="..\..\..\Changelog.md">
-      <Link>info\Changelog.md</Link>
+      <Link>Resources\Assets\info\Changelog.md</Link>
+      <LogicalName>info\Changelog.md</LogicalName>
     </MauiAsset>
   </ItemGroup>
 
