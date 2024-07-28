@@ -11,7 +11,7 @@
     "Group": "Weather forecast",
     "Type": 0,
     "Icon": null,
-    "WebLink": "https://www.dhv.de/wetter/"
+    "WebLink": "https://www.dhv.de/wetter/dhv-wetter/"
   },
   {
     "Name": "DWD Segelflugwetter",
