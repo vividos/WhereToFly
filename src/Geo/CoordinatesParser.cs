@@ -147,12 +147,12 @@ namespace WhereToFly.Geo
             string localLongitude = longitude;
 
             bool endsWithSwappedDirectionCharacter =
-                LongitudeDirectionCharacter.Any(c => localLatitude.EndsWith(c.ToString())) &&
-                LatitudeDirectionCharacter.Any(c => localLongitude.EndsWith(c.ToString()));
+                Array.Exists(LongitudeDirectionCharacter, c => localLatitude.EndsWith(c.ToString())) &&
+                Array.Exists(LatitudeDirectionCharacter, c => localLongitude.EndsWith(c.ToString()));
 
             bool startsWithSwappedDirectionCharacter =
-                LongitudeDirectionCharacter.Any(c => localLatitude.StartsWith(c.ToString())) &&
-                LatitudeDirectionCharacter.Any(c => localLongitude.StartsWith(c.ToString()));
+                Array.Exists(LongitudeDirectionCharacter, c => localLatitude.StartsWith(c.ToString())) &&
+                Array.Exists(LatitudeDirectionCharacter, c => localLongitude.StartsWith(c.ToString()));
 
             if (endsWithSwappedDirectionCharacter ||
                 startsWithSwappedDirectionCharacter)
@@ -277,7 +277,7 @@ namespace WhereToFly.Geo
 
             if (splitValues.Length < 2 ||
                 splitValues.Length > 3 ||
-                splitValues.Any(value => value.Length == 0))
+                Array.Exists(splitValues, value => value.Length == 0))
             {
                 return false;
             }
