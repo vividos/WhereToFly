@@ -74,7 +74,11 @@ namespace WhereToFly.App.Pages
 
             this.geolocationService = DependencyService.Get<IGeolocationService>();
 
+#if ANDROID || WINDOWS
             string cacheFolder = FileSystem.CacheDirectory;
+#else
+            string cacheFolder = Path.GetDirectoryName(this.GetType().Assembly.Location)!;
+#endif
 
             var nearbyPoiService = new NearbyPoiCachingService(
                 new BackendDataService(),
