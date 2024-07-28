@@ -30,13 +30,6 @@ jobs:
         fileDir: 'src/App/Maui/'
         encodedString: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
 
-    - name: Build MapView project
-      run: >
-        dotnet build
-        src/App/MapView/WhereToFly.App.MapView.csproj
-        -f net8.0-android34.0
-        -c Release
-
     - name: Build Android .apk
       run: >
         dotnet publish
