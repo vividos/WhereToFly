@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using WhereToFly.App.Logic;
+using WhereToFly.App.Models;
 using WhereToFly.App.ViewModels;
 using WhereToFly.Geo;
 
@@ -22,6 +23,8 @@ namespace WhereToFly.App.UnitTest.ViewModels
         {
             DependencyService.Register<IPlatform, UnitTestPlatform>();
             DependencyService.Register<SvgImageCache>();
+
+            App.Settings = new AppSettings();
 
             var imageCache = DependencyService.Get<SvgImageCache>();
             imageCache.AddImage("weblib/images/paragliding.svg", string.Empty);

@@ -19,6 +19,8 @@ namespace WhereToFly.App.UnitTest.ViewModels
         public void SetUp()
         {
             DependencyService.Register<IAppManager, UnitTestAppManager>();
+
+            App.Settings = new AppSettings();
         }
 
         /// <summary>
