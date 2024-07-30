@@ -736,6 +736,10 @@ namespace WhereToFly.App.Pages
                     await this.ShowFlyingRange(point);
                     break;
 
+                case MapLongTapContextMenu.Result.PlanTour:
+                    await this.AddPlanTourPoint(point);
+                    break;
+
                 case MapLongTapContextMenu.Result.Cancel:
                     // ignore
                     break;
@@ -851,6 +855,48 @@ namespace WhereToFly.App.Pages
                 PopupPageKey.PlanTourPopupPage,
                 true,
                 this.planTourParameters);
+        }
+
+        /// <summary>
+        /// Adds a new plan tour point by coordinates
+        /// </summary>
+        /// <param name="point">map point</param>
+        /// <returns>task to wait on</returns>
+        private async Task AddPlanTourPoint(MapPoint point)
+        {
+            if (this.locationList == null)
+            {
+                Debug.Assert(false, "calling AddPlanTourPoint() before data was loaded!");
+                return;
+            }
+
+            CoordinateDisplayFormat format =
+                this.appSettings?.CoordinateDisplayFormat
+                ?? CoordinateDisplayFormat.Format_dd_dddddd;
+
+            string name =
+                "At " +
+                GeoDataFormatter.FormatLatLong(point.Latitude, format) +
+                ", " +
+                GeoDataFormatter.FormatLatLong(point.Longitude, format);
+
+            var planTourLocation = new Location(
+                Guid.NewGuid().ToString("B"),
+                point)
+            {
+                Name = name,
+                Type = LocationType.Waypoint,
+                IsPlanTourLocation = false,
+            };
+
+            this.locationList.Add(planTourLocation);
+
+            var dataService = DependencyService.Get<IDataService>();
+            var locationDataService = dataService.GetLocationDataService();
+
+            await locationDataService.Add(planTourLocation);
+
+            await this.AddTourPlanningLocationAsync(planTourLocation);
         }
 
         #region Page lifecycle methods

@@ -1745,10 +1745,8 @@ export class MapView {
         text += "<img height=\"32em\" width=\"32em\" src=\"images/directions.svg\" style=\"vertical-align:middle\" /> " +
             "<a href=\"javascript:parent.map.onNavigateToLocation('" + location.id + "');\">Navigate here</a>";
 
-        if (location.isPlanTourLocation === true) {
-            text += "<img height=\"32em\" width=\"32em\" src=\"images/map-marker-plus.svg\" style=\"vertical-align:middle\" /> " +
-                "<a href=\"javascript:parent.map.onAddTourPlanLocation('" + location.id + "');\">Plan tour</a>";
-        }
+        text += "<img height=\"32em\" width=\"32em\" src=\"images/map-marker-plus.svg\" style=\"vertical-align:middle\" /> " +
+            "<a href=\"javascript:parent.map.onAddTourPlanLocation('" + location.id + "');\">Plan tour</a>";
 
         text += "</p><p>" + location.description + "</p>";
 
@@ -1765,7 +1763,8 @@ export class MapView {
      * @property {number} longitude Longitude of the location
      * @property {number} altitude Altitude of the location
      * @property {number} takeoffDirections Takeoff directions bit values
-     * @property {boolean} isPlanTourLocation Indicates if it's a tour planning location
+     * @property {boolean} isPlanTourLocation Indicates if it's a tour planning
+     * location known to the backend
      * @property {object} properties An object containing extra location
      * properties as string keys and string values
      */
@@ -3154,7 +3153,7 @@ export class MapView {
             this.viewer.trackedEntity = null;
 
         this.currentHeightProfileTrackId = undefined;
-    
+
         this.updateScene();
     }
 

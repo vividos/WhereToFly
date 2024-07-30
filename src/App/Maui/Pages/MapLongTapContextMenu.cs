@@ -39,6 +39,11 @@ namespace WhereToFly.App.Pages
             ShowFlyingRange,
 
             /// <summary>
+            /// User selected menu item to plan a tour with this poistion
+            /// </summary>
+            PlanTour,
+
+            /// <summary>
             /// User cancelled the context menu
             /// </summary>
             Cancel,
@@ -85,6 +90,12 @@ namespace WhereToFly.App.Pages
                     Text = "Show flying range",
                     IconImageSource = SvgImageCache.GetImageSource("info/images/arrow-expand-horizontal.svg"),
                     Command = new Command(() => popupPage?.Close(Result.ShowFlyingRange)),
+                },
+                new MenuItem
+                {
+                    Text = "Plan tour",
+                    IconImageSource = SvgImageCache.GetImageSource("weblib/images/map-marker-plus.svg"),
+                    Command = new Command(() => popupPage?.Close(Result.PlanTour)),
                 },
             };
 

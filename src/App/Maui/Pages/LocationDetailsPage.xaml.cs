@@ -30,10 +30,7 @@ namespace WhereToFly.App.Pages
                 this.AddLiveWaypointRefreshToolbarButton();
             }
 
-            if (location.IsPlanTourLocation)
-            {
-                this.AddTourPlanLocationToolbarButton();
-            }
+            this.AddTourPlanLocationToolbarButton();
         }
 
         /// <summary>

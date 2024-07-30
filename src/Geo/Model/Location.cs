@@ -46,6 +46,7 @@ namespace WhereToFly.Geo.Model
 
         /// <summary>
         /// Indicates if this location is a start/stop location for planning tours
+        /// that is known to the backend
         /// </summary>
         public bool IsPlanTourLocation { get; set; } = false;
 

@@ -203,6 +203,12 @@ namespace WhereToFly.App.ViewModels
                 (from location in this.PlanTourList
                  select location.Location.Id)
                  .ToList();
+
+            this.planTourParameters.WaypointLocationList =
+                this.PlanTourList
+                .Where(location => !location.Location.IsPlanTourLocation)
+                .Select(location => location.Location)
+                .ToList();
         }
 
         /// <summary>
@@ -241,6 +247,7 @@ namespace WhereToFly.App.ViewModels
             }
 
             this.planTourParameters.WaypointIdList.Clear();
+            this.planTourParameters.WaypointLocationList.Clear();
 
             await NavigationService.GoToMap();
 
