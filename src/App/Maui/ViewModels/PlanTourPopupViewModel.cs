@@ -204,11 +204,24 @@ namespace WhereToFly.App.ViewModels
                  select location.Location.Id)
                  .ToList();
 
-            this.planTourParameters.WaypointLocationList =
+            bool hasAnyNonPlanTourLocation =
                 this.PlanTourList
-                .Where(location => !location.Location.IsPlanTourLocation)
-                .Select(location => location.Location)
-                .ToList();
+                .Any(location => !location.Location.IsPlanTourLocation);
+
+            if (hasAnyNonPlanTourLocation)
+            {
+                this.planTourParameters.WaypointLocationList =
+                    this.PlanTourList
+                    .Select(location =>
+                        new Location(
+                            location.Location.Id,
+                            location.Location.MapLocation))
+                    .ToList();
+            }
+            else
+            {
+                this.planTourParameters.WaypointLocationList.Clear();
+            }
         }
 
         /// <summary>
@@ -226,6 +239,8 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         private async Task PlanTourAsync()
         {
+            this.UpdatePlanTourParameters();
+
             await this.ClosePageAsync();
 
             PlannedTour? plannedTour = await this.CalculateTourAsync();
