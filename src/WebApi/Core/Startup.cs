@@ -6,9 +6,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
 using System.IO;
+using WhereToFly.WebApi.Core.Services;
 using WhereToFly.WebApi.Logic;
 using WhereToFly.WebApi.Logic.Services;
-using WhereToFly.WebApi.Logic.TourPlanning;
 
 namespace WhereToFly.WebApi.Core
 {
@@ -92,18 +92,7 @@ namespace WhereToFly.WebApi.Core
             services.AddSingleton<LiveWaypointCacheManager>();
             services.AddSingleton<LiveTrackCacheManager>();
             services.AddSingleton<LocationFindManager>();
-
-            // confiugre and add tour planning engine
-            var logicAssembly = typeof(PlanTourEngine).Assembly;
-            var kmlStream = logicAssembly.GetManifestResourceStream("WhereToFly.WebApi.Logic.Assets.PlanTourPaths.kml");
-
-            var engine = new PlanTourEngine();
-            if (kmlStream != null)
-            {
-                engine.LoadGraph(kmlStream);
-            }
-
-            services.AddSingleton(engine);
+            services.AddSingleton<PlanTourService>();
         }
 
         /// <summary>

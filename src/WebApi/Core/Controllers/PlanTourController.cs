@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using WhereToFly.Shared.Model;
-using WhereToFly.WebApi.Logic.TourPlanning;
+using WhereToFly.WebApi.Core.Services;
 
 namespace WhereToFly.WebApi.Core.Controllers
 {
@@ -23,19 +24,21 @@ namespace WhereToFly.WebApi.Core.Controllers
         private readonly ILogger<PlanTourController> logger;
 
         /// <summary>
-        /// Tour planning engine
+        /// Tour planning service
         /// </summary>
-        private readonly PlanTourEngine engine;
+        private readonly PlanTourService service;
 
         /// <summary>
         /// Creates a new controller to plan tours
         /// </summary>
         /// <param name="logger">logger instance to use</param>
-        /// <param name="engine">tour planning engine</param>
-        public PlanTourController(ILogger<PlanTourController> logger, PlanTourEngine engine)
+        /// <param name="service">tour planning service</param>
+        public PlanTourController(
+            ILogger<PlanTourController> logger,
+            PlanTourService service)
         {
             this.logger = logger;
-            this.engine = engine;
+            this.service = service;
         }
 
         /// <summary>
@@ -48,7 +51,8 @@ namespace WhereToFly.WebApi.Core.Controllers
         [Consumes(System.Net.Mime.MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<PlannedTour> Get([FromBody] PlanTourParameters planTourParameters)
+        public async Task<ActionResult<PlannedTour>> Get(
+            [FromBody] PlanTourParameters planTourParameters)
         {
             this.logger.LogDebug(
                 "Planning tour with {Count} waypoints...",
@@ -59,7 +63,7 @@ namespace WhereToFly.WebApi.Core.Controllers
 
             try
             {
-                var result = this.engine.PlanTour(planTourParameters);
+                var result = await this.service.PlanTour(planTourParameters);
                 return result;
             }
             catch (Exception ex)
