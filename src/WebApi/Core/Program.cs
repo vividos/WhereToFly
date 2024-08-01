@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace WhereToFly.WebApi.LiveWaypoints
+namespace WhereToFly.WebApi.Core
 {
     /// <summary>
     /// Main program for WebAPI

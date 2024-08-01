@@ -10,7 +10,7 @@ using WhereToFly.WebApi.Logic;
 using WhereToFly.WebApi.Logic.Services;
 using WhereToFly.WebApi.Logic.TourPlanning;
 
-namespace WhereToFly.WebApi.LiveWaypoints
+namespace WhereToFly.WebApi.Core
 {
     /// <summary>
     /// Startup class for WebAPI project
