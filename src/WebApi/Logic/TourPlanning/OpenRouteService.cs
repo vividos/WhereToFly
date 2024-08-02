@@ -34,7 +34,7 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
             /// Route profile "foot-hiking"
             /// </summary>
             FootHiking,
-        };
+        }
 
         /// <summary>
         /// REST API address of open route service
