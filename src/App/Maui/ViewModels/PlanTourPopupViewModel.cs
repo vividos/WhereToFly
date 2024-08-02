@@ -68,7 +68,9 @@ namespace WhereToFly.App.ViewModels
 
             this.CloseCommand = new AsyncCommand(this.ClosePageAsync);
 
-            Task.Run(async () => await this.LoadDataAsync(planTourParameters.WaypointIdList));
+            MainThread.BeginInvokeOnMainThread(
+                async () => await this.LoadDataAsync(
+                    planTourParameters.WaypointIdList));
         }
 
         /// <summary>
