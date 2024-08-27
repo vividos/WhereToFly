@@ -84,12 +84,12 @@ namespace WhereToFly.App.Controls
                 return;
             }
 
-            Task.Run(async () =>
+            bindable.Dispatcher.Dispatch(async () =>
             {
                 try
                 {
                     image.svgImage = await SvgDataResolver.LoadSvgImage(image.Source);
-                    bindable.Dispatcher.Dispatch(image.InvalidateSurface);
+                    image.InvalidateSurface();
                 }
                 catch (Exception ex)
                 {
