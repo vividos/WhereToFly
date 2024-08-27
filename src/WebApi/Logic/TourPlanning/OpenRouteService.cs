@@ -138,13 +138,20 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
 
             if (!result.IsSuccessStatusCode)
             {
-                var errorDefinition = new { error = string.Empty };
+                var errorDefinition = new
+                {
+                    error = new
+                    {
+                        code = 123,
+                        message = string.Empty,
+                    }
+                };
 
                 string errorJson = await result.Content.ReadAsStringAsync();
                 var errorObject = JsonConvert.DeserializeAnonymousType(errorJson, errorDefinition);
 
                 throw new InvalidOperationException(
-                    $"{(int)result.StatusCode} ({result.ReasonPhrase}): Details: {errorObject?.error}");
+                    $"{(int)result.StatusCode} ({result.ReasonPhrase}): Details: {errorObject?.error?.message}");
             }
 
             string resultJson = await result.Content.ReadAsStringAsync(cancellationToken);
