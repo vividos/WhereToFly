@@ -36,6 +36,12 @@
     <RuntimeIdentifiers>android-arm64</RuntimeIdentifiers>
   </PropertyGroup>
 
+  <!-- Workaround for building Windows app until .NET Framework 8.0.402 or later is installed -->
+  <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
+    <WindowsSdkPackageVersion>10.0.19041.41</WindowsSdkPackageVersion>
+    <!--<PackageReference Include="Microsoft.Windows.SDK.NET.Ref" Version="10.0.19041.45" />-->
+  </PropertyGroup>
+
   <ItemGroup>
     <!-- App Icon -->
     <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#2F299E" />
@@ -88,7 +94,7 @@
     <PackageReference Include="AsyncAwaitBestPractices.MVVM" Version="8.0.0" />
     <PackageReference Include="CommunityToolkit.Maui" Version="9.0.3" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.65" />
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.0" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.1" />
     <PackageReference Include="FFImageLoading.Maui" Version="1.2.7" />
     <PackageReference Include="Markdig" Version="0.37.0" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.5" />
