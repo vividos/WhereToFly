@@ -125,6 +125,7 @@ namespace WhereToFly.App.UnitTest.Shared
         /// <summary>
         /// Tests app resource URI as key in dictionies
         /// </summary>
+        [TestMethod]
         public void TestKeyInDictionary()
         {
             // set up
