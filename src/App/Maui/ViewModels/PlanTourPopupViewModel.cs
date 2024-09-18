@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Input;
+using WhereToFly.App.Logic;
 using WhereToFly.App.Popups;
 using WhereToFly.App.Services;
 using WhereToFly.Geo;
@@ -252,6 +253,21 @@ namespace WhereToFly.App.ViewModels
             }
 
             var track = TrackFromPlannedTour(plannedTour);
+
+            track = await NavigationService.Instance.NavigateToPopupPageAsync<Track?>(
+                PopupPageKey.SetTrackInfosPopupPage,
+                true,
+                track);
+
+            if (track == null)
+            {
+                return; // user canceled editing track properties
+            }
+
+            // sample track heights even it's a planned tour, as the backend didn't return a
+            // height profile
+            await OpenFileHelper.AdjustTrackHeightsAsync(track);
+
             await AddTrack(track);
 
             var location = StartWaypointFromPlannedTour(plannedTour);

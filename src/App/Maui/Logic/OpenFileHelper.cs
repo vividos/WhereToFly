@@ -437,7 +437,7 @@ namespace WhereToFly.App.Logic
         /// </summary>
         /// <param name="track">track to adjust point heights</param>
         /// <returns>task to wait on</returns>
-        private static async Task AdjustTrackHeightsAsync(Track track)
+        internal static async Task AdjustTrackHeightsAsync(Track track)
         {
             var cts = new CancellationTokenSource();
 
