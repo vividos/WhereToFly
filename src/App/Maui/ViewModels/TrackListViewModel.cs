@@ -187,7 +187,14 @@ namespace WhereToFly.App.ViewModels
             var dataService = DependencyService.Get<IDataService>();
             var trackDataService = dataService.GetTrackDataService();
 
-            await trackDataService.Remove(track.Id);
+            try
+            {
+                await trackDataService.Remove(track.Id);
+            }
+            catch (Exception ex)
+            {
+                App.LogError(ex);
+            }
 
             if (track.IsLiveTrack)
             {
