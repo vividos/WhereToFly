@@ -26,6 +26,11 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
             DrivingCar,
 
             /// <summary>
+            /// Route profile "driving-hgv"
+            /// </summary>
+            DrivingHeavyGoodsVehicle,
+
+            /// <summary>
             /// Route profile "foot-walking"
             /// </summary>
             FootWalking,
@@ -34,6 +39,26 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
             /// Route profile "foot-hiking"
             /// </summary>
             FootHiking,
+
+            /// <summary>
+            /// Route profile "cycling-regular"
+            /// </summary>
+            CyclingRegular,
+
+            /// <summary>
+            /// Route profile "cycling-road"
+            /// </summary>
+            CyclingRoad,
+
+            /// <summary>
+            /// Route profile "cycling-mountain"
+            /// </summary>
+            CyclingMountain,
+
+            /// <summary>
+            /// Route profile "cycling-electric"
+            /// </summary>
+            CyclingElectric,
         }
 
         /// <summary>
@@ -47,8 +72,13 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
         private static readonly Dictionary<RouteProfile, string> RouteProfileToTextMapping = new()
         {
             { RouteProfile.DrivingCar, "driving-car" },
+            { RouteProfile.DrivingHeavyGoodsVehicle, "driving-hgv" },
             { RouteProfile.FootWalking, "foot-walking" },
             { RouteProfile.FootHiking, "foot-hiking" },
+            { RouteProfile.CyclingRegular, "cycling-regular" },
+            { RouteProfile.CyclingRoad, "cycling-road" },
+            { RouteProfile.CyclingMountain, "cycling-mountain" },
+            { RouteProfile.CyclingElectric, "cycling-electric" },
         };
 
         /// <summary>
@@ -138,20 +168,11 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
 
             if (!result.IsSuccessStatusCode)
             {
-                var errorDefinition = new
-                {
-                    error = new
-                    {
-                        code = 123,
-                        message = string.Empty,
-                    }
-                };
-
                 string errorJson = await result.Content.ReadAsStringAsync();
-                var errorObject = JsonConvert.DeserializeAnonymousType(errorJson, errorDefinition);
+                var errorObject = JsonConvert.DeserializeObject<ErrorInfo>(errorJson);
 
                 throw new InvalidOperationException(
-                    $"{(int)result.StatusCode} ({result.ReasonPhrase}): Details: {errorObject?.error?.message}");
+                    $"{(int)result.StatusCode} ({result.ReasonPhrase}): Details: {errorObject?.Error?.Message}");
             }
 
             string resultJson = await result.Content.ReadAsStringAsync(cancellationToken);
@@ -340,6 +361,36 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
             /// </summary>
             [JsonProperty("duration")]
             public double Duration { get; set; } = 0.0;
+        }
+
+        /// <summary>
+        /// Error info
+        /// </summary>
+        public class ErrorInfo
+        {
+            /// <summary>
+            /// Error details
+            /// </summary>
+            [JsonProperty("error")]
+            public ErrorDetails? Error { get; set; }
+
+            /// <summary>
+            /// Error details
+            /// </summary>
+            public class ErrorDetails
+            {
+                /// <summary>
+                /// Error code
+                /// </summary>
+                [JsonProperty("code")]
+                public int Code { get; set; }
+
+                /// <summary>
+                /// Error message
+                /// </summary>
+                [JsonProperty("message")]
+                public string? Message { get; set; }
+            }
         }
         #endregion
     }
