@@ -1,9 +1,7 @@
-﻿using Microsoft.Maui.Controls;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using WhereToFly.App.Services.SqliteDatabase;
 using WhereToFly.App.ViewModels;
 using WhereToFly.Shared.Model;
 
@@ -13,18 +11,8 @@ namespace WhereToFly.App.UnitTest.ViewModels
     /// Unit tests for class PlanTourPopupViewModel
     /// </summary>
     [TestClass]
-    public class PlanTourPopupViewModelTest
+    public class PlanTourPopupViewModelTest : UserInterfaceTestBase
     {
-        /// <summary>
-        /// Sets up tests
-        /// </summary>
-        [TestInitialize]
-        public void SetUp()
-        {
-            DependencyService.Register<IDataService, SqliteDatabaseDataService>();
-            DependencyService.Register<IPlatform, UnitTestPlatform>();
-        }
-
         /// <summary>
         /// Tests default ctor of view model
         /// </summary>

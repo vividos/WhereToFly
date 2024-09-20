@@ -1,9 +1,7 @@
-﻿using Microsoft.Maui.Controls;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 using WhereToFly.App.Models;
-using WhereToFly.App.Services.SqliteDatabase;
 using WhereToFly.App.ViewModels;
 
 namespace WhereToFly.App.UnitTest.ViewModels
@@ -12,18 +10,8 @@ namespace WhereToFly.App.UnitTest.ViewModels
     /// Unit tests for LocationListViewModel
     /// </summary>
     [TestClass]
-    public class LocationListViewModelTest
+    public class LocationListViewModelTest : UserInterfaceTestBase
     {
-        /// <summary>
-        /// Sets up tests
-        /// </summary>
-        [TestInitialize]
-        public void SetUp()
-        {
-            DependencyService.Register<IDataService, SqliteDatabaseDataService>();
-            DependencyService.Register<IPlatform, UnitTestPlatform>();
-        }
-
         /// <summary>
         /// Tests ctor
         /// </summary>

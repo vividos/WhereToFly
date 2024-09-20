@@ -1,5 +1,4 @@
-﻿using Microsoft.Maui.Controls;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -13,17 +12,8 @@ namespace WhereToFly.App.UnitTest.MapView
     /// Unit tests for <see cref="MapView"/>
     /// </summary>
     [TestClass]
-    public class MapViewTest
+    public class MapViewTest : UserInterfaceTestBase
     {
-        /// <summary>
-        /// Sets up tests
-        /// </summary>
-        [TestInitialize]
-        public void SetUp()
-        {
-            DependencyService.Register<IPlatform, UnitTestPlatform>();
-        }
-
         /// <summary>
         /// Tests CreateAsync() method
         /// </summary>

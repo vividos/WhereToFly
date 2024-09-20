@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
 using System.Linq;
-using WhereToFly.App.Models;
 using WhereToFly.App.ViewModels;
 
 namespace WhereToFly.App.UnitTest.ViewModels
@@ -10,17 +9,8 @@ namespace WhereToFly.App.UnitTest.ViewModels
     /// Unit tests for class SettingsViewModel
     /// </summary>
     [TestClass]
-    public class SettingsViewModelTest
+    public class SettingsViewModelTest : UserInterfaceTestBase
     {
-        /// <summary>
-        /// Sets up tests by
-        /// </summary>
-        [TestInitialize]
-        public void SetUp()
-        {
-            App.Settings = new AppSettings();
-        }
-
         /// <summary>
         /// Tests default ctor of view model
         /// </summary>

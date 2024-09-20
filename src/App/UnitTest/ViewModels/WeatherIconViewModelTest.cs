@@ -10,7 +10,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
     /// Unit tests for class WeatherIconViewModel
     /// </summary>
     [TestClass]
-    public class WeatherIconViewModelTest
+    public class WeatherIconViewModelTest : UserInterfaceTestBase
     {
         /// <summary>
         /// Sets up tests
@@ -18,10 +18,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
         [TestInitialize]
         public void SetUp()
         {
-            DependencyService.Register<IUserInterface, UnitTestUserInterface>();
             DependencyService.Register<IAppManager, UnitTestAppManager>();
-
-            App.Settings = new AppSettings();
         }
 
         /// <summary>

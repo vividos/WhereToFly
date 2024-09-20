@@ -12,7 +12,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
     /// Tests LocationListEntryViewModel class
     /// </summary>
     [TestClass]
-    public class LocationListEntryViewModelTest
+    public class LocationListEntryViewModelTest : UserInterfaceTestBase
     {
         /// <summary>
         /// Sets up tests
@@ -20,8 +20,6 @@ namespace WhereToFly.App.UnitTest.ViewModels
         [TestInitialize]
         public void SetUp()
         {
-            DependencyService.Register<SvgImageCache>();
-
             var imageCache = DependencyService.Get<SvgImageCache>();
             imageCache.AddImage("weblib/images/mountain-15.svg", string.Empty);
         }

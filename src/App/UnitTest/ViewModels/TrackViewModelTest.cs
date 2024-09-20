@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using WhereToFly.App.Logic;
-using WhereToFly.App.Models;
 using WhereToFly.App.ViewModels;
 using WhereToFly.Geo;
 
@@ -13,7 +12,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
     /// TrackTabViewModel.
     /// </summary>
     [TestClass]
-    public class TrackViewModelTest
+    public class TrackViewModelTest : UserInterfaceTestBase
     {
         /// <summary>
         /// Sets up tests
@@ -21,11 +20,6 @@ namespace WhereToFly.App.UnitTest.ViewModels
         [TestInitialize]
         public void SetUp()
         {
-            DependencyService.Register<IPlatform, UnitTestPlatform>();
-            DependencyService.Register<SvgImageCache>();
-
-            App.Settings = new AppSettings();
-
             var imageCache = DependencyService.Get<SvgImageCache>();
             imageCache.AddImage("weblib/images/paragliding.svg", string.Empty);
             imageCache.AddImage("icons/map-marker-distance.svg", string.Empty);
