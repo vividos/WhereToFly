@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Models;
+using WhereToFly.App.Services;
 using WhereToFly.App.Services.SqliteDatabase;
 
 namespace WhereToFly.App.UnitTest
@@ -45,6 +46,7 @@ namespace WhereToFly.App.UnitTest
             DependencyService.Register<IUserInterface, UnitTestUserInterface>();
             DependencyService.Register<IGeolocationService, UnitTestGeolocationService>();
             DependencyService.Register<IDataService, SqliteDatabaseDataService>();
+            DependencyService.Register<INavigationService, UnitTestNavigationService>();
             DependencyService.Register<SvgImageCache>();
 
             App.Settings = new AppSettings();

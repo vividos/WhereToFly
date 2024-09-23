@@ -22,7 +22,7 @@ namespace WhereToFly.App
         /// Returns the navigation service that can be used to navigate to pages and show popup
         /// pages.
         /// </summary>
-        NavigationService NavigationService { get; }
+        INavigationService NavigationService { get; }
 
         /// <summary>
         /// Displays toast message with given text

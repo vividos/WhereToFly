@@ -38,7 +38,11 @@ namespace WhereToFly.App.Pages
 
             this.Detail = navigationPage;
 
-            NavigationService.Instance.NavigationPage = navigationPage;
+            var navigationService = NavigationService.Instance as NavigationService;
+            if (navigationService != null)
+            {
+                navigationService.NavigationPage = navigationPage;
+            }
         }
     }
 }

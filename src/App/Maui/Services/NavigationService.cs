@@ -16,7 +16,7 @@ namespace WhereToFly.App.Services
     /// <summary>
     /// Navigation service for the app; manages navigating to pages from any place in the app.
     /// </summary>
-    public class NavigationService
+    public class NavigationService : INavigationService
     {
         /// <summary>
         /// Mapping from page key to page type and, optionally, the type of parameter that must be
@@ -65,9 +65,9 @@ namespace WhereToFly.App.Services
         /// <summary>
         /// Returns current instance of navigation service, registered with the DependencyService.
         /// </summary>
-        public static NavigationService Instance
+        public static INavigationService Instance
         {
-            get { return DependencyService.Get<NavigationService>(); }
+            get { return DependencyService.Get<INavigationService>(); }
         }
 
         /// <summary>

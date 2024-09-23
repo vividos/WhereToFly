@@ -19,8 +19,8 @@ namespace WhereToFly.App.UnitTest
         public bool IsDarkTheme => this.UserAppTheme == AppTheme.Dark;
 
         /// <inheritdoc />
-        public NavigationService NavigationService
-            => throw new NotImplementedException();
+        public INavigationService NavigationService { get; private set; }
+            = new UnitTestNavigationService();
 
         /// <summary>
         /// Result returned by call to <see cref="DisplayAlert(string, string, string)"/>

@@ -43,8 +43,8 @@ namespace WhereToFly.App
         /// <summary>
         /// Returns current navigation service instance
         /// </summary>
-        public NavigationService NavigationService =>
-            NavigationService.Instance;
+        public INavigationService NavigationService =>
+            Services.NavigationService.Instance;
 
         /// <summary>
         /// Displays toast message
