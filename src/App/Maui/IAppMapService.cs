@@ -11,11 +11,6 @@ namespace WhereToFly.App
     public interface IAppMapService
     {
         /// <summary>
-        /// The one and only map page (displaying the map using CesiumJS)
-        /// </summary>
-        MapPage MapPage { get; }
-
-        /// <summary>
         /// Access to the map view instance
         /// </summary>
         IMapView MapView { get; }

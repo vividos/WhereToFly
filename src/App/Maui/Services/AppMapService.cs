@@ -23,14 +23,14 @@ namespace WhereToFly.App.Services
         /// <summary>
         /// The one and only map page (displaying the map using CesiumJS)
         /// </summary>
-        public MapPage MapPage =>
+        private static MapPage MapPage =>
             ((Application.Current as App)?.MainPage as RootPage)?.MapPage
             ?? throw new InvalidOperationException("accessing MapPage before it is initialized");
 
         /// <summary>
         /// Access to the map view instance
         /// </summary>
-        public IMapView MapView => this.MapPage.MapView;
+        public IMapView MapView => MapPage.MapView;
 
         /// <summary>
         /// Adds a tour planning location to the current list of locations and opens the planning
@@ -40,9 +40,9 @@ namespace WhereToFly.App.Services
         /// <returns>task to wait on</returns>
         public async Task AddTourPlanLocation(Location location)
         {
-            if (this.MapPage != null)
+            if (MapPage != null)
             {
-                await this.MapPage.AddTourPlanningLocationAsync(location);
+                await MapPage.AddTourPlanningLocationAsync(location);
             }
         }
 
@@ -64,7 +64,7 @@ namespace WhereToFly.App.Services
         /// </summary>
         public void UpdateMapSettings()
         {
-            this.MapPage?.ReloadMapViewAppSettings();
+            MapPage?.ReloadMapViewAppSettings();
         }
 
         /// <summary>

@@ -1,10 +1,7 @@
-﻿using Microsoft.Maui.Controls;
-using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Threading.Tasks;
 using WhereToFly.App.MapView;
 using WhereToFly.App.Models;
-using WhereToFly.App.Pages;
 using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.UnitTest
@@ -15,12 +12,7 @@ namespace WhereToFly.App.UnitTest
     internal class UnitTestAppMapService : IAppMapService
     {
         /// <inheritdoc />
-        public MapPage MapPage =>
-            ((Application.Current as App)?.MainPage as RootPage)?.MapPage
-            ?? throw new InvalidOperationException("accessing MapPage before it is initialized");
-
-        /// <inheritdoc />
-        public IMapView MapView => this.MapPage.MapView;
+        public IMapView MapView { get; } = new UnitTestMapView();
 
         /// <inheritdoc />
         public Task AddTourPlanLocation(Location location)
