@@ -2,6 +2,7 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:WhereToFly.App.Controls"
+             xmlns:graphics="clr-namespace:Microsoft.Maui.Graphics;assembly=Microsoft.Maui.Graphics"
              x:Class="WhereToFly.App.Controls.ColorPickerView">
     <!-- flex layout with buttons for each color -->
     <FlexLayout x:Name="colorPickerLayout"
@@ -15,7 +16,7 @@
                 JustifyContent="Start"
                 Wrap="Wrap">
         <BindableLayout.ItemTemplate>
-            <DataTemplate x:DataType="x:String">
+            <DataTemplate x:DataType="graphics:Color">
                 <Border StrokeThickness="2"
                         Stroke="Transparent"
                         Margin="0"
