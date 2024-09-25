@@ -14,11 +14,25 @@
     "WebLink": "https://www.dhv.de/wetter/dhv-wetter/"
   },
   {
-    "Name": "DWD Segelflugwetter",
+    "Name": "DWD Gebietsvorhersagen Östl. Bayerische Alpen",
     "Group": "Weather forecast",
     "Type": 0,
     "Icon": null,
-    "WebLink": "https://www.dwd.de/DE/fachnutzer/luftfahrt/teaser/gafor/node_84"
+    "WebLink": "https://www.dwd.de/DE/fachnutzer/luftfahrt/teaser/gebietsvorhersagen_segelflug/node_84"
+  },
+  {
+    "Name": "DWD Flugwetterprognose Süd",
+    "Group": "Weather forecast",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://www.dwd.de/DE/fachnutzer/luftfahrt/teaser/luftsportberichte/fbeu40_edzm_node.html"
+  },
+  {
+    "Name": "DWD 3-Tages-Prognose Alpen",
+    "Group": "Weather forecast",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://www.dwd.de/DE/fachnutzer/luftfahrt/teaser/luftsportberichte/fbdl60_edzm_node.html"
   },
   {
     "Name": "AustroControl Übersicht Österreich",
@@ -28,25 +42,11 @@
     "WebLink": "https://www.austrocontrol.at/flugwetter/index.php?id=550&lang=de"
   },
   {
-    "Name": "Alptherm Thermikqualität Übersicht",
+    "Name": "Alptherm Thermik Mittleres Steigen",
     "Group": "Weather forecast",
     "Type": 0,
     "Icon": null,
     "WebLink": "https://www.austrocontrol.at/flugwetter/index.php?id=560&lang=de"
-  },
-  {
-    "Name": "Alptherm östl. Bayern",
-    "Group": "Weather forecast",
-    "Type": 0,
-    "Icon": null,
-    "WebLink": "https://www.austrocontrol.at/flugwetter/index.php?id=560&lang=de&tag=heute&region=84"
-  },
-  {
-    "Name": "Alptherm Pustertal",
-    "Group": "Weather forecast",
-    "Type": 0,
-    "Icon": null,
-    "WebLink": "https://www.austrocontrol.at/flugwetter/index.php?id=560&lang=de&tag=heute&region=118"
   },
   {
     "Name": "Meteo Parapente",
@@ -56,18 +56,11 @@
     "WebLink": "https://www.meteo-parapente.com/?lang=en#/"
   },
   {
-    "Name": "soarGFS",
-    "Group": "Weather forecast",
-    "Type": 0,
-    "Icon": null,
-    "WebLink": "https://soaringmeteo.org/GFSw/googleMap.html"
-  },
-  {
     "Name": "Soaringmeteo soarV2",
     "Group": "Weather forecast",
     "Type": 0,
     "Icon": null,
-    "WebLink": "https://soarwrf1.soaringmeteo.org/v2/"
+    "WebLink": "https://soaringmeteo.org/v2/?lat=47.175&lng=12.259&z=8.2"
   },
   {
     "Name": "Paraglidable Alpen",
@@ -196,6 +189,13 @@
     "WebLink": "https://holfuy.com/en/map/wind&la=46.91884&lo=11.81213&z=7.2"
   },
   {
+    "Name": "openwindmap.org",
+    "Group": "Current weather",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://www.openwindmap.org/"
+  },
+  {
     "Name": "Lightningmaps.org",
     "Group": "Current weather",
     "Type": 0,
@@ -257,6 +257,13 @@
     "Type": 0,
     "Icon": null,
     "WebLink": "https://lawinenwarndienst.bayern.de/webclient/weather-station/9"
+  },
+  {
+    "Name": "openwindmap Kampenwand",
+    "Group": "Current weather",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://www.openwindmap.org/windbird-1514"
   },
   {
     "Name": "Windfinder Neubiberg",
