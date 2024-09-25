@@ -96,13 +96,11 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
     <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.90" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Refit" Version="7.2.0" />
-    <PackageReference Include="Refit.Newtonsoft.Json" Version="7.2.0" />
+    <PackageReference Include="Refit" Version="7.2.1" />
+    <PackageReference Include="Refit.Newtonsoft.Json" Version="7.2.1" />
     <PackageReference Include="SkiaSharp.Svg" Version="1.60.0" />
     <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
     <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.8" />
-    <!-- Workaround: Refit only refernces the vulnerable version 8.0.0, so reference 8.0.4 it directly -->
-    <PackageReference Include="System.Text.Json" Version="8.0.4" />
   </ItemGroup>
 
   <ItemGroup>
