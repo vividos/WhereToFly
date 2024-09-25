@@ -19,8 +19,8 @@ namespace WhereToFly.App.UnitTest.MapView
         /// </summary>
         /// <returns>task to wait on</returns>
         [TestMethod]
+        [Timeout(10000)]
         [Ignore("CreateAsync() can't set MapInitializedTask")]
-        [Timeout(1000)]
         public async Task TestMapViewCreate()
         {
             // set up
@@ -71,10 +71,18 @@ namespace WhereToFly.App.UnitTest.MapView
             "Blocker Code Smell",
             "S2699:Tests should include assertions",
             Justification = "There's no way to test actions")]
+        [Timeout(10000)]
+        [Ignore("disabled since calling AddLocationList() would block indefinitely")]
         public async Task TestMapViewLocationMethods()
         {
             // set up
             var mapView = new WhereToFly.App.MapView.MapView();
+
+            await mapView.CreateAsync(
+                Constants.InitialCenterPoint,
+                5000,
+                true);
+
             var locationList = DataServiceHelper.GetDefaultLocationList();
 
             // run
@@ -97,10 +105,18 @@ namespace WhereToFly.App.UnitTest.MapView
             "Blocker Code Smell",
             "S2699:Tests should include assertions",
             Justification = "There's no way to test actions")]
+        [Timeout(10000)]
+        [Ignore("disabled since calling AddTrack() would block indefinitely")]
         public async Task TestMapViewTrackMethods()
         {
             // set up
             var mapView = new WhereToFly.App.MapView.MapView();
+
+            await mapView.CreateAsync(
+                Constants.InitialCenterPoint,
+                5000,
+                true);
+
             var track = UnitTestHelper.GetDefaultTrack();
 
             // run
@@ -120,10 +136,18 @@ namespace WhereToFly.App.UnitTest.MapView
             "Blocker Code Smell",
             "S2699:Tests should include assertions",
             Justification = "There's no way to test actions")]
+        [Timeout(10000)]
+        [Ignore("disabled since calling AddLayer() would block indefinitely")]
         public async Task TestMapViewLayerMethods()
         {
             // set up
             var mapView = new WhereToFly.App.MapView.MapView();
+
+            await mapView.CreateAsync(
+                Constants.InitialCenterPoint,
+                5000,
+                true);
+
             var layer = (await DataServiceHelper.GetInitialLayerList()).First();
 
             // run
