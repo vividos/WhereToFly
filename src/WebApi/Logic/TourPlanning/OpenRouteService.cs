@@ -157,6 +157,7 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
                             point.Latitude,
                         }).ToArray(),
                 instructions = false,
+                elevation = true,
             };
 
             string json = JsonConvert.SerializeObject(optionsObject);
@@ -192,7 +193,7 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
 
             var trackPoints = EncodedPolylineGeometry.DecodeGeometryToTrackPoints(
                 resultObject.Routes[0].Geometry,
-                false);
+                optionsObject.elevation);
 
             return new Track(Guid.NewGuid().ToString("B"))
             {
