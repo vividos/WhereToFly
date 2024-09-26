@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 
 namespace WhereToFly.WebApi.Logic.TourPlanning
@@ -189,6 +190,10 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
                 throw new InvalidOperationException("directions API didn't return any route");
             }
 
+            var trackPoints = EncodedPolylineGeometry.DecodeGeometryToTrackPoints(
+                resultObject.Routes[0].Geometry,
+                false);
+
             return new Track(Guid.NewGuid().ToString("B"))
             {
                 Name = string.Empty,
@@ -196,85 +201,8 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
                 IsLiveTrack = false,
                 LengthInMeter = resultObject.Routes[0].Summary.Distance,
                 Duration = TimeSpan.FromSeconds(resultObject.Routes[0].Summary.Duration),
-                TrackPoints = DecodeGeometryToTrackPoints(resultObject.Routes[0].Geometry).ToList(),
+                TrackPoints = trackPoints.ToList(),
             };
-        }
-
-        /// <summary>
-        /// Decodes the geometry passed as polyline string, using
-        /// Google's Encoded Polyline format. Adapted from:
-        /// https://stackoverflow.com/questions/3852268/c-sharp-implementation-of-googles-encoded-polyline-algorithm
-        /// See also: https://developers.google.com/maps/documentation/utilities/polylinealgorithm
-        /// </summary>
-        /// <param name="polylineString">polyline or geometry string</param>
-        /// <returns>list of track points</returns>
-        /// <exception cref="ArgumentNullException">
-        /// thrown when the polyline string is null or empty
-        /// </exception>
-        private static IEnumerable<TrackPoint> DecodeGeometryToTrackPoints(string polylineString)
-        {
-            if (string.IsNullOrEmpty(polylineString))
-            {
-                throw new ArgumentNullException(nameof(polylineString));
-            }
-
-            char[] polylineChars = polylineString.ToCharArray();
-            int index = 0;
-
-            double currentLatitude = 0;
-            double currentLongitude = 0;
-
-            while (index < polylineChars.Length)
-            {
-                // next latitude
-                int sum = 0;
-                int shifter = 0;
-                int nextFiveBits;
-                do
-                {
-                    nextFiveBits = polylineChars[index++] - 63;
-                    sum |= (nextFiveBits & 31) << shifter;
-                    shifter += 5;
-                }
-                while (nextFiveBits >= 32 && index < polylineChars.Length);
-
-                if (index >= polylineChars.Length)
-                {
-                    break;
-                }
-
-                currentLatitude +=
-                    (sum & 1) == 1
-                    ? ~(sum >> 1)
-                    : (sum >> 1);
-
-                // next longitude
-                sum = 0;
-                shifter = 0;
-                do
-                {
-                    nextFiveBits = polylineChars[index++] - 63;
-                    sum |= (nextFiveBits & 31) << shifter;
-                    shifter += 5;
-                }
-                while (nextFiveBits >= 32 && index < polylineChars.Length);
-
-                if (index >= polylineChars.Length && nextFiveBits >= 32)
-                {
-                    break;
-                }
-
-                currentLongitude +=
-                    (sum & 1) == 1
-                    ? ~(sum >> 1)
-                    : (sum >> 1);
-
-                yield return new TrackPoint(
-                    Convert.ToDouble(currentLatitude) / 1E5,
-                    Convert.ToDouble(currentLongitude) / 1E5,
-                    null,
-                    null);
-            }
         }
 
         #region Object model for results
