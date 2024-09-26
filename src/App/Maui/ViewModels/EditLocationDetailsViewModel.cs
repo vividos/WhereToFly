@@ -142,7 +142,7 @@ namespace WhereToFly.App.ViewModels
         /// </summary>
         private void SetupBindings()
         {
-            foreach (LocationType locationType in Enum.GetValues(typeof(LocationType)))
+            foreach (LocationType locationType in Enum.GetValues<LocationType>())
             {
                 if (locationType != LocationType.Undefined)
                 {

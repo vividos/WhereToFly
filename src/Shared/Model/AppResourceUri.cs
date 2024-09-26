@@ -152,12 +152,11 @@ namespace WhereToFly.Shared.Model
         /// <returns>found resource type, or None when it is unknown</returns>
         private static ResourceType FindResourceTypeFromString(string resourceType)
         {
-            foreach (object? item in Enum.GetValues(typeof(ResourceType)))
+            foreach (ResourceType item in Enum.GetValues<ResourceType>())
             {
-                if (item != null &&
-                    item.ToString()?.ToLowerInvariant() == resourceType)
+                if (item.ToString().ToLowerInvariant() == resourceType)
                 {
-                    return (ResourceType)item;
+                    return item;
                 }
             }
 
