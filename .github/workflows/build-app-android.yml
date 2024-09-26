@@ -34,7 +34,7 @@ jobs:
       run: >
         dotnet build
         src/App/MapView/WhereToFly.App.MapView.csproj
-        -f net8.0-android34.0
+        -f net8.0-android
         -c Release
 
     - name: Build Android .apk
