@@ -1,0 +1,8 @@
+<Project>
+    <!-- WhereToFly.App.MapView Assets .targets file
+    This adds all MauiAssets to the project that references the NuGet package.
+    See: https://github.com/dotnet/maui/issues/10019#issuecomment-1248032520 -->
+    <ItemGroup>
+        <MauiAsset Include="$(MSBuildThisFileDirectory)\weblib\**\*.*" LogicalName="weblib\%(RecursiveDir)%(Filename)%(Extension)" />
+    </ItemGroup>
+</Project>

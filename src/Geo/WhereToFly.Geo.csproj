@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <!-- NuGet package properties -->
-  <PropertyGroup Condition="!$(SolutionName.Contains('Maui'))">
+  <PropertyGroup>
     <PackageId>$(NuGetPackagePrefix).$(AssemblyName)</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/vividos/WhereToFly/tree/main/src/Geo</PackageProjectUrl>
@@ -15,6 +15,7 @@
     <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
     <PackageReadmeFile>Readme.md</PackageReadmeFile>
   </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="UnitTest\**" />
     <EmbeddedResource Remove="UnitTest\**" />
@@ -30,6 +31,8 @@
     <PackageReference Include="SharpKml.Core" Version="6.1.0" />
   </ItemGroup>
 
+  <!-- NuGet package targets -->
+  <!-- See: https://dev.to/yerac/include-both-nuget-package-references-and-project-reference-dll-using-dotnet-pack-2d8p -->
   <Target Name="CopyProjectReferencesToPackage" DependsOnTargets="BuildOnlySettings;ResolveReferences">
     <ItemGroup>
       <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths-&gt;WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))" />

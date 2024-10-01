@@ -15,20 +15,28 @@
     <PackageProjectUrl>https://github.com/vividos/WhereToFly/tree/main/src/App/MapView</PackageProjectUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
   </PropertyGroup>
 
+  <!-- NuGet package items -->
   <ItemGroup>
     <None Include="Readme.md" Pack="true" PackagePath="\" />
+    <None Include="WhereToFly.App.MapView.Assets.targets" Pack="True" PackagePath="buildTransitive\$(NuGetPackagePrefix).$(AssemblyName).targets" />
+    <None Include="..\..\Shared\WebLib\dist\**\*.*" Exclude="..\..\Shared\WebLib\dist\**\*.map" Pack="True" PackagePath="buildTransitive\weblib\" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.90" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <MauiAsset Include="..\..\Shared\WebLib\dist\**\*.*" Exclude="..\..\Shared\WebLib\dist\**\*.map" LogicalName="weblib\%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Geo\WhereToFly.Geo.csproj" />
-    <ProjectReference Include="..\..\Shared\Model\WhereToFly.Shared.Model.csproj" />
+    <ProjectReference Include="..\..\Geo\WhereToFly.Geo.csproj" PrivateAssets="all" />
+    <ProjectReference Include="..\..\Shared\Model\WhereToFly.Shared.Model.csproj" PrivateAssets="all" />
     <ProjectReference Include="..\..\Shared\WebLib\WhereToFly.Shared.WebLib.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <PrivateAssets>all</PrivateAssets>
     </ProjectReference>
   </ItemGroup>
 
@@ -37,5 +45,13 @@
     <!-- workaround: also need this package to fix an error in R8 with the above package -->
     <PackageReference Include="Xamarin.AndroidX.Fragment.Ktx" Version="1.8.3.1" />
   </ItemGroup>
+
+  <!-- NuGet package targets -->
+  <!-- See: https://dev.to/yerac/include-both-nuget-package-references-and-project-reference-dll-using-dotnet-pack-2d8p -->
+  <Target Name="CopyProjectReferencesToPackage" DependsOnTargets="BuildOnlySettings;ResolveReferences">
+    <ItemGroup>
+      <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths-&gt;WithMetadataValue('ReferenceSourceTarget', 'ProjectReference')-&gt;WithMetadataValue('PrivateAssets', 'All'))" />
+    </ItemGroup>
+  </Target>
 
 </Project>
