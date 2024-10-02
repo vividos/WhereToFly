@@ -6,6 +6,7 @@
     <UseMaui>true</UseMaui>
     <UseMauiCompat>false</UseMauiCompat>
     <SingleProject>true</SingleProject>
+    <IsAotCompatible>true</IsAotCompatible>
   </PropertyGroup>
 
   <!-- NuGet package properties -->
