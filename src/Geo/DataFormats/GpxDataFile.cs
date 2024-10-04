@@ -301,12 +301,15 @@ namespace WhereToFly.Geo.DataFormats
             if (nameNode != null &&
                 !string.IsNullOrEmpty(nameNode.InnerText))
             {
-                if (nameNode.InnerText.Contains("Startplatz"))
+                if (nameNode.InnerText.Contains("Startplatz") ||
+                    nameNode.InnerText.StartsWith("SP ") ||
+                    nameNode.InnerText.StartsWith("TO "))
                 {
                     return LocationType.FlyingTakeoff;
                 }
 
-                if (nameNode.InnerText.Contains("Landeplatz"))
+                if (nameNode.InnerText.Contains("Landeplatz") ||
+                    nameNode.InnerText.StartsWith("LP "))
                 {
                     return LocationType.FlyingLandingPlace;
                 }

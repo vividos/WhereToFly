@@ -35,6 +35,7 @@ namespace WhereToFly.Geo.UnitTest
                 "West takeoff (W-SW)",
                 "Takeoff (N, O, S)",
                 "Takeoff (NO, NW)",
+                "SP (SW-WSW)",
             ];
 
             foreach (string text in correctTakeoffTexts)
