@@ -6,7 +6,7 @@ Here are all the version images of previous Where-to-fly versions.
 
 ![](src/App/Maui/Resources/Raw/info/version.jpg)
 
-Soaring at Wallberg, Tegernsee, Germany.
+Thermalling at Wendelstein, Bavaria, Germany.
 
 ## Version 1.14.4
 

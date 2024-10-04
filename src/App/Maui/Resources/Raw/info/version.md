@@ -12,6 +12,6 @@ The Where-to-fly GitHub project can be found here:
 
 Current version: %VERSION%
 
-Image: Soaring at Wallberg, Tegernsee, Germany.
+Image: Thermalling at Wendelstein, Bavaria, Germany.
 
 [See all previous version images](https://github.com/vividos/WhereToFly/blob/main/PreviousVersionImages.md)
