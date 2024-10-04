@@ -452,13 +452,13 @@ namespace WhereToFly.App.ViewModels
         /// <summary>
         /// Cardinal direction names
         /// </summary>
-        private static readonly string[] DirectionNames = new string[16]
-        {
+        private static readonly string[] DirectionNames =
+        [
             "N", "NNE", "NE", "ENE",
             "E", "ESE", "SE", "SSE",
             "S", "SSW", "SW", "WSW",
             "W", "WNW", "NW", "NNW",
-        };
+        ];
 
         /// <summary>
         /// Gets a textual direction name from a given angle

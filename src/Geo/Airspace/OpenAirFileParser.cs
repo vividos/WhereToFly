@@ -419,9 +419,9 @@ namespace WhereToFly.Geo.Airspace
 
             string localData = data.ToUpperInvariant();
 
-            if ((this.TryParseFixedTextAltitude(localData, out Altitude? altitude) ||
+            if ((TryParseFixedTextAltitude(localData, out Altitude? altitude) ||
                 this.TryParseFlightLevelAltitude(localData, out altitude) ||
-                this.TryParseFixedHeightsAltitude(localData, out altitude)) &&
+                TryParseFixedHeightsAltitude(localData, out altitude)) &&
                     altitude != null)
             {
                 altitude.OpeningTimes = openingTimes;
@@ -470,7 +470,7 @@ namespace WhereToFly.Geo.Airspace
         /// <param name="data">uppercase data to parse</param>
         /// <param name="altitude">parsed altitude</param>
         /// <returns>true when successful, false when not</returns>
-        private bool TryParseFixedTextAltitude(string data, out Altitude? altitude)
+        private static bool TryParseFixedTextAltitude(string data, out Altitude? altitude)
         {
             switch (data)
             {
@@ -528,7 +528,7 @@ namespace WhereToFly.Geo.Airspace
         /// <param name="data">uppercase data to parse</param>
         /// <param name="altitude">parsed altitude</param>
         /// <returns>true when successful, false when not</returns>
-        private bool TryParseFixedHeightsAltitude(string data, out Altitude? altitude)
+        private static bool TryParseFixedHeightsAltitude(string data, out Altitude? altitude)
         {
             AltitudeType type = AltitudeType.Textual;
             if (data.EndsWith("MSL") ||
@@ -853,7 +853,7 @@ namespace WhereToFly.Geo.Airspace
         /// <summary>
         /// Array of coordinate separator characters
         /// </summary>
-        private static readonly char[] CoordinateSeparators = new char[] { 'N', 'S', 'E', 'W' };
+        private static readonly char[] CoordinateSeparators = ['N', 'S', 'E', 'W'];
 
         /// <summary>
         /// Parses coordinates, various formats. Examples:

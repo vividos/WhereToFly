@@ -317,7 +317,7 @@ namespace WhereToFly.App.ViewModels
                         ? refitException.Content
                         : refitException.Message;
 
-                    retry = await this.UserInterface.DisplayAlert(
+                    retry = await UserInterface.DisplayAlert(
                         "Error while planning tour: " + text,
                         "Retry",
                         "Close");
@@ -326,7 +326,7 @@ namespace WhereToFly.App.ViewModels
                 {
                     App.LogError(ex);
 
-                    retry = await this.UserInterface.DisplayAlert(
+                    retry = await UserInterface.DisplayAlert(
                         "Error while planning tour: " + ex.Message,
                         "Retry",
                         "Close");
@@ -387,7 +387,7 @@ namespace WhereToFly.App.ViewModels
             appMapService.MapView.AddTrack(track);
             appMapService.MapView.ZoomToTrack(track);
 
-            this.UserInterface.DisplayToast("Track was added.");
+            UserInterface.DisplayToast("Track was added.");
         }
 
         /// <summary>

@@ -13,8 +13,8 @@ namespace WhereToFly.Geo.UnitTest
         /// <summary>
         /// Example GeoJSON strings, from Wikipedia
         /// </summary>
-        private static readonly string[] GeoJsonExamples = new string[]
-        {
+        private static readonly string[] GeoJsonExamples =
+        [
             @"{
   ""type"": ""FeatureCollection"",
   ""features"": [
@@ -120,7 +120,7 @@ namespace WhereToFly.Geo.UnitTest
         }
     ]
 }",
-        };
+        ];
 
         /// <summary>
         /// Tests converting GeoJSON to KML format

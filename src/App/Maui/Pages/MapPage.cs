@@ -314,7 +314,7 @@ namespace WhereToFly.App.Pages
         /// </summary>
         private void SetupWebView()
         {
-            this.mapView.Navigating += this.OnNavigating_WebView;
+            this.mapView.Navigating += OnNavigating_WebView;
 
             this.mapView.ShowLocationDetails += async (locationId) => await this.OnMapView_ShowLocationDetails(locationId);
             this.mapView.NavigateToLocation += async (locationId) => await this.OnMapView_NavigateToLocation(locationId);
@@ -339,7 +339,7 @@ namespace WhereToFly.App.Pages
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        private void OnNavigating_WebView(object? sender, WebNavigatingEventArgs args)
+        private static void OnNavigating_WebView(object? sender, WebNavigatingEventArgs args)
         {
             if (args.NavigationEvent == WebNavigationEvent.NewPage &&
                 args.Url.StartsWith("http") &&

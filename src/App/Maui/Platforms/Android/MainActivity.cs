@@ -22,25 +22,25 @@ namespace WhereToFly.App
     //// Intent filter, case 1: mime type set
     //// See https://stackoverflow.com/questions/39300649/android-intent-filter-not-working
     [IntentFilter(
-        new[] { Intent.ActionView, Intent.ActionOpenDocument },
-        DataSchemes = new string[] { "file", "content", "http", "https" },
-        DataMimeTypes = new string[]
-        {
+        [Intent.ActionView, Intent.ActionOpenDocument],
+        DataSchemes = ["file", "content", "http", "https"],
+        DataMimeTypes =
+        [
             "application/vnd.google-earth.kml+xml",
             "application/vnd.google-earth.kmz",
             "application/gpx+xml",
             "application/x-igc", // xcontest .igc files return this MIME type
             "text/plain",
-        },
-        Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
+        ],
+        Categories = [Intent.CategoryDefault, Intent.CategoryBrowsable],
         Icon = "@mipmap/appicon")]
     //// Intent filter, case 2: mime type not set, but valid extensions
     [IntentFilter(
-        new[] { Intent.ActionView, Intent.ActionOpenDocument },
-        DataSchemes = new string[] { "file", "content", "http", "https" },
+        [Intent.ActionView, Intent.ActionOpenDocument],
+        DataSchemes = ["file", "content", "http", "https"],
         DataHost = "*",
-        DataPathPatterns = new string[]
-        {
+        DataPathPatterns =
+        [
             @".*\\.kmz", @".*\\..*\\.kmz", ".*\\..*\\..*\\.kmz", ".*\\..*\\..*\\..*\\.kmz",
             @".*\\.kml", @".*\\..*\\.kml", ".*\\..*\\..*\\.kml", ".*\\..*\\..*\\..*\\.kml",
             @".*\\.gpx", @".*\\..*\\.gpx", ".*\\..*\\..*\\.gpx", ".*\\..*\\..*\\..*\\.gpx",
@@ -48,17 +48,17 @@ namespace WhereToFly.App
             @".*\\.czml", @".*\\..*\\.czml", ".*\\..*\\..*\\.czml", ".*\\..*\\..*\\..*\\.czml",
             @".*\\.cup", @".*\\..*\\.cup", ".*\\..*\\..*\\.cup", ".*\\..*\\..*\\..*\\.cup",
             @".*\\.txt", @".*\\..*\\.txt", ".*\\..*\\..*\\.txt", ".*\\..*\\..*\\..*\\.txt",
-        },
-        Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
+        ],
+        Categories = [Intent.CategoryDefault, Intent.CategoryBrowsable],
         Icon = "@mipmap/appicon")]
     //// Intent filter, case 3: application/octet-stream, and valid extension
     [IntentFilter(
-        new[] { Intent.ActionView, Intent.ActionOpenDocument },
-        DataSchemes = new string[] { "file", "content", "http", "https" },
+        [Intent.ActionView, Intent.ActionOpenDocument],
+        DataSchemes = ["file", "content", "http", "https"],
         DataHost = "*",
         DataMimeType = "application/octet-stream",
-        DataPathPatterns = new string[]
-        {
+        DataPathPatterns =
+        [
             @".*\\.kmz", @".*\\..*\\.kmz", ".*\\..*\\..*\\.kmz", ".*\\..*\\..*\\..*\\.kmz",
             @".*\\.kml", @".*\\..*\\.kml", ".*\\..*\\..*\\.kml", ".*\\..*\\..*\\..*\\.kml",
             @".*\\.gpx", @".*\\..*\\.gpx", ".*\\..*\\..*\\.gpx", ".*\\..*\\..*\\..*\\.gpx",
@@ -66,16 +66,16 @@ namespace WhereToFly.App
             @".*\\.czml", @".*\\..*\\.czml", ".*\\..*\\..*\\.czml", ".*\\..*\\..*\\..*\\.czml",
             @".*\\.cup", @".*\\..*\\.cup", ".*\\..*\\..*\\.cup", ".*\\..*\\..*\\..*\\.cup",
             @".*\\.txt", @".*\\..*\\.txt", ".*\\..*\\..*\\.txt", ".*\\..*\\..*\\..*\\.txt",
-        },
-        Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
+        ],
+        Categories = [Intent.CategoryDefault, Intent.CategoryBrowsable],
         Icon = "@mipmap/appicon")]
     //// Intent filter, case 4: application/octet-stream, and valid extension, but not data host
     [IntentFilter(
-        new[] { Intent.ActionView, Intent.ActionOpenDocument, Intent.ActionDefault },
-        DataSchemes = new string[] { "content" },
+        [Intent.ActionView, Intent.ActionOpenDocument, Intent.ActionDefault],
+        DataSchemes = ["content"],
         DataMimeType = "application/octet-stream",
-        DataPathPatterns = new string[]
-        {
+        DataPathPatterns =
+        [
             @".*\\.kmz", @".*\\..*\\.kmz", ".*\\..*\\..*\\.kmz", ".*\\..*\\..*\\..*\\.kmz",
             @".*\\.kml", @".*\\..*\\.kml", ".*\\..*\\..*\\.kml", ".*\\..*\\..*\\..*\\.kml",
             @".*\\.gpx", @".*\\..*\\.gpx", ".*\\..*\\..*\\.gpx", ".*\\..*\\..*\\..*\\.gpx",
@@ -83,14 +83,14 @@ namespace WhereToFly.App
             @".*\\.czml", @".*\\..*\\.czml", ".*\\..*\\..*\\.czml", ".*\\..*\\..*\\..*\\.czml",
             @".*\\.cup", @".*\\..*\\.cup", ".*\\..*\\..*\\.cup", ".*\\..*\\..*\\..*\\.cup",
             @".*\\.txt", @".*\\..*\\.txt", ".*\\..*\\..*\\.txt", ".*\\..*\\..*\\..*\\.txt",
-        },
-        Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
+        ],
+        Categories = [Intent.CategoryDefault, Intent.CategoryBrowsable],
         Icon = "@mipmap/appicon")]
     //// Intent filter, case 5: URI with where-to-fly scheme
     [IntentFilter(
-        new[] { Intent.ActionView },
+        [Intent.ActionView],
         DataScheme = WhereToFly.Shared.Model.AppResourceUri.DefaultScheme,
-        Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
+        Categories = [Intent.CategoryDefault, Intent.CategoryBrowsable],
         Icon = "@mipmap/appicon")]
     public class MainActivity : MauiAppCompatActivity
     {

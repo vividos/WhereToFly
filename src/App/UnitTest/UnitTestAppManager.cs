@@ -27,7 +27,7 @@ namespace WhereToFly.App.UnitTest
             Debug.WriteLine("unit test: getting app icon for app " + packageName);
 
             return this.AppExists
-                ? new byte[] { 0x12, 0x34 }
+                ? [0x12, 0x34]
                 : Array.Empty<byte>();
         }
 

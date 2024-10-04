@@ -168,7 +168,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// Property keys for potential name of an element
         /// </summary>
         private static readonly string[] NamePropertyKeys =
-            new[] { "name", "NAME", "title", "TITLE", "OBJECTID" };
+            ["name", "NAME", "title", "TITLE", "OBJECTID"];
 
         /// <summary>
         /// Generates a name from a given element

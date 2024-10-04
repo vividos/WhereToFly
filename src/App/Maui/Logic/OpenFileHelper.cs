@@ -484,11 +484,11 @@ namespace WhereToFly.App.Logic
         {
             string question = "What do you want to import?";
 
-            string[] choices = new string[2]
-            {
+            string[] choices =
+            [
                 "Import Locations",
                 "Import Tracks",
-            };
+            ];
 
             string choice = await UserInterface.DisplayActionSheet(
                 question,

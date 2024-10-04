@@ -17,8 +17,8 @@ namespace WhereToFly.Geo.UnitTest
         public void TestTryParseCorrectTakeoffTexts()
         {
             // set up
-            string[] correctTakeoffTexts = new string[]
-            {
+            string[] correctTakeoffTexts =
+            [
                 "N",
                 "SSW",
                 "N-E",
@@ -35,9 +35,9 @@ namespace WhereToFly.Geo.UnitTest
                 "West takeoff (W-SW)",
                 "Takeoff (N, O, S)",
                 "Takeoff (NO, NW)",
-            };
+            ];
 
-            foreach (var text in correctTakeoffTexts)
+            foreach (string text in correctTakeoffTexts)
             {
                 // run
                 bool result = TakeoffDirectionsHelper.TryParse(text, out TakeoffDirections takeoffDirections);
@@ -57,15 +57,15 @@ namespace WhereToFly.Geo.UnitTest
         public void TestTryParseInvalidTakeoffTexts()
         {
             // set up
-            string[] invalidTakeoffTexts = new string[]
-            {
+            string[] invalidTakeoffTexts =
+            [
                 "SR",
                 "SSW-",
                 "N-NNW-",
                 "S-SW NW-W",
-            };
+            ];
 
-            foreach (var text in invalidTakeoffTexts)
+            foreach (string text in invalidTakeoffTexts)
             {
                 // run
                 bool result = TakeoffDirectionsHelper.TryParse(text, out TakeoffDirections takeoffDirections);

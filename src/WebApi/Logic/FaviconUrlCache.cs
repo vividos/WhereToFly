@@ -41,9 +41,9 @@ namespace WhereToFly.WebApi.Logic
             // download index page using hostname
             string baseUri = $"{uri.Scheme}://{uri.Host}/";
 
-            if (this.urlCache.ContainsKey(baseUri))
+            if (this.urlCache.TryGetValue(baseUri, out string? faviconUrlFromCache))
             {
-                return await Task.FromResult(this.urlCache[baseUri]);
+                return await Task.FromResult(faviconUrlFromCache);
             }
 
             var htmlDocument = await this.DownloadIndexPage(baseUri);

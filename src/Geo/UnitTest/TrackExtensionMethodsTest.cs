@@ -36,13 +36,13 @@ namespace WhereToFly.Geo.UnitTest
         {
             // set up
             string[] trackFilenames =
-            {
+            [
                 "waypoints.kml",
                 "track_linestring.kmz",
                 "tracks.gpx",
                 "tracks.kmz",
                 "85QA3ET1.igc",
-            };
+            ];
 
             // run
             foreach (string trackFilename in trackFilenames)

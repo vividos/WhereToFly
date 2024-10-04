@@ -56,8 +56,8 @@ namespace WhereToFly.Geo.UnitTest
         public void TestParseAltitudeVariants()
         {
             // set up
-            string[] altitudeVariants = new string[]
-            {
+            string[] altitudeVariants =
+            [
                 "GND",
                 "12959 ft",
                 "3950 m",
@@ -74,7 +74,7 @@ namespace WhereToFly.Geo.UnitTest
                 "500 ft agl",
                 "Ask on 122.8",
                 "3000 MSL",
-            };
+            ];
 
             foreach (var altitude in altitudeVariants)
             {
@@ -103,12 +103,12 @@ namespace WhereToFly.Geo.UnitTest
         public void TestParseCoordinateVariants()
         {
             // set up
-            string[] coordinateVariants = new string[]
-            {
+            string[] coordinateVariants =
+            [
                 "52:23:00 N 005:50:00 E",
                 "52:21.30 S 005:52.30 W",
                 "52:21:30.123 S 005:52:30.456 W",
-            };
+            ];
 
             foreach (var coordinate in coordinateVariants)
             {
@@ -143,8 +143,8 @@ namespace WhereToFly.Geo.UnitTest
             // set up
             string coord = "52:21:30.123 S 005:52:30.456 W";
 
-            string[] errorCommands = new string[]
-            {
+            string[] errorCommands =
+            [
                 "AN Text", // text without AC
                 "AL Text", // floor without AC
                 "AH Text", // ceiling without AC
@@ -177,7 +177,7 @@ namespace WhereToFly.Geo.UnitTest
                 "SB 1,2,3", // SB without AC
                 "AC C\nSP 1,2,3,4", // SP and wrong number of args
                 "AC C\nSB 1,2,3,4", // SB and wrong number of args
-            };
+            ];
 
             foreach (var openairText in errorCommands)
             {
@@ -201,12 +201,12 @@ namespace WhereToFly.Geo.UnitTest
         public void TestParseOpeningTimes()
         {
             // set up
-            string[] openingTimesVariants = new string[]
-            {
+            string[] openingTimesVariants =
+            [
                 "UNLIM (Mon-Fri)",
                 "UNLIM (Mon-Fri) ",
                 "UNLIM (on midnight)",
-            };
+            ];
 
             foreach (var openingTimes in openingTimesVariants)
             {

@@ -118,9 +118,10 @@ namespace WhereToFly.WebApi.Logic
             LiveWaypointData? cachedData;
             lock (this.lockCacheAndQueue)
             {
-                cachedData = this.liveWaypointCache.ContainsKey(id)
-                    ? this.liveWaypointCache[id]
-                    : null;
+                if (!this.liveWaypointCache.TryGetValue(id, out cachedData))
+                {
+                    cachedData = null;
+                }
             }
 
             if (cachedData == null)

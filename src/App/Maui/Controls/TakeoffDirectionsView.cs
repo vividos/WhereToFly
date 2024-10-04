@@ -303,7 +303,7 @@ namespace WhereToFly.App.Controls
         private void DrawDividerLines(SKCanvas canvas, SKPoint center, float radius)
         {
             float dash = radius < 32.0 ? radius / 8.0f : 3.0f;
-            var dashPathEffect = SKPathEffect.CreateDash(new float[] { dash, dash }, 0.0f);
+            var dashPathEffect = SKPathEffect.CreateDash([dash, dash], 0.0f);
 
             using var linePaint = new SKPaint
             {
@@ -328,10 +328,10 @@ namespace WhereToFly.App.Controls
         /// <summary>
         /// Text strings for all segment directions
         /// </summary>
-        private static readonly string[] DirectionText = new string[8]
-        {
+        private static readonly string[] DirectionText =
+        [
             "N", "NE", "E", "SE", "S", "SW", "W", "NW",
-        };
+        ];
 
         /// <summary>
         /// Draws direction labels for every segment

@@ -112,7 +112,7 @@ namespace WhereToFly.Geo.UnitTest
         {
             // set up
             string filename = "waypoints.abc";
-            var stream = new MemoryStream(new byte[] { 42 });
+            var stream = new MemoryStream([42]);
 
             // run + check
             Assert.ThrowsException<ArgumentException>(() => GeoLoader.LoadGeoDataFile(stream, filename), "must throw exception");

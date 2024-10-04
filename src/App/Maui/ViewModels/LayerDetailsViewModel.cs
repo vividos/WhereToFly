@@ -174,7 +174,7 @@ namespace WhereToFly.App.ViewModels
 
             await NavigationService.Instance.GoBack();
 
-            this.UserInterface.DisplayToast("Selected layer was deleted.");
+            UserInterface.DisplayToast("Selected layer was deleted.");
         }
 
         /// <summary>

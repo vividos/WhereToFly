@@ -248,7 +248,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// Property keys for potential name of an element
         /// </summary>
         private static readonly string[] NamePropertyKeys =
-            new[] { "name", "NAME", "title", "TITLE", "OBJECTID" };
+            ["name", "NAME", "title", "TITLE", "OBJECTID"];
 
         /// <summary>
         /// Generates a name from a given element
@@ -290,7 +290,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// Property keys for potential description of an element
         /// </summary>
         private static readonly string[] DescriptionPropertyKeys =
-            new[] { "desc", "DESC", "description", "DESCRIPTION" };
+            ["desc", "DESC", "description", "DESCRIPTION"];
 
         /// <summary>
         /// Generates a description from a given element

@@ -11,7 +11,7 @@ namespace WhereToFly.App.ViewModels
         /// <summary>
         /// Access to the user interface
         /// </summary>
-        public IUserInterface UserInterface
+        public static IUserInterface UserInterface
             => DependencyService.Get<IUserInterface>();
 
         #region INotifyPropertyChanged implementation

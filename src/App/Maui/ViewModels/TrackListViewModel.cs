@@ -207,7 +207,7 @@ namespace WhereToFly.App.ViewModels
             var appMapService = DependencyService.Get<IAppMapService>();
             appMapService.MapView.RemoveTrack(track);
 
-            this.UserInterface.DisplayToast("Selected track was deleted.");
+            UserInterface.DisplayToast("Selected track was deleted.");
         }
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         public async Task ClearTracksAsync()
         {
-            bool result = await this.UserInterface.DisplayAlert(
+            bool result = await UserInterface.DisplayAlert(
                 "Really clear all tracks?",
                 "Clear",
                 "Cancel");
@@ -239,7 +239,7 @@ namespace WhereToFly.App.ViewModels
             var appMapService = DependencyService.Get<IAppMapService>();
             appMapService.MapView.ClearAllTracks();
 
-            this.UserInterface.DisplayToast("Track list was cleared.");
+            UserInterface.DisplayToast("Track list was cleared.");
         }
 
         /// <summary>
@@ -274,7 +274,7 @@ namespace WhereToFly.App.ViewModels
                     FileTypes = new FilePickerFileType(
                         new Dictionary<DevicePlatform, IEnumerable<string>>
                         {
-                            { DevicePlatform.Android, new string[] { } },
+                            { DevicePlatform.Android, Array.Empty<string>() },
                             { DevicePlatform.WinUI, new string[] { ".kml", ".kmz", ".gpx", ".igc" } },
                         }),
                     PickerTitle = "Select a Track file to import",
@@ -294,7 +294,7 @@ namespace WhereToFly.App.ViewModels
             {
                 App.LogError(ex);
 
-                await this.UserInterface.DisplayAlert(
+                await UserInterface.DisplayAlert(
                     "Error while picking a file: " + ex.Message,
                     "OK");
 

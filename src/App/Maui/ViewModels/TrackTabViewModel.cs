@@ -89,7 +89,7 @@ namespace WhereToFly.App.ViewModels
 
             await NavigationService.Instance.GoBack();
 
-            this.UserInterface.DisplayToast("Selected track was deleted.");
+            UserInterface.DisplayToast("Selected track was deleted.");
         }
     }
 }

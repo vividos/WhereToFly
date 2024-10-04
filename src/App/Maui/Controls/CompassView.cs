@@ -286,18 +286,18 @@ namespace WhereToFly.App.Controls
         /// <summary>
         /// Text strings for all main wind directions
         /// </summary>
-        private static readonly string[] MainDirectionNames = new string[4]
-        {
+        private static readonly string[] MainDirectionNames =
+        [
             "N", "E", "S", "W",
-        };
+        ];
 
         /// <summary>
         /// Text strings for all "between" wind directions
         /// </summary>
-        private static readonly string[] BetweenDirectionNames = new string[4]
-        {
+        private static readonly string[] BetweenDirectionNames =
+        [
             "NE", "SE", "SW", "NW",
-        };
+        ];
 
         /// <summary>
         /// Draws compass circle, including border and filled background
@@ -456,11 +456,10 @@ namespace WhereToFly.App.Controls
             {
                 IsAntialias = true,
                 PathEffect = SKPathEffect.CreateDash(
-                    new float[2]
-                    {
+                    [
                         0.02f * radius,
                         0.02f * radius,
-                    },
+                    ],
                     0),
                 Style = SKPaintStyle.Fill,
                 Color = this.SunDirectionColor.ToSKColor(),

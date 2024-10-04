@@ -134,9 +134,10 @@ namespace WhereToFly.WebApi.Logic
             LiveTrackData? cachedData;
             lock (this.lockCacheAndQueue)
             {
-                cachedData = this.liveTrackCache.ContainsKey(id)
-                    ? this.liveTrackCache[id]
-                    : null;
+                if (!this.liveTrackCache.TryGetValue(id, out cachedData))
+                {
+                    cachedData = null;
+                }
             }
 
             if (cachedData == null)

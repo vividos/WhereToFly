@@ -200,8 +200,8 @@ namespace WhereToFly.Geo.Model
                 else
                 {
                     double[] array = point.Altitude.HasValue
-                        ? new double[3] { point.Latitude, point.Longitude, point.Altitude.Value }
-                        : new double[2] { point.Latitude, point.Longitude };
+                        ? [point.Latitude, point.Longitude, point.Altitude.Value]
+                        : [point.Latitude, point.Longitude];
 
                     serializer.Serialize(writer, array);
                 }

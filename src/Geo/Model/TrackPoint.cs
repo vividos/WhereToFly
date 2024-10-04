@@ -139,14 +139,14 @@ namespace WhereToFly.Geo.Model
                 }
                 else
                 {
-                    double[] array = new double[5]
-                    {
+                    double[] array =
+                    [
                         point.Latitude,
                         point.Longitude,
                         point.Altitude ?? InvalidAltitudeValue,
                         point.Heading ?? InvalidHeadingValue,
                         point.Time.HasValue ? point.Time.Value.ToUnixTimeMilliseconds() : 0.0,
-                    };
+                    ];
 
                     serializer.Serialize(writer, array);
                 }

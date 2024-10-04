@@ -85,8 +85,8 @@ namespace WhereToFly.App.ViewModels
                 this.VersionText = "Unknown version";
             }
 
-            this.MenuItemList = new MenuItemViewModel[]
-            {
+            this.MenuItemList =
+            [
                 new MenuItemViewModel("Map", "icons/map.svg", PageKey.MapPage),
                 new MenuItemViewModel("Layers", "icons/layers-outline.svg", PageKey.LayerListPage),
                 new MenuItemViewModel("Locations", "icons/format-list-bulleted.svg", PageKey.LocationListPage),
@@ -95,7 +95,7 @@ namespace WhereToFly.App.ViewModels
                 new MenuItemViewModel("Weather", "icons/weather-partlycloudy.svg", PageKey.WeatherDashboardPage),
                 new MenuItemViewModel("Settings", "icons/settings.svg", PageKey.SettingsPage),
                 new MenuItemViewModel("Info", "icons/information-outline.svg", PageKey.InfoPage),
-            };
+            ];
 
             this.MenuItemSelectedCommand = new Command(this.OnSelectedMenuItem);
         }

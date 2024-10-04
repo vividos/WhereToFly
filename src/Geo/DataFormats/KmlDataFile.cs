@@ -59,7 +59,7 @@ namespace WhereToFly.Geo.DataFormats
                 {
                     stream.Seek(0, SeekOrigin.Begin);
 
-                    this.kml = this.ReadLegacyKmlStream(stream, isKml);
+                    this.kml = ReadLegacyKmlStream(stream, isKml);
                 }
             }
             else
@@ -82,7 +82,7 @@ namespace WhereToFly.Geo.DataFormats
         /// <param name="stream">stream to read</param>
         /// <param name="isKml">indicates if stream contains a kml or a kmz file</param>
         /// <returns>parsed kml file, or null when file couldn't be loaded</returns>
-        private KmlFile? ReadLegacyKmlStream(Stream stream, bool isKml)
+        private static KmlFile? ReadLegacyKmlStream(Stream stream, bool isKml)
         {
             if (isKml)
             {
@@ -199,7 +199,7 @@ namespace WhereToFly.Geo.DataFormats
             }
             else if (placemark.Geometry is MultipleGeometry multiGeometry)
             {
-                track = this.LoadTrackFromMultipleGeometry(multiGeometry);
+                track = LoadTrackFromMultipleGeometry(multiGeometry);
             }
             else
             {
@@ -300,7 +300,7 @@ namespace WhereToFly.Geo.DataFormats
         /// </summary>
         /// <param name="multiGeometry">multi geometry object</param>
         /// <returns>loaded track </returns>
-        private Model.Track LoadTrackFromMultipleGeometry(MultipleGeometry multiGeometry)
+        private static Model.Track LoadTrackFromMultipleGeometry(MultipleGeometry multiGeometry)
         {
             var track = CreateTrackFromPlacemark(multiGeometry?.Parent as Placemark);
 

@@ -128,12 +128,12 @@ namespace WhereToFly.Geo
         /// <summary>
         /// Compass direction characters for latitude
         /// </summary>
-        private static readonly char[] LatitudeDirectionCharacter = new char[] { 'N', 'S' };
+        private static readonly char[] LatitudeDirectionCharacter = ['N', 'S'];
 
         /// <summary>
         /// Compass direction characters for longitude
         /// </summary>
-        private static readonly char[] LongitudeDirectionCharacter = new char[] { 'E', 'W', 'O' };
+        private static readonly char[] LongitudeDirectionCharacter = ['E', 'W', 'O'];
 
         /// <summary>
         /// Check if the split latitude and longitude strings actually end with the direction

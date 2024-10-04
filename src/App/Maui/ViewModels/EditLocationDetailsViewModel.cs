@@ -168,7 +168,7 @@ namespace WhereToFly.App.ViewModels
 
             if (locationToChange == null)
             {
-                await this.UserInterface.DisplayAlert(
+                await UserInterface.DisplayAlert(
                     "Error while saving location; not in location list!",
                     "OK");
 
