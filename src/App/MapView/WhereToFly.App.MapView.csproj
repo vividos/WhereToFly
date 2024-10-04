@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.90" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.91" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <MauiAsset Include="..\..\Shared\WebLib\dist\**\*.*" Exclude="..\..\Shared\WebLib\dist\**\*.map" LogicalName="weblib\%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
@@ -42,7 +42,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
-    <PackageReference Include="Xamarin.AndroidX.WebKit" Version="1.11.0.5" />
+    <PackageReference Include="Xamarin.AndroidX.WebKit" Version="1.12.0" />
     <!-- workaround: also need this package to fix an error in R8 with the above package -->
     <PackageReference Include="Xamarin.AndroidX.Fragment.Ktx" Version="1.8.3.1" />
   </ItemGroup>
