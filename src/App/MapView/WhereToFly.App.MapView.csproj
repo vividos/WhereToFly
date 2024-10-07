@@ -23,13 +23,12 @@
   <ItemGroup>
     <None Include="Readme.md" Pack="true" PackagePath="\" />
     <None Include="WhereToFly.App.MapView.Assets.targets" Pack="True" PackagePath="buildTransitive\$(NuGetPackagePrefix).$(AssemblyName).targets" />
-    <None Include="..\..\Shared\WebLib\dist\**\*.*" Exclude="..\..\Shared\WebLib\dist\**\*.map" Pack="True" PackagePath="buildTransitive\weblib\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.91" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <MauiAsset Include="..\..\Shared\WebLib\dist\**\*.*" Exclude="..\..\Shared\WebLib\dist\**\*.map" LogicalName="weblib\%(RecursiveDir)%(Filename)%(Extension)" />
+    <MauiAsset Include="..\..\Shared\WebLib\dist\**\*.*" Exclude="..\..\Shared\WebLib\dist\**\*.map" Pack="True" PackagePath="buildTransitive\weblib\" LogicalName="weblib\%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 
   <ItemGroup>
