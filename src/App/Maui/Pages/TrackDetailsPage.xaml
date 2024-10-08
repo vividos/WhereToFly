@@ -81,9 +81,8 @@
             <mapview:HeightProfileView Track="{Binding Track, Mode=OneWay}"
                                        UseDarkTheme="{Binding UseDarkTheme, Mode=OneTime}"
                                        Grid.Row="3" Grid.ColumnSpan="2"
-                                       WidthRequest="600"
                                        HeightRequest="300"
-                                       HorizontalOptions="CenterAndExpand"
+                                       HorizontalOptions="Fill"
                                        VerticalOptions="Start">
                 <mapview:HeightProfileView.Behaviors>
                     <toolkit:TouchBehavior CurrentTouchStatusChanged="OnTouchStatusChanged" />
