@@ -15,10 +15,10 @@
 
   <PropertyGroup Condition="'$(SonarQubeTargetsImported)' == ''">
     <PostBuildEvent>if "$(ConfigurationName)" == "Debug" echo Info: Even in debug mode, only Release .apk is used.
-if not exist "$(MSBuildProjectDirectory)\..\Maui\bin\Release\net8.0-android\de.vividos.app.wheretofly.android.apk" echo Error: File de.vividos.app.wheretofly.android.apk is missing! Please build and deploy the Release version at least once.
-if not exist "$(MSBuildProjectDirectory)\..\Maui\bin\Release\net8.0-android\de.vividos.app.wheretofly.android.apk" exit 1
-echo "$(MSBuildProjectDirectory)\..\Maui\bin\Release\net8.0-android\de.vividos.app.wheretofly.android.apk -&gt; bin\$(Configuration)\$(TargetFramework)\"
-copy "$(MSBuildProjectDirectory)\..\Maui\bin\Release\net8.0-android\de.vividos.app.wheretofly.android.apk" "bin\$(Configuration)\$(TargetFramework)\"
+if not exist "$(MSBuildProjectDirectory)\..\Maui\bin\Release\net8.0-android34.0\de.vividos.app.wheretofly.android.apk" echo Error: File de.vividos.app.wheretofly.android.apk is missing! Please build and deploy the Release version at least once.
+if not exist "$(MSBuildProjectDirectory)\..\Maui\bin\Release\net8.0-android34.0\de.vividos.app.wheretofly.android.apk" exit 1
+echo "$(MSBuildProjectDirectory)\..\Maui\bin\Release\net8.0-android34.0\de.vividos.app.wheretofly.android.apk -&gt; bin\$(Configuration)\$(TargetFramework)\"
+copy "$(MSBuildProjectDirectory)\..\Maui\bin\Release\net8.0-android34.0\de.vividos.app.wheretofly.android.apk" "bin\$(Configuration)\$(TargetFramework)\"
 exit 0</PostBuildEvent>
   </PropertyGroup>
 </Project>
