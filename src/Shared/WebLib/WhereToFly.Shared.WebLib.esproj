@@ -51,4 +51,15 @@
     <Message Importance="High" Text="Skipping npm build because output files are up-to-date with respect to the project and source files." />
   </Target>
 
+  <!-- Some webpack plugins, e.g. HtmlWebpackPlugin, don't set the correct
+       modified date for dist files. This would confuse MSBuild when checking
+       if a rebuild is necessary, in CheckIfNpmBuildIsNecessary, so touch them
+       -->
+  <Target Name="TouchNpmDistFiles" AfterTargets="CoreCompile" Condition="'$(ShouldRunBuildScript)' == 'true'">
+    <ItemGroup>
+      <TouchDistOutputFiles Include="$(BuildOutputFolder)**" />
+    </ItemGroup>
+    <Touch Files="@(TouchDistOuputFiles)" />
+  </Target>
+
 </Project>
