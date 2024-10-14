@@ -34,14 +34,14 @@ jobs:
       run: >
         dotnet build
         src/App/MapView/WhereToFly.App.MapView.csproj
-        -f net8.0-android34.0
+        -f net8.0-android
         -c Release
 
     - name: Build Android .apk
       run: >
         dotnet publish
         src/App/Maui/WhereToFly.App.Maui.csproj
-        -f net8.0-android34.0
+        -f net8.0-android
         -p:AndroidKeyStore=true
         -p:AndroidPackageFormats=apk
         -p:AndroidSigningKeyStore=keystore.jks
@@ -53,4 +53,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: APK file
-        path: src/App/Maui/bin/Release/net8.0-android34.0/publish/de.vividos.app.wheretofly.android-Signed.apk
+        path: src/App/Maui/bin/Release/net8.0-android/publish/de.vividos.app.wheretofly.android-Signed.apk
