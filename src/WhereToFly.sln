@@ -54,6 +54,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.Geo.UnitTest", "
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "WhereToFly.Web.LiveTracking.Frontend", "Web\LiveTracking\Frontend\WhereToFly.Web.LiveTracking.Frontend.esproj", "{FD3DA77F-076E-4966-A124-E725238F9DF2}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhereToFly.App.AotTest", "App\AotTest\WhereToFly.App.AotTest.csproj", "{C1C3B061-F6C5-484F-AC66-B9F7DD70140B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -116,6 +118,10 @@ Global
 		{FD3DA77F-076E-4966-A124-E725238F9DF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD3DA77F-076E-4966-A124-E725238F9DF2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FD3DA77F-076E-4966-A124-E725238F9DF2}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{C1C3B061-F6C5-484F-AC66-B9F7DD70140B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1C3B061-F6C5-484F-AC66-B9F7DD70140B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1C3B061-F6C5-484F-AC66-B9F7DD70140B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1C3B061-F6C5-484F-AC66-B9F7DD70140B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -134,6 +140,7 @@ Global
 		{4F0EC297-A5C2-44DA-904A-5A67A9FE30B0} = {A443B9B2-B8C9-44F0-A7F5-DF2466E0E0FE}
 		{28161F63-9154-428B-90B5-8002316BD3E2} = {60BE5B8E-A229-488F-A893-379E323EBB3E}
 		{FD3DA77F-076E-4966-A124-E725238F9DF2} = {30B9CDF1-6001-4E25-94F4-8B105BE6F2FB}
+		{C1C3B061-F6C5-484F-AC66-B9F7DD70140B} = {A443B9B2-B8C9-44F0-A7F5-DF2466E0E0FE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D13F3BD1-E396-49C7-BD98-2F3BC15F6E7C}

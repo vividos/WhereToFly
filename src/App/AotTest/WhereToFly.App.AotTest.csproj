@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>$(DotNetVersion)</TargetFramework>
+    <Description>Where-to-fly Native AOT test</Description>
+    <OutputType>Exe</OutputType>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <PublishAot>true</PublishAot>
+    <InvariantGlobalization>true</InvariantGlobalization>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Geo\WhereToFly.Geo.csproj" />
+    <ProjectReference Include="..\..\Shared\Model\WhereToFly.Shared.Model.csproj" />
+    <ProjectReference Include="..\MapView\WhereToFly.App.MapView.csproj" />
+    <ProjectReference Include="..\Maui\WhereToFly.App.Maui.csproj" />
+  </ItemGroup>
+
+</Project>
