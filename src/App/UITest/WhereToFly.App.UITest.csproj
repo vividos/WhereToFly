@@ -15,10 +15,10 @@
 
   <PropertyGroup Condition="'$(SonarQubeTargetsImported)' == ''">
     <PostBuildEvent>if "$(ConfigurationName)" == "Debug" echo Info: Even in debug mode, only Release .apk is used.
-if not exist "$(MSBuildProjectDirectory)\..\Maui\bin\Release\$(DotNetVersion)-android\de.vividos.app.wheretofly.android.apk" echo Error: File de.vividos.app.wheretofly.android.apk is missing! Please build and deploy the Release version at least once.
-if not exist "$(MSBuildProjectDirectory)\..\Maui\bin\Release\$(DotNetVersion)-android\de.vividos.app.wheretofly.android.apk" exit 1
-echo "$(MSBuildProjectDirectory)\..\Maui\bin\Release\$(DotNetVersion)-android\de.vividos.app.wheretofly.android.apk -&gt; bin\$(Configuration)\$(TargetFramework)\"
-copy "$(MSBuildProjectDirectory)\..\Maui\bin\Release\$(DotNetVersion)-android\de.vividos.app.wheretofly.android.apk" "bin\$(Configuration)\$(TargetFramework)\"
+if not exist "$(MSBuildProjectDirectory)\..\..\artifacts\bin\WhereToFly.App.Maui\release_$(DotNetVersion)-android\de.vividos.app.wheretofly.android.apk" echo Error: File de.vividos.app.wheretofly.android.apk is missing! Please build and deploy the Release version at least once.
+if not exist "$(MSBuildProjectDirectory)\..\..\artifacts\bin\WhereToFly.App.Maui\release_$(DotNetVersion)-android\de.vividos.app.wheretofly.android.apk" exit 1
+echo "$(MSBuildProjectDirectory)\..\..\artifacts\bin\WhereToFly.App.Maui\release_$(DotNetVersion)-android\de.vividos.app.wheretofly.android.apk -&gt; bin\$(Configuration)\$(TargetFramework)\"
+copy "$(MSBuildProjectDirectory)\..\..\artifacts\bin\WhereToFly.App.Maui\release_$(DotNetVersion)-android\de.vividos.app.wheretofly.android.apk" "bin\$(Configuration)\$(TargetFramework)\"
 exit 0</PostBuildEvent>
   </PropertyGroup>
 </Project>
