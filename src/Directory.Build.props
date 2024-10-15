@@ -5,6 +5,7 @@
     <Copyright>Copyright © 2017-2024 Michael Fink</Copyright>
     <Company></Company>
     <NuGetPackagePrefix>Vividos</NuGetPackagePrefix>
+    <DotNetVersion>net8.0</DotNetVersion>
   </PropertyGroup>
 
   <PropertyGroup>
