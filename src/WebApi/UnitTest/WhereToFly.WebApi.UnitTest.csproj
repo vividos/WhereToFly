@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>$(DotNetVersion)</TargetFramework>
-    <LangVersion>latest</LangVersion>
+    <Description>Where-to-fly WebApi unit tests</Description>
   </PropertyGroup>
 
   <ItemGroup>

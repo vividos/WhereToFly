@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFramework>$(DotNetVersion)</TargetFramework>
     <Description>Where-to-fly Geo unit tests</Description>
-    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

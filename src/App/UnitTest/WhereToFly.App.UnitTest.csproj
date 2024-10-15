@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>$(DotNetVersion)</TargetFramework>
-    <Description>Where-to-fly unit tests</Description>
+    <Description>Where-to-fly App unit tests</Description>
   </PropertyGroup>
 
   <ItemGroup>
