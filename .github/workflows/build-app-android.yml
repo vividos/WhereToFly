@@ -53,4 +53,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: APK file
-        path: src/App/Maui/bin/Release/net8.0-android/publish/de.vividos.app.wheretofly.android-Signed.apk
+        path: src/artifacts/publish/WhereToFly.App.Maui/release_net8.0-android/de.vividos.app.wheretofly.android-Signed.apk
