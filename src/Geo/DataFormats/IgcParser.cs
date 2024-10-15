@@ -80,7 +80,12 @@ namespace WhereToFly.Geo.DataFormats
             {
                 while (!reader.EndOfStream)
                 {
-                    string line = reader.ReadLine();
+                    string? line = reader.ReadLine();
+                    if (line == null)
+                    {
+                        break;
+                    }
+
                     this.currentLine++;
 
                     if (line.Length > 0)
@@ -128,7 +133,8 @@ namespace WhereToFly.Geo.DataFormats
         /// <returns>found or default value</returns>
         private string? GetHeaderFieldOrDefault(string headerFieldName, string? defaultValue)
         {
-            return this.headerFields.TryGetValue(headerFieldName, out string value)
+            return this.headerFields.TryGetValue(headerFieldName, out string? value) &&
+                value != null
                 ? value
                 : defaultValue;
         }

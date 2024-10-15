@@ -116,7 +116,7 @@ namespace WhereToFly.Geo.Model
         /// </summary>
         /// <param name="other">track to compare to</param>
         /// <returns>true when track are equal, false when not</returns>
-        public bool Equals(Track other)
+        public bool Equals(Track? other)
         {
             if (other == null)
             {
@@ -138,7 +138,7 @@ namespace WhereToFly.Geo.Model
         /// </summary>
         /// <param name="obj">object to compare to</param>
         /// <returns>true when tracks are equal, false when not</returns>
-        public override bool Equals(object obj) =>
+        public override bool Equals(object? obj) =>
             (obj is Track track) && this.Equals(track);
 
         /// <summary>
@@ -146,17 +146,12 @@ namespace WhereToFly.Geo.Model
         /// </summary>
         /// <returns>calculated hash code</returns>
         public override int GetHashCode()
-        {
-            int hashCode = 487;
-
-            hashCode = (hashCode * 31) + this.Id.GetHashCode();
-            hashCode = (hashCode * 31) + this.Name.GetHashCode();
-            hashCode = (hashCode * 31) + this.Description.GetHashCode();
-            hashCode = (hashCode * 31) + this.TrackPoints.GetHashCode();
-            hashCode = (hashCode * 31) + this.GroundHeightProfile.GetHashCode();
-
-            return hashCode;
-        }
+            => HashCode.Combine(
+                this.Id,
+                this.Name,
+                this.Description,
+                this.TrackPoints,
+                this.GroundHeightProfile);
 
         /// <summary>
         /// Returns a printable representation of this object

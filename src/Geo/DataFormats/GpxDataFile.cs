@@ -54,7 +54,7 @@ namespace WhereToFly.Geo.DataFormats
         /// <returns>true when version 1.1, false when 1.0 or any other</returns>
         private bool CheckGpx11Version()
         {
-            string version = this.gpxDocument.DocumentElement.GetAttribute("version");
+            string? version = this.gpxDocument.DocumentElement?.GetAttribute("version");
 
             return version is null or "1.1";
         }
@@ -65,9 +65,10 @@ namespace WhereToFly.Geo.DataFormats
         /// <returns>true when the file contains locations, false when not</returns>
         public bool HasLocations()
         {
-            XmlNodeList waypointNodeList = this.gpxDocument.SelectNodes("//x:wpt", this.namespaceManager);
+            XmlNodeList? waypointNodeList = this.gpxDocument.SelectNodes("//x:wpt", this.namespaceManager);
 
-            return waypointNodeList.Count > 0;
+            return waypointNodeList != null &&
+                waypointNodeList.Count > 0;
         }
 
         /// <summary>
@@ -76,13 +77,17 @@ namespace WhereToFly.Geo.DataFormats
         /// <returns>list of tracks found in the file</returns>
         public List<string> GetTrackList()
         {
-            XmlNodeList trackNodeList = this.gpxDocument.SelectNodes("//x:trk", this.namespaceManager);
+            XmlNodeList? trackNodeList = this.gpxDocument.SelectNodes("//x:trk", this.namespaceManager);
 
             var trackList = new List<string>();
+            if (trackNodeList == null)
+            {
+                return trackList;
+            }
 
             foreach (XmlNode trackNode in trackNodeList)
             {
-                XmlNode nameNode = trackNode.SelectSingleNode("x:name", this.namespaceManager);
+                XmlNode? nameNode = trackNode.SelectSingleNode("x:name", this.namespaceManager);
 
                 string name = nameNode?.InnerText ?? "Track";
 
@@ -99,14 +104,16 @@ namespace WhereToFly.Geo.DataFormats
         /// <returns>loaded track</returns>
         public Track LoadTrack(int trackIndex)
         {
-            XmlNodeList trackNodeList = this.gpxDocument.SelectNodes("//x:trk", this.namespaceManager);
+            XmlNodeList? trackNodeList = this.gpxDocument.SelectNodes("//x:trk", this.namespaceManager);
 
-            if (trackIndex >= trackNodeList.Count)
+            if (trackNodeList == null ||
+                trackIndex >= trackNodeList.Count ||
+                trackNodeList[trackIndex] == null)
             {
                 throw new FormatException("invalid track index in GPX file");
             }
 
-            return this.LoadTrackFromTrackNode(trackNodeList[trackIndex]);
+            return this.LoadTrackFromTrackNode(trackNodeList[trackIndex]!);
         }
 
         /// <summary>
@@ -116,7 +123,7 @@ namespace WhereToFly.Geo.DataFormats
         /// <returns>loaded track</returns>
         private Track LoadTrackFromTrackNode(XmlNode trackNode)
         {
-            XmlNode nameNode = trackNode.SelectSingleNode("x:name", this.namespaceManager);
+            XmlNode? nameNode = trackNode.SelectSingleNode("x:name", this.namespaceManager);
 
             string name = nameNode?.InnerText ?? "Track";
 
@@ -125,10 +132,32 @@ namespace WhereToFly.Geo.DataFormats
                 Name = name,
             };
 
-            foreach (XmlNode trackSegmentNode in trackNode.SelectNodes("x:trkseg", this.namespaceManager))
+            XmlNodeList? trackSegmentList = trackNode.SelectNodes("x:trkseg", this.namespaceManager);
+            if (trackSegmentList == null)
             {
-                foreach (XmlNode trackPointNode in trackSegmentNode.SelectNodes("x:trkpt", this.namespaceManager))
+                return track;
+            }
+
+            foreach (XmlNode? trackSegmentNode in trackSegmentList)
+            {
+                if (trackSegmentNode == null)
                 {
+                    continue;
+                }
+
+                XmlNodeList? trackPointList = trackSegmentNode.SelectNodes("x:trkpt", this.namespaceManager);
+                if (trackPointList == null)
+                {
+                    continue;
+                }
+
+                foreach (XmlNode? trackPointNode in trackPointList)
+                {
+                    if (trackPointNode == null)
+                    {
+                        continue;
+                    }
+
                     track.TrackPoints.Add(GetTrackPointFromTrackPointNode(trackPointNode, this.namespaceManager));
                 }
             }
@@ -168,9 +197,13 @@ namespace WhereToFly.Geo.DataFormats
         /// <returns>list of waypoint locations in file</returns>
         public List<Location> LoadLocationList()
         {
-            XmlNodeList waypointNodeList = this.gpxDocument.SelectNodes("//x:wpt", this.namespaceManager);
+            XmlNodeList? waypointNodeList = this.gpxDocument.SelectNodes("//x:wpt", this.namespaceManager);
 
             var locationList = new List<Location>();
+            if (waypointNodeList == null)
+            {
+                return locationList;
+            }
 
             foreach (XmlNode waypointNode in waypointNodeList)
             {
@@ -194,9 +227,9 @@ namespace WhereToFly.Geo.DataFormats
 
             double elevation = ParseElevation(waypointNode, namespaceManager);
 
-            XmlNode nameNode = waypointNode.SelectSingleNode("x:name", namespaceManager);
-            XmlNode descNode = waypointNode.SelectSingleNode("x:desc", namespaceManager);
-            XmlNode linkHrefNode = waypointNode.SelectSingleNode("x:link/@href", namespaceManager);
+            XmlNode? nameNode = waypointNode.SelectSingleNode("x:name", namespaceManager);
+            XmlNode? descNode = waypointNode.SelectSingleNode("x:desc", namespaceManager);
+            XmlNode? linkHrefNode = waypointNode.SelectSingleNode("x:link/@href", namespaceManager);
 
             var location = new Location(
                 Guid.NewGuid().ToString("B"),
@@ -223,13 +256,13 @@ namespace WhereToFly.Geo.DataFormats
             out double longitude)
         {
             bool canParseLatitude = double.TryParse(
-                node.Attributes["lat"].Value,
+                node?.Attributes?["lat"]?.Value,
                 NumberStyles.Float,
                 NumberFormatInfo.InvariantInfo,
                 out latitude);
 
             bool canParseLongitude = double.TryParse(
-                node.Attributes["lon"].Value,
+                node?.Attributes?["lon"]?.Value,
                 NumberStyles.Float,
                 NumberFormatInfo.InvariantInfo,
                 out longitude);
@@ -249,7 +282,7 @@ namespace WhereToFly.Geo.DataFormats
         private static double ParseElevation(XmlNode node, XmlNamespaceManager namespaceManager)
         {
             double elevation = 0.0;
-            XmlNode elevationNode = node.SelectSingleNode("x:ele", namespaceManager);
+            XmlNode? elevationNode = node.SelectSingleNode("x:ele", namespaceManager);
             if (elevationNode != null &&
                 !string.IsNullOrEmpty(elevationNode.InnerText) &&
                 double.TryParse(
@@ -272,7 +305,7 @@ namespace WhereToFly.Geo.DataFormats
         /// <returns>parsed elevation value, or 0.0</returns>
         private static DateTimeOffset? ParseTime(XmlNode trackPointNode, XmlNamespaceManager namespaceManager)
         {
-            XmlNode timeNode = trackPointNode.SelectSingleNode("x:time", namespaceManager);
+            XmlNode? timeNode = trackPointNode.SelectSingleNode("x:time", namespaceManager);
             if (timeNode != null &&
                 !string.IsNullOrEmpty(timeNode.InnerText) &&
                 DateTimeOffset.TryParse(

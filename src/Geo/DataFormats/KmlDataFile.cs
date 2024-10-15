@@ -541,7 +541,7 @@ namespace WhereToFly.Geo.DataFormats
         {
             string styleUrl = placemark.StyleUrl.ToString();
 
-            if (styleUrl.StartsWith("#"))
+            if (styleUrl.StartsWith('#'))
             {
                 var style = kml.FindStyle(styleUrl.Substring(1));
                 if (style is StyleMapCollection styleMap)
@@ -569,7 +569,7 @@ namespace WhereToFly.Geo.DataFormats
             if (normalStyle != null)
             {
                 string normalStyleUrl = normalStyle.StyleUrl.ToString();
-                if (normalStyleUrl.StartsWith("#"))
+                if (normalStyleUrl.StartsWith('#'))
                 {
                     var iconStyle = kml.FindStyle(normalStyleUrl.Substring(1));
                     if (iconStyle is Style icon)

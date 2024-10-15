@@ -23,10 +23,10 @@ namespace WhereToFly.Geo
         {
             takeoffDirections = TakeoffDirections.None;
 
-            int startBracket = text.IndexOf("(");
+            int startBracket = text.IndexOf('(');
             if (startBracket != -1)
             {
-                int endBracket = text.IndexOf(")", startBracket + 1);
+                int endBracket = text.IndexOf(')', startBracket + 1);
                 if (endBracket != -1)
                 {
                     return TryParse(
@@ -99,7 +99,7 @@ namespace WhereToFly.Geo
             string dirOrRange,
             ref TakeoffDirections takeoffDirections)
         {
-            int dashIndex = dirOrRange.IndexOf("-");
+            int dashIndex = dirOrRange.IndexOf('-');
             if (dashIndex == -1)
             {
                 if (!MapDirectionToEnum.ContainsKey(dirOrRange))

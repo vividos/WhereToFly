@@ -269,16 +269,16 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
 
             if (!string.IsNullOrWhiteSpace(element.Title))
             {
-                return element.Title!;
+                return element.Title;
             }
 
             if (element.Properties != null)
             {
                 foreach (string key in NamePropertyKeys)
                 {
-                    if (element.Properties.ContainsKey(key))
+                    if (element.Properties.TryGetValue(key, out object? value))
                     {
-                        return element.Properties[key].ToString();
+                        return value?.ToString() ?? string.Empty;
                     }
                 }
             }
@@ -314,9 +314,9 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
             {
                 foreach (string key in DescriptionPropertyKeys)
                 {
-                    if (element.Properties.ContainsKey(key))
+                    if (element.Properties.TryGetValue(key, out object? value))
                     {
-                        return element.Properties[key].ToString();
+                        return value?.ToString() ?? string.Empty;
                     }
                 }
             }

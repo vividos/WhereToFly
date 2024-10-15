@@ -23,9 +23,11 @@ namespace WhereToFly.Geo
         /// <exception cref="ArgumentNullException">
         /// thrown when the polyline string is null or empty
         /// </exception>
+#pragma warning disable S4456 // Parameter validation in yielding methods should be wrapped
         public static IEnumerable<TrackPoint> DecodeGeometryToTrackPoints(
             string polylineString,
             bool withElevation)
+#pragma warning restore S4456 // Parameter validation in yielding methods should be wrapped
         {
             if (string.IsNullOrEmpty(polylineString))
             {

@@ -96,15 +96,15 @@ namespace WhereToFly.Geo
 
                         this.allLocationIds.Add(locationId);
 
-                        return new[] { location };
+                        return [location];
                     }
                     else
                     {
-                        return Enumerable.Empty<Model.Location>();
+                        return [];
                     }
 
                 default:
-                    return Enumerable.Empty<Model.Location>();
+                    return [];
             }
         }
 

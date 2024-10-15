@@ -41,7 +41,12 @@ namespace WhereToFly.Geo.DataFormats
             using var reader = new StreamReader(this.stream);
             do
             {
-                string line = reader.ReadLine();
+                string? line = reader.ReadLine();
+                if (line == null)
+                {
+                    break;
+                }
+
                 if (isFirstLine)
                 {
                     isFirstLine = false;
@@ -186,7 +191,7 @@ namespace WhereToFly.Geo.DataFormats
             string localAltitudeText;
             bool convertFromFeet = false;
 
-            if (altitudeText.EndsWith("m"))
+            if (altitudeText.EndsWith('m'))
             {
                 localAltitudeText = altitudeText.TrimEnd('m');
             }

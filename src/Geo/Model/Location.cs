@@ -74,7 +74,7 @@ namespace WhereToFly.Geo.Model
         /// </summary>
         /// <param name="other">location to compare to first</param>
         /// <returns>true when locations are equal, false when not</returns>
-        public bool Equals(Location other)
+        public bool Equals(Location? other)
         {
             if (other == null)
             {
@@ -97,7 +97,7 @@ namespace WhereToFly.Geo.Model
         /// </summary>
         /// <param name="obj">object to compare to</param>
         /// <returns>true when locations are equal, false when not</returns>
-        public override bool Equals(object obj) =>
+        public override bool Equals(object? obj) =>
             (obj is Location location) && this.Equals(location);
 
         /// <summary>
@@ -105,20 +105,15 @@ namespace WhereToFly.Geo.Model
         /// </summary>
         /// <returns>calculated hash code</returns>
         public override int GetHashCode()
-        {
-            int hashCode = 487;
-
-            hashCode = (hashCode * 31) + this.Id.GetHashCode();
-            hashCode = (hashCode * 31) + this.Name.GetHashCode();
-            hashCode = (hashCode * 31) + this.Type.GetHashCode();
-            hashCode = (hashCode * 31) + this.InternetLink.GetHashCode();
-            hashCode = (hashCode * 31) + this.MapLocation.GetHashCode();
-            hashCode = (hashCode * 31) + this.Description.GetHashCode();
-            hashCode = (hashCode * 31) + this.IsPlanTourLocation.GetHashCode();
-            hashCode = (hashCode * 31) + this.TakeoffDirections.GetHashCode();
-
-            return hashCode;
-        }
+            => HashCode.Combine(
+                this.Id,
+                this.Name,
+                this.Type,
+                this.InternetLink,
+                this.MapLocation,
+                this.Description,
+                this.IsPlanTourLocation,
+                this.TakeoffDirections);
 
         /// <summary>
         /// Returns a printable representation of this object

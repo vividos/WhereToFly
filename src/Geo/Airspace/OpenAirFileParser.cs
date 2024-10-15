@@ -99,7 +99,12 @@ namespace WhereToFly.Geo.Airspace
             {
                 do
                 {
-                    string line = reader.ReadLine().Trim();
+                    string? line = reader.ReadLine()?.Trim();
+                    if (line == null)
+                    {
+                        break;
+                    }
+
                     this.currentLine++;
 
                     if (line.Length == 0)
@@ -533,7 +538,7 @@ namespace WhereToFly.Geo.Airspace
             AltitudeType type = AltitudeType.Textual;
             if (data.EndsWith("MSL") ||
                 data.EndsWith("AMSL") ||
-                data.EndsWith("M") ||
+                data.EndsWith('M') ||
                 data.EndsWith("FT") ||
                 data.All(ch => char.IsDigit(ch)))
             {
@@ -572,7 +577,7 @@ namespace WhereToFly.Geo.Airspace
         {
             bool unitFeet = true; // when empty, use feet
 
-            if (text.EndsWith("M"))
+            if (text.EndsWith('M'))
             {
                 text = text.Replace("M", string.Empty).Trim();
                 unitFeet = false;
@@ -583,7 +588,7 @@ namespace WhereToFly.Geo.Airspace
                 text = text.Replace("FT", string.Empty).Trim();
             }
 
-            if (text.EndsWith("F"))
+            if (text.EndsWith('F'))
             {
                 text = text.Replace("F", string.Empty).Trim();
             }
@@ -911,8 +916,8 @@ namespace WhereToFly.Geo.Airspace
 
             bool isNegative = false;
 
-            if (latLongText.EndsWith("S") ||
-                latLongText.EndsWith("W"))
+            if (latLongText.EndsWith('S') ||
+                latLongText.EndsWith('W'))
             {
                 isNegative = true;
             }
@@ -981,7 +986,8 @@ namespace WhereToFly.Geo.Airspace
         /// <returns>found or default value</returns>
         private string? GetVariableOrDefault(string variableName, string? defaultValue)
         {
-            return this.currentVariables.TryGetValue(variableName, out string value)
+            return this.currentVariables.TryGetValue(variableName, out string? value) &&
+                value != null
                 ? value
                 : defaultValue;
         }

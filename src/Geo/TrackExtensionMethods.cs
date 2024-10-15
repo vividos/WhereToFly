@@ -215,13 +215,10 @@ namespace WhereToFly.Geo
                 track.MinHeight = 0.0;
             }
 
-            // it seems SonarQube can't handle ref averageSpeedTrackPointCount yet
-#pragma warning disable S2583 // Conditionally executed code should be reachable
             if (averageSpeedTrackPointCount > 0)
             {
                 track.AverageSpeed /= averageSpeedTrackPointCount;
             }
-#pragma warning restore S2583 // Conditionally executed code should be reachable
         }
 
         /// <summary>

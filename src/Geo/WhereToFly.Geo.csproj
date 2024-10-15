@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>$(DotNetVersion)</TargetFramework>
     <Title>Where-to-fly Geo</Title>
     <Description>Where-to-fly Geography related classes</Description>
   </PropertyGroup>

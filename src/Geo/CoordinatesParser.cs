@@ -157,9 +157,7 @@ namespace WhereToFly.Geo
             if (endsWithSwappedDirectionCharacter ||
                 startsWithSwappedDirectionCharacter)
             {
-                string temp = latitude;
-                latitude = longitude;
-                longitude = temp;
+                (longitude, latitude) = (latitude, longitude);
             }
 
             latitude = latitude.Trim(LatitudeDirectionCharacter);
@@ -252,21 +250,23 @@ namespace WhereToFly.Geo
                 return false;
             }
 
-            if (!latitudeOrLongitudeText.Contains("°") ||
-                !latitudeOrLongitudeText.Contains("'") ||
-                latitudeOrLongitudeText.LastIndexOf("°") >= latitudeOrLongitudeText.LastIndexOf("'"))
+            if (!latitudeOrLongitudeText.Contains('°') ||
+                !latitudeOrLongitudeText.Contains('\'') ||
+                latitudeOrLongitudeText.LastIndexOf('°') >= latitudeOrLongitudeText.LastIndexOf('\''))
             {
                 return false;
             }
 
-            if (latitudeOrLongitudeText.Contains("'") &&
-                latitudeOrLongitudeText.Contains("\"") &&
-                latitudeOrLongitudeText.LastIndexOf("\"") < latitudeOrLongitudeText.IndexOf("'"))
+            if (latitudeOrLongitudeText.Contains('\'') &&
+                latitudeOrLongitudeText.Contains('"') &&
+                latitudeOrLongitudeText.LastIndexOf('"') < latitudeOrLongitudeText.IndexOf('\''))
             {
                 return false;
             }
 
+#pragma warning disable S3220 // Method calls should not resolve ambiguously to overloads with "params"
             string[] splitValues = latitudeOrLongitudeText.Split('°', '\'');
+#pragma warning restore S3220 // Method calls should not resolve ambiguously to overloads with "params"
 
             // no seconds after minutes?
             if (splitValues.Length == 3 &&
@@ -283,7 +283,7 @@ namespace WhereToFly.Geo
             }
 
             string degreesText = splitValues[0];
-            bool isNegative = degreesText.StartsWith("-");
+            bool isNegative = degreesText.StartsWith('-');
 
             if (isNegative)
             {
@@ -351,16 +351,16 @@ namespace WhereToFly.Geo
         {
             mapPoint = null;
 
-            if (!Uri.TryCreate(text, UriKind.Absolute, out Uri uri))
+            if (!Uri.TryCreate(text, UriKind.Absolute, out Uri? uri))
             {
                 return false;
             }
 
-            var mapsHostnames = new string[]
-            {
+            string[] mapsHostnames =
+            [
                 "maps.google.com",
                 "www.google.com",
-            };
+            ];
 
             if (mapsHostnames.Contains(uri.Host.ToLowerInvariant()))
             {
@@ -368,7 +368,10 @@ namespace WhereToFly.Geo
                     "/maps/place/",
                     StringComparison.OrdinalIgnoreCase))
                 {
-                    string[] parts = uri.LocalPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+                    string[] parts = uri.LocalPath.Split(
+                        '/',
+                        StringSplitOptions.RemoveEmptyEntries);
+
                     if (parts.Length >= 2)
                     {
                         string placeText = parts[2].Replace("+", ",");
@@ -376,7 +379,7 @@ namespace WhereToFly.Geo
                     }
                 }
 
-                Dictionary<string, string> uriParameterMap =
+                var uriParameterMap =
                     uri.Query.Split('&')
                         .Select(parameters => parameters.Split('='))
                         .Where(keyAndValue => keyAndValue.Length == 2)
@@ -384,7 +387,7 @@ namespace WhereToFly.Geo
                             keyAndValue => keyAndValue[0].ToLowerInvariant().Trim('?', '&'),
                             keyAndValue => keyAndValue[1]);
 
-                if (!uriParameterMap.TryGetValue("q", out string param))
+                if (!uriParameterMap.TryGetValue("q", out string? param))
                 {
                     return false;
                 }
@@ -395,7 +398,7 @@ namespace WhereToFly.Geo
             }
 
             // parse geo: URI
-            if (uri.Scheme.ToLowerInvariant() == "geo")
+            if (uri.Scheme.Equals("geo", StringComparison.InvariantCultureIgnoreCase))
             {
                 return TryParse(uri.PathAndQuery, out mapPoint);
             }

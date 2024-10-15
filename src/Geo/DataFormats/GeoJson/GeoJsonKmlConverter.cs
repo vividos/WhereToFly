@@ -198,9 +198,9 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
             {
                 foreach (string key in NamePropertyKeys)
                 {
-                    if (element.Properties.ContainsKey(key))
+                    if (element.Properties.TryGetValue(key, out object? value))
                     {
-                        return element.Properties[key].ToString();
+                        return value?.ToString() ?? string.Empty;
                     }
                 }
             }
