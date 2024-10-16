@@ -45,7 +45,7 @@ import {
     Material,
     MaterialAppearance,
     Matrix3,
-    Math,
+    Math as CesiumMath,
     OpenStreetMapImageryProvider,
     PinBuilder,
     PolygonHierarchy,
@@ -296,7 +296,7 @@ export class MapView {
         if (longitude !== 0 && latitude !== 0) {
 
             const initialHeading = 0.0; // north
-            const initialPitch = Math.toRadians(-35);
+            const initialPitch = CesiumMath.toRadians(-35);
             const initialViewingDistance = this.options.initialViewingDistance || 5000.0;
 
             this.viewer.camera.setView({
@@ -512,8 +512,8 @@ export class MapView {
 
                 longTapDetected = true;
                 this.onLongTap({
-                    latitude: Math.toDegrees(cartographic.latitude),
-                    longitude: Math.toDegrees(cartographic.longitude),
+                    latitude: CesiumMath.toDegrees(cartographic.latitude),
+                    longitude: CesiumMath.toDegrees(cartographic.longitude),
                     altitude: cartographic.height
                 });
             }
@@ -542,8 +542,8 @@ export class MapView {
             const cartographic = Cartographic.fromCartesian(cartesian);
 
             this.onLongTap({
-                latitude: Math.toDegrees(cartographic.latitude),
-                longitude: Math.toDegrees(cartographic.longitude),
+                latitude: CesiumMath.toDegrees(cartographic.latitude),
+                longitude: CesiumMath.toDegrees(cartographic.longitude),
                 altitude: cartographic.height
             });
         }
@@ -1117,10 +1117,10 @@ export class MapView {
                 this.viewer.scene.globe.ellipsoid);
 
         return {
-            west: Math.toDegrees(currentViewRectangle.west).toFixed(5),
-            south: Math.toDegrees(currentViewRectangle.south).toFixed(5),
-            east: Math.toDegrees(currentViewRectangle.east).toFixed(5),
-            north: Math.toDegrees(currentViewRectangle.north).toFixed(5)
+            west: CesiumMath.toDegrees(currentViewRectangle.west).toFixed(5),
+            south: CesiumMath.toDegrees(currentViewRectangle.south).toFixed(5),
+            east: CesiumMath.toDegrees(currentViewRectangle.east).toFixed(5),
+            north: CesiumMath.toDegrees(currentViewRectangle.north).toFixed(5)
         };
     }
 
@@ -1349,8 +1349,8 @@ export class MapView {
                 const center = Cartographic.fromCartesian(boundingSphere.center);
 
                 this.onUpdateLastShownLocation({
-                    latitude: Math.toDegrees(center.latitude),
-                    longitude: Math.toDegrees(center.longitude),
+                    latitude: CesiumMath.toDegrees(center.latitude),
+                    longitude: CesiumMath.toDegrees(center.longitude),
                     altitude: center.height,
                     viewingDistance: this.getCurrentViewingDistance()
                 });
@@ -1532,8 +1532,8 @@ export class MapView {
                 const center = Cartographic.fromCartesian(boundingSphere.center);
 
                 this.onUpdateLastShownLocation({
-                    latitude: Math.toDegrees(center.latitude),
-                    longitude: Math.toDegrees(center.longitude),
+                    latitude: CesiumMath.toDegrees(center.latitude),
+                    longitude: CesiumMath.toDegrees(center.longitude),
                     altitude: center.height,
                     viewingDistance: this.getCurrentViewingDistance()
                 });
@@ -1653,8 +1653,8 @@ export class MapView {
                 const center = Cartographic.fromCartesian(boundingSphere.center);
 
                 this.onUpdateLastShownLocation({
-                    latitude: Math.toDegrees(center.latitude),
-                    longitude: Math.toDegrees(center.longitude),
+                    latitude: CesiumMath.toDegrees(center.latitude),
+                    longitude: CesiumMath.toDegrees(center.longitude),
                     altitude: center.height,
                     viewingDistance: this.getCurrentViewingDistance()
                 });
@@ -2026,7 +2026,7 @@ export class MapView {
         const northVecScratch = new Cartesian3();
         const northVec = Cartesian3.cross(unitPos, eastVec, northVecScratch);
 
-        const azimuth = Math.toRadians(angleDegrees);
+        const azimuth = CesiumMath.toRadians(angleDegrees);
 
         const rotAxis = new Cartesian3();
         const tempVec = new Cartesian3();
@@ -2263,7 +2263,7 @@ export class MapView {
         const quat = Transforms.headingPitchRollQuaternion(
             Cartesian3.fromDegrees(options.longitude, options.latitude, options.altitude / 2.0),
             new HeadingPitchRoll(
-                Math.toRadians(options.windDirection + 90.0),
+                CesiumMath.toRadians(options.windDirection + 90.0),
                 conePitch, 0.0)
         );
 
@@ -2276,10 +2276,10 @@ export class MapView {
 
         text += "<p>" +
             "Glide ratio: " + options.glideRatio + "<br/>" +
-            "Glide angle: " + (90.0 - Math.toDegrees(glideAngle)).toFixed(1) + " degrees<br/>" +
+            "Glide angle: " + (90.0 - CesiumMath.toDegrees(glideAngle)).toFixed(1) + " degrees<br/>" +
             // 'Glider speed: ' + options.gliderSpeed + ' km/h<br/>' +
             // 'Glide ratio with wind: ' + glideRatioWithWind.toFixed(1) + '<br/>' +
-            // 'Glide angle with wind: ' + (90.0 - Math.toDegrees(glideAngleWithWind)).toFixed(1) + ' degrees<br/>' +
+            // 'Glide angle with wind: ' + (90.0 - CesiumMath.toDegrees(glideAngleWithWind)).toFixed(1) + ' degrees<br/>' +
             // 'Wind: ' + options.windSpeed + ' km/h from ' + options.windDirection + ' degrees' +
             "</p>";
 
@@ -3042,8 +3042,8 @@ export class MapView {
         const location = Cartographic.fromCartesian(position);
 
         this.zoomToLocation({
-            longitude: Math.toDegrees(location.longitude),
-            latitude: Math.toDegrees(location.latitude),
+            longitude: CesiumMath.toDegrees(location.longitude),
+            latitude: CesiumMath.toDegrees(location.latitude),
             altitude: location.height
         });
     }
@@ -3069,8 +3069,8 @@ export class MapView {
                     const currentPos = Cartographic.fromCartesian(currentPosCartesian);
 
                     this.flyTo({
-                        latitude: Math.toDegrees(currentPos.latitude),
-                        longitude: Math.toDegrees(currentPos.longitude),
+                        latitude: CesiumMath.toDegrees(currentPos.latitude),
+                        longitude: CesiumMath.toDegrees(currentPos.longitude),
                         altitude: currentPos.height
                     });
                 }
@@ -3081,8 +3081,8 @@ export class MapView {
                 const center = Cartographic.fromCartesian(trackData.boundingSphere.center);
 
                 this.onUpdateLastShownLocation({
-                    latitude: Math.toDegrees(center.latitude),
-                    longitude: Math.toDegrees(center.longitude),
+                    latitude: CesiumMath.toDegrees(center.latitude),
+                    longitude: CesiumMath.toDegrees(center.longitude),
                     altitude: center.height,
                     viewingDistance: this.getCurrentViewingDistance()
                 });
