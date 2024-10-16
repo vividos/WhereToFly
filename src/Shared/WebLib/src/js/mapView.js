@@ -1,5 +1,72 @@
 // Cesium.js
-import * as Cesium from "cesium";
+import {
+    arrayRemoveDuplicates,
+    createOsmBuildingsAsync,
+    createWorldTerrainAsync,
+    exportKml,
+    getAbsoluteUri,
+    sampleTerrainMostDetailed,
+    viewerCesiumInspectorMixin,
+    BingMapsImageryProvider,
+    BingMapsStyle,
+    BoundingSphere,
+    BoundingSphereState,
+    Cartesian2,
+    Cartesian3,
+    Cartographic,
+    Clock,
+    ClockStep,
+    ClockRange,
+    ClockViewModel,
+    Color,
+    ColorGeometryInstanceAttribute,
+    ConstantProperty,
+    Credit,
+    CustomDataSource,
+    CzmlDataSource,
+    DataSource,
+    DistanceDisplayCondition,
+    EllipsoidTerrainProvider,
+    Entity,
+    EntityCluster,
+    ExtrapolationType,
+    GeometryInstance,
+    GroundPolylineGeometry,
+    GroundPolylinePrimitive,
+    HeadingPitchRange,
+    HeadingPitchRoll,
+    HeightReference,
+    ImageryLayer,
+    Ion,
+    IonImageryProvider,
+    JulianDate,
+    LabelStyle,
+    LagrangePolynomialApproximation,
+    Material,
+    MaterialAppearance,
+    Matrix3,
+    Math,
+    OpenStreetMapImageryProvider,
+    PinBuilder,
+    PolygonHierarchy,
+    PolylineColorAppearance,
+    PolylineGeometry,
+    Primitive,
+    PrimitiveCollection,
+    Quaternion,
+    SampledPositionProperty,
+    ScreenSpaceEventHandler,
+    ScreenSpaceEventType,
+    ShadowMode,
+    TimeInterval,
+    TimeIntervalCollectionProperty,
+    Transforms,
+    UrlTemplateImageryProvider,
+    VerticalOrigin,
+    Viewer,
+    WallGeometry,
+    WebMercatorTilingScheme,
+} from "cesium";
 import "cesium/Build/Cesium/Widgets/widgets.css";
 
 // local
@@ -57,18 +124,18 @@ export class MapView {
             this.options.callback = Utils.callAction;
 
         this.pinImageCache = {};
-        this.pinBuilder = new Cesium.PinBuilder();
+        this.pinBuilder = new PinBuilder();
 
         this.showMessageBand("Initializing map...");
 
         console.log("#1 imagery provider");
 
-        Cesium.Ion.defaultAccessToken = this.options.cesiumIonApiKey;
+        Ion.defaultAccessToken = this.options.cesiumIonApiKey;
 
         this.imageryLayerInfos = {
             OpenStreetMap: {
                 layer: null,
-                provider: new Cesium.OpenStreetMapImageryProvider({
+                provider: new OpenStreetMapImageryProvider({
                     url: "https://{s}.tile.openstreetmap.org/",
                     subdomains: "abc",
                     maximumLevel: 18
@@ -78,17 +145,17 @@ export class MapView {
                 layer: null,
                 provider: null,
                 getProvider: async() => {
-                    return await Cesium.BingMapsImageryProvider.fromUrl(
+                    return await BingMapsImageryProvider.fromUrl(
                         "https://dev.virtualearth.net",
                         {
                             key: this.options.bingMapsApiKey,
-                            mapStyle: Cesium.BingMapsStyle.AERIAL_WITH_LABELS_ON_DEMAND
+                            mapStyle: BingMapsStyle.AERIAL_WITH_LABELS_ON_DEMAND
                         });
                 }
             },
             OpenTopoMap: {
                 layer: null,
-                provider: new Cesium.OpenStreetMapImageryProvider({
+                provider: new OpenStreetMapImageryProvider({
                     url: "https://{s}.tile.opentopomap.org/",
                     subdomains: "abc",
                     maximumLevel: 18,
@@ -99,7 +166,7 @@ export class MapView {
                 layer: null,
                 provider: null,
                 getProvider: async() => {
-                    return await Cesium.IonImageryProvider.fromAssetId(3954);
+                    return await IonImageryProvider.fromAssetId(3954);
                 }
             }
         };
@@ -121,7 +188,7 @@ export class MapView {
                 provider: null,
                 getProvider: () => {
                     // The Earth at Night, also known as Black Marble 2017 and Night Lights
-                    return Cesium.IonImageryProvider.fromAssetId(3812);
+                    return IonImageryProvider.fromAssetId(3812);
                 },
                 configLayer: (layer) => {
                     layer.alpha = 0.5; // 0.0 is transparent.  1.0 is opaque.
@@ -142,7 +209,7 @@ export class MapView {
                 provider: null,
                 getProvider: () => {
                     const airacId = MapView.calcCurrentAiracId();
-                    return new Cesium.UrlTemplateImageryProvider({
+                    return new UrlTemplateImageryProvider({
                         url: "https://nwy-tiles-api.prod.newaydata.com/tiles/{z}/{x}/{y}.png?path=" + airacId + "/aero/latest",
                         tileWidth: 512,
                         tileHeight: 512,
@@ -159,29 +226,29 @@ export class MapView {
         this.initTerrainProvider();
 
         console.log("#3 clock");
-        const now = Cesium.JulianDate.now();
-        const start = Cesium.JulianDate.addDays(now, -1, new Cesium.JulianDate());
-        const end = Cesium.JulianDate.addDays(now, 1, new Cesium.JulianDate());
+        const now = JulianDate.now();
+        const start = JulianDate.addDays(now, -1, new JulianDate());
+        const end = JulianDate.addDays(now, 1, new JulianDate());
 
-        const clock = new Cesium.Clock({
+        const clock = new Clock({
             startTime: start,
             endTime: end,
             currentTime: now.clone(),
-            clockStep: Cesium.ClockStep.SYSTEM_CLOCK,
-            clockRange: Cesium.ClockRange.CLAMPED
+            clockStep: ClockStep.SYSTEM_CLOCK,
+            clockRange: ClockRange.CLAMPED
         });
 
         console.log("#4 viewer");
         const webGLPowerPreference = "low-power";
 
         this.imageryLayerInfos.OpenStreetMap.layer =
-            new Cesium.ImageryLayer(
+            new ImageryLayer(
                 this.imageryLayerInfos.OpenStreetMap.provider);
 
-        this.viewer = new Cesium.Viewer(this.options.id, {
+        this.viewer = new Viewer(this.options.id, {
             baseLayer: this.imageryLayerInfos.OpenStreetMap.layer,
             terrainProvider: null, // is later set when readyPromise completes
-            clockViewModel: new Cesium.ClockViewModel(clock),
+            clockViewModel: new ClockViewModel(clock),
             baseLayerPicker: false,
             sceneModePicker: false,
             animation: false,
@@ -229,11 +296,11 @@ export class MapView {
         if (longitude !== 0 && latitude !== 0) {
 
             const initialHeading = 0.0; // north
-            const initialPitch = Cesium.Math.toRadians(-35);
+            const initialPitch = Math.toRadians(-35);
             const initialViewingDistance = this.options.initialViewingDistance || 5000.0;
 
             this.viewer.camera.setView({
-                destination: Cesium.Cartesian3.fromDegrees(longitude, latitude, initialViewingDistance),
+                destination: Cartesian3.fromDegrees(longitude, latitude, initialViewingDistance),
                 orientation: {
                     initialHeading,
                     initialPitch,
@@ -247,15 +314,15 @@ export class MapView {
 
         console.log("#9 long tap handler");
 
-        this.pickingHandler = new Cesium.ScreenSpaceEventHandler(this.viewer.scene.canvas);
+        this.pickingHandler = new ScreenSpaceEventHandler(this.viewer.scene.canvas);
 
-        this.pickingHandler.setInputAction(this.onScreenTouchDown.bind(this), Cesium.ScreenSpaceEventType.LEFT_DOWN);
-        this.pickingHandler.setInputAction(this.onScreenTouchUp.bind(this), Cesium.ScreenSpaceEventType.LEFT_UP);
+        this.pickingHandler.setInputAction(this.onScreenTouchDown.bind(this), ScreenSpaceEventType.LEFT_DOWN);
+        this.pickingHandler.setInputAction(this.onScreenTouchUp.bind(this), ScreenSpaceEventType.LEFT_UP);
 
         if (options.hasMouse) {
             this.pickingHandler.setInputAction(
                 this.onScreenRightClick.bind(this),
-                Cesium.ScreenSpaceEventType.RIGHT_CLICK);
+                ScreenSpaceEventType.RIGHT_CLICK);
         }
 
         console.log("#10 entity clustering");
@@ -268,7 +335,7 @@ export class MapView {
         this.heightProfileView = null;
 
         // add a dedicated track primitives collection, as we can't call viewer.scene.primitives.removeAll()
-        this.trackPrimitivesCollection = new Cesium.PrimitiveCollection({
+        this.trackPrimitivesCollection = new PrimitiveCollection({
             show: true,
             destroyPrimitives: true
         });
@@ -283,11 +350,11 @@ export class MapView {
 
         this.inOnCloseHandler = false;
 
-        this.locationDataSource = new Cesium.CustomDataSource("locations");
+        this.locationDataSource = new CustomDataSource("locations");
         this.locationDataSource.clustering = this.clustering;
         this.viewer.dataSources.add(this.locationDataSource);
 
-        this.liveTrackDataSource = new Cesium.CustomDataSource("livetrack");
+        this.liveTrackDataSource = new CustomDataSource("livetrack");
         this.viewer.dataSources.add(this.liveTrackDataSource);
 
         this.currentLiveTrackTimeOffset = -180;
@@ -326,7 +393,7 @@ export class MapView {
     async initTerrainProvider() {
 
         try {
-            const terrainProvider = await Cesium.createWorldTerrainAsync({
+            const terrainProvider = await createWorldTerrainAsync({
                 requestWaterMask: false,
                 requestVertexNormals: true
             });
@@ -353,7 +420,7 @@ export class MapView {
                 undefined,
                 "My Position",
                 "",
-                Cesium.Color.GREEN,
+                Color.GREEN,
                 "images/map-marker.svg",
                 0.0,
                 0.0);
@@ -368,10 +435,10 @@ export class MapView {
         // the zoom entity is invisible and transparent and is used for zoomToLocation() calls
         this.zoomEntity = this.viewer.entities.add({
             id: "zoomEntity",
-            position: Cesium.Cartesian3.fromDegrees(0.0, 0.0),
+            position: Cartesian3.fromDegrees(0.0, 0.0),
             point: {
-                color: Cesium.Color.TRANSPARENT,
-                heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
+                color: Color.TRANSPARENT,
+                heightReference: HeightReference.CLAMP_TO_GROUND
             },
             show: false
         });
@@ -382,13 +449,13 @@ export class MapView {
                 "trackMarker",
                 "Track point",
                 "",
-                Cesium.Color.PURPLE,
+                Color.PURPLE,
                 "images/map-marker-distance.svg",
                 0.0,
                 0.0);
 
             trackEntity.show = false;
-            trackEntity.billboard.heightReference = Cesium.HeightReference.NONE;
+            trackEntity.billboard.heightReference = HeightReference.NONE;
             this.trackMarker = this.viewer.entities.add(trackEntity);
         } catch (error) {
             console.error("MapView: #8 error creating find result entity: " + error);
@@ -401,7 +468,7 @@ export class MapView {
                 undefined,
                 "Find result",
                 "",
-                Cesium.Color.ORANGE,
+                Color.ORANGE,
                 "images/magnify.svg",
                 0.0,
                 0.0);
@@ -441,12 +508,12 @@ export class MapView {
             const ray = this.viewer.camera.getPickRay(movement.position);
             const cartesian = this.viewer.scene.globe.pick(ray, this.viewer.scene);
             if (cartesian) {
-                const cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+                const cartographic = Cartographic.fromCartesian(cartesian);
 
                 longTapDetected = true;
                 this.onLongTap({
-                    latitude: Cesium.Math.toDegrees(cartographic.latitude),
-                    longitude: Cesium.Math.toDegrees(cartographic.longitude),
+                    latitude: Math.toDegrees(cartographic.latitude),
+                    longitude: Math.toDegrees(cartographic.longitude),
                     altitude: cartographic.height
                 });
             }
@@ -472,11 +539,11 @@ export class MapView {
         const ray = this.viewer.camera.getPickRay(movement.position);
         const cartesian = this.viewer.scene.globe.pick(ray, this.viewer.scene);
         if (cartesian) {
-            const cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+            const cartographic = Cartographic.fromCartesian(cartesian);
 
             this.onLongTap({
-                latitude: Cesium.Math.toDegrees(cartographic.latitude),
-                longitude: Cesium.Math.toDegrees(cartographic.longitude),
+                latitude: Math.toDegrees(cartographic.latitude),
+                longitude: Math.toDegrees(cartographic.longitude),
                 altitude: cartographic.height
             });
         }
@@ -493,11 +560,11 @@ export class MapView {
 
         const creditText = "Skyways &copy; <a href=\"https://thermal.kk7.ch/\">thermal.kk7.ch</a>";
 
-        const tilingScheme = new Cesium.WebMercatorTilingScheme();
+        const tilingScheme = new WebMercatorTilingScheme();
 
-        const provider = new Cesium.UrlTemplateImageryProvider({
+        const provider = new UrlTemplateImageryProvider({
             url,
-            credit: new Cesium.Credit(creditText, false),
+            credit: new Credit(creditText, false),
             tilingScheme,
             tileWidth: 256,
             tileHeight: 256,
@@ -518,9 +585,9 @@ export class MapView {
         const creditText = "The Waymarked Trails route overlay is licensed under the " +
             "<a href=\"https://creativecommons.org/licenses/by-sa/3.0/de/deed.de\">CC BY-SA 3.0 DE</a> license";
 
-        return new Cesium.OpenStreetMapImageryProvider({
+        return new OpenStreetMapImageryProvider({
             url: "https://tile.waymarkedtrails.org/hiking/",
-            credit: new Cesium.Credit(creditText, false),
+            credit: new Credit(creditText, false),
             maximumLevel: 17
         });
     }
@@ -531,7 +598,7 @@ export class MapView {
      */
     setupEntityClustering() {
 
-        this.clustering = new Cesium.EntityCluster({
+        this.clustering = new EntityCluster({
             enabled: this.options.useEntityClustering,
             minimumClusterSize: 5,
             pixelRange: 40
@@ -544,17 +611,17 @@ export class MapView {
             // do nothing
         };
 
-        const pinBuilder = new Cesium.PinBuilder();
-        this.clustering.pin50 = pinBuilder.fromText("50+", Cesium.Color.RED, 48).toDataURL();
-        this.clustering.pin40 = pinBuilder.fromText("40+", Cesium.Color.RED, 48).toDataURL();
-        this.clustering.pin30 = pinBuilder.fromText("30+", Cesium.Color.RED, 48).toDataURL();
-        this.clustering.pin20 = pinBuilder.fromText("20+", Cesium.Color.RED, 48).toDataURL();
-        this.clustering.pin10 = pinBuilder.fromText("10+", Cesium.Color.RED, 48).toDataURL();
+        const pinBuilder = new PinBuilder();
+        this.clustering.pin50 = pinBuilder.fromText("50+", Color.RED, 48).toDataURL();
+        this.clustering.pin40 = pinBuilder.fromText("40+", Color.RED, 48).toDataURL();
+        this.clustering.pin30 = pinBuilder.fromText("30+", Color.RED, 48).toDataURL();
+        this.clustering.pin20 = pinBuilder.fromText("20+", Color.RED, 48).toDataURL();
+        this.clustering.pin10 = pinBuilder.fromText("10+", Color.RED, 48).toDataURL();
 
         this.clustering.singleDigitPins = new Array(8);
         for (let i = 0; i < this.clustering.singleDigitPins.length; ++i) {
             this.clustering.singleDigitPins[i] = pinBuilder
-                .fromText("" + (i + 2), Cesium.Color.RED, 48).toDataURL();
+                .fromText("" + (i + 2), Color.RED, 48).toDataURL();
         }
 
         this.clustering.clusterEvent.addEventListener(
@@ -571,8 +638,8 @@ export class MapView {
         cluster.label.show = false;
         cluster.billboard.show = true;
         cluster.billboard.id = "cluster-billboard-" + cluster.label.id;
-        cluster.billboard.verticalOrigin = Cesium.VerticalOrigin.BOTTOM;
-        cluster.billboard.heightReference = Cesium.HeightReference.CLAMP_TO_GROUND;
+        cluster.billboard.verticalOrigin = VerticalOrigin.BOTTOM;
+        cluster.billboard.heightReference = HeightReference.CLAMP_TO_GROUND;
 
         if (clusteredEntities.length >= 50)
             cluster.billboard.image = this.clustering.pin50;
@@ -737,7 +804,7 @@ export class MapView {
      * Adds the Cesium inspector window to the viewer
      */
     addViewerInspector() {
-        this.viewer.extend(Cesium.viewerCesiumInspectorMixin);
+        this.viewer.extend(viewerCesiumInspectorMixin);
     }
 
     /**
@@ -813,14 +880,14 @@ export class MapView {
     setupSlopeAndContourLines() {
 
         // Creates a material with contour lines only
-        this.contourLinesMaterial = Cesium.Material.fromType("ElevationContour");
+        this.contourLinesMaterial = Material.fromType("ElevationContour");
 
         this.contourLinesMaterial.uniforms.width = 1; // in pixels
         this.contourLinesMaterial.uniforms.spacing = 100; // in meters
-        this.contourLinesMaterial.uniforms.color = Cesium.Color.BLUE.clone();
+        this.contourLinesMaterial.uniforms.color = Color.BLUE.clone();
 
         // Creates a composite material with both slope shading and contour lines
-        const material = new Cesium.Material({
+        const material = new Material({
             fabric: {
                 type: "SlopeColorContour",
                 materials: {
@@ -842,7 +909,7 @@ export class MapView {
         const contourUniforms = material.materials.contourMaterial.uniforms;
         contourUniforms.width = 1; // in pixels
         contourUniforms.spacing = 100; // in meters
-        contourUniforms.color = Cesium.Color.BLUE.clone();
+        contourUniforms.color = Color.BLUE.clone();
 
         const shadingUniforms = material.materials.slopeRampMaterial.uniforms;
         shadingUniforms.image = MapView.getColorRamp();
@@ -948,7 +1015,7 @@ export class MapView {
         this.viewer.scene.globe.enableLighting = shadingMode !== "None";
 
         this.viewer.terrainShadows =
-            shadingMode === "None" ? Cesium.ShadowMode.DISABLED : Cesium.ShadowMode.RECEIVE_ONLY;
+            shadingMode === "None" ? ShadowMode.DISABLED : ShadowMode.RECEIVE_ONLY;
 
         this.updateScene();
     }
@@ -960,7 +1027,7 @@ export class MapView {
     setupFixedClock(hour) {
         const today = new Date();
         today.setHours(hour, 0, 0, 0);
-        const fixedTime = Cesium.JulianDate.fromDate(today);
+        const fixedTime = JulianDate.fromDate(today);
 
         this.viewer.clockViewModel.startTime = fixedTime;
         this.viewer.clockViewModel.currentTime = fixedTime.clone();
@@ -973,14 +1040,14 @@ export class MapView {
      * Sets up a clock that follows the current time.
      */
     setupCurrentTimeClock() {
-        const now = Cesium.JulianDate.now();
-        const start = Cesium.JulianDate.addDays(now, -1, new Cesium.JulianDate());
-        const end = Cesium.JulianDate.addDays(now, 1, new Cesium.JulianDate());
+        const now = JulianDate.now();
+        const start = JulianDate.addDays(now, -1, new JulianDate());
+        const end = JulianDate.addDays(now, 1, new JulianDate());
 
         this.viewer.clockViewModel.startTime = start;
         this.viewer.clockViewModel.currentTime = now.clone();
         this.viewer.clockViewModel.endTime = end;
-        this.viewer.clockViewModel.clockStep = Cesium.ClockStep.SYSTEM_CLOCK;
+        this.viewer.clockViewModel.clockStep = ClockStep.SYSTEM_CLOCK;
         this.viewer.clockViewModel.shouldAnimate = true;
     }
 
@@ -989,14 +1056,14 @@ export class MapView {
      * @param {number} hours number of hours the clock is ahead
      */
     setupAheadCurrentTimeClock(hours) {
-        const now = Cesium.JulianDate.now();
-        const ahead = Cesium.JulianDate.addHours(now, hours, new Cesium.JulianDate());
-        const end = Cesium.JulianDate.addDays(ahead, 1, new Cesium.JulianDate());
+        const now = JulianDate.now();
+        const ahead = JulianDate.addHours(now, hours, new JulianDate());
+        const end = JulianDate.addDays(ahead, 1, new JulianDate());
 
         this.viewer.clockViewModel.startTime = ahead;
         this.viewer.clockViewModel.currentTime = ahead.clone();
         this.viewer.clockViewModel.endTime = end;
-        this.viewer.clockViewModel.clockStep = Cesium.ClockStep.SYSTEM_CLOCK;
+        this.viewer.clockViewModel.clockStep = ClockStep.SYSTEM_CLOCK;
         this.viewer.clockViewModel.shouldAnimate = true;
     }
 
@@ -1035,7 +1102,7 @@ export class MapView {
 
         }.bind(this));
 
-        this.nearbyPoisDataSource = new Cesium.CustomDataSource("nearbyPois");
+        this.nearbyPoisDataSource = new CustomDataSource("nearbyPois");
         this.viewer.dataSources.add(this.nearbyPoisDataSource);
     }
 
@@ -1050,10 +1117,10 @@ export class MapView {
                 this.viewer.scene.globe.ellipsoid);
 
         return {
-            west: Cesium.Math.toDegrees(currentViewRectangle.west).toFixed(5),
-            south: Cesium.Math.toDegrees(currentViewRectangle.south).toFixed(5),
-            east: Cesium.Math.toDegrees(currentViewRectangle.east).toFixed(5),
-            north: Cesium.Math.toDegrees(currentViewRectangle.north).toFixed(5)
+            west: Math.toDegrees(currentViewRectangle.west).toFixed(5),
+            south: Math.toDegrees(currentViewRectangle.south).toFixed(5),
+            east: Math.toDegrees(currentViewRectangle.east).toFixed(5),
+            north: Math.toDegrees(currentViewRectangle.north).toFixed(5)
         };
     }
 
@@ -1107,7 +1174,7 @@ export class MapView {
         MapView.log("updating my location: lat=" + options.latitude + ", long=" + options.longitude);
 
         this.myLocationMarker.show = true;
-        this.myLocationMarker.position = Cesium.Cartesian3.fromDegrees(options.longitude, options.latitude);
+        this.myLocationMarker.position = Cartesian3.fromDegrees(options.longitude, options.latitude);
 
         let text = "<h2><img height=\"48em\" width=\"48em\" src=\"images/map-marker.svg\" style=\"vertical-align:middle\" />My Position</h2>" +
             "<div>Latitude: " + options.displayLatitude + "<br/>" +
@@ -1159,7 +1226,7 @@ export class MapView {
         this.compassTargetHideTargetLocation = false;
 
         const pinImage = "images/map-marker.svg";
-        const pinColor = Cesium.Color.fromCssColorString("#00ffd5");
+        const pinColor = Color.fromCssColorString("#00ffd5");
         const pinImageDataUrl = await this.getPinImageDataUrl(pinImage, pinColor);
 
         this.compassTargetEntity = this.viewer.entities.add({
@@ -1168,8 +1235,8 @@ export class MapView {
             billboard: {
                 show: false,
                 image: pinImageDataUrl,
-                heightReference: Cesium.HeightReference.NONE,
-                verticalOrigin: Cesium.VerticalOrigin.BOTTOM
+                heightReference: HeightReference.NONE,
+                verticalOrigin: VerticalOrigin.BOTTOM
             },
             polyline: {
                 show: false,
@@ -1177,8 +1244,8 @@ export class MapView {
                 width: 4,
                 material: pinColor,
                 positions: [
-                    Cesium.Cartesian3.ZERO,
-                    Cesium.Cartesian3.ZERO
+                    Cartesian3.ZERO,
+                    Cartesian3.ZERO
                 ]
             }
         });
@@ -1209,7 +1276,7 @@ export class MapView {
 
         this.compassTargetHideTargetLocation = options.hideTargetLocation;
         this.compassTargetLocation =
-            Cesium.Cartesian3.fromDegrees(options.longitude, options.latitude, options.altitude);
+            Cartesian3.fromDegrees(options.longitude, options.latitude, options.altitude);
 
         this.setCompassTargetPositions();
         this.updateCompassTargetDescription(options);
@@ -1267,23 +1334,23 @@ export class MapView {
 
         MapView.log("flying to compass target");
 
-        const boundingSphere = Cesium.BoundingSphere.fromPoints(
+        const boundingSphere = BoundingSphere.fromPoints(
             this.compassTargetEntity.polyline.positions.getValue(
                 this.viewer.clock.currentTime));
 
         this.viewer.camera.flyToBoundingSphere(boundingSphere, {
-            offset: new Cesium.HeadingPitchRange(
+            offset: new HeadingPitchRange(
                 this.viewer.camera.heading,
                 this.viewer.camera.pitch,
                 0.0),
             complete: function() {
                 MapView.log("flying to compass target finished");
 
-                const center = Cesium.Cartographic.fromCartesian(boundingSphere.center);
+                const center = Cartographic.fromCartesian(boundingSphere.center);
 
                 this.onUpdateLastShownLocation({
-                    latitude: Cesium.Math.toDegrees(center.latitude),
-                    longitude: Cesium.Math.toDegrees(center.longitude),
+                    latitude: Math.toDegrees(center.latitude),
+                    longitude: Math.toDegrees(center.longitude),
                     altitude: center.height,
                     viewingDistance: this.getCurrentViewingDistance()
                 });
@@ -1354,11 +1421,11 @@ export class MapView {
         const width = this.viewer.container.clientWidth;
         const height = this.viewer.container.clientHeight;
 
-        const ray = this.viewer.camera.getPickRay(new Cesium.Cartesian2(width / 2, height / 2));
+        const ray = this.viewer.camera.getPickRay(new Cartesian2(width / 2, height / 2));
         const position = this.viewer.scene.globe.pick(ray, this.viewer.scene);
 
         if (position !== undefined)
-            return Cesium.Cartesian3.distance(this.viewer.camera.positionWC, position);
+            return Cartesian3.distance(this.viewer.camera.positionWC, position);
 
         return 5000.0;
     }
@@ -1392,17 +1459,17 @@ export class MapView {
 
         // zooming works by assinging the zoom entity a new position, making it
         // visible (but transparent), fly there and hiding it again
-        this.zoomEntity.position = Cesium.Cartesian3.fromDegrees(options.longitude, options.latitude, altitude);
+        this.zoomEntity.position = Cartesian3.fromDegrees(options.longitude, options.latitude, altitude);
 
         this.zoomEntity.point.heightReference =
-            altitude === 0.0 ? Cesium.HeightReference.CLAMP_TO_GROUND : Cesium.HeightReference.NONE;
+            altitude === 0.0 ? HeightReference.CLAMP_TO_GROUND : HeightReference.NONE;
 
         this.zoomEntity.show = true;
 
         await this.viewer.flyTo(
             this.zoomEntity,
             {
-                offset: new Cesium.HeadingPitchRange(
+                offset: new HeadingPitchRange(
                     this.viewer.camera.heading,
                     this.viewer.camera.pitch,
                     viewingDistance)
@@ -1449,24 +1516,24 @@ export class MapView {
 
         MapView.log("start flying to rectangle");
 
-        const corner = Cesium.Cartesian3.fromDegrees(rectangle.minLongitude, rectangle.minLatitude, rectangle.minAltitude);
-        const oppositeCorner = Cesium.Cartesian3.fromDegrees(rectangle.maxLongitude, rectangle.maxLatitude, rectangle.maxAltitude);
+        const corner = Cartesian3.fromDegrees(rectangle.minLongitude, rectangle.minLatitude, rectangle.minAltitude);
+        const oppositeCorner = Cartesian3.fromDegrees(rectangle.maxLongitude, rectangle.maxLatitude, rectangle.maxAltitude);
 
-        const boundingSphere = Cesium.BoundingSphere.fromCornerPoints(corner, oppositeCorner);
+        const boundingSphere = BoundingSphere.fromCornerPoints(corner, oppositeCorner);
 
         this.viewer.camera.flyToBoundingSphere(boundingSphere, {
-            offset: new Cesium.HeadingPitchRange(
+            offset: new HeadingPitchRange(
                 this.viewer.camera.heading,
                 this.viewer.camera.pitch,
                 0.0),
             complete: function() {
                 MapView.log("flying to rectangle finished");
 
-                const center = Cesium.Cartographic.fromCartesian(boundingSphere.center);
+                const center = Cartographic.fromCartesian(boundingSphere.center);
 
                 this.onUpdateLastShownLocation({
-                    latitude: Cesium.Math.toDegrees(center.latitude),
-                    longitude: Cesium.Math.toDegrees(center.longitude),
+                    latitude: Math.toDegrees(center.latitude),
+                    longitude: Math.toDegrees(center.longitude),
                     altitude: center.height,
                     viewingDistance: this.getCurrentViewingDistance()
                 });
@@ -1494,7 +1561,7 @@ export class MapView {
 
         if (layer.type === "OsmBuildingsLayer") {
             if (this.osmBuildingsTileset === null)
-                this.osmBuildingsTileset = await Cesium.createOsmBuildingsAsync();
+                this.osmBuildingsTileset = await createOsmBuildingsAsync();
 
             this.viewer.scene.primitives.add(this.osmBuildingsTileset);
 
@@ -1507,7 +1574,7 @@ export class MapView {
         const czml = JSON.parse(layer.data);
 
         try {
-            const dataSource = await Cesium.CzmlDataSource.load(czml);
+            const dataSource = await CzmlDataSource.load(czml);
 
             // don't set clustering on CZML data sources, since the object can't be shared;
             // see https://github.com/CesiumGS/cesium/issues/9336
@@ -1524,8 +1591,8 @@ export class MapView {
 
     /**
      * Gets the bounding sphere of a data source
-     * @param {Cesium.DataSource} [dataSource] data source
-     * @returns {Cesium.BoundingSphere} bounding sphere object, or null when no
+     * @param {DataSource} [dataSource] data source
+     * @returns {BoundingSphere} bounding sphere object, or null when no
      * bounding sphere could be determined
      */
     getDataSourceBoundingSphere(dataSource) {
@@ -1533,17 +1600,17 @@ export class MapView {
         const entities = dataSource.entities.values;
         MapView.log("getting bounding spheres of " + entities.length + " entities");
 
-        const boundingSphereScratch = new Cesium.BoundingSphere();
+        const boundingSphereScratch = new BoundingSphere();
 
         const boundingSpheres = [];
         for (let i = 0, len = entities.length; i < len; i++) {
             try {
                 const state = this.viewer.dataSourceDisplay.getBoundingSphere(entities[i], false, boundingSphereScratch);
 
-                if (state === Cesium.BoundingSphereState.PENDING)
+                if (state === BoundingSphereState.PENDING)
                     continue;
-                else if (state !== Cesium.BoundingSphereState.FAILED)
-                    boundingSpheres.push(Cesium.BoundingSphere.clone(boundingSphereScratch));
+                else if (state !== BoundingSphereState.FAILED)
+                    boundingSpheres.push(BoundingSphere.clone(boundingSphereScratch));
             } catch (error) {
                 console.warn("MapView.getDataSourceBoundingSphere: " + error);
             }
@@ -1552,7 +1619,7 @@ export class MapView {
         if (boundingSpheres.length === 0)
             return null;
 
-        return Cesium.BoundingSphere.fromBoundingSpheres(boundingSpheres);
+        return BoundingSphere.fromBoundingSpheres(boundingSpheres);
     }
 
     /**
@@ -1583,11 +1650,11 @@ export class MapView {
 
             const boundingSphere = this.getDataSourceBoundingSphere(dataSource);
             if (boundingSphere !== null) {
-                const center = Cesium.Cartographic.fromCartesian(boundingSphere.center);
+                const center = Cartographic.fromCartesian(boundingSphere.center);
 
                 this.onUpdateLastShownLocation({
-                    latitude: Cesium.Math.toDegrees(center.latitude),
-                    longitude: Cesium.Math.toDegrees(center.longitude),
+                    latitude: Math.toDegrees(center.latitude),
+                    longitude: Math.toDegrees(center.longitude),
                     altitude: center.height,
                     viewingDistance: this.getCurrentViewingDistance()
                 });
@@ -1642,7 +1709,7 @@ export class MapView {
             return;
 
         try {
-            const result = await Cesium.exportKml({
+            const result = await exportKml({
                 entities: dataSource.entities,
                 kmz: true
             });
@@ -1805,7 +1872,7 @@ export class MapView {
     /**
      * Creates entity from location object
      * @param {Location} location to use
-     * @returns {Cesium.Entity} created entity
+     * @returns {Entity} created entity
      */
     async createEntityFromLocation(location) {
 
@@ -1836,7 +1903,7 @@ export class MapView {
      * @param {string} id Unique ID of the entity; may be 'undefined'
      * @param {string} name Name of the entity
      * @param {string} description Longer description text
-     * @param {string} pinColor Pin color, one of the Cesium.Color.Xxx constants
+     * @param {string} pinColor Pin color, one of the Color.Xxx constants
      * @param {string} pinImage Relative link URL to SVG image to use in pin
      * @param {number} longitude Longitude of entity
      * @param {number} latitude Latitude of entity
@@ -1851,11 +1918,11 @@ export class MapView {
                 id,
                 name,
                 description,
-                position: Cesium.Cartesian3.fromDegrees(longitude, latitude),
+                position: Cartesian3.fromDegrees(longitude, latitude),
                 billboard: {
                     image: pinImageDataUrl,
-                    verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-                    heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+                    verticalOrigin: VerticalOrigin.BOTTOM,
+                    heightReference: HeightReference.CLAMP_TO_GROUND,
                     disableDepthTestDistance: 5000.0
                 }
             };
@@ -1868,7 +1935,7 @@ export class MapView {
     /**
      * Creates a "data:" URL containing the pin image and a pin background color
      * @param {string} pinImage relative pin image filename
-     * @param {Cesium.Color} pinColor pin background color
+     * @param {Color} pinColor pin background color
      * @returns {string} a "data:" URI
      */
     async getPinImageDataUrl(pinImage, pinColor) {
@@ -1878,7 +1945,7 @@ export class MapView {
         if (cacheKey in this.pinImageCache)
             return this.pinImageCache[cacheKey];
 
-        const url = Cesium.getAbsoluteUri(pinImage, document.baseURI);
+        const url = getAbsoluteUri(pinImage, document.baseURI);
         const canvas = await this.pinBuilder.fromUrl(url, pinColor, 48);
         const dataUrl = canvas.toDataURL();
 
@@ -1926,62 +1993,62 @@ export class MapView {
     /**
      * Returns a pin color for given location type
      * @param {string} locationType location type
-     * @returns {string} Cesium.Color constant
+     * @returns {string} Color constant
      */
     pinColorFromLocationType(locationType) {
 
         switch (locationType) {
-        case "FlyingTakeoff": return Cesium.Color.YELLOWGREEN;
-        case "FlyingLandingPlace": return Cesium.Color.ORANGE;
-        case "FlyingWinchTowing": return Cesium.Color.CORNFLOWERBLUE;
-        case "Turnpoint": return Cesium.Color.RED;
-        default: return Cesium.Color.BLUE;
+        case "FlyingTakeoff": return Color.YELLOWGREEN;
+        case "FlyingLandingPlace": return Color.ORANGE;
+        case "FlyingWinchTowing": return Color.CORNFLOWERBLUE;
+        case "Turnpoint": return Color.RED;
+        default: return Color.BLUE;
         }
     }
 
     /**
      * Calculates a point on a circle around a given center.
      * Note: Most of the code is adapted from code in Cesium's EllipseGeometryLibrary.js
-     * @param {Cesium.Cartesian3} [center] Center point of the circle
+     * @param {Cartesian3} [center] Center point of the circle
      * @param {number} [radius] radius of the circle, in meter
      * @param {number} [angleDegrees] angle of point on circle, in degrees
-     * @returns {Cesium.Cartesian3} calculated point coordinates
+     * @returns {Cartesian3} calculated point coordinates
      */
     static pointFromCenterRadiusAngle(center, radius, angleDegrees) {
 
-        const unitPosScratch = new Cesium.Cartesian3();
-        const unitPos = Cesium.Cartesian3.normalize(center, unitPosScratch);
+        const unitPosScratch = new Cartesian3();
+        const unitPos = Cartesian3.normalize(center, unitPosScratch);
 
-        const eastVecScratch = new Cesium.Cartesian3();
-        let eastVec = Cesium.Cartesian3.cross(Cesium.Cartesian3.UNIT_Z, center, eastVecScratch);
-        eastVec = Cesium.Cartesian3.normalize(eastVec, eastVec);
+        const eastVecScratch = new Cartesian3();
+        let eastVec = Cartesian3.cross(Cartesian3.UNIT_Z, center, eastVecScratch);
+        eastVec = Cartesian3.normalize(eastVec, eastVec);
 
-        const northVecScratch = new Cesium.Cartesian3();
-        const northVec = Cesium.Cartesian3.cross(unitPos, eastVec, northVecScratch);
+        const northVecScratch = new Cartesian3();
+        const northVec = Cartesian3.cross(unitPos, eastVec, northVecScratch);
 
-        const azimuth = Cesium.Math.toRadians(angleDegrees);
+        const azimuth = Math.toRadians(angleDegrees);
 
-        const rotAxis = new Cesium.Cartesian3();
-        const tempVec = new Cesium.Cartesian3();
-        Cesium.Cartesian3.multiplyByScalar(eastVec, Math.cos(azimuth), rotAxis);
-        Cesium.Cartesian3.multiplyByScalar(northVec, Math.sin(azimuth), tempVec);
-        Cesium.Cartesian3.add(rotAxis, tempVec, rotAxis);
+        const rotAxis = new Cartesian3();
+        const tempVec = new Cartesian3();
+        Cartesian3.multiplyByScalar(eastVec, Math.cos(azimuth), rotAxis);
+        Cartesian3.multiplyByScalar(northVec, Math.sin(azimuth), tempVec);
+        Cartesian3.add(rotAxis, tempVec, rotAxis);
 
-        const mag = Cesium.Cartesian3.magnitude(center);
+        const mag = Cartesian3.magnitude(center);
         const angle = radius / mag;
 
         // Create the quaternion to rotate the position vector to the boundary of the ellipse.
-        const unitQuat = new Cesium.Quaternion();
-        Cesium.Quaternion.fromAxisAngle(rotAxis, angle, unitQuat);
+        const unitQuat = new Quaternion();
+        Quaternion.fromAxisAngle(rotAxis, angle, unitQuat);
 
-        const rotMtx = new Cesium.Matrix3();
-        Cesium.Matrix3.fromQuaternion(unitQuat, rotMtx);
+        const rotMtx = new Matrix3();
+        Matrix3.fromQuaternion(unitQuat, rotMtx);
 
-        const result = new Cesium.Cartesian3();
-        Cesium.Matrix3.multiplyByVector(rotMtx, unitPos, result);
-        Cesium.Cartesian3.normalize(result, result);
+        const result = new Cartesian3();
+        Matrix3.multiplyByVector(rotMtx, unitPos, result);
+        Cartesian3.normalize(result, result);
 
-        Cesium.Cartesian3.multiplyByScalar(result, mag, result);
+        Cartesian3.multiplyByScalar(result, mag, result);
         return result;
     }
 
@@ -1993,7 +2060,7 @@ export class MapView {
      */
     addTakeoffEntities(entity, location) {
 
-        const center = Cesium.Cartesian3.fromDegrees(location.longitude, location.latitude);
+        const center = Cartesian3.fromDegrees(location.longitude, location.latitude);
         const radius = 50.0; // in meter
 
         const pointArray = [];
@@ -2016,20 +2083,20 @@ export class MapView {
         }
 
         const distanceDisplayCondition =
-            new Cesium.DistanceDisplayCondition(0.0, 5000.0);
+            new DistanceDisplayCondition(0.0, 5000.0);
 
         entity.polyline = {
             positions: pointArray,
             width: 3.0,
-            material: new Cesium.Color(1.0, 1.0, 0.5, 0.4), // light yellow
+            material: new Color(1.0, 1.0, 0.5, 0.4), // light yellow
             clampToGround: true,
             distanceDisplayCondition
         };
 
         entity.polygon = {
             // note: clamping to terrain is achieved by not specifying height and heightReference at all
-            hierarchy: new Cesium.PolygonHierarchy(pointArray),
-            material: new Cesium.Color(0.0, 0.0, 0.54, 0.4), // dark blue
+            hierarchy: new PolygonHierarchy(pointArray),
+            material: new Color(0.0, 0.0, 0.54, 0.4), // dark blue
             outline: false, // when an outline would be present, it would not clamp to ground
             distanceDisplayCondition
         };
@@ -2053,7 +2120,7 @@ export class MapView {
             return;
         }
 
-        entity.position = Cesium.Cartesian3.fromDegrees(location.longitude, location.latitude, location.altitude);
+        entity.position = Cartesian3.fromDegrees(location.longitude, location.latitude, location.altitude);
 
         entity.name = location.name;
         entity.description = this.formatLocationText(location);
@@ -2129,7 +2196,7 @@ export class MapView {
             text += "<div>" + options.description + "</div>";
 
         this.findResultMarker.description = text;
-        this.findResultMarker.position = Cesium.Cartesian3.fromDegrees(options.longitude, options.latitude);
+        this.findResultMarker.position = Cartesian3.fromDegrees(options.longitude, options.latitude);
         this.findResultMarker.show = true;
 
         await this.flyTo(options);
@@ -2149,9 +2216,9 @@ export class MapView {
             ", longitude " + options.longitude);
 
         try {
-            const samples = await Cesium.sampleTerrainMostDetailed(
+            const samples = await sampleTerrainMostDetailed(
                 this.viewer.terrainProvider,
-                [Cesium.Cartographic.fromDegrees(options.longitude, options.latitude)]);
+                [Cartographic.fromDegrees(options.longitude, options.latitude)]);
 
             const altitude = samples[0].height;
 
@@ -2193,10 +2260,10 @@ export class MapView {
         const glideAngleWithWind = Math.atan(glideRatioWithWind);
         const conePitch = glideAngle - glideAngleWithWind;
 
-        const quat = Cesium.Transforms.headingPitchRollQuaternion(
-            Cesium.Cartesian3.fromDegrees(options.longitude, options.latitude, options.altitude / 2.0),
-            new Cesium.HeadingPitchRoll(
-                Cesium.Math.toRadians(options.windDirection + 90.0),
+        const quat = Transforms.headingPitchRollQuaternion(
+            Cartesian3.fromDegrees(options.longitude, options.latitude, options.altitude / 2.0),
+            new HeadingPitchRoll(
+                Math.toRadians(options.windDirection + 90.0),
                 conePitch, 0.0)
         );
 
@@ -2209,32 +2276,32 @@ export class MapView {
 
         text += "<p>" +
             "Glide ratio: " + options.glideRatio + "<br/>" +
-            "Glide angle: " + (90.0 - Cesium.Math.toDegrees(glideAngle)).toFixed(1) + " degrees<br/>" +
+            "Glide angle: " + (90.0 - Math.toDegrees(glideAngle)).toFixed(1) + " degrees<br/>" +
             // 'Glider speed: ' + options.gliderSpeed + ' km/h<br/>' +
             // 'Glide ratio with wind: ' + glideRatioWithWind.toFixed(1) + '<br/>' +
-            // 'Glide angle with wind: ' + (90.0 - Cesium.Math.toDegrees(glideAngleWithWind)).toFixed(1) + ' degrees<br/>' +
+            // 'Glide angle with wind: ' + (90.0 - Math.toDegrees(glideAngleWithWind)).toFixed(1) + ' degrees<br/>' +
             // 'Wind: ' + options.windSpeed + ' km/h from ' + options.windDirection + ' degrees' +
             "</p>";
 
         this.flyingRangeCone = this.viewer.entities.add({
             name: "Flying range",
             description: text,
-            position: Cesium.Cartesian3.fromDegrees(options.longitude, options.latitude, options.altitude / 2.0),
+            position: Cartesian3.fromDegrees(options.longitude, options.latitude, options.altitude / 2.0),
             orientation: quat,
             cylinder: {
                 length: options.altitude,
                 topRadius: 0.0,
                 bottomRadius: options.altitude * options.glideRatio,
                 numberOfVerticalLines: 18,
-                material: Cesium.Color.BLUE.withAlpha(0.4),
+                material: Color.BLUE.withAlpha(0.4),
                 outline: true,
-                outlineColor: Cesium.Color.WHITE
+                outlineColor: Color.WHITE
             }
         });
 
         this.viewer.flyTo(this.flyingRangeCone,
             {
-                offset: new Cesium.HeadingPitchRange(
+                offset: new HeadingPitchRange(
                     this.viewer.camera.heading,
                     this.viewer.camera.pitch,
                     20 * 1000.0)
@@ -2253,16 +2320,16 @@ export class MapView {
         MapView.log("sampleTrackHeights: #1 start sampling track point heights for " + track.listOfTrackPoints.length + " points...");
         console.time("MapView.sampleTrackHeights");
 
-        if (!Cesium.Entity.supportsPolylinesOnTerrain(this.viewer.scene)) {
+        if (!Entity.supportsPolylinesOnTerrain(this.viewer.scene)) {
             console.warn("MapView.sampleTrackHeights: #2: polylines on terrain are not supported");
             return;
         }
 
-        const trackPointArray = Cesium.Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints);
+        const trackPointArray = Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints);
 
         const cartographicArray = [];
         for (const trackPoint of trackPointArray)
-            cartographicArray.push(Cesium.Cartographic.fromCartesian(trackPoint));
+            cartographicArray.push(Cartographic.fromCartesian(trackPoint));
 
         MapView.log("sampleTrackHeights: #3: waiting for terrain provider to be ready");
 
@@ -2280,7 +2347,7 @@ export class MapView {
         MapView.log("sampleTrackHeights: #4: terrain provider is ready; starting sampling terrain");
 
         try {
-            const samples = await Cesium.sampleTerrainMostDetailed(
+            const samples = await sampleTerrainMostDetailed(
                 this.viewer.terrainProvider,
                 cartographicArray);
 
@@ -2324,29 +2391,29 @@ export class MapView {
     /**
      * Calculates track color from given variometer climb/sink rate value.
      * @param {number} varioValue variometer value, in m/s
-     * @returns {Cesium.Color} Track color
+     * @returns {Color} Track color
      */
     trackColorFromVarioValue(varioValue) {
 
         const varioColorMapping = [
-            5.0, Cesium.Color.RED,
-            4.5, Cesium.Color.fromBytes(255, 64, 0),
-            4.0, Cesium.Color.fromBytes(255, 128, 0),
-            3.5, Cesium.Color.fromBytes(255, 192, 0),
-            3.0, Cesium.Color.YELLOW,
-            2.5, Cesium.Color.fromBytes(192, 255, 0),
-            2.0, Cesium.Color.fromBytes(128, 255, 0),
-            1.5, Cesium.Color.fromBytes(64, 255, 128),
-            1.0, Cesium.Color.CYAN,
-            0.5, Cesium.Color.fromBytes(0, 224, 255),
-            0.0, Cesium.Color.fromBytes(0, 192, 255),
-            -0.5, Cesium.Color.fromBytes(0, 160, 255),
-            -1.0, Cesium.Color.fromBytes(0, 128, 255),
-            -1.5, Cesium.Color.fromBytes(0, 96, 224),
-            -2.0, Cesium.Color.fromBytes(0, 64, 192),
-            -3.0, Cesium.Color.fromBytes(0, 32, 160),
-            -3.5, Cesium.Color.fromBytes(0, 0, 128),
-            -4.0, Cesium.Color.fromBytes(64, 0, 128)
+            5.0, Color.RED,
+            4.5, Color.fromBytes(255, 64, 0),
+            4.0, Color.fromBytes(255, 128, 0),
+            3.5, Color.fromBytes(255, 192, 0),
+            3.0, Color.YELLOW,
+            2.5, Color.fromBytes(192, 255, 0),
+            2.0, Color.fromBytes(128, 255, 0),
+            1.5, Color.fromBytes(64, 255, 128),
+            1.0, Color.CYAN,
+            0.5, Color.fromBytes(0, 224, 255),
+            0.0, Color.fromBytes(0, 192, 255),
+            -0.5, Color.fromBytes(0, 160, 255),
+            -1.0, Color.fromBytes(0, 128, 255),
+            -1.5, Color.fromBytes(0, 96, 224),
+            -2.0, Color.fromBytes(0, 64, 192),
+            -3.0, Color.fromBytes(0, 32, 160),
+            -3.5, Color.fromBytes(0, 0, 128),
+            -4.0, Color.fromBytes(64, 0, 128)
         ];
 
         for (let mappingIndex = 0; mappingIndex < varioColorMapping.length; mappingIndex += 2) {
@@ -2354,7 +2421,7 @@ export class MapView {
                 return varioColorMapping[mappingIndex + 1];
         }
 
-        return Cesium.Color.fromBytes(128, 0, 128); // smaller than -4.0
+        return Color.fromBytes(128, 0, 128); // smaller than -4.0
     }
 
     /**
@@ -2396,27 +2463,27 @@ export class MapView {
      * @param {Array} [track.listOfTrackPoints] An array of track points in long, lat, alt, long, lat, alt ... order
      * @param {Array} [track.listOfTimePoints] An array of time points in seconds; same length as listOfTrackPoints; may be null
      * @param {Array} [trackPointArray] An array of track points to use
-     * @returns {Cesium.Primitive} created primitive object
+     * @returns {Primitive} created primitive object
      */
     getFlightTrackPrimitive(track, trackPointArray) {
 
         const trackColors = this.calcTrackColors(track.listOfTrackPoints, track.listOfTimePoints);
 
-        const trackPolyline = new Cesium.PolylineGeometry({
+        const trackPolyline = new PolylineGeometry({
             positions: trackPointArray,
             width: 5,
-            vertexFormat: Cesium.PolylineColorAppearance.VERTEX_FORMAT,
+            vertexFormat: PolylineColorAppearance.VERTEX_FORMAT,
             colors: trackColors,
             colorsPerVertex: false
         });
 
-        const primitive = new Cesium.Primitive({
+        const primitive = new Primitive({
             asynchronous: this.options.useAsynchronousPrimitives,
-            geometryInstances: new Cesium.GeometryInstance({
+            geometryInstances: new GeometryInstance({
                 id: "track-" + track.id,
                 geometry: trackPolyline
             }),
-            appearance: new Cesium.PolylineColorAppearance({ translucent: false })
+            appearance: new PolylineColorAppearance({ translucent: false })
         });
 
         return primitive;
@@ -2426,25 +2493,25 @@ export class MapView {
      * Creates a wall primitive for a flight track to display relation to ground
      * @param {string} [trackId] unique ID of the track
      * @param {Array} [trackPointArray] An array of track points to use
-     * @returns {Cesium.Primitive} created wall primitive object
+     * @returns {Primitive} created wall primitive object
      */
     getFlightTrackWallPrimitive(trackId, trackPointArray) {
 
-        const wallGeometry = new Cesium.WallGeometry({
+        const wallGeometry = new WallGeometry({
             positions: trackPointArray
         });
 
-        const wallMaterial = Cesium.Material.fromType("Color");
+        const wallMaterial = Material.fromType("Color");
 
-        wallMaterial.uniforms.color = new Cesium.Color(0.5, 0.5, 1, 0.4);
+        wallMaterial.uniforms.color = new Color(0.5, 0.5, 1, 0.4);
 
-        const wallPrimitive = new Cesium.Primitive({
+        const wallPrimitive = new Primitive({
             asynchronous: this.options.useAsynchronousPrimitives,
-            geometryInstances: new Cesium.GeometryInstance({
+            geometryInstances: new GeometryInstance({
                 id: "track-" + trackId,
                 geometry: wallGeometry
             }),
-            appearance: new Cesium.MaterialAppearance({
+            appearance: new MaterialAppearance({
                 translucent: true,
                 material: wallMaterial,
                 faceForward: true
@@ -2460,25 +2527,25 @@ export class MapView {
      * @param {string} [track.id] unique ID of the track
      * @param {string} [track.color] Color as "RRGGBB" string value
      * @param {Array} [trackPointArray] An array of track points to use
-     * @returns {Cesium.Primitive} created primitive object
+     * @returns {Primitive} created primitive object
      */
     getGroundTrackPrimitive(track, trackPointArray) {
 
-        const groundTrackPolyline = new Cesium.GroundPolylineGeometry({
+        const groundTrackPolyline = new GroundPolylineGeometry({
             positions: trackPointArray,
             width: 5
         });
 
-        const primitive = new Cesium.GroundPolylinePrimitive({
+        const primitive = new GroundPolylinePrimitive({
             asynchronous: this.options.useAsynchronousPrimitives,
-            geometryInstances: new Cesium.GeometryInstance({
+            geometryInstances: new GeometryInstance({
                 id: "track-" + track.id,
                 geometry: groundTrackPolyline,
                 attributes: {
-                    color: Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.fromCssColorString("#" + track.color))
+                    color: ColorGeometryInstanceAttribute.fromColor(Color.fromCssColorString("#" + track.color))
                 }
             }),
-            appearance: new Cesium.PolylineColorAppearance({ translucent: false })
+            appearance: new PolylineColorAppearance({ translucent: false })
         });
 
         return primitive;
@@ -2543,7 +2610,7 @@ export class MapView {
     addOrUpdateTrackPrimitives(track) {
 
         let trackPointArray = track.listOfTrackPoints.length > 0
-            ? Cesium.Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints)
+            ? Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints)
             : [];
 
         // remove duplicates so that color values are calculated correctly
@@ -2580,7 +2647,7 @@ export class MapView {
         if (trackData.primitive !== undefined)
             this.trackPrimitivesCollection.add(trackData.primitive);
 
-        trackData.boundingSphere = Cesium.BoundingSphere.fromPoints(trackPointArray, null);
+        trackData.boundingSphere = BoundingSphere.fromPoints(trackPointArray, null);
     }
 
     /**
@@ -2599,18 +2666,18 @@ export class MapView {
         const pinImageDataUrl = await this.getPinImageDataUrl(pinImage, pinColor);
 
         try {
-            const sampledPos = new Cesium.SampledPositionProperty();
-            sampledPos.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD;
+            const sampledPos = new SampledPositionProperty();
+            sampledPos.forwardExtrapolationType = ExtrapolationType.HOLD;
             sampledPos.setInterpolationOptions({
-                interpolationAlgorithm: Cesium.LagrangePolynomialApproximation,
+                interpolationAlgorithm: LagrangePolynomialApproximation,
                 interpolationDegree: 3
             });
 
-            const showLabelProperty = new Cesium.TimeIntervalCollectionProperty();
+            const showLabelProperty = new TimeIntervalCollectionProperty();
             showLabelProperty.intervals.addInterval(
-                new Cesium.TimeInterval({
-                    start: Cesium.JulianDate.now,
-                    stop: Cesium.JulianDate.addDays(Cesium.JulianDate.now, 365, new Cesium.JulianDate()),
+                new TimeInterval({
+                    start: JulianDate.now,
+                    stop: JulianDate.addDays(JulianDate.now, 365, new JulianDate()),
                     data: false // label is not visible
                 }));
 
@@ -2621,8 +2688,8 @@ export class MapView {
                 position: sampledPos,
                 billboard: {
                     image: pinImageDataUrl,
-                    heightReference: Cesium.HeightReference.NONE,
-                    verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+                    heightReference: HeightReference.NONE,
+                    verticalOrigin: VerticalOrigin.BOTTOM,
                     disableDepthTestDistance: 5000.0
                 },
                 path: {
@@ -2630,19 +2697,19 @@ export class MapView {
                     trailTime: 15 * 60,
                     resolution: 60,
                     width: 3,
-                    material: Cesium.Color.fromCssColorString("#" + track.color)
+                    material: Color.fromCssColorString("#" + track.color)
                 },
                 label: {
-                    text: new Cesium.ConstantProperty("out of current track data"),
+                    text: new ConstantProperty("out of current track data"),
                     show: showLabelProperty,
                     font: "14pt sans-serif",
-                    style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-                    fillColor: Cesium.Color.WHITE,
+                    style: LabelStyle.FILL_AND_OUTLINE,
+                    fillColor: Color.WHITE,
                     showBackground: false,
                     outlineWidth: 10.0,
-                    outlineColor: Cesium.Color.BLACK,
-                    pixelOffset: new Cesium.Cartesian2(64, 0),
-                    heightReference: Cesium.HeightReference.NONE,
+                    outlineColor: Color.BLACK,
+                    pixelOffset: new Cartesian2(64, 0),
+                    heightReference: HeightReference.NONE,
                     disableDepthTestDistance: 5000.0
                 }
             };
@@ -2676,8 +2743,8 @@ export class MapView {
                 const attributes = trackInfos.primitive.getGeometryInstanceAttributes(
                     "track-" + track.id);
 
-                attributes.color = Cesium.ColorGeometryInstanceAttribute.toValue(
-                    Cesium.Color.fromCssColorString("#" + track.color),
+                attributes.color = ColorGeometryInstanceAttribute.toValue(
+                    Color.fromCssColorString("#" + track.color),
                     attributes.color);
             }
 
@@ -2707,7 +2774,7 @@ export class MapView {
         for (let trackPointIndex = 0; trackPointIndex < trackPointArray.length; trackPointIndex++)
             trackPointArray[trackPointIndex].trackPointIndex = trackPointIndex;
 
-        const modifiedTrackPointArray = Cesium.arrayRemoveDuplicates(trackPointArray, Cesium.Cartesian3.equalsEpsilon);
+        const modifiedTrackPointArray = arrayRemoveDuplicates(trackPointArray, Cartesian3.equalsEpsilon);
 
         if (trackPointArray.length === modifiedTrackPointArray.length)
             return trackPointArray; // nothing was removed
@@ -2828,12 +2895,12 @@ export class MapView {
         this.addOrUpdateTrackPrimitives(track);
 
         // add points to path entity
-        const trackPointArray = Cesium.Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints);
+        const trackPointArray = Cartesian3.fromDegreesArrayHeights(track.listOfTrackPoints);
 
         const julianTimePoints = [];
         for (const timePoint in track.listOfTimePoints) {
             julianTimePoints.push(
-                Cesium.JulianDate.fromDate(
+                JulianDate.fromDate(
                     new Date(timePoint * 1000.0)));
         }
 
@@ -2850,7 +2917,7 @@ export class MapView {
         // update visibility and text of label
         const showLabelProperty = trackData.liveTrackEntity.label.show;
         showLabelProperty.intervals.addInterval(
-            new Cesium.TimeInterval({
+            new TimeInterval({
                 start: julianTimePoints[0],
                 stop: julianTimePoints[julianTimePoints.length - 1],
                 data: false // label is not visible
@@ -2860,7 +2927,7 @@ export class MapView {
             new Date(lastTimePoint * 1000.0).toTimeString().substring(0, 8);
 
         trackData.liveTrackEntity.label.text =
-            new Cesium.ConstantProperty(text);
+            new ConstantProperty(text);
 
         // update height profile when shown
         if (this.heightProfileView !== null &&
@@ -2936,12 +3003,12 @@ export class MapView {
 
         this.currentLiveTrackTimeOffset = timeOffset;
 
-        const now = Cesium.JulianDate.now();
-        const liveTrackTime = Cesium.JulianDate.addSeconds(now, timeOffset, new Cesium.JulianDate());
-        const end = Cesium.JulianDate.addDays(now, 1, new Cesium.JulianDate());
+        const now = JulianDate.now();
+        const liveTrackTime = JulianDate.addSeconds(now, timeOffset, new JulianDate());
+        const end = JulianDate.addDays(now, 1, new JulianDate());
 
         // note: set clockStep before currentTime, or it will be reset
-        this.viewer.clock.clockStep = Cesium.ClockStep.SYSTEM_CLOCK;
+        this.viewer.clock.clockStep = ClockStep.SYSTEM_CLOCK;
         this.viewer.clock.stopTime = end.clone();
         this.viewer.clock.currentTime = liveTrackTime.clone();
 
@@ -2972,11 +3039,11 @@ export class MapView {
         }
 
         const position = entity.position.getValue(this.viewer.clock.currentTime);
-        const location = Cesium.Cartographic.fromCartesian(position);
+        const location = Cartographic.fromCartesian(position);
 
         this.zoomToLocation({
-            longitude: Cesium.Math.toDegrees(location.longitude),
-            latitude: Cesium.Math.toDegrees(location.latitude),
+            longitude: Math.toDegrees(location.longitude),
+            latitude: Math.toDegrees(location.latitude),
             altitude: location.height
         });
     }
@@ -2997,13 +3064,13 @@ export class MapView {
 
                 const sampledPos = trackData.liveTrackEntity.position;
 
-                const currentPosCartesian = sampledPos.getValue(this.viewer.clockViewModel.currentTime, new Cesium.Cartesian3());
+                const currentPosCartesian = sampledPos.getValue(this.viewer.clockViewModel.currentTime, new Cartesian3());
                 if (currentPosCartesian !== undefined) {
-                    const currentPos = Cesium.Cartographic.fromCartesian(currentPosCartesian);
+                    const currentPos = Cartographic.fromCartesian(currentPosCartesian);
 
                     this.flyTo({
-                        latitude: Cesium.Math.toDegrees(currentPos.latitude),
-                        longitude: Cesium.Math.toDegrees(currentPos.longitude),
+                        latitude: Math.toDegrees(currentPos.latitude),
+                        longitude: Math.toDegrees(currentPos.longitude),
                         altitude: currentPos.height
                     });
                 }
@@ -3011,11 +3078,11 @@ export class MapView {
 
                 this.viewer.camera.flyToBoundingSphere(trackData.boundingSphere);
 
-                const center = Cesium.Cartographic.fromCartesian(trackData.boundingSphere.center);
+                const center = Cartographic.fromCartesian(trackData.boundingSphere.center);
 
                 this.onUpdateLastShownLocation({
-                    latitude: Cesium.Math.toDegrees(center.latitude),
-                    longitude: Cesium.Math.toDegrees(center.longitude),
+                    latitude: Math.toDegrees(center.latitude),
+                    longitude: Math.toDegrees(center.longitude),
                     altitude: center.height,
                     viewingDistance: this.getCurrentViewingDistance()
                 });
@@ -3173,7 +3240,7 @@ export class MapView {
                 this.viewer.flyTo(
                     this.trackMarker,
                     {
-                        offset: new Cesium.HeadingPitchRange(
+                        offset: new HeadingPitchRange(
                             this.viewer.scene.camera.heading,
                             this.viewer.scene.camera.pitch,
                             2000.0)
@@ -3207,7 +3274,7 @@ export class MapView {
 
         this.trackMarker.show = true;
         this.trackMarker.position =
-            Cesium.Cartesian3.fromDegrees(longitude, latitude, altitude);
+            Cartesian3.fromDegrees(longitude, latitude, altitude);
 
         this.updateScene();
     }
@@ -3394,7 +3461,7 @@ export class MapView {
 
         // retry initializing terrain provider
         if (isAvailable &&
-            (this.viewer.terrainProvider === null || this.viewer.terrainProvider instanceof Cesium.EllipsoidTerrainProvider))
+            (this.viewer.terrainProvider === null || this.viewer.terrainProvider instanceof EllipsoidTerrainProvider))
             this.initTerrainProvider();
     }
 
