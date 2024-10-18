@@ -15,9 +15,11 @@
     <Nullable>enable</Nullable>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <UseArtifactsOutput>true</UseArtifactsOutput>
     <!-- Workaround for .NET 8; when updating to .NET 9, "all" is the default -->
     <NuGetAuditMode>all</NuGetAuditMode>
-    <UseArtifactsOutput>true</UseArtifactsOutput>
+    <!-- Workaround for CsWinRT errors in .NET SDK 8.0.403; see https://github.com/microsoft/CsWinRT/issues/1809 -->
+    <CsWinRTAotOptimizerEnabled>false</CsWinRTAotOptimizerEnabled>
   </PropertyGroup>
 
   <ItemGroup>
