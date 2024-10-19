@@ -1186,7 +1186,13 @@ export class MapView {
             "</div>";
 
         text += "<img height=\"32em\" width=\"32em\" src=\"images/share-variant.svg\" style=\"vertical-align:middle\" />" +
-            "<a href=\"javascript:parent.map.onShareMyLocation();\">Share position</a></p>";
+            "<a href=\"javascript:parent.map.onShareMyLocation();\">Share position</a>";
+
+        const optionsText = "{ latitude:" + options.latitude +
+            ", longitude:" + options.longitude + " }";
+
+        text += "<img height=\"32em\" width=\"32em\" src=\"images/map-marker-plus.svg\" style=\"vertical-align:middle\" /> " +
+            "<a href=\"javascript:parent.map.onAddTempTourPlanPoint(" + optionsText + ");\">Plan tour</a></p>";
 
         this.myLocationMarker.description = text;
 
@@ -1378,7 +1384,13 @@ export class MapView {
             let text = "<h2><img height=\"48em\" width=\"48em\" src=\"images/compass-rose.svg\" style=\"vertical-align:middle\" />" +
                 "Compass target: " + options.title + "</h2>";
 
-            text += "<p><img height=\"32em\" width=\"32em\" src=\"images/close-circle-outline.svg\" style=\"vertical-align:middle\" />" +
+            const optionsText = "{ latitude:" + options.latitude +
+                ", longitude:" + options.longitude + " }";
+
+            text += "<p><img height=\"32em\" width=\"32em\" src=\"images/map-marker-plus.svg\" style=\"vertical-align:middle\" /> " +
+                "<a href=\"javascript:parent.map.onAddTempTourPlanPoint(" + optionsText + ");\">Plan tour</a>";
+
+            text += "<img height=\"32em\" width=\"32em\" src=\"images/close-circle-outline.svg\" style=\"vertical-align:middle\" />" +
                 "<a href=\"javascript:parent.map.onSetLocationAsCompassTarget(null);\">Hide</a></p>";
 
             if ("displayLatitude" in options &&
@@ -2189,6 +2201,9 @@ export class MapView {
         text += "<p><img height=\"32em\" width=\"32em\" src=\"images/map-marker-plus.svg\" style=\"vertical-align:middle\" />" +
             "<a href=\"javascript:parent.map.onAddFindResult(" + optionsText + ");\">Add as waypoint</a>";
 
+        text += "<img height=\"32em\" width=\"32em\" src=\"images/map-marker-plus.svg\" style=\"vertical-align:middle\" /> " +
+            "<a href=\"javascript:parent.map.onAddTempTourPlanPoint(" + optionsText + ");\">Plan tour</a>";
+
         text += "<img height=\"32em\" width=\"32em\" src=\"images/close-circle-outline.svg\" style=\"vertical-align:middle\" />" +
             "<a href=\"javascript:parent.map.hideFindResult();\">Hide</a></p>";
 
@@ -2267,7 +2282,13 @@ export class MapView {
                 conePitch, 0.0)
         );
 
-        let text = "<p><img height=\"32em\" width=\"32em\" src=\"images/close-circle-outline.svg\" style=\"vertical-align:middle\" />" +
+        const optionsText = "{ latitude:" + options.latitude +
+            ", longitude:" + options.longitude + " }";
+
+        let text = "<p><img height=\"32em\" width=\"32em\" src=\"images/map-marker-plus.svg\" style=\"vertical-align:middle\" /> " +
+            "<a href=\"javascript:parent.map.onAddTempTourPlanPoint(" + optionsText + ");\">Plan tour</a>";
+
+        text += "<img height=\"32em\" width=\"32em\" src=\"images/close-circle-outline.svg\" style=\"vertical-align:middle\" />" +
             "<a href=\"javascript:parent.map.hideFlyingRangeCone();\">Hide</a></p>";
 
         text += "<p>Flying range for map point at<br/>Latitude: " + options.displayLatitude + "<br/>" +
@@ -3404,6 +3425,25 @@ export class MapView {
 
         if (this.options.callback !== undefined)
             this.options.callback("onAddTourPlanLocation", locationId);
+
+        // hide the info box
+        this.viewer.selectedEntity = undefined;
+    }
+
+    /**
+     * Called by the marker pin link, in order to add the location to tour planning.
+     * @param {object} [options] An object with the following properties:
+     * @param {number} [options.latitude] Latitude of the position
+     * @param {number} [options.longitude] Longitude of the position
+     */
+    onAddTempTourPlanPoint(options) {
+
+        MapView.log("adding temp tour planning point: " +
+            "lat=" + options.latitude +
+            ", long=" + options.longitude);
+
+        if (this.options.callback !== undefined)
+            this.options.callback("onAddTempTourPlanPoint", options);
 
         // hide the info box
         this.viewer.selectedEntity = undefined;

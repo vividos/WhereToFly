@@ -322,6 +322,7 @@ namespace WhereToFly.App.Pages
             this.mapView.AddFindResult += async (name, point) => await this.OnMapView_AddFindResult(name, point);
             this.mapView.LongTap += async (point) => await this.OnMapView_LongTap(point);
             this.mapView.AddTourPlanLocation += async (locationId) => await this.OnMapView_AddTourPlanLocation(locationId);
+            this.mapView.AddTempTourPlanPoint += async (point) => await this.AddPlanTourPoint(point);
             this.mapView.UpdateLastShownLocation += async (point, viewingDistance)
                 => await OnMapView_UpdateLastShownLocation(point, viewingDistance);
             this.mapView.SetLocationAsCompassTarget += async (locationId)

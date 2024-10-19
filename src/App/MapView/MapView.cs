@@ -180,6 +180,17 @@ namespace WhereToFly.App.MapView
         public event OnAddTourPlanLocationCallback? AddTourPlanLocation;
 
         /// <summary>
+        /// Delegate of function to call when adding a temporary map point to tour planning
+        /// </summary>
+        /// <param name="point">temp plan tour point to add</param>
+        public delegate void OnAddTempTourPlanPointCallback(MapPoint point);
+
+        /// <summary>
+        /// Event that is signaled when adding a temp plan tour point to tour planning
+        /// </summary>
+        public event OnAddTempTourPlanPointCallback? AddTempTourPlanPoint;
+
+        /// <summary>
         /// Delegate of function to call when last shown location should be updated
         /// </summary>
         /// <param name="point">map point of last shown location</param>
@@ -1274,6 +1285,10 @@ namespace WhereToFly.App.MapView
                 (jsonParameters) => this.AddTourPlanLocation?.Invoke(jsonParameters.Trim('\"')));
 
             callbackHandler.RegisterHandler(
+                "onAddTempTourPlanPoint",
+                this.OnAddTempTourPlanPoint);
+
+            callbackHandler.RegisterHandler(
                 "onUpdateLastShownLocation",
                 this.OnUpdateLastShownLocation);
 
@@ -1337,6 +1352,25 @@ namespace WhereToFly.App.MapView
                     Math.Round(longTapParameters.Altitude));
 
                 this.LongTap?.Invoke(longTapPoint);
+            }
+        }
+
+        /// <summary>
+        /// Called when the "onAddTempTourPlanPoint" callback has been sent from JavaScript.
+        /// </summary>
+        /// <param name="jsonParameters">map point parameters as JSON</param>
+        private void OnAddTempTourPlanPoint(string jsonParameters)
+        {
+            var addTempTourPlanPointParameters =
+                JsonConvert.DeserializeObject<LongTapParameter>(jsonParameters);
+
+            if (addTempTourPlanPointParameters != null)
+            {
+                var tempTourPlanPoint = new MapPoint(
+                    addTempTourPlanPointParameters.Latitude,
+                    addTempTourPlanPointParameters.Longitude);
+
+                this.AddTempTourPlanPoint?.Invoke(tempTourPlanPoint);
             }
         }
 
