@@ -1,4 +1,6 @@
-﻿using Microsoft.AppCenter;
+﻿using FFImageLoading;
+using FFImageLoading.Config;
+using Microsoft.AppCenter;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Distribute;
 using System.Diagnostics;
@@ -50,7 +52,8 @@ namespace WhereToFly.App
         /// <summary>
         /// Creates a new app object
         /// </summary>
-        public App()
+        /// <param name="services">service provider</param>
+        public App(IServiceProvider services)
         {
             if (DeviceInfo.Platform == DevicePlatform.Android ||
                 DeviceInfo.Platform == DevicePlatform.WinUI)
@@ -61,6 +64,14 @@ namespace WhereToFly.App
                     typeof(Distribute),
                     typeof(Crashes));
             }
+
+            var imageService = services.GetService<IImageService>();
+            imageService.Initialize(
+                new Configuration
+                {
+                    HttpClient = new HttpClient(
+                        new FFImageLoadingHttpClientHandler()),
+                });
 
             TaskScheduler.UnobservedTaskException += this.TaskScheduler_UnobservedTaskException;
 
