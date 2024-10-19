@@ -194,7 +194,6 @@
                                 <MenuItem Text="Add tour plan location"
                                           IconImageSource="{local:Image weblib/images/map-marker-plus.svg}"
                                           Command="{Binding AddTourPlanLocationCommand}"
-                                          IsEnabled="{Binding IsEnabledAddTourPlanLocation, Mode=OneWay}"
                                           AutomationId="AddTourPlanLocation" />
                             </controls:ContextMenu.Items>
                         </controls:ContextMenu>

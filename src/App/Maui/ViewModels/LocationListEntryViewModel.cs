@@ -107,14 +107,6 @@ namespace WhereToFly.App.ViewModels
         public ICommand DeleteLocationCommand { get; set; }
 
         /// <summary>
-        /// Returns if the "add tour plan location" menu item is enabled
-        /// </summary>
-        public bool IsEnabledAddTourPlanLocation
-        {
-            get => this.Location?.IsPlanTourLocation ?? false;
-        }
-
-        /// <summary>
         /// Command to execute when "add tour plan location" toolbar item item is selected
         /// </summary>
         public ICommand AddTourPlanLocationCommand { get; set; }
