@@ -2282,16 +2282,7 @@ export class MapView {
                 conePitch, 0.0)
         );
 
-        const optionsText = "{ latitude:" + options.latitude +
-            ", longitude:" + options.longitude + " }";
-
-        let text = "<p><img height=\"32em\" width=\"32em\" src=\"images/map-marker-plus.svg\" style=\"vertical-align:middle\" /> " +
-            "<a href=\"javascript:parent.map.onAddTempTourPlanPoint(" + optionsText + ");\">Plan tour</a>";
-
-        text += "<img height=\"32em\" width=\"32em\" src=\"images/close-circle-outline.svg\" style=\"vertical-align:middle\" />" +
-            "<a href=\"javascript:parent.map.hideFlyingRangeCone();\">Hide</a></p>";
-
-        text += "<p>Flying range for map point at<br/>Latitude: " + options.displayLatitude + "<br/>" +
+        let text = "<p>Flying range for map point at<br/>Latitude: " + options.displayLatitude + "<br/>" +
             "Longitude: " + options.displayLongitude + "<br/>" +
             MapView.formatAltitude(options.altitude, "Altitude: ", " m</p>");
 
@@ -2303,6 +2294,15 @@ export class MapView {
             // 'Glide angle with wind: ' + (90.0 - CesiumMath.toDegrees(glideAngleWithWind)).toFixed(1) + ' degrees<br/>' +
             // 'Wind: ' + options.windSpeed + ' km/h from ' + options.windDirection + ' degrees' +
             "</p>";
+
+        const optionsText = "{ latitude:" + options.latitude +
+            ", longitude:" + options.longitude + " }";
+
+        text += "<p><img height=\"32em\" width=\"32em\" src=\"images/map-marker-plus.svg\" style=\"vertical-align:middle\" /> " +
+            "<a href=\"javascript:parent.map.onAddTempTourPlanPoint(" + optionsText + ");\">Plan tour</a>";
+
+        text += "<img height=\"32em\" width=\"32em\" src=\"images/close-circle-outline.svg\" style=\"vertical-align:middle\" />" +
+            "<a href=\"javascript:parent.map.hideFlyingRangeCone();\">Hide</a></p>";
 
         this.flyingRangeCone = this.viewer.entities.add({
             name: "Flying range",
