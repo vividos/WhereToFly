@@ -142,8 +142,7 @@ namespace WhereToFly.App.ViewModels
             this.DeleteLocationCommand = new AsyncCommand(this.OnDeleteLocationAsync);
             this.AddTourPlanLocationCommand =
                 new AsyncCommand(
-                    () => appMapService.AddTourPlanLocation(this.location),
-                    (obj) => this.IsEnabledAddTourPlanLocation);
+                    () => appMapService.AddTourPlanLocation(this.location));
         }
 
         /// <summary>
