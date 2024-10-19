@@ -3203,6 +3203,7 @@ export class MapView {
 
         this.heightProfileView = new HeightProfileView({
             id: this.options.heightProfileElementId,
+            trackName: trackData.track.name,
             setBodyBackgroundColor: false,
             useDarkTheme: true,
             showCloseButton: true,

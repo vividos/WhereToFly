@@ -133,6 +133,7 @@ namespace WhereToFly.App.MapView
             var options = new
             {
                 id = "heightProfileView",
+                trackName = string.Empty,
                 setBodyBackgroundColor = true,
                 useDarkTheme = this.UseDarkTheme,
             };

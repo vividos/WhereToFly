@@ -67,6 +67,16 @@
     background-color: gray !important;
 }
 
+.chart-toolbar-titletext {
+    color: white;
+    font-family: sans-serif;
+    font-size: 20px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    padding: 4px;
+}
+
 #chartjs-tooltip {
     opacity: 1;
     position: absolute;

@@ -51,6 +51,7 @@ export class HeightProfileView {
      * @class
      * @param {object} [options] Options to use for initializing height profile view
      * @param {number} [options.id] DOM ID of the element that will contain the height profile view
+     * @param {string} [options.trackName] track name of track to display
      * @param {boolean} [options.useDarkTheme] indicates if a dark theme should be used for the chart
      * @param {boolean} [options.setBodyBackgroundColor] indicates if body background should be themed
      * @param {boolean} [options.showCloseButton] indicates if a close button should be shown
@@ -70,6 +71,7 @@ export class HeightProfileView {
         this.options = Object.assign({
             id: "heightProfileView",
             setBodyBackgroundColor: true,
+            trackName: "Track",
             useDarkTheme: false,
             showCloseButton: false,
             showInfoButton: false,
@@ -302,6 +304,11 @@ export class HeightProfileView {
             "images/information-outline.svg",
             "info");
         infoButton.addEventListener("click", this.showInfo.bind(this));
+
+        const trackTextDiv = document.createElement("div");
+        trackTextDiv.classList.add("chart-toolbar-titletext");
+        trackTextDiv.innerText = this.options.trackName;
+        toolbarDiv.appendChild(trackTextDiv);
 
         // add the chart canvas inside a div
         const chartDiv = document.createElement("div");
