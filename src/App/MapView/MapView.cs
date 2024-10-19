@@ -214,6 +214,17 @@ namespace WhereToFly.App.MapView
         public event OnSetLocationAsCompassTargetCallback? SetLocationAsCompassTarget;
 
         /// <summary>
+        /// Delegate of function to call when track details should be shown
+        /// </summary>
+        /// <param name="trackId">track id of track to navigate to</param>
+        public delegate void OnShowTrackDetailsCallback(string trackId);
+
+        /// <summary>
+        /// Event that is signaled when track details should be shown
+        /// </summary>
+        public event OnShowTrackDetailsCallback? ShowTrackDetails;
+
+        /// <summary>
         /// Gets or sets map imagery type
         /// </summary>
         public MapImageryType MapImageryType
@@ -1295,6 +1306,10 @@ namespace WhereToFly.App.MapView
             callbackHandler.RegisterHandler(
                 "onSetLocationAsCompassTarget",
                 this.OnSetLocationAsCompassTarget);
+
+            callbackHandler.RegisterHandler(
+                "onShowTrackDetails",
+                (jsonParameters) => this.ShowTrackDetails?.Invoke(jsonParameters.Trim('\"')));
 
             callbackHandler.RegisterHandler(
                 "onSampledTrackHeights",

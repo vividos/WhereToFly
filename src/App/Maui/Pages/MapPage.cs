@@ -327,6 +327,7 @@ namespace WhereToFly.App.Pages
                 => await OnMapView_UpdateLastShownLocation(point, viewingDistance);
             this.mapView.SetLocationAsCompassTarget += async (locationId)
                 => await this.OnMapView_SetLocationAsCompassTarget(locationId);
+            this.mapView.ShowTrackDetails += async (locationId) => await this.OnMapView_ShowTrackDetails(locationId);
 
             // UWP needs to create the renderer in the main thread
             MainThread.BeginInvokeOnMainThread(() =>
@@ -702,6 +703,30 @@ namespace WhereToFly.App.Pages
             };
 
             await appMapService.SetCompassTarget(compassTarget);
+        }
+
+        /// <summary>
+        /// Called when user clicked on the "Show info" button in the height profile view. Starts
+        /// the track details page.
+        /// </summary>
+        /// <param name="trackId">track ID of track to show details for</param>
+        /// <returns>task to wait on</returns>
+        private async Task OnMapView_ShowTrackDetails(string trackId)
+        {
+            // since trackList is cleared for memory savings, ask the track data service directly
+            var dataService = DependencyService.Get<IDataService>();
+            Track? track = await dataService.GetTrackDataService().Get(trackId);
+
+            if (track == null)
+            {
+                Debug.WriteLine("couldn't find track with id=" + trackId);
+                return;
+            }
+
+            await NavigationService.Instance.NavigateAsync(
+                PageKey.TrackInfoPage,
+                animated: true,
+                parameter: track);
         }
 
         /// <summary>

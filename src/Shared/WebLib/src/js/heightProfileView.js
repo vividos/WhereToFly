@@ -1,4 +1,4 @@
-﻿import * as Utils from "./utils.js";
+import * as Utils from "./utils.js";
 
 // Chart.js
 import {
@@ -54,6 +54,7 @@ export class HeightProfileView {
      * @param {boolean} [options.useDarkTheme] indicates if a dark theme should be used for the chart
      * @param {boolean} [options.setBodyBackgroundColor] indicates if body background should be themed
      * @param {boolean} [options.showCloseButton] indicates if a close button should be shown
+     * @param {boolean} [options.showInfoButton] indicates if an info button should be shown
      * @param {boolean} [options.isFlightTrack] indicates if track is a flight track and vario
      * value should be shown
      * @param {Function} [options.colorFromVarioValue] function to get a color from vario value; may
@@ -66,14 +67,15 @@ export class HeightProfileView {
 
         this.isZoomAndPanActive = true;
 
-        this.options = options || {
+        this.options = Object.assign({
             id: "heightProfileView",
             setBodyBackgroundColor: true,
             useDarkTheme: false,
             showCloseButton: false,
+            showInfoButton: false,
             isFlightTrack: false,
             callback: {}
-        };
+        }, options);
 
         if (this.options.callback === undefined)
             this.options.callback = Utils.callAction;
@@ -204,6 +206,9 @@ export class HeightProfileView {
         const chartButtonClose = document.getElementById("chartButtonClose");
         chartButtonClose.style.display = this.options.showCloseButton ? "block" : "none";
 
+        const chartButtonInfo = document.getElementById("chartButtonInfo");
+        chartButtonInfo.style.display = this.options.showInfoButton ? "block" : "none";
+
         this.setModeZoomAndPan();
     }
 
@@ -290,6 +295,13 @@ export class HeightProfileView {
             "zoom and pan");
         modeZoomAndPan.style = "margin-right:0px;";
         modeZoomAndPan.addEventListener("click", this.setModeZoomAndPan.bind(this));
+
+        const infoButton = HeightProfileView.addChartToolbarButton(
+            toolbarDiv,
+            "chartButtonInfo",
+            "images/information-outline.svg",
+            "info");
+        infoButton.addEventListener("click", this.showInfo.bind(this));
 
         // add the chart canvas inside a div
         const chartDiv = document.createElement("div");
@@ -532,6 +544,18 @@ export class HeightProfileView {
     resetZoom() {
 
         this.chart.resetZoom();
+    }
+
+    /**
+     * Shows the track info
+     */
+    showInfo() {
+
+        HeightProfileView.log("showing track info for track \"" +
+            this.options.trackName + "\"");
+
+        if (this.options.callback !== undefined)
+            this.options.callback("onShowInfo", null);
     }
 
     /**

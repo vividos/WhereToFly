@@ -3206,6 +3206,7 @@ export class MapView {
             setBodyBackgroundColor: false,
             useDarkTheme: true,
             showCloseButton: true,
+            showInfoButton: true,
             isFlightTrack: trackData.track.isFlightTrack,
             colorFromVarioValue: function(varioValue) {
                 return this.trackColorFromVarioValue(varioValue).toCssColorString();
@@ -3273,6 +3274,9 @@ export class MapView {
             this.inOnCloseHandler = false;
 
             this.updateScene();
+        } else if (funcName === "onShowInfo") {
+            this.onShowTrackDetails(
+                this.currentHeightProfileTrackId);
         }
     }
 
@@ -3336,6 +3340,18 @@ export class MapView {
 
         if (this.options.callback !== undefined)
             this.options.callback("onSetLocationAsCompassTarget", locationId);
+    }
+
+    /**
+     * Called by the height profile view, in order to show details of the track.
+     * @param {string} trackId track ID of track to show
+     */
+    onShowTrackDetails(trackId) {
+
+        MapView.log("showing track details of track with ID:" + trackId);
+
+        if (this.options.callback !== undefined)
+            this.options.callback("onShowTrackDetails", trackId);
     }
 
     /**
