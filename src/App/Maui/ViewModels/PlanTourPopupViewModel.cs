@@ -268,6 +268,8 @@ namespace WhereToFly.App.ViewModels
             // height profile
             await OpenFileHelper.AdjustTrackHeightsAsync(track);
 
+            track.CalculateStatistics();
+
             await AddTrack(track);
 
             var appMapService = DependencyService.Get<IAppMapService>();
