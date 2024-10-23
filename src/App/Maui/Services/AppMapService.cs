@@ -203,5 +203,17 @@ namespace WhereToFly.App.Services
             appSettings.ShownFlightPlanningDisclaimer = true;
             await dataService.StoreAppSettingsAsync(appSettings);
         }
+
+        /// <summary>
+        /// Clears all temporary plan tour locations after planning tour
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        public async Task ClearTempPlanTourLocations()
+        {
+            if (MapPage != null)
+            {
+                await MapPage.ClearTempPlanTourLocations();
+            }
+        }
     }
 }

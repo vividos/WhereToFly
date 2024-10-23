@@ -67,5 +67,12 @@ namespace WhereToFly.App.UnitTest
             Debug.WriteLine("Showing flight planning disclaimer");
             return Task.CompletedTask;
         }
+
+        /// <inheritdoc />
+        public Task ClearTempPlanTourLocations()
+        {
+            Debug.WriteLine("Clearing temporary plan tour locations");
+            return Task.CompletedTask;
+        }
     }
 }

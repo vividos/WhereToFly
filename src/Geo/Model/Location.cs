@@ -51,6 +51,11 @@ namespace WhereToFly.Geo.Model
         public bool IsPlanTourLocation { get; set; } = false;
 
         /// <summary>
+        /// Indicates if the location is a temporary location created for planning a tour
+        /// </summary>
+        public bool IsTempPlanTourLocation { get; set; } = false;
+
+        /// <summary>
         /// Extra properties of the location, e.g. wind direction for a weather station, etc.
         /// </summary>
         public Dictionary<LocationPropertyType, string> Properties { get; set; } = [];

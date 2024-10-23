@@ -66,5 +66,11 @@ namespace WhereToFly.App
         /// </summary>
         /// <returns>task to wait on</returns>
         Task ShowFlightPlanningDisclaimer();
+
+        /// <summary>
+        /// Clears all temporary plan tour locations after planning tour
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        Task ClearTempPlanTourLocations();
     }
 }

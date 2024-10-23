@@ -270,14 +270,17 @@ namespace WhereToFly.App.ViewModels
 
             await AddTrack(track);
 
+            var appMapService = DependencyService.Get<IAppMapService>();
+
             var location = StartWaypointFromPlannedTour(plannedTour);
             if (location != null)
             {
                 await this.AddLocation(location);
 
-                var appMapService = DependencyService.Get<IAppMapService>();
                 appMapService.MapView.AddLocation(location);
             }
+
+            await appMapService.ClearTempPlanTourLocations();
 
             this.planTourParameters.WaypointIdList.Clear();
             this.planTourParameters.WaypointLocationList.Clear();

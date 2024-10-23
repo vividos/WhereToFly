@@ -322,7 +322,7 @@ namespace WhereToFly.App.Pages
             this.mapView.AddFindResult += async (name, point) => await this.OnMapView_AddFindResult(name, point);
             this.mapView.LongTap += async (point) => await this.OnMapView_LongTap(point);
             this.mapView.AddTourPlanLocation += async (locationId) => await this.OnMapView_AddTourPlanLocation(locationId);
-            this.mapView.AddTempTourPlanPoint += async (point) => await this.AddPlanTourPoint(point);
+            this.mapView.AddTempTourPlanPoint += async (point) => await this.AddTempPlanTourPoint(point);
             this.mapView.UpdateLastShownLocation += async (point, viewingDistance)
                 => await OnMapView_UpdateLastShownLocation(point, viewingDistance);
             this.mapView.SetLocationAsCompassTarget += async (locationId)
@@ -763,7 +763,7 @@ namespace WhereToFly.App.Pages
                     break;
 
                 case MapLongTapContextMenu.Result.PlanTour:
-                    await this.AddPlanTourPoint(point);
+                    await this.AddTempPlanTourPoint(point);
                     break;
 
                 case MapLongTapContextMenu.Result.Cancel:
@@ -884,15 +884,15 @@ namespace WhereToFly.App.Pages
         }
 
         /// <summary>
-        /// Adds a new plan tour point by coordinates
+        /// Adds a new temporary plan tour point by coordinates
         /// </summary>
         /// <param name="point">map point</param>
         /// <returns>task to wait on</returns>
-        private async Task AddPlanTourPoint(MapPoint point)
+        private async Task AddTempPlanTourPoint(MapPoint point)
         {
             if (this.locationList == null)
             {
-                Debug.Assert(false, "calling AddPlanTourPoint() before data was loaded!");
+                Debug.Assert(false, "calling AddTempPlanTourPoint() before data was loaded!");
                 return;
             }
 
@@ -913,6 +913,7 @@ namespace WhereToFly.App.Pages
                 Name = name,
                 Type = LocationType.Waypoint,
                 IsPlanTourLocation = false,
+                IsTempPlanTourLocation = true,
             };
 
             this.locationList.Add(planTourLocation);
@@ -923,6 +924,29 @@ namespace WhereToFly.App.Pages
             await locationDataService.Add(planTourLocation);
 
             await this.AddTourPlanningLocationAsync(planTourLocation);
+        }
+
+        /// <summary>
+        /// Clears all temporary plan tour locations after planning tour
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        internal async Task ClearTempPlanTourLocations()
+        {
+            var tempLocationsList = this.planTourParameters.WaypointLocationList
+                .Where(location => location.IsTempPlanTourLocation);
+
+            var appMapService = DependencyService.Get<IAppMapService>();
+            var dataService = DependencyService.Get<IDataService>();
+            var locationDataService = dataService.GetLocationDataService();
+
+            foreach (var tempLocation in tempLocationsList)
+            {
+                appMapService.MapView.RemoveLocation(tempLocation.Id);
+
+                this.locationList?.Remove(tempLocation);
+
+                await locationDataService.Remove(tempLocation.Id);
+            }
         }
 
         #region Page lifecycle methods
