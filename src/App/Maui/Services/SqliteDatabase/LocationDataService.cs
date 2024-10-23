@@ -112,6 +112,16 @@ namespace WhereToFly.App.Services.SqliteDatabase
             }
 
             /// <summary>
+            /// Is location a temporary plan tour location
+            /// </summary>
+            [Column("is_temp_plan_tour_location")]
+            public bool IsTempPlanTourLocation
+            {
+                get => this.Location.IsTempPlanTourLocation;
+                set => this.Location.IsTempPlanTourLocation = value;
+            }
+
+            /// <summary>
             /// Creates an empty location entry; used when loading entry from database
             /// </summary>
             public LocationEntry()
