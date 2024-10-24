@@ -25,6 +25,9 @@ The library can be built using npm; run ...
 The app builds the library using the MSBuild project
 `WhereToFly.Shared.WebLib.csproj` that is a dependency of the app projects.
 
+Note: In order to use `npm run serve` successfully, you have to set the
+environment variables `CESIUM_ION_API_KEY` and `BING_MAPS_API_KEY`.
+
 ## Usage
 
 Include one of the following .js files:
