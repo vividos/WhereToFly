@@ -1,4 +1,6 @@
-﻿/* eslint-disable comma-dangle */
+﻿//
+// webpack.prod.config.js - webpack configuration for production builds
+//
 const { merge } = require("webpack-merge");
 const common = require("./webpack.common.config.js");
 

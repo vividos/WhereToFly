@@ -1,4 +1,7 @@
-﻿const path = require("path");
+﻿//
+// webpack.common.config.js - webpack common configuration for weblib
+//
+const path = require("path");
 
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
