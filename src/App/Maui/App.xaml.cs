@@ -66,7 +66,7 @@ namespace WhereToFly.App
             }
 
             var imageService = services.GetService<IImageService>();
-            imageService.Initialize(
+            imageService?.Initialize(
                 new Configuration
                 {
                     HttpClient = new HttpClient(
