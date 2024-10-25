@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Windows": {
+      "commandName": "MsixPackage",
+      "nativeDebugging": false
+    }
+  }
+}
