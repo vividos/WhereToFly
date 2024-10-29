@@ -14,6 +14,13 @@ namespace WhereToFly.App
         Task InitCompleteTask { get; }
 
         /// <summary>
+        /// Gets or retrieves the current app config object
+        /// </summary>
+        /// <param name="token">cancellation token</param>
+        /// <returns>app config object</returns>
+        Task<AppConfig?> GetAppConfigAsync(CancellationToken token);
+
+        /// <summary>
         /// Gets the current app settings object
         /// </summary>
         /// <param name="token">cancellation token</param>

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SQLite;
+using System.Diagnostics;
 using WhereToFly.App.Models;
 using WhereToFly.Shared.Model;
 
@@ -14,6 +15,11 @@ namespace WhereToFly.App.Services.SqliteDatabase
         /// Filename for the SQLite database file
         /// </summary>
         private const string DatabaseFilename = "database.db";
+
+        /// <summary>
+        /// Key for <see cref="SecureStorage"/> to get and store app config as JSON
+        /// </summary>
+        private const string AppConfigSecureStorageKey = "AppConfig";
 
         /// <summary>
         /// SQLite database connection
@@ -34,6 +40,11 @@ namespace WhereToFly.App.Services.SqliteDatabase
         /// Track data service; only created once for caching purposes
         /// </summary>
         private TrackDataService? trackDataService;
+
+        /// <summary>
+        /// Backing store for app config
+        /// </summary>
+        private AppConfig? appConfig;
 
         /// <summary>
         /// Backing store for app settings
@@ -190,6 +201,56 @@ namespace WhereToFly.App.Services.SqliteDatabase
         public async Task CloseAsync()
         {
             await this.connection.CloseAsync();
+        }
+
+        /// <summary>
+        /// Gets or retrieves the current app config object
+        /// </summary>
+        /// <param name="token">cancellation token</param>
+        /// <returns>app config object</returns>
+        public async Task<AppConfig?> GetAppConfigAsync(CancellationToken token)
+        {
+            if (this.appConfig != null &&
+                this.appConfig.ExpiryDate > DateTimeOffset.Now)
+            {
+                return this.appConfig;
+            }
+
+            // check storage first
+            string? json = await SecureStorage.GetAsync(AppConfigSecureStorageKey);
+            if (json != null)
+            {
+                this.appConfig = JsonConvert.DeserializeObject<AppConfig>(json);
+            }
+
+            if (this.appConfig != null &&
+                this.appConfig.ExpiryDate > DateTimeOffset.Now)
+            {
+                return this.appConfig;
+            }
+
+            // then ask backend
+            try
+            {
+                this.appConfig = await this.backendDataService.GetAppConfigAsync(
+                    AppInfo.Current.Version.ToString(3));
+            }
+            catch (Exception ex)
+            {
+                // ignore error
+                Debug.WriteLine($"Error while retrieving AppConfig object: {ex}");
+            }
+            finally
+            {
+                if (this.appConfig != null)
+                {
+                    await SecureStorage.SetAsync(
+                        AppConfigSecureStorageKey,
+                        JsonConvert.SerializeObject(this.appConfig));
+                }
+            }
+
+            return this.appConfig;
         }
 
         /// <summary>

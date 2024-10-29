@@ -49,8 +49,19 @@ namespace WhereToFly.App.MapView
         /// <param name="initialCenterPoint">initial center point to be used for map view</param>
         /// <param name="initialViewingDistance">initial viewing distance, in meters from terrain</param>
         /// <param name="useEntityClustering">indicates if entity clustering should be used</param>
+        /// <param name="cesiumIonApiKey">
+        /// Cesium Ion API key; when null, no terrain and some Ion based layers are available
+        /// </param>
+        /// <param name="bingMapsApiKey">
+        /// Bing Maps API key; when null, no Bing Maps layer is available
+        /// </param>
         /// <returns>task to wait on</returns>
-        Task CreateAsync(MapPoint initialCenterPoint, int initialViewingDistance, bool useEntityClustering);
+        Task CreateAsync(
+            MapPoint initialCenterPoint,
+            int initialViewingDistance,
+            bool useEntityClustering,
+            string? cesiumIonApiKey,
+            string? bingMapsApiKey);
 
         /// <summary>
         /// Updates the "my location" pin in the map

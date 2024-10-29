@@ -30,7 +30,9 @@ namespace WhereToFly.App.UnitTest.MapView
             await mapView.CreateAsync(
                 Constants.InitialCenterPoint,
                 5000,
-                true);
+                true,
+                null,
+                null);
 
             // check
             Assert.IsTrue(
@@ -81,7 +83,9 @@ namespace WhereToFly.App.UnitTest.MapView
             await mapView.CreateAsync(
                 Constants.InitialCenterPoint,
                 5000,
-                true);
+                true,
+                null,
+                null);
 
             var locationList = DataServiceHelper.GetDefaultLocationList();
 
@@ -115,7 +119,9 @@ namespace WhereToFly.App.UnitTest.MapView
             await mapView.CreateAsync(
                 Constants.InitialCenterPoint,
                 5000,
-                true);
+                true,
+                null,
+                null);
 
             var track = UnitTestHelper.GetDefaultTrack();
 
@@ -146,7 +152,9 @@ namespace WhereToFly.App.UnitTest.MapView
             await mapView.CreateAsync(
                 Constants.InitialCenterPoint,
                 5000,
-                true);
+                true,
+                null,
+                null);
 
             var layer = (await DataServiceHelper.GetInitialLayerList()).First();
 

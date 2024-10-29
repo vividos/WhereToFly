@@ -8,6 +8,7 @@ using WhereToFly.App.Logic;
 using WhereToFly.App.Models;
 using WhereToFly.App.Pages;
 using WhereToFly.App.Services;
+using WhereToFly.Shared.Model;
 
 // make app internals visible to unit tests
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("WhereToFly.App.UnitTest")]
@@ -37,6 +38,12 @@ namespace WhereToFly.App
         /// Note that MapPage also has a task to wait for initialized page.
         /// </summary>
         public static Task InitializedTask => TaskCompletionSourceInitialized.Task;
+
+        /// <summary>
+        /// Application configuration, e.g. API keys; this is retrieved from the backend and is
+        /// available when <see cref="InitializedTask"/> has completed.
+        /// </summary>
+        public static AppConfig? Config { get; internal set; }
 
         /// <summary>
         /// Application settings; this is initialized when <see cref="InitializedTask"/> has
@@ -143,6 +150,7 @@ namespace WhereToFly.App
         private async Task LoadAppDataAsync()
         {
             var dataService = DependencyService.Get<IDataService>();
+            Config = await dataService.GetAppConfigAsync(CancellationToken.None);
             Settings = await dataService.GetAppSettingsAsync(CancellationToken.None);
 
             var userInterface = DependencyService.Get<IUserInterface>();

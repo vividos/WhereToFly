@@ -42,6 +42,11 @@ namespace WhereToFly.App.Pages
         private AppSettings? appSettings;
 
         /// <summary>
+        /// Current app config object
+        /// </summary>
+        private AppConfig? appConfig;
+
+        /// <summary>
         /// List of locations on the map
         /// </summary>
         private List<Location>? locationList;
@@ -364,6 +369,7 @@ namespace WhereToFly.App.Pages
             var dataService = DependencyService.Get<IDataService>();
 
             this.appSettings = await dataService.GetAppSettingsAsync(CancellationToken.None);
+            this.appConfig = await dataService.GetAppConfigAsync(CancellationToken.None);
             this.locationList = (await dataService.GetLocationDataService().GetList()).ToList();
             this.trackList = (await dataService.GetTrackDataService().GetList()).ToList();
             this.layerList = (await dataService.GetLayerDataService().GetList()).ToList();
@@ -399,10 +405,21 @@ namespace WhereToFly.App.Pages
                 lastViewingDistance = 5000;
             }
 
+            string? cesiumIonApiKey = null;
+            string? bingMapsApiKey = null;
+
+            if (this.appConfig != null)
+            {
+                this.appConfig.ApiKeys.TryGetValue("CesiumIonApiKey", out cesiumIonApiKey);
+                this.appConfig.ApiKeys.TryGetValue("BingMapsApiKey", out bingMapsApiKey);
+            }
+
             await this.mapView.CreateAsync(
                 initialCenter,
                 lastViewingDistance,
-                this.appSettings.UseMapEntityClustering);
+                this.appSettings.UseMapEntityClustering,
+                cesiumIonApiKey,
+                bingMapsApiKey);
 
             this.mapView.MapImageryType = this.appSettings.MapImageryType;
             this.mapView.MapOverlayType = this.appSettings.MapOverlayType;
