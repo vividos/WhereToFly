@@ -68,11 +68,19 @@ namespace WhereToFly.App.UnitTest
         /// <param name="useEntityClustering">
         /// true when entity clustering should be used
         /// </param>
+        /// <param name="cesiumIonApiKey">
+        /// Cesium Ion API key; when null, no terrain and some Ion based layers are available
+        /// </param>
+        /// <param name="bingMapsApiKey">
+        /// Bing Maps API key; when null, no Bing Maps layer is available
+        /// </param>
         /// <returns>task to wait on</returns>
         public Task CreateAsync(
             MapPoint initialCenterPoint,
             int initialViewingDistance,
-            bool useEntityClustering)
+            bool useEntityClustering,
+            string? cesiumIonApiKey,
+            string? bingMapsApiKey)
         {
             Debug.WriteLine("MapView: CreateAsync() was called");
 
