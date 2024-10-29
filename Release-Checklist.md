@@ -1,7 +1,7 @@
 # Release checklist
 
 - [ ] Increase version number in the files:
-  * [ ] Directory.Build.props
+  * [ ] version.json
   * [ ] SonarCloud.cmd
 - [ ] Add changes for the version to Changelog.md
 - [ ] Update all NuGet packages
