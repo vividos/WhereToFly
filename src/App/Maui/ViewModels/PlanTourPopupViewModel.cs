@@ -218,7 +218,10 @@ namespace WhereToFly.App.ViewModels
                     .Select(location =>
                         new Location(
                             location.Location.Id,
-                            location.Location.MapLocation))
+                            location.Location.MapLocation)
+                        {
+                            IsTempPlanTourLocation = location.Location.IsTempPlanTourLocation,
+                        })
                     .ToList();
             }
             else
