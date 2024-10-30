@@ -267,9 +267,11 @@ namespace WhereToFly.App.ViewModels
                 return; // user canceled editing track properties
             }
 
-            // sample track heights even it's a planned tour, as the backend didn't return a
-            // height profile
-            await OpenFileHelper.AdjustTrackHeightsAsync(track);
+            // sample track heights if the height profile has some missing altitude values
+            if (track.TrackPoints.Any(trackPoint => !trackPoint.Altitude.HasValue))
+            {
+                await OpenFileHelper.AdjustTrackHeightsAsync(track);
+            }
 
             track.CalculateStatistics();
 
