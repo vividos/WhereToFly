@@ -49,7 +49,7 @@ namespace WhereToFly.WebApi.Core.Controllers
             };
 
             this.logger.LogDebug(
-                "Initializing AppConfig controller with Cesium Ion API Keys {ApiKeys}",
+                "Initializing AppConfig controller with API Keys {ApiKeys}",
                 this.appConfig.ApiKeys);
         }
 
