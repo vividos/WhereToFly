@@ -32,6 +32,11 @@ namespace WhereToFly.App.Pages
         private readonly MapView.MapView mapView;
 
         /// <summary>
+        /// Toolbar button for planning tour
+        /// </summary>
+        private ToolbarItem? planTourToolbarButton;
+
+        /// <summary>
         /// Indicates if the next position update should also zoom to my position
         /// </summary>
         private bool zoomToMyPosition;
@@ -121,9 +126,58 @@ namespace WhereToFly.App.Pages
         /// </summary>
         private void SetupToolbar()
         {
+            this.AddPlanTourButton();
             this.AddFindNearbyPoisButton();
             this.AddLocateMeToolbarButton();
             this.AddFindLocationToolbarButton();
+        }
+
+        /// <summary>
+        /// Initializes the "plan tour" button that is initially invisible
+        /// </summary>
+        private void AddPlanTourButton()
+        {
+            this.planTourToolbarButton = new ToolbarItem(
+                "Plan tour",
+                "map_marker_plus.png",
+                async () => await this.ShowPlanTourPopup(),
+                ToolbarItemOrder.Primary,
+                0)
+            {
+                AutomationId = "PlanTour",
+            };
+        }
+
+        /// <summary>
+        /// Updates visibility of "plan tour" button
+        /// </summary>
+        /// <param name="isVisible">
+        /// true to show the button, or false to hide it
+        /// </param>
+        private void UpdatePlanTourButtonVisibility(bool isVisible)
+        {
+            if (!MainThread.IsMainThread)
+            {
+                MainThread.BeginInvokeOnMainThread(
+                    () => this.UpdatePlanTourButtonVisibility(isVisible));
+                return;
+            }
+
+            if (this.planTourToolbarButton == null)
+            {
+                return;
+            }
+
+            if (isVisible &&
+                !this.ToolbarItems.Contains(this.planTourToolbarButton))
+            {
+                this.ToolbarItems.Add(this.planTourToolbarButton);
+            }
+            else if (!isVisible &&
+                this.ToolbarItems.Contains(this.planTourToolbarButton))
+            {
+                this.ToolbarItems.Remove(this.planTourToolbarButton);
+            }
         }
 
         /// <summary>
@@ -135,7 +189,8 @@ namespace WhereToFly.App.Pages
                 "Find nearby POIs",
                 "magnify_scan.png",
                 async () => await this.OnClicked_ToolbarButtonFindNearbyPois(),
-                ToolbarItemOrder.Primary)
+                ToolbarItemOrder.Primary,
+                1)
             {
                 AutomationId = "FindNearbyPois",
             };
@@ -152,7 +207,8 @@ namespace WhereToFly.App.Pages
                 "Locate me",
                 "crosshairs_gps.png",
                 async () => await this.OnClicked_ToolbarButtonLocateMe(),
-                ToolbarItemOrder.Primary)
+                ToolbarItemOrder.Primary,
+                2)
             {
                 AutomationId = "LocateMe",
             };
@@ -241,7 +297,8 @@ namespace WhereToFly.App.Pages
                 "Find location",
                 "magnify.png",
                 async () => await this.OnClicked_ToolbarButtonFindLocation(),
-                ToolbarItemOrder.Primary)
+                ToolbarItemOrder.Primary,
+                3)
             {
                 AutomationId = "FindLocation",
             };
@@ -894,6 +951,17 @@ namespace WhereToFly.App.Pages
         {
             this.planTourParameters.WaypointIdList.Add(location.Id);
 
+            this.UpdatePlanTourButtonVisibility(true);
+
+            await this.ShowPlanTourPopup();
+        }
+
+        /// <summary>
+        /// Shows the "plan tour" popup
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        private async Task ShowPlanTourPopup()
+        {
             await NavigationService.Instance.NavigateToPopupPageAsync<object>(
                 PopupPageKey.PlanTourPopupPage,
                 true,
@@ -964,6 +1032,8 @@ namespace WhereToFly.App.Pages
 
                 await locationDataService.Remove(tempLocation.Id);
             }
+
+            this.UpdatePlanTourButtonVisibility(false);
         }
 
         #region Page lifecycle methods
