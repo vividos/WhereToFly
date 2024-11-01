@@ -233,7 +233,7 @@ namespace WhereToFly.App.Services.SqliteDatabase
             try
             {
                 this.appConfig = await this.backendDataService.GetAppConfigAsync(
-                    AppInfo.Current.Version.ToString(3));
+                    AppInfo.Current.VersionString);
             }
             catch (Exception ex)
             {
