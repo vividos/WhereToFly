@@ -8,7 +8,7 @@ Released on ?.
 
 - Height profile now shows track name and an info button to go to the track
   details page
-- Using CesiumJS version 1.122.0
+- Using CesiumJS version 1.123.0
 
 🐛 Bugfixes
 
