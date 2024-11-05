@@ -40,6 +40,11 @@ namespace WhereToFly.Geo.Model
         public string Color { get; set; } = "0000FF";
 
         /// <summary>
+        /// Attribution key to display; may be null
+        /// </summary>
+        public string? Attribution { get; set; }
+
+        /// <summary>
         /// Duration of track
         /// </summary>
         public TimeSpan Duration { get; set; } = TimeSpan.Zero;

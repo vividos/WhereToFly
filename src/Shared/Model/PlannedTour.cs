@@ -28,5 +28,10 @@ namespace WhereToFly.Shared.Model
         /// Description for the complete tour
         /// </summary>
         public string Description { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Attribution key; may be null
+        /// </summary>
+        public string? Attribution { get; set; }
     }
 }

@@ -88,7 +88,8 @@ namespace WhereToFly.WebApi.Core.Services
                         Duration = track.Duration,
                         TrackStartIndex = 0,
                     },
-                }
+                },
+                Attribution = track.Attribution,
             };
         }
     }

@@ -88,6 +88,16 @@ namespace WhereToFly.App.Services.SqliteDatabase
             }
 
             /// <summary>
+            /// Track attribution value
+            /// </summary>
+            [Column("attribution")]
+            public string? Attribution
+            {
+                get => this.Track.Attribution;
+                set => this.Track.Attribution = value;
+            }
+
+            /// <summary>
             /// Duration of track
             /// </summary>
             [Column("duration")]

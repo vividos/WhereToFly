@@ -367,6 +367,7 @@ namespace WhereToFly.App.ViewModels
                 Description = plannedTour.Description,
                 IsFlightTrack = false,
                 TrackPoints = trackPoints.ToList(),
+                Attribution = plannedTour.Attribution,
             };
 
             track.CalculateStatistics();

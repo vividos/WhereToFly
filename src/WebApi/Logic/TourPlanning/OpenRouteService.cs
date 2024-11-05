@@ -203,6 +203,7 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
                 LengthInMeter = resultObject.Routes[0].Summary.Distance,
                 Duration = TimeSpan.FromSeconds(resultObject.Routes[0].Summary.Duration),
                 TrackPoints = trackPoints.ToList(),
+                Attribution = "OpenRouteServiceOrg",
             };
         }
 
