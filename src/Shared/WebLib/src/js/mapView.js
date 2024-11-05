@@ -341,6 +341,8 @@ export class MapView {
 
         this.trackIdToTrackDataMap = {};
 
+        this.allCurrentAttributionKeys = new Set();
+
         this.dataSourceMap = {};
 
         this.osmBuildingsTileset = null;
@@ -2588,6 +2590,8 @@ export class MapView {
      * profile elevations; same length as listOfTimePoints; may be null
      * @param {string} [track.color] Color as "RRGGBB" string value, or undefined
      * when track should be colored according to climb and sink rate.
+     * @param {string} [track.attribution] Attribution key to display credits
+     * for this track; possible values: "OpenRouteServiceOrg".
      */
     async addTrack(track) {
 
@@ -2612,6 +2616,9 @@ export class MapView {
 
             this.setLiveTrackTime(this.currentLiveTrackTimeOffset);
         }
+
+        if (track.attribution !== undefined)
+            this.updateCredits();
     }
 
     /**
@@ -2666,6 +2673,49 @@ export class MapView {
             this.trackPrimitivesCollection.add(trackData.primitive);
 
         trackData.boundingSphere = BoundingSphere.fromPoints(trackPointArray, null);
+    }
+
+    /**
+     * Mapping from attribution keys to credits objects to display in viewer
+     */
+    static attributionKeyCreditsMapping = {
+        "OpenRouteServiceOrg": new Credit("&copy; openrouteservice.org by HeiGIT | Map data &copy; OpenStreetMap contributors")
+    };
+
+    /**
+     * Updates displayed credits for all currently available tracks.
+     */
+    updateCredits() {
+
+        const allAttributionKeysList = Object.values(this.trackIdToTrackDataMap)
+            .filter((trackData) => trackData.track.attribution !== undefined)
+            .map((trackData) => trackData.track.attribution);
+
+        const allAttributionKeys = new Set(allAttributionKeysList);
+
+        Object.keys(MapView.attributionKeyCreditsMapping)
+            .forEach(attributionKey => {
+
+                if (!allAttributionKeys.has(attributionKey))
+                    MapView.log("removing credits for attribution key " + attributionKey);
+
+                const creditToRemove =
+                    MapView.attributionKeyCreditsMapping[attributionKey];
+
+                this.viewer.creditDisplay.removeStaticCredit(creditToRemove);
+            });
+
+        allAttributionKeys.forEach(attributionKey => {
+            if (!this.allCurrentAttributionKeys.has(attributionKey))
+                MapView.log("adding credits for attribution key " + attributionKey);
+
+            const creditToAdd =
+                MapView.attributionKeyCreditsMapping[attributionKey];
+
+            this.viewer.creditDisplay.addStaticCredit(creditToAdd);
+        });
+
+        this.allCurrentAttributionKeys = allAttributionKeys;
     }
 
     /**

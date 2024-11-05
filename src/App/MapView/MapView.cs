@@ -1066,6 +1066,7 @@ namespace WhereToFly.App.MapView
                 trackStart,
                 groundHeightProfile = groundHeightProfileList,
                 color,
+                attribution = track.Attribution,
             };
 
             string js = $"await map.addTrack({JsonConvert.SerializeObject(trackJsonObject)});";
