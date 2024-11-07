@@ -6,9 +6,12 @@ Released on ?.
 
 ✨ New Features / Improvements
 
+- Planning tour is now possible with any location pin and by long-tapping a
+  point on the map
 - Height profile now shows track name and an info button to go to the track
   details page
 - Using CesiumJS version 1.123.0
+- Upgraded user interface to use .NET MAUI
 
 🐛 Bugfixes
 
