@@ -2617,7 +2617,7 @@ export class MapView {
             this.setLiveTrackTime(this.currentLiveTrackTimeOffset);
         }
 
-        if (track.attribution !== undefined)
+        if (track.attribution !== undefined && track.attribution !== null)
             this.updateCredits();
     }
 
@@ -2688,7 +2688,7 @@ export class MapView {
     updateCredits() {
 
         const allAttributionKeysList = Object.values(this.trackIdToTrackDataMap)
-            .filter((trackData) => trackData.track.attribution !== undefined)
+            .filter((trackData) => trackData.track.attribution !== undefined && trackData.track.attribution !== null)
             .map((trackData) => trackData.track.attribution);
 
         const allAttributionKeys = new Set(allAttributionKeysList);
