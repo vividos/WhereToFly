@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Android.Runtime;
+﻿using Android.Runtime;
 using Android.Views;
 
 namespace WhereToFly.App.Android
