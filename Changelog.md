@@ -10,6 +10,7 @@ Released on ?.
   point on the map
 - Height profile now shows track name and an info button to go to the track
   details page
+- Improved parsing coordinates, recognizing more formats
 - Using CesiumJS version 1.123.0
 - Upgraded user interface to use .NET MAUI
 

@@ -28,10 +28,11 @@ namespace WhereToFly.Geo
                 return false;
             }
 
-            text = text!
-                .Replace("\t", " ")
-                .Replace("\n", " ")
-                .Replace("\r", " ");
+            text = text
+                .Replace('\t', ' ')
+                .Replace('\n', ' ')
+                .Replace('\r', ' ')
+                .Replace('\u202f', ' ');
 
             while (text.Contains("  "))
             {
@@ -99,6 +100,7 @@ namespace WhereToFly.Geo
 
             int countSpaces = text.Count(c => c == ' ');
             int countCommas = text.Count(c => c == ',');
+            int countSemicolon = text.Count(c => c == ';');
 
             if (countSpaces == 1)
             {
@@ -107,6 +109,15 @@ namespace WhereToFly.Geo
             else if (countCommas == 1)
             {
                 splitPos = text.IndexOf(',');
+            }
+            else if (countCommas == 3)
+            {
+                splitPos = text.IndexOf(',', text.IndexOf(',') + 1);
+                text = text.Replace(',', '.');
+            }
+            else if (countSemicolon == 1)
+            {
+                splitPos = text.IndexOf(';');
             }
 
             if (splitPos == -1)
@@ -117,8 +128,8 @@ namespace WhereToFly.Geo
             latitude = text.Substring(0, splitPos);
             longitude = text.Substring(splitPos + 1).TrimStart();
 
-            latitude = latitude.Replace(" ", string.Empty);
-            longitude = longitude.Replace(" ", string.Empty);
+            latitude = latitude.Replace(" ", string.Empty).Trim();
+            longitude = longitude.Replace(" ", string.Empty).Trim();
 
             CheckSwapLatLong(ref latitude, ref longitude);
 
@@ -147,12 +158,12 @@ namespace WhereToFly.Geo
             string localLongitude = longitude;
 
             bool endsWithSwappedDirectionCharacter =
-                Array.Exists(LongitudeDirectionCharacter, c => localLatitude.EndsWith(c.ToString())) &&
-                Array.Exists(LatitudeDirectionCharacter, c => localLongitude.EndsWith(c.ToString()));
+                Array.Exists(LongitudeDirectionCharacter, localLatitude.EndsWith) &&
+                Array.Exists(LatitudeDirectionCharacter, localLongitude.EndsWith);
 
             bool startsWithSwappedDirectionCharacter =
-                Array.Exists(LongitudeDirectionCharacter, c => localLatitude.StartsWith(c.ToString())) &&
-                Array.Exists(LatitudeDirectionCharacter, c => localLongitude.StartsWith(c.ToString()));
+                Array.Exists(LongitudeDirectionCharacter, localLatitude.StartsWith) &&
+                Array.Exists(LatitudeDirectionCharacter, localLongitude.StartsWith);
 
             if (endsWithSwappedDirectionCharacter ||
                 startsWithSwappedDirectionCharacter)
@@ -160,8 +171,8 @@ namespace WhereToFly.Geo
                 (longitude, latitude) = (latitude, longitude);
             }
 
-            latitude = latitude.Trim(LatitudeDirectionCharacter);
-            longitude = longitude.Trim(LongitudeDirectionCharacter);
+            latitude = latitude.Trim(LatitudeDirectionCharacter).Trim();
+            longitude = longitude.Trim(LongitudeDirectionCharacter).Trim();
         }
 
         /// <summary>
@@ -200,6 +211,12 @@ namespace WhereToFly.Geo
                 return false;
             }
 
+            if (parsedLatitude > 90.0 ||
+                parsedLatitude < -90.0)
+            {
+                return false;
+            }
+
             mapPoint = new MapPoint(
                 latitude: parsedLatitude,
                 longitude: parsedLongitude);
@@ -218,13 +235,19 @@ namespace WhereToFly.Geo
                 mapPoint = null;
                 return false;
             }
-            else
+
+            if (parsedLatitude > 90.0 ||
+                parsedLatitude < -90.0)
             {
-                mapPoint = new MapPoint(
-                    latitude: parsedLatitude,
-                    longitude: parsedLongitude);
-                return true;
+                mapPoint = null;
+                return false;
             }
+
+            mapPoint = new MapPoint(
+                latitude: parsedLatitude,
+                longitude: parsedLongitude);
+
+            return true;
         }
 
         /// <summary>
@@ -243,8 +266,20 @@ namespace WhereToFly.Geo
         {
             latitudeOrLongitudeValue = 0.0;
 
-            if (latitudeOrLongitudeText.Count(c => c == '°') > 1 ||
-                latitudeOrLongitudeText.Count(c => c == '\'') > 1 ||
+            int countDegreeSymbol = latitudeOrLongitudeText.Count(c => c == '°');
+            int countMinuteSymbol = latitudeOrLongitudeText.Count(c => c == '\'');
+
+            if (countDegreeSymbol == 1 &&
+                !latitudeOrLongitudeText.EndsWith('°') &&
+                countMinuteSymbol == 0)
+            {
+                // has a degree symbol but ends without minute symbol
+                latitudeOrLongitudeText += '\'';
+                countMinuteSymbol++;
+            }
+
+            if (countDegreeSymbol > 1 ||
+                countMinuteSymbol > 1 ||
                 latitudeOrLongitudeText.Count(c => c == '"') > 1)
             {
                 return false;
@@ -356,45 +391,14 @@ namespace WhereToFly.Geo
                 return false;
             }
 
-            string[] mapsHostnames =
-            [
-                "maps.google.com",
-                "www.google.com",
-            ];
-
-            if (mapsHostnames.Contains(uri.Host.ToLowerInvariant()))
+            if (TryParseGoogleUri(uri, out mapPoint))
             {
-                if (uri.LocalPath.StartsWith(
-                    "/maps/place/",
-                    StringComparison.OrdinalIgnoreCase))
-                {
-                    string[] parts = uri.LocalPath.Split(
-                        '/',
-                        StringSplitOptions.RemoveEmptyEntries);
+                return true;
+            }
 
-                    if (parts.Length >= 2)
-                    {
-                        string placeText = parts[2].Replace("+", ",");
-                        return TryParse(placeText, out mapPoint);
-                    }
-                }
-
-                var uriParameterMap =
-                    uri.Query.Split('&')
-                        .Select(parameters => parameters.Split('='))
-                        .Where(keyAndValue => keyAndValue.Length == 2)
-                        .ToDictionary(
-                            keyAndValue => keyAndValue[0].ToLowerInvariant().Trim('?', '&'),
-                            keyAndValue => keyAndValue[1]);
-
-                if (!uriParameterMap.TryGetValue("q", out string? param))
-                {
-                    return false;
-                }
-                else
-                {
-                    return TryParse(param, out mapPoint);
-                }
+            if (TryParseOpenStreetMapUri(uri, out mapPoint))
+            {
+                return true;
             }
 
             // parse geo: URI
@@ -404,6 +408,111 @@ namespace WhereToFly.Geo
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Tries to parse a Google Maps url that contains a "q" query parameter
+        /// </summary>
+        /// <param name="uri">uri to parse</param>
+        /// <param name="mapPoint">
+        /// map point, containing parsed location coordinates
+        /// </param>
+        /// <returns>true when parsing succeeded, or false when not</returns>
+        private static bool TryParseGoogleUri(Uri uri, out MapPoint? mapPoint)
+        {
+            string[] mapsHostnames =
+            [
+                "maps.google.com",
+                "www.google.com",
+            ];
+
+            if (!mapsHostnames.Contains(uri.Host.ToLowerInvariant()))
+            {
+                mapPoint = null;
+                return false;
+            }
+
+            if (uri.LocalPath.StartsWith(
+                "/maps/place/",
+                StringComparison.OrdinalIgnoreCase))
+            {
+                string[] parts = uri.LocalPath.Split(
+                    '/',
+                    StringSplitOptions.RemoveEmptyEntries);
+
+                if (parts.Length >= 2)
+                {
+                    string placeText = parts[2].Replace("+", ",");
+                    return TryParse(placeText, out mapPoint);
+                }
+            }
+
+            Dictionary<string, string> uriParameterMap =
+                SplitUriQueryParameter(uri);
+
+            if (!uriParameterMap.TryGetValue("q", out string? param))
+            {
+                mapPoint = null;
+                return false;
+            }
+
+            return TryParse(param, out mapPoint);
+        }
+
+        /// <summary>
+        /// Tries to parse an OpenStreetMap url that contains a "maps" query parameter
+        /// </summary>
+        /// <param name="uri">uri to parse</param>
+        /// <param name="mapPoint">
+        /// map point, containing parsed location coordinates
+        /// </param>
+        /// <returns>true when parsing succeeded, or false when not</returns>
+        private static bool TryParseOpenStreetMapUri(Uri uri, out MapPoint? mapPoint)
+        {
+            if (!uri.Host.Contains(
+                "openstreetmap.org",
+                StringComparison.InvariantCultureIgnoreCase))
+            {
+                mapPoint = null;
+                return false;
+            }
+
+            int mapParamPos = uri.Fragment.IndexOf("map=");
+
+            if (mapParamPos == -1)
+            {
+                mapPoint = null;
+                return false;
+            }
+
+            string mapParam = uri.Fragment.Substring(mapParamPos + 4);
+
+            string[] parts = mapParam.Split('/');
+            if (parts.Length != 3)
+            {
+                mapPoint = null;
+                return false;
+            }
+
+            return TryParseDecimals(
+                parts[1],
+                parts[2],
+                out mapPoint);
+        }
+
+        /// <summary>
+        /// Splits Uri query parameters into a dictionary
+        /// </summary>
+        /// <param name="uri">uri to use</param>
+        /// <returns>dictionary with all query param keys and values</returns>
+        private static Dictionary<string, string> SplitUriQueryParameter(Uri uri)
+        {
+            return uri.Query.Split('&')
+                .Select(parameters => parameters.Split('='))
+                .Where(keyAndValue => keyAndValue.Length == 2)
+                .ToDictionary(
+                    keyAndValue => keyAndValue[0].ToLowerInvariant().Trim('?', '&'),
+                    keyAndValue => keyAndValue[1]);
         }
     }
 }

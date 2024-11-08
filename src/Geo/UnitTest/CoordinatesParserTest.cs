@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WhereToFly.Geo.Model;
 
 namespace WhereToFly.Geo.UnitTest
@@ -23,18 +22,30 @@ namespace WhereToFly.Geo.UnitTest
         [DataRow("+49.781231 -6.837581")]
         [DataRow("-49.781231 +6.837581")]
         [DataRow("-49.781231 -6.837581")]
+        [DataRow("49,781231,6,837581")]
         [DataRow("49°46'52.4\"N 6°50'15.3\"E")]
+        [DataRow("N 49°46'52.4\", E 6°50'15.3\"")]
         [DataRow("49° 46′ 52.4″N 006° 50′ 15.3″E")]
         [DataRow("49° 46′ N, 06° 50′ O ")]
         [DataRow("49° 46′ S, 06° 50′ E")]
         [DataRow("49° 46', -6° 50'")]
+        [DataRow("49° 46, -6° 50")]
         [DataRow("41°32'13\"N   109°32'59\"W")]
         [DataRow("49° 34′ 45.59″ N, 12° 17′ 13.85″ E")]
         [DataRow("49.579331°, 6.837581°")]
         [DataRow("49.579331°N 6.837581°E")]
+        [DataRow("S 49° 46.74400' , E 172° 4.50000'  ")]
+        [DataRow("S 49° 46' 44.6\" , E 172° 04' 30.0\" ")]
+        [DataRow("49.7812 S; 172.83 E  ")]
+        [DataRow("49.7812 S; 172.837 E")]
+        [DataRow("49,7812120, 26,8375812")]
+        [DataRow("49°34′ 45″ N, 12° 17′ 13″ O")]
+        [DataRow("49°34′\u202f45″\u202fN, 12°\u202f17′\u202f13″\u202fO")] // U+202F: Narrow No-Break Space
         [DataRow("https://maps.google.com/maps?q=49.781231,6.837581")]
         [DataRow("https://www.google.com/maps/place/47%C2%B038'32.8%22N+12%C2%B002'33.2%22E/@47.642442,12.0399761,17z")]
+        [DataRow("https://www.openstreetmap.org/#map=18/49.7812310/11.8375812")]
         [DataRow("geo:49.781231,6.837581")]
+        [DataRow("geo:49.781231,11.837581")]
         public void TestParseValidCoordinates(string text)
         {
             // run
@@ -55,8 +66,16 @@ namespace WhereToFly.Geo.UnitTest
         [DataRow("")]
         [DataRow(" ")]
         [DataRow("\t\t\n\r\t")]
-        [DataRow("49,781231,6,837581")]
+        [DataRow("49°46'52.4\"N 6°50'15.3\"N")]
+        [DataRow("49°46'52.4\"E 6°50'15.3\"W")]
+        [DataRow("128°46'52.4\"N 26°50'15.3\"E")] // north > 90° is invalid
+        [DataRow("128°46'52.4\"S 26°50'15.3\"E")] // south > 90° is invalid
+        [DataRow("109.781231°N,6.837581°E")]
+        [DataRow("-109.781231°N,6.837581°E")]
+        [DataRow("49° 46\" 52.4'N 006° 50\" 15.3'E")]
         [DataRow("https://maps.google.com/maps?abc=49.781231,6.837581")]
+        [DataRow("https://www.openstreetmap.org/#abc=18/49.7812310/11.8375812")]
+        [DataRow("https://www.openstreetmap.org/#map=18/49.7812310/11.8375812/42")]
         [DataRow("geo:49.781231")]
         public void TestParseInvalidCoordinatesText(string? text)
         {
