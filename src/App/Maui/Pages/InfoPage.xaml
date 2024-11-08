@@ -49,11 +49,11 @@
                                 <WebView HorizontalOptions="Start"
                                          VerticalOptions="Start"
                                          HeightRequest="20"
-                                         Navigating="OnNavigating_WebView"
                                          Source="{Binding WebViewSource}"
                                          Grid.Row="1">
                                     <WebView.Behaviors>
                                         <behaviors:AutoResizeWebViewBehavior />
+                                        <behaviors:OpenLinkExternalBrowserWebViewBehavior />
                                     </WebView.Behaviors>
                                 </WebView>
                             </Grid>

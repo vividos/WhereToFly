@@ -18,6 +18,7 @@ Released on ?.
 
 - Fixed exporting layers
 - Hide color selection when editing a flight track
+- Fixed clicking on links on the layer, location and track details pages
 
 ## Version 1.14.4
 

@@ -75,6 +75,7 @@
                          Source="{Binding DescriptionWebViewSource}">
                     <WebView.Behaviors>
                         <behaviors:AutoResizeWebViewBehavior />
+                        <behaviors:OpenLinkExternalBrowserWebViewBehavior />
                     </WebView.Behaviors>
                 </WebView>
 

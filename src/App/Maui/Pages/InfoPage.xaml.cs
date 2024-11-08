@@ -12,22 +12,5 @@
         {
             this.InitializeComponent();
         }
-
-        /// <summary>
-        /// Called when web view navigates to a new URL
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="args">event args</param>
-        private void OnNavigating_WebView(object sender, WebNavigatingEventArgs args)
-        {
-            if (args.NavigationEvent == WebNavigationEvent.NewPage &&
-                args.Url.StartsWith("http"))
-            {
-                args.Cancel = true;
-
-                MainThread.BeginInvokeOnMainThread(
-                    () => Browser.OpenAsync(args.Url, BrowserLaunchMode.External));
-            }
-        }
     }
 }
