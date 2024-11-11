@@ -2338,6 +2338,12 @@ export class MapView {
     async sampleTrackHeights(track) {
 
         MapView.log("sampleTrackHeights: #1 start sampling track point heights for " + track.listOfTrackPoints.length + " points...");
+
+        if (track.ListOfTrackPoints.length === 0) {
+            this.onSampledTrackHeights([]);
+            return;
+        }
+
         console.time("MapView.sampleTrackHeights");
 
         if (!Entity.supportsPolylinesOnTerrain(this.viewer.scene)) {

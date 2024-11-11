@@ -969,6 +969,11 @@ namespace WhereToFly.App.MapView
         /// <returns>ground profile heights, or null if there was an error</returns>
         public async Task<double[]?> SampleTrackHeights(Track track)
         {
+            if (track.TrackPoints.Count == 0)
+            {
+                return Array.Empty<double>();
+            }
+
             // need an initialized map in order to sample data
             await this.taskCompletionSourceMapInitialized.Task;
 
