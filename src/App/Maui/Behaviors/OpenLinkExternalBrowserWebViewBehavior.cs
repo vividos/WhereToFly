@@ -33,7 +33,7 @@
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        private static void OnNavigating(object sender, WebNavigatingEventArgs args)
+        private static void OnNavigating(object? sender, WebNavigatingEventArgs args)
         {
             if (args.NavigationEvent == WebNavigationEvent.NewPage &&
                 args.Url.StartsWith("https://", StringComparison.InvariantCultureIgnoreCase) &&
