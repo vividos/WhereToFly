@@ -426,6 +426,7 @@ namespace WhereToFly.Geo.DataFormats
 
             // DHV Geländedatenbank
             { "windsack_rot", LocationType.FlyingTakeoff },
+            { "windsack_orange", LocationType.FlyingTakeoff },
             { "windsack_gruen", LocationType.FlyingLandingPlace },
             { "windsack_blau", LocationType.FlyingWinchTowing },
 
@@ -463,7 +464,8 @@ namespace WhereToFly.Geo.DataFormats
             string name = placemark.Name ?? string.Empty;
 
             // Startplatz, takeoff, takeoff coast, takeoff winch
-            if (name.StartsWith("SP ") ||
+            if (name.Contains("Startplatz") ||
+                name.StartsWith("SP ") ||
                 name.StartsWith("SP-HG ") ||
                 name.StartsWith("TO ") ||
                 name.StartsWith("TO-HG ") ||
@@ -476,7 +478,8 @@ namespace WhereToFly.Geo.DataFormats
             }
 
             // Landeplatz, landing zone
-            if (name.StartsWith("LP ") ||
+            if (name.Contains("Landeplatz") ||
+                name.StartsWith("LP ") ||
                 name.StartsWith("LZ "))
             {
                 return LocationType.FlyingLandingPlace;
