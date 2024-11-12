@@ -81,6 +81,22 @@ namespace WhereToFly.App.Popups
         private void OnClickedCancelButton(object sender, EventArgs args)
         {
             this.cancellationTokenSource?.Cancel();
+
+            this.Close();
+        }
+
+        /// <summary>
+        /// Called when the user tapped outside of the popup
+        /// </summary>
+        /// <param name="token">default token; unused</param>
+        /// <returns>task to wait on</returns>
+        protected override Task OnDismissedByTappingOutsideOfPopup(
+            CancellationToken token = default)
+        {
+            this.cancellationTokenSource?.Cancel();
+
+            return base.OnDismissedByTappingOutsideOfPopup(
+                this.cancellationTokenSource?.Token ?? token);
         }
     }
 }
