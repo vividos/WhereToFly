@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using WhereToFly.Geo.DataFormats;
+using WhereToFly.Geo.Model;
 
 namespace WhereToFly.Geo
 {
@@ -58,43 +59,38 @@ namespace WhereToFly.Geo
         public Task<IEnumerable<Model.Location>> ImportAsync()
         {
             return Task.FromResult(
-                this.GetLocationRecursive(this.idPrefix, this.kmlFile.Root));
+                this.GetLocationRecursive(this.kmlFile.Root));
         }
 
         /// <summary>
         /// Recursively goes through the KML and its Element objects and returns a list of
         /// locations found in the elements and sub-elements.
         /// </summary>
-        /// <param name="currentIdPrefix">current prefix for ID</param>
         /// <param name="element">KML element to use</param>
         /// <returns>list of locations</returns>
-        private IEnumerable<Model.Location> GetLocationRecursive(string currentIdPrefix, Element element)
+        private IEnumerable<Model.Location> GetLocationRecursive(Element element)
         {
             switch (element)
             {
                 case Kml kml:
-                    return this.GetLocationRecursive(currentIdPrefix, kml.Feature);
+                    return this.GetLocationRecursive(kml.Feature);
 
                 case Document doc:
-                    return doc.Features.SelectMany(feature => this.GetLocationRecursive(currentIdPrefix, feature));
+                    return doc.Features.SelectMany(this.GetLocationRecursive);
 
                 case Folder folder:
-                    string subIdPrefix = currentIdPrefix + "-" + folder.Name;
-                    return folder.Features.SelectMany(feature => this.GetLocationRecursive(subIdPrefix, feature));
+                    return folder.Features.SelectMany(this.GetLocationRecursive);
 
                 case Placemark placemark when placemark.Geometry is Point:
-                    string locationId = SanitizeId(
-                        currentIdPrefix +
-                        (!string.IsNullOrEmpty(placemark.Id)
-                        ? placemark.Id
-                        : placemark.Name.Replace(" ", "-").Normalize()));
+                    Model.Location location = KmlDataFile.LocationFromPlacemark(
+                        this.kmlFile,
+                        placemark,
+                        true,
+                        this.idPrefix);
 
-                    if (!this.allLocationIds.Contains(locationId))
+                    if (!this.allLocationIds.Contains(location.Id))
                     {
-                        Model.Location location = KmlDataFile.LocationFromPlacemark(this.kmlFile, placemark);
-                        location.Id = locationId;
-
-                        this.allLocationIds.Add(locationId);
+                        this.allLocationIds.Add(location.Id);
 
                         return [location];
                     }
@@ -106,25 +102,6 @@ namespace WhereToFly.Geo
                 default:
                     return [];
             }
-        }
-
-        /// <summary>
-        /// Sanitizes an ID by removing anything which is not allowed
-        /// </summary>
-        /// <param name="id">ID to sanitize</param>
-        /// <returns>sanitized ID</returns>
-        private static string SanitizeId(string id)
-        {
-            return id
-                .Replace("<b>", string.Empty)
-                .Replace("</b>", string.Empty)
-                .Replace("(", string.Empty)
-                .Replace(")", string.Empty)
-                .Replace("?", string.Empty)
-                .Replace(" ", string.Empty)
-                .Replace(",", "-")
-                .Replace("/", "-")
-                .Replace("--", "-");
         }
     }
 }

@@ -27,6 +27,12 @@ namespace WhereToFly.Geo.DataFormats
         private readonly bool hasXCTracerTrack;
 
         /// <summary>
+        /// Indicates if KML file is from paraglidingspots and that stable ID values (not GUIDs)
+        /// should be generated at import
+        /// </summary>
+        private readonly bool createStablePlacemarkIds;
+
+        /// <summary>
         /// List of track placemarks
         /// </summary>
         private readonly List<Placemark> trackPlacemarkList = [];
@@ -69,6 +75,18 @@ namespace WhereToFly.Geo.DataFormats
             }
 
             this.hasXCTracerTrack = filename.Contains("-XTR-");
+
+            this.createStablePlacemarkIds =
+                filename.ToLowerInvariant().StartsWith("paraglidingspots");
+
+            if (!this.createStablePlacemarkIds)
+            {
+                this.createStablePlacemarkIds =
+                    this.kml?.Root is Kml kmlRoot &&
+                    kmlRoot.Feature is Document document &&
+                    document.Description?.Text != null &&
+                    document.Description.Text.Contains("paraglidingspots");
+            }
 
             if (this.kml != null)
             {
@@ -381,7 +399,11 @@ namespace WhereToFly.Geo.DataFormats
 
             return
                 (from placemark in this.locationPlacemarkList
-                 select LocationFromPlacemark(this.kml, placemark)).ToList();
+                 select LocationFromPlacemark(
+                     this.kml,
+                     placemark,
+                     this.createStablePlacemarkIds,
+                     "pgspots")).ToList();
         }
 
         /// <summary>
@@ -389,8 +411,16 @@ namespace WhereToFly.Geo.DataFormats
         /// </summary>
         /// <param name="kml">kml file where the placemark is in</param>
         /// <param name="placemark">placemark to use</param>
+        /// <param name="createStablePlacemarkIds">
+        /// when true, generates the placemark ID from the placemark's path from the root node
+        /// </param>
+        /// <param name="idPrefix">prefix for the ID</param>
         /// <returns>location object</returns>
-        internal static Model.Location LocationFromPlacemark(KmlFile kml, Placemark placemark)
+        internal static Model.Location LocationFromPlacemark(
+            KmlFile kml,
+            Placemark placemark,
+            bool createStablePlacemarkIds,
+            string idPrefix)
         {
             Debug.Assert(
                 placemark.Geometry is Point,
@@ -401,14 +431,87 @@ namespace WhereToFly.Geo.DataFormats
                 throw new FormatException("KML Placemark has no Point geometry; can't create location");
             }
 
+            string locationId = placemark.Id == null && createStablePlacemarkIds
+                ? GetStablePlacemarkId(placemark, idPrefix)
+                : placemark.Id ?? Guid.NewGuid().ToString("B");
+
             return new Model.Location(
-                placemark.Id ?? Guid.NewGuid().ToString("B"),
+                locationId,
                 new MapPoint(point.Coordinate.Latitude, point.Coordinate.Longitude, point.Coordinate.Altitude))
             {
                 Name = placemark.Name ?? "unknown",
                 Description = placemark.Description?.Text ?? string.Empty,
                 Type = MapPlacemarkToType(kml, placemark),
             };
+        }
+
+        /// <summary>
+        /// Creates a stable placemark ID from the given placemark. The placemark ID is derived
+        /// from the placemark's path from the root node.
+        /// </summary>
+        /// <param name="placemark">placemark to use</param>
+        /// <param name="idPrefix">prefix for the ID</param>
+        /// <returns>newly created placemark ID</returns>
+        private static string GetStablePlacemarkId(Placemark placemark, string idPrefix)
+        {
+            string locationId = idPrefix + "-" +
+                FindElementIdRecursive(placemark).Normalize();
+
+            if (placemark.Description?.Text != null)
+            {
+                locationId +=
+                    "-" +
+                    placemark.Description.Text.GetHashCode().ToString();
+            }
+
+            return SanitizePlacemarkId(locationId);
+        }
+
+        /// <summary>
+        /// Creates an element ID for given element, based on the folder names where the element
+        /// is contained. Called recursively to find the parent's ID.
+        /// </summary>
+        /// <param name="element">element to find ID for</param>
+        /// <returns>element's ID</returns>
+        private static string FindElementIdRecursive(Element element)
+        {
+            string text = element switch
+            {
+                Placemark placemark => placemark.Name.Replace(" ", "-"),
+                Folder folder => folder.Name,
+                _ => string.Empty,
+            };
+
+            if (element.Parent != null && element is not Kml)
+            {
+                string parentText = FindElementIdRecursive(element.Parent);
+                return string.IsNullOrEmpty(parentText)
+                    ? text
+                    : parentText + "-" + text;
+            }
+            else
+            {
+                return text;
+            }
+        }
+
+        /// <summary>
+        /// Sanitizes a placemark ID by removing anything which is not allowed
+        /// </summary>
+        /// <param name="id">ID to sanitize</param>
+        /// <returns>sanitized ID</returns>
+        private static string SanitizePlacemarkId(string id)
+        {
+            return id
+                .Replace("<b>", string.Empty)
+                .Replace("</b>", string.Empty)
+                .Replace("(", string.Empty)
+                .Replace(")", string.Empty)
+                .Replace("?", string.Empty)
+                .Replace(" ", string.Empty)
+                .Replace(",", "-")
+                .Replace("/", "-")
+                .Replace("--", "-");
         }
 
         /// <summary>

@@ -1,6 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using WhereToFly.Geo.DataFormats;
+using WhereToFly.Geo.Model;
 
 namespace WhereToFly.Geo.UnitTest
 {
@@ -115,6 +118,40 @@ namespace WhereToFly.Geo.UnitTest
 
             // check
             Assert.IsTrue(kmlFile.HasLocations(), "file must have a location");
+        }
+
+        /// <summary>
+        /// Tests loading .kml file with stable placemark IDs
+        /// </summary>
+        [TestMethod]
+        public void TestStablePlacemarkIds()
+        {
+            // set up
+            string filename = Path.Combine(
+                UnitTestHelper.TestAssetsPath,
+                "paraglidingspots_european_alps_2022_03_29.kmz");
+
+            // run
+            var kmlFile = GeoLoader.LoadGeoDataFile(filename);
+            List<Location> locationList = kmlFile.LoadLocationList();
+
+            // check
+            var allPlacemarkIds = new HashSet<string>(
+                locationList.Select(location => location.Id));
+
+            var locationIdToCountMapping =
+                allPlacemarkIds.ToDictionary(
+                    uniqueLocationId => uniqueLocationId,
+                    uniqueLocationId => locationList.Count(location => location.Id == uniqueLocationId));
+
+            var locationIdsWithMultipleCounts =
+                locationIdToCountMapping
+                .Where(kvp => kvp.Value > 1)
+                .Select(kvp => kvp.Key);
+
+            Assert.IsTrue(
+                !locationIdsWithMultipleCounts.Any(),
+                "there must be no placemark IDs which two or more locations");
         }
     }
 }
