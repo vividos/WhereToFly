@@ -129,7 +129,7 @@ namespace WhereToFly.Geo.UnitTest
             // set up
             string filename = Path.Combine(
                 UnitTestHelper.TestAssetsPath,
-                "paraglidingspots_european_alps_2022_03_29.kmz");
+                "paraglidingspots_european_alps_2024_11_13.kmz");
 
             // run
             var kmlFile = GeoLoader.LoadGeoDataFile(filename);

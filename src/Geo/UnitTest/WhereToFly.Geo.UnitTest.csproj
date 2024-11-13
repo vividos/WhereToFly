@@ -9,7 +9,7 @@
     <Content Include="Assets\**\*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\App\Maui\Resources\Raw\locations\paraglidingspots_european_alps_2022_03_29.kmz" Link="Assets\paraglidingspots_european_alps_2022_03_29.kmz">
+    <Content Include="..\..\App\Maui\Resources\Raw\locations\paraglidingspots_european_alps_2024_11_13.kmz" Link="Assets\paraglidingspots_european_alps_2024_11_13.kmz">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
