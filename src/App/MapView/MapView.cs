@@ -37,9 +37,9 @@ namespace WhereToFly.App.MapView
             = new();
 
         /// <summary>
-        /// List of nearby POIs already added to the map
+        /// Set of all location IDs (normal locations and nearby POIs) already added to the map
         /// </summary>
-        private readonly List<string> nearbyPoiIdList = [];
+        private readonly HashSet<string> visibleLocationIdSet = [];
 
         /// <summary>
         /// Task completion source for when map is fully initialized
@@ -688,7 +688,7 @@ namespace WhereToFly.App.MapView
                 }
 
                 IEnumerable<Location> newLocations =
-                    await this.NearbyPoiService.Get(area, this.nearbyPoiIdList);
+                    await this.NearbyPoiService.Get(area, this.visibleLocationIdSet);
 
                 this.AddNearbyPoiLocations(newLocations);
             }
@@ -721,7 +721,12 @@ namespace WhereToFly.App.MapView
         /// <param name="nearbyPoiLocations">list of nearby POI locations</param>
         public void AddNearbyPoiLocations(IEnumerable<Location> nearbyPoiLocations)
         {
-            this.nearbyPoiIdList.AddRange(
+            if (!nearbyPoiLocations.Any())
+            {
+                return;
+            }
+
+            this.visibleLocationIdSet.UnionWith(
                 nearbyPoiLocations.Select(location => location.Id));
 
             var jsonLocationList =
@@ -852,6 +857,8 @@ namespace WhereToFly.App.MapView
         public void ClearLocationList()
         {
             this.RunJavaScript("map.clearLocationList();");
+
+            this.visibleLocationIdSet.Clear();
         }
 
         /// <summary>
@@ -867,6 +874,8 @@ namespace WhereToFly.App.MapView
                 JsonConvert.SerializeObject(jsonLocation));
 
             this.RunJavaScript(js);
+
+            this.visibleLocationIdSet.Add(location.Id);
         }
 
         /// <summary>
@@ -919,6 +928,9 @@ namespace WhereToFly.App.MapView
                 JsonConvert.SerializeObject(jsonLocationList));
 
             await this.RunJavaScriptWithResultAsync(js);
+
+            this.visibleLocationIdSet.UnionWith(
+                locationList.Select(location => location.Id));
         }
 
         /// <summary>
@@ -960,6 +972,8 @@ namespace WhereToFly.App.MapView
         {
             string js = $"map.removeLocation(\"{locationId}\");";
             this.RunJavaScript(js);
+
+            this.visibleLocationIdSet.Remove(locationId);
         }
 
         /// <summary>

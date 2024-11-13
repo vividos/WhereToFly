@@ -56,21 +56,21 @@ namespace WhereToFly.App.Services
         /// the backend service. May throw an exception when no network connectivity is present.
         /// </summary>
         /// <param name="area">map rectangle area</param>
-        /// <param name="visiblePoiIds">list of IDs of already loaded and visible POIs</param>
+        /// <param name="visibleLocationIds">
+        /// set of location IDs of POIs already visible in the area
+        /// </param>
         /// <returns>list of new nearby POI locations</returns>
         public async Task<IEnumerable<Location>> Get(
             MapRectangle area,
-            IEnumerable<string> visiblePoiIds)
+            ISet<string> visibleLocationIds)
         {
             var latLongList = GetLatLongListFromMapArea(area);
 
             var resultList = await this.GetPoisFromLatLongList(latLongList);
 
             // filter by map rectangle and already present IDs
-            var visiblePoiIdSet = new HashSet<string>(visiblePoiIds);
-
             return resultList.Where(location =>
-                !visiblePoiIdSet.Contains(location.Id) &&
+                !visibleLocationIds.Contains(location.Id) &&
                 area.IsInside(location.MapLocation.Latitude, location.MapLocation.Longitude));
         }
 

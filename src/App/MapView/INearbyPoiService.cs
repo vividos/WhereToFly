@@ -13,8 +13,10 @@ namespace WhereToFly.App.MapView
         /// Returns list of nearby POIs in the given map area
         /// </summary>
         /// <param name="area">map area to find POIs in</param>
-        /// <param name="visiblePoiIds">list of POIs already visible in the area</param>
+        /// <param name="visibleLocationIds">
+        /// set of location IDs of POIs already visible in the area
+        /// </param>
         /// <returns>list of new locations</returns>
-        Task<IEnumerable<Location>> Get(MapRectangle area, IEnumerable<string> visiblePoiIds);
+        Task<IEnumerable<Location>> Get(MapRectangle area, ISet<string> visibleLocationIds);
     }
 }
