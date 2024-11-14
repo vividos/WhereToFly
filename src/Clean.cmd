@@ -1,15 +1,25 @@
 @echo off
 REM
 REM Where-to-fly - an app to decide where to (hike up and) fly with a paraglider
-REM Copyright (C) 2023 Michael Fink
+REM Copyright (C) 2023-2024 Michael Fink
 REM
 REM Cleans all temporary files and folders, including bin and obj filders
 REM
 echo Cleaning all temporary files and folders...
 echo.
 
+echo Removing "artifacts" folder...
+rmdir /S /Q ..\artifacts 2> nul
+
+echo Removing ".dotnet-tools" folder...
+rmdir /S /Q .dotnet-tools 2> nul
+
+echo Removing ".sonarqube" folder...
+rmdir /S /Q .sonarqube 2> nul
+echo.
+
 echo Removing "bin" and "obj" folders in...
-for /R %%A in (*.csproj) do (
+for /R %%A in (*.esproj) do (
     echo %%~dpA
     rmdir /S /Q %%~dpA\bin\ 2> nul
     rmdir /S /Q %%~dpA\obj\ 2> nul
