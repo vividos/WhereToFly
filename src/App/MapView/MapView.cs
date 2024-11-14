@@ -726,9 +726,6 @@ namespace WhereToFly.App.MapView
                 return;
             }
 
-            this.visibleLocationIdSet.UnionWith(
-                nearbyPoiLocations.Select(location => location.Id));
-
             var jsonLocationList =
                 from location in nearbyPoiLocations
                 select CreateJsonObjectFromLocation(location);
@@ -738,6 +735,9 @@ namespace WhereToFly.App.MapView
                 JsonConvert.SerializeObject(jsonLocationList));
 
             this.RunJavaScript(js);
+
+            this.visibleLocationIdSet.UnionWith(
+                nearbyPoiLocations.Select(location => location.Id));
         }
 
         /// <summary>
