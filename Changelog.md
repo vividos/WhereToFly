@@ -19,6 +19,7 @@ Released on ?.
 - Fixed exporting layers
 - Hide color selection when editing a flight track
 - Fixed clicking on links on the layer, location and track details pages
+- Fixed "show details" and other functions for nearby POIs
 
 ## Version 1.14.4
 

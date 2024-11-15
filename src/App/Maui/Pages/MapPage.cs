@@ -662,12 +662,21 @@ namespace WhereToFly.App.Pages
         /// <returns>found location, or null when no location could be found</returns>
         private Location? FindLocationById(string locationId)
         {
-            if (this.locationList == null)
+            Location? foundLocation = null;
+
+            if (this.locationList != null)
             {
-                return null;
+                foundLocation =
+                    this.locationList.Find(location => location.Id == locationId);
             }
 
-            return this.locationList.Find(location => location.Id == locationId);
+            if (foundLocation == null)
+            {
+                foundLocation =
+                    this.mapView.GetNearbyPoiLocationById(locationId);
+            }
+
+            return foundLocation;
         }
 
         /// <summary>

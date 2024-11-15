@@ -42,6 +42,11 @@ namespace WhereToFly.App.MapView
         private readonly HashSet<string> visibleLocationIdSet = [];
 
         /// <summary>
+        /// List of nearby POI locations added to the map
+        /// </summary>
+        private readonly List<Location> nearbyPoiLocationList = [];
+
+        /// <summary>
         /// Task completion source for when map is fully initialized
         /// </summary>
         private TaskCompletionSource<bool> taskCompletionSourceMapInitialized
@@ -736,8 +741,26 @@ namespace WhereToFly.App.MapView
 
             this.RunJavaScript(js);
 
+            this.nearbyPoiLocationList.AddRange(nearbyPoiLocations);
+
             this.visibleLocationIdSet.UnionWith(
                 nearbyPoiLocations.Select(location => location.Id));
+        }
+
+        /// <summary>
+        /// Finds a nearby POI location by given location ID.
+        /// </summary>
+        /// <param name="locationId">location ID to use</param>
+        /// <returns>found location, or null when no location could be found</returns>
+        public Location? GetNearbyPoiLocationById(string locationId)
+        {
+            if (!this.visibleLocationIdSet.Contains(locationId))
+            {
+                return null;
+            }
+
+            return this.nearbyPoiLocationList
+                .Find(location => location.Id == locationId);
         }
 
         /// <summary>
@@ -859,6 +882,8 @@ namespace WhereToFly.App.MapView
             this.RunJavaScript("map.clearLocationList();");
 
             this.visibleLocationIdSet.Clear();
+
+            this.nearbyPoiLocationList.Clear();
         }
 
         /// <summary>
