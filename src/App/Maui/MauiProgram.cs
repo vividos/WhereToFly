@@ -22,7 +22,15 @@ namespace WhereToFly.App
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+#if WINDOWS
+                .UseMauiCommunityToolkit(
+                    options =>
+                    {
+                        options.SetShouldEnableSnackbarOnWindows(true);
+                    })
+#else
                 .UseMauiCommunityToolkit()
+#endif
                 .UseSkiaSharp()
                 .UseFFImageLoading()
                 .UseMapView()
