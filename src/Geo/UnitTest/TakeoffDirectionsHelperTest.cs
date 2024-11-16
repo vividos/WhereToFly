@@ -41,7 +41,7 @@ namespace WhereToFly.Geo.UnitTest
             foreach (string text in correctTakeoffTexts)
             {
                 // run
-                bool result = TakeoffDirectionsHelper.TryParse(text, out TakeoffDirections takeoffDirections);
+                bool result = TakeoffDirectionsHelper.TryParseFromText(text, out TakeoffDirections takeoffDirections);
 
                 Debug.WriteLine($"text={text} directions={takeoffDirections}");
 
@@ -69,7 +69,7 @@ namespace WhereToFly.Geo.UnitTest
             foreach (string text in invalidTakeoffTexts)
             {
                 // run
-                bool result = TakeoffDirectionsHelper.TryParse(text, out TakeoffDirections takeoffDirections);
+                bool result = TakeoffDirectionsHelper.TryParseFromText(text, out TakeoffDirections takeoffDirections);
 
                 // check
                 Assert.IsFalse(result, "text parsing must have failed");

@@ -280,47 +280,8 @@ namespace WhereToFly.App.Logic
         {
             foreach (var location in locationList)
             {
-                if (TakeoffDirectionsHelper.TryParse(location.Name, out TakeoffDirections takeoffDirections))
-                {
-                    location.TakeoffDirections = takeoffDirections;
-                }
-                else if (TryParseStartDirectionFromDescription(location.Description, out TakeoffDirections takeoffDirections2))
-                {
-                    location.TakeoffDirections = takeoffDirections2;
-                }
+                TakeoffDirectionsHelper.AddTakeoffDirection(location);
             }
-        }
-
-        /// <summary>
-        /// Tries to parse a start direction from given location description. Some locations, e.g.
-        /// from the DHV Geländedatenbank, have the start directions in the description, after a
-        /// certain text.
-        /// </summary>
-        /// <param name="description">location description</param>
-        /// <param name="takeoffDirections">parsed takeoff directions</param>
-        /// <returns>true when a takeoff direction could be parsed, or false when not</returns>
-        private static bool TryParseStartDirectionFromDescription(string description, out TakeoffDirections takeoffDirections)
-        {
-            takeoffDirections = TakeoffDirections.None;
-
-            const string StartDirectionText = "Startrichtung ";
-            int posStartDirection = description.IndexOf(StartDirectionText);
-            if (posStartDirection == -1)
-            {
-                return false;
-            }
-
-            int posLineBreak = description.IndexOf("<br", posStartDirection);
-            if (posLineBreak == -1)
-            {
-                posLineBreak = description.Length;
-            }
-
-            posStartDirection += StartDirectionText.Length;
-
-            string direction = description.Substring(posStartDirection, posLineBreak - posStartDirection);
-
-            return TakeoffDirectionsHelper.TryParse(direction, out takeoffDirections);
         }
 
         /// <summary>

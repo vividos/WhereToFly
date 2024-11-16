@@ -6,10 +6,31 @@ using WhereToFly.Geo.Model;
 namespace WhereToFly.Geo
 {
     /// <summary>
-    /// Helper methods for the TakeoffDirections enum
+    /// Helper methods for the <see cref="TakeoffDirections"/> enum
     /// </summary>
     public static class TakeoffDirectionsHelper
     {
+        /// <summary>
+        /// Adds takeoff direction for a location, if it can be parsed from the location name or
+        /// description
+        /// </summary>
+        /// <param name="location">location to set takeoff direction for</param>
+        public static void AddTakeoffDirection(Location location)
+        {
+            if (TryParseFromText(
+                location.Name,
+                out TakeoffDirections takeoffDirections))
+            {
+                location.TakeoffDirections = takeoffDirections;
+            }
+            else if (TryParseStartDirectionFromDescription(
+                location.Description,
+                out TakeoffDirections takeoffDirections2))
+            {
+                location.TakeoffDirections = takeoffDirections2;
+            }
+        }
+
         /// <summary>
         /// Tries to parse a text string for takeoff directions. When the text contains
         /// parenthesis, only the text in the parenthesis is parsed. The takeoff directions can
@@ -19,7 +40,7 @@ namespace WhereToFly.Geo
         /// <param name="text">text to parse</param>
         /// <param name="takeoffDirections">flag enum that contains all directions</param>
         /// <returns>true when parsing was successful, false when not</returns>
-        public static bool TryParse(string text, out TakeoffDirections takeoffDirections)
+        public static bool TryParseFromText(string text, out TakeoffDirections takeoffDirections)
         {
             takeoffDirections = TakeoffDirections.None;
 
@@ -29,7 +50,7 @@ namespace WhereToFly.Geo
                 int endBracket = text.IndexOf(')', startBracket + 1);
                 if (endBracket != -1)
                 {
-                    return TryParse(
+                    return TryParseFromText(
                         text.Substring(startBracket + 1, endBracket - startBracket - 1),
                         out takeoffDirections);
                 }
@@ -218,6 +239,44 @@ namespace WhereToFly.Geo
             }
 
             return directions;
+        }
+
+        /// <summary>
+        /// Tries to parse a start direction from given location description. Some locations, e.g.
+        /// from the DHV Geländedatenbank, have the start directions in the description, after a
+        /// certain text.
+        /// </summary>
+        /// <param name="description">location description</param>
+        /// <param name="takeoffDirections">parsed takeoff directions</param>
+        /// <returns>true when a takeoff direction could be parsed, or false when not</returns>
+        private static bool TryParseStartDirectionFromDescription(
+            string description,
+            out TakeoffDirections takeoffDirections)
+        {
+            takeoffDirections = TakeoffDirections.None;
+
+            const string StartDirectionText = "Startrichtung ";
+            int posStartDirection = description.IndexOf(StartDirectionText);
+            if (posStartDirection == -1)
+            {
+                return false;
+            }
+
+            int posLineBreak = description.IndexOf("<br", posStartDirection);
+            if (posLineBreak == -1)
+            {
+                posLineBreak = description.Length;
+            }
+
+            posStartDirection += StartDirectionText.Length;
+
+            string direction = description.Substring(
+                posStartDirection,
+                posLineBreak - posStartDirection);
+
+            return TryParseFromText(
+                direction,
+                out takeoffDirections);
         }
     }
 }
