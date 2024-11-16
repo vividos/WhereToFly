@@ -882,6 +882,11 @@ namespace WhereToFly.App.Pages
                 InternetLink = string.Empty,
             };
 
+            await NavigationService.Instance.NavigateAsync(
+                PageKey.EditLocationDetailsPage,
+                animated: true,
+                parameter: location);
+
             this.locationList.Add(location);
 
             var dataService = DependencyService.Get<IDataService>();
@@ -889,10 +894,7 @@ namespace WhereToFly.App.Pages
 
             await locationDataService.Add(location);
 
-            await NavigationService.Instance.NavigateAsync(
-                PageKey.EditLocationDetailsPage,
-                animated: true,
-                parameter: location);
+            TakeoffDirectionsHelper.AddTakeoffDirection(location);
 
             this.mapView.AddLocation(location);
         }

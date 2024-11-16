@@ -241,6 +241,8 @@ namespace WhereToFly.Geo.DataFormats
                 InternetLink = linkHrefNode?.Value ?? string.Empty,
             };
 
+            TakeoffDirectionsHelper.AddTakeoffDirection(location);
+
             return location;
         }
 

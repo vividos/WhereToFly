@@ -435,7 +435,7 @@ namespace WhereToFly.Geo.DataFormats
                 ? GetStablePlacemarkId(placemark, idPrefix)
                 : placemark.Id ?? Guid.NewGuid().ToString("B");
 
-            return new Model.Location(
+            var location = new Model.Location(
                 locationId,
                 new MapPoint(point.Coordinate.Latitude, point.Coordinate.Longitude, point.Coordinate.Altitude))
             {
@@ -443,6 +443,10 @@ namespace WhereToFly.Geo.DataFormats
                 Description = placemark.Description?.Text ?? string.Empty,
                 Type = MapPlacemarkToType(kml, placemark),
             };
+
+            TakeoffDirectionsHelper.AddTakeoffDirection(location);
+
+            return location;
         }
 
         /// <summary>
