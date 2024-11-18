@@ -2339,7 +2339,7 @@ export class MapView {
 
         MapView.log("sampleTrackHeights: #1 start sampling track point heights for " + track.listOfTrackPoints.length + " points...");
 
-        if (track.ListOfTrackPoints.length === 0) {
+        if (track.listOfTrackPoints.length === 0) {
             this.onSampledTrackHeights([]);
             return;
         }
