@@ -9,7 +9,7 @@
           VerticalOptions="Center"
           HorizontalOptions="Center"
           WidthRequest="320"
-          RowSpacing="10"
+          RowSpacing="0"
           Padding="20">
 
         <HorizontalStackLayout Grid.Row="0" HorizontalOptions="Center"
@@ -32,6 +32,7 @@
 
         <!-- Cancel button -->
         <Button Grid.Row="1"
+                Margin="0,16,0,0"
                 x:Name="cancelButton"
                 WidthRequest="100"
                 Text="Cancel"
