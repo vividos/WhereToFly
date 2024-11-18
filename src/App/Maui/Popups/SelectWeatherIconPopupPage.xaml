@@ -39,18 +39,20 @@
             </CollectionView.ItemsLayout>
 
             <CollectionView.GroupHeaderTemplate>
+                <!-- Template for group header -->
                 <DataTemplate x:DataType="views:WeatherIconListViewModelGrouping">
                     <Label Text="{Binding Key}"
                            VerticalOptions="Center"
                            Padding="8,4"
+                           HeightRequest="40"
                            FontSize="Large"
                            FontAttributes="Bold" />
                 </DataTemplate>
             </CollectionView.GroupHeaderTemplate>
 
             <CollectionView.ItemTemplate>
+                <!-- Template for a single view cell -->
                 <DataTemplate x:DataType="viewmodels:WeatherIconListEntryViewModel">
-                    <!-- Template for a single view cell -->
                     <HorizontalStackLayout Style="{StaticResource ListViewItemStyle}"
                                            HeightRequest="{OnPlatform Android=65, WinUI=45}"
                                            Padding="2,1">
