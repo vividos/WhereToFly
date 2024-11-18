@@ -2,7 +2,7 @@
 
 ## Version 1.15.0
 
-Released on ?.
+Released on 2024-11-18.
 
 ✨ New Features / Improvements
 
