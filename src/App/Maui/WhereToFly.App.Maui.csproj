@@ -17,7 +17,7 @@
     <ApplicationId>de.vividos.app.wheretofly.android</ApplicationId>
 
     <!-- Versions -->
-    <ApplicationDisplayVersion>$(AssemblyInformationalVersion)</ApplicationDisplayVersion>
+    <ApplicationDisplayVersion>$(BuildVersionSimple)</ApplicationDisplayVersion>
     <ApplicationVersion>$(AndroidVersionCode)</ApplicationVersion>
     <ApplicationVersion Condition=" $(ApplicationVersion) == '' ">400</ApplicationVersion>
   </PropertyGroup>
