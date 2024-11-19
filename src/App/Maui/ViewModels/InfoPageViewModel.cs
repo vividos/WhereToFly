@@ -145,7 +145,7 @@ namespace WhereToFly.App.ViewModels
         {
             try
             {
-                return ThisAssembly.AssemblyFileVersion;
+                return ThisAssembly.AssemblyVersion;
             }
             catch (Exception)
             {

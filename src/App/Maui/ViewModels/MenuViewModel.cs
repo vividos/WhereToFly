@@ -78,7 +78,7 @@ namespace WhereToFly.App.ViewModels
 
             try
             {
-                this.VersionText = $"Version {ThisAssembly.AssemblyFileVersion}";
+                this.VersionText = $"Version {ThisAssembly.AssemblyVersion}";
             }
             catch (Exception)
             {
