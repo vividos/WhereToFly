@@ -18,7 +18,8 @@
 
     <!-- Versions -->
     <ApplicationDisplayVersion>$(AssemblyInformationalVersion)</ApplicationDisplayVersion>
-    <ApplicationVersion>$(BuildNumber)</ApplicationVersion>
+    <ApplicationVersion>$(AndroidVersionCode)</ApplicationVersion>
+    <ApplicationVersion Condition=" $(ApplicationVersion) == '' ">400</ApplicationVersion>
   </PropertyGroup>
 
   <!-- Windows properties -->
@@ -32,6 +33,8 @@
   <PropertyGroup Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' ">
     <SupportedOSPlatformVersion>21.0</SupportedOSPlatformVersion>
     <AndroidStoreUncompressedFileExtensions>.kmz</AndroidStoreUncompressedFileExtensions>
+    <!-- Disable automatically setting version numbers on MAUI -->
+    <NBGV_SetMauiVersionProperties>false</NBGV_SetMauiVersionProperties>
   </PropertyGroup>
 
   <PropertyGroup Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' And '$(Configuration)' == 'Debug' ">

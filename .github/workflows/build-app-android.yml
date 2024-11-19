@@ -37,6 +37,10 @@ jobs:
         fileDir: 'src/App/Maui/'
         encodedString: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
 
+    - name: Calculate Android versionCode
+      run: |
+        echo "set /a ANDROID_VERSION_CODE=%GITHUB_RUN_NUMBER%+100" >> $GITHUB_ENV
+
     - name: Build MapView project
       run: >
         dotnet build
@@ -57,6 +61,7 @@ jobs:
         -p:AndroidSigningKeyAlias=${{ secrets.ANDROID_KEYSTORE_ALIAS }}
         -p:AndroidSigningKeyPass=${{ secrets.ANDROID_KEY_PASSWORD }}
         -p:PublicRelease=${{ github.event.inputs.publicRelease }}
+        -p:AndroidVersionCode=${{ env.ANDROID_VERSION_CODE }}
 
     - name: Publish build artifacts
       uses: actions/upload-artifact@v4
