@@ -2,7 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/dotnet/Nerdbank.GitVersioning/main/src/NerdBank.GitVersioning/version.schema.json",
   "version": "1.15.0",
   "assemblyVersion": {
-    "precision": "revision"
+    "precision": "build" // build means a.b.c
   },
   "nugetPackageVersion": {
     "semVer": 2
