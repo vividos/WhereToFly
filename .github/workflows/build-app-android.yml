@@ -38,6 +38,7 @@ jobs:
         encodedString: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
 
     - name: Calculate Android versionCode
+      shell: cmd
       run: |
         set /a ANDROID_VERSION_CODE=%GITHUB_RUN_NUMBER%+100
         echo "Using android:versionCode %ANDROID_VERSION_CODE%"
