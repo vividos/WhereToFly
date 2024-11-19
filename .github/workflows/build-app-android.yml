@@ -41,8 +41,8 @@ jobs:
       shell: cmd
       run: |
         set /a ANDROID_VERSION_CODE=%GITHUB_RUN_NUMBER%+100
-        echo "Using android:versionCode %ANDROID_VERSION_CODE%"
-        echo "ANDROID_VERSION_CODE=%ANDROID_VERSION_CODE%" >> %GITHUB_ENV%
+        echo Using android:versionCode %ANDROID_VERSION_CODE%
+        echo ANDROID_VERSION_CODE=%ANDROID_VERSION_CODE% >> %GITHUB_ENV%
 
     - name: Build MapView project
       run: >
