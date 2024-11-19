@@ -39,7 +39,9 @@ jobs:
 
     - name: Calculate Android versionCode
       run: |
-        echo "set /a ANDROID_VERSION_CODE=%GITHUB_RUN_NUMBER%+100" >> $env:GITHUB_ENV
+        set /a ANDROID_VERSION_CODE=%GITHUB_RUN_NUMBER%+100
+        echo "Using android:versionCode %ANDROID_VERSION_CODE%"
+        echo "ANDROID_VERSION_CODE=%ANDROID_VERSION_CODE%" >> $env:GITHUB_ENV
 
     - name: Build MapView project
       run: >
