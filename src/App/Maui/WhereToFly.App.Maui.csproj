@@ -19,8 +19,6 @@
     <!-- Versions -->
     <ApplicationDisplayVersion>$(AssemblyInformationalVersion)</ApplicationDisplayVersion>
     <ApplicationVersion>$(BuildNumber)</ApplicationVersion>
-
-    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
   </PropertyGroup>
 
   <!-- Windows properties -->
@@ -31,14 +29,17 @@
   </PropertyGroup>
 
   <!-- Android properties -->
-  <PropertyGroup Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' And '$(Configuration)' == 'Debug' ">
+  <PropertyGroup Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' ">
+    <SupportedOSPlatformVersion>21.0</SupportedOSPlatformVersion>
     <AndroidStoreUncompressedFileExtensions>.kmz</AndroidStoreUncompressedFileExtensions>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' And '$(Configuration)' == 'Debug' ">
     <RuntimeIdentifiers>android-arm64;android-x64</RuntimeIdentifiers>
   </PropertyGroup>
 
   <PropertyGroup Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' And '$(Configuration)' == 'Release' ">
     <AndroidPackageFormat>apk</AndroidPackageFormat>
-    <AndroidStoreUncompressedFileExtensions>.kmz</AndroidStoreUncompressedFileExtensions>
     <RuntimeIdentifiers>android-arm64</RuntimeIdentifiers>
   </PropertyGroup>
 
