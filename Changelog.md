@@ -1,5 +1,13 @@
 ﻿# Changelog
 
+## Version 1.16.0
+
+Released on ?.
+
+✨ New Features / Improvements
+
+🐛 Bugfixes
+
 ## Version 1.15.0
 
 Released on 2024-11-20.
