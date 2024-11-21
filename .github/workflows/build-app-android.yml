@@ -28,7 +28,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
+        dotnet-version: 9.0.x
 
     - name: Prepare app signing
       uses: timheuer/base64-to-file@v1.2
@@ -48,7 +48,7 @@ jobs:
       run: >
         dotnet build
         src/App/MapView/WhereToFly.App.MapView.csproj
-        -f net8.0-android
+        -f net9.0-android
         -c Release
         -p:PublicRelease=${{ github.event.inputs.publicRelease }}
 
@@ -56,7 +56,7 @@ jobs:
       run: >
         dotnet publish
         src/App/Maui/WhereToFly.App.Maui.csproj
-        -f net8.0-android
+        -f net9.0-android
         -p:AndroidKeyStore=true
         -p:AndroidPackageFormats=apk
         -p:AndroidSigningKeyStore=keystore.jks
@@ -70,4 +70,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: APK file
-        path: artifacts/publish/WhereToFly.App.Maui/release_net8.0-android/de.vividos.app.wheretofly.android-Signed.apk
+        path: artifacts/publish/WhereToFly.App.Maui/release_net9.0-android/de.vividos.app.wheretofly.android-Signed.apk
