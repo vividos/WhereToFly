@@ -4,8 +4,8 @@
     <Copyright>Copyright © 2017-2024 Michael Fink</Copyright>
     <Company></Company>
     <NuGetPackagePrefix>Vividos</NuGetPackagePrefix>
-    <DotNetVersion>net8.0</DotNetVersion>
-    <DotNetMauiVersion>8.0.93</DotNetMauiVersion>
+    <DotNetVersion>net9.0</DotNetVersion>
+    <DotNetMauiVersion>9.0.10</DotNetMauiVersion>
   </PropertyGroup>
 
   <PropertyGroup>
