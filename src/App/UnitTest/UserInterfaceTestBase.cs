@@ -72,7 +72,9 @@ namespace WhereToFly.App.UnitTest
                 $"WhereToFly.App.{dotResourcePath};assembly={assembly.GetName().Name}";
 
             var resourceDictionary = new ResourceDictionary();
-            resourceDictionary.SetAndLoadSource(
+
+            Microsoft.Maui.Controls.Xaml.ResourceDictionaryHelpers.LoadFromSource(
+                resourceDictionary,
                 new Uri(uriWithAssembly, UriKind.Relative),
                 resourcePath,
                 assembly,
