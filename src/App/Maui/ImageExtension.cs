@@ -11,6 +11,7 @@ namespace WhereToFly.App
     /// {local:Image image_base_name.svg}
     /// </summary>
     [ContentProperty(nameof(BaseName))]
+    [RequireService([typeof(IXmlLineInfoProvider)])]
     public class ImageExtension : IMarkupExtension<ImageSource>
     {
         /// <summary>
