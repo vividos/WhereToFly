@@ -19,8 +19,8 @@ namespace WhereToFly.App
         /// <summary>
         /// The current main page
         /// </summary>
-        private static Page MainPage
-            => App.MainPage
+        internal static Page MainPage
+            => App.Windows[0].Page
             ?? throw new InvalidOperationException("MainPage is not available");
 
         /// <summary>

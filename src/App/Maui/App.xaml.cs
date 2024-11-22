@@ -86,8 +86,6 @@ namespace WhereToFly.App
 
             SetupDepencencyService();
 
-            this.MainPage = new RootPage();
-
             Task.Run(this.LoadAppDataAsync);
 
             this.RequestedThemeChanged += this.OnRequestedThemeChanged;
@@ -100,10 +98,11 @@ namespace WhereToFly.App
         /// <returns>window object</returns>
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            var window = base.CreateWindow(activationState);
-            window.Title = Constants.AppTitle;
-
-            return window;
+            return new Window
+            {
+                Title = Constants.AppTitle,
+                Page = new RootPage(),
+            };
         }
 
         /// <summary>

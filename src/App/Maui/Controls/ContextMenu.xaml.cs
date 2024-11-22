@@ -121,11 +121,7 @@ namespace WhereToFly.App.Controls
                 });
 
             popupPage = new ContextMenuPopupPage(viewModel);
-
-            var mainPage = App.Current?.MainPage
-                ?? throw new InvalidOperationException("MainPage is not available");
-
-            mainPage.ShowPopup(popupPage);
+            UserInterface.MainPage.ShowPopup(popupPage);
         }
     }
 }

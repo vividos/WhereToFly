@@ -95,10 +95,7 @@ namespace WhereToFly.App.Logic
         /// </returns>
         private static async Task<string?> AskUserExportFilenameAsync(string exportFilename)
         {
-            var mainPage = App.Current?.MainPage
-                ?? throw new InvalidOperationException("MainPage is not available");
-
-            string editedExportFilename = await mainPage.DisplayPromptAsync(
+            string editedExportFilename = await UserInterface.MainPage.DisplayPromptAsync(
                 Constants.AppTitle,
                 "Export filename",
                 "Export",

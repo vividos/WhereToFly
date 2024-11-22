@@ -106,10 +106,7 @@ namespace WhereToFly.App.Pages
 
             popupPage = new ContextMenuPopupPage(viewModel);
 
-            var mainPage = App.Current?.MainPage
-                ?? throw new InvalidOperationException("MainPage is not available");
-
-            object? result = await mainPage.ShowPopupAsync(popupPage);
+            object? result = await UserInterface.MainPage.ShowPopupAsync(popupPage);
 
             return (Result?)result ?? Result.Cancel;
         }

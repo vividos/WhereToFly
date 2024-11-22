@@ -47,7 +47,7 @@ namespace WhereToFly.App.Popups
         /// </summary>
         public void Show()
         {
-            App.Current!.MainPage!.ShowPopup(this);
+            UserInterface.MainPage.ShowPopup(this);
 
             this.isShown = true;
         }

@@ -188,10 +188,7 @@ namespace WhereToFly.App.Services
 
             if (popupPage != null)
             {
-                var mainPage = App.Current?.MainPage
-                    ?? throw new InvalidOperationException("MainPage is not available");
-
-                await mainPage.ShowPopupAsync(popupPage);
+                await UserInterface.MainPage.ShowPopupAsync(popupPage);
             }
             else
             {
@@ -260,10 +257,7 @@ namespace WhereToFly.App.Services
             }
 
             // close flyout if necessary
-            var mainPage = App.Current?.MainPage
-                ?? throw new InvalidOperationException("MainPage is not available");
-
-            if (mainPage is FlyoutPage flyoutPage &&
+            if (UserInterface.MainPage is FlyoutPage flyoutPage &&
                 flyoutPage.IsPresented)
             {
                 flyoutPage.IsPresented = false;
