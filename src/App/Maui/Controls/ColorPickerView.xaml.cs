@@ -149,27 +149,5 @@ namespace WhereToFly.App.Controls
             // update view model
             this.SetValue(SelectedColorProperty, color);
         }
-
-        /// <summary>
-        /// Called when a property has changed
-        /// </summary>
-        /// <param name="propertyName">name of changed property</param>
-        protected override void OnPropertyChanged(string? propertyName = null)
-        {
-            Debug.WriteLine($"OnPropertyChanged({propertyName})");
-            if (propertyName == nameof(this.BackgroundColor))
-            {
-                // set all inner frame background colors
-                foreach (Frame outerFrame in this.colorPickerLayout.Children.Cast<Frame>())
-                {
-                    if (outerFrame.Content is Frame innerFrame)
-                    {
-                        innerFrame.BackgroundColor = this.BackgroundColor;
-                    }
-                }
-            }
-
-            base.OnPropertyChanged(propertyName);
-        }
     }
 }

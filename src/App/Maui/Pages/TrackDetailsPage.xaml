@@ -35,20 +35,19 @@
                                    VerticalOptions="Center" />
 
                 <!-- Track color box -->
-                <Frame IsVisible="{Binding IsColorBoxVisible, Mode=OneWay}"
-                       BackgroundColor="{Binding TrackColor, Mode=OneWay}"
-                       WidthRequest="32"
-                       HeightRequest="32"
-                       VerticalOptions="Center"
-                       Padding="5"
-                       BorderColor="White"
-                       CornerRadius="3"
-                       HasShadow="False">
-                    <Frame.GestureRecognizers>
+                <Border IsVisible="{Binding IsColorBoxVisible, Mode=OneWay}"
+                        BackgroundColor="{Binding TrackColor, Mode=OneWay}"
+                        WidthRequest="32"
+                        HeightRequest="32"
+                        VerticalOptions="Center"
+                        Margin="5"
+                        Stroke="White"
+                        StrokeShape="RoundRectangle 3">
+                    <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ColorBoxTappedCommand}"
                                               NumberOfTapsRequired="1" />
-                    </Frame.GestureRecognizers>
-                </Frame>
+                    </Border.GestureRecognizers>
+                </Border>
 
                 <!-- Name -->
                 <Label Text="{Binding Name}"

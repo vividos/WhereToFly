@@ -91,16 +91,16 @@
                                                Grid.RowSpan="2" />
 
                             <!-- Track color -->
-                            <Frame IsVisible="{Binding IsColorBoxVisible, Mode=OneWay}"
-                                   BackgroundColor="{Binding TrackColor, Mode=OneTime}"
-                                   VerticalOptions="Center"
-                                   WidthRequest="12"
-                                   HeightRequest="32"
-                                   Padding="5"
-                                   CornerRadius="3"
-                                   HasShadow="False"
-                                   Grid.Column="1"
-                                   Grid.RowSpan="2" />
+                            <Border IsVisible="{Binding IsColorBoxVisible, Mode=OneWay}"
+                                    BackgroundColor="{Binding TrackColor, Mode=OneTime}"
+                                    VerticalOptions="Center"
+                                    WidthRequest="32"
+                                    HeightRequest="32"
+                                    Margin="5"
+                                    Stroke="White"
+                                    StrokeShape="RoundRectangle 3"
+                                    Grid.Column="1"
+                                    Grid.RowSpan="2" />
 
                             <!-- Details -->
                             <Label Text="{Binding Name}"
