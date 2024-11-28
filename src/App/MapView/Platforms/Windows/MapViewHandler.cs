@@ -18,7 +18,7 @@ namespace WhereToFly.App.MapView
         {
             base.ConnectHandler(platformView);
 
-            this.PlatformView.CoreWebView2Initialized += this.OnCoreWebView2Initialized;
+            platformView.CoreWebView2Initialized += this.OnCoreWebView2Initialized;
         }
 
         /// <summary>
@@ -27,9 +27,9 @@ namespace WhereToFly.App.MapView
         /// <param name="platformView">platform view</param>
         protected override void DisconnectHandler(WebView2 platformView)
         {
-            base.DisconnectHandler(platformView);
+            platformView.CoreWebView2Initialized -= this.OnCoreWebView2Initialized;
 
-            this.PlatformView.CoreWebView2Initialized -= this.OnCoreWebView2Initialized;
+            base.DisconnectHandler(platformView);
         }
 
         /// <summary>
