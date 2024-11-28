@@ -1,12 +1,12 @@
 ﻿using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Dispatching;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using WhereToFly.Geo.Model;
 
@@ -138,7 +138,7 @@ namespace WhereToFly.App.MapView
                 useDarkTheme = this.UseDarkTheme,
             };
 
-            string jsonOptions = JsonConvert.SerializeObject(options);
+            string jsonOptions = JsonSerializer.Serialize(options);
             string js = $"heightProfileView = new WhereToFly.heightProfileView.HeightProfileView({jsonOptions});";
             this.RunJavaScript(js);
 
@@ -243,7 +243,8 @@ namespace WhereToFly.App.MapView
                 listOfTimePoints = timePointsList,
             };
 
-            string js = $"heightProfileView.setTrack({JsonConvert.SerializeObject(trackJsonObject)});";
+            string json = JsonSerializer.Serialize(trackJsonObject);
+            string js = $"heightProfileView.setTrack({json});";
 
             this.RunJavaScript(js);
         }
@@ -255,7 +256,7 @@ namespace WhereToFly.App.MapView
         /// <param name="elevationValues">elevation values</param>
         public void AddGroundProfile(IEnumerable<double> elevationValues)
         {
-            string elevations = JsonConvert.SerializeObject(elevationValues);
+            string elevations = JsonSerializer.Serialize(elevationValues);
             string js = $"heightProfileView.addGroundProfile({elevations});";
 
             this.RunJavaScript(js);

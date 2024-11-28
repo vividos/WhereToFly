@@ -26,7 +26,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Maui.Controls" Version="$(DotNetMauiVersion)" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <MauiAsset Include="..\..\Shared\WebLib\dist\**\*.*" Exclude="..\..\Shared\WebLib\dist\**\*.map" Pack="True" PackagePath="buildTransitive\weblib\" LogicalName="weblib\%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 

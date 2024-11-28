@@ -2,12 +2,12 @@
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Devices;
 using Microsoft.Maui.Dispatching;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
@@ -403,7 +403,7 @@ namespace WhereToFly.App.MapView
 
             string js = string.Format(
                 "map = new WhereToFly.mapView.MapView({0});",
-                JsonConvert.SerializeObject(options));
+                JsonSerializer.Serialize(options));
 
             this.RunJavaScript(js);
 
@@ -472,7 +472,7 @@ namespace WhereToFly.App.MapView
 
             string js = string.Format(
                 "map.zoomToRectangle({0});",
-                JsonConvert.SerializeObject(rectangle));
+                JsonSerializer.Serialize(rectangle));
 
             this.RunJavaScript(js);
         }
@@ -517,7 +517,7 @@ namespace WhereToFly.App.MapView
 
             string js = string.Format(
                 "map.updateMyLocation({0});",
-                JsonConvert.SerializeObject(options));
+                JsonSerializer.Serialize(options));
 
             this.RunJavaScript(js);
 
@@ -589,7 +589,7 @@ namespace WhereToFly.App.MapView
                 hideTargetLocation = false,
             };
 
-            string js = $"await map.setCompassTarget({JsonConvert.SerializeObject(options)});";
+            string js = $"await map.setCompassTarget({JsonSerializer.Serialize(options)});";
 
             this.RunJavaScript(js);
         }
@@ -631,7 +631,7 @@ namespace WhereToFly.App.MapView
                 hideTargetLocation = false,
             };
 
-            string js = $"await map.setCompassTarget({JsonConvert.SerializeObject(options)});";
+            string js = $"await map.setCompassTarget({JsonSerializer.Serialize(options)});";
 
             this.RunJavaScript(js);
         }
@@ -717,7 +717,7 @@ namespace WhereToFly.App.MapView
                 .Replace("\\\\", "\\")
                 .Replace("\\\"", "\"");
 
-            return JsonConvert.DeserializeObject<MapRectangle>(result);
+            return JsonSerializer.Deserialize<MapRectangle>(result);
         }
 
         /// <summary>
@@ -737,7 +737,7 @@ namespace WhereToFly.App.MapView
 
             string js = string.Format(
                 "map.addNearbyPoiLocations({0});",
-                JsonConvert.SerializeObject(jsonLocationList));
+                JsonSerializer.Serialize(jsonLocationList));
 
             this.RunJavaScript(js);
 
@@ -806,7 +806,7 @@ namespace WhereToFly.App.MapView
 
             string js = string.Format(
                 "await map.addLayer({0});",
-                JsonConvert.SerializeObject(layerObject));
+                JsonSerializer.Serialize(layerObject));
 
             await this.RunJavaScriptWithResultAsync(js);
         }
@@ -836,7 +836,7 @@ namespace WhereToFly.App.MapView
 
             string js = string.Format(
                 "map.setLayerVisibility({0});",
-                JsonConvert.SerializeObject(options));
+                JsonSerializer.Serialize(options));
 
             this.RunJavaScript(js);
         }
@@ -896,7 +896,7 @@ namespace WhereToFly.App.MapView
 
             string js = string.Format(
                 "await map.addLocationList([{0}]);",
-                JsonConvert.SerializeObject(jsonLocation));
+                JsonSerializer.Serialize(jsonLocation));
 
             this.RunJavaScript(js);
 
@@ -950,7 +950,7 @@ namespace WhereToFly.App.MapView
 
             string js = string.Format(
                 "await map.addLocationList({0});",
-                JsonConvert.SerializeObject(jsonLocationList));
+                JsonSerializer.Serialize(jsonLocationList));
 
             await this.RunJavaScriptWithResultAsync(js);
 
@@ -984,7 +984,7 @@ namespace WhereToFly.App.MapView
 
             string js = string.Format(
                 "await map.updateLocation({0});",
-                JsonConvert.SerializeObject(jsonLocation));
+                JsonSerializer.Serialize(jsonLocation));
 
             this.RunJavaScript(js);
         }
@@ -1030,7 +1030,7 @@ namespace WhereToFly.App.MapView
                 listOfTrackPoints = trackPointsList,
             };
 
-            string js = $"map.sampleTrackHeights({JsonConvert.SerializeObject(trackJsonObject)});";
+            string js = $"map.sampleTrackHeights({JsonSerializer.Serialize(trackJsonObject)});";
 
             this.taskCompletionSourceSampleTrackHeights =
                 new TaskCompletionSource<double[]?>();
@@ -1113,7 +1113,7 @@ namespace WhereToFly.App.MapView
                 attribution = track.Attribution,
             };
 
-            string js = $"await map.addTrack({JsonConvert.SerializeObject(trackJsonObject)});";
+            string js = $"await map.addTrack({JsonSerializer.Serialize(trackJsonObject)});";
 
             await this.RunJavaScriptWithResultAsync(js);
         }
@@ -1131,7 +1131,7 @@ namespace WhereToFly.App.MapView
                 color = track.IsFlightTrack ? null : track.Color,
             };
 
-            string js = $"map.updateTrack({JsonConvert.SerializeObject(trackJsonObject)});";
+            string js = $"map.updateTrack({JsonSerializer.Serialize(trackJsonObject)});";
 
             this.RunJavaScript(js);
         }
@@ -1158,7 +1158,7 @@ namespace WhereToFly.App.MapView
                     }).ToArray(),
             };
 
-            string js = $"map.updateLiveTrack({JsonConvert.SerializeObject(trackJsonObject)});";
+            string js = $"map.updateLiveTrack({JsonSerializer.Serialize(trackJsonObject)});";
 
             this.RunJavaScript(js);
         }
@@ -1210,7 +1210,7 @@ namespace WhereToFly.App.MapView
 
             string js = string.Format(
                 "await map.showFindResult({0});",
-                JsonConvert.SerializeObject(options));
+                JsonSerializer.Serialize(options));
 
             this.RunJavaScript(js);
         }
@@ -1245,7 +1245,7 @@ namespace WhereToFly.App.MapView
 
             string js = string.Format(
                 "map.showFlyingRange({0});",
-                JsonConvert.SerializeObject(options));
+                JsonSerializer.Serialize(options));
 
             this.RunJavaScript(js);
         }
@@ -1396,7 +1396,7 @@ namespace WhereToFly.App.MapView
         /// <param name="jsonParameters">find result parameters as JSON</param>
         private void OnAddFindResult(string jsonParameters)
         {
-            var parameters = JsonConvert.DeserializeObject<AddFindResultParameter>(jsonParameters);
+            var parameters = JsonSerializer.Deserialize<AddFindResultParameter>(jsonParameters);
 
             if (parameters != null)
             {
@@ -1415,7 +1415,7 @@ namespace WhereToFly.App.MapView
         /// <param name="jsonParameters">long tap parameters as JSON</param>
         private void OnLongTap(string jsonParameters)
         {
-            var longTapParameters = JsonConvert.DeserializeObject<LongTapParameter>(jsonParameters);
+            var longTapParameters = JsonSerializer.Deserialize<LongTapParameter>(jsonParameters);
 
             if (longTapParameters != null)
             {
@@ -1435,7 +1435,7 @@ namespace WhereToFly.App.MapView
         private void OnAddTempTourPlanPoint(string jsonParameters)
         {
             var addTempTourPlanPointParameters =
-                JsonConvert.DeserializeObject<LongTapParameter>(jsonParameters);
+                JsonSerializer.Deserialize<LongTapParameter>(jsonParameters);
 
             if (addTempTourPlanPointParameters != null)
             {
@@ -1455,7 +1455,7 @@ namespace WhereToFly.App.MapView
         {
             // this action uses the same parameters as the onLongTap action
             var updateLastShownLocationParameters =
-                JsonConvert.DeserializeObject<UpdateLastShownLocationParameter>(jsonParameters);
+                JsonSerializer.Deserialize<UpdateLastShownLocationParameter>(jsonParameters);
 
             if (updateLastShownLocationParameters != null)
             {
@@ -1493,7 +1493,7 @@ namespace WhereToFly.App.MapView
         {
             double[]? trackPointHeights = string.IsNullOrEmpty(jsonParameters)
                 ? null
-                : JsonConvert.DeserializeObject<double[]>(jsonParameters);
+                : JsonSerializer.Deserialize<double[]>(jsonParameters);
 
             this.taskCompletionSourceSampleTrackHeights?.SetResult(trackPointHeights);
         }
