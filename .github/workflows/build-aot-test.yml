@@ -1,0 +1,29 @@
+# Build for the AOT test project
+
+name: Build AOT test project
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: 'true'
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x
+
+    - name: Build AOT test project
+      run: >
+        dotnet build
+        src/App/AotTest/WhereToFly.App.AotTest.csproj
+        -f net9.0
+        -c Release
+        -r win-x64
