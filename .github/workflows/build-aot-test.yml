@@ -22,7 +22,7 @@ jobs:
 
     - name: Build AOT test project
       run: >
-        dotnet build
+        dotnet publish
         src/App/AotTest/WhereToFly.App.AotTest.csproj
         -f net9.0
         -c Release
