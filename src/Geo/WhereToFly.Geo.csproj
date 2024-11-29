@@ -4,6 +4,7 @@
     <TargetFramework>$(DotNetVersion)</TargetFramework>
     <Title>Where-to-fly Geo</Title>
     <Description>Where-to-fly Geography related classes</Description>
+    <IsAotCompatible>true</IsAotCompatible>
   </PropertyGroup>
 
   <!-- NuGet package properties -->
