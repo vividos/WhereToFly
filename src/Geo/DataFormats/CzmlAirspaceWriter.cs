@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -61,7 +60,7 @@ namespace WhereToFly.Geo.DataFormats
                 objectList.Add(czmlObject);
             }
 
-            return JsonConvert.SerializeObject(objectList);
+            return DataFormats.Czml.Serializer.ToCzml(objectList);
         }
 
         /// <summary>

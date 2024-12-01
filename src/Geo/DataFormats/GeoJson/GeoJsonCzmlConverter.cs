@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using WhereToFly.Geo.DataFormats.Czml;
 
 namespace WhereToFly.Geo.DataFormats.GeoJson
 {
@@ -46,7 +46,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
                 this.ConvertElementToCzml(rootElement, objectList);
             }
 
-            return JsonConvert.SerializeObject(objectList);
+            return Serializer.ToCzml(objectList);
         }
 
         #region CZML conversion implementation
