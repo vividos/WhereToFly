@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Text.Json;
 
 namespace WhereToFly.Geo.DataFormats.Czml
 {
@@ -16,7 +16,7 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// <returns>JSON formatted CZML</returns>
         public static string ToCzml(IEnumerable<object> objectList)
         {
-            return JsonConvert.SerializeObject(objectList);
+            return JsonSerializer.Serialize(objectList);
         }
     }
 }

@@ -1,7 +1,8 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 #pragma warning disable SA1402 // File may only contain a single type
 #pragma warning disable SA1649 // File name should match first type name
@@ -18,25 +19,25 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// <summary>
         /// Document ID
         /// </summary>
-        [JsonProperty("id")]
+        [JsonPropertyName("id")]
         public string Id { get; set; } = "document";
 
         /// <summary>
         /// Packet name
         /// </summary>
-        [JsonProperty("name")]
+        [JsonPropertyName("name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Packet description; may be null
         /// </summary>
-        [JsonProperty("description")]
+        [JsonPropertyName("description")]
         public string? Description { get; }
 
         /// <summary>
         /// Packet version
         /// </summary>
-        [JsonProperty("version")]
+        [JsonPropertyName("version")]
         public string Version { get; set; } = "1.0";
 
         /// <summary>
@@ -59,98 +60,95 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// <summary>
         /// ID of object
         /// </summary>
-        [JsonProperty("id")]
+        [JsonPropertyName("id")]
         public string Id { get; set; } = Guid.NewGuid().ToString("B");
 
         /// <summary>
         /// Object name
         /// </summary>
-        [JsonProperty("name")]
+        [JsonPropertyName("name")]
         public string? Name { get; set; }
 
         /// <summary>
         /// Object description
         /// </summary>
-        [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("description")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? Description { get; set; }
 
         /// <summary>
         /// Position; used by Point, Cylinder, etc.
         /// </summary>
-        [JsonProperty("position", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("position")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public PositionList? Position { get; set; }
 
         /// <summary>
         /// Point entity
         /// </summary>
-        [JsonProperty("point", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("point")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Point? Point { get; set; }
 
         /// <summary>
         /// Label entity
         /// </summary>
-        [JsonProperty("label", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("label")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Label? Label { get; set; }
 
         /// <summary>
         /// Billboard entity
         /// </summary>
-        [JsonProperty("billboard", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("billboard")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Billboard? Billboard { get; set; }
 
         /// <summary>
         /// Polyline entity
         /// </summary>
-        [JsonProperty("polyline", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("polyline")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Polyline? Polyline { get; set; }
 
         /// <summary>
         /// Cylinder entity
         /// </summary>
-        [JsonProperty("cylinder", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("cylinder")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Cylinder? Cylinder { get; set; }
 
         /// <summary>
         /// Polygon entity
         /// </summary>
-        [JsonProperty("polygon", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("polygon")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Polygon? Polygon { get; set; }
 
         /// <summary>
         /// Model entity
         /// </summary>
-        [JsonProperty("model", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("model")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Model? Model { get; set; }
     }
 
     /// <summary>
     /// JSON converter for HeightReference enum
     /// </summary>
-    public class HeightReferenceConverter : JsonConverter
+    public class HeightReferenceConverter : JsonConverter<HeightReference>
     {
-        /// <summary>
-        /// Can convert the type when it's a HeightReference
-        /// </summary>
-        /// <param name="objectType">object type to try to convert</param>
-        /// <returns>true when it's a HeightReference</returns>
-        public override bool CanConvert(Type objectType)
-        {
-            return objectType == typeof(HeightReference);
-        }
-
         /// <summary>
         /// Reads HeightReference from JSON; not implemented
         /// </summary>
         /// <param name="reader">reader; unused</param>
-        /// <param name="objectType">object type; unused</param>
-        /// <param name="existingValue">existing value; unused</param>
-        /// <param name="serializer">serializer; unused</param>
+        /// <param name="typeToConvert">object type; unused</param>
+        /// <param name="options">serializer options; unused</param>
         /// <returns>throws exception</returns>
-        public override object? ReadJson(
-            JsonReader reader,
-            Type objectType,
-            object? existingValue,
-            JsonSerializer serializer)
+        public override HeightReference Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options)
         {
             throw new NotImplementedException();
         }
@@ -160,20 +158,22 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// </summary>
         /// <param name="writer">JSON writer to use</param>
         /// <param name="value">HeightReference value to write</param>
-        /// <param name="serializer">serializer; unused</param>
-        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+        /// <param name="options">serializer options; unused</param>
+        public override void Write(
+            Utf8JsonWriter writer,
+            HeightReference value,
+            JsonSerializerOptions options)
         {
-            var heightReference = (HeightReference?)value;
-            switch (heightReference)
+            switch (value)
             {
                 case HeightReference.None:
-                    writer.WriteValue("NONE");
+                    writer.WriteStringValue("NONE");
                     break;
                 case HeightReference.RelativeToGround:
-                    writer.WriteValue("RELATIVE_TO_GROUND");
+                    writer.WriteStringValue("RELATIVE_TO_GROUND");
                     break;
                 case HeightReference.ClampToGround:
-                    writer.WriteValue("CLAMP_TO_GROUND");
+                    writer.WriteStringValue("CLAMP_TO_GROUND");
                     break;
                 default:
                     Debug.Assert(false, "invalid height reference value");
@@ -207,31 +207,19 @@ namespace WhereToFly.Geo.DataFormats.Czml
     /// <summary>
     /// JSON converter for HorizontalOrigin enum
     /// </summary>
-    public class HorizontalOriginConverter : JsonConverter
+    public class HorizontalOriginConverter : JsonConverter<HorizontalOrigin>
     {
-        /// <summary>
-        /// Can convert the type when it's a HorizontalOrigin
-        /// </summary>
-        /// <param name="objectType">object type to try to convert</param>
-        /// <returns>true when it's a HorizontalOrigin</returns>
-        public override bool CanConvert(Type objectType)
-        {
-            return objectType == typeof(HorizontalOrigin);
-        }
-
         /// <summary>
         /// Reads HorizontalOrigin from JSON; not implemented
         /// </summary>
         /// <param name="reader">reader; unused</param>
-        /// <param name="objectType">object type; unused</param>
-        /// <param name="existingValue">existing value; unused</param>
-        /// <param name="serializer">serializer; unused</param>
+        /// <param name="typeToConvert">object type; unused</param>
+        /// <param name="options">serializer options; unused</param>
         /// <returns>throws exception</returns>
-        public override object? ReadJson(
-            JsonReader reader,
-            Type objectType,
-            object? existingValue,
-            JsonSerializer serializer)
+        public override HorizontalOrigin Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options)
         {
             throw new NotImplementedException();
         }
@@ -241,20 +229,22 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// </summary>
         /// <param name="writer">JSON writer to use</param>
         /// <param name="value">HorizontalOrigin value to write</param>
-        /// <param name="serializer">serializer; unused</param>
-        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+        /// <param name="options">serializer options; unused</param>
+        public override void Write(
+            Utf8JsonWriter writer,
+            HorizontalOrigin value,
+            JsonSerializerOptions options)
         {
-            var horizontalOrigin = (HorizontalOrigin?)value;
-            switch (horizontalOrigin)
+            switch (value)
             {
                 case HorizontalOrigin.Center:
-                    writer.WriteValue("CENTER");
+                    writer.WriteStringValue("CENTER");
                     break;
                 case HorizontalOrigin.Left:
-                    writer.WriteValue("LEFT");
+                    writer.WriteStringValue("LEFT");
                     break;
                 case HorizontalOrigin.Right:
-                    writer.WriteValue("RIGHT");
+                    writer.WriteStringValue("RIGHT");
                     break;
                 default:
                     Debug.Assert(false, "invalid horizontal origin value");
@@ -288,31 +278,19 @@ namespace WhereToFly.Geo.DataFormats.Czml
     /// <summary>
     /// JSON converter for VerticalOrigin enum
     /// </summary>
-    public class VerticalOriginConverter : JsonConverter
+    public class VerticalOriginConverter : JsonConverter<VerticalOrigin>
     {
-        /// <summary>
-        /// Can convert the type when it's a VerticalOrigin
-        /// </summary>
-        /// <param name="objectType">object type to try to convert</param>
-        /// <returns>true when it's a VerticalOrigin</returns>
-        public override bool CanConvert(Type objectType)
-        {
-            return objectType == typeof(VerticalOrigin);
-        }
-
         /// <summary>
         /// Reads VerticalOrigin from JSON; not implemented
         /// </summary>
         /// <param name="reader">reader; unused</param>
-        /// <param name="objectType">object type; unused</param>
-        /// <param name="existingValue">existing value; unused</param>
-        /// <param name="serializer">serializer; unused</param>
+        /// <param name="typeToConvert">object type; unused</param>
+        /// <param name="options">serializer options; unused</param>
         /// <returns>throws exception</returns>
-        public override object? ReadJson(
-            JsonReader reader,
-            Type objectType,
-            object? existingValue,
-            JsonSerializer serializer)
+        public override VerticalOrigin Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options)
         {
             throw new NotImplementedException();
         }
@@ -322,26 +300,25 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// </summary>
         /// <param name="writer">JSON writer to use</param>
         /// <param name="value">VerticalOrigin value to write</param>
-        /// <param name="serializer">serializer; unused</param>
-        public override void WriteJson(
-            JsonWriter writer,
-            object? value,
-            JsonSerializer serializer)
+        /// <param name="options">serializer options; unused</param>
+        public override void Write(
+            Utf8JsonWriter writer,
+            VerticalOrigin value,
+            JsonSerializerOptions options)
         {
-            var verticalOrigin = (VerticalOrigin?)value;
-            switch (verticalOrigin)
+            switch (value)
             {
                 case VerticalOrigin.Center:
-                    writer.WriteValue("CENTER");
+                    writer.WriteStringValue("CENTER");
                     break;
                 case VerticalOrigin.Bottom:
-                    writer.WriteValue("BOTTOM");
+                    writer.WriteStringValue("BOTTOM");
                     break;
                 case VerticalOrigin.Baseline:
-                    writer.WriteValue("BASELINE");
+                    writer.WriteStringValue("BASELINE");
                     break;
                 case VerticalOrigin.Top:
-                    writer.WriteValue("TOP");
+                    writer.WriteStringValue("TOP");
                     break;
                 default:
                     Debug.Assert(false, "invalid vertical origin value");
@@ -385,62 +362,50 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// <summary>
         /// Pixel size
         /// </summary>
-        [JsonProperty("pixelSize")]
+        [JsonPropertyName("pixelSize")]
         public double PixelSize { get; set; }
 
         /// <summary>
         /// Height reference of object
         /// </summary>
-        [JsonProperty("heightReference")]
+        [JsonPropertyName("heightReference")]
         public HeightReference HeightReference { get; set; } = HeightReference.None;
 
         /// <summary>
         /// Specifies the color
         /// </summary>
-        [JsonProperty("color")]
+        [JsonPropertyName("color")]
         public Color? Color { get; set; }
 
         /// <summary>
         /// Specifies the outline color
         /// </summary>
-        [JsonProperty("outlineColor")]
+        [JsonPropertyName("outlineColor")]
         public Color? OutlineColor { get; set; }
 
         /// <summary>
         /// Outline width
         /// </summary>
-        [JsonProperty("outlineWidth")]
+        [JsonPropertyName("outlineWidth")]
         public double? OutlineWidth { get; set; }
     }
 
     /// <summary>
     /// JSON converter for LabelStyle enum
     /// </summary>
-    public class LabelStyleConverter : JsonConverter
+    public class LabelStyleConverter : JsonConverter<LabelStyle>
     {
-        /// <summary>
-        /// Can convert the type when it's a LabelStyle
-        /// </summary>
-        /// <param name="objectType">object type to try to convert</param>
-        /// <returns>true when it's a LabelStyle</returns>
-        public override bool CanConvert(Type objectType)
-        {
-            return objectType == typeof(LabelStyle);
-        }
-
         /// <summary>
         /// Reads LabelStyle from JSON; not implemented
         /// </summary>
         /// <param name="reader">reader; unused</param>
-        /// <param name="objectType">object type; unused</param>
-        /// <param name="existingValue">existing value; unused</param>
-        /// <param name="serializer">serializer; unused</param>
+        /// <param name="typeToConvert">object type; unused</param>
+        /// <param name="options">serializer options; unused</param>
         /// <returns>throws exception</returns>
-        public override object? ReadJson(
-            JsonReader reader,
-            Type objectType,
-            object? existingValue,
-            JsonSerializer serializer)
+        public override LabelStyle Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options)
         {
             throw new NotImplementedException();
         }
@@ -450,23 +415,22 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// </summary>
         /// <param name="writer">JSON writer to use</param>
         /// <param name="value">LabelStyle value to write</param>
-        /// <param name="serializer">serializer; unused</param>
-        public override void WriteJson(
-            JsonWriter writer,
-            object? value,
-            JsonSerializer serializer)
+        /// <param name="options">serializer options; unused</param>
+        public override void Write(
+            Utf8JsonWriter writer,
+            LabelStyle value,
+            JsonSerializerOptions options)
         {
-            var verticalOrigin = (LabelStyle?)value;
-            switch (verticalOrigin)
+            switch (value)
             {
                 case LabelStyle.Fill:
-                    writer.WriteValue("FILL");
+                    writer.WriteStringValue("FILL");
                     break;
                 case LabelStyle.Outline:
-                    writer.WriteValue("OUTLINE");
+                    writer.WriteStringValue("OUTLINE");
                     break;
                 case LabelStyle.FillAndOutline:
-                    writer.WriteValue("FILL_AND_OUTLINE");
+                    writer.WriteStringValue("FILL_AND_OUTLINE");
                     break;
                 default:
                     Debug.Assert(false, "invalid label style value");
@@ -484,7 +448,7 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// <summary>
         /// Distance display condition values
         /// </summary>
-        [JsonProperty("distanceDisplayCondition")]
+        [JsonPropertyName("distanceDisplayCondition")]
         public double[] DistanceDisplayConditionValues { get; set; } = new double[2];
 
         /// <summary>
@@ -531,73 +495,78 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// <summary>
         /// Label text
         /// </summary>
-        [JsonProperty("text")]
+        [JsonPropertyName("text")]
         public string? Text { get; set; }
 
         /// <summary>
         /// Font name, e.g. "12pt Lucida Console"
         /// </summary>
-        [JsonProperty("font", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("font")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? Font { get; set; }
 
         /// <summary>
         /// Label style
         /// </summary>
-        [JsonProperty("style")]
+        [JsonPropertyName("style")]
         public LabelStyle LabelStyle { get; set; }
 
         /// <summary>
         /// Indicates if background is shown
         /// </summary>
-        [JsonProperty("showBackground")]
+        [JsonPropertyName("showBackground")]
         public bool ShowBackground { get; set; }
 
         /// <summary>
         /// Horizontal origin value for the label
         /// </summary>
-        [JsonProperty("horizontalOrigin")]
+        [JsonPropertyName("horizontalOrigin")]
         public HorizontalOrigin HorizontalOrigin { get; set; }
 
         /// <summary>
         /// Vertical origin value for the label
         /// </summary>
-        [JsonProperty("verticalOrigin")]
+        [JsonPropertyName("verticalOrigin")]
         public VerticalOrigin VerticalOrigin { get; set; }
 
         /// <summary>
         /// Height reference of object
         /// </summary>
-        [JsonProperty("heightReference")]
+        [JsonPropertyName("heightReference")]
         public HeightReference HeightReference { get; set; } = HeightReference.None;
 
         /// <summary>
         /// Specifies the fill color
         /// </summary>
-        [JsonProperty("fillColor", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("fillColor")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Color? FillColor { get; set; }
 
         /// <summary>
         /// Specifies the background color
         /// </summary>
-        [JsonProperty("backgroundColor", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("backgroundColor")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Color? BackgroundColor { get; set; }
 
         /// <summary>
         /// Specifies the outline color
         /// </summary>
-        [JsonProperty("outlineColor", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("outlineColor")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Color? OutlineColor { get; set; }
 
         /// <summary>
         /// Outline width
         /// </summary>
-        [JsonProperty("outlineWidth")]
+        [JsonPropertyName("outlineWidth")]
         public double OutlineWidth { get; set; } = 1.0;
 
         /// <summary>
         /// Distance display condition
         /// </summary>
-        [JsonProperty("distanceDisplayCondition", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("distanceDisplayCondition")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public DistanceDisplayCondition? DistanceDisplayCondition { get; set; }
     }
 
@@ -609,55 +578,59 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// <summary>
         /// Billboard image URI
         /// </summary>
-        [JsonProperty("image")]
+        [JsonPropertyName("image")]
         public string? Image { get; set; }
 
         /// <summary>
         /// Width of image, in meters or pixels
         /// </summary>
-        [JsonProperty("width", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("width")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? Width { get; set; }
 
         /// <summary>
         /// Height of image, in meters or pixels
         /// </summary>
-        [JsonProperty("height", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("height")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? Height { get; set; }
 
         /// <summary>
         /// Horizontal origin value for the billboard
         /// </summary>
-        [JsonProperty("horizontalOrigin")]
+        [JsonPropertyName("horizontalOrigin")]
         public HorizontalOrigin HorizontalOrigin { get; set; } = HorizontalOrigin.Center;
 
         /// <summary>
         /// Vertical origin value for the billboard
         /// </summary>
-        [JsonProperty("verticalOrigin")]
+        [JsonPropertyName("verticalOrigin")]
         public VerticalOrigin VerticalOrigin { get; set; } = VerticalOrigin.Center;
 
         /// <summary>
         /// Height reference of object
         /// </summary>
-        [JsonProperty("heightReference")]
+        [JsonPropertyName("heightReference")]
         public HeightReference HeightReference { get; set; } = HeightReference.None;
 
         /// <summary>
         /// Indicates if height and width are in meters (when true) or in pixels (when false)
         /// </summary>
-        [JsonProperty("sizeInMeters", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("sizeInMeters")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public bool? SizeInMeters { get; set; }
 
         /// <summary>
         /// Viewing distance where depth test is disabled for the billboard
         /// </summary>
-        [JsonProperty("disableDepthTestDistance")]
+        [JsonPropertyName("disableDepthTestDistance")]
         public double DisableDepthTestDistance { get; set; } = 0.0;
 
         /// <summary>
         /// Distance display condition
         /// </summary>
-        [JsonProperty("distanceDisplayCondition", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("distanceDisplayCondition")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public DistanceDisplayCondition? DistanceDisplayCondition { get; set; }
     }
 
@@ -669,31 +642,32 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// <summary>
         /// All positions of polyline points
         /// </summary>
-        [JsonProperty("positions")]
+        [JsonPropertyName("positions")]
         public PositionList? Positions { get; set; }
 
         /// <summary>
         /// Polyline width
         /// </summary>
-        [JsonProperty("width")]
+        [JsonPropertyName("width")]
         public double Width { get; set; }
 
         /// <summary>
         /// Indicates if polyline is clamped to ground
         /// </summary>
-        [JsonProperty("clampToGround")]
+        [JsonPropertyName("clampToGround")]
         public bool ClampToGround { get; set; }
 
         /// <summary>
         /// Material used to show the polyline
         /// </summary>
-        [JsonProperty("material")]
+        [JsonPropertyName("material")]
         public Material? Material { get; set; }
 
         /// <summary>
         /// Distance display condition
         /// </summary>
-        [JsonProperty("distanceDisplayCondition", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("distanceDisplayCondition")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public DistanceDisplayCondition? DistanceDisplayCondition { get; set; }
     }
 
@@ -705,43 +679,43 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// <summary>
         /// Length (or more exactly, height) of cylinder
         /// </summary>
-        [JsonProperty("length")]
+        [JsonPropertyName("length")]
         public double Length { get; set; }
 
         /// <summary>
         /// Radius at the top of the cylinder
         /// </summary>
-        [JsonProperty("topRadius")]
+        [JsonPropertyName("topRadius")]
         public double TopRadius { get; set; }
 
         /// <summary>
         /// Radius at the bottom
         /// </summary>
-        [JsonProperty("bottomRadius")]
+        [JsonPropertyName("bottomRadius")]
         public double BottomRadius { get; set; }
 
         /// <summary>
         /// Height reference of object
         /// </summary>
-        [JsonProperty("heightReference")]
+        [JsonPropertyName("heightReference")]
         public HeightReference HeightReference { get; set; } = HeightReference.None;
 
         /// <summary>
         /// Material used to show the cylinder
         /// </summary>
-        [JsonProperty("material")]
+        [JsonPropertyName("material")]
         public Material? Material { get; set; }
 
         /// <summary>
         /// Indicates if the cylinder should also be drawn with an outline
         /// </summary>
-        [JsonProperty("outline")]
+        [JsonPropertyName("outline")]
         public bool Outline { get; set; }
 
         /// <summary>
         /// Specifies the outline color
         /// </summary>
-        [JsonProperty("outlineColor")]
+        [JsonPropertyName("outlineColor")]
         public Color? OutlineColor { get; set; }
     }
 
@@ -754,43 +728,48 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// <summary>
         /// All positions of polygon points
         /// </summary>
-        [JsonProperty("positions")]
+        [JsonPropertyName("positions")]
         public PositionList? Positions { get; set; }
 
         /// <summary>
         /// Height of polygon, when HeightReference is set to RelativeToGround
         /// </summary>
-        [JsonProperty("height", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("height")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public double? Height { get; set; }
 
         /// <summary>
         /// Extruded height in meters
         /// </summary>
-        [JsonProperty("extrudedHeight", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("extrudedHeight")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public double? ExtrudedHeight { get; set; }
 
         /// <summary>
         /// Height reference of object; when null, is not set at all
         /// </summary>
-        [JsonProperty("heightReference", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("heightReference")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public HeightReference? HeightReference { get; set; } = null;
 
         /// <summary>
         /// Material used to show the polygon
         /// </summary>
-        [JsonProperty("material")]
+        [JsonPropertyName("material")]
         public Material? Material { get; set; }
 
         /// <summary>
         /// Indicates if the polygon should also be drawn with an outline
         /// </summary>
-        [JsonProperty("outline", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("outline")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public bool? Outline { get; set; }
 
         /// <summary>
         /// Specifies the outline color
         /// </summary>
-        [JsonProperty("outlineColor", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("outlineColor")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Color? OutlineColor { get; set; }
     }
 
@@ -802,19 +781,20 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// <summary>
         /// The model's URI, usually an URL to a .glb file
         /// </summary>
-        [JsonProperty("uri")]
+        [JsonPropertyName("uri")]
         public string? Uri { get; set; }
 
         /// <summary>
         /// Scale of model
         /// </summary>
-        [JsonProperty("scale")]
+        [JsonPropertyName("scale")]
         public double Scale { get; set; } = 1.0;
 
         /// <summary>
         /// Height reference of object; when null, is not set at all
         /// </summary>
-        [JsonProperty("heightReference", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("heightReference")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public HeightReference? HeightReference { get; set; } = null;
     }
 
@@ -845,7 +825,7 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// <summary>
         /// List of positions, 3 double values each, longitude/latitude/altitude
         /// </summary>
-        [JsonProperty("cartographicDegrees")]
+        [JsonPropertyName("cartographicDegrees")]
         public List<double> CartographicDegrees { get; set; } = [];
 
         /// <summary>
@@ -871,13 +851,15 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// <summary>
         /// Solid color for material
         /// </summary>
-        [JsonProperty("solidColor", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("solidColor")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public SolidColor? SolidColor { get; set; }
 
         /// <summary>
         /// Image based material
         /// </summary>
-        [JsonProperty("image", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("image")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public ImageMaterial? Image { get; set; }
 
         /// <summary>
@@ -921,7 +903,7 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// <summary>
         /// Specifies the color value
         /// </summary>
-        [JsonProperty("color")]
+        [JsonPropertyName("color")]
         public Color? Color { get; set; }
     }
 
@@ -933,7 +915,7 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// <summary>
         /// Stores the color components
         /// </summary>
-        [JsonProperty("rgba")]
+        [JsonPropertyName("rgba")]
         public int[] Rgba { get; set; } = new int[4];
 
         /// <summary>
@@ -991,7 +973,7 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// <summary>
         /// Image URI
         /// </summary>
-        [JsonProperty("uri")]
+        [JsonPropertyName("uri")]
         public string Uri { get; set; } = string.Empty;
     }
 }
