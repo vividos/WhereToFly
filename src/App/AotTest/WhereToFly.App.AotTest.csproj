@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>$(DotNetVersion)</TargetFramework>
+    <TargetFrameworks>$(DotNetVersion);$(DotNetVersion)-android;$(DotNetVersion)-windows10.0.19041.0</TargetFrameworks>
     <Description>Where-to-fly Native AOT test</Description>
     <OutputType>Exe</OutputType>
     <ImplicitUsings>enable</ImplicitUsings>
     <PublishAot>true</PublishAot>
+    <PublishTrimmed>true</PublishTrimmed>
     <InvariantGlobalization>true</InvariantGlobalization>
   </PropertyGroup>
 
@@ -17,6 +18,7 @@
     <TrimmerRootAssembly Include="WhereToFly.App.MapView" />
     <TrimmerRootAssembly Include="WhereToFly.App.Maui" />
     <TrimmerRootAssembly Include="WhereToFly.Geo" />
+    <TrimmerRootAssembly Include="WhereToFly.Shared.Model" />
   </ItemGroup>
 
 </Project>
