@@ -2,6 +2,7 @@
 using SQLite;
 using System.Diagnostics;
 using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Serializers;
 
 namespace WhereToFly.App.Services.SqliteDatabase
 {
@@ -258,7 +259,7 @@ namespace WhereToFly.App.Services.SqliteDatabase
                     {
                         Converters = new List<JsonConverter>
                         {
-                            new TrackPoint.Converter(),
+                            new TrackPointConverter(),
                         },
                     });
 
@@ -294,7 +295,10 @@ namespace WhereToFly.App.Services.SqliteDatabase
                     this.Track.TrackPoints,
                     new JsonSerializerSettings
                     {
-                        Converters = new List<JsonConverter> { new TrackPoint.Converter() },
+                        Converters = new List<JsonConverter>
+                        {
+                            new TrackPointConverter(),
+                        },
                     });
 
                 File.WriteAllText(filename, json);
