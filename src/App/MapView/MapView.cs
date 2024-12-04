@@ -5,6 +5,7 @@ using Microsoft.Maui.Dispatching;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Text.Json;
@@ -403,7 +404,7 @@ namespace WhereToFly.App.MapView
 
             string js = string.Format(
                 "map = new WhereToFly.mapView.MapView({0});",
-                JsonSerializer.Serialize(options));
+                ConvertAnonymousObjectToJson(options));
 
             this.RunJavaScript(js);
 
@@ -472,7 +473,7 @@ namespace WhereToFly.App.MapView
 
             string js = string.Format(
                 "map.zoomToRectangle({0});",
-                JsonSerializer.Serialize(rectangle));
+                ConvertAnonymousObjectToJson(rectangle));
 
             this.RunJavaScript(js);
         }
@@ -517,7 +518,7 @@ namespace WhereToFly.App.MapView
 
             string js = string.Format(
                 "map.updateMyLocation({0});",
-                JsonSerializer.Serialize(options));
+                ConvertAnonymousObjectToJson(options));
 
             this.RunJavaScript(js);
 
@@ -589,7 +590,7 @@ namespace WhereToFly.App.MapView
                 hideTargetLocation = false,
             };
 
-            string js = $"await map.setCompassTarget({JsonSerializer.Serialize(options)});";
+            string js = $"await map.setCompassTarget({ConvertAnonymousObjectToJson(options)});";
 
             this.RunJavaScript(js);
         }
@@ -631,7 +632,7 @@ namespace WhereToFly.App.MapView
                 hideTargetLocation = false,
             };
 
-            string js = $"await map.setCompassTarget({JsonSerializer.Serialize(options)});";
+            string js = $"await map.setCompassTarget({ConvertAnonymousObjectToJson(options)});";
 
             this.RunJavaScript(js);
         }
@@ -737,7 +738,7 @@ namespace WhereToFly.App.MapView
 
             string js = string.Format(
                 "map.addNearbyPoiLocations({0});",
-                JsonSerializer.Serialize(jsonLocationList));
+                ConvertAnonymousObjectToJson(jsonLocationList));
 
             this.RunJavaScript(js);
 
@@ -806,7 +807,7 @@ namespace WhereToFly.App.MapView
 
             string js = string.Format(
                 "await map.addLayer({0});",
-                JsonSerializer.Serialize(layerObject));
+                ConvertAnonymousObjectToJson(layerObject));
 
             await this.RunJavaScriptWithResultAsync(js);
         }
@@ -836,7 +837,7 @@ namespace WhereToFly.App.MapView
 
             string js = string.Format(
                 "map.setLayerVisibility({0});",
-                JsonSerializer.Serialize(options));
+                ConvertAnonymousObjectToJson(options));
 
             this.RunJavaScript(js);
         }
@@ -896,7 +897,7 @@ namespace WhereToFly.App.MapView
 
             string js = string.Format(
                 "await map.addLocationList([{0}]);",
-                JsonSerializer.Serialize(jsonLocation));
+                ConvertAnonymousObjectToJson(jsonLocation));
 
             this.RunJavaScript(js);
 
@@ -950,7 +951,7 @@ namespace WhereToFly.App.MapView
 
             string js = string.Format(
                 "await map.addLocationList({0});",
-                JsonSerializer.Serialize(jsonLocationList));
+                ConvertAnonymousObjectToJson(jsonLocationList));
 
             await this.RunJavaScriptWithResultAsync(js);
 
@@ -984,7 +985,7 @@ namespace WhereToFly.App.MapView
 
             string js = string.Format(
                 "await map.updateLocation({0});",
-                JsonSerializer.Serialize(jsonLocation));
+                ConvertAnonymousObjectToJson(jsonLocation));
 
             this.RunJavaScript(js);
         }
@@ -1030,7 +1031,7 @@ namespace WhereToFly.App.MapView
                 listOfTrackPoints = trackPointsList,
             };
 
-            string js = $"map.sampleTrackHeights({JsonSerializer.Serialize(trackJsonObject)});";
+            string js = $"map.sampleTrackHeights({ConvertAnonymousObjectToJson(trackJsonObject)});";
 
             this.taskCompletionSourceSampleTrackHeights =
                 new TaskCompletionSource<double[]?>();
@@ -1113,7 +1114,7 @@ namespace WhereToFly.App.MapView
                 attribution = track.Attribution,
             };
 
-            string js = $"await map.addTrack({JsonSerializer.Serialize(trackJsonObject)});";
+            string js = $"await map.addTrack({ConvertAnonymousObjectToJson(trackJsonObject)});";
 
             await this.RunJavaScriptWithResultAsync(js);
         }
@@ -1131,7 +1132,7 @@ namespace WhereToFly.App.MapView
                 color = track.IsFlightTrack ? null : track.Color,
             };
 
-            string js = $"map.updateTrack({JsonSerializer.Serialize(trackJsonObject)});";
+            string js = $"map.updateTrack({ConvertAnonymousObjectToJson(trackJsonObject)});";
 
             this.RunJavaScript(js);
         }
@@ -1158,7 +1159,7 @@ namespace WhereToFly.App.MapView
                     }).ToArray(),
             };
 
-            string js = $"map.updateLiveTrack({JsonSerializer.Serialize(trackJsonObject)});";
+            string js = $"map.updateLiveTrack({ConvertAnonymousObjectToJson(trackJsonObject)});";
 
             this.RunJavaScript(js);
         }
@@ -1210,7 +1211,7 @@ namespace WhereToFly.App.MapView
 
             string js = string.Format(
                 "await map.showFindResult({0});",
-                JsonSerializer.Serialize(options));
+                ConvertAnonymousObjectToJson(options));
 
             this.RunJavaScript(js);
         }
@@ -1245,7 +1246,7 @@ namespace WhereToFly.App.MapView
 
             string js = string.Format(
                 "map.showFlyingRange({0});",
-                JsonSerializer.Serialize(options));
+                ConvertAnonymousObjectToJson(options));
 
             this.RunJavaScript(js);
         }
@@ -1532,6 +1533,26 @@ namespace WhereToFly.App.MapView
             this.LogErrorAction?.Invoke(
                 new InvalidOperationException(
                     "JavaScript error: " + message));
+        }
+
+        /// <summary>
+        /// Converts an anonymous object to JSON; the object must only contain simple types such
+        /// as string, bool, int or double, or else the conversion will fail (when running with
+        /// AOT in release mode)
+        /// </summary>
+        /// <param name="obj">object to convert</param>
+        /// <returns>JSON text</returns>
+        [UnconditionalSuppressMessage(
+            "Trimming",
+            "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code",
+            Justification = "The method is only passed anonymous objects with simple types")]
+        [UnconditionalSuppressMessage(
+            "AOT",
+            "IL3050:Calling members annotated with 'RequiresDynamicCodeAttribute' may break functionality when AOT compiling.",
+            Justification = "The method is only passed anonymous objects with simple types")]
+        private static string ConvertAnonymousObjectToJson(object obj)
+        {
+            return JsonSerializer.Serialize(obj);
         }
     }
 }
