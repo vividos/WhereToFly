@@ -34,7 +34,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         {
             var rootElement = Element.Deserialize(geoJsonText);
 
-            var objectList = new List<object>
+            var objectList = new List<CzmlBase>
             {
                 new Czml.PacketHeader(
                     this.czmlOptions.DocumentName,
@@ -55,7 +55,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// </summary>
         /// <param name="element">GeoJSON element</param>
         /// <param name="objectList">object list to add to</param>
-        private void ConvertElementToCzml(Element element, List<object> objectList)
+        private void ConvertElementToCzml(Element element, List<CzmlBase> objectList)
         {
             switch (element)
             {
@@ -119,7 +119,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         private void ConvertGeometryToCzml(
             Element element,
             Geometry geometry,
-            List<object> objectList)
+            List<CzmlBase> objectList)
         {
             string elementName = this.NameFromElement(element, "???");
             string elementDescription = this.DescriptionFromElement(element);

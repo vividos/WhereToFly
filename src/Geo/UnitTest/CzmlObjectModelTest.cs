@@ -18,7 +18,7 @@ namespace WhereToFly.Geo.UnitTest
         public void TestWriteLabel()
         {
             // set up
-            var objectList = new List<object>
+            var objectList = new List<CzmlBase>
             {
                 new PacketHeader("labeltest", "description"),
                 new DataFormats.Czml.Object
@@ -67,7 +67,7 @@ namespace WhereToFly.Geo.UnitTest
         public void TestWriteBillbord()
         {
             // set up
-            var objectList = new List<object>
+            var objectList = new List<CzmlBase>
             {
                 new PacketHeader("billboardtest", "description"),
                 new DataFormats.Czml.Object
@@ -112,7 +112,7 @@ namespace WhereToFly.Geo.UnitTest
         public void TestWriteModel()
         {
             // set up
-            var objectList = new List<object>
+            var objectList = new List<CzmlBase>
             {
                 new PacketHeader("modeltest", "description"),
                 new DataFormats.Czml.Object

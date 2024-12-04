@@ -14,9 +14,11 @@ namespace WhereToFly.Geo.DataFormats.Czml
         /// </summary>
         /// <param name="objectList">object list to convert</param>
         /// <returns>JSON formatted CZML</returns>
-        public static string ToCzml(IEnumerable<object> objectList)
+        public static string ToCzml(IEnumerable<CzmlBase> objectList)
         {
-            return JsonSerializer.Serialize(objectList);
+            return JsonSerializer.Serialize(
+                objectList,
+                SerializerContext.Default.IEnumerableCzmlBase);
         }
     }
 }

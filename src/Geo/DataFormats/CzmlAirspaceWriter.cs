@@ -43,7 +43,7 @@ namespace WhereToFly.Geo.DataFormats
                 description = null;
             }
 
-            var objectList = new List<object>
+            var objectList = new List<Czml.CzmlBase>
             {
                 new Czml.PacketHeader(name, description),
             };

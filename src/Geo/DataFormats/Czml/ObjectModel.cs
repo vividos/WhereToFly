@@ -12,9 +12,19 @@ using System.Text.Json.Serialization;
 namespace WhereToFly.Geo.DataFormats.Czml
 {
     /// <summary>
+    /// CZML base object
+    /// </summary>
+    [JsonDerivedType(typeof(PacketHeader))]
+    [JsonDerivedType(typeof(Object))]
+    public class CzmlBase
+    {
+        // empty common base class
+    }
+
+    /// <summary>
     /// CZML packet header
     /// </summary>
-    public class PacketHeader
+    public class PacketHeader : CzmlBase
     {
         /// <summary>
         /// Document ID
@@ -55,7 +65,7 @@ namespace WhereToFly.Geo.DataFormats.Czml
     /// <summary>
     /// CZML object, containing various entity objects
     /// </summary>
-    public class Object
+    public class Object : CzmlBase
     {
         /// <summary>
         /// ID of object
