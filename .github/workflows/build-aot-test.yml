@@ -22,8 +22,23 @@ jobs:
       with:
         dotnet-version: 9.0.x
 
-    - name: Build AOT test project
+    - name: Publish AOT test project .NET
       run: >
         dotnet publish
         src/App/AotTest/WhereToFly.App.AotTest.csproj
         -c Release
+        -f net9.0
+
+    - name: Publish AOT test project .NET Android
+      run: >
+        dotnet publish
+        src/App/AotTest/WhereToFly.App.AotTest.csproj
+        -c Release
+        -f net9.0-android
+
+    - name: Publish AOT test project .NET Windows
+      run: >
+        dotnet publish
+        src/App/AotTest/WhereToFly.App.AotTest.csproj
+        -c Release
+        -f net9.0-windows10.0.19041.0
