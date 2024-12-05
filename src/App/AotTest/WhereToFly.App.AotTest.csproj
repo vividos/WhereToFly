@@ -3,11 +3,13 @@
   <PropertyGroup>
     <TargetFrameworks>$(DotNetVersion);$(DotNetVersion)-android;$(DotNetVersion)-windows10.0.19041.0</TargetFrameworks>
     <Description>Where-to-fly Native AOT test</Description>
-    <OutputType>Exe</OutputType>
+    <OutputType Condition="$(TargetFramework) == $(DotNetVersion)">Exe</OutputType>
     <ImplicitUsings>enable</ImplicitUsings>
     <PublishAot>true</PublishAot>
     <PublishTrimmed>true</PublishTrimmed>
     <InvariantGlobalization>true</InvariantGlobalization>
+    <!-- This fixes the warning MSB3270 "There was a mismatch between the processor architecture..." -->
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
   </PropertyGroup>
 
   <ItemGroup>
