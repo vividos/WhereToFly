@@ -21,30 +21,6 @@ namespace WhereToFly.App.WinUI
         }
 
         /// <summary>
-        /// Configures all lifecycle events for the Windows app
-        /// </summary>
-        /// <param name="lifecycleBuilder">lifecycle builder</param>
-        public static void AddLifecycleEvents(ILifecycleBuilder lifecycleBuilder)
-        {
-            lifecycleBuilder.AddWindows(
-                windows => windows
-                .OnWindowCreated(
-                    window =>
-                    {
-                        var nativeWindow = window as MauiWinUIWindow;
-                        var titleBar = nativeWindow?.AppWindow?.TitleBar;
-
-                        if (titleBar != null)
-                        {
-                            titleBar.BackgroundColor =
-                            titleBar.InactiveBackgroundColor =
-                            titleBar.ButtonBackgroundColor =
-                                Windows.UI.Color.FromArgb(0xFF, 0x2F, 0x29, 0x9E);
-                        }
-                    }));
-        }
-
-        /// <summary>
         /// Creates a new MAUI app
         /// </summary>
         /// <returns>MAUI app</returns>

@@ -31,21 +31,15 @@ namespace WhereToFly.App
 #else
                 .UseMauiCommunityToolkit()
 #endif
-                .UseSkiaSharp()
-                .UseFFImageLoading()
-                .UseMapView()
 #if WINDOWS
                 .ConfigureEssentials(essentials =>
                 {
                     essentials.UseMapServiceToken(Constants.BingMapsKeyWindows);
                 })
 #endif
-                .ConfigureLifecycleEvents(events =>
-                {
-#if WINDOWS
-                    WhereToFly.App.WinUI.App.AddLifecycleEvents(events);
-#endif
-                });
+                .UseSkiaSharp()
+                .UseFFImageLoading()
+                .UseMapView();
 
             builder = WeatherWebView.UseWeatherWebView(builder);
 
