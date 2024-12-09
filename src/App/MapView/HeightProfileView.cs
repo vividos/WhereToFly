@@ -4,6 +4,7 @@ using Microsoft.Maui.Dispatching;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Text.Json;
@@ -138,7 +139,7 @@ namespace WhereToFly.App.MapView
                 useDarkTheme = this.UseDarkTheme,
             };
 
-            string jsonOptions = JsonSerializer.Serialize(options);
+            string jsonOptions = ConvertAnonymousObjectToJson(options);
             string js = $"heightProfileView = new WhereToFly.heightProfileView.HeightProfileView({jsonOptions});";
             this.RunJavaScript(js);
 
@@ -243,7 +244,7 @@ namespace WhereToFly.App.MapView
                 listOfTimePoints = timePointsList,
             };
 
-            string json = JsonSerializer.Serialize(trackJsonObject);
+            string json = ConvertAnonymousObjectToJson(trackJsonObject);
             string js = $"heightProfileView.setTrack({json});";
 
             this.RunJavaScript(js);
@@ -256,7 +257,7 @@ namespace WhereToFly.App.MapView
         /// <param name="elevationValues">elevation values</param>
         public void AddGroundProfile(IEnumerable<double> elevationValues)
         {
-            string elevations = JsonSerializer.Serialize(elevationValues);
+            string elevations = ConvertAnonymousObjectToJson(elevationValues);
             string js = $"heightProfileView.addGroundProfile({elevations});";
 
             this.RunJavaScript(js);
@@ -281,6 +282,26 @@ namespace WhereToFly.App.MapView
             Debug.WriteLine("run js: " + js.Substring(0, Math.Min(80, js.Length)));
 
             this.Dispatcher.DispatchAsync(() => this.Eval(js));
+        }
+
+        /// <summary>
+        /// Converts an anonymous object to JSON; the object must only contain simple types such
+        /// as string, bool, int or double, or else the conversion will fail (when running with
+        /// AOT in release mode)
+        /// </summary>
+        /// <param name="obj">object to convert</param>
+        /// <returns>JSON text</returns>
+        [UnconditionalSuppressMessage(
+            "Trimming",
+            "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access otherwise can break functionality when trimming application code",
+            Justification = "The method is only passed anonymous objects with simple types")]
+        [UnconditionalSuppressMessage(
+            "AOT",
+            "IL3050:Calling members annotated with 'RequiresDynamicCodeAttribute' may break functionality when AOT compiling.",
+            Justification = "The method is only passed anonymous objects with simple types")]
+        private static string ConvertAnonymousObjectToJson(object obj)
+        {
+            return JsonSerializer.Serialize(obj);
         }
     }
 }
