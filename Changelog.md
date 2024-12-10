@@ -6,6 +6,8 @@ Released on ?.
 
 ✨ New Features / Improvements
 
+- Minimum Android version is now Android 12
+
 🐛 Bugfixes
 
 ## Version 1.15.0

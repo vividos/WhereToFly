@@ -31,7 +31,7 @@
 
   <!-- Android properties -->
   <PropertyGroup Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' ">
-    <SupportedOSPlatformVersion>21.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion>31.0</SupportedOSPlatformVersion>
     <AndroidStoreUncompressedFileExtensions>.kmz</AndroidStoreUncompressedFileExtensions>
     <!-- Disable automatically setting version numbers on MAUI -->
     <NBGV_SetMauiVersionProperties>false</NBGV_SetMauiVersionProperties>
