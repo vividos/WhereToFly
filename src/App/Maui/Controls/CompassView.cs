@@ -232,11 +232,14 @@ namespace WhereToFly.App.Controls
                 Color = this.CompassColor.ToSKColor(),
             };
 
+            var font = new SKFont
+            {
+                Size = radius * 0.06f,
+            };
+
             var textDegreesPaint = new SKPaint
             {
                 IsAntialias = true,
-                TextAlign = SKTextAlign.Center,
-                TextSize = radius * 0.06f,
                 Style = SKPaintStyle.Fill,
                 Color = this.CompassColor.ToSKColor(),
             };
@@ -271,6 +274,8 @@ namespace WhereToFly.App.Controls
                         $"{angle}",
                         center.X,
                         center.Y - (0.76f * radius),
+                        SKTextAlign.Center,
+                        font,
                         textDegreesPaint);
                 }
 
@@ -324,20 +329,26 @@ namespace WhereToFly.App.Controls
                 Color = this.CompassColor.ToSKColor(),
             };
 
+            using var textLargeSpireFont = new SKFont
+            {
+                Size = radius * 0.2f,
+            };
+
             using var textLargeSpirePaint = new SKPaint
             {
                 IsAntialias = true,
-                TextAlign = SKTextAlign.Center,
-                TextSize = radius * 0.2f,
                 Style = SKPaintStyle.StrokeAndFill,
                 Color = this.CompassColor.ToSKColor(),
+            };
+
+            using var textSmallSpireFont = new SKFont
+            {
+                Size = radius * 0.12f,
             };
 
             using var textSmallSpirePaint = new SKPaint
             {
                 IsAntialias = true,
-                TextAlign = SKTextAlign.Center,
-                TextSize = radius * 0.12f,
                 Style = SKPaintStyle.Fill,
                 Color = this.CompassColor.ToSKColor(),
             };
@@ -358,6 +369,7 @@ namespace WhereToFly.App.Controls
                 center,
                 filledPaint,
                 outlinePaint,
+                textSmallSpireFont,
                 textSmallSpirePaint,
                 0.2f * spireRadius,
                 0.1f * spireRadius,
@@ -374,6 +386,7 @@ namespace WhereToFly.App.Controls
                 center,
                 filledPaint,
                 outlinePaint,
+                textLargeSpireFont,
                 textLargeSpirePaint,
                 0.0f,
                 0.2f * spireRadius,
@@ -393,6 +406,7 @@ namespace WhereToFly.App.Controls
         /// <param name="center">compass center point</param>
         /// <param name="filledPaint">paint for the filled part of the spire</param>
         /// <param name="outlinePaint">paint for the outline part of the spire</param>
+        /// <param name="textFont">font for the text of direction names</param>
         /// <param name="textPaint">paint for the text of direction names</param>
         /// <param name="startRadius">radius where the spire starts</param>
         /// <param name="innerRadius">radius of the obtuse angle part of the spire</param>
@@ -405,6 +419,7 @@ namespace WhereToFly.App.Controls
             SKPoint center,
             SKPaint filledPaint,
             SKPaint outlinePaint,
+            SKFont textFont,
             SKPaint textPaint,
             float startRadius,
             float innerRadius,
@@ -438,6 +453,8 @@ namespace WhereToFly.App.Controls
                     directionNames[angle / 90],
                     center.X,
                     center.Y - textRadius,
+                    SKTextAlign.Center,
+                    textFont,
                     textPaint);
 
                 canvas.RotateDegrees(90.0f, center.X, center.Y);

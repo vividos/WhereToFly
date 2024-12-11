@@ -353,20 +353,23 @@ namespace WhereToFly.App.Controls
                     (float)(center.X + (0.8 * radius * Math.Cos(angleInRad))),
                     (float)(center.Y + (0.8 * radius * Math.Sin(angleInRad))));
 
+                using var font = new SKFont
+                {
+                    Size = radius / 5.0f,
+                };
+
                 using var textPaint = new SKPaint
                 {
                     Color = textColor.ToSKColor(),
-                    TextAlign = SKTextAlign.Center,
-                    TextSize = radius / 5.0f,
                 };
+
                 string text = DirectionText[segmentIndex];
 
-                var textBounds = default(SKRect);
-                textPaint.MeasureText(text, ref textBounds);
+                font.MeasureText(text, out SKRect textBounds);
 
                 textPos.Y += textBounds.Height / 2.0f;
 
-                canvas.DrawText(text, textPos, textPaint);
+                canvas.DrawText(text, textPos, SKTextAlign.Center, font, textPaint);
             }
         }
         #endregion
