@@ -14,6 +14,7 @@ namespace WhereToFly.App.MapView
     [JsonSerializable(typeof(MapRectangle))]
     [JsonSerializable(typeof(LongTapParameter))]
     [JsonSerializable(typeof(UpdateLastShownLocationParameter))]
+    [JsonSerializable(typeof(WebMessage))]
     internal partial class MapViewJsonSerializerContext : JsonSerializerContext
     {
         // nothing to add here

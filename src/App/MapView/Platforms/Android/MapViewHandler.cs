@@ -1,4 +1,5 @@
-﻿using Microsoft.Maui;
+﻿using AndroidX.WebKit;
+using Microsoft.Maui;
 using Microsoft.Maui.Handlers;
 
 namespace WhereToFly.App.MapView
@@ -6,7 +7,8 @@ namespace WhereToFly.App.MapView
     /// <summary>
     /// Handler for <see cref="MapView"/> control, Android platform.
     /// </summary>
-    internal partial class MapViewHandler : WebViewHandler
+    internal partial class MapViewHandler :
+        WebViewHandler
     {
         /// <summary>
         /// Called when handlers are connected to the platform view
@@ -27,8 +29,9 @@ namespace WhereToFly.App.MapView
         {
             base.DisconnectHandler(platformView);
 
-            platformView.RemoveJavascriptInterface(
-                JavaScriptCallbackHandler.ObjectName);
+            WebViewCompat.RemoveWebMessageListener(
+                platformView,
+                WebMessageListener.ObjectName);
         }
 
         /// <summary>
@@ -47,9 +50,14 @@ namespace WhereToFly.App.MapView
             // Note: don't put platformView.Settings in a local variable, it doesn't work
             platformView.Settings.JavaScriptEnabled = true;
 
-            platformView.AddJavascriptInterface(
-                new JavaScriptCallbackHandler(virtualView),
-                JavaScriptCallbackHandler.ObjectName);
+            if (virtualView is IWebMessageListener webMessageListener)
+            {
+                WebViewCompat.AddWebMessageListener(
+                    platformView,
+                    WebMessageListener.ObjectName,
+                    ["https://appassets.androidplatform.net"],
+                    new WebMessageListener(webMessageListener));
+            }
 
             // set secure settings
             platformView.Settings.AllowFileAccess = false;

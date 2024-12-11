@@ -19,6 +19,22 @@ namespace WhereToFly.App.MapView
             base.ConnectHandler(platformView);
 
             platformView.CoreWebView2Initialized += this.OnCoreWebView2Initialized;
+            this.PlatformView.WebMessageReceived += this.OnWebMessageReceived;
+        }
+
+        /// <summary>
+        /// Called when WebView2 received a web message
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="args">event args</param>
+        private void OnWebMessageReceived(
+            WebView2 sender,
+            CoreWebView2WebMessageReceivedEventArgs args)
+        {
+            if (this.VirtualView is IWebMessageListener listener)
+            {
+                listener.OnReceivedWebMessage(args.WebMessageAsJson);
+            }
         }
 
         /// <summary>
@@ -27,6 +43,7 @@ namespace WhereToFly.App.MapView
         /// <param name="platformView">platform view</param>
         protected override void DisconnectHandler(WebView2 platformView)
         {
+            platformView.WebMessageReceived -= this.OnWebMessageReceived;
             platformView.CoreWebView2Initialized -= this.OnCoreWebView2Initialized;
 
             base.DisconnectHandler(platformView);

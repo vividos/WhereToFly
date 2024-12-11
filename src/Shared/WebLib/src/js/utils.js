@@ -1,14 +1,22 @@
-﻿/**
- *  function used to call to C# WebView
- * @param {string} funcName callback function name
+/**
+ * function used to call to C# WebView
+ * @param {string} action callback action name
  * @param {object} params parameter as object
  */
-export function callAction(funcName, params) {
-    const ios = /iphone|ipod|ipad/.test(window.navigator.userAgent.toLowerCase());
-    if (ios)
-        window.location.href = "callback://" + funcName + "/" + JSON.stringify(params);
-    else if (typeof callback === "object")
-        window.callback.call(funcName, JSON.stringify(params));
+export function callAction(action, params) {
+    console.log("callAction: called with " + action);
+    if (typeof callback === "object") {
+        callback.postMessage(
+            JSON.stringify({
+                action: action,
+                data: JSON.stringify(params)
+            }));
+    }
+    else if (typeof window.chrome.webview === "object")
+        window.chrome.webview.postMessage({
+            action: action,
+            data: JSON.stringify(params)
+        });
     else
-        window.location.href = "callback://" + funcName + "/" + JSON.stringify(params);
+        console.warn("unhandled callAction() case!");
 }

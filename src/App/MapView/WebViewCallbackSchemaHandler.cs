@@ -37,11 +37,6 @@ namespace WhereToFly.App.MapView
         /// <param name="handler">handler action</param>
         public void RegisterHandler(string functionName, Action<string> handler)
         {
-#if WINDOWS
-            // the callback links on Windows are made lowercase by WebView2, so add them here
-            // lowercase as well
-            functionName = functionName.ToLowerInvariant();
-#endif
             this.handlerMap.Add(functionName, handler);
         }
 
@@ -69,6 +64,16 @@ namespace WhereToFly.App.MapView
 
             jsonParameters = System.Net.WebUtility.UrlDecode(jsonParameters);
 
+            this.HandleCallback(functionName, jsonParameters);
+        }
+
+        /// <summary>
+        /// Handles callback function
+        /// </summary>
+        /// <param name="functionName">callback function name</param>
+        /// <param name="jsonParameters">JSON parameters</param>
+        internal void HandleCallback(string functionName, string jsonParameters)
+        {
             if (this.handlerMap.TryGetValue(functionName, out Action<string>? handler) &&
                 handler != null)
             {

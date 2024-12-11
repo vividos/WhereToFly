@@ -16,7 +16,9 @@ namespace WhereToFly.App.MapView
     /// <summary>
     /// Web view showing a track height profile
     /// </summary>
-    public class HeightProfileView : WebView
+    public class HeightProfileView :
+        WebView,
+        IWebMessageListener
     {
         /// <summary>
         /// Task completion source that completes a task when the height profile view is
@@ -24,6 +26,11 @@ namespace WhereToFly.App.MapView
         /// </summary>
         private readonly TaskCompletionSource<bool> taskCompletionSourceViewInitialized
             = new();
+
+        /// <summary>
+        /// Handler for web view callbacks
+        /// </summary>
+        private WebViewCallbackSchemaHandler? callbackHandler;
 
         /// <summary>
         /// Delegate of function to call when user hovers over or clicks on a height profile point
@@ -106,16 +113,35 @@ namespace WhereToFly.App.MapView
         }
 
         /// <summary>
+        /// Called when the height profile view receives a web message from JavaScript side
+        /// </summary>
+        /// <param name="webMessageAsJson">web message as JSON</param>
+        public void OnReceivedWebMessage(string webMessageAsJson)
+        {
+            var webMessage = JsonSerializer.Deserialize<WebMessage>(
+                webMessageAsJson,
+                MapViewJsonSerializerContext.Default.WebMessage);
+
+            if (webMessage != null)
+            {
+                this.callbackHandler?.HandleCallback(
+                    webMessage.Action,
+                    webMessage.Data ?? string.Empty);
+            }
+        }
+
+        /// <summary>
         /// Registers callback functions from JavaScript to C#
         /// </summary>
         private void RegisterWebViewCallbacks()
         {
-            var callbackHandler = new WebViewCallbackSchemaHandler(this);
-            callbackHandler.RegisterHandler(
+            this.callbackHandler = new WebViewCallbackSchemaHandler(this);
+
+            this.callbackHandler.RegisterHandler(
                 "onClick",
                 (jsonParameters) => this.Click?.Invoke(int.Parse(jsonParameters)));
 
-            callbackHandler.RegisterHandler(
+            this.callbackHandler.RegisterHandler(
                 "onHover",
                 (jsonParameters) => this.Hover?.Invoke(int.Parse(jsonParameters)));
         }

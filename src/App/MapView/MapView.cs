@@ -24,7 +24,11 @@ namespace WhereToFly.App.MapView
     /// controlled using this class. JavaScript code is generated for function calls, and callback
     /// functions are called from JavaScript to C#.
     /// </summary>
-    public class MapView : WebView, IMapView, ITerrainHeightProvider
+    public class MapView :
+        WebView,
+        IMapView,
+        ITerrainHeightProvider,
+        IWebMessageListener
     {
         /// <summary>
         /// Maximum number of locations that are imported in one JavaScript call
@@ -46,6 +50,11 @@ namespace WhereToFly.App.MapView
         /// List of nearby POI locations added to the map
         /// </summary>
         private readonly List<Location> nearbyPoiLocationList = [];
+
+        /// <summary>
+        /// Handler for web view callbacks
+        /// </summary>
+        private WebViewCallbackSchemaHandler? callbackHandler;
 
         /// <summary>
         /// Task completion source for when map is fully initialized
@@ -1322,65 +1331,83 @@ namespace WhereToFly.App.MapView
         }
 
         /// <summary>
+        /// Called when the map view receives a web message from JavaScript side
+        /// </summary>
+        /// <param name="webMessageAsJson">web message as JSON</param>
+        public void OnReceivedWebMessage(string webMessageAsJson)
+        {
+            var webMessage = JsonSerializer.Deserialize<WebMessage>(
+                webMessageAsJson,
+                MapViewJsonSerializerContext.Default.WebMessage);
+
+            if (webMessage != null)
+            {
+                this.callbackHandler?.HandleCallback(
+                    webMessage.Action,
+                    webMessage.Data ?? string.Empty);
+            }
+        }
+
+        /// <summary>
         /// Registers callback functions from JavaScript to C#
         /// </summary>
         private void RegisterWebViewCallbacks()
         {
-            var callbackHandler = new WebViewCallbackSchemaHandler(this);
+            this.callbackHandler = new WebViewCallbackSchemaHandler(this);
 
-            callbackHandler.RegisterHandler(
+            this.callbackHandler.RegisterHandler(
                 "onMapInitialized",
                 (jsonParameters) => this.OnMapInitialized());
 
-            callbackHandler.RegisterHandler(
+            this.callbackHandler.RegisterHandler(
                 "onShowLocationDetails",
                 (jsonParameters) => this.ShowLocationDetails?.Invoke(jsonParameters.Trim('\"')));
 
-            callbackHandler.RegisterHandler(
+            this.callbackHandler.RegisterHandler(
                 "onNavigateToLocation",
                 (jsonParameters) => this.NavigateToLocation?.Invoke(jsonParameters.Trim('\"')));
 
-            callbackHandler.RegisterHandler(
+            this.callbackHandler.RegisterHandler(
                 "onShareMyLocation",
                 (jsonParameters) => this.ShareMyLocation?.Invoke());
 
-            callbackHandler.RegisterHandler(
+            this.callbackHandler.RegisterHandler(
                 "onAddFindResult",
                 this.OnAddFindResult);
 
-            callbackHandler.RegisterHandler(
+            this.callbackHandler.RegisterHandler(
                 "onLongTap",
                 this.OnLongTap);
 
-            callbackHandler.RegisterHandler(
+            this.callbackHandler.RegisterHandler(
                 "onAddTourPlanLocation",
                 (jsonParameters) => this.AddTourPlanLocation?.Invoke(jsonParameters.Trim('\"')));
 
-            callbackHandler.RegisterHandler(
+            this.callbackHandler.RegisterHandler(
                 "onAddTempTourPlanPoint",
                 this.OnAddTempTourPlanPoint);
 
-            callbackHandler.RegisterHandler(
+            this.callbackHandler.RegisterHandler(
                 "onUpdateLastShownLocation",
                 this.OnUpdateLastShownLocation);
 
-            callbackHandler.RegisterHandler(
+            this.callbackHandler.RegisterHandler(
                 "onSetLocationAsCompassTarget",
                 this.OnSetLocationAsCompassTarget);
 
-            callbackHandler.RegisterHandler(
+            this.callbackHandler.RegisterHandler(
                 "onShowTrackDetails",
                 (jsonParameters) => this.ShowTrackDetails?.Invoke(jsonParameters.Trim('\"')));
 
-            callbackHandler.RegisterHandler(
+            this.callbackHandler.RegisterHandler(
                 "onSampledTrackHeights",
                 this.OnSampledTrackHeights);
 
-            callbackHandler.RegisterHandler(
+            this.callbackHandler.RegisterHandler(
                 "onExportLayer",
                 this.OnExportLayer);
 
-            callbackHandler.RegisterHandler(
+            this.callbackHandler.RegisterHandler(
                 "onConsoleErrorMessage",
                 this.OnConsoleErrorMessage);
         }
