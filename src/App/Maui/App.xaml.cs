@@ -1,6 +1,4 @@
-﻿using FFImageLoading;
-using FFImageLoading.Config;
-using Microsoft.AppCenter;
+﻿using Microsoft.AppCenter;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Distribute;
 using System.Diagnostics;
@@ -71,14 +69,6 @@ namespace WhereToFly.App
                     typeof(Distribute),
                     typeof(Crashes));
             }
-
-            var imageService = services.GetService<IImageService>();
-            imageService?.Initialize(
-                new Configuration
-                {
-                    HttpClient = new HttpClient(
-                        new FFImageLoadingHttpClientHandler()),
-                });
 
             TaskScheduler.UnobservedTaskException += this.TaskScheduler_UnobservedTaskException;
 

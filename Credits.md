@@ -42,11 +42,6 @@ HTML content.
 The library is licensed using the
 [MIT License](https://github.com/zzzprojects/html-agility-pack/blob/master/LICENSE).
 
-The app uses the [FFImageLoading.Maui](https://github.com/microspaze/FFImageLoading.Maui)
-library to show and cache SVG images.
-The library is licensed using the
-[MIT License](https://github.com/microspaze/FFImageLoading.Maui?tab=MIT-1-ov-file).
-
 The app uses the [sqlite-net](https://github.com/praeclarum/sqlite-net)
 library to store all data.
 The library is licensed using the

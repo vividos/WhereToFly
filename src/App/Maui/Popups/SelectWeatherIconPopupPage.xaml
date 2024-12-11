@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <popups:BasePopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                     xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
                      xmlns:model="clr-namespace:WhereToFly.App.Models"
                      xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
                      xmlns:views="clr-namespace:WhereToFly.App.Pages"
@@ -63,9 +62,12 @@
                         </HorizontalStackLayout.GestureRecognizers>
 
                         <!-- Weather icon -->
-                        <ffimageloading:SvgCachedImage Source="{Binding Icon, Mode=OneWay}"
-                                                       WidthRequest="32" HeightRequest="32" Margin="4"
-                                                       HorizontalOptions="Start" VerticalOptions="Center" />
+                        <Image Source="{Binding Icon, Mode=OneWay}"
+                               WidthRequest="32"
+                               HeightRequest="32"
+                               Margin="4"
+                               HorizontalOptions="Start"
+                               VerticalOptions="Center" />
 
                         <!-- Title -->
                         <Label Text="{Binding Title, Mode=OneWay}"
