@@ -158,8 +158,8 @@ namespace WhereToFly.App.Services
             if (!PopupPageKeyToPageMap.TryGetValue(popupPageKey, out (Type, Type?, Type?) typeTuple))
             {
                 throw new ArgumentException(
-                    nameof(popupPageKey),
-                    $"invalid popup page key: {popupPageKey}");
+                    $"invalid popup page key: {popupPageKey}",
+                    nameof(popupPageKey));
             }
 
             Type? parameterType = typeTuple.Item3;
@@ -170,8 +170,8 @@ namespace WhereToFly.App.Services
                   parameter.GetType().IsSubclassOf(parameterType)))
             {
                 throw new ArgumentException(
-                    nameof(parameter),
-                    $"expected parameter of type {parameterType.FullName}, but type {parameter.GetType().FullName} was passed!");
+                    $"expected parameter of type {parameterType.FullName}, but type {parameter.GetType().FullName} was passed!",
+                    nameof(parameter));
             }
 
             Type popupPageType = typeTuple.Item1;
