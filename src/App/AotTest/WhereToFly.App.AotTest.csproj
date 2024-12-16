@@ -7,6 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <PublishAot>true</PublishAot>
     <PublishTrimmed>true</PublishTrimmed>
+    <TrimmerSingleWarn>false</TrimmerSingleWarn>
     <InvariantGlobalization>true</InvariantGlobalization>
     <!-- This fixes the warning MSB3270 "There was a mismatch between the processor architecture..." -->
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
