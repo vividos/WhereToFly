@@ -2,18 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>$(DotNetVersion)</TargetFramework>
+    <DefaultItemExcludes>$(DefaultItemExcludes);Frontend\**</DefaultItemExcludes>
   </PropertyGroup>
 
   <PropertyGroup>
     <AspNetCoreModuleName>AspNetCoreModuleV2</AspNetCoreModuleName>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Frontend\**" />
-    <Content Remove="Frontend\**" />
-    <EmbeddedResource Remove="Frontend\**" />
-    <None Remove="Frontend\**" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Refit" Version="8.0.0" />
