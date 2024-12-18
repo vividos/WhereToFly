@@ -305,3 +305,4 @@ stuff/
 /src/App/UWP/WhereToFly.App.UWP.xml
 .dotnet-tools/
 .env
+/src/Web/App/wwwroot/

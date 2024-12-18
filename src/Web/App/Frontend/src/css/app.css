@@ -1,0 +1,32 @@
+/* app wide styles */
+
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+
+#mapElement {
+    position: relative;
+    padding-bottom: 53px;
+    top: -3px;
+}
+
+@media (min-width: 768px) {
+    #mapElement {
+        top: 0px;
+        padding-bottom: 56px;
+    }
+}
+
+/* set size of infobox to fill 80% of the whole mobile screen */
+@media (max-width: 768px) {
+    .cesium-infoBox {
+        width: 80%;
+        max-width: 80%;
+    }
+}

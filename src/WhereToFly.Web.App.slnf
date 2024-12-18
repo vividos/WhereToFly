@@ -1,0 +1,10 @@
+{
+  "solution": {
+    "path": "WhereToFly.sln",
+    "projects": [
+      "Shared\\WebLib\\WhereToFly.Shared.WebLib.esproj",
+      "Web\\App\\Frontend\\WhereToFly.Web.App.Frontend.esproj",
+      "Web\\App\\WhereToFly.Web.App.csproj"
+    ]
+  }
+}
