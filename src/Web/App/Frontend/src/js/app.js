@@ -17,21 +17,30 @@ export class App {
 
     /**
      * Creates a new app object
+     * @param {object} [options] Options to use for initializing the app
+     * @param {string} [options.mapElementId] DOM ID of the div element to create map view in
+     * @param {Function} [options.callback] callback function to use for calling back to C# code
      */
-    constructor() {
+    constructor(options) {
 
         App.log("initializing web app");
 
-        this.map = new MapView({
-            id: "mapElement",
+        this.options = Object.assign({
+            mapElementId: "mapElement",
             liveTrackToolbarId: "liveTrackToolbar",
-            heightProfileElementId: "heightProfileView",
+            heightProfileElementId: "heightProfileView"
+        }, options);
+
+        this.map = new MapView({
+            id: this.options.mapElementId,
+            liveTrackToolbarId: this.options.liveTrackToolbarId,
+            heightProfileElementId: this.options.heightProfileElementId,
             initialCenterPoint: { latitude: 47.083, longitude: 12.178 },
             initialViewingDistance: 50000.0,
             hasMouse: true,
             useAsynchronousPrimitives: true,
             useEntityClustering: false,
-            callback: this.callMapAction
+            callback: this.callMapAction.bind(this)
         });
     }
 
@@ -45,12 +54,14 @@ export class App {
 
     /**
      * Function for MapView for map actions
-     * @param {string} funcName function name of action
+     * @param {string} action callback action name
      * @param {object} params action params
      */
-    callMapAction(funcName, params) {
-        App.log("call action: " + funcName + ", params: " + JSON.stringify(params));
+    callMapAction(action, params) {
+        App.log("call action: " + action + ", params: " + JSON.stringify(params));
+
+        this.options.callback(action, params);
     }
 }
 
-export default new App();
+export default (options) => new App(options);

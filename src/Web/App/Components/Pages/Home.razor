@@ -1,5 +1,6 @@
 @page "/"
 @using Microsoft.JSInterop
+@using System.Diagnostics
 @inject IJSRuntime JS
 
 <PageTitle>Where-To-Fly Web App</PageTitle>
@@ -15,8 +16,28 @@
 
 <script type="text/javascript">
 
-    function initApp() {
-        console.log("it works!");
+    /**
+     * Gets options object for initializing the App
+     */
+    function getAppOptions(referenceToThis) {
+        return {
+            mapElementId: 'mapElement',
+            liveTrackToolbarId: "liveTrackToolbar",
+            heightProfileElementId: "heightProfileView",
+            callback: (action, params) => callbackToDotNet(referenceToThis, action, params)
+        }
+    }
+
+    /**
+     * Calls back to the razor page
+     */
+    function callbackToDotNet(referenceToThis, action, params) {
+        referenceToThis.invokeMethodAsync(
+            'OnAction',
+            {
+                action,
+                params: (params === null ? "" : JSON.stringify(params))
+            });
     }
 
 </script>
@@ -41,9 +62,42 @@
                         "./js/app.bundle.js"
                     });
 
-            await module.InvokeVoidAsync("default");
+            var referenceToThis = DotNetObjectReference.Create(this);
+
+            IJSObjectReference options =
+                await JS.InvokeAsync<IJSObjectReference>(
+                    "getAppOptions",
+                    referenceToThis);
+
+            await module.InvokeVoidAsync("default", options);
         }
 
         await base.OnAfterRenderAsync(firstRender);
+    }
+
+    /// <summary>
+    /// Callback action infos
+    /// </summary>
+    public class ActionInfo
+    {
+        /// <summary>
+        /// Callback action
+        /// </summary>
+        public string Action { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Action parameters as JSON
+        /// </summary>
+        public string? Params { get; set; }
+    }
+
+    /// <summary>
+    /// Called when the JavaScript code calls back to .NET
+    /// </summary>
+    /// <param name="actionInfo">action info</param>
+    [JSInvokable("OnAction")]
+    public void OnAction(ActionInfo actionInfo)
+    {
+        Debug.WriteLine($"OnAction: action={actionInfo.Action} params={actionInfo.Params}");
     }
 }
