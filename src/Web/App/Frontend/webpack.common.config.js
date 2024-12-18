@@ -14,7 +14,9 @@ module.exports = {
         clean: true,
         filename: "js/[name].bundle.js",
         path: path.resolve(__dirname, "..", "wwwroot"),
-        libraryTarget: "module"
+        library: {
+            type: 'module'
+        }
     },
     experiments: {
         outputModule: true
