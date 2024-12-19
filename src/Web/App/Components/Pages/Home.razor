@@ -2,6 +2,7 @@
 @using Microsoft.JSInterop
 @using System.Diagnostics
 @inject IJSRuntime JS
+@inject IConfiguration Configuration
 
 <PageTitle>Where-To-Fly Web App</PageTitle>
 
@@ -19,11 +20,12 @@
     /**
      * Gets options object for initializing the App
      */
-    function getAppOptions(referenceToThis) {
+    async function getAppOptions(referenceToThis) {
         return {
             mapElementId: 'mapElement',
             liveTrackToolbarId: "liveTrackToolbar",
             heightProfileElementId: "heightProfileView",
+            apiKeys: await referenceToThis.invokeMethodAsync("GetApiKeys"),
             callback: (action, params) => callbackToDotNet(referenceToThis, action, params)
         }
     }
@@ -73,6 +75,19 @@
         }
 
         await base.OnAfterRenderAsync(firstRender);
+    }
+
+    /// <summary>
+    /// Returns API keys
+    /// </summary>
+    /// <returns>object with all API keys</returns>
+    [JSInvokable("GetApiKeys")]
+    public object GetApiKeys()
+    {
+        return new
+        {
+            cesiumIonApiKey = Configuration["CESIUM_ION_API_KEY"],
+        };
     }
 
     /// <summary>

@@ -19,6 +19,10 @@ export class App {
      * Creates a new app object
      * @param {object} [options] Options to use for initializing the app
      * @param {string} [options.mapElementId] DOM ID of the div element to create map view in
+     * @param {string} [options.liveTrackToolbarId] DOM ID of the live track toolbar div element
+     * @param {string} [options.heightProfileElementId] DOM ID of the height profile div element
+     * @param {object} [options.apiKeys] Object with all API keys
+     * @param {object} [options.apiKeys.cesiumIonApiKey] Cesium Ion API key
      * @param {Function} [options.callback] callback function to use for calling back to C# code
      */
     constructor(options) {
@@ -35,6 +39,7 @@ export class App {
             id: this.options.mapElementId,
             liveTrackToolbarId: this.options.liveTrackToolbarId,
             heightProfileElementId: this.options.heightProfileElementId,
+            cesiumIonApiKey: this.options.apiKeys.cesiumIonApiKey,
             initialCenterPoint: { latitude: 47.083, longitude: 12.178 },
             initialViewingDistance: 50000.0,
             hasMouse: true,
