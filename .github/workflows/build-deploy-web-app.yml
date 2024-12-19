@@ -16,10 +16,18 @@ jobs:
       with:
         fetch-depth: 0
 
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.0.x
+
+    - name: Build WebLib project
+      run: >
+        dotnet build
+        src/Shared/WebLib/WhereToFly.Shared.WebLib.esproj
 
     - name: Publish
       run: dotnet publish src/Web/App/WhereToFly.Web.App.csproj --output "published"
