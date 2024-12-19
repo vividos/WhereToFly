@@ -1,0 +1,49 @@
+# Build and Deployment for the Where-to-fly web app
+
+name: Build + Deploy Web App
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: 'true'
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x
+
+    - name: Publish
+      run: dotnet publish src/Web/App/WhereToFly.Web.App.csproj --output "published"
+
+    - name: Publish Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: WebApp
+        path: "published"
+
+  deploy:
+    runs-on: windows-latest
+    needs: build
+
+    steps:
+    - name: Download artifact from build job
+      uses: actions/download-artifact@v4
+      with:
+        name: WebApp
+        path: "published"
+
+    - name: Deploy to Azure WebApp
+      uses: azure/webapps-deploy@v3
+      with:
+        app-name: Where-To-Fly
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        package: "published"
