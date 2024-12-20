@@ -25,11 +25,11 @@
     "eslint": "^9.17.0",
     "eslint-plugin-jsdoc": "^50.6.1",
     "file-loader": "^6.2.0",
-    "globals": "^15.13.0",
+    "globals": "^15.14.0",
     "mini-css-extract-plugin": "^2.9.2",
     "terser-webpack-plugin": "^5.3.11",
     "webpack": "^5.97.1",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^6.0.0"
   },
   "dependencies": {
     "wheretofly-weblib": "file:../../../Shared/WebLib"

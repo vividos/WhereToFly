@@ -24,26 +24,26 @@
   "author": "vividos",
   "license": "MIT",
   "devDependencies": {
-    "@eslint/js": "^9.16.0",
+    "@eslint/js": "^9.17.0",
     "copy-webpack-plugin": "^12.0.2",
     "css-loader": "^7.1.2",
     "css-minimizer-webpack-plugin": "^7.0.0",
-    "eslint": "^9.15.0",
-    "eslint-plugin-jsdoc": "^50.6.0",
-    "globals": "^15.12.0",
+    "eslint": "^9.17.0",
+    "eslint-plugin-jsdoc": "^50.6.1",
+    "globals": "^15.14.0",
     "html-webpack-plugin": "^5.6.3",
     "mini-css-extract-plugin": "^2.9.2",
     "strip-pragma-loader": "^1.0.1",
-    "terser-webpack-plugin": "^5.3.10",
-    "webpack": "^5.96.1",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.1.0"
+    "terser-webpack-plugin": "^5.3.11",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^6.0.0",
+    "webpack-dev-server": "^5.2.0"
   },
   "dependencies": {
-    "cesium": "^1.123.0",
-    "chart.js": "^4.4.6",
+    "cesium": "^1.124.0",
+    "chart.js": "^4.4.7",
     "chartjs-adapter-dayjs-4": "^1.0.4",
-    "chartjs-plugin-zoom": "^2.0.1",
+    "chartjs-plugin-zoom": "^2.2.0",
     "dayjs": "^1.11.13"
   }
 }
