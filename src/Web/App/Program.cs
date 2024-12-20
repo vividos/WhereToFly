@@ -1,9 +1,9 @@
-﻿using WhereToFly.Web.App.Components;
+﻿namespace WhereToFly.Web.App;
 
 /// <summary>
 /// Web app program
 /// </summary>
-internal class Program
+internal static class Program
 {
     /// <summary>
     /// Main entry point
@@ -31,7 +31,7 @@ internal class Program
         app.UseAntiforgery();
 
         app.MapStaticAssets();
-        app.MapRazorComponents<App>()
+        app.MapRazorComponents<Components.App>()
             .AddInteractiveServerRenderMode();
 
         app.Run();
