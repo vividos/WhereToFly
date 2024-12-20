@@ -16,5 +16,10 @@ module.exports = merge(common, {
             new TerserPlugin(),
             new CssMinimizerPlugin()
         ]
+    },
+    performance: {
+        hints: "warning",
+        maxAssetSize: 5242880,
+        maxEntrypointSize: 5242880
     }
 });
