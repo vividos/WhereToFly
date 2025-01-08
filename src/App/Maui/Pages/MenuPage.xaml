@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="clr-namespace:WhereToFly.App.Controls"
+             xmlns:svg="clr-namespace:WhereToFly.App.Svg;assembly=WhereToFly.App.Svg"
              xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
              x:Class="WhereToFly.App.Pages.MenuPage"
              x:DataType="viewmodels:MenuViewModel"
@@ -20,9 +20,9 @@
                          HorizontalOptions="Start"
                          Padding="16,0,0,16">
                 <!-- app icon -->
-                <controls:SvgImage Source="{Binding AppIcon, Mode=OneWay}"
-                                   TintColor="{x:Null}"
-                                   WidthRequest="48" HeightRequest="48" VerticalOptions="Start" />
+                <svg:SvgImage Source="{Binding AppIcon, Mode=OneWay}"
+                              TintColor="{x:Null}"
+                              WidthRequest="48" HeightRequest="48" VerticalOptions="Start" />
 
                 <!-- app name and version -->
                 <StackLayout>
@@ -58,10 +58,10 @@
                             </VisualStateManager.VisualStateGroups>
 
                             <!-- menu item icon -->
-                            <controls:SvgImage Source="{Binding ImageSource, Mode=OneWay}"
-                                               InputTransparent="True"
-                                               WidthRequest="32" HeightRequest="32"
-                                               HorizontalOptions="Center" VerticalOptions="Center" />
+                            <svg:SvgImage Source="{Binding ImageSource, Mode=OneWay}"
+                                          InputTransparent="True"
+                                          WidthRequest="32" HeightRequest="32"
+                                          HorizontalOptions="Center" VerticalOptions="Center" />
 
                             <!-- title text -->
                             <Label Grid.Column="1" Text="{Binding Title, Mode=OneTime}"

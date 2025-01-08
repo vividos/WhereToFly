@@ -1,7 +1,7 @@
 ﻿using SkiaSharp.Extended.Svg;
 using System.Text;
 
-namespace WhereToFly.App.Controls
+namespace WhereToFly.App.Svg
 {
     /// <summary>
     /// Resolves loading SVG image data from various image sources

@@ -2,9 +2,9 @@
 using Microsoft.Maui.Controls;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using WhereToFly.App.Controls;
+using WhereToFly.App.Svg;
 
-namespace WhereToFly.App.UnitTest.Controls
+namespace WhereToFly.App.Svg.UnitTest
 {
     /// <summary>
     /// Unit tests for the <see cref="SvgImageSourceTypeConverter"/> class
@@ -66,7 +66,7 @@ namespace WhereToFly.App.UnitTest.Controls
 
             // check
             Assert.IsNotNull(imageSource, "non-null ImageSource must have been returned");
-            Assert.IsInstanceOfType(imageSource, typeof(StreamImageSource), "must be a stream image source");
+            Assert.IsInstanceOfType<StreamImageSource>(imageSource, "must be a stream image source");
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace WhereToFly.App.UnitTest.Controls
 
             // check
             Assert.IsNotNull(imageSource, "non-null ImageSource must have been returned");
-            Assert.IsInstanceOfType(imageSource, typeof(StreamImageSource), "must be a stream image source");
+            Assert.IsInstanceOfType<StreamImageSource>(imageSource, "must be a stream image source");
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace WhereToFly.App.UnitTest.Controls
 
             // check
             Assert.IsNotNull(imageSource, "non-null ImageSource must have been returned");
-            Assert.IsInstanceOfType(imageSource, typeof(UriImageSource), "must be an URI image source");
+            Assert.IsInstanceOfType<UriImageSource>(imageSource, "must be an URI image source");
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace WhereToFly.App.UnitTest.Controls
 
             // check
             Assert.IsNotNull(imageSource, "non-null ImageSource must have been returned");
-            Assert.IsInstanceOfType(imageSource, typeof(UriImageSource), "must be an URI image source");
+            Assert.IsInstanceOfType<UriImageSource>(imageSource, "must be an URI image source");
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace WhereToFly.App.UnitTest.Controls
 
             // check
             Assert.IsNotNull(imageSource, "non-null ImageSource must have been returned");
-            Assert.IsInstanceOfType(imageSource, typeof(UriImageSource), "must be an URI image source");
+            Assert.IsInstanceOfType<UriImageSource>(imageSource, "must be an URI image source");
         }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace WhereToFly.App.UnitTest.Controls
 
             // check
             Assert.IsNotNull(imageSource, "non-null ImageSource must have been returned");
-            Assert.IsInstanceOfType(imageSource, typeof(FileImageSource), "must be a file image source");
+            Assert.IsInstanceOfType<FileImageSource>(imageSource, "must be a file image source");
         }
     }
 }

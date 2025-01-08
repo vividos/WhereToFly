@@ -1,4 +1,4 @@
-﻿namespace WhereToFly.App.Controls
+﻿namespace WhereToFly.App.Svg
 {
     /// <summary>
     /// Common constants for SVG images

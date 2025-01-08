@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Reflection;
 
-namespace WhereToFly.App.Controls
+namespace WhereToFly.App.Svg
 {
     /// <summary>
     /// Type converter for SVG based image sources; takes a string representation of an SVG image
@@ -97,7 +97,7 @@ namespace WhereToFly.App.Controls
         /// <returns>data URI image source</returns>
         private static ImageSource ParseDataUri(string dataUri)
         {
-            if (Uri.TryCreate(dataUri, UriKind.Absolute, out Uri? uri))
+            if (Uri.TryCreate(dataUri, UriKind.Absolute, out var uri))
             {
                 return ImageSource.FromUri(uri);
             }

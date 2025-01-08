@@ -4,9 +4,8 @@ using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using WhereToFly.App.Controls;
 
-namespace WhereToFly.App.UnitTest.Controls
+namespace WhereToFly.App.Svg.UnitTest
 {
     /// <summary>
     /// Unit tests for the SvgDataResolver class

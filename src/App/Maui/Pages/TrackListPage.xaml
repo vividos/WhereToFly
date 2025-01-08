@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:WhereToFly.App.Controls"
              xmlns:local="clr-namespace:WhereToFly.App"
+             xmlns:svg="clr-namespace:WhereToFly.App.Svg;assembly=WhereToFly.App.Svg"
              xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
              x:Class="WhereToFly.App.Pages.TrackListPage"
              x:DataType="viewmodels:TrackListViewModel"
@@ -81,14 +82,14 @@
                             </Grid.GestureRecognizers>
 
                             <!-- Track type image -->
-                            <controls:SvgImage Source="{Binding TypeImageSource, Mode=OneWay}"
-                                               WidthRequest="32"
-                                               HeightRequest="32"
-                                               Margin="4,0,0,0"
-                                               HorizontalOptions="Start"
-                                               VerticalOptions="Center"
-                                               Grid.Column="0"
-                                               Grid.RowSpan="2" />
+                            <svg:SvgImage Source="{Binding TypeImageSource, Mode=OneWay}"
+                                          WidthRequest="32"
+                                          HeightRequest="32"
+                                          Margin="4,0,0,0"
+                                          HorizontalOptions="Start"
+                                          VerticalOptions="Center"
+                                          Grid.Column="0"
+                                          Grid.RowSpan="2" />
 
                             <!-- Track color -->
                             <Border IsVisible="{Binding IsColorBoxVisible, Mode=OneWay}"

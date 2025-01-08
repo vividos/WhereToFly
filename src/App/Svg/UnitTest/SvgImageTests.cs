@@ -1,24 +1,42 @@
-﻿using Microsoft.Maui.Controls;
+﻿using Microsoft.Maui;
+using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using WhereToFly.App.Controls;
 
-namespace WhereToFly.App.UnitTest.Controls
+namespace WhereToFly.App.Svg.UnitTest
 {
     /// <summary>
     /// Unit tests for the SvgImage class
     /// </summary>
     [TestClass]
-    public class SvgImageTests : UserInterfaceTestBase
+    public class SvgImageTests
     {
         /// <summary>
         /// Resource URI for a valid image to use for testing
         /// </summary>
         private const string ResourceUri =
             "resource://WhereToFly.App.UnitTest.Assets.svg.colibri.svg?assembly=WhereToFly.App.UnitTest";
+
+        /// <summary>
+        /// Sets up unit tests
+        /// </summary>
+        [TestInitialize]
+        public void SetUp()
+        {
+            MauiMocks.Init();
+        }
+
+        /// <summary>
+        /// Cleans up unit tests
+        /// </summary>
+        [TestCleanup]
+        public void TearDown()
+        {
+            MauiMocks.Reset();
+        }
 
         /// <summary>
         /// Tests SvgImage default ctor

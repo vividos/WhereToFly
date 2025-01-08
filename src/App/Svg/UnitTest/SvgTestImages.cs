@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace WhereToFly.App.UnitTest.Controls
+namespace WhereToFly.App.Svg.UnitTest
 {
     /// <summary>
     /// SVG test images
@@ -31,7 +31,7 @@ namespace WhereToFly.App.UnitTest.Controls
         /// <returns>Base64 encoded text</returns>
         public static string EncodeBase64(string svgImageText)
         {
-            var utf8bytes = Encoding.UTF8.GetBytes(svgImageText);
+            byte[] utf8bytes = Encoding.UTF8.GetBytes(svgImageText);
             return Convert.ToBase64String(utf8bytes);
         }
     }

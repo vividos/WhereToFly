@@ -22,8 +22,10 @@
     <ProjectReference Include="..\..\Shared\Model\WhereToFly.Shared.Model.csproj" />
     <ProjectReference Include="..\MapView\WhereToFly.App.MapView.csproj" />
     <ProjectReference Include="..\Maui\WhereToFly.App.Maui.csproj" />
+    <ProjectReference Include="..\Svg\WhereToFly.App.Svg.csproj" />
     <TrimmerRootAssembly Include="WhereToFly.App.MapView" />
     <TrimmerRootAssembly Include="WhereToFly.App.Maui" />
+    <TrimmerRootAssembly Include="WhereToFly.App.Svg" />
     <TrimmerRootAssembly Include="WhereToFly.Geo" />
     <TrimmerRootAssembly Include="WhereToFly.Shared.Model" />
   </ItemGroup>

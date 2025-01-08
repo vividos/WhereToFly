@@ -4,7 +4,10 @@ using SkiaSharp.Views.Maui.Controls;
 using System.ComponentModel;
 using System.Diagnostics;
 
-namespace WhereToFly.App.Controls
+// make SvgImage internals visible to unit tests
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("WhereToFly.App.Svg.UnitTest")]
+
+namespace WhereToFly.App.Svg
 {
     /// <summary>
     /// SVG image control, using the SkiaSharp.Extended.Svg NuGet package.
@@ -122,7 +125,7 @@ namespace WhereToFly.App.Controls
         {
             if (this.Source != null)
             {
-                BindableObject.SetInheritedBindingContext(this.Source, this.BindingContext);
+                SetInheritedBindingContext(this.Source, this.BindingContext);
             }
 
             base.OnBindingContextChanged();
@@ -135,7 +138,7 @@ namespace WhereToFly.App.Controls
         /// <param name="args">event args</param>
         private void CanvasViewOnPaintSurface(object? sender, SKPaintSurfaceEventArgs args)
         {
-            SKCanvas canvas = args.Surface.Canvas;
+            var canvas = args.Surface.Canvas;
             canvas.Clear();
 
             if (this.svgImage == null ||
@@ -144,10 +147,10 @@ namespace WhereToFly.App.Controls
                 return;
             }
 
-            SKImageInfo info = args.Info;
+            var info = args.Info;
             canvas.Translate(info.Width / 2f, info.Height / 2f);
 
-            SKRect bounds = this.svgImage.Picture.CullRect;
+            var bounds = this.svgImage.Picture.CullRect;
             float xRatio = info.Width / bounds.Width;
             float yRatio = info.Height / bounds.Height;
 

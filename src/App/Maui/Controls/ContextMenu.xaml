@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:controls="clr-namespace:WhereToFly.App.Controls"
+             xmlns:svg="clr-namespace:WhereToFly.App.Svg;assembly=WhereToFly.App.Svg"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="WhereToFly.App.Controls.ContextMenu"
              x:DataType="controls:ContextMenu">
     <Grid>
         <!-- Context menu 3-dot button -->
-        <controls:SvgImage Source="{Binding ContextMenuImageSource, Mode=OneWay}"
-                           WidthRequest="32"
-                           HeightRequest="32"
-                           HorizontalOptions="Center"
-                           VerticalOptions="Center">
-            <controls:SvgImage.GestureRecognizers>
+        <svg:SvgImage Source="{Binding ContextMenuImageSource, Mode=OneWay}"
+                      WidthRequest="32"
+                      HeightRequest="32"
+                      HorizontalOptions="Center"
+                      VerticalOptions="Center">
+            <svg:SvgImage.GestureRecognizers>
                 <TapGestureRecognizer NumberOfTapsRequired="1"
                                       Command="{Binding ContextMenuCommand}" />
-            </controls:SvgImage.GestureRecognizers>
-        </controls:SvgImage>
+            </svg:SvgImage.GestureRecognizers>
+        </svg:SvgImage>
     </Grid>
 </ContentView>

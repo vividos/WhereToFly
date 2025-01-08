@@ -4,6 +4,8 @@
     "projects": [
       "App\\MapView\\WhereToFly.App.MapView.csproj",
       "App\\Maui\\WhereToFly.App.Maui.csproj",
+      "App\\Svg\\UnitTest\\WhereToFly.App.Svg.UnitTest.csproj",
+      "App\\Svg\\WhereToFly.App.Svg.csproj",
       "App\\UITest\\WhereToFly.App.UITest.csproj",
       "App\\UnitTest\\WhereToFly.App.UnitTest.csproj",
       "Geo\\UnitTest\\WhereToFly.Geo.UnitTest.csproj",
