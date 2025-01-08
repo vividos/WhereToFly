@@ -2,6 +2,7 @@
 using Android.Content;
 using Android.Content.PM;
 using WhereToFly.App.Logic;
+using WhereToFly.Geo;
 
 #pragma warning disable SA1118 // Parameter should not span multiple lines
 
@@ -92,6 +93,12 @@ namespace WhereToFly.App
         DataScheme = WhereToFly.Shared.Model.AppResourceUri.DefaultScheme,
         Categories = [Intent.CategoryDefault, Intent.CategoryBrowsable],
         Icon = "@mipmap/appicon")]
+    //// Intent filter, case 6: geo: scheme, mime type not set
+    [IntentFilter(
+        [Intent.ActionView],
+        DataSchemes = ["geo"],
+        Categories = [Intent.CategoryDefault, Intent.CategoryBrowsable],
+        Icon = "@mipmap/appicon")]
     public class MainActivity : MauiAppCompatActivity
     {
         /// <summary>
@@ -137,6 +144,16 @@ namespace WhereToFly.App
                 {
                     var appMapService = DependencyService.Get<IAppMapService>();
                     appMapService.OpenAppResourceUri(intent.DataString);
+                    return;
+                }
+
+                if (intent.DataString != null &&
+                    intent.DataString.StartsWith("geo:") &&
+                    CoordinatesParser.TryParse(intent.DataString, out Geo.Model.MapPoint? mapPoint) &&
+                    mapPoint != null)
+                {
+                    var appMapService = DependencyService.Get<IAppMapService>();
+                    appMapService.AddNewLocation(mapPoint);
                     return;
                 }
 

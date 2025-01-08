@@ -56,6 +56,13 @@ namespace WhereToFly.App
         void OpenAppResourceUri(string uri);
 
         /// <summary>
+        /// Adds new location with given map point
+        /// </summary>
+        /// <param name="point">map point</param>
+        /// <returns>task to wait on</returns>
+        Task AddNewLocation(MapPoint point);
+
+        /// <summary>
         /// Initializes live waypoint refresh service with current location list
         /// </summary>
         /// <returns>task to wait on</returns>

@@ -148,6 +148,19 @@ namespace WhereToFly.App.Services
         }
 
         /// <summary>
+        /// Adds new location with given map point
+        /// </summary>
+        /// <param name="point">map point</param>
+        /// <returns>task to wait on</returns>
+        public async Task AddNewLocation(MapPoint point)
+        {
+            if (MapPage != null)
+            {
+                await MapPage.AddNewWaypoint(point);
+            }
+        }
+
+        /// <summary>
         /// Initializes live waypoint refresh service with current location list
         /// </summary>
         /// <returns>task to wait on</returns>

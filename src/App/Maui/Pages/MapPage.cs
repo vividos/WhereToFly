@@ -864,7 +864,7 @@ namespace WhereToFly.App.Pages
         /// </summary>
         /// <param name="point">map point</param>
         /// <returns>task to wait on</returns>
-        private async Task AddNewWaypoint(MapPoint point)
+        public async Task AddNewWaypoint(MapPoint point)
         {
             if (this.locationList == null)
             {
