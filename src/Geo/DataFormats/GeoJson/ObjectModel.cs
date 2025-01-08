@@ -232,7 +232,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
             string? type = jsonObject.Value<string>("type");
             if (type == null)
             {
-                throw new ArgumentException($"Unable to parse value object");
+                throw new ArgumentException("Unable to parse value object");
             }
 
             object target = CreateTargetObjectFromType(type);
