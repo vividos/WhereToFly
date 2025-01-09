@@ -18,7 +18,7 @@ namespace WhereToFly.App.Svg.UnitTest
         /// Resource URI for a valid image to use for testing
         /// </summary>
         private const string ResourceUri =
-            "resource://WhereToFly.App.UnitTest.Assets.svg.colibri.svg?assembly=WhereToFly.App.UnitTest";
+            "resource://WhereToFly.App.Svg.UnitTest.Assets.svg.colibri.svg?assembly=WhereToFly.App.Svg.UnitTest";
 
         /// <summary>
         /// Sets up unit tests

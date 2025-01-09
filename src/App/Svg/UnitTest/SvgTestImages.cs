@@ -22,7 +22,7 @@ namespace WhereToFly.App.Svg.UnitTest
         /// Resource path to colibri.svg in the Sample assembly
         /// </summary>
         public const string ResourcePathColibriSvg =
-            "WhereToFly.App.UnitTest.Assets.svg.colibri.svg";
+            "WhereToFly.App.Svg.UnitTest.Assets.svg.colibri.svg";
 
         /// <summary>
         /// Encodes SVG image text as Base64
