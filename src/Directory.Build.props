@@ -1,11 +1,11 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Product>Where-to-fly</Product>
-    <Copyright>Copyright © 2017-2024 Michael Fink</Copyright>
+    <Copyright>Copyright © 2017-2025 Michael Fink</Copyright>
     <Company></Company>
     <NuGetPackagePrefix>Vividos</NuGetPackagePrefix>
     <DotNetVersion>net9.0</DotNetVersion>
-    <DotNetMauiVersion>9.0.12</DotNetMauiVersion>
+    <DotNetMauiVersion>9.0.22</DotNetMauiVersion>
   </PropertyGroup>
 
   <PropertyGroup>
