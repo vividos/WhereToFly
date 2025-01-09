@@ -87,7 +87,7 @@ namespace WhereToFly.App.Pages
 #if ANDROID || WINDOWS
             string cacheFolder = FileSystem.CacheDirectory;
 #else
-            string cacheFolder = Path.GetDirectoryName(this.GetType().Assembly.Location)!;
+            string cacheFolder = System.AppContext.BaseDirectory;
 #endif
 
             var nearbyPoiService = new NearbyPoiCachingService(
