@@ -4,24 +4,47 @@
              xmlns:local="clr-namespace:WhereToFly.App.Svg.Sample"
              xmlns:svg="clr-namespace:WhereToFly.App.Svg;assembly=WhereToFly.App.Svg"
              x:Class="WhereToFly.App.Svg.Sample.SamplePage"
-             x:DataType="local:SamplePageViewModel">
+             x:DataType="local:SamplePageViewModel"
+             BackgroundColor="{AppThemeBinding Dark=Black, Light=White}">
 
     <ContentPage.BindingContext>
         <local:SamplePageViewModel />
     </ContentPage.BindingContext>
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <!-- Styles for dark/light mode -->
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="{AppThemeBinding Dark=White, Light=Black}" />
+            </Style>
+
+            <Style TargetType="Switch">
+                <Setter Property="ThumbColor" Value="{AppThemeBinding Dark=LightBlue, Light=DarkBlue}" />
+                <Setter Property="OnColor" Value="{AppThemeBinding Dark=DarkGray, Light=LightGray}" />
+            </Style>
+
+            <Style TargetType="Slider">
+                <Setter Property="ThumbColor" Value="{AppThemeBinding Dark=LightBlue, Light=DarkBlue}" />
+                <Setter Property="MinimumTrackColor" Value="{AppThemeBinding Dark=LightBlue, Light=DarkBlue}" />
+                <Setter Property="MaximumTrackColor" Value="{AppThemeBinding Dark=DarkGray, Light=LightGray}" />
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <ScrollView Orientation="Vertical">
         <StackLayout Padding="8">
             <!-- Heading -->
-            <Frame BackgroundColor="#2196F3" Padding="16" CornerRadius="0">
+            <Border BackgroundColor="#2F299E" Padding="16">
                 <Label Text="Welcome to SvgImage Samples!"
                        HorizontalTextAlignment="Center"
                        TextColor="White"
                        FontSize="24"/>
-            </Frame>
+            </Border>
 
-            <!-- Display an SVG image from the platform project's Assets folder -->
-            <Label Text="Image from platform project's Assets" />
+            <!-- Display an SVG image from the project's Assets folder -->
+            <Label Text="Image from project's Assets" />
             <StackLayout Orientation="Horizontal">
                 <svg:SvgImage Source="{Binding ImageFromPlatformAssets}"
                               BackgroundColor="CadetBlue"
@@ -41,14 +64,14 @@
                     </svg:SvgImage.Background>
                 </svg:SvgImage>
 
-                <!--  image with transparent background -->
+                <!-- Image with transparent background -->
                 <svg:SvgImage Source="{Binding ImageFromPlatformAssets}"
                               BackgroundColor="Transparent"
                               WidthRequest="96"
                               HeightRequest="96"
                               VerticalOptions="Start" />
 
-                <!-- square image with rectangle size -->
+                <!-- Square image with rectangle size -->
                 <svg:SvgImage Source="{Binding ImageFromPlatformAssets}"
                               BackgroundColor="Brown"
                               WidthRequest="128"
@@ -56,8 +79,8 @@
                               VerticalOptions="Start" />
             </StackLayout>
 
-            <!-- Display an SVG image from the Forms project's Assets folder, referenced as EmbeddedResource -->
-            <Label Text="Image from Forms project's Assets using EmbeddedResource" />
+            <!-- Display an SVG image from the app project's Assets folder, referenced as EmbeddedResource -->
+            <Label Text="Image from app project's Assets using EmbeddedResource" />
             <StackLayout Orientation="Horizontal" x:Name="layoutToAddImage">
                 <svg:SvgImage Source="{Binding ImageFromFormsAssets}"
                               BackgroundColor="LightBlue"
@@ -109,6 +132,7 @@
                               WidthRequest="64"
                               HeightRequest="64"
                               VerticalOptions="Start" />
+
                 <svg:SvgImage Source="resource://WhereToFly.App.Svg.Sample.Assets.cog-outline.svg?assembly=WhereToFly.App.Svg.Sample"
                               BackgroundColor="DarkBlue"
                               TintColor="LightBlue"
@@ -116,14 +140,15 @@
                               HeightRequest="64"
                               VerticalOptions="Start" />
 
-                <!-- tint based on app theme -->
+                <!-- Tint based on app theme -->
                 <svg:SvgImage Source="resource://WhereToFly.App.Svg.Sample.Assets.cog-outline.svg?assembly=WhereToFly.App.Svg.Sample"
                               BackgroundColor="{AppThemeBinding Light=LightBlue, Dark=DarkBlue}"
                               TintColor="{AppThemeBinding Light=DarkBlue, Dark=LightBlue}"
                               WidthRequest="64"
                               HeightRequest="64"
                               VerticalOptions="Start" />
-                <!-- switch to change app theme to dark mode -->
+
+                <!-- Switch to change app theme to dark mode -->
                 <StackLayout Orientation="Vertical">
                     <Label Text="Dark mode" />
                     <Switch IsToggled="{Binding IsDarkModeOn}" />

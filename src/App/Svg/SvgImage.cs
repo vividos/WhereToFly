@@ -10,7 +10,7 @@ using System.Diagnostics;
 namespace WhereToFly.App.Svg
 {
     /// <summary>
-    /// SVG image control, using the SkiaSharp.Extended.Svg NuGet package.
+    /// SVG image control, using the SkiaSharp.Extended.Svg classes (formerly NuGet package).
     /// </summary>
     public class SvgImage : SKCanvasView
     {

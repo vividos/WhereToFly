@@ -1,4 +1,6 @@
-﻿namespace WhereToFly.App.Svg.Sample
+﻿[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
+
+namespace WhereToFly.App.Svg.Sample
 {
     /// <summary>
     /// Sample app

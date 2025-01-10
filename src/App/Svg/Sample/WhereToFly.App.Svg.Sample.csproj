@@ -30,6 +30,12 @@
 
     <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
     <MauiAsset Include="Resources\Raw\**" LogicalName="Assets\%(RecursiveDir)%(Filename)%(Extension)" />
+
+    <!-- Embedded resource assets -->
+    <EmbeddedResource Include="Resources\Raw\toucan.svg" Link="Assets\toucan.svg" />
+    <EmbeddedResource Include="Resources\Raw\shapes.svg" Link="Assets\shapes.svg" />
+    <EmbeddedResource Include="Resources\Raw\colibri.svg" Link="Assets\colibri.svg" />
+    <EmbeddedResource Include="Resources\Raw\cog-outline.svg" Link="Assets\cog-outline.svg" />
   </ItemGroup>
 
   <ItemGroup>
