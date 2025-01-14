@@ -139,7 +139,15 @@ namespace WhereToFly.App.Svg
         private void CanvasViewOnPaintSurface(object? sender, SKPaintSurfaceEventArgs args)
         {
             var canvas = args.Surface.Canvas;
-            canvas.Clear();
+
+            if (this.BackgroundColor != null && this.BackgroundColor != Colors.Transparent)
+            {
+                canvas.Clear(this.BackgroundColor.ToSKColor());
+            }
+            else
+            {
+                canvas.Clear();
+            }
 
             if (this.svgImage == null ||
                 this.svgImage.Picture == null)
