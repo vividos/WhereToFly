@@ -44,8 +44,8 @@
             </Border>
 
             <!-- Display an SVG image from the project's Assets folder -->
-            <Label Text="Image from project's Assets" />
-            <StackLayout Orientation="Horizontal">
+            <Label Text="Image from project's Assets (4 images)" />
+            <HorizontalStackLayout Spacing="8">
                 <svg:SvgImage Source="{Binding ImageFromPlatformAssets}"
                               BackgroundColor="CadetBlue"
                               WidthRequest="48"
@@ -77,11 +77,12 @@
                               WidthRequest="128"
                               HeightRequest="96"
                               VerticalOptions="Start" />
-            </StackLayout>
+            </HorizontalStackLayout>
 
             <!-- Display an SVG image from the app project's Assets folder, referenced as EmbeddedResource -->
-            <Label Text="Image from app project's Assets using EmbeddedResource" />
-            <StackLayout Orientation="Horizontal" x:Name="layoutToAddImage">
+            <Label Text="Image from app project's Assets using EmbeddedResource (4 images)" />
+            <HorizontalStackLayout x:Name="layoutToAddImage"
+                                   Spacing="8">
                 <svg:SvgImage Source="{Binding ImageFromFormsAssets}"
                               BackgroundColor="LightBlue"
                               WidthRequest="64"
@@ -99,11 +100,11 @@
                               WidthRequest="96"
                               HeightRequest="64"
                               VerticalOptions="Start" />
-            </StackLayout>
+            </HorizontalStackLayout>
 
             <!-- Display an image from an SVG data URI or plain SVG text -->
-            <Label Text="Image from Data URLs or SVG image text" />
-            <StackLayout Orientation="Horizontal">
+            <Label Text="Image from Data URLs or SVG image text (3 images)" />
+            <HorizontalStackLayout Spacing="8">
                 <svg:SvgImage Source="{Binding SvgImageDataUrlBase64Encoded}"
                               BackgroundColor="MediumVioletRed"
                               WidthRequest="64"
@@ -121,11 +122,11 @@
                               WidthRequest="64"
                               HeightRequest="64"
                               VerticalOptions="Start" />
-            </StackLayout>
+            </HorizontalStackLayout>
 
             <!-- Set light tint color, dark tint color, and color based on AppTheme settings -->
-            <Label Text="Use tint color for images" />
-            <StackLayout Orientation="Horizontal">
+            <Label Text="Use tint color for images (3 images)" />
+            <HorizontalStackLayout Spacing="8">
                 <svg:SvgImage Source="resource://WhereToFly.App.Svg.Sample.Assets.cog-outline.svg?assembly=WhereToFly.App.Svg.Sample"
                               BackgroundColor="LightBlue"
                               TintColor="DarkBlue"
@@ -153,11 +154,11 @@
                     <Label Text="Dark mode" />
                     <Switch IsToggled="{Binding IsDarkModeOn}" />
                 </StackLayout>
-            </StackLayout>
+            </HorizontalStackLayout>
 
             <!-- Some more control tests -->
-            <Label Text="Tap on image for gesture recognizer test" />
-            <StackLayout Orientation="Horizontal">
+            <Label Text="Tap on image for gesture recognizer test (1 image)" />
+            <HorizontalStackLayout Spacing="8">
                 <svg:SvgImage Source="resource://WhereToFly.App.Svg.Sample.Assets.cog-outline.svg?assembly=WhereToFly.App.Svg.Sample"
                               BackgroundColor="LightBlue"
                               TintColor="DarkBlue"
@@ -168,18 +169,18 @@
                         <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding TappedImageCommand}" />
                     </svg:SvgImage.GestureRecognizers>
                 </svg:SvgImage>
-            </StackLayout>
+            </HorizontalStackLayout>
 
             <!-- Pick any SVG image and display it -->
             <Label Text="Pick an SVG image file from storage and display it" />
-            <StackLayout Orientation="Horizontal">
+            <HorizontalStackLayout Spacing="8">
                 <Button Text="Pick SVG image" Command="{Binding PickSvgImageCommand}" />
                 <svg:SvgImage Source="{Binding PickedImage}"
                               BackgroundColor="DarkSlateBlue"
                               WidthRequest="64"
                               HeightRequest="64"
                               VerticalOptions="Start" />
-            </StackLayout>
+            </HorizontalStackLayout>
 
             <!-- Dynamic image width change -->
             <Label Text="{Binding Path=DynamicImageSize, StringFormat='Dynamic image size change ({0:F0}x{0:F0})'}" />

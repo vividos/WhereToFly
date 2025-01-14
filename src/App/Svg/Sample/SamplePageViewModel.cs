@@ -91,7 +91,7 @@ namespace WhereToFly.App.Svg.Sample
                 () => GetPlatformStream());
 
             this.ImageFromFormsAssets = ImageSource.FromResource(
-                SvgTestImages.ResourcePathColibriSvg,
+                "WhereToFly.App.Svg.Sample.Assets.colibri.svg",
                 typeof(SvgTestImages).Assembly);
 
             this.TappedImageCommand = new AsyncRelayCommand(this.TappedImage);
