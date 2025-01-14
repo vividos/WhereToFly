@@ -141,7 +141,16 @@ namespace WhereToFly.App.Svg
             }
 
             var svg = new SKSvg();
-            svg.Load(filename);
+
+            if (filename.StartsWith("<svg"))
+            {
+                using var stream = new MemoryStream(Encoding.UTF8.GetBytes(filename));
+                svg.Load(stream);
+            }
+            else
+            {
+                svg.Load(filename);
+            }
 
             SvgCache[cacheKey] = svg;
 
