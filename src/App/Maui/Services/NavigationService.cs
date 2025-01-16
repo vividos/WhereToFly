@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui.Views;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using WhereToFly.App.MapView;
 using WhereToFly.App.Models;
 using WhereToFly.App.Pages;
@@ -243,6 +244,7 @@ namespace WhereToFly.App.Services
         /// <param name="animated">indicates if page navigation should be animated</param>
         /// <param name="parameter">parameter object to pass; may be null</param>
         /// <returns>task to wait on</returns>
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
         public async Task NavigateAsync(Type pageType, bool animated = true, object? parameter = null)
         {
             if (this.NavigationPage == null)
