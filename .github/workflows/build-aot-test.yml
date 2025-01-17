@@ -35,6 +35,7 @@ jobs:
         src/App/AotTest/WhereToFly.App.AotTest.csproj
         -c Release
         -f net9.0-android
+        -r android-arm64
 
     - name: Publish AOT test project .NET Windows
       run: >
