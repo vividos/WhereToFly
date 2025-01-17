@@ -8,6 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
 using System.Threading.Tasks;
 using WhereToFly.Geo.Model;
 
@@ -327,7 +328,12 @@ namespace WhereToFly.App.MapView
             Justification = "The method is only passed anonymous objects with simple types")]
         private static string ConvertAnonymousObjectToJson(object obj)
         {
-            return JsonSerializer.Serialize(obj);
+            return JsonSerializer.Serialize(
+                obj,
+                new JsonSerializerOptions
+                {
+                    TypeInfoResolver = new DefaultJsonTypeInfoResolver(),
+                });
         }
     }
 }
