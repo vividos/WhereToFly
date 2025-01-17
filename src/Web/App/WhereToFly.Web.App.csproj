@@ -13,4 +13,8 @@
     </ProjectReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\**\*.map" CopyToPublishDirectory="Never" />
+  </ItemGroup>
+
 </Project>
