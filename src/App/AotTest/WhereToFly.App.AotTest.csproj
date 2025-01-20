@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFrameworks>$(DotNetVersion);$(DotNetVersion)-android;$(DotNetVersion)-windows10.0.19041.0</TargetFrameworks>
     <Description>Where-to-fly Native AOT test</Description>
-    <OutputType Condition="$(TargetFramework) == $(DotNetVersion)">Exe</OutputType>
     <ImplicitUsings>enable</ImplicitUsings>
     <PublishAot>true</PublishAot>
     <PublishTrimmed>true</PublishTrimmed>
@@ -14,6 +13,9 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' ">
+    <!-- Native AOT is not supported on Android yet -->
+    <PublishAot>false</PublishAot>
+    <PublishTrimmed>false</PublishTrimmed>
     <RuntimeIdentifier>android-arm64</RuntimeIdentifier>
   </PropertyGroup>
 
