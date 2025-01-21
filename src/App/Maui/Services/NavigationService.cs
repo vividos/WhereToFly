@@ -35,14 +35,14 @@ namespace WhereToFly.App.Services
         /// type
         /// </summary>
         /// <param name="PopupPageType">popup page type; must derive from Popup</param>
-        /// <param name="ParameterType">parameter type; can be null</param>
         /// <param name="ReturnType">return type; can be null</param>
+        /// <param name="ParameterType">parameter type; can be null</param>
         internal record struct PopupPageInfo(
             [param: DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
             [property: DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
             Type PopupPageType,
-            Type? ParameterType,
-            Type? ReturnType);
+            Type? ReturnType,
+            Type? ParameterType);
 
         /// <summary>
         /// Mapping from page key to page type and, optionally, the type of parameter that must be
@@ -235,7 +235,7 @@ namespace WhereToFly.App.Services
                 {
                     Debug.Assert(
                         false,
-                        $"the page's {popupPage.GetType().FullName} result type doesn't match the calling NavigateToPopupPageAsync result type {typeof(TResult).FullName}");
+                        $"the page's {popupPage.GetType().FullName} result type {returnType?.FullName} doesn't match the calling NavigateToPopupPageAsync result type {typeof(TResult).FullName}");
                 }
             }
 
