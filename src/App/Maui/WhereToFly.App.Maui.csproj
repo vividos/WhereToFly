@@ -8,7 +8,7 @@
     <UseMauiCompat>false</UseMauiCompat>
     <SingleProject>true</SingleProject>
     <ImplicitUsings>enable</ImplicitUsings>
-    <JsonSerializerIsReflectionEnabledByDefault>false</JsonSerializerIsReflectionEnabledByDefault>
+    <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
 
     <!-- Display name -->
     <ApplicationTitle>Where-to-fly</ApplicationTitle>
