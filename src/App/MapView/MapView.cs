@@ -668,7 +668,7 @@ namespace WhereToFly.App.MapView
         /// </exception>
         public async Task FindNearbyPois()
         {
-            Debug.WriteLine(
+            Debug.Assert(
                 this.NearbyPoiService != null,
                 "must set a NearbyPoiService before calling");
 
