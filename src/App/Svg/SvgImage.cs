@@ -140,7 +140,13 @@ namespace WhereToFly.App.Svg
         {
             var canvas = args.Surface.Canvas;
 
-            if (this.BackgroundColor != null && this.BackgroundColor != Colors.Transparent)
+            if (this.Background != null)
+            {
+                Debug.WriteLine("SvgImage doesn't support Background property yet");
+            }
+
+            if (this.BackgroundColor != null &&
+                this.BackgroundColor != Colors.Transparent)
             {
                 canvas.Clear(this.BackgroundColor.ToSKColor());
             }
