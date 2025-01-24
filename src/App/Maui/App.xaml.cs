@@ -22,11 +22,6 @@ namespace WhereToFly.App
     public partial class App : Application
     {
         /// <summary>
-        /// Task completion source used for the InitializedTask property
-        /// </summary>
-        private static readonly TaskCompletionSource<bool> TaskCompletionSourceInitialized = new();
-
-        /// <summary>
         /// Task that can be awaited to wait for a completed app initialisation. The task performs
         /// the following:
         /// - sets up dependency service objects
@@ -35,7 +30,7 @@ namespace WhereToFly.App
         /// - initializes live waypoint refresh service
         /// Note that MapPage also has a task to wait for initialized page.
         /// </summary>
-        public static Task InitializedTask => TaskCompletionSourceInitialized.Task;
+        public static Task InitializedTask { get; internal set; } = Task.CompletedTask;
 
         /// <summary>
         /// Application configuration, e.g. API keys; this is retrieved from the backend and is
@@ -76,7 +71,7 @@ namespace WhereToFly.App
 
             SetupDepencencyService();
 
-            Task.Run(this.LoadAppDataAsync);
+            App.InitializedTask = Task.Run(this.LoadAppDataAsync);
 
             this.RequestedThemeChanged += this.OnRequestedThemeChanged;
         }
@@ -157,8 +152,6 @@ namespace WhereToFly.App
 
             var appMapService = DependencyService.Get<IAppMapService>();
             await appMapService.InitLiveWaypointRefreshService();
-
-            TaskCompletionSourceInitialized.SetResult(true);
         }
 
         /// <summary>
