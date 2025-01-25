@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using WhereToFly.App.MapView;
 using WhereToFly.App.Models;
@@ -52,6 +53,13 @@ namespace WhereToFly.App.UnitTest
         public void OpenAppResourceUri(string uri)
         {
             Debug.WriteLine($"Opening app resource URI; {uri}");
+        }
+
+        /// <inheritdoc />
+        public Task AddNewLocation(MapPoint point)
+        {
+            Debug.WriteLine($"Adding new location; {point}");
+            return Task.CompletedTask;
         }
 
         /// <inheritdoc />
