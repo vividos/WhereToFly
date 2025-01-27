@@ -119,7 +119,7 @@ namespace WhereToFly.App.MapView
         /// <param name="webMessageAsJson">web message as JSON</param>
         public void OnReceivedWebMessage(string webMessageAsJson)
         {
-            var webMessage = JsonSerializer.Deserialize<WebMessage>(
+            var webMessage = JsonSerializer.Deserialize(
                 webMessageAsJson,
                 MapViewJsonSerializerContext.Default.WebMessage);
 

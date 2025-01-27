@@ -728,7 +728,7 @@ namespace WhereToFly.App.MapView
                 .Replace("\\\\", "\\")
                 .Replace("\\\"", "\"");
 
-            return JsonSerializer.Deserialize<MapRectangle>(
+            return JsonSerializer.Deserialize(
                 result,
                 MapViewJsonSerializerContext.Default.MapRectangle);
         }
@@ -1337,7 +1337,7 @@ namespace WhereToFly.App.MapView
         /// <param name="webMessageAsJson">web message as JSON</param>
         public void OnReceivedWebMessage(string webMessageAsJson)
         {
-            var webMessage = JsonSerializer.Deserialize<WebMessage>(
+            var webMessage = JsonSerializer.Deserialize(
                 webMessageAsJson,
                 MapViewJsonSerializerContext.Default.WebMessage);
 
@@ -1427,7 +1427,7 @@ namespace WhereToFly.App.MapView
         /// <param name="jsonParameters">find result parameters as JSON</param>
         private void OnAddFindResult(string jsonParameters)
         {
-            var parameters = JsonSerializer.Deserialize<AddFindResultParameter>(
+            var parameters = JsonSerializer.Deserialize(
                 jsonParameters,
                 MapViewJsonSerializerContext.Default.AddFindResultParameter);
 
@@ -1448,7 +1448,7 @@ namespace WhereToFly.App.MapView
         /// <param name="jsonParameters">long tap parameters as JSON</param>
         private void OnLongTap(string jsonParameters)
         {
-            var longTapParameters = JsonSerializer.Deserialize<LongTapParameter>(
+            var longTapParameters = JsonSerializer.Deserialize(
                 jsonParameters,
                 MapViewJsonSerializerContext.Default.LongTapParameter);
 
@@ -1470,7 +1470,7 @@ namespace WhereToFly.App.MapView
         private void OnAddTempTourPlanPoint(string jsonParameters)
         {
             var addTempTourPlanPointParameters =
-                JsonSerializer.Deserialize<LongTapParameter>(
+                JsonSerializer.Deserialize(
                     jsonParameters,
                     MapViewJsonSerializerContext.Default.LongTapParameter);
 
@@ -1492,7 +1492,7 @@ namespace WhereToFly.App.MapView
         {
             // this action uses the same parameters as the onLongTap action
             var updateLastShownLocationParameters =
-                JsonSerializer.Deserialize<UpdateLastShownLocationParameter>(
+                JsonSerializer.Deserialize(
                     jsonParameters,
                     MapViewJsonSerializerContext.Default.UpdateLastShownLocationParameter);
 
@@ -1532,7 +1532,7 @@ namespace WhereToFly.App.MapView
         {
             double[]? trackPointHeights = string.IsNullOrEmpty(jsonParameters)
                 ? null
-                : JsonSerializer.Deserialize<double[]>(
+                : JsonSerializer.Deserialize(
                     jsonParameters,
                     MapViewJsonSerializerContext.Default.DoubleArray);
 
