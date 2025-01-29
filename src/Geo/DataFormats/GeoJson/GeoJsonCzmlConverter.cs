@@ -86,10 +86,6 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
 
                     break;
 
-                case Geometry geometry:
-                    this.ConvertGeometryToCzml(element, geometry, objectList);
-                    break;
-
                 case GeometryCollection geometryCollection:
                     if (geometryCollection.GeometryList != null)
                     {

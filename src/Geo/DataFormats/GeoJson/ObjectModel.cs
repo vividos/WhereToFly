@@ -1,8 +1,7 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 #pragma warning disable SA1402 // File may only contain a single type
 #pragma warning disable SA1649 // File name should match first type name
@@ -17,24 +16,28 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
     /// <summary>
     /// Element base class for all GeoJSON objects
     /// </summary>
+    [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
+    [JsonDerivedType(typeof(Feature), "Feature")]
+    [JsonDerivedType(typeof(FeatureCollection), "FeatureCollection")]
+    [JsonDerivedType(typeof(GeometryCollection), "GeometryCollection")]
     public class Element
     {
         /// <summary>
         /// Type of GeoJSON object
         /// </summary>
-        [JsonProperty("type")]
+        [JsonPropertyName("type")]
         public string? Type { get; set; }
 
         /// <summary>
         /// Element title; may be null
         /// </summary>
-        [JsonProperty("title")]
+        [JsonPropertyName("title")]
         public string? Title { get; set; }
 
         /// <summary>
         /// Properties attached to this element; may be empty
         /// </summary>
-        [JsonProperty("properties")]
+        [JsonPropertyName("properties")]
         public Dictionary<string, object> Properties { get; set; } = [];
 
         /// <summary>
@@ -44,15 +47,9 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// <returns>root element</returns>
         public static Element? Deserialize(string geoJsonText)
         {
-            return JsonConvert.DeserializeObject<Element>(
+            return JsonSerializer.Deserialize<Element>(
                 geoJsonText,
-                new JsonSerializerSettings
-                {
-                    Converters =
-                    {
-                        new ElementJsonDecoder(),
-                    },
-                });
+                GeoJsonSerializerContext.Default.Element);
         }
     }
 
@@ -64,7 +61,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// <summary>
         /// List of features contained in this collection
         /// </summary>
-        [JsonProperty("features")]
+        [JsonPropertyName("features")]
         public Feature[]? FeatureList { get; set; }
     }
 
@@ -76,17 +73,28 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// <summary>
         /// Geometry for this feature
         /// </summary>
-        [JsonProperty("geometry")]
+        [JsonPropertyName("geometry")]
         public Geometry? Geometry { get; set; }
     }
 
     /// <summary>
-    /// Geometry element; technically the Geometry element may only appear in a feature, but
-    /// to keep parsing simple, it is derived from Element, too.
+    /// Geometry element base class
     /// </summary>
-    [DebuggerDisplay("Geometry")]
-    public class Geometry : Element
+    [DebuggerDisplay("Geometry {Type}")]
+    [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
+    [JsonDerivedType(typeof(PointGeometry), "Point")]
+    [JsonDerivedType(typeof(LineStringGeometry), "LineString")]
+    [JsonDerivedType(typeof(PolygonGeometry), "Polygon")]
+    [JsonDerivedType(typeof(MultiPointGeometry), "MultiPoint")]
+    [JsonDerivedType(typeof(MultiLineStringGeometry), "MultiLineString")]
+    [JsonDerivedType(typeof(MultiPolygonGeometry), "MultiPolygon")]
+    public class Geometry
     {
+        /// <summary>
+        /// Type of GeoJSON object
+        /// </summary>
+        [JsonPropertyName("type")]
+        public string? Type { get; set; }
     }
 
     /// <summary>
@@ -97,7 +105,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// <summary>
         /// List of geometries
         /// </summary>
-        [JsonProperty("geometries")]
+        [JsonPropertyName("geometries")]
         public Geometry[]? GeometryList { get; set; }
     }
 
@@ -109,7 +117,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// <summary>
         /// Coordinates for the point geometry
         /// </summary>
-        [JsonProperty("coordinates")]
+        [JsonPropertyName("coordinates")]
         public double[]? Coordinates { get; set; }
     }
 
@@ -121,7 +129,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// <summary>
         /// Coordinates for the line string geometry
         /// </summary>
-        [JsonProperty("coordinates")]
+        [JsonPropertyName("coordinates")]
         public double[][]? Coordinates { get; set; }
     }
 
@@ -133,7 +141,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// <summary>
         /// Coordinates for the polygon geometry
         /// </summary>
-        [JsonProperty("coordinates")]
+        [JsonPropertyName("coordinates")]
         public double[][][]? Coordinates { get; set; }
     }
 
@@ -145,7 +153,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// <summary>
         /// Coordinates for the multi-point geometry
         /// </summary>
-        [JsonProperty("coordinates")]
+        [JsonPropertyName("coordinates")]
         public double[][]? Coordinates { get; set; }
     }
 
@@ -157,7 +165,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// <summary>
         /// Coordinates for the multi line string geometry
         /// </summary>
-        [JsonProperty("coordinates")]
+        [JsonPropertyName("coordinates")]
         public double[][][]? Coordinates { get; set; }
     }
 
@@ -169,98 +177,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// <summary>
         /// Coordinates for the multi-polygon geometry
         /// </summary>
-        [JsonProperty("coordinates")]
+        [JsonPropertyName("coordinates")]
         public double[][][][]? Coordinates { get; set; }
-    }
-
-    /// <summary>
-    /// Deserializer for Element derived objects; see also:
-    /// https://www.codeproject.com/Tips/1206080/Complex-deserialization-of-objects-from-JSON
-    /// </summary>
-    public class ElementJsonDecoder : JsonConverter
-    {
-        /// <summary>
-        /// Indicates if writing is supported (no, it isn't)
-        /// </summary>
-        public override bool CanWrite => false;
-
-        /// <summary>
-        /// Determines if a given type can be converted by this converter
-        /// </summary>
-        /// <param name="objectType">the object's type</param>
-        /// <returns>true when convertable, false when not</returns>
-        public override bool CanConvert(Type objectType)
-        {
-            return typeof(Element).IsAssignableFrom(objectType);
-        }
-
-        /// <summary>
-        /// Writes JSON; not implemented
-        /// </summary>
-        /// <param name="writer">JSON writer</param>
-        /// <param name="value">value to write</param>
-        /// <param name="serializer">JSON serializer</param>
-        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
-            => throw new NotSupportedException("writing not supported");
-
-        /// <summary>
-        /// Reads JSON
-        /// </summary>
-        /// <param name="reader">JSON reader</param>
-        /// <param name="objectType">the object's type</param>
-        /// <param name="existingValue">existing object; unused</param>
-        /// <param name="serializer">JSON serializer</param>
-        /// <returns>read object</returns>
-        public override object? ReadJson(
-            JsonReader reader,
-            Type objectType,
-            object? existingValue,
-            JsonSerializer serializer)
-        {
-            if (reader.TokenType == JsonToken.Null)
-            {
-                return null;
-            }
-
-            // load JObject from stream
-            var jsonObject = JObject.Load(reader);
-            if (jsonObject == null)
-            {
-                return null;
-            }
-
-            string? type = jsonObject.Value<string>("type");
-            if (type == null)
-            {
-                throw new ArgumentException("Unable to parse value object");
-            }
-
-            object target = CreateTargetObjectFromType(type);
-
-            serializer.Populate(jsonObject.CreateReader(), target);
-            return target;
-        }
-
-        /// <summary>
-        /// Creates a target element object, based on the type string
-        /// </summary>
-        /// <param name="type">GeoJSON type string</param>
-        /// <returns>target object</returns>
-        private static object CreateTargetObjectFromType(string type)
-        {
-            return type switch
-            {
-                "Feature" => new Feature(),
-                "FeatureCollection" => new FeatureCollection(),
-                "GeometryCollection" => new GeometryCollection(),
-                "Point" => new PointGeometry(),
-                "LineString" => new LineStringGeometry(),
-                "Polygon" => new PolygonGeometry(),
-                "MultiPoint" => new MultiPointGeometry(),
-                "MultiLineString" => new MultiLineStringGeometry(),
-                "MultiPolygon" => new MultiPolygonGeometry(),
-                _ => throw new ArgumentException($"Unknown geometry type '{type}'"),
-            };
-        }
     }
 }

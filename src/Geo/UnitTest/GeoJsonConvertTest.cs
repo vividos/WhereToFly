@@ -60,44 +60,62 @@ namespace WhereToFly.Geo.UnitTest
   ]
 }",
             @"{
-    ""type"": ""Point"",
-    ""coordinates"": [30, 10]
+    ""type"": ""Feature"",
+    ""geometry"": {
+        ""type"": ""Point"",
+        ""coordinates"": [30, 10]
+    }
 }",
             @"{
-    ""type"": ""LineString"",
-    ""coordinates"": [
-        [30, 10], [10, 30], [40, 40]
-    ]
-}",
-            @"{
-    ""type"": ""Polygon"",
-    ""coordinates"": [
-        [[30, 10], [40, 40], [20, 40], [10, 20], [30, 10]]
-    ]
-}",
-            @"{
-    ""type"": ""MultiPoint"",
-    ""coordinates"": [
-        [10, 40], [40, 30], [20, 20], [30, 10]
-    ]
-}",
-            @"{
-    ""type"": ""MultiLineString"",
-    ""coordinates"": [
-        [[10, 10], [20, 20], [10, 40]],
-        [[40, 40], [30, 30], [40, 20], [30, 10]]
-    ]
-}",
-            @"{
-    ""type"": ""MultiPolygon"",
-    ""coordinates"": [
-        [
-            [[30, 20], [45, 40], [10, 40], [30, 20]]
-        ],
-        [
-            [[15, 5], [40, 10], [10, 20], [5, 10], [15, 5]]
+    ""type"": ""Feature"",
+    ""geometry"": {
+        ""type"": ""LineString"",
+        ""coordinates"": [
+            [30, 10], [10, 30], [40, 40]
         ]
-    ]
+    }
+}",
+            @"{
+    ""type"": ""Feature"",
+    ""geometry"": {
+        ""type"": ""Polygon"",
+        ""coordinates"": [
+            [[30, 10], [40, 40], [20, 40], [10, 20], [30, 10]]
+        ]
+    }
+}",
+            @"{
+    ""type"": ""Feature"",
+    ""geometry"": {
+        ""type"": ""MultiPoint"",
+        ""coordinates"": [
+            [10, 40], [40, 30], [20, 20], [30, 10]
+        ]
+    }
+}",
+            @"{
+    ""type"": ""Feature"",
+    ""geometry"": {
+        ""type"": ""MultiLineString"",
+        ""coordinates"": [
+            [[10, 10], [20, 20], [10, 40]],
+            [[40, 40], [30, 30], [40, 20], [30, 10]]
+        ]
+    }
+}",
+            @"{
+    ""type"": ""Feature"",
+    ""geometry"": {
+        ""type"": ""MultiPolygon"",
+        ""coordinates"": [
+            [
+                [[30, 20], [45, 40], [10, 40], [30, 20]]
+            ],
+            [
+                [[15, 5], [40, 10], [10, 20], [5, 10], [15, 5]]
+            ]
+        ]
+    }
 }",
             @"{
     ""type"": ""GeometryCollection"",

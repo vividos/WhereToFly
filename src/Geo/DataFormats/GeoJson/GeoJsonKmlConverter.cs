@@ -131,17 +131,13 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
                 case Feature feature:
                     if (feature.Geometry != null)
                     {
-                        this.ConvertElementToKml(folder, elementName, feature.Geometry);
+                        this.ConvertGeometryToKml(folder, elementName, feature.Geometry);
                     }
                     else
                     {
                         throw new FormatException("GeoJSON Feature without geometry");
                     }
 
-                    break;
-
-                case Geometry geometry:
-                    this.ConvertGeometryToKml(folder, elementName, geometry);
                     break;
 
                 case GeometryCollection geometryCollection:
