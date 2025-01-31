@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using System.Text.Json;
 using WhereToFly.App.Popups;
 using WhereToFly.App.Services;
 using WhereToFly.Geo;
@@ -601,7 +600,10 @@ namespace WhereToFly.App.Logic
                 return;
             }
 
-            ReadCzmlNameAndDescription(czml, out string name, out string description);
+            WhereToFly.Geo.DataFormats.Czml.Serializer.ReadCzmlNameAndDescription(
+                czml,
+                out string name,
+                out string description);
 
             if (string.IsNullOrEmpty(name))
             {
@@ -644,32 +646,6 @@ namespace WhereToFly.App.Logic
         }
 
         /// <summary>
-        /// Reads name and description fields from the CZML file's packet header, if present.
-        /// </summary>
-        /// <param name="czml">CZML JSON text</param>
-        /// <param name="name">document name to read</param>
-        /// <param name="description">document description to read</param>
-        private static void ReadCzmlNameAndDescription(string czml, out string name, out string description)
-        {
-            var rootArray = JArray.Parse(czml);
-            if (rootArray.Count > 0)
-            {
-                var headerObject = rootArray[0].ToObject<PacketHeader>();
-                if (headerObject != null &&
-                    headerObject.Id == "document")
-                {
-                    name = headerObject.Name;
-                    description = headerObject.Description ?? string.Empty;
-
-                    return;
-                }
-            }
-
-            name = string.Empty;
-            description = string.Empty;
-        }
-
-        /// <summary>
         /// Checks if given JSON string is actually valid JSON.
         /// </summary>
         /// <param name="json">JSON string to check</param>
@@ -687,10 +663,10 @@ namespace WhereToFly.App.Logic
 
             try
             {
-                JToken.Parse(json);
+                JsonDocument.Parse(json);
                 return true;
             }
-            catch (JsonReaderException jex)
+            catch (JsonException jex)
             {
                 App.LogError(jex);
                 return false;
