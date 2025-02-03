@@ -1,14 +1,15 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using WhereToFly.App.Serializers;
 using WhereToFly.App.Services;
 using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.UnitTest
 {
     /// <summary>
-    /// Tests for record LatLongKey
+    /// Tests for record <see cref="LatLongKey"/>
     /// </summary>
     [TestClass]
     public class LatLongKeyTest
@@ -36,13 +37,25 @@ namespace WhereToFly.App.UnitTest
             };
 
             // run
-            string jsonKey = JsonConvert.SerializeObject(key);
-            string jsonList = JsonConvert.SerializeObject(list);
-            string jsonDict = JsonConvert.SerializeObject(dict);
+            string jsonKey = JsonSerializer.Serialize(
+                key,
+                ModelsJsonSerializerContext.Default.LatLongKey);
 
-            var key2 = JsonConvert.DeserializeObject<LatLongKey>(jsonKey);
-            var list2 = JsonConvert.DeserializeObject<List<LatLongKey>>(jsonList);
-            var dict2 = JsonConvert.DeserializeObject<Dictionary<LatLongKey, List<Location>>>(jsonDict);
+            string jsonList = JsonSerializer.Serialize(list);
+
+            string jsonDict = JsonSerializer.Serialize(
+                dict,
+                ModelsJsonSerializerContext.Default.DictionaryLatLongKeyListLocation);
+
+            var key2 = JsonSerializer.Deserialize(
+                jsonKey,
+                ModelsJsonSerializerContext.Default.LatLongKey);
+
+            var list2 = JsonSerializer.Deserialize<List<LatLongKey>>(jsonList);
+
+            var dict2 = JsonSerializer.Deserialize(
+                jsonDict,
+                ModelsJsonSerializerContext.Default.DictionaryLatLongKeyListLocation);
 
             // check
             Assert.IsNotNull(key2, "deserialized key must not be null");

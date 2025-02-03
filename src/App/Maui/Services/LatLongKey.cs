@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Text.Json.Serialization;
+using WhereToFly.App.Serializers;
 
 namespace WhereToFly.App.Services
 {
@@ -7,6 +8,6 @@ namespace WhereToFly.App.Services
     /// </summary>
     /// <param name="Latitude">integer latitude value</param>
     /// <param name="Longitude">integer longitude value</param>
-    [TypeConverter(typeof(LatLongKeyTypeConverter))]
+    [JsonConverter(typeof(LatLongKeyJsonConverter))]
     internal readonly record struct LatLongKey(int Latitude, int Longitude);
 }

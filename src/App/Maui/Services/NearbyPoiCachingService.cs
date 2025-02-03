@@ -1,6 +1,7 @@
-﻿using Newtonsoft.Json;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using System.Text.Json;
 using WhereToFly.App.MapView;
+using WhereToFly.App.Serializers;
 using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.Services
@@ -170,7 +171,10 @@ namespace WhereToFly.App.Services
             {
                 string json = File.ReadAllText(cacheFilename);
 
-                var localCache = JsonConvert.DeserializeObject<Dictionary<LatLongKey, List<Location>>>(json);
+                var localCache = JsonSerializer.Deserialize(
+                    json,
+                    ModelsJsonSerializerContext.Default.DictionaryLatLongKeyListLocation);
+
                 if (localCache != null)
                 {
                     this.cache = localCache;
@@ -192,7 +196,9 @@ namespace WhereToFly.App.Services
         /// </summary>
         private void SaveCache()
         {
-            string json = JsonConvert.SerializeObject(this.cache);
+            string json = JsonSerializer.Serialize(
+                this.cache,
+                ModelsJsonSerializerContext.Default.DictionaryLatLongKeyListLocation);
 
             string cacheFilename = Path.Combine(this.cacheFolder, CacheFilename);
             File.WriteAllText(cacheFilename, json);
