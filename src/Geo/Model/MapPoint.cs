@@ -130,7 +130,6 @@ namespace WhereToFly.Geo.Model
                 this.Longitude.ToString("F6", CultureInfo.InvariantCulture),
                 altitudeText);
         }
-
-#endregion
+        #endregion
     }
 }

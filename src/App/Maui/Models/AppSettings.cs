@@ -60,7 +60,7 @@ namespace WhereToFly.App.Models
         /// Last used flying range parameters
         /// </summary>
         public FlyingRangeParameters LastFlyingRangeParameters { get; set; }
-         = new FlyingRangeParameters();
+            = new FlyingRangeParameters();
 
         /// <summary>
         /// Last shown settings page
