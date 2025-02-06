@@ -1,13 +1,15 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
+using WhereToFly.WebApi.Logic.Serializers;
 
 namespace WhereToFly.WebApi.Logic.TourPlanning
 {
@@ -160,7 +162,8 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
                 elevation = true,
             };
 
-            string json = JsonConvert.SerializeObject(optionsObject);
+            string json = JsonSerializer.Serialize(optionsObject);
+
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var result = await this.client.PostAsync(
@@ -171,14 +174,18 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
             if (!result.IsSuccessStatusCode)
             {
                 string errorJson = await result.Content.ReadAsStringAsync();
-                var errorObject = JsonConvert.DeserializeObject<ErrorInfo>(errorJson);
+                var errorObject = JsonSerializer.Deserialize<ErrorInfo>(
+                    errorJson,
+                    OpenRouteServiceJsonSerializerContext.Default.ErrorInfo);
 
                 throw new InvalidOperationException(
                     $"{(int)result.StatusCode} ({result.ReasonPhrase}): Details: {errorObject?.Error?.Message}");
             }
 
             string resultJson = await result.Content.ReadAsStringAsync(cancellationToken);
-            var resultObject = JsonConvert.DeserializeObject<ResultObject>(resultJson);
+            var resultObject = JsonSerializer.Deserialize(
+                resultJson,
+                OpenRouteServiceJsonSerializerContext.Default.ResultObject);
 
             if (resultObject == null)
             {
@@ -217,19 +224,19 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
             /// <summary>
             /// Bounding box
             /// </summary>
-            [JsonProperty("bbox")]
+            [JsonPropertyName("bbox")]
             public double[] BoundingBox { get; set; } = Array.Empty<double>();
 
             /// <summary>
             /// Routes list
             /// </summary>
-            [JsonProperty("routes")]
+            [JsonPropertyName("routes")]
             public Route[]? Routes { get; set; } = Array.Empty<Route>();
 
             /// <summary>
             /// Result metadata
             /// </summary>
-            [JsonProperty("metadata")]
+            [JsonPropertyName("metadata")]
             public Metadata? Metadata { get; set; }
         }
 
@@ -241,7 +248,7 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
             /// <summary>
             /// Attribution text
             /// </summary>
-            [JsonProperty("attribution")]
+            [JsonPropertyName("attribution")]
             public string Attribution { get; set; } = string.Empty;
         }
 
@@ -253,25 +260,25 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
             /// <summary>
             /// Route summary
             /// </summary>
-            [JsonProperty("summary")]
+            [JsonPropertyName("summary")]
             public Summary Summary { get; set; } = new Summary();
 
             /// <summary>
             /// Bounding box of route
             /// </summary>
-            [JsonProperty("bbox")]
+            [JsonPropertyName("bbox")]
             public double[] BoundingBox { get; set; } = Array.Empty<double>();
 
             /// <summary>
             /// Geometry polyline string
             /// </summary>
-            [JsonProperty("geometry")]
+            [JsonPropertyName("geometry")]
             public string Geometry { get; set; } = string.Empty;
 
             /// <summary>
             /// Waypoint indices into the geometry
             /// </summary>
-            [JsonProperty("way_points")]
+            [JsonPropertyName("way_points")]
             public int[] WaypointIndexList { get; set; } = Array.Empty<int>();
         }
 
@@ -283,13 +290,13 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
             /// <summary>
             /// Distance in meter
             /// </summary>
-            [JsonProperty("distance")]
+            [JsonPropertyName("distance")]
             public double Distance { get; set; } = 0.0;
 
             /// <summary>
             /// Duration in seconds
             /// </summary>
-            [JsonProperty("duration")]
+            [JsonPropertyName("duration")]
             public double Duration { get; set; } = 0.0;
         }
 
@@ -301,7 +308,7 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
             /// <summary>
             /// Error details
             /// </summary>
-            [JsonProperty("error")]
+            [JsonPropertyName("error")]
             public ErrorDetails? Error { get; set; }
 
             /// <summary>
@@ -312,13 +319,13 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
                 /// <summary>
                 /// Error code
                 /// </summary>
-                [JsonProperty("code")]
+                [JsonPropertyName("code")]
                 public int Code { get; set; }
 
                 /// <summary>
                 /// Error message
                 /// </summary>
-                [JsonProperty("message")]
+                [JsonPropertyName("message")]
                 public string? Message { get; set; }
             }
         }
