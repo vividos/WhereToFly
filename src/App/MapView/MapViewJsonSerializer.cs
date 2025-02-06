@@ -8,6 +8,7 @@ namespace WhereToFly.App.MapView
     /// </summary>
     [JsonSourceGenerationOptions(
         WriteIndented = false,
+        PropertyNameCaseInsensitive = true,
         GenerationMode = JsonSourceGenerationMode.Default)]
     [JsonSerializable(typeof(double[]))]
     [JsonSerializable(typeof(AddFindResultParameter))]
