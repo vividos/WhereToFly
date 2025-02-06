@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace WhereToFly.Geo.Model
 {
@@ -10,11 +11,13 @@ namespace WhereToFly.Geo.Model
         /// <summary>
         /// Map point containing the north-west point of the rectangle
         /// </summary>
+        [JsonIgnore]
         public MapPoint NorthWest { get; set; }
 
         /// <summary>
         /// Map point containing the south-east point of the rectangle
         /// </summary>
+        [JsonIgnore]
         public MapPoint SouthEast { get; set; }
 
         /// <summary>
@@ -56,16 +59,19 @@ namespace WhereToFly.Geo.Model
         /// <summary>
         /// Width of rectangle, in degrees longitude
         /// </summary>
+        [JsonIgnore]
         public double Width => Math.Abs(this.East - this.West);
 
         /// <summary>
         /// Height of rectangle, in degrees latitude
         /// </summary>
+        [JsonIgnore]
         public double Height => Math.Abs(this.North - this.South);
 
         /// <summary>
         /// Returns the center point of the map rectangle
         /// </summary>
+        [JsonIgnore]
         public MapPoint Center => new(
             this.South + (this.Height / 2.0),
             this.West + (this.Width / 2.0));
@@ -73,6 +79,7 @@ namespace WhereToFly.Geo.Model
         /// <summary>
         /// Returns if the rectangle is value
         /// </summary>
+        [JsonIgnore]
         public bool Valid => this.NorthWest.Valid && this.SouthEast.Valid;
 
         /// <summary>
