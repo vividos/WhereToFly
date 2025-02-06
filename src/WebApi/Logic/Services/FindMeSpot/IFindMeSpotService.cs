@@ -1,8 +1,9 @@
-﻿using Newtonsoft.Json;
-using Refit;
+﻿using Refit;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using WhereToFly.WebApi.Logic.Serializers;
 
 #pragma warning disable SA1402 // File may only contain a single type
 #pragma warning disable CA1034 // Nested types should not be visible
@@ -39,7 +40,7 @@ namespace WhereToFly.WebApi.Logic.Services.FindMeSpot
 
         public class Message
         {
-            [JsonProperty(PropertyName = "@clientUnixTime")]
+            [JsonPropertyName("@clientUnixTime")]
             public string? ClientUnixTime { get; set; }
 
             public int Id { get; set; }
@@ -60,6 +61,7 @@ namespace WhereToFly.WebApi.Logic.Services.FindMeSpot
 
             public string? ShowCustomMsg { get; set; }
 
+            [JsonConverter(typeof(DateTimeConverterUsingDateTimeParse))]
             public DateTime DateTime { get; set; }
 
             public string? BatteryState { get; set; }

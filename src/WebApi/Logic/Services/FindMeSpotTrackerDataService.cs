@@ -2,8 +2,10 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 using System.Threading.Tasks;
 using WhereToFly.Shared.Model;
+using WhereToFly.WebApi.Logic.Serializers;
 using WhereToFly.WebApi.Logic.Services.FindMeSpot;
 
 [assembly: InternalsVisibleTo("WhereToFly.WebApi.UnitTest")]
@@ -37,7 +39,16 @@ namespace WhereToFly.WebApi.Logic.Services
         /// </summary>
         public FindMeSpotTrackerDataService()
         {
-            this.findMeSpotApi = RestService.For<IFindMeSpotService>(BaseUrl);
+            this.findMeSpotApi = RestService.For<IFindMeSpotService>(
+                BaseUrl,
+                new RefitSettings
+                {
+                    ContentSerializer = new SystemTextJsonContentSerializer(
+                        new JsonSerializerOptions
+                        {
+                            TypeInfoResolver = FindMeSpotJsonSerializerContext.Default,
+                        }),
+                });
         }
 
         /// <summary>
@@ -69,7 +80,7 @@ namespace WhereToFly.WebApi.Logic.Services
                 throw new ArgumentNullException("uri.Data", "live feed ID is null");
             }
 
-            Model.RootObject result;
+            Model.RootObject? result;
             if (liveFeedId != "xxx")
             {
                 result = await this.findMeSpotApi.GetLatest(liveFeedId);
@@ -80,7 +91,9 @@ namespace WhereToFly.WebApi.Logic.Services
             {
                 // support for unit test
                 string feedText = @"{""response"":{""feedMessageResponse"":{""count"":1,""feed"":{""id"":""abc123"",""name"":""name1"",""description"":""desc1"",""status"":""ACTIVE"",""usage"":0,""daysRange"":7,""detailedMessageShown"":true,""type"":""SHARED_PAGE""},""totalCount"":1,""activityCount"":0,""messages"":{""message"":{""@clientUnixTime"":""0"",""id"":942821234,""messengerId"":""0-123456"",""messengerName"":""Spot"",""unixTime"":1521991234,""messageType"":""UNLIMITED-TRACK"",""latitude"":48.12345,""longitude"":11.12345,""modelId"":""SPOT3"",""showCustomMsg"":""Y"",""dateTime"":""2018-03-26T20:52:00+0000"",""batteryState"":""GOOD"",""hidden"":0,""altitude"":1234}}}}}";
-                result = Newtonsoft.Json.JsonConvert.DeserializeObject<Model.RootObject>(feedText)!;
+                result = JsonSerializer.Deserialize(
+                    feedText,
+                    FindMeSpotJsonSerializerContext.Default.RootObject);
             }
 
             var latestMessage = result?.Response?.FeedMessageResponse?.Messages?.Message;
