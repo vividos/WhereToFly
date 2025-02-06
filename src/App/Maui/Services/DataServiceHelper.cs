@@ -1,6 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
 using WhereToFly.App.Models;
 using WhereToFly.App.Resources;
+using WhereToFly.App.Serializers;
 using WhereToFly.Geo.Airspace;
 using WhereToFly.Geo.DataFormats;
 using WhereToFly.Geo.Model;
@@ -240,7 +241,9 @@ namespace WhereToFly.App.Services
                 using var reader = new StreamReader(stream);
                 string json = await reader.ReadToEndAsync();
 
-                return JsonConvert.DeserializeObject<Dictionary<string, string>>(json)
+                return JsonSerializer.Deserialize(
+                    json,
+                    ModelsJsonSerializerContext.Default.DictionaryStringString)
                     ?? [];
             }
             catch (Exception)
@@ -268,7 +271,10 @@ namespace WhereToFly.App.Services
                 using var reader = new StreamReader(stream);
                 string json = await reader.ReadToEndAsync();
 
-                var weatherIconList = JsonConvert.DeserializeObject<List<WeatherIconDescription>>(json);
+                var weatherIconList = JsonSerializer.Deserialize(
+                    json,
+                    ModelsJsonSerializerContext.Default.ListWeatherIconDescription);
+
                 return weatherIconList ?? Enumerable.Empty<WeatherIconDescription>();
             }
             catch (Exception ex)

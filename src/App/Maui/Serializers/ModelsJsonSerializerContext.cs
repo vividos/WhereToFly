@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using WhereToFly.App.Models;
 using WhereToFly.App.Services;
 using WhereToFly.Geo.Model;
 
@@ -11,6 +12,8 @@ namespace WhereToFly.App.Serializers
         WriteIndented = false,
         UseStringEnumConverter = true,
         GenerationMode = JsonSourceGenerationMode.Default)]
+    [JsonSerializable(typeof(Dictionary<string, string>))]
+    [JsonSerializable(typeof(List<WeatherIconDescription>))]
     [JsonSerializable(typeof(Dictionary<LatLongKey, List<Location>>))]
     internal partial class ModelsJsonSerializerContext : JsonSerializerContext
     {
