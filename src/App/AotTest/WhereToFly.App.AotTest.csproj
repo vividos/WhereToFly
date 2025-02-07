@@ -2,34 +2,42 @@
 
   <PropertyGroup>
     <TargetFrameworks>$(DotNetVersion);$(DotNetVersion)-android;$(DotNetVersion)-windows10.0.19041.0</TargetFrameworks>
+    <OutputType>Exe</OutputType>
     <Description>Where-to-fly Native AOT test</Description>
     <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <!-- NativeAOT properties -->
+  <PropertyGroup>
     <PublishAot>true</PublishAot>
-    <PublishTrimmed>true</PublishTrimmed>
     <TrimmerSingleWarn>false</TrimmerSingleWarn>
     <InvariantGlobalization>true</InvariantGlobalization>
-    <!-- This fixes the warning MSB3270 "There was a mismatch between the processor architecture..." -->
-    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
   </PropertyGroup>
 
   <PropertyGroup Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' ">
     <!-- Native AOT is not supported on Android yet -->
     <PublishAot>false</PublishAot>
-    <PublishTrimmed>false</PublishTrimmed>
     <RuntimeIdentifier>android-arm64</RuntimeIdentifier>
   </PropertyGroup>
+
+  <!-- PropertyGroup Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows' ">
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+  </PropertyGroup -->
 
   <ItemGroup>
     <ProjectReference Include="..\..\Geo\WhereToFly.Geo.csproj" />
     <ProjectReference Include="..\..\Shared\Model\WhereToFly.Shared.Model.csproj" />
     <ProjectReference Include="..\MapView\WhereToFly.App.MapView.csproj" />
-    <ProjectReference Include="..\Maui\WhereToFly.App.Maui.csproj" />
     <ProjectReference Include="..\Svg\WhereToFly.App.Svg.csproj" />
     <TrimmerRootAssembly Include="WhereToFly.App.MapView" />
-    <TrimmerRootAssembly Include="WhereToFly.App.Maui" />
     <TrimmerRootAssembly Include="WhereToFly.App.Svg" />
     <TrimmerRootAssembly Include="WhereToFly.Geo" />
     <TrimmerRootAssembly Include="WhereToFly.Shared.Model" />
+  </ItemGroup>
+
+  <ItemGroup  Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'windows' ">
+    <ProjectReference Include="..\Maui\WhereToFly.App.Maui.csproj" />
+    <TrimmerRootAssembly Include="WhereToFly.App.Maui" />
   </ItemGroup>
 
 </Project>
