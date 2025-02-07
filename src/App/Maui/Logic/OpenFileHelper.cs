@@ -4,7 +4,6 @@ using WhereToFly.App.Services;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Airspace;
 using WhereToFly.Geo.DataFormats;
-using WhereToFly.Geo.DataFormats.Czml;
 using WhereToFly.Geo.Model;
 using Location = WhereToFly.Geo.Model.Location;
 

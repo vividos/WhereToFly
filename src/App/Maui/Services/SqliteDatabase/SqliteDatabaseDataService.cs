@@ -251,11 +251,11 @@ namespace WhereToFly.App.Services.SqliteDatabase
             {
                 if (this.appConfig != null)
                 {
-                     await SecureStorage.SetAsync(
-                        AppConfigSecureStorageKey,
-                        JsonSerializer.Serialize(
-                            this.appConfig,
-                            ModelsJsonSerializerContext.Default.AppConfig));
+                    await SecureStorage.SetAsync(
+                       AppConfigSecureStorageKey,
+                       JsonSerializer.Serialize(
+                           this.appConfig,
+                           ModelsJsonSerializerContext.Default.AppConfig));
                 }
             }
 

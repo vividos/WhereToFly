@@ -2,7 +2,6 @@
 using Microsoft.Maui.Controls;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using WhereToFly.App.Svg;
 
 namespace WhereToFly.App.Svg.UnitTest
 {

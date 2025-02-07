@@ -1,11 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using WhereToFly.Geo.Model;
-using WhereToFly.Shared.Model;
 using WhereToFly.WebApi.Logic.TourPlanning;
 
 namespace WhereToFly.WebApi.UnitTest

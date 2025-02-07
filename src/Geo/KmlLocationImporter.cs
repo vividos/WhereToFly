@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using WhereToFly.Geo.DataFormats;
-using WhereToFly.Geo.Model;
 
 namespace WhereToFly.Geo
 {

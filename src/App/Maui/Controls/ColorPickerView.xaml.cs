@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace WhereToFly.App.Controls
+﻿namespace WhereToFly.App.Controls
 {
     /// <summary>
     /// Color picker view that lets the user pick a color from a fixed list of colors, e.g. for
