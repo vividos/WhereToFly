@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json;
-using SQLite;
+﻿using SQLite;
 using System.Diagnostics;
+using System.Text.Json;
+using WhereToFly.App.Serializers;
 using WhereToFly.Geo.Model;
-using WhereToFly.Geo.Serializers;
 
 namespace WhereToFly.App.Services.SqliteDatabase
 {
@@ -210,12 +210,20 @@ namespace WhereToFly.App.Services.SqliteDatabase
             [Column("ground_height_profile")]
             public string GroundHeightProfile
             {
-                get => JsonConvert.SerializeObject(this.Track.GroundHeightProfile);
+                get
+                {
+                    return JsonSerializer.Serialize(
+                        this.Track.GroundHeightProfile,
+                        ModelsJsonSerializerContext.Default.ListDouble);
+                }
+
                 set
                 {
                     var list = value == null
                         ? null
-                        : JsonConvert.DeserializeObject<List<double>>(value);
+                        : JsonSerializer.Deserialize(
+                            value,
+                            ModelsJsonSerializerContext.Default.ListDouble);
                     this.Track.GroundHeightProfile = list ?? [];
                 }
             }
@@ -253,15 +261,9 @@ namespace WhereToFly.App.Services.SqliteDatabase
 
                 string json = File.ReadAllText(filename);
 
-                var trackPoints = JsonConvert.DeserializeObject<List<TrackPoint>>(
+                var trackPoints = JsonSerializer.Deserialize(
                     json,
-                    new JsonSerializerSettings
-                    {
-                        Converters = new List<JsonConverter>
-                        {
-                            new TrackPointConverter(),
-                        },
-                    });
+                    ModelsJsonSerializerContext.Default.ListTrackPoint);
 
                 if (trackPoints != null)
                 {
@@ -291,15 +293,9 @@ namespace WhereToFly.App.Services.SqliteDatabase
 
                 string filename = Path.Combine(tracksFolder, this.TrackPointFilename);
 
-                string json = JsonConvert.SerializeObject(
+                string json = JsonSerializer.Serialize(
                     this.Track.TrackPoints,
-                    new JsonSerializerSettings
-                    {
-                        Converters = new List<JsonConverter>
-                        {
-                            new TrackPointConverter(),
-                        },
-                    });
+                    ModelsJsonSerializerContext.Default.ListTrackPoint);
 
                 File.WriteAllText(filename, json);
             }

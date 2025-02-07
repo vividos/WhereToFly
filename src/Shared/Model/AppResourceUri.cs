@@ -1,12 +1,13 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using System.Text.Json.Serialization;
+using WhereToFly.Shared.Model.Serializers;
 
 namespace WhereToFly.Shared.Model
 {
     /// <summary>
     /// Represents an Uniform Resource Locator (URI) for the Where-to-fly app.
     /// </summary>
-    [JsonConverter(typeof(AppResourceUri.Converter))]
+    [JsonConverter(typeof(AppResourceUriConverter))]
     public sealed class AppResourceUri : IEquatable<AppResourceUri>
     {
         /// <summary>
@@ -221,53 +222,5 @@ namespace WhereToFly.Shared.Model
         /// <param name="right">right operator argument</param>
         /// <returns>true when objects are inequal, false when not</returns>
         public static bool operator !=(AppResourceUri left, AppResourceUri right) => !Equals(left, right);
-
-        /// <summary>
-        /// Nested JSON converter class for app resource URI
-        /// </summary>
-        private sealed class Converter : JsonConverter
-        {
-            /// <summary>
-            /// Determines if given type can be converted to an app resource URI
-            /// </summary>
-            /// <param name="objectType">object type to convert to</param>
-            /// <returns>true when type can be converted to, false when not</returns>
-            public override bool CanConvert(Type objectType) => typeof(AppResourceUri).IsAssignableFrom(objectType);
-
-            /// <summary>
-            /// Reads app resource URI from JSON
-            /// </summary>
-            /// <param name="reader">json reader</param>
-            /// <param name="objectType">type of object to read/return</param>
-            /// <param name="existingValue">existing value; unused</param>
-            /// <param name="serializer">json serializer</param>
-            /// <returns>created app resource URI object, or null when reading failed</returns>
-            public override object? ReadJson(
-                JsonReader reader,
-                Type objectType,
-                object? existingValue,
-                JsonSerializer serializer)
-            {
-                string? uriAsText = serializer.Deserialize<string>(reader);
-                return string.IsNullOrEmpty(uriAsText)
-                    ? null
-                    : new AppResourceUri(uriAsText!);
-            }
-
-            /// <summary>
-            /// Writes app resource URI to JSON
-            /// </summary>
-            /// <param name="writer">json writer</param>
-            /// <param name="value">app resource URI object to write</param>
-            /// <param name="serializer">json serializer</param>
-            public override void WriteJson(
-                JsonWriter writer,
-                object? value,
-                JsonSerializer serializer)
-            {
-                var uri = value as AppResourceUri;
-                writer.WriteValue(uri?.ToString() ?? string.Empty);
-            }
-        }
     }
 }

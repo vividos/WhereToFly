@@ -105,9 +105,7 @@
     <PackageReference Include="Microsoft.AppCenter.Distribute" Version="5.0.6" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.1" />
     <PackageReference Include="Microsoft.Maui.Controls" Version="$(DotNetMauiVersion)" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Refit" Version="8.0.0" />
-    <PackageReference Include="Refit.Newtonsoft.Json" Version="8.0.0" />
     <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.116.1" />
     <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
     <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.10" />

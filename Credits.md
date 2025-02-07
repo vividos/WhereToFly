@@ -13,11 +13,6 @@ distribute the app and to collect crash information.
 The components are licensed using the
 [MIT License](https://github.com/Microsoft/AppCenter-SDK-DotNet/blob/master/license.txt)
 
-The app uses the [Newtonsoft.Json](https://www.newtonsoft.com/json) library to
-format and parse JSON objects.
-The component is licensed using the
-[MIT License](https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md).
-
 The app uses the [.NET MAUI Community Toolkit](https://github.com/CommunityToolkit/Maui)
 library. The library is licensed using the
 [MIT License](https://github.com/CommunityToolkit/Maui?tab=MIT-1-ov-file).

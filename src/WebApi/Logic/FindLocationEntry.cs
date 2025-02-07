@@ -1,7 +1,8 @@
-﻿using Newtonsoft.Json;
-using SQLite;
+﻿using SQLite;
 using System;
+using System.Text.Json;
 using WhereToFly.Geo.Model;
+using WhereToFly.Shared.Model.Serializers;
 
 namespace WhereToFly.WebApi.Logic
 {
@@ -53,9 +54,13 @@ namespace WhereToFly.WebApi.Logic
         [Column("json")]
         public string Json
         {
-            get => JsonConvert.SerializeObject(this.Location);
+            get => JsonSerializer.Serialize(
+                this.Location,
+                SharedModelJsonSerializerContext.Default.Location);
             set => this.Location =
-                JsonConvert.DeserializeObject<Location>(value)
+                JsonSerializer.Deserialize(
+                    value,
+                    SharedModelJsonSerializerContext.Default.Location)
                 ?? throw new FormatException("invalid location JSON");
         }
 

@@ -1,5 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using WhereToFly.Geo.Model;
 
 namespace WhereToFly.Geo.Serializers
@@ -8,7 +9,7 @@ namespace WhereToFly.Geo.Serializers
     /// JSON converter class for track point. Track point properties are stored as JSON
     /// array, with five elements, representing the track point properties.
     /// </summary>
-    public class TrackPointConverter : JsonConverter
+    public class TrackPointConverter : JsonConverter<TrackPoint>
     {
         /// <summary>
         /// Value specifying an invalid altitude value
@@ -21,91 +22,104 @@ namespace WhereToFly.Geo.Serializers
         private const int InvalidHeadingValue = -1;
 
         /// <summary>
-        /// Determines if given type can be converted to a track point
-        /// </summary>
-        /// <param name="objectType">object type to convert to</param>
-        /// <returns>true when type can be converted to, false when not</returns>
-        public override bool CanConvert(Type objectType) =>
-            typeof(TrackPoint).IsAssignableFrom(objectType);
-
-        /// <summary>
         /// Reads track point from JSON
         /// </summary>
         /// <param name="reader">json reader</param>
-        /// <param name="objectType">type of object to read/return</param>
-        /// <param name="existingValue">existing value; unused</param>
-        /// <param name="serializer">json serializer</param>
+        /// <param name="typeToConvert">object type; unused</param>
+        /// <param name="options">serializer options; unused</param>
         /// <returns>created track point object, or null when reading failed</returns>
-        public override object? ReadJson(
-            JsonReader reader,
-            Type objectType,
-            object? existingValue,
-            JsonSerializer serializer)
+        public override TrackPoint? Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options)
         {
-            double[]? elements = serializer.Deserialize<double[]>(reader);
+            int numberIndex = 0;
 
-            if (elements == null)
+            var point = new TrackPoint(0.0, 0.0, null, null);
+
+            while (reader.Read() &&
+                reader.TokenType != JsonTokenType.EndArray)
             {
-                return null;
+                switch (reader.TokenType)
+                {
+                    case JsonTokenType.StartArray:
+                    case JsonTokenType.EndArray:
+                        // ok, let's proceed
+                        break;
+
+                    case JsonTokenType.Number:
+                        double value = reader.GetDouble();
+                        if (numberIndex == 0)
+                        {
+                            point.Latitude = value;
+                        }
+                        else if (numberIndex == 1)
+                        {
+                            point.Longitude = value;
+                        }
+                        else if (numberIndex == 2)
+                        {
+                            if ((int)value != InvalidAltitudeValue)
+                            {
+                                point.Altitude = value;
+                            }
+                        }
+                        else if (numberIndex == 3)
+                        {
+                            if ((int)value != InvalidHeadingValue)
+                            {
+                                point.Heading = (int)value;
+                            }
+                        }
+                        else if (numberIndex == 4)
+                        {
+                            if ((long)value != 0)
+                            {
+                                long unixTime = (long)value;
+                                point.Time = DateTimeOffset.FromUnixTimeMilliseconds(unixTime);
+                            }
+                        }
+                        else
+                        {
+                            throw new JsonException(
+                                "TrackPoint number array has too many numbers (5 expected)");
+                        }
+
+                        numberIndex++;
+                        break;
+
+                    default:
+                        throw new JsonException(
+                            $"MapPoint object expected, but encountered {reader.TokenType}");
+                }
             }
 
-            if (elements.Length != 5)
-            {
-                return new TrackPoint(0.0, 0.0, null, null);
-            }
-
-            double? altitude = null;
-            if ((int)elements[2] != InvalidAltitudeValue)
-            {
-                altitude = elements[2];
-            }
-
-            int? heading = null;
-            int convertedHeading = (int)elements[3];
-            if (convertedHeading != InvalidHeadingValue)
-            {
-                heading = convertedHeading;
-            }
-
-            var trackPoint = new TrackPoint(elements[0], elements[1], altitude, heading);
-
-            if ((long)elements[4] != 0)
-            {
-                long unixTime = (long)elements[4];
-                trackPoint.Time = DateTimeOffset.FromUnixTimeMilliseconds(unixTime);
-            }
-
-            return trackPoint;
+            return point;
         }
 
         /// <summary>
         /// Writes track point to JSON
         /// </summary>
         /// <param name="writer">json writer</param>
-        /// <param name="value">track point object to write</param>
-        /// <param name="serializer">json serializer</param>
-        public override void WriteJson(
-            JsonWriter writer,
-            object? value,
-            JsonSerializer serializer)
+        /// <param name="point">track point object to write</param>
+        /// <param name="options">serializer options; unused</param>
+        public override void Write(
+            Utf8JsonWriter writer,
+            TrackPoint point,
+            JsonSerializerOptions options)
         {
-            if (value is not TrackPoint point)
-            {
-                serializer.Serialize(writer, null);
-            }
-            else
-            {
-                double[] array =
-                [
-                    point.Latitude,
-                    point.Longitude,
-                    point.Altitude ?? InvalidAltitudeValue,
-                    point.Heading ?? InvalidHeadingValue,
-                    point.Time.HasValue ? point.Time.Value.ToUnixTimeMilliseconds() : 0.0,
-                ];
+            writer.WriteStartArray();
 
-                serializer.Serialize(writer, array);
-            }
+            writer.WriteNumberValue(point.Latitude);
+            writer.WriteNumberValue(point.Longitude);
+            writer.WriteNumberValue(point.Altitude ?? InvalidAltitudeValue);
+            writer.WriteNumberValue(point.Heading ?? InvalidHeadingValue);
+            writer.WriteNumberValue(
+                point.Time.HasValue
+                ? point.Time.Value.ToUnixTimeMilliseconds()
+                : 0.0);
+
+            writer.WriteEndArray();
         }
     }
 }

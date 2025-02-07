@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
 using System.IO;
+using WhereToFly.Shared.Model.Serializers;
 using WhereToFly.WebApi.Core.Services;
 using WhereToFly.WebApi.Logic;
 using WhereToFly.WebApi.Logic.Services;
@@ -55,8 +56,7 @@ namespace WhereToFly.WebApi.Core
                     });
             });
 
-            services.AddControllers()
-                .AddNewtonsoftJson();
+            services.AddControllers();
 
             // Register the Swagger generator, defining one or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -78,6 +78,13 @@ namespace WhereToFly.WebApi.Core
                     c.IncludeXmlComments(xmlPath);
                 }
             });
+
+            services.ConfigureHttpJsonOptions(
+                options =>
+                {
+                    options.SerializerOptions.TypeInfoResolver =
+                        SharedModelJsonSerializerContext.Default;
+                });
 
             AddLogicServices(services);
         }

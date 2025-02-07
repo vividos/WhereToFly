@@ -1,7 +1,9 @@
 ﻿using Refit;
 using System.Diagnostics;
+using System.Text.Json;
 using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;
+using WhereToFly.Shared.Model.Serializers;
 
 namespace WhereToFly.App.Services
 {
@@ -12,7 +14,9 @@ namespace WhereToFly.App.Services
     public class BackendDataService
     {
         /// <summary>
-        /// Interface to REST service for our backend web API
+        /// Interface to REST service for our backend web API.
+        /// Be sure to add all types that are used here to the
+        /// <see cref="SharedModelJsonSerializerContext"/>.
         /// </summary>
         internal interface IBackendWebApi
         {
@@ -97,7 +101,11 @@ namespace WhereToFly.App.Services
                 BaseUrl,
                 new RefitSettings
                 {
-                    ContentSerializer = new NewtonsoftJsonContentSerializer(),
+                    ContentSerializer = new SystemTextJsonContentSerializer(
+                        new JsonSerializerOptions
+                        {
+                            TypeInfoResolver = SharedModelJsonSerializerContext.Default,
+                        }),
                 });
         }
 

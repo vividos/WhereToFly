@@ -1,8 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using WhereToFly.Shared.Model;
+using WhereToFly.Shared.Model.Serializers;
 
 namespace WhereToFly.App.UnitTest.Shared
 {
@@ -95,10 +96,10 @@ namespace WhereToFly.App.UnitTest.Shared
             Assert.AreEqual<object>(uri2, uri3, "different references must be equal");
             Assert.AreNotEqual<object>("hello", uri1, "different object types must not be equal");
 
-            Assert.AreEqual<AppResourceUri>(uri1, uri1, "same objects must be equal");
-            Assert.AreNotEqual<AppResourceUri>(uri1, uri2, "different objects must be equal");
-            Assert.AreEqual<AppResourceUri>(uri2, uri3, "different references must be equal");
-            Assert.AreNotEqual<AppResourceUri>(null, uri1, "object must not be equal to null");
+            Assert.AreEqual(uri1, uri1, "same objects must be equal");
+            Assert.AreNotEqual(uri1, uri2, "different objects must be equal");
+            Assert.AreEqual(uri2, uri3, "different references must be equal");
+            Assert.AreNotEqual(null, uri1, "object must not be equal to null");
 
             Assert.AreEqual(uri2.GetHashCode(), uri3.GetHashCode(), "hash codes of same objects must be equal");
         }
@@ -113,8 +114,13 @@ namespace WhereToFly.App.UnitTest.Shared
             var uri = new AppResourceUri("where-to-fly://GarminInreachPos/yyy");
 
             // run
-            string json = JsonConvert.SerializeObject(uri);
-            AppResourceUri? uri2 = JsonConvert.DeserializeObject<AppResourceUri>(json);
+            string json = JsonSerializer.Serialize(
+                uri,
+                SharedModelJsonSerializerContext.Default.AppResourceUri);
+
+            AppResourceUri? uri2 = JsonSerializer.Deserialize(
+                json,
+                SharedModelJsonSerializerContext.Default.AppResourceUri);
 
             // check
             Assert.IsNotNull(uri2, "returned uri must be non-null");

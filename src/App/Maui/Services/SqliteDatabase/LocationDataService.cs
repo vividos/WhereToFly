@@ -1,7 +1,8 @@
-﻿using Newtonsoft.Json;
-using SQLite;
+﻿using SQLite;
 using System.Diagnostics;
+using System.Text.Json;
 using WhereToFly.App.Models;
+using WhereToFly.App.Serializers;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 
@@ -50,10 +51,19 @@ namespace WhereToFly.App.Services.SqliteDatabase
             [Column("map_location")]
             public string MapLocation
             {
-                get => JsonConvert.SerializeObject(this.Location.MapLocation);
+                get
+                {
+                    return JsonSerializer.Serialize(
+                        this.Location.MapLocation,
+                        ModelsJsonSerializerContext.Default.MapPoint);
+                }
+
                 set
                 {
-                    var mapPoint = JsonConvert.DeserializeObject<MapPoint>(value);
+                    var mapPoint = JsonSerializer.Deserialize(
+                        value,
+                        ModelsJsonSerializerContext.Default.MapPoint);
+
                     if (mapPoint != null)
                     {
                         this.Location.MapLocation = mapPoint;

@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Text.Json;
+using WhereToFly.App.Serializers;
 using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.UnitTest
@@ -142,14 +143,16 @@ namespace WhereToFly.App.UnitTest
             var mapPoint2 = new MapPoint(latitude, longitude, altitude);
             var mapPoint3 = new MapPoint(0.0, 0.0);
 
-            // run
-            string json1 = JsonConvert.SerializeObject(mapPoint1);
-            string json2 = JsonConvert.SerializeObject(mapPoint2);
-            string json3 = JsonConvert.SerializeObject(mapPoint3);
+            var jsonTypeInfo = ModelsJsonSerializerContext.Default.MapPoint;
 
-            var mapPoint1a = JsonConvert.DeserializeObject<MapPoint>(json1);
-            var mapPoint2a = JsonConvert.DeserializeObject<MapPoint>(json2);
-            var mapPoint3a = JsonConvert.DeserializeObject<MapPoint>(json3);
+            // run
+            string json1 = JsonSerializer.Serialize(mapPoint1, jsonTypeInfo);
+            string json2 = JsonSerializer.Serialize(mapPoint2, jsonTypeInfo);
+            string json3 = JsonSerializer.Serialize(mapPoint3, jsonTypeInfo);
+
+            var mapPoint1a = JsonSerializer.Deserialize(json1, jsonTypeInfo);
+            var mapPoint2a = JsonSerializer.Deserialize(json2, jsonTypeInfo);
+            var mapPoint3a = JsonSerializer.Deserialize(json3, jsonTypeInfo);
 
             // check
             Assert.IsNotNull(mapPoint1a, "returned value must not be null");

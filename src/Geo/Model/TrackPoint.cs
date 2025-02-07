@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace WhereToFly.Geo.Model
 {
     /// <summary>
     /// Single track point in a track
     /// </summary>
+    [JsonConverter(typeof(Serializers.TrackPointConverter))]
     public class TrackPoint
     {
         /// <summary>

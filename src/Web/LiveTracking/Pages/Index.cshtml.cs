@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Refit;
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 using WhereToFly.Shared.Model;
+using WhereToFly.Shared.Model.Serializers;
 
 namespace WhereToFly.Web.LiveTracking.Pages
 {
@@ -58,7 +60,17 @@ namespace WhereToFly.Web.LiveTracking.Pages
         /// </summary>
         public IndexModel()
         {
-            this.backendWebApi = RestService.For<IBackendWebApi>(BaseUrl);
+            this.backendWebApi =
+                RestService.For<IBackendWebApi>(
+                    BaseUrl,
+                    new RefitSettings
+                    {
+                        ContentSerializer = new SystemTextJsonContentSerializer(
+                            new JsonSerializerOptions
+                            {
+                                TypeInfoResolver = SharedModelJsonSerializerContext.Default,
+                            }),
+                    });
 
 #pragma warning disable S1075 // URIs should not be hardcoded
             const string TestPosDataUri = "where-to-fly://TestPos/data";

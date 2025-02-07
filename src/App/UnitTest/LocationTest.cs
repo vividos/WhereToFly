@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Text.Json;
+using WhereToFly.App.Serializers;
 using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.UnitTest
@@ -67,8 +68,13 @@ namespace WhereToFly.App.UnitTest
             };
 
             // run
-            string json = JsonConvert.SerializeObject(locationList);
-            var locationList2 = JsonConvert.DeserializeObject<List<Location>>(json);
+            string json = JsonSerializer.Serialize(
+                locationList,
+                ModelsJsonSerializerContext.Default.ListLocation);
+
+            var locationList2 = JsonSerializer.Deserialize(
+                json,
+                ModelsJsonSerializerContext.Default.ListLocation);
 
             // check
             Assert.IsNotNull(locationList2, "returned location list must be non-null");
