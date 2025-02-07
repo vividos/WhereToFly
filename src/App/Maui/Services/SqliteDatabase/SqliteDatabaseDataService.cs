@@ -1,7 +1,8 @@
-﻿using Newtonsoft.Json;
-using SQLite;
+﻿using SQLite;
 using System.Diagnostics;
+using System.Text.Json;
 using WhereToFly.App.Models;
+using WhereToFly.App.Serializers;
 using WhereToFly.Shared.Model;
 
 namespace WhereToFly.App.Services.SqliteDatabase
@@ -78,12 +79,16 @@ namespace WhereToFly.App.Services.SqliteDatabase
             {
                 get
                 {
-                    return JsonConvert.SerializeObject(this.AppSettings);
+                    return JsonSerializer.Serialize(
+                        this.AppSettings,
+                        ModelsJsonSerializerContext.Default.AppSettings);
                 }
 
                 set
                 {
-                    this.AppSettings = JsonConvert.DeserializeObject<AppSettings>(value);
+                    this.AppSettings = JsonSerializer.Deserialize(
+                        value,
+                        ModelsJsonSerializerContext.Default.AppSettings);
 
                     if (this.AppSettings == null)
                     {
@@ -220,7 +225,9 @@ namespace WhereToFly.App.Services.SqliteDatabase
             string? json = await SecureStorage.GetAsync(AppConfigSecureStorageKey);
             if (json != null)
             {
-                this.appConfig = JsonConvert.DeserializeObject<AppConfig>(json);
+                this.appConfig = JsonSerializer.Deserialize(
+                    json,
+                    ModelsJsonSerializerContext.Default.AppConfig);
             }
 
             if (this.appConfig != null &&
@@ -244,9 +251,11 @@ namespace WhereToFly.App.Services.SqliteDatabase
             {
                 if (this.appConfig != null)
                 {
-                    await SecureStorage.SetAsync(
+                     await SecureStorage.SetAsync(
                         AppConfigSecureStorageKey,
-                        JsonConvert.SerializeObject(this.appConfig));
+                        JsonSerializer.Serialize(
+                            this.appConfig,
+                            ModelsJsonSerializerContext.Default.AppConfig));
                 }
             }
 
