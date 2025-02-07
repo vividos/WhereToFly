@@ -142,7 +142,18 @@ namespace WhereToFly.App.Svg
 
             if (this.Background != null)
             {
-                Debug.WriteLine("SvgImage doesn't support Background property yet");
+                if (this.Background is SolidColorBrush solidColorBrush)
+                {
+                    if (solidColorBrush.Color != null &&
+                        solidColorBrush.Color != Colors.Transparent)
+                    {
+                        canvas.Clear(solidColorBrush.Color.ToSKColor());
+                    }
+                }
+                else
+                {
+                    Debug.WriteLine("SvgImage doesn't support Background property yet");
+                }
             }
 
             if (this.BackgroundColor != null &&
