@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using WhereToFly.App.MapView;
 using WhereToFly.App.Services;
@@ -174,10 +174,12 @@ namespace WhereToFly.App.UnitTest.MapView
         public void TestDeserialize_AddFindResultParameter()
         {
             // set up
-            string jsonParameters = "{ name: 'find result', latitude: 48.2, longitude: 11.8 }";
+            string jsonParameters = "{ \"name\": \"find result\", \"latitude\": 48.2, \"longitude\": 11.8 }";
 
             // run
-            var parameters = JsonConvert.DeserializeObject<AddFindResultParameter>(jsonParameters);
+            var parameters = JsonSerializer.Deserialize(
+                jsonParameters,
+                MapViewJsonSerializerContext.Default.AddFindResultParameter);
 
             // check
             Assert.IsNotNull(parameters, "returned parameters must be non-null");
