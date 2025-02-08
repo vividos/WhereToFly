@@ -1116,10 +1116,10 @@ export class MapView {
                 this.viewer.scene.globe.ellipsoid);
 
         return {
-            west: CesiumMath.toDegrees(currentViewRectangle.west).toFixed(5),
-            south: CesiumMath.toDegrees(currentViewRectangle.south).toFixed(5),
-            east: CesiumMath.toDegrees(currentViewRectangle.east).toFixed(5),
-            north: CesiumMath.toDegrees(currentViewRectangle.north).toFixed(5)
+            west: Number(CesiumMath.toDegrees(currentViewRectangle.west).toFixed(5)),
+            south: Number(CesiumMath.toDegrees(currentViewRectangle.south).toFixed(5)),
+            east: Number(CesiumMath.toDegrees(currentViewRectangle.east).toFixed(5)),
+            north: Number(CesiumMath.toDegrees(currentViewRectangle.north).toFixed(5))
         };
     }
 

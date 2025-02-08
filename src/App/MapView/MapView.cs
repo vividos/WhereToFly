@@ -724,10 +724,6 @@ namespace WhereToFly.App.MapView
 
             string result = await this.RunJavaScriptWithResultAsync(js);
 
-            result = result
-                .Replace("\\\\", "\\")
-                .Replace("\\\"", "\"");
-
             return JsonSerializer.Deserialize(
                 result,
                 MapViewJsonSerializerContext.Default.MapRectangle);
