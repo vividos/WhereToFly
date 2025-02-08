@@ -8,7 +8,7 @@ namespace WhereToFly.App.UnitTest.Pages
     /// Tests for MapPage class
     /// </summary>
     [TestClass]
-    public class MapPageTest
+    public class MapPageTest : UserInterfaceTestBase
     {
         /// <summary>
         /// Sets up tests
