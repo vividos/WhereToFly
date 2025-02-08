@@ -28,18 +28,7 @@ namespace WhereToFly.App.Serializers
             }
 
             string? text = reader.GetString();
-            if (string.IsNullOrEmpty(text))
-            {
-                return default;
-            }
-
-            int posComma = text.IndexOf(',');
-            string latitude = text[..posComma];
-            string longitude = text[(posComma + 1)..];
-
-            return new LatLongKey(
-                int.Parse(latitude),
-                int.Parse(longitude));
+            return Parse(text);
         }
 
         /// <summary>
@@ -53,7 +42,15 @@ namespace WhereToFly.App.Serializers
             ref Utf8JsonReader reader,
             Type typeToConvert,
             JsonSerializerOptions options)
-            => this.Read(ref reader, typeToConvert, options);
+        {
+            if (reader.TokenType != JsonTokenType.PropertyName)
+            {
+                return default;
+            }
+
+            string? text = reader.GetString();
+            return Parse(text);
+        }
 
         /// <summary>
         /// Writes lat long key to JSON
@@ -66,8 +63,7 @@ namespace WhereToFly.App.Serializers
             LatLongKey latLongKey,
             JsonSerializerOptions options)
         {
-            writer.WriteStringValue(
-                $"{latLongKey.Latitude},{latLongKey.Longitude}");
+            writer.WriteStringValue(Format(latLongKey));
         }
 
         /// <summary>
@@ -80,6 +76,34 @@ namespace WhereToFly.App.Serializers
             Utf8JsonWriter writer,
             [DisallowNull] LatLongKey value,
             JsonSerializerOptions options)
-            => this.Write(writer, value, options);
+            => writer.WritePropertyName(Format(value));
+
+        /// <summary>
+        /// Formats a lat/long key as text
+        /// </summary>
+        /// <returns>lat/long key as text</returns>
+        private static string Format(LatLongKey latLongKey)
+            => $"{latLongKey.Latitude},{latLongKey.Longitude}";
+
+        /// <summary>
+        /// Parses a lat/long key from given text
+        /// </summary>
+        /// <param name="text">text to parse</param>
+        /// <returns>lat/long key</returns>
+        private static LatLongKey Parse(string? text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return default;
+            }
+
+            int posComma = text.IndexOf(',');
+            string latitude = text[..posComma];
+            string longitude = text[(posComma + 1)..];
+
+            return new LatLongKey(
+                int.Parse(latitude),
+                int.Parse(longitude));
+        }
     }
 }
