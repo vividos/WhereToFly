@@ -86,9 +86,16 @@ namespace WhereToFly.App.Services.SqliteDatabase
 
                 set
                 {
-                    this.AppSettings = JsonSerializer.Deserialize(
-                        value,
-                        ModelsJsonSerializerContext.Default.AppSettings);
+                    try
+                    {
+                        this.AppSettings = JsonSerializer.Deserialize(
+                            value,
+                            ModelsJsonSerializerContext.Default.AppSettings);
+                    }
+                    catch (Exception ex)
+                    {
+                        App.LogError(ex);
+                    }
 
                     if (this.AppSettings == null)
                     {
