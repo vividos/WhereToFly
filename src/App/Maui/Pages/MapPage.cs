@@ -103,7 +103,8 @@ namespace WhereToFly.App.Pages
                 NearbyPoiService = nearbyPoiService,
             };
 
-            this.Dispatcher.DispatchAsync(this.InitLayoutAsync);
+            this.Dispatcher.DispatchAsync(this.InitLayoutAsync)
+                .LogTaskException();
         }
 
         /// <summary>
