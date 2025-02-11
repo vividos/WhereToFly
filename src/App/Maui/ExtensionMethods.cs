@@ -19,5 +19,24 @@ namespace WhereToFly.App
                 location.Longitude,
                 location.Altitude);
         }
+
+        /// <summary>
+        /// When a task throws an exception (technically, when it is faulted),
+        /// observes the exception and logs it.
+        /// </summary>
+        /// <param name="task">task to log exception for</param>
+        /// <returns>chained task object</returns>
+        public static Task LogTaskException(this Task task)
+        {
+            return task.ContinueWith(
+                faultedTask =>
+                {
+                    if (faultedTask.Exception != null)
+                    {
+                        App.LogError(faultedTask.Exception);
+                    }
+                },
+                TaskContinuationOptions.OnlyOnFaulted);
+        }
     }
 }
