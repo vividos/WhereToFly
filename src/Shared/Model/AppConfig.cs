@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
+using WhereToFly.Shared.Model.Serializers;
 
 namespace WhereToFly.Shared.Model
 {
@@ -16,6 +18,7 @@ namespace WhereToFly.Shared.Model
         /// <summary>
         /// Date/time when validity of infos expire
         /// </summary>
+        [JsonConverter(typeof(DateTimeOffsetJsonConverter))]
         public DateTimeOffset ExpiryDate { get; set; }
     }
 }
