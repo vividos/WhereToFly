@@ -282,6 +282,12 @@ csharp_style_var_elsewhere = true:silent
 # CA1031: Do not catch general exception types
 dotnet_diagnostic.CA1031.severity = none
 
+# CsWinRT1028: Class should be marked partial
+dotnet_diagnostic.CsWinRT1028.severity = none
+
+# CsWinRT1030: Project needs to be updated with '<AllowUnsafeBlocks>true</AllowUnsafeBlocks>' to allow generic interface code generation.
+dotnet_diagnostic.CsWinRT1030.severity = none
+
 # StyleCop rules
 
 # SA0001: XML comment analysis is disabled due to project configuration
