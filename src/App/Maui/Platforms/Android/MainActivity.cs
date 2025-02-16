@@ -12,7 +12,7 @@ namespace WhereToFly.App
     /// Android MAUI app main activity.
     /// The attributes specify startup behavior. LaunchMode.SingleTask is used when the activity
     /// is started again with an intent to open files. See
-    /// http://www.helloandroid.com/tutorials/communicating-between-running-activities
+    /// https://web.archive.org/web/20230323234840/http://www.helloandroid.com/tutorials/communicating-between-running-activities
     /// The intent filters are used to open various combinations of files.
     /// </summary>
     [Activity(
