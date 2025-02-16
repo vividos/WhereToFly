@@ -8,6 +8,7 @@ Released on ?.
 
 - Android: `geo:` links can now be opened with the app and adds a new location
 - Minimum Android version is now Android 12
+- Using CesiumJS version 1.126.0
 
 🐛 Bugfixes
 
