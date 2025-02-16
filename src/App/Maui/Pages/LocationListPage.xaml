@@ -38,7 +38,7 @@
             <Entry Grid.Column="1"
                    Text="{Binding Path=FilterText, Mode=TwoWay}"
                    Placeholder="Type here to filter"
-                   HorizontalOptions="FillAndExpand"
+                   HorizontalOptions="Fill"
                    AutomationId="FilterText">
                 <Entry.Behaviors>
                     <toolkit:UserStoppedTypingBehavior

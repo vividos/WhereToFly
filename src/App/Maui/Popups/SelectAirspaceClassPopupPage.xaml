@@ -9,19 +9,21 @@
                      x:TypeArguments="generic:ISet(airspace:AirspaceClass)"
                      x:DataType="viewmodels:SelectAirspaceClassPopupViewModel">
 
-    <VerticalStackLayout
-        VerticalOptions="Center"
-        HorizontalOptions="Center"
-        WidthRequest="360"
-        Spacing="10"
-        Padding="20">
+    <Grid RowDefinitions="Auto, Auto, Auto"
+          VerticalOptions="Center"
+          HorizontalOptions="Center"
+          WidthRequest="360"
+          RowSpacing="10"
+          Padding="20">
 
         <!-- Caption -->
-        <Label Text="Select airspace classes" FontSize="Large" />
+        <Label Grid.Row="0"
+               Text="Select airspace classes"
+               FontSize="Large" />
 
         <!-- Flex layout with airspace classes -->
-        <FlexLayout BindableLayout.ItemsSource="{Binding AirspaceClassList}"
-                    VerticalOptions="StartAndExpand"
+        <FlexLayout Grid.Row="1"
+                    BindableLayout.ItemsSource="{Binding AirspaceClassList}"
                     Direction="Row"
                     AlignItems="Start"
                     AlignContent="Start"
@@ -29,18 +31,18 @@
                     Wrap="Wrap">
             <BindableLayout.ItemTemplate>
                 <DataTemplate x:DataType="viewmodels:SelectAirspaceClassPopupViewModel+AirspaceClassViewModel">
-                    <VerticalStackLayout
-                        HeightRequest="48"
-                        MinimumWidthRequest="48"
-                        VerticalOptions="FillAndExpand"
-                        Margin="1"
-                        BackgroundColor="{Binding BackgroundColor, Mode=OneWay}">
+                    <Grid RowDefinitions="Auto"
+                          HeightRequest="48"
+                          MinimumWidthRequest="48"
+                          VerticalOptions="Fill"
+                          Margin="1"
+                          BackgroundColor="{Binding BackgroundColor, Mode=OneWay}">
 
                         <!-- Recognize taps anywhere in the layout -->
-                        <VerticalStackLayout.GestureRecognizers>
+                        <Grid.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1"
                                                   Command="{Binding Tapped}" />
-                        </VerticalStackLayout.GestureRecognizers>
+                        </Grid.GestureRecognizers>
 
                         <Label Text="{Binding Text, Mode=OneTime}"
                                FontSize="Large"
@@ -49,15 +51,16 @@
                                VerticalTextAlignment="Center"
                                HorizontalTextAlignment="Center"
                                Padding="8" />
-                    </VerticalStackLayout>
+                    </Grid>
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </FlexLayout>
 
         <!-- Button to filter for airspace classes -->
-        <Button Text="Filter airspaces"
+        <Button Grid.Row="2"
+                Text="Filter airspaces"
                 Clicked="OnClickedFilterAirspacesButton"
                 AutomationId="FilterAirspacesButton" />
-    </VerticalStackLayout>
+    </Grid>
 
 </popups:BasePopupPage>

@@ -9,45 +9,55 @@
                      x:TypeArguments="geo:Track"
                      x:DataType="viewmodels:AddTrackPopupViewModel">
 
-    <VerticalStackLayout
-        VerticalOptions="Center"
-        HorizontalOptions="Center"
-        WidthRequest="360"
-        Spacing="10"
-        Padding="20">
+    <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
+          VerticalOptions="Center"
+          HorizontalOptions="Center"
+          WidthRequest="360"
+          RowSpacing="10"
+          Padding="20">
 
         <!-- Caption -->
-        <Label Text="Add track" FontSize="Large" />
+        <Label Grid.Row="0"
+               Text="Add track"
+               FontSize="Large" />
 
         <!-- Entry for track name -->
-        <Label Text="Name" FontSize="Medium" />
-        <Entry Placeholder="enter track name"
+        <Label Grid.Row="1"
+               Text="Name"
+               FontSize="Medium" />
+        <Entry Grid.Row="2"
+               Placeholder="enter track name"
                Text="{Binding Path=TrackName, Mode=TwoWay}"
                Style="{StaticResource EntryOnPopupPageStyle}" />
 
         <!-- Picker for track point interval -->
-        <Label Text="Track point time interval" FontSize="Medium"
+        <Label Grid.Row="3"
+               Text="Track point time interval"
+               FontSize="Medium"
                IsVisible="{Binding IsTrackPointIntervalPickerVisible, Mode=OneWay}" />
-        <Picker Title="Select a time interval"
+        <Picker Grid.Row="4"
+                Title="Select a time interval"
                 IsVisible="{Binding IsTrackPointIntervalPickerVisible, Mode=OneWay}"
                 ItemsSource="{Binding Path=TrackPointIntervalList, Mode=OneTime}"
                 SelectedItem="{Binding Path=TrackPointIntervalText, Mode=TwoWay}"
                 Style="{StaticResource PickerOnPopupPageStyle}" />
 
         <!-- Switch to select if it's a flight track -->
-        <StackLayout Orientation="Horizontal">
+        <HorizontalStackLayout Grid.Row="5">
             <Switch IsToggled="{Binding IsFlightTrack, Mode=TwoWay}"
                     AutomationId="IsFlightTrackSwitch" />
             <Label Text="Track is a flight"
                    VerticalTextAlignment="Center"
                    FontSize="Medium" />
-        </StackLayout>
+        </HorizontalStackLayout>
 
         <!-- Track offset -->
-        <Label Text="Track offset"
+        <Label Grid.Row="6"
+               Text="Track offset"
                FontSize="Medium"
                IsVisible="{Binding IsTrackOffsetPickerVisible, Mode=OneWay}" />
-        <HorizontalStackLayout IsVisible="{Binding IsTrackOffsetPickerVisible, Mode=OneWay}">
+        <HorizontalStackLayout Grid.Row="7"
+                               IsVisible="{Binding IsTrackOffsetPickerVisible, Mode=OneWay}">
             <Entry Text="{Binding Path=TrackOffset, Mode=TwoWay}"
                    Keyboard="Numeric"
                    ClearButtonVisibility="Never"
@@ -62,17 +72,21 @@
         </HorizontalStackLayout>
 
         <!-- Colors to choose from -->
-        <Label Text="Color" FontSize="Medium"
+        <Label Grid.Row="8"
+               Text="Color"
+               FontSize="Medium"
                IsVisible="{Binding IsColorPickerVisible, Mode=OneWay}" />
-        <controls:ColorPickerView x:Name="colorPickerLayout"
+        <controls:ColorPickerView Grid.Row="9"
+                                  x:Name="colorPickerLayout"
                                   Style="{StaticResource ColorPickerStyle}"
                                   SelectedColor="{Binding SelectedTrackColor}"
                                   IsVisible="{Binding IsColorPickerVisible, Mode=OneWay}" />
 
         <!-- Button to add track -->
-        <Button Text="Add track"
+        <Button Grid.Row="10"
+                Text="Add track"
                 Clicked="OnClickedAddTrackButton"
                 AutomationId="AddTrackButton" />
-    </VerticalStackLayout>
+    </Grid>
 
 </popups:BasePopupPage>

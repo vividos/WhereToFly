@@ -7,23 +7,17 @@
     <ContentPage.Content>
 
         <!-- stack layout with location details grid and details multiline edit control -->
-        <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand">
+        <Grid RowDefinitions="Auto, Auto, 1*">
 
             <!-- Grid with all location details -->
-            <Grid WidthRequest="350" MinimumWidthRequest="350"
-                  ColumnSpacing="16" RowSpacing="16" Padding="8">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+            <Grid Grid.Row="0"
+                  RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto"
+                  ColumnDefinitions="Auto, 1*"
+                  WidthRequest="350"
+                  MinimumWidthRequest="350"
+                  ColumnSpacing="16"
+                  RowSpacing="16"
+                  Padding="8">
 
                 <!-- Name -->
                 <Label Grid.Row="0" Grid.Column="0" Text="Name" />
@@ -35,7 +29,7 @@
                 <!-- Type -->
                 <Label Grid.Row="1" Grid.Column="0" Text="Type" />
                 <Picker Grid.Row="1" Grid.Column="1"
-                        VerticalOptions="StartAndExpand"
+                        VerticalOptions="Start"
                         ItemsSource="{Binding LocationTypeList, Mode=OneWay}"
                         SelectedItem="{Binding Type}"
                         Style="{StaticResource PickerOnPopupPageStyle}" />
@@ -65,11 +59,16 @@
             </Grid>
 
             <!-- Description editor -->
-            <Label Text="Description" HorizontalOptions="Start" VerticalOptions="Start" />
-            <Editor HorizontalOptions="Fill" VerticalOptions="FillAndExpand"
+            <Label Grid.Row="1"
+                   Text="Description"
+                   HorizontalOptions="Start"
+                   VerticalOptions="Start" />
+            <Editor Grid.Row="2"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Fill"
                     Text="{Binding Description}" />
 
-        </StackLayout>
+        </Grid>
 
     </ContentPage.Content>
 </ContentPage>

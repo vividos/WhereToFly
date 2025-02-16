@@ -9,24 +9,30 @@
                      x:TypeArguments="geo:Track"
                      x:DataType="viewmodels:SetTrackInfoPopupViewModel">
 
-    <VerticalStackLayout
-        VerticalOptions="Center"
-        HorizontalOptions="Center"
-        WidthRequest="360"
-        Spacing="10"
-        Padding="20">
+    <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto"
+          VerticalOptions="Center"
+          HorizontalOptions="Center"
+          WidthRequest="360"
+          RowSpacing="10"
+          Padding="20">
 
         <!-- Caption -->
-        <Label Text="Set track infos" FontSize="Large" />
+        <Label Grid.Row="0"
+               Text="Set track infos"
+               FontSize="Large" />
 
         <!-- Entry for track name -->
-        <Label Text="Name" FontSize="Medium" />
-        <Entry Placeholder="enter track name"
+        <Label Grid.Row="1"
+               Text="Name"
+               FontSize="Medium" />
+        <Entry Grid.Row="2"
+               Placeholder="enter track name"
                Text="{Binding Path=TrackName, Mode=TwoWay}"
                Style="{StaticResource EntryOnPopupPageStyle}" />
 
         <!-- Colors to choose from -->
-        <VerticalStackLayout IsVisible="{Binding IsColorBoxVisible, Mode=OneWay}">
+        <VerticalStackLayout Grid.Row="3"
+                             IsVisible="{Binding IsColorBoxVisible, Mode=OneWay}">
 
             <Label Text="Color" FontSize="Medium" Margin="0, 10, 0, 0" />
             <controls:ColorPickerView x:Name="colorPickerLayout"
@@ -35,9 +41,10 @@
         </VerticalStackLayout>
 
         <!-- Button to set track infos -->
-        <Button Text="OK"
+        <Button Grid.Row="4"
+                Text="OK"
                 Clicked="OnClickedSetTrackInfoButton"
                 AutomationId="SetTrackInfoButton" />
-    </VerticalStackLayout>
+    </Grid>
 
 </popups:BasePopupPage>

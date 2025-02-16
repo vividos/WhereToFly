@@ -64,7 +64,7 @@
                                    LineBreakMode="WordWrap"
                                    HorizontalTextAlignment="Center" VerticalTextAlignment="Start"
                                    HeightRequest="48" Margin="4,0,4,4"
-                                   VerticalOptions="FillAndExpand" />
+                                   VerticalOptions="Fill" />
                         </StackLayout>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>

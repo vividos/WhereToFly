@@ -14,11 +14,11 @@
     </ContentPage.BindingContext>
 
     <ContentPage.Content>
-        <StackLayout>
+        <Grid RowDefinitions="Auto, 1*">
             <!-- menu header -->
-            <StackLayout Orientation="Horizontal"
-                         HorizontalOptions="Start"
-                         Padding="16,0,0,16">
+            <HorizontalStackLayout Grid.Row="0"
+                                   HorizontalOptions="Start"
+                                   Padding="16,0,0,16">
                 <!-- app icon -->
                 <svg:SvgImage Source="{Binding AppIcon, Mode=OneWay}"
                               TintColor="{x:Null}"
@@ -29,16 +29,17 @@
                     <Label Text="Where-to-fly" FontSize="36" TextColor="White" />
                     <Label Text="{Binding VersionText, Mode=OneTime}" FontSize="Small" TextColor="LightGray" />
                 </StackLayout>
-            </StackLayout>
+            </HorizontalStackLayout>
 
             <!-- list view with all menu items -->
-            <CollectionView ItemsSource="{Binding MenuItemList, Mode=OneTime}"
+            <CollectionView Grid.Row="1"
+                            ItemsSource="{Binding MenuItemList, Mode=OneTime}"
                             SelectedItem="{Binding SelectedMenuItem}"
                             SelectionChangedCommand="{Binding MenuItemSelectedCommand}"
                             SelectionMode="Single"
                             BackgroundColor="{AppThemeBinding Light={StaticResource MenuBackgroundColorLight}, Dark={StaticResource MenuBackgroundColorDark}}"
-                            VerticalOptions="FillAndExpand"
-                            HorizontalOptions="StartAndExpand">
+                            VerticalOptions="Fill"
+                            HorizontalOptions="Start">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="viewmodels:MenuViewModel+MenuItemViewModel">
                         <!-- single view cell for menu items -->
@@ -67,12 +68,12 @@
                             <Label Grid.Column="1" Text="{Binding Title, Mode=OneTime}"
                                    InputTransparent="True"
                                    FontSize="Medium"
-                                   VerticalOptions="FillAndExpand"
+                                   VerticalOptions="Fill"
                                    VerticalTextAlignment="Center" />
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-        </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -23,7 +23,7 @@
         <CollectionView Grid.Row="1"
                         ItemsSource="{Binding ContextMenuItems, Mode=OneTime}"
                         VerticalOptions="Start"
-                        HorizontalOptions="FillAndExpand"
+                        HorizontalOptions="Fill"
                         HeightRequest="{Binding ContextMenuListHeight, Mode=OneTime}">
 
             <CollectionView.ItemTemplate>
@@ -54,7 +54,7 @@
                                TextColor="{Binding ForegroundColor}"
                                IsEnabled="{Binding IsEnabled, Mode=OneWay}"
                                FontSize="Medium"
-                               VerticalOptions="FillAndExpand"
+                               VerticalOptions="Fill"
                                VerticalTextAlignment="Center" />
                     </Grid>
 

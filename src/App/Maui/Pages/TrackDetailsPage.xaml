@@ -24,7 +24,7 @@
 
             <HorizontalStackLayout Grid.Row="0"
                                    Grid.ColumnSpan="2"
-                                   HorizontalOptions="FillAndExpand"
+                                   HorizontalOptions="Fill"
                                    Spacing="8">
 
                 <!-- Type image -->
@@ -55,7 +55,7 @@
                        FontAttributes="Bold"
                        LineBreakMode="WordWrap"
                        MaxLines="2"
-                       HorizontalOptions="FillAndExpand"
+                       HorizontalOptions="Fill"
                        VerticalOptions="Center">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding TrackNameTappedCommand}"
@@ -89,8 +89,8 @@
             </mapview:HeightProfileView>
 
             <!-- Track description web view -->
-            <WebView HorizontalOptions="CenterAndExpand"
-                     VerticalOptions="FillAndExpand"
+            <WebView HorizontalOptions="Center"
+                     VerticalOptions="Fill"
                      Grid.Row="4" Grid.ColumnSpan="2"
                      WidthRequest="600"
                      HeightRequest="200"

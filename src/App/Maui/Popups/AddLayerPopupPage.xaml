@@ -8,26 +8,32 @@
                      x:TypeArguments="geo:Layer"
                      x:DataType="viewmodels:AddLayerPopupViewModel">
 
-    <VerticalStackLayout
-        VerticalOptions="Center"
-        HorizontalOptions="Center"
-        WidthRequest="360"
-        Spacing="10"
-        Padding="20">
+    <Grid RowDefinitions="Auto, Auto, Auto, Auto"
+          VerticalOptions="Center"
+          HorizontalOptions="Center"
+          WidthRequest="360"
+          RowSpacing="10"
+          Padding="20">
 
         <!-- Caption -->
-        <Label Text="Add layer" FontSize="Large" />
+        <Label Grid.Row="0"
+               Text="Add layer"
+               FontSize="Large" />
 
         <!-- Entry for layer name -->
-        <Label Text="Name" FontSize="Medium" />
-        <Entry Placeholder="enter layer name"
+        <Label Grid.Row="1"
+               Text="Name"
+               FontSize="Medium" />
+        <Entry Grid.Row="2"
+               Placeholder="enter layer name"
                Text="{Binding Path=LayerName, Mode=TwoWay}"
                Style="{StaticResource EntryOnPopupPageStyle}" />
 
         <!-- Button to add layer -->
-        <Button Text="Add layer"
+        <Button Grid.Row="3"
+                Text="Add layer"
                 Clicked="OnClickedAddLayerButton"
                 AutomationId="AddLayerButton" />
-    </VerticalStackLayout>
+    </Grid>
 
 </popups:BasePopupPage>

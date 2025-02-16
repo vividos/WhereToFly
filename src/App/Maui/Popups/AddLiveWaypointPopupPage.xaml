@@ -8,30 +8,39 @@
                      x:TypeArguments="geo:Location"
                      x:DataType="viewmodels:AddLiveWaypointPopupViewModel">
 
-    <VerticalStackLayout
-        VerticalOptions="Center"
-        HorizontalOptions="Center"
-        WidthRequest="360"
-        Spacing="10"
-        Padding="20">
+    <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto"
+          VerticalOptions="Center"
+          HorizontalOptions="Center"
+          WidthRequest="360"
+          RowSpacing="10"
+          Padding="20">
 
         <!-- Caption -->
-        <Label Text="Add live waypoint" FontSize="Large" />
+        <Label Grid.Row="0"
+               Text="Add live waypoint"
+               FontSize="Large" />
 
         <!-- Entry for live waypoint name -->
-        <Label Text="Name" FontSize="Medium" />
-        <Entry Placeholder="enter live waypoint name"
+        <Label Grid.Row="1"
+               Text="Name"
+               FontSize="Medium" />
+        <Entry Grid.Row="2"
+               Placeholder="enter live waypoint name"
                Text="{Binding Path=Name, Mode=TwoWay}"
                Style="{StaticResource EntryOnPopupPageStyle}" />
 
         <!-- Label showing live waypoint type -->
-        <Label Text="Type" FontSize="Medium" />
-        <Label Text="{Binding Type, Mode=OneTime}" />
+        <Label Grid.Row="3"
+               Text="Type"
+               FontSize="Medium" />
+        <Label Grid.Row="4"
+               Text="{Binding Type, Mode=OneTime}" />
 
         <!-- Button to add live waypoint -->
-        <Button Text="Add live waypoint"
+        <Button Grid.Row="5"
+                Text="Add live waypoint"
                 Clicked="OnClickedAddLiveWaypointButton"
                 AutomationId="AddLiveWaypointButton" />
-    </VerticalStackLayout>
+    </Grid>
 
 </popups:BasePopupPage>

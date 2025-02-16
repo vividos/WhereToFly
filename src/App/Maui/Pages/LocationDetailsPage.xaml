@@ -41,11 +41,12 @@
 
         <ScrollView Orientation="Vertical">
 
-            <!-- stack layout with location details grid and details web view -->
-            <VerticalStackLayout>
+            <!-- grid with location details grid and details web view -->
+            <Grid RowDefinitions="Auto, 1*">
 
                 <!-- Grid with all location details -->
-                <Grid WidthRequest="350"
+                <Grid Grid.Row="0"
+                      WidthRequest="350"
                       MinimumWidthRequest="350"
                       VerticalOptions="Start"
                       HorizontalOptions="Center"
@@ -114,8 +115,9 @@
                 </Grid>
 
                 <!-- Description web view -->
-                <WebView HorizontalOptions="CenterAndExpand"
-                         VerticalOptions="FillAndExpand"
+                <WebView Grid.Row="1"
+                         HorizontalOptions="Center"
+                         VerticalOptions="Fill"
                          HeightRequest="200"
                          Source="{Binding DescriptionWebViewSource}">
                     <WebView.Behaviors>
@@ -124,7 +126,7 @@
                     </WebView.Behaviors>
                 </WebView>
 
-            </VerticalStackLayout>
+            </Grid>
         </ScrollView>
 
     </ContentPage.Content>

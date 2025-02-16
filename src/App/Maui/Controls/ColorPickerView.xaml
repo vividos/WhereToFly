@@ -8,8 +8,8 @@
     <FlexLayout x:Name="colorPickerLayout"
                 x:DataType="controls:ColorPickerView"
                 BindableLayout.ItemsSource="{Binding AllColorPickerColors}"
-                VerticalOptions="FillAndExpand"
-                HorizontalOptions="FillAndExpand"
+                VerticalOptions="Fill"
+                HorizontalOptions="Fill"
                 Direction="Row"
                 AlignItems="Start"
                 AlignContent="Start"
@@ -17,6 +17,7 @@
                 Wrap="Wrap">
         <BindableLayout.ItemTemplate>
             <DataTemplate x:DataType="graphics:Color">
+                <!-- Single color item -->
                 <Border StrokeThickness="2"
                         Stroke="Transparent"
                         Margin="0"
