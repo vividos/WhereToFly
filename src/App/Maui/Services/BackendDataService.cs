@@ -1,6 +1,5 @@
 ﻿using Refit;
 using System.Diagnostics;
-using System.Text.Json;
 using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;
 using WhereToFly.Shared.Model.Serializers;
@@ -101,11 +100,7 @@ namespace WhereToFly.App.Services
                 BaseUrl,
                 new RefitSettings
                 {
-                    ContentSerializer = new SystemTextJsonContentSerializer(
-                        new JsonSerializerOptions
-                        {
-                            TypeInfoResolver = SharedModelJsonSerializerContext.Default,
-                        }),
+                    ContentSerializer = new SystemTextJsonContentSerializer(),
                 });
         }
 
