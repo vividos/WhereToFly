@@ -33,9 +33,21 @@
                 <!-- Compass -->
                 <Grid VerticalOptions="Fill"
                       HorizontalOptions="Fill"
-                      WidthRequest="{OnPlatform Android=356, WinUI=600}"
-                      HeightRequest="{OnPlatform Android=356, WinUI=600}"
                       Style="{StaticResource PositionInfoTileStyle}">
+
+                    <Grid.WidthRequest>
+                        <OnPlatform x:TypeArguments="x:Double">
+                            <On Platform="Android" Value="356" />
+                            <On Platform="WinUI" Value="600" />
+                        </OnPlatform>
+                    </Grid.WidthRequest>
+                    <Grid.HeightRequest>
+                        <OnPlatform x:TypeArguments="x:Double">
+                            <On Platform="Android" Value="356" />
+                            <On Platform="WinUI" Value="600" />
+                        </OnPlatform>
+                    </Grid.HeightRequest>
+
                     <controls:CompassView VerticalOptions="Fill"
                                           HorizontalOptions="Fill"
                                           Heading="{Binding TrueNorthHeadingInDegrees, Mode=OneWay}"
