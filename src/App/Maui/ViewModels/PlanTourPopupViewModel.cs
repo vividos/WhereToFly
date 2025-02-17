@@ -318,20 +318,6 @@ namespace WhereToFly.App.ViewModels
                     var dataService = DependencyService.Get<IDataService>();
                     return await dataService.PlanTourAsync(this.planTourParameters);
                 }
-                catch (Refit.ApiException refitException)
-                {
-                    App.LogError(refitException);
-                    Debug.WriteLine("Refit exception: " + refitException.Content);
-
-                    string? text = refitException.HasContent
-                        ? refitException.Content
-                        : refitException.Message;
-
-                    retry = await UserInterface.DisplayAlert(
-                        "Error while planning tour: " + text,
-                        "Retry",
-                        "Close");
-                }
                 catch (Exception ex)
                 {
                     App.LogError(ex);
