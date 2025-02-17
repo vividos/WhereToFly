@@ -163,16 +163,9 @@ namespace WhereToFly.App
             object? sender,
             UnobservedTaskExceptionEventArgs args)
         {
-            Exception? ex = args.Exception.InnerExceptions.Count == 1
-                ? args.Exception.InnerException
-                : args.Exception;
+            Debug.WriteLine($"UnobservedTaskException: {args.Exception}");
 
-            Debug.WriteLine($"UnobservedTaskException: {ex}");
-
-            if (ex != null)
-            {
-                LogError(ex);
-            }
+            LogError(args.Exception);
         }
 
         /// <summary>
@@ -182,6 +175,13 @@ namespace WhereToFly.App
         /// <param name="ex">exception to log</param>
         public static void LogError(Exception ex)
         {
+            if (ex is AggregateException aggregateException &&
+                aggregateException.InnerExceptions.Count == 1 &&
+                aggregateException.InnerException != null)
+            {
+                ex = aggregateException.InnerException;
+            }
+
             Crashes.TrackError(ex);
         }
 
