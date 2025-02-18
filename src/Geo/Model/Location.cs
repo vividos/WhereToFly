@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace WhereToFly.Geo.Model
 {
@@ -31,6 +32,7 @@ namespace WhereToFly.Geo.Model
         /// <summary>
         /// Type of location
         /// </summary>
+        [JsonConverter(typeof(JsonStringEnumConverter<LocationType>))]
         public LocationType Type { get; set; } = LocationType.Waypoint;
 
         /// <summary>

@@ -10,8 +10,6 @@ namespace WhereToFly.Shared.Model.Serializers
     /// </summary>
     [JsonSourceGenerationOptions(
         WriteIndented = false,
-        UseStringEnumConverter = true,
-        PropertyNameCaseInsensitive = true,
         GenerationMode = JsonSourceGenerationMode.Default)]
     [JsonSerializable(typeof(AppConfig))]
     [JsonSerializable(typeof(AppResourceUri))]
