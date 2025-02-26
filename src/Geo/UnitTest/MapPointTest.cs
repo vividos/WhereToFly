@@ -1,10 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Text.Json;
-using WhereToFly.App.Serializers;
 using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Serializers;
 
-namespace WhereToFly.App.UnitTest
+namespace WhereToFly.Geo.UnitTest
 {
     /// <summary>
     /// Tests for class MapPoint
@@ -143,7 +143,7 @@ namespace WhereToFly.App.UnitTest
             var mapPoint2 = new MapPoint(latitude, longitude, altitude);
             var mapPoint3 = new MapPoint(0.0, 0.0);
 
-            var jsonTypeInfo = ModelsJsonSerializerContext.Default.MapPoint;
+            var jsonTypeInfo = GeoModelJsonSerializerContext.Default.MapPoint;
 
             // run
             string json1 = JsonSerializer.Serialize(mapPoint1, jsonTypeInfo);
