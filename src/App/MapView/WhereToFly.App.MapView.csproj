@@ -6,7 +6,8 @@
     <UseMaui>true</UseMaui>
     <UseMauiCompat>false</UseMauiCompat>
     <SingleProject>true</SingleProject>
-    <IsAotCompatible>true</IsAotCompatible>
+    <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
+    <EnableAotAnalyzer>true</EnableAotAnalyzer>
   </PropertyGroup>
 
   <!-- NuGet package properties -->
