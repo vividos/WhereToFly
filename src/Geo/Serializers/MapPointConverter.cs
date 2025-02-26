@@ -23,6 +23,11 @@ namespace WhereToFly.Geo.Serializers
             Type typeToConvert,
             JsonSerializerOptions options)
         {
+            if (reader.TokenType == JsonTokenType.StartObject)
+            {
+                return this.ReadLegacyJson(ref reader);
+            }
+
             int numberIndex = 0;
             double latitude = 0.0;
             double longitude = 0.0;
@@ -37,6 +42,7 @@ namespace WhereToFly.Geo.Serializers
                     case JsonTokenType.EndArray:
                         // ok, let's proceed
                         break;
+
                     case JsonTokenType.Number:
                         double value = reader.GetDouble();
                         if (numberIndex == 0)
@@ -74,6 +80,63 @@ namespace WhereToFly.Geo.Serializers
             {
                 return new MapPoint(latitude, longitude, altitude);
             }
+        }
+
+        /// <summary>
+        /// Reads legacy JSON object as MapPoint
+        /// </summary>
+        /// <param name="reader">json reader</param>
+        /// <returns>created map point object, or null when reading failed</returns>
+        private MapPoint? ReadLegacyJson(ref Utf8JsonReader reader)
+        {
+            var point = new MapPoint(0.0, 0.0);
+            string? nextProperty = null;
+
+            do
+            {
+                switch (reader.TokenType)
+                {
+                    case JsonTokenType.EndObject:
+                        return point;
+
+                    case JsonTokenType.PropertyName:
+                        nextProperty = reader.GetString();
+                        break;
+
+                    case JsonTokenType.Number:
+                        double number = reader.GetDouble();
+                        switch (nextProperty)
+                        {
+                            case "Latitude":
+                                point.Latitude = number;
+                                break;
+
+                            case "Longitude":
+                                point.Longitude = number;
+                                break;
+
+                            case "Altitude":
+                                point.Altitude = number;
+                                break;
+
+                            default:
+                                // ignore unknown property
+                                break;
+                        }
+
+                        nextProperty = null;
+                        break;
+
+                    default:
+                        // ignore token
+                        break;
+                }
+            }
+            while (reader.Read());
+
+            return point.Valid
+                ? point
+                : null;
         }
 
         /// <summary>

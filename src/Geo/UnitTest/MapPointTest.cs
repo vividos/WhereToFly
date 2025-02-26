@@ -172,5 +172,34 @@ namespace WhereToFly.Geo.UnitTest
 
             Assert.AreEqual(mapPoint3.Valid, mapPoint3a.Valid, "valid property of map point 3 must match");
         }
+
+        /// <summary>
+        /// Tests JSON deserializer handling legacy MapPoint format
+        /// </summary>
+        [TestMethod]
+        public void TestLegacyJsonDeserializer()
+        {
+            // set up
+            string json1 = "{\"Latitude\":47.6764385,\"Longitude\":11.8710533,\"Altitude\":1786.1,\"Valid\":true}";
+            string json2 = "{\"Latitude\":0.0,\"Longitude\":0.0,\"Altitude\":0,\"Valid\":false}";
+
+            // run
+            var jsonTypeInfo = GeoModelJsonSerializerContext.Default.MapPoint;
+
+            var mapPoint1 = JsonSerializer.Deserialize(json1, jsonTypeInfo);
+            var mapPoint2 = JsonSerializer.Deserialize(json2, jsonTypeInfo);
+
+            // check
+            Assert.IsNotNull(mapPoint1, "map point 1 must not be null");
+            Assert.IsTrue(mapPoint1.Valid, "map point 1 must be valid");
+            Assert.IsTrue(mapPoint1.Altitude.HasValue, "map point 1 must have altitude");
+
+            Assert.AreEqual(47.6764385, mapPoint1.Latitude, 1e-7, "deserialized latitude must match");
+            Assert.AreEqual(11.8710533, mapPoint1.Longitude, 1e-7, "deserialized longitude must match");
+            Assert.AreEqual(1786.1, mapPoint1.Altitude.Value, 1e-2, "deserialized altitude must match");
+
+            Assert.IsNotNull(mapPoint2, "map point 2 must not be null");
+            Assert.IsFalse(mapPoint2.Valid, "map point 2 must be invalid");
+        }
     }
 }
