@@ -1,6 +1,8 @@
 @page "/"
 @using Microsoft.JSInterop
 @using System.Diagnostics
+@using System.Text.Json
+@using WhereToFly.Geo.Model
 @inject IJSRuntime JS
 @inject IConfiguration Configuration
 
@@ -114,5 +116,33 @@
     public void OnAction(ActionInfo actionInfo)
     {
         Debug.WriteLine($"OnAction: action={actionInfo.Action} params={actionInfo.Params}");
+
+        switch (actionInfo.Action)
+        {
+            case "onMapMoved":
+                if (actionInfo.Params != null)
+                {
+                    var rectangle = JsonSerializer.Deserialize(
+                        actionInfo.Params,
+                        Geo.Serializers.GeoModelJsonSerializerContext.Default.MapRectangle);
+
+                    if (rectangle != null)
+                    {
+                        this.OnMapMoved(rectangle);
+                    }
+                }
+
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Called when the "onMapMoved" action is received
+    /// </summary>
+    private void OnMapMoved(MapRectangle rectangle)
+    {
     }
 }

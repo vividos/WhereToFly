@@ -1099,6 +1099,9 @@ export class MapView {
                 ", east: " + rect.east +
                 ", north: " + rect.north);
 
+            if (this.options.callback !== undefined)
+                this.options.callback("onMapMoved", rect);
+
         }.bind(this));
 
         this.nearbyPoisDataSource = new CustomDataSource("nearbyPois");
