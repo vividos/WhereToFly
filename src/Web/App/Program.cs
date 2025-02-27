@@ -1,4 +1,6 @@
-﻿namespace WhereToFly.Web.App;
+﻿using WhereToFly.WebApi.Logic;
+
+namespace WhereToFly.Web.App;
 
 /// <summary>
 /// Web app program
@@ -16,6 +18,8 @@ internal static class Program
         builder.Services
             .AddRazorComponents()
             .AddInteractiveServerComponents();
+
+        builder.Services.AddSingleton(new LocationFindManager());
 
         var app = builder.Build();
 

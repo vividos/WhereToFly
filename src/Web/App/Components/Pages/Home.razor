@@ -3,8 +3,10 @@
 @using System.Diagnostics
 @using System.Text.Json
 @using WhereToFly.Geo.Model
+@using WhereToFly.WebApi.Logic
 @inject IJSRuntime JS
 @inject IConfiguration Configuration
+@inject LocationFindManager LocationFindManager
 
 <PageTitle>Where-To-Fly Web App</PageTitle>
 
@@ -118,8 +120,9 @@
     /// Called when the JavaScript code calls back to .NET
     /// </summary>
     /// <param name="actionInfo">action info</param>
+    /// <returns>task to wait on</returns>
     [JSInvokable("OnAction")]
-    public void OnAction(ActionInfo actionInfo)
+    public async Task OnAction(ActionInfo actionInfo)
     {
         Debug.WriteLine($"OnAction: action={actionInfo.Action} params={actionInfo.Params}");
 
@@ -134,7 +137,7 @@
 
                     if (rectangle != null)
                     {
-                        this.OnMapMoved(rectangle);
+                        await this.OnMapMoved(rectangle);
                     }
                 }
 
@@ -146,10 +149,42 @@
     }
 
     /// <summary>
+    /// Cache for lat/long tuples for nearby POIs already loaded
+    /// </summary>
+    private readonly HashSet<(int, int)> nearbyPoiLatLongCache = new();
+
+    /// <summary>
     /// Called when the "onMapMoved" action is received
     /// </summary>
-    private void OnMapMoved(MapRectangle rectangle)
+    /// <returns>task to wait on</returns>
+    private async Task OnMapMoved(MapRectangle rectangle)
     {
+        if (!rectangle.Valid ||
+            rectangle.Width > 2.0 ||
+            rectangle.Height > 2.0)
+        {
+            return;
+        }
+
+        MapPoint center = rectangle.Center;
+
+        int latitudeInt = (int)center.Latitude;
+        int longitudeInt = (int)center.Longitude;
+
+        var latLongKey = (latitudeInt, longitudeInt);
+
+        if (this.nearbyPoiLatLongCache.Contains(latLongKey))
+        {
+            return;
+        }
+
+        this.nearbyPoiLatLongCache.Add(latLongKey);
+
+        var locationList = await LocationFindManager.GetInRectAsync(
+            latitudeInt,
+            longitudeInt);
+
+        await this.AddLocationList(locationList);
     }
 
     /// <summary>
