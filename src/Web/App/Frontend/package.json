@@ -27,6 +27,7 @@
     "file-loader": "^6.2.0",
     "globals": "^15.14.0",
     "mini-css-extract-plugin": "^2.9.2",
+    "source-map-loader": "^5.0.0",
     "terser-webpack-plugin": "^5.3.11",
     "webpack": "^5.97.1",
     "webpack-cli": "^6.0.0"
