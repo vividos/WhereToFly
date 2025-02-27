@@ -50,6 +50,18 @@ export class App {
     }
 
     /**
+     * Adds list of locations to the map, as marker pins
+     * @param {Array} locationList An array of location, each with the following object layout:
+     * { id:"location-id", name:"Location Name", type:"LocationType", latitude: 123.45678, longitude: 9.87654, altitude:1234.5 }
+     */
+    async addLocationList(locationList) {
+
+        App.log("adding location list, with " + locationList.length + " entries");
+
+        await this.map.addLocationList(locationList);
+    }
+
+    /**
      * Logs a message to the console, just like console.log, but with styled output.
      * @param {string} message message to log
      */

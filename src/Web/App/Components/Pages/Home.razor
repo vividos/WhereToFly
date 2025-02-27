@@ -49,6 +49,11 @@
 @code {
 
     /// <summary>
+    /// Reference to the JavaScript App instance
+    /// </summary>
+    IJSObjectReference app;
+
+    /// <summary>
     /// Called after the razor page has finished rendering
     /// </summary>
     /// <param name="firstRender">when true, it's the first render</param>
@@ -73,7 +78,8 @@
                     "getAppOptions",
                     referenceToThis);
 
-            await module.InvokeVoidAsync("default", options);
+            this.app =
+                await module.InvokeAsync<IJSObjectReference>("default", options);
         }
 
         await base.OnAfterRenderAsync(firstRender);
@@ -144,5 +150,47 @@
     /// </summary>
     private void OnMapMoved(MapRectangle rectangle)
     {
+    }
+
+    /// <summary>
+    /// Called when the JavaScript code calls back to .NET
+    /// </summary>
+    /// <param name="locationList">location list</param>
+    /// <returns>task to wait on</returns>
+    private async Task AddLocationList(IEnumerable<Location> locationList)
+    {
+        if (!locationList.Any())
+        {
+            return;
+        }
+
+        var jsonLocationList =
+            from location in locationList
+            select CreateJsonObjectFromLocation(location);
+
+        await this.app.InvokeVoidAsync("addLocationList", jsonLocationList);
+    }
+
+    /// <summary>
+    /// Creates a C# object suitable for conversion to JSON, in order to use in a JavaScript
+    /// call.
+    /// </summary>
+    /// <param name="location">location to convert</param>
+    /// <returns>C# object</returns>
+    private static object CreateJsonObjectFromLocation(Location location)
+    {
+        return new
+        {
+            id = location.Id,
+            name = location.Name,
+            description = location.Description,
+            type = location.Type.ToString(),
+            latitude = location.MapLocation.Latitude,
+            longitude = location.MapLocation.Longitude,
+            altitude = location.MapLocation.Altitude.GetValueOrDefault(0.0),
+            takeoffDirections = (int)location.TakeoffDirections,
+            isPlanTourLocation = location.IsPlanTourLocation,
+            properties = location.Properties.ToDictionary(kvp => kvp.Key.ToString(), kvp => kvp.Value),
+        };
     }
 }
