@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/1.0.1721241">
+﻿<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/1.0.2518757">
 
   <PropertyGroup>
     <!-- No NuGet packages in here -->
@@ -12,6 +12,9 @@
 
     <!-- Folder where production build objects will be placed -->
     <BuildOutputFolder>$(MSBuildProjectDirectory)\..\wwwroot\</BuildOutputFolder>
+
+    <!-- Workaround for NU1012 reporting invalid target framework net6.0-none -->
+    <RestoreProjectStyle>None</RestoreProjectStyle>
   </PropertyGroup>
 
   <!-- Support for skipping unnecessary rebuilds -->
