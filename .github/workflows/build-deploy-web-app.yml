@@ -29,6 +29,11 @@ jobs:
         dotnet build
         src/Shared/WebLib/WhereToFly.Shared.WebLib.esproj
 
+    - name: Build Web App Frontend project
+      run: >
+        dotnet build
+        src/Web/App/Frontend/WhereToFly.Web.App.Frontend.esproj
+
     - name: Publish
       run: dotnet publish src/Web/App/WhereToFly.Web.App.csproj --output "published"
 
