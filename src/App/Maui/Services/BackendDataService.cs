@@ -26,6 +26,15 @@ namespace WhereToFly.App.Services
         private readonly HttpClient client;
 
         /// <summary>
+        /// Creates a new backend data service object using provided client
+        /// </summary>
+        /// <param name="externalClient">external client</param>
+        public BackendDataService(HttpClient externalClient)
+        {
+            this.client = externalClient;
+        }
+
+        /// <summary>
         /// Creates a new backend data service object
         /// </summary>
         public BackendDataService()

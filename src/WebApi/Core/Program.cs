@@ -58,3 +58,10 @@ app.UseHttpsRedirection();
 app.MapControllers();
 
 await app.RunAsync();
+
+/// <summary>
+/// Web API program
+/// </summary>
+public partial class Program
+{
+}

@@ -3,11 +3,16 @@
   <PropertyGroup>
     <TargetFramework>$(DotNetVersion)</TargetFramework>
     <Description>Where-to-fly WebApi unit tests</Description>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Assets\GarminInreachRawKmlData.kml" />
     <None Remove="Assets\GarminInreachRawKmlTrackData.kml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\App\Maui\Services\BackendDataService.cs" Link="BackendDataService.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +29,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="3.8.2" />
     <PackageReference Include="MSTest.TestFramework" Version="3.8.2" />
@@ -31,6 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Core\WhereToFly.WebApi.Core.csproj" />
     <ProjectReference Include="..\Logic\WhereToFly.WebApi.Logic.csproj" />
   </ItemGroup>
 
