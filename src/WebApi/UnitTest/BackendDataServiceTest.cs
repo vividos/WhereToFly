@@ -25,7 +25,7 @@ namespace WhereToFly.WebApi.UnitTest
 
             // run
             var appConfig = await service.GetAppConfigAsync(
-                global::ThisAssembly.AssemblyInformationalVersion);
+                "1.234.5");
 
             // check
             Assert.AreNotEqual(
