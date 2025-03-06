@@ -1,8 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>$(DotNetVersion)</TargetFramework>
     <Description>Where-to-fly App unit tests</Description>
+    <UseMaui>true</UseMaui>
+    <UseMauiCompat>false</UseMauiCompat>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,8 +34,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Maui.Controls" Version="$(DotNetMauiVersion)" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
-    <PackageReference Include="Mocks.Maui" Version="1.1.8" />
+    <PackageReference Include="Mocks.Maui" Version="1.2.3" />
     <PackageReference Include="MSTest.TestAdapter" Version="3.8.2" />
     <PackageReference Include="MSTest.TestFramework" Version="3.8.2" />
     <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.116.1" />
