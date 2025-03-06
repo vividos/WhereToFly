@@ -1405,6 +1405,10 @@ namespace WhereToFly.App.MapView
                 this.OnExportLayer);
 
             this.callbackHandler.RegisterHandler(
+                "onMapMoved",
+                this.OnMapMoved);
+
+            this.callbackHandler.RegisterHandler(
                 "onConsoleErrorMessage",
                 this.OnConsoleErrorMessage);
         }
@@ -1558,6 +1562,23 @@ namespace WhereToFly.App.MapView
             }
 
             this.taskCompletionSourceExportLayer?.SetResult(kmzData);
+        }
+
+        /// <summary>
+        /// Called when the "onMapMoved" callback has been sent from JavaScript.
+        /// </summary>
+        /// <param name="jsonParameters">map rectangle as JSON</param>
+        private void OnMapMoved(string jsonParameters)
+        {
+            MapRectangle? rect =
+                JsonSerializer.Deserialize(
+                    jsonParameters,
+                    MapViewJsonSerializerContext.Default.MapRectangle);
+
+            if (rect != null)
+            {
+                // do something with rectangle
+            }
         }
 
         /// <summary>
