@@ -290,11 +290,17 @@ namespace WhereToFly.App.ViewModels
                 return;
             }
 
+            double height = this.position.Altitude ?? 0.0;
+            if (height < 0.0)
+            {
+                height = 0.0;
+            }
+
             SolarTimes currentSolarTimes = SunCalc.GetTimes(
                 this.position.Timestamp,
                 this.position.Latitude,
                 this.position.Longitude,
-                this.position.Altitude ?? 0.0);
+                height);
 
             if (currentSolarTimes.Sunrise.HasValue)
             {

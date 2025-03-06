@@ -98,6 +98,27 @@ namespace WhereToFly.Geo.UnitTest
         }
 
         /// <summary>
+        /// Checks specifying a negative height; no sunrise/sunset is returned
+        /// </summary>
+        [TestMethod]
+        public void TestSolarTimes_NegativeHeight()
+        {
+            // set up
+            double latitude = 48.137222;
+            double longitude = 11.575556;
+            var date = new DateTimeOffset(2020, 7, 31, 12, 0, 0, TimeSpan.FromHours(2.0));
+
+            // run
+            var times = SunCalc.GetTimes(date, latitude, longitude, -8.0);
+
+            // check
+            Assert.IsNotNull(times, "times object must be non-null");
+
+            Assert.IsFalse(times.Sunrise.HasValue, "sunrise must not have been set");
+            Assert.IsFalse(times.Sunset.HasValue, "sunset must not have been set");
+        }
+
+        /// <summary>
         /// Checks solar times before and after a timezone change
         /// </summary>
         [TestMethod]

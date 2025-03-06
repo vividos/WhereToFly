@@ -12,6 +12,8 @@ Released on ?.
 
 🐛 Bugfixes
 
+- Fixed displaying sunrise and sunset when altitude is below 0 m
+
 ## Version 1.15.0
 
 Released on 2024-11-20.

@@ -25,7 +25,9 @@ namespace WhereToFly.Geo.SunCalcNet
         /// <param name="date">date to calculate solar times for</param>
         /// <param name="latitude">latitude value, going from greenwich meridian to the east</param>
         /// <param name="longitude">longitude value, going to the north and the south</param>
-        /// <param name="height">height relative to the horizon, in meters</param>
+        /// <param name="height">
+        /// height relative to the horizon, in meters; must not be negative
+        /// </param>
         /// <returns>solar times object</returns>
         public static SolarTimes GetTimes(
             DateTimeOffset date,

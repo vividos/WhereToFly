@@ -363,11 +363,17 @@ namespace WhereToFly.App.ViewModels
             this.OnPropertyChanged(nameof(this.LastPositionFix));
             this.OnPropertyChanged(nameof(this.SpeedInKmh));
 
+            double height = this.position.Altitude ?? 0.0;
+            if (height < 0.0)
+            {
+                height = 0.0;
+            }
+
             this.currentSolarTimes = SunCalc.GetTimes(
                 this.position.Timestamp,
                 this.position.Latitude,
                 this.position.Longitude,
-                this.position.Altitude ?? 0.0);
+                height);
 
             this.OnPropertyChanged(nameof(this.IsSunriseSunsetAvail));
             this.OnPropertyChanged(nameof(this.SunriseTime));
