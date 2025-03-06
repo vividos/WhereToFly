@@ -8,11 +8,6 @@ namespace WhereToFly.App
     public class WindowsPlatform : IPlatform
     {
         /// <summary>
-        /// Base path to use in WebView control, for Windows
-        /// </summary>
-        public string WebViewBasePath => "https://appdir/";
-
-        /// <summary>
         /// Translates the compass' magnetic north heading (e.g. from Xamarin.Essentials.Compass
         /// API) to true north.
         /// </summary>

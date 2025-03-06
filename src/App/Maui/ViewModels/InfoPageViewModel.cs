@@ -9,6 +9,19 @@ namespace WhereToFly.App.ViewModels
     public class InfoPageViewModel : ViewModelBase
     {
         /// <summary>
+        /// Base path to use in WebView control
+        /// </summary>
+#pragma warning disable S1075 // URIs should not be hardcoded
+#if ANDROID
+        private static readonly string WebViewBasePath = "file:///android_asset/";
+#elif WINDOWS
+        private static readonly string WebViewBasePath = "https://appdir/";
+#else
+        private static readonly string WebViewBasePath = "about:blank";
+#endif
+#pragma warning restore S1075 // URIs should not be hardcoded
+
+        /// <summary>
         /// View model for one info page entry
         /// </summary>
         public class InfoPageEntryViewModel
@@ -81,12 +94,10 @@ namespace WhereToFly.App.ViewModels
         {
             string htmlText = await GetHtmlText(markdownFilename);
 
-            IPlatform platform = DependencyService.Get<IPlatform>();
-
             return new HtmlWebViewSource
             {
                 Html = htmlText,
-                BaseUrl = platform.WebViewBasePath + "info/",
+                BaseUrl = WebViewBasePath + "info/",
             };
         }
 

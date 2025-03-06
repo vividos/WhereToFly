@@ -8,11 +8,6 @@ namespace WhereToFly.App
     public class AndroidPlatform : IPlatform
     {
         /// <summary>
-        /// Base path to use in WebView control, for Android
-        /// </summary>
-        public string WebViewBasePath => "file:///android_asset/";
-
-        /// <summary>
         /// Translates the compass' magnetic north heading (e.g. from Xamarin.Essentials.Compass
         /// API) to true north. On Android this is done using the GeomagneticField class that
         /// returns the magnetic declination on the given coordinates

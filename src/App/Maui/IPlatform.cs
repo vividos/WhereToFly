@@ -6,11 +6,6 @@
     public interface IPlatform
     {
         /// <summary>
-        /// Base path to use in WebView control
-        /// </summary>
-        string WebViewBasePath { get; }
-
-        /// <summary>
         /// Translates the compass' magnetic north heading (e.g. from Xamarin.Essentials.Compass
         /// API) to true north.
         /// </summary>

@@ -6,11 +6,6 @@
     internal class UnitTestPlatform : IPlatform
     {
         /// <summary>
-        /// Returns web view base path; always "about:blank"
-        /// </summary>
-        public string WebViewBasePath => "about:blank";
-
-        /// <summary>
         /// Translates the compass' magnetic north heading (e.g. from Xamarin.Essentials.Compass
         /// API) to true north. For unit tests, translates the value with a fixed declination.
         /// </summary>
