@@ -48,6 +48,10 @@ namespace WhereToFly.Geo.UnitTest
         [DataRow("geo:49.781231,11.837581")]
         [DataRow("geo:47.6,-122.3")]
         [DataRow("geo:47.6,-122.3?z=11")]
+        [DataRow("53°20'21''N, 012°07'56''O")]
+        [DataRow("53°20'21.0\"N 12°07'56.0\"E")]
+        [DataRow("N 50°29.958' E 009°56.832'")]
+        [DataRow("E 50°29.958' S 009°56.832'")]
         public void TestParseValidCoordinates(string text)
         {
             // run
@@ -80,6 +84,7 @@ namespace WhereToFly.Geo.UnitTest
         [DataRow("https://www.openstreetmap.org/#map=18/49.7812310/11.8375812/42")]
         [DataRow("geo:49.781231")]
         [DataRow("geo:0,0?q=34.99,-106.61(Treasure)")]
+        [DataRow("geo:?q=34.99,-106.61(Treasure)")]
         [DataRow("geogeo:0,0?q=1600+Amphitheatre+Parkway%2C+CA")]
         public void TestParseInvalidCoordinatesText(string? text)
         {

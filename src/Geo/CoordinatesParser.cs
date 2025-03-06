@@ -54,7 +54,8 @@ namespace WhereToFly.Geo
                 .Replace("″", "\"")
                 .Replace("° ", "°")
                 .Replace("' ", "'")
-                .Replace("\" ", "\"");
+                .Replace("\" ", "\"")
+                .Replace("''", "\"");
 
             // try to split the text into two parts
             if (!TrySplitCoordinates(text, out string? latitude, out string? longitude) ||
@@ -120,13 +121,21 @@ namespace WhereToFly.Geo
                 splitPos = text.IndexOf(';');
             }
 
+            int numCharsToRemove = 1;
+
+            if (splitPos == -1)
+            {
+                splitPos = FindSplitPosByDirectionChar(text);
+                numCharsToRemove = 0;
+            }
+
             if (splitPos == -1)
             {
                 return false;
             }
 
             latitude = text.Substring(0, splitPos);
-            longitude = text.Substring(splitPos + 1).TrimStart();
+            longitude = text.Substring(splitPos + numCharsToRemove).TrimStart();
 
             latitude = latitude.Replace(" ", string.Empty).Trim();
             longitude = longitude.Replace(" ", string.Empty).Trim();
@@ -134,6 +143,48 @@ namespace WhereToFly.Geo
             CheckSwapLatLong(ref latitude, ref longitude);
 
             return true;
+        }
+
+        /// <summary>
+        /// Finds split position based on latitude / longitude direction characters
+        /// </summary>
+        /// <param name="text">coordinates text to split</param>
+        /// <returns>
+        /// split position, or -1 when no position was found
+        /// </returns>
+        private static int FindSplitPosByDirectionChar(string text)
+        {
+            bool startsWithLatitudeDirectionCharacter =
+                Array.Exists(LatitudeDirectionCharacter, text.StartsWith);
+
+            bool startsWithLongitudeDirectionCharacter =
+                Array.Exists(LongitudeDirectionCharacter, text.StartsWith);
+
+            if (!startsWithLatitudeDirectionCharacter &&
+                !startsWithLongitudeDirectionCharacter)
+            {
+                return -1;
+            }
+
+            if (startsWithLatitudeDirectionCharacter)
+            {
+                return
+                    LongitudeDirectionCharacter
+                    .Where(text.Contains)
+                    .Select(ch => text.IndexOf(ch))
+                    .FirstOrDefault(-1);
+            }
+
+            if (startsWithLongitudeDirectionCharacter)
+            {
+                return
+                    LatitudeDirectionCharacter
+                    .Where(text.Contains)
+                    .Select(ch => text.IndexOf(ch))
+                    .FirstOrDefault(-1);
+            }
+
+            return -1;
         }
 
         /// <summary>
@@ -402,9 +453,11 @@ namespace WhereToFly.Geo
             }
 
             // parse geo: URI
-            if (uri.Scheme.Equals("geo", StringComparison.InvariantCultureIgnoreCase))
+            if (uri.Scheme.Equals("geo", StringComparison.InvariantCultureIgnoreCase) &&
+                !string.IsNullOrEmpty(uri.AbsolutePath) &&
+                uri.AbsolutePath != "0,0")
             {
-                return TryParse(uri.PathAndQuery, out mapPoint);
+                return TryParse(uri.AbsolutePath, out mapPoint);
             }
 
             return false;
