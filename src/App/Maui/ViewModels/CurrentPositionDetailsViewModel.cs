@@ -548,7 +548,7 @@ namespace WhereToFly.App.ViewModels
             this.OnPropertyChanged(nameof(this.MagneticNorthHeadingInDegrees));
 
             // try to translate magnetic north heading to true north
-            var platform = DependencyService.Get<IPlatform>();
+            var platform = DependencyService.Get<CompassGeoServices>();
 
             int headingTrueNorth = 0;
 

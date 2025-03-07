@@ -41,7 +41,7 @@ namespace WhereToFly.App.UnitTest
             DependencyService.Register<IFontNamedSizeService, MockFontNamedSizeService>();
 #pragma warning restore CS0612 // Type or member is obsolete
 
-            DependencyService.Register<IPlatform, UnitTestPlatform>();
+            DependencyService.Register<CompassGeoServices>();
             DependencyService.Register<IAppMapService, UnitTestAppMapService>();
             DependencyService.Register<IUserInterface, UnitTestUserInterface>();
             DependencyService.Register<IGeolocationService, UnitTestGeolocationService>();

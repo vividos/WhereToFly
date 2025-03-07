@@ -20,7 +20,6 @@ namespace WhereToFly.App.UnitTest.Pages
         [TestInitialize]
         public void SetUp()
         {
-            DependencyService.Register<IPlatform, UnitTestPlatform>();
             DependencyService.Register<SvgImageCache>();
         }
 

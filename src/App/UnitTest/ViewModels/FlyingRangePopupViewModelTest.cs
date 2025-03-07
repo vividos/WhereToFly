@@ -21,7 +21,6 @@ namespace WhereToFly.App.UnitTest.ViewModels
         public void SetUp()
         {
             DependencyService.Register<IDataService, SqliteDatabaseDataService>();
-            DependencyService.Register<IPlatform, UnitTestPlatform>();
         }
 
         /// <summary>

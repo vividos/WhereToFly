@@ -23,8 +23,6 @@ namespace WhereToFly.App.UnitTest
         [TestInitialize]
         public void SetUp()
         {
-            DependencyService.Register<IPlatform, UnitTestPlatform>();
-
             // start with a new database
             string? folder = Path.GetDirectoryName(this.GetType().Assembly.Location);
             Assert.IsNotNull(folder, "test folder must be available");

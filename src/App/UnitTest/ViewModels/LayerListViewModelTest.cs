@@ -20,7 +20,6 @@ namespace WhereToFly.App.UnitTest.ViewModels
         [TestInitialize]
         public void SetUp()
         {
-            DependencyService.Register<IPlatform, UnitTestPlatform>();
             DependencyService.Register<IDataService, SqliteDatabaseDataService>();
             DependencyService.Register<SvgImageCache>();
         }

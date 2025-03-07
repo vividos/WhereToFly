@@ -1,15 +1,16 @@
-﻿[assembly: Dependency(typeof(WhereToFly.App.WindowsPlatform))]
-
-namespace WhereToFly.App
+﻿namespace WhereToFly.App
 {
     /// <summary>
-    /// Platform specific functions
+    /// Compass geographic services
     /// </summary>
-    public class WindowsPlatform : IPlatform
+    public class CompassGeoServices
     {
         /// <summary>
-        /// Translates the compass' magnetic north heading (e.g. from Xamarin.Essentials.Compass
+        /// Translates the compass' magnetic north heading (e.g. from the Essentials' Compass
         /// API) to true north.
+        /// On Android this is done using the GeomagneticField class that returns the magnetic
+        /// declination on the given coordinates.
+        /// On Windows, there's no such API.
         /// </summary>
         /// <param name="headingMagneticNorthInDegrees">magnetic north heading</param>
         /// <param name="latitudeInDegrees">latitude of current position</param>
@@ -24,10 +25,29 @@ namespace WhereToFly.App
             double altitudeInMeter,
             out int headingTrueNorthInDegrees)
         {
+#if ANDROID
+            long millisecondsSinceEpoch = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+
+            var geomagneticField = new global::Android.Hardware.GeomagneticField(
+                (float)latitudeInDegrees,
+                (float)longitudeInDegrees,
+                (float)altitudeInMeter,
+                millisecondsSinceEpoch);
+
+            headingTrueNorthInDegrees =
+                (int)(headingMagneticNorthInDegrees + geomagneticField.Declination);
+
+            return true;
+#elif WINDOWS
             // on Windows this isn't possible. Essentials' Compass could return true north
             // heading directly in the CompassData, but doesn't.
             headingTrueNorthInDegrees = 0;
             return false;
+#else
+            // for unit tests
+            headingTrueNorthInDegrees = headingMagneticNorthInDegrees + 4;
+            return true;
+#endif
         }
     }
 }

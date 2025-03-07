@@ -18,7 +18,6 @@ namespace WhereToFly.App.UnitTest.ViewModels
         [TestInitialize]
         public void SetUp()
         {
-            DependencyService.Register<IPlatform, UnitTestPlatform>();
             DependencyService.Register<SvgImageCache>();
 
             var imageCache = DependencyService.Get<SvgImageCache>();

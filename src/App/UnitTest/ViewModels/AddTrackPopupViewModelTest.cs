@@ -13,15 +13,6 @@ namespace WhereToFly.App.UnitTest.ViewModels
     public class AddTrackPopupViewModelTest
     {
         /// <summary>
-        /// Sets up tests
-        /// </summary>
-        [TestInitialize]
-        public void SetUp()
-        {
-            DependencyService.Register<IPlatform, UnitTestPlatform>();
-        }
-
-        /// <summary>
         /// Tests default ctor of view model
         /// </summary>
         [TestMethod]
