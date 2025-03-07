@@ -17,6 +17,16 @@ namespace WhereToFly.App.Pages
     public class MapPage : ContentPage
     {
         /// <summary>
+        /// App map service
+        /// </summary>
+        private readonly IAppMapService appMapService;
+
+        /// <summary>
+        /// Data service
+        /// </summary>
+        private readonly IDataService dataService;
+
+        /// <summary>
         /// Geolocation service to use for position updates
         /// </summary>
         private readonly IGeolocationService geolocationService;
@@ -77,6 +87,9 @@ namespace WhereToFly.App.Pages
         /// </summary>
         public MapPage()
         {
+            this.appMapService = DependencyService.Get<IAppMapService>();
+            this.dataService = DependencyService.Get<IDataService>();
+
             this.Title = Constants.AppTitle;
             this.BackgroundColor = Colors.Black;
 
@@ -269,8 +282,7 @@ namespace WhereToFly.App.Pages
             {
                 var point = position.ToMapPoint();
 
-                var appMapService = DependencyService.Get<IAppMapService>();
-                await appMapService.UpdateLastShownPosition(point);
+                await this.appMapService.UpdateLastShownPosition(point);
 
                 this.mapView.UpdateMyLocation(
                     point,
@@ -387,7 +399,7 @@ namespace WhereToFly.App.Pages
             this.mapView.AddTourPlanLocation += async (locationId) => await this.OnMapView_AddTourPlanLocation(locationId);
             this.mapView.AddTempTourPlanPoint += async (point) => await this.AddTempPlanTourPoint(point);
             this.mapView.UpdateLastShownLocation += async (point, viewingDistance)
-                => await OnMapView_UpdateLastShownLocation(point, viewingDistance);
+                => await this.OnMapView_UpdateLastShownLocation(point, viewingDistance);
             this.mapView.SetLocationAsCompassTarget += async (locationId)
                 => await this.OnMapView_SetLocationAsCompassTarget(locationId);
             this.mapView.ShowTrackDetails += async (locationId) => await this.OnMapView_ShowTrackDetails(locationId);
@@ -424,13 +436,11 @@ namespace WhereToFly.App.Pages
         /// <returns>task to wait on</returns>
         private async Task LoadDataAsync()
         {
-            var dataService = DependencyService.Get<IDataService>();
-
-            this.appSettings = await dataService.GetAppSettingsAsync(CancellationToken.None);
-            this.appConfig = await dataService.GetAppConfigAsync(CancellationToken.None);
-            this.locationList = (await dataService.GetLocationDataService().GetList()).ToList();
-            this.trackList = (await dataService.GetTrackDataService().GetList()).ToList();
-            this.layerList = (await dataService.GetLayerDataService().GetList()).ToList();
+            this.appSettings = await this.dataService.GetAppSettingsAsync(CancellationToken.None);
+            this.appConfig = await this.dataService.GetAppConfigAsync(CancellationToken.None);
+            this.locationList = (await this.dataService.GetLocationDataService().GetList()).ToList();
+            this.trackList = (await this.dataService.GetTrackDataService().GetList()).ToList();
+            this.layerList = (await this.dataService.GetLayerDataService().GetList()).ToList();
         }
 
         /// <summary>
@@ -531,8 +541,7 @@ namespace WhereToFly.App.Pages
 
                     this.MapView.UpdateLocation(location);
 
-                    var dataService = DependencyService.Get<IDataService>();
-                    var locationDataService = dataService.GetLocationDataService();
+                    var locationDataService = this.dataService.GetLocationDataService();
 
                     Task.Run(async () => await locationDataService.Update(location));
                 }
@@ -540,8 +549,7 @@ namespace WhereToFly.App.Pages
 
             if (args.TrackData != null)
             {
-                var dataService = DependencyService.Get<IDataService>();
-                var trackDataService = dataService.GetTrackDataService();
+                var trackDataService = this.dataService.GetTrackDataService();
 
                 Task.Run(async () =>
                 {
@@ -696,8 +704,7 @@ namespace WhereToFly.App.Pages
 
             var point = position.ToMapPoint();
 
-            var appMapService = DependencyService.Get<IAppMapService>();
-            await appMapService.UpdateLastShownPosition(point);
+            await this.appMapService.UpdateLastShownPosition(point);
 
             await Share.RequestAsync(
                 DataFormatter.FormatMyPositionShareText(point, position.Timestamp),
@@ -731,8 +738,7 @@ namespace WhereToFly.App.Pages
 
             this.locationList.Add(location);
 
-            var dataService = DependencyService.Get<IDataService>();
-            var locationDataService = dataService.GetLocationDataService();
+            var locationDataService = this.dataService.GetLocationDataService();
 
             await locationDataService.Add(location);
 
@@ -750,10 +756,9 @@ namespace WhereToFly.App.Pages
         /// <param name="point">map point to store</param>
         /// <param name="viewingDistance">current viewing distance</param>
         /// <returns>task to wait on</returns>
-        private static async Task OnMapView_UpdateLastShownLocation(MapPoint point, int viewingDistance)
+        private async Task OnMapView_UpdateLastShownLocation(MapPoint point, int viewingDistance)
         {
-            var appMapService = DependencyService.Get<IAppMapService>();
-            await appMapService.UpdateLastShownPosition(point, viewingDistance);
+            await this.appMapService.UpdateLastShownPosition(point, viewingDistance);
         }
 
         /// <summary>
@@ -763,12 +768,10 @@ namespace WhereToFly.App.Pages
         /// <returns>task to wait on</returns>
         private async Task OnMapView_SetLocationAsCompassTarget(string locationId)
         {
-            var appMapService = DependencyService.Get<IAppMapService>();
-
             if (string.IsNullOrEmpty(locationId) ||
                 locationId == "null")
             {
-                await appMapService.SetCompassTarget(null);
+                await this.appMapService.SetCompassTarget(null);
                 return;
             }
 
@@ -786,7 +789,7 @@ namespace WhereToFly.App.Pages
                 TargetLocation = location.MapLocation,
             };
 
-            await appMapService.SetCompassTarget(compassTarget);
+            await this.appMapService.SetCompassTarget(compassTarget);
         }
 
         /// <summary>
@@ -798,8 +801,7 @@ namespace WhereToFly.App.Pages
         private async Task OnMapView_ShowTrackDetails(string trackId)
         {
             // since trackList is cleared for memory savings, ask the track data service directly
-            var dataService = DependencyService.Get<IDataService>();
-            Track? track = await dataService.GetTrackDataService().Get(trackId);
+            Track? track = await this.dataService.GetTrackDataService().Get(trackId);
 
             if (track == null)
             {
@@ -835,7 +837,7 @@ namespace WhereToFly.App.Pages
                     break;
 
                 case MapLongTapContextMenu.Result.SetAsCompassTarget:
-                    await SetAsCompassTarget(point);
+                    await this.SetAsCompassTarget(point);
                     break;
 
                 case MapLongTapContextMenu.Result.NavigateHere:
@@ -890,8 +892,7 @@ namespace WhereToFly.App.Pages
 
             this.locationList.Add(location);
 
-            var dataService = DependencyService.Get<IDataService>();
-            var locationDataService = dataService.GetLocationDataService();
+            var locationDataService = this.dataService.GetLocationDataService();
 
             await locationDataService.Add(location);
 
@@ -905,7 +906,7 @@ namespace WhereToFly.App.Pages
         /// </summary>
         /// <param name="point">map point to set as target</param>
         /// <returns>task to wait on</returns>
-        private static async Task SetAsCompassTarget(MapPoint point)
+        private async Task SetAsCompassTarget(MapPoint point)
         {
             var compassTarget = new CompassTarget
             {
@@ -913,8 +914,7 @@ namespace WhereToFly.App.Pages
                 TargetLocation = point,
             };
 
-            var appMapService = DependencyService.Get<IAppMapService>();
-            await appMapService.SetCompassTarget(compassTarget);
+            await this.appMapService.SetCompassTarget(compassTarget);
         }
 
         /// <summary>
@@ -1015,8 +1015,7 @@ namespace WhereToFly.App.Pages
 
             this.locationList.Add(planTourLocation);
 
-            var dataService = DependencyService.Get<IDataService>();
-            var locationDataService = dataService.GetLocationDataService();
+            var locationDataService = this.dataService.GetLocationDataService();
 
             await locationDataService.Add(planTourLocation);
 
@@ -1032,13 +1031,11 @@ namespace WhereToFly.App.Pages
             var tempLocationsList = this.planTourParameters.WaypointLocationList
                 .Where(location => location.IsTempPlanTourLocation);
 
-            var appMapService = DependencyService.Get<IAppMapService>();
-            var dataService = DependencyService.Get<IDataService>();
-            var locationDataService = dataService.GetLocationDataService();
+            var locationDataService = this.dataService.GetLocationDataService();
 
             foreach (var tempLocation in tempLocationsList)
             {
-                appMapService.MapView.RemoveLocation(tempLocation.Id);
+                this.appMapService.MapView.RemoveLocation(tempLocation.Id);
 
                 this.locationList?.Remove(tempLocation);
 
@@ -1129,9 +1126,7 @@ namespace WhereToFly.App.Pages
 
             if (zoomToPosition)
             {
-                var appMapService = DependencyService.Get<IAppMapService>();
-
-                Task.Run(async () => await appMapService.UpdateLastShownPosition(point));
+                Task.Run(async () => await this.appMapService.UpdateLastShownPosition(point));
             }
         }
     }
