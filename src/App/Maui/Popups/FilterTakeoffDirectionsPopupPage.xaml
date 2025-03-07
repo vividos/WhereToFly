@@ -5,9 +5,6 @@
                      xmlns:models="clr-namespace:WhereToFly.App.Models"
                      xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
                      xmlns:popups="clr-namespace:WhereToFly.App.Popups"
-                     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                     mc:Ignorable="d"
                      x:Class="WhereToFly.App.Popups.FilterTakeoffDirectionsPopupPage"
                      x:TypeArguments="models:LocationFilterSettings"
                      x:DataType="viewmodels:FilterTakeoffDirectionsPopupViewModel">
