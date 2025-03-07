@@ -4,6 +4,7 @@ using WhereToFly.App.Logic;
 using WhereToFly.App.MapView;
 using WhereToFly.App.Models;
 using WhereToFly.App.Services;
+using WhereToFly.App.ViewModels;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;
@@ -40,6 +41,11 @@ namespace WhereToFly.App.Pages
         /// Map view control on C# side
         /// </summary>
         private readonly MapView.MapView mapView;
+
+        /// <summary>
+        /// Map page view model
+        /// </summary>
+        private readonly MapPageViewModel viewModel;
 
         /// <summary>
         /// Toolbar button for planning tour
@@ -115,6 +121,11 @@ namespace WhereToFly.App.Pages
                 AutomationId = "ExploreMapWebView",
                 NearbyPoiService = nearbyPoiService,
             };
+
+            this.viewModel = new MapPageViewModel(
+                this.appMapService);
+
+            this.BindingContext = this.viewModel;
 
             this.Dispatcher.DispatchAsync(this.InitLayoutAsync)
                 .LogTaskException();
