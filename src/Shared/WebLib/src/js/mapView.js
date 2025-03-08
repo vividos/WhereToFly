@@ -2195,7 +2195,7 @@ export class MapView {
             "Altitude: " + options.altitude.toFixed(1) + " m" +
             "</div>";
 
-        const optionsText = "{ name: '" + options.name +
+        const optionsText = "{ name: '" + options.name.replaceAll("'", "\\'") +
             "', latitude:" + options.latitude +
             ", longitude:" + options.longitude +
             ", altitude:" + options.altitude.toFixed(1) + "}";
