@@ -123,7 +123,8 @@ namespace WhereToFly.App.Pages
             };
 
             this.viewModel = new MapPageViewModel(
-                this.appMapService);
+                this.appMapService,
+                this.geolocationService);
 
             this.BindingContext = this.viewModel;
 
@@ -404,7 +405,7 @@ namespace WhereToFly.App.Pages
 
             this.mapView.ShowLocationDetails += async (locationId) => await this.OnMapView_ShowLocationDetails(locationId);
             this.mapView.NavigateToLocation += async (locationId) => await this.OnMapView_NavigateToLocation(locationId);
-            this.mapView.ShareMyLocation += async () => await this.OnMapView_ShareMyLocation();
+            this.mapView.ShareMyLocation += () => this.OnMapView_ShareMyLocation();
             this.mapView.AddFindResult += async (name, point) => await this.OnMapView_AddFindResult(name, point);
             this.mapView.LongTap += async (point) => await this.OnMapView_LongTap(point);
             this.mapView.AddTourPlanLocation += async (locationId) => await this.OnMapView_AddTourPlanLocation(locationId);
@@ -702,24 +703,9 @@ namespace WhereToFly.App.Pages
         /// <summary>
         /// Called when the user clicked on the "Share position" link in the "my position" pin description.
         /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task OnMapView_ShareMyLocation()
+        private void OnMapView_ShareMyLocation()
         {
-            var position =
-                await this.geolocationService.GetPositionAsync(timeout: TimeSpan.FromSeconds(0.1));
-
-            if (position == null)
-            {
-                return;
-            }
-
-            var point = position.ToMapPoint();
-
-            await this.appMapService.UpdateLastShownPosition(point);
-
-            await Share.RequestAsync(
-                DataFormatter.FormatMyPositionShareText(point, position.Timestamp),
-                "Share my position with...");
+            this.viewModel.ShareMyLocationCommand.Execute(null);
         }
 
         /// <summary>
