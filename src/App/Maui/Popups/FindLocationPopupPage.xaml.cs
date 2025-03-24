@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Maui.Core;
-
-namespace WhereToFly.App.Popups
+﻿namespace WhereToFly.App.Popups
 {
     /// <summary>
     /// Popup page for "Find location" function in order to input a location name.
@@ -12,8 +10,6 @@ namespace WhereToFly.App.Popups
         /// </summary>
         public FindLocationPopupPage()
         {
-            this.Opened += this.OnPopupPageOpened;
-
             this.InitializeComponent();
         }
 
@@ -28,12 +24,10 @@ namespace WhereToFly.App.Popups
         }
 
         /// <summary>
-        /// Called when popup is opened; sets focus to the entry field.
+        /// Called when then entry field has loaded; sets focus to the entry field.
         /// </summary>
-        private void OnPopupPageOpened(object? sender, PopupOpenedEventArgs args)
+        private void OnLoadedLocationEntry(object sender, EventArgs args)
         {
-            this.Opened -= this.OnPopupPageOpened;
-
             this.locationEntry.Focus();
         }
     }

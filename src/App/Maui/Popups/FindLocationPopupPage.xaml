@@ -21,7 +21,8 @@
         <Entry Grid.Row="1"
                x:Name="locationEntry"
                Placeholder="enter location"
-               Style="{StaticResource EntryOnPopupPageStyle}"/>
+               Style="{StaticResource EntryOnPopupPageStyle}"
+               Loaded="OnLoadedLocationEntry" />
 
         <Button Grid.Row="2"
                 Text="Find"
