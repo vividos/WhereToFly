@@ -25,6 +25,7 @@
     <NpmSourceFiles Include="$(PackageJsonDirectory)package.json" />
     <NpmSourceFiles Include="$(PackageJsonDirectory)package-lock.json" />
     <NpmSourceFiles Include="$(PackageJsonDirectory)webpack.*.json" />
+    <NpmSourceFiles Include="..\..\..\Shared\WebLib\dist\js\WhereToFly.mapView.js" />
 
     <!-- This lists (a subset of) files that are output by the build; the list
          doesn't need to be exhaustive, but at least one file that's always
