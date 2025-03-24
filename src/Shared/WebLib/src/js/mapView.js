@@ -258,6 +258,7 @@ export class MapView {
             requestRenderMode: true,
             // when no animation happens, render after this number of seconds
             maximumRenderTimeChange: 60.0,
+            targetFrameRate: 60.0,
             contextOptions: {
                 webgl: {
                     powerPreference: webGLPowerPreference
