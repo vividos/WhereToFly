@@ -40,7 +40,7 @@
     "webpack-dev-server": "^5.2.0"
   },
   "dependencies": {
-    "cesium": "^1.126.0",
+    "cesium": "^1.127.0",
     "chart.js": "^4.4.7",
     "chartjs-adapter-dayjs-4": "^1.0.4",
     "chartjs-plugin-zoom": "^2.2.0",
