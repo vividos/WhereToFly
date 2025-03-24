@@ -6,6 +6,12 @@ Here are all the version images of previous Where-to-fly versions.
 
 ![](src/App/Maui/Resources/Raw/info/version.jpg)
 
+Above Drymades Beach, Dhërmi, Albania.
+
+## Version 1.15.0
+
+![](https://raw.githubusercontent.com/vividos/WhereToFly/version-1.15.0/src/App/Maui/Resources/Raw/info/version.jpg)
+
 Thermalling at Wendelstein, Bavaria, Germany.
 
 ## Version 1.14.4

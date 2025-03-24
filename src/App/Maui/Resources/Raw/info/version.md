@@ -12,6 +12,6 @@ The Where-to-fly GitHub project can be found here:
 
 Current version: %VERSION%
 
-Image: Thermalling at Wendelstein, Bavaria, Germany.
+Image: Above Drymades Beach, Dhërmi, Albania.
 
 [See all previous version images](https://github.com/vividos/WhereToFly/blob/main/PreviousVersionImages.md)
