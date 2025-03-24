@@ -14,6 +14,7 @@ Released on ?.
 🐛 Bugfixes
 
 - Fixed displaying sunrise and sunset when altitude is below 0 m
+- Fixed hovering over height profile to display track location
 
 ## Version 1.15.0
 

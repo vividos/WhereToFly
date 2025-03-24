@@ -168,8 +168,8 @@ export class HeightProfileView {
                         pan: {
                             enabled: true,
                             mode: "x",
-                            onPanStart: this.onPanStart.bind(this),
-                            onPanComplete: this.onPanComplete.bind(this)
+                            onPanStart: this.onPanZoomStart.bind(this),
+                            onPanComplete: this.onPanZoomComplete.bind(this)
                         },
                         zoom: {
                             wheel: {
@@ -182,7 +182,9 @@ export class HeightProfileView {
                             pinch: {
                                 enabled: true
                             },
-                            mode: "x"
+                            mode: "x",
+                            onZoomStart: this.onPanZoomStart.bind(this),
+                            onZoomComplete: this.onPanZoomComplete.bind(this)
                         },
                         limits: {
                             // to be set later
@@ -215,36 +217,51 @@ export class HeightProfileView {
     }
 
     /**
-     * Called when panning starts; installs an event listener for "mousemove"
-     * events
+     * Called when panning or zooming starts; installs an event listener for
+     * "mousemove" events
      * @param {object} args event args
+     * @returns {boolean} true to continue panning or zooming, or false to cancel it
      */
-    onPanStart(args) {
-        if (this.currentMouseMoveHandler !== null)
-            return;
+    onPanZoomStart(args) {
+        if (!this.isZoomAndPanActive)
+            return false;
 
-        this.currentMouseMoveHandler = this.onPanMouseMove.bind(this);
+        if (this.currentMouseMoveHandler !== null)
+            return false;
+
+        this.currentMouseMoveHandler = this.onPanZoomMouseMove.bind(this);
 
         args.chart.canvas.addEventListener(
             "mousemove",
             this.currentMouseMoveHandler);
+
+        return true;
     }
 
     /**
-     * Called during panning for every "mousemove" event
+     * Called during panning or zooming for every "mousemove" event
      * @param {object} args event args
      */
-    onPanMouseMove(args) {
+    onPanZoomMouseMove(args) {
         // update crosshair's x value, since afterEvent() is not called during
         // panning
         this.chart.crosshair.x = args.x;
+
+        // also send onHover events
+        const activeElements = this.chart.getElementsAtEventForMode(
+            args.event,
+            "nearest",
+            this.chart.options,
+            true);
+
+        this.options.onHover(args.event, activeElements);
     }
 
     /**
      * Called when panning has completed; removes "mousemove" handler again
      * @param {object} args event args
      */
-    onPanComplete(args) {
+    onPanZoomComplete(args) {
         args.chart.canvas.removeEventListener(
             "mousemove",
             this.currentMouseMoveHandler);
