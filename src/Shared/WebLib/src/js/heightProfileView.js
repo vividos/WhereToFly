@@ -842,7 +842,8 @@ export class HeightProfileView {
         }
 
         // hide if no tooltip
-        if (tooltipModel.opacity === 0) {
+        if (tooltipModel.opacity === 0 ||
+            this.isZoomAndPanActive) {
             tooltipElement.style.opacity = 0;
             return;
         }
