@@ -56,6 +56,12 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         private async Task InitViewModel()
         {
+#if WINDOWS
+            string pathPrefix = "Resources/Assets/";
+#else
+            string pathPrefix = string.Empty;
+#endif
+
             this.Pages =
             [
                 new InfoPageEntryViewModel
@@ -72,12 +78,12 @@ namespace WhereToFly.App.ViewModels
                 new InfoPageEntryViewModel
                 {
                     Image = null,
-                    WebViewSource = await GetWebViewSource("info/Changelog.md"),
+                    WebViewSource = await GetWebViewSource(pathPrefix + "info/Changelog.md"),
                 },
                 new InfoPageEntryViewModel
                 {
                     Image = null,
-                    WebViewSource = await GetWebViewSource("info/Credits.md"),
+                    WebViewSource = await GetWebViewSource(pathPrefix + "info/Credits.md"),
                 },
             ];
 
