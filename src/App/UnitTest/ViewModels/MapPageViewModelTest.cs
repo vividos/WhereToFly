@@ -24,9 +24,9 @@ namespace WhereToFly.App.UnitTest.ViewModels
                     DependencyService.Get<IAppMapService>(),
                     DependencyService.Get<IGeolocationService>());
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Assert.Fail("ctor must not throw but did", ex);
+                Assert.Fail($"ctor must not throw but did: {ex}");
             }
         }
     }
