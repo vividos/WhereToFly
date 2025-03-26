@@ -28,13 +28,12 @@ namespace WhereToFly.App.ViewModels
         /// </summary>
         private readonly Dictionary<string, string> downloadWebSiteList = new()
         {
-            { "vividos' Where-to-fly resources", "http://www.vividos.de/wheretofly/index.html" },
+            { "vividos' Where-to-fly resources", "https://www.vividos.de/wheretofly/index.html" },
             { "Paraglidingspots.com", "https://paraglidingspots.com/downloadselect.aspx" },
             {
                 "DHV Gelände-Datenbank",
                 "https://www.dhv.de/web/piloteninfos/gelaende-luftraum-natur/fluggelaendeflugbetrieb/gelaendedaten/gelaendedaten-download"
             },
-            { "Tourenwelt.info Jo's Hüttenliste", "http://www.tourenwelt.info/huettenliste/map.php" },
         };
 
         /// <summary>

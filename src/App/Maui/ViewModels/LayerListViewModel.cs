@@ -16,10 +16,9 @@ namespace WhereToFly.App.ViewModels
         /// </summary>
         private readonly Dictionary<string, string> downloadWebSiteList = new()
         {
-            { "vividos' Where-to-fly resources", "http://www.vividos.de/wheretofly/index.html" },
+            { "vividos' Where-to-fly resources", "https://www.vividos.de/wheretofly/index.html" },
             { "XContest Airspaces", "https://airspace.xcontest.org/" },
             { "DHV-XC Lufträume", "https://www.dhv-xc.de/xc/modules/leonardo/index.php?name=leonardo&op=luftraum" },
-            { "Flyland.ch Lufträume", "http://www.flyland.ch/download.php" },
         };
 
         /// <summary>
