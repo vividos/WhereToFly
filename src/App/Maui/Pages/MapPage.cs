@@ -849,6 +849,10 @@ namespace WhereToFly.App.Pages
                     await this.AddTempPlanTourPoint(point);
                     break;
 
+                case MapLongTapContextMenu.Result.FindFlights:
+                    await this.viewModel.FindFlights(point);
+                    break;
+
                 case MapLongTapContextMenu.Result.Cancel:
                     // ignore
                     break;

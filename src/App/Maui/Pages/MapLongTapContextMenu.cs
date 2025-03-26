@@ -44,6 +44,11 @@ namespace WhereToFly.App.Pages
             PlanTour,
 
             /// <summary>
+            /// User selected menu item to find flights at this position
+            /// </summary>
+            FindFlights,
+
+            /// <summary>
             /// User cancelled the context menu
             /// </summary>
             Cancel,
@@ -96,6 +101,12 @@ namespace WhereToFly.App.Pages
                     Text = "Plan tour",
                     IconImageSource = SvgImageCache.GetImageSource("weblib/images/map-marker-plus.svg"),
                     Command = new Command(() => popupPage?.Close(Result.PlanTour)),
+                },
+                new MenuItem
+                {
+                    Text = "Find flights",
+                    IconImageSource = SvgImageCache.GetImageSource("icons/text-box-search-outline.svg"),
+                    Command = new Command(() => popupPage?.Close(Result.FindFlights)),
                 },
             };
 

@@ -1,5 +1,7 @@
-﻿using System.Windows.Input;
+﻿using System.Globalization;
+using System.Windows.Input;
 using WhereToFly.App.Logic;
+using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.ViewModels
 {
@@ -65,6 +67,23 @@ namespace WhereToFly.App.ViewModels
                     point,
                     position.Timestamp),
                 "Share my position with...");
+        }
+
+        /// <summary>
+        /// Finds flights at given map point, by opening xcontest.org page with coordinates.
+        /// </summary>
+        /// <param name="point">map point</param>
+        /// <returns>task to wait on</returns>
+        internal async Task FindFlights(MapPoint point)
+        {
+            string latitudeText = point.Latitude.ToString("F6", CultureInfo.InvariantCulture);
+            string longitudeText = point.Longitude.ToString("F6", CultureInfo.InvariantCulture);
+
+            string url =
+                "https://www.xcontest.org/world/en/flights-search/" +
+                $"?filter[point]={longitudeText}+{latitudeText}&filter[radius]=5000";
+
+            await Browser.OpenAsync(url);
         }
     }
 }
