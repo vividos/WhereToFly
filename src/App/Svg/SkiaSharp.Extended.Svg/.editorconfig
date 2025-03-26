@@ -40,6 +40,9 @@ dotnet_diagnostic.CS8625.severity = none
 # CA1031: Do not catch general exception types
 dotnet_diagnostic.CA1031.severity = none
 
+# CA1822: Member 'x' does not access instance data and can be marked as static
+dotnet_diagnostic.CA1822.severity = none
+
 # IDE0008: Use explicit type instead of 'var'
 dotnet_diagnostic.IDE0008.severity = none
 
@@ -124,3 +127,6 @@ dotnet_diagnostic.S2114.severity = none
 
 # S4136: All 'ReadElement' method overloads should be adjacent
 dotnet_diagnostic.S4136.severity = none
+
+# S6444: Pass a timeout to limit the execution time
+dotnet_diagnostic.S6444.severity = none
