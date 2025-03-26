@@ -1,6 +1,5 @@
 ﻿using Microsoft.AppCenter;
 using Microsoft.AppCenter.Crashes;
-using Microsoft.AppCenter.Distribute;
 using System.Diagnostics;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Models;
@@ -61,7 +60,6 @@ namespace WhereToFly.App
                 AppCenter.Start(
                     $"android={Constants.AppCenterKeyAndroid};" +
                     $"windowsdesktop={Constants.AppCenterKeyWindows}",
-                    typeof(Distribute),
                     typeof(Crashes));
             }
 
