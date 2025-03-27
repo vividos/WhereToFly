@@ -53,4 +53,11 @@
     <Message Importance="High" Text="Skipping npm build because output files are up-to-date with respect to the project and source files." />
   </Target>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\WebLib\WhereToFly.Shared.WebLib.esproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <PrivateAssets>all</PrivateAssets>
+    </ProjectReference>
+  </ItemGroup>
+
 </Project>
