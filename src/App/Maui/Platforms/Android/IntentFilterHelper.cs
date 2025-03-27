@@ -48,7 +48,6 @@ namespace WhereToFly.App
                     case ContentResolver.SchemeFile:
                         return data.LastPathSegment;
 
-                    case "http":
                     case "https":
                         return data.LastPathSegment;
 
@@ -109,7 +108,6 @@ namespace WhereToFly.App
                     case ContentResolver.SchemeFile:
                         return this.resolver?.OpenInputStream(data);
 
-                    case "http":
                     case "https":
                         return this.GetStreamFromInternetLink(data.ToString());
 
@@ -123,7 +121,7 @@ namespace WhereToFly.App
         }
 
         /// <summary>
-        /// Returns a stream from given internet link, http:// or https://
+        /// Returns a stream from given internet link, starting with https://
         /// </summary>
         /// <param name="url">internet link</param>
         /// <returns>stream object, or null when download is not possible</returns>
