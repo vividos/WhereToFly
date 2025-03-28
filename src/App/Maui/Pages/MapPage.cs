@@ -126,6 +126,22 @@ namespace WhereToFly.App.Pages
                 this.appMapService,
                 this.geolocationService);
 
+#if WINDOWS
+            var dropRecognizer = new DropGestureRecognizer
+            {
+                AllowDrop = true,
+            };
+
+            dropRecognizer.Drop +=
+                async (sender, args) =>
+                {
+                    args.Handled = true;
+                    await App.OnDropFile(args);
+                };
+
+            this.mapView.GestureRecognizers.Add(dropRecognizer);
+#endif
+
             this.BindingContext = this.viewModel;
 
             this.Dispatcher.DispatchAsync(this.InitLayoutAsync)

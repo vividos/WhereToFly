@@ -7,6 +7,11 @@ using WhereToFly.App.Pages;
 using WhereToFly.App.Services;
 using WhereToFly.Shared.Model;
 
+#if WINDOWS
+using Windows.ApplicationModel.DataTransfer;
+using Windows.Storage;
+#endif
+
 // make app internals visible to unit tests
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("WhereToFly.App.UnitTest")]
 
@@ -208,6 +213,39 @@ namespace WhereToFly.App
                 value is Color color
                 ? color.ToHex()
                 : "#000000";
+        }
+
+        /// <summary>
+        /// Called when a file is dropped on the app's window
+        /// </summary>
+        /// <param name="args">drop event args</param>
+        /// <returns>task to wait on</returns>
+        public static async Task OnDropFile(DropEventArgs? args)
+        {
+#if WINDOWS
+            var dataView = args?.PlatformArgs?.DragEventArgs.DataView;
+
+            if (dataView == null ||
+                !dataView.Contains(StandardDataFormats.StorageItems))
+            {
+                return;
+            }
+
+            var items = await dataView.GetStorageItemsAsync();
+
+            if (items.Count > 0 &&
+                items[0] is StorageFile file &&
+                !string.IsNullOrEmpty(file.Name))
+            {
+                await MainThread.InvokeOnMainThreadAsync(async () =>
+                {
+                    using var stream = await file.OpenStreamForReadAsync();
+                    await OpenFileHelper.OpenFileAsync(stream, file.Name);
+                });
+            }
+#else
+            await Task.CompletedTask;
+#endif
         }
 
         #region App lifecycle methods
