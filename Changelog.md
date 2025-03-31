@@ -8,6 +8,7 @@ Released on ?.
 
 - Added long-tap map menu to find flights, opening xcontest worldwide flights
   search
+- When sharing locations with other apps, added a maps link to the text
 - Android: `geo:` links can now be opened with the app and adds a new location
 - Improved recognizing more geo coordinate formats
 - Minimum Android version is now Android 12

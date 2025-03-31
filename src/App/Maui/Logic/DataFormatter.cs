@@ -46,10 +46,7 @@ namespace WhereToFly.App.Logic
         /// <returns>displayable text for sharing</returns>
         public static string FormatMyPositionShareText(MapPoint point, DateTimeOffset dateTime)
         {
-            string mapsLink = string.Format(
-                "https://www.google.com/maps/?q={0},{1}&z=15",
-                point.Latitude.ToString("F6", CultureInfo.InvariantCulture),
-                point.Longitude.ToString("F6", CultureInfo.InvariantCulture));
+            string mapsLink = FormatMapsLink(point);
 
             return string.Format(
                 "My current position is Lat={0}, Long={1}, at an altitude of {2} m, as of {3} local time. {4}",
@@ -67,12 +64,28 @@ namespace WhereToFly.App.Logic
         /// <returns>displayable text for sharing</returns>
         public static string FormatLocationShareText(Location location)
         {
+            string mapsLink = FormatMapsLink(location.MapLocation);
+
             return string.Format(
-                "Here is a location named \"{0}\", at coordinates Lat={1}, Long={2} and altitude of {3} m.",
+                "Here is a location named \"{0}\", at coordinates Lat={1}, Long={2} and altitude of {3} m. {4}",
                 location.Name,
                 location.MapLocation.Latitude.ToString("F6", CultureInfo.InvariantCulture),
                 location.MapLocation.Longitude.ToString("F6", CultureInfo.InvariantCulture),
-                (int)location.MapLocation.Altitude.GetValueOrDefault(0.0));
+                (int)location.MapLocation.Altitude.GetValueOrDefault(0.0),
+                mapsLink);
+        }
+
+        /// <summary>
+        /// Formats a maps link from given map point
+        /// </summary>
+        /// <param name="point">map point</param>
+        /// <returns>maps link</returns>
+        private static string FormatMapsLink(MapPoint point)
+        {
+            return string.Format(
+                "https://www.google.com/maps/?q={0},{1}&z=15",
+                point.Latitude.ToString("F6", CultureInfo.InvariantCulture),
+                point.Longitude.ToString("F6", CultureInfo.InvariantCulture));
         }
     }
 }
