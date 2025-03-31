@@ -75,8 +75,16 @@ namespace WhereToFly.App.Services
                 return null;
             }
 
-            return await Geolocation.GetLocationAsync(
-                new GeolocationRequest(GeolocationAccuracy.Default, timeout));
+            try
+            {
+                return await Geolocation.GetLocationAsync(
+                    new GeolocationRequest(GeolocationAccuracy.Default, timeout));
+            }
+            catch (FeatureNotEnabledException)
+            {
+                // Workaround until .NET 10 has Geolocation.IsEnabled
+                return null;
+            }
         }
 
         /// <summary>
