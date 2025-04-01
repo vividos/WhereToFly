@@ -995,6 +995,9 @@ namespace WhereToFly.App.Pages
                 PopupPageKey.PlanTourPopupPage,
                 true,
                 this.planTourParameters);
+
+            this.UpdatePlanTourButtonVisibility(
+                this.planTourParameters.WaypointIdList.Any());
         }
 
         /// <summary>

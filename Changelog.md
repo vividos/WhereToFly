@@ -19,6 +19,7 @@ Released on ?.
 - Fixed displaying sunrise and sunset when altitude is below 0 m
 - Fixed hovering over height profile to display track location
 - Fixed crash when location is requested but location services are disabled
+- Hide Plan Tour toolbar button when tour planning locations are removed
 
 ## Version 1.15.0
 
