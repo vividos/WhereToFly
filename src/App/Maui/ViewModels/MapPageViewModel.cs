@@ -79,9 +79,11 @@ namespace WhereToFly.App.ViewModels
             string latitudeText = point.Latitude.ToString("F6", CultureInfo.InvariantCulture);
             string longitudeText = point.Longitude.ToString("F6", CultureInfo.InvariantCulture);
 
+#pragma warning disable S1075 // URIs should not be hardcoded
             string url =
                 "https://www.xcontest.org/world/en/flights-search/" +
                 $"?filter[point]={longitudeText}+{latitudeText}&filter[radius]=5000";
+#pragma warning restore S1075 // URIs should not be hardcoded
 
             await Browser.OpenAsync(url);
         }
