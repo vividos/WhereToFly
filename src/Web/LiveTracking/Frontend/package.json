@@ -1,6 +1,6 @@
 {
   "name": "wheretofly-livetracking-frontend",
-  "version": "1.16.0",
+  "version": "1.17.0",
   "description": "Where-to-fly LiveTracking frontend",
   "main": "site.js",
   "sideEffects": [

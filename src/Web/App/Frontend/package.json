@@ -1,6 +1,6 @@
 {
   "name": "wheretofly-web-app-frontend",
-  "version": "1.16.0",
+  "version": "1.17.0",
   "description": "Where-to-fly Web App frontend",
   "main": "app.js",
   "sideEffects": false,
