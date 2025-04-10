@@ -159,16 +159,6 @@ namespace WhereToFly.App.ViewModels
         /// </summary>
         /// <returns>version number as text</returns>
         private static string GetCurrentVersionText()
-        {
-            try
-            {
-                var version = Version.Parse(ThisAssembly.AssemblyVersion);
-                return version.ToString(3);
-            }
-            catch (Exception)
-            {
-                return "Unknown version";
-            }
-        }
+            => ThisAssembly.AssemblyInformationalVersion;
     }
 }
