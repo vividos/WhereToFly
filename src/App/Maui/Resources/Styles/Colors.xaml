@@ -95,6 +95,8 @@
     <Color x:Key="ElementOnPopupPageBackgroundColorDark">#404144</Color>
     <Color x:Key="SvgImageTintColorLight">Black</Color>
     <Color x:Key="SvgImageTintColorDark">White</Color>
+    <Color x:Key="ImageTintColorLight">Black</Color>
+    <Color x:Key="ImageTintColorDark">White</Color>
     <Color x:Key="ColorPickerBorderSelectionColorLight">Black</Color>
     <Color x:Key="ColorPickerBorderSelectionColorDark">White</Color>
     <Color x:Key="CompassForegroundColorLight">#2F299E</Color>

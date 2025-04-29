@@ -1,5 +1,4 @@
 ﻿using System.Windows.Input;
-using WhereToFly.App.Logic;
 using WhereToFly.App.Services;
 
 namespace WhereToFly.App.ViewModels
@@ -25,22 +24,21 @@ namespace WhereToFly.App.ViewModels
             public PageKey PageKey { get; private set; }
 
             /// <summary>
-            /// Returns image source for SvgImage in order to display the type image
+            /// Returns image source for menu icon
             /// </summary>
-            public ImageSource ImageSource { get; }
+            public ImageSource Icon { get; }
 
             /// <summary>
             /// Creates a new menu item view model object
             /// </summary>
             /// <param name="title">title of menu item</param>
-            /// <param name="svgImageName">SVG image name of image to display</param>
+            /// <param name="icon">icon image name to display</param>
             /// <param name="pageKey">page key of page to navigate to</param>
-            public MenuItemViewModel(string title, string svgImageName, PageKey pageKey)
+            public MenuItemViewModel(string title, string icon, PageKey pageKey)
             {
                 this.Title = title;
+                this.Icon = icon;
                 this.PageKey = pageKey;
-
-                this.ImageSource = SvgImageCache.GetImageSource(svgImageName);
             }
         }
 
@@ -81,14 +79,14 @@ namespace WhereToFly.App.ViewModels
 
             this.MenuItemList =
             [
-                new MenuItemViewModel("Map", "icons/map.svg", PageKey.MapPage),
-                new MenuItemViewModel("Layers", "icons/layers-outline.svg", PageKey.LayerListPage),
-                new MenuItemViewModel("Locations", "icons/format-list-bulleted.svg", PageKey.LocationListPage),
-                new MenuItemViewModel("Tracks", "icons/map-marker-distance.svg", PageKey.TrackListPage),
-                new MenuItemViewModel("Current Position", "icons/compass.svg", PageKey.CurrentPositionDetailsPage),
-                new MenuItemViewModel("Weather", "icons/weather-partlycloudy.svg", PageKey.WeatherDashboardPage),
-                new MenuItemViewModel("Settings", "icons/settings.svg", PageKey.SettingsPage),
-                new MenuItemViewModel("Info", "icons/information-outline.svg", PageKey.InfoPage),
+                new MenuItemViewModel("Map", "map.png", PageKey.MapPage),
+                new MenuItemViewModel("Layers", "layers_outline.png", PageKey.LayerListPage),
+                new MenuItemViewModel("Locations", "format_list_bulleted.png", PageKey.LocationListPage),
+                new MenuItemViewModel("Tracks", "map_marker_distance.png", PageKey.TrackListPage),
+                new MenuItemViewModel("Current Position", "compass.png", PageKey.CurrentPositionDetailsPage),
+                new MenuItemViewModel("Weather", "weather_partlycloudy.png", PageKey.WeatherDashboardPage),
+                new MenuItemViewModel("Settings", "settings.png", PageKey.SettingsPage),
+                new MenuItemViewModel("Info", "information_outline.png", PageKey.InfoPage),
             ];
 
             this.MenuItemSelectedCommand = new Command(this.OnSelectedMenuItem);

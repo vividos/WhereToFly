@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:svg="clr-namespace:WhereToFly.App.Svg;assembly=WhereToFly.App.Svg"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
              x:Class="WhereToFly.App.Pages.MenuPage"
              x:DataType="viewmodels:MenuViewModel"
@@ -59,10 +60,14 @@
                             </VisualStateManager.VisualStateGroups>
 
                             <!-- menu item icon -->
-                            <svg:SvgImage Source="{Binding ImageSource, Mode=OneWay}"
-                                          InputTransparent="True"
-                                          WidthRequest="32" HeightRequest="32"
-                                          HorizontalOptions="Center" VerticalOptions="Center" />
+                            <Image Source="{Binding Icon, Mode=OneWay}"
+                                   InputTransparent="True"
+                                   WidthRequest="32" HeightRequest="32"
+                                   HorizontalOptions="Center" VerticalOptions="Center">
+                                <Image.Behaviors>
+                                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource ImageTintColorLight}, Dark={StaticResource ImageTintColorDark}}" />
+                                </Image.Behaviors>
+                            </Image>
 
                             <!-- title text -->
                             <Label Grid.Column="1" Text="{Binding Title, Mode=OneTime}"
