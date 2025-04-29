@@ -20,9 +20,9 @@
                                    HorizontalOptions="Start"
                                    Padding="16,0,0,16">
                 <!-- app icon -->
-                <svg:SvgImage Source="{Binding AppIcon, Mode=OneWay}"
-                              TintColor="{x:Null}"
-                              WidthRequest="48" HeightRequest="48" VerticalOptions="Start" />
+                <Image Source="applogo.png"
+                       WidthRequest="48" HeightRequest="48"
+                       VerticalOptions="Start" />
 
                 <!-- app name and version -->
                 <StackLayout>

@@ -45,11 +45,6 @@ namespace WhereToFly.App.ViewModels
         }
 
         /// <summary>
-        /// Image source for app icon
-        /// </summary>
-        public ImageSource AppIcon { get; private set; }
-
-        /// <summary>
         /// Version text to display under the app icon and name
         /// </summary>
         public string VersionText { get; private set; }
@@ -74,8 +69,6 @@ namespace WhereToFly.App.ViewModels
         /// </summary>
         public MenuViewModel()
         {
-            this.AppIcon = SvgImageCache.GetImageSource("applogo.svg");
-
             try
             {
                 var version = Version.Parse(ThisAssembly.AssemblyVersion);
