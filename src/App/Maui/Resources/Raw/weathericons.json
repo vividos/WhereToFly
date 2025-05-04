@@ -280,6 +280,13 @@
     "WebLink": "https://www.windfinder.com/weatherforecast/sulzberg"
   },
   {
+    "Name": "OpenWindMap",
+    "Group": "Current weather",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://www.openwindmap.org/"
+  },
+  {
     "Name": "Foto-Webcam Karte",
     "Group": "Webcams",
     "Type": 0,
@@ -299,6 +306,13 @@
     "Type": 0,
     "Icon": null,
     "WebLink": "https://www.foto-webcam.eu/webcam/wendelstein-west/"
+  },
+  {
+    "Name": "Webcam Schliersee",
+    "Group": "Webcams",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://www.bergfex.de/sommer/schliersee-neuhaus-spitzingsee/webcams/c15710/"
   },
   {
     "Name": "Foto-Webcam Wallberg",
