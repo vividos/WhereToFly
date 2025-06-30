@@ -83,7 +83,6 @@ namespace WhereToFly.App.ViewModels
             this.isListRefreshActive = false;
 
             this.IsListRefreshActive = true;
-            this.OnPropertyChanged(nameof(this.IsListEmpty));
 
             Task.Run(this.ReloadTrackListAsync);
 

@@ -3,6 +3,7 @@ using Android.Webkit;
 using AndroidX.WebKit;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
+using System;
 using System.Diagnostics;
 
 namespace WhereToFly.App.MapView
@@ -27,12 +28,13 @@ namespace WhereToFly.App.MapView
             WebViewHandler handler)
             : base(handler)
         {
-            this.assetLoader = new WebViewAssetLoader
-                .Builder()
+            this.assetLoader =
+                new WebViewAssetLoader.Builder()
                 .AddPathHandler(
                     "/assets/",
                     new WebViewAssetLoader.AssetsPathHandler(context))
-                .Build();
+                ?.Build()
+                ?? throw new InvalidOperationException("must be able to build a WebViewAssetLoader");
         }
 
         /// <summary>

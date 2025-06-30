@@ -44,12 +44,13 @@ namespace WhereToFly.App.MapView
 
             this.corsWebsiteCache.CorsWebsiteHosts.Add("thermal.kk7.ch");
 
-            this.assetLoader = new WebViewAssetLoader
-                .Builder()
+            this.assetLoader =
+                new WebViewAssetLoader.Builder()
                 .AddPathHandler(
                     "/assets/",
                     new WebViewAssetLoader.AssetsPathHandler(context))
-                .Build();
+                ?.Build()
+                ?? throw new InvalidOperationException("must be able to build a WebViewAssetLoader");
         }
 
         /// <summary>

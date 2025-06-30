@@ -40,15 +40,15 @@ namespace WhereToFly.App.MapView
         /// <param name="replyProy">reply proy; unused</param>
 #pragma warning disable S927 // Parameter names should match base declaration and other partial definitions
         public void OnPostMessage(
-            WebView webView,
-            WebMessageCompat message,
-            Uri sourceOrigin,
+            WebView? webView,
+            WebMessageCompat? message,
+            Uri? sourceOrigin,
             bool isMainFrame,
-            JavaScriptReplyProxy replyProy)
+            JavaScriptReplyProxy? replyProy)
 #pragma warning restore S927 // Parameter names should match base declaration and other partial definitions
         {
             this.webMessageListener.OnReceivedWebMessage(
-                message.Data ?? "{}");
+                message?.Data ?? "{}");
         }
     }
 }
