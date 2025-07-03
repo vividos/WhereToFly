@@ -6,6 +6,8 @@ Released on ?.
 
 ✨ New Features / Improvements
 
+- Using CesiumJS version 1.131.0
+
 🐛 Bugfixes
 
 - Fixed crash when opening external links
