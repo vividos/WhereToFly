@@ -55,7 +55,7 @@ namespace WhereToFly.App.ViewModels
             this.funcAddWeatherIcon = funcAddWeatherIcon;
             this.IconDescription = iconDescription;
 
-            this.Tapped = new AsyncCommand(this.OpenWeatherIconTargetAsync);
+            this.Tapped = new AsyncRelayCommand(this.OpenWeatherIconTargetAsync);
 
             var userInterface = DependencyService.Get<IUserInterface>();
 

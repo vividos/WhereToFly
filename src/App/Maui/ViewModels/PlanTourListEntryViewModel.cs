@@ -66,15 +66,15 @@ namespace WhereToFly.App.ViewModels
                 SvgImageCache.GetImageSource(this.Location);
 
             this.MoveUpCommand = new Command(
-                (obj) => this.parent.MoveUpLocation(this),
-                (obj) => !this.parent.IsFirstLocation(this));
+                () => this.parent.MoveUpLocation(this),
+                () => !this.parent.IsFirstLocation(this));
 
             this.MoveDownCommand = new Command(
-                (obj) => this.parent.MoveDownLocation(this),
-                (obj) => !this.parent.IsLastLocation(this));
+                () => this.parent.MoveDownLocation(this),
+                () => !this.parent.IsLastLocation(this));
 
             this.RemoveCommand = new Command(
-                (obj) => this.parent.RemoveLocation(this));
+                () => this.parent.RemoveLocation(this));
         }
 
         /// <summary>

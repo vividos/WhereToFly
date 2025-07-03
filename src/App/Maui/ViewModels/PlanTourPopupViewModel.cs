@@ -34,7 +34,7 @@ namespace WhereToFly.App.ViewModels
         /// <summary>
         /// Command to start tour planning
         /// </summary>
-        public AsyncCommand PlanTourCommand { get; set; }
+        public AsyncRelayCommand PlanTourCommand { get; set; }
 
         /// <summary>
         /// Command to close popup page
@@ -63,11 +63,11 @@ namespace WhereToFly.App.ViewModels
             this.planTourParameters = planTourParameters;
             this.closePopupPage = closePopupPage;
 
-            this.PlanTourCommand = new AsyncCommand(
+            this.PlanTourCommand = new AsyncRelayCommand(
                 this.PlanTourAsync,
-                (obj) => this.IsTourPlanningPossible);
+                () => this.IsTourPlanningPossible);
 
-            this.CloseCommand = new AsyncCommand(this.ClosePageAsync);
+            this.CloseCommand = new AsyncRelayCommand(this.ClosePageAsync);
 
             MainThread.BeginInvokeOnMainThread(
                 async () => await this.LoadDataAsync(
@@ -94,7 +94,7 @@ namespace WhereToFly.App.ViewModels
             this.PlanTourList = new ObservableCollection<PlanTourListEntryViewModel>(viewModelList);
             this.OnPropertyChanged(nameof(this.PlanTourList));
             this.OnPropertyChanged(nameof(this.ShowWarningForMoreLocations));
-            this.PlanTourCommand.RaiseCanExecuteChanged();
+            this.PlanTourCommand.NotifyCanExecuteChanged();
         }
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace WhereToFly.App.ViewModels
                 entryViewModel.Update();
             }
 
-            this.PlanTourCommand.RaiseCanExecuteChanged();
+            this.PlanTourCommand.NotifyCanExecuteChanged();
         }
 
         /// <summary>

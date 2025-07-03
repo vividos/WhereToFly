@@ -114,10 +114,10 @@ namespace WhereToFly.App.ViewModels
             this.TypeImageSource = SvgImageCache.GetImageSource(track);
 
             this.ColorBoxTappedCommand =
-                this.TrackNameTappedCommand = new AsyncCommand(
+                this.TrackNameTappedCommand = new AsyncRelayCommand(
                     this.EditTrackInfos);
 
-            this.OpenHeightProfileCommand = new AsyncCommand(
+            this.OpenHeightProfileCommand = new AsyncRelayCommand(
                 this.OpenHeightProfilePage);
 
             this.DescriptionWebViewSource = new HtmlWebViewSource

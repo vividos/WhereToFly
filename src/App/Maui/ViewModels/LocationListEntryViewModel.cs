@@ -84,7 +84,7 @@ namespace WhereToFly.App.ViewModels
         /// <summary>
         /// Command to execute when the item has been tapped
         /// </summary>
-        public AsyncCommand ItemTappedCommand { get; private set; }
+        public ICommand ItemTappedCommand { get; private set; }
 
         /// <summary>
         /// Command to execute when "show details" context menu item is selected on a location
@@ -136,12 +136,12 @@ namespace WhereToFly.App.ViewModels
 
             var appMapService = DependencyService.Get<IAppMapService>();
 
-            this.ItemTappedCommand = new AsyncCommand(this.OnShowDetailsLocation);
-            this.ZoomToLocationCommand = new AsyncCommand(this.OnZoomToLocationAsync);
-            this.SetAsCompassTargetCommand = new AsyncCommand(this.OnSetAsCompassTargetAsync);
-            this.DeleteLocationCommand = new AsyncCommand(this.OnDeleteLocationAsync);
+            this.ItemTappedCommand = new AsyncRelayCommand(this.OnShowDetailsLocation);
+            this.ZoomToLocationCommand = new AsyncRelayCommand(this.OnZoomToLocationAsync);
+            this.SetAsCompassTargetCommand = new AsyncRelayCommand(this.OnSetAsCompassTargetAsync);
+            this.DeleteLocationCommand = new AsyncRelayCommand(this.OnDeleteLocationAsync);
             this.AddTourPlanLocationCommand =
-                new AsyncCommand(
+                new AsyncRelayCommand(
                     () => appMapService.AddTourPlanLocation(this.location));
         }
 

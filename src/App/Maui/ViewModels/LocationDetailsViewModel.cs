@@ -197,17 +197,17 @@ namespace WhereToFly.App.ViewModels
                 BaseUrl = "about:blank",
             };
 
-            this.RefreshLiveWaypointCommand = new AsyncCommand(this.OnRefreshLiveWaypoint);
-            this.AddTourPlanLocationCommand = new AsyncCommand(this.OnAddTourPlanLocationAsync);
-            this.ZoomToLocationCommand = new AsyncCommand(this.OnZoomToLocationAsync);
-            this.SetAsCompassTargetCommand = new AsyncCommand(this.OnSetAsCompassTargetAsync);
-            this.NavigateToLocationCommand = new AsyncCommand(this.OnNavigateToLocationAsync);
-            this.ShareLocationCommand = new AsyncCommand(this.OnShareLocationAsync);
-            this.DeleteLocationCommand = new AsyncCommand(this.OnDeleteLocationAsync);
+            this.RefreshLiveWaypointCommand = new AsyncRelayCommand(this.OnRefreshLiveWaypoint);
+            this.AddTourPlanLocationCommand = new AsyncRelayCommand(this.OnAddTourPlanLocationAsync);
+            this.ZoomToLocationCommand = new AsyncRelayCommand(this.OnZoomToLocationAsync);
+            this.SetAsCompassTargetCommand = new AsyncRelayCommand(this.OnSetAsCompassTargetAsync);
+            this.NavigateToLocationCommand = new AsyncRelayCommand(this.OnNavigateToLocationAsync);
+            this.ShareLocationCommand = new AsyncRelayCommand(this.OnShareLocationAsync);
+            this.DeleteLocationCommand = new AsyncRelayCommand(this.OnDeleteLocationAsync);
 
             if (Uri.TryCreate(this.InternetLink, UriKind.Absolute, out Uri? _))
             {
-                this.InternetLinkTappedCommand = new AsyncCommand(this.OnInternetLinkTappedAsync);
+                this.InternetLinkTappedCommand = new AsyncRelayCommand(this.OnInternetLinkTappedAsync);
             }
 
             Task.Run(this.UpdateDistance);

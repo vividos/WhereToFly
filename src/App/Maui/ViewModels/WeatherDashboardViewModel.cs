@@ -42,9 +42,9 @@ namespace WhereToFly.App.ViewModels
         /// </summary>
         public WeatherDashboardViewModel()
         {
-            this.AddIconCommand = new AsyncCommand(this.AddIconAsync);
-            this.AddWebLinkCommand = new AsyncCommand(this.AddWebLinkAsync);
-            this.ClearAllCommand = new AsyncCommand(this.ClearAllWeatherIcons);
+            this.AddIconCommand = new AsyncRelayCommand(this.AddIconAsync);
+            this.AddWebLinkCommand = new AsyncRelayCommand(this.AddWebLinkAsync);
+            this.ClearAllCommand = new AsyncRelayCommand(this.ClearAllWeatherIcons);
 
             Task.Run(async () => await this.InitWeatherIconDescriptionList());
         }

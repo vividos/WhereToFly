@@ -170,8 +170,8 @@ namespace WhereToFly.App.ViewModels
         {
             this.appSettings = appSettings;
 
-            this.SetTargetDirectionCommand = new AsyncCommand(this.SetTargetDirection);
-            this.ClearCompassTargetCommand = new AsyncCommand(this.ClearCompassTarget);
+            this.SetTargetDirectionCommand = new AsyncRelayCommand(this.SetTargetDirection);
+            this.ClearCompassTargetCommand = new AsyncRelayCommand(this.ClearCompassTarget);
         }
 
         /// <summary>

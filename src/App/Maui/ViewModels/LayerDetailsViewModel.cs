@@ -100,9 +100,17 @@ namespace WhereToFly.App.ViewModels
                 BaseUrl = "about:blank",
             };
 
-            this.ZoomToLayerCommand = new AsyncCommand(this.OnZoomToLayerAsync, this.OnCanExecuteZoomToLayer);
-            this.ExportLayerCommand = new AsyncCommand(this.OnExportLayerAsync, this.OnCanExecuteExportLayer);
-            this.DeleteLayerCommand = new AsyncCommand(this.OnDeleteLayerAsync, this.OnCanExecuteDeleteLayer);
+            this.ZoomToLayerCommand = new AsyncRelayCommand(
+                this.OnZoomToLayerAsync,
+                () => this.IsEnabledZoomToLayer);
+
+            this.ExportLayerCommand = new AsyncRelayCommand(
+                this.OnExportLayerAsync,
+                () => this.IsEnabledExportLayer);
+
+            this.DeleteLayerCommand = new AsyncRelayCommand(
+                this.OnDeleteLayerAsync,
+                () => this.IsEnabledDeleteLayer);
         }
 
         /// <summary>
@@ -134,14 +142,6 @@ namespace WhereToFly.App.ViewModels
         }
 
         /// <summary>
-        /// Determines if a layer's "zoom to layer" toolbar action can be executed. Prevents
-        /// zooming to OSM buildings layer.
-        /// </summary>
-        /// <param name="arg">argument; unused</param>
-        /// <returns>true when context action can be executed, false when not</returns>
-        private bool OnCanExecuteZoomToLayer(object? arg) => this.IsEnabledZoomToLayer;
-
-        /// <summary>
         /// Called when "Export" menu item is selected
         /// </summary>
         /// <returns>task to wait on</returns>
@@ -149,14 +149,6 @@ namespace WhereToFly.App.ViewModels
         {
             await ExportFileHelper.ExportLayerAsync(this.layer);
         }
-
-        /// <summary>
-        /// Determines if a layer's "export layer" toolbar action can be executed. Prevents
-        /// exporting layers that can't be exported.
-        /// </summary>
-        /// <param name="arg">argument; unused</param>
-        /// <returns>true when context action can be executed, false when not</returns>
-        private bool OnCanExecuteExportLayer(object? arg) => this.IsEnabledExportLayer;
 
         /// <summary>
         /// Called when "Delete" menu item is selected
@@ -176,13 +168,5 @@ namespace WhereToFly.App.ViewModels
 
             UserInterface.DisplayToast("Selected layer was deleted.");
         }
-
-        /// <summary>
-        /// Determines if a layer's "delete" toolbar action can be executed. Prevents
-        /// exporting layers that can't be deleted.
-        /// </summary>
-        /// <param name="arg">argument; unused</param>
-        /// <returns>true when context action can be executed, false when not</returns>
-        private bool OnCanExecuteDeleteLayer(object? arg) => this.IsEnabledDeleteLayer;
     }
 }

@@ -72,7 +72,7 @@ namespace WhereToFly.App.ViewModels
         /// <summary>
         /// Command to execute when toolbar button "delete track list" has been tapped
         /// </summary>
-        public AsyncCommand DeleteTrackListCommand { get; private set; }
+        public AsyncRelayCommand DeleteTrackListCommand { get; private set; }
         #endregion
 
         /// <summary>
@@ -86,11 +86,11 @@ namespace WhereToFly.App.ViewModels
 
             Task.Run(this.ReloadTrackListAsync);
 
-            this.ImportTrackCommand = new AsyncCommand(this.ImportTrackAsync);
+            this.ImportTrackCommand = new AsyncRelayCommand(this.ImportTrackAsync);
 
-            this.DeleteTrackListCommand = new AsyncCommand(
+            this.DeleteTrackListCommand = new AsyncRelayCommand(
                 this.ClearTracksAsync,
-                (obj) => this.IsDeleteTrackEnabled);
+                () => this.IsDeleteTrackEnabled);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace WhereToFly.App.ViewModels
             this.IsListRefreshActive = true;
             this.OnPropertyChanged(nameof(this.IsListEmpty));
 
-            this.DeleteTrackListCommand.RaiseCanExecuteChanged();
+            this.DeleteTrackListCommand.NotifyCanExecuteChanged();
 
             var newList = this.trackList
                 .Select(track => new TrackListEntryViewModel(this, track));
@@ -135,7 +135,7 @@ namespace WhereToFly.App.ViewModels
             this.OnPropertyChanged(nameof(this.IsListRefreshActive));
             this.OnPropertyChanged(nameof(this.IsListEmpty));
 
-            this.DeleteTrackListCommand.RaiseCanExecuteChanged();
+            this.DeleteTrackListCommand.NotifyCanExecuteChanged();
         }
 
         /// <summary>

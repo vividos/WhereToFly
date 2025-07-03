@@ -40,7 +40,7 @@ namespace WhereToFly.App.ViewModels
             this.appMapService = appMapService;
             this.geolocationService = geolocationService;
 
-            this.ShareMyLocationCommand = new AsyncCommand(this.OnShareMyLocation);
+            this.ShareMyLocationCommand = new AsyncRelayCommand(this.OnShareMyLocation);
         }
 
         /// <summary>

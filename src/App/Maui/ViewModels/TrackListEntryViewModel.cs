@@ -71,7 +71,7 @@ namespace WhereToFly.App.ViewModels
         /// <summary>
         /// Command to execute when an item in the track list has been tapped
         /// </summary>
-        public AsyncCommand ItemTappedCommand { get; private set; }
+        public ICommand ItemTappedCommand { get; private set; }
 
         /// <summary>
         /// Command to execute when "show details" context menu item is selected on a track
@@ -105,10 +105,10 @@ namespace WhereToFly.App.ViewModels
 
             this.TypeImageSource = SvgImageCache.GetImageSource(track);
 
-            this.ItemTappedCommand = new AsyncCommand(this.OnShowDetailsLocation);
-            this.ZoomToTrackCommand = new AsyncCommand(this.OnZoomToTrackAsync);
-            this.ExportTrackCommand = new AsyncCommand(this.OnExportTrackAsync);
-            this.DeleteTrackCommand = new AsyncCommand(this.OnDeleteTrackAsync);
+            this.ItemTappedCommand = new AsyncRelayCommand(this.OnShowDetailsLocation);
+            this.ZoomToTrackCommand = new AsyncRelayCommand(this.OnZoomToTrackAsync);
+            this.ExportTrackCommand = new AsyncRelayCommand(this.OnExportTrackAsync);
+            this.DeleteTrackCommand = new AsyncRelayCommand(this.OnDeleteTrackAsync);
         }
 
         /// <summary>

@@ -299,7 +299,7 @@ namespace WhereToFly.App.ViewModels
 
             this.SetupTimer();
 
-            this.SharePositionCommand = new AsyncCommand(this.SharePosition);
+            this.SharePositionCommand = new AsyncRelayCommand(this.SharePosition);
         }
 
         /// <summary>

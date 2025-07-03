@@ -161,13 +161,13 @@ namespace WhereToFly.App.ViewModels
             this.UpdateLocationList();
 
             this.FindTextEnteredCommand =
-                new AsyncCommand(this.OnFindTextEntered);
+                new AsyncRelayCommand(this.OnFindTextEntered);
 
             this.FilterTakeoffDirectionsCommand =
-                new AsyncCommand(this.FilterTakeoffDirectionsAsync);
+                new AsyncRelayCommand(this.FilterTakeoffDirectionsAsync);
 
-            this.ImportLocationsCommand = new AsyncCommand(this.ImportLocationsAsync);
-            this.DeleteLocationListCommand = new AsyncCommand(this.ClearLocationsAsync);
+            this.ImportLocationsCommand = new AsyncRelayCommand(this.ImportLocationsAsync);
+            this.DeleteLocationListCommand = new AsyncRelayCommand(this.ClearLocationsAsync);
         }
 
         /// <summary>

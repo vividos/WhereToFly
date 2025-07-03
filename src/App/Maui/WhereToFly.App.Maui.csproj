@@ -91,12 +91,11 @@
 
   <ItemGroup>
     <!-- Configure implicit usings -->
-    <Using Include="AsyncAwaitBestPractices.MVVM" />
+    <Using Include="CommunityToolkit.Mvvm.Input" />
     <Using Remove="Microsoft.Maui.Devices.Sensors" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AsyncAwaitBestPractices.MVVM" Version="9.0.0" />
     <PackageReference Include="CommunityToolkit.Maui" Version="11.2.0" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="HtmlAgilityPack" Version="1.12.1" />

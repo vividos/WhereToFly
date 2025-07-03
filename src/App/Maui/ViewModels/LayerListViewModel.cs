@@ -46,7 +46,7 @@ namespace WhereToFly.App.ViewModels
         /// <summary>
         /// Command to execute when an item in the layer list has been tapped
         /// </summary>
-        public AsyncCommand<Layer> ItemTappedCommand { get; private set; }
+        public AsyncRelayCommand<Layer> ItemTappedCommand { get; private set; }
 
         /// <summary>
         /// Indicates if the "clear layer list" button is enabled.
@@ -61,7 +61,7 @@ namespace WhereToFly.App.ViewModels
         /// <summary>
         /// Command to execute when toolbar button "delete layer list" has been tapped
         /// </summary>
-        public AsyncCommand DeleteLayerListCommand { get; private set; }
+        public AsyncRelayCommand DeleteLayerListCommand { get; private set; }
         #endregion
 
         /// <summary>
@@ -72,14 +72,14 @@ namespace WhereToFly.App.ViewModels
             Task.Run(this.LoadDataAsync);
 
             this.ItemTappedCommand =
-                new AsyncCommand<Layer>(this.NavigateToLayerDetails);
+                new AsyncRelayCommand<Layer>(this.NavigateToLayerDetails);
 
-            this.ImportLayerCommand = new AsyncCommand(this.ImportLayerAsync);
+            this.ImportLayerCommand = new AsyncRelayCommand(this.ImportLayerAsync);
 
             this.DeleteLayerListCommand =
-                new AsyncCommand(
+                new AsyncRelayCommand(
                     this.ClearLayersAsync,
-                    (obj) => this.IsClearLayerListEnabled);
+                    () => this.IsClearLayerListEnabled);
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace WhereToFly.App.ViewModels
                 this.OnPropertyChanged(nameof(this.LayerList));
                 this.OnPropertyChanged(nameof(this.IsListEmpty));
                 this.OnPropertyChanged(nameof(this.IsClearLayerListEnabled));
-                MainThread.BeginInvokeOnMainThread(this.DeleteLayerListCommand.RaiseCanExecuteChanged);
+                MainThread.BeginInvokeOnMainThread(this.DeleteLayerListCommand.NotifyCanExecuteChanged);
             });
         }
 
