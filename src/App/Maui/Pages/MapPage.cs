@@ -1,6 +1,6 @@
 ﻿using Microsoft.Maui.Devices.Sensors;
 using System.Diagnostics;
-using WhereToFly.App.Logic;
+using WhereToFly.App.Behaviors;
 using WhereToFly.App.MapView;
 using WhereToFly.App.Models;
 using WhereToFly.App.Services;
@@ -417,7 +417,8 @@ namespace WhereToFly.App.Pages
         /// </summary>
         private void SetupWebView()
         {
-            this.mapView.Navigating += OnNavigating_WebView;
+            this.mapView.Behaviors.Add(
+                new OpenLinkExternalBrowserWebViewBehavior());
 
             this.mapView.ShowLocationDetails += async (locationId) => await this.OnMapView_ShowLocationDetails(locationId);
             this.mapView.NavigateToLocation += async (locationId) => await this.OnMapView_NavigateToLocation(locationId);
@@ -437,25 +438,6 @@ namespace WhereToFly.App.Pages
             {
                 this.Content = this.mapView;
             });
-        }
-
-        /// <summary>
-        /// Called when web view navigates to a new URL
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="args">event args</param>
-        private static void OnNavigating_WebView(object? sender, WebNavigatingEventArgs args)
-        {
-            if (args.NavigationEvent == WebNavigationEvent.NewPage &&
-                args.Url.StartsWith("http") &&
-                !args.Url.Contains("https://appdir/"))
-            {
-                Browser.OpenAsync(
-                    args.Url,
-                    BrowserLaunchMode.External);
-
-                args.Cancel = true;
-            }
         }
 
         /// <summary>
