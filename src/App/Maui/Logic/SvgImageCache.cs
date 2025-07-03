@@ -41,7 +41,7 @@ namespace WhereToFly.App.Logic
         {
             string svgImagePath = track.IsFlightTrack
                 ? "weblib/images/paragliding.svg"
-                : "icons/map-marker-distance.svg";
+                : "icons/map_marker_distance.svg";
 
             return GetImageSource(svgImagePath);
         }
@@ -67,9 +67,9 @@ namespace WhereToFly.App.Logic
         {
             return layerType switch
             {
-                LayerType.LocationLayer => "icons/format-list-bulleted.svg",
-                LayerType.TrackLayer => "icons/map-marker-distance.svg",
-                _ => "icons/layers-outline.svg",
+                LayerType.LocationLayer => "icons/format_list_bulleted.svg",
+                LayerType.TrackLayer => "icons/map_marker_distance.svg",
+                _ => "icons/layers_outline.svg",
             };
         }
 
