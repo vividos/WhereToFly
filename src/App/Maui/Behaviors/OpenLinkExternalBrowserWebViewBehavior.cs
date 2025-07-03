@@ -36,15 +36,26 @@
         private static void OnNavigating(object? sender, WebNavigatingEventArgs args)
         {
             if (args.NavigationEvent == WebNavigationEvent.NewPage &&
-                args.Url.StartsWith("https://", StringComparison.InvariantCultureIgnoreCase) &&
+                (args.Url.StartsWith("https://", StringComparison.InvariantCultureIgnoreCase) ||
+                args.Url.StartsWith("http://", StringComparison.InvariantCultureIgnoreCase)) &&
                 !args.Url.StartsWith("https://appdir/", StringComparison.InvariantCultureIgnoreCase))
             {
                 args.Cancel = true;
 
                 MainThread.BeginInvokeOnMainThread(
-                    () => Browser.OpenAsync(
-                        args.Url,
-                        BrowserLaunchMode.External));
+                    () =>
+                    {
+                        try
+                        {
+                            Browser.OpenAsync(
+                                args.Url,
+                                BrowserLaunchMode.External);
+                        }
+                        catch (Exception ex)
+                        {
+                            App.LogError(ex);
+                        }
+                    });
             }
         }
     }

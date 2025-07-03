@@ -8,6 +8,8 @@ Released on ?.
 
 🐛 Bugfixes
 
+- Fixed crash when opening external links
+
 ## Version 1.16.0
 
 Released on 2025-04-10.

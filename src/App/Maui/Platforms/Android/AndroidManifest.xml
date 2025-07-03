@@ -10,6 +10,10 @@
 			<action android:name="android.intent.action.VIEW" />
 			<data android:scheme="https" />
 		</intent>
+		<intent>
+			<action android:name="android.intent.action.VIEW" />
+			<data android:scheme="http" />
+		</intent>
 		<package android:name="com.windyty.android" />
 		<package android:name="de.dwd.warnapp" />
 		<package android:name="de.wetteronline.wetterapp" />
