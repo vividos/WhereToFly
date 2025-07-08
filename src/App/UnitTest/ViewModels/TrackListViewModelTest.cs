@@ -44,7 +44,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
 
             // check
             ////viewModel.ImportTrackCommand.Execute(null); // don't execute import; it opens a file picker
-            await viewModel.DeleteTrackListCommand.ExecuteAsync();
+            await viewModel.DeleteTrackListCommand.ExecuteAsync(null);
         }
     }
 }
