@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>$(DotNetVersion);$(DotNetVersion)-android;$(DotNetVersion)-windows10.0.19041.0</TargetFrameworks>
@@ -9,6 +9,8 @@
     <SingleProject>true</SingleProject>
     <ImplicitUsings>enable</ImplicitUsings>
     <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
+    <MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
+    <MauiStrictXamlCompilation>true</MauiStrictXamlCompilation>
 
     <!-- Display name -->
     <ApplicationTitle>Where-to-fly</ApplicationTitle>
