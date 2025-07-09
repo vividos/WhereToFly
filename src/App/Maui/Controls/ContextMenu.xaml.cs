@@ -107,7 +107,7 @@ namespace WhereToFly.App.Controls
         {
             foreach (var item in this.Items)
             {
-                item.IsEnabled &= item.Command.CanExecute(item.CommandParameter);
+                item.IsEnabled &= item.Command?.CanExecute(item.CommandParameter) ?? false;
             }
 
             ContextMenuPopupPage? popupPage = null;
