@@ -89,6 +89,7 @@ namespace WhereToFly.App.ViewModels
             var viewModelList =
                 from waypointId in waypointIdList
                 let location = locationList.FirstOrDefault(locationToCheck => locationToCheck.Id == waypointId)
+                where location != null
                 select new PlanTourListEntryViewModel(location, this);
 
             this.PlanTourList = new ObservableCollection<PlanTourListEntryViewModel>(viewModelList);
