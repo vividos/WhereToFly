@@ -16,9 +16,6 @@
     <ApplicationTitle>Where-to-fly</ApplicationTitle>
     <Description>Where-to-fly is an app that helps decide where to (hike up and) fly with a paraglider.</Description>
 
-    <!-- App Identifier -->
-    <ApplicationId>de.vividos.app.wheretofly.android</ApplicationId>
-
     <!-- Versions -->
     <ApplicationDisplayVersion>$(AssemblyInformationalVersion)</ApplicationDisplayVersion>
     <ApplicationVersion>$(AndroidVersionCode)</ApplicationVersion>
@@ -27,6 +24,7 @@
 
   <!-- Windows properties -->
   <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
+    <ApplicationId>de.vividos.app.wheretofly.windows</ApplicationId>
     <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <WindowsPackageType>None</WindowsPackageType>
@@ -34,6 +32,7 @@
 
   <!-- Android properties -->
   <PropertyGroup Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' ">
+    <ApplicationId>de.vividos.app.wheretofly.android</ApplicationId>
     <SupportedOSPlatformVersion>31.0</SupportedOSPlatformVersion>
     <AndroidStoreUncompressedFileExtensions>.kmz</AndroidStoreUncompressedFileExtensions>
     <!-- Disable automatically setting version numbers on MAUI -->
@@ -41,6 +40,8 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' And '$(Configuration)' == 'Debug' ">
+    <ApplicationId>de.vividos.app.wheretofly.android_dbg</ApplicationId>
+    <ApplicationTitle>Debug Where-to-fly</ApplicationTitle>
     <RuntimeIdentifiers>android-arm64;android-x64</RuntimeIdentifiers>
   </PropertyGroup>
 
