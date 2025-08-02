@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
+using WhereToFly.App.Pages;
 using WhereToFly.App.Services;
 
 namespace WhereToFly.App
@@ -29,7 +30,21 @@ namespace WhereToFly.App
         public AppTheme UserAppTheme
         {
             get => App.UserAppTheme;
-            set => App.UserAppTheme = value;
+            set
+            {
+                bool themeChanged = App.UserAppTheme != value;
+
+                App.UserAppTheme = value;
+
+                // refresh the menu page
+                if (themeChanged &&
+                    App.Windows.Count > 0 &&
+                    MainPage is RootPage rootPage &&
+                    rootPage.Flyout is MenuPage)
+                {
+                    rootPage.Flyout = new MenuPage();
+                }
+            }
         }
 
         /// <summary>
