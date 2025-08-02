@@ -124,14 +124,18 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         public async Task StoreDataAsync()
         {
-            if (this.AlpthermUsername != null)
+            if (!string.IsNullOrEmpty(this.AlpthermUsername))
             {
-                await SecureStorage.SetAsync(Constants.SecureSettingsAlpthermUsername, this.AlpthermUsername);
+                await SecureStorage.SetAsync(
+                    Constants.SecureSettingsAlpthermUsername,
+                    this.AlpthermUsername);
             }
 
-            if (this.AlpthermPassword != null)
+            if (!string.IsNullOrEmpty(this.AlpthermPassword))
             {
-                await SecureStorage.SetAsync(Constants.SecureSettingsAlpthermPassword, this.AlpthermPassword);
+                await SecureStorage.SetAsync(
+                    Constants.SecureSettingsAlpthermPassword,
+                    this.AlpthermPassword);
             }
         }
 

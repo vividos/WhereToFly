@@ -29,7 +29,8 @@ namespace WhereToFly.App.Pages
         {
             base.OnDisappearing();
 
-            Task.Run(this.viewModel.StoreDataAsync);
+            Task.Run(this.viewModel.StoreDataAsync)
+                .LogTaskException();
         }
     }
 }
