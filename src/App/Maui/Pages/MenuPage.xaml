@@ -8,6 +8,7 @@
              x:DataType="viewmodels:MenuViewModel"
              Padding="0,40,0,0"
              IconImageSource="icon.png"
+             BackgroundColor="{StaticResource Primary}"
              Title="Where-to-fly">
 
     <ContentPage.BindingContext>
