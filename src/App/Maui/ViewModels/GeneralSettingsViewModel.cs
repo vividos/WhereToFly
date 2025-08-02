@@ -66,7 +66,8 @@ namespace WhereToFly.App.ViewModels
                 {
                     this.appSettings.AppTheme = value.Value;
                     App.Settings!.AppTheme = value.Value;
-                    Task.Run(async () => await this.SaveThemeSettingsAsync());
+                    MainThread.BeginInvokeOnMainThread(
+                        async () => await this.SaveThemeSettingsAsync());
                 }
             }
         }
