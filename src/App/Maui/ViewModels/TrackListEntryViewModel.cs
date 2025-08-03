@@ -103,7 +103,8 @@ namespace WhereToFly.App.ViewModels
             this.parentViewModel = parentViewModel;
             this.track = track;
 
-            this.TypeImageSource = SvgImageCache.GetImageSource(track);
+            this.TypeImageSource =
+                TrackListViewModel.ImageSourceFromTrack(track);
 
             this.ItemTappedCommand = new AsyncRelayCommand(this.OnShowDetailsLocation);
             this.ZoomToTrackCommand = new AsyncRelayCommand(this.OnZoomToTrackAsync);

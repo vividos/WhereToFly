@@ -111,7 +111,8 @@ namespace WhereToFly.App.ViewModels
         {
             this.Track = track;
 
-            this.TypeImageSource = SvgImageCache.GetImageSource(track);
+            this.TypeImageSource =
+                TrackListViewModel.ImageSourceFromTrack(track);
 
             this.ColorBoxTappedCommand =
                 this.TrackNameTappedCommand = new AsyncRelayCommand(

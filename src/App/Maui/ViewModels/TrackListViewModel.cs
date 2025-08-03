@@ -333,5 +333,19 @@ namespace WhereToFly.App.ViewModels
                 App.LogError(ex);
             }
         }
+
+        /// <summary>
+        /// Returns an image source based on the track.
+        /// </summary>
+        /// <param name="track">track to use</param>
+        /// <returns>image source</returns>
+        internal static ImageSource ImageSourceFromTrack(Track track)
+        {
+            string imagePath = track.IsFlightTrack
+                ? "paragliding.png"
+                : "map_marker_distance.png";
+
+            return ImageSource.FromFile(imagePath);
+        }
     }
 }

@@ -13,17 +13,6 @@ namespace WhereToFly.App.UnitTest.ViewModels
     public class TrackListEntryViewModelTest : UserInterfaceTestBase
     {
         /// <summary>
-        /// Sets up tests
-        /// </summary>
-        [TestInitialize]
-        public void SetUp()
-        {
-            var imageCache = DependencyService.Get<SvgImageCache>();
-            imageCache.AddImage("weblib/images/paragliding.svg", string.Empty);
-            imageCache.AddImage("icons/map-marker-distance.svg", string.Empty);
-        }
-
-        /// <summary>
         /// Tests default ctor of view model
         /// </summary>
         [TestMethod]

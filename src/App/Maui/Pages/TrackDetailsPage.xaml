@@ -2,8 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:behaviors="clr-namespace:WhereToFly.App.Behaviors"
+             xmlns:controls="clr-namespace:WhereToFly.App.Controls"
              xmlns:mapview="clr-namespace:WhereToFly.App.MapView;assembly=WhereToFly.App.MapView"
-             xmlns:svg="clr-namespace:WhereToFly.App.Svg;assembly=WhereToFly.App.Svg"
              xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="WhereToFly.App.Pages.TrackDetailsPage"
@@ -28,11 +28,11 @@
                                    Spacing="8">
 
                 <!-- Type image -->
-                <svg:SvgImage Source="{Binding TypeImageSource, Mode=OneWay}"
-                              WidthRequest="64"
-                              HeightRequest="64"
-                              HorizontalOptions="Start"
-                              VerticalOptions="Center" />
+                <controls:TintedImage Source="{Binding TypeImageSource}"
+                                      WidthRequest="64"
+                                      HeightRequest="64"
+                                      HorizontalOptions="Start"
+                                      VerticalOptions="Center" />
 
                 <!-- Track color box -->
                 <Border IsVisible="{Binding IsColorBoxVisible, Mode=OneWay}"
