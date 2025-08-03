@@ -5,6 +5,7 @@
     <OutputType>Exe</OutputType>
     <Description>Where-to-fly Native AOT test</Description>
     <ImplicitUsings>enable</ImplicitUsings>
+    <DisableResizetizer>true</DisableResizetizer>
   </PropertyGroup>
 
   <!-- NativeAOT properties -->
