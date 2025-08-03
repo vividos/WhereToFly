@@ -59,14 +59,12 @@ namespace WhereToFly.App
         /// <param name="services">service provider</param>
         public App(IServiceProvider services)
         {
-            if (DeviceInfo.Platform == DevicePlatform.Android ||
-                DeviceInfo.Platform == DevicePlatform.WinUI)
-            {
-                AppCenter.Start(
-                    $"android={Constants.AppCenterKeyAndroid};" +
-                    $"windowsdesktop={Constants.AppCenterKeyWindows}",
-                    typeof(Crashes));
-            }
+#if ANDROID || WINDOWS
+            AppCenter.Start(
+                $"android={Constants.AppCenterKeyAndroid};" +
+                $"windowsdesktop={Constants.AppCenterKeyWindows}",
+                typeof(Crashes));
+#endif
 
             TaskScheduler.UnobservedTaskException += this.TaskScheduler_UnobservedTaskException;
 
