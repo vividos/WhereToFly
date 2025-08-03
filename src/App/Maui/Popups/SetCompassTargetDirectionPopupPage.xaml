@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <popups:BasePopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                     xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
-                     xmlns:popups="clr-namespace:WhereToFly.App.Popups"
-                     xmlns:system="clr-namespace:System;assembly=System.Core"
-                     x:Class="WhereToFly.App.Popups.SetCompassTargetDirectionPopupPage"
-                     x:TypeArguments="system:Tuple(system:Int32)"
-                     x:DataType="viewmodels:SetCompassTargetDirectionPopupViewModel">
+                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
+                      xmlns:popups="clr-namespace:WhereToFly.App.Popups"
+                      xmlns:system="clr-namespace:System;assembly=System.Core"
+                      x:Class="WhereToFly.App.Popups.SetCompassTargetDirectionPopupPage"
+                      x:TypeArguments="system:Tuple(system:Int32)"
+                      x:DataType="viewmodels:SetCompassTargetDirectionPopupViewModel"
+                      WidthRequest="360">
 
     <Grid RowDefinitions="Auto, Auto, Auto, Auto"
-          VerticalOptions="Center"
-          HorizontalOptions="Center"
-          WidthRequest="360"
           RowSpacing="10"
-          Padding="20">
+          Padding="10">
 
         <!-- Caption -->
         <Label Grid.Row="0"

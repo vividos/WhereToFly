@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <popups:BasePopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                     xmlns:geo="clr-namespace:WhereToFly.Geo.Model;assembly=WhereToFly.Geo"
-                     xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
-                     xmlns:popups="clr-namespace:WhereToFly.App.Popups"
-                     x:Class="WhereToFly.App.Popups.AddLiveWaypointPopupPage"
-                     x:TypeArguments="geo:Location"
-                     x:DataType="viewmodels:AddLiveWaypointPopupViewModel">
+                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      xmlns:geo="clr-namespace:WhereToFly.Geo.Model;assembly=WhereToFly.Geo"
+                      xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
+                      xmlns:popups="clr-namespace:WhereToFly.App.Popups"
+                      x:Class="WhereToFly.App.Popups.AddLiveWaypointPopupPage"
+                      x:TypeArguments="geo:Location"
+                      x:DataType="viewmodels:AddLiveWaypointPopupViewModel"
+                      WidthRequest="360">
 
     <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto"
-          VerticalOptions="Center"
-          HorizontalOptions="Center"
-          WidthRequest="360"
           RowSpacing="10"
-          Padding="20">
+          Padding="10">
 
         <!-- Caption -->
         <Label Grid.Row="0"

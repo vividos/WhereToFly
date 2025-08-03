@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <popups:BasePopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                     xmlns:controls="clr-namespace:WhereToFly.App.Controls"
-                     xmlns:models="clr-namespace:WhereToFly.App.Models"
-                     xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
-                     xmlns:popups="clr-namespace:WhereToFly.App.Popups"
-                     x:Class="WhereToFly.App.Popups.FilterTakeoffDirectionsPopupPage"
-                     x:TypeArguments="models:LocationFilterSettings"
-                     x:DataType="viewmodels:FilterTakeoffDirectionsPopupViewModel">
+                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      xmlns:controls="clr-namespace:WhereToFly.App.Controls"
+                      xmlns:models="clr-namespace:WhereToFly.App.Models"
+                      xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
+                      xmlns:popups="clr-namespace:WhereToFly.App.Popups"
+                      x:Class="WhereToFly.App.Popups.FilterTakeoffDirectionsPopupPage"
+                      x:TypeArguments="models:LocationFilterSettings"
+                      x:DataType="viewmodels:FilterTakeoffDirectionsPopupViewModel"
+                      WidthRequest="360">
 
     <VerticalStackLayout
-        VerticalOptions="Center"
-        HorizontalOptions="Center"
-        WidthRequest="360"
         Spacing="10"
-        Padding="20">
+        Padding="10">
 
         <!-- Caption -->
         <Label Text="Filter by takeoff direction" FontSize="Large" />

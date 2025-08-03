@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <popups:BasePopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                     xmlns:models="clr-namespace:WhereToFly.App.Models"
-                     xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
-                     xmlns:popups="clr-namespace:WhereToFly.App.Popups"
-                     x:Class="WhereToFly.App.Popups.AddWeatherLinkPopupPage"
-                     x:TypeArguments="models:WeatherIconDescription"
-                     x:DataType="viewmodels:AddWeatherLinkPopupViewModel">
+                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      xmlns:models="clr-namespace:WhereToFly.App.Models"
+                      xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
+                      xmlns:popups="clr-namespace:WhereToFly.App.Popups"
+                      x:Class="WhereToFly.App.Popups.AddWeatherLinkPopupPage"
+                      x:TypeArguments="models:WeatherIconDescription"
+                      x:DataType="viewmodels:AddWeatherLinkPopupViewModel"
+                      WidthRequest="360">
 
     <VerticalStackLayout
-        VerticalOptions="Center"
-        HorizontalOptions="Center"
-        WidthRequest="360"
         Spacing="10"
-        Padding="20">
+        Padding="10">
 
         <!-- Caption -->
         <Label Text="Add weather link" FontSize="Large" />

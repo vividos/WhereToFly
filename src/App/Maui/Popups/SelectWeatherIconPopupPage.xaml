@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <popups:BasePopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                     xmlns:model="clr-namespace:WhereToFly.App.Models"
-                     xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
-                     xmlns:views="clr-namespace:WhereToFly.App.Pages"
-                     xmlns:popups="clr-namespace:WhereToFly.App.Popups"
-                     x:Class="WhereToFly.App.Popups.SelectWeatherIconPopupPage"
-                     x:DataType="viewmodels:SelectWeatherIconViewModel"
-                     x:TypeArguments="model:WeatherIconDescription">
+                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      xmlns:model="clr-namespace:WhereToFly.App.Models"
+                      xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
+                      xmlns:views="clr-namespace:WhereToFly.App.Pages"
+                      xmlns:popups="clr-namespace:WhereToFly.App.Popups"
+                      x:Class="WhereToFly.App.Popups.SelectWeatherIconPopupPage"
+                      x:DataType="viewmodels:SelectWeatherIconViewModel"
+                      x:TypeArguments="model:WeatherIconDescription"
+                      WidthRequest="360"
+                      HeightRequest="400">
 
     <Grid RowDefinitions="Auto, 1*"
-          VerticalOptions="Center"
-          HorizontalOptions="Center"
-          WidthRequest="360"
-          HeightRequest="400"
           RowSpacing="10"
-          Padding="20">
+          Padding="10">
 
         <!-- Caption -->
         <Label Grid.Row="0"
