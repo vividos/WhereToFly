@@ -21,7 +21,6 @@ namespace WhereToFly.App.UnitTest
         {
             DependencyService.Register<IAppManager, UnitTestAppManager>();
             DependencyService.Register<IDataService, SqliteDatabaseDataService>();
-            DependencyService.Register<SvgImageCache>();
         }
 
         /// <summary>

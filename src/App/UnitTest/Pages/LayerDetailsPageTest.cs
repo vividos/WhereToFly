@@ -15,15 +15,6 @@ namespace WhereToFly.App.UnitTest.Pages
     public class LayerDetailsPageTest : UserInterfaceTestBase
     {
         /// <summary>
-        /// Sets up tests
-        /// </summary>
-        [TestInitialize]
-        public void SetUp()
-        {
-            DependencyService.Register<SvgImageCache>();
-        }
-
-        /// <summary>
         /// Tests default ctor of page
         /// </summary>
         /// <returns>task to wait on</returns>

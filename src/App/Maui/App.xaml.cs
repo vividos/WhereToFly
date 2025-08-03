@@ -126,7 +126,6 @@ namespace WhereToFly.App
         {
             DependencyService.Register<IUserInterface, UserInterface>();
             DependencyService.Register<IAppMapService, AppMapService>();
-            DependencyService.Register<SvgImageCache>();
             DependencyService.Register<INavigationService, NavigationService>();
             DependencyService.Register<IDataService, Services.SqliteDatabase.SqliteDatabaseDataService>();
             DependencyService.Register<IGeolocationService, GeolocationService>();
