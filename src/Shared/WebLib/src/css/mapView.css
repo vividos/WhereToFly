@@ -25,6 +25,22 @@
     transition: all 0.25s ease-in-out;
 }
 
+/* style for map legend */
+.legend-container {
+    width: 100vw;
+    height: 80px;
+    padding: 10px;
+    background-color: #202124;
+    color: white;
+    font-family: sans-serif;
+}
+
+/* style for the legend title */
+.legend-title {
+    font: bold 18px;
+    margin-bottom: 4px;
+}
+
 /* container div styles for all toolbars */
 .toolbar-container {
     display: flex;

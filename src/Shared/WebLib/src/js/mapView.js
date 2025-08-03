@@ -931,7 +931,26 @@ export class MapView {
 
         const shadingUniforms = material.uniforms;
         shadingUniforms.image = MapView.getAspectColorRamp();
+
+        // also create a legend canvas
+        this.slopeDirectionLegendCanvas =
+            MapView.createLegendRampFromColors(MapView.aspectColors);
     }
+
+    /**
+     * Colors for terrain aspect; colors are ordered clockwise:
+     * N, NE, E, SE, S, SW, W, NW
+     */
+    static aspectColors = [
+        "108   0 163", // violet
+        "202   0 156", // pink
+        "255  85 104", // red
+        "255 171  71", // orange
+        "244 250   0", // yellow
+        "132 214   0", // light green
+        "  0 171  68", // dark green
+        "  0 104 192", // blue
+    ];
 
     /**
      * Generates a color ramp canvas element for coloring terrain using aspect
@@ -945,18 +964,6 @@ export class MapView {
         const ctx = ramp.getContext("2d");
 
         const grd = ctx.createLinearGradient(0, 0, 360, 0);
-
-        // colors are ordered clockwise: N, NE, E, SE, S, SW, W, NW
-        const colors = [
-            "108   0 163", // violet
-            "202   0 156", // pink
-            "255  85 104", // red
-            "255 171  71", // orange
-            "244 250   0", // yellow
-            "132 214   0", // light green
-            "  0 171  68", // dark green
-            "  0 104 192", // blue
-        ];
 
         // gradient stops are ordered counter-clockwise:
         // 0.0-0.25: E to N
@@ -972,6 +979,8 @@ export class MapView {
         function degreesToStop(degrees){
             return (((90 - degrees) / 360) + 1.0) % 1.0;
         }
+
+        const colors = MapView.aspectColors;
 
         for (let degrees = 0; degrees < 360; degrees += 45)
         {
@@ -989,6 +998,70 @@ export class MapView {
         ctx.fillRect(0, 0, 360, 1);
 
         return ramp;
+    }
+
+    /**
+     * Displays the legend for the terrain slope overlay
+     */
+    showTerrainSlopeLegend() {
+
+        let legend = document.getElementById("legendElement");
+        legend.replaceChildren();
+
+        // add title
+        const titleDiv = document.createElement("div");
+        titleDiv.classList.add("legend-title");
+        titleDiv.innerText = "Legend";
+        legend.appendChild(titleDiv);
+
+        // add ramp image
+        legend.appendChild(this.slopeDirectionLegendCanvas);
+        this.slopeDirectionLegendCanvas.style = "width: 300px; height: 32px";
+
+        // add legend text
+        const textDiv = document.createElement("div");
+        textDiv.style = "width: 300px; display: flex; justify-content: space-around;"
+        textDiv.innerHTML = "<div>N</div><div>NE</div><div>E</div><div>SE</div><div>S</div><div>SW</div><div>W</div><div>NW</div>";
+        legend.appendChild(textDiv);
+    
+        legend.style.display = "block";
+    }
+
+    /**
+     * Hides the legend again
+     */
+    hideLegend() {
+
+        let legend = document.getElementById("legendElement");
+        legend.style.display = "none";
+    }
+
+    /**
+     * Creates a canvas element with a list of colors, evenly spaced, usable
+     * for displaying a legend. The image is 1 pixel in height, and 10 pixels
+     * for every color wide.
+     * @param {Array.<string>} colors array of colors to use
+     * @returns {HTMLCanvasElement} canvas element
+     */
+    static createLegendRampFromColors(colors) {
+        const legendRamp = document.createElement("canvas");
+        legendRamp.width = colors.length * 10;
+        legendRamp.height = 1;
+        const legendContext = legendRamp.getContext("2d");
+
+        const legendGradient = legendContext.createLinearGradient(0, 0, colors.length * 10, 0);
+
+        for (let colorIndex = 0; colorIndex < colors.length; colorIndex++) {
+
+            const color = "rgb(" + colors[colorIndex] + ")";
+            legendGradient.addColorStop(colorIndex / colors.length, color);
+            legendGradient.addColorStop((colorIndex + 0.999) / colors.length, color);
+        }
+
+        legendContext.fillStyle = legendGradient;
+        legendContext.fillRect(0, 0, legendRamp.width, legendRamp.height);
+
+        return legendRamp;
     }
 
     /**
@@ -1024,6 +1097,7 @@ export class MapView {
 
         case "SlopeDirection":
             this.viewer.scene.globe.material = this.slopeDirectionMaterial;
+            this.showTerrainSlopeLegend();
             break;
 
         default:
@@ -1047,6 +1121,9 @@ export class MapView {
                 console.warn("MapView.setMapOverlayType: invalid map overlay type: " + overlayType);
             break;
         }
+
+        if (overlayType !== "SlopeDirection")
+            this.hideLegend();
 
         this.updateScene();
     }
