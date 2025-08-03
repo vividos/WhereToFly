@@ -1,7 +1,7 @@
 ﻿using WhereToFly.App.Models;
 using WhereToFly.Shared.Model;
 
-namespace WhereToFly.App
+namespace WhereToFly.App.Abstractions
 {
     /// <summary>
     /// Data service for the app; provides access to data storage.

@@ -1,4 +1,5 @@
-﻿using WhereToFly.App.Logic;
+﻿using WhereToFly.App.Abstractions;
+using WhereToFly.App.Logic;
 using WhereToFly.App.Resources;
 
 namespace WhereToFly.App.ViewModels

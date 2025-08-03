@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using WhereToFly.App.Abstractions;
 
 namespace WhereToFly.App.ViewModels
 {

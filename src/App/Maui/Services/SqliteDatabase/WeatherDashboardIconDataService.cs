@@ -1,4 +1,5 @@
 ﻿using SQLite;
+using WhereToFly.App.Abstractions;
 using WhereToFly.App.Models;
 
 namespace WhereToFly.App.Services.SqliteDatabase

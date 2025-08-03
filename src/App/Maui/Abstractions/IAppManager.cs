@@ -1,4 +1,4 @@
-﻿namespace WhereToFly.App
+﻿namespace WhereToFly.App.Abstractions
 {
     /// <summary>
     /// Interface to app manager that provides operations on external apps

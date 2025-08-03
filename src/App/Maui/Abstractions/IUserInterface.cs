@@ -1,6 +1,6 @@
 ﻿using WhereToFly.App.Services;
 
-namespace WhereToFly.App
+namespace WhereToFly.App.Abstractions
 {
     /// <summary>
     /// Interface to the user interface

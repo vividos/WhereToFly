@@ -1,4 +1,6 @@
-﻿[assembly: Dependency(typeof(WhereToFly.App.WindowsAppManager))]
+﻿using WhereToFly.App.Abstractions;
+
+[assembly: Dependency(typeof(WhereToFly.App.WindowsAppManager))]
 
 namespace WhereToFly.App
 {

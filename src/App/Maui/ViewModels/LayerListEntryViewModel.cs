@@ -1,5 +1,5 @@
 ﻿using System.Windows.Input;
-using WhereToFly.App.Logic;
+using WhereToFly.App.Abstractions;
 using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.ViewModels

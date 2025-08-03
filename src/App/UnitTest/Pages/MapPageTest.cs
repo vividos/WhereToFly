@@ -1,5 +1,6 @@
 ﻿using Microsoft.Maui.Controls;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WhereToFly.App.Abstractions;
 using WhereToFly.App.Pages;
 
 namespace WhereToFly.App.UnitTest.Pages

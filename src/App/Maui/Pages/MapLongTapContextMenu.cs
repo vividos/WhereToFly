@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Extensions;
-using WhereToFly.App.Logic;
 using WhereToFly.App.Models;
 using WhereToFly.App.Popups;
 using WhereToFly.App.ViewModels;

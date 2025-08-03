@@ -1,4 +1,5 @@
-﻿using WhereToFly.App.ViewModels;
+﻿using WhereToFly.App.Abstractions;
+using WhereToFly.App.ViewModels;
 
 namespace WhereToFly.App.Pages
 {

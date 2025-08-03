@@ -3,6 +3,7 @@ using Android.Content.PM;
 using Android.Graphics;
 using Android.Graphics.Drawables;
 using System.Diagnostics;
+using WhereToFly.App.Abstractions;
 
 [assembly: Dependency(typeof(WhereToFly.App.Android.AndroidAppManager))]
 

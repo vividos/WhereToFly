@@ -1,6 +1,6 @@
 ﻿using WhereToFly.Geo.Model;
 
-namespace WhereToFly.App
+namespace WhereToFly.App.Abstractions
 {
     /// <summary>
     /// Interface to geolocation services

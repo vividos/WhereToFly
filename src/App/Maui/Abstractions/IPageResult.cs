@@ -1,4 +1,4 @@
-﻿namespace WhereToFly.App
+﻿namespace WhereToFly.App.Abstractions
 {
     /// <summary>
     /// Interface for pages and popup pages that wish to return a result

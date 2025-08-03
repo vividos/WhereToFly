@@ -1,6 +1,6 @@
 ﻿using WhereToFly.App.Models;
 
-namespace WhereToFly.App
+namespace WhereToFly.App.Abstractions
 {
     /// <summary>
     /// Data service for WeatherIconDescription objects

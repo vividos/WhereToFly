@@ -1,4 +1,5 @@
-﻿using WhereToFly.App.Services;
+﻿using WhereToFly.App.Abstractions;
+using WhereToFly.App.Services;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;

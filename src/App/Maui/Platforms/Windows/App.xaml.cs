@@ -1,5 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
+using WhereToFly.App.Abstractions;
 using WhereToFly.App.Logic;
 using Windows.Storage;
 

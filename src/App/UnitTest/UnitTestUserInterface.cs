@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using WhereToFly.App.Abstractions;
 using WhereToFly.App.Services;
 
 namespace WhereToFly.App.UnitTest

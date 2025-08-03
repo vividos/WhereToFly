@@ -1,4 +1,6 @@
-﻿namespace WhereToFly.App.Pages
+﻿using WhereToFly.App.Abstractions;
+
+namespace WhereToFly.App.Pages
 {
     /// <summary>
     /// Tabbed settings page to show all settings pages

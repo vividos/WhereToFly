@@ -1,6 +1,7 @@
 ﻿using Microsoft.Maui.Devices.Sensors;
 using System.Timers;
 using System.Windows.Input;
+using WhereToFly.App.Abstractions;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Models;
 using WhereToFly.Geo;

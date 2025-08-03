@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using WhereToFly.App.Abstractions;
 using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.UnitTest

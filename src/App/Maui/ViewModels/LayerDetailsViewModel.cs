@@ -1,4 +1,5 @@
 ﻿using System.Windows.Input;
+using WhereToFly.App.Abstractions;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Resources;
 using WhereToFly.App.Services;

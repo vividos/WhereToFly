@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using System.Threading.Tasks;
+using WhereToFly.App.Abstractions;
 using WhereToFly.App.Models;
 using WhereToFly.App.Services.SqliteDatabase;
 using WhereToFly.App.ViewModels;

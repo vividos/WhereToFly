@@ -1,4 +1,5 @@
-﻿using WhereToFly.Geo.DataFormats;
+﻿using WhereToFly.App.Abstractions;
+using WhereToFly.Geo.DataFormats;
 using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.Logic

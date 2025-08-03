@@ -1,7 +1,7 @@
 ﻿using WhereToFly.App.Models;
 using WhereToFly.Geo.Model;
 
-namespace WhereToFly.App
+namespace WhereToFly.App.Abstractions
 {
     /// <summary>
     /// Data service for Location objects
