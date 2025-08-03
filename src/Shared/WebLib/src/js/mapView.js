@@ -846,7 +846,7 @@ export class MapView {
 
     /**
      * Generates a color ramp canvas element and returns it. From
-     * https://cesiumjs.org/Cesium/Build/Apps/Sandcastle/index.html?src=Globe%20Materials.html
+     * https://sandcastle.cesium.com/?src=Globe%20Materials.html
      * @returns {object} generated canvas object
      */
     static getColorRamp() {
@@ -875,7 +875,7 @@ export class MapView {
     /**
      * Sets up slope and contour lines materials for overlay types 'ContourLines' and
      * 'SlopeAndContourLines'. From
-     * https://cesiumjs.org/Cesium/Build/Apps/Sandcastle/index.html?src=Globe%20Materials.html
+     * https://sandcastle.cesium.com/?src=Globe%20Materials.html
      */
     setupSlopeAndContourLines() {
 
