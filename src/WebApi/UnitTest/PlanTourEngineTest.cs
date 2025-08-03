@@ -96,8 +96,9 @@ namespace WhereToFly.WebApi.UnitTest
                 ],
             };
 
-            Assert.ThrowsException<InvalidOperationException>(
-                () => engine.PlanTour(planTourParameters));
+            Assert.ThrowsExactly<InvalidOperationException>(
+                () => engine.PlanTour(planTourParameters),
+                "must throw invalid operation exception");
         }
 
         /// <summary>
@@ -120,8 +121,9 @@ namespace WhereToFly.WebApi.UnitTest
                 ],
             };
 
-            Assert.ThrowsException<ArgumentException>(
-                () => engine.PlanTour(planTourParameters));
+            Assert.ThrowsExactly<ArgumentException>(
+                () => engine.PlanTour(planTourParameters),
+                "must throw argument exception");
         }
 
         /// <summary>

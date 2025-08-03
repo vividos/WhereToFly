@@ -67,7 +67,9 @@ namespace WhereToFly.Geo.UnitTest
 
                 // check
                 Assert.IsFalse(igcFile.HasLocations(), "IGC file must not contain locations");
-                Assert.ThrowsException<NotImplementedException>(igcFile.LoadLocationList);
+                Assert.ThrowsExactly<NotImplementedException>(
+                    igcFile.LoadLocationList,
+                    "loading locations from igc file must throw exception");
             }
         }
     }

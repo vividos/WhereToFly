@@ -101,7 +101,9 @@ namespace WhereToFly.Geo.UnitTest
             string filename = Path.Combine(UnitTestHelper.TestAssetsPath, "waypoints.abc");
 
             // run + check
-            Assert.ThrowsException<FileNotFoundException>(() => GeoLoader.LoadGeoDataFile(filename), "must throw exception");
+            Assert.ThrowsExactly<FileNotFoundException>(
+                () => GeoLoader.LoadGeoDataFile(filename),
+                "must throw exception");
         }
 
         /// <summary>
@@ -115,7 +117,9 @@ namespace WhereToFly.Geo.UnitTest
             var stream = new MemoryStream([42]);
 
             // run + check
-            Assert.ThrowsException<ArgumentException>(() => GeoLoader.LoadGeoDataFile(stream, filename), "must throw exception");
+            Assert.ThrowsExactly<ArgumentException>(
+                () => GeoLoader.LoadGeoDataFile(stream, filename),
+                "must throw exception");
         }
     }
 }
