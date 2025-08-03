@@ -5,4 +5,15 @@
     xmlns:maui="using:Microsoft.Maui"
     xmlns:local="using:WhereToFly.App.WinUI">
 
+    <maui:MauiWinUIApplication.Resources>
+        <ResourceDictionary>
+            <!-- Hamburger menu colors -->
+            <StaticResource x:Key="NavigationViewItemBackground" ResourceKey="PrimaryBrush" />
+            <SolidColorBrush x:Key="PrimaryBrush" Color="#2F299E" />
+
+            <StaticResource x:Key="NavigationViewItemForeground" ResourceKey="WhiteBrush" />
+            <SolidColorBrush x:Key="WhiteBrush" Color="White" />
+        </ResourceDictionary>
+    </maui:MauiWinUIApplication.Resources>
+
 </maui:MauiWinUIApplication>
