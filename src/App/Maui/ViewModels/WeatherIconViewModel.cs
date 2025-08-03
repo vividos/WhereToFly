@@ -33,11 +33,6 @@ namespace WhereToFly.App.ViewModels
         public ImageSource? Icon { get; private set; }
 
         /// <summary>
-        /// Replace string map for SVG image (only used by the placeholder image)
-        /// </summary>
-        public Dictionary<string, string> ReplaceStringMap { get; private set; }
-
-        /// <summary>
         /// Command that is carried out when weather icon has been tapped.
         /// </summary>
         public ICommand Tapped { get; internal set; }
@@ -59,20 +54,11 @@ namespace WhereToFly.App.ViewModels
 
             var userInterface = DependencyService.Get<IUserInterface>();
 
-            this.ReplaceStringMap =
-                userInterface.IsDarkTheme
-                ? new Dictionary<string, string>
-                {
-                    { "fill=\"#000000", "fill=\"#ffffff" },
-                }
-                : new Dictionary<string, string>
-                {
-                    { "fill=\"#ffffff", "fill=\"#000000" },
-                };
-
             Task.Run(async () =>
             {
-                this.Icon = await WeatherImageCache.GetImageAsync(this.IconDescription);
+                this.Icon = await WeatherImageCache.GetImageAsync(
+                    this.IconDescription,
+                    userInterface.IsDarkTheme);
 
                 this.OnPropertyChanged(nameof(this.Icon));
             });

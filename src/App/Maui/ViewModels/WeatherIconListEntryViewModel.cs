@@ -65,9 +65,13 @@ namespace WhereToFly.App.ViewModels
         /// </summary>
         private void SetupBindings()
         {
+            var userInterface = DependencyService.Get<IUserInterface>();
+
             Task.Run(async () =>
             {
-                this.Icon = await WeatherImageCache.GetImageAsync(this.IconDescription);
+                this.Icon = await WeatherImageCache.GetImageAsync(
+                    this.IconDescription,
+                    userInterface.IsDarkTheme);
 
                 this.OnPropertyChanged(nameof(this.Icon));
             });

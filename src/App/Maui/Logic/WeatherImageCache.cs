@@ -12,8 +12,13 @@ namespace WhereToFly.App.Logic
         /// Returns an image from image cache
         /// </summary>
         /// <param name="iconDescription">weather icon description to load image for</param>
+        /// <param name="isDarkTheme">
+        /// indicates if an icon suitable for dark theme should be returned
+        /// </param>
         /// <returns>image source, or null when no image was found or could be loaded</returns>
-        public static async Task<ImageSource?> GetImageAsync(WeatherIconDescription iconDescription)
+        public static async Task<ImageSource?> GetImageAsync(
+            WeatherIconDescription iconDescription,
+            bool isDarkTheme = false)
         {
             switch (iconDescription.Type)
             {
@@ -48,7 +53,10 @@ namespace WhereToFly.App.Logic
                         });
 
                 case WeatherIconDescription.IconType.IconPlaceholder:
-                    return ImageSource.FromFile("border_none_variant.png");
+                    return ImageSource.FromFile(
+                        isDarkTheme
+                        ? "border_none_variant_dark.png"
+                        : "border_none_variant.png");
 
                 default:
                     break;
