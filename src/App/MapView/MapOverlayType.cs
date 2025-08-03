@@ -39,5 +39,10 @@
         /// OpenFlightmaps.org overlay with current flight map data
         /// </summary>
         OpenFlightMaps = 6,
+
+        /// <summary>
+        /// Displays slope direction using colors
+        /// </summary>
+        SlopeDirection = 7,
     }
 }

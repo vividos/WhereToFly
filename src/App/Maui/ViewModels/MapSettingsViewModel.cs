@@ -294,6 +294,7 @@ namespace WhereToFly.App.ViewModels
                 new MapOverlayTypeViewModel("Thermal Skyways (thermal.kk7.ch)", MapOverlayType.ThermalSkywaysKk7),
                 new MapOverlayTypeViewModel("Contour lines", MapOverlayType.ContourLines),
                 new MapOverlayTypeViewModel("Slope + contour lines", MapOverlayType.SlopeAndContourLines),
+                new MapOverlayTypeViewModel("Terrain slope direction", MapOverlayType.SlopeDirection),
                 new MapOverlayTypeViewModel("NASA Black Marble 2017", MapOverlayType.BlackMarble),
                 new MapOverlayTypeViewModel("Waymarked Trails Hiking", MapOverlayType.WaymarkedTrailsHiking),
                 new MapOverlayTypeViewModel("OpenFlightMaps", MapOverlayType.OpenFlightMaps),

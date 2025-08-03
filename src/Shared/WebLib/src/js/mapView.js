@@ -169,6 +169,7 @@ export class MapView {
         };
 
         this.setupSlopeAndContourLines();
+        this.setupSlopeDirectionMaterial();
 
         this.imageryOverlayInfos = {
             ThermalSkywaysKk7: {
@@ -918,10 +919,83 @@ export class MapView {
     }
 
     /**
+     * Sets up aspect material for overlay types 'SlopeDirection'. From
+     * https://sandcastle.cesium.com/?src=Globe%20Materials.html
+     */
+    setupSlopeDirectionMaterial() {
+
+        const material = Material.fromType(Material.AspectRampMaterialType);
+        this.slopeDirectionMaterial = material;
+
+        material.translucent = true;
+
+        const shadingUniforms = material.uniforms;
+        shadingUniforms.image = MapView.getAspectColorRamp();
+    }
+
+    /**
+     * Generates a color ramp canvas element for coloring terrain using aspect
+     * (slope of terrain) and returns it.
+     * @returns {object} generated canvas object
+     */
+    static getAspectColorRamp() {
+        const ramp = document.createElement("canvas");
+        ramp.width = 360;
+        ramp.height = 1;
+        const ctx = ramp.getContext("2d");
+
+        const grd = ctx.createLinearGradient(0, 0, 360, 0);
+
+        // colors are ordered clockwise: N, NE, E, SE, S, SW, W, NW
+        const colors = [
+            "108   0 163", // violet
+            "202   0 156", // pink
+            "255  85 104", // red
+            "255 171  71", // orange
+            "244 250   0", // yellow
+            "132 214   0", // light green
+            "  0 171  68", // dark green
+            "  0 104 192", // blue
+        ];
+
+        // gradient stops are ordered counter-clockwise:
+        // 0.0-0.25: E to N
+        // 0.25-0.5: N to W
+        // 0.5-0.75: W to S
+        // 0.75-1.0: S to E
+
+        /**
+         * converts from degrees to gradient stop values [0.0; 1.0[
+         * @param {number} degrees degrees value
+         * @returns {number} gradient stop value
+         */
+        function degreesToStop(degrees){
+            return (((90 - degrees) / 360) + 1.0) % 1.0;
+        }
+
+        for (let degrees = 0; degrees < 360; degrees += 45)
+        {
+            const color = "rgb(" + colors[degrees / 45] + " / 50%)";
+            grd.addColorStop(degreesToStop(degrees - 22.49), color);
+            grd.addColorStop(degreesToStop(degrees + 22.49), color);
+
+            if (degrees == 90){
+                grd.addColorStop(0.0, color);
+                grd.addColorStop(1.0, color);
+            }
+        }
+
+        ctx.fillStyle = grd;
+        ctx.fillRect(0, 0, 360, 1);
+
+        return ramp;
+    }
+
+    /**
      * Sets new map overlay type
      * @param {string} overlayType overlay type constant; the following constants currently can be
      * used: 'None', 'ContourLines', 'SlopeAndContourLines', 'ThermalSkywaysKk7', 'BlackMarble',
-     * 'WaymarkedTrailsHiking', 'OpenFlightMaps'.
+     * 'WaymarkedTrailsHiking', 'OpenFlightMaps', 'SlopeDirection'.
      */
     async setMapOverlayType(overlayType) {
 
@@ -946,6 +1020,10 @@ export class MapView {
 
         case "SlopeAndContourLines":
             this.viewer.scene.globe.material = this.slopeAndContourLinesMaterial;
+            break;
+
+        case "SlopeDirection":
+            this.viewer.scene.globe.material = this.slopeDirectionMaterial;
             break;
 
         default:
