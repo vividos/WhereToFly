@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:WhereToFly.App.Controls"
              xmlns:local="clr-namespace:WhereToFly.App"
-             xmlns:svg="clr-namespace:WhereToFly.App.Svg;assembly=WhereToFly.App.Svg"
              xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="WhereToFly.App.Pages.LocationListPage"
@@ -132,14 +131,14 @@
                         </Grid.GestureRecognizers>
 
                         <!-- Location type image -->
-                        <svg:SvgImage Source="{Binding TypeImageSource, Mode=OneWay}"
-                                      WidthRequest="32"
-                                      HeightRequest="32"
-                                      Margin="4"
-                                      HorizontalOptions="Start"
-                                      VerticalOptions="Center"
-                                      Grid.Column="0"
-                                      Grid.RowSpan="3" />
+                        <controls:TintedImage Source="{Binding TypeImageSource}"
+                                              WidthRequest="32"
+                                              HeightRequest="32"
+                                              Margin="4"
+                                              HorizontalOptions="Start"
+                                              VerticalOptions="Center"
+                                              Grid.Column="0"
+                                              Grid.RowSpan="3" />
 
                         <!-- Takeoff directions -->
                         <controls:TakeoffDirectionsView

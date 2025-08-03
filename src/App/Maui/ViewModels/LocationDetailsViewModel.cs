@@ -189,7 +189,9 @@ namespace WhereToFly.App.ViewModels
             this.distance = 0.0;
 
             this.TypeImageSource =
-                SvgImageCache.GetImageSource(location);
+                ImageSource.FromFile(
+                    LocationListViewModel.ImagePathFromLocationType(
+                        location.Type));
 
             this.DescriptionWebViewSource = new HtmlWebViewSource
             {

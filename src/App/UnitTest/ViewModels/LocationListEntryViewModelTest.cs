@@ -15,16 +15,6 @@ namespace WhereToFly.App.UnitTest.ViewModels
     public class LocationListEntryViewModelTest : UserInterfaceTestBase
     {
         /// <summary>
-        /// Sets up tests
-        /// </summary>
-        [TestInitialize]
-        public void SetUp()
-        {
-            var imageCache = DependencyService.Get<SvgImageCache>();
-            imageCache.AddImage("weblib/images/mountain-15.svg", string.Empty);
-        }
-
-        /// <summary>
         /// Tests ctor
         /// </summary>
         [TestMethod]

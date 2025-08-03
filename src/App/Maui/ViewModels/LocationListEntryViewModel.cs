@@ -130,7 +130,9 @@ namespace WhereToFly.App.ViewModels
                 : 0.0;
 
             this.TypeImageSource =
-                SvgImageCache.GetImageSource(this.location);
+                ImageSource.FromFile(
+                    LocationListViewModel.ImagePathFromLocationType(
+                        this.location.Type));
 
             this.Description = HtmlConverter.StripAllTags(this.location.Description);
 

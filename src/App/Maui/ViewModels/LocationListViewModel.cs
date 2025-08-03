@@ -558,5 +558,15 @@ namespace WhereToFly.App.ViewModels
 
             this.UpdateLocationList();
         }
+
+        /// <summary>
+        /// Returns an image path from given location type
+        /// </summary>
+        /// <param name="locationType">location type</param>
+        /// <returns>image path</returns>
+        internal static string ImagePathFromLocationType(LocationType locationType)
+        {
+            return $"locationtype_{locationType.ToString().ToLowerInvariant()}.png";
+        }
     }
 }
