@@ -27,11 +27,6 @@ load Google Earth .kml and .kmz files.
 The library is licensed using the
 [MIT License](https://github.com/samcragg/sharpkml/blob/master/LICENSE).
 
-The app uses the [Refit](https://paulcbetts.github.io/refit/) library to send
-REST based web service requests.
-The library is licensed using the
-[MIT License](https://github.com/paulcbetts/refit/blob/master/COPYING).
-
 The app uses the [Html Agility Pack](https://html-agility-pack.net/) to parse
 HTML content.
 The library is licensed using the
