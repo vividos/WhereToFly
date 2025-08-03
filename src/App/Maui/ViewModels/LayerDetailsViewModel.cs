@@ -92,7 +92,9 @@ namespace WhereToFly.App.ViewModels
         {
             this.layer = layer;
 
-            this.TypeImageSource = SvgImageCache.GetImageSource(layer);
+            this.TypeImageSource =
+                ImageSource.FromFile(
+                    LayerListViewModel.ImagePathFromLayerType(layer.LayerType));
 
             this.DescriptionWebViewSource = new HtmlWebViewSource
             {

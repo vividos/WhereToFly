@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:WhereToFly.App.Controls"
              xmlns:local="clr-namespace:WhereToFly.App"
-             xmlns:svg="clr-namespace:WhereToFly.App.Svg;assembly=WhereToFly.App.Svg"
              xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
              x:Class="WhereToFly.App.Pages.LayerListPage"
              x:DataType="viewmodels:LayerListViewModel"
@@ -69,13 +68,13 @@
                         </Grid.GestureRecognizers>
 
                         <!-- Layer type image -->
-                        <svg:SvgImage Source="{Binding TypeImageSource, Mode=OneWay}"
-                                      WidthRequest="32"
-                                      HeightRequest="32"
-                                      Margin="4,0,0,0"
-                                      HorizontalOptions="Start"
-                                      VerticalOptions="Center"
-                                      Grid.Column="0" />
+                        <controls:TintedImage Source="{Binding TypeImageSource}"
+                                              WidthRequest="32"
+                                              HeightRequest="32"
+                                              Margin="4,0,0,0"
+                                              HorizontalOptions="Start"
+                                              VerticalOptions="Center"
+                                              Grid.Column="0" />
 
                         <!-- Layer visibility image -->
                         <ContentView Margin="0"
@@ -86,13 +85,12 @@
                                                       NumberOfTapsRequired="1"/>
                             </ContentView.GestureRecognizers>
 
-                            <svg:SvgImage Source="{Binding VisibilityImageSource, Mode=OneWay}"
-                                          WidthRequest="32"
-                                          HeightRequest="32"
-                                          Margin="4,0"
-                                          HorizontalOptions="Start"
-                                          VerticalOptions="Center"
-                                          InputTransparent="true" />
+                            <controls:TintedImage Source="{Binding VisibilityImageSource}"
+                                                  WidthRequest="32"
+                                                  HeightRequest="32"
+                                                  Margin="4,0"
+                                                  HorizontalOptions="Start"
+                                                  VerticalOptions="Center" />
                         </ContentView>
 
                         <!-- Name -->

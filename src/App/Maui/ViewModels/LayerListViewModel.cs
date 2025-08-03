@@ -83,6 +83,35 @@ namespace WhereToFly.App.ViewModels
         }
 
         /// <summary>
+        /// Returns image path from layer type
+        /// </summary>
+        /// <param name="layerType">layer type</param>
+        /// <returns>image path</returns>
+        internal static string ImagePathFromLayerType(LayerType layerType)
+        {
+            return layerType switch
+            {
+                LayerType.LocationLayer => "format_list_bulleted.png",
+                LayerType.TrackLayer => "map_marker_distance.png",
+                _ => "layers_outline.png",
+            };
+        }
+
+        /// <summary>
+        /// Returns an image source for the visibility of the given layer.
+        /// </summary>
+        /// <param name="layer">layer to use</param>
+        /// <returns>image source</returns>
+        internal static ImageSource GetLayerVisibilityImageSource(Layer layer)
+        {
+            string imagePath = layer.IsVisible
+                ? "eye.png"
+                : "eye_off_outline.png";
+
+            return ImageSource.FromFile(imagePath);
+        }
+
+        /// <summary>
         /// Loads data; async method
         /// </summary>
         /// <returns>task to wait on</returns>

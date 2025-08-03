@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
-using WhereToFly.App.Logic;
 using WhereToFly.App.Services.SqliteDatabase;
 using WhereToFly.App.ViewModels;
 
@@ -12,18 +11,8 @@ namespace WhereToFly.App.UnitTest.ViewModels
     /// Unit tests for LayerListViewModel
     /// </summary>
     [TestClass]
-    public class LayerListViewModelTest
+    public class LayerListViewModelTest : UserInterfaceTestBase
     {
-        /// <summary>
-        /// Sets up tests
-        /// </summary>
-        [TestInitialize]
-        public void SetUp()
-        {
-            DependencyService.Register<IDataService, SqliteDatabaseDataService>();
-            DependencyService.Register<SvgImageCache>();
-        }
-
         /// <summary>
         /// Tests ctor
         /// </summary>

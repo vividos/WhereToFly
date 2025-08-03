@@ -98,8 +98,12 @@ namespace WhereToFly.App.ViewModels
             this.parentViewModel = parentViewModel;
             this.Layer = layer;
 
-            this.TypeImageSource = SvgImageCache.GetImageSource(this.Layer);
-            this.VisibilityImageSource = SvgImageCache.GetLayerVisibilityImageSource(this.Layer);
+            this.TypeImageSource =
+                ImageSource.FromFile(
+                    LayerListViewModel.ImagePathFromLayerType(this.Layer.LayerType));
+
+            this.VisibilityImageSource =
+                LayerListViewModel.GetLayerVisibilityImageSource(this.Layer);
 
             this.ItemTappedCommand = new AsyncRelayCommand(this.OnTappedLayerItemAsync);
             this.VisibilityTappedCommand = new AsyncRelayCommand(this.OnTappedLayerVisibilityAsync);
@@ -143,7 +147,9 @@ namespace WhereToFly.App.ViewModels
             var appMapService = DependencyService.Get<IAppMapService>();
             appMapService.MapView.SetLayerVisibility(this.Layer);
 
-            this.VisibilityImageSource = SvgImageCache.GetLayerVisibilityImageSource(this.Layer);
+            this.VisibilityImageSource =
+                LayerListViewModel.GetLayerVisibilityImageSource(this.Layer);
+
             this.OnPropertyChanged(nameof(this.VisibilityImageSource));
         }
 
