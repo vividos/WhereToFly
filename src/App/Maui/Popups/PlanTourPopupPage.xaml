@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <popups:BasePopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                     xmlns:svg="clr-namespace:WhereToFly.App.Svg;assembly=WhereToFly.App.Svg"
+                     xmlns:controls="clr-namespace:WhereToFly.App.Controls"
                      xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
                      xmlns:popups="clr-namespace:WhereToFly.App.Popups"
                      x:Class="WhereToFly.App.Popups.PlanTourPopupPage"
@@ -54,12 +54,12 @@
                           HeightRequest="90">
 
                         <!-- Type image -->
-                        <svg:SvgImage Source="{Binding TypeImageSource, Mode=OneWay}"
-                                      WidthRequest="32"
-                                      HeightRequest="32"
-                                      Margin="4,4,0,0"
-                                      HorizontalOptions="Start" VerticalOptions="Center"
-                                      Grid.Row="0" Grid.Column="0" />
+                        <controls:TintedImage Source="{Binding TypeImageSource}"
+                                              WidthRequest="32"
+                                              HeightRequest="32"
+                                              Margin="4,4,0,0"
+                                              HorizontalOptions="Start" VerticalOptions="Center"
+                                              Grid.Row="0" Grid.Column="0" />
 
                         <!-- Name -->
                         <Label Text="{Binding Name, Mode=OneTime}"

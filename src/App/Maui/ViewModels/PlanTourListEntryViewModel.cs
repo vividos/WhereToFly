@@ -63,7 +63,9 @@ namespace WhereToFly.App.ViewModels
             this.parent = parent;
 
             this.TypeImageSource =
-                SvgImageCache.GetImageSource(this.Location);
+                ImageSource.FromFile(
+                    LocationListViewModel.ImagePathFromLocationType(
+                        this.Location.Type));
 
             this.MoveUpCommand = new Command(
                 () => this.parent.MoveUpLocation(this),
