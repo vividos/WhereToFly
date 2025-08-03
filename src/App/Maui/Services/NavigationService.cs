@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Maui.Views;
+﻿using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui.Extensions;
+using CommunityToolkit.Maui.Views;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using WhereToFly.App.MapView;
@@ -204,42 +206,42 @@ namespace WhereToFly.App.Services
 
             Type popupPageType = popupPageInfo.PopupPageType;
 
-            BasePopupPage? popupPage = null;
+            Popup? popupPage = null;
             if (parameter == null)
             {
-                popupPage = (BasePopupPage?)Activator.CreateInstance(popupPageType);
+                popupPage = (Popup?)Activator.CreateInstance(popupPageType);
             }
             else
             {
-                popupPage = (BasePopupPage?)Activator.CreateInstance(popupPageType, parameter);
+                popupPage = (Popup?)Activator.CreateInstance(popupPageType, parameter);
             }
 
-            if (popupPage != null)
-            {
-                await UserInterface.MainPage.ShowPopupAsync(popupPage);
-            }
-            else
+            if (popupPage == null)
             {
                 throw new InvalidOperationException("couldn't create popup page for popup page key " + popupPageKey);
             }
 
             Type? returnType = popupPageInfo.ReturnType;
-            if (popupPage is IPageResult<TResult> pageResult)
+            if (returnType != null &&
+                typeof(TResult) != returnType)
             {
-                if (returnType != null &&
-                    typeof(TResult) == returnType)
-                {
-                    return await pageResult.ResultTask;
-                }
-                else
-                {
-                    Debug.Assert(
-                        false,
-                        $"the page's {popupPage.GetType().FullName} result type {returnType?.FullName} doesn't match the calling NavigateToPopupPageAsync result type {typeof(TResult).FullName}");
-                }
+                Debug.Assert(
+                    false,
+                    $"the page's {popupPage.GetType().FullName} result type {returnType?.FullName} doesn't match the calling NavigateToPopupPageAsync result type {typeof(TResult).FullName}");
             }
 
-            return null;
+            if (popupPage is Popup<TResult> popupPageWithResult)
+            {
+                IPopupResult<TResult> result = await UserInterface.MainPage.ShowPopupAsync<TResult>(
+                    popupPageWithResult);
+
+                return result.Result;
+            }
+            else
+            {
+                await UserInterface.MainPage.ShowPopupAsync(popupPage);
+                return null;
+            }
         }
 
         /// <summary>

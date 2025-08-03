@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Maui.Views;
+﻿using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui.Extensions;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Models;
 using WhereToFly.App.Popups;
@@ -70,45 +71,53 @@ namespace WhereToFly.App.Pages
 
             ContextMenuPopupPage? popupPage = null;
 
+            Result contextMenuResult = Result.Cancel;
+
             var items = new List<MenuItem>
             {
                 new MenuItem
                 {
                     Text = "Add new waypoint",
                     IconImageSource = ImageSource.FromFile("playlist_plus.png"),
-                    Command = new Command(() => popupPage?.Close(Result.AddNewWaypoint)),
+                    Command = new AsyncRelayCommand(async () => await CloseWithResult(Result.AddNewWaypoint)),
                 },
                 new MenuItem
                 {
                     Text = "Set as compass target",
                     IconImageSource = ImageSource.FromFile("compass_rose.png"),
-                    Command = new Command(() => popupPage?.Close(Result.SetAsCompassTarget)),
+                    Command = new AsyncRelayCommand(async () => await CloseWithResult(Result.SetAsCompassTarget)),
                 },
                 new MenuItem
                 {
                     Text = "Navigate here",
                     IconImageSource = ImageSource.FromFile("directions.png"),
-                    Command = new Command(() => popupPage?.Close(Result.NavigateHere)),
+                    Command = new AsyncRelayCommand(async () => await CloseWithResult(Result.NavigateHere)),
                 },
                 new MenuItem
                 {
                     Text = "Show flying range",
                     IconImageSource = ImageSource.FromFile("arrow_expand_horizontal.png"),
-                    Command = new Command(() => popupPage?.Close(Result.ShowFlyingRange)),
+                    Command = new AsyncRelayCommand(async () => await CloseWithResult(Result.ShowFlyingRange)),
                 },
                 new MenuItem
                 {
                     Text = "Plan tour",
                     IconImageSource = ImageSource.FromFile("map_marker_plus.png"),
-                    Command = new Command(() => popupPage?.Close(Result.PlanTour)),
+                    Command = new AsyncRelayCommand(async () => await CloseWithResult(Result.PlanTour)),
                 },
                 new MenuItem
                 {
                     Text = "Find flights",
                     IconImageSource = ImageSource.FromFile("text_box_search_outline.png"),
-                    Command = new Command(() => popupPage?.Close(Result.FindFlights)),
+                    Command = new AsyncRelayCommand(async () => await CloseWithResult(Result.FindFlights)),
                 },
             };
+
+            async Task CloseWithResult(Result selectedResult)
+            {
+                contextMenuResult = selectedResult;
+                await (popupPage?.CloseAsync() ?? Task.CompletedTask);
+            }
 
             var viewModel = new ContextMenuPopupViewModel(
                 caption,
@@ -117,9 +126,14 @@ namespace WhereToFly.App.Pages
 
             popupPage = new ContextMenuPopupPage(viewModel);
 
-            object? result = await UserInterface.MainPage.ShowPopupAsync(popupPage);
+            IPopupResult popupResult = await UserInterface.MainPage.ShowPopupAsync(popupPage);
 
-            return (Result?)result ?? Result.Cancel;
+            if (popupResult.WasDismissedByTappingOutsideOfPopup)
+            {
+                return Result.Cancel;
+            }
+
+            return contextMenuResult;
         }
     }
 }

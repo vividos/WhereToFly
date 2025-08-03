@@ -21,6 +21,8 @@ namespace WhereToFly.App.Popups
             this.InitializeComponent();
 
             this.BindingContext = this.viewModel = new FlyingRangePopupViewModel(App.Settings!);
+
+            this.Closed += this.OnClosed;
         }
 
         /// <summary>
@@ -36,20 +38,13 @@ namespace WhereToFly.App.Popups
         /// <summary>
         /// Called when the popup was closed
         /// </summary>
-        /// <param name="result">result object</param>
-        /// <param name="wasDismissedByTappingOutsideOfPopup">
-        /// true when dismissed by tapping outside of popup
-        /// </param>
-        /// <param name="token">cancellation token; unused</param>
-        /// <returns>task to wait on</returns>
-        protected override async Task OnClosed(
-            object? result,
-            bool wasDismissedByTappingOutsideOfPopup,
-            CancellationToken token = default)
+        /// <param name="sender">sender object</param>
+        /// <param name="args">event args</param>
+        private async void OnClosed(object? sender, EventArgs args)
         {
-            await this.viewModel.StoreFlyingRangeParameters();
+            this.Closed -= this.OnClosed;
 
-            await base.OnClosed(result, wasDismissedByTappingOutsideOfPopup, token);
+            await this.viewModel.StoreFlyingRangeParameters();
         }
     }
 }

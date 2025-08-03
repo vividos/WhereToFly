@@ -399,7 +399,8 @@
 
     <!-- Where-to-fly specific styles -->
     <Style TargetType="toolkit:Popup" ApplyToDerivedTypes="True">
-        <Setter Property="Color"
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="BackgroundColor"
                 Value="{AppThemeBinding Light={StaticResource PopupPageBackgroundColorLight}, Dark={StaticResource PopupPageBackgroundColorDark}}" />
     </Style>
 

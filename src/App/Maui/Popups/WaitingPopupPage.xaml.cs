@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Maui.Views;
+﻿using CommunityToolkit.Maui.Extensions;
+using CommunityToolkit.Maui.Views;
 
 namespace WhereToFly.App.Popups
 {
@@ -82,21 +83,8 @@ namespace WhereToFly.App.Popups
         {
             this.cancellationTokenSource?.Cancel();
 
-            this.Close();
-        }
-
-        /// <summary>
-        /// Called when the user tapped outside of the popup
-        /// </summary>
-        /// <param name="token">default token; unused</param>
-        /// <returns>task to wait on</returns>
-        protected override Task OnDismissedByTappingOutsideOfPopup(
-            CancellationToken token = default)
-        {
-            this.cancellationTokenSource?.Cancel();
-
-            return base.OnDismissedByTappingOutsideOfPopup(
-                this.cancellationTokenSource?.Token ?? token);
+            MainThread.BeginInvokeOnMainThread(
+                async () => await this.CloseAsync());
         }
     }
 }

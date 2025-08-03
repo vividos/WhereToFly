@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Maui.Views;
+﻿using CommunityToolkit.Maui.Extensions;
 using System.Windows.Input;
 using WhereToFly.App.Popups;
 using WhereToFly.App.ViewModels;
@@ -107,9 +107,9 @@ namespace WhereToFly.App.Controls
             var viewModel = new ContextMenuPopupViewModel(
                 this.Caption,
                 this.Items,
-                () =>
+                async () =>
                 {
-                    popupPage?.Close();
+                    await (popupPage?.CloseAsync() ?? Task.CompletedTask);
                 });
 
             popupPage = new ContextMenuPopupPage(viewModel);
