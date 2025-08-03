@@ -15,8 +15,8 @@ Builds are made by GitHub Actions:
 
 [![Build Android app](https://github.com/vividos/WhereToFly/actions/workflows/build-app-android.yml/badge.svg)](https://github.com/vividos/WhereToFly/actions/workflows/build-app-android.yml)
 
-Test versions are available via AppCenter:
-https://install.appcenter.ms/users/michael.fink/apps/wheretofly/distribution_groups/beta%20tester
+Official versions are available via GitHub releases:
+https://github.com/vividos/WhereToFly/releases/latest
 
 Builds are occasionally checked with SonarCloud:
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=WhereToFly&metric=alert_status)](https://sonarcloud.io/dashboard?id=WhereToFly)
