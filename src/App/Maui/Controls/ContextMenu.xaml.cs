@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Maui.Views;
 using System.Windows.Input;
-using WhereToFly.App.Logic;
 using WhereToFly.App.Popups;
 using WhereToFly.App.ViewModels;
 
@@ -13,10 +12,6 @@ namespace WhereToFly.App.Controls
     public partial class ContextMenu : ContentView
     {
         #region Binding properties
-        /// <summary>
-        /// Image source for the context menu 3-dot button
-        /// </summary>
-        public ImageSource ContextMenuImageSource { get; }
 
         /// <summary>
         /// Context menu command
@@ -59,9 +54,6 @@ namespace WhereToFly.App.Controls
         public ContextMenu()
         {
             this.BindingContext = this;
-
-            this.ContextMenuImageSource =
-                SvgImageCache.GetImageSource("icons/dots-vertical.svg");
 
             this.ContextMenuCommand = new Command(this.ShowContextMenu);
 

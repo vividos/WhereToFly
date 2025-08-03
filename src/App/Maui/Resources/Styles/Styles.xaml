@@ -409,6 +409,11 @@
                 Value="{AppThemeBinding Light={StaticResource SvgImageTintColorLight}, Dark={StaticResource SvgImageTintColorDark}}" />
     </Style>
 
+    <Style TargetType="controls:TintedImage">
+        <Setter Property="TintColor"
+                Value="{AppThemeBinding Light={StaticResource ImageTintColorLight}, Dark={StaticResource ImageTintColorDark}}" />
+    </Style>
+
     <Style x:Key="ColorPickerStyle" TargetType="controls:ColorPickerView" ApplyToDerivedTypes="True">
         <Setter Property="SelectionBorderColor"
                 Value="{AppThemeBinding Light={StaticResource ColorPickerBorderSelectionColorLight}, Dark={StaticResource ColorPickerBorderSelectionColorDark}}" />

@@ -113,17 +113,17 @@
                                               VerticalOptions="Center">
                             <controls:ContextMenu.Items>
                                 <MenuItem Text="Zoom to"
-                                          IconImageSource="{local:Image info/images/magnify-plus-outline.svg}"
+                                          IconImageSource="magnify_plus_outline.png"
                                           IsEnabled="{Binding IsEnabledZoomToLayer}"
                                           Command="{Binding ZoomToLayerCommand}"
                                           CommandParameter="{Binding .}" />
                                 <MenuItem Text="Export"
-                                          IconImageSource="{local:Image info/images/export-variant.svg}"
+                                          IconImageSource="export_variant.png"
                                           IsEnabled="{Binding IsEnabledExportLayer}"
                                           Command="{Binding ExportLayerCommand}"
                                           CommandParameter="{Binding .}" />
                                 <MenuItem Text="Delete" IsDestructive="True"
-                                          IconImageSource="{local:Image info/images/delete.svg}"
+                                          IconImageSource="delete.png"
                                           IsEnabled="{Binding IsEnabledDeleteLayer}"
                                           Command="{Binding DeleteLayerCommand}"
                                           CommandParameter="{Binding .}" />

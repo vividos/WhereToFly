@@ -181,19 +181,19 @@
                                               VerticalOptions="Center">
                             <controls:ContextMenu.Items>
                                 <MenuItem Text="Show Details"
-                                          IconImageSource="{local:Image info/images/information-outline.svg}"
+                                          IconImageSource="information_outline.png"
                                           Command="{Binding ShowDetailsLocationCommand}" />
                                 <MenuItem Text="Zoom to"
-                                          IconImageSource="{local:Image info/images/magnify-plus-outline.svg}"
+                                          IconImageSource="magnify_plus_outline.png"
                                           Command="{Binding ZoomToLocationCommand}" />
                                 <MenuItem Text="Set as compass target"
-                                          IconImageSource="{local:Image weblib/images/compass-rose.svg}"
+                                          IconImageSource="compass_rose.png"
                                           Command="{Binding SetAsCompassTargetCommand}" />
                                 <MenuItem Text="Delete" IsDestructive="True"
-                                          IconImageSource="{local:Image info/images/delete.svg}"
+                                          IconImageSource="delete.png"
                                           Command="{Binding DeleteLocationCommand}" />
                                 <MenuItem Text="Add tour plan location"
-                                          IconImageSource="{local:Image weblib/images/map-marker-plus.svg}"
+                                          IconImageSource="map_marker_plus.png"
                                           Command="{Binding AddTourPlanLocationCommand}"
                                           AutomationId="AddTourPlanLocation" />
                             </controls:ContextMenu.Items>

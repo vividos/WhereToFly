@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <popups:BasePopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                     xmlns:svg="clr-namespace:WhereToFly.App.Svg;assembly=WhereToFly.App.Svg"
+                     xmlns:controls="clr-namespace:WhereToFly.App.Controls"
                      xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
                      xmlns:popups="clr-namespace:WhereToFly.App.Popups"
                      x:Class="WhereToFly.App.Popups.ContextMenuPopupPage"
@@ -40,13 +40,14 @@
                         </Grid.GestureRecognizers>
 
                         <!-- Menu item icon -->
-                        <svg:SvgImage Source="{Binding IconImageSource, Mode=OneWay}"
-                                      TintColor="{Binding ForegroundColor}"
-                                      InputTransparent="True"
-                                      WidthRequest="32"
-                                      HeightRequest="32"
-                                      HorizontalOptions="Center"
-                                      VerticalOptions="Center" />
+                        <controls:TintedImage
+                            Source="{Binding IconImageSource}"
+                            TintColor="{Binding ForegroundColor}"
+                            InputTransparent="True"
+                            WidthRequest="32"
+                            HeightRequest="32"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center" />
 
                         <!-- Menu item text -->
                         <Label Grid.Column="1" Text="{Binding Text, Mode=OneTime}"

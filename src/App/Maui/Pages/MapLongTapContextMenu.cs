@@ -75,37 +75,37 @@ namespace WhereToFly.App.Pages
                 new MenuItem
                 {
                     Text = "Add new waypoint",
-                    IconImageSource = SvgImageCache.GetImageSource("info/images/playlist-plus.svg"),
+                    IconImageSource = ImageSource.FromFile("playlist_plus.png"),
                     Command = new Command(() => popupPage?.Close(Result.AddNewWaypoint)),
                 },
                 new MenuItem
                 {
                     Text = "Set as compass target",
-                    IconImageSource = SvgImageCache.GetImageSource("weblib/images/compass-rose.svg"),
+                    IconImageSource = ImageSource.FromFile("compass_rose.png"),
                     Command = new Command(() => popupPage?.Close(Result.SetAsCompassTarget)),
                 },
                 new MenuItem
                 {
                     Text = "Navigate here",
-                    IconImageSource = SvgImageCache.GetImageSource("info/images/directions.svg"),
+                    IconImageSource = ImageSource.FromFile("directions.png"),
                     Command = new Command(() => popupPage?.Close(Result.NavigateHere)),
                 },
                 new MenuItem
                 {
                     Text = "Show flying range",
-                    IconImageSource = SvgImageCache.GetImageSource("info/images/arrow-expand-horizontal.svg"),
+                    IconImageSource = ImageSource.FromFile("arrow_expand_horizontal.png"),
                     Command = new Command(() => popupPage?.Close(Result.ShowFlyingRange)),
                 },
                 new MenuItem
                 {
                     Text = "Plan tour",
-                    IconImageSource = SvgImageCache.GetImageSource("weblib/images/map-marker-plus.svg"),
+                    IconImageSource = ImageSource.FromFile("map_marker_plus.png"),
                     Command = new Command(() => popupPage?.Close(Result.PlanTour)),
                 },
                 new MenuItem
                 {
                     Text = "Find flights",
-                    IconImageSource = SvgImageCache.GetImageSource("icons/text-box-search-outline.svg"),
+                    IconImageSource = ImageSource.FromFile("text_box_search_outline.png"),
                     Command = new Command(() => popupPage?.Close(Result.FindFlights)),
                 },
             };

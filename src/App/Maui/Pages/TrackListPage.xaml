@@ -127,16 +127,16 @@
                                                   VerticalOptions="Center">
                                 <controls:ContextMenu.Items>
                                     <MenuItem Text="Show Details"
-                                              IconImageSource="{local:Image info/images/information-outline.svg}"
+                                              IconImageSource="information_outline.png"
                                               Command="{Binding ShowTrackDetailsCommand}" />
                                     <MenuItem Text="Zoom to"
-                                              IconImageSource="{local:Image info/images/magnify-plus-outline.svg}"
+                                              IconImageSource="magnify_plus_outline.png"
                                               Command="{Binding ZoomToTrackCommand}" />
                                     <MenuItem Text="Export"
-                                              IconImageSource="{local:Image info/images/export-variant.svg}"
+                                              IconImageSource="export_variant.png"
                                               Command="{Binding ExportTrackCommand}" />
                                     <MenuItem Text="Delete" IsDestructive="True"
-                                              IconImageSource="{local:Image info/images/delete.svg}"
+                                              IconImageSource="delete.png"
                                               Command="{Binding DeleteTrackCommand}" />
                                 </controls:ContextMenu.Items>
                             </controls:ContextMenu>
