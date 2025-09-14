@@ -12,6 +12,7 @@ Released on ?.
 🐛 Bugfixes
 
 - Fixed crash when opening external links
+- Fixed potential crash when app tries to change the app's color theme
 
 ## Version 1.16.0
 

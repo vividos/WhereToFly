@@ -31,21 +31,7 @@ namespace WhereToFly.App
         public AppTheme UserAppTheme
         {
             get => App.UserAppTheme;
-            set
-            {
-                bool themeChanged = App.UserAppTheme != value;
-
-                App.UserAppTheme = value;
-
-                // refresh the menu page
-                if (themeChanged &&
-                    App.Windows.Count > 0 &&
-                    MainPage is RootPage rootPage &&
-                    rootPage.Flyout is MenuPage)
-                {
-                    rootPage.Flyout = new MenuPage();
-                }
-            }
+            set => SetUserAppTheme(value);
         }
 
         /// <summary>
@@ -129,5 +115,32 @@ namespace WhereToFly.App
             string? destruction,
             params string[] buttons)
             => MainPage.DisplayActionSheet(title, cancel, destruction, buttons);
+
+        /// <summary>
+        /// Sets new user app theme, and ensures that it's running in the main thread
+        /// </summary>
+        /// <param name="newUserAppTheme">new user app theme to set</param>
+        private static void SetUserAppTheme(AppTheme newUserAppTheme)
+        {
+            if (!MainThread.IsMainThread)
+            {
+                MainThread.BeginInvokeOnMainThread(
+                    () => SetUserAppTheme(newUserAppTheme));
+                return;
+            }
+
+            bool themeChanged = App.UserAppTheme != newUserAppTheme;
+
+            App.UserAppTheme = newUserAppTheme;
+
+            // refresh the menu page
+            if (themeChanged &&
+                App.Windows.Count > 0 &&
+                MainPage is RootPage rootPage &&
+                rootPage.Flyout is MenuPage)
+            {
+                rootPage.Flyout = new MenuPage();
+            }
+        }
     }
 }
