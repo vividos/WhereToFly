@@ -204,16 +204,24 @@ namespace WhereToFly.App.Services
                     nameof(parameter));
             }
 
+            IServiceProvider serviceProvider =
+                IPlatformApplication.Current?.Services
+                ?? throw new InvalidOperationException("Serice provider is not available");
+
             Type popupPageType = popupPageInfo.PopupPageType;
 
             Popup? popupPage = null;
             if (parameter == null)
             {
-                popupPage = (Popup?)Activator.CreateInstance(popupPageType);
+                popupPage = (Popup?)ActivatorUtilities.CreateInstance(
+                    serviceProvider,
+                    popupPageType);
             }
             else
             {
-                popupPage = (Popup?)Activator.CreateInstance(popupPageType, parameter);
+                popupPage = (Popup?)Activator.CreateInstance(
+                    popupPageType,
+                    parameter);
             }
 
             if (popupPage == null)
@@ -297,6 +305,10 @@ namespace WhereToFly.App.Services
                 flyoutPage.IsPresented = false;
             }
 
+            IServiceProvider serviceProvider =
+                IPlatformApplication.Current?.Services
+                ?? throw new InvalidOperationException("Serice provider is not available");
+
             Page? displayPage = null;
             if (pageType == typeof(MapPage))
             {
@@ -304,11 +316,16 @@ namespace WhereToFly.App.Services
             }
             else if (parameter == null)
             {
-                displayPage = (Page?)Activator.CreateInstance(pageType);
+                displayPage = (Page?)ActivatorUtilities.CreateInstance(
+                    serviceProvider,
+                    pageType);
             }
             else
             {
-                displayPage = (Page?)Activator.CreateInstance(pageType, parameter);
+                displayPage = (Page?)ActivatorUtilities.CreateInstance(
+                    serviceProvider,
+                    pageType,
+                    parameter);
             }
 
             if (displayPage != null)
