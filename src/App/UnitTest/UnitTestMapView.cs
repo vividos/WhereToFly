@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WhereToFly.App.MapView;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
+using WhereToFly.Shared.Model;
 
 namespace WhereToFly.App.UnitTest
 {
@@ -88,6 +89,18 @@ namespace WhereToFly.App.UnitTest
             return Task.CompletedTask;
         }
 
+        /// <inheritdoc />
+        public void ShowMessageBand(string messageText)
+        {
+            Debug.WriteLine($"MapView: ShowMessageBand was called, with text {messageText}");
+        }
+
+        /// <inheritdoc />
+        public void HideMessageBand()
+        {
+            Debug.WriteLine("MapView: HideMessageBand was called");
+        }
+
         /// <summary>
         /// Updates current location of user on the map
         /// </summary>
@@ -132,9 +145,28 @@ namespace WhereToFly.App.UnitTest
         }
 
         /// <inheritdoc />
+        public Location? GetNearbyPoiLocationById(string locationId)
+        {
+            Debug.WriteLine("MapView: GetNearbyPoiLocationById was called");
+            return null;
+        }
+
+        /// <inheritdoc />
         public void AddNearbyPoiLocations(IEnumerable<Location> nearbyPoiLocations)
         {
             Debug.WriteLine("MapView: AddNearbyPoiLocations was called");
+        }
+
+        /// <inheritdoc />
+        public void ShowFindResult(string text, MapPoint point)
+        {
+            Debug.WriteLine("MapView: ShowFindResult was called");
+        }
+
+        /// <inheritdoc />
+        public void ShowFlyingRange(MapPoint point, FlyingRangeParameters parameters)
+        {
+            Debug.WriteLine("MapView: ShowFlyingRange was called");
         }
 
         #region Layer methods
@@ -261,6 +293,12 @@ namespace WhereToFly.App.UnitTest
         public void UpdateTrack(Track track)
         {
             Debug.WriteLine("MapView: UpdateTrack was called");
+        }
+
+        /// <inheritdoc />
+        public void UpdateLiveTrack(LiveTrackData data)
+        {
+            Debug.WriteLine("MapView: UpdateLiveTrack was called");
         }
 
         /// <inheritdoc />

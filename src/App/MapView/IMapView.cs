@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
+using WhereToFly.Shared.Model;
 
 namespace WhereToFly.App.MapView
 {
@@ -64,6 +65,17 @@ namespace WhereToFly.App.MapView
             string? bingMapsApiKey);
 
         /// <summary>
+        /// Shows a message band at the top of the map, with given message text
+        /// </summary>
+        /// <param name="messageText">message text</param>
+        void ShowMessageBand(string messageText);
+
+        /// <summary>
+        /// Hides message band again
+        /// </summary>
+        void HideMessageBand();
+
+        /// <summary>
         /// Updates the "my location" pin in the map
         /// </summary>
         /// <param name="position">new position to use</param>
@@ -104,10 +116,32 @@ namespace WhereToFly.App.MapView
         Task FindNearbyPois();
 
         /// <summary>
+        /// Finds a nearby POI location by given location ID.
+        /// </summary>
+        /// <param name="locationId">location ID to use</param>
+        /// <returns>found location, or null when no location could be found</returns>
+        Location? GetNearbyPoiLocationById(string locationId);
+
+        /// <summary>
         /// Adds a list of nearby POI locations
         /// </summary>
         /// <param name="nearbyPoiLocations">list of nearby POI locations</param>
         void AddNearbyPoiLocations(IEnumerable<Location> nearbyPoiLocations);
+
+        /// <summary>
+        /// Shows the find result pin and zooms to it
+        /// </summary>
+        /// <param name="text">text of find result</param>
+        /// <param name="point">find result map point</param>
+        void ShowFindResult(string text, MapPoint point);
+
+        /// <summary>
+        /// Shows flying range by displaying a half transparent cone on the given point and using
+        /// some flying range parameters
+        /// </summary>
+        /// <param name="point">map point to display cone at</param>
+        /// <param name="parameters">flying range parameters</param>
+        void ShowFlyingRange(MapPoint point, FlyingRangeParameters parameters);
 
         #region Layer methods
         /// <summary>
@@ -206,6 +240,12 @@ namespace WhereToFly.App.MapView
         /// </summary>
         /// <param name="track">track to update</param>
         void UpdateTrack(Track track);
+
+        /// <summary>
+        /// Updates live track data for a track
+        /// </summary>
+        /// <param name="data">live track data with updated track points</param>
+        void UpdateLiveTrack(LiveTrackData data);
 
         /// <summary>
         /// Removes track from map
