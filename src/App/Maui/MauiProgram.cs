@@ -19,7 +19,6 @@ namespace WhereToFly.App
         {
             var builder = MauiApp.CreateBuilder();
 
-#pragma warning disable CA1416 // Validate platform compatibility
             builder
                 .UseMauiApp<App>()
 #if WINDOWS
@@ -28,7 +27,7 @@ namespace WhereToFly.App
                     {
                         options.SetShouldEnableSnackbarOnWindows(true);
                     })
-#else
+#elif ANDROID
                 .UseMauiCommunityToolkit()
 #endif
 #if WINDOWS
@@ -39,7 +38,6 @@ namespace WhereToFly.App
 #endif
                 .UseSkiaSharp()
                 .UseMapView();
-#pragma warning restore CA1416 // Validate platform compatibility
 
             builder = WeatherWebView.UseWeatherWebView(builder);
 
