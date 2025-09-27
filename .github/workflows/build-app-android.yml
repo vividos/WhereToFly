@@ -25,6 +25,11 @@ jobs:
       with:
         dotnet-version: 10.0.x
 
+    - name: Install workloads
+      shell: cmd
+      run: |
+        dotnet workload install maui
+
     - name: Prepare app signing
       uses: timheuer/base64-to-file@v1.2
       with:
