@@ -22,7 +22,9 @@ namespace WhereToFly.App.UnitTest.ViewModels
             try
             {
                 var viewModel = new MapPageViewModel(
+                    new UnitTestMapView(),
                     DependencyService.Get<IAppMapService>(),
+                    DependencyService.Get<IDataService>(),
                     DependencyService.Get<IGeolocationService>());
             }
             catch (Exception ex)
