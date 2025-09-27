@@ -129,7 +129,7 @@
     <PackageReference Include="HtmlAgilityPack" Version="1.12.2" />
     <PackageReference Include="Markdig" Version="0.42.0" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.7" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.9" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0-rc.1.25451.107" />
     <PackageReference Include="Microsoft.Maui.Controls" Version="$(DotNetMauiVersion)" />
     <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.119.0" />
     <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
