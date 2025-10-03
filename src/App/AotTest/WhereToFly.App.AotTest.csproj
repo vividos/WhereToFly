@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>$(DotNetVersion);$(DotNetVersion)-android;$(DotNetVersion)-windows10.0.19041.0</TargetFrameworks>
@@ -21,22 +21,20 @@
     <RuntimeIdentifier>android-arm64</RuntimeIdentifier>
   </PropertyGroup>
 
-  <!-- PropertyGroup Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows' ">
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-  </PropertyGroup -->
-
   <ItemGroup>
     <ProjectReference Include="..\..\Geo\WhereToFly.Geo.csproj" />
     <ProjectReference Include="..\..\Shared\Model\WhereToFly.Shared.Model.csproj" />
     <ProjectReference Include="..\MapView\WhereToFly.App.MapView.csproj" />
-    <TrimmerRootAssembly Include="WhereToFly.App.MapView" />
-    <TrimmerRootAssembly Include="WhereToFly.Geo" />
-    <TrimmerRootAssembly Include="WhereToFly.Shared.Model" />
+    <TrimmerRootAssembly Include="WhereToFly.App.MapView" RootMode="%(TrimmerRootAssembly.RootMode)" />
+    <TrimmerRootAssembly Include="WhereToFly.Geo" RootMode="%(TrimmerRootAssembly.RootMode)" />
+    <TrimmerRootAssembly Include="WhereToFly.Shared.Model" RootMode="%(TrimmerRootAssembly.RootMode)" />
+    <TrimmerRootAssembly Include="Microsoft.AppCenter" RootMode="%(TrimmerRootAssembly.RootMode)" />
+    <TrimmerRootAssembly Include="SharpKml.Core" RootMode="%(TrimmerRootAssembly.RootMode)" />
   </ItemGroup>
 
   <ItemGroup  Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'windows' ">
     <ProjectReference Include="..\Maui\WhereToFly.App.Maui.csproj" />
-    <TrimmerRootAssembly Include="WhereToFly.App.Maui" />
+    <TrimmerRootAssembly Include="WhereToFly.App.Maui" RootMode="%(TrimmerRootAssembly.RootMode)" />
   </ItemGroup>
 
 </Project>
