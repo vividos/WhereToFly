@@ -7,6 +7,14 @@
     <DefaultItemExcludes>$(DefaultItemExcludes);Frontend\**</DefaultItemExcludes>
   </PropertyGroup>
 
+  <!--
+    Workaround for .NET 9 where MapStaticAssets() doesn't work together with
+    dynamically importing .js modules with JS.InvokeAsync<IJSObjectReference>()
+  -->
+  <PropertyGroup Condition=" $(TargetFramework) == 'net9.0'">
+    <BlazorCacheBootResources>false</BlazorCacheBootResources>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\Geo\WhereToFly.Geo.csproj" />
     <ProjectReference Include="..\..\WebApi\Logic\WhereToFly.WebApi.Logic.csproj" />
