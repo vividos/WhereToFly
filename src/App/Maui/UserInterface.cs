@@ -90,7 +90,7 @@ namespace WhereToFly.App
         {
             await MainPage.Dispatcher.DispatchAsync(async () =>
             {
-                await MainPage.DisplayAlert(
+                await MainPage.DisplayAlertAsync(
                         Constants.AppTitle,
                         message,
                         cancel);
@@ -102,7 +102,7 @@ namespace WhereToFly.App
             string message,
             string accept,
             string cancel)
-            => MainPage.DisplayAlert(
+            => MainPage.DisplayAlertAsync(
                 Constants.AppTitle,
                 message,
                 accept,
@@ -114,7 +114,7 @@ namespace WhereToFly.App
             string? cancel,
             string? destruction,
             params string[] buttons)
-            => MainPage.DisplayActionSheet(title, cancel, destruction, buttons);
+            => MainPage.DisplayActionSheetAsync(title, cancel, destruction, buttons);
 
         /// <summary>
         /// Sets new user app theme, and ensures that it's running in the main thread
