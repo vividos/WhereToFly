@@ -19,6 +19,11 @@ namespace WhereToFly.App.ViewModels
         private readonly AppSettings appSettings;
 
         /// <summary>
+        /// Compass geo services
+        /// </summary>
+        private readonly CompassGeoServices compassGeoServices;
+
+        /// <summary>
         /// Current position
         /// </summary>
         private Microsoft.Maui.Devices.Sensors.Location? position;
@@ -167,9 +172,13 @@ namespace WhereToFly.App.ViewModels
         /// Creates a new compass details view model
         /// </summary>
         /// <param name="appSettings">app settings to use</param>
-        public CompassDetailsViewModel(AppSettings appSettings)
+        /// <param name="compassGeoServices">compass geo services</param>
+        public CompassDetailsViewModel(
+            AppSettings appSettings,
+            CompassGeoServices compassGeoServices)
         {
             this.appSettings = appSettings;
+            this.compassGeoServices = compassGeoServices;
 
             this.SetTargetDirectionCommand = new AsyncRelayCommand(this.SetTargetDirection);
             this.ClearCompassTargetCommand = new AsyncRelayCommand(this.ClearCompassTarget);
@@ -405,13 +414,11 @@ namespace WhereToFly.App.ViewModels
             this.OnPropertyChanged(nameof(this.MagneticNorthHeadingInDegrees));
 
             // try to translate magnetic north heading to true north
-            var platform = DependencyService.Get<CompassGeoServices>();
-
             int headingTrueNorth = 0;
 
             bool translateSuccessful =
                 this.position != null &&
-                platform.TranslateCompassMagneticNorthToTrueNorth(
+                this.compassGeoServices.TranslateCompassMagneticNorthToTrueNorth(
                     this.currentCompassHeading,
                     this.position.Latitude,
                     this.position.Longitude,

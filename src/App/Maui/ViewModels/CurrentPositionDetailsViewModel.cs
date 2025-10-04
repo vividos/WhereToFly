@@ -20,6 +20,11 @@ namespace WhereToFly.App.ViewModels
         private readonly AppSettings appSettings;
 
         /// <summary>
+        /// Compass geo services
+        /// </summary>
+        private readonly CompassGeoServices compassGeoServices;
+
+        /// <summary>
         /// Timer to update LastPositionFix property
         /// </summary>
         private readonly System.Timers.Timer timerUpdateLastPositionFix = new();
@@ -294,9 +299,13 @@ namespace WhereToFly.App.ViewModels
         /// Creates a new current position details view model
         /// </summary>
         /// <param name="appSettings">app settings to use</param>
-        public CurrentPositionDetailsViewModel(AppSettings appSettings)
+        /// <param name="compassGeoServices">compass geo services</param>
+        public CurrentPositionDetailsViewModel(
+            AppSettings appSettings,
+            CompassGeoServices compassGeoServices)
         {
             this.appSettings = appSettings;
+            this.compassGeoServices = compassGeoServices;
 
             this.SetupTimer();
 
@@ -549,13 +558,11 @@ namespace WhereToFly.App.ViewModels
             this.OnPropertyChanged(nameof(this.MagneticNorthHeadingInDegrees));
 
             // try to translate magnetic north heading to true north
-            var platform = DependencyService.Get<CompassGeoServices>();
-
             int headingTrueNorth = 0;
 
             bool translateSuccessful =
                 this.position != null &&
-                platform.TranslateCompassMagneticNorthToTrueNorth(
+                this.compassGeoServices.TranslateCompassMagneticNorthToTrueNorth(
                     this.currentCompassHeading,
                     this.position.Latitude,
                     this.position.Longitude,

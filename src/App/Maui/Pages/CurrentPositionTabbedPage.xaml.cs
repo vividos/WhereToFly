@@ -8,12 +8,13 @@
         /// <summary>
         /// Creates new current position tabbed page
         /// </summary>
-        public CurrentPositionTabbedPage()
+        /// <param name="services">service provider</param>
+        public CurrentPositionTabbedPage(IServiceProvider services)
         {
             this.InitializeComponent();
 
-            this.Children.Add(new CurrentPositionDetailsPage());
-            this.Children.Add(new CompassDetailsPage());
+            this.Children.Add(new CurrentPositionDetailsPage(services));
+            this.Children.Add(new CompassDetailsPage(services));
         }
     }
 }

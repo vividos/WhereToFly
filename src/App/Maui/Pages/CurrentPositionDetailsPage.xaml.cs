@@ -21,13 +21,17 @@ namespace WhereToFly.App.Pages
         /// <summary>
         /// Creates new current position details page
         /// </summary>
-        public CurrentPositionDetailsPage()
+        /// <param name="services">service provider</param>
+        public CurrentPositionDetailsPage(IServiceProvider services)
         {
             this.InitializeComponent();
 
             this.geolocationService = DependencyService.Get<IGeolocationService>();
 
-            this.BindingContext = this.viewModel = new CurrentPositionDetailsViewModel(App.Settings!);
+            this.BindingContext = this.viewModel =
+                new CurrentPositionDetailsViewModel(
+                    App.Settings!,
+                    services.GetRequiredService<CompassGeoServices>());
 
             Task.Run(this.InitPositionAsync);
         }

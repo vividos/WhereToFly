@@ -45,6 +45,8 @@ namespace WhereToFly.App
             builder.Logging.AddDebug();
 #endif
 
+            builder.Services.AddSingleton<CompassGeoServices>();
+
             return builder.Build();
         }
     }

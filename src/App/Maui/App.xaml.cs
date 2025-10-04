@@ -129,7 +129,6 @@ namespace WhereToFly.App
             DependencyService.Register<IDataService, Services.SqliteDatabase.SqliteDatabaseDataService>();
             DependencyService.Register<IGeolocationService, GeolocationService>();
             DependencyService.Register<LiveDataRefreshService>();
-            DependencyService.Register<CompassGeoServices>();
         }
 
         /// <summary>
