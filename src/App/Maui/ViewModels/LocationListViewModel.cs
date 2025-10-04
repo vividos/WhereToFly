@@ -264,7 +264,7 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         public async Task FilterTakeoffDirectionsAsync()
         {
-            var result = await NavigationService.Instance.NavigateToPopupPageAsync<LocationFilterSettings>(
+            var result = await UserInterface.NavigationService.NavigateToPopupPageAsync<LocationFilterSettings>(
                 PopupPageKey.FilterTakeoffDirectionsPopupPage,
                 true,
                 this.appSettings.LastLocationFilterSettings);
@@ -287,7 +287,7 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         internal async Task NavigateToLocationDetails(Location location)
         {
-            await NavigationService.Instance.NavigateAsync(PageKey.LocationDetailsPage, true, location);
+            await UserInterface.NavigationService.NavigateAsync(PageKey.LocationDetailsPage, true, location);
         }
 
         /// <summary>

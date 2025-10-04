@@ -1,7 +1,6 @@
 ﻿using System.Windows.Input;
 using WhereToFly.App.Abstractions;
 using WhereToFly.App.Logic;
-using WhereToFly.App.Services;
 using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.ViewModels
@@ -94,14 +93,7 @@ namespace WhereToFly.App.ViewModels
         /// <summary>
         /// Indicates if the height profile view is displayed using a dark theme
         /// </summary>
-        public bool UseDarkTheme
-        {
-            get
-            {
-                var userInterface = DependencyService.Get<IUserInterface>();
-                return userInterface.IsDarkTheme;
-            }
-        }
+        public bool UseDarkTheme => UserInterface.IsDarkTheme;
         #endregion
 
         /// <summary>
@@ -135,7 +127,7 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         private async Task EditTrackInfos()
         {
-            var editedTrack = await NavigationService.Instance.NavigateToPopupPageAsync<Track?>(
+            var editedTrack = await UserInterface.NavigationService.NavigateToPopupPageAsync<Track?>(
                 PopupPageKey.SetTrackInfosPopupPage,
                 true,
                 this.Track);
@@ -163,7 +155,7 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         private async Task OpenHeightProfilePage()
         {
-            await NavigationService.Instance.NavigateAsync(
+            await UserInterface.NavigationService.NavigateAsync(
                 PageKey.TrackHeightProfilePage,
                 true,
                 this.Track);

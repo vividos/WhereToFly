@@ -2,7 +2,6 @@
 using System.Windows.Input;
 using WhereToFly.App.Abstractions;
 using WhereToFly.App.Models;
-using WhereToFly.App.Services;
 
 namespace WhereToFly.App.ViewModels
 {
@@ -104,7 +103,7 @@ namespace WhereToFly.App.ViewModels
         private async Task AddIconAsync()
         {
             var weatherIcon =
-                await NavigationService.Instance.NavigateToPopupPageAsync<WeatherIconDescription>(
+                await UserInterface.NavigationService.NavigateToPopupPageAsync<WeatherIconDescription>(
                     PopupPageKey.SelectWeatherIconPopupPage,
                     animated: true);
 
@@ -121,7 +120,7 @@ namespace WhereToFly.App.ViewModels
         private async Task AddWebLinkAsync()
         {
             WeatherIconDescription? weatherIconDescription =
-                await NavigationService.Instance.NavigateToPopupPageAsync<WeatherIconDescription?>(
+                await UserInterface.NavigationService.NavigateToPopupPageAsync<WeatherIconDescription?>(
                     PopupPageKey.AddWeatherLinkPopupPage,
                     true);
 

@@ -2,7 +2,6 @@
 using System.Windows.Input;
 using WhereToFly.App.Abstractions;
 using WhereToFly.App.Models;
-using WhereToFly.App.Services;
 using WhereToFly.Geo;
 using WhereToFly.Geo.SunCalcNet;
 
@@ -193,7 +192,7 @@ namespace WhereToFly.App.ViewModels
             int initialDirection = this.TargetDirectionInDegrees ?? this.TrueNorthHeadingInDegrees;
 
             int? direction =
-                (await NavigationService.Instance.NavigateToPopupPageAsync<Tuple<int>>(
+                (await UserInterface.NavigationService.NavigateToPopupPageAsync<Tuple<int>>(
                     PopupPageKey.SetCompassTargetDirectionPopupPage,
                     true,
                     initialDirection))?.Item1;

@@ -783,9 +783,7 @@ namespace WhereToFly.App.ViewModels
             {
                 Debug.WriteLine("exception while finding nearby POIs: " + ex.ToString());
 
-                var userInterface = DependencyService.Get<IUserInterface>();
-
-                await userInterface.DisplayAlert(
+                await UserInterface.DisplayAlert(
                     "Error while finding nearby POIs: " + ex.Message,
                     "Close");
             }
@@ -859,9 +857,7 @@ namespace WhereToFly.App.ViewModels
 
             if (string.IsNullOrWhiteSpace(text))
             {
-                var userInterface = DependencyService.Get<IUserInterface>();
-
-                await userInterface.DisplayAlert(
+                await UserInterface.DisplayAlert(
                     "No location text was entered",
                     "Cancel");
 
@@ -890,9 +886,7 @@ namespace WhereToFly.App.ViewModels
             if (foundLocationsList == null ||
                 !foundLocationsList.Any())
             {
-                var userInterface = DependencyService.Get<IUserInterface>();
-
-                await userInterface.DisplayAlert(
+                await UserInterface.DisplayAlert(
                     "The location could not be found",
                     "OK");
 

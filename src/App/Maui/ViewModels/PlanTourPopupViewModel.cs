@@ -259,7 +259,7 @@ namespace WhereToFly.App.ViewModels
 
             var track = TrackFromPlannedTour(plannedTour);
 
-            track = await NavigationService.Instance.NavigateToPopupPageAsync<Track?>(
+            track = await UserInterface.NavigationService.NavigateToPopupPageAsync<Track?>(
                 PopupPageKey.SetTrackInfosPopupPage,
                 true,
                 track);

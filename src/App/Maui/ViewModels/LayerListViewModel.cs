@@ -182,7 +182,7 @@ namespace WhereToFly.App.ViewModels
                 layer.LayerType != LayerType.LocationLayer &&
                 layer.LayerType != LayerType.TrackLayer)
             {
-                await NavigationService.Instance.NavigateAsync(PageKey.LayerDetailsPage, true, layer);
+                await UserInterface.NavigationService.NavigateAsync(PageKey.LayerDetailsPage, true, layer);
             }
             else
             {

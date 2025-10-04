@@ -3,7 +3,6 @@ using System.Windows.Input;
 using WhereToFly.App.Abstractions;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Models;
-using WhereToFly.App.Services;
 
 namespace WhereToFly.App.ViewModels
 {
@@ -53,13 +52,11 @@ namespace WhereToFly.App.ViewModels
 
             this.Tapped = new AsyncRelayCommand(this.OpenWeatherIconTargetAsync);
 
-            var userInterface = DependencyService.Get<IUserInterface>();
-
             Task.Run(async () =>
             {
                 this.Icon = await WeatherImageCache.GetImageAsync(
                     this.IconDescription,
-                    userInterface.IsDarkTheme);
+                    UserInterface.IsDarkTheme);
 
                 this.OnPropertyChanged(nameof(this.Icon));
             });
@@ -74,7 +71,7 @@ namespace WhereToFly.App.ViewModels
             switch (this.IconDescription.Type)
             {
                 case WeatherIconDescription.IconType.IconLink:
-                    await NavigationService.Instance.NavigateAsync(
+                    await UserInterface.NavigationService.NavigateAsync(
                         PageKey.WeatherDetailsPage,
                         animated: true,
                         parameter: this.IconDescription);

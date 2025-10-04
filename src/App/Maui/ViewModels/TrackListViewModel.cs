@@ -149,7 +149,7 @@ namespace WhereToFly.App.ViewModels
             this.SelectedTrack = null;
             this.OnPropertyChanged(nameof(this.SelectedTrack));
 
-            await NavigationService.Instance.NavigateAsync(PageKey.TrackInfoPage, true, track);
+            await UserInterface.NavigationService.NavigateAsync(PageKey.TrackInfoPage, true, track);
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace WhereToFly.App.ViewModels
 
             if (success)
             {
-                await NavigationService.Instance.GoBack();
+                await UserInterface.NavigationService.GoBack();
             }
         }
 

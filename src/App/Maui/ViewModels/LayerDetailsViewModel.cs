@@ -167,7 +167,7 @@ namespace WhereToFly.App.ViewModels
             var appMapService = DependencyService.Get<IAppMapService>();
             appMapService.MapView.RemoveLayer(this.layer);
 
-            await NavigationService.Instance.GoBack();
+            await UserInterface.NavigationService.GoBack();
 
             UserInterface.DisplayToast("Selected layer was deleted.");
         }

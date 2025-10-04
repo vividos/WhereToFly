@@ -1,5 +1,4 @@
 ﻿using System.Windows.Input;
-using WhereToFly.App.Abstractions;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Models;
 
@@ -66,13 +65,11 @@ namespace WhereToFly.App.ViewModels
         /// </summary>
         private void SetupBindings()
         {
-            var userInterface = DependencyService.Get<IUserInterface>();
-
             Task.Run(async () =>
             {
                 this.Icon = await WeatherImageCache.GetImageAsync(
                     this.IconDescription,
-                    userInterface.IsDarkTheme);
+                    UserInterface.IsDarkTheme);
 
                 this.OnPropertyChanged(nameof(this.Icon));
             });

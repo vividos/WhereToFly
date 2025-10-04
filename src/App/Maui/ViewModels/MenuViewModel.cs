@@ -1,5 +1,4 @@
 ﻿using System.Windows.Input;
-using WhereToFly.App.Services;
 
 namespace WhereToFly.App.ViewModels
 {
@@ -109,7 +108,7 @@ namespace WhereToFly.App.ViewModels
                 // wait for complete app init before showing a page
                 await App.InitializedTask;
 
-                await NavigationService.Instance.NavigateAsync(pageKey, true);
+                await UserInterface.NavigationService.NavigateAsync(pageKey, true);
 
                 await Task.Delay(100);
                 this.SelectedMenuItem = null;

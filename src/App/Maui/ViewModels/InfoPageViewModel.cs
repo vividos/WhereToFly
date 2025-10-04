@@ -1,5 +1,4 @@
-﻿using WhereToFly.App.Abstractions;
-using WhereToFly.App.Logic;
+﻿using WhereToFly.App.Logic;
 using WhereToFly.App.Resources;
 
 namespace WhereToFly.App.ViewModels
@@ -138,8 +137,7 @@ namespace WhereToFly.App.ViewModels
 
             htmlText = htmlText.Replace(".svg\"", ".svg\" class=\"svg-img\"");
 
-            var userInterface = DependencyService.Get<IUserInterface>();
-            if (!userInterface.IsDarkTheme)
+            if (!UserInterface.IsDarkTheme)
             {
                 htmlText = "<style> body { color: black; background-color: white; } .svg-img { filter: invert(100%); } </style>" + htmlText;
             }

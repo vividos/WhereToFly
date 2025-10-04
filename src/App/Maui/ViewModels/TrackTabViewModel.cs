@@ -88,7 +88,7 @@ namespace WhereToFly.App.ViewModels
             var appMapService = DependencyService.Get<IAppMapService>();
             appMapService.MapView.RemoveTrack(this.track);
 
-            await NavigationService.Instance.GoBack();
+            await UserInterface.NavigationService.GoBack();
 
             UserInterface.DisplayToast("Selected track was deleted.");
         }

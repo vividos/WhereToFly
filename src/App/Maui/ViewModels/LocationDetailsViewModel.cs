@@ -398,7 +398,7 @@ namespace WhereToFly.App.ViewModels
             var appMapService = DependencyService.Get<IAppMapService>();
             appMapService.MapView.RemoveLocation(this.location.Id);
 
-            await NavigationService.Instance.GoBack();
+            await UserInterface.NavigationService.GoBack();
 
             UserInterface.DisplayToast("Selected location was deleted.");
         }
