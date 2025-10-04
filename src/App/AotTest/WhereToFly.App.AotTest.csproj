@@ -18,7 +18,9 @@
   <PropertyGroup Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' ">
     <!-- Native AOT is not supported on Android yet -->
     <PublishAot>false</PublishAot>
-    <RuntimeIdentifier>android-arm64</RuntimeIdentifier>
+    <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
+    <EnableSingleFileAnalyzer>true</EnableSingleFileAnalyzer>
+    <EnableAotAnalyzer>true</EnableAotAnalyzer>
   </PropertyGroup>
 
   <ItemGroup>
@@ -35,6 +37,7 @@
     <ProjectReference Include="..\Maui\WhereToFly.App.Maui.csproj" />
     <TrimmerRootAssembly Include="WhereToFly.App.Maui" RootMode="%(TrimmerRootAssembly.RootMode)" />
     <TrimmerRootAssembly Include="Microsoft.AppCenter" RootMode="%(TrimmerRootAssembly.RootMode)" />
+    <TrimmerRootAssembly Include="Microsoft.AppCenter.Crashes" RootMode="%(TrimmerRootAssembly.RootMode)" />
   </ItemGroup>
 
 </Project>
