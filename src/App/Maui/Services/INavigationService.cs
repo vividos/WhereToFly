@@ -6,6 +6,12 @@
     public interface INavigationService
     {
         /// <summary>
+        /// Navigates to the map page
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        Task GoToMap();
+
+        /// <summary>
         /// Navigates to a page with given page key and parameters
         /// </summary>
         /// <param name="pageKey">page key of page to navigate to</param>

@@ -250,7 +250,7 @@ namespace WhereToFly.App.Logic
             liveWaypointRefreshService.ClearLiveWaypointList();
             liveWaypointRefreshService.AddLiveWaypointList(locationList);
 
-            await NavigationService.GoToMap();
+            await NavigationService.Instance.GoToMap();
 
             UserInterface.DisplayToast("Locations were loaded.");
 
@@ -637,7 +637,7 @@ namespace WhereToFly.App.Logic
             var appMapService = DependencyService.Get<IAppMapService>();
             await appMapService.ShowFlightPlanningDisclaimer();
 
-            await NavigationService.GoToMap();
+            await NavigationService.Instance.GoToMap();
 
             await appMapService.MapView.AddLayer(layer);
             appMapService.MapView.ZoomToLayer(layer);

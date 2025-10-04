@@ -32,6 +32,15 @@ namespace WhereToFly.App.UnitTest
         public int GoBackCount { get; private set; }
 
         /// <summary>
+        /// Navigates to the map page
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        public async Task GoToMap()
+        {
+            await this.NavigateAsync(PageKey.MapPage, animated: true);
+        }
+
+        /// <summary>
         /// Navigates to a page with given key; sets the <see cref="LastPageKey"/> property.
         /// </summary>
         /// <param name="pageKey">page key</param>

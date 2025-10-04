@@ -141,7 +141,7 @@ namespace WhereToFly.App.ViewModels
             var appMapService = DependencyService.Get<IAppMapService>();
             appMapService.MapView.ZoomToLayer(this.layer);
 
-            await NavigationService.GoToMap();
+            await NavigationService.Instance.GoToMap();
         }
 
         /// <summary>

@@ -107,9 +107,9 @@ namespace WhereToFly.App.Services
         /// Navigates to the map page
         /// </summary>
         /// <returns>task to wait on</returns>
-        public static Task GoToMap()
+        public async Task GoToMap()
         {
-            return Instance.NavigateAsync(PageKey.MapPage, animated: true);
+            await this.NavigateAsync(PageKey.MapPage, animated: true);
         }
 
         /// <summary>

@@ -87,7 +87,7 @@ namespace WhereToFly.App.Logic
             var userInterface = DependencyService.Get<IUserInterface>();
             userInterface.DisplayToast("Live waypoint was loaded.");
 
-            await NavigationService.GoToMap();
+            await NavigationService.Instance.GoToMap();
 
             var appMapService = DependencyService.Get<IAppMapService>();
             await appMapService.UpdateLastShownPosition(liveWaypoint.MapLocation);
@@ -188,7 +188,7 @@ namespace WhereToFly.App.Logic
             var userInterface = DependencyService.Get<IUserInterface>();
             userInterface.DisplayToast("Live track was loaded.");
 
-            await NavigationService.GoToMap();
+            await NavigationService.Instance.GoToMap();
 
             var appMapService = DependencyService.Get<IAppMapService>();
             await appMapService.MapView.AddTrack(liveTrack);

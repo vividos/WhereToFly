@@ -329,7 +329,7 @@ namespace WhereToFly.App.ViewModels
 
             appMapService.MapView.ZoomToLocation(this.location.MapLocation);
 
-            await NavigationService.GoToMap();
+            await NavigationService.Instance.GoToMap();
         }
 
         /// <summary>
@@ -347,7 +347,7 @@ namespace WhereToFly.App.ViewModels
             var appMapService = DependencyService.Get<IAppMapService>();
             await appMapService.SetCompassTarget(compassTarget);
 
-            await NavigationService.GoToMap();
+            await NavigationService.Instance.GoToMap();
         }
 
         /// <summary>

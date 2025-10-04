@@ -55,7 +55,7 @@ namespace WhereToFly.App.ViewModels
             var appMapService = DependencyService.Get<IAppMapService>();
             appMapService.MapView.ZoomToTrack(this.track);
 
-            await NavigationService.GoToMap();
+            await NavigationService.Instance.GoToMap();
         }
 
         /// <summary>
