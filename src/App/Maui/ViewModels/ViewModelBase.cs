@@ -10,6 +10,13 @@ namespace WhereToFly.App.ViewModels
     public class ViewModelBase : INotifyPropertyChanged
     {
         /// <summary>
+        /// Service provider
+        /// </summary>
+        public static IServiceProvider Services
+            => IPlatformApplication.Current?.Services
+            ?? throw new InvalidOperationException("IServiceProvider is not available");
+
+        /// <summary>
         /// Access to the user interface
         /// </summary>
         public static IUserInterface UserInterface
