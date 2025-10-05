@@ -60,10 +60,10 @@ namespace WhereToFly.App.UnitTest.Shared
         public void TestParseInvalidUris()
         {
             // run
-            Assert.ThrowsException<ArgumentNullException>(() => new AppResourceUri(null));
-            Assert.ThrowsException<ArgumentException>(() => new AppResourceUri(AppResourceUri.ResourceType.None, "123"));
-            Assert.ThrowsException<ArgumentNullException>(() => new AppResourceUri(AppResourceUri.ResourceType.FindMeSpotPos, null));
-            Assert.ThrowsException<UriFormatException>(() => new AppResourceUri(string.Empty));
+            Assert.ThrowsExactly<ArgumentNullException>(() => new AppResourceUri(null));
+            Assert.ThrowsExactly<ArgumentException>(() => new AppResourceUri(AppResourceUri.ResourceType.None, "123"));
+            Assert.ThrowsExactly<ArgumentNullException>(() => new AppResourceUri(AppResourceUri.ResourceType.FindMeSpotPos, null));
+            Assert.ThrowsExactly<UriFormatException>(() => new AppResourceUri(string.Empty));
 
             var uri1 = new AppResourceUri("https://github.com/");
             var uri2 = new AppResourceUri("where-to-fly://");
