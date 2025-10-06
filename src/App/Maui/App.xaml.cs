@@ -38,6 +38,13 @@ namespace WhereToFly.App
         public static Task InitializedTask { get; internal set; } = Task.CompletedTask;
 
         /// <summary>
+        /// Service provider
+        /// </summary>
+        public static IServiceProvider Services
+            => IPlatformApplication.Current?.Services
+            ?? throw new InvalidOperationException("IServiceProvider is not available");
+
+        /// <summary>
         /// Application configuration, e.g. API keys; this is retrieved from the backend and is
         /// available when <see cref="InitializedTask"/> has completed.
         /// </summary>
@@ -57,8 +64,7 @@ namespace WhereToFly.App
         /// <summary>
         /// Creates a new app object
         /// </summary>
-        /// <param name="services">service provider</param>
-        public App(IServiceProvider services)
+        public App()
         {
 #if ANDROID || WINDOWS
             AppCenter.Start(
