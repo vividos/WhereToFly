@@ -294,7 +294,7 @@ namespace WhereToFly.App.ViewModels
             this.planTourParameters.WaypointIdList.Clear();
             this.planTourParameters.WaypointLocationList.Clear();
 
-            await NavigationService.Instance.GoToMap();
+            await UserInterface.NavigationService.GoToMap();
 
             this.ShowTrack(track);
         }

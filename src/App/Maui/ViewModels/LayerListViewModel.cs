@@ -165,7 +165,7 @@ namespace WhereToFly.App.ViewModels
             var appMapService = DependencyService.Get<IAppMapService>();
             appMapService.MapView.ZoomToLayer(layer);
 
-            await NavigationService.Instance.GoToMap();
+            await UserInterface.NavigationService.GoToMap();
         }
 
         /// <summary>
@@ -339,7 +339,7 @@ namespace WhereToFly.App.ViewModels
             await layerDataService.Remove(layer.Id);
             await layerDataService.Add(layer);
 
-            await NavigationService.Instance.GoToMap();
+            await UserInterface.NavigationService.GoToMap();
 
             var appMapService = DependencyService.Get<IAppMapService>();
             await appMapService.MapView.AddLayer(layer);
