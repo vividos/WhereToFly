@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behaviors="clr-namespace:WhereToFly.App.Behaviors"
+             xmlns:controls="clr-namespace:WhereToFly.App.Controls"
+             xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
+             x:Class="WhereToFly.App.Pages.WeatherDetailsPage"
+             x:DataType="viewmodels:WeatherDetailsViewModel">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Refresh"
+                     IconImageSource="refresh.png"
+                     Command="{Binding RefreshCommand}"
+                     Order="Primary"
+                     Priority="0"
+                     AutomationId="Refresh" />
+
+        <ToolbarItem Text="Forecast"
+                     IconImageSource="calendar_clock.png"
+                     Command="{Binding WeatherForecastCommand}"
+                     Order="Primary"
+                     Priority="1"
+                     AutomationId="Forecast" />
+
+        <ToolbarItem Text="Weather"
+                     IconImageSource="weather_partlycloudy.png"
+                     Command="{Binding CurrentWeatherCommand}"
+                     Order="Primary"
+                     Priority="2"
+                     AutomationId="Weather" />
+
+        <ToolbarItem Text="Webcams"
+                     IconImageSource="camera.png"
+                     Command="{Binding WebcamsCommand}"
+                     Order="Primary"
+                     Priority="3"
+                     AutomationId="Webcams" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+
+        <!-- Full page weather web view -->
+        <controls:WeatherWebView
+            x:Name="weatherWebView"
+            Source="{Binding WeatherWebViewSource}"
+            VerticalOptions="Fill"
+            HorizontalOptions="Fill"
+            AutomationId="WeatherDetailsWebView">
+        </controls:WeatherWebView>
+
+    </ContentPage.Content>
+</ContentPage>
