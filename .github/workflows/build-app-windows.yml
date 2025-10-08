@@ -27,3 +27,6 @@ jobs:
         dotnet publish
         src/App/Maui/WhereToFly.App.Maui.csproj
         -f net9.0-windows10.0.19041.0
+        --self-contained true
+        /p:PublishSingleFile=true
+        /p:PublishTrimmed=true
