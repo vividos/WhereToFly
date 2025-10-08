@@ -39,7 +39,6 @@
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
     <PublishSingleFile>true</PublishSingleFile>
     <PublishTrimmed>true</PublishTrimmed>
-    <!--<PublishTrimmed>true</PublishTrimmed>-->
   </PropertyGroup>
 
   <!-- Android properties -->
