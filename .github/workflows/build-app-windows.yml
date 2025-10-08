@@ -31,3 +31,9 @@ jobs:
         -p:WindowsPackageType=None
         -p:PublishSingleFile=true
         -p:PublishTrimmed=true
+
+    - name: Upload Windows app
+      uses: actions/upload-artifact@v4
+      with:
+        name: Windows app
+        path: artifacts/publish/WhereToFly.App.Maui/release_net9.0-windows10.0.19041.0_win-x64/*.*
