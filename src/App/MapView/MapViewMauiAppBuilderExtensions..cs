@@ -19,8 +19,8 @@ namespace WhereToFly.App.MapView
                 .ConfigureMauiHandlers((handlers) =>
                  {
 #if ANDROID || WINDOWS
-                     handlers.AddHandler(typeof(MapView), typeof(MapViewHandler));
-                     handlers.AddHandler(typeof(HeightProfileView), typeof(MapViewHandler));
+                     handlers.AddHandler<MapView, MapViewHandler>();
+                     handlers.AddHandler<HeightProfileView, MapViewHandler>();
 #endif
 
 #if ANDROID
