@@ -16,7 +16,7 @@ namespace WhereToFly.App.UnitTest.Pages
         public void TestDefaultCtor()
         {
             // run
-            var page = new CurrentPositionDetailsPage();
+            var page = new CurrentPositionDetailsPage(null!);
 
             // check
             Assert.IsTrue(

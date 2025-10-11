@@ -31,7 +31,7 @@ namespace WhereToFly.App.Pages
             this.BindingContext = this.viewModel =
                 new CompassDetailsViewModel(
                     App.Settings!,
-                    services.GetRequiredService<CompassGeoServices>());
+                    DependencyService.Get<CompassGeoServices>());
 
             Task.Run(this.InitPositionAsync);
         }

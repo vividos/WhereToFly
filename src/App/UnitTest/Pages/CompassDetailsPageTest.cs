@@ -16,7 +16,7 @@ namespace WhereToFly.App.UnitTest.Pages
         public void TestDefaultCtor()
         {
             // run
-            var page = new CompassDetailsPage();
+            var page = new CompassDetailsPage(null!);
 
             // check
             Assert.IsTrue(

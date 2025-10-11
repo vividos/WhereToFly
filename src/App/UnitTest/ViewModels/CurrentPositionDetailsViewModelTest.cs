@@ -1,4 +1,5 @@
-﻿using Microsoft.Maui.Graphics;
+﻿using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using WhereToFly.App.Models;
@@ -8,10 +9,10 @@ using WhereToFly.Geo;
 namespace WhereToFly.App.UnitTest.ViewModels
 {
     /// <summary>
-    /// Tests CurrentPositionDetailsViewModel class
+    /// Tests <see cref="CurrentPositionDetailsViewModel"/> class
     /// </summary>
     [TestClass]
-    public class CurrentPositionDetailsViewModelTest
+    public class CurrentPositionDetailsViewModelTest : UserInterfaceTestBase
     {
         /// <summary>
         /// Tests ctor
@@ -21,7 +22,9 @@ namespace WhereToFly.App.UnitTest.ViewModels
         {
             // set up
             var appSettings = new AppSettings();
-            var viewModel = new CurrentPositionDetailsViewModel(appSettings);
+            var viewModel = new CurrentPositionDetailsViewModel(
+                appSettings,
+                DependencyService.Get<CompassGeoServices>());
 
             // check
             Assert.AreEqual(string.Empty, viewModel.Longitude, "longitude text must be correct");
@@ -50,7 +53,9 @@ namespace WhereToFly.App.UnitTest.ViewModels
                 CoordinateDisplayFormat = CoordinateDisplayFormat.Format_dd_mm_sss,
             };
 
-            var viewModel = new CurrentPositionDetailsViewModel(appSettings);
+            var viewModel = new CurrentPositionDetailsViewModel(
+                appSettings,
+                DependencyService.Get<CompassGeoServices>());
 
             // run
             var location = new Microsoft.Maui.Devices.Sensors.Location(48.137222, 11.575556, 512)
@@ -92,7 +97,9 @@ namespace WhereToFly.App.UnitTest.ViewModels
         {
             // set up
             var appSettings = new AppSettings();
-            var viewModel = new CurrentPositionDetailsViewModel(appSettings);
+            var viewModel = new CurrentPositionDetailsViewModel(
+                appSettings,
+                DependencyService.Get<CompassGeoServices>());
 
             // run
             var location = new Microsoft.Maui.Devices.Sensors.Location(48.137222, 11.575556);
