@@ -1,10 +1,7 @@
-﻿using Microsoft.Maui.Controls;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using System.Threading.Tasks;
-using WhereToFly.App.Abstractions;
 using WhereToFly.App.Models;
-using WhereToFly.App.Services.SqliteDatabase;
 using WhereToFly.App.ViewModels;
 
 namespace WhereToFly.App.UnitTest.ViewModels
@@ -13,17 +10,8 @@ namespace WhereToFly.App.UnitTest.ViewModels
     /// Unit tests for class FlyingRangePopupViewModel
     /// </summary>
     [TestClass]
-    public class FlyingRangePopupViewModelTest
+    public class FlyingRangePopupViewModelTest : UserInterfaceTestBase
     {
-        /// <summary>
-        /// Sets up tests
-        /// </summary>
-        [TestInitialize]
-        public void SetUp()
-        {
-            DependencyService.Register<IDataService, SqliteDatabaseDataService>();
-        }
-
         /// <summary>
         /// Tests default ctor of view model
         /// </summary>

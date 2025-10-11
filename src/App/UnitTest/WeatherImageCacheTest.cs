@@ -1,10 +1,7 @@
-﻿using Microsoft.Maui.Controls;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
-using WhereToFly.App.Abstractions;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Models;
-using WhereToFly.App.Services.SqliteDatabase;
 
 namespace WhereToFly.App.UnitTest
 {
@@ -12,18 +9,8 @@ namespace WhereToFly.App.UnitTest
     /// Tests for WeatherImageCache class
     /// </summary>
     [TestClass]
-    public class WeatherImageCacheTest
+    public class WeatherImageCacheTest : UserInterfaceTestBase
     {
-        /// <summary>
-        /// Sets up tests
-        /// </summary>
-        [TestInitialize]
-        public void SetUp()
-        {
-            DependencyService.Register<IAppManager, UnitTestAppManager>();
-            DependencyService.Register<IDataService, SqliteDatabaseDataService>();
-        }
-
         /// <summary>
         /// Tests weather icon type IconPlaceholder
         /// </summary>

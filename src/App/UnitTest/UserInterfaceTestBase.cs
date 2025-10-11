@@ -48,6 +48,7 @@ namespace WhereToFly.App.UnitTest
             DependencyService.Register<IGeolocationService, UnitTestGeolocationService>();
             DependencyService.Register<IDataService, SqliteDatabaseDataService>();
             DependencyService.Register<INavigationService, UnitTestNavigationService>();
+            DependencyService.Register<IAppManager, UnitTestAppManager>();
 
             App.Settings = new AppSettings();
 

@@ -14,15 +14,6 @@ namespace WhereToFly.App.UnitTest.ViewModels
     public class WeatherIconViewModelTest : UserInterfaceTestBase
     {
         /// <summary>
-        /// Sets up tests
-        /// </summary>
-        [TestInitialize]
-        public void SetUp()
-        {
-            DependencyService.Register<IAppManager, UnitTestAppManager>();
-        }
-
-        /// <summary>
         /// Tests view model default ctor
         /// </summary>
         [TestMethod]

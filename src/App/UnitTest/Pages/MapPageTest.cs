@@ -12,15 +12,6 @@ namespace WhereToFly.App.UnitTest.Pages
     public class MapPageTest : UserInterfaceTestBase
     {
         /// <summary>
-        /// Sets up tests
-        /// </summary>
-        [TestInitialize]
-        public void SetUp()
-        {
-            DependencyService.Register<IGeolocationService, UnitTestGeolocationService>();
-        }
-
-        /// <summary>
         /// Tests default ctor of page
         /// </summary>
         [TestMethod]
