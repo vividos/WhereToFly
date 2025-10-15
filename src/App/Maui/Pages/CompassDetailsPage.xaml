@@ -78,10 +78,10 @@
                 </VerticalStackLayout>
 
                 <!-- Distance -->
-                <StackLayout Style="{StaticResource PositionInfoSquareTileStyle}">
+                <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}">
                     <Label Text="Distance" />
                     <Label Text="{Binding Distance, Mode=OneWay}" FontSize="32" />
-                </StackLayout>
+                </VerticalStackLayout>
 
                 <!-- Height difference -->
                 <VerticalStackLayout WidthRequest="120"
