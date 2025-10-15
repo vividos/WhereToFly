@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WhereToFly.App.Models;
 using WhereToFly.App.Pages;
+using WhereToFly.App.ViewModels;
 
 namespace WhereToFly.App.UnitTest.Pages
 {
@@ -29,7 +30,8 @@ namespace WhereToFly.App.UnitTest.Pages
 
             // check
             Assert.IsTrue(
-                page.Title.Length > 0,
+                page.BindingContext is WeatherDetailsViewModel viewModel &&
+                viewModel.Title.Length > 0,
                 "page title must have been set");
         }
     }
