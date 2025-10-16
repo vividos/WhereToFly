@@ -28,13 +28,13 @@
                 <!-- app name and version -->
                 <StackLayout>
                     <Label Text="Where-to-fly" FontSize="36" TextColor="White" />
-                    <Label Text="{Binding VersionText, Mode=OneTime}" FontSize="Small" TextColor="LightGray" />
+                    <Label Text="{Binding VersionText}" FontSize="Small" TextColor="LightGray" />
                 </StackLayout>
             </HorizontalStackLayout>
 
             <!-- list view with all menu items -->
             <CollectionView Grid.Row="1"
-                            ItemsSource="{Binding MenuItemList, Mode=OneTime}"
+                            ItemsSource="{Binding MenuItemList}"
                             SelectedItem="{Binding SelectedMenuItem}"
                             SelectionChangedCommand="{Binding MenuItemSelectedCommand}"
                             SelectionMode="Single"
@@ -60,7 +60,7 @@
                             </VisualStateManager.VisualStateGroups>
 
                             <!-- menu item icon -->
-                            <Image Source="{Binding Icon, Mode=OneWay}"
+                            <Image Source="{Binding Icon}"
                                    InputTransparent="True"
                                    WidthRequest="32" HeightRequest="32"
                                    HorizontalOptions="Center" VerticalOptions="Center">
@@ -70,7 +70,7 @@
                             </Image>
 
                             <!-- title text -->
-                            <Label Grid.Column="1" Text="{Binding Title, Mode=OneTime}"
+                            <Label Grid.Column="1" Text="{Binding Title}"
                                    InputTransparent="True"
                                    FontSize="Medium"
                                    VerticalOptions="Fill"

@@ -20,12 +20,12 @@
 
         <!-- Entry and slider for compass direction -->
         <Label Grid.Row="1"
-               Text="{Binding Path=CompassDirection, Mode=OneWay, StringFormat='Direction: {0}°'}"
+               Text="{Binding Path=CompassDirection, StringFormat='Direction: {0}°'}"
                FontSize="Medium" />
         <Slider Grid.Row="2"
                 Minimum="0"
                 Maximum="360"
-                Value="{Binding Path=CompassDirection, Mode=TwoWay}" />
+                Value="{Binding Path=CompassDirection}" />
 
         <!-- Button to set compass direction -->
         <Button Grid.Row="3"

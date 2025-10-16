@@ -24,7 +24,7 @@
                FontSize="Medium" />
         <Entry Grid.Row="2"
                Placeholder="enter live waypoint name"
-               Text="{Binding Path=Name, Mode=TwoWay}"
+               Text="{Binding Path=Name}"
                Style="{StaticResource EntryOnPopupPageStyle}" />
 
         <!-- Label showing live waypoint type -->
@@ -32,7 +32,7 @@
                Text="Type"
                FontSize="Medium" />
         <Label Grid.Row="4"
-               Text="{Binding Type, Mode=OneTime}" />
+               Text="{Binding Type}" />
 
         <!-- Button to add live waypoint -->
         <Button Grid.Row="5"

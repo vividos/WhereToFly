@@ -41,7 +41,7 @@
                         <!-- Header image and a webview, both scrollable -->
                         <ScrollView VerticalOptions="Fill" Margin="0,10,0,0">
                             <Grid Padding="0,0,0,10" RowDefinitions="Auto,*">
-                                <Image Source="{Binding Image, Mode=OneTime}"
+                                <Image Source="{Binding Image}"
                                        Grid.Row="0" />
                                 <WebView HorizontalOptions="Start"
                                          VerticalOptions="Start"

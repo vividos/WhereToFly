@@ -22,24 +22,24 @@
         <HorizontalStackLayout>
             <Entry Placeholder="enter glide ratio"
                    IsReadOnly="True"
-                   Text="{Binding Path=GlideRatio, Mode=OneWay}"
+                   Text="{Binding Path=GlideRatio}"
                    Style="{StaticResource EntryOnPopupPageStyle}"
                    WidthRequest="70" />
-            <Stepper Value="{Binding Path=GlideRatio, Mode=TwoWay}"
+            <Stepper Value="{Binding Path=GlideRatio}"
                      Minimum="1.0" Maximum="12" Increment="0.5" />
         </HorizontalStackLayout>
 
         <!-- Picker for wind direction --><!--
         <Label Text="Wind direction" FontSize="Medium" />
         <Picker Title="Select a wind direction"
-                ItemsSource="{Binding Path=WindDirectionList, Mode=OneTime}"
-                SelectedItem="{Binding Path=WindDirection, Mode=TwoWay}"
+                ItemsSource="{Binding Path=WindDirectionList}"
+                SelectedItem="{Binding Path=WindDirection}"
                 Style="{StaticResource PickerOnPopupPageStyle}" />
 
         --><!-- Picker for wind speed --><!--
         <Label Text="Wind speed" FontSize="Medium" />
         <Picker Title="Select a wind speed"
-                SelectedItem="{Binding Path=WindSpeed, Mode=TwoWay}"
+                SelectedItem="{Binding Path=WindSpeed}"
                 Style="{StaticResource PickerOnPopupPageStyle}">
             <Picker.Items>
                 <x:String>0 km/h</x:String>
@@ -56,14 +56,14 @@
         <Label Text="Altitude offset"
                FontSize="Medium" />
         <HorizontalStackLayout>
-            <Entry Text="{Binding Path=AltitudeOffset, Mode=OneWay}"
+            <Entry Text="{Binding Path=AltitudeOffset}"
                    Keyboard="Numeric"
                    ClearButtonVisibility="Never"
                    Style="{StaticResource EntryOnPopupPageStyle}"
                    WidthRequest="70" />
             <Label Text="meter"
                    VerticalTextAlignment="Center" />
-            <Stepper Value="{Binding Path=AltitudeOffset, Mode=TwoWay}"
+            <Stepper Value="{Binding Path=AltitudeOffset}"
                      Minimum="0"
                      Maximum="1000"
                      Increment="50" />

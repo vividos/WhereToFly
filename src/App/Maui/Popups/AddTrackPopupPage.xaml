@@ -25,24 +25,24 @@
                FontSize="Medium" />
         <Entry Grid.Row="2"
                Placeholder="enter track name"
-               Text="{Binding Path=TrackName, Mode=TwoWay}"
+               Text="{Binding Path=TrackName}"
                Style="{StaticResource EntryOnPopupPageStyle}" />
 
         <!-- Picker for track point interval -->
         <Label Grid.Row="3"
                Text="Track point time interval"
                FontSize="Medium"
-               IsVisible="{Binding IsTrackPointIntervalPickerVisible, Mode=OneWay}" />
+               IsVisible="{Binding IsTrackPointIntervalPickerVisible}" />
         <Picker Grid.Row="4"
                 Title="Select a time interval"
-                IsVisible="{Binding IsTrackPointIntervalPickerVisible, Mode=OneWay}"
-                ItemsSource="{Binding Path=TrackPointIntervalList, Mode=OneTime}"
-                SelectedItem="{Binding Path=TrackPointIntervalText, Mode=TwoWay}"
+                IsVisible="{Binding IsTrackPointIntervalPickerVisible}"
+                ItemsSource="{Binding Path=TrackPointIntervalList}"
+                SelectedItem="{Binding Path=TrackPointIntervalText}"
                 Style="{StaticResource PickerOnPopupPageStyle}" />
 
         <!-- Switch to select if it's a flight track -->
         <HorizontalStackLayout Grid.Row="5">
-            <Switch IsToggled="{Binding IsFlightTrack, Mode=TwoWay}"
+            <Switch IsToggled="{Binding IsFlightTrack}"
                     AutomationId="IsFlightTrackSwitch" />
             <Label Text="Track is a flight"
                    VerticalTextAlignment="Center"
@@ -53,10 +53,10 @@
         <Label Grid.Row="6"
                Text="Track offset"
                FontSize="Medium"
-               IsVisible="{Binding IsTrackOffsetPickerVisible, Mode=OneWay}" />
+               IsVisible="{Binding IsTrackOffsetPickerVisible}" />
         <HorizontalStackLayout Grid.Row="7"
-                               IsVisible="{Binding IsTrackOffsetPickerVisible, Mode=OneWay}">
-            <Entry Text="{Binding Path=TrackOffset, Mode=TwoWay}"
+                               IsVisible="{Binding IsTrackOffsetPickerVisible}">
+            <Entry Text="{Binding Path=TrackOffset}"
                    Keyboard="Numeric"
                    ClearButtonVisibility="Never"
                    Style="{StaticResource EntryOnPopupPageStyle}"
@@ -73,12 +73,12 @@
         <Label Grid.Row="8"
                Text="Color"
                FontSize="Medium"
-               IsVisible="{Binding IsColorPickerVisible, Mode=OneWay}" />
+               IsVisible="{Binding IsColorPickerVisible}" />
         <controls:ColorPickerView Grid.Row="9"
                                   x:Name="colorPickerLayout"
                                   Style="{StaticResource ColorPickerStyle}"
                                   SelectedColor="{Binding SelectedTrackColor}"
-                                  IsVisible="{Binding IsColorPickerVisible, Mode=OneWay}" />
+                                  IsVisible="{Binding IsColorPickerVisible}" />
 
         <!-- Button to add track -->
         <Button Grid.Row="10"

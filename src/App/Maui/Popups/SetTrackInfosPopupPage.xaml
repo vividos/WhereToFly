@@ -25,12 +25,12 @@
                FontSize="Medium" />
         <Entry Grid.Row="2"
                Placeholder="enter track name"
-               Text="{Binding Path=TrackName, Mode=TwoWay}"
+               Text="{Binding Path=TrackName}"
                Style="{StaticResource EntryOnPopupPageStyle}" />
 
         <!-- Colors to choose from -->
         <VerticalStackLayout Grid.Row="3"
-                             IsVisible="{Binding IsColorBoxVisible, Mode=OneWay}">
+                             IsVisible="{Binding IsColorBoxVisible}">
 
             <Label Text="Color" FontSize="Medium" Margin="0, 10, 0, 0" />
             <controls:ColorPickerView x:Name="colorPickerLayout"

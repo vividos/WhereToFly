@@ -34,7 +34,7 @@
                           MinimumWidthRequest="48"
                           VerticalOptions="Fill"
                           Margin="1"
-                          BackgroundColor="{Binding BackgroundColor, Mode=OneWay}">
+                          BackgroundColor="{Binding BackgroundColor}">
 
                         <!-- Recognize taps anywhere in the layout -->
                         <Grid.GestureRecognizers>
@@ -42,9 +42,9 @@
                                                   Command="{Binding Tapped}" />
                         </Grid.GestureRecognizers>
 
-                        <Label Text="{Binding Text, Mode=OneTime}"
+                        <Label Text="{Binding Text}"
                                FontSize="Large"
-                               TextColor="{Binding TextColor, Mode=OneWay}"
+                               TextColor="{Binding TextColor}"
                                VerticalOptions="Fill"
                                VerticalTextAlignment="Center"
                                HorizontalTextAlignment="Center"

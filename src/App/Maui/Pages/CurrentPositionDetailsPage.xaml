@@ -33,78 +33,78 @@
                       ColumnDefinitions="1*, 1*"
                       Style="{StaticResource PositionInfoTileStyle}">
                     <Label Grid.Row="0" Grid.Column="0" Text="Longitude" />
-                    <Label Grid.Row="1" Grid.Column="0" Text="{Binding Longitude, Mode=OneWay}" FontSize="24" />
+                    <Label Grid.Row="1" Grid.Column="0" Text="{Binding Longitude}" FontSize="24" />
 
                     <!-- Latitude -->
                     <Label Grid.Row="0" Grid.Column="1" Text="Latitude" />
-                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Latitude, Mode=OneWay}" FontSize="24" />
+                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Latitude}" FontSize="24" />
                 </Grid>
 
                 <!-- Altitude -->
                 <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}">
                     <Label Text="Altitude [m]" />
-                    <Label Text="{Binding Altitude, Mode=OneWay}" FontSize="32" />
+                    <Label Text="{Binding Altitude}" FontSize="32" />
                 </VerticalStackLayout>
 
                 <!-- Accuracy -->
                 <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}">
                     <Label Text="Accuracy [m]" />
-                    <Label Text="{Binding Accuracy, Mode=OneWay}" FontSize="32"
-                           TextColor="{Binding PositionAccuracyColor, Mode=OneWay}" />
+                    <Label Text="{Binding Accuracy}" FontSize="32"
+                           TextColor="{Binding PositionAccuracyColor}" />
                 </VerticalStackLayout>
 
                 <!-- Last position fix -->
                 <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}">
                     <Label Text="Last position fix" />
-                    <Label Text="{Binding LastPositionFix, Mode=OneWay}" FontSize="24" />
+                    <Label Text="{Binding LastPositionFix}" FontSize="24" />
                 </VerticalStackLayout>
 
                 <!-- Speed -->
                 <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}">
                     <Label Text="Speed [km/h]" />
-                    <Label Text="{Binding SpeedInKmh, Mode=OneWay}" FontSize="32" />
+                    <Label Text="{Binding SpeedInKmh}" FontSize="32" />
                 </VerticalStackLayout>
 
                 <!-- Magnetic-north Heading -->
                 <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}"
-                                     IsVisible="{Binding IsMagneticNorthHeadingAvail, Mode=OneWay}">
+                                     IsVisible="{Binding IsMagneticNorthHeadingAvail}">
                     <Label Text="Magnetic Heading [°]" />
-                    <Label Text="{Binding MagneticNorthHeadingInDegrees, Mode=OneWay}" FontSize="32" />
+                    <Label Text="{Binding MagneticNorthHeadingInDegrees}" FontSize="32" />
                 </VerticalStackLayout>
 
                 <!-- True-north Heading -->
                 <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}"
-                                     IsVisible="{Binding IsTrueNorthHeadingAvail, Mode=OneWay}">
+                                     IsVisible="{Binding IsTrueNorthHeadingAvail}">
                     <Label Text="True North Heading [°]" />
-                    <Label Text="{Binding TrueNorthHeadingInDegrees, Mode=OneWay}" FontSize="32" />
+                    <Label Text="{Binding TrueNorthHeadingInDegrees}" FontSize="32" />
                 </VerticalStackLayout>
 
                 <!-- Sunrise -->
                 <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}"
-                                     IsVisible="{Binding IsSunriseSunsetAvail, Mode=OneWay}">
+                                     IsVisible="{Binding IsSunriseSunsetAvail}">
                     <Label Text="Sunrise" />
-                    <Label Text="{Binding SunriseTime, Mode=OneWay}" FontSize="24" />
+                    <Label Text="{Binding SunriseTime}" FontSize="24" />
                 </VerticalStackLayout>
 
                 <!-- Sunset -->
                 <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}"
-                             IsVisible="{Binding IsSunriseSunsetAvail, Mode=OneWay}">
+                             IsVisible="{Binding IsSunriseSunsetAvail}">
                     <Label Text="Sunset" />
-                    <Label Text="{Binding SunsetTime, Mode=OneWay}" FontSize="24" />
+                    <Label Text="{Binding SunsetTime}" FontSize="24" />
                 </VerticalStackLayout>
 
                 <!-- Sunrise angle -->
                 <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}"
-                                     IsVisible="{Binding IsSunriseDirectionAvail, Mode=OneWay}">
+                                     IsVisible="{Binding IsSunriseDirectionAvail}">
                     <Label Text="Sunrise angle [°]" />
-                    <Label Text="{Binding SunriseDirectionText, Mode=OneWay}" FontSize="24" />
+                    <Label Text="{Binding SunriseDirectionText}" FontSize="24" />
                 </VerticalStackLayout>
 
                 <!-- Sunset angle -->
                 <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}"
-                                     IsVisible="{Binding IsSunsetDirectionAvail, Mode=OneWay}">
+                                     IsVisible="{Binding IsSunsetDirectionAvail}">
                     <Label Text="Sunset angle [°]" />
-                    <Label Text="{Binding SunsetDirectionText, Mode=OneWay}" FontSize="24" />
+                    <Label Text="{Binding SunsetDirectionText}" FontSize="24" />
                 </VerticalStackLayout>
 
             </FlexLayout>

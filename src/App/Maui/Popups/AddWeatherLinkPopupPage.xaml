@@ -19,24 +19,24 @@
         <!-- Entry for name -->
         <Label Text="Name" FontSize="Medium" />
         <Entry Placeholder="enter name for link"
-               Text="{Binding Path=Name, Mode=TwoWay}"
+               Text="{Binding Path=Name}"
                Style="{StaticResource EntryOnPopupPageStyle}" />
 
         <!-- Entry for weblink URL -->
         <Label Text="Link" FontSize="Medium" />
         <Entry Placeholder="enter weather link"
-               Text="{Binding Path=WebLink, Mode=TwoWay}"
+               Text="{Binding Path=WebLink}"
                Style="{StaticResource EntryOnPopupPageStyle}" />
 
         <!-- Group selection -->
         <Label Text="Group" FontSize="Medium" />
-        <Picker ItemsSource="{Binding GroupsList, Mode=OneTime}"
-                SelectedItem="{Binding SelectedGroup, Mode=TwoWay}"
+        <Picker ItemsSource="{Binding GroupsList}"
+                SelectedItem="{Binding SelectedGroup}"
                 Style="{StaticResource PickerOnPopupPageStyle}" />
 
         <!-- Button to add web link -->
         <Button Text="Add weather link"
-                IsEnabled="{Binding IsValidWebLink, Mode=OneWay}"
+                IsEnabled="{Binding IsValidWebLink}"
                 Clicked="OnClickedAddWeatherLinkButton"
                 AutomationId="AddWeatherLinkButton" />
     </VerticalStackLayout>

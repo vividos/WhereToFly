@@ -19,10 +19,10 @@
 
         <!-- Context menu list -->
         <CollectionView Grid.Row="1"
-                        ItemsSource="{Binding ContextMenuItems, Mode=OneTime}"
+                        ItemsSource="{Binding ContextMenuItems}"
                         VerticalOptions="Start"
                         HorizontalOptions="Fill"
-                        HeightRequest="{Binding ContextMenuListHeight, Mode=OneTime}">
+                        HeightRequest="{Binding ContextMenuListHeight}">
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="viewmodels:ContextMenuItemViewModel">
@@ -48,10 +48,10 @@
                             VerticalOptions="Center" />
 
                         <!-- Menu item text -->
-                        <Label Grid.Column="1" Text="{Binding Text, Mode=OneTime}"
+                        <Label Grid.Column="1" Text="{Binding Text}"
                                InputTransparent="True"
                                TextColor="{Binding ForegroundColor}"
-                               IsEnabled="{Binding IsEnabled, Mode=OneWay}"
+                               IsEnabled="{Binding IsEnabled}"
                                FontSize="Medium"
                                VerticalOptions="Fill"
                                VerticalTextAlignment="Center" />

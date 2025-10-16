@@ -28,7 +28,7 @@
                                    Padding="8"
                                    BackgroundColor="{StaticResource LoadingBandBackgroundColor}"
                                    HorizontalOptions="Fill"
-                                   IsVisible="{Binding IsListRefreshActive, Mode=OneWay}" >
+                                   IsVisible="{Binding IsListRefreshActive}" >
                 <ActivityIndicator IsRunning="True"
                                    Color="{StaticResource LoadingBandActivityIndicatorColor}"
                                    WidthRequest="20"
@@ -45,7 +45,7 @@
                                    Padding="8"
                                    BackgroundColor="{StaticResource MessageBandBackgroundColor}"
                                    HorizontalOptions="Fill"
-                                   IsVisible="{Binding IsListEmpty, Mode=OneWay}" >
+                                   IsVisible="{Binding IsListEmpty}" >
                 <Label Text="There are no tracks in the list."
                        VerticalTextAlignment="Center" FontSize="Medium"
                        TextColor="{StaticResource MessageBandTextColor}" />
@@ -53,7 +53,7 @@
 
             <!-- Track list -->
             <CollectionView Grid.Row="2"
-                            ItemsSource="{Binding Path=TrackList, Mode=OneWay}"
+                            ItemsSource="{Binding Path=TrackList}"
                             SelectionMode="Single"
                             SelectedItem="{Binding SelectedTrack}"
                             ItemSizingStrategy="MeasureFirstItem"
@@ -90,8 +90,8 @@
                                                   Grid.RowSpan="2" />
 
                             <!-- Track color -->
-                            <Border IsVisible="{Binding IsColorBoxVisible, Mode=OneWay}"
-                                    BackgroundColor="{Binding TrackColor, Mode=OneTime}"
+                            <Border IsVisible="{Binding IsColorBoxVisible}"
+                                    BackgroundColor="{Binding TrackColor}"
                                     VerticalOptions="Center"
                                     WidthRequest="32"
                                     HeightRequest="32"

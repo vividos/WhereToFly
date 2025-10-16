@@ -24,7 +24,7 @@
                FontSize="Medium" />
         <Entry Grid.Row="2"
                Placeholder="enter layer name"
-               Text="{Binding Path=LayerName, Mode=TwoWay}"
+               Text="{Binding Path=LayerName}"
                Style="{StaticResource EntryOnPopupPageStyle}" />
 
         <!-- Button to add layer -->

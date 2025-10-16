@@ -23,7 +23,7 @@
                              Padding="8"
                              BackgroundColor="{StaticResource WarningBandBackgroundColor}"
                              HorizontalOptions="Fill"
-                             IsVisible="{Binding Path=ShowWarningForMoreLocations, Mode=OneWay}">
+                             IsVisible="{Binding Path=ShowWarningForMoreLocations}">
             <Label Text="At least two locations are needed for tour planning"
                    FontSize="Medium"
                    TextColor="{StaticResource WarningBandTextColor}"
@@ -32,7 +32,7 @@
 
         <!-- Tour plan location list -->
         <CollectionView Grid.Row="2"
-                        ItemsSource="{Binding Path=PlanTourList, Mode=OneWay}"
+                        ItemsSource="{Binding Path=PlanTourList}"
                         ItemSizingStrategy="MeasureFirstItem"
                         SelectionMode="None"
                         VerticalOptions="Fill"
@@ -60,7 +60,7 @@
                                               Grid.Row="0" Grid.Column="0" />
 
                         <!-- Name -->
-                        <Label Text="{Binding Name, Mode=OneTime}"
+                        <Label Text="{Binding Name}"
                                Style="{StaticResource ListItemTextStyle}"
                                FontSize="Medium"
                                LineBreakMode="TailTruncation"

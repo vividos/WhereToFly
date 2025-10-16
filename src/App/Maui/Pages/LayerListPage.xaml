@@ -31,7 +31,7 @@
                                Padding="8"
                                BackgroundColor="{StaticResource MessageBandBackgroundColor}"
                                HorizontalOptions="Fill"
-                               IsVisible="{Binding IsListEmpty, Mode=OneWay}" >
+                               IsVisible="{Binding IsListEmpty}" >
             <Label Text="There are no layers in the list."
                    VerticalTextAlignment="Center"
                    FontSize="Medium"
@@ -40,7 +40,7 @@
 
         <!-- Layer list -->
         <CollectionView Grid.Row="1"
-                        ItemsSource="{Binding Path=LayerList, Mode=OneWay}"
+                        ItemsSource="{Binding Path=LayerList}"
                         SelectionMode="Single"
                         SelectedItem="{Binding SelectedLayer}"
                         ItemSizingStrategy="MeasureFirstItem"

@@ -34,7 +34,7 @@
                    Text="Filter"
                    VerticalTextAlignment="Center" />
             <Entry Grid.Column="1"
-                   Text="{Binding Path=FilterText, Mode=TwoWay}"
+                   Text="{Binding Path=FilterText}"
                    Placeholder="Type here to filter"
                    HorizontalOptions="Fill"
                    AutomationId="FilterText">
@@ -52,7 +52,7 @@
                 IsVisible="True"
                 WidthRequest="40"
                 HeightRequest="40"
-                Source="{Binding FilterTakeoffDirections, Mode=TwoWay}"
+                Source="{Binding FilterTakeoffDirections}"
                 IsReadOnly="True"
                 TouchCommand="{Binding FilterTakeoffDirectionsCommand}"
                 BackgroundColor="Transparent"
@@ -65,7 +65,7 @@
                                Padding="8"
                                BackgroundColor="{StaticResource LoadingBandBackgroundColor}"
                                HorizontalOptions="Fill"
-                               IsVisible="{Binding IsListRefreshActive, Mode=OneWay}" >
+                               IsVisible="{Binding IsListRefreshActive}" >
             <ActivityIndicator IsRunning="True"
                                Color="{StaticResource LoadingBandActivityIndicatorColor}"
                                WidthRequest="20"
@@ -82,7 +82,7 @@
                                Padding="8"
                                BackgroundColor="{StaticResource MessageBandBackgroundColor}"
                                HorizontalOptions="Fill"
-                               IsVisible="{Binding IsListEmpty, Mode=OneWay}" >
+                               IsVisible="{Binding IsListEmpty}" >
             <Label Text="There are no locations in the list."
                    VerticalTextAlignment="Center"
                    FontSize="Medium"
@@ -94,7 +94,7 @@
                              Padding="8"
                              BackgroundColor="{StaticResource WarningBandBackgroundColor}"
                              HorizontalOptions="Fill"
-                             IsVisible="{Binding Path=AreAllLocationsFilteredOut, Mode=OneWay}">
+                             IsVisible="{Binding Path=AreAllLocationsFilteredOut}">
             <Label Text="All locations filtered out" FontSize="Medium"
                    TextColor="{StaticResource WarningBandTextColor}"
                    AutomationId="AllFilteredOutLabel" />
@@ -103,7 +103,7 @@
         <!-- Location list -->
         <CollectionView Grid.Row="3"
                         x:Name="locationsListView"
-                        ItemsSource="{Binding Path=LocationList, Mode=OneWay}"
+                        ItemsSource="{Binding Path=LocationList}"
                         SelectionMode="Single"
                         SelectedItem="{Binding SelectedLocation}"
                         ItemSizingStrategy="MeasureFirstItem"
@@ -142,7 +142,7 @@
                         <!-- Takeoff directions -->
                         <controls:TakeoffDirectionsView
                             Grid.Column="1" Grid.RowSpan="3"
-                            IsVisible="{Binding IsTakeoffDirectionsVisible, Mode=OneTime}"
+                            IsVisible="{Binding IsTakeoffDirectionsVisible}"
                             WidthRequest="40" HeightRequest="40"
                             Source="{Binding TakeoffDirections, Mode=OneTime}"
                             IsReadOnly="True"

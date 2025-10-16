@@ -35,8 +35,8 @@
                                       VerticalOptions="Center" />
 
                 <!-- Track color box -->
-                <Border IsVisible="{Binding IsColorBoxVisible, Mode=OneWay}"
-                        BackgroundColor="{Binding TrackColor, Mode=OneWay}"
+                <Border IsVisible="{Binding IsColorBoxVisible}"
+                        BackgroundColor="{Binding TrackColor}"
                         WidthRequest="32"
                         HeightRequest="32"
                         VerticalOptions="Center"
@@ -68,16 +68,16 @@
             <Label Grid.Row="1" Grid.Column="0"
                    Text="Distance" />
             <Label Grid.Row="1" Grid.Column="1"
-                   Text="{Binding Distance, Mode=OneTime}" />
+                   Text="{Binding Distance}" />
 
             <!-- Duration -->
             <Label Grid.Row="2" Grid.Column="0"
                    Text="Duration" />
             <Label Grid.Row="2" Grid.Column="1"
-                   Text="{Binding Duration, Mode=OneTime}" />
+                   Text="{Binding Duration}" />
 
             <!-- Height profile -->
-            <mapview:HeightProfileView Track="{Binding Track, Mode=OneWay}"
+            <mapview:HeightProfileView Track="{Binding Track}"
                                        UseDarkTheme="{Binding UseDarkTheme, Mode=OneTime}"
                                        Grid.Row="3" Grid.ColumnSpan="2"
                                        HeightRequest="300"

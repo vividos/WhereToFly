@@ -55,14 +55,14 @@
                                               HorizontalOptions="Start" VerticalOptions="Center" />
 
                         <!-- Name -->
-                        <Label Text="{Binding Name, Mode=OneTime}"
+                        <Label Text="{Binding Name}"
                            FontSize="Large" FontAttributes="Bold"
                            VerticalOptions="Center" />
                     </StackLayout>
 
                     <!-- Type -->
                     <Label Grid.Row="1" Grid.Column="0" Text="Type" />
-                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Type, Mode=OneTime}" />
+                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Type}" />
                 </Grid>
 
                 <!-- Description web view -->

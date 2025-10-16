@@ -29,30 +29,30 @@
                 <!-- Map imagery type -->
                 <Label Grid.Row="0" Grid.Column="0" FontSize="Medium" Text="Map imagery" />
                 <Picker Grid.Row="0" Grid.Column="1" Title="Map imagery"
-                        ItemsSource="{Binding MapImageryTypeItems, Mode=OneWay}"
+                        ItemsSource="{Binding MapImageryTypeItems}"
                         ItemDisplayBinding="{Binding Text, x:DataType=viewmodels:MapSettingsViewModel+MapImageryTypeViewModel}"
-                        SelectedItem="{Binding SelectedMapImageryType, Mode=TwoWay}" />
+                        SelectedItem="{Binding SelectedMapImageryType}" />
 
                 <!-- Map overlay type -->
                 <Label Grid.Row="1" Grid.Column="0" FontSize="Medium" Text="Map overlay" />
                 <Picker Grid.Row="1" Grid.Column="1" Title="Map overlay"
-                        ItemsSource="{Binding MapOverlayTypeItems, Mode=OneWay}"
+                        ItemsSource="{Binding MapOverlayTypeItems}"
                         ItemDisplayBinding="{Binding Text, x:DataType=viewmodels:MapSettingsViewModel+MapOverlayTypeViewModel}"
-                        SelectedItem="{Binding SelectedMapOverlayType, Mode=TwoWay}" />
+                        SelectedItem="{Binding SelectedMapOverlayType}" />
 
                 <!-- Map shading mode -->
                 <Label Grid.Row="2" Grid.Column="0" FontSize="Medium" Text="Map shading" />
                 <Picker Grid.Row="2" Grid.Column="1" Title="Map shading"
-                        ItemsSource="{Binding MapShadingModeItems, Mode=OneWay}"
+                        ItemsSource="{Binding MapShadingModeItems}"
                         ItemDisplayBinding="{Binding Text, x:DataType=viewmodels:MapSettingsViewModel+MapShadingModeViewModel}"
-                        SelectedItem="{Binding SelectedMapShadingModeItem, Mode=TwoWay}" />
+                        SelectedItem="{Binding SelectedMapShadingModeItem}" />
 
                 <!-- Lat/long coordinates display format -->
                 <Label Grid.Row="3" Grid.Column="0" FontSize="Medium" Text="Coordinates display format" />
                 <Picker Grid.Row="3" Grid.Column="1" Title="Coordinates format"
-                        ItemsSource="{Binding CoordinateDisplayFormatItems, Mode=OneWay}"
+                        ItemsSource="{Binding CoordinateDisplayFormatItems}"
                         ItemDisplayBinding="{Binding Text, x:DataType=viewmodels:MapSettingsViewModel+CoordinateDisplayFormatViewModel}"
-                        SelectedItem="{Binding SelectedCoordinateDisplayFormatItem, Mode=TwoWay}" />
+                        SelectedItem="{Binding SelectedCoordinateDisplayFormatItem}" />
 
                 <!-- Map entity clustering -->
                 <Label Grid.Row="4" Grid.Column="0" FontSize="Medium" Text="Use location clustering" />

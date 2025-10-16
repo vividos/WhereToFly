@@ -22,7 +22,7 @@
 
         <!-- List showing all weather icons that can be added -->
         <CollectionView Grid.Row="1"
-                        ItemsSource="{Binding Path=GroupedWeatherIconList, Mode=OneWay}"
+                        ItemsSource="{Binding Path=GroupedWeatherIconList}"
                         SelectionMode="Single"
                         SelectedItem="{Binding SelectedWeatherIcon}"
                         ItemSizingStrategy="MeasureFirstItem"
@@ -60,7 +60,7 @@
                         </HorizontalStackLayout.GestureRecognizers>
 
                         <!-- Weather icon -->
-                        <Image Source="{Binding Icon, Mode=OneWay}"
+                        <Image Source="{Binding Icon}"
                                WidthRequest="32"
                                HeightRequest="32"
                                Margin="4"
@@ -68,7 +68,7 @@
                                VerticalOptions="Center" />
 
                         <!-- Title -->
-                        <Label Text="{Binding Title, Mode=OneWay}"
+                        <Label Text="{Binding Title}"
                                Style="{StaticResource ListItemTextStyle}"
                                FontSize="Medium"
                                LineBreakMode="TailTruncation"

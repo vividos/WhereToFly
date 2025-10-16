@@ -24,9 +24,9 @@
                 <!-- App theme picker -->
                 <Label Grid.Row="0" Grid.Column="0" FontSize="Medium" Text="App theme" />
                 <Picker Grid.Row="0" Grid.Column="1" Title="App theme"
-                    ItemsSource="{Binding AppThemeItems, Mode=OneWay}"
+                    ItemsSource="{Binding AppThemeItems}"
                     ItemDisplayBinding="{Binding Text, x:DataType=viewmodels:GeneralSettingsViewModel+AppThemeViewModel}"
-                    SelectedItem="{Binding SelectedAppTheme, Mode=TwoWay}" />
+                    SelectedItem="{Binding SelectedAppTheme}" />
 
                 <!-- Alptherm section header -->
                 <Label Grid.Row="1" Grid.ColumnSpan="2"

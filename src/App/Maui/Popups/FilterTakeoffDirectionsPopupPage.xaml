@@ -23,7 +23,7 @@
             WidthRequest="240" HeightRequest="240"
             HorizontalOptions="Center"
             VerticalOptions="Center"
-            Source="{Binding TakeoffDirections, Mode=TwoWay}"
+            Source="{Binding TakeoffDirections}"
             IsReadOnly="False"
             BackgroundColor="Transparent"
             ShowLabels="True"
@@ -31,7 +31,7 @@
 
         <!-- Switch to select if it's a flight track -->
         <HorizontalStackLayout>
-            <Switch IsToggled="{Binding AlsoShowOtherLocations, Mode=TwoWay}"
+            <Switch IsToggled="{Binding AlsoShowOtherLocations}"
                     AutomationId="AlsoShowOtherLocationsSwitch" />
             <Label Text="Also show other locations"
                    FontSize="Medium"

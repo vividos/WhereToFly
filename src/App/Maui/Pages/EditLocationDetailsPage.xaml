@@ -30,17 +30,17 @@
                 <Label Grid.Row="1" Grid.Column="0" Text="Type" />
                 <Picker Grid.Row="1" Grid.Column="1"
                         VerticalOptions="Start"
-                        ItemsSource="{Binding LocationTypeList, Mode=OneWay}"
+                        ItemsSource="{Binding LocationTypeList}"
                         SelectedItem="{Binding Type}"
                         Style="{StaticResource PickerOnPopupPageStyle}" />
 
                 <!-- Latitude -->
                 <Label Grid.Row="2" Grid.Column="0" Text="Latitude" />
-                <Label Grid.Row="2" Grid.Column="1" Text="{Binding Latitude, Mode=OneWay}" />
+                <Label Grid.Row="2" Grid.Column="1" Text="{Binding Latitude}" />
 
                 <!-- Longitude -->
                 <Label Grid.Row="3" Grid.Column="0" Text="Longitude" />
-                <Label Grid.Row="3" Grid.Column="1" Text="{Binding Longitude, Mode=OneWay}" />
+                <Label Grid.Row="3" Grid.Column="1" Text="{Binding Longitude}" />
 
                 <!-- Altitude -->
                 <Label Grid.Row="4" Grid.Column="0" Text="Altitude" />

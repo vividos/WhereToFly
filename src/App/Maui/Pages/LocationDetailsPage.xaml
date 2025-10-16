@@ -65,17 +65,17 @@
 
                         <!-- Takeoff directions -->
                         <controls:TakeoffDirectionsView
-                            IsVisible="{Binding IsTakeoffDirectionsVisible, Mode=OneTime}"
+                            IsVisible="{Binding IsTakeoffDirectionsVisible}"
                             WidthRequest="64" HeightRequest="64"
                             HorizontalOptions="Start" VerticalOptions="Center"
-                            Source="{Binding TakeoffDirections, Mode=OneTime}"
+                            Source="{Binding TakeoffDirections}"
                             IsReadOnly="True"
                             BackgroundColor="Transparent"
                             ShowLabels="True"
                             Style="{StaticResource TakeoffDirectionsStyle}" />
 
                         <!-- Name -->
-                        <Label Text="{Binding Name, Mode=OneTime}"
+                        <Label Text="{Binding Name}"
                                FontSize="Large"
                                FontAttributes="Bold"
                                VerticalOptions="Center" />
@@ -83,27 +83,27 @@
 
                     <!-- Type -->
                     <Label Grid.Row="1" Grid.Column="0" Text="Type" />
-                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Type, Mode=OneTime}" />
+                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Type}" />
 
                     <!-- Latitude -->
                     <Label Grid.Row="2" Grid.Column="0" Text="Latitude" />
-                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding Latitude, Mode=OneTime}" />
+                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding Latitude}" />
 
                     <!-- Longitude -->
                     <Label Grid.Row="3" Grid.Column="0" Text="Longitude" />
-                    <Label Grid.Row="3" Grid.Column="1" Text="{Binding Longitude, Mode=OneTime}" />
+                    <Label Grid.Row="3" Grid.Column="1" Text="{Binding Longitude}" />
 
                     <!-- Altitude -->
                     <Label Grid.Row="4" Grid.Column="0" Text="Altitude" />
-                    <Label Grid.Row="4" Grid.Column="1" Text="{Binding Altitude, Mode=OneTime}" />
+                    <Label Grid.Row="4" Grid.Column="1" Text="{Binding Altitude}" />
 
                     <!-- Current distance -->
                     <Label Grid.Row="5" Grid.Column="0" Text="Distance" />
-                    <Label Grid.Row="5" Grid.Column="1" Text="{Binding Distance, Mode=OneWay}" />
+                    <Label Grid.Row="5" Grid.Column="1" Text="{Binding Distance}" />
 
                     <!-- Internet link -->
                     <Label Grid.Row="6" Grid.Column="0" Text="Internet link" />
-                    <Label Grid.Row="6" Grid.Column="1" Text="{Binding InternetLink, Mode=OneTime}"
+                    <Label Grid.Row="6" Grid.Column="1" Text="{Binding InternetLink}"
                            TextColor="{StaticResource AccentColor}"
                            TextDecorations="Underline">
                         <Label.GestureRecognizers>

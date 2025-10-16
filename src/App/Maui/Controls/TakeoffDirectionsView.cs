@@ -59,6 +59,7 @@ namespace WhereToFly.App.Controls
                 returnType: typeof(TakeoffDirections),
                 declaringType: typeof(TakeoffDirectionsView),
                 defaultValue: TakeoffDirections.None,
+                defaultBindingMode: BindingMode.TwoWay,
                 propertyChanged: InvalidateSurfaceOnChange);
 
         /// <summary>

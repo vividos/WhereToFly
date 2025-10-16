@@ -49,8 +49,8 @@
 
                     <controls:CompassView VerticalOptions="Fill"
                                           HorizontalOptions="Fill"
-                                          Heading="{Binding TrueNorthHeadingInDegrees, Mode=OneWay}"
-                                          TargetDirection="{Binding TargetDirectionInDegrees, Mode=OneWay}"
+                                          Heading="{Binding TrueNorthHeadingInDegrees}"
+                                          TargetDirection="{Binding TargetDirectionInDegrees}"
                                           SunriseDirection="{Binding SunriseDirectionInDegrees}"
                                           SunsetDirection="{Binding SunsetDirectionInDegrees}"
                                           Style="{StaticResource CompassStyle}" />
@@ -58,36 +58,36 @@
 
                 <!-- Magnetic-north Heading -->
                 <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}"
-                                     IsVisible="{Binding IsMagneticNorthHeadingAvail, Mode=OneWay}">
+                                     IsVisible="{Binding IsMagneticNorthHeadingAvail}">
                     <Label Text="Magnetic Heading [°]" />
-                    <Label Text="{Binding MagneticNorthHeadingInDegrees, Mode=OneWay}" FontSize="32" />
+                    <Label Text="{Binding MagneticNorthHeadingInDegrees}" FontSize="32" />
                 </VerticalStackLayout>
 
                 <!-- True-north Heading -->
                 <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}"
-                                     IsVisible="{Binding IsTrueNorthHeadingAvail, Mode=OneWay}">
+                                     IsVisible="{Binding IsTrueNorthHeadingAvail}">
                     <Label Text="True North Heading [°]" />
-                    <Label Text="{Binding TrueNorthHeadingInDegrees, Mode=OneWay}" FontSize="32" />
+                    <Label Text="{Binding TrueNorthHeadingInDegrees}" FontSize="32" />
                 </VerticalStackLayout>
 
                 <!-- Target direction -->
                 <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}"
-                                     IsVisible="{Binding IsTargetDirectionAvail, Mode=OneWay}">
+                                     IsVisible="{Binding IsTargetDirectionAvail}">
                     <Label Text="Direction [°]" />
-                    <Label Text="{Binding TargetDirectionText, Mode=OneWay}" FontSize="32" />
+                    <Label Text="{Binding TargetDirectionText}" FontSize="32" />
                 </VerticalStackLayout>
 
                 <!-- Distance -->
                 <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}">
                     <Label Text="Distance" />
-                    <Label Text="{Binding Distance, Mode=OneWay}" FontSize="32" />
+                    <Label Text="{Binding Distance}" FontSize="32" />
                 </VerticalStackLayout>
 
                 <!-- Height difference -->
                 <VerticalStackLayout WidthRequest="120"
                                      Style="{StaticResource PositionInfoSquareTileStyle}">
                     <Label Text="Height difference" />
-                    <Label Text="{Binding HeightDifference, Mode=OneWay}" FontSize="32" />
+                    <Label Text="{Binding HeightDifference}" FontSize="32" />
                 </VerticalStackLayout>
 
             </FlexLayout>
