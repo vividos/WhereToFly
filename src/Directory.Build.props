@@ -5,7 +5,7 @@
     <Company></Company>
     <NuGetPackagePrefix>Vividos</NuGetPackagePrefix>
     <DotNetVersion>net9.0</DotNetVersion>
-    <DotNetMauiVersion>9.0.110</DotNetMauiVersion>
+    <DotNetMauiVersion>9.0.111</DotNetMauiVersion>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -34,7 +34,7 @@
     <AdditionalFiles Include="$(MSBuildThisFileDirectory)stylecop.json" Link="stylecop.json" />
 
     <!-- Add versioning to all projects -->
-    <PackageReference Include="Nerdbank.GitVersioning" Version="3.7.115">
+    <PackageReference Include="Nerdbank.GitVersioning" Version="3.8.118">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
