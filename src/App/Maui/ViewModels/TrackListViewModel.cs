@@ -251,7 +251,12 @@ namespace WhereToFly.App.ViewModels
             try
             {
                 await this.LoadDataAsync();
+
+#if ANDROID || WINDOWS
                 await MainThread.InvokeOnMainThreadAsync(this.UpdateTrackList);
+#else
+                this.UpdateTrackList();
+#endif
             }
             catch (Exception ex)
             {

@@ -70,9 +70,13 @@ namespace WhereToFly.App.ViewModels
 
             this.CloseCommand = new AsyncRelayCommand(this.ClosePageAsync);
 
+#if ANDROID || WINDOWS
             MainThread.BeginInvokeOnMainThread(
                 async () => await this.LoadDataAsync(
                     planTourParameters.WaypointIdList));
+#else
+            _ = this.LoadDataAsync(planTourParameters.WaypointIdList);
+#endif
         }
 
         /// <summary>
