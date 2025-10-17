@@ -25,7 +25,7 @@ namespace WhereToFly.App.UnitTest
             string text = location.ToString();
 
             // check
-            Assert.IsTrue(text.Length > 0, "location ToString() result must contain text");
+            Assert.IsGreaterThan(0, text.Length, "location ToString() result must contain text");
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace WhereToFly.App.UnitTest
 
             // check
             Assert.IsNotNull(locationList2, "returned location list must be non-null");
-            Assert.AreEqual(locationList.Count, locationList2.Count, "length of lists must be equal");
+            Assert.HasCount(locationList.Count, locationList2, "length of lists must be equal");
             ////Assert.AreEqual(locationList.First(), locationList2.First(), "single entry must be equal");
         }
     }

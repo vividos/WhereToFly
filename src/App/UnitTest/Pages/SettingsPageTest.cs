@@ -19,8 +19,8 @@ namespace WhereToFly.App.UnitTest.Pages
             var page = new SettingsPage();
 
             // check
-            Assert.IsTrue(page.Title.Length > 0, "page title must have been set");
-            Assert.IsTrue(page.Children.Count > 0, "tabbed page must have at least one sub page");
+            Assert.IsGreaterThan(0, page.Title.Length, "page title must have been set");
+            Assert.IsNotEmpty(page.Children, "tabbed page must have at least one sub page");
         }
     }
 }

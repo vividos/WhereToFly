@@ -20,7 +20,7 @@ namespace WhereToFly.App.UnitTest.Pages
             var page = new LocationDetailsPage(location);
 
             // check
-            Assert.IsTrue(page.Title.Length > 0, "page title must have been set");
+            Assert.IsGreaterThan(0, page.Title.Length, "page title must have been set");
         }
     }
 }

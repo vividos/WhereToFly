@@ -78,7 +78,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
             Assert.AreEqual("512", viewModel.Altitude, "altitude text must be correct");
             Assert.AreEqual("42", viewModel.Accuracy, "accuracy text must be correct");
             Assert.AreEqual(Color.FromArgb("#E0E000"), viewModel.PositionAccuracyColor, "accuracy color must be black");
-            Assert.IsTrue(viewModel.LastPositionFix.Length > 0, "last position fix text must contain text");
+            Assert.IsGreaterThan(0, viewModel.LastPositionFix.Length, "last position fix text must contain text");
             Assert.AreEqual(14, viewModel.SpeedInKmh, "speed value must be correct");
             Assert.IsFalse(viewModel.IsMagneticNorthHeadingAvail, "initially magnetic-north heading is not available");
             Assert.AreEqual(0, viewModel.MagneticNorthHeadingInDegrees, "magnetic-north heading value must be correct");

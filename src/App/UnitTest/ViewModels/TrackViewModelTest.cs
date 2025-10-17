@@ -67,7 +67,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
             var viewModel = new TrackStatisticsViewModel(track);
 
             // check
-            Assert.IsTrue(viewModel.NumTrackPoints > 0, "there must be some track points");
+            Assert.IsGreaterThan(0, viewModel.NumTrackPoints, "there must be some track points");
             Assert.IsTrue(viewModel.Distance.Any(), "distance must contain value");
             Assert.IsTrue(viewModel.Duration.Any(), "duration must contain value");
 

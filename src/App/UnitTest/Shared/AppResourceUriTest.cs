@@ -31,8 +31,8 @@ namespace WhereToFly.App.UnitTest.Shared
             Assert.IsTrue(uri1.IsValid, "uri1 must be valid");
             Assert.IsTrue(uri2.IsValid, "uri2 must be valid");
 
-            Assert.IsTrue(uriText1.ToLowerInvariant() == uri1.ToString(), "uri text and ToString() result must match");
-            Assert.IsTrue(uriText2.ToLowerInvariant() == uri2.ToString(), "uri text and ToString() result must match");
+            Assert.AreEqual(uri1.ToString(), uriText1.ToLowerInvariant(), "uri text and ToString() result must match");
+            Assert.AreEqual(uri2.ToString(), uriText2.ToLowerInvariant(), "uri text and ToString() result must match");
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace WhereToFly.App.UnitTest.Shared
             Assert.AreEqual(uri1, uri1, "same objects must be equal");
             Assert.AreNotEqual(uri1, uri2, "different objects must be equal");
             Assert.AreEqual(uri2, uri3, "different references must be equal");
-            Assert.AreNotEqual(null, uri1, "object must not be equal to null");
+            Assert.IsNotNull(uri1, "object must not be equal to null");
 
             Assert.AreEqual(uri2.GetHashCode(), uri3.GetHashCode(), "hash codes of same objects must be equal");
         }
@@ -142,18 +142,18 @@ namespace WhereToFly.App.UnitTest.Shared
             var dict = new Dictionary<AppResourceUri, int>();
 
             // run + check
-            Assert.IsFalse(dict.Count != 0, "there must be no items in the dictionary");
+            Assert.IsEmpty(dict, "there must be no items in the dictionary");
 
             dict[uri1] = 42;
-            Assert.IsTrue(dict.Count != 0, "there must be an item in the dictionary");
+            Assert.IsNotEmpty(dict, "there must be an item in the dictionary");
             Assert.IsTrue(dict.ContainsKey(uri1), "dict must contain value for uri1");
             Assert.IsFalse(dict.ContainsKey(uri2), "dict must not contain value for uri1");
 
             dict[uri2] = 64;
-            Assert.AreEqual(2, dict.Count, "there must be 2 items in the dictionary");
+            Assert.HasCount(2, dict, "there must be 2 items in the dictionary");
 
             dict[uri3] = 128;
-            Assert.AreEqual(2, dict.Count, "there must still be 2 items in the dictionary");
+            Assert.HasCount(2, dict, "there must still be 2 items in the dictionary");
 
             Assert.AreEqual(42, dict[uri1], "value of key with uri 1 must match");
             Assert.AreEqual(128, dict[uri2], "value of key with uri 2 must match");

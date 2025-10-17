@@ -31,10 +31,11 @@ namespace WhereToFly.App.UnitTest.ViewModels
                 viewModel.GlideRatio < 20.0,
                 "glide ratio must have a sane default value");
 
-            Assert.IsTrue(viewModel.WindDirectionList.Count != 0, "wind direction list must contain values");
+            Assert.IsNotEmpty(viewModel.WindDirectionList, "wind direction list must contain values");
 
-            Assert.IsTrue(
-                viewModel.WindDirectionList.Contains(viewModel.WindDirection),
+            Assert.Contains(
+                viewModel.WindDirection,
+                viewModel.WindDirectionList,
                 "wind direction must be in the wind direction list");
 
             Assert.IsTrue(viewModel.WindSpeed.Any(), "wind speed must contain text");

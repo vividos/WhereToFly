@@ -65,7 +65,7 @@ namespace WhereToFly.App.UnitTest
             string text = DataFormatter.FormatMyPositionShareText(mapPoint, DateTimeOffset.UtcNow);
 
             // check
-            Assert.IsTrue(text.Length > 0, "formatted text must not be empty");
+            Assert.IsGreaterThan(0, text.Length, "formatted text must not be empty");
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace WhereToFly.App.UnitTest
             string text = DataFormatter.FormatLocationShareText(location);
 
             // check
-            Assert.IsTrue(text.Length > 0, "formatted text must not be empty");
+            Assert.IsGreaterThan(0, text.Length, "formatted text must not be empty");
         }
 
         /// <summary>

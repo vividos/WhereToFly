@@ -24,7 +24,7 @@ namespace WhereToFly.Geo.UnitTest
                 var trackList = gpxFile.GetTrackList();
 
                 // check
-                Assert.IsTrue(trackList.Count != 0, "track list list must at least one track");
+                Assert.IsNotEmpty(trackList, "track list list must at least one track");
             }
         }
 
@@ -43,7 +43,7 @@ namespace WhereToFly.Geo.UnitTest
                 var track = gpxFile.LoadTrack(0);
 
                 // check
-                Assert.IsTrue(track.TrackPoints.Count != 0, "track points list must not be empty");
+                Assert.IsNotEmpty(track.TrackPoints, "track points list must not be empty");
             }
         }
 
@@ -63,7 +63,7 @@ namespace WhereToFly.Geo.UnitTest
                 var locationList = gpxFile.LoadLocationList();
 
                 // check
-                Assert.IsTrue(locationList.Count != 0, "loaded location list must contain locations");
+                Assert.IsNotEmpty(locationList, "loaded location list must contain locations");
             }
         }
     }

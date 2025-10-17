@@ -26,6 +26,8 @@ namespace WhereToFly.App.UnitTest.ViewModels
                     DependencyService.Get<IAppMapService>(),
                     DependencyService.Get<IDataService>(),
                     DependencyService.Get<IGeolocationService>());
+
+                Assert.IsNotNull(viewModel, "view model most have been creted");
             }
             catch (Exception ex)
             {

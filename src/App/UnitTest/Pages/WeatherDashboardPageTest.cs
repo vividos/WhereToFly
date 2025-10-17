@@ -19,8 +19,9 @@ namespace WhereToFly.App.UnitTest.Pages
             var page = new WeatherDashboardPage();
 
             // check
-            Assert.IsTrue(
-                page.Title.Length > 0,
+            Assert.IsGreaterThan(
+                0,
+                page.Title.Length,
                 "page title must have been set");
         }
     }

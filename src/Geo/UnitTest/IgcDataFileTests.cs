@@ -26,7 +26,7 @@ namespace WhereToFly.Geo.UnitTest
                 var trackList = igcFile.GetTrackList();
 
                 // check
-                Assert.AreEqual(1, trackList.Count, "track list must contain exactly one track");
+                Assert.HasCount(1, trackList, "track list must contain exactly one track");
             }
         }
 
@@ -49,7 +49,7 @@ namespace WhereToFly.Geo.UnitTest
             // check
             Assert.IsNotNull(track, "track must not be null");
             Assert.IsNotNull(track.Name, "track name must be set");
-            Assert.IsTrue(track.TrackPoints.Count > 0, "there must be any track points");
+            Assert.IsNotEmpty(track.TrackPoints, "there must be any track points");
         }
 
         /// <summary>

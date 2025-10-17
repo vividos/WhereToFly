@@ -43,8 +43,8 @@ namespace WhereToFly.Geo.UnitTest
             // check
             Debug.WriteLine("CZML = " + czml);
 
-            Assert.IsTrue(czml.Contains("MyAirspace"), "CZML must contain generated airspace");
-            Assert.IsTrue(czml.Contains("cylinder"), "CZML must contain a cylinder element");
+            Assert.Contains("MyAirspace", czml, "CZML must contain generated airspace");
+            Assert.Contains("cylinder", czml, "CZML must contain a cylinder element");
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace WhereToFly.Geo.UnitTest
                 // check
                 Debug.WriteLine("CZML = " + czml);
 
-                Assert.IsTrue(czml.Contains("GRUYERES"), "CZML must contain Gruyeres airspace");
+                Assert.Contains("GRUYERES", czml, "CZML must contain Gruyeres airspace");
             }
         }
     }

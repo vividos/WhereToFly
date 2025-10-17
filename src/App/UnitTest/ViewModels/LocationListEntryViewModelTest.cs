@@ -35,8 +35,8 @@ namespace WhereToFly.App.UnitTest.ViewModels
             var viewModel = new LocationListEntryViewModel(parentViewModel, location, null);
 
             // check
-            Assert.IsTrue(viewModel.Name.Length > 0, "name text must not be empty");
-            Assert.IsTrue(viewModel.Description.Length > 0, "description text must not be empty");
+            Assert.IsGreaterThan(0, viewModel.Name.Length, "name text must not be empty");
+            Assert.IsGreaterThan(0, viewModel.Description.Length, "description text must not be empty");
         }
     }
 }

@@ -53,11 +53,11 @@ namespace WhereToFly.Geo.UnitTest
             // check
             Debug.WriteLine("CZML = " + czml);
 
-            Assert.IsTrue(czml.Contains("\"label\":{"), "CZML must contain label");
-            Assert.IsTrue(czml.Contains("FILL_AND_OUTLINE"), "CZML must contain label style");
-            Assert.IsTrue(czml.Contains("LEFT"), "CZML must contain horizontal origin");
-            Assert.IsTrue(czml.Contains("BASELINE"), "CZML must contain vertical origin");
-            Assert.IsTrue(czml.Contains("CLAMP_TO_GROUND"), "CZML must contain height reference");
+            Assert.Contains("\"label\":{", czml, "CZML must contain label");
+            Assert.Contains("FILL_AND_OUTLINE", czml, "CZML must contain label style");
+            Assert.Contains("LEFT", czml, "CZML must contain horizontal origin");
+            Assert.Contains("BASELINE", czml, "CZML must contain vertical origin");
+            Assert.Contains("CLAMP_TO_GROUND", czml, "CZML must contain height reference");
         }
 
         /// <summary>
@@ -99,10 +99,10 @@ namespace WhereToFly.Geo.UnitTest
             // check
             Debug.WriteLine("CZML = " + czml);
 
-            Assert.IsTrue(czml.Contains("\"billboard\":{"), "CZML must contain billboard");
-            Assert.IsTrue(czml.Contains("RIGHT"), "CZML must contain horizontal origin");
-            Assert.IsTrue(czml.Contains("CENTER"), "CZML must contain vertical origin");
-            Assert.IsTrue(czml.Contains("RELATIVE_TO_GROUND"), "CZML must contain height reference");
+            Assert.Contains("\"billboard\":{", czml, "CZML must contain billboard");
+            Assert.Contains("RIGHT", czml, "CZML must contain horizontal origin");
+            Assert.Contains("CENTER", czml, "CZML must contain vertical origin");
+            Assert.Contains("RELATIVE_TO_GROUND", czml, "CZML must contain height reference");
         }
 
         /// <summary>
@@ -138,8 +138,8 @@ namespace WhereToFly.Geo.UnitTest
             // check
             Debug.WriteLine("CZML = " + czml);
 
-            Assert.IsTrue(czml.Contains("\"model\":{"), "CZML must contain model");
-            Assert.IsTrue(czml.Contains("NONE"), "CZML must contain height reference");
+            Assert.Contains("\"model\":{", czml, "CZML must contain model");
+            Assert.Contains("NONE", czml, "CZML must contain height reference");
         }
     }
 }

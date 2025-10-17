@@ -1,5 +1,17 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Diagnostics.CodeAnalysis;
 using WhereToFly.Geo.Model;
+
+[assembly: SuppressMessage(
+    "Minor Code Smell",
+    "S1075:URIs should not be hardcoded",
+    Justification = "The unit test project uses test URLs")]
+
+// Unfortunately we can't run any unit tests in parallel, since some tests
+// use the SQLite database, and setting up and tearing down the Maui app
+// context also prevents this.
+[assembly: DoNotParallelize]
 
 namespace WhereToFly.App.UnitTest
 {

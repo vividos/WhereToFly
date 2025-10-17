@@ -50,7 +50,7 @@ namespace WhereToFly.Geo.UnitTest
 
             // check
             Debug.WriteLine("xml = " + text);
-            Assert.IsTrue(text.Contains(TrackName), "gpx must contain track name");
+            Assert.Contains(TrackName, text, "gpx must contain track name");
         }
     }
 }

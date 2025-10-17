@@ -47,18 +47,18 @@ namespace WhereToFly.App.UnitTest
                 dict,
                 ModelsJsonSerializerContext.Default.DictionaryLatLongKeyListLocation);
 
-            var key2 = JsonSerializer.Deserialize(
+            LatLongKey key2 = JsonSerializer.Deserialize(
                 jsonKey,
                 ModelsJsonSerializerContext.Default.LatLongKey);
 
-            var list2 = JsonSerializer.Deserialize<List<LatLongKey>>(jsonList);
+            List<LatLongKey>? list2 =
+                JsonSerializer.Deserialize<List<LatLongKey>>(jsonList);
 
-            var dict2 = JsonSerializer.Deserialize(
+            Dictionary<LatLongKey, List<Location>>? dict2 = JsonSerializer.Deserialize(
                 jsonDict,
                 ModelsJsonSerializerContext.Default.DictionaryLatLongKeyListLocation);
 
             // check
-            Assert.IsNotNull(key2, "deserialized key must not be null");
             Assert.IsNotNull(list2, "deserialized list must not be null");
             Assert.IsNotNull(dict2, "deserialized dictionary must not be null");
 

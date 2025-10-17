@@ -35,9 +35,9 @@ namespace WhereToFly.Geo.UnitTest
                 withElevation: true)
                 .ToList();
 
-            Assert.AreEqual(
+            Assert.HasCount(
                 trackPointsWithoutElevation.Count,
-                trackPointsWithElevation.Count,
+                trackPointsWithElevation,
                 "number of track points must be equal");
 
             for (int trackPointIndex = 0; trackPointIndex < trackPointsWithoutElevation.Count; trackPointIndex++)

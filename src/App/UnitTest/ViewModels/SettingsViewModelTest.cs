@@ -31,10 +31,10 @@ namespace WhereToFly.App.UnitTest.ViewModels
             viewModel.SelectedCoordinateDisplayFormatItem = viewModel.CoordinateDisplayFormatItems.Last();
 
             // check
-            Assert.IsTrue(viewModel.MapImageryTypeItems.Count != 0, "map imagery type list must contain items");
-            Assert.IsTrue(viewModel.MapOverlayTypeItems.Count != 0, "map overlay type list must contain items");
-            Assert.IsTrue(viewModel.MapShadingModeItems.Count != 0, "map shading mode list must contain items");
-            Assert.IsTrue(viewModel.CoordinateDisplayFormatItems.Count != 0, "coordinate display format list must contain items");
+            Assert.IsNotEmpty(viewModel.MapImageryTypeItems, "map imagery type list must contain items");
+            Assert.IsNotEmpty(viewModel.MapOverlayTypeItems, "map overlay type list must contain items");
+            Assert.IsNotEmpty(viewModel.MapShadingModeItems, "map shading mode list must contain items");
+            Assert.IsNotEmpty(viewModel.CoordinateDisplayFormatItems, "coordinate display format list must contain items");
         }
     }
 }

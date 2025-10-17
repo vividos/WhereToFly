@@ -93,9 +93,9 @@ namespace WhereToFly.App.UnitTest.MapView
         public void TestToString()
         {
             // check
-            Assert.IsTrue(TestParams1.ToString().Length > 0, "ToString() must return non-empty string");
-            Assert.IsTrue(TestParams2.ToString().Length > 0, "ToString() must return non-empty string");
-            Assert.IsTrue(TestParams3.ToString().Length > 0, "ToString() must return non-empty string");
+            Assert.IsGreaterThan(0, TestParams1.ToString().Length, "ToString() must return non-empty string");
+            Assert.IsGreaterThan(0, TestParams2.ToString().Length, "ToString() must return non-empty string");
+            Assert.IsGreaterThan(0, TestParams3.ToString().Length, "ToString() must return non-empty string");
         }
     }
 }

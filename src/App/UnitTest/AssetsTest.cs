@@ -27,7 +27,7 @@ namespace WhereToFly.App.UnitTest
             string text = await reader.ReadToEndAsync();
 
             // check
-            Assert.IsTrue(text.Length > 0, "changelog file must have been read");
+            Assert.IsGreaterThan(0, text.Length, "changelog file must have been read");
         }
     }
 }

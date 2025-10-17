@@ -27,7 +27,7 @@ namespace WhereToFly.Geo.UnitTest
             var trackList = kmlFile.GetTrackList();
 
             // check
-            Assert.IsTrue(trackList.Count > 0, "track list must contain any tracks");
+            Assert.IsNotEmpty(trackList, "track list must contain any tracks");
         }
 
         /// <summary>
@@ -46,8 +46,8 @@ namespace WhereToFly.Geo.UnitTest
             var track1 = kmlFile.LoadTrack(1);
 
             // check
-            Assert.IsTrue(track0.TrackPoints.Count > 0, "track points list must not be empty");
-            Assert.IsTrue(track1.TrackPoints.Count > 0, "track points list must not be empty");
+            Assert.IsNotEmpty(track0.TrackPoints, "track points list must not be empty");
+            Assert.IsNotEmpty(track1.TrackPoints, "track points list must not be empty");
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace WhereToFly.Geo.UnitTest
             var locationList = kmlFile.LoadLocationList();
 
             // check
-            Assert.IsTrue(locationList.Count > 0, "loaded location list must contain locations");
+            Assert.IsNotEmpty(locationList, "loaded location list must contain locations");
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace WhereToFly.Geo.UnitTest
             var locationList = kmlFile.LoadLocationList();
 
             // check
-            Assert.IsTrue(locationList.Count != 0, "loaded location list must contain locations");
+            Assert.IsNotEmpty(locationList, "loaded location list must contain locations");
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace WhereToFly.Geo.UnitTest
 
             // check
             Assert.IsFalse(kmlFile.HasLocations(), "kml file must not contain locations");
-            Assert.IsFalse(locationList.Count != 0, "loaded location list must not contain locations");
+            Assert.IsEmpty(locationList, "loaded location list must not contain locations");
         }
 
         /// <summary>
@@ -149,8 +149,8 @@ namespace WhereToFly.Geo.UnitTest
                 .Where(kvp => kvp.Value > 1)
                 .Select(kvp => kvp.Key);
 
-            Assert.IsTrue(
-                !locationIdsWithMultipleCounts.Any(),
+            Assert.IsFalse(
+                locationIdsWithMultipleCounts.Any(),
                 "there must be no placemark IDs which two or more locations");
         }
     }

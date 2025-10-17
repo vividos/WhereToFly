@@ -25,7 +25,7 @@ namespace WhereToFly.Geo.UnitTest
 
                 // check
                 Assert.IsFalse(cupFile.HasLocations(), "loaded file must have no locations");
-                Assert.IsTrue(cupFile.LoadLocationList().Count == 0, "locations list must contain no locations");
+                Assert.IsEmpty(cupFile.LoadLocationList(), "locations list must contain no locations");
             }
         }
 
@@ -46,7 +46,7 @@ namespace WhereToFly.Geo.UnitTest
 
                 // check
                 Assert.IsTrue(cupFile.HasLocations(), "loaded file must have locations");
-                Assert.AreEqual(4, locationsList.Count, "locations list must contain correct number of locations");
+                Assert.HasCount(4, locationsList, "locations list must contain correct number of locations");
             }
         }
     }

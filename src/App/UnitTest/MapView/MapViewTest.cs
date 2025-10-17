@@ -15,11 +15,16 @@ namespace WhereToFly.App.UnitTest.MapView
     public class MapViewTest : UserInterfaceTestBase
     {
         /// <summary>
+        /// Test context to access the cancellation token
+        /// </summary>
+        public TestContext TestContext { get; set; }
+
+        /// <summary>
         /// Tests CreateAsync() method
         /// </summary>
         /// <returns>task to wait on</returns>
         [TestMethod]
-        [Timeout(10000)]
+        [Timeout(10000, CooperativeCancellation = true)]
         [Ignore("CreateAsync() can't set MapInitializedTask")]
         public async Task TestMapViewCreate()
         {
@@ -27,6 +32,14 @@ namespace WhereToFly.App.UnitTest.MapView
             var mapView = new WhereToFly.App.MapView.MapView();
 
             // run
+            _ = Task.Run(
+                () =>
+                {
+                    Task.Delay(10);
+                    mapView.OnMapInitialized();
+                },
+                this.TestContext.CancellationTokenSource.Token);
+
             await mapView.CreateAsync(
                 Constants.InitialCenterPoint,
                 5000,
@@ -73,7 +86,6 @@ namespace WhereToFly.App.UnitTest.MapView
             "Blocker Code Smell",
             "S2699:Tests should include assertions",
             Justification = "There's no way to test actions")]
-        [Timeout(10000)]
         [Ignore("disabled since calling AddLocationList() would block indefinitely")]
         public async Task TestMapViewLocationMethods()
         {
@@ -109,7 +121,6 @@ namespace WhereToFly.App.UnitTest.MapView
             "Blocker Code Smell",
             "S2699:Tests should include assertions",
             Justification = "There's no way to test actions")]
-        [Timeout(10000)]
         [Ignore("disabled since calling AddTrack() would block indefinitely")]
         public async Task TestMapViewTrackMethods()
         {
@@ -142,7 +153,6 @@ namespace WhereToFly.App.UnitTest.MapView
             "Blocker Code Smell",
             "S2699:Tests should include assertions",
             Justification = "There's no way to test actions")]
-        [Timeout(10000)]
         [Ignore("disabled since calling AddLayer() would block indefinitely")]
         public async Task TestMapViewLayerMethods()
         {

@@ -47,7 +47,7 @@ namespace WhereToFly.Geo.UnitTest
 
                 // check
                 Assert.IsTrue(result, "text must have been parsed correctly");
-                Assert.IsTrue(takeoffDirections != TakeoffDirections.None, "takeoff direction must not be empty");
+                Assert.AreNotEqual(TakeoffDirections.None, takeoffDirections, "takeoff direction must not be empty");
             }
         }
 
@@ -74,7 +74,7 @@ namespace WhereToFly.Geo.UnitTest
                 // check
                 Assert.IsFalse(result, "text parsing must have failed");
 
-                Assert.IsTrue(takeoffDirections == TakeoffDirections.None, "takeoff direction must be None");
+                Assert.AreEqual(TakeoffDirections.None, takeoffDirections, "takeoff direction must be None");
             }
         }
 

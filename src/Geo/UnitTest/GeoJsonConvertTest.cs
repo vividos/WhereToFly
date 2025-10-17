@@ -163,7 +163,7 @@ namespace WhereToFly.Geo.UnitTest
                     string kml = converter.ConvertToKml(geoJsonText);
 
                     // check
-                    Assert.IsTrue(!string.IsNullOrEmpty(kml), "generated KML must not be empty");
+                    Assert.IsFalse(string.IsNullOrEmpty(kml), "generated KML must not be empty");
                 }
                 catch (Exception ex)
                 {
@@ -203,7 +203,7 @@ namespace WhereToFly.Geo.UnitTest
                     string czml = converter.ConvertToCzml(geoJsonText);
 
                     // check
-                    Assert.IsTrue(!string.IsNullOrEmpty(czml), "generated CZML must not be empty");
+                    Assert.IsFalse(string.IsNullOrEmpty(czml), "generated CZML must not be empty");
                 }
                 catch (Exception ex)
                 {

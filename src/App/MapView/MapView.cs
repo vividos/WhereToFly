@@ -1416,7 +1416,7 @@ namespace WhereToFly.App.MapView
         /// <summary>
         /// Called when the "mapInitialized" callback has been sent from JavaScript.
         /// </summary>
-        private void OnMapInitialized()
+        internal void OnMapInitialized()
         {
             this.taskCompletionSourceMapInitialized.SetResult(true);
         }

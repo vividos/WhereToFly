@@ -39,7 +39,7 @@ namespace WhereToFly.Geo.UnitTest
                         string airspaceText = airspace.ToString();
                         Debug.WriteLine($"checking airspace: {airspaceText})");
 
-                        Assert.IsTrue(airspace.Class != AirspaceClass.Unknown, "airspace class must not be Unknown");
+                        Assert.AreNotEqual(AirspaceClass.Unknown, airspace.Class, "airspace class must not be Unknown");
                         Assert.IsNotNull(airspace.Name, "airspace name must not be null");
                         Assert.IsNotNull(airspace.Floor, "airspace floor must not be null");
                         Assert.IsNotNull(airspace.Ceiling, "airspace ceiling must not be null");

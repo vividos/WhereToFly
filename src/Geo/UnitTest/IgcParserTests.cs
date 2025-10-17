@@ -36,7 +36,7 @@ namespace WhereToFly.Geo.UnitTest
             // check
             Assert.IsNotNull(track, "track must not be null");
             Assert.IsNotNull(track.Name, "track name must be set");
-            Assert.IsTrue(track.TrackPoints.Count > 0, "there must be any track points");
+            Assert.IsNotEmpty(track.TrackPoints, "there must be any track points");
             Assert.IsFalse(parsingErrors.Any(), "there must be no parsing errors");
         }
 
@@ -70,7 +70,7 @@ namespace WhereToFly.Geo.UnitTest
                 }
 
                 // check
-                Assert.AreEqual(1, track.TrackPoints.Count, "there must be one track point");
+                Assert.HasCount(1, track.TrackPoints, "there must be one track point");
 
                 var trackPoint = track.TrackPoints[0];
 
@@ -106,7 +106,7 @@ namespace WhereToFly.Geo.UnitTest
 
             // check
             Assert.IsNotNull(track, "track must not be null");
-            Assert.AreEqual(2, track.TrackPoints.Count, "there only must be two track points");
+            Assert.HasCount(2, track.TrackPoints, "there only must be two track points");
         }
     }
 }

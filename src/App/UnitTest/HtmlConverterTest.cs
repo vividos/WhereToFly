@@ -19,7 +19,7 @@ namespace WhereToFly.App.UnitTest
             string html = HtmlConverter.FromMarkdown(string.Empty, null);
 
             // check
-            Assert.IsTrue(html.Length == 0, "html text must also be empty");
+            Assert.AreEqual(0, html.Length, "html text must also be empty");
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace WhereToFly.App.UnitTest
             string html = HtmlConverter.FromMarkdown(string.Empty, fontName: FontName);
 
             // check
-            Assert.IsTrue(html.Contains(FontName), "html text must contain font name");
+            Assert.Contains(FontName, html, "html text must contain font name");
         }
 
         /// <summary>
@@ -47,8 +47,8 @@ namespace WhereToFly.App.UnitTest
             string html = HtmlConverter.FromMarkdown("# Heading");
 
             // check
-            Assert.IsTrue(html.Length > 0, "html text must not be empty");
-            Assert.IsTrue(html.Contains("Heading"), "must contain heading");
+            Assert.IsGreaterThan(0, html.Length, "html text must not be empty");
+            Assert.Contains("Heading", html, "must contain heading");
         }
 
         /// <summary>
@@ -71,17 +71,17 @@ https://github.com/vividos/WhereToFly
             string html = HtmlConverter.FromMarkdown(markdown);
 
             // check
-            Assert.IsTrue(html.Length > 0, "html text must not be empty");
+            Assert.IsGreaterThan(0, html.Length, "html text must not be empty");
 
-            Assert.IsTrue(html.Contains("Heading"), "must contain heading");
-            Assert.IsTrue(html.Contains("Sub Heading"), "must contain sub heading");
-            Assert.IsTrue(html.Contains("LocalLink"), "must contain local link target");
-            Assert.IsTrue(html.Contains("Local Link"), "must contain local link text");
-            Assert.IsTrue(html.Contains("github.com/vividos"), "must contain text-less internet link URL");
-            Assert.IsTrue(html.Contains("Internet Link"), "must contain internet link text");
-            Assert.IsTrue(html.Contains("www.cesium.com"), "must contain internet link target");
-            Assert.IsTrue(html.Contains("Image Link"), "must contain image link text");
-            Assert.IsTrue(html.Contains("CheckBox"), "must contain checkbox text");
+            Assert.Contains("Heading", html, "must contain heading");
+            Assert.Contains("Sub Heading", html, "must contain sub heading");
+            Assert.Contains("LocalLink", html, "must contain local link target");
+            Assert.Contains("Local Link", html, "must contain local link text");
+            Assert.Contains("github.com/vividos", html, "must contain text-less internet link URL");
+            Assert.Contains("Internet Link", html, "must contain internet link text");
+            Assert.Contains("www.cesium.com", html, "must contain internet link target");
+            Assert.Contains("Image Link", html, "must contain image link text");
+            Assert.Contains("CheckBox", html, "must contain checkbox text");
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ https://github.com/vividos/WhereToFly
             string html = HtmlConverter.Sanitize(string.Empty);
 
             // check
-            Assert.IsTrue(html.Length == 0, "sanitized html text must also be empty");
+            Assert.AreEqual(0, html.Length, "sanitized html text must also be empty");
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ https://github.com/vividos/WhereToFly
             string html = HtmlConverter.Sanitize(text);
 
             // check
-            Assert.IsTrue(html.IndexOf("<script") == -1, "sanitized html text must not contain script tag");
+            Assert.AreEqual(-1, html.IndexOf("<script"), "sanitized html text must not contain script tag");
         }
     }
 }
