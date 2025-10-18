@@ -33,12 +33,12 @@
     <WindowsPackageType>None</WindowsPackageType>
   </PropertyGroup>
 
-  <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows' And '$(Target)' == 'Publish'">
+  <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows' And '$(Configuration)' == 'Release'">
     <WindowsPackageType>None</WindowsPackageType>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
     <PublishSingleFile>true</PublishSingleFile>
-    <PublishTrimmed>true</PublishTrimmed>
+    <SelfContailed>true</SelfContailed>
+    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
   </PropertyGroup>
 
   <!-- Android properties -->
