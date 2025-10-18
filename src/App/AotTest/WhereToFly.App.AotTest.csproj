@@ -16,6 +16,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' ">
+    <RuntimeIdentifiers>android-arm64</RuntimeIdentifiers>
     <!-- Native AOT is not supported on Android yet -->
     <PublishAot>false</PublishAot>
     <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
@@ -36,6 +37,11 @@
   <ItemGroup Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'windows' ">
     <ProjectReference Include="..\Maui\WhereToFly.App.Maui.csproj" />
     <TrimmerRootAssembly Include="WhereToFly.App.Maui" RootMode="%(TrimmerRootAssembly.RootMode)" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' ">
+    <!-- Workaround: add remaining android resources, as AndroidManifest.xml references them -->
+    <AndroidResource Include="..\Maui\Platforms\Android\Resources\**" Link="Resources\%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 
 </Project>

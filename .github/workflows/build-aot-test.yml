@@ -32,7 +32,6 @@ jobs:
       run: >
         dotnet publish
         src/App/AotTest/WhereToFly.App.AotTest.csproj
-        -c Release
         -f net9.0
 
     - name: Publish AOT test project .NET Android
@@ -40,13 +39,12 @@ jobs:
       run: >
         dotnet publish
         src/App/AotTest/WhereToFly.App.AotTest.csproj
-        -c Release
         -f net9.0-android
+        -r android-arm64
 
     - name: Publish AOT test project .NET Windows
       if: always()
       run: >
         dotnet publish
         src/App/AotTest/WhereToFly.App.AotTest.csproj
-        -c Release
         -f net9.0-windows10.0.19041.0
