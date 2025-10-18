@@ -36,8 +36,6 @@
   <ItemGroup Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'windows' ">
     <ProjectReference Include="..\Maui\WhereToFly.App.Maui.csproj" />
     <TrimmerRootAssembly Include="WhereToFly.App.Maui" RootMode="%(TrimmerRootAssembly.RootMode)" />
-    <TrimmerRootAssembly Include="Microsoft.AppCenter" RootMode="%(TrimmerRootAssembly.RootMode)" />
-    <TrimmerRootAssembly Include="Microsoft.AppCenter.Crashes" RootMode="%(TrimmerRootAssembly.RootMode)" />
   </ItemGroup>
 
 </Project>
