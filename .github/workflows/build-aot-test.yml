@@ -35,6 +35,13 @@ jobs:
         -c Release
         -f net9.0
 
+    - name: Run dotnet restore for .NET Android
+      if: always()
+      run: >
+        dotnet restore
+        src/App/AotTest/WhereToFly.App.AotTest.csproj
+        -f net9.0-android
+
     - name: Publish AOT test project .NET Android
       if: always()
       run: >
