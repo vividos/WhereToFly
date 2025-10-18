@@ -24,8 +24,7 @@ jobs:
 
     - name: Remove AppCenter from Maui project
       run: >
-        dotnet remove package
-        Microsoft.AppCenter.Crashes
+        dotnet remove package Microsoft.AppCenter.Crashes
         --project src/App/Maui/WhereToFly.App.Maui.csproj
 
     - name: Publish AOT test project .NET
