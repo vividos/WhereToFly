@@ -1,12 +1,15 @@
-﻿using Microsoft.AppCenter;
-using Microsoft.AppCenter.Crashes;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using WhereToFly.App.Abstractions;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Models;
 using WhereToFly.App.Pages;
 using WhereToFly.App.Services;
 using WhereToFly.Shared.Model;
+
+#if APPCENTER
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Crashes;
+#endif
 
 #if WINDOWS
 using Windows.ApplicationModel.DataTransfer;
@@ -66,7 +69,7 @@ namespace WhereToFly.App
         /// </summary>
         public App()
         {
-#if ANDROID || WINDOWS
+#if APPCENTER && (ANDROID || WINDOWS)
             AppCenter.Start(
                 $"android={Constants.AppCenterKeyAndroid};" +
                 $"windowsdesktop={Constants.AppCenterKeyWindows}",
@@ -183,7 +186,11 @@ namespace WhereToFly.App
                 ex = aggregateException.InnerException;
             }
 
+#if APPCENTER
             Crashes.TrackError(ex);
+#else
+            Debug.WriteLine($"App exception occurred: {ex}");
+#endif
         }
 
         /// <summary>
