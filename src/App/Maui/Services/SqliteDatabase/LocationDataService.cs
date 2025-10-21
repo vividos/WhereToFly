@@ -178,7 +178,9 @@ namespace WhereToFly.App.Services.SqliteDatabase
             /// <returns>task to wait on</returns>
             public async Task Add(Location locationToAdd)
             {
-                await this.connection.InsertAsync(new LocationEntry(locationToAdd));
+                await this.connection.InsertAsync(
+                    new LocationEntry(locationToAdd),
+                    typeof(LocationEntry));
             }
 
             /// <summary>
@@ -198,7 +200,9 @@ namespace WhereToFly.App.Services.SqliteDatabase
             /// <returns>task to wait on</returns>
             public async Task Update(Location location)
             {
-                await this.connection.UpdateAsync(new LocationEntry(location));
+                await this.connection.UpdateAsync(
+                    new LocationEntry(location),
+                    typeof(LocationEntry));
             }
 
             /// <summary>
@@ -324,7 +328,10 @@ namespace WhereToFly.App.Services.SqliteDatabase
                     from location in locationList
                     select new LocationEntry(location);
 
-                await this.connection.InsertAllAsync(locationEntryList, runInTransaction: true);
+                await this.connection.InsertAllAsync(
+                    locationEntryList,
+                    typeof(LocationEntry),
+                    runInTransaction: true);
             }
 
             /// <summary>

@@ -337,7 +337,9 @@ namespace WhereToFly.App.Services.SqliteDatabase
 
                 trackEntry.StoreTrackPoints();
 
-                await this.connection.InsertAsync(trackEntry);
+                await this.connection.InsertAsync(
+                    trackEntry,
+                    typeof(TrackEntry));
 
                 this.trackCache[trackToAdd.Id] = trackToAdd;
             }
@@ -372,7 +374,9 @@ namespace WhereToFly.App.Services.SqliteDatabase
 
                 trackEntry.Track = trackToUpdate;
 
-                await this.connection.UpdateAsync(trackEntry);
+                await this.connection.UpdateAsync(
+                    trackEntry,
+                    typeof(TrackEntry));
 
                 this.trackCache[trackToUpdate.Id] = trackToUpdate;
             }
@@ -441,7 +445,10 @@ namespace WhereToFly.App.Services.SqliteDatabase
                     trackEntry.StoreTrackPoints();
                 }
 
-                await this.connection.InsertAllAsync(trackEntryList, runInTransaction: true);
+                await this.connection.InsertAllAsync(
+                    trackEntryList,
+                    typeof(TrackEntry),
+                    runInTransaction: true);
 
                 foreach (var trackEntry in trackEntryList)
                 {

@@ -58,7 +58,8 @@ namespace WhereToFly.App.Services.SqliteDatabase
                     new WeatherDashboardIconEntry
                     {
                         WeatherIconDescriptionId = await this.IdFromDescription(weatherIconDescriptionToAdd),
-                    });
+                    },
+                    typeof(WeatherDashboardIconEntry));
             }
 
             /// <summary>
@@ -136,6 +137,7 @@ namespace WhereToFly.App.Services.SqliteDatabase
 
                 await this.connection.InsertAllAsync(
                     weatherIconDescriptionEntryList,
+                    typeof(WeatherDashboardIconEntry),
                     runInTransaction: true);
             }
 

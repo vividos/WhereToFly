@@ -111,7 +111,9 @@ namespace WhereToFly.App.Services.SqliteDatabase
             /// <returns>task to wait on</returns>
             public async Task Add(WeatherIconDescription weatherIconDescriptionToAdd)
             {
-                await this.connection.InsertAsync(new WeatherIconDescriptionEntry(weatherIconDescriptionToAdd));
+                await this.connection.InsertAsync(
+                    new WeatherIconDescriptionEntry(weatherIconDescriptionToAdd),
+                    typeof(WeatherIconDescriptionEntry));
             }
 
             /// <summary>

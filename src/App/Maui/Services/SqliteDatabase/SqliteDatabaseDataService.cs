@@ -176,7 +176,10 @@ namespace WhereToFly.App.Services.SqliteDatabase
                         FaviconUrl = keyAndValue.Value,
                     };
 
-                await this.connection.InsertAllAsync(defaultEntries, runInTransaction: true);
+                await this.connection.InsertAllAsync(
+                    defaultEntries,
+                    typeof(FaviconUrlEntry),
+                    runInTransaction: true);
             }
 
             if (await this.connection.CreateTableAsync<LocationEntry>() == CreateTableResult.Created)
@@ -309,10 +312,12 @@ namespace WhereToFly.App.Services.SqliteDatabase
         {
             await this.initCompleteTask;
 
-            await this.connection.InsertOrReplaceAsync(new AppDataEntry
-            {
-                AppSettings = appSettings,
-            });
+            await this.connection.InsertOrReplaceAsync(
+                new AppDataEntry
+                {
+                    AppSettings = appSettings,
+                },
+                typeof(AppDataEntry));
         }
 
         /// <summary>
@@ -394,11 +399,13 @@ namespace WhereToFly.App.Services.SqliteDatabase
             {
                 faviconUrl = await this.backendDataService.GetFaviconUrlAsync(websiteUrl);
 
-                await this.connection.InsertAsync(new FaviconUrlEntry
-                {
-                    WebsiteUrl = baseUri,
-                    FaviconUrl = faviconUrl,
-                });
+                await this.connection.InsertAsync(
+                    new FaviconUrlEntry
+                    {
+                        WebsiteUrl = baseUri,
+                        FaviconUrl = faviconUrl,
+                    },
+                    typeof(FaviconUrlEntry));
 
                 return faviconUrl;
             }
