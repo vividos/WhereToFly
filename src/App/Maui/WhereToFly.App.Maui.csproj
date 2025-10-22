@@ -147,6 +147,10 @@
     <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.11" />
   </ItemGroup>
 
+  <ItemGroup>
+    <TrimmerRootAssembly Include="SharpKml.Core" />
+  </ItemGroup>
+
   <PropertyGroup Condition="'$(PkgMicrosoft_AppCenter_Crashes)' != ''">
     <DefineConstants>$(DefineConstants);APPCENTER</DefineConstants>
   </PropertyGroup>
