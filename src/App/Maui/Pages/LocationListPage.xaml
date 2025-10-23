@@ -37,9 +37,12 @@
                    Text="{Binding Path=FilterText}"
                    Placeholder="Type here to filter"
                    HorizontalOptions="Fill"
+                   ReturnCommand="{Binding FindTextEnteredCommand}"
+                   x:Name="filterEntry"
                    AutomationId="FilterText">
                 <Entry.Behaviors>
                     <toolkit:UserStoppedTypingBehavior
+                        BindingContext="{Binding Path=BindingContext, Source={x:Reference filterEntry}, x:DataType=Entry}"
                         Command="{Binding FindTextEnteredCommand}"
                         StoppedTypingTimeThreshold="1000"
                         ShouldDismissKeyboardAutomatically="False" />
