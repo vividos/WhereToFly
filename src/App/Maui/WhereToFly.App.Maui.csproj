@@ -148,7 +148,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <TrimmerRootAssembly Include="SharpKml.Core" />
+    <TrimmerRootAssembly Include="SharpKml.Core" RootMode="all" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(PkgMicrosoft_AppCenter_Crashes)' != ''">
