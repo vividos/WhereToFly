@@ -114,18 +114,23 @@
 
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical"
-                                   ItemSpacing="0" />
+                                   ItemSpacing="2" />
             </CollectionView.ItemsLayout>
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="viewmodels:LocationListEntryViewModel">
                     <!-- Template for a single item -->
 
-                    <Grid HeightRequest="{OnPlatform Android=65, WinUI=85}"
-                          Margin="4,2"
+                    <Grid Margin="4,2"
                           RowDefinitions="Auto, Auto, Auto"
                           ColumnDefinitions="Auto, Auto, 1*, 40"
                           Style="{StaticResource ListViewItemStyle}">
+                        <Grid.HeightRequest>
+                            <OnPlatform x:TypeArguments="x:Double">
+                                <On Platform="Android" Value="65" />
+                                <On Platform="WinUI" Value="85" />
+                            </OnPlatform>
+                        </Grid.HeightRequest>
 
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding ItemTappedCommand}"

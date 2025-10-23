@@ -51,7 +51,7 @@
                 <!-- Template for a single view cell -->
                 <DataTemplate x:DataType="viewmodels:WeatherIconListEntryViewModel">
                     <HorizontalStackLayout Style="{StaticResource ListViewItemStyle}"
-                                           HeightRequest="{OnPlatform Android=65, WinUI=45}"
+                                           HeightRequest="45"
                                            Padding="2,1">
                         <HorizontalStackLayout.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1"
