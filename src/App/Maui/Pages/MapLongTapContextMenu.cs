@@ -2,6 +2,7 @@
 using CommunityToolkit.Maui.Extensions;
 using WhereToFly.App.Models;
 using WhereToFly.App.Popups;
+using WhereToFly.App.Services;
 using WhereToFly.App.ViewModels;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
@@ -125,7 +126,10 @@ namespace WhereToFly.App.Pages
 
             popupPage = new ContextMenuPopupPage(viewModel);
 
-            IPopupResult popupResult = await UserInterface.MainPage.ShowPopupAsync(popupPage);
+            IPopupResult popupResult =
+                await UserInterface.MainPage.ShowPopupAsync(
+                    popupPage,
+                    NavigationService.DefaultPopupOptions);
 
             if (popupResult.WasDismissedByTappingOutsideOfPopup)
             {

@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui.Extensions;
 using System.Windows.Input;
 using WhereToFly.App.Popups;
+using WhereToFly.App.Services;
 using WhereToFly.App.ViewModels;
 
 namespace WhereToFly.App.Controls
@@ -113,7 +114,9 @@ namespace WhereToFly.App.Controls
                 });
 
             popupPage = new ContextMenuPopupPage(viewModel);
-            UserInterface.MainPage.ShowPopup(popupPage);
+            UserInterface.MainPage.ShowPopup(
+                popupPage,
+                NavigationService.DefaultPopupOptions);
         }
     }
 }

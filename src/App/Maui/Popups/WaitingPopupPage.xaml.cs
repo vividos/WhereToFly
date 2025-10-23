@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui.Extensions;
 using CommunityToolkit.Maui.Views;
+using WhereToFly.App.Services;
 
 namespace WhereToFly.App.Popups
 {
@@ -57,7 +58,9 @@ namespace WhereToFly.App.Popups
         /// </summary>
         public void Show()
         {
-            UserInterface.MainPage.ShowPopup(this);
+            UserInterface.MainPage.ShowPopup(
+                this,
+                NavigationService.DefaultPopupOptions);
 
             this.isShown = true;
         }

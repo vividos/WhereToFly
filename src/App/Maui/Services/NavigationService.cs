@@ -1,6 +1,8 @@
-﻿using CommunityToolkit.Maui.Core;
+﻿using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Extensions;
 using CommunityToolkit.Maui.Views;
+using Microsoft.Maui.Controls.Shapes;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using WhereToFly.App.MapView;
@@ -88,6 +90,21 @@ namespace WhereToFly.App.Services
                 { PopupPageKey.SelectWeatherIconPopupPage, new PopupPageInfo(typeof(SelectWeatherIconPopupPage), typeof(WeatherIconDescription), typeof(string)) },
                 { PopupPageKey.SetCompassTargetDirectionPopupPage, new PopupPageInfo(typeof(SetCompassTargetDirectionPopupPage), typeof(Tuple<int>), null) },
                 { PopupPageKey.SetTrackInfosPopupPage, new PopupPageInfo(typeof(SetTrackInfosPopupPage), typeof(Track), typeof(Track)) },
+            };
+
+        /// <summary>
+        /// Default popup options
+        /// </summary>
+        public static readonly PopupOptions DefaultPopupOptions =
+            new PopupOptions
+            {
+                PageOverlayColor = Colors.White.WithAlpha(0.5f),
+                Shape = new RoundRectangle
+                {
+                    CornerRadius = new CornerRadius(8),
+                    StrokeThickness = 0,
+                },
+                Shadow = null,
             };
 
         /// <summary>
@@ -240,14 +257,19 @@ namespace WhereToFly.App.Services
 
             if (popupPage is Popup<TResult> popupPageWithResult)
             {
-                IPopupResult<TResult> result = await UserInterface.MainPage.ShowPopupAsync<TResult>(
-                    popupPageWithResult);
+                IPopupResult<TResult> result =
+                    await UserInterface.MainPage.ShowPopupAsync<TResult>(
+                        popupPageWithResult,
+                        DefaultPopupOptions);
 
                 return result.Result;
             }
             else
             {
-                await UserInterface.MainPage.ShowPopupAsync(popupPage);
+                await UserInterface.MainPage.ShowPopupAsync(
+                    popupPage,
+                    DefaultPopupOptions);
+
                 return null;
             }
         }
