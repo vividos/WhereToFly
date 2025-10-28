@@ -16,7 +16,7 @@ namespace WhereToFly.App.UnitTest.Pages
         public void TestDefaultCtor()
         {
             // run
-            var page = new CurrentPositionDetailsPage(null!);
+            var page = new CurrentPositionDetailsPage(this.Services);
 
             // check
             Assert.IsGreaterThan(

@@ -1,4 +1,4 @@
-﻿using Microsoft.Maui.Controls;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using WhereToFly.App.Abstractions;
@@ -23,9 +23,9 @@ namespace WhereToFly.App.UnitTest.ViewModels
             {
                 var viewModel = new MapPageViewModel(
                     new UnitTestMapView(),
-                    DependencyService.Get<IAppMapService>(),
-                    DependencyService.Get<IDataService>(),
-                    DependencyService.Get<IGeolocationService>());
+                    this.Services.GetRequiredService<IAppMapService>(),
+                    this.Services.GetRequiredService<IDataService>(),
+                    this.Services.GetRequiredService<IGeolocationService>());
 
                 Assert.IsNotNull(viewModel, "view model most have been creted");
             }

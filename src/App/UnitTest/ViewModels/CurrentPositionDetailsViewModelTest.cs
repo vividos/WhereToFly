@@ -1,4 +1,4 @@
-﻿using Microsoft.Maui.Controls;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui.Graphics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -24,7 +24,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
             var appSettings = new AppSettings();
             var viewModel = new CurrentPositionDetailsViewModel(
                 appSettings,
-                DependencyService.Get<CompassGeoServices>());
+                this.Services.GetRequiredService<CompassGeoServices>());
 
             // check
             Assert.AreEqual(string.Empty, viewModel.Longitude, "longitude text must be correct");
@@ -55,7 +55,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
 
             var viewModel = new CurrentPositionDetailsViewModel(
                 appSettings,
-                DependencyService.Get<CompassGeoServices>());
+                this.Services.GetRequiredService<CompassGeoServices>());
 
             // run
             var location = new Microsoft.Maui.Devices.Sensors.Location(48.137222, 11.575556, 512)
@@ -99,7 +99,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
             var appSettings = new AppSettings();
             var viewModel = new CurrentPositionDetailsViewModel(
                 appSettings,
-                DependencyService.Get<CompassGeoServices>());
+                this.Services.GetRequiredService<CompassGeoServices>());
 
             // run
             var location = new Microsoft.Maui.Devices.Sensors.Location(48.137222, 11.575556);

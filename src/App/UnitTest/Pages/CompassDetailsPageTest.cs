@@ -16,7 +16,7 @@ namespace WhereToFly.App.UnitTest.Pages
         public void TestDefaultCtor()
         {
             // run
-            var page = new CompassDetailsPage(null!);
+            var page = new CompassDetailsPage(this.Services);
 
             // check
             Assert.IsGreaterThan(
