@@ -132,12 +132,12 @@ namespace WhereToFly.App
         /// </summary>
         private static void SetupDepencencyService()
         {
-            DependencyService.Register<IUserInterface, UserInterface>();
-            DependencyService.Register<IAppMapService, AppMapService>();
-            DependencyService.Register<INavigationService, NavigationService>();
-            DependencyService.Register<IDataService, Services.SqliteDatabase.SqliteDatabaseDataService>();
-            DependencyService.Register<IGeolocationService, GeolocationService>();
-            DependencyService.Register<LiveDataRefreshService>();
+            DependencyService.RegisterSingleton(Services.GetRequiredService<IUserInterface>());
+            DependencyService.RegisterSingleton(Services.GetRequiredService<IAppMapService>());
+            DependencyService.RegisterSingleton(Services.GetRequiredService<INavigationService>());
+            DependencyService.RegisterSingleton(Services.GetRequiredService<IDataService>());
+            DependencyService.RegisterSingleton(Services.GetRequiredService<IGeolocationService>());
+            DependencyService.RegisterSingleton(Services.GetRequiredService<LiveDataRefreshService>());
         }
 
         /// <summary>

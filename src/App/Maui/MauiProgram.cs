@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using SkiaSharp.Views.Maui.Controls.Hosting;
+using WhereToFly.App.Abstractions;
 using WhereToFly.App.Controls;
 using WhereToFly.App.MapView;
+using WhereToFly.App.Services;
 
 namespace WhereToFly.App
 {
@@ -45,7 +47,13 @@ namespace WhereToFly.App
             builder.Logging.AddDebug();
 #endif
 
+            builder.Services.AddSingleton<IUserInterface, UserInterface>();
+            builder.Services.AddSingleton<IAppMapService, AppMapService>();
+            builder.Services.AddSingleton<INavigationService, NavigationService>();
+            builder.Services.AddSingleton<IDataService, Services.SqliteDatabase.SqliteDatabaseDataService>();
+            builder.Services.AddSingleton<IGeolocationService, GeolocationService>();
             builder.Services.AddSingleton<CompassGeoServices>();
+            builder.Services.AddSingleton<LiveDataRefreshService>();
 
             return builder.Build();
         }
