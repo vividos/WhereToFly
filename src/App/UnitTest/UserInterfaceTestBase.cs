@@ -1,10 +1,10 @@
-﻿using Microsoft.Maui;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Internals;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using WhereToFly.App.Abstractions;
-using WhereToFly.App.Logic;
 using WhereToFly.App.Models;
 using WhereToFly.App.Services;
 using WhereToFly.App.Services.SqliteDatabase;
@@ -16,6 +16,12 @@ namespace WhereToFly.App.UnitTest
     /// </summary>
     public class UserInterfaceTestBase
     {
+        /// <summary>
+        /// Services for unit tests
+        /// </summary>
+        public IServiceProvider Services { get; private set; }
+            = new ServiceCollection().BuildServiceProvider();
+
 #pragma warning disable CS0612 // Type or member is obsolete
         /// <summary>
         /// Mock implementation of IFontNamedSizeService
@@ -42,13 +48,24 @@ namespace WhereToFly.App.UnitTest
             DependencyService.Register<IFontNamedSizeService, MockFontNamedSizeService>();
 #pragma warning restore CS0612 // Type or member is obsolete
 
-            DependencyService.Register<CompassGeoServices>();
-            DependencyService.Register<IAppMapService, UnitTestAppMapService>();
-            DependencyService.Register<IUserInterface, UnitTestUserInterface>();
-            DependencyService.Register<IGeolocationService, UnitTestGeolocationService>();
-            DependencyService.Register<IDataService, SqliteDatabaseDataService>();
-            DependencyService.Register<INavigationService, UnitTestNavigationService>();
-            DependencyService.Register<IAppManager, UnitTestAppManager>();
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddSingleton<CompassGeoServices>();
+            serviceCollection.AddSingleton<IAppMapService, UnitTestAppMapService>();
+            serviceCollection.AddSingleton<IUserInterface, UnitTestUserInterface>();
+            serviceCollection.AddSingleton<IGeolocationService, UnitTestGeolocationService>();
+            serviceCollection.AddSingleton<IDataService, SqliteDatabaseDataService>();
+            serviceCollection.AddSingleton<INavigationService, UnitTestNavigationService>();
+            serviceCollection.AddSingleton<IAppManager, UnitTestAppManager>();
+
+            this.Services = serviceCollection.BuildServiceProvider();
+
+            DependencyService.RegisterSingleton(this.Services.GetRequiredService<CompassGeoServices>());
+            DependencyService.RegisterSingleton(this.Services.GetRequiredService<IAppMapService>());
+            DependencyService.RegisterSingleton(this.Services.GetRequiredService<IUserInterface>());
+            DependencyService.RegisterSingleton(this.Services.GetRequiredService<IGeolocationService>());
+            DependencyService.RegisterSingleton(this.Services.GetRequiredService<IDataService>());
+            DependencyService.RegisterSingleton(this.Services.GetRequiredService<INavigationService>());
+            DependencyService.RegisterSingleton(this.Services.GetRequiredService<IAppManager>());
 
             App.Settings = new AppSettings();
 
