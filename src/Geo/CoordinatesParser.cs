@@ -52,6 +52,8 @@ namespace WhereToFly.Geo
             text = text
                 .Replace("′", "'")
                 .Replace("″", "\"")
+                .Replace("’", "'")
+                .Replace("”", "\"")
                 .Replace("° ", "°")
                 .Replace("' ", "'")
                 .Replace("\" ", "\"")

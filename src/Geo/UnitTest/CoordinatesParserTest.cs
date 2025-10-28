@@ -52,6 +52,7 @@ namespace WhereToFly.Geo.UnitTest
         [DataRow("53°20'21.0\"N 12°07'56.0\"E")]
         [DataRow("N 50°29.958' E 009°56.832'")]
         [DataRow("E 50°29.958' S 009°56.832'")]
+        [DataRow("N 49°34’4.5444” E 12°17’13.9744”")]
         public void TestParseValidCoordinates(string text)
         {
             // run
