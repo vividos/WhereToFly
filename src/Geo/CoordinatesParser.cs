@@ -277,6 +277,15 @@ namespace WhereToFly.Geo
             return true;
         }
 
+        /// <summary>
+        /// Tries parsing degrees/minutes/seconds coordinates
+        /// </summary>
+        /// <param name="latitude">latitude text</param>
+        /// <param name="longitude">longitude text</param>
+        /// <param name="mapPoint">
+        /// map point, containing parsed values of latitude and longitude
+        /// </param>
+        /// <returns>true when parsing succeeded, or false when not</returns>
         private static bool TryParseDegreesMinutesSeconds(
             string latitude,
             string longitude,
