@@ -1,7 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CommunityToolkit.Maui;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Hosting;
 using Microsoft.Maui.Controls.Internals;
+using Microsoft.Maui.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using WhereToFly.App.Abstractions;
@@ -17,10 +20,41 @@ namespace WhereToFly.App.UnitTest
     public class UserInterfaceTestBase
     {
         /// <summary>
+        /// Platform application implementation for unit tests
+        /// </summary>
+        public class UnitTestPlatformApplication : IPlatformApplication
+        {
+            /// <inheritdoc />
+            public IServiceProvider Services { get; }
+
+            /// <inheritdoc />
+            public IApplication Application { get; }
+
+            /// <summary>
+            /// Creates a new platform application object
+            /// </summary>
+            /// <param name="services">service provider to set</param>
+            public UnitTestPlatformApplication(IServiceProvider services)
+            {
+                this.Services = services;
+                this.Application = services.GetRequiredService<IApplication>();
+
+                IPlatformApplication.Current = this;
+            }
+        }
+
+        /// <summary>
+        /// Unit test app
+        /// </summary>
+        private MauiApp? unitTestApp;
+
+        /// <summary>
         /// Services for unit tests
         /// </summary>
-        public IServiceProvider Services { get; private set; }
-            = new ServiceCollection().BuildServiceProvider();
+        public IServiceProvider Services
+            => this.unitTestApp?.Services
+            ?? throw new InvalidOperationException(
+                "unit test app was not initialized yet or is already reset");
 
 #pragma warning disable CS0612 // Type or member is obsolete
         /// <summary>
@@ -44,20 +78,35 @@ namespace WhereToFly.App.UnitTest
         {
             MauiMocks.Init();
 
+            var builder = MauiApp.CreateBuilder();
+
+            builder
+                .UseMauiApp<MockApplication>()
+#if WINDOWS || ANDROID
+                .UseMauiCommunityToolkit();
+#else
+                ;
+#endif
+
 #pragma warning disable CS0612 // Type or member is obsolete
             DependencyService.Register<IFontNamedSizeService, MockFontNamedSizeService>();
 #pragma warning restore CS0612 // Type or member is obsolete
 
-            var serviceCollection = new ServiceCollection();
-            serviceCollection.AddSingleton<CompassGeoServices>();
-            serviceCollection.AddSingleton<IAppMapService, UnitTestAppMapService>();
-            serviceCollection.AddSingleton<IUserInterface, UnitTestUserInterface>();
-            serviceCollection.AddSingleton<IGeolocationService, UnitTestGeolocationService>();
-            serviceCollection.AddSingleton<IDataService, SqliteDatabaseDataService>();
-            serviceCollection.AddSingleton<INavigationService, UnitTestNavigationService>();
-            serviceCollection.AddSingleton<IAppManager, UnitTestAppManager>();
+            builder.Services.AddSingleton<IPlatformApplication, UnitTestPlatformApplication>();
 
-            this.Services = serviceCollection.BuildServiceProvider();
+            builder.Services.AddSingleton<CompassGeoServices>();
+            builder.Services.AddSingleton<IAppMapService, UnitTestAppMapService>();
+            builder.Services.AddSingleton<IUserInterface, UnitTestUserInterface>();
+            builder.Services.AddSingleton<IGeolocationService, UnitTestGeolocationService>();
+            builder.Services.AddSingleton<IDataService, SqliteDatabaseDataService>();
+            builder.Services.AddSingleton<INavigationService, UnitTestNavigationService>();
+            builder.Services.AddSingleton<IAppManager, UnitTestAppManager>();
+            builder.Services.AddSingleton<LiveDataRefreshService>();
+
+            this.unitTestApp = builder.Build();
+
+            // access the IPlatformApplication to force initalization
+            _ = this.unitTestApp.Services.GetRequiredService<IPlatformApplication>();
 
             DependencyService.RegisterSingleton(this.Services.GetRequiredService<CompassGeoServices>());
             DependencyService.RegisterSingleton(this.Services.GetRequiredService<IAppMapService>());
@@ -66,6 +115,7 @@ namespace WhereToFly.App.UnitTest
             DependencyService.RegisterSingleton(this.Services.GetRequiredService<IDataService>());
             DependencyService.RegisterSingleton(this.Services.GetRequiredService<INavigationService>());
             DependencyService.RegisterSingleton(this.Services.GetRequiredService<IAppManager>());
+            DependencyService.RegisterSingleton(this.Services.GetRequiredService<LiveDataRefreshService>());
 
             App.Settings = new AppSettings();
 
@@ -110,6 +160,8 @@ namespace WhereToFly.App.UnitTest
         [TestCleanup]
         public void TearDownUnitTestUserInterface()
         {
+            this.unitTestApp = null;
+
             MauiMocks.Reset();
         }
     }
