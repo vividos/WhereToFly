@@ -2,6 +2,8 @@
 using System;
 using WhereToFly.WebApi.Logic.Services;
 
+[assembly: Parallelize(Scope = ExecutionScope.MethodLevel)]
+
 namespace WhereToFly.WebApi.UnitTest
 {
     /// <summary>
@@ -20,8 +22,8 @@ namespace WhereToFly.WebApi.UnitTest
             var data = TestLiveTrackService.GetLiveTrackingData("id", DateTimeOffset.Now);
 
             // check
-            Assert.IsTrue(
-                data.TrackPoints.Length > 0,
+            Assert.IsNotEmpty(
+                data.TrackPoints,
                 "there must be any track points");
         }
 
@@ -35,8 +37,8 @@ namespace WhereToFly.WebApi.UnitTest
             var track = TestLiveTrackService.GenerateLiveTrackData(DateTimeOffset.Now);
 
             // check
-            Assert.IsTrue(
-                track.TrackPoints.Count > 0,
+            Assert.IsNotEmpty(
+                track.TrackPoints,
                 "there must be any track points");
 
             ////GpxWriter.WriteTrack("...\\testlivetrack.gpx", track);

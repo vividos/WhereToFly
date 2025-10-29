@@ -73,8 +73,9 @@ namespace WhereToFly.WebApi.UnitTest
 
                 Debug.WriteLine($"{latitude}: {maxNumberOfLocations} locations in {maxTime} seconds");
 
-                Assert.IsTrue(
-                    maxNumberOfLocations > 0,
+                Assert.IsGreaterThan(
+                    0,
+                    maxNumberOfLocations,
                     "there must be locations anywhere in the checked range");
             }
         }

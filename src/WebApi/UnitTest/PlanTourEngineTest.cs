@@ -71,10 +71,10 @@ namespace WhereToFly.WebApi.UnitTest
             var tour = engine.PlanTour(planTourParameters);
 
             // check
-            Assert.IsTrue(tour.Description.Length > 0, "description must contain text");
-            Assert.IsTrue(tour.TotalDuration.TotalMinutes > 0, "total duration must contain value");
-            Assert.IsTrue(tour.TourEntriesList.Count > 0, "tour entries list must be filled");
-            Assert.IsTrue(tour.MapPointList.Count > 0, "map point list must be filled");
+            Assert.IsGreaterThan(0, tour.Description.Length, "description must contain text");
+            Assert.IsGreaterThan(0, tour.TotalDuration.TotalMinutes, "total duration must contain value");
+            Assert.IsNotEmpty(tour.TourEntriesList, "tour entries list must be filled");
+            Assert.IsNotEmpty(tour.MapPointList, "map point list must be filled");
         }
 
         /// <summary>
@@ -168,10 +168,10 @@ namespace WhereToFly.WebApi.UnitTest
             var tour = engine.PlanTour(planTourParameters);
 
             // check
-            Assert.IsTrue(tour.Description.Length > 0, "description must contain text");
-            Assert.IsTrue(tour.TotalDuration.TotalMinutes > 0, "total duration must contain value");
-            Assert.IsTrue(tour.TourEntriesList.Count > 0, "tour entries list must be filled");
-            Assert.IsTrue(tour.MapPointList.Count > 0, "map point list must be filled");
+            Assert.IsGreaterThan(0, tour.Description.Length, "description must contain text");
+            Assert.IsGreaterThan(0, tour.TotalDuration.TotalMinutes, "total duration must contain value");
+            Assert.IsNotEmpty(tour.TourEntriesList, "tour entries list must be filled");
+            Assert.IsNotEmpty(tour.MapPointList, "map point list must be filled");
         }
     }
 }

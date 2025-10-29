@@ -21,11 +21,15 @@ namespace WhereToFly.WebApi.UnitTest
             // set up
             var cache = new FaviconUrlCache();
 
+#pragma warning disable S1075 // URIs should not be hardcoded
+            const string url = "https://github.com/vividos/WhereToFly";
+#pragma warning restore S1075 // URIs should not be hardcoded
+
             // run
-            var result = await cache.GetFaviconUrlAsync(new Uri("https://github.com/vividos/WhereToFly"));
+            string result = await cache.GetFaviconUrlAsync(new Uri(url));
 
             // check
-            Assert.IsTrue(result.Length > 0, "result must contain text");
+            Assert.IsGreaterThan(0, result.Length, "result must contain text");
         }
 
         /// <summary>
@@ -38,11 +42,15 @@ namespace WhereToFly.WebApi.UnitTest
             // set up
             var cache = new FaviconUrlCache();
 
+#pragma warning disable S1075 // URIs should not be hardcoded
+            const string url = "https://www.wetteronline.de/";
+#pragma warning restore S1075 // URIs should not be hardcoded
+
             // run
-            var result = await cache.GetFaviconUrlAsync(new Uri("https://www.wetteronline.de/"));
+            string result = await cache.GetFaviconUrlAsync(new Uri(url));
 
             // check
-            Assert.IsTrue(result.Length > 0, "result must contain text");
+            Assert.IsGreaterThan(0, result.Length, "result must contain text");
         }
     }
 }

@@ -44,9 +44,9 @@ namespace WhereToFly.WebApi.UnitTest
 
             // check
             Assert.IsNotNull(data, "returned data must not be null");
-            Assert.IsTrue(data.ID.Length > 0, "ID must be non-empty");
-            Assert.IsTrue(data.Name.Length > 0, "name must be non-empty");
-            Assert.IsTrue(data.Description.Length > 0, "description must be non-empty");
+            Assert.IsGreaterThan(0, data.ID.Length, "ID must be non-empty");
+            Assert.IsGreaterThan(0, data.Name.Length, "name must be non-empty");
+            Assert.IsGreaterThan(0, data.Description.Length, "description must be non-empty");
         }
 
         /// <summary>
@@ -68,9 +68,9 @@ namespace WhereToFly.WebApi.UnitTest
 
             // check
             Assert.IsNotNull(data, "returned data must not be null");
-            Assert.IsTrue(data.ID.Length > 0, "ID must be non-empty");
-            Assert.IsTrue(data.Name.Length > 0, "name must be non-empty");
-            Assert.IsTrue(data.Description.Length > 0, "description must be non-empty");
+            Assert.IsGreaterThan(0, data.ID.Length, "ID must be non-empty");
+            Assert.IsGreaterThan(0, data.Name.Length, "name must be non-empty");
+            Assert.IsGreaterThan(0, data.Description.Length, "description must be non-empty");
         }
     }
 }

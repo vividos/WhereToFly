@@ -38,12 +38,12 @@ namespace WhereToFly.WebApi.UnitTest
                 });
 
             // check
-            Assert.IsTrue(track.Id.Length > 0, "ID must be set");
-            Assert.IsTrue(track.Attribution?.Length > 0, "attribution must be set");
-            Assert.IsTrue(track.Duration.TotalMinutes > 0, "duration must be set");
-            Assert.IsTrue(track.LengthInMeter > 0, "length must be set");
+            Assert.IsGreaterThan(0, track.Id.Length, "ID must be set");
+            Assert.IsGreaterThan(0, track.Attribution?.Length ?? -1, "attribution must be set");
+            Assert.IsGreaterThan(0, track.Duration.TotalMinutes, "duration must be set");
+            Assert.IsGreaterThan(0, track.LengthInMeter, "length must be set");
             Assert.IsFalse(track.IsFlightTrack, "track must not be a flight");
-            Assert.IsTrue(track.TrackPoints.Count > 0, "track point list must be filled");
+            Assert.IsNotEmpty(track.TrackPoints, "track point list must be filled");
         }
     }
 }
