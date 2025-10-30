@@ -1,4 +1,5 @@
-﻿using WhereToFly.App.Services;
+﻿using WhereToFly.App.Abstractions;
+using WhereToFly.App.Services;
 
 namespace WhereToFly.App.Pages
 {
@@ -38,10 +39,10 @@ namespace WhereToFly.App.Pages
 
             this.Detail = navigationPage;
 
-            var navigationService = NavigationService.Instance as NavigationService;
-            if (navigationService != null)
+            var navigationService = App.Services.GetRequiredService<INavigationService>();
+            if (navigationService is NavigationService navigationServiceImpl)
             {
-                navigationService.NavigationPage = navigationPage;
+                navigationServiceImpl.NavigationPage = navigationPage;
             }
         }
     }

@@ -45,8 +45,16 @@ namespace WhereToFly.App
         /// <summary>
         /// Returns current navigation service instance
         /// </summary>
-        public INavigationService NavigationService =>
-            Services.NavigationService.Instance;
+        public INavigationService NavigationService { get; }
+
+        /// <summary>
+        /// Creates a new user interface instance
+        /// </summary>
+        /// <param name="navigationService">navigation service</param>
+        public UserInterface(INavigationService navigationService)
+        {
+            this.NavigationService = navigationService;
+        }
 
         /// <summary>
         /// Displays toast message
