@@ -1,4 +1,4 @@
-﻿using Microsoft.Maui.Controls;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 using WhereToFly.App.Abstractions;
@@ -63,7 +63,7 @@ namespace WhereToFly.App.UnitTest.ViewModels
             viewModel.Tapped.Execute(null);
 
             // check
-            var appManager = DependencyService.Get<IAppManager>() as UnitTestAppManager;
+            var appManager = this.Services.GetRequiredService<IAppManager>() as UnitTestAppManager;
             Assert.IsNotNull(appManager, "app manager must be non-null");
             Assert.IsTrue(appManager.AppHasBeenOpened, "app must have been opened");
         }
