@@ -143,7 +143,7 @@ namespace WhereToFly.App
                 if (intent.DataString != null &&
                     intent.DataString.StartsWith(Shared.Model.AppResourceUri.DefaultScheme))
                 {
-                    var appMapService = DependencyService.Get<IAppMapService>();
+                    var appMapService = App.Services.GetRequiredService<IAppMapService>();
                     appMapService.OpenAppResourceUri(intent.DataString);
                     return;
                 }
@@ -153,7 +153,7 @@ namespace WhereToFly.App
                     CoordinatesParser.TryParse(intent.DataString, out Geo.Model.MapPoint? mapPoint) &&
                     mapPoint != null)
                 {
-                    var appMapService = DependencyService.Get<IAppMapService>();
+                    var appMapService = App.Services.GetRequiredService<IAppMapService>();
                     appMapService.AddNewLocation(mapPoint);
                     return;
                 }

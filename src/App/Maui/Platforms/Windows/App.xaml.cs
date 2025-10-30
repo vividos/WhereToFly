@@ -55,7 +55,7 @@ namespace WhereToFly.App.WinUI
             {
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
-                    var appMapService = DependencyService.Get<IAppMapService>();
+                    var appMapService = WhereToFly.App.App.Services.GetRequiredService<IAppMapService>();
                     appMapService.OpenAppResourceUri(protocolActivatedEventArgs.Uri.AbsoluteUri);
                 });
             }
