@@ -16,6 +16,21 @@ namespace WhereToFly.App.Services
     internal class AppMapService : IAppMapService
     {
         /// <summary>
+        /// Data service
+        /// </summary>
+        private readonly IDataService dataService;
+
+        /// <summary>
+        /// User interface
+        /// </summary>
+        private readonly IUserInterface userInterface;
+
+        /// <summary>
+        /// Live data refresh service
+        /// </summary>
+        private readonly LiveDataRefreshService liveWaypointRefreshService;
+
+        /// <summary>
         /// Application settings; this is always available, since AppMapService is created after
         /// loading app settings
         /// </summary>
@@ -32,6 +47,22 @@ namespace WhereToFly.App.Services
         /// Access to the map view instance
         /// </summary>
         public IMapView MapView => MapPage.MapView;
+
+        /// <summary>
+        /// Creates a new app service instance
+        /// </summary>
+        /// <param name="dataService">data service</param>
+        /// <param name="userInterface">user interface</param>
+        /// <param name="liveDataRefreshService">live data refresh service</param>
+        public AppMapService(
+            IDataService dataService,
+            IUserInterface userInterface,
+            LiveDataRefreshService liveDataRefreshService)
+        {
+            this.dataService = dataService;
+            this.userInterface = userInterface;
+            this.liveWaypointRefreshService = liveDataRefreshService;
+        }
 
         /// <summary>
         /// Adds a tour planning location to the current list of locations and opens the planning
@@ -90,8 +121,7 @@ namespace WhereToFly.App.Services
                     this.Settings.LastViewingDistance = viewingDistance.Value;
                 }
 
-                var dataService = DependencyService.Get<IDataService>();
-                await dataService.StoreAppSettingsAsync(this.Settings);
+                await this.dataService.StoreAppSettingsAsync(this.Settings);
             }
         }
 
@@ -109,8 +139,7 @@ namespace WhereToFly.App.Services
 
             this.Settings.CurrentCompassTarget = compassTarget;
 
-            var dataService = DependencyService.Get<IDataService>();
-            await dataService.StoreAppSettingsAsync(this.Settings);
+            await this.dataService.StoreAppSettingsAsync(this.Settings);
 
             if (compassTarget == null)
             {
@@ -167,16 +196,13 @@ namespace WhereToFly.App.Services
         /// <returns>task to wait on</returns>
         public async Task InitLiveWaypointRefreshService()
         {
-            var dataService = DependencyService.Get<IDataService>();
-            var locationDataService = dataService.GetLocationDataService();
+            var locationDataService = this.dataService.GetLocationDataService();
 
             var locationList = await locationDataService.GetList();
 
-            var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
+            this.liveWaypointRefreshService.AddLiveWaypointList(locationList);
 
-            liveWaypointRefreshService.AddLiveWaypointList(locationList);
-
-            var trackDataService = dataService.GetTrackDataService();
+            var trackDataService = this.dataService.GetTrackDataService();
 
             var trackList = await trackDataService.GetList();
 
@@ -184,7 +210,7 @@ namespace WhereToFly.App.Services
 
             foreach (var liveTrack in liveTrackList)
             {
-                liveWaypointRefreshService.AddLiveTrack(liveTrack);
+                this.liveWaypointRefreshService.AddLiveTrack(liveTrack);
             }
         }
 
@@ -194,8 +220,7 @@ namespace WhereToFly.App.Services
         /// <returns>task to wait on</returns>
         public async Task ShowFlightPlanningDisclaimer()
         {
-            var dataService = DependencyService.Get<IDataService>();
-            var appSettings = await dataService.GetAppSettingsAsync(CancellationToken.None);
+            var appSettings = await this.dataService.GetAppSettingsAsync(CancellationToken.None);
 
             if (appSettings.ShownFlightPlanningDisclaimer)
             {
@@ -208,14 +233,12 @@ namespace WhereToFly.App.Services
                 "thorough and orderly preflight planning, nor from the use of all required " +
                 "and approved means of navigation (e.g. Aeronautical Chart ICAO 1:500,000).";
 
-            var userInterface = DependencyService.Get<IUserInterface>();
-
-            await userInterface.DisplayAlert(
+            await this.userInterface.DisplayAlert(
                 DisclaimerMessage,
                 "Understood");
 
             appSettings.ShownFlightPlanningDisclaimer = true;
-            await dataService.StoreAppSettingsAsync(appSettings);
+            await this.dataService.StoreAppSettingsAsync(appSettings);
         }
 
         /// <summary>

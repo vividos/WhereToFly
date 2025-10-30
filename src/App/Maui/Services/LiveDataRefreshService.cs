@@ -40,6 +40,11 @@ namespace WhereToFly.App.Services
         }
 
         /// <summary>
+        /// Data service
+        /// </summary>
+        private readonly IDataService dataService;
+
+        /// <summary>
         /// Lock for liveWaypointMap, liveTrackMap, liveTrackLastTrackPointTimeMap,
         /// nextUpdateQueue and nextPossibleUpdateMap
         /// </summary>
@@ -86,6 +91,15 @@ namespace WhereToFly.App.Services
         /// Event that is triggered when data for a live waypoint or a live track was updated
         /// </summary>
         public event OnUpdateLiveData? UpdateLiveData;
+
+        /// <summary>
+        /// Creates a new live data refresh service instance
+        /// </summary>
+        /// <param name="dataService">data service</param>
+        public LiveDataRefreshService(IDataService dataService)
+        {
+            this.dataService = dataService;
+        }
 
         /// <summary>
         /// Adds location list, to be checked for live waypoints to be updated periodically.
@@ -428,11 +442,7 @@ namespace WhereToFly.App.Services
             LiveWaypointQueryResult? queryResult = null;
             try
             {
-                var dataService = DependencyService.Get<IDataService>();
-                if (dataService != null)
-                {
-                    queryResult = await dataService.GetLiveWaypointDataAsync(liveWaypointId);
-                }
+                queryResult = await this.dataService.GetLiveWaypointDataAsync(liveWaypointId);
             }
             catch (Exception ex)
             {
@@ -484,16 +494,12 @@ namespace WhereToFly.App.Services
             Debug.WriteLine($"LiveDataRefreshService: updating live track for {liveTrackId}");
 
             LiveTrackQueryResult? queryResult = null;
+
             try
             {
-                var dataService = DependencyService.Get<IDataService>();
-
-                if (dataService != null)
-                {
-                    queryResult = await dataService.GetLiveTrackDataAsync(
-                        liveTrackId,
-                        lastTrackPointTime);
-                }
+                queryResult = await this.dataService.GetLiveTrackDataAsync(
+                    liveTrackId,
+                    lastTrackPointTime);
             }
             catch (Exception ex)
             {

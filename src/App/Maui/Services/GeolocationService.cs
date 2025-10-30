@@ -16,6 +16,11 @@ namespace WhereToFly.App.Services
         private readonly IGeolocation geolocation = Geolocation.Default;
 
         /// <summary>
+        /// User interface
+        /// </summary>
+        private readonly IUserInterface userInterface;
+
+        /// <summary>
         /// Returns if currently listening to position updates
         /// </summary>
         public bool IsListening => this.geolocation.IsListeningForeground;
@@ -26,14 +31,23 @@ namespace WhereToFly.App.Services
         public event EventHandler<GeolocationEventArgs>? PositionChanged;
 
         /// <summary>
+        /// Creates a new geolocation service instance
+        /// </summary>
+        /// <param name="userInterface">user interface</param>
+        public GeolocationService(IUserInterface userInterface)
+        {
+            this.userInterface = userInterface;
+        }
+
+        /// <summary>
         /// Checks for permission to use location.
         /// </summary>
         /// <returns>true when everything is ok, false when permission wasn't given</returns>
-        private static async Task<bool> CheckPermissionAsync()
+        private async Task<bool> CheckPermissionAsync()
         {
             if (!MainThread.IsMainThread)
             {
-                return await MainThread.InvokeOnMainThreadAsync(CheckPermissionAsync);
+                return await MainThread.InvokeOnMainThreadAsync(this.CheckPermissionAsync);
             }
 
             try
@@ -48,9 +62,7 @@ namespace WhereToFly.App.Services
                 if (Permissions.ShouldShowRationale<Permissions.LocationWhenInUse>() &&
                     status != PermissionStatus.Granted)
                 {
-                    var userInterface = DependencyService.Get<IUserInterface>();
-
-                    await userInterface.DisplayAlert(
+                    await this.userInterface.DisplayAlert(
                         "The location permission is needed in order to locate your position on the map",
                         "OK");
                 }
@@ -71,7 +83,7 @@ namespace WhereToFly.App.Services
         /// <returns>current position, or null when none could be retrieved</returns>
         public async Task<Microsoft.Maui.Devices.Sensors.Location?> GetPositionAsync(TimeSpan timeout)
         {
-            if (!await CheckPermissionAsync())
+            if (!await this.CheckPermissionAsync())
             {
                 return null;
             }
@@ -94,7 +106,7 @@ namespace WhereToFly.App.Services
         /// <returns>last known position, or null when none could be retrieved</returns>
         public async Task<MapPoint?> GetLastKnownPositionAsync()
         {
-            if (!await CheckPermissionAsync())
+            if (!await this.CheckPermissionAsync())
             {
                 return null;
             }
@@ -119,7 +131,7 @@ namespace WhereToFly.App.Services
                 return true;
             }
 
-            if (!await CheckPermissionAsync())
+            if (!await this.CheckPermissionAsync())
             {
                 return false;
             }
