@@ -24,11 +24,6 @@ jobs:
       with:
         dotnet-version: 10.0.x
 
-    - name: Install workloads
-      shell: cmd
-      run: |
-        dotnet workload install maui
-
     - name: Build WebLib project
       run: >
         dotnet build
