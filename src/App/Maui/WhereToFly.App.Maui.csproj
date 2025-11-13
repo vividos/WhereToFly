@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>$(DotNetVersion);$(DotNetVersion)-android;$(DotNetVersion)-windows10.0.19041.0</TargetFrameworks>
@@ -18,8 +18,6 @@
 
     <!-- Versions -->
     <ApplicationDisplayVersion>$(AssemblyInformationalVersion)</ApplicationDisplayVersion>
-    <ApplicationVersion>$(AndroidVersionCode)</ApplicationVersion>
-    <ApplicationVersion Condition=" $(ApplicationVersion) == '' ">400</ApplicationVersion>
   </PropertyGroup>
 
   <!-- Windows properties -->
@@ -60,6 +58,22 @@
     <AndroidPackageFormat>apk</AndroidPackageFormat>
     <RuntimeIdentifiers>android-arm64</RuntimeIdentifiers>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <BeforeGenerateAndroidManifest>$(BeforeGenerateAndroidManifest);SetAndroidVersionCode</BeforeGenerateAndroidManifest>
+  </PropertyGroup>
+
+  <Target Name="SetAndroidVersionCode" DependsOnTargets="GetBuildVersion" Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' ">
+    <PropertyGroup>
+      <!-- Set versionCode to MmmHHH, with M = major version, mm = minor version, HHH = git height -->
+      <ApplicationVersion>$([System.String]::Format('{0}{1:00}{2:000}',
+          $([System.Version]::Parse($(BuildVersionSimple)).Major),
+          $([System.Version]::Parse($(BuildVersionSimple)).Minor),
+          $(GitVersionHeight)
+        ))</ApplicationVersion>
+    </PropertyGroup>
+    <Message Importance="High" Text="Setting android:versionCode to $(ApplicationVersion)" />
+  </Target>
 
   <ItemGroup>
     <!-- App Icon -->
