@@ -163,6 +163,7 @@
 
   <ItemGroup>
     <TrimmerRootAssembly Include="SharpKml.Core" RootMode="all" />
+    <LinkerDescriptor Include="TrimmerLinkerDescriptor.xml" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(PkgMicrosoft_AppCenter_Crashes)' != ''">

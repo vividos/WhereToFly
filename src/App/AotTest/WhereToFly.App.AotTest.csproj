@@ -29,6 +29,7 @@
     <ProjectReference Include="..\..\Shared\Model\WhereToFly.Shared.Model.csproj" />
     <ProjectReference Include="..\MapView\WhereToFly.App.MapView.csproj" />
     <TrimmerRootAssembly Include="SharpKml.Core" RootMode="all" />
+    <LinkerDescriptor Include="..\Maui\TrimmerLinkerDescriptor.xml" />
   </ItemGroup>
 
   <ItemGroup Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'windows' ">
