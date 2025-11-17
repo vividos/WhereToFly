@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
+
+[assembly: Parallelize(Scope = ExecutionScope.MethodLevel)]
 
 namespace WhereToFly.Geo.UnitTest
 {
