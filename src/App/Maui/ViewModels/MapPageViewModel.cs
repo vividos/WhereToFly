@@ -223,7 +223,7 @@ namespace WhereToFly.App.ViewModels
 
             this.mapView.HideMessageBand();
 
-            var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
+            var liveWaypointRefreshService = Services.GetRequiredService<LiveDataRefreshService>();
             liveWaypointRefreshService.UpdateLiveData += this.OnUpdateLiveData;
         }
 

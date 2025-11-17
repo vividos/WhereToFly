@@ -42,15 +42,16 @@ namespace WhereToFly.App.Pages
         /// <summary>
         /// Creates a new maps page
         /// </summary>
-        public MapPage()
+        /// <param name="services">services</param>
+        public MapPage(IServiceProvider services)
         {
-            var appMapService = DependencyService.Get<IAppMapService>();
-            var dataService = DependencyService.Get<IDataService>();
+            var appMapService = services.GetRequiredService<IAppMapService>();
+            var dataService = services.GetRequiredService<IDataService>();
 
             this.Title = Constants.AppTitle;
             this.BackgroundColor = Colors.Black;
 
-            this.geolocationService = DependencyService.Get<IGeolocationService>();
+            this.geolocationService = services.GetRequiredService<IGeolocationService>();
 
 #if ANDROID || WINDOWS
             string cacheFolder = FileSystem.CacheDirectory;

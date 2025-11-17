@@ -28,7 +28,7 @@ namespace WhereToFly.App.Pages
             };
 
             // set up detail page
-            this.MapPage = new MapPage();
+            this.MapPage = new MapPage(App.Services);
             var navigationPage = new NavigationPage(this.MapPage)
             {
                 BarBackgroundColor = Constants.PrimaryColor,
