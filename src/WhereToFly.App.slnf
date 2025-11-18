@@ -1,6 +1,6 @@
 {
   "solution": {
-    "path": "WhereToFly.sln",
+    "path": "WhereToFly.slnx",
     "projects": [
       "App\\MapView\\WhereToFly.App.MapView.csproj",
       "App\\Maui\\WhereToFly.App.Maui.csproj",

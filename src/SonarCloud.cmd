@@ -38,7 +38,7 @@ if errorlevel 1 goto end
 REM
 REM Rebuild projects
 REM
-dotnet build WhereToFly.sln -c Release
+dotnet build WhereToFly.slnx -c Release
 
 REM
 REM Run Unit-Tests

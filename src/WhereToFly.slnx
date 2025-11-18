@@ -1,0 +1,52 @@
+<Solution>
+  <Folder Name="/App/">
+    <Project Path="App/AotTest/WhereToFly.App.AotTest.csproj" />
+    <Project Path="App/MapView/WhereToFly.App.MapView.csproj" />
+    <Project Path="App/Maui/WhereToFly.App.Maui.csproj">
+      <Deploy />
+    </Project>
+    <Project Path="App/UITest/WhereToFly.App.UITest.csproj">
+      <BuildDependency Project="App/Maui/WhereToFly.App.Maui.csproj" />
+    </Project>
+    <Project Path="App/UnitTest/WhereToFly.App.UnitTest.csproj" />
+  </Folder>
+  <Folder Name="/Backend/">
+    <Project Path="WebApi/Core/WhereToFly.WebApi.Core.csproj" />
+    <Project Path="WebApi/Logic/WhereToFly.WebApi.Logic.csproj" />
+    <Project Path="WebApi/UnitTest/WhereToFly.WebApi.UnitTest.csproj" />
+  </Folder>
+  <Folder Name="/Shared/">
+    <Project Path="Geo/UnitTest/WhereToFly.Geo.UnitTest.csproj" />
+    <Project Path="Geo/WhereToFly.Geo.csproj" />
+    <Project Path="Shared/Model/WhereToFly.Shared.Model.csproj" />
+    <Project Path="Shared/WebLib/WhereToFly.Shared.WebLib.esproj">
+      <Build />
+    </Project>
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="../Changelog.md" />
+    <File Path="../Credits.md" />
+    <File Path="../PreviousVersionImages.md" />
+    <File Path="../README.md" />
+    <File Path="../Release-Checklist.md" />
+    <File Path="../TestCases.md" />
+    <File Path=".editorconfig" />
+    <File Path="Clean.cmd" />
+    <File Path="Directory.Build.props" />
+    <File Path="SonarCloud.cmd" />
+    <File Path="stylecop.json" />
+    <File Path="version.json" />
+  </Folder>
+  <Folder Name="/Web/">
+    <Project Path="Web/App/Frontend/WhereToFly.Web.App.Frontend.esproj">
+      <Build />
+      <Deploy />
+    </Project>
+    <Project Path="Web/App/WhereToFly.Web.App.csproj" />
+    <Project Path="Web/LiveTracking/Frontend/WhereToFly.Web.LiveTracking.Frontend.esproj">
+      <Build />
+      <Deploy />
+    </Project>
+    <Project Path="Web/LiveTracking/WhereToFly.Web.LiveTracking.csproj" />
+  </Folder>
+</Solution>
