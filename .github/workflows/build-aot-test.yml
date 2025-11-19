@@ -27,6 +27,13 @@ jobs:
       run: |
         dotnet workload install maui
 
+    - name: Build MapView project
+      run: >
+        dotnet build
+        src/App/MapView/WhereToFly.App.MapView.csproj
+        -f net10.0-android
+        -c Release
+
     - name: Remove AppCenter from Maui project
       run: >
         dotnet remove
