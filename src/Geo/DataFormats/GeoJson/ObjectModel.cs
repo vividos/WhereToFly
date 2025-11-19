@@ -26,6 +26,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// Type of GeoJSON object
         /// </summary>
         [JsonPropertyName("type")]
+        [JsonIgnore]
         public string? Type { get; set; }
 
         /// <summary>
@@ -94,6 +95,7 @@ namespace WhereToFly.Geo.DataFormats.GeoJson
         /// Type of GeoJSON object
         /// </summary>
         [JsonPropertyName("type")]
+        [JsonIgnore]
         public string? Type { get; set; }
     }
 
