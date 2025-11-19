@@ -418,6 +418,8 @@ namespace WhereToFly.App.MapView
 
             this.RunJavaScript(js);
 
+            this.RunJavaScript("await map.initMap();");
+
             await this.MapInitializedTask;
         }
 

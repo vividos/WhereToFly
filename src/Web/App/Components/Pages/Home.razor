@@ -35,6 +35,13 @@
         }
     }
 
+    async function createApp(options) {
+        let module = await import("./js/app.bundle.js");
+        let app = module.default(options);
+        await app.initApp();
+        return app;
+    }
+
     /**
      * Calls back to the razor page
      */
@@ -65,12 +72,6 @@
     {
         if (firstRender)
         {
-            // https://jonhilton.net/import-js-modules/
-            IJSObjectReference module =
-                await JS.InvokeAsync<IJSObjectReference>(
-                    "import",
-                    "./" + Assets["js/app.bundle.js"]);
-
             var referenceToThis = DotNetObjectReference.Create(this);
 
             IJSObjectReference options =
@@ -79,7 +80,7 @@
                     referenceToThis);
 
             this.app =
-                await module.InvokeAsync<IJSObjectReference>("default", options);
+                await JS.InvokeAsync<IJSObjectReference>("createApp", options);
         }
 
         await base.OnAfterRenderAsync(firstRender);

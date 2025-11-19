@@ -36,6 +36,8 @@ export default class LiveTracking {
             callback: this.callMapAction
         });
 
+        this.map.initMap();
+
         this.map.setShadingMode("Fixed10Am");
 
         this.addDefaultLayerAndLocationListsAndTracks();

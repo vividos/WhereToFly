@@ -102,8 +102,7 @@ export class MapView {
      */
     constructor(options) {
 
-        console.groupCollapsed("%cMapView", MapView.consoleLogStyle, "creating new 3D map view");
-        console.time("ctor");
+        MapView.log("creating new 3D map view");
 
         this.options = Object.assign({
             id: "mapElement",
@@ -122,11 +121,41 @@ export class MapView {
         this.pinImageCache = {};
         this.pinBuilder = new PinBuilder();
 
+        Ion.defaultAccessToken = this.options.cesiumIonApiKey;
+
+        this.heightProfileView = null;
+
+        this.trackIdToTrackDataMap = {};
+
+        this.allCurrentAttributionKeys = new Set();
+
+        this.dataSourceMap = {};
+
+        this.osmBuildingsTileset = null;
+
+        this.inOnCloseHandler = false;
+
+        this.currentLiveTrackTimeOffset = -180;
+
+        // swap out console.error for logging purposes
+        const oldLog = console.error;
+        console.error = function(message) {
+            this.onConsoleErrorMessage(message);
+            oldLog.apply(console, arguments);
+        }.bind(this);
+    };
+
+    /**
+     * Initializes map.
+     */
+    async initMap() {
+
+        console.groupCollapsed("%cMapView", MapView.consoleLogStyle, "initializing map");
+        console.time("initMap");
+
         this.showMessageBand("Initializing map...");
 
         console.log("#1 imagery provider");
-
-        Ion.defaultAccessToken = this.options.cesiumIonApiKey;
 
         this.imageryLayerInfos = {
             OpenStreetMap: {
@@ -282,7 +311,7 @@ export class MapView {
         this.viewer.infoBox.frame.sandbox = this.viewer.infoBox.frame.sandbox + " allow-scripts";
         this.viewer.infoBox.frame.setAttribute("src", "about:blank"); // needed to apply new sandbox attributes
 
-        if (!options.hasMouse) {
+        if (!this.options.hasMouse) {
             // switch to Touch instructions, as the control is only used on touch devices
             this.viewer.navigationHelpButton.viewModel.showTouch();
         }
@@ -317,7 +346,7 @@ export class MapView {
         this.pickingHandler.setInputAction(this.onScreenTouchDown.bind(this), ScreenSpaceEventType.LEFT_DOWN);
         this.pickingHandler.setInputAction(this.onScreenTouchUp.bind(this), ScreenSpaceEventType.LEFT_UP);
 
-        if (options.hasMouse) {
+        if (this.options.hasMouse) {
             this.pickingHandler.setInputAction(
                 this.onScreenRightClick.bind(this),
                 ScreenSpaceEventType.RIGHT_CLICK);
@@ -330,8 +359,6 @@ export class MapView {
 
         this.initCompassTarget();
 
-        this.heightProfileView = null;
-
         // add a dedicated track primitives collection, as we can't call viewer.scene.primitives.removeAll()
         this.trackPrimitivesCollection = new PrimitiveCollection({
             show: true,
@@ -340,15 +367,6 @@ export class MapView {
 
         this.viewer.scene.primitives.add(this.trackPrimitivesCollection);
 
-        this.trackIdToTrackDataMap = {};
-
-        this.allCurrentAttributionKeys = new Set();
-
-        this.dataSourceMap = {};
-
-        this.osmBuildingsTileset = null;
-
-        this.inOnCloseHandler = false;
 
         this.locationDataSource = new CustomDataSource("locations");
         this.locationDataSource.clustering = this.clustering;
@@ -357,24 +375,15 @@ export class MapView {
         this.liveTrackDataSource = new CustomDataSource("livetrack");
         this.viewer.dataSources.add(this.liveTrackDataSource);
 
-        this.currentLiveTrackTimeOffset = -180;
-
         this.setupLiveTrackToolbar();
 
         this.setupNearbyPois();
-
-        // swap out console.error for logging purposes
-        const oldLog = console.error;
-        console.error = function(message) {
-            this.onConsoleErrorMessage(message);
-            oldLog.apply(console, arguments);
-        }.bind(this);
 
         this.onMapInitialized();
 
         this.hideMessageBand();
 
-        console.timeEnd("ctor");
+        console.timeEnd("initMap");
         console.groupEnd();
     }
 
@@ -1014,7 +1023,7 @@ export class MapView {
         textDiv.style = "width: 300px; display: flex; justify-content: space-around;"
         textDiv.innerHTML = "<div>N</div><div>NE</div><div>E</div><div>SE</div><div>S</div><div>SW</div><div>W</div><div>NW</div>";
         legend.appendChild(textDiv);
-    
+
         legend.style.display = "block";
     }
 

@@ -49,6 +49,10 @@ export class App {
         });
     }
 
+    async initApp() {
+        await this.map.initMap();
+    }
+
     /**
      * Adds list of locations to the map, as marker pins
      * @param {Array} locationList An array of location, each with the following object layout:
