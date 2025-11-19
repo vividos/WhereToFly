@@ -162,7 +162,7 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         public async Task SaveChangesAsync()
         {
-            var dataService = DependencyService.Get<IDataService>();
+            var dataService = Services.GetRequiredService<IDataService>();
             var locationDataService = dataService.GetLocationDataService();
 
             var locationToChange = await locationDataService.Get(this.location.Id);
@@ -184,7 +184,7 @@ namespace WhereToFly.App.ViewModels
 
             await locationDataService.Update(locationToChange);
 
-            var appMapService = DependencyService.Get<IAppMapService>();
+            var appMapService = Services.GetRequiredService<IAppMapService>();
             appMapService.MapView.UpdateLocation(locationToChange);
         }
     }

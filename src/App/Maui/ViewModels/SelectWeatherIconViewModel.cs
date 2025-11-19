@@ -56,14 +56,14 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         private async Task LoadData(string? group)
         {
-            var dataService = DependencyService.Get<IDataService>();
+            var dataService = Services.GetRequiredService<IDataService>();
             await dataService.InitCompleteTask;
 
             var weatherIconDescriptionDataService = dataService.GetWeatherIconDescriptionDataService();
             var weatherIconList = await weatherIconDescriptionDataService.GetList();
 
 #pragma warning disable S1854 // Unused assignments should be removed
-            var appManager = DependencyService.Get<IAppManager>();
+            var appManager = Services.GetRequiredService<IAppManager>();
 #pragma warning restore S1854 // Unused assignments should be removed
 
             var ungroupedWeatherIconList = new ObservableCollection<WeatherIconListEntryViewModel>(

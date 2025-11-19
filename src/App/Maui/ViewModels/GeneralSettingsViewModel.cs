@@ -149,7 +149,7 @@ namespace WhereToFly.App.ViewModels
         {
             UserInterface.UserAppTheme = this.appSettings.AppTheme;
 
-            var dataService = DependencyService.Get<IDataService>();
+            var dataService = Services.GetRequiredService<IDataService>();
             await dataService.StoreAppSettingsAsync(this.appSettings);
         }
     }

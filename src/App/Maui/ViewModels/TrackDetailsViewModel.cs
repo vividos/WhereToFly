@@ -10,6 +10,16 @@ namespace WhereToFly.App.ViewModels
     /// </summary>
     public class TrackDetailsViewModel : ViewModelBase
     {
+        /// <summary>
+        /// Data service
+        /// </summary>
+        private readonly IDataService dataService;
+
+        /// <summary>
+        /// App map services
+        /// </summary>
+        private readonly IAppMapService appMapService;
+
         #region Binding properties
         /// <summary>
         /// Property containing track name
@@ -102,6 +112,9 @@ namespace WhereToFly.App.ViewModels
         /// <param name="track">track object</param>
         public TrackDetailsViewModel(Track track)
         {
+            this.dataService = Services.GetRequiredService<IDataService>();
+            this.appMapService = Services.GetRequiredService<IAppMapService>();
+
             this.Track = track;
 
             this.TypeImageSource =
@@ -139,13 +152,11 @@ namespace WhereToFly.App.ViewModels
                 this.OnPropertyChanged(nameof(this.Name));
                 this.OnPropertyChanged(nameof(this.TrackColor));
 
-                var dataService = DependencyService.Get<IDataService>();
-                var trackDataService = dataService.GetTrackDataService();
+                var trackDataService = this.dataService.GetTrackDataService();
 
                 await trackDataService.Update(this.Track);
 
-                var appMapService = DependencyService.Get<IAppMapService>();
-                appMapService.MapView.UpdateTrack(this.Track);
+                this.appMapService.MapView.UpdateTrack(this.Track);
             }
         }
 

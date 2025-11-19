@@ -126,7 +126,7 @@ namespace WhereToFly.App.ViewModels
         {
             this.appSettings.LastFlyingRangeParameters = this.Parameters;
 
-            var dataService = DependencyService.Get<IDataService>();
+            var dataService = Services.GetRequiredService<IDataService>();
             await dataService.StoreAppSettingsAsync(this.appSettings);
         }
     }

@@ -23,6 +23,16 @@ namespace WhereToFly.App.ViewModels
         };
 
         /// <summary>
+        /// Data service
+        /// </summary>
+        private readonly IDataService dataService;
+
+        /// <summary>
+        /// App map services
+        /// </summary>
+        private readonly IAppMapService appMapService;
+
+        /// <summary>
         /// Layer list backing store
         /// </summary>
         private List<Layer> layerList = [];
@@ -70,6 +80,9 @@ namespace WhereToFly.App.ViewModels
         /// </summary>
         public LayerListViewModel()
         {
+            this.dataService = Services.GetRequiredService<IDataService>();
+            this.appMapService = Services.GetRequiredService<IAppMapService>();
+
             Task.Run(this.LoadDataAsync);
 
             this.ItemTappedCommand =
@@ -120,10 +133,9 @@ namespace WhereToFly.App.ViewModels
         {
             try
             {
-                IDataService dataService = DependencyService.Get<IDataService>();
-                await dataService.InitCompleteTask;
+                await this.dataService.InitCompleteTask;
 
-                var layerDataService = dataService.GetLayerDataService();
+                var layerDataService = this.dataService.GetLayerDataService();
 
                 var localLayerList = await layerDataService.GetList();
                 this.layerList = localLayerList.ToList();
@@ -162,8 +174,7 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         internal async Task ZoomToLayer(Layer layer)
         {
-            var appMapService = DependencyService.Get<IAppMapService>();
-            appMapService.MapView.ZoomToLayer(layer);
+            this.appMapService.MapView.ZoomToLayer(layer);
 
             await UserInterface.NavigationService.GoToMap();
         }
@@ -331,8 +342,7 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         private async Task AddOpenStreetMapLayerAsync()
         {
-            var dataService = DependencyService.Get<IDataService>();
-            var layerDataService = dataService.GetLayerDataService();
+            var layerDataService = this.dataService.GetLayerDataService();
 
             var layer = DataServiceHelper.GetOpenStreetMapBuildingsLayer();
 
@@ -341,8 +351,7 @@ namespace WhereToFly.App.ViewModels
 
             await UserInterface.NavigationService.GoToMap();
 
-            var appMapService = DependencyService.Get<IAppMapService>();
-            await appMapService.MapView.AddLayer(layer);
+            await this.appMapService.MapView.AddLayer(layer);
 
             UserInterface.DisplayToast("Layer was added.");
         }
@@ -387,8 +396,7 @@ namespace WhereToFly.App.ViewModels
                 return;
             }
 
-            var dataService = DependencyService.Get<IDataService>();
-            var layerDataService = dataService.GetLayerDataService();
+            var layerDataService = this.dataService.GetLayerDataService();
 
             await layerDataService.ClearList();
 
@@ -397,8 +405,7 @@ namespace WhereToFly.App.ViewModels
 
             await this.ReloadLayerListAsync();
 
-            var appMapService = DependencyService.Get<IAppMapService>();
-            appMapService.MapView.ClearLayerList();
+            this.appMapService.MapView.ClearLayerList();
 
             UserInterface.DisplayToast("Layer list was cleared.");
         }
@@ -422,15 +429,13 @@ namespace WhereToFly.App.ViewModels
         {
             this.layerList.Remove(layer);
 
-            var dataService = DependencyService.Get<IDataService>();
-            var layerDataService = dataService.GetLayerDataService();
+            var layerDataService = this.dataService.GetLayerDataService();
 
             await layerDataService.Remove(layer.Id);
 
             this.UpdateLayerList();
 
-            var appMapService = DependencyService.Get<IAppMapService>();
-            appMapService.MapView.RemoveLayer(layer);
+            this.appMapService.MapView.RemoveLayer(layer);
 
             UserInterface.DisplayToast("Selected layer was deleted.");
         }

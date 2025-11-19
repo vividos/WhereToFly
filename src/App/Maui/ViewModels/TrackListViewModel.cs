@@ -13,6 +13,16 @@ namespace WhereToFly.App.ViewModels
     public class TrackListViewModel : ViewModelBase
     {
         /// <summary>
+        /// Data service
+        /// </summary>
+        private readonly IDataService dataService;
+
+        /// <summary>
+        /// App map services
+        /// </summary>
+        private readonly IAppMapService appMapService;
+
+        /// <summary>
         /// Track list
         /// </summary>
         private List<Track> trackList = [];
@@ -81,6 +91,9 @@ namespace WhereToFly.App.ViewModels
         /// </summary>
         public TrackListViewModel()
         {
+            this.dataService = Services.GetRequiredService<IDataService>();
+            this.appMapService = Services.GetRequiredService<IAppMapService>();
+
             this.isListRefreshActive = false;
 
             this.IsListRefreshActive = true;
@@ -102,10 +115,9 @@ namespace WhereToFly.App.ViewModels
         {
             try
             {
-                IDataService dataService = DependencyService.Get<IDataService>();
-                await dataService.InitCompleteTask;
+                await this.dataService.InitCompleteTask;
 
-                var trackDataService = dataService.GetTrackDataService();
+                var trackDataService = this.dataService.GetTrackDataService();
 
                 this.trackList = (await trackDataService.GetList()).ToList();
             }
@@ -159,8 +171,7 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         internal async Task ZoomToTrack(Track track)
         {
-            var appMapService = DependencyService.Get<IAppMapService>();
-            appMapService.MapView.ZoomToTrack(track);
+            this.appMapService.MapView.ZoomToTrack(track);
 
             await UserInterface.NavigationService.GoToMap();
         }
@@ -184,8 +195,7 @@ namespace WhereToFly.App.ViewModels
         {
             this.trackList.Remove(track);
 
-            var dataService = DependencyService.Get<IDataService>();
-            var trackDataService = dataService.GetTrackDataService();
+            var trackDataService = this.dataService.GetTrackDataService();
 
             try
             {
@@ -198,14 +208,13 @@ namespace WhereToFly.App.ViewModels
 
             if (track.IsLiveTrack)
             {
-                var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
+                var liveWaypointRefreshService = Services.GetRequiredService<LiveDataRefreshService>();
                 liveWaypointRefreshService.RemoveLiveTrack(track.Id);
             }
 
             this.UpdateTrackList();
 
-            var appMapService = DependencyService.Get<IAppMapService>();
-            appMapService.MapView.RemoveTrack(track);
+            this.appMapService.MapView.RemoveTrack(track);
 
             UserInterface.DisplayToast("Selected track was deleted.");
         }
@@ -226,18 +235,16 @@ namespace WhereToFly.App.ViewModels
                 return;
             }
 
-            var dataService = DependencyService.Get<IDataService>();
-            var trackDataService = dataService.GetTrackDataService();
+            var trackDataService = this.dataService.GetTrackDataService();
 
             await trackDataService.ClearList();
 
-            var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
+            var liveWaypointRefreshService = Services.GetRequiredService<LiveDataRefreshService>();
             liveWaypointRefreshService.ClearLiveWaypointList();
 
             await this.ReloadTrackListAsync();
 
-            var appMapService = DependencyService.Get<IAppMapService>();
-            appMapService.MapView.ClearAllTracks();
+            this.appMapService.MapView.ClearAllTracks();
 
             UserInterface.DisplayToast("Track list was cleared.");
         }
@@ -320,8 +327,7 @@ namespace WhereToFly.App.ViewModels
         {
             try
             {
-                IDataService dataService = DependencyService.Get<IDataService>();
-                var trackDataService = dataService.GetTrackDataService();
+                var trackDataService = this.dataService.GetTrackDataService();
 
                 var newTrackList = (await trackDataService.GetList()).ToList();
 

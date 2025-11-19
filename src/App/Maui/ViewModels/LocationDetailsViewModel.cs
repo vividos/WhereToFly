@@ -16,6 +16,21 @@ namespace WhereToFly.App.ViewModels
     public class LocationDetailsViewModel : ViewModelBase
     {
         /// <summary>
+        /// Data service
+        /// </summary>
+        private readonly IDataService dataService;
+
+        /// <summary>
+        /// App map services
+        /// </summary>
+        private readonly IAppMapService appMapService;
+
+        /// <summary>
+        /// Live data refresh service
+        /// </summary>
+        private readonly LiveDataRefreshService liveDataRefreshService;
+
+        /// <summary>
         /// App settings object
         /// </summary>
         private readonly AppSettings appSettings;
@@ -184,6 +199,10 @@ namespace WhereToFly.App.ViewModels
         /// <param name="location">location object</param>
         public LocationDetailsViewModel(AppSettings appSettings, Location location)
         {
+            this.dataService = Services.GetRequiredService<IDataService>();
+            this.appMapService = Services.GetRequiredService<IAppMapService>();
+            this.liveDataRefreshService = Services.GetRequiredService<LiveDataRefreshService>();
+
             this.appSettings = appSettings;
             this.location = location;
 
@@ -238,7 +257,7 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         private async Task UpdateDistance()
         {
-            var geolocationService = DependencyService.Get<IGeolocationService>();
+            var geolocationService = Services.GetRequiredService<IGeolocationService>();
             var position = await geolocationService.GetLastKnownPositionAsync();
 
             if (position != null)
@@ -257,8 +276,7 @@ namespace WhereToFly.App.ViewModels
         {
             try
             {
-                var dataService = DependencyService.Get<IDataService>();
-                var result = await dataService.GetLiveWaypointDataAsync(this.location.InternetLink);
+                var result = await this.dataService.GetLiveWaypointDataAsync(this.location.InternetLink);
 
                 if (result.Data == null)
                 {
@@ -283,7 +301,7 @@ namespace WhereToFly.App.ViewModels
                 this.OnPropertyChanged(nameof(this.DescriptionWebViewSource));
 
                 // store new infos in location list
-                var locationDataService = dataService.GetLocationDataService();
+                var locationDataService = this.dataService.GetLocationDataService();
 
                 Location? locationInList = await locationDataService.Get(this.location.Id);
                 if (locationInList != null)
@@ -293,9 +311,8 @@ namespace WhereToFly.App.ViewModels
 
                     await locationDataService.Update(locationInList);
 
-                    var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
-                    liveWaypointRefreshService.RemoveLiveWaypoint(locationInList.Id);
-                    liveWaypointRefreshService.AddLiveWaypoint(locationInList);
+                    this.liveDataRefreshService.RemoveLiveWaypoint(locationInList.Id);
+                    this.liveDataRefreshService.AddLiveWaypoint(locationInList);
                 }
             }
             catch (Exception ex)
@@ -314,8 +331,7 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         private async Task OnAddTourPlanLocationAsync()
         {
-            var appMapService = DependencyService.Get<IAppMapService>();
-            await appMapService.AddTourPlanLocation(this.location);
+            await this.appMapService.AddTourPlanLocation(this.location);
         }
 
         /// <summary>
@@ -324,10 +340,9 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         private async Task OnZoomToLocationAsync()
         {
-            var appMapService = DependencyService.Get<IAppMapService>();
-            await appMapService.UpdateLastShownPosition(this.location.MapLocation);
+            await this.appMapService.UpdateLastShownPosition(this.location.MapLocation);
 
-            appMapService.MapView.ZoomToLocation(this.location.MapLocation);
+            this.appMapService.MapView.ZoomToLocation(this.location.MapLocation);
 
             await UserInterface.NavigationService.GoToMap();
         }
@@ -344,8 +359,7 @@ namespace WhereToFly.App.ViewModels
                 TargetLocation = this.location.MapLocation,
             };
 
-            var appMapService = DependencyService.Get<IAppMapService>();
-            await appMapService.SetCompassTarget(compassTarget);
+            await this.appMapService.SetCompassTarget(compassTarget);
 
             await UserInterface.NavigationService.GoToMap();
         }
@@ -387,16 +401,13 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         private async Task OnDeleteLocationAsync()
         {
-            var dataService = DependencyService.Get<IDataService>();
-            var locationDataService = dataService.GetLocationDataService();
+            var locationDataService = this.dataService.GetLocationDataService();
 
             await locationDataService.Remove(this.location.Id);
 
-            var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
-            liveWaypointRefreshService.RemoveLiveWaypoint(this.location.Id);
+            this.liveDataRefreshService.RemoveLiveWaypoint(this.location.Id);
 
-            var appMapService = DependencyService.Get<IAppMapService>();
-            appMapService.MapView.RemoveLocation(this.location.Id);
+            this.appMapService.MapView.RemoveLocation(this.location.Id);
 
             await UserInterface.NavigationService.GoBack();
 

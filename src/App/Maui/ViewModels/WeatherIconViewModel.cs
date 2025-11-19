@@ -78,7 +78,7 @@ namespace WhereToFly.App.ViewModels
                     break;
 
                 case WeatherIconDescription.IconType.IconApp:
-                    var appManager = DependencyService.Get<IAppManager>();
+                    var appManager = Services.GetRequiredService<IAppManager>();
                     appManager.OpenApp(this.IconDescription.WebLink);
                     break;
 

@@ -12,6 +12,16 @@ namespace WhereToFly.App.ViewModels
     public class TrackTabViewModel : ViewModelBase
     {
         /// <summary>
+        /// Data service
+        /// </summary>
+        private readonly IDataService dataService;
+
+        /// <summary>
+        /// App map services
+        /// </summary>
+        private readonly IAppMapService appMapService;
+
+        /// <summary>
         /// Track to show
         /// </summary>
         private readonly Track track;
@@ -39,6 +49,9 @@ namespace WhereToFly.App.ViewModels
         /// <param name="track">track object</param>
         public TrackTabViewModel(Track track)
         {
+            this.dataService = Services.GetRequiredService<IDataService>();
+            this.appMapService = Services.GetRequiredService<IAppMapService>();
+
             this.track = track;
 
             this.ZoomToTrackCommand = new AsyncRelayCommand(this.OnZoomToTrackAsync);
@@ -52,8 +65,7 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         private async Task OnZoomToTrackAsync()
         {
-            var appMapService = DependencyService.Get<IAppMapService>();
-            appMapService.MapView.ZoomToTrack(this.track);
+            this.appMapService.MapView.ZoomToTrack(this.track);
 
             await UserInterface.NavigationService.GoToMap();
         }
@@ -73,8 +85,7 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         private async Task OnDeleteTrackAsync()
         {
-            var dataService = DependencyService.Get<IDataService>();
-            var trackDataService = dataService.GetTrackDataService();
+            var trackDataService = this.dataService.GetTrackDataService();
 
             try
             {
@@ -85,8 +96,7 @@ namespace WhereToFly.App.ViewModels
                 App.LogError(ex);
             }
 
-            var appMapService = DependencyService.Get<IAppMapService>();
-            appMapService.MapView.RemoveTrack(this.track);
+            this.appMapService.MapView.RemoveTrack(this.track);
 
             await UserInterface.NavigationService.GoBack();
 

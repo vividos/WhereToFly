@@ -140,11 +140,11 @@ namespace WhereToFly.App.ViewModels
         {
             this.Layer.IsVisible = !this.Layer.IsVisible;
 
-            IDataService dataService = DependencyService.Get<IDataService>();
+            IDataService dataService = Services.GetRequiredService<IDataService>();
             var layerDataService = dataService.GetLayerDataService();
             await layerDataService.Update(this.Layer);
 
-            var appMapService = DependencyService.Get<IAppMapService>();
+            var appMapService = Services.GetRequiredService<IAppMapService>();
             appMapService.MapView.SetLayerVisibility(this.Layer);
 
             this.VisibilityImageSource =

@@ -13,6 +13,11 @@ namespace WhereToFly.App.ViewModels
     public class CompassDetailsViewModel : ViewModelBase
     {
         /// <summary>
+        /// App map services
+        /// </summary>
+        private readonly IAppMapService appMapService;
+
+        /// <summary>
         /// App settings object
         /// </summary>
         private readonly AppSettings appSettings;
@@ -176,6 +181,8 @@ namespace WhereToFly.App.ViewModels
             AppSettings appSettings,
             CompassGeoServices compassGeoServices)
         {
+            this.appMapService = Services.GetRequiredService<IAppMapService>();
+
             this.appSettings = appSettings;
             this.compassGeoServices = compassGeoServices;
 
@@ -208,8 +215,7 @@ namespace WhereToFly.App.ViewModels
                 TargetDirection = direction,
             };
 
-            var appMapService = DependencyService.Get<IAppMapService>();
-            await appMapService.SetCompassTarget(compassTarget);
+            await this.appMapService.SetCompassTarget(compassTarget);
 
             this.OnPropertyChanged(nameof(this.Distance));
             this.OnPropertyChanged(nameof(this.HeightDifference));
@@ -224,8 +230,7 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         private async Task ClearCompassTarget()
         {
-            var appMapService = DependencyService.Get<IAppMapService>();
-            await appMapService.SetCompassTarget(null);
+            await this.appMapService.SetCompassTarget(null);
 
             this.OnPropertyChanged(nameof(this.Distance));
             this.OnPropertyChanged(nameof(this.HeightDifference));
@@ -280,8 +285,7 @@ namespace WhereToFly.App.ViewModels
 
             var point = this.position.ToMapPoint();
 
-            var appMapService = DependencyService.Get<IAppMapService>();
-            Task.Run(async () => await appMapService.UpdateLastShownPosition(point));
+            Task.Run(async () => await this.appMapService.UpdateLastShownPosition(point));
         }
 
         /// <summary>

@@ -318,7 +318,7 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         private async Task SharePosition()
         {
-            var geolocationService = DependencyService.Get<IGeolocationService>();
+            var geolocationService = Services.GetRequiredService<IGeolocationService>();
 
             var currentPosition =
                 await geolocationService.GetPositionAsync(timeout: TimeSpan.FromSeconds(0.1));
@@ -393,7 +393,7 @@ namespace WhereToFly.App.ViewModels
 
             var point = this.position.ToMapPoint();
 
-            var appMapService = DependencyService.Get<IAppMapService>();
+            var appMapService = Services.GetRequiredService<IAppMapService>();
             Task.Run(async () => await appMapService.UpdateLastShownPosition(point));
         }
 

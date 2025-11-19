@@ -9,7 +9,7 @@ namespace WhereToFly.App.ViewModels
     /// <summary>
     /// View model for a single location list entry
     /// </summary>
-    public class LocationListEntryViewModel
+    public class LocationListEntryViewModel : ViewModelBase
     {
         /// <summary>
         /// Parent view model
@@ -137,7 +137,7 @@ namespace WhereToFly.App.ViewModels
 
             this.Description = HtmlConverter.StripAllTags(this.location.Description);
 
-            var appMapService = DependencyService.Get<IAppMapService>();
+            var appMapService = Services.GetRequiredService<IAppMapService>();
 
             this.ItemTappedCommand = new AsyncRelayCommand(this.OnShowDetailsLocation);
             this.ZoomToLocationCommand = new AsyncRelayCommand(this.OnZoomToLocationAsync);

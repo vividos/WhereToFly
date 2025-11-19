@@ -17,6 +17,16 @@ namespace WhereToFly.App.ViewModels
     public class PlanTourPopupViewModel : ViewModelBase
     {
         /// <summary>
+        /// Data service
+        /// </summary>
+        private readonly IDataService dataService;
+
+        /// <summary>
+        /// App map services
+        /// </summary>
+        private readonly IAppMapService appMapService;
+
+        /// <summary>
         /// Tour planning parameters
         /// </summary>
         private readonly PlanTourParameters planTourParameters;
@@ -61,6 +71,9 @@ namespace WhereToFly.App.ViewModels
         /// <param name="closePopupPage">function to call to close popup page</param>
         public PlanTourPopupViewModel(PlanTourParameters planTourParameters, Func<Task> closePopupPage)
         {
+            this.dataService = Services.GetRequiredService<IDataService>();
+            this.appMapService = Services.GetRequiredService<IAppMapService>();
+
             this.planTourParameters = planTourParameters;
             this.closePopupPage = closePopupPage;
 
@@ -86,8 +99,7 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait for</returns>
         private async Task LoadDataAsync(List<string> waypointIdList)
         {
-            var dataService = DependencyService.Get<IDataService>();
-            var locationDataService = dataService.GetLocationDataService();
+            var locationDataService = this.dataService.GetLocationDataService();
 
             var locationList = await locationDataService.GetList();
 
@@ -281,19 +293,17 @@ namespace WhereToFly.App.ViewModels
 
             track.CalculateStatistics();
 
-            await AddTrack(track);
-
-            var appMapService = DependencyService.Get<IAppMapService>();
+            await this.AddTrack(track);
 
             var location = StartWaypointFromPlannedTour(plannedTour);
             if (location != null)
             {
                 await this.AddLocation(location);
 
-                appMapService.MapView.AddLocation(location);
+                this.appMapService.MapView.AddLocation(location);
             }
 
-            await appMapService.ClearTempPlanTourLocations();
+            await this.appMapService.ClearTempPlanTourLocations();
 
             this.planTourParameters.WaypointIdList.Clear();
             this.planTourParameters.WaypointLocationList.Clear();
@@ -321,8 +331,7 @@ namespace WhereToFly.App.ViewModels
                 {
                     waitingDialog.Show();
 
-                    var dataService = DependencyService.Get<IDataService>();
-                    return await dataService.PlanTourAsync(this.planTourParameters);
+                    return await this.dataService.PlanTourAsync(this.planTourParameters);
                 }
                 catch (Exception ex)
                 {
@@ -372,10 +381,9 @@ namespace WhereToFly.App.ViewModels
         /// </summary>
         /// <param name="track">track to add</param>
         /// <returns>task to wait on</returns>
-        private static async Task AddTrack(Track track)
+        private async Task AddTrack(Track track)
         {
-            var dataService = DependencyService.Get<IDataService>();
-            var trackDataService = dataService.GetTrackDataService();
+            var trackDataService = this.dataService.GetTrackDataService();
 
             await trackDataService.Add(track);
         }
@@ -386,9 +394,8 @@ namespace WhereToFly.App.ViewModels
         /// <param name="track">track to show</param>
         private void ShowTrack(Track track)
         {
-            var appMapService = DependencyService.Get<IAppMapService>();
-            appMapService.MapView.AddTrack(track);
-            appMapService.MapView.ZoomToTrack(track);
+            this.appMapService.MapView.AddTrack(track);
+            this.appMapService.MapView.ZoomToTrack(track);
 
             UserInterface.DisplayToast("Track was added.");
         }
@@ -426,8 +433,7 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         private async Task AddLocation(Location location)
         {
-            var dataService = DependencyService.Get<IDataService>();
-            var locationDataService = dataService.GetLocationDataService();
+            var locationDataService = this.dataService.GetLocationDataService();
 
             await locationDataService.Add(location);
         }

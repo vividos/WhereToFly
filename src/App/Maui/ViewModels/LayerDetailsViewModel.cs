@@ -13,6 +13,16 @@ namespace WhereToFly.App.ViewModels
     public class LayerDetailsViewModel : ViewModelBase
     {
         /// <summary>
+        /// Data service
+        /// </summary>
+        private readonly IDataService dataService;
+
+        /// <summary>
+        /// App map services
+        /// </summary>
+        private readonly IAppMapService appMapService;
+
+        /// <summary>
         /// Layer to show
         /// </summary>
         private readonly Layer layer;
@@ -91,6 +101,9 @@ namespace WhereToFly.App.ViewModels
         /// <param name="layer">layer object</param>
         public LayerDetailsViewModel(Layer layer)
         {
+            this.dataService = Services.GetRequiredService<IDataService>();
+            this.appMapService = Services.GetRequiredService<IAppMapService>();
+
             this.layer = layer;
 
             this.TypeImageSource =
@@ -138,8 +151,7 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         private async Task OnZoomToLayerAsync()
         {
-            var appMapService = DependencyService.Get<IAppMapService>();
-            appMapService.MapView.ZoomToLayer(this.layer);
+            this.appMapService.MapView.ZoomToLayer(this.layer);
 
             await UserInterface.NavigationService.GoToMap();
         }
@@ -159,13 +171,11 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         private async Task OnDeleteLayerAsync()
         {
-            var dataService = DependencyService.Get<IDataService>();
-            var layerDataService = dataService.GetLayerDataService();
+            var layerDataService = this.dataService.GetLayerDataService();
 
             await layerDataService.Remove(this.layer.Id);
 
-            var appMapService = DependencyService.Get<IAppMapService>();
-            appMapService.MapView.RemoveLayer(this.layer);
+            this.appMapService.MapView.RemoveLayer(this.layer);
 
             await UserInterface.NavigationService.GoBack();
 

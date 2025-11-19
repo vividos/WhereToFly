@@ -119,6 +119,16 @@ namespace WhereToFly.App.ViewModels
         }
 
         /// <summary>
+        /// Data service
+        /// </summary>
+        private readonly IDataService dataService;
+
+        /// <summary>
+        /// App map services
+        /// </summary>
+        private readonly IAppMapService appMapService;
+
+        /// <summary>
         /// App settings object
         /// </summary>
         private readonly AppSettings appSettings;
@@ -184,8 +194,7 @@ namespace WhereToFly.App.ViewModels
                         await this.SaveSettingsAsync();
                         if (value.Value == MapOverlayType.OpenFlightMaps)
                         {
-                            var appMapService = DependencyService.Get<IAppMapService>();
-                            await appMapService.ShowFlightPlanningDisclaimer();
+                            await this.appMapService.ShowFlightPlanningDisclaimer();
                         }
                     });
                 }
@@ -278,6 +287,9 @@ namespace WhereToFly.App.ViewModels
         /// </summary>
         public MapSettingsViewModel()
         {
+            this.dataService = Services.GetRequiredService<IDataService>();
+            this.appMapService = Services.GetRequiredService<IAppMapService>();
+
             this.appSettings = App.Settings!;
 
             this.MapImageryTypeItems =
@@ -323,11 +335,9 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         private async Task SaveSettingsAsync()
         {
-            var dataService = DependencyService.Get<IDataService>();
-            await dataService.StoreAppSettingsAsync(this.appSettings);
+            await this.dataService.StoreAppSettingsAsync(this.appSettings);
 
-            var appMapService = DependencyService.Get<IAppMapService>();
-            appMapService.UpdateMapSettings();
+            this.appMapService.UpdateMapSettings();
 
             UserInterface.DisplayToast("Settings were saved.");
         }

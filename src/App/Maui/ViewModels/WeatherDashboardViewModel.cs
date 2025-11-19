@@ -11,6 +11,11 @@ namespace WhereToFly.App.ViewModels
     public class WeatherDashboardViewModel : ViewModelBase
     {
         /// <summary>
+        /// Data service
+        /// </summary>
+        private readonly IDataService dataService;
+
+        /// <summary>
         /// List of weather icon descriptions to display
         /// </summary>
         private List<WeatherIconDescription> weatherIconDescriptionList = [];
@@ -42,6 +47,8 @@ namespace WhereToFly.App.ViewModels
         /// </summary>
         public WeatherDashboardViewModel()
         {
+            this.dataService = Services.GetRequiredService<IDataService>();
+
             this.AddIconCommand = new AsyncRelayCommand(this.AddIconAsync);
             this.AddWebLinkCommand = new AsyncRelayCommand(this.AddWebLinkAsync);
             this.ClearAllCommand = new AsyncRelayCommand(this.ClearAllWeatherIcons);
@@ -73,8 +80,8 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         private async Task SaveWeatherIconListAsync()
         {
-            var dataService = DependencyService.Get<IDataService>();
-            var weatherDashboardIconDataService = dataService.GetWeatherDashboardIconDataService();
+            var weatherDashboardIconDataService =
+                this.dataService.GetWeatherDashboardIconDataService();
 
             await weatherDashboardIconDataService.ClearList();
             await weatherDashboardIconDataService.AddList(
@@ -87,8 +94,8 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         private async Task InitWeatherIconDescriptionList()
         {
-            var dataService = DependencyService.Get<IDataService>();
-            var weatherDashboardIconDataService = dataService.GetWeatherDashboardIconDataService();
+            var weatherDashboardIconDataService =
+                this.dataService.GetWeatherDashboardIconDataService();
 
             this.weatherIconDescriptionList =
                 (await weatherDashboardIconDataService.GetList()).ToList();
@@ -129,8 +136,8 @@ namespace WhereToFly.App.ViewModels
                 return;
             }
 
-            var dataService = DependencyService.Get<IDataService>();
-            var weatherIconDescriptionDataService = dataService.GetWeatherIconDescriptionDataService();
+            var weatherIconDescriptionDataService =
+                this.dataService.GetWeatherIconDescriptionDataService();
 
             // add the new icon description
             await weatherIconDescriptionDataService.Add(weatherIconDescription);
