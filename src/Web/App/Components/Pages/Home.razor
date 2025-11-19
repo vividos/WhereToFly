@@ -69,7 +69,7 @@
             IJSObjectReference module =
                 await JS.InvokeAsync<IJSObjectReference>(
                     "import",
-                    "./js/app.bundle.js");
+                    "./" + Assets["js/app.bundle.js"]);
 
             var referenceToThis = DotNetObjectReference.Create(this);
 
