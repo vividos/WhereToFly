@@ -25,7 +25,7 @@ namespace WhereToFly.Geo.UnitTest
             foreach (string filename in Directory.GetFiles(airspacesFolder))
             {
                 Debug.WriteLine("parsing OpenAir file: " + filename);
-                using (var stream = new FileStream(filename, FileMode.Open))
+                using (var stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
                 {
                     // run
                     var parser = new OpenAirFileParser(stream);

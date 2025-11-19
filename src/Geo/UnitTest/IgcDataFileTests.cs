@@ -20,7 +20,7 @@ namespace WhereToFly.Geo.UnitTest
         {
             // run
             string filename = Path.Combine(UnitTestHelper.TestAssetsPath, "85QA3ET1.igc");
-            using (var stream = new FileStream(filename, FileMode.Open))
+            using (var stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
             {
                 var igcFile = new IgcDataFile(stream);
                 var trackList = igcFile.GetTrackList();
@@ -40,7 +40,7 @@ namespace WhereToFly.Geo.UnitTest
             string filename = Path.Combine(UnitTestHelper.TestAssetsPath, "85QA3ET1.igc");
 
             Track? track = null;
-            using (var stream = new FileStream(filename, FileMode.Open))
+            using (var stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
             {
                 var igcFile = new IgcDataFile(stream);
                 track = igcFile.LoadTrack(0);
@@ -61,7 +61,7 @@ namespace WhereToFly.Geo.UnitTest
             // run
             string filename = Path.Combine(UnitTestHelper.TestAssetsPath, "85QA3ET1.igc");
 
-            using (var stream = new FileStream(filename, FileMode.Open))
+            using (var stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
             {
                 var igcFile = new IgcDataFile(stream);
 

@@ -18,7 +18,7 @@ namespace WhereToFly.Geo.UnitTest
         {
             // run
             string filename = Path.Combine(UnitTestHelper.TestAssetsPath, "tracks.gpx");
-            using (var stream = new FileStream(filename, FileMode.Open))
+            using (var stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
             {
                 var gpxFile = new GpxDataFile(stream);
                 var trackList = gpxFile.GetTrackList();
@@ -36,7 +36,7 @@ namespace WhereToFly.Geo.UnitTest
         {
             // run
             string filename = Path.Combine(UnitTestHelper.TestAssetsPath, "tracks.gpx");
-            using (var stream = new FileStream(filename, FileMode.Open))
+            using (var stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
             {
                 var gpxFile = new GpxDataFile(stream);
 
@@ -55,7 +55,7 @@ namespace WhereToFly.Geo.UnitTest
         {
             // run
             string filename = Path.Combine(UnitTestHelper.TestAssetsPath, "waypoints.gpx");
-            using (var stream = new FileStream(filename, FileMode.Open))
+            using (var stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
             {
                 var gpxFile = new GpxDataFile(stream);
 

@@ -139,7 +139,7 @@ namespace WhereToFly.App.MapView
                 this.numCacheHit++;
                 Debug.WriteLine($"CORS cache hits vs misses: {this.numCacheHit}/{this.numCacheMiss}");
 
-                return new FileStream(cacheFilename, FileMode.Open);
+                return new FileStream(cacheFilename, FileMode.Open, FileAccess.Read);
             }
 
             try

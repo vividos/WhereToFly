@@ -58,7 +58,7 @@ namespace WhereToFly.Geo.UnitTest
 
             string filename = Path.Combine(airspacesFolder, "xcontest-switzerland.txt");
             Debug.WriteLine("parsing OpenAir file: " + filename);
-            using (var stream = new FileStream(filename, FileMode.Open))
+            using (var stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
             {
                 var parser = new OpenAirFileParser(stream);
 

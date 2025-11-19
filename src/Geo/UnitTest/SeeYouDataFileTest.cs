@@ -18,7 +18,7 @@ namespace WhereToFly.Geo.UnitTest
         {
             // set up
             string filename = Path.Combine(UnitTestHelper.TestAssetsPath, "waypoints-empty.cup");
-            using (var stream = new FileStream(filename, FileMode.Open))
+            using (var stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
             {
                 // run
                 var cupFile = new SeeYouDataFile(stream);
@@ -37,7 +37,7 @@ namespace WhereToFly.Geo.UnitTest
         {
             // set up
             string filename = Path.Combine(UnitTestHelper.TestAssetsPath, "waypoints-variants.cup");
-            using (var stream = new FileStream(filename, FileMode.Open))
+            using (var stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
             {
                 // run
                 var cupFile = new SeeYouDataFile(stream);
