@@ -6,7 +6,6 @@ import {
     exportKml,
     getAbsoluteUri,
     sampleTerrainMostDetailed,
-    viewerCesiumInspectorMixin,
     BingMapsImageryProvider,
     BingMapsStyle,
     BoundingSphere,
@@ -798,14 +797,6 @@ export class MapView {
                 bandElement.style.display = "none";
             }, 700);
         }
-
-    }
-
-    /**
-     * Adds the Cesium inspector window to the viewer
-     */
-    addViewerInspector() {
-        this.viewer.extend(viewerCesiumInspectorMixin);
     }
 
     /**
