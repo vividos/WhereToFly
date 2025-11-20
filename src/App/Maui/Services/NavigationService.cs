@@ -108,14 +108,6 @@ namespace WhereToFly.App.Services
             };
 
         /// <summary>
-        /// Returns current instance of navigation service, registered with the DependencyService.
-        /// </summary>
-        public static INavigationService Instance
-        {
-            get { return DependencyService.Get<INavigationService>(); }
-        }
-
-        /// <summary>
         /// Navigation page to use to navigate between pages
         /// </summary>
         public NavigationPage? NavigationPage { get; internal set; }
