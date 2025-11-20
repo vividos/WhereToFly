@@ -250,7 +250,7 @@ namespace WhereToFly.App.Logic
             liveWaypointRefreshService.ClearLiveWaypointList();
             liveWaypointRefreshService.AddLiveWaypointList(locationList);
 
-            await NavigationService.Instance.GoToMap();
+            await UserInterface.NavigationService.GoToMap();
 
             UserInterface.DisplayToast("Locations were loaded.");
 
@@ -355,7 +355,7 @@ namespace WhereToFly.App.Logic
 
             await CloseWaitingPopupPageAsync();
 
-            track = await NavigationService.Instance.NavigateToPopupPageAsync<Track?>(
+            track = await UserInterface.NavigationService.NavigateToPopupPageAsync<Track?>(
                 PopupPageKey.AddTrackPopupPage,
                 true,
                 track);
@@ -566,7 +566,7 @@ namespace WhereToFly.App.Logic
                 .Distinct()
                 .ToList();
 
-            var selectedAirspaceClasses = await NavigationService.Instance.NavigateToPopupPageAsync<ISet<AirspaceClass>>(
+            var selectedAirspaceClasses = await UserInterface.NavigationService.NavigateToPopupPageAsync<ISet<AirspaceClass>>(
                 PopupPageKey.SelectAirspaceClassPopupPage,
                 true,
                 airspaceClasses);
@@ -619,7 +619,7 @@ namespace WhereToFly.App.Logic
                 Data = czml,
             };
 
-            layer = await NavigationService.Instance.NavigateToPopupPageAsync<Layer>(
+            layer = await UserInterface.NavigationService.NavigateToPopupPageAsync<Layer>(
                 PopupPageKey.AddLayerPopupPage,
                 true,
                 layer);
@@ -637,7 +637,7 @@ namespace WhereToFly.App.Logic
             var appMapService = DependencyService.Get<IAppMapService>();
             await appMapService.ShowFlightPlanningDisclaimer();
 
-            await NavigationService.Instance.GoToMap();
+            await UserInterface.NavigationService.GoToMap();
 
             await appMapService.MapView.AddLayer(layer);
             appMapService.MapView.ZoomToLayer(layer);
