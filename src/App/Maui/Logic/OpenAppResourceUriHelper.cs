@@ -7,16 +7,55 @@ using WhereToFly.Shared.Model;
 namespace WhereToFly.App.Logic
 {
     /// <summary>
-    /// Helper for opening AppResourceUri
+    /// Helper for opening <see cref="AppResourceUri"/>
     /// </summary>
-    public static class OpenAppResourceUriHelper
+    public class OpenAppResourceUriHelper
     {
+        /// <summary>
+        /// User interface
+        /// </summary>
+        private readonly IUserInterface userInterface;
+
+        /// <summary>
+        /// App map service
+        /// </summary>
+        private readonly IAppMapService appMapService;
+
+        /// <summary>
+        /// Data service
+        /// </summary>
+        private readonly IDataService dataService;
+
+        /// <summary>
+        /// Live data refresh service
+        /// </summary>
+        private readonly LiveDataRefreshService liveWaypointRefreshService;
+
+        /// <summary>
+        /// Creates a new helper object
+        /// </summary>
+        /// <param name="userInterface">user interface</param>
+        /// <param name="appMapService">app map service</param>
+        /// <param name="dataService">data service</param>
+        /// <param name="liveWaypointRefreshService">live waypoint refresh service</param>
+        public OpenAppResourceUriHelper(
+            IUserInterface userInterface,
+            IAppMapService appMapService,
+            IDataService dataService,
+            LiveDataRefreshService liveWaypointRefreshService)
+        {
+            this.userInterface = userInterface;
+            this.appMapService = appMapService;
+            this.dataService = dataService;
+            this.liveWaypointRefreshService = liveWaypointRefreshService;
+        }
+
         /// <summary>
         /// Opens app resource URI, e.g. a live waypoint
         /// </summary>
         /// <param name="uri">app resource URI to open</param>
         /// <returns>task to wait on</returns>
-        public static async Task OpenAsync(string uri)
+        public async Task OpenAsync(string uri)
         {
             try
             {
@@ -24,9 +63,7 @@ namespace WhereToFly.App.Logic
 
                 if (!appResourceUri.IsValid)
                 {
-                    var userInterface = DependencyService.Get<IUserInterface>();
-
-                    await userInterface.DisplayAlert(
+                    await this.userInterface.DisplayAlert(
                         "Not a valid Where-to-fly weblink: " + uri,
                         "OK");
 
@@ -35,20 +72,18 @@ namespace WhereToFly.App.Logic
 
                 if (!appResourceUri.IsTrackResourceType)
                 {
-                    await AddLiveWaypoint(uri, appResourceUri);
+                    await this.AddLiveWaypoint(uri, appResourceUri);
                 }
                 else
                 {
-                    await AddLiveTrack(uri, appResourceUri);
+                    await this.AddLiveTrack(uri, appResourceUri);
                 }
             }
             catch (Exception ex)
             {
                 App.LogError(ex);
 
-                var userInterface = DependencyService.Get<IUserInterface>();
-
-                await userInterface.DisplayAlert(
+                await this.userInterface.DisplayAlert(
                     "Error while opening weblink: " + ex.Message,
                     "OK");
             }
@@ -60,7 +95,7 @@ namespace WhereToFly.App.Logic
         /// <param name="uri">URI as string</param>
         /// <param name="appResourceUri">app resource URI</param>
         /// <returns>task to wait on</returns>
-        private static async Task AddLiveWaypoint(string uri, AppResourceUri appResourceUri)
+        private async Task AddLiveWaypoint(string uri, AppResourceUri appResourceUri)
         {
             var rawUri = new Uri(uri);
             string waypointName = "Live Waypoint";
@@ -70,31 +105,29 @@ namespace WhereToFly.App.Logic
                     System.Net.WebUtility.UrlDecode(rawUri.Fragment.TrimStart('#'));
             }
 
-            Location? liveWaypoint = await GetLiveWaypointLocation(waypointName, appResourceUri);
+            Location? liveWaypoint = await this.GetLiveWaypointLocation(waypointName, appResourceUri);
 
             if (liveWaypoint == null)
             {
                 return;
             }
 
-            if (!await ShowAddLiveWaypointDialog(liveWaypoint))
+            if (!await this.ShowAddLiveWaypointDialog(liveWaypoint))
             {
                 return;
             }
 
-            await StoreLiveWaypoint(liveWaypoint);
+            await this.StoreLiveWaypoint(liveWaypoint);
 
-            var userInterface = DependencyService.Get<IUserInterface>();
-            userInterface.DisplayToast("Live waypoint was loaded.");
+            this.userInterface.DisplayToast("Live waypoint was loaded.");
 
-            await NavigationService.Instance.GoToMap();
+            await this.userInterface.NavigationService.GoToMap();
 
-            var appMapService = DependencyService.Get<IAppMapService>();
-            await appMapService.UpdateLastShownPosition(liveWaypoint.MapLocation);
+            await this.appMapService.UpdateLastShownPosition(liveWaypoint.MapLocation);
 
-            appMapService.MapView.AddLocation(liveWaypoint);
+            this.appMapService.MapView.AddLocation(liveWaypoint);
 
-            appMapService.MapView.ZoomToLocation(liveWaypoint.MapLocation);
+            this.appMapService.MapView.ZoomToLocation(liveWaypoint.MapLocation);
         }
 
         /// <summary>
@@ -103,11 +136,9 @@ namespace WhereToFly.App.Logic
         /// <param name="waypointName">waypoint name to use</param>
         /// <param name="appResourceUri">app resource uri to use</param>
         /// <returns>map location, or null when it couldn't be retrieved</returns>
-        private static async Task<Location?> GetLiveWaypointLocation(string waypointName, AppResourceUri appResourceUri)
+        private async Task<Location?> GetLiveWaypointLocation(string waypointName, AppResourceUri appResourceUri)
         {
-            var dataService = DependencyService.Get<IDataService>();
-
-            LiveWaypointQueryResult result = await dataService.GetLiveWaypointDataAsync(appResourceUri.ToString());
+            LiveWaypointQueryResult result = await this.dataService.GetLiveWaypointDataAsync(appResourceUri.ToString());
 
             if (result.Data == null)
             {
@@ -132,9 +163,9 @@ namespace WhereToFly.App.Logic
         /// </summary>
         /// <param name="liveWaypoint">live waypoint</param>
         /// <returns>true when live waypoint should be added, false when not</returns>
-        private static async Task<bool> ShowAddLiveWaypointDialog(Location? liveWaypoint)
+        private async Task<bool> ShowAddLiveWaypointDialog(Location? liveWaypoint)
         {
-            var editedLiveWaypoint = await NavigationService.Instance.NavigateToPopupPageAsync<Location?>(
+            var editedLiveWaypoint = await this.userInterface.NavigationService.NavigateToPopupPageAsync<Location?>(
                 PopupPageKey.AddLiveWaypointPopupPage,
                 true,
                 liveWaypoint);
@@ -152,17 +183,15 @@ namespace WhereToFly.App.Logic
         /// </summary>
         /// <param name="liveWaypoint">live waypoint to store in location list</param>
         /// <returns>task to wait on</returns>
-        private static async Task StoreLiveWaypoint(Location liveWaypoint)
+        private async Task StoreLiveWaypoint(Location liveWaypoint)
         {
-            var dataService = DependencyService.Get<IDataService>();
-            var locationDataService = dataService.GetLocationDataService();
+            var locationDataService = this.dataService.GetLocationDataService();
 
             // remove when the live waypoint was already in the list
             await locationDataService.Remove(liveWaypoint.Id);
             await locationDataService.Add(liveWaypoint);
 
-            var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
-            liveWaypointRefreshService.AddLiveWaypoint(liveWaypoint);
+            this.liveWaypointRefreshService.AddLiveWaypoint(liveWaypoint);
         }
 
         /// <summary>
@@ -171,7 +200,7 @@ namespace WhereToFly.App.Logic
         /// <param name="uri">URI as string</param>
         /// <param name="appResourceUri">app resource URI</param>
         /// <returns>task to wait on</returns>
-        private static async Task AddLiveTrack(string uri, AppResourceUri appResourceUri)
+        private async Task AddLiveTrack(string uri, AppResourceUri appResourceUri)
         {
             var rawUri = new Uri(uri);
             string trackName = "Live Track";
@@ -181,19 +210,17 @@ namespace WhereToFly.App.Logic
                     System.Net.WebUtility.UrlDecode(rawUri.Fragment.TrimStart('#'));
             }
 
-            Track liveTrack = await GetLiveTrack(trackName, appResourceUri);
+            Track liveTrack = await this.GetLiveTrack(trackName, appResourceUri);
 
-            await StoreLiveTrack(liveTrack);
+            await this.StoreLiveTrack(liveTrack);
 
-            var userInterface = DependencyService.Get<IUserInterface>();
-            userInterface.DisplayToast("Live track was loaded.");
+            this.userInterface.DisplayToast("Live track was loaded.");
 
-            await NavigationService.Instance.GoToMap();
+            await this.userInterface.NavigationService.GoToMap();
 
-            var appMapService = DependencyService.Get<IAppMapService>();
-            await appMapService.MapView.AddTrack(liveTrack);
+            await this.appMapService.MapView.AddTrack(liveTrack);
 
-            appMapService.MapView.ZoomToTrack(liveTrack);
+            this.appMapService.MapView.ZoomToTrack(liveTrack);
         }
 
         /// <summary>
@@ -202,11 +229,9 @@ namespace WhereToFly.App.Logic
         /// <param name="trackName">track name to use</param>
         /// <param name="appResourceUri">app resource uri to use</param>
         /// <returns>loaded live track</returns>
-        private static async Task<Track> GetLiveTrack(string trackName, AppResourceUri appResourceUri)
+        private async Task<Track> GetLiveTrack(string trackName, AppResourceUri appResourceUri)
         {
-            var dataService = DependencyService.Get<IDataService>();
-
-            LiveTrackQueryResult result = await dataService.GetLiveTrackDataAsync(
+            LiveTrackQueryResult result = await this.dataService.GetLiveTrackDataAsync(
                 appResourceUri.ToString(),
                 null);
 
@@ -238,10 +263,9 @@ namespace WhereToFly.App.Logic
         /// </summary>
         /// <param name="liveTrack">live track to store in track list</param>
         /// <returns>task to wait on</returns>
-        private static async Task StoreLiveTrack(Track liveTrack)
+        private async Task StoreLiveTrack(Track liveTrack)
         {
-            var dataService = DependencyService.Get<IDataService>();
-            var trackDataService = dataService.GetTrackDataService();
+            var trackDataService = this.dataService.GetTrackDataService();
 
             // remove when the live track was already in the list
             try

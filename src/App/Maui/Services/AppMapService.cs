@@ -173,8 +173,14 @@ namespace WhereToFly.App.Services
         /// <param name="uri">app resource URI to open</param>
         public void OpenAppResourceUri(string uri)
         {
+            var helper = new OpenAppResourceUriHelper(
+                this.userInterface,
+                this,
+                this.dataService,
+                this.liveWaypointRefreshService);
+
             MainThread.BeginInvokeOnMainThread(
-                async () => await OpenAppResourceUriHelper.OpenAsync(uri));
+                async () => await helper.OpenAsync(uri));
         }
 
         /// <summary>
