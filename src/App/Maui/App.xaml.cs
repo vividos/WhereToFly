@@ -122,7 +122,7 @@ namespace WhereToFly.App
 
             if (Settings != null)
             {
-                var userInterface = DependencyService.Get<IUserInterface>();
+                var userInterface = Services.GetRequiredService<IUserInterface>();
                 userInterface.UserAppTheme = Settings.AppTheme;
             }
         }
@@ -147,14 +147,14 @@ namespace WhereToFly.App
         /// <returns>task to wait on</returns>
         private async Task LoadAppDataAsync()
         {
-            var dataService = DependencyService.Get<IDataService>();
+            var dataService = Services.GetRequiredService<IDataService>();
             Config = await dataService.GetAppConfigAsync(CancellationToken.None);
             Settings = await dataService.GetAppSettingsAsync(CancellationToken.None);
 
-            var userInterface = DependencyService.Get<IUserInterface>();
+            var userInterface = Services.GetRequiredService<IUserInterface>();
             userInterface.UserAppTheme = Settings.AppTheme;
 
-            var appMapService = DependencyService.Get<IAppMapService>();
+            var appMapService = Services.GetRequiredService<IAppMapService>();
             await appMapService.InitLiveWaypointRefreshService();
         }
 
@@ -268,7 +268,7 @@ namespace WhereToFly.App
 
             if (Settings != null)
             {
-                var userInterface = DependencyService.Get<IUserInterface>();
+                var userInterface = Services.GetRequiredService<IUserInterface>();
                 userInterface.UserAppTheme = Settings.AppTheme;
             }
         }
@@ -280,10 +280,10 @@ namespace WhereToFly.App
         {
             base.OnSleep();
 
-            var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
+            var liveWaypointRefreshService = Services.GetRequiredService<LiveDataRefreshService>();
             liveWaypointRefreshService.StopTimer();
 
-            var geolocationService = DependencyService.Get<IGeolocationService>();
+            var geolocationService = Services.GetRequiredService<IGeolocationService>();
 
             if (geolocationService.IsListening)
             {
@@ -302,11 +302,11 @@ namespace WhereToFly.App
 
             if (Settings != null)
             {
-                var userInterface = DependencyService.Get<IUserInterface>();
+                var userInterface = Services.GetRequiredService<IUserInterface>();
                 userInterface.UserAppTheme = Settings.AppTheme;
             }
 
-            var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
+            var liveWaypointRefreshService = Services.GetRequiredService<LiveDataRefreshService>();
             liveWaypointRefreshService.ResumeTimer();
 
             if (this.restartLocationUpdates)
@@ -315,7 +315,7 @@ namespace WhereToFly.App
 
                 Task.Run(async () =>
                 {
-                    var geolocationService = DependencyService.Get<IGeolocationService>();
+                    var geolocationService = Services.GetRequiredService<IGeolocationService>();
                     await geolocationService.StartListeningAsync();
                 });
             }

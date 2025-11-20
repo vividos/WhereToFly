@@ -162,7 +162,10 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         private async Task OnExportLayerAsync()
         {
-            await ExportFileHelper.ExportLayerAsync(this.layer);
+            await ExportFileHelper.ExportLayerAsync(
+                this.layer,
+                Services.GetRequiredService<IAppMapService>(),
+                UserInterface);
         }
 
         /// <summary>

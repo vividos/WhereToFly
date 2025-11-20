@@ -76,7 +76,9 @@ namespace WhereToFly.App.ViewModels
         /// <returns>task to wait on</returns>
         private async Task OnExportTrackAsync()
         {
-            await ExportFileHelper.ExportTrackAsync(this.track);
+            await ExportFileHelper.ExportTrackAsync(
+                this.track,
+                UserInterface);
         }
 
         /// <summary>

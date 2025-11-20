@@ -14,15 +14,17 @@ namespace WhereToFly.App.Logic
         /// layer to file.
         /// </summary>
         /// <param name="layer">layer to export</param>
+        /// <param name="appMapService">app map service</param>
+        /// <param name="userInterface">user interface</param>
         /// <returns>task to wait on</returns>
-        public static async Task ExportLayerAsync(Layer layer)
+        public static async Task ExportLayerAsync(
+            Layer layer,
+            IAppMapService appMapService,
+            IUserInterface userInterface)
         {
-            var appMapService = DependencyService.Get<IAppMapService>();
             byte[]? data = await appMapService.MapView.ExportLayerAsync(layer);
             if (data == null)
             {
-                var userInterface = DependencyService.Get<IUserInterface>();
-
                 userInterface.DisplayToast("Error occured at layer export.");
                 return;
             }
@@ -45,8 +47,6 @@ namespace WhereToFly.App.Logic
             {
                 App.LogError(ex);
 
-                var userInterface = DependencyService.Get<IUserInterface>();
-
                 await userInterface.DisplayAlert(
                     "Error while exporting layer: " + ex.Message,
                     "OK");
@@ -58,8 +58,11 @@ namespace WhereToFly.App.Logic
         /// track to file
         /// </summary>
         /// <param name="track">track to export</param>
+        /// <param name="userInterface">user interface</param>
         /// <returns>task to wait on</returns>
-        public static async Task ExportTrackAsync(Track track)
+        public static async Task ExportTrackAsync(
+            Track track,
+            IUserInterface userInterface)
         {
             string? exportFilename = await AskUserExportFilenameAsync(track.Name + ".gpx");
             if (exportFilename == null)
@@ -78,8 +81,6 @@ namespace WhereToFly.App.Logic
             catch (Exception ex)
             {
                 App.LogError(ex);
-
-                var userInterface = DependencyService.Get<IUserInterface>();
 
                 await userInterface.DisplayAlert(
                     "Error while exporting track: " + ex.Message,
