@@ -402,6 +402,8 @@ export class MapView {
     async initTerrainProvider() {
 
         try {
+            this.updateTerrainStatus("Initializing world terrain...");
+
             const terrainProvider = await createWorldTerrainAsync({
                 requestWaterMask: false,
                 requestVertexNormals: true
@@ -409,12 +411,15 @@ export class MapView {
 
             this.viewer.terrainProvider = terrainProvider;
             MapView.log("terrain provider is ready!");
+            this.updateTerrainStatus(null);
 
         } catch (error) {
 
             // waiting for onNetworkConnectivityChanged
             console.warn("MapView.initTerrainProvider: error init'ing terrain provider, " +
                 "waiting for network reconnect: " + error);
+
+            this.updateTerrainStatus("Terrain is not available (" + error + ")");
         }
     }
 
@@ -800,6 +805,40 @@ export class MapView {
 
         const bandElement = document.getElementById(this.options.messageBandId);
         if (bandElement !== undefined) {
+            bandElement.style.opacity = "0.0";
+
+            setTimeout(function() {
+                bandElement.style.display = "none";
+            }, 700);
+        }
+    }
+
+    /**
+     * Shows a band with current terrain status.
+     * @param {string} statusText status text to show, or null to hide band
+     */
+    updateTerrainStatus(statusText) {
+
+        if (this.options.terrainStatusBandId === undefined)
+            return;
+
+        const bandElement = document.getElementById(this.options.terrainStatusBandId);
+        if (bandElement === undefined)
+            return;
+
+        if (statusText !== null)
+        {
+            bandElement.style.opacity = "0";
+            bandElement.style.display = "flex";
+
+            setTimeout(function() {
+                bandElement.style.opacity = "0.7";
+            }, 1);
+
+            bandElement.innerHTML = statusText;
+        }
+        else
+        {
             bandElement.style.opacity = "0.0";
 
             setTimeout(function() {

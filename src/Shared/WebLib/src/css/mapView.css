@@ -25,6 +25,24 @@
     transition: all 0.25s ease-in-out;
 }
 
+/* style for terrain status band */
+.terrain-status-band {
+    display: none;
+    position: absolute;
+    width: 100vw;
+    height: 40px;
+    z-index: 100;
+    align-items: center;
+    padding-left: 8px;
+    background-color: #e08e20;
+    color: white;
+    opacity: 0.7;
+    font-family: sans-serif;
+    font-size: 20px;
+    text-align: left;
+    transition: all 0.25s ease-in-out;
+}
+
 /* style for map legend */
 .legend-container {
     width: 100vw;
