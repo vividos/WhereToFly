@@ -1,7 +1,8 @@
 ﻿using System.Text.Json.Serialization;
+using WhereToFly.App.MapView.Models;
 using WhereToFly.Geo.Model;
 
-namespace WhereToFly.App.MapView
+namespace WhereToFly.App.MapView.Serializers
 {
     /// <summary>
     /// Serializer context for <see cref="MapView"/>

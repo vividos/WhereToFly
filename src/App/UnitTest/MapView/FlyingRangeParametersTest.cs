@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WhereToFly.App.MapView;
+using WhereToFly.App.MapView.Models;
 
 namespace WhereToFly.App.UnitTest.MapView
 {

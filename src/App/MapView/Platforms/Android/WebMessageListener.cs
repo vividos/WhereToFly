@@ -1,6 +1,7 @@
 ﻿using Android.Net;
 using Android.Webkit;
 using AndroidX.WebKit;
+using WhereToFly.App.MapView.Abstractions;
 
 namespace WhereToFly.App.MapView
 {

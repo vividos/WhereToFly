@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using WhereToFly.App.Abstractions;
-using WhereToFly.App.MapView;
+using WhereToFly.App.MapView.Models;
 using WhereToFly.App.Models;
 
 namespace WhereToFly.App.ViewModels

@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using WhereToFly.App.MapView;
+using WhereToFly.App.MapView.Models;
 using WhereToFly.App.Models;
 using WhereToFly.App.Services.SqliteDatabase;
 using WhereToFly.Geo;

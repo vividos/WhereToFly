@@ -1,4 +1,4 @@
-﻿namespace WhereToFly.App.MapView
+﻿namespace WhereToFly.App.MapView.Models
 {
     /// <summary>
     /// Parameter for AddFindResult JavaScript event

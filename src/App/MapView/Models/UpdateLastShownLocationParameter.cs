@@ -1,4 +1,4 @@
-﻿namespace WhereToFly.App.MapView
+﻿namespace WhereToFly.App.MapView.Models
 {
     /// <summary>
     /// Additional parameter for the OnUpdateLastShownLocation JavaScript event

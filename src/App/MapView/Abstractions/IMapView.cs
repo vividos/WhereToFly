@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using WhereToFly.App.MapView.Models;
 using WhereToFly.Geo;
 using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;
 
-namespace WhereToFly.App.MapView
+namespace WhereToFly.App.MapView.Abstractions
 {
     /// <summary>
     /// Interface to the map view

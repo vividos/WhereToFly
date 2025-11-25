@@ -1,4 +1,4 @@
-﻿using WhereToFly.App.MapView;
+﻿using WhereToFly.App.MapView.Abstractions;
 using WhereToFly.App.Models;
 using WhereToFly.Geo.Model;
 

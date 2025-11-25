@@ -1,4 +1,4 @@
-﻿using WhereToFly.App.MapView;
+﻿using WhereToFly.App.MapView.Models;
 using WhereToFly.App.ViewModels;
 
 namespace WhereToFly.App.Popups

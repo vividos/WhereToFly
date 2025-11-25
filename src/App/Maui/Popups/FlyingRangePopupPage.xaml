@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <popups:BasePopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                      xmlns:mapview="clr-namespace:WhereToFly.App.MapView;assembly=WhereToFly.App.MapView"
+                      xmlns:mapview_models="clr-namespace:WhereToFly.App.MapView.Models;assembly=WhereToFly.App.MapView"
                       xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
                       xmlns:popups="clr-namespace:WhereToFly.App.Popups"
                       x:Class="WhereToFly.App.Popups.FlyingRangePopupPage"
-                      x:TypeArguments="mapview:FlyingRangeParameters"
+                      x:TypeArguments="mapview_models:FlyingRangeParameters"
                       x:DataType="viewmodels:FlyingRangePopupViewModel"
                       WidthRequest="360">
 

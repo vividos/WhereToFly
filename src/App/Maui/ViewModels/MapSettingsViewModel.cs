@@ -1,5 +1,5 @@
 ﻿using WhereToFly.App.Abstractions;
-using WhereToFly.App.MapView;
+using WhereToFly.App.MapView.Models;
 using WhereToFly.App.Models;
 using WhereToFly.Geo;
 

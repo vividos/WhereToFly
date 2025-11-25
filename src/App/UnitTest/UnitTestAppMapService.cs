@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Threading.Tasks;
 using WhereToFly.App.Abstractions;
-using WhereToFly.App.MapView;
+using WhereToFly.App.MapView.Abstractions;
 using WhereToFly.App.Models;
 using WhereToFly.Geo.Model;
 

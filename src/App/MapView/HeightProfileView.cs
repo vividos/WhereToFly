@@ -10,6 +10,8 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
 using System.Threading.Tasks;
+using WhereToFly.App.MapView.Abstractions;
+using WhereToFly.App.MapView.Serializers;
 using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.MapView

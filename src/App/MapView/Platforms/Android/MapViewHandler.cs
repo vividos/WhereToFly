@@ -1,6 +1,7 @@
 ﻿using AndroidX.WebKit;
 using Microsoft.Maui;
 using Microsoft.Maui.Handlers;
+using WhereToFly.App.MapView.Abstractions;
 
 namespace WhereToFly.App.MapView
 {

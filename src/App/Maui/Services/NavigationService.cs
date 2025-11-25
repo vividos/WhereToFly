@@ -5,7 +5,7 @@ using CommunityToolkit.Maui.Views;
 using Microsoft.Maui.Controls.Shapes;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using WhereToFly.App.MapView;
+using WhereToFly.App.MapView.Models;
 using WhereToFly.App.Models;
 using WhereToFly.App.Pages;
 using WhereToFly.App.Popups;

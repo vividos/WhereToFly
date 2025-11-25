@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace WhereToFly.App.MapView
+namespace WhereToFly.App.MapView.Models
 {
     /// <summary>
     /// Web message and data

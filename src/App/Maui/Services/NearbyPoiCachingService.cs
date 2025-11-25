@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Text.Json;
-using WhereToFly.App.MapView;
+using WhereToFly.App.MapView.Abstractions;
 using WhereToFly.App.Serializers;
 using WhereToFly.Geo.Model;
 

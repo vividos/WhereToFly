@@ -2,6 +2,7 @@
 using Microsoft.Maui.Handlers;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Web.WebView2.Core;
+using WhereToFly.App.MapView.Abstractions;
 
 namespace WhereToFly.App.MapView
 {

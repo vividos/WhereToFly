@@ -3,7 +3,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using WhereToFly.App.MapView;
+using WhereToFly.App.MapView.Models;
+using WhereToFly.App.MapView.Serializers;
 using WhereToFly.App.Services;
 
 namespace WhereToFly.App.UnitTest.MapView

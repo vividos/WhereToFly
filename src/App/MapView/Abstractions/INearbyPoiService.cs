@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using WhereToFly.Geo.Model;
 
-namespace WhereToFly.App.MapView
+namespace WhereToFly.App.MapView.Abstractions
 {
     /// <summary>
     /// Service to find and access nearby POIs

@@ -1,4 +1,4 @@
-﻿namespace WhereToFly.App.MapView
+﻿namespace WhereToFly.App.MapView.Abstractions
 {
     /// <summary>
     /// Interface to a web message listener
