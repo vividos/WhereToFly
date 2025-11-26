@@ -318,7 +318,8 @@ export default class LiveTracking {
 
         LiveTracking.log("update result: " + JSON.stringify(result));
 
-        if (result.data !== undefined) {
+        if (result.data !== undefined &&
+            result.data !== null) {
             result.data.id = liveWaypointUri;
             result.data.type = "LiveWaypoint";
 
@@ -389,7 +390,8 @@ export default class LiveTracking {
      */
     onUpdateLiveTrackResult(liveTrackUri, result) {
 
-        if (result.data !== undefined) {
+        if (result.data !== undefined &&
+            result.data !== undefined) {
             result.data.id = liveTrackUri;
             result.data.groundHeightProfile = null;
 
