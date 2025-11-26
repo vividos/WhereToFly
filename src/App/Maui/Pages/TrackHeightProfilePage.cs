@@ -12,12 +12,13 @@ namespace WhereToFly.App.Pages
         /// <summary>
         /// Creates track height profile page
         /// </summary>
+        /// <param name="userInterface">user interface</param>
         /// <param name="track">track to display</param>
-        public TrackHeightProfilePage(Track track)
+        public TrackHeightProfilePage(
+            IUserInterface userInterface,
+            Track track)
         {
             this.Title = "Track height profile";
-
-            var userInterface = DependencyService.Get<IUserInterface>();
 
             this.Content = new HeightProfileView
             {

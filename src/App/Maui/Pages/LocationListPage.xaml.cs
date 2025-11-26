@@ -28,13 +28,14 @@ namespace WhereToFly.App.Pages
         /// <summary>
         /// Creates a new location list page
         /// </summary>
-        public LocationListPage()
+        /// <param name="services">service provider</param>
+        public LocationListPage(IServiceProvider services)
         {
             this.Title = "Location list";
 
             this.InitializeComponent();
 
-            this.geolocationService = DependencyService.Get<IGeolocationService>();
+            this.geolocationService = services.GetRequiredService<IGeolocationService>();
 
             this.BindingContext = this.viewModel = new LocationListViewModel(App.Settings!);
 

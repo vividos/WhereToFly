@@ -26,10 +26,9 @@ namespace WhereToFly.App.Pages
         {
             this.InitializeComponent();
 
-            this.geolocationService = DependencyService.Get<IGeolocationService>();
+            this.geolocationService = services.GetRequiredService<IGeolocationService>();
 
-            var compassGeoServices = DependencyService.Get<CompassGeoServices>()
-                ?? services.GetRequiredService<CompassGeoServices>();
+            var compassGeoServices = services.GetRequiredService<CompassGeoServices>();
 
             this.BindingContext = this.viewModel =
                 new CompassDetailsViewModel(

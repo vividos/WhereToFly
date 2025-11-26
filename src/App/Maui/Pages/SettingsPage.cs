@@ -8,11 +8,19 @@ namespace WhereToFly.App.Pages
     public class SettingsPage : TabbedPage
     {
         /// <summary>
+        /// Data service
+        /// </summary>
+        private readonly IDataService dataService;
+
+        /// <summary>
         /// Creates new settings page
         /// </summary>
-        public SettingsPage()
+        /// <param name="services">service provider</param>
+        public SettingsPage(IServiceProvider services)
         {
             this.Title = "Settings";
+
+            this.dataService = services.GetRequiredService<IDataService>();
 
             this.Children.Add(new GeneralSettingsPage());
             this.Children.Add(new MapSettingsPage());
@@ -45,8 +53,7 @@ namespace WhereToFly.App.Pages
 
             App.Settings!.LastShownSettingsPage = currentPageIndex;
 
-            var dataService = DependencyService.Get<IDataService>();
-            await dataService.StoreAppSettingsAsync(App.Settings);
+            await this.dataService.StoreAppSettingsAsync(App.Settings);
         }
     }
 }
