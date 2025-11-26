@@ -1,13 +1,12 @@
-﻿namespace WhereToFly.App.MapView.Models
+﻿namespace WhereToFly.App.MapView.Models;
+
+/// <summary>
+/// Additional parameter for the OnUpdateLastShownLocation JavaScript event
+/// </summary>
+internal class UpdateLastShownLocationParameter : LongTapParameter
 {
     /// <summary>
-    /// Additional parameter for the OnUpdateLastShownLocation JavaScript event
+    /// Current viewing distance from the terrain, in meters
     /// </summary>
-    internal class UpdateLastShownLocationParameter : LongTapParameter
-    {
-        /// <summary>
-        /// Current viewing distance from the terrain, in meters
-        /// </summary>
-        public int ViewingDistance { get; set; }
-    }
+    public int ViewingDistance { get; set; }
 }

@@ -1,29 +1,28 @@
-﻿namespace WhereToFly.App.MapView.Models
+﻿namespace WhereToFly.App.MapView.Models;
+
+/// <summary>
+/// Type of map imagery used to lay over the terrain
+/// </summary>
+public enum MapImageryType
 {
     /// <summary>
-    /// Type of map imagery used to lay over the terrain
+    /// OpenStreetMap imagery tiles are displayed; the OSM layer often contains many details
+    /// needed for hiking.
     /// </summary>
-    public enum MapImageryType
-    {
-        /// <summary>
-        /// OpenStreetMap imagery tiles are displayed; the OSM layer often contains many details
-        /// needed for hiking.
-        /// </summary>
-        OpenStreetMap = 0,
+    OpenStreetMap = 0,
 
-        /// <summary>
-        /// Bing Maps aerials with lames imagery tiles are displayed.
-        /// </summary>
-        BingMapsAerialWithLabels = 1,
+    /// <summary>
+    /// Bing Maps aerials with lames imagery tiles are displayed.
+    /// </summary>
+    BingMapsAerialWithLabels = 1,
 
-        /// <summary>
-        /// OpenTopoMap imagery tiles are displayed
-        /// </summary>
-        OpenTopoMap = 2,
+    /// <summary>
+    /// OpenTopoMap imagery tiles are displayed
+    /// </summary>
+    OpenTopoMap = 2,
 
-        /// <summary>
-        /// Sentinel-2 (mostly) cloudless imagery tiles are displayed
-        /// </summary>
-        Sentinel2 = 3,
-    }
+    /// <summary>
+    /// Sentinel-2 (mostly) cloudless imagery tiles are displayed
+    /// </summary>
+    Sentinel2 = 3,
 }
