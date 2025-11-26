@@ -6,14 +6,8 @@
     <title>@ViewData["Title"] - Where-to-fly</title>
     <link rel="shortcut icon" type="image/png" href="favicon.png" />
 
-    <environment include="Development">
-        <script type="module" src="~/js/site.bundle.js" defer></script>
-        <link rel="stylesheet" href="~/css/site.css" />
-    </environment>
-    <environment exclude="Development">
-        <script type="module" src="~/js/site.bundle.js" defer></script>
-        <link rel="stylesheet" href="~/css/site.css" />
-    </environment>
+    <script type="module" src="~/js/site.bundle.js" defer></script>
+    <link rel="stylesheet" href="~/css/site.css" />
 
     @await RenderSectionAsync("Scripts", required: false)
 </head>

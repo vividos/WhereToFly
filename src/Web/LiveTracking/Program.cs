@@ -1,36 +1,47 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.AspNetCore.StaticFiles;
 
-namespace WhereToFly.Web.LiveTracking
+namespace WhereToFly.Web.LiveTracking;
+
+/// <summary>
+/// Program for the LiveTracking web page
+/// </summary>
+internal static class Program
 {
     /// <summary>
-    /// Program for the LiveTracking web page
+    /// Main entry point
     /// </summary>
-    public static class Program
+    /// <param name="args">command line args</param>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        "Sonar Code Smell",
+        "S4823:Using command line arguments is security-sensitive",
+        Justification = "ASP.NET Core boilerplate code")]
+    private static void Main(string[] args)
     {
-        /// <summary>
-        /// Main entry point
-        /// </summary>
-        /// <param name="args">command line args</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Sonar Code Smell",
-            "S4823:Using command line arguments is security-sensitive",
-            Justification = "ASP.NET Core boilerplate code")]
-        public static void Main(string[] args)
+        var builder = WebApplication.CreateBuilder(args);
+
+        // Add services to the container.
+        builder.Services.AddRazorPages();
+
+        var app = builder.Build();
+
+        // Configure the HTTP request pipeline.
+        if (!app.Environment.IsDevelopment())
         {
-            CreateHostBuilder(args).Build().Run();
+            app.UseExceptionHandler("/Error");
+            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+            app.UseHsts();
         }
 
-        /// <summary>
-        /// Creates host builder for given command line args
-        /// </summary>
-        /// <param name="args">command line args</param>
-        /// <returns>host builder</returns>
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+        app.UseHttpsRedirection();
+
+        var provider = new FileExtensionContentTypeProvider();
+        provider.Mappings[".czml"] = "application/json";
+        app.UseStaticFiles(new StaticFileOptions { ContentTypeProvider = provider });
+
+        app.UseRouting();
+
+        app.MapRazorPages();
+
+        app.Run();
     }
 }

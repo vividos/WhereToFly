@@ -2,11 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>$(DotNetVersion)</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
     <DefaultItemExcludes>$(DefaultItemExcludes);Frontend\**</DefaultItemExcludes>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <AspNetCoreModuleName>AspNetCoreModuleV2</AspNetCoreModuleName>
   </PropertyGroup>
 
   <ItemGroup>
