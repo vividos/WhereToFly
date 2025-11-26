@@ -29,7 +29,7 @@ namespace WhereToFly.App.Logic
         /// <summary>
         /// Live data refresh service
         /// </summary>
-        private readonly LiveDataRefreshService liveWaypointRefreshService;
+        private readonly LiveDataRefreshService liveDataRefreshService;
 
         /// <summary>
         /// Creates a new helper object
@@ -37,17 +37,17 @@ namespace WhereToFly.App.Logic
         /// <param name="userInterface">user interface</param>
         /// <param name="appMapService">app map service</param>
         /// <param name="dataService">data service</param>
-        /// <param name="liveWaypointRefreshService">live waypoint refresh service</param>
+        /// <param name="liveDataRefreshService">live data refresh service</param>
         public OpenAppResourceUriHelper(
             IUserInterface userInterface,
             IAppMapService appMapService,
             IDataService dataService,
-            LiveDataRefreshService liveWaypointRefreshService)
+            LiveDataRefreshService liveDataRefreshService)
         {
             this.userInterface = userInterface;
             this.appMapService = appMapService;
             this.dataService = dataService;
-            this.liveWaypointRefreshService = liveWaypointRefreshService;
+            this.liveDataRefreshService = liveDataRefreshService;
         }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace WhereToFly.App.Logic
             await locationDataService.Remove(liveWaypoint.Id);
             await locationDataService.Add(liveWaypoint);
 
-            this.liveWaypointRefreshService.AddLiveWaypoint(liveWaypoint);
+            this.liveDataRefreshService.AddLiveWaypoint(liveWaypoint);
         }
 
         /// <summary>
@@ -279,8 +279,7 @@ namespace WhereToFly.App.Logic
 
             await trackDataService.Add(liveTrack);
 
-            var liveDataRefreshService = DependencyService.Get<LiveDataRefreshService>();
-            liveDataRefreshService.AddLiveTrack(liveTrack);
+            this.liveDataRefreshService.AddLiveTrack(liveTrack);
         }
     }
 }
