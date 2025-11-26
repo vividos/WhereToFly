@@ -29,7 +29,6 @@
 
   <ItemGroup>
     <PackageReference Include="SharpKml.Core" Version="6.1.0" />
-    <PackageReference Include="System.Text.Json" Version="10.0.0" />
   </ItemGroup>
 
   <!-- NuGet package targets -->
