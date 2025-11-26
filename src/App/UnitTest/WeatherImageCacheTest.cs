@@ -1,5 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
+using WhereToFly.App.Abstractions;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Models;
 
@@ -26,7 +28,10 @@ namespace WhereToFly.App.UnitTest
             };
 
             // run
-            var imageSource = await WeatherImageCache.GetImageAsync(placeholderIcon);
+            var imageSource =
+                await WeatherImageCache.GetImageAsync(
+                    placeholderIcon,
+                    this.Services.GetRequiredService<IAppManager>());
 
             // check
             Assert.IsNotNull(imageSource, "returned image source must not be null");
@@ -39,13 +44,19 @@ namespace WhereToFly.App.UnitTest
         [TestMethod]
         public async Task TestIconTypeIconApp()
         {
-            // run
-            var imageSource = await WeatherImageCache.GetImageAsync(new WeatherIconDescription
+            // set up
+            var desc = new WeatherIconDescription
             {
                 Name = "My App",
                 Type = WeatherIconDescription.IconType.IconApp,
                 WebLink = "de.myapp",
-            });
+            };
+
+            // run
+            var imageSource =
+                await WeatherImageCache.GetImageAsync(
+                    desc,
+                    this.Services.GetRequiredService<IAppManager>());
 
             // check
             Assert.IsNotNull(imageSource, "returned image source must not be null");
@@ -67,7 +78,10 @@ namespace WhereToFly.App.UnitTest
             };
 
             // run
-            var imageSource = await WeatherImageCache.GetImageAsync(desc);
+            var imageSource =
+                await WeatherImageCache.GetImageAsync(
+                    desc,
+                    this.Services.GetRequiredService<IAppManager>());
 
             // check
             Assert.IsNotNull(imageSource, "returned image source must not be null");
@@ -89,7 +103,10 @@ namespace WhereToFly.App.UnitTest
             };
 
             // run
-            var imageSource = await WeatherImageCache.GetImageAsync(desc);
+            var imageSource =
+                await WeatherImageCache.GetImageAsync(
+                    desc,
+                    this.Services.GetRequiredService<IAppManager>());
 
             // check
             Assert.IsNotNull(imageSource, "returned image source must not be null");

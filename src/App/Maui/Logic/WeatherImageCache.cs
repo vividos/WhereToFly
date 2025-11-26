@@ -13,12 +13,14 @@ namespace WhereToFly.App.Logic
         /// Returns an image from image cache
         /// </summary>
         /// <param name="iconDescription">weather icon description to load image for</param>
+        /// <param name="appManager">app manager</param>
         /// <param name="isDarkTheme">
         /// indicates if an icon suitable for dark theme should be returned
         /// </param>
         /// <returns>image source, or null when no image was found or could be loaded</returns>
         public static async Task<ImageSource?> GetImageAsync(
             WeatherIconDescription iconDescription,
+            IAppManager appManager,
             bool isDarkTheme = false)
         {
             switch (iconDescription.Type)
@@ -44,7 +46,6 @@ namespace WhereToFly.App.Logic
                     return ImageSource.FromStream(
                         (cancellationToken) =>
                         {
-                            var appManager = DependencyService.Get<IAppManager>();
                             byte[]? appIconData = appManager.GetAppIcon(iconDescription.WebLink);
 
                             return Task.FromResult<Stream?>(

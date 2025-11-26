@@ -1,4 +1,5 @@
 ﻿using System.Windows.Input;
+using WhereToFly.App.Abstractions;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Models;
 
@@ -69,6 +70,7 @@ namespace WhereToFly.App.ViewModels
             {
                 this.Icon = await WeatherImageCache.GetImageAsync(
                     this.IconDescription,
+                    Services.GetRequiredService<IAppManager>(),
                     UserInterface.IsDarkTheme);
 
                 this.OnPropertyChanged(nameof(this.Icon));
