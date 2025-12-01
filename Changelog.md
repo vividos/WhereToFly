@@ -7,7 +7,7 @@ Released on ?.
 ✨ New Features / Improvements
 
 - Added the "Terrain slope direction" map overlay and showing a color legend
-- Using CesiumJS version 1.133.1
+- Using CesiumJS version 1.136.0
 
 🐛 Bugfixes
 
