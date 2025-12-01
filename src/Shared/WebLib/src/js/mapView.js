@@ -703,7 +703,7 @@ export class MapView {
         sliderInput.classList.add("livetrack-slider");
 
         sliderInput.oninput = function() {
-            const timeOffset = parseInt(this.value, 10);
+            const timeOffset = Number.parseInt(this.value, 10);
             this.setLiveTrackTime(timeOffset);
         }.bind(this);
         sliderCont.appendChild(sliderInput);
@@ -2081,7 +2081,7 @@ export class MapView {
     /**
      * Creates entity from location object
      * @param {Location} location to use
-     * @returns {Entity} created entity
+     * @returns {Promise.<Entity>} created entity
      */
     async createEntityFromLocation(location) {
 
@@ -2145,7 +2145,7 @@ export class MapView {
      * Creates a "data:" URL containing the pin image and a pin background color
      * @param {string} pinImage relative pin image filename
      * @param {Color} pinColor pin background color
-     * @returns {string} a "data:" URI
+     * @returns {Promise.<string>} a "data:" URI
      */
     async getPinImageDataUrl(pinImage, pinColor) {
 

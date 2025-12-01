@@ -673,10 +673,6 @@ public class MapView :
     /// </exception>
     public async Task FindNearbyPois()
     {
-        Debug.Assert(
-            this.NearbyPoiService != null,
-            "must set a NearbyPoiService before calling");
-
         if (this.NearbyPoiService == null)
         {
             throw new InvalidOperationException("no NearbyPoiService set");

@@ -391,7 +391,7 @@ export default class LiveTracking {
     onUpdateLiveTrackResult(liveTrackUri, result) {
 
         if (result.data !== undefined &&
-            result.data !== undefined) {
+            result.data !== null) {
             result.data.id = liveTrackUri;
             result.data.groundHeightProfile = null;
 
