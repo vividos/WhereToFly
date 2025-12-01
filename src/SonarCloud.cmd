@@ -29,7 +29,6 @@ dotnet-sonarscanner begin ^
     /k:"WhereToFly" ^
     /v:"1.17.0" ^
     /d:"sonar.cs.opencover.reportsPaths=%CD%\TestResults\**\*.opencover.xml" ^
-    /d:"sonar.exclusions=Web\LiveTracking\wwwroot\lib\**\*" ^
     /d:"sonar.host.url=https://sonarcloud.io" ^
     /o:"vividos-github" ^
     /d:"sonar.token=%SONARLOGIN%"
