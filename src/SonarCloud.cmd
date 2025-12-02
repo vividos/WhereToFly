@@ -28,6 +28,7 @@ rmdir .\bw-output /s /q 2> nul
 dotnet-sonarscanner begin ^
     /k:"WhereToFly" ^
     /v:"1.17.0" ^
+    /s:SonarQube.Analysis.xml ^
     /d:"sonar.cs.opencover.reportsPaths=%CD%\TestResults\**\*.opencover.xml" ^
     /d:"sonar.host.url=https://sonarcloud.io" ^
     /o:"vividos-github" ^
