@@ -16,7 +16,7 @@ namespace WhereToFly.App.UnitTest.Pages
         public void TestDefaultCtor()
         {
             // set up
-            var page = new SettingsPage();
+            var page = new SettingsPage(this.Services);
 
             // check
             Assert.IsGreaterThan(0, page.Title.Length, "page title must have been set");
