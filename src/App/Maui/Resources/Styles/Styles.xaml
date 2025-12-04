@@ -442,9 +442,17 @@
         <Setter Property="FontSize" Value="Small" />
     </Style>
 
-    <Style x:Key="SectionHeaderStyle" TargetType="Label">
-        <Setter Property="BackgroundColor"
-                Value="{AppThemeBinding Light={StaticResource SectionHeaderBackgroundColorLight}, Dark={StaticResource SectionHeaderBackgroundColorDark}}" />
+    <!-- Styles for cards -->
+    <Style x:Key="CardLabelStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="Subtitle" />
+    </Style>
+
+    <Style x:Key="CardBorderStyle" TargetType="Border">
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 16" />
+        <Setter Property="Padding" Value="8" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource CardBackgroundColorLight}, Dark={StaticResource CardBackgroundColorDark}}" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
     </Style>
 
     <Style x:Key="EntryOnPopupPageStyle" TargetType="Entry">

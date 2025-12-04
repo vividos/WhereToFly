@@ -11,8 +11,7 @@
         <ScrollView Orientation="Vertical" HorizontalOptions="Center">
 
             <!-- Grid with all settings -->
-            <Grid RowDefinitions="Auto, Auto, Auto, Auto"
-                  ColumnDefinitions="1*, 1*"
+            <Grid RowDefinitions="Auto, Auto"
                   WidthRequest="350"
                   MinimumWidthRequest="350"
                   HorizontalOptions="Center"
@@ -22,32 +21,60 @@
                   Padding="8">
 
                 <!-- App theme picker -->
-                <Label Grid.Row="0" Grid.Column="0" FontSize="Medium" Text="App theme" />
-                <Picker Grid.Row="0" Grid.Column="1" Title="App theme"
-                    ItemsSource="{Binding AppThemeItems}"
-                    ItemDisplayBinding="{Binding Text, x:DataType=viewmodels:GeneralSettingsViewModel+AppThemeViewModel}"
-                    SelectedItem="{Binding SelectedAppTheme}" />
+                <Grid RowDefinitions="Auto, Auto"
+                      RowSpacing="8">
+                    <Label Grid.Row="0"
+                           Style="{StaticResource CardLabelStyle}"
+                           Text="App theme" />
+                    <Border Grid.Row="1"
+                            Style="{StaticResource CardBorderStyle}">
+                        <Picker
+                            ItemsSource="{Binding AppThemeItems}"
+                            ItemDisplayBinding="{Binding Text, x:DataType=viewmodels:GeneralSettingsViewModel+AppThemeViewModel}"
+                            SelectedItem="{Binding SelectedAppTheme}"
+                            Margin="8" />
+                    </Border>
+                </Grid>
 
-                <!-- Alptherm section header -->
-                <Label Grid.Row="1" Grid.ColumnSpan="2"
-                       FontSize="Large" Text="Alptherm" Padding="4"
-                       Style="{StaticResource SectionHeaderStyle}" />
+                <!-- Alptherm -->
+                <Grid Grid.Row="1"
+                      RowDefinitions="Auto, Auto"
+                      RowSpacing="8">
+                    <Label Grid.Row="0"
+                           Style="{StaticResource CardLabelStyle}"
+                           Text="Alptherm" />
+                    <Border Grid.Row="1"
+                            Style="{StaticResource CardBorderStyle}"
+                            Padding="8">
 
-                <!-- Alptherm username -->
-                <Label Grid.Row="2" Grid.Column="0" FontSize="Medium" Text="Username" />
-                <Entry Grid.Row="2" Grid.Column="1"
-                   Placeholder="Alptherm username"
-                   Text="{Binding AlpthermUsername}"
-                   IsSpellCheckEnabled="False" IsTextPredictionEnabled="false"
-                   ClearButtonVisibility="WhileEditing" />
+                        <Grid RowDefinitions="Auto, Auto"
+                              ColumnDefinitions="1*, 1*"
+                              Margin="8">
+                            <!-- Alptherm username -->
+                            <Label Grid.Row="0" Grid.Column="0"
+                                   FontSize="Small"
+                                   Text="Username"
+                                   VerticalOptions="Center" />
+                            <Entry Grid.Row="0" Grid.Column="1"
+                                   Placeholder="Alptherm username"
+                                   Text="{Binding AlpthermUsername}"
+                                   IsSpellCheckEnabled="False"
+                                   IsTextPredictionEnabled="false"
+                                   ClearButtonVisibility="WhileEditing" />
 
-                <!-- Alptherm password -->
-                <Label Grid.Row="3" Grid.Column="0" FontSize="Medium" Text="Password" />
-                <Entry Grid.Row="3" Grid.Column="1"
-                   Placeholder="Alptherm password"
-                   Text="{Binding AlpthermPassword}"
-                   IsPassword="True"
-                   ClearButtonVisibility="WhileEditing" />
+                            <!-- Alptherm password -->
+                            <Label Grid.Row="1" Grid.Column="0"
+                                   FontSize="Small"
+                                   Text="Password"
+                                   VerticalOptions="Center" />
+                            <Entry Grid.Row="1" Grid.Column="1"
+                                   Placeholder="Alptherm password"
+                                   Text="{Binding AlpthermPassword}"
+                                   IsPassword="True"
+                                   ClearButtonVisibility="WhileEditing" />
+                        </Grid>
+                    </Border>
+                </Grid>
             </Grid>
 
         </ScrollView>

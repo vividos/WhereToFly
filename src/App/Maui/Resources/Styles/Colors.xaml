@@ -97,6 +97,8 @@
     <Color x:Key="SvgImageTintColorDark">White</Color>
     <Color x:Key="ImageTintColorLight">Black</Color>
     <Color x:Key="ImageTintColorDark">White</Color>
+    <Color x:Key="CardBackgroundColorLight">#dddddd</Color>
+    <Color x:Key="CardBackgroundColorDark">#333333</Color>
     <Color x:Key="ColorPickerBorderSelectionColorLight">Black</Color>
     <Color x:Key="ColorPickerBorderSelectionColorDark">White</Color>
     <Color x:Key="CompassForegroundColorLight">#2F299E</Color>
