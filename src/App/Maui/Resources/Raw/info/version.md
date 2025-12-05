@@ -12,6 +12,6 @@ The Where-to-fly GitHub project can be found here:
 
 Current version: %VERSION%
 
-Image: Above Drymades Beach, Dhërmi, Albania.
+Image: Kohlbergspitze, Tyrol, Austria.
 
 [See all previous version images](https://github.com/vividos/WhereToFly/blob/main/PreviousVersionImages.md)

@@ -6,7 +6,7 @@ Here are all the version images of previous Where-to-fly versions.
 
 ![](src/App/Maui/Resources/Raw/info/version.jpg)
 
-Above Drymades Beach, Dhërmi, Albania.
+Kohlbergspitze, Tyrol, Austria.
 
 ## Version 1.16.0
 
