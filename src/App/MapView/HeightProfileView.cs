@@ -308,10 +308,22 @@ public class HeightProfileView :
     /// <param name="js">javascript code snippet</param>
     private void RunJavaScript(string js)
     {
-        Debug.WriteLine("run js: " + js.Substring(0, Math.Min(80, js.Length)));
+        Debug.WriteLine($"run js: {js.AsSpan(0, Math.Min(80, js.Length))}");
 
         this.Dispatcher.DispatchAsync(() => this.Eval(js));
     }
+
+    /// <summary>
+    /// JSON serializer options for anonymous types
+    /// </summary>
+    [UnconditionalSuppressMessage(
+        "AOT",
+        "IL3050:Calling members annotated with 'RequiresDynamicCodeAttribute' may break functionality when AOT compiling.",
+        Justification = "The JsonSerializerOptions object is only used to serialize anonymous objects with simple types")]
+    private static readonly JsonSerializerOptions AnonymousJsonSerializerOptions = new()
+    {
+        TypeInfoResolver = new DefaultJsonTypeInfoResolver(),
+    };
 
     /// <summary>
     /// Converts an anonymous object to JSON; the object must only contain simple types such
@@ -332,9 +344,6 @@ public class HeightProfileView :
     {
         return JsonSerializer.Serialize(
             obj,
-            new JsonSerializerOptions
-            {
-                TypeInfoResolver = new DefaultJsonTypeInfoResolver(),
-            });
+            AnonymousJsonSerializerOptions);
     }
 }

@@ -1020,7 +1020,7 @@ public class MapView :
     {
         if (track.TrackPoints.Count == 0)
         {
-            return Array.Empty<double>();
+            return [];
         }
 
         // need an initialized map in order to sample data
@@ -1063,19 +1063,17 @@ public class MapView :
         }
 
         // round lat/long to 6 digits, getting about 0,1m accuracy
-        Func<double, decimal> getRoundedLatLong =
-            latlong => Math.Round((decimal)latlong, 6);
+        decimal GetRoundedLatLong(double latlong) => Math.Round((decimal)latlong, 6);
 
         // round altitude to 0,1m accuracy
-        Func<double, decimal> getRoundedHeightFromAltitude =
-            altitude => Math.Round((decimal)altitude, 1);
+        decimal GetRoundedHeightFromAltitude(double altitude) => Math.Round((decimal)altitude, 1);
 
         var trackPointsList =
             track.TrackPoints.SelectMany(x => new decimal[]
             {
-                getRoundedLatLong(x.Longitude),
-                getRoundedLatLong(x.Latitude),
-                getRoundedHeightFromAltitude(x.Altitude ?? 0.0),
+                GetRoundedLatLong(x.Longitude),
+                GetRoundedLatLong(x.Latitude),
+                GetRoundedHeightFromAltitude(x.Altitude ?? 0.0),
             });
 
         List<decimal>? timePointsList = null;
@@ -1091,18 +1089,17 @@ public class MapView :
             trackStart = (long)(startTime.ToUnixTimeMilliseconds() / 1000.0);
 
             // round time delta to 1/10 seconds, or 10Hz sample rate
-            Func<TrackPoint, decimal> getTimeDeltaFromTrackPoint =
-                x => x.Time.HasValue
+            decimal GetTimeDeltaFromTrackPoint(TrackPoint x) => x.Time.HasValue
                 ? Math.Round((decimal)(x.Time.Value - startTime).TotalSeconds, 1)
                 : 0m;
 
             timePointsList = track.TrackPoints
-                .Select(getTimeDeltaFromTrackPoint)
+                .Select(GetTimeDeltaFromTrackPoint)
                 .ToList();
         }
 
         IEnumerable<decimal>? groundHeightProfileList = track.GroundHeightProfile.Count != 0
-            ? track.GroundHeightProfile.Select(getRoundedHeightFromAltitude)
+            ? track.GroundHeightProfile.Select(GetRoundedHeightFromAltitude)
             : null;
 
         string? color = track.IsFlightTrack && !track.IsLiveTrack
@@ -1293,7 +1290,7 @@ public class MapView :
     /// <param name="js">JavaScript code snippet</param>
     private void RunJavaScript(string js)
     {
-        Debug.WriteLine("run js: " + js.Substring(0, Math.Min(80, js.Length)));
+        Debug.WriteLine($"run js: {js.AsSpan(0, Math.Min(80, js.Length))}");
 
         // when the command uses await, add an IIFE around it; see:
         // https://flaviocopes.com/javascript-iife/
@@ -1313,7 +1310,7 @@ public class MapView :
     /// <returns>JavaScript object as JSON formatted string</returns>
     private async Task<string> RunJavaScriptWithResultAsync(string js)
     {
-        Debug.WriteLine("run js: " + js.Substring(0, Math.Min(80, js.Length)));
+        Debug.WriteLine($"run js: {js.AsSpan(0, Math.Min(80, js.Length))}");
 
         // when the command uses await, add an IIFE around it; see:
         // https://flaviocopes.com/javascript-iife/
@@ -1407,7 +1404,7 @@ public class MapView :
 
         this.callbackHandler.RegisterHandler(
             "onMapMoved",
-            this.OnMapMoved);
+            OnMapMoved);
 
         this.callbackHandler.RegisterHandler(
             "onConsoleErrorMessage",
@@ -1569,7 +1566,7 @@ public class MapView :
     /// Called when the "onMapMoved" callback has been sent from JavaScript.
     /// </summary>
     /// <param name="jsonParameters">map rectangle as JSON</param>
-    private void OnMapMoved(string jsonParameters)
+    private static void OnMapMoved(string jsonParameters)
     {
         MapRectangle? rect =
             JsonSerializer.Deserialize(
@@ -1594,6 +1591,18 @@ public class MapView :
     }
 
     /// <summary>
+    /// JSON serializer options for anonymous types
+    /// </summary>
+    [UnconditionalSuppressMessage(
+        "AOT",
+        "IL3050:Calling members annotated with 'RequiresDynamicCodeAttribute' may break functionality when AOT compiling.",
+        Justification = "The JsonSerializerOptions object is only used to serialize anonymous objects with simple types")]
+    private static readonly JsonSerializerOptions AnonymousJsonSerializerOptions = new()
+    {
+        TypeInfoResolver = new DefaultJsonTypeInfoResolver(),
+    };
+
+    /// <summary>
     /// Converts an anonymous object to JSON; the object must only contain simple types such
     /// as string, bool, int or double, or else the conversion will fail (when running with
     /// AOT in release mode)
@@ -1612,9 +1621,6 @@ public class MapView :
     {
         return JsonSerializer.Serialize(
             obj,
-            new JsonSerializerOptions
-            {
-                TypeInfoResolver = new DefaultJsonTypeInfoResolver(),
-            });
+            AnonymousJsonSerializerOptions);
     }
 }
