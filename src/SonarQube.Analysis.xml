@@ -10,4 +10,11 @@
         Shared\WebLib\src\*Test.html
     </Property>
 
+    <Property Name="sonar.coverage.exclusions">
+        App\AotTest\**\*,
+        App\MapView\Platforms\**\*,
+        App\Maui\Platforms\**\*,
+        Shared\WebLib\src\**\*.js
+    </Property>
+
 </SonarQubeAnalysisProperties>
