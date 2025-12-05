@@ -176,17 +176,15 @@ namespace WhereToFly.Geo
                     .Select(ch => text.IndexOf(ch))
                     .FirstOrDefault(-1);
             }
-
-            if (startsWithLongitudeDirectionCharacter)
+            else
             {
+                // at this point, startsWithLongitudeDirectionCharacter is always true
                 return
                     LatitudeDirectionCharacter
                     .Where(text.Contains)
                     .Select(ch => text.IndexOf(ch))
                     .FirstOrDefault(-1);
             }
-
-            return -1;
         }
 
         /// <summary>
