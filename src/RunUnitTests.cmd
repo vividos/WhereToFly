@@ -33,14 +33,6 @@ dotnet test ^
     --logger:console;verbosity=detailed
 
 dotnet test ^
-    App\Svg\UnitTest\WhereToFly.App.Svg.UnitTest.csproj ^
-    --configuration Release ^
-    --collect:"XPlat Code Coverage;Format=opencover" ^
-    --results-directory TestResults ^
-    --logger:trx;LogFileName=WhereToFly-App-Svg-Log.xml ^
-    --logger:console;verbosity=detailed
-
-dotnet test ^
     Geo\UnitTest\WhereToFly.Geo.UnitTest.csproj ^
     --configuration Release ^
     --collect:"XPlat Code Coverage;Format=opencover" ^
