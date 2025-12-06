@@ -31,6 +31,7 @@ dotnet-sonarscanner begin ^
     /s:"%CD%\SonarQube.Analysis.xml" ^
     /d:"sonar.cs.opencover.reportsPaths=%CD%\TestResults\**\*.opencover.xml" ^
     /d:"sonar.host.url=https://sonarcloud.io" ^
+    /d:sonar.scanner.skipJreProvisioning=true ^
     /o:"vividos-github" ^
     /d:"sonar.token=%SONARLOGIN%"
 if errorlevel 1 goto end
