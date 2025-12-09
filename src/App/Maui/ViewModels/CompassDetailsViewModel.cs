@@ -354,6 +354,11 @@ namespace WhereToFly.App.ViewModels
         {
             this.isCompassAvailable = false;
 
+            if (!Compass.IsSupported)
+            {
+                return;
+            }
+
             try
             {
                 if (Compass.IsMonitoring)
@@ -381,6 +386,11 @@ namespace WhereToFly.App.ViewModels
         public void StopCompass()
         {
             this.isCompassAvailable = false;
+
+            if (!Compass.IsSupported)
+            {
+                return;
+            }
 
             try
             {
