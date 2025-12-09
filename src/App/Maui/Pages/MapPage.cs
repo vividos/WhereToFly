@@ -50,6 +50,7 @@ namespace WhereToFly.App.Pages
 
             this.Title = Constants.AppTitle;
             this.BackgroundColor = Colors.Black;
+            this.SafeAreaEdges = SafeAreaEdges.All;
 
             this.geolocationService = services.GetRequiredService<IGeolocationService>();
 
