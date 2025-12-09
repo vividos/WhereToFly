@@ -93,6 +93,7 @@ export class MapView {
      * @param {object} [options] Options to use for initializing map view
      * @param {string} [options.id] DOM ID of the div element to create map view in
      * @param {string} [options.messageBandId] DOM ID of the message band div element
+     * @param {string} [options.terrainStatusBandId] DOM ID of the terrain status band div element
      * @param {string} [options.liveTrackToolbarId] DOM ID of the live track toolbar div element
      * @param {string} [options.heightProfileElementId] DOM ID of the height profile div element
      * @param {object} [options.initialCenterPoint] initial center point of map view

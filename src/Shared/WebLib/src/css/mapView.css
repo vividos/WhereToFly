@@ -8,10 +8,20 @@
     position: absolute;
 }
 
+/* container div styles for all bands */
+.band-container {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: absolute;
+    top: 0px;
+    z-index: 100;
+}
+
 /* style for message band */
 .message-band {
     display: none;
-    position: absolute;
     width: 100vw;
     height: 40px;
     z-index: 100;
@@ -28,7 +38,6 @@
 /* style for terrain status band */
 .terrain-status-band {
     display: none;
-    position: absolute;
     width: 100vw;
     height: 40px;
     z-index: 100;
