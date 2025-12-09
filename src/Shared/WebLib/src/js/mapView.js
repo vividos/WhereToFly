@@ -81,6 +81,13 @@ export class MapView {
     static consoleLogStyle = "background: lightgreen; color: darkblue; padding: 1px 3px; border-radius: 3px;";
 
     /**
+     * @callback CallbackToDotNet
+     * function used to call to C# WebView
+     * @param {string} action callback action name
+     * @param {object} params parameter as object
+     */
+
+    /**
      * Creates a new instance of MapView
      * @class
      * @param {object} [options] Options to use for initializing map view
@@ -98,7 +105,7 @@ export class MapView {
      * @param {boolean} [options.useEntityClustering] indicates if entity clustering should be used
      * @param {string} [options.bingMapsApiKey] Bing maps API key to use
      * @param {string} [options.cesiumIonApiKey] Cesium Ion API key to use
-     * @param {Function} [options.callback] callback function to use for calling back to C# code
+     * @param {CallbackToDotNet} [options.callback] callback function to use for calling back to C# code
      */
     constructor(options) {
 
@@ -644,8 +651,8 @@ export class MapView {
 
     /**
      * Called when a cluster of entities will be displayed
-     * @param {any} clusteredEntities list of clustered objects
-     * @param {any} cluster cluster object
+     * @param {Array.<Entity>} clusteredEntities list of clustered objects
+     * @param {object} cluster cluster object
      */
     onNewCluster(clusteredEntities, cluster) {
 

@@ -1,3 +1,5 @@
+/*global callback */
+
 /**
  * function used to call to C# WebView
  * @param {string} action callback action name
@@ -12,11 +14,12 @@ export function callAction(action, params) {
                 data: JSON.stringify(params)
             }));
     }
-    else if (typeof window.chrome.webview === "object")
+    else if (typeof window.chrome.webview === "object") {
         window.chrome.webview.postMessage({
             action: action,
             data: JSON.stringify(params)
         });
+    }
     else
         console.warn("unhandled callAction() case!");
 }
