@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.LifecycleEvents;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using WhereToFly.App.Abstractions;
 using WhereToFly.App.Controls;
@@ -38,6 +39,23 @@ namespace WhereToFly.App
                     essentials.UseMapServiceToken(Constants.BingMapsKeyWindows);
                 })
 #endif
+                .ConfigureLifecycleEvents(events =>
+                {
+#if WINDOWS
+                    events.AddWindows(windows =>
+                    {
+                        windows.OnWindowCreated(window =>
+                        {
+                            var titlebar = window.AppWindow.TitleBar;
+
+                            var white = Windows.UI.Color.FromArgb(0xff, 0xff, 0xff, 0xff);
+
+                            titlebar.ForegroundColor = white;
+                            titlebar.ButtonForegroundColor = white;
+                        });
+                    });
+#endif
+                })
                 .UseSkiaSharp()
                 .UseMapView();
 
