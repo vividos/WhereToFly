@@ -85,7 +85,7 @@ namespace WhereToFly.App.Services
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        public delegate void OnUpdateLiveData(object sender, LiveDataUpdateEventArgs args);
+        public delegate void OnUpdateLiveData(object? sender, LiveDataUpdateEventArgs args);
 
         /// <summary>
         /// Event that is triggered when data for a live waypoint or a live track was updated

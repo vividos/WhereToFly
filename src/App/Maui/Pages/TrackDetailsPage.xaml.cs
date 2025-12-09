@@ -31,7 +31,7 @@ namespace WhereToFly.App.Pages
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
         private void OnTouchStatusChanged(
-            object sender,
+            object? sender,
             TouchStatusChangedEventArgs args)
         {
 #if ANDROID

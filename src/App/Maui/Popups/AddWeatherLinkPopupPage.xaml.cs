@@ -28,7 +28,7 @@ namespace WhereToFly.App.Popups
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        private void OnClickedAddWeatherLinkButton(object sender, EventArgs args)
+        private void OnClickedAddWeatherLinkButton(object? sender, EventArgs args)
         {
             this.SetResult(this.viewModel.WeatherIconDescription);
         }

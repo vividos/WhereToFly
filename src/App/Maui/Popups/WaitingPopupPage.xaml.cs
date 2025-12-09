@@ -91,7 +91,7 @@ namespace WhereToFly.App.Popups
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        private void OnClickedCancelButton(object sender, EventArgs args)
+        private void OnClickedCancelButton(object? sender, EventArgs args)
         {
             this.cancellationTokenSource?.Cancel();
 

@@ -29,7 +29,7 @@ namespace WhereToFly.App.Popups
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        private void OnClickedAddTrackButton(object sender, EventArgs args)
+        private void OnClickedAddTrackButton(object? sender, EventArgs args)
         {
             this.viewModel.UpdateTrack();
 

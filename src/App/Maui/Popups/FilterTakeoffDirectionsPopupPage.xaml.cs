@@ -30,7 +30,7 @@ namespace WhereToFly.App.Popups
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        private void OnClickedFilterButton(object sender, EventArgs args)
+        private void OnClickedFilterButton(object? sender, EventArgs args)
         {
             this.SetResult(this.viewModel.FilterSettings);
         }

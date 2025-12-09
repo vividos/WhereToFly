@@ -29,7 +29,7 @@ namespace WhereToFly.App.Popups
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        private void OnClickedSetDirectionButton(object sender, EventArgs args)
+        private void OnClickedSetDirectionButton(object? sender, EventArgs args)
         {
             this.SetResult(new Tuple<int>(this.viewModel.CompassDirection));
         }

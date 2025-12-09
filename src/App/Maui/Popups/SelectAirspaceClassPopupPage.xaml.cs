@@ -30,7 +30,7 @@ namespace WhereToFly.App.Popups
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        private void OnClickedFilterAirspacesButton(object sender, EventArgs args)
+        private void OnClickedFilterAirspacesButton(object? sender, EventArgs args)
         {
             var airspaceClassesSet = this.viewModel.GetSelectedAirspaceClasses();
 

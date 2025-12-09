@@ -38,7 +38,7 @@ namespace WhereToFly.App.Popups
         /// <summary>
         /// Called when then entry field has loaded; sets focus to the entry field.
         /// </summary>
-        private void OnLoadedLocationEntry(object sender, EventArgs args)
+        private void OnLoadedLocationEntry(object? sender, EventArgs args)
         {
             this.locationEntry.Focus();
         }

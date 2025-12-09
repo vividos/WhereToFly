@@ -30,7 +30,7 @@ namespace WhereToFly.App.Popups
         /// </summary>
         /// <param name="sender">sender object</param>
         /// <param name="args">event args</param>
-        private void OnClickedShowFlyingRange(object sender, EventArgs args)
+        private void OnClickedShowFlyingRange(object? sender, EventArgs args)
         {
             this.SetResult(this.viewModel.Parameters);
         }
