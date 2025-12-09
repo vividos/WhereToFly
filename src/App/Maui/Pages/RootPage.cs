@@ -1,4 +1,6 @@
-﻿using WhereToFly.App.Abstractions;
+﻿using CommunityToolkit.Maui.Behaviors;
+using CommunityToolkit.Maui.Core;
+using WhereToFly.App.Abstractions;
 using WhereToFly.App.Services;
 
 namespace WhereToFly.App.Pages
@@ -36,6 +38,15 @@ namespace WhereToFly.App.Pages
             };
 
             NavigationPage.SetTitleIconImageSource(navigationPage, "icon.png");
+
+#if ANDROID
+            navigationPage.Behaviors.Add(
+                new StatusBarBehavior
+                {
+                    StatusBarColor = Colors.White,
+                    StatusBarStyle = StatusBarStyle.LightContent,
+                });
+#endif
 
             this.Detail = navigationPage;
 
