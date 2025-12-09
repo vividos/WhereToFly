@@ -55,6 +55,12 @@ namespace WhereToFly.App
             builder.Services.AddSingleton<CompassGeoServices>();
             builder.Services.AddSingleton<LiveDataRefreshService>();
 
+#if ANDROID
+            builder.Services.AddSingleton<IAppManager, Platforms.Android.AndroidAppManager>();
+#elif WINDOWS
+            builder.Services.AddSingleton<IAppManager, Platforms.Windows.WindowsAppManager>();
+#endif
+
             return builder.Build();
         }
     }

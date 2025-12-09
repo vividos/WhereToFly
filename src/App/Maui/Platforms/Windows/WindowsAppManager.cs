@@ -1,8 +1,9 @@
 ﻿using WhereToFly.App.Abstractions;
+using WhereToFly.App.Platforms.Windows;
 
-[assembly: Dependency(typeof(WhereToFly.App.WindowsAppManager))]
+[assembly: Dependency(typeof(WindowsAppManager))]
 
-namespace WhereToFly.App
+namespace WhereToFly.App.Platforms.Windows
 {
     /// <summary>
     /// Windows app manager implementation that provides operations on external Windows apps.

@@ -4,10 +4,11 @@ using Android.Graphics;
 using Android.Graphics.Drawables;
 using System.Diagnostics;
 using WhereToFly.App.Abstractions;
+using WhereToFly.App.Platforms.Android;
 
-[assembly: Dependency(typeof(WhereToFly.App.Android.AndroidAppManager))]
+[assembly: Dependency(typeof(AndroidAppManager))]
 
-namespace WhereToFly.App.Android
+namespace WhereToFly.App.Platforms.Android
 {
     /// <summary>
     /// Android app manager implementation that provides operations on external Android apps.
