@@ -56,7 +56,7 @@ namespace WhereToFly.Shared.Model
         /// <summary>
         /// List of all track points
         /// </summary>
-        public LiveTrackPoint[] TrackPoints { get; set; } = Array.Empty<LiveTrackPoint>();
+        public LiveTrackPoint[] TrackPoints { get; set; } = [];
 
         /// <summary>
         /// Creates a new live track data object

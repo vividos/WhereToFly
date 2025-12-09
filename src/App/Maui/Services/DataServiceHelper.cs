@@ -64,7 +64,7 @@ namespace WhereToFly.App.Services
             using var stream = await Assets.Get(DefaultLayerFilename);
             if (stream == null)
             {
-                return Enumerable.Empty<Layer>();
+                return [];
             }
 
             var parser = new OpenAirFileParser(stream);
@@ -265,7 +265,7 @@ namespace WhereToFly.App.Services
                 using var stream = await Assets.Get("weathericons.json");
                 if (stream == null)
                 {
-                    return Enumerable.Empty<WeatherIconDescription>();
+                    return [];
                 }
 
                 using var reader = new StreamReader(stream);

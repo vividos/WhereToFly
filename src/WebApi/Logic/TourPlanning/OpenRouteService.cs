@@ -225,13 +225,13 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
             /// Bounding box
             /// </summary>
             [JsonPropertyName("bbox")]
-            public double[] BoundingBox { get; set; } = Array.Empty<double>();
+            public double[] BoundingBox { get; set; } = [];
 
             /// <summary>
             /// Routes list
             /// </summary>
             [JsonPropertyName("routes")]
-            public Route[]? Routes { get; set; } = Array.Empty<Route>();
+            public Route[]? Routes { get; set; } = [];
 
             /// <summary>
             /// Result metadata
@@ -267,7 +267,7 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
             /// Bounding box of route
             /// </summary>
             [JsonPropertyName("bbox")]
-            public double[] BoundingBox { get; set; } = Array.Empty<double>();
+            public double[] BoundingBox { get; set; } = [];
 
             /// <summary>
             /// Geometry polyline string
@@ -279,7 +279,7 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
             /// Waypoint indices into the geometry
             /// </summary>
             [JsonPropertyName("way_points")]
-            public int[] WaypointIndexList { get; set; } = Array.Empty<int>();
+            public int[] WaypointIndexList { get; set; } = [];
         }
 
         /// <summary>

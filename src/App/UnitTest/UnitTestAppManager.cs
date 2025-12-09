@@ -29,7 +29,7 @@ namespace WhereToFly.App.UnitTest
 
             return this.AppExists
                 ? [0x12, 0x34]
-                : Array.Empty<byte>();
+                : [];
         }
 
         /// <inheritdoc />

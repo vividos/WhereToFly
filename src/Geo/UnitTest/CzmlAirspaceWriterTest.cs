@@ -38,7 +38,7 @@ namespace WhereToFly.Geo.UnitTest
             };
 
             // run
-            string czml = CzmlAirspaceWriter.WriteCzml("my airspaces", airspacesList, Enumerable.Empty<string>());
+            string czml = CzmlAirspaceWriter.WriteCzml("my airspaces", airspacesList, []);
 
             // check
             Debug.WriteLine("CZML = " + czml);

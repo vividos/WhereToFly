@@ -573,7 +573,7 @@ namespace WhereToFly.App.Logic
 
             if (selectedAirspaceClasses == null)
             {
-                return Enumerable.Empty<Airspace>();
+                return [];
             }
 
             var filteredAirspaces = airspacesList.Where(

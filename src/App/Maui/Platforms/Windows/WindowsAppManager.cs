@@ -37,7 +37,7 @@ namespace WhereToFly.App.Platforms.Windows
         /// <returns>image data bytes, or null when no image could be retrieved</returns>
         public byte[]? GetAppIcon(string packageName)
         {
-            return Array.Empty<byte>();
+            return [];
         }
     }
 }

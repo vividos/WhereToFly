@@ -256,7 +256,7 @@ namespace WhereToFly.App.Services.SqliteDatabase
                 if (locationEntryList == null ||
                     locationEntryList.Count == 0)
                 {
-                    return Enumerable.Empty<Location>();
+                    return [];
                 }
 
                 return locationEntryList.Select(locationEntry => locationEntry.Location);
