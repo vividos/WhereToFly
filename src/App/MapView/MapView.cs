@@ -403,6 +403,7 @@ public class MapView :
             bingMapsApiKey,
             cesiumIonApiKey,
             messageBandId = "messageBand",
+            terrainStatusBandId = "terrainStatusBand",
             liveTrackToolbarId = "liveTrackToolbar",
             initialCenterPoint = new
             {

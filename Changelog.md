@@ -7,6 +7,7 @@ Released on ?.
 ✨ New Features / Improvements
 
 - Added the "Terrain slope direction" map overlay and showing a color legend
+- Display message band when terrain is not initialized yet
 - Using CesiumJS version 1.136.0
 
 🐛 Bugfixes
