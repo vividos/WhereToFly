@@ -15,6 +15,7 @@ Released on ?.
 - Fixed crash when opening external links
 - Fixed potential crash when app tries to change the app's color theme
 - Fixed entering text in location filter field
+- Fixed opening web links in external browser
 
 ## Version 1.16.0
 

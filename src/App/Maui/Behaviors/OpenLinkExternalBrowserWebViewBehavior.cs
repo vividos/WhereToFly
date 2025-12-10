@@ -1,62 +1,50 @@
-﻿namespace WhereToFly.App.Behaviors
+﻿#pragma warning disable S1118 // Utility classes should not have public constructors
+
+namespace WhereToFly.App.Behaviors;
+
+/// <summary>
+/// Behavior that can be attached to a <see cref="WebView"/> to open web links in an external
+/// browser
+/// </summary>
+internal partial class OpenLinkExternalBrowserWebViewBehavior
 {
     /// <summary>
-    /// Behavior that can be attached to a <see cref="WebView"/> to open web links in an external
-    /// browser
+    /// Called when the web view navigates to a new URL
     /// </summary>
-    internal class OpenLinkExternalBrowserWebViewBehavior : Behavior<WebView>
+    /// <param name="sender">sender object</param>
+    /// <param name="args">event args</param>
+    private static void OnNavigating(object? sender, WebNavigatingEventArgs args)
     {
-        /// <summary>
-        /// Called when the behavior is attached to a web view
-        /// </summary>
-        /// <param name="webView">web view</param>
-        protected override void OnAttachedTo(WebView webView)
+        if (args.NavigationEvent == WebNavigationEvent.NewPage &&
+            (args.Url.StartsWith("https://", StringComparison.InvariantCultureIgnoreCase) ||
+            args.Url.StartsWith("http://", StringComparison.InvariantCultureIgnoreCase)) &&
+            !args.Url.StartsWith("https://appdir/", StringComparison.InvariantCultureIgnoreCase))
         {
-            base.OnAttachedTo(webView);
+            args.Cancel = true;
 
-            webView.Navigating += OnNavigating;
+            OpenLink(args.Url);
         }
+    }
 
-        /// <summary>
-        /// Called when the behavior is detaching from a web view
-        /// </summary>
-        /// <param name="webView">web view</param>
-        protected override void OnDetachingFrom(WebView webView)
-        {
-            webView.Navigating -= OnNavigating;
-
-            base.OnDetachingFrom(webView);
-        }
-
-        /// <summary>
-        /// Called when the web view navigates to a new URL
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="args">event args</param>
-        private static void OnNavigating(object? sender, WebNavigatingEventArgs args)
-        {
-            if (args.NavigationEvent == WebNavigationEvent.NewPage &&
-                (args.Url.StartsWith("https://", StringComparison.InvariantCultureIgnoreCase) ||
-                args.Url.StartsWith("http://", StringComparison.InvariantCultureIgnoreCase)) &&
-                !args.Url.StartsWith("https://appdir/", StringComparison.InvariantCultureIgnoreCase))
+    /// <summary>
+    /// Opens link in external browser window
+    /// </summary>
+    /// <param name="url">link URL to open</param>
+    private static void OpenLink(string url)
+    {
+        MainThread.BeginInvokeOnMainThread(
+            () =>
             {
-                args.Cancel = true;
-
-                MainThread.BeginInvokeOnMainThread(
-                    () =>
-                    {
-                        try
-                        {
-                            Browser.OpenAsync(
-                                args.Url,
-                                BrowserLaunchMode.External);
-                        }
-                        catch (Exception ex)
-                        {
-                            App.LogError(ex);
-                        }
-                    });
-            }
-        }
+                try
+                {
+                    Browser.OpenAsync(
+                        url,
+                        BrowserLaunchMode.External);
+                }
+                catch (Exception ex)
+                {
+                    App.LogError(ex);
+                }
+            });
     }
 }
