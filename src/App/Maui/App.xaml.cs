@@ -19,9 +19,6 @@ using Windows.Storage;
 // make app internals visible to unit tests
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("WhereToFly.App.UnitTest")]
 
-// compile all xaml pages
-[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
-
 namespace WhereToFly.App
 {
     /// <summary>

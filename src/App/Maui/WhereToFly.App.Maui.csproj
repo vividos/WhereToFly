@@ -11,6 +11,7 @@
     <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
     <MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
     <MauiStrictXamlCompilation>true</MauiStrictXamlCompilation>
+    <MauiXamlInflator>SourceGen</MauiXamlInflator>
 
     <!-- Display name -->
     <ApplicationTitle>Where-to-fly</ApplicationTitle>
@@ -122,6 +123,9 @@
       <Link>Resources\Assets\info\Changelog.md</Link>
       <LogicalName>info\Changelog.md</LogicalName>
     </MauiAsset>
+
+    <!-- Workaround: Xaml source generators use obsolete classes like Device and NamedSize -->
+    <MauiXaml Update="**/*.xaml" NoWarn="0612" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == '$(DotNetVersion)'">
