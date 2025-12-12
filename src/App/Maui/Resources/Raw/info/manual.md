@@ -224,7 +224,7 @@ are updated periodically while the app is running. The live waypoint data is
 queried from the Where-to-fly background service. Sources for live waypoints
 currently are "Garmin inReach" devices or "Find me Spot" tracker devices.
 
-## ![Tracks](../icons/map-marker-distance.svg) Tracks
+## ![Tracks](images/map-marker-distance.svg) Tracks
 
 ![Track list](images/track-list.png)
 
