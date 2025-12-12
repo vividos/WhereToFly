@@ -1,5 +1,5 @@
 /*!
-  * chartjs-plugin-simple-crosshair v1.0.1
+  * chartjs-plugin-simple-crosshair v1.0.2
   * https://www.chartjs.org
   * (c) Abel Heinsbroek, vividos
   * Released under the MIT license
@@ -10,6 +10,8 @@
   * 1.0.0: Initial version, forked and removed zoom and sync features
   * 1.0.1: Set args.changed instead of calling chart.draw(); also cleaned up
   *        code.
+  * 1.0.2: Fixed drawTraceLine() when chart contains no data yet. Also moved
+  *        chart.crosshair.enabled to plugin options.
   */
 import { valueOrDefault } from "chart.js/helpers";
 
@@ -18,11 +20,13 @@ export default {
     id: "crosshair",
 
     defaults: {
+        enabled: true,
         line: {
             color: "#F66",
             width: 1,
             dashPattern: []
-        }
+        },
+        x: null
     },
 
     afterInit: function(chart) {
@@ -41,11 +45,6 @@ export default {
 
         if (chart.options.plugins.crosshair === undefined)
             chart.options.plugins.crosshair = this.defaults;
-
-        chart.crosshair = {
-            enabled: false,
-            x: null
-        };
     },
 
     getOption: function(chart, category, name) {
@@ -85,21 +84,21 @@ export default {
         if (!xScale)
             return;
 
-        chart.crosshair.enabled = (e.type !== "mouseout" &&
+        chart.options.plugins.crosshair.enabled = (e.type !== "mouseout" &&
             (e.x > xScale.getPixelForValue(xScale.min) &&
                 e.x < xScale.getPixelForValue(xScale.max)));
 
-        if (!chart.crosshair.enabled)
+        if (!chart.options.plugins.crosshair.enabled)
             return;
 
-        chart.crosshair.x = e.x;
+        chart.options.plugins.crosshair.x = e.x;
 
         args.changed = true;
     },
 
     afterDraw: function(chart) {
 
-        if (!chart.crosshair.enabled)
+        if (!chart.options.plugins.crosshair.enabled)
             return;
 
         this.drawTraceLine(chart);
@@ -109,11 +108,14 @@ export default {
 
         const yScale = this.getYScale(chart);
 
+        if (!yScale)
+            return;
+
         const lineWidth = this.getOption(chart, "line", "width");
         const color = this.getOption(chart, "line", "color");
         const dashPattern = this.getOption(chart, "line", "dashPattern");
 
-        const lineX = chart.crosshair.x;
+        const lineX = chart.options.plugins.crosshair.x;
 
         chart.ctx.beginPath();
         chart.ctx.setLineDash(dashPattern);
