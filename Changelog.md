@@ -8,7 +8,7 @@ Released on ?.
 
 - Added the "Terrain slope direction" map overlay and showing a color legend
 - Display message band when terrain is not initialized yet
-- Using CesiumJS version 1.136.0
+- Using CesiumJS version 1.137.0
 
 🐛 Bugfixes
 
