@@ -7,6 +7,9 @@ namespace WhereToFly.App.Behaviors;
 /// browser
 /// </summary>
 internal partial class OpenLinkExternalBrowserWebViewBehavior
+#if !WINDOWS && !ANDROID
+    : Behavior
+#endif
 {
     /// <summary>
     /// Called when the web view navigates to a new URL
