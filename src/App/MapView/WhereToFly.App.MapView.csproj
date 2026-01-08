@@ -43,7 +43,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
-    <PackageReference Include="Xamarin.AndroidX.WebKit" Version="1.14.0" />
+    <PackageReference Include="Xamarin.AndroidX.WebKit" Version="1.15.0" />
   </ItemGroup>
 
   <!-- NuGet package targets -->
