@@ -20,16 +20,16 @@
   "author": "vividos",
   "license": "MIT",
   "devDependencies": {
-    "@eslint/js": "^9.39.1",
+    "@eslint/js": "^9.39.2",
     "copy-webpack-plugin": "^13.0.1",
     "css-loader": "^7.1.2",
-    "eslint": "^9.39.1",
-    "eslint-plugin-jsdoc": "^61.3.0",
+    "eslint": "^9.39.2",
+    "eslint-plugin-jsdoc": "^61.7.1",
     "file-loader": "^6.2.0",
-    "globals": "^16.5.0",
+    "globals": "^17.0.0",
     "mini-css-extract-plugin": "^2.9.4",
-    "terser-webpack-plugin": "^5.3.14",
-    "webpack": "^5.103.0",
+    "terser-webpack-plugin": "^5.3.16",
+    "webpack": "^5.104.1",
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
