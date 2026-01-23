@@ -29,15 +29,15 @@
     "css-loader": "^7.1.2",
     "css-minimizer-webpack-plugin": "^7.0.4",
     "eslint": "^9.39.2",
-    "eslint-plugin-jsdoc": "^61.7.1",
-    "globals": "^17.0.0",
-    "html-webpack-plugin": "^5.6.5",
-    "mini-css-extract-plugin": "^2.9.4",
+    "eslint-plugin-jsdoc": "^62.4.0",
+    "globals": "^17.1.0",
+    "html-webpack-plugin": "^5.6.6",
+    "mini-css-extract-plugin": "^2.10.0",
     "strip-pragma-loader": "^1.0.1",
     "terser-webpack-plugin": "^5.3.16",
     "webpack": "^5.104.1",
     "webpack-cli": "^6.0.1",
-    "webpack-dev-server": "^5.2.2"
+    "webpack-dev-server": "^5.2.3"
   },
   "dependencies": {
     "cesium": "^1.137.0",
