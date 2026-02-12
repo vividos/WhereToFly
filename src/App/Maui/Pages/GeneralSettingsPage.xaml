@@ -12,8 +12,8 @@
 
             <!-- Grid with all settings -->
             <Grid RowDefinitions="Auto, Auto"
-                  WidthRequest="350"
-                  MinimumWidthRequest="350"
+                  WidthRequest="450"
+                  MinimumWidthRequest="450"
                   HorizontalOptions="Center"
                   VerticalOptions="Fill"
                   ColumnSpacing="16"
