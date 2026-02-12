@@ -16,48 +16,77 @@
         <ScrollView Orientation="Vertical" HorizontalOptions="Center">
 
             <!-- Grid with all settings -->
-            <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto"
-                  ColumnDefinitions="1*, 1*"
-                  WidthRequest="350"
-                  MinimumWidthRequest="350"
+            <Grid WidthRequest="450"
+                  MinimumWidthRequest="450"
                   HorizontalOptions="Center"
                   VerticalOptions="Fill"
-                  ColumnSpacing="16"
-                  RowSpacing="16"
                   Padding="8">
 
-                <!-- Map imagery type -->
-                <Label Grid.Row="0" Grid.Column="0" FontSize="Medium" Text="Map imagery" />
-                <Picker Grid.Row="0" Grid.Column="1" Title="Map imagery"
-                        ItemsSource="{Binding MapImageryTypeItems}"
-                        ItemDisplayBinding="{Binding Text, x:DataType=viewmodels:MapSettingsViewModel+MapImageryTypeViewModel}"
-                        SelectedItem="{Binding SelectedMapImageryType}" />
+                <Grid RowDefinitions="Auto, Auto"
+                      RowSpacing="8">
+                    <Label Grid.Row="0"
+                           Style="{StaticResource CardLabelStyle}"
+                           Text="Map settings" />
+                    <Border Grid.Row="1"
+                            Style="{StaticResource CardBorderStyle}">
 
-                <!-- Map overlay type -->
-                <Label Grid.Row="1" Grid.Column="0" FontSize="Medium" Text="Map overlay" />
-                <Picker Grid.Row="1" Grid.Column="1" Title="Map overlay"
-                        ItemsSource="{Binding MapOverlayTypeItems}"
-                        ItemDisplayBinding="{Binding Text, x:DataType=viewmodels:MapSettingsViewModel+MapOverlayTypeViewModel}"
-                        SelectedItem="{Binding SelectedMapOverlayType}" />
+                        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto"
+                              ColumnDefinitions="1*, 1*"
+                              VerticalOptions="Fill"
+                              ColumnSpacing="16"
+                              RowSpacing="16"
+                              Padding="8">
 
-                <!-- Map shading mode -->
-                <Label Grid.Row="2" Grid.Column="0" FontSize="Medium" Text="Map shading" />
-                <Picker Grid.Row="2" Grid.Column="1" Title="Map shading"
-                        ItemsSource="{Binding MapShadingModeItems}"
-                        ItemDisplayBinding="{Binding Text, x:DataType=viewmodels:MapSettingsViewModel+MapShadingModeViewModel}"
-                        SelectedItem="{Binding SelectedMapShadingModeItem}" />
+                            <!-- Base layer -->
+                            <Label Grid.Row="0" Grid.Column="0"
+                                   FontSize="Small"
+                                   VerticalOptions="Center"
+                                   Text="Base layer" />
+                            <Picker Grid.Row="0" Grid.Column="1"
+                                    ItemsSource="{Binding MapImageryTypeItems}"
+                                    ItemDisplayBinding="{Binding Text, x:DataType=viewmodels:MapSettingsViewModel+MapImageryTypeViewModel}"
+                                    SelectedItem="{Binding SelectedMapImageryType}" />
 
-                <!-- Lat/long coordinates display format -->
-                <Label Grid.Row="3" Grid.Column="0" FontSize="Medium" Text="Coordinates display format" />
-                <Picker Grid.Row="3" Grid.Column="1" Title="Coordinates format"
-                        ItemsSource="{Binding CoordinateDisplayFormatItems}"
-                        ItemDisplayBinding="{Binding Text, x:DataType=viewmodels:MapSettingsViewModel+CoordinateDisplayFormatViewModel}"
-                        SelectedItem="{Binding SelectedCoordinateDisplayFormatItem}" />
+                            <!-- Map overlay type -->
+                            <Label Grid.Row="1" Grid.Column="0"
+                                   FontSize="Small"
+                                   VerticalOptions="Center"
+                                   Text="Overlay" />
+                            <Picker Grid.Row="1" Grid.Column="1"
+                                    ItemsSource="{Binding MapOverlayTypeItems}"
+                                    ItemDisplayBinding="{Binding Text, x:DataType=viewmodels:MapSettingsViewModel+MapOverlayTypeViewModel}"
+                                    SelectedItem="{Binding SelectedMapOverlayType}" />
 
-                <!-- Map entity clustering -->
-                <Label Grid.Row="4" Grid.Column="0" FontSize="Medium" Text="Use location clustering" />
-                <Switch Grid.Row="4" Grid.Column="1"
-                        IsToggled="{Binding MapEntityClustering}" />
+                            <!-- Map shading mode -->
+                            <Label Grid.Row="2" Grid.Column="0"
+                                   FontSize="Small"
+                                   VerticalOptions="Center"
+                                   Text="Map shading" />
+                            <Picker Grid.Row="2" Grid.Column="1"
+                                    ItemsSource="{Binding MapShadingModeItems}"
+                                    ItemDisplayBinding="{Binding Text, x:DataType=viewmodels:MapSettingsViewModel+MapShadingModeViewModel}"
+                                    SelectedItem="{Binding SelectedMapShadingModeItem}" />
+
+                            <!-- Lat/long coordinates display format -->
+                            <Label Grid.Row="3" Grid.Column="0"
+                                   FontSize="Small"
+                                   VerticalOptions="Center"
+                                   Text="Coordinates format" />
+                            <Picker Grid.Row="3" Grid.Column="1"
+                                    ItemsSource="{Binding CoordinateDisplayFormatItems}"
+                                    ItemDisplayBinding="{Binding Text, x:DataType=viewmodels:MapSettingsViewModel+CoordinateDisplayFormatViewModel}"
+                                    SelectedItem="{Binding SelectedCoordinateDisplayFormatItem}" />
+
+                            <!-- Map entity clustering -->
+                            <Label Grid.Row="4" Grid.Column="0"
+                                   FontSize="Small"
+                                   VerticalOptions="Center"
+                                   Text="Use location clustering" />
+                            <Switch Grid.Row="4" Grid.Column="1"
+                                    IsToggled="{Binding MapEntityClustering}" />
+                        </Grid>
+                    </Border>
+                </Grid>
             </Grid>
 
         </ScrollView>
