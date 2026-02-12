@@ -26,6 +26,7 @@
   <Folder Name="/Solution Items/">
     <File Path="../Changelog.md" />
     <File Path="../Credits.md" />
+    <File Path="../LICENSE.md" />
     <File Path="../PreviousVersionImages.md" />
     <File Path="../README.md" />
     <File Path="../Release-Checklist.md" />
