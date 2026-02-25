@@ -4,7 +4,6 @@
     <TargetFrameworks>$(DotNetVersion);$(DotNetVersion)-android;$(DotNetVersion)-windows10.0.19041.0</TargetFrameworks>
     <Description>Where-to-fly App MapView</Description>
     <UseMaui>true</UseMaui>
-    <UseMauiCompat>false</UseMauiCompat>
     <SingleProject>true</SingleProject>
     <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
     <EnableAotAnalyzer>true</EnableAotAnalyzer>
