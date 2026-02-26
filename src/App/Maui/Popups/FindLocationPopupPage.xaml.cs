@@ -22,9 +22,28 @@ namespace WhereToFly.App.Popups
         {
             this.InitializeComponent();
 
+            this.Opened += this.OnPopupOpened;
+
             this.FindCommand = new Command(this.OnFind);
 
             this.BindingContext = this;
+        }
+
+        /// <summary>
+        /// Called when the popup is opened
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="args">event args</param>
+        private void OnPopupOpened(object? sender, EventArgs args)
+        {
+            this.Opened -= this.OnPopupOpened;
+
+            MainThread.BeginInvokeOnMainThread(
+                async () =>
+                {
+                    await Task.Delay(100);
+                    this.locationEntry.Focus();
+                });
         }
 
         /// <summary>
@@ -33,14 +52,6 @@ namespace WhereToFly.App.Popups
         private void OnFind()
         {
             this.SetResult(this.locationEntry.Text);
-        }
-
-        /// <summary>
-        /// Called when then entry field has loaded; sets focus to the entry field.
-        /// </summary>
-        private void OnLoadedLocationEntry(object? sender, EventArgs args)
-        {
-            this.locationEntry.Focus();
         }
     }
 }

@@ -16,6 +16,7 @@ Released on ?.
 - Fixed potential crash when app tries to change the app's color theme
 - Fixed entering text in location filter field
 - Fixed opening web links in external browser
+- Fixed showing the keyboard when Find dialog is shown
 
 ## Version 1.16.0
 

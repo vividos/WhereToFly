@@ -21,8 +21,7 @@
                x:Name="locationEntry"
                Placeholder="enter location"
                Style="{StaticResource EntryOnPopupPageStyle}"
-               ReturnCommand="{Binding FindCommand}"
-               Loaded="OnLoadedLocationEntry" />
+               ReturnCommand="{Binding FindCommand}" />
 
         <Button Grid.Row="2"
                 Text="Find"
