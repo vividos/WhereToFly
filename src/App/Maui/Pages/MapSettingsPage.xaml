@@ -16,8 +16,9 @@
         <ScrollView Orientation="Vertical" HorizontalOptions="Center">
 
             <!-- Grid with all settings -->
-            <Grid WidthRequest="450"
-                  MinimumWidthRequest="450"
+            <Grid ColumnDefinitions="1*"
+                  WidthRequest="350"
+                  MaximumWidthRequest="450"
                   HorizontalOptions="Center"
                   VerticalOptions="Fill"
                   Padding="8">
