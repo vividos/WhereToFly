@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.Runtime;
+using Android.Webkit;
 
 namespace WhereToFly.App
 {
@@ -17,6 +18,20 @@ namespace WhereToFly.App
         public MainApplication(IntPtr handle, JniHandleOwnership ownership)
             : base(handle, ownership)
         {
+        }
+
+        /// <summary>
+        /// Called when the Android app is about to be created
+        /// </summary>
+        public override void OnCreate()
+        {
+            base.OnCreate();
+
+            Task.Run(() =>
+            {
+                // start WebView initialization early
+                _ = WebSettings.GetDefaultUserAgent(this.ApplicationContext);
+            });
         }
 
         /// <summary>
