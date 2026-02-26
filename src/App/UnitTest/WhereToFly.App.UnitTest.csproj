@@ -4,6 +4,7 @@
     <TargetFramework>$(DotNetVersion)</TargetFramework>
     <Description>Where-to-fly App unit tests</Description>
     <UseMaui>true</UseMaui>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>

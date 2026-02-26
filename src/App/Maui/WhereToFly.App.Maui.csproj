@@ -5,6 +5,7 @@
     <OutputType Condition="$(TargetFramework) != '$(DotNetVersion)'">Exe</OutputType>
     <RootNamespace>WhereToFly.App</RootNamespace>
     <UseMaui>true</UseMaui>
+    <IsPackable>false</IsPackable>
     <SingleProject>true</SingleProject>
     <ImplicitUsings>enable</ImplicitUsings>
     <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
