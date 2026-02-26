@@ -8,6 +8,7 @@
     <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
     <EnableAotAnalyzer>true</EnableAotAnalyzer>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+    <GenerateSBOM>true</GenerateSBOM>
   </PropertyGroup>
 
   <!-- NuGet package properties -->
@@ -28,6 +29,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Maui.Controls" Version="$(DotNetMauiVersion)" />
+    <PackageReference Include="Microsoft.Sbom.Targets" Version="4.1.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <MauiAsset Include="..\..\Shared\WebLib\dist\**\*.*" Exclude="..\..\Shared\WebLib\dist\**\*.map" LogicalName="weblib\%(RecursiveDir)%(Filename)%(Extension)" />
     <None Include="..\..\Shared\WebLib\dist\**\*.*" Exclude="..\..\Shared\WebLib\dist\**\*.map;..\..\Shared\WebLib\dist\*Test.html" Pack="True" PackagePath="buildTransitive\weblib\" LogicalName="weblib\%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
