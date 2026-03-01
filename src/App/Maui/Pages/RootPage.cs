@@ -43,7 +43,7 @@ namespace WhereToFly.App.Pages
             navigationPage.Behaviors.Add(
                 new StatusBarBehavior
                 {
-                    StatusBarColor = Colors.White,
+                    StatusBarColor = Constants.PrimaryColor,
                     StatusBarStyle = StatusBarStyle.LightContent,
                 });
 #endif
