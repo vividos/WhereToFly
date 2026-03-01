@@ -5,7 +5,8 @@
              xmlns:controls="clr-namespace:WhereToFly.App.Controls"
              xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
              x:Class="WhereToFly.App.Pages.WeatherDetailsPage"
-             x:DataType="viewmodels:WeatherDetailsViewModel">
+             x:DataType="viewmodels:WeatherDetailsViewModel"
+             SafeAreaEdges="All">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Refresh"
