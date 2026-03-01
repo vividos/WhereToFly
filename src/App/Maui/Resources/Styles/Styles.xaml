@@ -460,17 +460,16 @@
     </Style>
 
     <Style x:Key="PositionInfoTileStyle" TargetType="Grid">
+        <Setter Property="WidthRequest" Value="116" />
+        <Setter Property="HeightRequest" Value="116" />
         <Setter Property="Margin" Value="8,8,0,0" />
-        <Setter Property="Padding" Value="4" />
-        <Setter Property="BackgroundColor"
-                Value="{AppThemeBinding Light={StaticResource ListViewItemBackgroundColorLight}, Dark={StaticResource ListViewItemBackgroundColorDark}}" />
     </Style>
 
-    <Style x:Key="PositionInfoSquareTileStyle" TargetType="VerticalStackLayout">
-        <Setter Property="WidthRequest" Value="108" />
-        <Setter Property="HeightRequest" Value="108" />
-        <Setter Property="Margin" Value="8,8,0,0" />
-        <Setter Property="Padding" Value="4" />
+    <Style x:Key="PositionInfoBorderStyle" TargetType="Border">
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 8" />
+        <Setter Property="Padding" Value="8" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
         <Setter Property="BackgroundColor"
                 Value="{AppThemeBinding Light={StaticResource ListViewItemBackgroundColorLight}, Dark={StaticResource ListViewItemBackgroundColorDark}}" />
     </Style>

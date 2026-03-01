@@ -30,65 +30,89 @@
                         Wrap="Wrap">
 
                 <!-- Compass -->
-                <Grid VerticalOptions="Fill"
-                      HorizontalOptions="Fill"
-                      Style="{StaticResource PositionInfoTileStyle}">
+                <Grid Style="{StaticResource PositionInfoTileStyle}"
+                      VerticalOptions="Fill"
+                      HorizontalOptions="Fill">
 
                     <Grid.WidthRequest>
                         <OnPlatform x:TypeArguments="x:Double">
-                            <On Platform="Android" Value="356" />
+                            <On Platform="Android" Value="380" />
                             <On Platform="WinUI" Value="600" />
                         </OnPlatform>
                     </Grid.WidthRequest>
                     <Grid.HeightRequest>
                         <OnPlatform x:TypeArguments="x:Double">
-                            <On Platform="Android" Value="356" />
+                            <On Platform="Android" Value="380" />
                             <On Platform="WinUI" Value="600" />
                         </OnPlatform>
                     </Grid.HeightRequest>
 
-                    <controls:CompassView VerticalOptions="Fill"
-                                          HorizontalOptions="Fill"
-                                          Heading="{Binding TrueNorthHeadingInDegrees}"
-                                          TargetDirection="{Binding TargetDirectionInDegrees}"
-                                          SunriseDirection="{Binding SunriseDirectionInDegrees}"
-                                          SunsetDirection="{Binding SunsetDirectionInDegrees}"
-                                          Style="{StaticResource CompassStyle}" />
+                    <Border Style="{StaticResource PositionInfoBorderStyle}">
+
+                        <controls:CompassView VerticalOptions="Fill"
+                                              HorizontalOptions="Fill"
+                                              Heading="{Binding TrueNorthHeadingInDegrees}"
+                                              TargetDirection="{Binding TargetDirectionInDegrees}"
+                                              SunriseDirection="{Binding SunriseDirectionInDegrees}"
+                                              SunsetDirection="{Binding SunsetDirectionInDegrees}"
+                                              Style="{StaticResource CompassStyle}" />
+                    </Border>
                 </Grid>
 
                 <!-- Magnetic-north Heading -->
-                <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}"
-                                     IsVisible="{Binding IsMagneticNorthHeadingAvail}">
-                    <Label Text="Magnetic Heading [°]" />
-                    <Label Text="{Binding MagneticNorthHeadingInDegrees}" FontSize="32" />
-                </VerticalStackLayout>
+                <Grid Style="{StaticResource PositionInfoTileStyle}"
+                      IsVisible="{Binding IsMagneticNorthHeadingAvail}">
+                    <Border Style="{StaticResource PositionInfoBorderStyle}">
+                        <VerticalStackLayout>
+                            <Label Text="Magnetic Heading [°]" />
+                            <Label Text="{Binding MagneticNorthHeadingInDegrees}" FontSize="32" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
 
                 <!-- True-north Heading -->
-                <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}"
-                                     IsVisible="{Binding IsTrueNorthHeadingAvail}">
-                    <Label Text="True North Heading [°]" />
-                    <Label Text="{Binding TrueNorthHeadingInDegrees}" FontSize="32" />
-                </VerticalStackLayout>
+                <Grid Style="{StaticResource PositionInfoTileStyle}"
+                      IsVisible="{Binding IsTrueNorthHeadingAvail}">
+                    <Border Style="{StaticResource PositionInfoBorderStyle}">
+                        <VerticalStackLayout>
+                            <Label Text="True North Heading [°]" />
+                            <Label Text="{Binding TrueNorthHeadingInDegrees}" FontSize="32" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
 
                 <!-- Target direction -->
-                <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}"
-                                     IsVisible="{Binding IsTargetDirectionAvail}">
-                    <Label Text="Direction [°]" />
-                    <Label Text="{Binding TargetDirectionText}" FontSize="32" />
-                </VerticalStackLayout>
+                <Grid Style="{StaticResource PositionInfoTileStyle}"
+                      IsVisible="{Binding IsTargetDirectionAvail}">
+                    <Border Style="{StaticResource PositionInfoBorderStyle}">
+                        <VerticalStackLayout>
+                            <Label Text="Direction [°]" />
+                            <Label Text="{Binding TargetDirectionText}" FontSize="32" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
 
                 <!-- Distance -->
-                <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}">
-                    <Label Text="Distance" />
-                    <Label Text="{Binding Distance}" FontSize="32" />
-                </VerticalStackLayout>
+                <Grid Style="{StaticResource PositionInfoTileStyle}">
+                    <Border Style="{StaticResource PositionInfoBorderStyle}">
+                        <VerticalStackLayout>
+                            <Label Text="Distance" />
+                            <Label Text="{Binding Distance}" FontSize="32" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
 
                 <!-- Height difference -->
-                <VerticalStackLayout WidthRequest="120"
-                                     Style="{StaticResource PositionInfoSquareTileStyle}">
-                    <Label Text="Height difference" />
-                    <Label Text="{Binding HeightDifference}" FontSize="32" />
-                </VerticalStackLayout>
+                <Grid Style="{StaticResource PositionInfoTileStyle}">
+                    <Border Style="{StaticResource PositionInfoBorderStyle}">
+                        <VerticalStackLayout>
+                            <Label Text="Height difference" />
+                            <Label Text="{Binding HeightDifference}"
+                                   FontSize="32"
+                                   FontAutoScalingEnabled="True" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
 
             </FlexLayout>
         </ScrollView>

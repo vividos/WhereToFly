@@ -27,85 +27,130 @@
                 Wrap="Wrap">
 
                 <!-- Latitude / Longitude -->
-                <Grid WidthRequest="356"
-                      HeightRequest="108"
-                      RowDefinitions="Auto, Auto"
-                      ColumnDefinitions="1*, 1*"
+                <Grid WidthRequest="380"
+                      HeightRequest="80"
                       Style="{StaticResource PositionInfoTileStyle}">
-                    <Label Grid.Row="0" Grid.Column="0" Text="Longitude" />
-                    <Label Grid.Row="1" Grid.Column="0" Text="{Binding Longitude}" FontSize="24" />
+                    <Border Style="{StaticResource PositionInfoBorderStyle}">
+                        <Grid RowDefinitions="Auto, Auto"
+                              ColumnDefinitions="1*, 1*">
 
-                    <!-- Latitude -->
-                    <Label Grid.Row="0" Grid.Column="1" Text="Latitude" />
-                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Latitude}" FontSize="24" />
+                            <!-- Longitude -->
+                            <Label Grid.Row="0" Grid.Column="0" Text="Longitude" />
+                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding Longitude}" FontSize="24" />
+
+                            <!-- Latitude -->
+                            <Label Grid.Row="0" Grid.Column="1" Text="Latitude" />
+                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding Latitude}" FontSize="24" />
+                        </Grid>
+                    </Border>
                 </Grid>
 
                 <!-- Altitude -->
-                <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}">
-                    <Label Text="Altitude [m]" />
-                    <Label Text="{Binding Altitude}" FontSize="32" />
-                </VerticalStackLayout>
+                <Grid Style="{StaticResource PositionInfoTileStyle}">
+                    <Border Style="{StaticResource PositionInfoBorderStyle}">
+                        <VerticalStackLayout>
+                            <Label Text="Altitude [m]" />
+                            <Label Text="{Binding Altitude}" FontSize="32" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
 
                 <!-- Accuracy -->
-                <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}">
-                    <Label Text="Accuracy [m]" />
-                    <Label Text="{Binding Accuracy}" FontSize="32"
-                           TextColor="{Binding PositionAccuracyColor}" />
-                </VerticalStackLayout>
+                <Grid Style="{StaticResource PositionInfoTileStyle}">
+                    <Border Style="{StaticResource PositionInfoBorderStyle}">
+                        <VerticalStackLayout>
+                            <Label Text="Accuracy [m]" />
+                            <Label Text="{Binding Accuracy}" FontSize="32"
+                                   TextColor="{Binding PositionAccuracyColor}" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
 
                 <!-- Last position fix -->
-                <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}">
-                    <Label Text="Last position fix" />
-                    <Label Text="{Binding LastPositionFix}" FontSize="24" />
-                </VerticalStackLayout>
+                <Grid Style="{StaticResource PositionInfoTileStyle}">
+                    <Border Style="{StaticResource PositionInfoBorderStyle}">
+                        <VerticalStackLayout>
+                            <Label Text="Last position fix" />
+                            <Label Text="{Binding LastPositionFix}" FontSize="24" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
 
                 <!-- Speed -->
-                <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}">
-                    <Label Text="Speed [km/h]" />
-                    <Label Text="{Binding SpeedInKmh}" FontSize="32" />
-                </VerticalStackLayout>
+                <Grid Style="{StaticResource PositionInfoTileStyle}">
+                    <Border Style="{StaticResource PositionInfoBorderStyle}">
+                        <VerticalStackLayout>
+                            <Label Text="Speed [km/h]" />
+                            <Label Text="{Binding SpeedInKmh}" FontSize="32" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
 
                 <!-- Magnetic-north Heading -->
-                <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}"
-                                     IsVisible="{Binding IsMagneticNorthHeadingAvail}">
-                    <Label Text="Magnetic Heading [°]" />
-                    <Label Text="{Binding MagneticNorthHeadingInDegrees}" FontSize="32" />
-                </VerticalStackLayout>
+                <Grid Style="{StaticResource PositionInfoTileStyle}"
+                      IsVisible="{Binding IsMagneticNorthHeadingAvail}">
+                    <Border Style="{StaticResource PositionInfoBorderStyle}">
+                        <VerticalStackLayout>
+                            <Label Text="Magnetic Heading [°]" />
+                            <Label Text="{Binding MagneticNorthHeadingInDegrees}" FontSize="32" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
 
                 <!-- True-north Heading -->
-                <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}"
-                                     IsVisible="{Binding IsTrueNorthHeadingAvail}">
-                    <Label Text="True North Heading [°]" />
-                    <Label Text="{Binding TrueNorthHeadingInDegrees}" FontSize="32" />
-                </VerticalStackLayout>
+                <Grid Style="{StaticResource PositionInfoTileStyle}"
+                      IsVisible="{Binding IsTrueNorthHeadingAvail}">
+                    <Border Style="{StaticResource PositionInfoBorderStyle}">
+                        <VerticalStackLayout>
+                            <Label Text="True North Heading [°]" />
+                            <Label Text="{Binding TrueNorthHeadingInDegrees}" FontSize="32" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
 
                 <!-- Sunrise -->
-                <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}"
-                                     IsVisible="{Binding IsSunriseSunsetAvail}">
-                    <Label Text="Sunrise" />
-                    <Label Text="{Binding SunriseTime}" FontSize="24" />
-                </VerticalStackLayout>
+                <Grid Style="{StaticResource PositionInfoTileStyle}"
+                      IsVisible="{Binding IsSunriseSunsetAvail}">
+                    <Border Style="{StaticResource PositionInfoBorderStyle}">
+                        <VerticalStackLayout>
+                            <Label Text="Sunrise" />
+                            <Label Text="{Binding SunriseTime}" FontSize="24" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
 
                 <!-- Sunset -->
-                <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}"
-                             IsVisible="{Binding IsSunriseSunsetAvail}">
-                    <Label Text="Sunset" />
-                    <Label Text="{Binding SunsetTime}" FontSize="24" />
-                </VerticalStackLayout>
+                <Grid Style="{StaticResource PositionInfoTileStyle}"
+                      IsVisible="{Binding IsSunriseSunsetAvail}">
+                    <Border Style="{StaticResource PositionInfoBorderStyle}">
+                        <VerticalStackLayout>
+                            <Label Text="Sunset" />
+                            <Label Text="{Binding SunsetTime}" FontSize="24" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
 
                 <!-- Sunrise angle -->
-                <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}"
-                                     IsVisible="{Binding IsSunriseDirectionAvail}">
-                    <Label Text="Sunrise angle [°]" />
-                    <Label Text="{Binding SunriseDirectionText}" FontSize="24" />
-                </VerticalStackLayout>
+                <Grid Style="{StaticResource PositionInfoTileStyle}"
+                      IsVisible="{Binding IsSunriseDirectionAvail}">
+                    <Border Style="{StaticResource PositionInfoBorderStyle}">
+                        <VerticalStackLayout>
+                            <Label Text="Sunrise angle [°]" />
+                            <Label Text="{Binding SunriseDirectionText}" FontSize="24" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
 
                 <!-- Sunset angle -->
-                <VerticalStackLayout Style="{StaticResource PositionInfoSquareTileStyle}"
-                                     IsVisible="{Binding IsSunsetDirectionAvail}">
-                    <Label Text="Sunset angle [°]" />
-                    <Label Text="{Binding SunsetDirectionText}" FontSize="24" />
-                </VerticalStackLayout>
+                <Grid Style="{StaticResource PositionInfoTileStyle}"
+                      IsVisible="{Binding IsSunsetDirectionAvail}">
+                    <Border Style="{StaticResource PositionInfoBorderStyle}">
+                        <VerticalStackLayout>
+                            <Label Text="Sunset angle [°]" />
+                            <Label Text="{Binding SunsetDirectionText}" FontSize="24" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
 
             </FlexLayout>
         </ScrollView>
