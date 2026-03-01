@@ -5,7 +5,8 @@
              xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
              x:Class="WhereToFly.App.Pages.MenuPage"
              x:DataType="viewmodels:MenuViewModel"
-             Padding="0,40,0,0"
+             Padding="0,16,0,0"
+             SafeAreaEdges="All"
              IconImageSource="icon.png"
              BackgroundColor="{StaticResource Primary}"
              Title="Where-to-fly">
