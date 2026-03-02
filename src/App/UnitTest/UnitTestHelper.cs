@@ -13,70 +13,69 @@ using WhereToFly.Geo.Model;
 // context also prevents this.
 [assembly: DoNotParallelize]
 
-namespace WhereToFly.App.UnitTest
+namespace WhereToFly.App.UnitTest;
+
+/// <summary>
+/// Helper methods for all unit tests
+/// </summary>
+public static class UnitTestHelper
 {
     /// <summary>
-    /// Helper methods for all unit tests
+    /// Returns default layer for unit tests
     /// </summary>
-    public static class UnitTestHelper
+    /// <returns>default layer</returns>
+    public static Layer GetDefaultLayer()
     {
-        /// <summary>
-        /// Returns default layer for unit tests
-        /// </summary>
-        /// <returns>default layer</returns>
-        public static Layer GetDefaultLayer()
+        return new Layer(Guid.NewGuid().ToString("B"))
         {
-            return new Layer(Guid.NewGuid().ToString("B"))
-            {
-                Name = "DefaultLayer",
-                Description = "Default description",
-                LayerType = LayerType.CzmlLayer,
-                IsVisible = true,
-                Data = "abc123xyz",
-            };
-        }
+            Name = "DefaultLayer",
+            Description = "Default description",
+            LayerType = LayerType.CzmlLayer,
+            IsVisible = true,
+            Data = "abc123xyz",
+        };
+    }
 
-        /// <summary>
-        /// Returns default location for unit tests
-        /// </summary>
-        /// <returns>default location</returns>
-        public static Location GetDefaultLocation()
+    /// <summary>
+    /// Returns default location for unit tests
+    /// </summary>
+    /// <returns>default location</returns>
+    public static Location GetDefaultLocation()
+    {
+        return new Location(
+            Guid.NewGuid().ToString("B"),
+            new MapPoint(47.6764385, 11.8710533, 1685.0))
         {
-            return new Location(
-                Guid.NewGuid().ToString("B"),
-                new MapPoint(47.6764385, 11.8710533, 1685.0))
-            {
-                Name = "Brecherspitz",
-                Description = "Herrliche Aussicht über die drei Seen Schliersee im Norden, Tegernsee im Westen und den Spitzingsee im Süden.",
-                Type = LocationType.Summit,
-                InternetLink = "https://de.wikipedia.org/wiki/Brecherspitz",
-            };
-        }
+            Name = "Brecherspitz",
+            Description = "Herrliche Aussicht über die drei Seen Schliersee im Norden, Tegernsee im Westen und den Spitzingsee im Süden.",
+            Type = LocationType.Summit,
+            InternetLink = "https://de.wikipedia.org/wiki/Brecherspitz",
+        };
+    }
 
-        /// <summary>
-        /// Returns default track for unit tests
-        /// </summary>
-        /// <returns>default track</returns>
-        public static Track GetDefaultTrack()
+    /// <summary>
+    /// Returns default track for unit tests
+    /// </summary>
+    /// <returns>default track</returns>
+    public static Track GetDefaultTrack()
+    {
+        return new Track("track1")
         {
-            return new Track("track1")
-            {
-                Name = "Track1",
-                IsFlightTrack = false,
-                IsLiveTrack = false,
-                Color = "FF0000",
-                TrackPoints =
-                [
-                    new TrackPoint(47.754076, 12.352277, 1234.0, null)
-                    {
-                        Time = DateTime.Today + TimeSpan.FromHours(1.0),
-                    },
-                    new TrackPoint(46.017779, 11.900711, 778.2, null)
-                    {
-                        Time = DateTime.Today + TimeSpan.FromHours(2.0),
-                    },
-                ],
-            };
-        }
+            Name = "Track1",
+            IsFlightTrack = false,
+            IsLiveTrack = false,
+            Color = "FF0000",
+            TrackPoints =
+            [
+                new TrackPoint(47.754076, 12.352277, 1234.0, null)
+                {
+                    Time = DateTime.Today + TimeSpan.FromHours(1.0),
+                },
+                new TrackPoint(46.017779, 11.900711, 778.2, null)
+                {
+                    Time = DateTime.Today + TimeSpan.FromHours(2.0),
+                },
+            ],
+        };
     }
 }

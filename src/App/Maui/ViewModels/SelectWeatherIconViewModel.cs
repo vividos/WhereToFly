@@ -4,113 +4,112 @@ using WhereToFly.App.Abstractions;
 using WhereToFly.App.Models;
 using WhereToFly.App.Pages;
 
-namespace WhereToFly.App.ViewModels
+namespace WhereToFly.App.ViewModels;
+
+/// <summary>
+/// View model for the weather icon selection popup page.
+/// </summary>
+public partial class SelectWeatherIconViewModel : ViewModelBase
 {
+    #region Binding properties
     /// <summary>
-    /// View model for the weather icon selection popup page.
+    /// List of grouped weather icon view models
     /// </summary>
-    public partial class SelectWeatherIconViewModel : ViewModelBase
+    public ObservableCollection<WeatherIconListViewModelGrouping>? GroupedWeatherIconList { get; set; }
+
+    /// <summary>
+    /// Stores the selected weather icon when an item is tapped
+    /// </summary>
+    public WeatherIconListEntryViewModel? SelectedWeatherIcon { get; set; }
+
+    /// <summary>
+    /// Command to execute when an item in the weather icon list has been tapped
+    /// </summary>
+    public ICommand ItemTappedCommand { get; set; }
+    #endregion
+
+    /// <summary>
+    /// Creates a new select weather icon view model
+    /// </summary>
+    /// <param name="setResult">action to set result</param>
+    /// <param name="group">group to filter by, or null to show all groups</param>
+    public SelectWeatherIconViewModel(
+        Action<WeatherIconDescription> setResult,
+        string? group = null)
     {
-        #region Binding properties
-        /// <summary>
-        /// List of grouped weather icon view models
-        /// </summary>
-        public ObservableCollection<WeatherIconListViewModelGrouping>? GroupedWeatherIconList { get; set; }
+        this.ItemTappedCommand = new Command<WeatherIconListEntryViewModel>(
+            (itemViewModel) =>
+            {
+                setResult(itemViewModel.IconDescription);
 
-        /// <summary>
-        /// Stores the selected weather icon when an item is tapped
-        /// </summary>
-        public WeatherIconListEntryViewModel? SelectedWeatherIcon { get; set; }
+                this.SelectedWeatherIcon = null;
+                this.OnPropertyChanged(nameof(this.SelectedWeatherIcon));
+            });
 
-        /// <summary>
-        /// Command to execute when an item in the weather icon list has been tapped
-        /// </summary>
-        public ICommand ItemTappedCommand { get; set; }
-        #endregion
+        Task.Run(async () => await this.LoadData(group));
+    }
 
-        /// <summary>
-        /// Creates a new select weather icon view model
-        /// </summary>
-        /// <param name="setResult">action to set result</param>
-        /// <param name="group">group to filter by, or null to show all groups</param>
-        public SelectWeatherIconViewModel(
-            Action<WeatherIconDescription> setResult,
-            string? group = null)
-        {
-            this.ItemTappedCommand = new Command<WeatherIconListEntryViewModel>(
-                (itemViewModel) =>
-                {
-                    setResult(itemViewModel.IconDescription);
+    /// <summary>
+    /// Loads data for view model
+    /// </summary>
+    /// <param name="group">group to filter by, or null to show all groups</param>
+    /// <returns>task to wait on</returns>
+    private async Task LoadData(string? group)
+    {
+        var dataService = Services.GetRequiredService<IDataService>();
+        await dataService.InitCompleteTask;
 
-                    this.SelectedWeatherIcon = null;
-                    this.OnPropertyChanged(nameof(this.SelectedWeatherIcon));
-                });
-
-            Task.Run(async () => await this.LoadData(group));
-        }
-
-        /// <summary>
-        /// Loads data for view model
-        /// </summary>
-        /// <param name="group">group to filter by, or null to show all groups</param>
-        /// <returns>task to wait on</returns>
-        private async Task LoadData(string? group)
-        {
-            var dataService = Services.GetRequiredService<IDataService>();
-            await dataService.InitCompleteTask;
-
-            var weatherIconDescriptionDataService = dataService.GetWeatherIconDescriptionDataService();
-            var weatherIconList = await weatherIconDescriptionDataService.GetList();
+        var weatherIconDescriptionDataService = dataService.GetWeatherIconDescriptionDataService();
+        var weatherIconList = await weatherIconDescriptionDataService.GetList();
 
 #pragma warning disable S1854 // Unused assignments should be removed
-            var appManager = Services.GetRequiredService<IAppManager>();
+        var appManager = Services.GetRequiredService<IAppManager>();
 #pragma warning restore S1854 // Unused assignments should be removed
 
-            var ungroupedWeatherIconList = new ObservableCollection<WeatherIconListEntryViewModel>(
-                from weatherIcon in weatherIconList
-                where IsInGroup(@group, weatherIcon) && IsAppAvailable(weatherIcon)
-                select new WeatherIconListEntryViewModel(this, weatherIcon));
+        var ungroupedWeatherIconList = new ObservableCollection<WeatherIconListEntryViewModel>(
+            from weatherIcon in weatherIconList
+            where IsInGroup(@group, weatherIcon) && IsAppAvailable(weatherIcon)
+            select new WeatherIconListEntryViewModel(this, weatherIcon));
 
-            var groupedWeatherIconList =
-                from weatherIconViewModel in ungroupedWeatherIconList
-                orderby GroupKeyFromGroup(weatherIconViewModel.Group)
-                group weatherIconViewModel by weatherIconViewModel.Group into weatherIconGroup
-                select new WeatherIconListViewModelGrouping(
-                    weatherIconGroup);
+        var groupedWeatherIconList =
+            from weatherIconViewModel in ungroupedWeatherIconList
+            orderby GroupKeyFromGroup(weatherIconViewModel.Group)
+            group weatherIconViewModel by weatherIconViewModel.Group into weatherIconGroup
+            select new WeatherIconListViewModelGrouping(
+                weatherIconGroup);
 
-            this.GroupedWeatherIconList =
-                new ObservableCollection<WeatherIconListViewModelGrouping>(
-                    groupedWeatherIconList);
+        this.GroupedWeatherIconList =
+            new ObservableCollection<WeatherIconListViewModelGrouping>(
+                groupedWeatherIconList);
 
-            this.OnPropertyChanged(nameof(this.GroupedWeatherIconList));
+        this.OnPropertyChanged(nameof(this.GroupedWeatherIconList));
 
-            bool IsInGroup(string? groupToCheck, WeatherIconDescription weatherIcon)
-            {
-                return groupToCheck == null || groupToCheck == weatherIcon.Group;
-            }
-
-            bool IsAppAvailable(WeatherIconDescription weatherIcon)
-            {
-                return weatherIcon.Type != WeatherIconDescription.IconType.IconApp ||
-                    (appManager != null && appManager.IsAvailable(weatherIcon.WebLink));
-            }
-        }
-
-        /// <summary>
-        /// Returns a group key for the group text; this is used to order weather icons by group.
-        /// </summary>
-        /// <param name="group">group text</param>
-        /// <returns>group key; an order integer</returns>
-        private static int GroupKeyFromGroup(string group)
+        bool IsInGroup(string? groupToCheck, WeatherIconDescription weatherIcon)
         {
-            return group switch
-            {
-                "Weather forecast" => 0,
-                "Current weather" => 1,
-                "Webcams" => 2,
-                "Android app" => 3,
-                _ => 4,
-            };
+            return groupToCheck == null || groupToCheck == weatherIcon.Group;
         }
+
+        bool IsAppAvailable(WeatherIconDescription weatherIcon)
+        {
+            return weatherIcon.Type != WeatherIconDescription.IconType.IconApp ||
+                (appManager != null && appManager.IsAvailable(weatherIcon.WebLink));
+        }
+    }
+
+    /// <summary>
+    /// Returns a group key for the group text; this is used to order weather icons by group.
+    /// </summary>
+    /// <param name="group">group text</param>
+    /// <returns>group key; an order integer</returns>
+    private static int GroupKeyFromGroup(string group)
+    {
+        return group switch
+        {
+            "Weather forecast" => 0,
+            "Current weather" => 1,
+            "Webcams" => 2,
+            "Android app" => 3,
+            _ => 4,
+        };
     }
 }

@@ -1,38 +1,37 @@
-﻿namespace WhereToFly.Geo.Airspace
+﻿namespace WhereToFly.Geo.Airspace;
+
+/// <summary>
+/// Altitude (reference) type
+/// </summary>
+public enum AltitudeType
 {
     /// <summary>
-    /// Altitude (reference) type
+    /// Ground/surface level; height value is ignored
     /// </summary>
-    public enum AltitudeType
-    {
-        /// <summary>
-        /// Ground/surface level; height value is ignored
-        /// </summary>
-        GND,
+    GND,
 
-        /// <summary>
-        /// Unlimited altitude; height value is ignored
-        /// </summary>
-        Unlimited,
+    /// <summary>
+    /// Unlimited altitude; height value is ignored
+    /// </summary>
+    Unlimited,
 
-        /// <summary>
-        /// Altitude is given as text and must be user interpreted
-        /// </summary>
-        Textual,
+    /// <summary>
+    /// Altitude is given as text and must be user interpreted
+    /// </summary>
+    Textual,
 
-        /// <summary>
-        /// Feet above mean sea level
-        /// </summary>
-        AMSL,
+    /// <summary>
+    /// Feet above mean sea level
+    /// </summary>
+    AMSL,
 
-        /// <summary>
-        /// Feet above ground level; depends on the terrain
-        /// </summary>
-        AGL,
+    /// <summary>
+    /// Feet above ground level; depends on the terrain
+    /// </summary>
+    AGL,
 
-        /// <summary>
-        /// Flight level, e.g. FL100
-        /// </summary>
-        FlightLevel,
-    }
+    /// <summary>
+    /// Flight level, e.g. FL100
+    /// </summary>
+    FlightLevel,
 }

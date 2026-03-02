@@ -1,22 +1,21 @@
 ﻿using WhereToFly.App.ViewModels;
 using WhereToFly.Geo.Model;
 
-namespace WhereToFly.App.Pages
+namespace WhereToFly.App.Pages;
+
+/// <summary>
+/// Page to display layer details
+/// </summary>
+public partial class LayerDetailsPage : ContentPage
 {
     /// <summary>
-    /// Page to display layer details
+    /// Creates new layer details page
     /// </summary>
-    public partial class LayerDetailsPage : ContentPage
+    /// <param name="layer">layer to display</param>
+    public LayerDetailsPage(Layer layer)
     {
-        /// <summary>
-        /// Creates new layer details page
-        /// </summary>
-        /// <param name="layer">layer to display</param>
-        public LayerDetailsPage(Layer layer)
-        {
-            this.BindingContext = new LayerDetailsViewModel(layer);
+        this.BindingContext = new LayerDetailsViewModel(layer);
 
-            this.InitializeComponent();
-        }
+        this.InitializeComponent();
     }
 }

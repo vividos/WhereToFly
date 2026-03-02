@@ -1,74 +1,73 @@
 ﻿using CommunityToolkit.Maui.Behaviors;
 
-namespace WhereToFly.App.Controls
+namespace WhereToFly.App.Controls;
+
+/// <summary>
+/// Image that can be tinted with a color
+/// </summary>
+public class TintedImage : Image
 {
     /// <summary>
-    /// Image that can be tinted with a color
+    /// Bindable property to set tint color
     /// </summary>
-    public class TintedImage : Image
+    public static readonly BindableProperty TintColorProperty =
+        BindableProperty.Create(
+            nameof(TintedImage.TintColor),
+            typeof(Color),
+            typeof(TintedImage),
+            null,
+            propertyChanged: OnTintColorPropertyChanged);
+
+    /// <summary>
+    /// Tint color; when null or transparent, the image is not tinted
+    /// </summary>
+    public Color? TintColor
     {
-        /// <summary>
-        /// Bindable property to set tint color
-        /// </summary>
-        public static readonly BindableProperty TintColorProperty =
-            BindableProperty.Create(
-                nameof(TintedImage.TintColor),
-                typeof(Color),
-                typeof(TintedImage),
-                null,
-                propertyChanged: OnTintColorPropertyChanged);
+        get => (Color?)this.GetValue(TintColorProperty);
+        set => this.SetValue(TintColorProperty, value);
+    }
 
-        /// <summary>
-        /// Tint color; when null or transparent, the image is not tinted
-        /// </summary>
-        public Color? TintColor
+    /// <summary>
+    /// Called when the tint color has changed; static verison
+    /// </summary>
+    /// <param name="bindable">bindable object</param>
+    /// <param name="oldValue">old value</param>
+    /// <param name="newValue">new value</param>
+    private static void OnTintColorPropertyChanged(
+        BindableObject bindable,
+        object oldValue,
+        object newValue)
+    {
+        ((TintedImage)bindable).OnTintColorPropertyChanged(
+            (Color?)oldValue,
+            (Color?)newValue);
+    }
+
+    /// <summary>
+    /// Called when the tint color has changed
+    /// </summary>
+    /// <param name="oldValue">old color</param>
+    /// <param name="newValue">new color</param>
+    private void OnTintColorPropertyChanged(
+        Color? oldValue,
+        Color? newValue)
+    {
+        if (oldValue == newValue)
         {
-            get => (Color?)this.GetValue(TintColorProperty);
-            set => this.SetValue(TintColorProperty, value);
+            return;
         }
 
-        /// <summary>
-        /// Called when the tint color has changed; static verison
-        /// </summary>
-        /// <param name="bindable">bindable object</param>
-        /// <param name="oldValue">old value</param>
-        /// <param name="newValue">new value</param>
-        private static void OnTintColorPropertyChanged(
-            BindableObject bindable,
-            object oldValue,
-            object newValue)
+        this.Behaviors.Clear();
+
+        if (newValue != null &&
+            newValue != Colors.Transparent)
         {
-            ((TintedImage)bindable).OnTintColorPropertyChanged(
-                (Color?)oldValue,
-                (Color?)newValue);
-        }
-
-        /// <summary>
-        /// Called when the tint color has changed
-        /// </summary>
-        /// <param name="oldValue">old color</param>
-        /// <param name="newValue">new color</param>
-        private void OnTintColorPropertyChanged(
-            Color? oldValue,
-            Color? newValue)
-        {
-            if (oldValue == newValue)
+            var behavior = new IconTintColorBehavior
             {
-                return;
-            }
+                TintColor = newValue,
+            };
 
-            this.Behaviors.Clear();
-
-            if (newValue != null &&
-                newValue != Colors.Transparent)
-            {
-                var behavior = new IconTintColorBehavior
-                {
-                    TintColor = newValue,
-                };
-
-                this.Behaviors.Add(behavior);
-            }
+            this.Behaviors.Add(behavior);
         }
     }
 }

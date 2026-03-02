@@ -1,16 +1,15 @@
-﻿namespace WhereToFly.App.Pages
+﻿namespace WhereToFly.App.Pages;
+
+/// <summary>
+/// Settings page to configure app map settings
+/// </summary>
+public partial class MapSettingsPage : ContentPage
 {
     /// <summary>
-    /// Settings page to configure app map settings
+    /// Creates new map settings page
     /// </summary>
-    public partial class MapSettingsPage : ContentPage
+    public MapSettingsPage()
     {
-        /// <summary>
-        /// Creates new map settings page
-        /// </summary>
-        public MapSettingsPage()
-        {
-            this.InitializeComponent();
-        }
+        this.InitializeComponent();
     }
 }

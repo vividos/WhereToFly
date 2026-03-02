@@ -1,21 +1,20 @@
 ﻿using System;
 using WhereToFly.Geo.Model;
 
-namespace WhereToFly.Geo
+namespace WhereToFly.Geo;
+
+/// <summary>
+/// Position data
+/// </summary>
+public record Position
 {
     /// <summary>
-    /// Position data
+    /// Location of pilot in WGS84 coordinates
     /// </summary>
-    public record Position
-    {
-        /// <summary>
-        /// Location of pilot in WGS84 coordinates
-        /// </summary>
-        public MapPoint? Location { get; set; }
+    public MapPoint? Location { get; set; }
 
-        /// <summary>
-        /// Timestamp of location
-        /// </summary>
-        public DateTimeOffset? Timestamp { get; set; }
-    }
+    /// <summary>
+    /// Timestamp of location
+    /// </summary>
+    public DateTimeOffset? Timestamp { get; set; }
 }

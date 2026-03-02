@@ -1,17 +1,16 @@
-﻿namespace WhereToFly.App.Pages
+﻿namespace WhereToFly.App.Pages;
+
+/// <summary>
+/// Page to display layer list; the layers' visibility can be set, and a layer can be zoomed
+/// to.
+/// </summary>
+public partial class LayerListPage : ContentPage
 {
     /// <summary>
-    /// Page to display layer list; the layers' visibility can be set, and a layer can be zoomed
-    /// to.
+    /// Creates a new layer list page
     /// </summary>
-    public partial class LayerListPage : ContentPage
+    public LayerListPage()
     {
-        /// <summary>
-        /// Creates a new layer list page
-        /// </summary>
-        public LayerListPage()
-        {
-            this.InitializeComponent();
-        }
+        this.InitializeComponent();
     }
 }

@@ -1,16 +1,15 @@
-﻿namespace WhereToFly.App.Pages
+﻿namespace WhereToFly.App.Pages;
+
+/// <summary>
+/// Page to display menu for the flyout page
+/// </summary>
+public partial class MenuPage : ContentPage
 {
     /// <summary>
-    /// Page to display menu for the flyout page
+    /// Creates new menu page
     /// </summary>
-    public partial class MenuPage : ContentPage
+    public MenuPage()
     {
-        /// <summary>
-        /// Creates new menu page
-        /// </summary>
-        public MenuPage()
-        {
-            this.InitializeComponent();
-        }
+        this.InitializeComponent();
     }
 }

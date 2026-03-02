@@ -2,20 +2,20 @@
 using System;
 using WhereToFly.Geo.DataFormats.GeoJson;
 
-namespace WhereToFly.Geo.UnitTest
+namespace WhereToFly.Geo.UnitTest;
+
+/// <summary>
+/// Unit tests for GeoJSON converter classes
+/// </summary>
+[TestClass]
+public class GeoJsonConvertTest
 {
     /// <summary>
-    /// Unit tests for GeoJSON converter classes
+    /// Example GeoJSON strings, from Wikipedia
     /// </summary>
-    [TestClass]
-    public class GeoJsonConvertTest
-    {
-        /// <summary>
-        /// Example GeoJSON strings, from Wikipedia
-        /// </summary>
-        private static readonly string[] GeoJsonExamples =
-        [
-            @"{
+    private static readonly string[] GeoJsonExamples =
+    [
+        @"{
   ""type"": ""FeatureCollection"",
   ""features"": [
     {
@@ -59,14 +59,14 @@ namespace WhereToFly.Geo.UnitTest
     }
   ]
 }",
-            @"{
+        @"{
     ""type"": ""Feature"",
     ""geometry"": {
         ""type"": ""Point"",
         ""coordinates"": [30, 10]
     }
 }",
-            @"{
+        @"{
     ""type"": ""Feature"",
     ""geometry"": {
         ""type"": ""LineString"",
@@ -75,7 +75,7 @@ namespace WhereToFly.Geo.UnitTest
         ]
     }
 }",
-            @"{
+        @"{
     ""type"": ""Feature"",
     ""geometry"": {
         ""type"": ""Polygon"",
@@ -84,7 +84,7 @@ namespace WhereToFly.Geo.UnitTest
         ]
     }
 }",
-            @"{
+        @"{
     ""type"": ""Feature"",
     ""geometry"": {
         ""type"": ""MultiPoint"",
@@ -93,7 +93,7 @@ namespace WhereToFly.Geo.UnitTest
         ]
     }
 }",
-            @"{
+        @"{
     ""type"": ""Feature"",
     ""geometry"": {
         ""type"": ""MultiLineString"",
@@ -103,7 +103,7 @@ namespace WhereToFly.Geo.UnitTest
         ]
     }
 }",
-            @"{
+        @"{
     ""type"": ""Feature"",
     ""geometry"": {
         ""type"": ""MultiPolygon"",
@@ -117,7 +117,7 @@ namespace WhereToFly.Geo.UnitTest
         ]
     }
 }",
-            @"{
+        @"{
     ""type"": ""GeometryCollection"",
     ""geometries"": [
         {
@@ -138,77 +138,76 @@ namespace WhereToFly.Geo.UnitTest
         }
     ]
 }",
-        ];
+    ];
 
-        /// <summary>
-        /// Tests converting GeoJSON to KML format
-        /// </summary>
-        [TestMethod]
-        public void TestConvertToKml()
+    /// <summary>
+    /// Tests converting GeoJSON to KML format
+    /// </summary>
+    [TestMethod]
+    public void TestConvertToKml()
+    {
+        foreach (string geoJsonText in GeoJsonExamples)
         {
-            foreach (string geoJsonText in GeoJsonExamples)
+            try
             {
-                try
+                // set up
+                var kmlOptions = new KmlConvertOptions
                 {
-                    // set up
-                    var kmlOptions = new KmlConvertOptions
-                    {
-                        DocumentName = "empty",
-                        PolygonColor = SharpKml.Base.Color32.Parse("aabb12"),
-                    };
+                    DocumentName = "empty",
+                    PolygonColor = SharpKml.Base.Color32.Parse("aabb12"),
+                };
 
-                    var converter = new GeoJsonKmlConverter(kmlOptions);
+                var converter = new GeoJsonKmlConverter(kmlOptions);
 
-                    // run
-                    string kml = converter.ConvertToKml(geoJsonText);
+                // run
+                string kml = converter.ConvertToKml(geoJsonText);
 
-                    // check
-                    Assert.IsFalse(string.IsNullOrEmpty(kml), "generated KML must not be empty");
-                }
-                catch (Exception ex)
-                {
-                    Assert.Fail("generating KML must not throw an exception: " + ex.ToString());
-                }
+                // check
+                Assert.IsFalse(string.IsNullOrEmpty(kml), "generated KML must not be empty");
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail("generating KML must not throw an exception: " + ex.ToString());
             }
         }
+    }
 
-        /// <summary>
-        /// Tests converting GeoJSON to CZML format
-        /// </summary>
-        [TestMethod]
-        public void TestConvertToCzml()
+    /// <summary>
+    /// Tests converting GeoJSON to CZML format
+    /// </summary>
+    [TestMethod]
+    public void TestConvertToCzml()
+    {
+        foreach (string geoJsonText in GeoJsonExamples)
         {
-            foreach (string geoJsonText in GeoJsonExamples)
+            try
             {
-                try
+                // set up
+                var czmlConvertOptions = new CzmlConvertOptions
                 {
-                    // set up
-                    var czmlConvertOptions = new CzmlConvertOptions
-                    {
-                        DocumentName = "empty",
-                        DocumentDescription = "also empty",
-                        PointSize = 15.0,
-                        PointColor = new WhereToFly.Geo.DataFormats.Czml.Color(255, 0, 255),
-                        LineWidth = 10.0,
-                        LineColor = new WhereToFly.Geo.DataFormats.Czml.Color(0, 255, 255),
-                        PolygonColor = new WhereToFly.Geo.DataFormats.Czml.Color(255, 255, 0),
-                        CustomNameFormatter = (element) => element.Title ?? "title",
-                        CustomDescriptionFormatter = (element) => element.Title ?? "description",
-                        CustomPointColorResolver = (element) =>
-                            new WhereToFly.Geo.DataFormats.Czml.Color(element.GetHashCode() & 0xFF, 0, 0),
-                    };
+                    DocumentName = "empty",
+                    DocumentDescription = "also empty",
+                    PointSize = 15.0,
+                    PointColor = new WhereToFly.Geo.DataFormats.Czml.Color(255, 0, 255),
+                    LineWidth = 10.0,
+                    LineColor = new WhereToFly.Geo.DataFormats.Czml.Color(0, 255, 255),
+                    PolygonColor = new WhereToFly.Geo.DataFormats.Czml.Color(255, 255, 0),
+                    CustomNameFormatter = (element) => element.Title ?? "title",
+                    CustomDescriptionFormatter = (element) => element.Title ?? "description",
+                    CustomPointColorResolver = (element) =>
+                        new WhereToFly.Geo.DataFormats.Czml.Color(element.GetHashCode() & 0xFF, 0, 0),
+                };
 
-                    // run
-                    var converter = new GeoJsonCzmlConverter(czmlConvertOptions);
-                    string czml = converter.ConvertToCzml(geoJsonText);
+                // run
+                var converter = new GeoJsonCzmlConverter(czmlConvertOptions);
+                string czml = converter.ConvertToCzml(geoJsonText);
 
-                    // check
-                    Assert.IsFalse(string.IsNullOrEmpty(czml), "generated CZML must not be empty");
-                }
-                catch (Exception ex)
-                {
-                    Assert.Fail("generating CZML must not throw an exception: " + ex.ToString());
-                }
+                // check
+                Assert.IsFalse(string.IsNullOrEmpty(czml), "generated CZML must not be empty");
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail("generating CZML must not throw an exception: " + ex.ToString());
             }
         }
     }

@@ -1,93 +1,92 @@
-﻿namespace WhereToFly.Geo.Airspace
+﻿namespace WhereToFly.Geo.Airspace;
+
+/// <summary>
+/// Enum values for all airspace classes
+/// </summary>
+public enum AirspaceClass
 {
     /// <summary>
-    /// Enum values for all airspace classes
+    /// Restricted airspace
     /// </summary>
-    public enum AirspaceClass
-    {
-        /// <summary>
-        /// Restricted airspace
-        /// </summary>
-        Restricted,
+    Restricted,
 
-        /// <summary>
-        /// Danger airspace
-        /// </summary>
-        Danger,
+    /// <summary>
+    /// Danger airspace
+    /// </summary>
+    Danger,
 
-        /// <summary>
-        /// Prohibited airspace
-        /// </summary>
-        Prohibited,
+    /// <summary>
+    /// Prohibited airspace
+    /// </summary>
+    Prohibited,
 
-        /// <summary>
-        /// Class A
-        /// </summary>
-        A,
+    /// <summary>
+    /// Class A
+    /// </summary>
+    A,
 
-        /// <summary>
-        /// Class B
-        /// </summary>
-        B,
+    /// <summary>
+    /// Class B
+    /// </summary>
+    B,
 
-        /// <summary>
-        /// Class C
-        /// </summary>
-        C,
+    /// <summary>
+    /// Class C
+    /// </summary>
+    C,
 
-        /// <summary>
-        /// Class D
-        /// </summary>
-        D,
+    /// <summary>
+    /// Class D
+    /// </summary>
+    D,
 
-        /// <summary>
-        /// Class E
-        /// </summary>
-        E,
+    /// <summary>
+    /// Class E
+    /// </summary>
+    E,
 
-        /// <summary>
-        /// Class F
-        /// </summary>
-        F,
+    /// <summary>
+    /// Class F
+    /// </summary>
+    F,
 
-        /// <summary>
-        /// Class G
-        /// </summary>
-        G,
+    /// <summary>
+    /// Class G
+    /// </summary>
+    G,
 
-        /// <summary>
-        /// Glider prohibited
-        /// </summary>
-        GliderProhibited,
+    /// <summary>
+    /// Glider prohibited
+    /// </summary>
+    GliderProhibited,
 
-        /// <summary>
-        /// CTR (=Control Zone)
-        /// </summary>
-        CTR,
+    /// <summary>
+    /// CTR (=Control Zone)
+    /// </summary>
+    CTR,
 
-        /// <summary>
-        /// Wave window
-        /// </summary>
-        WaveWindow,
+    /// <summary>
+    /// Wave window
+    /// </summary>
+    WaveWindow,
 
-        /// <summary>
-        /// Radio mandatory zone
-        /// </summary>
-        RMZ,
+    /// <summary>
+    /// Radio mandatory zone
+    /// </summary>
+    RMZ,
 
-        /// <summary>
-        /// Transponder mandatory zone
-        /// </summary>
-        TMZ,
+    /// <summary>
+    /// Transponder mandatory zone
+    /// </summary>
+    TMZ,
 
-        /// <summary>
-        /// Other airspace
-        /// </summary>
-        Other,
+    /// <summary>
+    /// Other airspace
+    /// </summary>
+    Other,
 
-        /// <summary>
-        /// Unknown or not recognized class
-        /// </summary>
-        Unknown,
-    }
+    /// <summary>
+    /// Unknown or not recognized class
+    /// </summary>
+    Unknown,
 }

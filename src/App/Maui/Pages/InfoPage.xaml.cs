@@ -1,16 +1,15 @@
-﻿namespace WhereToFly.App.Pages
+﻿namespace WhereToFly.App.Pages;
+
+/// <summary>
+/// Shows an info page displaying a CarouselView with the info (sub) pages.
+/// </summary>
+public partial class InfoPage : ContentPage
 {
     /// <summary>
-    /// Shows an info page displaying a CarouselView with the info (sub) pages.
+    /// Creates a new info page
     /// </summary>
-    public partial class InfoPage : ContentPage
+    public InfoPage()
     {
-        /// <summary>
-        /// Creates a new info page
-        /// </summary>
-        public InfoPage()
-        {
-            this.InitializeComponent();
-        }
+        this.InitializeComponent();
     }
 }

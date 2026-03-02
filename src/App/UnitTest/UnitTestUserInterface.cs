@@ -6,109 +6,108 @@ using System.Threading.Tasks;
 using WhereToFly.App.Abstractions;
 using WhereToFly.App.Services;
 
-namespace WhereToFly.App.UnitTest
+namespace WhereToFly.App.UnitTest;
+
+/// <summary>
+/// User interface implementation for unit tests
+/// </summary>
+internal class UnitTestUserInterface : IUserInterface
 {
+    /// <inheritdoc />
+    public AppTheme UserAppTheme { get; set; } = AppTheme.Unspecified;
+
+    /// <inheritdoc />
+    public bool IsDarkTheme => this.UserAppTheme == AppTheme.Dark;
+
+    /// <inheritdoc />
+    public INavigationService NavigationService { get; private set; }
+        = new UnitTestNavigationService();
+
     /// <summary>
-    /// User interface implementation for unit tests
+    /// Result returned by call to <see cref="DisplayAlert(string, string, string)"/>
     /// </summary>
-    internal class UnitTestUserInterface : IUserInterface
+    public bool AlertResult { get; set; } = true;
+
+    /// <summary>
+    /// Result returned by call to <see cref="DisplayActionSheet"/>. Wen set to -1, returns the
+    /// 'cancel' action text, and for -2 returns the 'destruction' action text.
+    /// </summary>
+    public int ActionSheetResult { get; set; } = -1;
+
+    /// <inheritdoc />
+    public void DisplayToast(string message)
     {
-        /// <inheritdoc />
-        public AppTheme UserAppTheme { get; set; } = AppTheme.Unspecified;
+        Debug.WriteLine($"Displaying toast: {message}");
+    }
 
-        /// <inheritdoc />
-        public bool IsDarkTheme => this.UserAppTheme == AppTheme.Dark;
+    /// <inheritdoc />
+    public Task DisplayAlert(string message, string cancel)
+    {
+        Debug.WriteLine($"Displaying alert: {message} [{cancel}]");
+        return Task.CompletedTask;
+    }
 
-        /// <inheritdoc />
-        public INavigationService NavigationService { get; private set; }
-            = new UnitTestNavigationService();
+    /// <inheritdoc />
+    public Task<bool> DisplayAlert(string message, string accept, string cancel)
+    {
+        Debug.WriteLine($"Displaying alert: {message} [{accept}] [{cancel}]");
+        Debug.WriteLine($"Pressing button [{(this.AlertResult ? accept : cancel)}]");
 
-        /// <summary>
-        /// Result returned by call to <see cref="DisplayAlert(string, string, string)"/>
-        /// </summary>
-        public bool AlertResult { get; set; } = true;
+        return Task.FromResult(this.AlertResult);
+    }
 
-        /// <summary>
-        /// Result returned by call to <see cref="DisplayActionSheet"/>. Wen set to -1, returns the
-        /// 'cancel' action text, and for -2 returns the 'destruction' action text.
-        /// </summary>
-        public int ActionSheetResult { get; set; } = -1;
-
-        /// <inheritdoc />
-        public void DisplayToast(string message)
+    /// <inheritdoc />
+    public Task<string> DisplayActionSheet(
+        string title,
+        string? cancel,
+        string? destruction,
+        params string[] buttons)
+    {
+        if (cancel == null &&
+            this.ActionSheetResult == -1)
         {
-            Debug.WriteLine($"Displaying toast: {message}");
+            throw new ArgumentException(
+                "no 'cancel' text was provided!",
+                nameof(cancel));
         }
 
-        /// <inheritdoc />
-        public Task DisplayAlert(string message, string cancel)
+        if (destruction == null &&
+            this.ActionSheetResult == -2)
         {
-            Debug.WriteLine($"Displaying alert: {message} [{cancel}]");
-            return Task.CompletedTask;
+            throw new ArgumentException(
+                "no 'destruction' text was provided!",
+                nameof(destruction));
         }
 
-        /// <inheritdoc />
-        public Task<bool> DisplayAlert(string message, string accept, string cancel)
-        {
-            Debug.WriteLine($"Displaying alert: {message} [{accept}] [{cancel}]");
-            Debug.WriteLine($"Pressing button [{(this.AlertResult ? accept : cancel)}]");
+        string choices =
+            string.Join(
+                ", ",
+                buttons.Select(
+                    text => $"{Array.IndexOf(buttons, text)}. {text}"));
 
-            return Task.FromResult(this.AlertResult);
+        if (cancel != null)
+        {
+            choices += $", -1. {cancel}";
         }
 
-        /// <inheritdoc />
-        public Task<string> DisplayActionSheet(
-            string title,
-            string? cancel,
-            string? destruction,
-            params string[] buttons)
+        if (destruction != null)
         {
-            if (cancel == null &&
-                this.ActionSheetResult == -1)
-            {
-                throw new ArgumentException(
-                    "no 'cancel' text was provided!",
-                    nameof(cancel));
-            }
+            choices += $", -2. {destruction}";
+        }
 
-            if (destruction == null &&
-                this.ActionSheetResult == -2)
-            {
-                throw new ArgumentException(
-                    "no 'destruction' text was provided!",
-                    nameof(destruction));
-            }
-
-            string choices =
-                string.Join(
-                    ", ",
-                    buttons.Select(
-                        text => $"{Array.IndexOf(buttons, text)}. {text}"));
-
-            if (cancel != null)
-            {
-                choices += $", -1. {cancel}";
-            }
-
-            if (destruction != null)
-            {
-                choices += $", -2. {destruction}";
-            }
-
-            Debug.WriteLine($"Displaying action sheet: {title} {choices}");
+        Debug.WriteLine($"Displaying action sheet: {title} {choices}");
 
 #pragma warning disable S3358 // Ternary operators should not be nested
-            string result =
-                this.ActionSheetResult == -2
-                ? destruction!
-                : this.ActionSheetResult == -1 || buttons.Length >= this.ActionSheetResult
-                ? cancel!
-                : buttons[this.ActionSheetResult];
+        string result =
+            this.ActionSheetResult == -2
+            ? destruction!
+            : this.ActionSheetResult == -1 || buttons.Length >= this.ActionSheetResult
+            ? cancel!
+            : buttons[this.ActionSheetResult];
 #pragma warning restore S3358 // Ternary operators should not be nested
 
-            Debug.WriteLine($"Choosing: {result}");
+        Debug.WriteLine($"Choosing: {result}");
 
-            return Task.FromResult(result);
-        }
+        return Task.FromResult(result);
     }
 }

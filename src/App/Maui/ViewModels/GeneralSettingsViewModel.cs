@@ -1,156 +1,155 @@
 ﻿using WhereToFly.App.Abstractions;
 using WhereToFly.App.Models;
 
-namespace WhereToFly.App.ViewModels
+namespace WhereToFly.App.ViewModels;
+
+/// <summary>
+/// View model for the map settings page
+/// </summary>
+public class GeneralSettingsViewModel : ViewModelBase
 {
     /// <summary>
-    /// View model for the map settings page
+    /// View model for app theme
     /// </summary>
-    public class GeneralSettingsViewModel : ViewModelBase
+    public class AppThemeViewModel
     {
         /// <summary>
-        /// View model for app theme
+        /// Display text for value
         /// </summary>
-        public class AppThemeViewModel
+        public string Text { get; set; }
+
+        /// <summary>
+        /// App theme value
+        /// </summary>
+        public AppTheme Value { get; set; }
+
+        /// <summary>
+        /// Creates a new app theme view model
+        /// </summary>
+        /// <param name="text">display text</param>
+        /// <param name="appTheme">app theme</param>
+        public AppThemeViewModel(string text, AppTheme appTheme)
         {
-            /// <summary>
-            /// Display text for value
-            /// </summary>
-            public string Text { get; set; }
+            this.Text = text;
+            this.Value = appTheme;
+        }
+    }
 
-            /// <summary>
-            /// App theme value
-            /// </summary>
-            public AppTheme Value { get; set; }
+    /// <summary>
+    /// App settings object
+    /// </summary>
+    private readonly AppSettings appSettings;
 
-            /// <summary>
-            /// Creates a new app theme view model
-            /// </summary>
-            /// <param name="text">display text</param>
-            /// <param name="appTheme">app theme</param>
-            public AppThemeViewModel(string text, AppTheme appTheme)
+    #region Binding properties
+    /// <summary>
+    /// List of available map overlay types
+    /// </summary>
+    public List<AppThemeViewModel> AppThemeItems
+    {
+        get; private set;
+    }
+
+    /// <summary>
+    /// Currently selected app theme
+    /// </summary>
+    public AppThemeViewModel? SelectedAppTheme
+    {
+        get
+        {
+            return this.AppThemeItems.Find(
+                x => x.Value == this.appSettings.AppTheme);
+        }
+
+        set
+        {
+            if (value?.Value != null &&
+                this.appSettings.AppTheme != value.Value)
             {
-                this.Text = text;
-                this.Value = appTheme;
+                this.appSettings.AppTheme = value.Value;
+                App.Settings!.AppTheme = value.Value;
+                MainThread.BeginInvokeOnMainThread(
+                    async () => await this.SaveThemeSettingsAsync());
             }
         }
+    }
 
-        /// <summary>
-        /// App settings object
-        /// </summary>
-        private readonly AppSettings appSettings;
+    /// <summary>
+    /// Username for the alptherm web page
+    /// </summary>
+    public string AlpthermUsername { get; set; } = string.Empty;
 
-        #region Binding properties
-        /// <summary>
-        /// List of available map overlay types
-        /// </summary>
-        public List<AppThemeViewModel> AppThemeItems
+    /// <summary>
+    /// Password for the alptherm web page
+    /// </summary>
+    public string AlpthermPassword { get; set; } = string.Empty;
+    #endregion
+
+    /// <summary>
+    /// Creates a new view model for the general settings page
+    /// </summary>
+    public GeneralSettingsViewModel()
+    {
+        this.appSettings = App.Settings!;
+
+        this.AppThemeItems =
+        [
+            new AppThemeViewModel("Same as device", AppTheme.Unspecified),
+            new AppThemeViewModel("Light theme", AppTheme.Light),
+            new AppThemeViewModel("Dark theme", AppTheme.Dark),
+        ];
+
+        Task.Run(this.LoadDataAsync);
+    }
+
+    /// <summary>
+    /// Loads view model data from secure storage
+    /// </summary>
+    /// <returns>task to wait on</returns>
+    private async Task LoadDataAsync()
+    {
+        this.AlpthermUsername =
+            await SecureStorage.GetAsync(Constants.SecureSettingsAlpthermUsername)
+            ?? string.Empty;
+
+        this.OnPropertyChanged(nameof(this.AlpthermUsername));
+
+        this.AlpthermPassword =
+            await SecureStorage.GetAsync(Constants.SecureSettingsAlpthermPassword)
+            ?? string.Empty;
+
+        this.OnPropertyChanged(nameof(this.AlpthermPassword));
+    }
+
+    /// <summary>
+    /// Stores view model data to secure storage
+    /// </summary>
+    /// <returns>task to wait on</returns>
+    public async Task StoreDataAsync()
+    {
+        if (!string.IsNullOrEmpty(this.AlpthermUsername))
         {
-            get; private set;
+            await SecureStorage.SetAsync(
+                Constants.SecureSettingsAlpthermUsername,
+                this.AlpthermUsername);
         }
 
-        /// <summary>
-        /// Currently selected app theme
-        /// </summary>
-        public AppThemeViewModel? SelectedAppTheme
+        if (!string.IsNullOrEmpty(this.AlpthermPassword))
         {
-            get
-            {
-                return this.AppThemeItems.Find(
-                    x => x.Value == this.appSettings.AppTheme);
-            }
-
-            set
-            {
-                if (value?.Value != null &&
-                    this.appSettings.AppTheme != value.Value)
-                {
-                    this.appSettings.AppTheme = value.Value;
-                    App.Settings!.AppTheme = value.Value;
-                    MainThread.BeginInvokeOnMainThread(
-                        async () => await this.SaveThemeSettingsAsync());
-                }
-            }
+            await SecureStorage.SetAsync(
+                Constants.SecureSettingsAlpthermPassword,
+                this.AlpthermPassword);
         }
+    }
 
-        /// <summary>
-        /// Username for the alptherm web page
-        /// </summary>
-        public string AlpthermUsername { get; set; } = string.Empty;
+    /// <summary>
+    /// Saves settings to data service
+    /// </summary>
+    /// <returns>task to wait on</returns>
+    private async Task SaveThemeSettingsAsync()
+    {
+        UserInterface.UserAppTheme = this.appSettings.AppTheme;
 
-        /// <summary>
-        /// Password for the alptherm web page
-        /// </summary>
-        public string AlpthermPassword { get; set; } = string.Empty;
-        #endregion
-
-        /// <summary>
-        /// Creates a new view model for the general settings page
-        /// </summary>
-        public GeneralSettingsViewModel()
-        {
-            this.appSettings = App.Settings!;
-
-            this.AppThemeItems =
-            [
-                new AppThemeViewModel("Same as device", AppTheme.Unspecified),
-                new AppThemeViewModel("Light theme", AppTheme.Light),
-                new AppThemeViewModel("Dark theme", AppTheme.Dark),
-            ];
-
-            Task.Run(this.LoadDataAsync);
-        }
-
-        /// <summary>
-        /// Loads view model data from secure storage
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task LoadDataAsync()
-        {
-            this.AlpthermUsername =
-                await SecureStorage.GetAsync(Constants.SecureSettingsAlpthermUsername)
-                ?? string.Empty;
-
-            this.OnPropertyChanged(nameof(this.AlpthermUsername));
-
-            this.AlpthermPassword =
-                await SecureStorage.GetAsync(Constants.SecureSettingsAlpthermPassword)
-                ?? string.Empty;
-
-            this.OnPropertyChanged(nameof(this.AlpthermPassword));
-        }
-
-        /// <summary>
-        /// Stores view model data to secure storage
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        public async Task StoreDataAsync()
-        {
-            if (!string.IsNullOrEmpty(this.AlpthermUsername))
-            {
-                await SecureStorage.SetAsync(
-                    Constants.SecureSettingsAlpthermUsername,
-                    this.AlpthermUsername);
-            }
-
-            if (!string.IsNullOrEmpty(this.AlpthermPassword))
-            {
-                await SecureStorage.SetAsync(
-                    Constants.SecureSettingsAlpthermPassword,
-                    this.AlpthermPassword);
-            }
-        }
-
-        /// <summary>
-        /// Saves settings to data service
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task SaveThemeSettingsAsync()
-        {
-            UserInterface.UserAppTheme = this.appSettings.AppTheme;
-
-            var dataService = Services.GetRequiredService<IDataService>();
-            await dataService.StoreAppSettingsAsync(this.appSettings);
-        }
+        var dataService = Services.GetRequiredService<IDataService>();
+        await dataService.StoreAppSettingsAsync(this.appSettings);
     }
 }

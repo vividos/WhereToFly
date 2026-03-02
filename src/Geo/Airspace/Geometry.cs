@@ -1,9 +1,8 @@
-﻿namespace WhereToFly.Geo.Airspace
+﻿namespace WhereToFly.Geo.Airspace;
+
+/// <summary>
+/// Interface for Circle and Polygon airspace geometries
+/// </summary>
+public interface IGeometry
 {
-    /// <summary>
-    /// Interface for Circle and Polygon airspace geometries
-    /// </summary>
-    public interface IGeometry
-    {
-    }
 }

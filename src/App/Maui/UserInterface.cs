@@ -4,151 +4,150 @@ using WhereToFly.App.Abstractions;
 using WhereToFly.App.Pages;
 using WhereToFly.App.Services;
 
-namespace WhereToFly.App
+namespace WhereToFly.App;
+
+/// <summary>
+/// User interface implementation for the Forms app
+/// </summary>
+internal class UserInterface : IUserInterface
 {
     /// <summary>
-    /// User interface implementation for the Forms app
+    /// The current app instance
     /// </summary>
-    internal class UserInterface : IUserInterface
+    private static App App
+        => App.Current as App
+        ?? throw new InvalidOperationException("App.Current is not available");
+
+    /// <summary>
+    /// The current main page
+    /// </summary>
+    internal static Page MainPage
+        => App.Windows[0].Page
+        ?? throw new InvalidOperationException("MainPage is not available");
+
+    /// <summary>
+    /// Gets or sets the user's selected app theme
+    /// </summary>
+    public AppTheme UserAppTheme
     {
-        /// <summary>
-        /// The current app instance
-        /// </summary>
-        private static App App
-            => App.Current as App
-            ?? throw new InvalidOperationException("App.Current is not available");
+        get => App.UserAppTheme;
+        set => SetUserAppTheme(value);
+    }
 
-        /// <summary>
-        /// The current main page
-        /// </summary>
-        internal static Page MainPage
-            => App.Windows[0].Page
-            ?? throw new InvalidOperationException("MainPage is not available");
+    /// <summary>
+    /// Returns if the app is currently using a dark theme. This takes into account when the
+    /// app theme is set to "Same as device".
+    /// </summary>
+    public bool IsDarkTheme
+        => App.UserAppTheme == AppTheme.Dark ||
+        (App.UserAppTheme == AppTheme.Unspecified && App.RequestedTheme == AppTheme.Dark);
 
-        /// <summary>
-        /// Gets or sets the user's selected app theme
-        /// </summary>
-        public AppTheme UserAppTheme
-        {
-            get => App.UserAppTheme;
-            set => SetUserAppTheme(value);
-        }
+    /// <summary>
+    /// Returns current navigation service instance
+    /// </summary>
+    public INavigationService NavigationService { get; }
 
-        /// <summary>
-        /// Returns if the app is currently using a dark theme. This takes into account when the
-        /// app theme is set to "Same as device".
-        /// </summary>
-        public bool IsDarkTheme
-            => App.UserAppTheme == AppTheme.Dark ||
-            (App.UserAppTheme == AppTheme.Unspecified && App.RequestedTheme == AppTheme.Dark);
+    /// <summary>
+    /// Creates a new user interface instance
+    /// </summary>
+    /// <param name="navigationService">navigation service</param>
+    public UserInterface(INavigationService navigationService)
+    {
+        this.NavigationService = navigationService;
+    }
 
-        /// <summary>
-        /// Returns current navigation service instance
-        /// </summary>
-        public INavigationService NavigationService { get; }
-
-        /// <summary>
-        /// Creates a new user interface instance
-        /// </summary>
-        /// <param name="navigationService">navigation service</param>
-        public UserInterface(INavigationService navigationService)
-        {
-            this.NavigationService = navigationService;
-        }
-
-        /// <summary>
-        /// Displays toast message
-        /// </summary>
-        /// <param name="message">message text</param>
-        public void DisplayToast(string message)
-        {
+    /// <summary>
+    /// Displays toast message
+    /// </summary>
+    /// <param name="message">message text</param>
+    public void DisplayToast(string message)
+    {
 #if WINDOWS
-            MainThread.BeginInvokeOnMainThread(
-                async () =>
-                {
-                    var toast = Toast.Make(
-                        message,
-                        ToastDuration.Short);
-
-                    await toast.Show();
-                });
-#else
-            MainThread.BeginInvokeOnMainThread(
-                async () =>
-                {
-                    var options = new SnackbarOptions
-                    {
-                        BackgroundColor = Constants.PrimaryColor,
-                        ActionButtonTextColor = Colors.White,
-                        TextColor = Colors.White,
-                    };
-
-                    var snackbar = Snackbar.Make(
-                        message,
-                        duration: TimeSpan.FromSeconds(5),
-                        visualOptions: options);
-
-                    await snackbar.Show();
-                });
-#endif
-        }
-
-        /// <inheritdoc />
-        public async Task DisplayAlert(string message, string cancel)
-        {
-            await MainPage.Dispatcher.DispatchAsync(async () =>
+        MainThread.BeginInvokeOnMainThread(
+            async () =>
             {
-                await MainPage.DisplayAlertAsync(
-                        Constants.AppTitle,
-                        message,
-                        cancel);
+                var toast = Toast.Make(
+                    message,
+                    ToastDuration.Short);
+
+                await toast.Show();
             });
+#else
+        MainThread.BeginInvokeOnMainThread(
+            async () =>
+            {
+                var options = new SnackbarOptions
+                {
+                    BackgroundColor = Constants.PrimaryColor,
+                    ActionButtonTextColor = Colors.White,
+                    TextColor = Colors.White,
+                };
+
+                var snackbar = Snackbar.Make(
+                    message,
+                    duration: TimeSpan.FromSeconds(5),
+                    visualOptions: options);
+
+                await snackbar.Show();
+            });
+#endif
+    }
+
+    /// <inheritdoc />
+    public async Task DisplayAlert(string message, string cancel)
+    {
+        await MainPage.Dispatcher.DispatchAsync(async () =>
+        {
+            await MainPage.DisplayAlertAsync(
+                    Constants.AppTitle,
+                    message,
+                    cancel);
+        });
+    }
+
+    /// <inheritdoc />
+    public Task<bool> DisplayAlert(
+        string message,
+        string accept,
+        string cancel)
+        => MainPage.DisplayAlertAsync(
+            Constants.AppTitle,
+            message,
+            accept,
+            cancel);
+
+    /// <inheritdoc />
+    public Task<string> DisplayActionSheet(
+        string title,
+        string? cancel,
+        string? destruction,
+        params string[] buttons)
+        => MainPage.DisplayActionSheetAsync(title, cancel, destruction, buttons);
+
+    /// <summary>
+    /// Sets new user app theme, and ensures that it's running in the main thread
+    /// </summary>
+    /// <param name="newUserAppTheme">new user app theme to set</param>
+    private static void SetUserAppTheme(AppTheme newUserAppTheme)
+    {
+        if (!MainThread.IsMainThread)
+        {
+            MainThread.BeginInvokeOnMainThread(
+                () => SetUserAppTheme(newUserAppTheme));
+            return;
         }
 
-        /// <inheritdoc />
-        public Task<bool> DisplayAlert(
-            string message,
-            string accept,
-            string cancel)
-            => MainPage.DisplayAlertAsync(
-                Constants.AppTitle,
-                message,
-                accept,
-                cancel);
+        bool themeChanged = App.UserAppTheme != newUserAppTheme;
 
-        /// <inheritdoc />
-        public Task<string> DisplayActionSheet(
-            string title,
-            string? cancel,
-            string? destruction,
-            params string[] buttons)
-            => MainPage.DisplayActionSheetAsync(title, cancel, destruction, buttons);
+        App.UserAppTheme = newUserAppTheme;
 
-        /// <summary>
-        /// Sets new user app theme, and ensures that it's running in the main thread
-        /// </summary>
-        /// <param name="newUserAppTheme">new user app theme to set</param>
-        private static void SetUserAppTheme(AppTheme newUserAppTheme)
+        // refresh the menu page
+        if (themeChanged &&
+            App.Windows.Count > 0 &&
+            MainPage is RootPage rootPage &&
+            rootPage.Flyout is MenuPage)
         {
-            if (!MainThread.IsMainThread)
-            {
-                MainThread.BeginInvokeOnMainThread(
-                    () => SetUserAppTheme(newUserAppTheme));
-                return;
-            }
-
-            bool themeChanged = App.UserAppTheme != newUserAppTheme;
-
-            App.UserAppTheme = newUserAppTheme;
-
-            // refresh the menu page
-            if (themeChanged &&
-                App.Windows.Count > 0 &&
-                MainPage is RootPage rootPage &&
-                rootPage.Flyout is MenuPage)
-            {
-                rootPage.Flyout = new MenuPage();
-            }
+            rootPage.Flyout = new MenuPage();
         }
     }
 }

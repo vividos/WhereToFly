@@ -3,25 +3,24 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WhereToFly.App.Abstractions;
 using WhereToFly.App.Pages;
 
-namespace WhereToFly.App.UnitTest.Pages
+namespace WhereToFly.App.UnitTest.Pages;
+
+/// <summary>
+/// Tests for MapPage class
+/// </summary>
+[TestClass]
+public class MapPageTest : UserInterfaceTestBase
 {
     /// <summary>
-    /// Tests for MapPage class
+    /// Tests default ctor of page
     /// </summary>
-    [TestClass]
-    public class MapPageTest : UserInterfaceTestBase
+    [TestMethod]
+    public void TestDefaultCtor()
     {
-        /// <summary>
-        /// Tests default ctor of page
-        /// </summary>
-        [TestMethod]
-        public void TestDefaultCtor()
-        {
-            // set up
-            var page = new MapPage(this.Services);
+        // set up
+        var page = new MapPage(this.Services);
 
-            // check
-            Assert.IsGreaterThan(0, page.Title.Length, "page title must have been set");
-        }
+        // check
+        Assert.IsGreaterThan(0, page.Title.Length, "page title must have been set");
     }
 }

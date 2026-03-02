@@ -1,26 +1,25 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WhereToFly.App.Popups;
 
-namespace WhereToFly.App.UnitTest.Popups
+namespace WhereToFly.App.UnitTest.Popups;
+
+/// <summary>
+/// Tests for AddTrackPopupPage class
+/// </summary>
+[TestClass]
+public class AddTrackPopupPageTest : UserInterfaceTestBase
 {
     /// <summary>
-    /// Tests for AddTrackPopupPage class
+    /// Tests default ctor of popup page
     /// </summary>
-    [TestClass]
-    public class AddTrackPopupPageTest : UserInterfaceTestBase
+    [TestMethod]
+    public void TestDefaultCtor()
     {
-        /// <summary>
-        /// Tests default ctor of popup page
-        /// </summary>
-        [TestMethod]
-        public void TestDefaultCtor()
-        {
-            // set up
-            var track = UnitTestHelper.GetDefaultTrack();
-            var page = new AddTrackPopupPage(track);
+        // set up
+        var track = UnitTestHelper.GetDefaultTrack();
+        var page = new AddTrackPopupPage(track);
 
-            // check
-            Assert.IsNotNull(page.Content, "page content must have been set");
-        }
+        // check
+        Assert.IsNotNull(page.Content, "page content must have been set");
     }
 }

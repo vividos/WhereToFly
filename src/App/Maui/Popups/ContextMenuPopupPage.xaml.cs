@@ -1,20 +1,19 @@
 ﻿using WhereToFly.App.ViewModels;
 
-namespace WhereToFly.App.Popups
+namespace WhereToFly.App.Popups;
+
+/// <summary>
+/// Popup to display context menu items list
+/// </summary>
+public partial class ContextMenuPopupPage : BasePopupPage
 {
     /// <summary>
-    /// Popup to display context menu items list
+    /// Creates a new context menu popup
     /// </summary>
-    public partial class ContextMenuPopupPage : BasePopupPage
+    /// <param name="viewModel">view model for the popup</param>
+    public ContextMenuPopupPage(ContextMenuPopupViewModel viewModel)
     {
-        /// <summary>
-        /// Creates a new context menu popup
-        /// </summary>
-        /// <param name="viewModel">view model for the popup</param>
-        public ContextMenuPopupPage(ContextMenuPopupViewModel viewModel)
-        {
-            this.BindingContext = viewModel;
-            this.InitializeComponent();
-        }
+        this.BindingContext = viewModel;
+        this.InitializeComponent();
     }
 }

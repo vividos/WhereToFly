@@ -3,33 +3,32 @@ using System.Linq;
 using WhereToFly.App.ViewModels;
 using WhereToFly.Geo.Model;
 
-namespace WhereToFly.App.UnitTest.ViewModels
+namespace WhereToFly.App.UnitTest.ViewModels;
+
+/// <summary>
+/// Unit tests for class AddLiveWaypointPopupViewModel
+/// </summary>
+[TestClass]
+public class AddLiveWaypointPopupViewModelTest
 {
     /// <summary>
-    /// Unit tests for class AddLiveWaypointPopupViewModel
+    /// Tests default ctor of view model
     /// </summary>
-    [TestClass]
-    public class AddLiveWaypointPopupViewModelTest
+    [TestMethod]
+    public void TestDefaultCtor()
     {
-        /// <summary>
-        /// Tests default ctor of view model
-        /// </summary>
-        [TestMethod]
-        public void TestDefaultCtor()
-        {
-            // set up
-            var location = UnitTestHelper.GetDefaultLocation();
-            location.Type = LocationType.LiveWaypoint;
+        // set up
+        var location = UnitTestHelper.GetDefaultLocation();
+        location.Type = LocationType.LiveWaypoint;
 
-            // run
-            var viewModel = new AddLiveWaypointPopupViewModel(location);
+        // run
+        var viewModel = new AddLiveWaypointPopupViewModel(location);
 
-            // check
-            Assert.AreEqual(location.Name, viewModel.Name, "location mame must match");
-            Assert.IsTrue(viewModel.Type.Any(), "location type must contain text");
+        // check
+        Assert.AreEqual(location.Name, viewModel.Name, "location mame must match");
+        Assert.IsTrue(viewModel.Type.Any(), "location type must contain text");
 
-            // modify values
-            viewModel.Name = "Live42";
-        }
+        // modify values
+        viewModel.Name = "Live42";
     }
 }

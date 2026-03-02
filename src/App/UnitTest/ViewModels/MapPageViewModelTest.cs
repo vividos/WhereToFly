@@ -4,35 +4,34 @@ using System;
 using WhereToFly.App.Abstractions;
 using WhereToFly.App.ViewModels;
 
-namespace WhereToFly.App.UnitTest.ViewModels
+namespace WhereToFly.App.UnitTest.ViewModels;
+
+/// <summary>
+/// Unit tests for class <see cref="MapPageViewModel"/>
+/// </summary>
+[TestClass]
+public class MapPageViewModelTest : UserInterfaceTestBase
 {
     /// <summary>
-    /// Unit tests for class <see cref="MapPageViewModel"/>
+    /// Tests default ctor of view model
     /// </summary>
-    [TestClass]
-    public class MapPageViewModelTest : UserInterfaceTestBase
+    [TestMethod]
+    public void TestDefaultCtor()
     {
-        /// <summary>
-        /// Tests default ctor of view model
-        /// </summary>
-        [TestMethod]
-        public void TestDefaultCtor()
+        // set up + run + check
+        try
         {
-            // set up + run + check
-            try
-            {
-                var viewModel = new MapPageViewModel(
-                    new UnitTestMapView(),
-                    this.Services.GetRequiredService<IAppMapService>(),
-                    this.Services.GetRequiredService<IDataService>(),
-                    this.Services.GetRequiredService<IGeolocationService>());
+            var viewModel = new MapPageViewModel(
+                new UnitTestMapView(),
+                this.Services.GetRequiredService<IAppMapService>(),
+                this.Services.GetRequiredService<IDataService>(),
+                this.Services.GetRequiredService<IGeolocationService>());
 
-                Assert.IsNotNull(viewModel, "view model most have been creted");
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail($"ctor must not throw but did: {ex}");
-            }
+            Assert.IsNotNull(viewModel, "view model most have been creted");
+        }
+        catch (Exception ex)
+        {
+            Assert.Fail($"ctor must not throw but did: {ex}");
         }
     }
 }

@@ -1,36 +1,35 @@
 ﻿using WhereToFly.App.ViewModels;
 
-namespace WhereToFly.App.Pages
+namespace WhereToFly.App.Pages;
+
+/// <summary>
+/// Settings page to configure general app settings
+/// </summary>
+public partial class GeneralSettingsPage : ContentPage
 {
     /// <summary>
-    /// Settings page to configure general app settings
+    /// View model for this page
     /// </summary>
-    public partial class GeneralSettingsPage : ContentPage
+    private readonly GeneralSettingsViewModel viewModel;
+
+    /// <summary>
+    /// Creates new general settings page
+    /// </summary>
+    public GeneralSettingsPage()
     {
-        /// <summary>
-        /// View model for this page
-        /// </summary>
-        private readonly GeneralSettingsViewModel viewModel;
+        this.BindingContext = this.viewModel = new GeneralSettingsViewModel();
 
-        /// <summary>
-        /// Creates new general settings page
-        /// </summary>
-        public GeneralSettingsPage()
-        {
-            this.BindingContext = this.viewModel = new GeneralSettingsViewModel();
+        this.InitializeComponent();
+    }
 
-            this.InitializeComponent();
-        }
+    /// <summary>
+    /// Called when page is about to disappear
+    /// </summary>
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
 
-        /// <summary>
-        /// Called when page is about to disappear
-        /// </summary>
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
-
-            Task.Run(this.viewModel.StoreDataAsync)
-                .LogTaskException();
-        }
+        Task.Run(this.viewModel.StoreDataAsync)
+            .LogTaskException();
     }
 }

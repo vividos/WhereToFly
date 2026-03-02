@@ -1,37 +1,36 @@
 ﻿using WhereToFly.App.ViewModels;
 
-namespace WhereToFly.App.Pages
+namespace WhereToFly.App.Pages;
+
+/// <summary>
+/// Page to display track list; a single location entry can be tapped to get more infos.
+/// </summary>
+public partial class TrackListPage : ContentPage
 {
     /// <summary>
-    /// Page to display track list; a single location entry can be tapped to get more infos.
+    /// View model for this page
     /// </summary>
-    public partial class TrackListPage : ContentPage
+    private readonly TrackListViewModel viewModel;
+
+    /// <summary>
+    /// Creates a new track list page
+    /// </summary>
+    public TrackListPage()
     {
-        /// <summary>
-        /// View model for this page
-        /// </summary>
-        private readonly TrackListViewModel viewModel;
+        this.InitializeComponent();
 
-        /// <summary>
-        /// Creates a new track list page
-        /// </summary>
-        public TrackListPage()
-        {
-            this.InitializeComponent();
-
-            this.BindingContext = this.viewModel = new TrackListViewModel();
-        }
-
-        #region Page lifecycle methods
-        /// <summary>
-        /// Called when page is appearing; get current position
-        /// </summary>
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-
-            Task.Run(this.viewModel.CheckReloadNeeded);
-        }
-        #endregion
+        this.BindingContext = this.viewModel = new TrackListViewModel();
     }
+
+    #region Page lifecycle methods
+    /// <summary>
+    /// Called when page is appearing; get current position
+    /// </summary>
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        Task.Run(this.viewModel.CheckReloadNeeded);
+    }
+    #endregion
 }

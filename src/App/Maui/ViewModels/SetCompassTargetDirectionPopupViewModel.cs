@@ -1,37 +1,36 @@
-﻿namespace WhereToFly.App.ViewModels
+﻿namespace WhereToFly.App.ViewModels;
+
+/// <summary>
+/// View model for the "set compass target direction" popup page
+/// </summary>
+public class SetCompassTargetDirectionPopupViewModel : ViewModelBase
 {
     /// <summary>
-    /// View model for the "set compass target direction" popup page
+    /// Compass direction backing field
     /// </summary>
-    public class SetCompassTargetDirectionPopupViewModel : ViewModelBase
+    private int compassDirection;
+
+    #region Binding properties
+    /// <summary>
+    /// Property containing the compass direction
+    /// </summary>
+    public int CompassDirection
     {
-        /// <summary>
-        /// Compass direction backing field
-        /// </summary>
-        private int compassDirection;
-
-        #region Binding properties
-        /// <summary>
-        /// Property containing the compass direction
-        /// </summary>
-        public int CompassDirection
+        get => this.compassDirection;
+        set
         {
-            get => this.compassDirection;
-            set
-            {
-                this.compassDirection = value;
-                this.OnPropertyChanged(nameof(this.CompassDirection));
-            }
+            this.compassDirection = value;
+            this.OnPropertyChanged(nameof(this.CompassDirection));
         }
-        #endregion
+    }
+    #endregion
 
-        /// <summary>
-        /// Creates a new "set compass target direction" popup page view model
-        /// </summary>
-        /// <param name="compassDirection">compass direction</param>
-        public SetCompassTargetDirectionPopupViewModel(int compassDirection)
-        {
-            this.compassDirection = compassDirection;
-        }
+    /// <summary>
+    /// Creates a new "set compass target direction" popup page view model
+    /// </summary>
+    /// <param name="compassDirection">compass direction</param>
+    public SetCompassTargetDirectionPopupViewModel(int compassDirection)
+    {
+        this.compassDirection = compassDirection;
     }
 }

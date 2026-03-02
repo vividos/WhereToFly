@@ -1,21 +1,20 @@
 ﻿using WhereToFly.App.ViewModels;
 using WhereToFly.Geo.Model;
 
-namespace WhereToFly.App.Pages
+namespace WhereToFly.App.Pages;
+
+/// <summary>
+/// Page to display track statistics
+/// </summary>
+public partial class TrackStatisticsPage : ContentPage
 {
     /// <summary>
-    /// Page to display track statistics
+    /// Creates new track statistics page
     /// </summary>
-    public partial class TrackStatisticsPage : ContentPage
+    /// <param name="track">track to display</param>
+    public TrackStatisticsPage(Track track)
     {
-        /// <summary>
-        /// Creates new track statistics page
-        /// </summary>
-        /// <param name="track">track to display</param>
-        public TrackStatisticsPage(Track track)
-        {
-            this.BindingContext = new TrackStatisticsViewModel(track);
-            this.InitializeComponent();
-        }
+        this.BindingContext = new TrackStatisticsViewModel(track);
+        this.InitializeComponent();
     }
 }

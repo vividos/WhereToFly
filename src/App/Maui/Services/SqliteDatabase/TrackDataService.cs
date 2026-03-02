@@ -5,498 +5,497 @@ using WhereToFly.App.Abstractions;
 using WhereToFly.App.Serializers;
 using WhereToFly.Geo.Model;
 
-namespace WhereToFly.App.Services.SqliteDatabase
+namespace WhereToFly.App.Services.SqliteDatabase;
+
+/// <summary>
+/// Track data service implementation of SQLite database data service
+/// </summary>
+internal partial class SqliteDatabaseDataService
 {
     /// <summary>
-    /// Track data service implementation of SQLite database data service
+    /// Folder name for all tracks files
     /// </summary>
-    internal partial class SqliteDatabaseDataService
+    private const string TracksFolderName = "tracks";
+
+    /// <summary>
+    /// Database entry for a track
+    /// </summary>
+    [Table("tracks")]
+    private sealed class TrackEntry
     {
         /// <summary>
-        /// Folder name for all tracks files
+        /// Track to store in the entry
         /// </summary>
-        private const string TracksFolderName = "tracks";
+        [Ignore]
+        public Track Track { get; set; }
 
         /// <summary>
-        /// Database entry for a track
+        /// Track ID
         /// </summary>
-        [Table("tracks")]
-        private sealed class TrackEntry
+        [Column("id"), PrimaryKey]
+        public string Id
         {
-            /// <summary>
-            /// Track to store in the entry
-            /// </summary>
-            [Ignore]
-            public Track Track { get; set; }
+            get => this.Track.Id;
+            set => this.Track.Id = value;
+        }
 
-            /// <summary>
-            /// Track ID
-            /// </summary>
-            [Column("id"), PrimaryKey]
-            public string Id
+        /// <summary>
+        /// Track name
+        /// </summary>
+        [Column("name")]
+        public string Name
+        {
+            get => this.Track.Name;
+            set => this.Track.Name = value;
+        }
+
+        /// <summary>
+        /// Track description
+        /// </summary>
+        [Column("desc")]
+        public string Description
+        {
+            get => this.Track.Description;
+            set => this.Track.Description = value;
+        }
+
+        /// <summary>
+        /// Track is a flight?
+        /// </summary>
+        [Column("is_flight")]
+        public bool IsFlightTrack
+        {
+            get => this.Track.IsFlightTrack;
+            set => this.Track.IsFlightTrack = value;
+        }
+
+        /// <summary>
+        /// Track is a live track?
+        /// </summary>
+        [Column("is_livetrack")]
+        public bool IsLiveTrack
+        {
+            get => this.Track.IsLiveTrack;
+            set => this.Track.IsLiveTrack = value;
+        }
+
+        /// <summary>
+        /// Track color
+        /// </summary>
+        [Column("color")]
+        public string Color
+        {
+            get => this.Track.Color;
+            set => this.Track.Color = value;
+        }
+
+        /// <summary>
+        /// Track attribution value
+        /// </summary>
+        [Column("attribution")]
+        public string? Attribution
+        {
+            get => this.Track.Attribution;
+            set => this.Track.Attribution = value;
+        }
+
+        /// <summary>
+        /// Duration of track
+        /// </summary>
+        [Column("duration")]
+        public TimeSpan Duration
+        {
+            get => this.Track.Duration;
+            set => this.Track.Duration = value;
+        }
+
+        /// <summary>
+        /// Length of track, in meter
+        /// </summary>
+        [Column("length")]
+        public double LengthInMeter
+        {
+            get => this.Track.LengthInMeter;
+            set => this.Track.LengthInMeter = value;
+        }
+
+        /// <summary>
+        /// Height gain, in meter
+        /// </summary>
+        [Column("height_gain")]
+        public double HeightGain
+        {
+            get => this.Track.HeightGain;
+            set => this.Track.HeightGain = value;
+        }
+
+        /// <summary>
+        /// Height loss, in meter
+        /// </summary>
+        [Column("height_loss")]
+        public double HeightLoss
+        {
+            get => this.Track.HeightLoss;
+            set => this.Track.HeightLoss = value;
+        }
+
+        /// <summary>
+        /// Max. height, in meter
+        /// </summary>
+        [Column("max_height")]
+        public double MaxHeight
+        {
+            get => this.Track.MaxHeight;
+            set => this.Track.MaxHeight = value;
+        }
+
+        /// <summary>
+        /// Min. height, in meter
+        /// </summary>
+        [Column("min_height")]
+        public double MinHeight
+        {
+            get => this.Track.MinHeight;
+            set => this.Track.MinHeight = value;
+        }
+
+        /// <summary>
+        /// Max. climb rate, in m/s
+        /// </summary>
+        [Column("max_climb_rate")]
+        public double MaxClimbRate
+        {
+            get => this.Track.MaxClimbRate;
+            set => this.Track.MaxClimbRate = value;
+        }
+
+        /// <summary>
+        /// Max. sink rate (or min. negative climb rate), in m/s
+        /// </summary>
+        [Column("max_sink_rate")]
+        public double MaxSinkRate
+        {
+            get => this.Track.MaxSinkRate;
+            set => this.Track.MaxSinkRate = value;
+        }
+
+        /// <summary>
+        /// Maximum speed, in km/h
+        /// </summary>
+        [Column("max_speed")]
+        public double MaxSpeed
+        {
+            get => this.Track.MaxSpeed;
+            set => this.Track.MaxSpeed = value;
+        }
+
+        /// <summary>
+        /// Average speed, in km/h
+        /// </summary>
+        [Column("average_speed")]
+        public double AverageSpeed
+        {
+            get => this.Track.AverageSpeed;
+            set => this.Track.AverageSpeed = value;
+        }
+
+        /// <summary>
+        /// Track points are stored in internal storage instead of in the database
+        /// </summary>
+        [Column("filename")]
+        public string? TrackPointFilename { get; set; }
+
+        /// <summary>
+        /// Ground height profile
+        /// </summary>
+        [Column("ground_height_profile")]
+        public string GroundHeightProfile
+        {
+            get
             {
-                get => this.Track.Id;
-                set => this.Track.Id = value;
+                return JsonSerializer.Serialize(
+                    this.Track.GroundHeightProfile,
+                    ModelsJsonSerializerContext.Default.ListDouble);
             }
 
-            /// <summary>
-            /// Track name
-            /// </summary>
-            [Column("name")]
-            public string Name
+            set
             {
-                get => this.Track.Name;
-                set => this.Track.Name = value;
-            }
-
-            /// <summary>
-            /// Track description
-            /// </summary>
-            [Column("desc")]
-            public string Description
-            {
-                get => this.Track.Description;
-                set => this.Track.Description = value;
-            }
-
-            /// <summary>
-            /// Track is a flight?
-            /// </summary>
-            [Column("is_flight")]
-            public bool IsFlightTrack
-            {
-                get => this.Track.IsFlightTrack;
-                set => this.Track.IsFlightTrack = value;
-            }
-
-            /// <summary>
-            /// Track is a live track?
-            /// </summary>
-            [Column("is_livetrack")]
-            public bool IsLiveTrack
-            {
-                get => this.Track.IsLiveTrack;
-                set => this.Track.IsLiveTrack = value;
-            }
-
-            /// <summary>
-            /// Track color
-            /// </summary>
-            [Column("color")]
-            public string Color
-            {
-                get => this.Track.Color;
-                set => this.Track.Color = value;
-            }
-
-            /// <summary>
-            /// Track attribution value
-            /// </summary>
-            [Column("attribution")]
-            public string? Attribution
-            {
-                get => this.Track.Attribution;
-                set => this.Track.Attribution = value;
-            }
-
-            /// <summary>
-            /// Duration of track
-            /// </summary>
-            [Column("duration")]
-            public TimeSpan Duration
-            {
-                get => this.Track.Duration;
-                set => this.Track.Duration = value;
-            }
-
-            /// <summary>
-            /// Length of track, in meter
-            /// </summary>
-            [Column("length")]
-            public double LengthInMeter
-            {
-                get => this.Track.LengthInMeter;
-                set => this.Track.LengthInMeter = value;
-            }
-
-            /// <summary>
-            /// Height gain, in meter
-            /// </summary>
-            [Column("height_gain")]
-            public double HeightGain
-            {
-                get => this.Track.HeightGain;
-                set => this.Track.HeightGain = value;
-            }
-
-            /// <summary>
-            /// Height loss, in meter
-            /// </summary>
-            [Column("height_loss")]
-            public double HeightLoss
-            {
-                get => this.Track.HeightLoss;
-                set => this.Track.HeightLoss = value;
-            }
-
-            /// <summary>
-            /// Max. height, in meter
-            /// </summary>
-            [Column("max_height")]
-            public double MaxHeight
-            {
-                get => this.Track.MaxHeight;
-                set => this.Track.MaxHeight = value;
-            }
-
-            /// <summary>
-            /// Min. height, in meter
-            /// </summary>
-            [Column("min_height")]
-            public double MinHeight
-            {
-                get => this.Track.MinHeight;
-                set => this.Track.MinHeight = value;
-            }
-
-            /// <summary>
-            /// Max. climb rate, in m/s
-            /// </summary>
-            [Column("max_climb_rate")]
-            public double MaxClimbRate
-            {
-                get => this.Track.MaxClimbRate;
-                set => this.Track.MaxClimbRate = value;
-            }
-
-            /// <summary>
-            /// Max. sink rate (or min. negative climb rate), in m/s
-            /// </summary>
-            [Column("max_sink_rate")]
-            public double MaxSinkRate
-            {
-                get => this.Track.MaxSinkRate;
-                set => this.Track.MaxSinkRate = value;
-            }
-
-            /// <summary>
-            /// Maximum speed, in km/h
-            /// </summary>
-            [Column("max_speed")]
-            public double MaxSpeed
-            {
-                get => this.Track.MaxSpeed;
-                set => this.Track.MaxSpeed = value;
-            }
-
-            /// <summary>
-            /// Average speed, in km/h
-            /// </summary>
-            [Column("average_speed")]
-            public double AverageSpeed
-            {
-                get => this.Track.AverageSpeed;
-                set => this.Track.AverageSpeed = value;
-            }
-
-            /// <summary>
-            /// Track points are stored in internal storage instead of in the database
-            /// </summary>
-            [Column("filename")]
-            public string? TrackPointFilename { get; set; }
-
-            /// <summary>
-            /// Ground height profile
-            /// </summary>
-            [Column("ground_height_profile")]
-            public string GroundHeightProfile
-            {
-                get
-                {
-                    return JsonSerializer.Serialize(
-                        this.Track.GroundHeightProfile,
+                var list = value == null
+                    ? null
+                    : JsonSerializer.Deserialize(
+                        value,
                         ModelsJsonSerializerContext.Default.ListDouble);
-                }
+                this.Track.GroundHeightProfile = list ?? [];
+            }
+        }
 
-                set
+        /// <summary>
+        /// Creates an empty track entry; used when loading entry from database
+        /// </summary>
+        public TrackEntry()
+        {
+            this.Track = new Track(Guid.NewGuid().ToString("B"));
+        }
+
+        /// <summary>
+        /// Creates a new entry from given track
+        /// </summary>
+        /// <param name="track">track to use</param>
+        public TrackEntry(Track track)
+        {
+            this.Track = track;
+        }
+
+        /// <summary>
+        /// Loads track points from internal storage
+        /// </summary>
+        public void LoadTrackPoints()
+        {
+            Debug.Assert(
+                !string.IsNullOrEmpty(this.TrackPointFilename),
+                "must have set track point filename when loading a track");
+
+            string filename = Path.Combine(
+                FileSystem.AppDataDirectory,
+                TracksFolderName,
+                this.TrackPointFilename);
+
+            string json = File.ReadAllText(filename);
+
+            var trackPoints = JsonSerializer.Deserialize(
+                json,
+                ModelsJsonSerializerContext.Default.ListTrackPoint);
+
+            if (trackPoints != null)
+            {
+                this.Track.TrackPoints = trackPoints;
+            }
+        }
+
+        /// <summary>
+        /// Stores track points to internal storage, generating a new track filename if
+        /// necessary.
+        /// </summary>
+        public void StoreTrackPoints()
+        {
+            string tracksFolder = Path.Combine(
+                FileSystem.AppDataDirectory,
+                TracksFolderName);
+
+            if (!Directory.Exists(tracksFolder))
+            {
+                Directory.CreateDirectory(tracksFolder);
+            }
+
+            if (string.IsNullOrEmpty(this.TrackPointFilename))
+            {
+                this.TrackPointFilename = Guid.NewGuid().ToString("B") + ".json";
+            }
+
+            string filename = Path.Combine(tracksFolder, this.TrackPointFilename);
+
+            string json = JsonSerializer.Serialize(
+                this.Track.TrackPoints,
+                ModelsJsonSerializerContext.Default.ListTrackPoint);
+
+            File.WriteAllText(filename, json);
+        }
+    }
+
+    /// <summary>
+    /// Track data service with access to the SQLite database
+    /// </summary>
+    private sealed class TrackDataService : ITrackDataService
+    {
+        /// <summary>
+        /// SQLite database connection
+        /// </summary>
+        private readonly SQLiteAsyncConnection connection;
+
+        /// <summary>
+        /// Cache for tracks, with track ID as key
+        /// </summary>
+        private readonly Dictionary<string, Track> trackCache = [];
+
+        /// <summary>
+        /// Creates a new track data service
+        /// </summary>
+        /// <param name="connection">SQLite database connection</param>
+        public TrackDataService(SQLiteAsyncConnection connection)
+        {
+            this.connection = connection;
+        }
+
+        /// <summary>
+        /// Adds a new track to the track list
+        /// </summary>
+        /// <param name="trackToAdd">track to add</param>
+        /// <returns>task to wait on</returns>
+        public async Task Add(Track trackToAdd)
+        {
+            var trackEntry = new TrackEntry(trackToAdd);
+
+            trackEntry.StoreTrackPoints();
+
+            await this.connection.InsertAsync(
+                trackEntry,
+                typeof(TrackEntry));
+
+            this.trackCache[trackToAdd.Id] = trackToAdd;
+        }
+
+        /// <summary>
+        /// Retrieves a specific track
+        /// </summary>
+        /// <param name="trackId">track ID</param>
+        /// <returns>track from list, or null when none was found</returns>
+        public async Task<Track?> Get(string trackId)
+        {
+            if (this.trackCache.TryGetValue(trackId, out Track? track))
+            {
+                return track;
+            }
+
+            var trackEntry = await this.connection.GetAsync<TrackEntry>(trackId);
+
+            trackEntry.LoadTrackPoints();
+
+            return trackEntry.Track;
+        }
+
+        /// <summary>
+        /// Updates an existing track
+        /// </summary>
+        /// <param name="trackToUpdate">track to update</param>
+        /// <returns>task to wait on</returns>
+        public async Task Update(Track trackToUpdate)
+        {
+            var trackEntry = await this.connection.GetAsync<TrackEntry>(trackToUpdate.Id);
+
+            trackEntry.Track = trackToUpdate;
+
+            await this.connection.UpdateAsync(
+                trackEntry,
+                typeof(TrackEntry));
+
+            this.trackCache[trackToUpdate.Id] = trackToUpdate;
+        }
+
+        /// <summary>
+        /// Removes a specific track
+        /// </summary>
+        /// <param name="trackId">track ID</param>
+        /// <returns>task to wait on</returns>
+        public async Task Remove(string trackId)
+        {
+            var trackEntry = await this.connection.GetAsync<TrackEntry>(trackId);
+
+            string? filename = trackEntry.TrackPointFilename;
+            if (!string.IsNullOrEmpty(filename))
+            {
+                File.Delete(filename);
+            }
+
+            await this.connection.DeleteAsync<TrackEntry>(trackId);
+
+            this.trackCache.Remove(trackId);
+        }
+
+        /// <summary>
+        /// Returns a list of all tracks
+        /// </summary>
+        /// <returns>list of tracks</returns>
+        public async Task<IEnumerable<Track>> GetList()
+        {
+            var trackList = await this.connection.Table<TrackEntry>().ToListAsync();
+
+            foreach (var trackEntry in trackList)
+            {
+                if (this.trackCache.TryGetValue(trackEntry.Id, out Track? track))
                 {
-                    var list = value == null
-                        ? null
-                        : JsonSerializer.Deserialize(
-                            value,
-                            ModelsJsonSerializerContext.Default.ListDouble);
-                    this.Track.GroundHeightProfile = list ?? [];
+                    trackEntry.Track = track;
                 }
-            }
-
-            /// <summary>
-            /// Creates an empty track entry; used when loading entry from database
-            /// </summary>
-            public TrackEntry()
-            {
-                this.Track = new Track(Guid.NewGuid().ToString("B"));
-            }
-
-            /// <summary>
-            /// Creates a new entry from given track
-            /// </summary>
-            /// <param name="track">track to use</param>
-            public TrackEntry(Track track)
-            {
-                this.Track = track;
-            }
-
-            /// <summary>
-            /// Loads track points from internal storage
-            /// </summary>
-            public void LoadTrackPoints()
-            {
-                Debug.Assert(
-                    !string.IsNullOrEmpty(this.TrackPointFilename),
-                    "must have set track point filename when loading a track");
-
-                string filename = Path.Combine(
-                    FileSystem.AppDataDirectory,
-                    TracksFolderName,
-                    this.TrackPointFilename);
-
-                string json = File.ReadAllText(filename);
-
-                var trackPoints = JsonSerializer.Deserialize(
-                    json,
-                    ModelsJsonSerializerContext.Default.ListTrackPoint);
-
-                if (trackPoints != null)
+                else
                 {
-                    this.Track.TrackPoints = trackPoints;
+                    trackEntry.LoadTrackPoints();
                 }
             }
 
-            /// <summary>
-            /// Stores track points to internal storage, generating a new track filename if
-            /// necessary.
-            /// </summary>
-            public void StoreTrackPoints()
+            return trackList.Select(trackEntry => trackEntry.Track);
+        }
+
+        /// <summary>
+        /// Adds new track list
+        /// </summary>
+        /// <param name="trackList">track list to add</param>
+        /// <returns>task to wait on</returns>
+        public async Task AddList(IEnumerable<Track> trackList)
+        {
+            if (!trackList.Any())
+            {
+                return;
+            }
+
+            var trackEntryList =
+                (from track in trackList
+                 select new TrackEntry(track)).ToList();
+
+            foreach (var trackEntry in trackEntryList)
+            {
+                trackEntry.StoreTrackPoints();
+            }
+
+            await this.connection.InsertAllAsync(
+                trackEntryList,
+                typeof(TrackEntry),
+                runInTransaction: true);
+
+            foreach (var trackEntry in trackEntryList)
+            {
+                this.trackCache[trackEntry.Id] = trackEntry.Track;
+            }
+        }
+
+        /// <summary>
+        /// Clears list of tracks
+        /// </summary>
+        /// <returns>task to wait on</returns>
+        public async Task ClearList()
+        {
+            var trackEntryList = await this.connection.QueryAsync<TrackEntry>(
+                "select filename from tracks");
+
+            trackEntryList
+                .Where(trackEntry => trackEntry.TrackPointFilename != null)
+                .ToList()
+                .ForEach(trackEntry => File.Delete(trackEntry.TrackPointFilename!));
+
+            await this.connection.DeleteAllAsync<TrackEntry>();
+
+            ClearTrackFolder();
+
+            this.trackCache.Clear();
+        }
+
+        /// <summary>
+        /// Clears track folder by removing all files and the folder itself
+        /// </summary>
+        private static void ClearTrackFolder()
+        {
+            try
             {
                 string tracksFolder = Path.Combine(
                     FileSystem.AppDataDirectory,
                     TracksFolderName);
 
-                if (!Directory.Exists(tracksFolder))
+                if (Directory.Exists(tracksFolder))
                 {
-                    Directory.CreateDirectory(tracksFolder);
-                }
-
-                if (string.IsNullOrEmpty(this.TrackPointFilename))
-                {
-                    this.TrackPointFilename = Guid.NewGuid().ToString("B") + ".json";
-                }
-
-                string filename = Path.Combine(tracksFolder, this.TrackPointFilename);
-
-                string json = JsonSerializer.Serialize(
-                    this.Track.TrackPoints,
-                    ModelsJsonSerializerContext.Default.ListTrackPoint);
-
-                File.WriteAllText(filename, json);
-            }
-        }
-
-        /// <summary>
-        /// Track data service with access to the SQLite database
-        /// </summary>
-        private sealed class TrackDataService : ITrackDataService
-        {
-            /// <summary>
-            /// SQLite database connection
-            /// </summary>
-            private readonly SQLiteAsyncConnection connection;
-
-            /// <summary>
-            /// Cache for tracks, with track ID as key
-            /// </summary>
-            private readonly Dictionary<string, Track> trackCache = [];
-
-            /// <summary>
-            /// Creates a new track data service
-            /// </summary>
-            /// <param name="connection">SQLite database connection</param>
-            public TrackDataService(SQLiteAsyncConnection connection)
-            {
-                this.connection = connection;
-            }
-
-            /// <summary>
-            /// Adds a new track to the track list
-            /// </summary>
-            /// <param name="trackToAdd">track to add</param>
-            /// <returns>task to wait on</returns>
-            public async Task Add(Track trackToAdd)
-            {
-                var trackEntry = new TrackEntry(trackToAdd);
-
-                trackEntry.StoreTrackPoints();
-
-                await this.connection.InsertAsync(
-                    trackEntry,
-                    typeof(TrackEntry));
-
-                this.trackCache[trackToAdd.Id] = trackToAdd;
-            }
-
-            /// <summary>
-            /// Retrieves a specific track
-            /// </summary>
-            /// <param name="trackId">track ID</param>
-            /// <returns>track from list, or null when none was found</returns>
-            public async Task<Track?> Get(string trackId)
-            {
-                if (this.trackCache.TryGetValue(trackId, out Track? track))
-                {
-                    return track;
-                }
-
-                var trackEntry = await this.connection.GetAsync<TrackEntry>(trackId);
-
-                trackEntry.LoadTrackPoints();
-
-                return trackEntry.Track;
-            }
-
-            /// <summary>
-            /// Updates an existing track
-            /// </summary>
-            /// <param name="trackToUpdate">track to update</param>
-            /// <returns>task to wait on</returns>
-            public async Task Update(Track trackToUpdate)
-            {
-                var trackEntry = await this.connection.GetAsync<TrackEntry>(trackToUpdate.Id);
-
-                trackEntry.Track = trackToUpdate;
-
-                await this.connection.UpdateAsync(
-                    trackEntry,
-                    typeof(TrackEntry));
-
-                this.trackCache[trackToUpdate.Id] = trackToUpdate;
-            }
-
-            /// <summary>
-            /// Removes a specific track
-            /// </summary>
-            /// <param name="trackId">track ID</param>
-            /// <returns>task to wait on</returns>
-            public async Task Remove(string trackId)
-            {
-                var trackEntry = await this.connection.GetAsync<TrackEntry>(trackId);
-
-                string? filename = trackEntry.TrackPointFilename;
-                if (!string.IsNullOrEmpty(filename))
-                {
-                    File.Delete(filename);
-                }
-
-                await this.connection.DeleteAsync<TrackEntry>(trackId);
-
-                this.trackCache.Remove(trackId);
-            }
-
-            /// <summary>
-            /// Returns a list of all tracks
-            /// </summary>
-            /// <returns>list of tracks</returns>
-            public async Task<IEnumerable<Track>> GetList()
-            {
-                var trackList = await this.connection.Table<TrackEntry>().ToListAsync();
-
-                foreach (var trackEntry in trackList)
-                {
-                    if (this.trackCache.TryGetValue(trackEntry.Id, out Track? track))
-                    {
-                        trackEntry.Track = track;
-                    }
-                    else
-                    {
-                        trackEntry.LoadTrackPoints();
-                    }
-                }
-
-                return trackList.Select(trackEntry => trackEntry.Track);
-            }
-
-            /// <summary>
-            /// Adds new track list
-            /// </summary>
-            /// <param name="trackList">track list to add</param>
-            /// <returns>task to wait on</returns>
-            public async Task AddList(IEnumerable<Track> trackList)
-            {
-                if (!trackList.Any())
-                {
-                    return;
-                }
-
-                var trackEntryList =
-                    (from track in trackList
-                     select new TrackEntry(track)).ToList();
-
-                foreach (var trackEntry in trackEntryList)
-                {
-                    trackEntry.StoreTrackPoints();
-                }
-
-                await this.connection.InsertAllAsync(
-                    trackEntryList,
-                    typeof(TrackEntry),
-                    runInTransaction: true);
-
-                foreach (var trackEntry in trackEntryList)
-                {
-                    this.trackCache[trackEntry.Id] = trackEntry.Track;
+                    Directory.Delete(tracksFolder, true);
                 }
             }
-
-            /// <summary>
-            /// Clears list of tracks
-            /// </summary>
-            /// <returns>task to wait on</returns>
-            public async Task ClearList()
+            catch (Exception)
             {
-                var trackEntryList = await this.connection.QueryAsync<TrackEntry>(
-                    "select filename from tracks");
-
-                trackEntryList
-                    .Where(trackEntry => trackEntry.TrackPointFilename != null)
-                    .ToList()
-                    .ForEach(trackEntry => File.Delete(trackEntry.TrackPointFilename!));
-
-                await this.connection.DeleteAllAsync<TrackEntry>();
-
-                ClearTrackFolder();
-
-                this.trackCache.Clear();
-            }
-
-            /// <summary>
-            /// Clears track folder by removing all files and the folder itself
-            /// </summary>
-            private static void ClearTrackFolder()
-            {
-                try
-                {
-                    string tracksFolder = Path.Combine(
-                        FileSystem.AppDataDirectory,
-                        TracksFolderName);
-
-                    if (Directory.Exists(tracksFolder))
-                    {
-                        Directory.Delete(tracksFolder, true);
-                    }
-                }
-                catch (Exception)
-                {
-                    // ignore errors
-                }
+                // ignore errors
             }
         }
     }

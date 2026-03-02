@@ -11,175 +11,174 @@ using System.Text.Json.Serialization;
 // See: https://en.wikipedia.org/wiki/GeoJSON and RFC 7946.
 // GeoJSON can contain Point, LineString, Polygon elements, as well as multi-part variants
 // of these objects (MultiPoint, MultiLineString and MultiPolygon).
-namespace WhereToFly.Geo.DataFormats.GeoJson
+namespace WhereToFly.Geo.DataFormats.GeoJson;
+
+/// <summary>
+/// Element base class for all GeoJSON objects
+/// </summary>
+[JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
+[JsonDerivedType(typeof(Feature), "Feature")]
+[JsonDerivedType(typeof(FeatureCollection), "FeatureCollection")]
+[JsonDerivedType(typeof(GeometryCollection), "GeometryCollection")]
+public class Element
 {
     /// <summary>
-    /// Element base class for all GeoJSON objects
+    /// Type of GeoJSON object
     /// </summary>
-    [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
-    [JsonDerivedType(typeof(Feature), "Feature")]
-    [JsonDerivedType(typeof(FeatureCollection), "FeatureCollection")]
-    [JsonDerivedType(typeof(GeometryCollection), "GeometryCollection")]
-    public class Element
-    {
-        /// <summary>
-        /// Type of GeoJSON object
-        /// </summary>
-        [JsonPropertyName("type")]
-        [JsonIgnore]
-        public string? Type { get; set; }
-
-        /// <summary>
-        /// Element title; may be null
-        /// </summary>
-        [JsonPropertyName("title")]
-        public string? Title { get; set; }
-
-        /// <summary>
-        /// Properties attached to this element; may be empty
-        /// </summary>
-        [JsonPropertyName("properties")]
-        public Dictionary<string, object> Properties { get; set; } = [];
-
-        /// <summary>
-        /// Deserializes a GeoJSON formatted JSON text to an element hierarchy and returns it.
-        /// </summary>
-        /// <param name="geoJsonText">GeoJSON text</param>
-        /// <returns>root element</returns>
-        public static Element? Deserialize(string geoJsonText)
-        {
-            return JsonSerializer.Deserialize<Element>(
-                geoJsonText,
-                GeoJsonSerializerContext.Default.Element);
-        }
-    }
+    [JsonPropertyName("type")]
+    [JsonIgnore]
+    public string? Type { get; set; }
 
     /// <summary>
-    /// Feature collection element, containing zero or more features
+    /// Element title; may be null
     /// </summary>
-    public class FeatureCollection : Element
-    {
-        /// <summary>
-        /// List of features contained in this collection
-        /// </summary>
-        [JsonPropertyName("features")]
-        public Feature[]? FeatureList { get; set; }
-    }
+    [JsonPropertyName("title")]
+    public string? Title { get; set; }
 
     /// <summary>
-    /// Single feature element, containing a geometry
+    /// Properties attached to this element; may be empty
     /// </summary>
-    public class Feature : Element
-    {
-        /// <summary>
-        /// Geometry for this feature
-        /// </summary>
-        [JsonPropertyName("geometry")]
-        public Geometry? Geometry { get; set; }
-    }
+    [JsonPropertyName("properties")]
+    public Dictionary<string, object> Properties { get; set; } = [];
 
     /// <summary>
-    /// Geometry element base class
+    /// Deserializes a GeoJSON formatted JSON text to an element hierarchy and returns it.
     /// </summary>
-    [DebuggerDisplay("Geometry {Type}")]
-    [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
-    [JsonDerivedType(typeof(PointGeometry), "Point")]
-    [JsonDerivedType(typeof(LineStringGeometry), "LineString")]
-    [JsonDerivedType(typeof(PolygonGeometry), "Polygon")]
-    [JsonDerivedType(typeof(MultiPointGeometry), "MultiPoint")]
-    [JsonDerivedType(typeof(MultiLineStringGeometry), "MultiLineString")]
-    [JsonDerivedType(typeof(MultiPolygonGeometry), "MultiPolygon")]
-    public class Geometry
+    /// <param name="geoJsonText">GeoJSON text</param>
+    /// <returns>root element</returns>
+    public static Element? Deserialize(string geoJsonText)
     {
-        /// <summary>
-        /// Type of GeoJSON object
-        /// </summary>
-        [JsonPropertyName("type")]
-        [JsonIgnore]
-        public string? Type { get; set; }
+        return JsonSerializer.Deserialize<Element>(
+            geoJsonText,
+            GeoJsonSerializerContext.Default.Element);
     }
+}
 
+/// <summary>
+/// Feature collection element, containing zero or more features
+/// </summary>
+public class FeatureCollection : Element
+{
     /// <summary>
-    /// Geometry collection element
+    /// List of features contained in this collection
     /// </summary>
-    public class GeometryCollection : Element
-    {
-        /// <summary>
-        /// List of geometries
-        /// </summary>
-        [JsonPropertyName("geometries")]
-        public Geometry[]? GeometryList { get; set; }
-    }
+    [JsonPropertyName("features")]
+    public Feature[]? FeatureList { get; set; }
+}
 
+/// <summary>
+/// Single feature element, containing a geometry
+/// </summary>
+public class Feature : Element
+{
     /// <summary>
-    /// Point geometry, containing one point
+    /// Geometry for this feature
     /// </summary>
-    public class PointGeometry : Geometry
-    {
-        /// <summary>
-        /// Coordinates for the point geometry
-        /// </summary>
-        [JsonPropertyName("coordinates")]
-        public double[]? Coordinates { get; set; }
-    }
+    [JsonPropertyName("geometry")]
+    public Geometry? Geometry { get; set; }
+}
 
+/// <summary>
+/// Geometry element base class
+/// </summary>
+[DebuggerDisplay("Geometry {Type}")]
+[JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
+[JsonDerivedType(typeof(PointGeometry), "Point")]
+[JsonDerivedType(typeof(LineStringGeometry), "LineString")]
+[JsonDerivedType(typeof(PolygonGeometry), "Polygon")]
+[JsonDerivedType(typeof(MultiPointGeometry), "MultiPoint")]
+[JsonDerivedType(typeof(MultiLineStringGeometry), "MultiLineString")]
+[JsonDerivedType(typeof(MultiPolygonGeometry), "MultiPolygon")]
+public class Geometry
+{
     /// <summary>
-    /// Line string geometry, containing a list of points
+    /// Type of GeoJSON object
     /// </summary>
-    public class LineStringGeometry : Geometry
-    {
-        /// <summary>
-        /// Coordinates for the line string geometry
-        /// </summary>
-        [JsonPropertyName("coordinates")]
-        public double[][]? Coordinates { get; set; }
-    }
+    [JsonPropertyName("type")]
+    [JsonIgnore]
+    public string? Type { get; set; }
+}
 
+/// <summary>
+/// Geometry collection element
+/// </summary>
+public class GeometryCollection : Element
+{
     /// <summary>
-    /// Polygon geometry, containing one or more closed polygons
+    /// List of geometries
     /// </summary>
-    public class PolygonGeometry : Geometry
-    {
-        /// <summary>
-        /// Coordinates for the polygon geometry
-        /// </summary>
-        [JsonPropertyName("coordinates")]
-        public double[][][]? Coordinates { get; set; }
-    }
+    [JsonPropertyName("geometries")]
+    public Geometry[]? GeometryList { get; set; }
+}
 
+/// <summary>
+/// Point geometry, containing one point
+/// </summary>
+public class PointGeometry : Geometry
+{
     /// <summary>
-    /// Multi-point geometry, containing one or more points
+    /// Coordinates for the point geometry
     /// </summary>
-    public class MultiPointGeometry : Geometry
-    {
-        /// <summary>
-        /// Coordinates for the multi-point geometry
-        /// </summary>
-        [JsonPropertyName("coordinates")]
-        public double[][]? Coordinates { get; set; }
-    }
+    [JsonPropertyName("coordinates")]
+    public double[]? Coordinates { get; set; }
+}
 
+/// <summary>
+/// Line string geometry, containing a list of points
+/// </summary>
+public class LineStringGeometry : Geometry
+{
     /// <summary>
-    /// Multi line string geometry, containing a list of line strings
+    /// Coordinates for the line string geometry
     /// </summary>
-    public class MultiLineStringGeometry : Geometry
-    {
-        /// <summary>
-        /// Coordinates for the multi line string geometry
-        /// </summary>
-        [JsonPropertyName("coordinates")]
-        public double[][][]? Coordinates { get; set; }
-    }
+    [JsonPropertyName("coordinates")]
+    public double[][]? Coordinates { get; set; }
+}
 
+/// <summary>
+/// Polygon geometry, containing one or more closed polygons
+/// </summary>
+public class PolygonGeometry : Geometry
+{
     /// <summary>
-    /// Multi-polygon geometry
+    /// Coordinates for the polygon geometry
     /// </summary>
-    public class MultiPolygonGeometry : Geometry
-    {
-        /// <summary>
-        /// Coordinates for the multi-polygon geometry
-        /// </summary>
-        [JsonPropertyName("coordinates")]
-        public double[][][][]? Coordinates { get; set; }
-    }
+    [JsonPropertyName("coordinates")]
+    public double[][][]? Coordinates { get; set; }
+}
+
+/// <summary>
+/// Multi-point geometry, containing one or more points
+/// </summary>
+public class MultiPointGeometry : Geometry
+{
+    /// <summary>
+    /// Coordinates for the multi-point geometry
+    /// </summary>
+    [JsonPropertyName("coordinates")]
+    public double[][]? Coordinates { get; set; }
+}
+
+/// <summary>
+/// Multi line string geometry, containing a list of line strings
+/// </summary>
+public class MultiLineStringGeometry : Geometry
+{
+    /// <summary>
+    /// Coordinates for the multi line string geometry
+    /// </summary>
+    [JsonPropertyName("coordinates")]
+    public double[][][]? Coordinates { get; set; }
+}
+
+/// <summary>
+/// Multi-polygon geometry
+/// </summary>
+public class MultiPolygonGeometry : Geometry
+{
+    /// <summary>
+    /// Coordinates for the multi-polygon geometry
+    /// </summary>
+    [JsonPropertyName("coordinates")]
+    public double[][][][]? Coordinates { get; set; }
 }

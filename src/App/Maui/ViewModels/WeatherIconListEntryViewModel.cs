@@ -3,78 +3,77 @@ using WhereToFly.App.Abstractions;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Models;
 
-namespace WhereToFly.App.ViewModels
+namespace WhereToFly.App.ViewModels;
+
+/// <summary>
+/// View model for a weather icon as a list entry
+/// </summary>
+public class WeatherIconListEntryViewModel : ViewModelBase
 {
     /// <summary>
-    /// View model for a weather icon as a list entry
+    /// Parent view model
     /// </summary>
-    public class WeatherIconListEntryViewModel : ViewModelBase
+    private readonly SelectWeatherIconViewModel parentViewModel;
+
+    #region Binding properties
+    /// <summary>
+    /// Title of weather icon
+    /// </summary>
+    public string Title { get => this.IconDescription.Name; }
+
+    /// <summary>
+    /// Image source for weather icon
+    /// </summary>
+    public ImageSource? Icon { get; private set; }
+
+    /// <summary>
+    /// The weather icon's group text
+    /// </summary>
+    public string Group => this.IconDescription.Group;
+    #endregion
+
+    /// <summary>
+    /// Weather icon description instance
+    /// </summary>
+    public WeatherIconDescription IconDescription { get; private set; }
+
+    /// <summary>
+    /// Command to execute when an item in the weather icon list has been tapped
+    /// </summary>
+    public ICommand ItemTappedCommand { get; }
+
+    /// <summary>
+    /// Creates a new weather icon view model from weather icon description
+    /// </summary>
+    /// <param name="parentViewModel">parent view model</param>
+    /// <param name="iconDescription">weather icon description to use</param>
+    public WeatherIconListEntryViewModel(SelectWeatherIconViewModel parentViewModel, WeatherIconDescription iconDescription)
     {
-        /// <summary>
-        /// Parent view model
-        /// </summary>
-        private readonly SelectWeatherIconViewModel parentViewModel;
+        this.parentViewModel = parentViewModel;
 
-        #region Binding properties
-        /// <summary>
-        /// Title of weather icon
-        /// </summary>
-        public string Title { get => this.IconDescription.Name; }
+        this.IconDescription = iconDescription;
 
-        /// <summary>
-        /// Image source for weather icon
-        /// </summary>
-        public ImageSource? Icon { get; private set; }
-
-        /// <summary>
-        /// The weather icon's group text
-        /// </summary>
-        public string Group => this.IconDescription.Group;
-        #endregion
-
-        /// <summary>
-        /// Weather icon description instance
-        /// </summary>
-        public WeatherIconDescription IconDescription { get; private set; }
-
-        /// <summary>
-        /// Command to execute when an item in the weather icon list has been tapped
-        /// </summary>
-        public ICommand ItemTappedCommand { get; }
-
-        /// <summary>
-        /// Creates a new weather icon view model from weather icon description
-        /// </summary>
-        /// <param name="parentViewModel">parent view model</param>
-        /// <param name="iconDescription">weather icon description to use</param>
-        public WeatherIconListEntryViewModel(SelectWeatherIconViewModel parentViewModel, WeatherIconDescription iconDescription)
+        this.ItemTappedCommand = new Command(() =>
         {
-            this.parentViewModel = parentViewModel;
+            this.parentViewModel.ItemTappedCommand.Execute(this);
+        });
 
-            this.IconDescription = iconDescription;
+        this.SetupBindings();
+    }
 
-            this.ItemTappedCommand = new Command(() =>
-            {
-                this.parentViewModel.ItemTappedCommand.Execute(this);
-            });
-
-            this.SetupBindings();
-        }
-
-        /// <summary>
-        /// Sets up bindings properties
-        /// </summary>
-        private void SetupBindings()
+    /// <summary>
+    /// Sets up bindings properties
+    /// </summary>
+    private void SetupBindings()
+    {
+        Task.Run(async () =>
         {
-            Task.Run(async () =>
-            {
-                this.Icon = await WeatherImageCache.GetImageAsync(
-                    this.IconDescription,
-                    Services.GetRequiredService<IAppManager>(),
-                    UserInterface.IsDarkTheme);
+            this.Icon = await WeatherImageCache.GetImageAsync(
+                this.IconDescription,
+                Services.GetRequiredService<IAppManager>(),
+                UserInterface.IsDarkTheme);
 
-                this.OnPropertyChanged(nameof(this.Icon));
-            });
-        }
+            this.OnPropertyChanged(nameof(this.Icon));
+        });
     }
 }

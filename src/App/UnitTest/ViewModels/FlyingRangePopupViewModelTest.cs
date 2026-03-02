@@ -4,50 +4,49 @@ using System.Threading.Tasks;
 using WhereToFly.App.Models;
 using WhereToFly.App.ViewModels;
 
-namespace WhereToFly.App.UnitTest.ViewModels
+namespace WhereToFly.App.UnitTest.ViewModels;
+
+/// <summary>
+/// Unit tests for class FlyingRangePopupViewModel
+/// </summary>
+[TestClass]
+public class FlyingRangePopupViewModelTest : UserInterfaceTestBase
 {
     /// <summary>
-    /// Unit tests for class FlyingRangePopupViewModel
+    /// Tests default ctor of view model
     /// </summary>
-    [TestClass]
-    public class FlyingRangePopupViewModelTest : UserInterfaceTestBase
+    /// <returns>task to wait on</returns>
+    [TestMethod]
+    public async Task TestDefaultCtor()
     {
-        /// <summary>
-        /// Tests default ctor of view model
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        [TestMethod]
-        public async Task TestDefaultCtor()
-        {
-            // set up
-            var appSettings = new AppSettings();
+        // set up
+        var appSettings = new AppSettings();
 
-            // run
-            var viewModel = new FlyingRangePopupViewModel(appSettings);
+        // run
+        var viewModel = new FlyingRangePopupViewModel(appSettings);
 
-            // check
-            Assert.IsTrue(
-                viewModel.GlideRatio > 0.0 &&
-                viewModel.GlideRatio < 20.0,
-                "glide ratio must have a sane default value");
+        // check
+        Assert.IsTrue(
+            viewModel.GlideRatio > 0.0 &&
+            viewModel.GlideRatio < 20.0,
+            "glide ratio must have a sane default value");
 
-            Assert.IsNotEmpty(viewModel.WindDirectionList, "wind direction list must contain values");
+        Assert.IsNotEmpty(viewModel.WindDirectionList, "wind direction list must contain values");
 
-            Assert.Contains(
-                viewModel.WindDirection,
-                viewModel.WindDirectionList,
-                "wind direction must be in the wind direction list");
+        Assert.Contains(
+            viewModel.WindDirection,
+            viewModel.WindDirectionList,
+            "wind direction must be in the wind direction list");
 
-            Assert.IsTrue(viewModel.WindSpeed.Any(), "wind speed must contain text");
+        Assert.IsTrue(viewModel.WindSpeed.Any(), "wind speed must contain text");
 
-            // modify values
-            viewModel.GlideRatio = 8.5;
-            viewModel.WindDirection = viewModel.WindDirectionList[1];
-            viewModel.WindSpeed = "42 km/h";
+        // modify values
+        viewModel.GlideRatio = 8.5;
+        viewModel.WindDirection = viewModel.WindDirectionList[1];
+        viewModel.WindSpeed = "42 km/h";
 
-            Assert.AreEqual(42.0, viewModel.Parameters.WindSpeed, 1e-6, "modified wind speed must match");
+        Assert.AreEqual(42.0, viewModel.Parameters.WindSpeed, 1e-6, "modified wind speed must match");
 
-            await viewModel.StoreFlyingRangeParameters();
-        }
+        await viewModel.StoreFlyingRangeParameters();
     }
 }

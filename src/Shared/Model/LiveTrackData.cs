@@ -1,72 +1,71 @@
 ﻿using System;
 
-namespace WhereToFly.Shared.Model
+namespace WhereToFly.Shared.Model;
+
+/// <summary>
+/// Data for a Live Track
+/// </summary>
+public class LiveTrackData
 {
     /// <summary>
-    /// Data for a Live Track
+    /// Live Track ID
     /// </summary>
-    public class LiveTrackData
+    public string ID { get; set; }
+
+    /// <summary>
+    /// Name of live waypoint
+    /// </summary>
+    public string Name { get; set; }
+
+    /// <summary>
+    /// Detailed description, in MarkDown format
+    /// </summary>
+    public string Description { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Track starting point
+    /// </summary>
+    public DateTimeOffset TrackStart { get; set; }
+
+    /// <summary>
+    /// Live tracking track point
+    /// </summary>
+    public struct LiveTrackPoint
     {
         /// <summary>
-        /// Live Track ID
+        /// Offset of track point to track start
         /// </summary>
-        public string ID { get; set; }
+        public double Offset { get; set; }
 
         /// <summary>
-        /// Name of live waypoint
+        /// Latitude value, positive values to the north
         /// </summary>
-        public string Name { get; set; }
+        public double Latitude { get; set; }
 
         /// <summary>
-        /// Detailed description, in MarkDown format
+        /// Longitude value, positive values to the east
         /// </summary>
-        public string Description { get; set; } = string.Empty;
+        public double Longitude { get; set; }
 
         /// <summary>
-        /// Track starting point
+        /// Altitude value, if available; 0 means "clamp to ground"
         /// </summary>
-        public DateTimeOffset TrackStart { get; set; }
+        public double Altitude { get; set; }
+    }
 
-        /// <summary>
-        /// Live tracking track point
-        /// </summary>
-        public struct LiveTrackPoint
-        {
-            /// <summary>
-            /// Offset of track point to track start
-            /// </summary>
-            public double Offset { get; set; }
+    /// <summary>
+    /// List of all track points
+    /// </summary>
+    public LiveTrackPoint[] TrackPoints { get; set; } = [];
 
-            /// <summary>
-            /// Latitude value, positive values to the north
-            /// </summary>
-            public double Latitude { get; set; }
-
-            /// <summary>
-            /// Longitude value, positive values to the east
-            /// </summary>
-            public double Longitude { get; set; }
-
-            /// <summary>
-            /// Altitude value, if available; 0 means "clamp to ground"
-            /// </summary>
-            public double Altitude { get; set; }
-        }
-
-        /// <summary>
-        /// List of all track points
-        /// </summary>
-        public LiveTrackPoint[] TrackPoints { get; set; } = [];
-
-        /// <summary>
-        /// Creates a new live track data object
-        /// </summary>
-        /// <param name="id">ID to use</param>
-        /// <param name="name">name to use</param>
-        public LiveTrackData(string id, string name)
-        {
-            this.ID = id;
-            this.Name = name;
-        }
+    /// <summary>
+    /// Creates a new live track data object
+    /// </summary>
+    /// <param name="id">ID to use</param>
+    /// <param name="name">name to use</param>
+    public LiveTrackData(string id, string name)
+    {
+        this.ID = id;
+        this.Name = name;
     }
 }

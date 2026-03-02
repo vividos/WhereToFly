@@ -1,30 +1,29 @@
 ﻿using System;
 
-namespace WhereToFly.Geo
+namespace WhereToFly.Geo;
+
+/// <summary>
+/// Extension methods for spatial classes
+/// </summary>
+public static class ExtensionMethods
 {
     /// <summary>
-    /// Extension methods for spatial classes
+    /// Converts an angle in degrees to radians
     /// </summary>
-    public static class ExtensionMethods
+    /// <param name="angleInDegrees">angle to convert</param>
+    /// <returns>angle in radians</returns>
+    public static double ToRadians(this double angleInDegrees)
     {
-        /// <summary>
-        /// Converts an angle in degrees to radians
-        /// </summary>
-        /// <param name="angleInDegrees">angle to convert</param>
-        /// <returns>angle in radians</returns>
-        public static double ToRadians(this double angleInDegrees)
-        {
-            return angleInDegrees * (Math.PI / 180);
-        }
+        return angleInDegrees * (Math.PI / 180);
+    }
 
-        /// <summary>
-        /// Converts an angle in radians to degrees
-        /// </summary>
-        /// <param name="angleInRadians">angle to convert</param>
-        /// <returns>angle in degrees</returns>
-        public static double ToDegrees(this double angleInRadians)
-        {
-            return angleInRadians * (180 / Math.PI);
-        }
+    /// <summary>
+    /// Converts an angle in radians to degrees
+    /// </summary>
+    /// <param name="angleInRadians">angle to convert</param>
+    /// <returns>angle in degrees</returns>
+    public static double ToDegrees(this double angleInRadians)
+    {
+        return angleInRadians * (180 / Math.PI);
     }
 }

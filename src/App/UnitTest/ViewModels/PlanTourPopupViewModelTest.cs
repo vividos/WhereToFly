@@ -5,45 +5,44 @@ using System.Threading.Tasks;
 using WhereToFly.App.ViewModels;
 using WhereToFly.Shared.Model;
 
-namespace WhereToFly.App.UnitTest.ViewModels
+namespace WhereToFly.App.UnitTest.ViewModels;
+
+/// <summary>
+/// Unit tests for class PlanTourPopupViewModel
+/// </summary>
+[TestClass]
+public class PlanTourPopupViewModelTest : UserInterfaceTestBase
 {
     /// <summary>
-    /// Unit tests for class PlanTourPopupViewModel
+    /// Tests default ctor of view model
     /// </summary>
-    [TestClass]
-    public class PlanTourPopupViewModelTest : UserInterfaceTestBase
+    [TestMethod]
+    public void TestDefaultCtor()
     {
-        /// <summary>
-        /// Tests default ctor of view model
-        /// </summary>
-        [TestMethod]
-        public void TestDefaultCtor()
-        {
-            // set up
+        // set up
 
-            // run
-            var viewModel = new PlanTourPopupViewModel(
-                new PlanTourParameters
-                {
-                    WaypointIdList =
-                    [
-                        "wheretofly-path-rotwand",
-                    ],
-                },
-                () => Task.CompletedTask);
+        // run
+        var viewModel = new PlanTourPopupViewModel(
+            new PlanTourParameters
+            {
+                WaypointIdList =
+                [
+                    "wheretofly-path-rotwand",
+                ],
+            },
+            () => Task.CompletedTask);
 
-            Assert.IsTrue(
-                viewModel.WaitForPropertyChange(
-                    nameof(viewModel.PlanTourList),
-                    TimeSpan.FromSeconds(10)),
-                "waiting for property change must succeed");
+        Assert.IsTrue(
+            viewModel.WaitForPropertyChange(
+                nameof(viewModel.PlanTourList),
+                TimeSpan.FromSeconds(10)),
+            "waiting for property change must succeed");
 
-            // check
-            Assert.IsTrue(viewModel.PlanTourList.Any(), "plan tour list must contain entries");
-            Assert.IsNotNull(viewModel.PlanTourCommand, "command must have been initialized");
-            Assert.IsNotNull(viewModel.CloseCommand, "command must have been initialized");
-            Assert.IsFalse(viewModel.IsTourPlanningPossible, "tour planning must not be possible with 1 entry");
-            Assert.IsTrue(viewModel.ShowWarningForMoreLocations, "warning for more entries must be shown");
-        }
+        // check
+        Assert.IsTrue(viewModel.PlanTourList.Any(), "plan tour list must contain entries");
+        Assert.IsNotNull(viewModel.PlanTourCommand, "command must have been initialized");
+        Assert.IsNotNull(viewModel.CloseCommand, "command must have been initialized");
+        Assert.IsFalse(viewModel.IsTourPlanningPossible, "tour planning must not be possible with 1 entry");
+        Assert.IsTrue(viewModel.ShowWarningForMoreLocations, "warning for more entries must be shown");
     }
 }

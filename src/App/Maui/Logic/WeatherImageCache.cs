@@ -2,92 +2,91 @@
 using WhereToFly.App.Models;
 using WhereToFly.App.Resources;
 
-namespace WhereToFly.App.Logic
+namespace WhereToFly.App.Logic;
+
+/// <summary>
+/// Image cache for weather images
+/// </summary>
+public static class WeatherImageCache
 {
     /// <summary>
-    /// Image cache for weather images
+    /// Returns an image from image cache
     /// </summary>
-    public static class WeatherImageCache
+    /// <param name="iconDescription">weather icon description to load image for</param>
+    /// <param name="appManager">app manager</param>
+    /// <param name="isDarkTheme">
+    /// indicates if an icon suitable for dark theme should be returned
+    /// </param>
+    /// <returns>image source, or null when no image was found or could be loaded</returns>
+    public static async Task<ImageSource?> GetImageAsync(
+        WeatherIconDescription iconDescription,
+        IAppManager appManager,
+        bool isDarkTheme = false)
     {
-        /// <summary>
-        /// Returns an image from image cache
-        /// </summary>
-        /// <param name="iconDescription">weather icon description to load image for</param>
-        /// <param name="appManager">app manager</param>
-        /// <param name="isDarkTheme">
-        /// indicates if an icon suitable for dark theme should be returned
-        /// </param>
-        /// <returns>image source, or null when no image was found or could be loaded</returns>
-        public static async Task<ImageSource?> GetImageAsync(
-            WeatherIconDescription iconDescription,
-            IAppManager appManager,
-            bool isDarkTheme = false)
+        switch (iconDescription.Type)
         {
-            switch (iconDescription.Type)
-            {
-                case WeatherIconDescription.IconType.IconLink:
-                    if (iconDescription.WebLink.StartsWith("https://www.austrocontrol.at"))
-                    {
-                        return ImageSource.FromStream(
-                            async (cancellationToken) =>
-                                await Assets.Get("alptherm-favicon.png"));
-                    }
-
-                    string faviconLink = await GetFaviconFromLinkAsync(iconDescription.WebLink);
-
-                    if (!string.IsNullOrEmpty(faviconLink))
-                    {
-                        return new UriImageSource { Uri = new Uri(faviconLink) };
-                    }
-
-                    break;
-
-                case WeatherIconDescription.IconType.IconApp:
+            case WeatherIconDescription.IconType.IconLink:
+                if (iconDescription.WebLink.StartsWith("https://www.austrocontrol.at"))
+                {
                     return ImageSource.FromStream(
-                        (cancellationToken) =>
-                        {
-                            byte[]? appIconData = appManager.GetAppIcon(iconDescription.WebLink);
+                        async (cancellationToken) =>
+                            await Assets.Get("alptherm-favicon.png"));
+                }
 
-                            return Task.FromResult<Stream?>(
-                                appIconData != null
-                                ? new MemoryStream(appIconData)
-                                : null);
-                        });
+                string faviconLink = await GetFaviconFromLinkAsync(iconDescription.WebLink);
 
-                case WeatherIconDescription.IconType.IconPlaceholder:
-                    return ImageSource.FromFile(
-                        isDarkTheme
-                        ? "border_none_variant_dark.png"
-                        : "border_none_variant.png");
+                if (!string.IsNullOrEmpty(faviconLink))
+                {
+                    return new UriImageSource { Uri = new Uri(faviconLink) };
+                }
 
-                default:
-                    break;
-            }
+                break;
 
-            return null;
+            case WeatherIconDescription.IconType.IconApp:
+                return ImageSource.FromStream(
+                    (cancellationToken) =>
+                    {
+                        byte[]? appIconData = appManager.GetAppIcon(iconDescription.WebLink);
+
+                        return Task.FromResult<Stream?>(
+                            appIconData != null
+                            ? new MemoryStream(appIconData)
+                            : null);
+                    });
+
+            case WeatherIconDescription.IconType.IconPlaceholder:
+                return ImageSource.FromFile(
+                    isDarkTheme
+                    ? "border_none_variant_dark.png"
+                    : "border_none_variant.png");
+
+            default:
+                break;
         }
 
-        /// <summary>
-        /// Returns a favicon link from given web link
-        /// </summary>
-        /// <param name="webLink">web link</param>
-        /// <returns>link with hostname and favicon.ico prefixed</returns>
-        private static async Task<string> GetFaviconFromLinkAsync(string webLink)
+        return null;
+    }
+
+    /// <summary>
+    /// Returns a favicon link from given web link
+    /// </summary>
+    /// <param name="webLink">web link</param>
+    /// <returns>link with hostname and favicon.ico prefixed</returns>
+    private static async Task<string> GetFaviconFromLinkAsync(string webLink)
+    {
+        if (webLink.StartsWith("https://www.austrocontrol.at"))
         {
-            if (webLink.StartsWith("https://www.austrocontrol.at"))
-            {
-                return "https://www.austrocontrol.at/favicon.ico";
-            }
-
-            int pos = webLink.IndexOf(";jsessionid=");
-            if (pos != -1)
-            {
-                webLink = webLink.Substring(0, pos);
-            }
-
-            var dataService = DependencyService.Get<IDataService>();
-
-            return await dataService.GetFaviconUrlAsync(webLink);
+            return "https://www.austrocontrol.at/favicon.ico";
         }
+
+        int pos = webLink.IndexOf(";jsessionid=");
+        if (pos != -1)
+        {
+            webLink = webLink.Substring(0, pos);
+        }
+
+        var dataService = DependencyService.Get<IDataService>();
+
+        return await dataService.GetFaviconUrlAsync(webLink);
     }
 }

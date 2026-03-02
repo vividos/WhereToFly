@@ -3,552 +3,551 @@ using WhereToFly.App.Abstractions;
 using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;
 
-namespace WhereToFly.App.Services
+namespace WhereToFly.App.Services;
+
+/// <summary>
+/// Service for refreshing live waypoint data and live track data
+/// </summary>
+public class LiveDataRefreshService
 {
     /// <summary>
-    /// Service for refreshing live waypoint data and live track data
+    /// Update info for queueing live data updates
     /// </summary>
-    public class LiveDataRefreshService
+    private sealed class LiveDataUpdateInfo
     {
         /// <summary>
-        /// Update info for queueing live data updates
+        /// Update time for this given live waypoint/track
         /// </summary>
-        private sealed class LiveDataUpdateInfo
+        public DateTimeOffset UpdateTime { get; set; }
+
+        /// <summary>
+        /// Location or track ID of live waypoint/track to update
+        /// </summary>
+        public string LocationOrTrackId { get; set; }
+
+        /// <summary>
+        /// Creates a new live data update info object
+        /// </summary>
+        /// <param name="updateTime">update time</param>
+        /// <param name="locationOrTrackId">location or track ID</param>
+        public LiveDataUpdateInfo(
+            DateTimeOffset updateTime,
+            string locationOrTrackId)
         {
-            /// <summary>
-            /// Update time for this given live waypoint/track
-            /// </summary>
-            public DateTimeOffset UpdateTime { get; set; }
+            this.UpdateTime = updateTime;
+            this.LocationOrTrackId = locationOrTrackId;
+        }
+    }
 
-            /// <summary>
-            /// Location or track ID of live waypoint/track to update
-            /// </summary>
-            public string LocationOrTrackId { get; set; }
+    /// <summary>
+    /// Data service
+    /// </summary>
+    private readonly IDataService dataService;
 
-            /// <summary>
-            /// Creates a new live data update info object
-            /// </summary>
-            /// <param name="updateTime">update time</param>
-            /// <param name="locationOrTrackId">location or track ID</param>
-            public LiveDataUpdateInfo(
-                DateTimeOffset updateTime,
-                string locationOrTrackId)
-            {
-                this.UpdateTime = updateTime;
-                this.LocationOrTrackId = locationOrTrackId;
-            }
+    /// <summary>
+    /// Lock for liveWaypointMap, liveTrackMap, liveTrackLastTrackPointTimeMap,
+    /// nextUpdateQueue and nextPossibleUpdateMap
+    /// </summary>
+    private readonly object dataLock = new();
+
+    /// <summary>
+    /// Mapping of live waypoint IDs and their location objects
+    /// </summary>
+    private readonly Dictionary<string, Location> liveWaypointMap = [];
+
+    /// <summary>
+    /// Mapping of live track IDs and their track objects
+    /// </summary>
+    private readonly Dictionary<string, Track> liveTrackMap = [];
+
+    /// <summary>
+    /// Mapping of live track IDs and the last track point time
+    /// </summary>
+    private readonly Dictionary<string, DateTimeOffset> liveTrackLastTrackPointTimeMap = [];
+
+    /// <summary>
+    /// Queue with all updates to be due
+    /// </summary>
+    private readonly Queue<LiveDataUpdateInfo> nextUpdateQueue = new();
+
+    /// <summary>
+    /// Map with times when a next update can be scheduled
+    /// </summary>
+    private readonly Dictionary<string, DateTimeOffset> nextPossibleUpdateMap = [];
+
+    /// <summary>
+    /// Timer to schedule updates
+    /// </summary>
+    private Timer? timer;
+
+    /// <summary>
+    /// Delegate of event that is triggered when live waypoint or track data was updated
+    /// </summary>
+    /// <param name="sender">sender object</param>
+    /// <param name="args">event args</param>
+    public delegate void OnUpdateLiveData(object? sender, LiveDataUpdateEventArgs args);
+
+    /// <summary>
+    /// Event that is triggered when data for a live waypoint or a live track was updated
+    /// </summary>
+    public event OnUpdateLiveData? UpdateLiveData;
+
+    /// <summary>
+    /// Creates a new live data refresh service instance
+    /// </summary>
+    /// <param name="dataService">data service</param>
+    public LiveDataRefreshService(IDataService dataService)
+    {
+        this.dataService = dataService;
+    }
+
+    /// <summary>
+    /// Adds location list, to be checked for live waypoints to be updated periodically.
+    /// </summary>
+    /// <param name="locationList">location list</param>
+    public void AddLiveWaypointList(IEnumerable<Location> locationList)
+    {
+        var liveWaypointLocationList = locationList.Where(location => location.Type == LocationType.LiveWaypoint);
+
+        if (!liveWaypointLocationList.Any())
+        {
+            return;
         }
 
-        /// <summary>
-        /// Data service
-        /// </summary>
-        private readonly IDataService dataService;
+        Debug.WriteLine($"LiveDataRefreshService: adding list of {liveWaypointLocationList.Count()} live waypoints");
 
-        /// <summary>
-        /// Lock for liveWaypointMap, liveTrackMap, liveTrackLastTrackPointTimeMap,
-        /// nextUpdateQueue and nextPossibleUpdateMap
-        /// </summary>
-        private readonly object dataLock = new();
-
-        /// <summary>
-        /// Mapping of live waypoint IDs and their location objects
-        /// </summary>
-        private readonly Dictionary<string, Location> liveWaypointMap = [];
-
-        /// <summary>
-        /// Mapping of live track IDs and their track objects
-        /// </summary>
-        private readonly Dictionary<string, Track> liveTrackMap = [];
-
-        /// <summary>
-        /// Mapping of live track IDs and the last track point time
-        /// </summary>
-        private readonly Dictionary<string, DateTimeOffset> liveTrackLastTrackPointTimeMap = [];
-
-        /// <summary>
-        /// Queue with all updates to be due
-        /// </summary>
-        private readonly Queue<LiveDataUpdateInfo> nextUpdateQueue = new();
-
-        /// <summary>
-        /// Map with times when a next update can be scheduled
-        /// </summary>
-        private readonly Dictionary<string, DateTimeOffset> nextPossibleUpdateMap = [];
-
-        /// <summary>
-        /// Timer to schedule updates
-        /// </summary>
-        private Timer? timer;
-
-        /// <summary>
-        /// Delegate of event that is triggered when live waypoint or track data was updated
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="args">event args</param>
-        public delegate void OnUpdateLiveData(object? sender, LiveDataUpdateEventArgs args);
-
-        /// <summary>
-        /// Event that is triggered when data for a live waypoint or a live track was updated
-        /// </summary>
-        public event OnUpdateLiveData? UpdateLiveData;
-
-        /// <summary>
-        /// Creates a new live data refresh service instance
-        /// </summary>
-        /// <param name="dataService">data service</param>
-        public LiveDataRefreshService(IDataService dataService)
+        lock (this.dataLock)
         {
-            this.dataService = dataService;
-        }
-
-        /// <summary>
-        /// Adds location list, to be checked for live waypoints to be updated periodically.
-        /// </summary>
-        /// <param name="locationList">location list</param>
-        public void AddLiveWaypointList(IEnumerable<Location> locationList)
-        {
-            var liveWaypointLocationList = locationList.Where(location => location.Type == LocationType.LiveWaypoint);
-
-            if (!liveWaypointLocationList.Any())
+            foreach (Location liveWaypointLocation in liveWaypointLocationList)
             {
-                return;
-            }
-
-            Debug.WriteLine($"LiveDataRefreshService: adding list of {liveWaypointLocationList.Count()} live waypoints");
-
-            lock (this.dataLock)
-            {
-                foreach (Location liveWaypointLocation in liveWaypointLocationList)
-                {
-                    if (!this.liveWaypointMap.ContainsKey(liveWaypointLocation.Id))
-                    {
-                        this.liveWaypointMap.Add(liveWaypointLocation.Id, liveWaypointLocation);
-                    }
-                }
-            }
-
-            this.ScheduleUpdates();
-        }
-
-        /// <summary>
-        /// Adds live waypoint to be updated periodically.
-        /// </summary>
-        /// <param name="liveWaypointLocation">live waypoint location to add</param>
-        public void AddLiveWaypoint(Location liveWaypointLocation)
-        {
-            lock (this.dataLock)
-            {
-                if (this.liveWaypointMap.ContainsKey(liveWaypointLocation.Id))
-                {
-                    this.liveWaypointMap[liveWaypointLocation.Id] = liveWaypointLocation;
-                }
-                else
+                if (!this.liveWaypointMap.ContainsKey(liveWaypointLocation.Id))
                 {
                     this.liveWaypointMap.Add(liveWaypointLocation.Id, liveWaypointLocation);
                 }
             }
-
-            this.ScheduleUpdates();
         }
 
-        /// <summary>
-        /// Removes live waypoint from being updated.
-        /// </summary>
-        /// <param name="liveWaypointLocationId">live waypoint ID to remove</param>
-        public void RemoveLiveWaypoint(string liveWaypointLocationId)
+        this.ScheduleUpdates();
+    }
+
+    /// <summary>
+    /// Adds live waypoint to be updated periodically.
+    /// </summary>
+    /// <param name="liveWaypointLocation">live waypoint location to add</param>
+    public void AddLiveWaypoint(Location liveWaypointLocation)
+    {
+        lock (this.dataLock)
         {
-            lock (this.dataLock)
+            if (this.liveWaypointMap.ContainsKey(liveWaypointLocation.Id))
             {
-                this.liveWaypointMap.Remove(liveWaypointLocationId);
-                this.nextPossibleUpdateMap.Remove(liveWaypointLocationId);
+                this.liveWaypointMap[liveWaypointLocation.Id] = liveWaypointLocation;
             }
-
-            this.ScheduleUpdates();
-        }
-
-        /// <summary>
-        /// Adds live track, to be updated periodically.
-        /// </summary>
-        /// <param name="liveTrack">live track to add</param>
-        public void AddLiveTrack(Track liveTrack)
-        {
-            lock (this.dataLock)
+            else
             {
-                if (this.liveTrackMap.ContainsKey(liveTrack.Id))
-                {
-                    this.liveTrackMap[liveTrack.Id] = liveTrack;
-                }
-                else
-                {
-                    this.liveTrackMap.Add(liveTrack.Id, liveTrack);
-                }
-
-                DateTimeOffset? lastTrackPointTime =
-                    liveTrack.TrackPoints.LastOrDefault(
-                        trackPoint => trackPoint.Time != null)?.Time;
-
-                if (lastTrackPointTime != null)
-                {
-                    this.liveTrackLastTrackPointTimeMap[liveTrack.Id] =
-                        lastTrackPointTime.Value;
-                }
-            }
-
-            this.ScheduleUpdates();
-        }
-
-        /// <summary>
-        /// Removes live track from being updated.
-        /// </summary>
-        /// <param name="liveTrackId">live track ID to remove</param>
-        public void RemoveLiveTrack(string liveTrackId)
-        {
-            lock (this.dataLock)
-            {
-                this.liveTrackMap.Remove(liveTrackId);
-                this.nextPossibleUpdateMap.Remove(liveTrackId);
-            }
-
-            this.ScheduleUpdates();
-        }
-
-        /// <summary>
-        /// Checks all live waypoints/tracks for a next possible update and schedules updating the
-        /// live waypoints/tracks.
-        /// </summary>
-        private void ScheduleUpdates()
-        {
-            Debug.WriteLine("LiveDataRefreshService: scheduling updates");
-
-            lock (this.dataLock)
-            {
-                DateTimeOffset nextUpdateTime = DateTimeOffset.MaxValue;
-                string? nextLocationOrTrackId = null;
-                foreach (var item in this.nextPossibleUpdateMap)
-                {
-                    if (item.Value < nextUpdateTime)
-                    {
-                        nextUpdateTime = item.Value;
-                        nextLocationOrTrackId = item.Key;
-                    }
-                }
-
-                if (nextLocationOrTrackId != null)
-                {
-                    this.EnqueueNextUpdate(nextLocationOrTrackId, nextUpdateTime);
-                    this.StartTimer(nextUpdateTime);
-                }
-                else if (this.liveWaypointMap.Count != 0 || this.liveTrackMap.Count != 0)
-                {
-                    // no locations or tracks in the map; update all
-                    Debug.WriteLine("LiveDataRefreshService: schedule update for all live waypoints and live tracks");
-
-                    foreach (string liveWaypointId in this.liveWaypointMap.Keys)
-                    {
-                        this.EnqueueNextUpdate(liveWaypointId, DateTimeOffset.Now);
-                    }
-
-                    foreach (string liveTrackId in this.liveTrackMap.Keys)
-                    {
-                        this.EnqueueNextUpdate(liveTrackId, DateTimeOffset.Now);
-                    }
-
-                    Task.Run(this.CheckLiveWaypointsAndTracksAsync);
-                }
-                else
-                {
-                    nextUpdateTime = DateTimeOffset.Now + TimeSpan.FromMinutes(1.0);
-                    this.StartTimer(nextUpdateTime);
-                }
+                this.liveWaypointMap.Add(liveWaypointLocation.Id, liveWaypointLocation);
             }
         }
 
-        /// <summary>
-        /// Enqueues next update for given location or track ID
-        /// </summary>
-        /// <param name="locationOrTrackId">location or track ID to enqueue update</param>
-        /// <param name="nextUpdateTime">time of next update</param>
-        private void EnqueueNextUpdate(string locationOrTrackId, DateTimeOffset nextUpdateTime)
-        {
-            lock (this.dataLock)
-            {
-                if (this.nextUpdateQueue.Any(updateInfo => updateInfo.LocationOrTrackId == locationOrTrackId))
-                {
-                    return; // already scheduled
-                }
+        this.ScheduleUpdates();
+    }
 
-                this.nextUpdateQueue.Enqueue(new LiveDataUpdateInfo(
-                    nextUpdateTime,
-                    locationOrTrackId));
+    /// <summary>
+    /// Removes live waypoint from being updated.
+    /// </summary>
+    /// <param name="liveWaypointLocationId">live waypoint ID to remove</param>
+    public void RemoveLiveWaypoint(string liveWaypointLocationId)
+    {
+        lock (this.dataLock)
+        {
+            this.liveWaypointMap.Remove(liveWaypointLocationId);
+            this.nextPossibleUpdateMap.Remove(liveWaypointLocationId);
+        }
+
+        this.ScheduleUpdates();
+    }
+
+    /// <summary>
+    /// Adds live track, to be updated periodically.
+    /// </summary>
+    /// <param name="liveTrack">live track to add</param>
+    public void AddLiveTrack(Track liveTrack)
+    {
+        lock (this.dataLock)
+        {
+            if (this.liveTrackMap.ContainsKey(liveTrack.Id))
+            {
+                this.liveTrackMap[liveTrack.Id] = liveTrack;
+            }
+            else
+            {
+                this.liveTrackMap.Add(liveTrack.Id, liveTrack);
+            }
+
+            DateTimeOffset? lastTrackPointTime =
+                liveTrack.TrackPoints.LastOrDefault(
+                    trackPoint => trackPoint.Time != null)?.Time;
+
+            if (lastTrackPointTime != null)
+            {
+                this.liveTrackLastTrackPointTimeMap[liveTrack.Id] =
+                    lastTrackPointTime.Value;
             }
         }
 
-        /// <summary>
-        /// Starts time to check live waypoints and live tracks at next given update time
-        /// </summary>
-        /// <param name="nextUpdateTime">next time an update should be carried out</param>
-        private void StartTimer(DateTimeOffset nextUpdateTime)
+        this.ScheduleUpdates();
+    }
+
+    /// <summary>
+    /// Removes live track from being updated.
+    /// </summary>
+    /// <param name="liveTrackId">live track ID to remove</param>
+    public void RemoveLiveTrack(string liveTrackId)
+    {
+        lock (this.dataLock)
         {
-            Debug.WriteLine($"LiveDataRefreshService: starting timer for next update on {nextUpdateTime}");
+            this.liveTrackMap.Remove(liveTrackId);
+            this.nextPossibleUpdateMap.Remove(liveTrackId);
+        }
 
-            TimeSpan dueTimeSpan = nextUpdateTime - DateTimeOffset.Now;
+        this.ScheduleUpdates();
+    }
 
-            if (dueTimeSpan < TimeSpan.Zero)
+    /// <summary>
+    /// Checks all live waypoints/tracks for a next possible update and schedules updating the
+    /// live waypoints/tracks.
+    /// </summary>
+    private void ScheduleUpdates()
+    {
+        Debug.WriteLine("LiveDataRefreshService: scheduling updates");
+
+        lock (this.dataLock)
+        {
+            DateTimeOffset nextUpdateTime = DateTimeOffset.MaxValue;
+            string? nextLocationOrTrackId = null;
+            foreach (var item in this.nextPossibleUpdateMap)
             {
+                if (item.Value < nextUpdateTime)
+                {
+                    nextUpdateTime = item.Value;
+                    nextLocationOrTrackId = item.Key;
+                }
+            }
+
+            if (nextLocationOrTrackId != null)
+            {
+                this.EnqueueNextUpdate(nextLocationOrTrackId, nextUpdateTime);
+                this.StartTimer(nextUpdateTime);
+            }
+            else if (this.liveWaypointMap.Count != 0 || this.liveTrackMap.Count != 0)
+            {
+                // no locations or tracks in the map; update all
+                Debug.WriteLine("LiveDataRefreshService: schedule update for all live waypoints and live tracks");
+
+                foreach (string liveWaypointId in this.liveWaypointMap.Keys)
+                {
+                    this.EnqueueNextUpdate(liveWaypointId, DateTimeOffset.Now);
+                }
+
+                foreach (string liveTrackId in this.liveTrackMap.Keys)
+                {
+                    this.EnqueueNextUpdate(liveTrackId, DateTimeOffset.Now);
+                }
+
                 Task.Run(this.CheckLiveWaypointsAndTracksAsync);
-                return;
             }
-
-            this.timer = new Timer(
-                async (state) =>
-                {
-                    await this.CheckLiveWaypointsAndTracksAsync();
-                },
-                null,
-                dueTimeSpan,
-                TimeSpan.Zero);
-        }
-
-        /// <summary>
-        /// Stops timer to update live waypoints
-        /// </summary>
-        public void StopTimer()
-        {
-            if (this.timer != null)
+            else
             {
-                this.timer.Dispose();
-                this.timer = null;
+                nextUpdateTime = DateTimeOffset.Now + TimeSpan.FromMinutes(1.0);
+                this.StartTimer(nextUpdateTime);
             }
         }
+    }
 
-        /// <summary>
-        /// Resumes timer (by just scheduling the next timer update)
-        /// </summary>
-        public void ResumeTimer()
+    /// <summary>
+    /// Enqueues next update for given location or track ID
+    /// </summary>
+    /// <param name="locationOrTrackId">location or track ID to enqueue update</param>
+    /// <param name="nextUpdateTime">time of next update</param>
+    private void EnqueueNextUpdate(string locationOrTrackId, DateTimeOffset nextUpdateTime)
+    {
+        lock (this.dataLock)
         {
-            this.ScheduleUpdates();
+            if (this.nextUpdateQueue.Any(updateInfo => updateInfo.LocationOrTrackId == locationOrTrackId))
+            {
+                return; // already scheduled
+            }
+
+            this.nextUpdateQueue.Enqueue(new LiveDataUpdateInfo(
+                nextUpdateTime,
+                locationOrTrackId));
+        }
+    }
+
+    /// <summary>
+    /// Starts time to check live waypoints and live tracks at next given update time
+    /// </summary>
+    /// <param name="nextUpdateTime">next time an update should be carried out</param>
+    private void StartTimer(DateTimeOffset nextUpdateTime)
+    {
+        Debug.WriteLine($"LiveDataRefreshService: starting timer for next update on {nextUpdateTime}");
+
+        TimeSpan dueTimeSpan = nextUpdateTime - DateTimeOffset.Now;
+
+        if (dueTimeSpan < TimeSpan.Zero)
+        {
+            Task.Run(this.CheckLiveWaypointsAndTracksAsync);
+            return;
         }
 
-        /// <summary>
-        /// Clears all live waypoints in the service, e.g. when user cleared location list
-        /// </summary>
-        public void ClearLiveWaypointList()
+        this.timer = new Timer(
+            async (state) =>
+            {
+                await this.CheckLiveWaypointsAndTracksAsync();
+            },
+            null,
+            dueTimeSpan,
+            TimeSpan.Zero);
+    }
+
+    /// <summary>
+    /// Stops timer to update live waypoints
+    /// </summary>
+    public void StopTimer()
+    {
+        if (this.timer != null)
         {
+            this.timer.Dispose();
+            this.timer = null;
+        }
+    }
+
+    /// <summary>
+    /// Resumes timer (by just scheduling the next timer update)
+    /// </summary>
+    public void ResumeTimer()
+    {
+        this.ScheduleUpdates();
+    }
+
+    /// <summary>
+    /// Clears all live waypoints in the service, e.g. when user cleared location list
+    /// </summary>
+    public void ClearLiveWaypointList()
+    {
+        lock (this.dataLock)
+        {
+            // don't clear nextPossibleUpdateMap, as the info might be needed again when
+            // re -adding some live waypoints
+            this.liveWaypointMap.Clear();
+            this.nextUpdateQueue.Clear();
+        }
+    }
+
+    /// <summary>
+    /// Clears all live tracks in the service, e.g. when user cleared track list
+    /// </summary>
+    public void ClearLiveTrackList()
+    {
+        lock (this.dataLock)
+        {
+            // don't clear nextPossibleUpdateMap, as the info might be needed again when
+            // re -adding some live waypoints
+            this.liveTrackMap.Clear();
+            this.nextUpdateQueue.Clear();
+        }
+    }
+
+    /// <summary>
+    /// Checks all live waypoints in queue that should be updated.
+    /// </summary>
+    /// <returns>task to wait on</returns>
+    private async Task CheckLiveWaypointsAndTracksAsync()
+    {
+        this.StopTimer();
+
+        Debug.WriteLine("LiveDataRefreshService: checking all live waypoints in queue");
+
+        LiveDataUpdateInfo? updateInfo;
+        while ((updateInfo = this.GetNextUpdateInfo()) != null)
+        {
+            bool isLocation = false;
+            DateTimeOffset? lastTrackPointTime = null;
             lock (this.dataLock)
             {
-                // don't clear nextPossibleUpdateMap, as the info might be needed again when
-                // re -adding some live waypoints
-                this.liveWaypointMap.Clear();
-                this.nextUpdateQueue.Clear();
-            }
-        }
+                isLocation = this.liveWaypointMap.ContainsKey(updateInfo.LocationOrTrackId);
 
-        /// <summary>
-        /// Clears all live tracks in the service, e.g. when user cleared track list
-        /// </summary>
-        public void ClearLiveTrackList()
-        {
-            lock (this.dataLock)
-            {
-                // don't clear nextPossibleUpdateMap, as the info might be needed again when
-                // re -adding some live waypoints
-                this.liveTrackMap.Clear();
-                this.nextUpdateQueue.Clear();
-            }
-        }
-
-        /// <summary>
-        /// Checks all live waypoints in queue that should be updated.
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task CheckLiveWaypointsAndTracksAsync()
-        {
-            this.StopTimer();
-
-            Debug.WriteLine("LiveDataRefreshService: checking all live waypoints in queue");
-
-            LiveDataUpdateInfo? updateInfo;
-            while ((updateInfo = this.GetNextUpdateInfo()) != null)
-            {
-                bool isLocation = false;
-                DateTimeOffset? lastTrackPointTime = null;
-                lock (this.dataLock)
+                if (!isLocation)
                 {
-                    isLocation = this.liveWaypointMap.ContainsKey(updateInfo.LocationOrTrackId);
-
-                    if (!isLocation)
+                    if (this.liveTrackLastTrackPointTimeMap.TryGetValue(
+                        updateInfo.LocationOrTrackId,
+                        out DateTimeOffset value))
                     {
-                        if (this.liveTrackLastTrackPointTimeMap.TryGetValue(
-                            updateInfo.LocationOrTrackId,
-                            out DateTimeOffset value))
-                        {
-                            lastTrackPointTime = value;
-                        }
-                        else if (this.liveTrackMap.TryGetValue(
-                            updateInfo.LocationOrTrackId,
-                            out Track? liveTrack) &&
-                            liveTrack != null)
-                        {
-                            lastTrackPointTime =
-                                liveTrack.TrackPoints.LastOrDefault(
-                                    trackPoint => trackPoint.Time != null)?.Time;
-                        }
+                        lastTrackPointTime = value;
+                    }
+                    else if (this.liveTrackMap.TryGetValue(
+                        updateInfo.LocationOrTrackId,
+                        out Track? liveTrack) &&
+                        liveTrack != null)
+                    {
+                        lastTrackPointTime =
+                            liveTrack.TrackPoints.LastOrDefault(
+                                trackPoint => trackPoint.Time != null)?.Time;
                     }
                 }
-
-                if (isLocation)
-                {
-                    await this.UpdateLiveWaypointAsync(updateInfo.LocationOrTrackId);
-                }
-                else
-                {
-                    await this.UpdateLiveTrackAsync(
-                        updateInfo.LocationOrTrackId,
-                        lastTrackPointTime);
-                }
             }
 
-            this.ScheduleUpdates();
-        }
-
-        /// <summary>
-        /// Retrieves next update info object from queue, or null when there is no update due or
-        /// the queue is empty.
-        /// </summary>
-        /// <returns>update info object, or null when no object is available</returns>
-        private LiveDataUpdateInfo? GetNextUpdateInfo()
-        {
-            lock (this.dataLock)
+            if (isLocation)
             {
-                if (this.nextUpdateQueue.Count > 0 &&
-                    this.nextUpdateQueue.Peek().UpdateTime <= DateTimeOffset.Now)
-                {
-                    return this.nextUpdateQueue.Dequeue();
-                }
-
-                return null;
+                await this.UpdateLiveWaypointAsync(updateInfo.LocationOrTrackId);
             }
-        }
-
-        /// <summary>
-        /// Updates live waypoint by getting live waypoint data and notify all event subjects.
-        /// </summary>
-        /// <param name="liveWaypointId">live waypoint ID to update</param>
-        /// <returns>task to wait on</returns>
-        private async Task UpdateLiveWaypointAsync(string liveWaypointId)
-        {
-            Debug.WriteLine($"LiveDataRefreshService: updating live waypoint for {liveWaypointId}");
-
-            LiveWaypointQueryResult? queryResult = null;
-            try
+            else
             {
-                queryResult = await this.dataService.GetLiveWaypointDataAsync(liveWaypointId);
-            }
-            catch (Exception ex)
-            {
-                // ignore exception
-                Debug.WriteLine($"LiveDataRefreshService: exception occured: {ex}");
-            }
-
-            if (queryResult == null)
-            {
-                // try again in a minute
-                lock (this.dataLock)
-                {
-                    this.nextPossibleUpdateMap[liveWaypointId] = DateTimeOffset.Now + TimeSpan.FromMinutes(1.0);
-                }
-
-                return;
-            }
-
-            if (queryResult.Data != null)
-            {
-                this.UpdateLiveData?.Invoke(
-                    this,
-                    new LiveDataUpdateEventArgs
-                    {
-                        WaypointData = queryResult.Data,
-                    });
-            }
-
-            var nextUpdate = queryResult.NextRequestDate;
-            lock (this.dataLock)
-            {
-                this.nextPossibleUpdateMap[liveWaypointId] = nextUpdate;
-            }
-        }
-
-        /// <summary>
-        /// Updates live track by getting live track data and notify all event subjects.
-        /// </summary>
-        /// <param name="liveTrackId">live track ID to update</param>
-        /// <param name="lastTrackPointTime">
-        /// last track point that the client already has received, or null when no track points
-        /// are known yet
-        /// </param>
-        /// <returns>task to wait on</returns>
-        private async Task UpdateLiveTrackAsync(
-            string liveTrackId,
-            DateTimeOffset? lastTrackPointTime)
-        {
-            Debug.WriteLine($"LiveDataRefreshService: updating live track for {liveTrackId}");
-
-            LiveTrackQueryResult? queryResult = null;
-
-            try
-            {
-                queryResult = await this.dataService.GetLiveTrackDataAsync(
-                    liveTrackId,
+                await this.UpdateLiveTrackAsync(
+                    updateInfo.LocationOrTrackId,
                     lastTrackPointTime);
             }
-            catch (Exception ex)
+        }
+
+        this.ScheduleUpdates();
+    }
+
+    /// <summary>
+    /// Retrieves next update info object from queue, or null when there is no update due or
+    /// the queue is empty.
+    /// </summary>
+    /// <returns>update info object, or null when no object is available</returns>
+    private LiveDataUpdateInfo? GetNextUpdateInfo()
+    {
+        lock (this.dataLock)
+        {
+            if (this.nextUpdateQueue.Count > 0 &&
+                this.nextUpdateQueue.Peek().UpdateTime <= DateTimeOffset.Now)
             {
-                // ignore exception
-                Debug.WriteLine($"LiveDataRefreshService: exception occured: {ex}");
+                return this.nextUpdateQueue.Dequeue();
             }
 
-            if (queryResult == null)
-            {
-                // try again in a minute
-                lock (this.dataLock)
-                {
-                    this.nextPossibleUpdateMap[liveTrackId] = DateTimeOffset.Now + TimeSpan.FromMinutes(1.0);
-                }
+            return null;
+        }
+    }
 
-                return;
-            }
+    /// <summary>
+    /// Updates live waypoint by getting live waypoint data and notify all event subjects.
+    /// </summary>
+    /// <param name="liveWaypointId">live waypoint ID to update</param>
+    /// <returns>task to wait on</returns>
+    private async Task UpdateLiveWaypointAsync(string liveWaypointId)
+    {
+        Debug.WriteLine($"LiveDataRefreshService: updating live waypoint for {liveWaypointId}");
 
-            DateTimeOffset? nextLastTrackPointTime = null;
+        LiveWaypointQueryResult? queryResult = null;
+        try
+        {
+            queryResult = await this.dataService.GetLiveWaypointDataAsync(liveWaypointId);
+        }
+        catch (Exception ex)
+        {
+            // ignore exception
+            Debug.WriteLine($"LiveDataRefreshService: exception occured: {ex}");
+        }
 
-            if (queryResult.Data != null)
-            {
-                this.UpdateLiveData?.Invoke(
-                    this,
-                    new LiveDataUpdateEventArgs
-                    {
-                        TrackData = queryResult.Data,
-                    });
-
-                if (queryResult.Data.TrackPoints.Any())
-                {
-                    double offset = queryResult.Data.
-                        TrackPoints[queryResult.Data.TrackPoints.Length - 1]
-                        .Offset;
-
-                    nextLastTrackPointTime = queryResult.Data.TrackStart.AddSeconds(offset);
-                }
-            }
-
-            var nextUpdate = queryResult.NextRequestDate;
+        if (queryResult == null)
+        {
+            // try again in a minute
             lock (this.dataLock)
             {
-                this.nextPossibleUpdateMap[liveTrackId] = nextUpdate;
+                this.nextPossibleUpdateMap[liveWaypointId] = DateTimeOffset.Now + TimeSpan.FromMinutes(1.0);
+            }
 
-                if (nextLastTrackPointTime != null)
+            return;
+        }
+
+        if (queryResult.Data != null)
+        {
+            this.UpdateLiveData?.Invoke(
+                this,
+                new LiveDataUpdateEventArgs
                 {
-                    this.liveTrackLastTrackPointTimeMap[liveTrackId] =
-                        nextLastTrackPointTime.Value;
-                }
+                    WaypointData = queryResult.Data,
+                });
+        }
+
+        var nextUpdate = queryResult.NextRequestDate;
+        lock (this.dataLock)
+        {
+            this.nextPossibleUpdateMap[liveWaypointId] = nextUpdate;
+        }
+    }
+
+    /// <summary>
+    /// Updates live track by getting live track data and notify all event subjects.
+    /// </summary>
+    /// <param name="liveTrackId">live track ID to update</param>
+    /// <param name="lastTrackPointTime">
+    /// last track point that the client already has received, or null when no track points
+    /// are known yet
+    /// </param>
+    /// <returns>task to wait on</returns>
+    private async Task UpdateLiveTrackAsync(
+        string liveTrackId,
+        DateTimeOffset? lastTrackPointTime)
+    {
+        Debug.WriteLine($"LiveDataRefreshService: updating live track for {liveTrackId}");
+
+        LiveTrackQueryResult? queryResult = null;
+
+        try
+        {
+            queryResult = await this.dataService.GetLiveTrackDataAsync(
+                liveTrackId,
+                lastTrackPointTime);
+        }
+        catch (Exception ex)
+        {
+            // ignore exception
+            Debug.WriteLine($"LiveDataRefreshService: exception occured: {ex}");
+        }
+
+        if (queryResult == null)
+        {
+            // try again in a minute
+            lock (this.dataLock)
+            {
+                this.nextPossibleUpdateMap[liveTrackId] = DateTimeOffset.Now + TimeSpan.FromMinutes(1.0);
+            }
+
+            return;
+        }
+
+        DateTimeOffset? nextLastTrackPointTime = null;
+
+        if (queryResult.Data != null)
+        {
+            this.UpdateLiveData?.Invoke(
+                this,
+                new LiveDataUpdateEventArgs
+                {
+                    TrackData = queryResult.Data,
+                });
+
+            if (queryResult.Data.TrackPoints.Any())
+            {
+                double offset = queryResult.Data.
+                    TrackPoints[queryResult.Data.TrackPoints.Length - 1]
+                    .Offset;
+
+                nextLastTrackPointTime = queryResult.Data.TrackStart.AddSeconds(offset);
+            }
+        }
+
+        var nextUpdate = queryResult.NextRequestDate;
+        lock (this.dataLock)
+        {
+            this.nextPossibleUpdateMap[liveTrackId] = nextUpdate;
+
+            if (nextLastTrackPointTime != null)
+            {
+                this.liveTrackLastTrackPointTimeMap[liveTrackId] =
+                    nextLastTrackPointTime.Value;
             }
         }
     }

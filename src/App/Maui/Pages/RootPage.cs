@@ -3,58 +3,57 @@ using CommunityToolkit.Maui.Core;
 using WhereToFly.App.Abstractions;
 using WhereToFly.App.Services;
 
-namespace WhereToFly.App.Pages
+namespace WhereToFly.App.Pages;
+
+/// <summary>
+/// The root page of the app, showing a slide-out menu on the left, and the map page in
+/// the center of the screen.
+/// </summary>
+public class RootPage : FlyoutPage
 {
     /// <summary>
-    /// The root page of the app, showing a slide-out menu on the left, and the map page in
-    /// the center of the screen.
+    /// Map page
     /// </summary>
-    public class RootPage : FlyoutPage
+    public MapPage MapPage { get; private set; }
+
+    /// <summary>
+    /// Creates a new root page
+    /// </summary>
+    public RootPage()
     {
-        /// <summary>
-        /// Map page
-        /// </summary>
-        public MapPage MapPage { get; private set; }
+        this.FlyoutLayoutBehavior = FlyoutLayoutBehavior.Popover;
 
-        /// <summary>
-        /// Creates a new root page
-        /// </summary>
-        public RootPage()
+        // set up flyout menu page
+        this.Flyout = new MenuPage
         {
-            this.FlyoutLayoutBehavior = FlyoutLayoutBehavior.Popover;
+            BackgroundColor = Constants.PrimaryColor,
+        };
 
-            // set up flyout menu page
-            this.Flyout = new MenuPage
-            {
-                BackgroundColor = Constants.PrimaryColor,
-            };
+        // set up detail page
+        this.MapPage = new MapPage(App.Services);
+        var navigationPage = new NavigationPage(this.MapPage)
+        {
+            BarBackgroundColor = Constants.PrimaryColor,
+            BarTextColor = Colors.White,
+        };
 
-            // set up detail page
-            this.MapPage = new MapPage(App.Services);
-            var navigationPage = new NavigationPage(this.MapPage)
-            {
-                BarBackgroundColor = Constants.PrimaryColor,
-                BarTextColor = Colors.White,
-            };
-
-            NavigationPage.SetTitleIconImageSource(navigationPage, "icon.png");
+        NavigationPage.SetTitleIconImageSource(navigationPage, "icon.png");
 
 #if ANDROID
-            navigationPage.Behaviors.Add(
-                new StatusBarBehavior
-                {
-                    StatusBarColor = Constants.PrimaryColor,
-                    StatusBarStyle = StatusBarStyle.LightContent,
-                });
+        navigationPage.Behaviors.Add(
+            new StatusBarBehavior
+            {
+                StatusBarColor = Constants.PrimaryColor,
+                StatusBarStyle = StatusBarStyle.LightContent,
+            });
 #endif
 
-            this.Detail = navigationPage;
+        this.Detail = navigationPage;
 
-            var navigationService = App.Services.GetRequiredService<INavigationService>();
-            if (navigationService is NavigationService navigationServiceImpl)
-            {
-                navigationServiceImpl.NavigationPage = navigationPage;
-            }
+        var navigationService = App.Services.GetRequiredService<INavigationService>();
+        if (navigationService is NavigationService navigationServiceImpl)
+        {
+            navigationServiceImpl.NavigationPage = navigationPage;
         }
     }
 }

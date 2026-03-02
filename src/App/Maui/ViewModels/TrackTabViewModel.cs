@@ -4,105 +4,104 @@ using WhereToFly.App.Logic;
 using WhereToFly.App.Services;
 using WhereToFly.Geo.Model;
 
-namespace WhereToFly.App.ViewModels
+namespace WhereToFly.App.ViewModels;
+
+/// <summary>
+/// View model for the track details page
+/// </summary>
+public class TrackTabViewModel : ViewModelBase
 {
     /// <summary>
-    /// View model for the track details page
+    /// Data service
     /// </summary>
-    public class TrackTabViewModel : ViewModelBase
+    private readonly IDataService dataService;
+
+    /// <summary>
+    /// App map services
+    /// </summary>
+    private readonly IAppMapService appMapService;
+
+    /// <summary>
+    /// Track to show
+    /// </summary>
+    private readonly Track track;
+
+    #region Binding properties
+    /// <summary>
+    /// Command to execute when "zoom to" menu item is selected on a track
+    /// </summary>
+    public ICommand ZoomToTrackCommand { get; set; }
+
+    /// <summary>
+    /// Command to execute when "export" menu item is selected on a track
+    /// </summary>
+    public ICommand ExportTrackCommand { get; set; }
+
+    /// <summary>
+    /// Command to execute when "delete" menu item is selected on a track
+    /// </summary>
+    public ICommand DeleteTrackCommand { get; set; }
+    #endregion
+
+    /// <summary>
+    /// Creates a new view model object based on the given track object
+    /// </summary>
+    /// <param name="track">track object</param>
+    public TrackTabViewModel(Track track)
     {
-        /// <summary>
-        /// Data service
-        /// </summary>
-        private readonly IDataService dataService;
+        this.dataService = Services.GetRequiredService<IDataService>();
+        this.appMapService = Services.GetRequiredService<IAppMapService>();
 
-        /// <summary>
-        /// App map services
-        /// </summary>
-        private readonly IAppMapService appMapService;
+        this.track = track;
 
-        /// <summary>
-        /// Track to show
-        /// </summary>
-        private readonly Track track;
+        this.ZoomToTrackCommand = new AsyncRelayCommand(this.OnZoomToTrackAsync);
+        this.ExportTrackCommand = new AsyncRelayCommand(this.OnExportTrackAsync);
+        this.DeleteTrackCommand = new AsyncRelayCommand(this.OnDeleteTrackAsync);
+    }
 
-        #region Binding properties
-        /// <summary>
-        /// Command to execute when "zoom to" menu item is selected on a track
-        /// </summary>
-        public ICommand ZoomToTrackCommand { get; set; }
+    /// <summary>
+    /// Called when "Zoom to" menu item is selected
+    /// </summary>
+    /// <returns>task to wait on</returns>
+    private async Task OnZoomToTrackAsync()
+    {
+        this.appMapService.MapView.ZoomToTrack(this.track);
 
-        /// <summary>
-        /// Command to execute when "export" menu item is selected on a track
-        /// </summary>
-        public ICommand ExportTrackCommand { get; set; }
+        await UserInterface.NavigationService.GoToMap();
+    }
 
-        /// <summary>
-        /// Command to execute when "delete" menu item is selected on a track
-        /// </summary>
-        public ICommand DeleteTrackCommand { get; set; }
-        #endregion
+    /// <summary>
+    /// Called when "Export" menu item is selected
+    /// </summary>
+    /// <returns>task to wait on</returns>
+    private async Task OnExportTrackAsync()
+    {
+        await ExportFileHelper.ExportTrackAsync(
+            this.track,
+            UserInterface);
+    }
 
-        /// <summary>
-        /// Creates a new view model object based on the given track object
-        /// </summary>
-        /// <param name="track">track object</param>
-        public TrackTabViewModel(Track track)
+    /// <summary>
+    /// Called when "Delete" menu item is selected
+    /// </summary>
+    /// <returns>task to wait on</returns>
+    private async Task OnDeleteTrackAsync()
+    {
+        var trackDataService = this.dataService.GetTrackDataService();
+
+        try
         {
-            this.dataService = Services.GetRequiredService<IDataService>();
-            this.appMapService = Services.GetRequiredService<IAppMapService>();
-
-            this.track = track;
-
-            this.ZoomToTrackCommand = new AsyncRelayCommand(this.OnZoomToTrackAsync);
-            this.ExportTrackCommand = new AsyncRelayCommand(this.OnExportTrackAsync);
-            this.DeleteTrackCommand = new AsyncRelayCommand(this.OnDeleteTrackAsync);
+            await trackDataService.Remove(this.track.Id);
+        }
+        catch (Exception ex)
+        {
+            App.LogError(ex);
         }
 
-        /// <summary>
-        /// Called when "Zoom to" menu item is selected
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task OnZoomToTrackAsync()
-        {
-            this.appMapService.MapView.ZoomToTrack(this.track);
+        this.appMapService.MapView.RemoveTrack(this.track);
 
-            await UserInterface.NavigationService.GoToMap();
-        }
+        await UserInterface.NavigationService.GoBack();
 
-        /// <summary>
-        /// Called when "Export" menu item is selected
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task OnExportTrackAsync()
-        {
-            await ExportFileHelper.ExportTrackAsync(
-                this.track,
-                UserInterface);
-        }
-
-        /// <summary>
-        /// Called when "Delete" menu item is selected
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task OnDeleteTrackAsync()
-        {
-            var trackDataService = this.dataService.GetTrackDataService();
-
-            try
-            {
-                await trackDataService.Remove(this.track.Id);
-            }
-            catch (Exception ex)
-            {
-                App.LogError(ex);
-            }
-
-            this.appMapService.MapView.RemoveTrack(this.track);
-
-            await UserInterface.NavigationService.GoBack();
-
-            UserInterface.DisplayToast("Selected track was deleted.");
-        }
+        UserInterface.DisplayToast("Selected track was deleted.");
     }
 }

@@ -7,79 +7,78 @@ using WhereToFly.App.Controls;
 using WhereToFly.App.MapView;
 using WhereToFly.App.Services;
 
-namespace WhereToFly.App
+namespace WhereToFly.App;
+
+/// <summary>
+/// MAUI program
+/// </summary>
+public static class MauiProgram
 {
     /// <summary>
-    /// MAUI program
+    /// Creates a MAUI app object
     /// </summary>
-    public static class MauiProgram
+    /// <returns>MAUI app object</returns>
+    public static MauiApp CreateMauiApp()
     {
-        /// <summary>
-        /// Creates a MAUI app object
-        /// </summary>
-        /// <returns>MAUI app object</returns>
-        public static MauiApp CreateMauiApp()
-        {
-            var builder = MauiApp.CreateBuilder();
+        var builder = MauiApp.CreateBuilder();
 
-            builder
-                .UseMauiApp<App>()
+        builder
+            .UseMauiApp<App>()
 #if WINDOWS
-                .UseMauiCommunityToolkit(
-                    options =>
-                    {
-                        options.SetShouldEnableSnackbarOnWindows(true);
-                    })
+            .UseMauiCommunityToolkit(
+                options =>
+                {
+                    options.SetShouldEnableSnackbarOnWindows(true);
+                })
 #elif ANDROID
-                .UseMauiCommunityToolkit()
+            .UseMauiCommunityToolkit()
 #endif
 #if WINDOWS
-                .ConfigureEssentials(essentials =>
-                {
-                    essentials.UseMapServiceToken(Constants.BingMapsKeyWindows);
-                })
+            .ConfigureEssentials(essentials =>
+            {
+                essentials.UseMapServiceToken(Constants.BingMapsKeyWindows);
+            })
 #endif
-                .ConfigureLifecycleEvents(events =>
-                {
+            .ConfigureLifecycleEvents(events =>
+            {
 #if WINDOWS
-                    events.AddWindows(windows =>
+                events.AddWindows(windows =>
+                {
+                    windows.OnWindowCreated(window =>
                     {
-                        windows.OnWindowCreated(window =>
-                        {
-                            var titlebar = window.AppWindow.TitleBar;
+                        var titlebar = window.AppWindow.TitleBar;
 
-                            var white = Windows.UI.Color.FromArgb(0xff, 0xff, 0xff, 0xff);
+                        var white = Windows.UI.Color.FromArgb(0xff, 0xff, 0xff, 0xff);
 
-                            titlebar.ForegroundColor = white;
-                            titlebar.ButtonForegroundColor = white;
-                        });
+                        titlebar.ForegroundColor = white;
+                        titlebar.ButtonForegroundColor = white;
                     });
+                });
 #endif
-                })
-                .UseSkiaSharp()
-                .UseMapView();
+            })
+            .UseSkiaSharp()
+            .UseMapView();
 
-            builder = WeatherWebView.UseWeatherWebView(builder);
+        builder = WeatherWebView.UseWeatherWebView(builder);
 
 #if DEBUG
-            builder.Logging.AddDebug();
+        builder.Logging.AddDebug();
 #endif
 
-            builder.Services.AddSingleton<IUserInterface, UserInterface>();
-            builder.Services.AddSingleton<IAppMapService, AppMapService>();
-            builder.Services.AddSingleton<INavigationService, NavigationService>();
-            builder.Services.AddSingleton<IDataService, Services.SqliteDatabase.SqliteDatabaseDataService>();
-            builder.Services.AddSingleton<IGeolocationService, GeolocationService>();
-            builder.Services.AddSingleton<CompassGeoServices>();
-            builder.Services.AddSingleton<LiveDataRefreshService>();
+        builder.Services.AddSingleton<IUserInterface, UserInterface>();
+        builder.Services.AddSingleton<IAppMapService, AppMapService>();
+        builder.Services.AddSingleton<INavigationService, NavigationService>();
+        builder.Services.AddSingleton<IDataService, Services.SqliteDatabase.SqliteDatabaseDataService>();
+        builder.Services.AddSingleton<IGeolocationService, GeolocationService>();
+        builder.Services.AddSingleton<CompassGeoServices>();
+        builder.Services.AddSingleton<LiveDataRefreshService>();
 
 #if ANDROID
-            builder.Services.AddSingleton<IAppManager, Platforms.Android.AndroidAppManager>();
+        builder.Services.AddSingleton<IAppManager, Platforms.Android.AndroidAppManager>();
 #elif WINDOWS
-            builder.Services.AddSingleton<IAppManager, Platforms.Windows.WindowsAppManager>();
+        builder.Services.AddSingleton<IAppManager, Platforms.Windows.WindowsAppManager>();
 #endif
 
-            return builder.Build();
-        }
+        return builder.Build();
     }
 }

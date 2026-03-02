@@ -1,37 +1,36 @@
 ﻿using WhereToFly.App.ViewModels;
 using WhereToFly.Geo.Model;
 
-namespace WhereToFly.App.Popups
+namespace WhereToFly.App.Popups;
+
+/// <summary>
+/// Popup page for adding a new layer and edit its properties.
+/// </summary>
+public partial class AddLayerPopupPage : BasePopupPage<Layer>
 {
     /// <summary>
-    /// Popup page for adding a new layer and edit its properties.
+    /// View model for this popup page
     /// </summary>
-    public partial class AddLayerPopupPage : BasePopupPage<Layer>
+    private readonly AddLayerPopupViewModel viewModel;
+
+    /// <summary>
+    /// Creates a new popup page to edit layer properties
+    /// </summary>
+    /// <param name="layer">layer to edit</param>
+    public AddLayerPopupPage(Layer layer)
     {
-        /// <summary>
-        /// View model for this popup page
-        /// </summary>
-        private readonly AddLayerPopupViewModel viewModel;
+        this.InitializeComponent();
 
-        /// <summary>
-        /// Creates a new popup page to edit layer properties
-        /// </summary>
-        /// <param name="layer">layer to edit</param>
-        public AddLayerPopupPage(Layer layer)
-        {
-            this.InitializeComponent();
+        this.BindingContext = this.viewModel = new AddLayerPopupViewModel(layer);
+    }
 
-            this.BindingContext = this.viewModel = new AddLayerPopupViewModel(layer);
-        }
-
-        /// <summary>
-        /// Called when user clicked on the "Add layer" button, ending the popup page.
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="args">event args</param>
-        private void OnClickedAddLayerButton(object? sender, EventArgs args)
-        {
-            this.SetResult(this.viewModel.Layer);
-        }
+    /// <summary>
+    /// Called when user clicked on the "Add layer" button, ending the popup page.
+    /// </summary>
+    /// <param name="sender">sender object</param>
+    /// <param name="args">event args</param>
+    private void OnClickedAddLayerButton(object? sender, EventArgs args)
+    {
+        this.SetResult(this.viewModel.Layer);
     }
 }

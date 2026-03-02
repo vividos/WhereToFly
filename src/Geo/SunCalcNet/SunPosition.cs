@@ -1,18 +1,17 @@
-﻿namespace WhereToFly.Geo.SunCalcNet
+﻿namespace WhereToFly.Geo.SunCalcNet;
+
+/// <summary>
+/// Sun position
+/// </summary>
+public class SunPosition
 {
     /// <summary>
-    /// Sun position
+    /// Azimuth angle of sun position, in radians
     /// </summary>
-    public class SunPosition
-    {
-        /// <summary>
-        /// Azimuth angle of sun position, in radians
-        /// </summary>
-        public double Azimuth { get; set; }
+    public double Azimuth { get; set; }
 
-        /// <summary>
-        /// Altitude or elevation angle of sun position, in radians
-        /// </summary>
-        public double Altitude { get; set; }
-    }
+    /// <summary>
+    /// Altitude or elevation angle of sun position, in radians
+    /// </summary>
+    public double Altitude { get; set; }
 }

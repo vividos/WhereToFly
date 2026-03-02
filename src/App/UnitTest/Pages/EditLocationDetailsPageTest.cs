@@ -3,32 +3,31 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 using WhereToFly.App.Pages;
 
-namespace WhereToFly.App.UnitTest.Pages
+namespace WhereToFly.App.UnitTest.Pages;
+
+/// <summary>
+/// Tests for <see cref="EditLocationDetailsPage"/> class
+/// </summary>
+[TestClass]
+public class EditLocationDetailsPageTest : UserInterfaceTestBase
 {
     /// <summary>
-    /// Tests for <see cref="EditLocationDetailsPage"/> class
+    /// Tests default ctor of page
     /// </summary>
-    [TestClass]
-    public class EditLocationDetailsPageTest : UserInterfaceTestBase
+    /// <returns>task to wait on</returns>
+    [TestMethod]
+    public async Task TestDefaultCtor()
     {
-        /// <summary>
-        /// Tests default ctor of page
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        [TestMethod]
-        public async Task TestDefaultCtor()
-        {
-            // set up
-            var location = UnitTestHelper.GetDefaultLocation();
+        // set up
+        var location = UnitTestHelper.GetDefaultLocation();
 
-            // run
-            var root = new ContentPage();
-            var page = new EditLocationDetailsPage(location);
+        // run
+        var root = new ContentPage();
+        var page = new EditLocationDetailsPage(location);
 
-            await root.Navigation.PushAsync(page);
+        await root.Navigation.PushAsync(page);
 
-            // check
-            Assert.IsGreaterThan(0, page.Title.Length, "page title must have been set");
-        }
+        // check
+        Assert.IsGreaterThan(0, page.Title.Length, "page title must have been set");
     }
 }

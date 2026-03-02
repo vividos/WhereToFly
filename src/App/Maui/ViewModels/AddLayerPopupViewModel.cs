@@ -1,39 +1,38 @@
 ﻿using WhereToFly.Geo.Model;
 
-namespace WhereToFly.App.ViewModels
+namespace WhereToFly.App.ViewModels;
+
+/// <summary>
+/// View model for the "add layer" popup page
+/// </summary>
+public class AddLayerPopupViewModel : ViewModelBase
 {
     /// <summary>
-    /// View model for the "add layer" popup page
+    /// Layer being edited
     /// </summary>
-    public class AddLayerPopupViewModel : ViewModelBase
+    public Layer Layer { get; private set; }
+
+    #region Binding properties
+    /// <summary>
+    /// Property containing the layer name
+    /// </summary>
+    public string LayerName
     {
-        /// <summary>
-        /// Layer being edited
-        /// </summary>
-        public Layer Layer { get; private set; }
-
-        #region Binding properties
-        /// <summary>
-        /// Property containing the layer name
-        /// </summary>
-        public string LayerName
+        get => this.Layer.Name;
+        set
         {
-            get => this.Layer.Name;
-            set
-            {
-                this.Layer.Name = value;
-                this.OnPropertyChanged(nameof(this.LayerName));
-            }
+            this.Layer.Name = value;
+            this.OnPropertyChanged(nameof(this.LayerName));
         }
-        #endregion
+    }
+    #endregion
 
-        /// <summary>
-        /// Creates a new "add layer" popup page view model
-        /// </summary>
-        /// <param name="layer">layer to edit</param>
-        public AddLayerPopupViewModel(Layer layer)
-        {
-            this.Layer = layer;
-        }
+    /// <summary>
+    /// Creates a new "add layer" popup page view model
+    /// </summary>
+    /// <param name="layer">layer to edit</param>
+    public AddLayerPopupViewModel(Layer layer)
+    {
+        this.Layer = layer;
     }
 }

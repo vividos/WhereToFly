@@ -1,82 +1,81 @@
 ﻿using WhereToFly.App.Models;
 
-namespace WhereToFly.App.ViewModels
+namespace WhereToFly.App.ViewModels;
+
+/// <summary>
+/// View model for "add weather link" popup page
+/// </summary>
+public class AddWeatherLinkPopupViewModel : ViewModelBase
 {
     /// <summary>
-    /// View model for "add weather link" popup page
+    /// Weather icon description being edited
     /// </summary>
-    public class AddWeatherLinkPopupViewModel : ViewModelBase
+    public WeatherIconDescription WeatherIconDescription { get; set; }
+
+    #region Binding properties
+    /// <summary>
+    /// Weather icon description name
+    /// </summary>
+    public string Name
     {
-        /// <summary>
-        /// Weather icon description being edited
-        /// </summary>
-        public WeatherIconDescription WeatherIconDescription { get; set; }
+        get => this.WeatherIconDescription.Name;
+        set => this.WeatherIconDescription.Name = value;
+    }
 
-        #region Binding properties
-        /// <summary>
-        /// Weather icon description name
-        /// </summary>
-        public string Name
+    /// <summary>
+    /// Web link to edit
+    /// </summary>
+    public string WebLink
+    {
+        get => this.WeatherIconDescription.WebLink;
+        set
         {
-            get => this.WeatherIconDescription.Name;
-            set => this.WeatherIconDescription.Name = value;
+            this.WeatherIconDescription.WebLink = value;
+            this.OnPropertyChanged(nameof(this.IsValidWebLink));
         }
+    }
 
-        /// <summary>
-        /// Web link to edit
-        /// </summary>
-        public string WebLink
+    /// <summary>
+    /// List of all groups to select from
+    /// </summary>
+    public IEnumerable<string> GroupsList { get; }
+
+    /// <summary>
+    /// Currently selected group
+    /// </summary>
+    public string SelectedGroup
+    {
+        get => this.WeatherIconDescription.Group;
+        set => this.WeatherIconDescription.Group = value;
+    }
+
+    /// <summary>
+    /// Returns if the currently input web link is valid
+    /// </summary>
+    public bool IsValidWebLink
+    {
+        get => Uri.TryCreate(this.WebLink, UriKind.Absolute, out Uri? _);
+    }
+    #endregion
+
+    /// <summary>
+    /// Creates a new view model for the "add weather link" page
+    /// </summary>
+    public AddWeatherLinkPopupViewModel()
+    {
+        this.GroupsList = new List<string>
         {
-            get => this.WeatherIconDescription.WebLink;
-            set
-            {
-                this.WeatherIconDescription.WebLink = value;
-                this.OnPropertyChanged(nameof(this.IsValidWebLink));
-            }
-        }
+            "Weather forecast",
+            "Current weather",
+            "Webcams",
+        };
 
-        /// <summary>
-        /// List of all groups to select from
-        /// </summary>
-        public IEnumerable<string> GroupsList { get; }
-
-        /// <summary>
-        /// Currently selected group
-        /// </summary>
-        public string SelectedGroup
+        this.WeatherIconDescription = new WeatherIconDescription
         {
-            get => this.WeatherIconDescription.Group;
-            set => this.WeatherIconDescription.Group = value;
-        }
-
-        /// <summary>
-        /// Returns if the currently input web link is valid
-        /// </summary>
-        public bool IsValidWebLink
-        {
-            get => Uri.TryCreate(this.WebLink, UriKind.Absolute, out Uri? _);
-        }
-        #endregion
-
-        /// <summary>
-        /// Creates a new view model for the "add weather link" page
-        /// </summary>
-        public AddWeatherLinkPopupViewModel()
-        {
-            this.GroupsList = new List<string>
-            {
-                "Weather forecast",
-                "Current weather",
-                "Webcams",
-            };
-
-            this.WeatherIconDescription = new WeatherIconDescription
-            {
-                Name = string.Empty,
-                Group = this.GroupsList.First(),
-                Type = WeatherIconDescription.IconType.IconLink,
-                WebLink = string.Empty,
-            };
-        }
+            Name = string.Empty,
+            Group = this.GroupsList.First(),
+            Type = WeatherIconDescription.IconType.IconLink,
+            WebLink = string.Empty,
+        };
     }
 }

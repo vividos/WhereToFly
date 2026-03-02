@@ -7,196 +7,195 @@ using WhereToFly.App.MapView.Models;
 using WhereToFly.App.MapView.Serializers;
 using WhereToFly.App.Services;
 
-namespace WhereToFly.App.UnitTest.MapView
+namespace WhereToFly.App.UnitTest.MapView;
+
+/// <summary>
+/// Unit tests for <see cref="MapView"/>
+/// </summary>
+[TestClass]
+public class MapViewTest : UserInterfaceTestBase
 {
     /// <summary>
-    /// Unit tests for <see cref="MapView"/>
+    /// Test context to access the cancellation token
     /// </summary>
-    [TestClass]
-    public class MapViewTest : UserInterfaceTestBase
+    public TestContext TestContext { get; set; }
+
+    /// <summary>
+    /// Tests CreateAsync() method
+    /// </summary>
+    /// <returns>task to wait on</returns>
+    [TestMethod]
+    [Timeout(10000, CooperativeCancellation = true)]
+    [Ignore("CreateAsync() can't set MapInitializedTask")]
+    public async Task TestMapViewCreate()
     {
-        /// <summary>
-        /// Test context to access the cancellation token
-        /// </summary>
-        public TestContext TestContext { get; set; }
+        // set up
+        var mapView = new WhereToFly.App.MapView.MapView();
 
-        /// <summary>
-        /// Tests CreateAsync() method
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        [TestMethod]
-        [Timeout(10000, CooperativeCancellation = true)]
-        [Ignore("CreateAsync() can't set MapInitializedTask")]
-        public async Task TestMapViewCreate()
-        {
-            // set up
-            var mapView = new WhereToFly.App.MapView.MapView();
+        // run
+        _ = Task.Run(
+            () =>
+            {
+                Task.Delay(10);
+                mapView.OnMapInitialized();
+            },
+            this.TestContext.CancellationTokenSource.Token);
 
-            // run
-            _ = Task.Run(
-                () =>
-                {
-                    Task.Delay(10);
-                    mapView.OnMapInitialized();
-                },
-                this.TestContext.CancellationTokenSource.Token);
+        await mapView.CreateAsync(
+            Constants.InitialCenterPoint,
+            5000,
+            true,
+            null,
+            null);
 
-            await mapView.CreateAsync(
-                Constants.InitialCenterPoint,
-                5000,
-                true,
-                null,
-                null);
+        // check
+        Assert.IsTrue(
+            mapView.MapInitializedTask.IsCompleted,
+            "map initialized task must be completed");
+    }
 
-            // check
-            Assert.IsTrue(
-                mapView.MapInitializedTask.IsCompleted,
-                "map initialized task must be completed");
-        }
+    /// <summary>
+    /// Tests setting map view settings properties
+    /// </summary>
+    [TestMethod]
+    public void TestMapViewSettings()
+    {
+        // set up
+        var mapView = new WhereToFly.App.MapView.MapView();
 
-        /// <summary>
-        /// Tests setting map view settings properties
-        /// </summary>
-        [TestMethod]
-        public void TestMapViewSettings()
-        {
-            // set up
-            var mapView = new WhereToFly.App.MapView.MapView();
+        Assert.IsTrue(mapView.UseEntityClustering, "initial settings value must be correct");
 
-            Assert.IsTrue(mapView.UseEntityClustering, "initial settings value must be correct");
+        // run
+        mapView.MapImageryType = MapImageryType.BingMapsAerialWithLabels;
+        mapView.MapOverlayType = MapOverlayType.ContourLines;
+        mapView.MapShadingMode = MapShadingMode.Fixed10Am;
+        mapView.UseEntityClustering = false;
 
-            // run
-            mapView.MapImageryType = MapImageryType.BingMapsAerialWithLabels;
-            mapView.MapOverlayType = MapOverlayType.ContourLines;
-            mapView.MapShadingMode = MapShadingMode.Fixed10Am;
-            mapView.UseEntityClustering = false;
+        // check
+        Assert.AreEqual(MapShadingMode.Fixed10Am, mapView.MapShadingMode, "settings value must be correct");
+        Assert.AreEqual(MapOverlayType.ContourLines, mapView.MapOverlayType, "settings value must be correct");
+        Assert.AreEqual(MapImageryType.BingMapsAerialWithLabels, mapView.MapImageryType, "settings value must be correct");
+        Assert.IsFalse(mapView.UseEntityClustering, "settings value must be correct");
+    }
 
-            // check
-            Assert.AreEqual(MapShadingMode.Fixed10Am, mapView.MapShadingMode, "settings value must be correct");
-            Assert.AreEqual(MapOverlayType.ContourLines, mapView.MapOverlayType, "settings value must be correct");
-            Assert.AreEqual(MapImageryType.BingMapsAerialWithLabels, mapView.MapImageryType, "settings value must be correct");
-            Assert.IsFalse(mapView.UseEntityClustering, "settings value must be correct");
-        }
+    /// <summary>
+    /// Tests all Location methods of MapView
+    /// </summary>
+    /// <returns>task to wait on</returns>
+    [TestMethod]
+    [SuppressMessage(
+        "Blocker Code Smell",
+        "S2699:Tests should include assertions",
+        Justification = "There's no way to test actions")]
+    [Ignore("disabled since calling AddLocationList() would block indefinitely")]
+    public async Task TestMapViewLocationMethods()
+    {
+        // set up
+        var mapView = new WhereToFly.App.MapView.MapView();
 
-        /// <summary>
-        /// Tests all Location methods of MapView
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        [TestMethod]
-        [SuppressMessage(
-            "Blocker Code Smell",
-            "S2699:Tests should include assertions",
-            Justification = "There's no way to test actions")]
-        [Ignore("disabled since calling AddLocationList() would block indefinitely")]
-        public async Task TestMapViewLocationMethods()
-        {
-            // set up
-            var mapView = new WhereToFly.App.MapView.MapView();
+        await mapView.CreateAsync(
+            Constants.InitialCenterPoint,
+            5000,
+            true,
+            null,
+            null);
 
-            await mapView.CreateAsync(
-                Constants.InitialCenterPoint,
-                5000,
-                true,
-                null,
-                null);
+        var locationList = DataServiceHelper.GetDefaultLocationList();
 
-            var locationList = DataServiceHelper.GetDefaultLocationList();
+        // run
+        await mapView.AddLocationList(locationList);
 
-            // run
-            await mapView.AddLocationList(locationList);
+        var location = locationList.First();
+        mapView.UpdateLocation(location);
+        mapView.ZoomToLocation(location.MapLocation);
+        mapView.RemoveLocation(location.Id);
 
-            var location = locationList.First();
-            mapView.UpdateLocation(location);
-            mapView.ZoomToLocation(location.MapLocation);
-            mapView.RemoveLocation(location.Id);
+        mapView.ClearLocationList();
+    }
 
-            mapView.ClearLocationList();
-        }
+    /// <summary>
+    /// Tests all Track methods of MapView
+    /// </summary>
+    /// <returns>task to wait on</returns>
+    [TestMethod]
+    [SuppressMessage(
+        "Blocker Code Smell",
+        "S2699:Tests should include assertions",
+        Justification = "There's no way to test actions")]
+    [Ignore("disabled since calling AddTrack() would block indefinitely")]
+    public async Task TestMapViewTrackMethods()
+    {
+        // set up
+        var mapView = new WhereToFly.App.MapView.MapView();
 
-        /// <summary>
-        /// Tests all Track methods of MapView
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        [TestMethod]
-        [SuppressMessage(
-            "Blocker Code Smell",
-            "S2699:Tests should include assertions",
-            Justification = "There's no way to test actions")]
-        [Ignore("disabled since calling AddTrack() would block indefinitely")]
-        public async Task TestMapViewTrackMethods()
-        {
-            // set up
-            var mapView = new WhereToFly.App.MapView.MapView();
+        await mapView.CreateAsync(
+            Constants.InitialCenterPoint,
+            5000,
+            true,
+            null,
+            null);
 
-            await mapView.CreateAsync(
-                Constants.InitialCenterPoint,
-                5000,
-                true,
-                null,
-                null);
+        var track = UnitTestHelper.GetDefaultTrack();
 
-            var track = UnitTestHelper.GetDefaultTrack();
+        // run
+        await mapView.AddTrack(track);
+        ////mapView.SampleTrackHeights(track);
+        mapView.ZoomToTrack(track);
+        mapView.RemoveTrack(track);
+        mapView.ClearAllTracks();
+    }
 
-            // run
-            await mapView.AddTrack(track);
-            ////mapView.SampleTrackHeights(track);
-            mapView.ZoomToTrack(track);
-            mapView.RemoveTrack(track);
-            mapView.ClearAllTracks();
-        }
+    /// <summary>
+    /// Tests all Layer methods of MapView
+    /// </summary>
+    /// <returns>task to wait on</returns>
+    [TestMethod]
+    [SuppressMessage(
+        "Blocker Code Smell",
+        "S2699:Tests should include assertions",
+        Justification = "There's no way to test actions")]
+    [Ignore("disabled since calling AddLayer() would block indefinitely")]
+    public async Task TestMapViewLayerMethods()
+    {
+        // set up
+        var mapView = new WhereToFly.App.MapView.MapView();
 
-        /// <summary>
-        /// Tests all Layer methods of MapView
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        [TestMethod]
-        [SuppressMessage(
-            "Blocker Code Smell",
-            "S2699:Tests should include assertions",
-            Justification = "There's no way to test actions")]
-        [Ignore("disabled since calling AddLayer() would block indefinitely")]
-        public async Task TestMapViewLayerMethods()
-        {
-            // set up
-            var mapView = new WhereToFly.App.MapView.MapView();
+        await mapView.CreateAsync(
+            Constants.InitialCenterPoint,
+            5000,
+            true,
+            null,
+            null);
 
-            await mapView.CreateAsync(
-                Constants.InitialCenterPoint,
-                5000,
-                true,
-                null,
-                null);
+        var layer = (await DataServiceHelper.GetInitialLayerList()).First();
 
-            var layer = (await DataServiceHelper.GetInitialLayerList()).First();
+        // run
+        await mapView.AddLayer(layer);
+        mapView.SetLayerVisibility(layer);
+        ////mapView.ExportLayerAsync(layer);
+        mapView.ZoomToLayer(layer);
+        mapView.RemoveLayer(layer);
+        mapView.ClearLayerList();
+    }
 
-            // run
-            await mapView.AddLayer(layer);
-            mapView.SetLayerVisibility(layer);
-            ////mapView.ExportLayerAsync(layer);
-            mapView.ZoomToLayer(layer);
-            mapView.RemoveLayer(layer);
-            mapView.ClearLayerList();
-        }
+    /// <summary>
+    /// Tests deserializing MapView.AddFindResultParameter from JSON
+    /// </summary>
+    [TestMethod]
+    public void TestDeserialize_AddFindResultParameter()
+    {
+        // set up
+        string jsonParameters = "{ \"name\": \"find result\", \"latitude\": 48.2, \"longitude\": 11.8 }";
 
-        /// <summary>
-        /// Tests deserializing MapView.AddFindResultParameter from JSON
-        /// </summary>
-        [TestMethod]
-        public void TestDeserialize_AddFindResultParameter()
-        {
-            // set up
-            string jsonParameters = "{ \"name\": \"find result\", \"latitude\": 48.2, \"longitude\": 11.8 }";
+        // run
+        var parameters = JsonSerializer.Deserialize(
+            jsonParameters,
+            MapViewJsonSerializerContext.Default.AddFindResultParameter);
 
-            // run
-            var parameters = JsonSerializer.Deserialize(
-                jsonParameters,
-                MapViewJsonSerializerContext.Default.AddFindResultParameter);
-
-            // check
-            Assert.IsNotNull(parameters, "returned parameters must be non-null");
-            Assert.AreEqual("find result", parameters.Name, "deserialized name must match");
-            Assert.AreEqual(48.2, parameters.Latitude, 1e-6, "deserialized latitude must match");
-            Assert.AreEqual(11.8, parameters.Longitude, 1e-6, "deserialized longitude must match");
-        }
+        // check
+        Assert.IsNotNull(parameters, "returned parameters must be non-null");
+        Assert.AreEqual("find result", parameters.Name, "deserialized name must match");
+        Assert.AreEqual(48.2, parameters.Latitude, 1e-6, "deserialized latitude must match");
+        Assert.AreEqual(11.8, parameters.Longitude, 1e-6, "deserialized longitude must match");
     }
 }

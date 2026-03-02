@@ -6,37 +6,36 @@ using WhereToFly.App.Models;
 using WhereToFly.App.ViewModels;
 using WhereToFly.Geo.Model;
 
-namespace WhereToFly.App.UnitTest.ViewModels
+namespace WhereToFly.App.UnitTest.ViewModels;
+
+/// <summary>
+/// Tests LocationListEntryViewModel class
+/// </summary>
+[TestClass]
+public class LocationListEntryViewModelTest : UserInterfaceTestBase
 {
     /// <summary>
-    /// Tests LocationListEntryViewModel class
+    /// Tests ctor
     /// </summary>
-    [TestClass]
-    public class LocationListEntryViewModelTest : UserInterfaceTestBase
+    [TestMethod]
+    public void TestCtor()
     {
-        /// <summary>
-        /// Tests ctor
-        /// </summary>
-        [TestMethod]
-        public void TestCtor()
+        // set up
+        var location = new Location(
+            Guid.NewGuid().ToString("B"),
+            new MapPoint(47.6764385, 11.8710533, 1685.0))
         {
-            // set up
-            var location = new Location(
-                Guid.NewGuid().ToString("B"),
-                new MapPoint(47.6764385, 11.8710533, 1685.0))
-            {
-                Name = "Brecherspitz",
-                Description = "Herrliche Aussicht über die drei Seen Schliersee im Norden, Tegernsee im Westen und den Spitzingsee im Süden.",
-                Type = LocationType.Summit,
-                InternetLink = "https://de.wikipedia.org/wiki/Brecherspitz",
-            };
+            Name = "Brecherspitz",
+            Description = "Herrliche Aussicht über die drei Seen Schliersee im Norden, Tegernsee im Westen und den Spitzingsee im Süden.",
+            Type = LocationType.Summit,
+            InternetLink = "https://de.wikipedia.org/wiki/Brecherspitz",
+        };
 
-            var parentViewModel = new LocationListViewModel(new AppSettings());
-            var viewModel = new LocationListEntryViewModel(parentViewModel, location, null);
+        var parentViewModel = new LocationListViewModel(new AppSettings());
+        var viewModel = new LocationListEntryViewModel(parentViewModel, location, null);
 
-            // check
-            Assert.IsGreaterThan(0, viewModel.Name.Length, "name text must not be empty");
-            Assert.IsGreaterThan(0, viewModel.Description.Length, "description text must not be empty");
-        }
+        // check
+        Assert.IsGreaterThan(0, viewModel.Name.Length, "name text must not be empty");
+        Assert.IsGreaterThan(0, viewModel.Description.Length, "description text must not be empty");
     }
 }

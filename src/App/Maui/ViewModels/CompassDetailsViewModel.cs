@@ -5,445 +5,444 @@ using WhereToFly.App.Models;
 using WhereToFly.Geo;
 using WhereToFly.Geo.SunCalcNet;
 
-namespace WhereToFly.App.ViewModels
+namespace WhereToFly.App.ViewModels;
+
+/// <summary>
+/// View model for the compass details page
+/// </summary>
+public class CompassDetailsViewModel : ViewModelBase
 {
     /// <summary>
-    /// View model for the compass details page
+    /// App map services
     /// </summary>
-    public class CompassDetailsViewModel : ViewModelBase
+    private readonly IAppMapService appMapService;
+
+    /// <summary>
+    /// App settings object
+    /// </summary>
+    private readonly AppSettings appSettings;
+
+    /// <summary>
+    /// Compass geo services
+    /// </summary>
+    private readonly CompassGeoServices compassGeoServices;
+
+    /// <summary>
+    /// Current position
+    /// </summary>
+    private Microsoft.Maui.Devices.Sensors.Location? position;
+
+    /// <summary>
+    /// Indicates if the device has a compass that is available
+    /// </summary>
+    private bool isCompassAvailable;
+
+    /// <summary>
+    /// Current magnetic-north compass heading; only set if isCompassAvailable is true
+    /// </summary>
+    private int currentCompassHeading;
+
+    /// <summary>
+    /// Current true-north heading
+    /// </summary>
+    private int? currentTrueNorthHeading;
+
+    #region Binding properties
+    /// <summary>
+    /// Distance text
+    /// </summary>
+    public string Distance
     {
-        /// <summary>
-        /// App map services
-        /// </summary>
-        private readonly IAppMapService appMapService;
-
-        /// <summary>
-        /// App settings object
-        /// </summary>
-        private readonly AppSettings appSettings;
-
-        /// <summary>
-        /// Compass geo services
-        /// </summary>
-        private readonly CompassGeoServices compassGeoServices;
-
-        /// <summary>
-        /// Current position
-        /// </summary>
-        private Microsoft.Maui.Devices.Sensors.Location? position;
-
-        /// <summary>
-        /// Indicates if the device has a compass that is available
-        /// </summary>
-        private bool isCompassAvailable;
-
-        /// <summary>
-        /// Current magnetic-north compass heading; only set if isCompassAvailable is true
-        /// </summary>
-        private int currentCompassHeading;
-
-        /// <summary>
-        /// Current true-north heading
-        /// </summary>
-        private int? currentTrueNorthHeading;
-
-        #region Binding properties
-        /// <summary>
-        /// Distance text
-        /// </summary>
-        public string Distance
+        get
         {
-            get
+            if (this.position == null ||
+                this.appSettings?.CurrentCompassTarget?.TargetLocation == null ||
+                !this.appSettings.CurrentCompassTarget.TargetLocation.Valid)
             {
-                if (this.position == null ||
-                    this.appSettings?.CurrentCompassTarget?.TargetLocation == null ||
-                    !this.appSettings.CurrentCompassTarget.TargetLocation.Valid)
-                {
-                    return "-";
-                }
-
-                var point = this.position.ToMapPoint();
-
-                double distanceInMeter = point.DistanceTo(
-                    this.appSettings.CurrentCompassTarget.TargetLocation);
-
-                return distanceInMeter < 500
-                    ? $"{(int)distanceInMeter} m"
-                    : $"{distanceInMeter / 1000.0:F1} km";
+                return "-";
             }
-        }
-
-        /// <summary>
-        /// Height difference, in meter or km
-        /// </summary>
-        public string HeightDifference
-        {
-            get
-            {
-                if (this.position == null ||
-                    !this.position.Altitude.HasValue ||
-                    this.appSettings?.CurrentCompassTarget?.TargetLocation == null ||
-                    !this.appSettings.CurrentCompassTarget.TargetLocation.Valid ||
-                    !this.appSettings.CurrentCompassTarget.TargetLocation.Altitude.HasValue)
-                {
-                    return "-";
-                }
-
-                double heightDifferenceInMeter =
-                    this.appSettings.CurrentCompassTarget.TargetLocation.Altitude.Value -
-                    this.position.Altitude.Value;
-
-                return $"{heightDifferenceInMeter:F0} m";
-            }
-        }
-
-        /// <summary>
-        /// Indicates if magnetic-north heading value is available
-        /// </summary>
-        public bool IsMagneticNorthHeadingAvail =>
-            this.isCompassAvailable;
-
-        /// <summary>
-        /// Magnetic-north heading in degrees
-        /// </summary>
-        public int MagneticNorthHeadingInDegrees =>
-            this.isCompassAvailable ? this.currentCompassHeading : 0;
-
-        /// <summary>
-        /// Indicates if true-north heading value is available
-        /// </summary>
-        public bool IsTrueNorthHeadingAvail =>
-            this.currentTrueNorthHeading.HasValue || this.position?.Course != null;
-
-        /// <summary>
-        /// True-north heading in degrees
-        /// </summary>
-        public int TrueNorthHeadingInDegrees
-        {
-            get
-            {
-                if (this.currentTrueNorthHeading.HasValue)
-                {
-                    return this.currentTrueNorthHeading.Value;
-                }
-
-                return this.position?.Course == null
-                    ? 0
-                    : (int)this.position.Course.Value;
-            }
-        }
-
-        /// <summary>
-        /// Indicates if target direction value is available
-        /// </summary>
-        public bool IsTargetDirectionAvail =>
-            this.CalculateTargetDirection().HasValue;
-
-        /// <summary>
-        /// Set compass target direction in degrees
-        /// </summary>
-        public int? TargetDirectionInDegrees =>
-            this.CalculateTargetDirection();
-
-        /// <summary>
-        /// Set compass target direction, as text
-        /// </summary>
-        public string TargetDirectionText =>
-            this.CalculateTargetDirection()?.ToString() ?? "N/A";
-
-        /// <summary>
-        /// Sunrise direction, in deegrees; may be null
-        /// </summary>
-        public int? SunriseDirectionInDegrees { get; set; }
-
-        /// <summary>
-        /// Sunset direction, in deegrees; may be null
-        /// </summary>
-        public int? SunsetDirectionInDegrees { get; set; }
-
-        /// <summary>
-        /// Command to execute when the user clicks on the "set target direction" toolbar icon
-        /// </summary>
-        public ICommand SetTargetDirectionCommand { get; set; }
-
-        /// <summary>
-        /// Command to execute when the user clicks on the "clear compass target" toolbar icon
-        /// </summary>
-        public ICommand ClearCompassTargetCommand { get; set; }
-        #endregion
-
-        /// <summary>
-        /// Creates a new compass details view model
-        /// </summary>
-        /// <param name="appSettings">app settings to use</param>
-        /// <param name="compassGeoServices">compass geo services</param>
-        public CompassDetailsViewModel(
-            AppSettings appSettings,
-            CompassGeoServices compassGeoServices)
-        {
-            this.appMapService = Services.GetRequiredService<IAppMapService>();
-
-            this.appSettings = appSettings;
-            this.compassGeoServices = compassGeoServices;
-
-            this.SetTargetDirectionCommand = new AsyncRelayCommand(this.SetTargetDirection);
-            this.ClearCompassTargetCommand = new AsyncRelayCommand(this.ClearCompassTarget);
-        }
-
-        /// <summary>
-        /// Called when the user clicked on the "set target direction" toolbar icon
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task SetTargetDirection()
-        {
-            int initialDirection = this.TargetDirectionInDegrees ?? this.TrueNorthHeadingInDegrees;
-
-            int? direction =
-                (await UserInterface.NavigationService.NavigateToPopupPageAsync<Tuple<int>>(
-                    PopupPageKey.SetCompassTargetDirectionPopupPage,
-                    true,
-                    initialDirection))?.Item1;
-
-            if (direction == null)
-            {
-                return;
-            }
-
-            var compassTarget = new CompassTarget
-            {
-                Title = $"Fixed direction {direction.Value}°",
-                TargetDirection = direction,
-            };
-
-            await this.appMapService.SetCompassTarget(compassTarget);
-
-            this.OnPropertyChanged(nameof(this.Distance));
-            this.OnPropertyChanged(nameof(this.HeightDifference));
-            this.OnPropertyChanged(nameof(this.IsTargetDirectionAvail));
-            this.OnPropertyChanged(nameof(this.TargetDirectionInDegrees));
-            this.OnPropertyChanged(nameof(this.TargetDirectionText));
-        }
-
-        /// <summary>
-        /// Called when the user clicked on the "clear compass target" toolbar icon
-        /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task ClearCompassTarget()
-        {
-            await this.appMapService.SetCompassTarget(null);
-
-            this.OnPropertyChanged(nameof(this.Distance));
-            this.OnPropertyChanged(nameof(this.HeightDifference));
-            this.OnPropertyChanged(nameof(this.IsTargetDirectionAvail));
-            this.OnPropertyChanged(nameof(this.TargetDirectionInDegrees));
-            this.OnPropertyChanged(nameof(this.TargetDirectionText));
-        }
-
-        /// <summary>
-        /// Calculates the target direction, if available
-        /// </summary>
-        /// <returns>target direction angle, in degrees, or null when not set</returns>
-        private int? CalculateTargetDirection()
-        {
-            CompassTarget? compassTarget = this.appSettings?.CurrentCompassTarget;
-            if (compassTarget == null)
-            {
-                return null;
-            }
-
-            // target location was set?
-            if (compassTarget.TargetLocation != null &&
-                compassTarget.TargetLocation.Valid &&
-                this.position != null)
-            {
-                var point = this.position.ToMapPoint();
-
-                double courseAngleInDegrees = point.CourseTo(compassTarget.TargetLocation);
-                return (int)(courseAngleInDegrees + 0.5);
-            }
-
-            // might be a target direction
-            return compassTarget.TargetDirection;
-        }
-
-        /// <summary>
-        /// Called when position has changed
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="args">event args, including position</param>
-        public void OnPositionChanged(object? sender, GeolocationEventArgs args)
-        {
-            this.position = args.Position;
-
-            this.OnPropertyChanged(nameof(this.Distance));
-            this.OnPropertyChanged(nameof(this.HeightDifference));
-            this.OnPropertyChanged(nameof(this.IsTargetDirectionAvail));
-            this.OnPropertyChanged(nameof(this.TargetDirectionInDegrees));
-            this.OnPropertyChanged(nameof(this.TargetDirectionText));
-
-            this.UpdateSunAngles();
 
             var point = this.position.ToMapPoint();
 
-            Task.Run(async () => await this.appMapService.UpdateLastShownPosition(point));
+            double distanceInMeter = point.DistanceTo(
+                this.appSettings.CurrentCompassTarget.TargetLocation);
+
+            return distanceInMeter < 500
+                ? $"{(int)distanceInMeter} m"
+                : $"{distanceInMeter / 1000.0:F1} km";
+        }
+    }
+
+    /// <summary>
+    /// Height difference, in meter or km
+    /// </summary>
+    public string HeightDifference
+    {
+        get
+        {
+            if (this.position == null ||
+                !this.position.Altitude.HasValue ||
+                this.appSettings?.CurrentCompassTarget?.TargetLocation == null ||
+                !this.appSettings.CurrentCompassTarget.TargetLocation.Valid ||
+                !this.appSettings.CurrentCompassTarget.TargetLocation.Altitude.HasValue)
+            {
+                return "-";
+            }
+
+            double heightDifferenceInMeter =
+                this.appSettings.CurrentCompassTarget.TargetLocation.Altitude.Value -
+                this.position.Altitude.Value;
+
+            return $"{heightDifferenceInMeter:F0} m";
+        }
+    }
+
+    /// <summary>
+    /// Indicates if magnetic-north heading value is available
+    /// </summary>
+    public bool IsMagneticNorthHeadingAvail =>
+        this.isCompassAvailable;
+
+    /// <summary>
+    /// Magnetic-north heading in degrees
+    /// </summary>
+    public int MagneticNorthHeadingInDegrees =>
+        this.isCompassAvailable ? this.currentCompassHeading : 0;
+
+    /// <summary>
+    /// Indicates if true-north heading value is available
+    /// </summary>
+    public bool IsTrueNorthHeadingAvail =>
+        this.currentTrueNorthHeading.HasValue || this.position?.Course != null;
+
+    /// <summary>
+    /// True-north heading in degrees
+    /// </summary>
+    public int TrueNorthHeadingInDegrees
+    {
+        get
+        {
+            if (this.currentTrueNorthHeading.HasValue)
+            {
+                return this.currentTrueNorthHeading.Value;
+            }
+
+            return this.position?.Course == null
+                ? 0
+                : (int)this.position.Course.Value;
+        }
+    }
+
+    /// <summary>
+    /// Indicates if target direction value is available
+    /// </summary>
+    public bool IsTargetDirectionAvail =>
+        this.CalculateTargetDirection().HasValue;
+
+    /// <summary>
+    /// Set compass target direction in degrees
+    /// </summary>
+    public int? TargetDirectionInDegrees =>
+        this.CalculateTargetDirection();
+
+    /// <summary>
+    /// Set compass target direction, as text
+    /// </summary>
+    public string TargetDirectionText =>
+        this.CalculateTargetDirection()?.ToString() ?? "N/A";
+
+    /// <summary>
+    /// Sunrise direction, in deegrees; may be null
+    /// </summary>
+    public int? SunriseDirectionInDegrees { get; set; }
+
+    /// <summary>
+    /// Sunset direction, in deegrees; may be null
+    /// </summary>
+    public int? SunsetDirectionInDegrees { get; set; }
+
+    /// <summary>
+    /// Command to execute when the user clicks on the "set target direction" toolbar icon
+    /// </summary>
+    public ICommand SetTargetDirectionCommand { get; set; }
+
+    /// <summary>
+    /// Command to execute when the user clicks on the "clear compass target" toolbar icon
+    /// </summary>
+    public ICommand ClearCompassTargetCommand { get; set; }
+    #endregion
+
+    /// <summary>
+    /// Creates a new compass details view model
+    /// </summary>
+    /// <param name="appSettings">app settings to use</param>
+    /// <param name="compassGeoServices">compass geo services</param>
+    public CompassDetailsViewModel(
+        AppSettings appSettings,
+        CompassGeoServices compassGeoServices)
+    {
+        this.appMapService = Services.GetRequiredService<IAppMapService>();
+
+        this.appSettings = appSettings;
+        this.compassGeoServices = compassGeoServices;
+
+        this.SetTargetDirectionCommand = new AsyncRelayCommand(this.SetTargetDirection);
+        this.ClearCompassTargetCommand = new AsyncRelayCommand(this.ClearCompassTarget);
+    }
+
+    /// <summary>
+    /// Called when the user clicked on the "set target direction" toolbar icon
+    /// </summary>
+    /// <returns>task to wait on</returns>
+    private async Task SetTargetDirection()
+    {
+        int initialDirection = this.TargetDirectionInDegrees ?? this.TrueNorthHeadingInDegrees;
+
+        int? direction =
+            (await UserInterface.NavigationService.NavigateToPopupPageAsync<Tuple<int>>(
+                PopupPageKey.SetCompassTargetDirectionPopupPage,
+                true,
+                initialDirection))?.Item1;
+
+        if (direction == null)
+        {
+            return;
         }
 
-        /// <summary>
-        /// Updates sunrise/sunset angles
-        /// </summary>
-        private void UpdateSunAngles()
+        var compassTarget = new CompassTarget
         {
-            if (this.position == null)
-            {
-                this.SunriseDirectionInDegrees = null;
-                this.SunsetDirectionInDegrees = null;
+            Title = $"Fixed direction {direction.Value}°",
+            TargetDirection = direction,
+        };
 
-                this.OnPropertyChanged(nameof(this.SunriseDirectionInDegrees));
-                this.OnPropertyChanged(nameof(this.SunsetDirectionInDegrees));
-                return;
-            }
+        await this.appMapService.SetCompassTarget(compassTarget);
 
-            double height = this.position.Altitude ?? 0.0;
-            if (height < 0.0)
-            {
-                height = 0.0;
-            }
+        this.OnPropertyChanged(nameof(this.Distance));
+        this.OnPropertyChanged(nameof(this.HeightDifference));
+        this.OnPropertyChanged(nameof(this.IsTargetDirectionAvail));
+        this.OnPropertyChanged(nameof(this.TargetDirectionInDegrees));
+        this.OnPropertyChanged(nameof(this.TargetDirectionText));
+    }
 
-            SolarTimes currentSolarTimes = SunCalc.GetTimes(
-                this.position.Timestamp,
-                this.position.Latitude,
-                this.position.Longitude,
-                height);
+    /// <summary>
+    /// Called when the user clicked on the "clear compass target" toolbar icon
+    /// </summary>
+    /// <returns>task to wait on</returns>
+    private async Task ClearCompassTarget()
+    {
+        await this.appMapService.SetCompassTarget(null);
 
-            if (currentSolarTimes.Sunrise.HasValue)
-            {
-                SunPosition sunrisePosition = SunCalc.GetPosition(
-                    currentSolarTimes.Sunrise.Value,
-                    this.position.Latitude,
-                    this.position.Longitude);
+        this.OnPropertyChanged(nameof(this.Distance));
+        this.OnPropertyChanged(nameof(this.HeightDifference));
+        this.OnPropertyChanged(nameof(this.IsTargetDirectionAvail));
+        this.OnPropertyChanged(nameof(this.TargetDirectionInDegrees));
+        this.OnPropertyChanged(nameof(this.TargetDirectionText));
+    }
 
-                this.SunriseDirectionInDegrees = (int)sunrisePosition.Azimuth.ToDegrees();
-            }
-            else
-            {
-                this.SunriseDirectionInDegrees = null;
-            }
+    /// <summary>
+    /// Calculates the target direction, if available
+    /// </summary>
+    /// <returns>target direction angle, in degrees, or null when not set</returns>
+    private int? CalculateTargetDirection()
+    {
+        CompassTarget? compassTarget = this.appSettings?.CurrentCompassTarget;
+        if (compassTarget == null)
+        {
+            return null;
+        }
 
-            if (currentSolarTimes.Sunset.HasValue)
-            {
-                SunPosition sunsetPosition = SunCalc.GetPosition(
-                    currentSolarTimes.Sunset.Value,
-                    this.position.Latitude,
-                    this.position.Longitude);
+        // target location was set?
+        if (compassTarget.TargetLocation != null &&
+            compassTarget.TargetLocation.Valid &&
+            this.position != null)
+        {
+            var point = this.position.ToMapPoint();
 
-                this.SunsetDirectionInDegrees = (int)sunsetPosition.Azimuth.ToDegrees();
-            }
-            else
-            {
-                this.SunsetDirectionInDegrees = null;
-            }
+            double courseAngleInDegrees = point.CourseTo(compassTarget.TargetLocation);
+            return (int)(courseAngleInDegrees + 0.5);
+        }
+
+        // might be a target direction
+        return compassTarget.TargetDirection;
+    }
+
+    /// <summary>
+    /// Called when position has changed
+    /// </summary>
+    /// <param name="sender">sender object</param>
+    /// <param name="args">event args, including position</param>
+    public void OnPositionChanged(object? sender, GeolocationEventArgs args)
+    {
+        this.position = args.Position;
+
+        this.OnPropertyChanged(nameof(this.Distance));
+        this.OnPropertyChanged(nameof(this.HeightDifference));
+        this.OnPropertyChanged(nameof(this.IsTargetDirectionAvail));
+        this.OnPropertyChanged(nameof(this.TargetDirectionInDegrees));
+        this.OnPropertyChanged(nameof(this.TargetDirectionText));
+
+        this.UpdateSunAngles();
+
+        var point = this.position.ToMapPoint();
+
+        Task.Run(async () => await this.appMapService.UpdateLastShownPosition(point));
+    }
+
+    /// <summary>
+    /// Updates sunrise/sunset angles
+    /// </summary>
+    private void UpdateSunAngles()
+    {
+        if (this.position == null)
+        {
+            this.SunriseDirectionInDegrees = null;
+            this.SunsetDirectionInDegrees = null;
 
             this.OnPropertyChanged(nameof(this.SunriseDirectionInDegrees));
             this.OnPropertyChanged(nameof(this.SunsetDirectionInDegrees));
+            return;
         }
 
-        /// <summary>
-        /// Starts compass monitoring, if compass is available
-        /// </summary>
-        public void StartCompass()
+        double height = this.position.Altitude ?? 0.0;
+        if (height < 0.0)
         {
-            this.isCompassAvailable = false;
+            height = 0.0;
+        }
 
-            if (!Compass.IsSupported)
+        SolarTimes currentSolarTimes = SunCalc.GetTimes(
+            this.position.Timestamp,
+            this.position.Latitude,
+            this.position.Longitude,
+            height);
+
+        if (currentSolarTimes.Sunrise.HasValue)
+        {
+            SunPosition sunrisePosition = SunCalc.GetPosition(
+                currentSolarTimes.Sunrise.Value,
+                this.position.Latitude,
+                this.position.Longitude);
+
+            this.SunriseDirectionInDegrees = (int)sunrisePosition.Azimuth.ToDegrees();
+        }
+        else
+        {
+            this.SunriseDirectionInDegrees = null;
+        }
+
+        if (currentSolarTimes.Sunset.HasValue)
+        {
+            SunPosition sunsetPosition = SunCalc.GetPosition(
+                currentSolarTimes.Sunset.Value,
+                this.position.Latitude,
+                this.position.Longitude);
+
+            this.SunsetDirectionInDegrees = (int)sunsetPosition.Azimuth.ToDegrees();
+        }
+        else
+        {
+            this.SunsetDirectionInDegrees = null;
+        }
+
+        this.OnPropertyChanged(nameof(this.SunriseDirectionInDegrees));
+        this.OnPropertyChanged(nameof(this.SunsetDirectionInDegrees));
+    }
+
+    /// <summary>
+    /// Starts compass monitoring, if compass is available
+    /// </summary>
+    public void StartCompass()
+    {
+        this.isCompassAvailable = false;
+
+        if (!Compass.IsSupported)
+        {
+            return;
+        }
+
+        try
+        {
+            if (Compass.IsMonitoring)
             {
                 return;
             }
 
-            try
-            {
-                if (Compass.IsMonitoring)
-                {
-                    return;
-                }
+            Compass.ReadingChanged += this.OnCompassReadingChanged;
+            Compass.Start(SensorSpeed.UI);
+        }
+        catch (FeatureNotSupportedException)
+        {
+            // Feature not supported on device
+        }
+        catch (Exception ex)
+        {
+            // Some other exception has occurred
+            App.LogError(ex);
+        }
+    }
 
-                Compass.ReadingChanged += this.OnCompassReadingChanged;
-                Compass.Start(SensorSpeed.UI);
-            }
-            catch (FeatureNotSupportedException)
-            {
-                // Feature not supported on device
-            }
-            catch (Exception ex)
-            {
-                // Some other exception has occurred
-                App.LogError(ex);
-            }
+    /// <summary>
+    /// Stops compass monitoring
+    /// </summary>
+    public void StopCompass()
+    {
+        this.isCompassAvailable = false;
+
+        if (!Compass.IsSupported)
+        {
+            return;
         }
 
-        /// <summary>
-        /// Stops compass monitoring
-        /// </summary>
-        public void StopCompass()
+        try
         {
-            this.isCompassAvailable = false;
-
-            if (!Compass.IsSupported)
+            if (!Compass.IsMonitoring)
             {
                 return;
             }
 
-            try
-            {
-                if (!Compass.IsMonitoring)
-                {
-                    return;
-                }
-
-                Compass.ReadingChanged -= this.OnCompassReadingChanged;
-                Compass.Stop();
-            }
-            catch (FeatureNotSupportedException)
-            {
-                // Feature not supported on device
-            }
-            catch (Exception ex)
-            {
-                // Some other exception has occurred
-                App.LogError(ex);
-            }
+            Compass.ReadingChanged -= this.OnCompassReadingChanged;
+            Compass.Stop();
         }
-
-        /// <summary>
-        /// Called when compass reading has changed
-        /// </summary>
-        /// <param name="sender">sender object</param>
-        /// <param name="args">event args</param>
-        private void OnCompassReadingChanged(object? sender, CompassChangedEventArgs args)
+        catch (FeatureNotSupportedException)
         {
-            this.currentCompassHeading = (int)(args.Reading.HeadingMagneticNorth + 0.5);
-            this.isCompassAvailable = true;
-
-            this.OnPropertyChanged(nameof(this.IsMagneticNorthHeadingAvail));
-            this.OnPropertyChanged(nameof(this.MagneticNorthHeadingInDegrees));
-
-            // try to translate magnetic north heading to true north
-            int headingTrueNorth = 0;
-
-            bool translateSuccessful =
-                this.position != null &&
-                this.compassGeoServices.TranslateCompassMagneticNorthToTrueNorth(
-                    this.currentCompassHeading,
-                    this.position.Latitude,
-                    this.position.Longitude,
-                    this.position.Altitude ?? 0.0,
-                    out headingTrueNorth);
-
-            this.currentTrueNorthHeading = translateSuccessful
-                ? headingTrueNorth
-                : null;
-
-            this.OnPropertyChanged(nameof(this.IsTrueNorthHeadingAvail));
-            this.OnPropertyChanged(nameof(this.TrueNorthHeadingInDegrees));
+            // Feature not supported on device
         }
+        catch (Exception ex)
+        {
+            // Some other exception has occurred
+            App.LogError(ex);
+        }
+    }
+
+    /// <summary>
+    /// Called when compass reading has changed
+    /// </summary>
+    /// <param name="sender">sender object</param>
+    /// <param name="args">event args</param>
+    private void OnCompassReadingChanged(object? sender, CompassChangedEventArgs args)
+    {
+        this.currentCompassHeading = (int)(args.Reading.HeadingMagneticNorth + 0.5);
+        this.isCompassAvailable = true;
+
+        this.OnPropertyChanged(nameof(this.IsMagneticNorthHeadingAvail));
+        this.OnPropertyChanged(nameof(this.MagneticNorthHeadingInDegrees));
+
+        // try to translate magnetic north heading to true north
+        int headingTrueNorth = 0;
+
+        bool translateSuccessful =
+            this.position != null &&
+            this.compassGeoServices.TranslateCompassMagneticNorthToTrueNorth(
+                this.currentCompassHeading,
+                this.position.Latitude,
+                this.position.Longitude,
+                this.position.Altitude ?? 0.0,
+                out headingTrueNorth);
+
+        this.currentTrueNorthHeading = translateSuccessful
+            ? headingTrueNorth
+            : null;
+
+        this.OnPropertyChanged(nameof(this.IsTrueNorthHeadingAvail));
+        this.OnPropertyChanged(nameof(this.TrueNorthHeadingInDegrees));
     }
 }

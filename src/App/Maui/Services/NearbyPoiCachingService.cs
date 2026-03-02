@@ -4,204 +4,203 @@ using WhereToFly.App.MapView.Abstractions;
 using WhereToFly.App.Serializers;
 using WhereToFly.Geo.Model;
 
-namespace WhereToFly.App.Services
+namespace WhereToFly.App.Services;
+
+/// <summary>
+/// Caching nearby POI service that uses the backend data service to load more POIs
+/// </summary>
+public class NearbyPoiCachingService : INearbyPoiService
 {
     /// <summary>
-    /// Caching nearby POI service that uses the backend data service to load more POIs
+    /// Filename of cache file to read from
     /// </summary>
-    public class NearbyPoiCachingService : INearbyPoiService
+    private const string CacheFilename = "nearbyPoiCache.json";
+
+    /// <summary>
+    /// Backend data service to retrieve more nearby POIs when not in cache
+    /// </summary>
+    private readonly BackendDataService backendDataService;
+
+    /// <summary>
+    /// Folder where cache file is stored
+    /// </summary>
+    private readonly string cacheFolder;
+
+    /// <summary>
+    /// The cache dictionary
+    /// </summary>
+    private Dictionary<LatLongKey, List<Location>> cache = [];
+
+    /// <summary>
+    /// Creates a new nearby POI caching service
+    /// </summary>
+    /// <param name="backendDataService">
+    /// backend data service to use for getting more nearby POIs; must not be null
+    /// </param>
+    /// <param name="cacheFolder">cache folder to load and store POIs; must exist</param>
+    public NearbyPoiCachingService(
+        BackendDataService backendDataService,
+        string cacheFolder)
     {
-        /// <summary>
-        /// Filename of cache file to read from
-        /// </summary>
-        private const string CacheFilename = "nearbyPoiCache.json";
+        Debug.Assert(
+            Directory.Exists(cacheFolder),
+            "cache folder must already exist");
 
-        /// <summary>
-        /// Backend data service to retrieve more nearby POIs when not in cache
-        /// </summary>
-        private readonly BackendDataService backendDataService;
+        this.backendDataService = backendDataService;
+        this.cacheFolder = cacheFolder;
 
-        /// <summary>
-        /// Folder where cache file is stored
-        /// </summary>
-        private readonly string cacheFolder;
+        this.LoadCache();
+    }
 
-        /// <summary>
-        /// The cache dictionary
-        /// </summary>
-        private Dictionary<LatLongKey, List<Location>> cache = [];
+    /// <summary>
+    /// Gets nearby POIs in the given rectangle area; may load locations from cache or from
+    /// the backend service. May throw an exception when no network connectivity is present.
+    /// </summary>
+    /// <param name="area">map rectangle area</param>
+    /// <param name="visibleLocationIds">
+    /// set of location IDs of POIs already visible in the area
+    /// </param>
+    /// <returns>list of new nearby POI locations</returns>
+    public async Task<IEnumerable<Location>> Get(
+        MapRectangle area,
+        ISet<string> visibleLocationIds)
+    {
+        var latLongList = GetLatLongListFromMapArea(area);
 
-        /// <summary>
-        /// Creates a new nearby POI caching service
-        /// </summary>
-        /// <param name="backendDataService">
-        /// backend data service to use for getting more nearby POIs; must not be null
-        /// </param>
-        /// <param name="cacheFolder">cache folder to load and store POIs; must exist</param>
-        public NearbyPoiCachingService(
-            BackendDataService backendDataService,
-            string cacheFolder)
+        var resultList = await this.GetPoisFromLatLongList(latLongList);
+
+        // filter by map rectangle and already present IDs
+        return resultList.Where(location =>
+            !visibleLocationIds.Contains(location.Id) &&
+            area.IsInside(location.MapLocation.Latitude, location.MapLocation.Longitude));
+    }
+
+    /// <summary>
+    /// Gets a list of all lat/long combinations contained in the map rectangle.
+    /// </summary>
+    /// <param name="area">map area</param>
+    /// <returns>
+    /// list of integer latitude longitude combinations in the map area
+    /// </returns>
+    private static IEnumerable<LatLongKey> GetLatLongListFromMapArea(
+        MapRectangle area)
+    {
+        int minLatitude = (int)Math.Floor(area.South);
+        int maxLatitude = (int)Math.Ceiling(area.North);
+        int minLongitude = (int)Math.Floor(area.West);
+        int maxLongitude = (int)Math.Ceiling(area.East);
+
+        List<LatLongKey> latLongList = [];
+
+        for (int latitude = minLatitude; latitude < maxLatitude; latitude++)
         {
-            Debug.Assert(
-                Directory.Exists(cacheFolder),
-                "cache folder must already exist");
-
-            this.backendDataService = backendDataService;
-            this.cacheFolder = cacheFolder;
-
-            this.LoadCache();
-        }
-
-        /// <summary>
-        /// Gets nearby POIs in the given rectangle area; may load locations from cache or from
-        /// the backend service. May throw an exception when no network connectivity is present.
-        /// </summary>
-        /// <param name="area">map rectangle area</param>
-        /// <param name="visibleLocationIds">
-        /// set of location IDs of POIs already visible in the area
-        /// </param>
-        /// <returns>list of new nearby POI locations</returns>
-        public async Task<IEnumerable<Location>> Get(
-            MapRectangle area,
-            ISet<string> visibleLocationIds)
-        {
-            var latLongList = GetLatLongListFromMapArea(area);
-
-            var resultList = await this.GetPoisFromLatLongList(latLongList);
-
-            // filter by map rectangle and already present IDs
-            return resultList.Where(location =>
-                !visibleLocationIds.Contains(location.Id) &&
-                area.IsInside(location.MapLocation.Latitude, location.MapLocation.Longitude));
-        }
-
-        /// <summary>
-        /// Gets a list of all lat/long combinations contained in the map rectangle.
-        /// </summary>
-        /// <param name="area">map area</param>
-        /// <returns>
-        /// list of integer latitude longitude combinations in the map area
-        /// </returns>
-        private static IEnumerable<LatLongKey> GetLatLongListFromMapArea(
-            MapRectangle area)
-        {
-            int minLatitude = (int)Math.Floor(area.South);
-            int maxLatitude = (int)Math.Ceiling(area.North);
-            int minLongitude = (int)Math.Floor(area.West);
-            int maxLongitude = (int)Math.Ceiling(area.East);
-
-            List<LatLongKey> latLongList = [];
-
-            for (int latitude = minLatitude; latitude < maxLatitude; latitude++)
+            for (int longitude = minLongitude; longitude < maxLongitude; longitude++)
             {
-                for (int longitude = minLongitude; longitude < maxLongitude; longitude++)
-                {
-                    latLongList.Add(new LatLongKey(latitude, longitude));
-                }
-            }
-
-            return latLongList;
-        }
-
-        /// <summary>
-        /// Gets a list of locations for all the latitude/longitude combinations in the list.
-        /// </summary>
-        /// <param name="latLongList">lat/long list</param>
-        /// <returns>list of locations</returns>
-        private async Task<IEnumerable<Location>> GetPoisFromLatLongList(
-            IEnumerable<LatLongKey> latLongList)
-        {
-            var resultList = new List<Location>();
-
-            foreach (var (latitude, longitude) in latLongList)
-            {
-                var partResult = await this.FetchNearbyPoiLocations(
-                    latitude,
-                    longitude);
-
-                resultList.AddRange(partResult);
-            }
-
-            return resultList;
-        }
-
-        /// <summary>
-        /// Fetches more nearby POI locations in the given integer latitude and longitude area.
-        /// First the local cache is checked, and if unsuccessful, the backend data service is
-        /// used. May throw an exception if the network is currently not available.
-        /// </summary>
-        /// <param name="latitude">latitude value</param>
-        /// <param name="longitude">longitude value</param>
-        /// <returns>list of locations</returns>
-        private async Task<IEnumerable<Location>> FetchNearbyPoiLocations(
-            int latitude,
-            int longitude)
-        {
-            var combo = new LatLongKey(latitude, longitude);
-
-            if (this.cache.TryGetValue(combo, out var locationList))
-            {
-                return locationList;
-            }
-
-            IEnumerable<Location> result =
-                await this.backendDataService.FindNearbyPoisAsync(
-                    latitude,
-                    longitude);
-
-            this.cache[combo] = result.ToList();
-
-            this.SaveCache();
-
-            return result;
-        }
-
-        /// <summary>
-        /// Loads the cache from file
-        /// </summary>
-        private void LoadCache()
-        {
-            string cacheFilename = Path.Combine(this.cacheFolder, CacheFilename);
-            if (!File.Exists(cacheFilename))
-            {
-                return;
-            }
-
-            try
-            {
-                string json = File.ReadAllText(cacheFilename);
-
-                var localCache = JsonSerializer.Deserialize(
-                    json,
-                    ModelsJsonSerializerContext.Default.DictionaryLatLongKeyListLocation);
-
-                if (localCache != null)
-                {
-                    this.cache = localCache;
-                }
-                else
-                {
-                    Debug.WriteLine("Error while deserializing JSON for nearby POIs cache: " + json);
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Error while loading nearby POIs cache: " + ex.ToString());
-                App.LogError(ex);
+                latLongList.Add(new LatLongKey(latitude, longitude));
             }
         }
 
-        /// <summary>
-        /// Saves the cache to file
-        /// </summary>
-        private void SaveCache()
+        return latLongList;
+    }
+
+    /// <summary>
+    /// Gets a list of locations for all the latitude/longitude combinations in the list.
+    /// </summary>
+    /// <param name="latLongList">lat/long list</param>
+    /// <returns>list of locations</returns>
+    private async Task<IEnumerable<Location>> GetPoisFromLatLongList(
+        IEnumerable<LatLongKey> latLongList)
+    {
+        var resultList = new List<Location>();
+
+        foreach (var (latitude, longitude) in latLongList)
         {
-            string json = JsonSerializer.Serialize(
-                this.cache,
+            var partResult = await this.FetchNearbyPoiLocations(
+                latitude,
+                longitude);
+
+            resultList.AddRange(partResult);
+        }
+
+        return resultList;
+    }
+
+    /// <summary>
+    /// Fetches more nearby POI locations in the given integer latitude and longitude area.
+    /// First the local cache is checked, and if unsuccessful, the backend data service is
+    /// used. May throw an exception if the network is currently not available.
+    /// </summary>
+    /// <param name="latitude">latitude value</param>
+    /// <param name="longitude">longitude value</param>
+    /// <returns>list of locations</returns>
+    private async Task<IEnumerable<Location>> FetchNearbyPoiLocations(
+        int latitude,
+        int longitude)
+    {
+        var combo = new LatLongKey(latitude, longitude);
+
+        if (this.cache.TryGetValue(combo, out var locationList))
+        {
+            return locationList;
+        }
+
+        IEnumerable<Location> result =
+            await this.backendDataService.FindNearbyPoisAsync(
+                latitude,
+                longitude);
+
+        this.cache[combo] = result.ToList();
+
+        this.SaveCache();
+
+        return result;
+    }
+
+    /// <summary>
+    /// Loads the cache from file
+    /// </summary>
+    private void LoadCache()
+    {
+        string cacheFilename = Path.Combine(this.cacheFolder, CacheFilename);
+        if (!File.Exists(cacheFilename))
+        {
+            return;
+        }
+
+        try
+        {
+            string json = File.ReadAllText(cacheFilename);
+
+            var localCache = JsonSerializer.Deserialize(
+                json,
                 ModelsJsonSerializerContext.Default.DictionaryLatLongKeyListLocation);
 
-            string cacheFilename = Path.Combine(this.cacheFolder, CacheFilename);
-            File.WriteAllText(cacheFilename, json);
+            if (localCache != null)
+            {
+                this.cache = localCache;
+            }
+            else
+            {
+                Debug.WriteLine("Error while deserializing JSON for nearby POIs cache: " + json);
+            }
         }
+        catch (Exception ex)
+        {
+            Debug.WriteLine("Error while loading nearby POIs cache: " + ex.ToString());
+            App.LogError(ex);
+        }
+    }
+
+    /// <summary>
+    /// Saves the cache to file
+    /// </summary>
+    private void SaveCache()
+    {
+        string json = JsonSerializer.Serialize(
+            this.cache,
+            ModelsJsonSerializerContext.Default.DictionaryLatLongKeyListLocation);
+
+        string cacheFilename = Path.Combine(this.cacheFolder, CacheFilename);
+        File.WriteAllText(cacheFilename, json);
     }
 }
