@@ -423,12 +423,20 @@
         <Setter Property="CompassColor" Value="Green" />
     </Style>
 
+    <Style x:Key="WeatherDashboardTileBorderStyle" TargetType="Border">
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 8" />
+        <Setter Property="Padding" Value="4" />
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Light={StaticResource ListViewItemBackgroundColorLight}, Dark={StaticResource ListViewItemBackgroundColorDark}}" />
+    </Style>
+
     <Style x:Key="ListViewItemStyle" TargetType="VisualElement">
         <Setter Property="BackgroundColor"
                 Value="{AppThemeBinding Light={StaticResource ListViewItemBackgroundColorLight}, Dark={StaticResource ListViewItemBackgroundColorDark}}" />
     </Style>
 
-    <Style x:Key="ListItemTextStyle" TargetType="Label">
+        <Style x:Key="ListItemTextStyle" TargetType="Label">
         <Setter Property="FontSize" Value="Large" />
     </Style>
 
