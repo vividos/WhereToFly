@@ -439,7 +439,7 @@ public class LocationListViewModel : ViewModelBase
                     new Dictionary<DevicePlatform, IEnumerable<string>>
                     {
                         { DevicePlatform.Android, new string[] { } },
-                        { DevicePlatform.WinUI, new string[] { ".kml", ".kmz", ".gpx", ".cup" } },
+                        { DevicePlatform.WinUI, new string[] { ".kml", ".kmz", ".gpx", ".xctsk", ".cup" } },
                     }),
                 PickerTitle = "Select a Location file to import",
             };

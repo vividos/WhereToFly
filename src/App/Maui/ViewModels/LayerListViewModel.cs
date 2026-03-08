@@ -211,6 +211,7 @@ public class LayerListViewModel : ViewModelBase
         {
             "Import CZML Layer",
             "Import OpenAir airspaces",
+            "Import XC Track task",
             "Add OpenStreetMap Buildings Layer",
             "Download from web",
         };
@@ -236,10 +237,14 @@ public class LayerListViewModel : ViewModelBase
                     break;
 
                 case 2:
-                    await this.AddOpenStreetMapLayerAsync();
+                    await this.ImportXctrackTaskAsync();
                     break;
 
                 case 3:
+                    await this.AddOpenStreetMapLayerAsync();
+                    break;
+
+                case 4:
                     await this.DownloadFromWebAsync();
                     break;
 
@@ -321,6 +326,49 @@ public class LayerListViewModel : ViewModelBase
 
             using var stream = await result.OpenReadAsync();
             await OpenFileHelper.ImportOpenAirAirspaceFile(stream, result.FileName);
+        }
+        catch (Exception ex)
+        {
+            App.LogError(ex);
+
+            await UserInterface.DisplayAlert(
+                "Error while picking a file: " + ex.Message,
+                "OK");
+
+            return;
+        }
+
+        await this.ReloadLayerListAsync();
+    }
+
+    /// <summary>
+    /// Imports XC Track task file and adds layer
+    /// </summary>
+    /// <returns>task to wait on</returns>
+    private async Task ImportXctrackTaskAsync()
+    {
+        try
+        {
+            var options = new PickOptions
+            {
+                FileTypes = new FilePickerFileType(
+                    new Dictionary<DevicePlatform, IEnumerable<string>>
+                    {
+                        { DevicePlatform.Android, new string[] { "text/plain" } },
+                        { DevicePlatform.WinUI, new string[] { ".xctsk" } },
+                    }),
+                PickerTitle = "Select an XC Track task file (.xctsk) to import",
+            };
+
+            var result = await FilePicker.PickAsync(options);
+            if (result == null ||
+                string.IsNullOrEmpty(result.FullPath))
+            {
+                return;
+            }
+
+            using var stream = await result.OpenReadAsync();
+            await OpenFileHelper.ImportTaskFile(stream, result.FileName);
         }
         catch (Exception ex)
         {

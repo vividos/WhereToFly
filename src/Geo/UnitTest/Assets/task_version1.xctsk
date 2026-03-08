@@ -1,0 +1,91 @@
+{
+    "earthModel": "WGS84",
+    "goal": {
+        "deadline": "21:00:00Z",
+        "type": "LINE"
+    },
+    "sss": {
+        "direction": "EXIT",
+        "timeGates": [
+            "10:15:00Z"
+        ],
+        "type": "RACE"
+    },
+    "taskType": "CLASSIC",
+    "turnpoints": [
+        {
+            "radius": 400,
+            "type": "TAKEOFF",
+            "waypoint": {
+                "altSmoothed": 1865,
+                "description": "EMBERGER ALM UPPER TAKE OFF",
+                "lat": 46.77667,
+                "lon": 13.15,
+                "name": "S02-18"
+            }
+        },
+        {
+            "radius": 5500,
+            "type": "SSS",
+            "waypoint": {
+                "altSmoothed": 1054,
+                "description": "Weinberg",
+                "lat": 46.7565,
+                "lon": 13.0969,
+                "name": "B39-11"
+            }
+        },
+        {
+            "radius": 4000,
+            "waypoint": {
+                "altSmoothed": 570,
+                "description": "KLEBLACH BRIDGE",
+                "lat": 46.77362,
+                "lon": 13.345,
+                "name": "029-05"
+            }
+        },
+        {
+            "radius": 3000,
+            "waypoint": {
+                "altSmoothed": 1620,
+                "description": "GLATSCH ALM",
+                "lat": 46.76578,
+                "lon": 13.05428,
+                "name": "080-16"
+            }
+        },
+        {
+            "radius": 1000,
+            "waypoint": {
+                "altSmoothed": 929,
+                "description": "WEISSENSEE BRIDGE",
+                "lat": 46.71667,
+                "lon": 13.29417,
+                "name": "032-09"
+            }
+        },
+        {
+            "radius": 2000,
+            "type": "ESS",
+            "waypoint": {
+                "altSmoothed": 595,
+                "description": "LP GREIFENBURG GOAL",
+                "lat": 46.74647,
+                "lon": 13.19147,
+                "name": "L01-06"
+            }
+        },
+        {
+            "radius": 200,
+            "waypoint": {
+                "altSmoothed": 595,
+                "description": "LP GREIFENBURG GOAL",
+                "lat": 46.74647,
+                "lon": 13.19147,
+                "name": "L01-06"
+            }
+        }
+    ],
+    "version": 1
+}

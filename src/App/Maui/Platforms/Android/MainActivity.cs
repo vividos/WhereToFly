@@ -32,6 +32,7 @@ namespace WhereToFly.App;
         "application/vnd.google-earth.kmz",
         "application/gpx+xml",
         "application/x-igc", // xcontest .igc files return this MIME type
+        "application/xctsk",
         "text/plain",
     ],
     Categories = [Intent.CategoryDefault, Intent.CategoryBrowsable],
@@ -49,6 +50,7 @@ namespace WhereToFly.App;
         @".*\\.igc", @".*\\..*\\.igc", ".*\\..*\\..*\\.igc", ".*\\..*\\..*\\..*\\.igc",
         @".*\\.czml", @".*\\..*\\.czml", ".*\\..*\\..*\\.czml", ".*\\..*\\..*\\..*\\.czml",
         @".*\\.cup", @".*\\..*\\.cup", ".*\\..*\\..*\\.cup", ".*\\..*\\..*\\..*\\.cup",
+        @".*\\.xctsk", @".*\\..*\\.xctsk", ".*\\..*\\..*\\.xctsk", ".*\\..*\\..*\\..*\\.xctsk",
         @".*\\.txt", @".*\\..*\\.txt", ".*\\..*\\..*\\.txt", ".*\\..*\\..*\\..*\\.txt",
     ],
     Categories = [Intent.CategoryDefault, Intent.CategoryBrowsable],
@@ -67,6 +69,7 @@ namespace WhereToFly.App;
         @".*\\.igc", @".*\\..*\\.igc", ".*\\..*\\..*\\.igc", ".*\\..*\\..*\\..*\\.igc",
         @".*\\.czml", @".*\\..*\\.czml", ".*\\..*\\..*\\.czml", ".*\\..*\\..*\\..*\\.czml",
         @".*\\.cup", @".*\\..*\\.cup", ".*\\..*\\..*\\.cup", ".*\\..*\\..*\\..*\\.cup",
+        @".*\\.xctsk", @".*\\..*\\.xctsk", ".*\\..*\\..*\\.xctsk", ".*\\..*\\..*\\..*\\.xctsk",
         @".*\\.txt", @".*\\..*\\.txt", ".*\\..*\\..*\\.txt", ".*\\..*\\..*\\..*\\.txt",
     ],
     Categories = [Intent.CategoryDefault, Intent.CategoryBrowsable],
@@ -84,6 +87,7 @@ namespace WhereToFly.App;
         @".*\\.igc", @".*\\..*\\.igc", ".*\\..*\\..*\\.igc", ".*\\..*\\..*\\..*\\.igc",
         @".*\\.czml", @".*\\..*\\.czml", ".*\\..*\\..*\\.czml", ".*\\..*\\..*\\..*\\.czml",
         @".*\\.cup", @".*\\..*\\.cup", ".*\\..*\\..*\\.cup", ".*\\..*\\..*\\..*\\.cup",
+        @".*\\.xctsk", @".*\\..*\\.xctsk", ".*\\..*\\..*\\.xctsk", ".*\\..*\\..*\\..*\\.xctsk",
         @".*\\.txt", @".*\\..*\\.txt", ".*\\..*\\..*\\.txt", ".*\\..*\\..*\\..*\\.txt",
     ],
     Categories = [Intent.CategoryDefault, Intent.CategoryBrowsable],
@@ -104,7 +108,7 @@ public class MainActivity : MauiAppCompatActivity
 {
     /// <summary>
     /// Called when activity is called with a new intent, e.g. from the intent filter for file
-    /// extension (.kml, .kmz, .gpx, .igc, .czml, .cup, .txt).
+    /// extension (.kml, .kmz, .gpx, .igc, .czml, .cup, .xctsk, .txt).
     /// See: https://stackoverflow.com/questions/3760276/android-intent-filter-associate-app-with-file-extension
     /// </summary>
     /// <param name="intent">intent to be passed to the app</param>

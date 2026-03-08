@@ -48,6 +48,12 @@ public static class OpenFileHelper
             return;
         }
 
+        if (Path.GetExtension(filename).ToLowerInvariant() == ".xctsk")
+        {
+            await ImportTaskFile(stream, filename);
+            return;
+        }
+
         try
         {
             var geoDataFile = GeoLoader.LoadGeoDataFile(stream, filename);
@@ -502,6 +508,31 @@ public static class OpenFileHelper
         }
 
         await AddLayerFromCzml(czml, filename, string.Empty);
+    }
+
+    /// <summary>
+    /// Imports an .xctsk file as layer
+    /// </summary>
+    /// <param name="stream">stream to read from</param>
+    /// <param name="filename">filename of file</param>
+    /// <returns>task to wait on</returns>
+    internal static async Task ImportTaskFile(Stream stream, string filename)
+    {
+        try
+        {
+            var parser = new XcTskFileParser(filename, stream);
+            string czml = parser.ConvertToCzml();
+
+            await AddLayerFromCzml(czml, filename, parser.Description);
+        }
+        catch (Exception ex)
+        {
+            App.LogError(ex);
+
+            await UserInterface.DisplayAlert(
+                $"Error while loading XCTask file: {ex.Message}",
+                "OK");
+        }
     }
 
     /// <summary>

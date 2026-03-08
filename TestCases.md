@@ -30,7 +30,7 @@ version.
 ## Location list
 
 - [ ] Import locations from included lists
-- [ ] Import locations from .kml, .kmz, .gpx and .cup files using file picker
+- [ ] Import locations from .kml, .kmz, .gpx, .xctsk and .cup files using file picker
 - [ ] Import locations by opening them via app
 - [ ] Add live waypoints using `where-to-fly://` links
 - [ ] View location list and details
