@@ -44,91 +44,98 @@
                         SelectionMode="Single"
                         SelectedItem="{Binding SelectedLayer}"
                         ItemSizingStrategy="MeasureFirstItem"
+                        Margin="4,2"
                         AutomationId="LayerList">
 
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical"
-                                   ItemSpacing="0" />
+                                   ItemSpacing="2" />
             </CollectionView.ItemsLayout>
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="viewmodels:LayerListEntryViewModel">
                     <!-- Template for a single item -->
 
-                    <Grid RowDefinitions="*"
-                          ColumnDefinitions="Auto, Auto, 1*, 40"
-                          HeightRequest="45"
-                          Margin="4,2"
-                          Style="{StaticResource ListViewItemStyle}">
+                    <Grid HeightRequest="45">
 
                         <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding ItemTappedCommand}"
-                                                  NumberOfTapsRequired="1" />
+                            <TapGestureRecognizer
+                                Command="{Binding ItemTappedCommand}"
+                                NumberOfTapsRequired="1" />
                         </Grid.GestureRecognizers>
 
-                        <!-- Layer type image -->
-                        <controls:TintedImage Source="{Binding TypeImageSource}"
-                                              WidthRequest="32"
-                                              HeightRequest="32"
-                                              Margin="4,0,0,0"
-                                              HorizontalOptions="Start"
-                                              VerticalOptions="Center"
-                                              Grid.Column="0" />
+                        <Border Style="{StaticResource ListViewItemBorderStyle}">
 
-                        <!-- Layer visibility image -->
-                        <ContentView Margin="0"
-                                     Padding="0"
-                                     Grid.Column="1">
-                            <ContentView.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding VisibilityTappedCommand}"
-                                                      NumberOfTapsRequired="1"/>
-                            </ContentView.GestureRecognizers>
+                            <Grid RowDefinitions="*"
+                                  ColumnDefinitions="Auto, Auto, 1*, 40"
+                                  ColumnSpacing="2">
 
-                            <controls:TintedImage Source="{Binding VisibilityImageSource}"
-                                                  WidthRequest="32"
-                                                  HeightRequest="32"
-                                                  Margin="4,0"
-                                                  HorizontalOptions="Start"
-                                                  VerticalOptions="Center" />
-                        </ContentView>
+                                <!-- Layer type image -->
+                                <controls:TintedImage Source="{Binding TypeImageSource}"
+                                                      WidthRequest="32"
+                                                      HeightRequest="32"
+                                                      Margin="4,0,0,0"
+                                                      HorizontalOptions="Start"
+                                                      VerticalOptions="Center"
+                                                      Grid.Column="0" />
 
-                        <!-- Name -->
-                        <Label Text="{Binding Name}"
-                               VerticalOptions="Center"
-                               HorizontalOptions="Fill"
-                               Style="{StaticResource ListItemTextStyle}"
-                               FontSize="Medium"
-                               LineBreakMode="TailTruncation"
-                               Grid.Column="2" />
+                                <!-- Layer visibility image -->
+                                <ContentView Margin="0"
+                                             Padding="0"
+                                             Grid.Column="1">
+                                    <ContentView.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding VisibilityTappedCommand}"
+                                                              NumberOfTapsRequired="1"/>
+                                    </ContentView.GestureRecognizers>
 
-                        <!-- Context menu for an item -->
-                        <controls:ContextMenu Grid.Column="3"
-                                              Caption="Layer"
-                                              WidthRequest="40"
-                                              HeightRequest="40"
-                                              HorizontalOptions="Center"
-                                              VerticalOptions="Center">
-                            <controls:ContextMenu.Items>
-                                <MenuItem Text="Zoom to"
-                                          IconImageSource="magnify_plus_outline.png"
-                                          IsEnabled="{Binding IsEnabledZoomToLayer}"
-                                          Command="{Binding ZoomToLayerCommand}"
-                                          CommandParameter="{Binding .}" />
-                                <MenuItem Text="Export"
-                                          IconImageSource="export_variant.png"
-                                          IsEnabled="{Binding IsEnabledExportLayer}"
-                                          Command="{Binding ExportLayerCommand}"
-                                          CommandParameter="{Binding .}" />
-                                <MenuItem Text="Delete" IsDestructive="True"
-                                          IconImageSource="delete.png"
-                                          IsEnabled="{Binding IsEnabledDeleteLayer}"
-                                          Command="{Binding DeleteLayerCommand}"
-                                          CommandParameter="{Binding .}" />
+                                    <controls:TintedImage Source="{Binding VisibilityImageSource}"
+                                                          WidthRequest="32"
+                                                          HeightRequest="32"
+                                                          Margin="4,0"
+                                                          HorizontalOptions="Start"
+                                                          VerticalOptions="Center" />
+                                </ContentView>
 
-                            </controls:ContextMenu.Items>
-                        </controls:ContextMenu>
+                                <!-- Name -->
+                                <Label Text="{Binding Name}"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Fill"
+                                       Style="{StaticResource ListItemTextStyle}"
+                                       FontSize="Medium"
+                                       LineBreakMode="TailTruncation"
+                                       Grid.Column="2" />
 
+                                <!-- Context menu for an item -->
+                                <controls:ContextMenu Grid.Column="3"
+                                                      Caption="Layer"
+                                                      WidthRequest="40"
+                                                      HeightRequest="40"
+                                                      HorizontalOptions="Center"
+                                                      VerticalOptions="Center">
+                                    <controls:ContextMenu.Items>
+                                        <MenuItem Text="Zoom to"
+                                                  IconImageSource="magnify_plus_outline.png"
+                                                  IsEnabled="{Binding IsEnabledZoomToLayer}"
+                                                  Command="{Binding ZoomToLayerCommand}"
+                                                  CommandParameter="{Binding .}" />
+                                        <MenuItem Text="Export"
+                                                  IconImageSource="export_variant.png"
+                                                  IsEnabled="{Binding IsEnabledExportLayer}"
+                                                  Command="{Binding ExportLayerCommand}"
+                                                  CommandParameter="{Binding .}" />
+                                        <MenuItem Text="Delete" IsDestructive="True"
+                                                  IconImageSource="delete.png"
+                                                  IsEnabled="{Binding IsEnabledDeleteLayer}"
+                                                  Command="{Binding DeleteLayerCommand}"
+                                                  CommandParameter="{Binding .}" />
+
+                                    </controls:ContextMenu.Items>
+                                </controls:ContextMenu>
+
+                            </Grid>
+                        </Border>
                     </Grid>
+
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

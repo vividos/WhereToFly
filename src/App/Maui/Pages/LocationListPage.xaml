@@ -110,6 +110,7 @@
                         SelectionMode="Single"
                         SelectedItem="{Binding SelectedLocation}"
                         ItemSizingStrategy="MeasureFirstItem"
+                        Margin="4,2"
                         AutomationId="LocationList">
 
             <CollectionView.ItemsLayout>
@@ -121,89 +122,95 @@
                 <DataTemplate x:DataType="viewmodels:LocationListEntryViewModel">
                     <!-- Template for a single item -->
 
-                    <Grid Margin="4,2"
-                          RowDefinitions="Auto, Auto, Auto"
-                          ColumnDefinitions="Auto, Auto, 1*, 40"
-                          Style="{StaticResource ListViewItemStyle}">
+                    <Grid>
+
                         <Grid.HeightRequest>
                             <OnPlatform x:TypeArguments="x:Double">
-                                <On Platform="Android" Value="65" />
-                                <On Platform="WinUI" Value="85" />
+                                <On Platform="Android" Value="78" />
+                                <On Platform="WinUI" Value="90" />
                             </OnPlatform>
                         </Grid.HeightRequest>
 
                         <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding ItemTappedCommand}"
-                                                  NumberOfTapsRequired="1" />
+                            <TapGestureRecognizer
+                                Command="{Binding ItemTappedCommand}"
+                                NumberOfTapsRequired="1" />
                         </Grid.GestureRecognizers>
 
-                        <!-- Location type image -->
-                        <controls:TintedImage Source="{Binding TypeImageSource}"
-                                              WidthRequest="32"
-                                              HeightRequest="32"
-                                              Margin="4"
-                                              HorizontalOptions="Start"
-                                              VerticalOptions="Center"
-                                              Grid.Column="0"
-                                              Grid.RowSpan="3" />
+                        <Border Style="{StaticResource ListViewItemBorderStyle}">
 
-                        <!-- Takeoff directions -->
-                        <controls:TakeoffDirectionsView
-                            Grid.Column="1" Grid.RowSpan="3"
-                            IsVisible="{Binding IsTakeoffDirectionsVisible}"
-                            WidthRequest="40" HeightRequest="40"
-                            Source="{Binding TakeoffDirections, Mode=OneTime}"
-                            IsReadOnly="True"
-                            BackgroundColor="Transparent"
-                            ShowLabels="False"
-                            Style="{StaticResource TakeoffDirectionsStyle}" />
+                            <Grid RowDefinitions="Auto, Auto, Auto"
+                                  ColumnDefinitions="Auto, Auto, 1*, 40">
 
-                        <!-- Details -->
-                        <Label Text="{Binding Name}"
-                               Style="{StaticResource ListItemTextStyle}"
-                               FontSize="Medium"
-                               LineBreakMode="TailTruncation"
-                               Grid.Column="2" Grid.Row="0" />
-                        <Label Text="{Binding DetailInfos}"
-                               Style="{StaticResource ListItemDetailTextStyle}"
-                               FontSize="Small"
-                               LineBreakMode="TailTruncation"
-                               Grid.Column="2" Grid.Row="1" />
-                        <Label Text="{Binding Description}"
-                               Style="{StaticResource ListItemDetailTextStyle}"
-                               FontSize="Small"
-                               LineBreakMode="TailTruncation"
-                               Grid.Column="2"
-                               Grid.Row="2"
-                               Grid.ColumnSpan="2" />
+                                <!-- Location type image -->
+                                <controls:TintedImage Source="{Binding TypeImageSource}"
+                                                      WidthRequest="32"
+                                                      HeightRequest="32"
+                                                      Margin="4"
+                                                      HorizontalOptions="Start"
+                                                      VerticalOptions="Center"
+                                                      Grid.Column="0"
+                                                      Grid.RowSpan="3" />
 
-                        <!-- Context menu for an item -->
-                        <controls:ContextMenu Grid.Column="3"
-                                              Grid.RowSpan="2"
-                                              Caption="Location"
-                                              WidthRequest="40"
-                                              HeightRequest="40"
-                                              HorizontalOptions="Center"
-                                              VerticalOptions="Center">
-                            <controls:ContextMenu.Items>
-                                <MenuItem Text="Show Details"
-                                          IconImageSource="information_outline.png"
-                                          Command="{Binding ShowDetailsLocationCommand}" />
-                                <MenuItem Text="Zoom to"
-                                          IconImageSource="magnify_plus_outline.png"
-                                          Command="{Binding ZoomToLocationCommand}" />
-                                <MenuItem Text="Set as compass target"
-                                          IconImageSource="compass_rose.png"
-                                          Command="{Binding SetAsCompassTargetCommand}" />
-                                <MenuItem Text="Delete" IsDestructive="True"
-                                          IconImageSource="delete.png"
-                                          Command="{Binding DeleteLocationCommand}" />
-                                <MenuItem Text="Add tour plan location"
-                                          IconImageSource="map_marker_plus.png"
-                                          Command="{Binding AddTourPlanLocationCommand}"
-                                          AutomationId="AddTourPlanLocation" />
-                            </controls:ContextMenu.Items>
-                        </controls:ContextMenu>
+                                <!-- Takeoff directions -->
+                                <controls:TakeoffDirectionsView
+                                    Grid.Column="1" Grid.RowSpan="3"
+                                    IsVisible="{Binding IsTakeoffDirectionsVisible}"
+                                    WidthRequest="40" HeightRequest="40"
+                                    Source="{Binding TakeoffDirections, Mode=OneTime}"
+                                    IsReadOnly="True"
+                                    BackgroundColor="Transparent"
+                                    ShowLabels="False"
+                                    Style="{StaticResource TakeoffDirectionsStyle}" />
+
+                                <!-- Details -->
+                                <Label Text="{Binding Name}"
+                                       Style="{StaticResource ListItemTextStyle}"
+                                       FontSize="Medium"
+                                       LineBreakMode="TailTruncation"
+                                       Grid.Column="2" Grid.Row="0" />
+                                <Label Text="{Binding DetailInfos}"
+                                       Style="{StaticResource ListItemDetailTextStyle}"
+                                       FontSize="Small"
+                                       LineBreakMode="TailTruncation"
+                                       Grid.Column="2" Grid.Row="1" />
+                                <Label Text="{Binding Description}"
+                                       Style="{StaticResource ListItemDetailTextStyle}"
+                                       FontSize="Small"
+                                       LineBreakMode="TailTruncation"
+                                       Grid.Column="2"
+                                       Grid.Row="2"
+                                       Grid.ColumnSpan="2" />
+
+                                <!-- Context menu for an item -->
+                                <controls:ContextMenu Grid.Column="3"
+                                                      Grid.RowSpan="2"
+                                                      Caption="Location"
+                                                      WidthRequest="40"
+                                                      HeightRequest="40"
+                                                      HorizontalOptions="Center"
+                                                      VerticalOptions="Center">
+                                    <controls:ContextMenu.Items>
+                                        <MenuItem Text="Show Details"
+                                                  IconImageSource="information_outline.png"
+                                                  Command="{Binding ShowDetailsLocationCommand}" />
+                                        <MenuItem Text="Zoom to"
+                                                  IconImageSource="magnify_plus_outline.png"
+                                                  Command="{Binding ZoomToLocationCommand}" />
+                                        <MenuItem Text="Set as compass target"
+                                                  IconImageSource="compass_rose.png"
+                                                  Command="{Binding SetAsCompassTargetCommand}" />
+                                        <MenuItem Text="Delete" IsDestructive="True"
+                                                  IconImageSource="delete.png"
+                                                  Command="{Binding DeleteLocationCommand}" />
+                                        <MenuItem Text="Add tour plan location"
+                                                  IconImageSource="map_marker_plus.png"
+                                                  Command="{Binding AddTourPlanLocationCommand}"
+                                                  AutomationId="AddTourPlanLocation" />
+                                    </controls:ContextMenu.Items>
+                                </controls:ContextMenu>
+                            </Grid>
+                        </Border>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

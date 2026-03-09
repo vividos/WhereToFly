@@ -57,6 +57,7 @@
                             SelectionMode="Single"
                             SelectedItem="{Binding SelectedTrack}"
                             ItemSizingStrategy="MeasureFirstItem"
+                            Margin="4,2"
                             AutomationId="TrackList">
 
                 <CollectionView.ItemsLayout>
@@ -68,81 +69,87 @@
                     <DataTemplate x:DataType="viewmodels:TrackListEntryViewModel">
                         <!-- Template for a single item -->
 
-                        <Grid Margin="4,2"
-                              RowDefinitions="Auto, Auto"
-                              ColumnDefinitions="Auto, Auto, 1*, 40"
-                              Style="{StaticResource ListViewItemStyle}">
+                        <Grid>
+
                             <Grid.HeightRequest>
                                 <OnPlatform x:TypeArguments="x:Double">
-                                    <On Platform="Android" Value="45" />
-                                    <On Platform="WinUI" Value="55" />
+                                    <On Platform="Android" Value="58" />
+                                    <On Platform="WinUI" Value="65" />
                                 </OnPlatform>
                             </Grid.HeightRequest>
 
                             <Grid.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding ItemTappedCommand}"
-                                                      NumberOfTapsRequired="1" />
+                                <TapGestureRecognizer
+                                    Command="{Binding ItemTappedCommand}"
+                                    NumberOfTapsRequired="1" />
                             </Grid.GestureRecognizers>
 
-                            <!-- Track type image -->
-                            <controls:TintedImage Source="{Binding TypeImageSource}"
-                                                  WidthRequest="32"
-                                                  HeightRequest="32"
-                                                  Margin="4,0,0,0"
-                                                  HorizontalOptions="Start"
-                                                  VerticalOptions="Center"
-                                                  Grid.Column="0"
-                                                  Grid.RowSpan="2" />
+                            <Border Style="{StaticResource ListViewItemBorderStyle}">
 
-                            <!-- Track color -->
-                            <Border IsVisible="{Binding IsColorBoxVisible}"
-                                    BackgroundColor="{Binding TrackColor}"
-                                    VerticalOptions="Center"
-                                    WidthRequest="32"
-                                    HeightRequest="32"
-                                    Margin="5"
-                                    Stroke="White"
-                                    StrokeShape="RoundRectangle 3"
-                                    Grid.Column="1"
-                                    Grid.RowSpan="2" />
+                                <Grid RowDefinitions="Auto, Auto"
+                                      ColumnDefinitions="Auto, Auto, 1*, 40">
 
-                            <!-- Details -->
-                            <Label Text="{Binding Name}"
-                                   Style="{StaticResource ListItemTextStyle}"
-                                   FontSize="Medium"
-                                   LineBreakMode="TailTruncation"
-                                   Grid.Column="2"
-                                   Grid.Row="0" />
-                            <Label Text="{Binding DetailInfos}"
-                                   Style="{StaticResource ListItemDetailTextStyle}"
-                                   FontSize="Small"
-                                   LineBreakMode="TailTruncation"
-                                   Grid.Column="2"
-                                   Grid.Row="1" />
+                                    <!-- Track type image -->
+                                    <controls:TintedImage Source="{Binding TypeImageSource}"
+                                                          WidthRequest="32"
+                                                          HeightRequest="32"
+                                                          Margin="4,0,0,0"
+                                                          HorizontalOptions="Start"
+                                                          VerticalOptions="Center"
+                                                          Grid.Column="0"
+                                                          Grid.RowSpan="2" />
 
-                            <!-- Context menu for an item -->
-                            <controls:ContextMenu Grid.Column="3"
-                                                  Grid.RowSpan="2"
-                                                  Caption="Track"
-                                                  WidthRequest="40"
-                                                  HeightRequest="40"
-                                                  HorizontalOptions="Center"
-                                                  VerticalOptions="Center">
-                                <controls:ContextMenu.Items>
-                                    <MenuItem Text="Show Details"
-                                              IconImageSource="information_outline.png"
-                                              Command="{Binding ShowTrackDetailsCommand}" />
-                                    <MenuItem Text="Zoom to"
-                                              IconImageSource="magnify_plus_outline.png"
-                                              Command="{Binding ZoomToTrackCommand}" />
-                                    <MenuItem Text="Export"
-                                              IconImageSource="export_variant.png"
-                                              Command="{Binding ExportTrackCommand}" />
-                                    <MenuItem Text="Delete" IsDestructive="True"
-                                              IconImageSource="delete.png"
-                                              Command="{Binding DeleteTrackCommand}" />
-                                </controls:ContextMenu.Items>
-                            </controls:ContextMenu>
+                                    <!-- Track color -->
+                                    <Border IsVisible="{Binding IsColorBoxVisible}"
+                                            BackgroundColor="{Binding TrackColor}"
+                                            VerticalOptions="Center"
+                                            WidthRequest="32"
+                                            HeightRequest="32"
+                                            Margin="5"
+                                            Stroke="White"
+                                            StrokeShape="RoundRectangle 3"
+                                            Grid.Column="1"
+                                            Grid.RowSpan="2" />
+
+                                    <!-- Details -->
+                                    <Label Text="{Binding Name}"
+                                           Style="{StaticResource ListItemTextStyle}"
+                                           FontSize="Medium"
+                                           LineBreakMode="TailTruncation"
+                                           Grid.Column="2"
+                                           Grid.Row="0" />
+                                    <Label Text="{Binding DetailInfos}"
+                                           Style="{StaticResource ListItemDetailTextStyle}"
+                                           FontSize="Small"
+                                           LineBreakMode="TailTruncation"
+                                           Grid.Column="2"
+                                           Grid.Row="1" />
+
+                                    <!-- Context menu for an item -->
+                                    <controls:ContextMenu Grid.Column="3"
+                                                          Grid.RowSpan="2"
+                                                          Caption="Track"
+                                                          WidthRequest="40"
+                                                          HeightRequest="40"
+                                                          HorizontalOptions="Center"
+                                                          VerticalOptions="Center">
+                                        <controls:ContextMenu.Items>
+                                            <MenuItem Text="Show Details"
+                                                      IconImageSource="information_outline.png"
+                                                      Command="{Binding ShowTrackDetailsCommand}" />
+                                            <MenuItem Text="Zoom to"
+                                                      IconImageSource="magnify_plus_outline.png"
+                                                      Command="{Binding ZoomToTrackCommand}" />
+                                            <MenuItem Text="Export"
+                                                      IconImageSource="export_variant.png"
+                                                      Command="{Binding ExportTrackCommand}" />
+                                            <MenuItem Text="Delete" IsDestructive="True"
+                                                      IconImageSource="delete.png"
+                                                      Command="{Binding DeleteTrackCommand}" />
+                                        </controls:ContextMenu.Items>
+                                    </controls:ContextMenu>
+                                </Grid>
+                            </Border>
                         </Grid>
 
                     </DataTemplate>
