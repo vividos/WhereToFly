@@ -9,7 +9,7 @@ Released on ?.
 - Added importing .xctsk files as layers
 - Added the "Terrain slope direction" map overlay and showing a color legend
 - Display message band when terrain is not initialized yet
-- Using CesiumJS version 1.138.0
+- Using CesiumJS version 1.139.1
 
 🐛 Bugfixes
 
