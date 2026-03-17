@@ -21,61 +21,6 @@
     <ApplicationDisplayVersion>$(AssemblyInformationalVersion)</ApplicationDisplayVersion>
   </PropertyGroup>
 
-  <!-- Windows properties -->
-  <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
-    <ApplicationId>de.vividos.app.wheretofly.windows</ApplicationId>
-    <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
-    <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows' And '$(Configuration)' == 'Debug'">
-    <WindowsPackageType>None</WindowsPackageType>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows' And '$(Configuration)' == 'Release'">
-    <WindowsPackageType>None</WindowsPackageType>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-    <PublishSingleFile>true</PublishSingleFile>
-    <SelfContailed>true</SelfContailed>
-    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
-  </PropertyGroup>
-
-  <!-- Android properties -->
-  <PropertyGroup Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' ">
-    <ApplicationId>de.vividos.app.wheretofly.android</ApplicationId>
-    <SupportedOSPlatformVersion>31.0</SupportedOSPlatformVersion>
-    <AndroidStoreUncompressedFileExtensions>.kmz</AndroidStoreUncompressedFileExtensions>
-    <!-- Disable automatically setting version numbers on MAUI -->
-    <NBGV_SetMauiVersionProperties>false</NBGV_SetMauiVersionProperties>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' And '$(Configuration)' == 'Debug' ">
-    <ApplicationId>de.vividos.app.wheretofly.android_dbg</ApplicationId>
-    <ApplicationTitle>Debug Where-to-fly</ApplicationTitle>
-    <RuntimeIdentifiers>android-arm64;android-x64</RuntimeIdentifiers>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' And '$(Configuration)' == 'Release' ">
-    <AndroidPackageFormat>apk</AndroidPackageFormat>
-    <RuntimeIdentifiers>android-arm64</RuntimeIdentifiers>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <BeforeGenerateAndroidManifest>$(BeforeGenerateAndroidManifest);SetAndroidVersionCode</BeforeGenerateAndroidManifest>
-  </PropertyGroup>
-
-  <Target Name="SetAndroidVersionCode" DependsOnTargets="GetBuildVersion" Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' ">
-    <PropertyGroup>
-      <!-- Set versionCode to MmmHHH, with M = major version, mm = minor version, HHH = git height -->
-      <ApplicationVersion>$([System.String]::Format('{0}{1:00}{2:000}',
-          $([System.Version]::Parse($(BuildVersionSimple)).Major),
-          $([System.Version]::Parse($(BuildVersionSimple)).Minor),
-          $(GitVersionHeight)
-        ))</ApplicationVersion>
-    </PropertyGroup>
-    <Message Importance="High" Text="Setting android:versionCode to $(ApplicationVersion)" />
-  </Target>
-
   <ItemGroup>
     <!-- App Icon -->
     <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#2F299E" />
@@ -128,12 +73,6 @@
     <MauiXaml Update="**/*.xaml" NoWarn="0612" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == '$(DotNetVersion)'">
-    <EmbeddedResource Include="Resources\Raw\**" Link="Resources\Assets\%(RecursiveDir)%(Filename)%(Extension)" />
-    <EmbeddedResource Include="..\..\..\Credits.md" Link="Resources\Assets\info\Credits.md" />
-    <EmbeddedResource Include="..\..\..\Changelog.md" Link="Resources\Assets\info\Changelog.md" />
-  </ItemGroup>
-
   <ItemGroup>
     <Compile Update="Resources\Strings.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -152,6 +91,7 @@
     <Using Remove="Microsoft.Maui.Devices.Sensors" />
   </ItemGroup>
 
+  <!-- NuGet packages -->
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Maui" Version="14.0.1" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
@@ -178,6 +118,72 @@
     <ProjectReference Include="..\..\Geo\WhereToFly.Geo.csproj" />
     <ProjectReference Include="..\..\Shared\Model\WhereToFly.Shared.Model.csproj" />
     <ProjectReference Include="..\MapView\WhereToFly.App.MapView.csproj" />
+  </ItemGroup>
+
+  <!-- .NET Windows properties -->
+  <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
+    <ApplicationId>de.vividos.app.wheretofly.windows</ApplicationId>
+    <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
+    <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
+  </PropertyGroup>
+
+  <!-- .NET Windows debug properties -->
+  <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows' And '$(Configuration)' == 'Debug'">
+    <WindowsPackageType>None</WindowsPackageType>
+  </PropertyGroup>
+
+  <!-- .NET Windows release properties -->
+  <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows' And '$(Configuration)' == 'Release'">
+    <WindowsPackageType>None</WindowsPackageType>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContailed>true</SelfContailed>
+    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+  </PropertyGroup>
+
+  <!-- .NET Android properties -->
+  <PropertyGroup Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' ">
+    <ApplicationId>de.vividos.app.wheretofly.android</ApplicationId>
+    <SupportedOSPlatformVersion>31.0</SupportedOSPlatformVersion>
+    <AndroidStoreUncompressedFileExtensions>.kmz</AndroidStoreUncompressedFileExtensions>
+    <!-- Disable automatically setting version numbers on MAUI -->
+    <NBGV_SetMauiVersionProperties>false</NBGV_SetMauiVersionProperties>
+  </PropertyGroup>
+
+  <!-- .NET Android debug properties -->
+  <PropertyGroup Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' And '$(Configuration)' == 'Debug' ">
+    <ApplicationId>de.vividos.app.wheretofly.android_dbg</ApplicationId>
+    <ApplicationTitle>Debug Where-to-fly</ApplicationTitle>
+    <RuntimeIdentifiers>android-arm64;android-x64</RuntimeIdentifiers>
+  </PropertyGroup>
+
+  <!-- .NET Android release properties -->
+  <PropertyGroup Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' And '$(Configuration)' == 'Release' ">
+    <AndroidPackageFormat>apk</AndroidPackageFormat>
+    <RuntimeIdentifiers>android-arm64</RuntimeIdentifiers>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <BeforeGenerateAndroidManifest>$(BeforeGenerateAndroidManifest);SetAndroidVersionCode</BeforeGenerateAndroidManifest>
+  </PropertyGroup>
+
+  <Target Name="SetAndroidVersionCode" DependsOnTargets="GetBuildVersion" Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' ">
+    <PropertyGroup>
+      <!-- Set versionCode to MmmHHH, with M = major version, mm = minor version, HHH = git height -->
+      <ApplicationVersion>$([System.String]::Format('{0}{1:00}{2:000}',
+          $([System.Version]::Parse($(BuildVersionSimple)).Major),
+          $([System.Version]::Parse($(BuildVersionSimple)).Minor),
+          $(GitVersionHeight)
+        ))</ApplicationVersion>
+    </PropertyGroup>
+    <Message Importance="High" Text="Setting android:versionCode to $(ApplicationVersion)" />
+  </Target>
+
+  <!-- .NET build for unit tests -->
+  <ItemGroup Condition="'$(TargetFramework)' == '$(DotNetVersion)'">
+    <EmbeddedResource Include="Resources\Raw\**" Link="Resources\Assets\%(RecursiveDir)%(Filename)%(Extension)" />
+    <EmbeddedResource Include="..\..\..\Credits.md" Link="Resources\Assets\info\Credits.md" />
+    <EmbeddedResource Include="..\..\..\Changelog.md" Link="Resources\Assets\info\Changelog.md" />
   </ItemGroup>
 
 </Project>
