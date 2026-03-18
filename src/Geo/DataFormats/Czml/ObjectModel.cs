@@ -122,6 +122,13 @@ public class Object : CzmlBase
     public Polyline? Polyline { get; set; }
 
     /// <summary>
+    /// Ellipse entity
+    /// </summary>
+    [JsonPropertyName("ellipse")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public Ellipse? Ellipse { get; set; }
+
+    /// <summary>
     /// Cylinder entity
     /// </summary>
     [JsonPropertyName("cylinder")]
@@ -679,6 +686,68 @@ public class Polyline
     [JsonPropertyName("distanceDisplayCondition")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public DistanceDisplayCondition? DistanceDisplayCondition { get; set; }
+}
+
+/// <summary>
+/// CZML ellipse object
+/// https://github.com/AnalyticalGraphicsInc/czml-writer/wiki/Ellipse
+/// </summary>
+public class Ellipse
+{
+    /// <summary>
+    /// Length of the semi major axis of the ellipse, in meters
+    /// </summary>
+    [JsonPropertyName("semiMajorAxis")]
+    public double SemiMajorAxis { get; set; }
+
+    /// <summary>
+    /// Length of the semi minor axis of the ellipse, in meters
+    /// </summary>
+    [JsonPropertyName("semiMinorAxis")]
+    public double SemiMinorAxis { get; set; }
+
+    /// <summary>
+    /// Height of the ellipse in relation to the height reference, in meters
+    /// </summary>
+    [JsonPropertyName("height")]
+    public double Height { get; set; }
+
+    /// <summary>
+    /// Height reference of object
+    /// </summary>
+    [JsonPropertyName("heightReference")]
+    public HeightReference HeightReference { get; set; } = HeightReference.None;
+
+    /// <summary>
+    /// Indicates if the ellipse is drawn filled with the material
+    /// </summary>
+    [JsonPropertyName("fill")]
+    public bool Fill { get; set; }
+
+    /// <summary>
+    /// Material used to fill the ellipse
+    /// </summary>
+    [JsonPropertyName("material")]
+    public Material? Material { get; set; }
+
+    /// <summary>
+    /// Indicates if the ellipse should also be drawn with an outline
+    /// </summary>
+    [JsonPropertyName("outline")]
+    public bool Outline { get; set; }
+
+    /// <summary>
+    /// Specifies the outline color
+    /// </summary>
+    [JsonPropertyName("outlineColor")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public Color? OutlineColor { get; set; }
+
+    /// <summary>
+    /// Outline width
+    /// </summary>
+    [JsonPropertyName("outlineWidth")]
+    public double OutlineWidth { get; set; } = 1.0;
 }
 
 /// <summary>
