@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using System.Text.Json;
 using WhereToFly.Geo.DataFormats.Czml;
+using WhereToFly.Geo.Model;
 using WhereToFly.Geo.Serializers;
 
 namespace WhereToFly.Geo.DataFormats;
@@ -135,22 +136,46 @@ public class XcTskFileParser
     /// </summary>
     /// <param name="turnpoint">turnpoint to use</param>
     /// <returns>CZML object</returns>
-    private static CzmlBase CzmlObjectFromTurnpoint(Turnpoint turnpoint)
+    private static Czml.Object CzmlObjectFromTurnpoint(Turnpoint turnpoint)
     {
+        var positions = new Czml.PositionList();
+
+        var center = new MapPoint(
+            turnpoint.Waypoint.Latitude,
+            turnpoint.Waypoint.Longitude);
+
+        const double step = 5;
+        const double endAngle = 360.0 + step;
+
+        for (double bearing = 0.0; bearing < endAngle; bearing += step)
+        {
+            var point = center.PolarOffset(turnpoint.Radius, bearing, 0.0);
+            positions.Add(point.Latitude, point.Longitude, 0.0);
+        }
+
         return new Czml.Object
         {
             Name = turnpoint.Type,
             Description = DescriptionFromTurnpoint(turnpoint),
-            Position = PositionFromTurnpoint(turnpoint),
-            Cylinder = new Cylinder
+            Polyline = new Polyline
             {
-                BottomRadius = turnpoint.Radius,
-                TopRadius = turnpoint.Radius,
-                Length = 4000,
-                HeightReference = HeightReference.None,
-                Material = MaterialFromTurnpoint(turnpoint),
+                Positions = positions,
+                ClampToGround = true,
+                Width = 5.0,
+                Material = Material.FromSolidColor(ColorFromTurnpoint(turnpoint, outlineColor: false)),
+            },
+            Polygon = new Polygon
+            {
+                Positions = positions,
+                Height = 0.0,
+                ExtrudedHeight = 3000.0,
+                HeightReference = HeightReference.ClampToGround,
+                Fill = false,
                 Outline = true,
                 OutlineColor = ColorFromTurnpoint(turnpoint, outlineColor: true),
+                OutlineWidth = 10.0,
+                CloseTop = false,
+                CloseBottom = false,
             },
         };
     }
@@ -170,36 +195,6 @@ public class XcTskFileParser
         sb.AppendLine(turnpoint.Waypoint.Description);
 
         return sb.ToString();
-    }
-
-    /// <summary>
-    /// Returns a position from given turnpoint
-    /// </summary>
-    /// <param name="turnpoint">turnpoint to use</param>
-    /// <returns>CZML position object</returns>
-    private static PositionList PositionFromTurnpoint(Turnpoint turnpoint)
-    {
-        return new PositionList
-        {
-            CartographicDegrees =
-            [
-                // note the reversal of latitude and longitude
-                turnpoint.Waypoint.Longitude,
-                turnpoint.Waypoint.Latitude,
-                turnpoint.Waypoint.Altitude,
-            ],
-        };
-    }
-
-    /// <summary>
-    /// Returns material object from given turnpoint
-    /// </summary>
-    /// <param name="turnpoint">turnpoint to use</param>
-    /// <returns>material object</returns>
-    private static Material MaterialFromTurnpoint(Turnpoint turnpoint)
-    {
-        var color = ColorFromTurnpoint(turnpoint, outlineColor: false);
-        return Material.FromSolidColor(color);
     }
 
     /// <summary>
