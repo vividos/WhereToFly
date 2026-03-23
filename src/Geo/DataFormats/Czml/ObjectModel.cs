@@ -398,12 +398,14 @@ public class Point
     /// Specifies the outline color
     /// </summary>
     [JsonPropertyName("outlineColor")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public Color? OutlineColor { get; set; }
 
     /// <summary>
     /// Outline width
     /// </summary>
     [JsonPropertyName("outlineWidth")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public double? OutlineWidth { get; set; }
 }
 
@@ -653,6 +655,7 @@ public class Billboard
 
 /// <summary>
 /// CZML polyline object
+/// https://github.com/AnalyticalGraphicsInc/czml-writer/wiki/Polyline
 /// </summary>
 public class Polyline
 {
@@ -752,6 +755,7 @@ public class Ellipse
 
 /// <summary>
 /// CZML cylinder object
+/// https://github.com/AnalyticalGraphicsInc/czml-writer/wiki/Cylinder
 /// </summary>
 public class Cylinder
 {
@@ -795,12 +799,21 @@ public class Cylinder
     /// Specifies the outline color
     /// </summary>
     [JsonPropertyName("outlineColor")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public Color? OutlineColor { get; set; }
+
+    /// <summary>
+    /// Outline width
+    /// </summary>
+    [JsonPropertyName("outlineWidth")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public double? OutlineWidth { get; set; }
 }
 
 /// <summary>
 /// CZML polygon object.
 /// Note that clamping to ground is achieved when not setting Height and HeightReference property
+/// https://github.com/AnalyticalGraphicsInc/czml-writer/wiki/Polygon
 /// </summary>
 public class Polygon
 {
@@ -832,6 +845,12 @@ public class Polygon
     public HeightReference? HeightReference { get; set; } = null;
 
     /// <summary>
+    /// Indicates if the polygon is drawn filled with the material
+    /// </summary>
+    [JsonPropertyName("fill")]
+    public bool Fill { get; set; } = true;
+
+    /// <summary>
     /// Material used to show the polygon
     /// </summary>
     [JsonPropertyName("material")]
@@ -850,6 +869,25 @@ public class Polygon
     [JsonPropertyName("outlineColor")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public Color? OutlineColor { get; set; }
+
+    /// <summary>
+    /// Outline width
+    /// </summary>
+    [JsonPropertyName("outlineWidth")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public double? OutlineWidth { get; set; }
+
+    /// <summary>
+    /// Indicates if the polygon's top is closed
+    /// </summary>
+    [JsonPropertyName("closeTop")]
+    public bool CloseTop { get; set; } = true;
+
+    /// <summary>
+    /// Indicates if the polygon's bottom is closed
+    /// </summary>
+    [JsonPropertyName("closeBottom")]
+    public bool CloseBottom { get; set; } = true;
 }
 
 /// <summary>
