@@ -108,15 +108,6 @@ public class UserInterfaceTestBase
         // access the IPlatformApplication to force initalization
         _ = this.unitTestApp.Services.GetRequiredService<IPlatformApplication>();
 
-        DependencyService.RegisterSingleton(this.Services.GetRequiredService<CompassGeoServices>());
-        DependencyService.RegisterSingleton(this.Services.GetRequiredService<IAppMapService>());
-        DependencyService.RegisterSingleton(this.Services.GetRequiredService<IUserInterface>());
-        DependencyService.RegisterSingleton(this.Services.GetRequiredService<IGeolocationService>());
-        DependencyService.RegisterSingleton(this.Services.GetRequiredService<IDataService>());
-        DependencyService.RegisterSingleton(this.Services.GetRequiredService<INavigationService>());
-        DependencyService.RegisterSingleton(this.Services.GetRequiredService<IAppManager>());
-        DependencyService.RegisterSingleton(this.Services.GetRequiredService<LiveDataRefreshService>());
-
         App.Settings = new AppSettings();
 
         LoadAppResources("Resources/Styles/Colors.xaml");
