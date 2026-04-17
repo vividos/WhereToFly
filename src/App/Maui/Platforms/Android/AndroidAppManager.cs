@@ -6,8 +6,6 @@ using System.Diagnostics;
 using WhereToFly.App.Abstractions;
 using WhereToFly.App.Platforms.Android;
 
-[assembly: Dependency(typeof(AndroidAppManager))]
-
 namespace WhereToFly.App.Platforms.Android;
 
 /// <summary>

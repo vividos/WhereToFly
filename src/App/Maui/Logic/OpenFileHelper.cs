@@ -16,10 +16,17 @@ namespace WhereToFly.App.Logic;
 public static class OpenFileHelper
 {
     /// <summary>
+    /// Service provider
+    /// </summary>
+    private static IServiceProvider Services
+        => IPlatformApplication.Current?.Services
+        ?? throw new InvalidOperationException("IServiceProvider is not available");
+
+    /// <summary>
     /// Access to the user interface
     /// </summary>
     private static IUserInterface UserInterface
-        => DependencyService.Get<IUserInterface>();
+        => Services.GetRequiredService<IUserInterface>();
 
     /// <summary>
     /// Waiting dialog that is currently shown; else it's set to null
@@ -233,9 +240,9 @@ public static class OpenFileHelper
         SanitizeLocationDescriptions(locationList);
         AddTakeoffDirections(locationList);
 
-        var appMapService = DependencyService.Get<IAppMapService>();
+        var appMapService = Services.GetRequiredService<IAppMapService>();
 
-        var dataService = DependencyService.Get<IDataService>();
+        var dataService = Services.GetRequiredService<IDataService>();
         var locationDataService = dataService.GetLocationDataService();
 
         bool isListEmpty = await locationDataService.IsListEmpty();
@@ -252,7 +259,7 @@ public static class OpenFileHelper
 
         await locationDataService.AddList(locationList);
 
-        var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
+        var liveWaypointRefreshService = Services.GetRequiredService<LiveDataRefreshService>();
         liveWaypointRefreshService.ClearLiveWaypointList();
         liveWaypointRefreshService.AddLiveWaypointList(locationList);
 
@@ -297,7 +304,7 @@ public static class OpenFileHelper
     {
         locationList.GetBoundingRectangle(out MapPoint minLocation, out MapPoint maxLocation);
 
-        var appMapService = DependencyService.Get<IAppMapService>();
+        var appMapService = Services.GetRequiredService<IAppMapService>();
         appMapService.MapView.ZoomToRectangle(minLocation, maxLocation);
     }
 
@@ -378,18 +385,18 @@ public static class OpenFileHelper
             await AdjustTrackHeightsAsync(track);
         }
 
-        var dataService = DependencyService.Get<IDataService>();
+        var dataService = Services.GetRequiredService<IDataService>();
         var trackDataService = dataService.GetTrackDataService();
 
         await trackDataService.Add(track);
 
         if (track.IsLiveTrack)
         {
-            var liveWaypointRefreshService = DependencyService.Get<LiveDataRefreshService>();
+            var liveWaypointRefreshService = Services.GetRequiredService<LiveDataRefreshService>();
             liveWaypointRefreshService.AddLiveTrack(track);
         }
 
-        var appMapService = DependencyService.Get<IAppMapService>();
+        var appMapService = Services.GetRequiredService<IAppMapService>();
         await appMapService.AddTrack(track);
         appMapService.MapView.ZoomToTrack(track);
 
@@ -416,7 +423,7 @@ public static class OpenFileHelper
 
             await App.InitializedTask;
 
-            var appMapService = DependencyService.Get<IAppMapService>();
+            var appMapService = Services.GetRequiredService<IAppMapService>();
 
             double[]? trackPointHeights =
                 await Task.Run(
@@ -660,12 +667,12 @@ public static class OpenFileHelper
             return;
         }
 
-        var dataService = DependencyService.Get<IDataService>();
+        var dataService = Services.GetRequiredService<IDataService>();
         var layerDataService = dataService.GetLayerDataService();
 
         await layerDataService.Add(layer);
 
-        var appMapService = DependencyService.Get<IAppMapService>();
+        var appMapService = Services.GetRequiredService<IAppMapService>();
         await appMapService.ShowFlightPlanningDisclaimer();
 
         await UserInterface.NavigationService.GoToMap();

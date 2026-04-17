@@ -29,7 +29,6 @@ public partial class App : Application
     /// <summary>
     /// Task that can be awaited to wait for a completed app initialisation. The task performs
     /// the following:
-    /// - sets up dependency service objects
     /// - sets up main page and map page
     /// - loads app data
     /// - initializes live waypoint refresh service
@@ -77,8 +76,6 @@ public partial class App : Application
 
         this.InitializeComponent();
 
-        SetupDepencencyService();
-
         App.InitializedTask = Task.Run(this.LoadAppDataAsync);
 
         this.RequestedThemeChanged += this.OnRequestedThemeChanged;
@@ -122,19 +119,6 @@ public partial class App : Application
             var userInterface = Services.GetRequiredService<IUserInterface>();
             userInterface.UserAppTheme = Settings.AppTheme;
         }
-    }
-
-    /// <summary>
-    /// Sets up DependencyService
-    /// </summary>
-    private static void SetupDepencencyService()
-    {
-        DependencyService.RegisterSingleton(Services.GetRequiredService<IUserInterface>());
-        DependencyService.RegisterSingleton(Services.GetRequiredService<IAppMapService>());
-        DependencyService.RegisterSingleton(Services.GetRequiredService<INavigationService>());
-        DependencyService.RegisterSingleton(Services.GetRequiredService<IDataService>());
-        DependencyService.RegisterSingleton(Services.GetRequiredService<IGeolocationService>());
-        DependencyService.RegisterSingleton(Services.GetRequiredService<LiveDataRefreshService>());
     }
 
     /// <summary>

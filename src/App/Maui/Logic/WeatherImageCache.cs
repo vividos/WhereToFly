@@ -85,7 +85,11 @@ public static class WeatherImageCache
             webLink = webLink.Substring(0, pos);
         }
 
-        var dataService = DependencyService.Get<IDataService>();
+        IServiceProvider services =
+            IPlatformApplication.Current?.Services
+            ?? throw new InvalidOperationException("IServiceProvider is not available");
+
+        var dataService = services.GetRequiredService<IDataService>();
 
         return await dataService.GetFaviconUrlAsync(webLink);
     }
