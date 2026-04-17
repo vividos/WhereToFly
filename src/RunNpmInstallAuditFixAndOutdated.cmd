@@ -1,11 +1,11 @@
 @echo off
 REM
 REM Where-to-fly - an app to decide where to (hike up and) fly with a paraglider
-REM Copyright (C) 2017-2025 Michael Fink
+REM Copyright (C) 2017-2026 Michael Fink
 REM
-REM Runs "npm install" and then "npm outdated" on npm projects
+REM Runs "npm install", "npm audit fix" and then "npm outdated" on npm projects
 REM
-echo RunNpmInstallAndOutdated.cmd - Runs npm install and outdated
+echo RunNpmInstallAndOutdated.cmd - Runs npm install, audit fix and outdated
 echo.
 
 set PROJECTS=^
@@ -17,6 +17,7 @@ for %%P in (%PROJECTS%) do (
    echo Project %%P...
    pushd %%P
    cmd /c npm install
+   cmd /c npm audit fix
    cmd /c npm outdated
    popd
    echo.
