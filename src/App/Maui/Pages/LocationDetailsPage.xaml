@@ -37,13 +37,55 @@
 
     <ContentPage.Content>
 
-        <ScrollView Orientation="Vertical">
+        <ScrollView Orientation="Vertical"
+                HorizontalOptions="Fill">
 
-            <!-- grid with location details grid and details web view -->
-            <Grid RowDefinitions="Auto, 1*">
+            <!-- Grid with location name, details grid and details web view -->
+            <Grid RowDefinitions="Auto, Auto, 1*"
+                  Padding="8">
+
+                <!-- Grid with location type and name -->
+                <Grid
+                    Grid.Row="0"
+                    ColumnDefinitions="Auto, Auto, 1*"
+                    HorizontalOptions="Center"
+                    ColumnSpacing="8">
+
+                    <!-- Type image -->
+                    <controls:TintedImage
+                        Source="{Binding TypeImageSource}"
+                        Grid.Column="0"
+                        WidthRequest="64"
+                        HeightRequest="64"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Center" />
+
+                    <!-- Takeoff directions -->
+                    <controls:TakeoffDirectionsView
+                        Grid.Column="1"
+                        IsVisible="{Binding IsTakeoffDirectionsVisible}"
+                        WidthRequest="64" HeightRequest="64"
+                        HorizontalOptions="Start" VerticalOptions="Center"
+                        Source="{Binding TakeoffDirections}"
+                        IsReadOnly="True"
+                        BackgroundColor="Transparent"
+                        ShowLabels="True"
+                        Style="{StaticResource TakeoffDirectionsStyle}" />
+
+                    <!-- Name -->
+                    <Label
+                        Grid.Column="2"
+                        Text="{Binding Name}"
+                        FontSize="Large"
+                        FontAttributes="Bold"
+                        LineBreakMode="WordWrap"
+                        MaxLines="3"
+                        VerticalTextAlignment="Center"
+                        VerticalOptions="Center" />
+                </Grid>
 
                 <!-- Grid with all location details -->
-                <Grid Grid.Row="0"
+                <Grid Grid.Row="1"
                       WidthRequest="350"
                       MinimumWidthRequest="350"
                       VerticalOptions="Start"
@@ -53,33 +95,6 @@
                       RowSpacing="16"
                       RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto"
                       ColumnDefinitions="1*,1*">
-
-                    <HorizontalStackLayout Grid.Row="0"
-                                           Grid.Column="0"
-                                           Grid.ColumnSpan="2">
-
-                        <!-- Type image -->
-                        <controls:TintedImage Source="{Binding TypeImageSource}"
-                                              WidthRequest="64" HeightRequest="64"
-                                              HorizontalOptions="Start" VerticalOptions="Center" />
-
-                        <!-- Takeoff directions -->
-                        <controls:TakeoffDirectionsView
-                            IsVisible="{Binding IsTakeoffDirectionsVisible}"
-                            WidthRequest="64" HeightRequest="64"
-                            HorizontalOptions="Start" VerticalOptions="Center"
-                            Source="{Binding TakeoffDirections}"
-                            IsReadOnly="True"
-                            BackgroundColor="Transparent"
-                            ShowLabels="True"
-                            Style="{StaticResource TakeoffDirectionsStyle}" />
-
-                        <!-- Name -->
-                        <Label Text="{Binding Name}"
-                               FontSize="Large"
-                               FontAttributes="Bold"
-                               VerticalOptions="Center" />
-                    </HorizontalStackLayout>
 
                     <!-- Type -->
                     <Label Grid.Row="1" Grid.Column="0" Text="Type" />
@@ -113,7 +128,7 @@
                 </Grid>
 
                 <!-- Description web view -->
-                <WebView Grid.Row="1"
+                <WebView Grid.Row="2"
                          HorizontalOptions="Center"
                          VerticalOptions="Fill"
                          HeightRequest="200"

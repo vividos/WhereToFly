@@ -13,36 +13,37 @@
     <ScrollView Orientation="Vertical"
                 HorizontalOptions="Fill">
 
-        <!-- Grid with all track details -->
-        <Grid MaximumWidthRequest="600"
-              HorizontalOptions="Center"
-              Padding="8"
-              RowDefinitions="Auto, Auto, Auto, Auto, Auto"
-              ColumnDefinitions="1*, 1*"
-              ColumnSpacing="16"
-              RowSpacing="16">
+        <!-- Grid with track name, details grid, height profile view and details web view -->
+        <Grid RowDefinitions="Auto, Auto, Auto, 1*"
+              Padding="8">
 
-            <HorizontalStackLayout Grid.Row="0"
-                                   Grid.ColumnSpan="2"
-                                   HorizontalOptions="Fill"
-                                   Spacing="8">
+            <!-- Grid with track type, color and name -->
+            <Grid
+                Grid.Row="0"
+                ColumnDefinitions="Auto, Auto, 1*"
+                HorizontalOptions="Center"
+                ColumnSpacing="8">
 
                 <!-- Type image -->
-                <controls:TintedImage Source="{Binding TypeImageSource}"
-                                      WidthRequest="64"
-                                      HeightRequest="64"
-                                      HorizontalOptions="Start"
-                                      VerticalOptions="Center" />
+                <controls:TintedImage
+                    Source="{Binding TypeImageSource}"
+                    Grid.Column="0"
+                    WidthRequest="64"
+                    HeightRequest="64"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center" />
 
                 <!-- Track color box -->
-                <Border IsVisible="{Binding IsColorBoxVisible}"
-                        BackgroundColor="{Binding TrackColor}"
-                        WidthRequest="32"
-                        HeightRequest="32"
-                        VerticalOptions="Center"
-                        Margin="5"
-                        Stroke="White"
-                        StrokeShape="RoundRectangle 3">
+                <Border
+                    Grid.Column="1"
+                    IsVisible="{Binding IsColorBoxVisible}"
+                    BackgroundColor="{Binding TrackColor}"
+                    WidthRequest="32"
+                    HeightRequest="32"
+                    VerticalOptions="Center"
+                    Margin="5"
+                    Stroke="White"
+                    StrokeShape="RoundRectangle 3">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ColorBoxTappedCommand}"
                                               NumberOfTapsRequired="1" />
@@ -50,39 +51,54 @@
                 </Border>
 
                 <!-- Name -->
-                <Label Text="{Binding Name}"
-                       FontSize="Large"
-                       FontAttributes="Bold"
-                       LineBreakMode="WordWrap"
-                       MaxLines="2"
-                       HorizontalOptions="Fill"
-                       VerticalOptions="Center">
+                <Label
+                    Grid.Column="2"
+                    Text="{Binding Name}"
+                    FontSize="Large"
+                    FontAttributes="Bold"
+                    LineBreakMode="WordWrap"
+                    MaxLines="3"
+                    VerticalTextAlignment="Center"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Center">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding TrackNameTappedCommand}"
                                               NumberOfTapsRequired="1" />
                     </Label.GestureRecognizers>
                 </Label>
-            </HorizontalStackLayout>
+            </Grid>
 
-            <!-- Distance -->
-            <Label Grid.Row="1" Grid.Column="0"
-                   Text="Distance" />
-            <Label Grid.Row="1" Grid.Column="1"
-                   Text="{Binding Distance}" />
+            <!-- Grid with all track details -->
+            <Grid Grid.Row="1"
+                  MaximumWidthRequest="600"
+                  HorizontalOptions="Center"
+                  Padding="8"
+                  RowDefinitions="Auto, Auto, Auto, Auto, Auto"
+                  ColumnDefinitions="1*, 1*"
+                  ColumnSpacing="16"
+                  RowSpacing="16">
 
-            <!-- Duration -->
-            <Label Grid.Row="2" Grid.Column="0"
-                   Text="Duration" />
-            <Label Grid.Row="2" Grid.Column="1"
-                   Text="{Binding Duration}" />
+                <!-- Distance -->
+                <Label Grid.Row="1" Grid.Column="0"
+                       Text="Distance" />
+                <Label Grid.Row="1" Grid.Column="1"
+                       Text="{Binding Distance}" />
+
+                <!-- Duration -->
+                <Label Grid.Row="2" Grid.Column="0"
+                       Text="Duration" />
+                <Label Grid.Row="2" Grid.Column="1"
+                       Text="{Binding Duration}" />
+            </Grid>
 
             <!-- Height profile -->
-            <mapview:HeightProfileView Track="{Binding Track}"
-                                       UseDarkTheme="{Binding UseDarkTheme, Mode=OneTime}"
-                                       Grid.Row="3" Grid.ColumnSpan="2"
-                                       HeightRequest="300"
-                                       HorizontalOptions="Fill"
-                                       VerticalOptions="Start">
+            <mapview:HeightProfileView
+                Track="{Binding Track}"
+                UseDarkTheme="{Binding UseDarkTheme, Mode=OneTime}"
+                Grid.Row="2"
+                HeightRequest="300"
+                HorizontalOptions="Fill"
+                VerticalOptions="Start">
                 <mapview:HeightProfileView.Behaviors>
                     <toolkit:TouchBehavior CurrentTouchStatusChanged="OnTouchStatusChanged" />
                 </mapview:HeightProfileView.Behaviors>
@@ -91,8 +107,7 @@
             <!-- Track description web view -->
             <WebView HorizontalOptions="Center"
                      VerticalOptions="Fill"
-                     Grid.Row="4" Grid.ColumnSpan="2"
-                     WidthRequest="600"
+                     Grid.Row="2"
                      HeightRequest="200"
                      Source="{Binding DescriptionWebViewSource}">
                 <WebView.Behaviors>
