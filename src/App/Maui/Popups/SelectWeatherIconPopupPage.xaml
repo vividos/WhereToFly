@@ -48,34 +48,41 @@
             </CollectionView.GroupHeaderTemplate>
 
             <CollectionView.ItemTemplate>
-                <!-- Template for a single view cell -->
+                <!-- Template for a single item -->
                 <DataTemplate x:DataType="viewmodels:WeatherIconListEntryViewModel">
-                    <HorizontalStackLayout Style="{StaticResource ListViewItemStyle}"
-                                           HeightRequest="45"
-                                           Padding="2,1">
-                        <HorizontalStackLayout.GestureRecognizers>
-                            <TapGestureRecognizer NumberOfTapsRequired="1"
-                                                  Command="{Binding ItemTappedCommand}"
-                                                  CommandParameter="{Binding .}" />
-                        </HorizontalStackLayout.GestureRecognizers>
+                    <Grid HeightRequest="45">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer
+                                NumberOfTapsRequired="1"
+                                Command="{Binding ItemTappedCommand}"
+                                CommandParameter="{Binding .}" />
+                        </Grid.GestureRecognizers>
 
-                        <!-- Weather icon -->
-                        <Image Source="{Binding Icon}"
-                               WidthRequest="32"
-                               HeightRequest="32"
-                               Margin="4"
-                               HorizontalOptions="Start"
-                               VerticalOptions="Center" />
+                        <Border Style="{StaticResource ListViewItemBorderStyle}" Padding="0">
+                            <Grid Style="{StaticResource ListViewItemStyle}"
+                                  Padding="8,4"
+                                  ColumnDefinitions="Auto, 1*"
+                                  ColumnSpacing="4">
 
-                        <!-- Title -->
-                        <Label Text="{Binding Title}"
-                               Style="{StaticResource ListItemTextStyle}"
-                               FontSize="Medium"
-                               LineBreakMode="TailTruncation"
-                               HorizontalOptions="Fill"
-                               VerticalOptions="Center" />
+                                <!-- Weather icon -->
+                                <Image Source="{Binding Icon}"
+                                       WidthRequest="32"
+                                       HeightRequest="32"
+                                       HorizontalOptions="Start"
+                                       VerticalOptions="Center" />
 
-                    </HorizontalStackLayout>
+                                <!-- Title -->
+                                <Label Grid.Column="1"
+                                       Text="{Binding Title}"
+                                       Style="{StaticResource ListItemTextStyle}"
+                                       FontSize="Medium"
+                                       LineBreakMode="TailTruncation"
+                                       HorizontalOptions="Fill"
+                                       VerticalOptions="Center" />
+
+                            </Grid>
+                        </Border>
+                    </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
