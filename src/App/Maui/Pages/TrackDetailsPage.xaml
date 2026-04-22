@@ -105,11 +105,11 @@
             </mapview:HeightProfileView>
 
             <!-- Track description web view -->
-            <WebView HorizontalOptions="Center"
-                     VerticalOptions="Fill"
+            <WebView Source="{Binding DescriptionWebViewSource}"
                      Grid.Row="2"
-                     HeightRequest="200"
-                     Source="{Binding DescriptionWebViewSource}">
+                     HorizontalOptions="Fill"
+                     VerticalOptions="Start"
+                     HeightRequest="200">
                 <WebView.Behaviors>
                     <behaviors:AutoResizeWebViewBehavior />
                     <behaviors:OpenLinkExternalBrowserWebViewBehavior />

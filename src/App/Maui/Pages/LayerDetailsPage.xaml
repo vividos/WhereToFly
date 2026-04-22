@@ -74,8 +74,8 @@
                 <!-- Description web view -->
                 <WebView Source="{Binding DescriptionWebViewSource}"
                          Grid.Row="1"
-                         HorizontalOptions="Center"
-                         VerticalOptions="Fill"
+                         HorizontalOptions="Fill"
+                         VerticalOptions="Start"
                          HeightRequest="200">
                     <WebView.Behaviors>
                         <behaviors:AutoResizeWebViewBehavior />

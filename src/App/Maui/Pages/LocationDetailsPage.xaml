@@ -37,8 +37,9 @@
 
     <ContentPage.Content>
 
-        <ScrollView Orientation="Vertical"
-                HorizontalOptions="Fill">
+        <ScrollView
+            Orientation="Vertical"
+            HorizontalOptions="Fill">
 
             <!-- Grid with location name, details grid and details web view -->
             <Grid RowDefinitions="Auto, Auto, 1*"
@@ -128,11 +129,11 @@
                 </Grid>
 
                 <!-- Description web view -->
-                <WebView Grid.Row="2"
-                         HorizontalOptions="Center"
-                         VerticalOptions="Fill"
-                         HeightRequest="200"
-                         Source="{Binding DescriptionWebViewSource}">
+                <WebView Source="{Binding DescriptionWebViewSource}"
+                         Grid.Row="2"
+                         HorizontalOptions="Fill"
+                         VerticalOptions="Start"
+                         HeightRequest="200">
                     <WebView.Behaviors>
                         <behaviors:AutoResizeWebViewBehavior />
                         <behaviors:OpenLinkExternalBrowserWebViewBehavior />
