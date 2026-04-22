@@ -22,7 +22,7 @@
                           Grid.Row="0"
                           Loop="False"
                           IndicatorView="indicatorView"
-                          PeekAreaInsets="10"
+                          PeekAreaInsets="0"
                           HorizontalOptions="Start"
                           ItemsUpdatingScrollMode="KeepItemsInView"
                           Style="{StaticResource ManualCarouselStyle}">
@@ -30,7 +30,7 @@
                 <!-- Stop on full carousel items -->
                 <CarouselView.ItemsLayout>
                     <LinearItemsLayout Orientation="Horizontal"
-                                       ItemSpacing="10"
+                                       ItemSpacing="0"
                                        SnapPointsAlignment="Start"
                                        SnapPointsType="MandatorySingle" />
                 </CarouselView.ItemsLayout>
@@ -39,21 +39,25 @@
                     <DataTemplate x:DataType="viewmodels:InfoPageViewModel+InfoPageEntryViewModel">
 
                         <!-- Header image and a webview, both scrollable -->
-                        <ScrollView VerticalOptions="Fill" Margin="0,10,0,0">
-                            <Grid Padding="0,0,0,10" RowDefinitions="Auto,*">
-                                <Image Source="{Binding Image}"
-                                       Grid.Row="0" />
-                                <WebView HorizontalOptions="Start"
-                                         VerticalOptions="Start"
-                                         HeightRequest="20"
-                                         Source="{Binding WebViewSource}"
-                                         Grid.Row="1">
-                                    <WebView.Behaviors>
-                                        <behaviors:AutoResizeWebViewBehavior />
-                                        <behaviors:OpenLinkExternalBrowserWebViewBehavior />
-                                    </WebView.Behaviors>
-                                </WebView>
-                            </Grid>
+                        <ScrollView VerticalOptions="Fill" Margin="10">
+                            <Border StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 12">
+
+                                <Grid RowDefinitions="Auto,*">
+                                    <Image Source="{Binding Image}"
+                                           Grid.Row="0" />
+                                    <WebView HorizontalOptions="Start"
+                                             VerticalOptions="Start"
+                                             HeightRequest="20"
+                                             Source="{Binding WebViewSource}"
+                                             Grid.Row="1">
+                                        <WebView.Behaviors>
+                                            <behaviors:AutoResizeWebViewBehavior />
+                                            <behaviors:OpenLinkExternalBrowserWebViewBehavior />
+                                        </WebView.Behaviors>
+                                    </WebView>
+                                </Grid>
+                            </Border>
                         </ScrollView>
                     </DataTemplate>
 
