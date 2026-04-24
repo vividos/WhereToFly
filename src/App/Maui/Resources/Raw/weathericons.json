@@ -70,6 +70,13 @@
     "WebLink": "https://paraglidable.com/?lat=47.036&lon=11.805&zoom=8"
   },
   {
+    "Name": "Breezedude Thermikprognose",
+    "Group": "Weather forecast",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://breezedude.de/?lat=47.2643&lon=11.8421&z=8.0"
+  },
+  {
     "Name": "Meteo.guru (Velivole.fr)",
     "Group": "Weather forecast",
     "Type": 0,
@@ -119,11 +126,11 @@
     "WebLink": "https://forecast.uoa.gr/en/forecast-maps/dust/europe"
   },
   {
-    "Name": "ZAMG Saharastaub",
+    "Name": "GeoSphere.at Saharastaub",
     "Group": "Weather forecast",
     "Type": 0,
     "Icon": null,
-    "WebLink": "https://www.zamg.ac.at/cms/de/umwelt/luftqualitaetsvorhersagen/schadstofftransport/?imgtype=0"
+    "WebLink": "https://portale.geosphere.at/hpEUgw/index.php?p=HP_DUSTLOAD_EUmob&gl=EN"
   },
   {
     "Name": "NOAA Aurora 30 minutes forecast",
@@ -138,13 +145,6 @@
     "Type": 0,
     "Icon": null,
     "WebLink": "https://www.wetter3.de/vertikal.html"
-  },
-  {
-    "Name": "Wetterkarte ZAMG",
-    "Group": "Weather forecast",
-    "Type": 0,
-    "Icon": null,
-    "WebLink": "https://www.zamg.ac.at/cms/de/wetter/wetterkarte"
   },
   {
     "Name": "meteoblue Wetterkarte Alpen",
