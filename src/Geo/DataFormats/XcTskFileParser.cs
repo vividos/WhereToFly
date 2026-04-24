@@ -42,7 +42,7 @@ public class XcTskFileParser
     private readonly XcTskDocument document;
 
     /// <summary>
-    /// Description of task file, possibly in MarkDown format
+    /// Description of task file, in MarkDown format
     /// </summary>
     public string Description { get; set; } = string.Empty;
 
