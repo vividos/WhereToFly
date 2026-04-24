@@ -130,9 +130,9 @@ internal class UserInterface : IUserInterface
     /// <param name="newUserAppTheme">new user app theme to set</param>
     private static void SetUserAppTheme(AppTheme newUserAppTheme)
     {
-        if (!MainThread.IsMainThread)
+        if (App.Dispatcher.IsDispatchRequired)
         {
-            MainThread.BeginInvokeOnMainThread(
+            App.Dispatcher.Dispatch(
                 () => SetUserAppTheme(newUserAppTheme));
             return;
         }
