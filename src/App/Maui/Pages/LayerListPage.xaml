@@ -68,13 +68,12 @@
 
                             <Grid RowDefinitions="*"
                                   ColumnDefinitions="Auto, Auto, 1*, 40"
-                                  ColumnSpacing="2">
+                                  ColumnSpacing="4">
 
                                 <!-- Layer type image -->
                                 <controls:TintedImage Source="{Binding TypeImageSource}"
                                                       WidthRequest="32"
                                                       HeightRequest="32"
-                                                      Margin="4,0,0,0"
                                                       HorizontalOptions="Start"
                                                       VerticalOptions="Center"
                                                       Grid.Column="0" />
@@ -91,7 +90,6 @@
                                     <controls:TintedImage Source="{Binding VisibilityImageSource}"
                                                           WidthRequest="32"
                                                           HeightRequest="32"
-                                                          Margin="4,0"
                                                           HorizontalOptions="Start"
                                                           VerticalOptions="Center" />
                                 </ContentView>

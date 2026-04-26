@@ -123,7 +123,6 @@
                     <!-- Template for a single item -->
 
                     <Grid>
-
                         <Grid.HeightRequest>
                             <OnPlatform x:TypeArguments="x:Double">
                                 <On Platform="Android" Value="78" />
@@ -140,13 +139,13 @@
                         <Border Style="{StaticResource ListViewItemBorderStyle}">
 
                             <Grid RowDefinitions="Auto, Auto, Auto"
-                                  ColumnDefinitions="Auto, Auto, 1*, 40">
+                                  ColumnDefinitions="Auto, Auto, 1*, 40"
+                                      ColumnSpacing="4">
 
                                 <!-- Location type image -->
                                 <controls:TintedImage Source="{Binding TypeImageSource}"
                                                       WidthRequest="32"
                                                       HeightRequest="32"
-                                                      Margin="4"
                                                       HorizontalOptions="Start"
                                                       VerticalOptions="Center"
                                                       Grid.Column="0"
