@@ -47,8 +47,8 @@
     <Color x:Key="AccentColorDark">#6059d4</Color>
 
     <!-- Background colors -->
-    <Color x:Key="PageBackgroundColorLight">#F5F5F5</Color>
-    <Color x:Key="PageBackgroundColorDark">#202124</Color>
+    <Color x:Key="PageBackgroundColorLight">White</Color>
+    <Color x:Key="PageBackgroundColorDark">#1f1f1f</Color>
     <Color x:Key="PopupPageBackgroundColorLight">#F5F5F5</Color>
     <Color x:Key="PopupPageBackgroundColorDark">#606164</Color>
     <Color x:Key="MenuBackgroundColorLight">LightGray</Color>
