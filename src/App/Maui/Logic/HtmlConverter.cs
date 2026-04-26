@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using Markdig;
 
 namespace WhereToFly.App.Logic;
 
@@ -7,6 +8,14 @@ namespace WhereToFly.App.Logic;
 /// </summary>
 public static class HtmlConverter
 {
+    /// <summary>
+    /// Markdown pipeline to convert Markdown to HTML
+    /// </summary>
+    private static readonly MarkdownPipeline MarkdownPipeline =
+        new MarkdownPipelineBuilder()
+        .UsePipeTables()
+        .Build();
+
     /// <summary>
     /// Sanitizes any potentially dangerous tags from the provided raw HTML input using
     /// a whitelist based approach, leaving the "safe" HTML tags. See:
@@ -93,9 +102,12 @@ public static class HtmlConverter
     /// <param name="fontName">font name for whole text; may be null</param>
     /// <param name="fontSize">font size; used when font name is specified</param>
     /// <returns>HTML text</returns>
-    public static string FromMarkdown(string markdownText, string? fontName = "sans-serif", int fontSize = 14)
+    public static string FromMarkdown(
+        string markdownText,
+        string? fontName = "sans-serif",
+        int fontSize = 14)
     {
-        string htmlText = Markdig.Markdown.ToHtml(markdownText);
+        string htmlText = Markdown.ToHtml(markdownText, MarkdownPipeline);
 
         if (string.IsNullOrEmpty(fontName))
         {
@@ -112,7 +124,10 @@ public static class HtmlConverter
     /// <param name="fontName">font name for whole text; may be null</param>
     /// <param name="fontSize">font size; used when font name is specified</param>
     /// <returns>HTML text</returns>
-    public static string FromHtmlOrMarkdown(string markdownOrHtmlText, string fontName = "sans-serif", int fontSize = 14)
+    public static string FromHtmlOrMarkdown(
+        string markdownOrHtmlText,
+        string fontName = "sans-serif",
+        int fontSize = 14)
     {
         if (string.IsNullOrEmpty(markdownOrHtmlText))
         {
