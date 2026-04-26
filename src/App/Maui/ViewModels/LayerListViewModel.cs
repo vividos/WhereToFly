@@ -354,7 +354,7 @@ public class LayerListViewModel : ViewModelBase
                 FileTypes = new FilePickerFileType(
                     new Dictionary<DevicePlatform, IEnumerable<string>>
                     {
-                        { DevicePlatform.Android, new string[] { "text/plain" } },
+                        { DevicePlatform.Android, new string[] { } },
                         { DevicePlatform.WinUI, new string[] { ".xctsk" } },
                     }),
                 PickerTitle = "Select an XC Track task file (.xctsk) to import",
