@@ -98,7 +98,7 @@ public class NavigationService : INavigationService
     public static readonly PopupOptions DefaultPopupOptions =
         new PopupOptions
         {
-            PageOverlayColor = Colors.White.WithAlpha(0.5f),
+            PageOverlayColor = Colors.Gray.WithAlpha(0.5f),
             Shape = new RoundRectangle
             {
                 CornerRadius = new CornerRadius(8),
