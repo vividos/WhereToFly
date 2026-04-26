@@ -13,12 +13,12 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       with:
         fetch-depth: 0
 
     - name: Setup Node.js
-      uses: actions/setup-node@v5
+      uses: actions/setup-node@v6
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v5
@@ -57,7 +57,8 @@ jobs:
         -p:AndroidSigningKeyPass=${{ secrets.ANDROID_KEY_PASSWORD }}
 
     - name: Publish build artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
+
       with:
         name: APK file
         path: artifacts/publish/WhereToFly.App.Maui/release_net10.0-android/de.vividos.app.wheretofly.android-Signed.apk
