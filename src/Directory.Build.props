@@ -5,8 +5,8 @@
     <Company></Company>
     <NuGetPackagePrefix>Vividos</NuGetPackagePrefix>
     <DotNetVersion>net10.0</DotNetVersion>
-    <DotNetMauiVersion>10.0.50</DotNetMauiVersion>
-    <DotNetMicrosoftPackagesVersion>10.0.5</DotNetMicrosoftPackagesVersion>
+    <DotNetMauiVersion>10.0.51</DotNetMauiVersion>
+    <DotNetMicrosoftPackagesVersion>10.0.7</DotNetMicrosoftPackagesVersion>
   </PropertyGroup>
 
   <PropertyGroup>

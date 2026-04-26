@@ -93,10 +93,10 @@
 
   <!-- NuGet packages -->
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Maui" Version="14.0.1" />
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="CommunityToolkit.Maui" Version="14.1.0" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
     <PackageReference Include="HtmlAgilityPack" Version="1.12.4" />
-    <PackageReference Include="Markdig" Version="1.1.1" />
+    <PackageReference Include="Markdig" Version="1.1.3" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.7" GeneratePathProperty="true" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="$(DotNetMicrosoftPackagesVersion)" />
     <PackageReference Include="Microsoft.Maui.Controls" Version="$(DotNetMauiVersion)" />
