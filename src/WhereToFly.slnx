@@ -39,6 +39,15 @@
     <File Path="stylecop.json" />
     <File Path="version.json" />
   </Folder>
+  <Folder Name="/Solution Items/GitHub Action Workflows/">
+    <File Path="../.github/workflows/build-aot-test.yml" />
+    <File Path="../.github/workflows/build-app-android.yml" />
+    <File Path="../.github/workflows/build-app-windows.yml" />
+    <File Path="../.github/workflows/build-deploy-livetracking.yml" />
+    <File Path="../.github/workflows/build-deploy-web-app.yml" />
+    <File Path="../.github/workflows/build-deploy-webapi.yml" />
+    <File Path="../.github/workflows/run-sonarcloud-analysis.yml" />
+  </Folder>
   <Folder Name="/Web/">
     <Project Path="Web/App/Frontend/WhereToFly.Web.App.Frontend.esproj">
       <Build />
