@@ -8,10 +8,10 @@
                       x:Class="WhereToFly.App.Popups.AddTrackPopupPage"
                       x:TypeArguments="geo:Track"
                       x:DataType="viewmodels:AddTrackPopupViewModel"
-                      WidthRequest="360">
+                      WidthRequest="366">
 
     <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
-          RowSpacing="10"
+          RowSpacing="4"
           Padding="10">
 
         <!-- Caption -->
@@ -55,6 +55,7 @@
                FontSize="Medium"
                IsVisible="{Binding IsTrackOffsetPickerVisible}" />
         <HorizontalStackLayout Grid.Row="7"
+                               Spacing="8"
                                IsVisible="{Binding IsTrackOffsetPickerVisible}">
             <Entry Text="{Binding Path=TrackOffset}"
                    Keyboard="Numeric"
