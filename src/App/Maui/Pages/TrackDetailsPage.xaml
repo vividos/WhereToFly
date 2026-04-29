@@ -106,7 +106,7 @@
 
             <!-- Track description web view -->
             <WebView Source="{Binding DescriptionWebViewSource}"
-                     Grid.Row="2"
+                     Grid.Row="3"
                      HorizontalOptions="Fill"
                      VerticalOptions="Start"
                      HeightRequest="200">
