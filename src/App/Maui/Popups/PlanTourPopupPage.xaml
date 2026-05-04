@@ -46,38 +46,42 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="viewmodels:PlanTourListEntryViewModel">
                     <!-- Template for a single entry -->
-                    <Grid Style="{StaticResource ListViewItemStyle}"
-                          RowDefinitions="Auto, Auto"
-                          ColumnDefinitions="40, Auto"
-                          HeightRequest="90">
+                    <Grid HeightRequest="90">
+                        <Border Style="{StaticResource ListViewItemBorderStyle}" Padding="0">
 
-                        <!-- Type image -->
-                        <controls:TintedImage Source="{Binding TypeImageSource}"
-                                              WidthRequest="32"
-                                              HeightRequest="32"
-                                              Margin="4,4,0,0"
-                                              HorizontalOptions="Start" VerticalOptions="Center"
-                                              Grid.Row="0" Grid.Column="0" />
+                            <Grid Style="{StaticResource ListViewItemStyle}"
+                                  RowDefinitions="Auto, Auto"
+                                  ColumnDefinitions="40, Auto">
 
-                        <!-- Name -->
-                        <Label Text="{Binding Name}"
-                               Style="{StaticResource ListItemTextStyle}"
-                               FontSize="Medium"
-                               LineBreakMode="TailTruncation"
-                               HorizontalOptions="Fill"
-                               VerticalOptions="Center"
-                               Grid.Row="0" Grid.Column="1" />
+                                <!-- Type image -->
+                                <controls:TintedImage Source="{Binding TypeImageSource}"
+                                                      WidthRequest="32"
+                                                      HeightRequest="32"
+                                                      Margin="4,4,0,0"
+                                                      HorizontalOptions="Start" VerticalOptions="Center"
+                                                      Grid.Row="0" Grid.Column="0" />
 
-                        <!-- Up/down buttons -->
-                        <HorizontalStackLayout HorizontalOptions="Fill"
-                                               VerticalOptions="Center"
-                                               HeightRequest="40"
-                                               Spacing="4"
-                                               Grid.Row="1" Grid.Column="1">
-                            <Button Text="Up" WidthRequest="80" Command="{Binding MoveUpCommand}" />
-                            <Button Text="Down" WidthRequest="80" Command="{Binding MoveDownCommand}" />
-                            <Button Text="X" WidthRequest="60" Command="{Binding RemoveCommand}" />
-                        </HorizontalStackLayout>
+                                <!-- Name -->
+                                <Label Text="{Binding Name}"
+                                       Style="{StaticResource ListItemTextStyle}"
+                                       FontSize="Medium"
+                                       LineBreakMode="TailTruncation"
+                                       HorizontalOptions="Fill"
+                                       VerticalOptions="Center"
+                                       Grid.Row="0" Grid.Column="1" />
+
+                                <!-- Up/down buttons -->
+                                <HorizontalStackLayout HorizontalOptions="Fill"
+                                                       VerticalOptions="Center"
+                                                       HeightRequest="40"
+                                                       Spacing="4"
+                                                       Grid.Row="1" Grid.Column="1">
+                                    <Button Text="Up" WidthRequest="80" Command="{Binding MoveUpCommand}" />
+                                    <Button Text="Down" WidthRequest="80" Command="{Binding MoveDownCommand}" />
+                                    <Button Text="X" WidthRequest="60" Command="{Binding RemoveCommand}" />
+                                </HorizontalStackLayout>
+                            </Grid>
+                        </Border>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
