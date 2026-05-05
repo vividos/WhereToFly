@@ -37,6 +37,8 @@ have the following options:
   Sets location as new compass target
 - ![Navigate here](images/directions.svg) Navigate here: Starts the navigation
   app to show a route to this location
+- ![Plan tour](images/map-marker-plus.svg) Plan tour: Adds the location to tour
+  planning
 
 When the location displays a takeoff, the takeoff directions are shown using
 circle sectors:
@@ -58,6 +60,7 @@ pin is shown in the map at the current track point.
 
 There are several toolbar buttons above the track height profile:
 
+- ![Info](images/information-outline.svg) Info: Opens the track details page.
 - ![Zoom-and-pan](images/gesture-spread.svg) Zoom-and-pan: When active
   (white), you can zoom (with a pinch gesture) and pan (with a one-finger
   drag gesture) the height profile.
@@ -79,6 +82,11 @@ tapping on a layer object, details for the object are shown:
 
 ### Title bar icons
 
+![Title bar](images/app-titlebar.png)
+
+The ![Tour planning](images/map-marker-plus.svg) button is displayed as soon
+as one or more locations are selected for tour planning.
+
 The ![Find nearby POIs](images/magnify-scan.svg) button searches for new point
 of interests and adds it to the map temporarily. When zoomed far out, an area
 of maximum 2 degrees latitude and/or longitude are searched.
@@ -97,21 +105,49 @@ A long tap on the map shows the following menu:
 
 ![Long-tap menu](images/longtap-menu.png)
 
-- Add new waypoint: Adds a new waypoint location to the location list.
-- Set as compass target: Sets the selected point as new compass target.
-- Navigate here: Starts the navigation app to show a route to this point.
-- Show flying range: Shows a cone at the selected point that visualizes the
-  areas that can be reached with a given glide ratio. The following dialog
-  appears:
+- ![Add new waypoint](images/playlist-plus.svg) Add new waypoint: Adds a new
+  waypoint location to the location list.
+- ![Set as compass target](images/compass-rose.svg) Set as compass target:
+  Sets the selected point as new compass target.
+- ![Navigate here](images/directions.svg) Navigate here: Starts the navigation
+  app to show a route to this point.
+- ![Flying range](images/arrow-expand-horizontal.svg) Show flying range: Shows
+  a cone at the selected point that visualizes the areas that can be reached
+  with a given glide ratio.
+- ![Plan tour](images/map-marker-plus.svg) Plan tour: Shows a dialog for tour
+  planning with the currently added locations.
+  locations can be reviewed and tour planning can be started.
+- ![Find flights](images/text-box-search-outline.svg) Find flights: Opens the
+  xcontest worldwide flights search page at the selected map position.
+
+#### Flying range
+
+The following dialog appears when selecting the "Show flying range" menu entry
+in the long-tap menu:
 
 ![Flying range parameters](images/flying-range-menu.png)
 
 - Glide ratio: Determines how fast you sink; the glide ratio is given in km
   gliding per 1000m sinking.
+- Altitude offset: Specifies the offset above the selected map point, in
+  meters.
 
 A half-transparent blue cone appears on the selected point, showing the areas
 that are potentially reachable. The details of the cone shows infos about the
 flying range. A Hide button lets you hide the cone again.
+
+#### Tour planning
+
+The following dialog appears when selecting the "Tour planning" button in the
+title bar or the "Plan tour" menu entry in the long-tap menu:
+
+![Plan Tour](images/plan-tour.png)
+
+The dialog lets you reorder the order of the locations and tour planning can
+be started. A minimum of two locations is needed for tour planning.
+
+The tour planning uses a hiking profile to find paths and displays the planned
+route using a track line.
 
 ## ![Layers](images/layers-outline.svg) Layers
 
@@ -131,11 +167,16 @@ button. A menu is shown to select which kind of layer to import:
 - Import CZML Layer: Lets you import .czml files in the Cesium JSON format.
 - Import OpenAir airspaces: Lets you import airspaces in the OpenAir text
   format.
+- Import XC Track task: Lets you import .xctsk task files from XC Track and
+  displays all task turnpoints as cylinders.
+- Add OpenStreetMap Buildings Layer: Adds a layer displaying all buildings
+  from OpenStreetMap as 3D elements, with metadata.
 - Download from web: Lets you download files to import from the web.
 
-When selecting the first two items, a file picker is opened to select a file
-on the device. Allowed file types are CZML and OpenAir text files. The CZML
-format is a custom JSON based format from the Cesium project.
+When selecting the first three items, a file picker is opened to select a file
+on the device. Allowed file types are CZML, OpenAir text files and XC Track
+track files. The CZML format is a custom JSON based format from the Cesium
+project.
 
 The ![Delete all](images/delete-forever.svg) button removes all layers
 (except the two default layers "Locations" and "Tracks", which can't be
@@ -158,7 +199,7 @@ is empty. Tapping on an entry shows the details of that location (see below).
 To the right of the filter entry line is the takeoff directions selection
 icon. Tapping the icon opens a pop-up dialog that lets you select takeoff
 directions that should be used to filter the location list entries. Note that
-the app tries to recognize the start directions from the location title or
+the app tries to recognize the takeoff directions from the location title or
 description text at import.
 
 ![Takeoff directions filter](images/takeoff-directions.png)
@@ -187,15 +228,17 @@ imported.
 The ![Remove all locations](images/delete-forever.svg) button removes all
 locations in the list.
 
-When long-tapping a single location entry, a context menu appears with the
-following menu entries:
+When long-tapping a single location entry or using the three dots in each
+entry, a context menu appears with the following menu entries:
 
-- ![Show Detaails](images/information-outline.svg) Shows details for the selected
+- ![Show Details](images/information-outline.svg) Shows details for the selected
   location
 - ![Zoom to](images/magnify-plus-outline.svg) Zooms to the location on the map
 - ![Set as compass target](images/compass-rose.svg) Sets location as new
   compass target
 - ![Delete](images/delete.svg) Deletes the selected location
+- ![Add tour plan location](images/map-marker-plus.svg) Adds the location to
+  tour planning
 
 ### Location details
 
@@ -207,13 +250,21 @@ Distance field contains the current distance to the location.
 
 The following title bar icons are available:
 
-- ![Zoom to](images/magnify-plus-outline.svg) Zooms to the location on the map
-- ![Set as compass target](images/compass-rose.svg) Sets location as new
-  compass target
-- ![Navigate](images/directions.svg) Starts the navigation app to
-  show a route to this location
-- ![Share](images/share-variant.svg) Shares the location with other apps
-- ![Delete](images/delete.svg) Deletes the location
+- ![Zoom to](images/magnify-plus-outline.svg) Zoom to: Zooms to the location
+  on the map.
+- ![Set as compass target](images/compass-rose.svg) Set as compass target:
+  Sets location as new compass target.
+- ![Navigate](images/directions.svg) Navigate: Starts the navigation app to
+  show a route to this location.
+- ![Share](images/share-variant.svg) Share: Shares the location with other
+  apps.
+- ![Delete](images/delete.svg) Delete: Deletes the location.
+
+In the options menu (the three dots in the title bar) you find the following
+item:
+
+- ![Add tour plan location](images/map-marker-plus.svg) Add tour plan
+  location: Adds the location to tour planning.
 
 ### Live waypoints
 
@@ -266,13 +317,15 @@ Tracks can also be added when opening supported file types using the app
 The ![Remove all tracks](images/delete-forever.svg) button removes all
 tracks in the list.
 
-When long-tapping a single track entry, a context menu appears with the
-following menu entries:
+When long-tapping a single track entry or using the three dots in each entry,
+a context menu appears with the following menu entries:
 
-- ![Info](images/information-outline.svg) Shows details for the selected
-  track.
-- ![Zoom to](images/magnify-plus-outline.svg) Zooms to the track on the map.
-- ![Delete](images/delete.svg) Deletes the selected track.
+- ![Show Details](images/information-outline.svg) Show Details: Shows details
+  for the selected track.
+- ![Zoom to](images/magnify-plus-outline.svg) Zoom to: Zooms to the track on
+  the map.
+- ![Export](images/export-variant.svg) Export: Exports the track to a GPX file.
+- ![Delete](images/delete.svg) Delete: Deletes the selected track.
 
 ### Track infos
 
@@ -335,7 +388,7 @@ appears at the bottom of the screen:
 The toolbar lets you adjust the time offset of the currently displayed live
 track point. Naturally, live track data is transferred with a delay, so the
 current position can only be displayed in the past. The time offset slider
-sets the difference. The ![Zoom to](images/timeline-clock-outline.svg) button
+sets the difference. The ![Reset](images/timeline-clock-outline.svg) button
 resets the time offset to -3 minutes.
 
 ## ![Current position](images/compass.svg) Current position
@@ -360,11 +413,11 @@ The position data can be shared with other apps using the
 ![Compass](images/compass.png)
 
 The compass tab page shows a compass with the cardinal directions, and when
-the current position is available, the sunrise and sunset. As soon as a
-location or position on the map is selected as "compass target", the compass
-also shows the direction to this position. Below, the magnetic and true-north
-heading is displayed, as well as distance and height difference to the
-selected compass target.
+the current position is available, the sunrise and sunset directions. As soon
+as a location or position on the map is selected as "compass target", the
+compass also shows the direction to this position. Below, the magnetic and
+true-north heading is displayed, as well as distance and height difference to
+the selected compass target.
 
 The following title bar buttons are available:
 
@@ -374,6 +427,9 @@ The following title bar buttons are available:
   The following dialog appears to select the compass target direction:
 
 ![Set compass direction dialog](images/compass-direction.png)
+
+- ![Clear compass target](images/close.svg) Clear compass target:
+  Clears the currently set compass direction.
 
 ## ![Weather](images/weather-partly-cloudy.svg) Weather
 
@@ -466,6 +522,9 @@ The Map tab has several settings:
   * Contour lines: Displays contour lines with a distance of 100 meters.
   * Slope + contour lines: Displays contour lines and additionally colors the
     ground based on the slope.
+  * Terrain slope direction: Displays the direction of the terrain slope,
+    useful to determine possible takeoff directions. A color legend is
+    displayed as long as the map overlay is active.
   * NASA Black Marble 2017: Displays the night imagery from NASA.
   * Waymarked Trails Hiking: Displays an overlay with marked hiking trails
     from [waymarkedtrails.org](https://waymarkedtrails.org/).
