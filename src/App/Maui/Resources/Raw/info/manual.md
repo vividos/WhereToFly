@@ -143,8 +143,8 @@ title bar or the "Plan tour" menu entry in the long-tap menu:
 
 ![Plan Tour](images/plan-tour.png)
 
-The dialog lets you reorder the order of the locations and tour planning can
-be started. A minimum of two locations is needed for tour planning.
+The dialog lets you reorder the locations and tour planning can be started.
+A minimum of two locations is needed for tour planning.
 
 The tour planning uses a hiking profile to find paths and displays the planned
 route using a track line.
