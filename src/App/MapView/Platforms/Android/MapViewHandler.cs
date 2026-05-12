@@ -19,7 +19,7 @@ internal partial class MapViewHandler :
     {
         base.ConnectHandler(platformView);
 
-        this.SetupWebViewSettings(platformView, this.VirtualView);
+        SetupWebViewSettings(platformView, this.VirtualView);
     }
 
     /// <summary>
@@ -40,7 +40,7 @@ internal partial class MapViewHandler :
     /// </summary>
     /// <param name="platformView">Android WebView</param>
     /// <param name="virtualView">Maui WebView</param>
-    private void SetupWebViewSettings(
+    private static void SetupWebViewSettings(
         Android.Webkit.WebView platformView,
         IWebView virtualView)
     {

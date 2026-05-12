@@ -565,7 +565,7 @@ internal class MapPageViewModel : ViewModelBase
                 break;
 
             case MapLongTapContextMenu.Result.FindFlights:
-                await this.FindFlights(point);
+                await FindFlights(point);
                 break;
 
             case MapLongTapContextMenu.Result.Cancel:
@@ -905,7 +905,7 @@ internal class MapPageViewModel : ViewModelBase
     /// </summary>
     /// <param name="point">map point</param>
     /// <returns>task to wait on</returns>
-    internal async Task FindFlights(MapPoint point)
+    internal static async Task FindFlights(MapPoint point)
     {
         string latitudeText = point.Latitude.ToString("F6", CultureInfo.InvariantCulture);
         string longitudeText = point.Longitude.ToString("F6", CultureInfo.InvariantCulture);

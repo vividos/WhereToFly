@@ -7,7 +7,7 @@ namespace WhereToFly.App.ViewModels;
 /// <summary>
 /// View model for a single track list entry
 /// </summary>
-public class TrackListEntryViewModel
+public class TrackListEntryViewModel : ViewModelBase
 {
     /// <summary>
     /// Parent view model
@@ -136,7 +136,9 @@ public class TrackListEntryViewModel
     /// <returns>task to wait on</returns>
     private async Task OnExportTrackAsync()
     {
-        await this.parentViewModel.ExportTrack(this.track);
+        await ExportFileHelper.ExportTrackAsync(
+            this.track,
+            UserInterface);
     }
 
     /// <summary>

@@ -73,7 +73,7 @@ public class AndroidAppManager : IAppManager
     /// <returns>image data bytes, or null when no image could be retrieved</returns>
     public byte[]? GetAppIcon(string packageName)
     {
-        var stream = this.LoadAppIcon(packageName);
+        var stream = LoadAppIcon(packageName);
         return stream?.ToArray();
     }
 
@@ -82,7 +82,7 @@ public class AndroidAppManager : IAppManager
     /// </summary>
     /// <param name="packageName">package name of app icon to load</param>
     /// <returns>stream containing a PNG image, or null when no bitmap could be loaded</returns>
-    private MemoryStream? LoadAppIcon(string packageName)
+    private static MemoryStream? LoadAppIcon(string packageName)
     {
         Drawable? drawable = null;
         try

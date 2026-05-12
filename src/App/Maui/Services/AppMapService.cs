@@ -34,7 +34,7 @@ internal class AppMapService : IAppMapService
     /// Application settings; this is always available, since AppMapService is created after
     /// loading app settings
     /// </summary>
-    private AppSettings Settings => App.Settings!;
+    private static AppSettings Settings => App.Settings!;
 
     /// <summary>
     /// The one and only map page (displaying the map using CesiumJS)
@@ -107,21 +107,21 @@ internal class AppMapService : IAppMapService
     /// <returns>task to wait on</returns>
     public async Task UpdateLastShownPosition(MapPoint point, int? viewingDistance = null)
     {
-        if (this.Settings == null)
+        if (Settings == null)
         {
             return; // app settings not loaded yet
         }
 
         if (point.Valid)
         {
-            this.Settings.LastShownPosition = point;
+            Settings.LastShownPosition = point;
 
             if (viewingDistance.HasValue)
             {
-                this.Settings.LastViewingDistance = viewingDistance.Value;
+                Settings.LastViewingDistance = viewingDistance.Value;
             }
 
-            await this.dataService.StoreAppSettingsAsync(this.Settings);
+            await this.dataService.StoreAppSettingsAsync(Settings);
         }
     }
 
@@ -132,14 +132,14 @@ internal class AppMapService : IAppMapService
     /// <returns>task to wait on</returns>
     public async Task SetCompassTarget(CompassTarget? compassTarget)
     {
-        if (this.Settings == null)
+        if (Settings == null)
         {
             return; // app settings not loaded yet
         }
 
-        this.Settings.CurrentCompassTarget = compassTarget;
+        Settings.CurrentCompassTarget = compassTarget;
 
-        await this.dataService.StoreAppSettingsAsync(this.Settings);
+        await this.dataService.StoreAppSettingsAsync(Settings);
 
         if (compassTarget == null)
         {

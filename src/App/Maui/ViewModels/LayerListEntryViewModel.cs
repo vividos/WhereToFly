@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using WhereToFly.App.Abstractions;
+using WhereToFly.App.Logic;
 using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.ViewModels;
@@ -168,7 +169,10 @@ public class LayerListEntryViewModel : ViewModelBase
     /// <returns>task to wait on</returns>
     private async Task OnExportLayerAsync()
     {
-        await this.parentViewModel.ExportLayer(this.Layer);
+        await ExportFileHelper.ExportLayerAsync(
+            this.Layer,
+            Services.GetRequiredService<IAppMapService>(),
+            UserInterface);
     }
 
     /// <summary>

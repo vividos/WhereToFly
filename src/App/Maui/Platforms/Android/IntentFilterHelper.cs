@@ -109,7 +109,7 @@ internal class IntentFilterHelper
                     return this.resolver?.OpenInputStream(data);
 
                 case "https":
-                    return this.GetStreamFromInternetLink(data.ToString());
+                    return GetStreamFromInternetLink(data.ToString());
 
                 default:
                     System.Diagnostics.Debug.Assert(false, "invalid scheme");
@@ -125,7 +125,7 @@ internal class IntentFilterHelper
     /// </summary>
     /// <param name="url">internet link</param>
     /// <returns>stream object, or null when download is not possible</returns>
-    private Stream? GetStreamFromInternetLink(string? url)
+    private static Stream? GetStreamFromInternetLink(string? url)
     {
         if (url == null)
         {

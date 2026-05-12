@@ -291,16 +291,6 @@ public class LocationListViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Navigates to location info page, showing details about given location
-    /// </summary>
-    /// <param name="location">location to show</param>
-    /// <returns>task to wait on</returns>
-    internal async Task NavigateToLocationDetails(Location location)
-    {
-        await UserInterface.NavigationService.NavigateAsync(PageKey.LocationDetailsPage, true, location);
-    }
-
-    /// <summary>
     /// Returns to map view and zooms to the given location
     /// </summary>
     /// <param name="location">location to zoom to</param>

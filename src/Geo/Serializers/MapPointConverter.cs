@@ -25,7 +25,7 @@ public sealed class MapPointConverter : JsonConverter<MapPoint>
     {
         if (reader.TokenType == JsonTokenType.StartObject)
         {
-            return this.ReadLegacyJson(ref reader);
+            return ReadLegacyJson(ref reader);
         }
 
         int numberIndex = 0;
@@ -87,7 +87,7 @@ public sealed class MapPointConverter : JsonConverter<MapPoint>
     /// </summary>
     /// <param name="reader">json reader</param>
     /// <returns>created map point object, or null when reading failed</returns>
-    private MapPoint? ReadLegacyJson(ref Utf8JsonReader reader)
+    private static MapPoint? ReadLegacyJson(ref Utf8JsonReader reader)
     {
         var point = new MapPoint(0.0, 0.0);
         string? nextProperty = null;

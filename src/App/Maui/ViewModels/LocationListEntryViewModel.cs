@@ -154,7 +154,10 @@ public class LocationListEntryViewModel : ViewModelBase
     /// <returns>task to wait on</returns>
     private async Task OnShowDetailsLocation()
     {
-        await this.parentViewModel.NavigateToLocationDetails(this.location);
+        await UserInterface.NavigationService.NavigateAsync(
+            PageKey.LocationDetailsPage,
+            true,
+            this.location);
     }
 
     /// <summary>

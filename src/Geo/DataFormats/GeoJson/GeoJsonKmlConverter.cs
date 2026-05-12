@@ -131,7 +131,7 @@ public class GeoJsonKmlConverter
             case Feature feature:
                 if (feature.Geometry != null)
                 {
-                    this.ConvertGeometryToKml(folder, elementName, feature.Geometry);
+                    ConvertGeometryToKml(folder, elementName, feature.Geometry);
                 }
                 else
                 {
@@ -145,7 +145,7 @@ public class GeoJsonKmlConverter
                 {
                     foreach (var singleGeometry in geometryCollection.GeometryList)
                     {
-                        this.ConvertGeometryToKml(folder, elementName, singleGeometry);
+                        ConvertGeometryToKml(folder, elementName, singleGeometry);
                     }
                 }
                 else
@@ -210,7 +210,7 @@ public class GeoJsonKmlConverter
     /// <param name="folder">KML folder</param>
     /// <param name="elementName">name of element to create</param>
     /// <param name="geometry">GeoJSON geometry</param>
-    private void ConvertGeometryToKml(
+    private static void ConvertGeometryToKml(
         Folder folder,
         string elementName,
         Geometry geometry)
@@ -220,7 +220,7 @@ public class GeoJsonKmlConverter
             case PointGeometry pointGeometry:
                 if (pointGeometry.Coordinates != null)
                 {
-                    this.AddPointPlacemark(
+                    AddPointPlacemark(
                         folder,
                         elementName,
                         pointGeometry.Coordinates);
@@ -237,7 +237,7 @@ public class GeoJsonKmlConverter
                 {
                     foreach (double[] pointCollection in multiPointGeometry.Coordinates)
                     {
-                        this.AddPointPlacemark(
+                        AddPointPlacemark(
                             folder,
                             elementName,
                             pointCollection);
@@ -253,7 +253,7 @@ public class GeoJsonKmlConverter
             case LineStringGeometry lineStringGeometry:
                 if (lineStringGeometry.Coordinates != null)
                 {
-                    this.AddLineStringPlacemark(
+                    AddLineStringPlacemark(
                         folder,
                         elementName,
                         lineStringGeometry.Coordinates);
@@ -270,7 +270,7 @@ public class GeoJsonKmlConverter
                 {
                     foreach (double[][] lineStringCollection in multiLineStringGeometry.Coordinates)
                     {
-                        this.AddLineStringPlacemark(folder, elementName, lineStringCollection);
+                        AddLineStringPlacemark(folder, elementName, lineStringCollection);
                     }
                 }
                 else
@@ -285,7 +285,7 @@ public class GeoJsonKmlConverter
                 {
                     foreach (double[][] polygonCollection in polygonGeometry.Coordinates)
                     {
-                        this.AddPolygonPlacemark(folder, elementName, polygonCollection);
+                        AddPolygonPlacemark(folder, elementName, polygonCollection);
                     }
                 }
                 else
@@ -302,7 +302,7 @@ public class GeoJsonKmlConverter
                     {
                         foreach (double[][] polygonCollection in multiPolygonCollection)
                         {
-                            this.AddPolygonPlacemark(folder, elementName, polygonCollection);
+                            AddPolygonPlacemark(folder, elementName, polygonCollection);
                         }
                     }
                 }
@@ -324,7 +324,7 @@ public class GeoJsonKmlConverter
     /// <param name="folder">folder to add to</param>
     /// <param name="elementName">name of element to create</param>
     /// <param name="coordinates">coordinates for the point</param>
-    private void AddPointPlacemark(
+    private static void AddPointPlacemark(
         Folder folder,
         string elementName,
         double[] coordinates)
@@ -358,7 +358,7 @@ public class GeoJsonKmlConverter
     /// <param name="folder">folder to add to</param>
     /// <param name="elementName">name of element to create</param>
     /// <param name="coordinatesList">list of coordinates</param>
-    private void AddLineStringPlacemark(
+    private static void AddLineStringPlacemark(
         Folder folder,
         string elementName,
         double[][] coordinatesList)
@@ -398,7 +398,7 @@ public class GeoJsonKmlConverter
     /// <param name="folder">folder to add to</param>
     /// <param name="elementName">name of element to create</param>
     /// <param name="polygonCollection">polygon point coordinates</param>
-    private void AddPolygonPlacemark(
+    private static void AddPolygonPlacemark(
         Folder folder,
         string elementName,
         double[][] polygonCollection)

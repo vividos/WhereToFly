@@ -208,7 +208,7 @@ namespace WhereToFly.WebApi.Logic
                     return await this.GetGarminInreachPosResult(uri);
 
                 case AppResourceUri.ResourceType.TestPos:
-                    return await this.GetTestPosResult(uri);
+                    return await GetTestPosResult(uri);
 
                 default:
                     Debug.Assert(false, "invalid app resource URI type");
@@ -260,7 +260,7 @@ namespace WhereToFly.WebApi.Logic
         /// </summary>
         /// <param name="uri">live waypoint ID to use</param>
         /// <returns>live waypoint query result</returns>
-        private Task<LiveWaypointQueryResult> GetTestPosResult(AppResourceUri uri)
+        private static Task<LiveWaypointQueryResult> GetTestPosResult(AppResourceUri uri)
         {
             MapPoint mapPoint;
             switch (uri.Data?.ToLowerInvariant())

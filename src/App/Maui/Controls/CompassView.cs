@@ -364,7 +364,7 @@ public class CompassView : SKCanvasView
 
         canvas.RotateDegrees(45.0f, center.X, center.Y);
 
-        this.DrawCompassRoseSpires(
+        DrawCompassRoseSpires(
             canvas,
             center,
             filledPaint,
@@ -381,7 +381,7 @@ public class CompassView : SKCanvasView
         canvas.RotateDegrees(-45.0f, center.X, center.Y);
 
         // and then draw the main direction spires and names
-        this.DrawCompassRoseSpires(
+        DrawCompassRoseSpires(
             canvas,
             center,
             filledPaint,
@@ -414,7 +414,7 @@ public class CompassView : SKCanvasView
     /// <param name="textRadius">radius where direction letter text is drawn</param>
     /// <param name="sideAngleDegrees">angle of the side of the obtuse angle part</param>
     /// <param name="directionNames">four direction names</param>
-    private void DrawCompassRoseSpires(
+    private static void DrawCompassRoseSpires(
         SKCanvas canvas,
         SKPoint center,
         SKPaint filledPaint,

@@ -177,18 +177,6 @@ public class TrackListViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Called when "Export" menu item is selected
-    /// </summary>
-    /// <param name="track">track to export</param>
-    /// <returns>task to wait on</returns>
-    internal async Task ExportTrack(Track track)
-    {
-        await ExportFileHelper.ExportTrackAsync(
-            track,
-            UserInterface);
-    }
-
-    /// <summary>
     /// Deletes the given track from the track list
     /// </summary>
     /// <param name="track">track to delete</param>
