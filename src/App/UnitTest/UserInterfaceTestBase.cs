@@ -110,39 +110,11 @@ public class UserInterfaceTestBase
 
         App.Settings = new AppSettings();
 
-        LoadAppResources("Resources/Styles/Colors.xaml");
-        LoadAppResources("Resources/Styles/Styles.xaml");
-    }
+        App.Current!.Resources.MergedDictionaries.Add(
+            new WhereToFly.App.Resources.Styles.Colors());
 
-    /// <summary>
-    /// Loads resource dictionary from the app assembly and adds it to the unit test app
-    /// merged resources
-    /// </summary>
-    /// <param name="resourcePath">
-    /// relative resource path with forward slashes, e.g. Resources/Styles/Colors.xaml
-    /// </param>
-    private static void LoadAppResources(string resourcePath)
-    {
-        string dotResourcePath = resourcePath.Replace("/", ".");
-
-        var assembly = typeof(MauiProgram).Assembly;
-
-        string uriWithAssembly =
-            $"WhereToFly.App.{dotResourcePath};assembly={assembly.GetName().Name}";
-
-        var resourceDictionary = new ResourceDictionary();
-
-        Microsoft.Maui.Controls.Xaml.ResourceDictionaryHelpers.LoadFromSource(
-            resourceDictionary,
-            new Uri(uriWithAssembly, UriKind.Relative),
-            resourcePath,
-            assembly,
-            null);
-
-        Application app = App.Current
-            ?? throw new InvalidOperationException("App.Current is not available!");
-
-        app.Resources.MergedDictionaries.Add(resourceDictionary);
+        App.Current!.Resources.MergedDictionaries.Add(
+            new WhereToFly.App.Resources.Styles.Styles());
     }
 
     /// <summary>
