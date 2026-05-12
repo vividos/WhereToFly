@@ -27,6 +27,12 @@ jobs:
       with:
         dotnet-version: 10.0.x
 
+    - name: Setup Java
+      uses: actions/setup-java@v5
+      with:
+        java-version: 25
+        distribution: 'temurin'
+
     - name: Install workloads
       shell: cmd
       run: |
