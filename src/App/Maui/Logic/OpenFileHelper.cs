@@ -530,10 +530,7 @@ public static class OpenFileHelper
             var parser = new XcTskFileParser(filename, stream);
             string czml = parser.ConvertToCzml();
 
-            string description =
-                HtmlConverter.FromMarkdown(parser.Description);
-
-            await AddLayerFromCzml(czml, filename, description);
+            await AddLayerFromCzml(czml, filename, string.Empty);
         }
         catch (Exception ex)
         {
