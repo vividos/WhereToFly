@@ -429,7 +429,7 @@ export class HeightProfileView {
         const trackData = [];
 
         const trackStart = typeof track.trackStart === "string"
-            ? Math.floor(new Date(track.trackStart).getTime() / 1000.0)
+            ? Math.floor(new Date(track.trackStart).getTime() / 1000)
             : track.trackStart;
 
         if (track.listOfTimePoints === null) {
@@ -446,7 +446,7 @@ export class HeightProfileView {
                 timePoint += trackStart;
 
             trackData.push({
-                x: timePoint * 1000.0,
+                x: timePoint * 1000,
                 y: track.listOfTrackPoints[trackPointIndex + 2],
                 trackDataIndex: trackPointIndex / 3
             });
@@ -458,7 +458,7 @@ export class HeightProfileView {
                 backgroundColor: this.backgroundColor,
                 fill: false,
                 label: "Track",
-                pointRadius: 0.0, // disable point drawing
+                pointRadius: 0, // disable point drawing
                 borderColor: this.trackColor
             }]
         };
@@ -502,8 +502,8 @@ export class HeightProfileView {
             showLine: true,
             fill: "start",
             label: "Terrain",
-            tension: 0.0,
-            pointRadius: 0.0,
+            tension: 0,
+            pointRadius: 0,
             backgroundColor: this.groundProfileColor,
             borderColor: "rgba(0,128,0,255)"
         });
@@ -545,7 +545,7 @@ export class HeightProfileView {
         for (let trackPointIndex = newStartTimePos * 3, len = track.listOfTrackPoints.length; trackPointIndex < len; trackPointIndex += 3) {
             const timePoint = track.listOfTimePoints[trackPointIndex / 3];
             trackData.push({
-                x: new Date(timePoint * 1000.0),
+                x: new Date(timePoint * 1000),
                 y: track.listOfTrackPoints[trackPointIndex + 2]
             });
         }
@@ -737,24 +737,24 @@ export class HeightProfileView {
         const timePoint = new Date(currentDataPoint.x);
 
         if (timePoint.getFullYear() === 1970)
-            values.elapsedTime = timePoint.valueOf() / 1000.0;
+            values.elapsedTime = timePoint.valueOf() / 1000;
         else {
             values.timePoint = timePoint;
             const startTime = new Date(this.getTrackDataPoint(0).x);
-            values.elapsedTime = (values.timePoint - startTime).valueOf() / 1000.0;
+            values.elapsedTime = (values.timePoint - startTime).valueOf() / 1000;
         }
 
         values.trackHeight = currentDataPoint.y;
 
         if (trackDataIndex === 0)
-            values.varioValue = 0.0;
+            values.varioValue = 0;
         else {
             const lastDataPoint = this.getTrackDataPoint(trackDataIndex - 1);
 
             const lastTrackHeight = lastDataPoint.y;
 
             const deltaTimeMs = currentDataPoint.x.valueOf() - lastDataPoint.x.valueOf();
-            values.varioValue = (values.trackHeight - lastTrackHeight) / deltaTimeMs * 1000.0;
+            values.varioValue = (values.trackHeight - lastTrackHeight) / deltaTimeMs * 1000;
         }
 
         const groundProfileDataPoint = this.getGroundProfileDataPoint(trackDataIndex);
@@ -772,7 +772,7 @@ export class HeightProfileView {
      */
     static formatTimeSpan(elapsedTime) {
 
-        const elapsed = new Date((elapsedTime - 60.0 * 60.0) * 1000.0);
+        const elapsed = new Date((elapsedTime - 60 * 60) * 1000);
 
         const hour = ("0" + elapsed.getHours()).slice(-2);
         const minutes = ("0" + elapsed.getMinutes()).slice(-2);

@@ -117,7 +117,7 @@ export class MapView {
             liveTrackToolbarId: "liveTrackToolbar",
             heightProfileElementId: "heightProfileView",
             initialCenterPoint: { latitude: 47.67, longitude: 11.88 },
-            initialViewingDistance: 5000.0,
+            initialViewingDistance: 5000,
             hasMouse: false,
             useAsynchronousPrimitives: true,
             useEntityClustering: true
@@ -214,7 +214,7 @@ export class MapView {
                 getProvider: () => this.createThermalImageryProvider(),
                 configLayer: (layer) => {
                     layer.alpha = 0.2; // 0.0 is transparent.  1.0 is opaque.
-                    layer.brightness = 2.0; // > 1.0 increases brightness.  < 1.0 decreases.
+                    layer.brightness = 2; // > 1.0 increases brightness.  < 1.0 decreases.
                 }
             },
             BlackMarble: {
@@ -226,7 +226,7 @@ export class MapView {
                 },
                 configLayer: (layer) => {
                     layer.alpha = 0.5; // 0.0 is transparent.  1.0 is opaque.
-                    layer.brightness = 2.0; // > 1.0 increases brightness.  < 1.0 decreases.
+                    layer.brightness = 2; // > 1.0 increases brightness.  < 1.0 decreases.
                 }
             },
             WaymarkedTrailsHiking: {
@@ -235,7 +235,7 @@ export class MapView {
                 getProvider: () => this.createWaymarkedTrailsHikingImageryProvider(),
                 configLayer: (layer) => {
                     layer.alpha = 0.8; // 0.0 is transparent.  1.0 is opaque.
-                    layer.brightness = 1.0; // > 1.0 increases brightness.  < 1.0 decreases.
+                    layer.brightness = 1; // > 1.0 increases brightness.  < 1.0 decreases.
                 }
             },
             OpenFlightMaps: {
@@ -294,8 +294,8 @@ export class MapView {
             scene3DOnly: true,
             requestRenderMode: true,
             // when no animation happens, render after this number of seconds
-            maximumRenderTimeChange: 60.0,
-            targetFrameRate: 60.0,
+            maximumRenderTimeChange: 60,
+            targetFrameRate: 60,
             contextOptions: {
                 webgl: {
                     powerPreference: webGLPowerPreference
@@ -330,16 +330,16 @@ export class MapView {
 
         if (longitude !== 0 && latitude !== 0) {
 
-            const initialHeading = 0.0; // north
+            const initialHeading = 0; // north
             const initialPitch = CesiumMath.toRadians(-35);
-            const initialViewingDistance = this.options.initialViewingDistance || 5000.0;
+            const initialViewingDistance = this.options.initialViewingDistance || 5000;
 
             this.viewer.camera.setView({
                 destination: Cartesian3.fromDegrees(longitude, latitude, initialViewingDistance),
                 orientation: {
                     initialHeading,
                     initialPitch,
-                    roll: 0.0
+                    roll: 0
                 }
             });
         }
@@ -444,8 +444,8 @@ export class MapView {
                 "",
                 Color.GREEN,
                 "images/map-marker.svg",
-                0.0,
-                0.0);
+                0,
+                0);
 
             myLocationEntity.show = false;
             this.myLocationMarker = this.viewer.entities.add(myLocationEntity);
@@ -457,7 +457,7 @@ export class MapView {
         // the zoom entity is invisible and transparent and is used for zoomToLocation() calls
         this.zoomEntity = this.viewer.entities.add({
             id: "zoomEntity",
-            position: Cartesian3.fromDegrees(0.0, 0.0),
+            position: Cartesian3.fromDegrees(0, 0),
             point: {
                 color: Color.TRANSPARENT,
                 heightReference: HeightReference.CLAMP_TO_GROUND
@@ -473,8 +473,8 @@ export class MapView {
                 "",
                 Color.PURPLE,
                 "images/map-marker-distance.svg",
-                0.0,
-                0.0);
+                0,
+                0);
 
             trackEntity.show = false;
             trackEntity.billboard.heightReference = HeightReference.NONE;
@@ -492,8 +492,8 @@ export class MapView {
                 "",
                 Color.ORANGE,
                 "images/magnify.svg",
-                0.0,
-                0.0);
+                0,
+                0);
             findResultEntity.show = false;
             this.findResultMarker = this.viewer.entities.add(findResultEntity);
         } catch (error) {
@@ -890,7 +890,7 @@ export class MapView {
             console.warn("MapView.setMapImageryType: invalid imagery type: " + imageryType);
     }
 
-    static slopeRamp = [0.0, 0.29, 0.5, Math.sqrt(2) / 2, 0.87, 0.91, 1.0];
+    static slopeRamp = [0, 0.29, 0.5, Math.sqrt(2) / 2, 0.87, 0.91, 1];
 
     /**
      * Generates a color ramp canvas element and returns it. From
@@ -1024,7 +1024,7 @@ export class MapView {
          * @returns {number} gradient stop value
          */
         function degreesToStop(degrees){
-            return (((90 - degrees) / 360) + 1.0) % 1.0;
+            return (((90 - degrees) / 360) + 1) % 1;
         }
 
         const colors = MapView.aspectColors;
@@ -1036,8 +1036,8 @@ export class MapView {
             grd.addColorStop(degreesToStop(degrees + 22.49), color);
 
             if (degrees == 90){
-                grd.addColorStop(0.0, color);
-                grd.addColorStop(1.0, color);
+                grd.addColorStop(0, color);
+                grd.addColorStop(1, color);
             }
         }
 
@@ -1553,7 +1553,7 @@ export class MapView {
             offset: new HeadingPitchRange(
                 this.viewer.camera.heading,
                 this.viewer.camera.pitch,
-                0.0),
+                0),
             complete: function() {
                 MapView.log("flying to compass target finished");
 
@@ -1644,7 +1644,7 @@ export class MapView {
         if (position !== undefined)
             return Cartesian3.distance(this.viewer.camera.positionWC, position);
 
-        return 5000.0;
+        return 5000;
     }
 
     /**
@@ -1665,21 +1665,21 @@ export class MapView {
             ", longitude=" + options.longitude +
             MapView.formatAltitude(options.altitude, ", altitude="));
 
-        let altitude = options.altitude || 0.0;
-        if (altitude === 0.0)
+        let altitude = options.altitude || 0;
+        if (altitude === 0)
             altitude = await this.findAltitude(options);
 
         let viewingDistance = this.getCurrentViewingDistance();
 
-        if (viewingDistance > 10000.0)
-            viewingDistance = 10000.0;
+        if (viewingDistance > 10000)
+            viewingDistance = 10000;
 
         // zooming works by assinging the zoom entity a new position, making it
         // visible (but transparent), fly there and hiding it again
         this.zoomEntity.position = Cartesian3.fromDegrees(options.longitude, options.latitude, altitude);
 
         this.zoomEntity.point.heightReference =
-            altitude === 0.0 ? HeightReference.CLAMP_TO_GROUND : HeightReference.NONE;
+            altitude === 0 ? HeightReference.CLAMP_TO_GROUND : HeightReference.NONE;
 
         this.zoomEntity.show = true;
 
@@ -1742,7 +1742,7 @@ export class MapView {
             offset: new HeadingPitchRange(
                 this.viewer.camera.heading,
                 this.viewer.camera.pitch,
-                0.0),
+                0),
             complete: function() {
                 MapView.log("flying to rectangle finished");
 
@@ -2140,7 +2140,7 @@ export class MapView {
                     image: pinImageDataUrl,
                     verticalOrigin: VerticalOrigin.BOTTOM,
                     heightReference: HeightReference.CLAMP_TO_GROUND,
-                    disableDepthTestDistance: 5000.0
+                    disableDepthTestDistance: 5000
                 }
             };
 
@@ -2278,34 +2278,34 @@ export class MapView {
     addTakeoffEntities(entity, location) {
 
         const center = Cartesian3.fromDegrees(location.longitude, location.latitude);
-        const radius = 50.0; // in meter
+        const radius = 50; // in meter
 
         const pointArray = [];
         const takeoffBits = location.takeoffDirections;
-        const sliceAngle = 360.0 / 16.0;
+        const sliceAngle = 360 / 16;
 
         pointArray.push(center);
 
         // from the bits, calculate the takeoff angle and add polygon points
         for (let angleBit = 0; angleBit <= 16; angleBit++) {
             const bitmask = 1 << angleBit;
-            const angle = 180.0 - angleBit * sliceAngle;
+            const angle = 180 - angleBit * sliceAngle;
 
             if ((takeoffBits & bitmask) !== 0) {
-                pointArray.push(MapView.pointFromCenterRadiusAngle(center, radius, angle - sliceAngle / 2.0));
+                pointArray.push(MapView.pointFromCenterRadiusAngle(center, radius, angle - sliceAngle / 2));
                 pointArray.push(MapView.pointFromCenterRadiusAngle(center, radius, angle));
-                pointArray.push(MapView.pointFromCenterRadiusAngle(center, radius, angle + sliceAngle / 2.0));
+                pointArray.push(MapView.pointFromCenterRadiusAngle(center, radius, angle + sliceAngle / 2));
                 pointArray.push(center);
             }
         }
 
         const distanceDisplayCondition =
-            new DistanceDisplayCondition(0.0, 5000.0);
+            new DistanceDisplayCondition(0, 5000);
 
         entity.polyline = {
             positions: pointArray,
-            width: 3.0,
-            material: new Color(1.0, 1.0, 0.5, 0.4), // light yellow
+            width: 3,
+            material: new Color(1, 1, 0.5, 0.4), // light yellow
             clampToGround: true,
             distanceDisplayCondition
         };
@@ -2313,7 +2313,7 @@ export class MapView {
         entity.polygon = {
             // note: clamping to terrain is achieved by not specifying height and heightReference at all
             hierarchy: new PolygonHierarchy(pointArray),
-            material: new Color(0.0, 0.0, 0.54, 0.4), // dark blue
+            material: new Color(0, 0, 0.54, 0.4), // dark blue
             outline: false, // when an outline would be present, it would not clamp to ground
             distanceDisplayCondition
         };
@@ -2389,7 +2389,7 @@ export class MapView {
 
         if (!("altitude" in options) ||
             options.altitude === null ||
-            options.altitude === 0.0)
+            options.altitude === 0)
             options.altitude = await this.findAltitude(options);
 
         let text = "<h2><img height=\"48em\" width=\"48em\" src=\"images/magnify.svg\" style=\"vertical-align:middle\" />" + options.name + "</h2>" +
@@ -2448,7 +2448,7 @@ export class MapView {
 
         } catch (error) {
             console.error("findAltitude: error while finding altitude: " + error);
-            return 0.0;
+            return 0;
         }
     }
 
@@ -2481,10 +2481,10 @@ export class MapView {
         const conePitch = glideAngle - glideAngleWithWind;
 
         const quat = Transforms.headingPitchRollQuaternion(
-            Cartesian3.fromDegrees(options.longitude, options.latitude, options.altitude / 2.0),
+            Cartesian3.fromDegrees(options.longitude, options.latitude, options.altitude / 2),
             new HeadingPitchRoll(
-                CesiumMath.toRadians(options.windDirection + 90.0),
-                conePitch, 0.0)
+                CesiumMath.toRadians(options.windDirection + 90),
+                conePitch, 0)
         );
 
         let text = "<p>Flying range for map point at<br/>Latitude: " + options.displayLatitude + "<br/>" +
@@ -2493,7 +2493,7 @@ export class MapView {
 
         text += "<p>" +
             "Glide ratio: " + options.glideRatio + "<br/>" +
-            "Glide angle: " + (90.0 - CesiumMath.toDegrees(glideAngle)).toFixed(1) + " degrees<br/>" +
+            "Glide angle: " + (90 - CesiumMath.toDegrees(glideAngle)).toFixed(1) + " degrees<br/>" +
             // 'Glider speed: ' + options.gliderSpeed + ' km/h<br/>' +
             // 'Glide ratio with wind: ' + glideRatioWithWind.toFixed(1) + '<br/>' +
             // 'Glide angle with wind: ' + (90.0 - CesiumMath.toDegrees(glideAngleWithWind)).toFixed(1) + ' degrees<br/>' +
@@ -2512,11 +2512,11 @@ export class MapView {
         this.flyingRangeCone = this.viewer.entities.add({
             name: "Flying range",
             description: text,
-            position: Cartesian3.fromDegrees(options.longitude, options.latitude, options.altitude / 2.0),
+            position: Cartesian3.fromDegrees(options.longitude, options.latitude, options.altitude / 2),
             orientation: quat,
             cylinder: {
                 length: options.altitude,
-                topRadius: 0.0,
+                topRadius: 0,
                 bottomRadius: options.altitude * options.glideRatio,
                 numberOfVerticalLines: 18,
                 material: Color.BLUE.withAlpha(0.4),
@@ -2530,7 +2530,7 @@ export class MapView {
                 offset: new HeadingPitchRange(
                     this.viewer.camera.heading,
                     this.viewer.camera.pitch,
-                    20 * 1000.0)
+                    20 * 1000)
             });
     }
 
@@ -2628,24 +2628,24 @@ export class MapView {
     trackColorFromVarioValue(varioValue) {
 
         const varioColorMapping = [
-            5.0, Color.RED,
+            5, Color.RED,
             4.5, Color.fromBytes(255, 64, 0),
-            4.0, Color.fromBytes(255, 128, 0),
+            4, Color.fromBytes(255, 128, 0),
             3.5, Color.fromBytes(255, 192, 0),
-            3.0, Color.YELLOW,
+            3, Color.YELLOW,
             2.5, Color.fromBytes(192, 255, 0),
-            2.0, Color.fromBytes(128, 255, 0),
+            2, Color.fromBytes(128, 255, 0),
             1.5, Color.fromBytes(64, 255, 128),
-            1.0, Color.CYAN,
+            1, Color.CYAN,
             0.5, Color.fromBytes(0, 224, 255),
-            0.0, Color.fromBytes(0, 192, 255),
+            0, Color.fromBytes(0, 192, 255),
             -0.5, Color.fromBytes(0, 160, 255),
-            -1.0, Color.fromBytes(0, 128, 255),
+            -1, Color.fromBytes(0, 128, 255),
             -1.5, Color.fromBytes(0, 96, 224),
-            -2.0, Color.fromBytes(0, 64, 192),
-            -3.0, Color.fromBytes(0, 32, 160),
+            -2, Color.fromBytes(0, 64, 192),
+            -3, Color.fromBytes(0, 32, 160),
             -3.5, Color.fromBytes(0, 0, 128),
-            -4.0, Color.fromBytes(64, 0, 128)
+            -4, Color.fromBytes(64, 0, 128)
         ];
 
         for (let mappingIndex = 0; mappingIndex < varioColorMapping.length; mappingIndex += 2) {
@@ -2666,13 +2666,13 @@ export class MapView {
 
         const trackColors = [];
 
-        trackColors[0] = this.trackColorFromVarioValue(0.0);
+        trackColors[0] = this.trackColorFromVarioValue(0);
 
         for (let index = 3; index < listOfTrackPoints.length; index += 3) {
 
             const altitudeDiff = listOfTrackPoints[index + 2] - listOfTrackPoints[index - 1];
 
-            let timeDiff = 1.0;
+            let timeDiff = 1;
             if (listOfTimePoints !== null)
                 timeDiff = listOfTimePoints[index / 3] - listOfTimePoints[index / 3 - 1];
 
@@ -2970,7 +2970,7 @@ export class MapView {
                     image: pinImageDataUrl,
                     heightReference: HeightReference.NONE,
                     verticalOrigin: VerticalOrigin.BOTTOM,
-                    disableDepthTestDistance: 5000.0
+                    disableDepthTestDistance: 5000
                 },
                 path: {
                     leadTime: 0,
@@ -2986,11 +2986,11 @@ export class MapView {
                     style: LabelStyle.FILL_AND_OUTLINE,
                     fillColor: Color.WHITE,
                     showBackground: false,
-                    outlineWidth: 10.0,
+                    outlineWidth: 10,
                     outlineColor: Color.BLACK,
                     pixelOffset: new Cartesian2(64, 0),
                     heightReference: HeightReference.NONE,
-                    disableDepthTestDistance: 5000.0
+                    disableDepthTestDistance: 5000
                 }
             };
 
@@ -3107,7 +3107,7 @@ export class MapView {
     convertResponseDataToTrack(track) {
 
         const trackStart = typeof track.trackStart === "string"
-            ? Math.floor(new Date(track.trackStart).getTime() / 1000.0)
+            ? Math.floor(new Date(track.trackStart).getTime() / 1000)
             : track.trackStart;
 
         track.listOfTrackPoints = [];
@@ -3181,15 +3181,15 @@ export class MapView {
         for (const timePoint in track.listOfTimePoints) {
             julianTimePoints.push(
                 JulianDate.fromDate(
-                    new Date(timePoint * 1000.0)));
+                    new Date(timePoint * 1000)));
         }
 
         const lastTimePoint = track.listOfTimePoints[track.listOfTimePoints.length - 1];
 
         MapView.log("added new track points, from " +
-            new Date(track.listOfTimePoints[0] * 1000.0) +
+            new Date(track.listOfTimePoints[0] * 1000) +
             " to " +
-            new Date(lastTimePoint * 1000.0));
+            new Date(lastTimePoint * 1000));
 
         const sampledPos = trackData.liveTrackEntity.position;
         sampledPos.addSamples(julianTimePoints, trackPointArray);
@@ -3204,7 +3204,7 @@ export class MapView {
             }));
 
         const text = "out of data\nsince " +
-            new Date(lastTimePoint * 1000.0).toTimeString().substring(0, 8);
+            new Date(lastTimePoint * 1000).toTimeString().substring(0, 8);
 
         trackData.liveTrackEntity.label.text =
             new ConstantProperty(text);
@@ -3525,7 +3525,7 @@ export class MapView {
                         offset: new HeadingPitchRange(
                             this.viewer.scene.camera.heading,
                             this.viewer.scene.camera.pitch,
-                            2000.0)
+                            2000)
                     });
             }
         } else if (funcName === "onClose" && this.inOnCloseHandler === false) {
