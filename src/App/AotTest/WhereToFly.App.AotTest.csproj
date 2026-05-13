@@ -22,6 +22,7 @@
     <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
     <EnableSingleFileAnalyzer>true</EnableSingleFileAnalyzer>
     <EnableAotAnalyzer>true</EnableAotAnalyzer>
+    <SupportedOSPlatformVersion>31.0</SupportedOSPlatformVersion>
   </PropertyGroup>
 
   <ItemGroup>
