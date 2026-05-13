@@ -12,6 +12,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint --config eslint.config.mjs src",
+    "lint:fix": "eslint --config eslint.config.mjs src --fix",
     "build": "webpack --config webpack.config.js",
     "build-release": "webpack --config webpack.prod.config.js",
     "serve": "webpack serve",
