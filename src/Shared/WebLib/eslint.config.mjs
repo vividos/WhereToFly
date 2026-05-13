@@ -3,6 +3,7 @@
 //
 import js from "@eslint/js";
 import jsdoc from "eslint-plugin-jsdoc";
+import eslintPluginUnicorn from "eslint-plugin-unicorn";
 import globals from "globals";
 
 export default [
@@ -20,6 +21,7 @@ export default [
         },
         plugins: {
             jsdoc,
+            unicorn: eslintPluginUnicorn,
         },
         rules: {
             "indent": [ "error", 4 ],
@@ -28,7 +30,8 @@ export default [
             "padded-blocks": "off",
             "space-before-function-paren": ["error", "never"],
             "semi": "off",
-            "no-extra-semi": "off"
+            "no-extra-semi": "off",
+            "unicorn/no-zero-fractions": "error"
         }
     }
 ];
