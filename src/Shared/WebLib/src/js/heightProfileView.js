@@ -47,6 +47,20 @@ export class HeightProfileView {
     }
 
     /**
+     * Callback to get a CSS color for a specific vario value
+     * @callback ColorFromVarioValueFunc
+     * @param {number} varioValue vario value, in m/s
+     * @returns {string} CSS color string
+     */
+
+    /**
+     * Callback for an action of the height profile view
+     * @callback HeightProfileCallbackFunc
+     * @param {string} funcName action function name
+     * @param {object} params action params
+     */
+
+    /**
      * Creates a new instance of HeightProfileView
      * @class
      * @param {object} [options] Options to use for initializing height profile view
@@ -58,9 +72,9 @@ export class HeightProfileView {
      * @param {boolean} [options.showInfoButton] indicates if an info button should be shown
      * @param {boolean} [options.isFlightTrack] indicates if track is a flight track and vario
      * value should be shown
-     * @param {Function} [options.colorFromVarioValue] function to get a color from vario value; may
+     * @param {ColorFromVarioValueFunc} [options.colorFromVarioValue] function to get a color from vario value; may
      * be undefined
-     * @param {Function} [options.callback] action function callback
+     * @param {HeightProfileCallbackFunc} [options.callback] action function callback
      */
     constructor(options) {
 
