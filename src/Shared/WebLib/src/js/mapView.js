@@ -1392,14 +1392,20 @@ export class MapView {
             "Time: " + options.displayTimestamp +
             "</div>";
 
-        text += "<img height=\"32em\" width=\"32em\" src=\"images/share-variant.svg\" style=\"vertical-align:middle\" />" +
-            "<a href=\"javascript:parent.map.onShareMyLocation();\">Share position</a>";
+        text += "<p>" + MapView.getInfoTextButtonHtml(
+            "Share position",
+            "images/share-variant.svg",
+            "parent.map.onShareMyLocation();");
 
         const optionsText = "{ latitude:" + options.latitude +
             ", longitude:" + options.longitude + " }";
 
-        text += "<img height=\"32em\" width=\"32em\" src=\"images/map-marker-plus.svg\" style=\"vertical-align:middle\" /> " +
-            "<a href=\"javascript:parent.map.onAddTempTourPlanPoint(" + optionsText + ");\">Plan tour</a></p>";
+        text += MapView.getInfoTextButtonHtml(
+            "Plan tour",
+            "images/map-marker-plus.svg",
+            "parent.map.onAddTempTourPlanPoint(" + optionsText + ");");
+
+        text += "</p>";
 
         this.myLocationMarker.description = text;
 
@@ -1408,6 +1414,20 @@ export class MapView {
             this.flyTo(options);
         } else
             this.updateScene();
+    }
+
+    /**
+     * Returns HTML code for the info text to show a button with icon and text.
+     * @param {string} imageUrl relative image URL of image to show
+     * @param {string} buttonText button text to display
+     * @param {string} javascriptCode Javascript code to execute when the
+     * button is clicked
+     * @returns HTML code for the button
+     */
+    static getInfoTextButtonHtml(buttonText, imageUrl, javascriptCode) {
+        return "<img height=\"32em\" width=\"32em\" src=\"" + imageUrl +
+            "\" style=\"vertical-align:middle\" />" +
+            "<a href=\"javascript:" + javascriptCode + "\">" + buttonText + "</a>";
     }
 
     /**
@@ -1594,11 +1614,15 @@ export class MapView {
             const optionsText = "{ latitude:" + options.latitude +
                 ", longitude:" + options.longitude + " }";
 
-            text += "<p><img height=\"32em\" width=\"32em\" src=\"images/map-marker-plus.svg\" style=\"vertical-align:middle\" /> " +
-                "<a href=\"javascript:parent.map.onAddTempTourPlanPoint(" + optionsText + ");\">Plan tour</a>";
+            text += "<p>" + MapView.getInfoTextButtonHtml(
+                "Plan tour",
+                "images/map-marker-plus.svg",
+                "parent.map.onAddTempTourPlanPoint(" + optionsText + ");");
 
-            text += "<img height=\"32em\" width=\"32em\" src=\"images/close-circle-outline.svg\" style=\"vertical-align:middle\" />" +
-                "<a href=\"javascript:parent.map.onSetLocationAsCompassTarget(null);\">Hide</a></p>";
+            text += MapView.getInfoTextButtonHtml(
+                "Hide",
+                "images/close-circle-outline.svg",
+                "parent.map.onSetLocationAsCompassTarget(null);") + "</p>";
 
             if ("displayLatitude" in options &&
                 "displayLongitude" in options) {
@@ -2022,17 +2046,25 @@ export class MapView {
         let text = "<h2><img height=\"48em\" width=\"48em\" src=\"" + this.imageUrlFromLocationType(location.type) + "\" style=\"vertical-align:middle\" />" +
             location.name + altitudeText + "</h2>";
 
-        text += "<p><img height=\"32em\" width=\"32em\" src=\"images/information-outline.svg\" style=\"vertical-align:middle\" /> " +
-            "<a href=\"javascript:parent.map.onShowLocationDetails('" + location.id + "');\">Show details</a> ";
+        text += "<p>" + MapView.getInfoTextButtonHtml(
+            "Show details",
+            "images/information-outline.svg",
+            "parent.map.onShowLocationDetails('" + location.id + "');");
 
-        text += "<img height=\"32em\" width=\"32em\" src=\"images/compass-rose.svg\" style=\"vertical-align:middle\" /> " +
-            "<a href=\"javascript:parent.map.onSetLocationAsCompassTarget('" + location.id + "');\">Set as compass target</a> ";
+        text += MapView.getInfoTextButtonHtml(
+            "Set as compass target",
+            "images/compass-rose.svg",
+            "parent.map.onSetLocationAsCompassTarget('" + location.id + "');");
 
-        text += "<img height=\"32em\" width=\"32em\" src=\"images/directions.svg\" style=\"vertical-align:middle\" /> " +
-            "<a href=\"javascript:parent.map.onNavigateToLocation('" + location.id + "');\">Navigate here</a>";
+        text += MapView.getInfoTextButtonHtml(
+            "Navigate here",
+            "images/directions.svg",
+            "parent.map.onNavigateToLocation('" + location.id + "');");
 
-        text += "<img height=\"32em\" width=\"32em\" src=\"images/map-marker-plus.svg\" style=\"vertical-align:middle\" /> " +
-            "<a href=\"javascript:parent.map.onAddTourPlanLocation('" + location.id + "');\">Plan tour</a>";
+        text += MapView.getInfoTextButtonHtml(
+            "Plan tour",
+            "images/map-marker-plus.svg",
+            "parent.map.onAddTourPlanLocation('" + location.id + "');");
 
         text += "</p><p>" + location.description + "</p>";
 
@@ -2406,17 +2438,25 @@ export class MapView {
             ", longitude:" + options.longitude +
             ", altitude:" + options.altitude.toFixed(1) + "}";
 
-        text += "<p><img height=\"32em\" width=\"32em\" src=\"images/playlist-plus.svg\" style=\"vertical-align:middle\" />" +
-            "<a href=\"javascript:parent.map.onAddFindResult(" + optionsText + ");\">Add as waypoint</a>";
+        text += "<p>" + MapView.getInfoTextButtonHtml(
+            "Add as waypoint",
+            "images/playlist-plus.svg",
+            "parent.map.onAddFindResult(" + optionsText + ");");
 
-        text += "<img height=\"32em\" width=\"32em\" src=\"images/compass-rose.svg\" style=\"vertical-align:middle\" /> " +
-            "<a href=\"javascript:parent.map.onSetMapPointAsCompassTarget('" + optionsText + "');\">Set as compass target</a> ";
+        text += MapView.getInfoTextButtonHtml(
+            "Set as compass target",
+            "images/compass-rose.svg",
+            "parent.map.onSetMapPointAsCompassTarget('" + optionsText + "');");
 
-        text += "<img height=\"32em\" width=\"32em\" src=\"images/map-marker-plus.svg\" style=\"vertical-align:middle\" /> " +
-            "<a href=\"javascript:parent.map.onAddTempTourPlanPoint(" + optionsText + ");\">Plan tour</a>";
+        text += MapView.getInfoTextButtonHtml(
+            "Plan tour",
+            "images/map-marker-plus.svg",
+            "parent.map.onAddTempTourPlanPoint(" + optionsText + ");");
 
-        text += "<img height=\"32em\" width=\"32em\" src=\"images/close-circle-outline.svg\" style=\"vertical-align:middle\" />" +
-            "<a href=\"javascript:parent.map.hideFindResult();\">Hide</a></p>";
+        text += MapView.getInfoTextButtonHtml(
+            "Hide",
+            "images/close-circle-outline.svg",
+            "parent.map.hideFindResult();") + "</p>";
 
         if (options.description !== undefined)
             text += "<div>" + options.description + "</div>";
@@ -2509,11 +2549,15 @@ export class MapView {
         const optionsText = "{ latitude:" + options.latitude +
             ", longitude:" + options.longitude + " }";
 
-        text += "<p><img height=\"32em\" width=\"32em\" src=\"images/map-marker-plus.svg\" style=\"vertical-align:middle\" /> " +
-            "<a href=\"javascript:parent.map.onAddTempTourPlanPoint(" + optionsText + ");\">Plan tour</a>";
+        text += "<p>" + MapView.getInfoTextButtonHtml(
+            "Plan tour",
+            "images/map-marker-plus.svg",
+            "parent.map.onAddTempTourPlanPoint(" + optionsText + ");");
 
-        text += "<img height=\"32em\" width=\"32em\" src=\"images/close-circle-outline.svg\" style=\"vertical-align:middle\" />" +
-            "<a href=\"javascript:parent.map.hideFlyingRangeCone();\">Hide</a></p>";
+        text += MapView.getInfoTextButtonHtml(
+            "Hide",
+            "images/close-circle-outline.svg",
+            "parent.map.hideFlyingRangeCone();") + "</p>";
 
         this.flyingRangeCone = this.viewer.entities.add({
             name: "Flying range",
