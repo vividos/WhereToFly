@@ -233,6 +233,18 @@ public class MapView :
     public event OnSetLocationAsCompassTargetCallback? SetLocationAsCompassTarget;
 
     /// <summary>
+    /// Delegate of function to call when a map point should be set as compass target
+    /// </summary>
+    /// <param name="name">find result name</param>
+    /// <param name="point">map point</param>
+    public delegate void OnSetMapPointAsCompassTargetCallback(string name, MapPoint point);
+
+    /// <summary>
+    /// Event that is signaled when a map point should be set as compass target
+    /// </summary>
+    public event OnSetMapPointAsCompassTargetCallback ? SetMapPointAsCompassTarget;
+
+    /// <summary>
     /// Delegate of function to call when track details should be shown
     /// </summary>
     /// <param name="trackId">track id of track to navigate to</param>
@@ -1392,6 +1404,10 @@ public class MapView :
             this.OnSetLocationAsCompassTarget);
 
         this.callbackHandler.RegisterHandler(
+            "onSetMapPointAsCompassTarget",
+            this.OnSetMapPointAsCompassTarget);
+
+        this.callbackHandler.RegisterHandler(
             "onShowTrackDetails",
             (jsonParameters) => this.ShowTrackDetails?.Invoke(jsonParameters.Trim('\"')));
 
@@ -1519,6 +1535,27 @@ public class MapView :
         if (locationId != null)
         {
             this.SetLocationAsCompassTarget?.Invoke(locationId);
+        }
+    }
+
+    /// <summary>
+    /// Called when the "onSetMapPointAsCompassTarget" callback has been sent from JavaScript.
+    /// </summary>
+    /// <param name="jsonParameters">set map point as compass target parameters as JSON</param>
+    private void OnSetMapPointAsCompassTarget(string jsonParameters)
+    {
+        var parameters = JsonSerializer.Deserialize(
+            jsonParameters,
+            MapViewJsonSerializerContext.Default.SetMapPointAsCompassTargetParameter);
+
+        if (parameters != null)
+        {
+            var point = new MapPoint(
+                parameters.Latitude,
+                parameters.Longitude,
+                parameters.Altitude);
+
+            this.SetMapPointAsCompassTarget?.Invoke(parameters.Name, point);
         }
     }
 

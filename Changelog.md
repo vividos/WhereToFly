@@ -9,6 +9,7 @@ Released on ?.
 - Added importing .xctsk files as layers
 - Added the "Terrain slope direction" map overlay and showing a color legend
 - Display message band when terrain is not initialized yet
+- Find result pins can now be set as compass targets
 - Using CesiumJS version 1.141.0
 
 🐛 Bugfixes

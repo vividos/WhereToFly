@@ -265,6 +265,8 @@ public class MapPage : ContentPage
             => await this.viewModel.OnUpdateLastShownLocation(point, viewingDistance);
         this.mapView.SetLocationAsCompassTarget += async (locationId)
             => await this.viewModel.OnSetLocationAsCompassTarget(locationId);
+        this.mapView.SetMapPointAsCompassTarget += async (name, point)
+            => await this.viewModel.OnSetMapPointAsCompassTarget(name, point);
         this.mapView.ShowTrackDetails += async (locationId) => await this.viewModel.OnShowTrackDetails(locationId);
 
         // UWP needs to create the renderer in the main thread

@@ -2409,6 +2409,9 @@ export class MapView {
         text += "<p><img height=\"32em\" width=\"32em\" src=\"images/playlist-plus.svg\" style=\"vertical-align:middle\" />" +
             "<a href=\"javascript:parent.map.onAddFindResult(" + optionsText + ");\">Add as waypoint</a>";
 
+        text += "<img height=\"32em\" width=\"32em\" src=\"images/compass-rose.svg\" style=\"vertical-align:middle\" /> " +
+            "<a href=\"javascript:parent.map.onSetMapPointAsCompassTarget('" + optionsText + "');\">Set as compass target</a> ";
+
         text += "<img height=\"32em\" width=\"32em\" src=\"images/map-marker-plus.svg\" style=\"vertical-align:middle\" /> " +
             "<a href=\"javascript:parent.map.onAddTempTourPlanPoint(" + optionsText + ");\">Plan tour</a>";
 
@@ -3596,8 +3599,9 @@ export class MapView {
     }
 
     /**
-     * Called by the marker pin link, in order to show details of the location.
-     * @param {string} locationId Location ID of location to show
+     * Called by the location pin link, in order to set the location as
+     *  compass target.
+     * @param {string} locationId Location ID of location to use
      */
     onSetLocationAsCompassTarget(locationId) {
 
@@ -3608,6 +3612,24 @@ export class MapView {
 
         if (this.options.callback !== undefined)
             this.options.callback("onSetLocationAsCompassTarget", locationId);
+    }
+
+    /**
+     * Called by the location pin link, in order to set the location as
+     *  compass target.
+     * @param {object} [options] An object with the following properties:
+     * @param {string} [options.name] Name of the map point to use
+     * @param {number} [options.latitude] Latitude of the map point
+     * @param {number} [options.longitude] Longitude of the map point
+     */
+    onSetMapPointAsCompassTarget(options) {
+
+        MapView.log("setting map point as compass target: " +
+            "lat=" + options.latitude +
+            ", long=" + options.longitude);
+
+        if (this.options.callback !== undefined)
+            this.options.callback("onSetMapPointAsCompassTarget", options);
     }
 
     /**

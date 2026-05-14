@@ -505,6 +505,25 @@ internal class MapPageViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Called when a map point has been set as the compass target.
+    /// </summary>
+    /// <param name="name">name of the map point</param>
+    /// <param name="mapPoint">map point to use</param>
+    /// <returns>task to wait on</returns>
+    internal async Task OnSetMapPointAsCompassTarget(
+        string name,
+        MapPoint mapPoint)
+    {
+        var compassTarget = new CompassTarget
+        {
+            Title = name,
+            TargetLocation = mapPoint,
+        };
+
+        await this.appMapService.SetCompassTarget(compassTarget);
+    }
+
+    /// <summary>
     /// Called when user clicked on the "Show info" button in the height profile view. Starts
     /// the track details page.
     /// </summary>
