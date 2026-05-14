@@ -2,7 +2,6 @@
 using WhereToFly.App.Abstractions;
 using WhereToFly.App.Logic;
 using WhereToFly.App.Resources;
-using WhereToFly.App.Services;
 using WhereToFly.Geo.Model;
 
 namespace WhereToFly.App.ViewModels;

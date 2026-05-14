@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Maui.Behaviors;
 using CommunityToolkit.Maui.Core;
-using WhereToFly.App.Abstractions;
 using WhereToFly.App.Services;
 
 namespace WhereToFly.App.Pages;

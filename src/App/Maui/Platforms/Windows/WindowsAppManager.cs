@@ -1,5 +1,4 @@
 ﻿using WhereToFly.App.Abstractions;
-using WhereToFly.App.Platforms.Windows;
 
 namespace WhereToFly.App.Platforms.Windows;
 

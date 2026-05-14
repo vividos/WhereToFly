@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using WhereToFly.Geo.Airspace;
 using WhereToFly.Geo.DataFormats;
 

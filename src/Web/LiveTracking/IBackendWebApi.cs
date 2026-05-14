@@ -1,6 +1,4 @@
 ﻿using Refit;
-using System;
-using System.Threading.Tasks;
 using WhereToFly.Shared.Model;
 
 namespace WhereToFly.Web.LiveTracking

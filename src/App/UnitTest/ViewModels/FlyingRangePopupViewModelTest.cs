@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
 using System.Threading.Tasks;
 using WhereToFly.App.Models;
 using WhereToFly.App.ViewModels;

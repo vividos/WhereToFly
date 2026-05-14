@@ -1,7 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.IO;
-using WhereToFly.Shared.Model;
+﻿using WhereToFly.Shared.Model;
 using WhereToFly.WebApi.Logic.TourPlanning;
 
 namespace WhereToFly.WebApi.UnitTest

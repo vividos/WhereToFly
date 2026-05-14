@@ -1,8 +1,6 @@
-﻿using Microsoft.Maui.Controls;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using System.Threading.Tasks;
-using WhereToFly.App.Logic;
 using WhereToFly.App.Pages;
 using WhereToFly.App.Services;
 

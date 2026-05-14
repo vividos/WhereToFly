@@ -1,7 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Threading.Tasks;
-using WhereToFly.WebApi.Logic;
+﻿using WhereToFly.WebApi.Logic;
 
 namespace WhereToFly.WebApi.UnitTest
 {

@@ -1,8 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WhereToFly.Geo.Model;
+﻿using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;
 using WhereToFly.WebApi.Logic.TourPlanning;
 

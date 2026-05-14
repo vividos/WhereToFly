@@ -1,9 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
 using WhereToFly.Shared.Model;
 
 namespace WhereToFly.WebApi.Core.Controllers

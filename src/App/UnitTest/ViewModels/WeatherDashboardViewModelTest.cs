@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Linq;
 using WhereToFly.App.ViewModels;
 
 namespace WhereToFly.App.UnitTest.ViewModels;

@@ -4,7 +4,6 @@ using Android.Graphics;
 using Android.Graphics.Drawables;
 using System.Diagnostics;
 using WhereToFly.App.Abstractions;
-using WhereToFly.App.Platforms.Android;
 
 namespace WhereToFly.App.Platforms.Android;
 

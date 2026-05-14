@@ -1,7 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Threading.Tasks;
 using WhereToFly.WebApi.Logic;
 
 namespace WhereToFly.WebApi.Core.Controllers

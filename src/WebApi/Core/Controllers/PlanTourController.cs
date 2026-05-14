@@ -1,9 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using WhereToFly.Shared.Model;
 using WhereToFly.WebApi.Core.Services;
 

@@ -1,5 +1,4 @@
-﻿using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
+﻿using Microsoft.Maui.Graphics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WhereToFly.App.ViewModels;
 using WhereToFly.Geo;

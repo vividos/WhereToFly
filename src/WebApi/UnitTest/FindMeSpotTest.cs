@@ -1,5 +1,4 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WhereToFly.Shared.Model;
+﻿using WhereToFly.Shared.Model;
 using WhereToFly.WebApi.Logic.Services;
 
 namespace WhereToFly.WebApi.UnitTest

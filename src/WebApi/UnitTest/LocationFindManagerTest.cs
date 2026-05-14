@@ -1,8 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using WhereToFly.Geo.Model;
 using WhereToFly.WebApi.Logic;
 

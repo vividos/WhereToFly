@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using WhereToFly.WebApi.Logic.Services;
+﻿using WhereToFly.WebApi.Logic.Services;
 
 [assembly: Parallelize(Scope = ExecutionScope.MethodLevel)]
 
