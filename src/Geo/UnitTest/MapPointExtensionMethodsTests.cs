@@ -19,7 +19,7 @@ public class MapPointExtensionMethodsTests
         var point1 = new MapPoint(48.2, 11.5);
         var point2 = new MapPoint(48.2 + 0.1, 11.5);
 
-        var distanceInMeter = 1000;
+        int distanceInMeter = 1000;
         var point3 = point2.PolarOffset(distanceInMeter, 321.0, 0.0);
 
         // run
@@ -77,7 +77,7 @@ public class MapPointExtensionMethodsTests
     {
         // set up
         var centerPoint = new MapPoint(48.2, 11.5);
-        var distanceInMeter = 1000;
+        int distanceInMeter = 1000;
 
         // run
         var northPoint = centerPoint.PolarOffset(distanceInMeter, 0, 0.0);
@@ -102,8 +102,8 @@ public class MapPointExtensionMethodsTests
     {
         // set up
         var point1 = new MapPoint(48.2, 11.5);
-        var distanceInMeterNorth = 3000;
-        var distanceInMeterEast = 4000;
+        int distanceInMeterNorth = 3000;
+        int distanceInMeterEast = 4000;
 
         // run
         var point2 = point1.Offset(distanceInMeterNorth, distanceInMeterEast, 0.0);

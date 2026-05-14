@@ -31,8 +31,8 @@ public class OpenAirFileParserTest
                 var parser = new OpenAirFileParser(stream);
 
                 // check
-                Assert.IsTrue(parser.Airspaces.Any(), "there must be some airspaces in the file");
-                Assert.IsFalse(parser.ParsingErrors.Any(), "there must be no parsing errors");
+                Assert.IsNotEmpty(parser.Airspaces, "there must be some airspaces in the file");
+                Assert.IsEmpty(parser.ParsingErrors, "there must be no parsing errors");
 
                 foreach (Airspace.Airspace airspace in parser.Airspaces)
                 {
@@ -76,7 +76,7 @@ public class OpenAirFileParserTest
             "3000 MSL",
         ];
 
-        foreach (var altitude in altitudeVariants)
+        foreach (string altitude in altitudeVariants)
         {
             string openairText = $"AC C\nAN UnitTest\nAL GND\nAH {altitude}\nV X=52:23:00 N 005:50:00 E\nDC 5";
 
@@ -86,12 +86,12 @@ public class OpenAirFileParserTest
                 var parser = new OpenAirFileParser(stream);
 
                 // check
-                Assert.IsTrue(parser.Airspaces.Any(), "there must be some airspaces in the file");
+                Assert.IsNotEmpty(parser.Airspaces, "there must be some airspaces in the file");
 
                 AltitudeType? ceilingType = parser.Airspaces?.FirstOrDefault()?.Ceiling?.Type;
                 Debug.WriteLine($"altitude text {altitude} resulted in type {ceilingType}");
 
-                Assert.IsFalse(parser.ParsingErrors.Any(), "there must be no parsing errors");
+                Assert.IsEmpty(parser.ParsingErrors, "there must be no parsing errors");
             }
         }
     }
@@ -110,7 +110,7 @@ public class OpenAirFileParserTest
             "52:21:30.123 S 005:52:30.456 W",
         ];
 
-        foreach (var coordinate in coordinateVariants)
+        foreach (string coordinate in coordinateVariants)
         {
             string openairText = $"AC C\nAN UnitTest\nAL GND\nAH UNLIMITED\nV X={coordinate}\nDC 5";
 
@@ -120,9 +120,9 @@ public class OpenAirFileParserTest
                 var parser = new OpenAirFileParser(stream);
 
                 // check
-                Assert.AreEqual(1, parser.Airspaces.Count(), "there must be one airspace in the file");
+                Assert.HasCount(1, parser.Airspaces, "there must be one airspace in the file");
 
-                Assert.IsFalse(parser.ParsingErrors.Any(), "there must be no parsing errors");
+                Assert.IsEmpty(parser.ParsingErrors, "there must be no parsing errors");
 
                 var circle = parser.Airspaces.First().Geometry as Circle;
 
@@ -179,7 +179,7 @@ public class OpenAirFileParserTest
             "AC C\nSB 1,2,3,4", // SB and wrong number of args
         ];
 
-        foreach (var openairText in errorCommands)
+        foreach (string openairText in errorCommands)
         {
             Debug.WriteLine("trying to parse: " + openairText);
 
@@ -189,7 +189,7 @@ public class OpenAirFileParserTest
                 var parser = new OpenAirFileParser(stream);
 
                 // check
-                Assert.IsTrue(parser.ParsingErrors.Any(), "there must be parsing errors");
+                Assert.IsNotEmpty(parser.ParsingErrors, "there must be parsing errors");
             }
         }
     }
@@ -208,7 +208,7 @@ public class OpenAirFileParserTest
             "UNLIM (on midnight)",
         ];
 
-        foreach (var openingTimes in openingTimesVariants)
+        foreach (string openingTimes in openingTimesVariants)
         {
             string openairText = $"AC C\nAN UnitTest\nAL GND\nAH {openingTimes}\nV X=52:23:00 N 005:50:00 E\nDC 5";
 
@@ -218,8 +218,8 @@ public class OpenAirFileParserTest
                 var parser = new OpenAirFileParser(stream);
 
                 // check
-                Assert.IsFalse(parser.ParsingErrors.Any(), "there must be no parsing errors");
-                Assert.IsTrue(parser.Airspaces.Any(), "there must be some airspaces in the file");
+                Assert.IsEmpty(parser.ParsingErrors, "there must be no parsing errors");
+                Assert.IsNotEmpty(parser.Airspaces, "there must be some airspaces in the file");
 
                 var ceiling = parser.Airspaces.First().Ceiling;
                 Debug.WriteLine($"altitude text {openingTimes} resulted in type {ceiling?.Type} and opening times {ceiling?.OpeningTimes}");
@@ -229,7 +229,7 @@ public class OpenAirFileParserTest
                     "ceiling must not be a textual value");
 
                 Assert.IsTrue(
-                    ceiling.OpeningTimes != null && ceiling.OpeningTimes.Any(),
+                    ceiling.OpeningTimes != null && ceiling.OpeningTimes.Length != 0,
                     "there must be an opening times text");
             }
         }

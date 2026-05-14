@@ -339,7 +339,7 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
         {
             var itemMapping = new Dictionary<string, string>();
 
-            string[] lines = text.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] lines = text.Split(['\n'], StringSplitOptions.RemoveEmptyEntries);
 
             string? currentItemTitle = null;
             var currentItemText = new StringBuilder();

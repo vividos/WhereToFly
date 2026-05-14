@@ -35,8 +35,8 @@ public class SelectWeatherIconViewModelTest : UserInterfaceTestBase
             viewModel.GroupedWeatherIconList,
             "grouped weather icon list must be available");
 
-        Assert.IsTrue(
-            viewModel.GroupedWeatherIconList.Any(),
+        Assert.IsNotEmpty(
+            viewModel.GroupedWeatherIconList,
             "weather icon description list must not be empty");
     }
 }

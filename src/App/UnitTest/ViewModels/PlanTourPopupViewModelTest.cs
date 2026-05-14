@@ -39,7 +39,7 @@ public class PlanTourPopupViewModelTest : UserInterfaceTestBase
             "waiting for property change must succeed");
 
         // check
-        Assert.IsTrue(viewModel.PlanTourList.Any(), "plan tour list must contain entries");
+        Assert.IsNotEmpty(viewModel.PlanTourList, "plan tour list must contain entries");
         Assert.IsNotNull(viewModel.PlanTourCommand, "command must have been initialized");
         Assert.IsNotNull(viewModel.CloseCommand, "command must have been initialized");
         Assert.IsFalse(viewModel.IsTourPlanningPossible, "tour planning must not be possible with 1 entry");

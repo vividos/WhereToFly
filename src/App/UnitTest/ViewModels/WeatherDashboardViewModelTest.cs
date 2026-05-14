@@ -27,6 +27,6 @@ public class WeatherDashboardViewModelTest : UserInterfaceTestBase
             "waiting for property change must succeed");
 
         // check
-        Assert.IsTrue(viewModel.WeatherDashboardItems.Any(), "weather icon list must contain placeholder icon");
+        Assert.IsNotEmpty(viewModel.WeatherDashboardItems, "weather icon list must contain placeholder icon");
     }
 }

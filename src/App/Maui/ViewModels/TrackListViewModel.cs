@@ -276,8 +276,8 @@ public class TrackListViewModel : ViewModelBase
                 FileTypes = new FilePickerFileType(
                     new Dictionary<DevicePlatform, IEnumerable<string>>
                     {
-                        { DevicePlatform.Android, Array.Empty<string>() },
-                        { DevicePlatform.WinUI, new string[] { ".kml", ".kmz", ".gpx", ".igc" } },
+                        { DevicePlatform.Android, [] },
+                        { DevicePlatform.WinUI, [".kml", ".kmz", ".gpx", ".igc"] },
                     }),
                 PickerTitle = "Select a Track file to import",
             };

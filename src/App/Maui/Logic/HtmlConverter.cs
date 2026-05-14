@@ -134,7 +134,7 @@ public static class HtmlConverter
             return string.Empty;
         }
 
-        bool hasHtmlTags = markdownOrHtmlText.Contains("<") &&
+        bool hasHtmlTags = markdownOrHtmlText.Contains('<') &&
             (markdownOrHtmlText.Contains("</") || markdownOrHtmlText.Contains("/>"));
 
         if (!hasHtmlTags)

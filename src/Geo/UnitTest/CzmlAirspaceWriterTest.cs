@@ -22,7 +22,7 @@ public class CzmlAirspaceWriterTest
     {
         var airspacesList = new List<Airspace.Airspace>
         {
-            new Airspace.Airspace(AirspaceClass.C)
+            new(AirspaceClass.C)
             {
                 Name = "MyAirspace",
                 AirspaceType = "RMZ",
@@ -66,7 +66,7 @@ public class CzmlAirspaceWriterTest
             string czml = CzmlAirspaceWriter.WriteCzml(
                 Path.GetFileNameWithoutExtension(Path.GetFileNameWithoutExtension(filename)),
                 parser.Airspaces,
-                new string[] { "Description line", "Another line" });
+                ["Description line", "Another line"]);
 
             // check
             Debug.WriteLine("CZML = " + czml);

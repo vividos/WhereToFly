@@ -37,7 +37,7 @@ public class IgcParserTests
         Assert.IsNotNull(track, "track must not be null");
         Assert.IsNotNull(track.Name, "track name must be set");
         Assert.IsNotEmpty(track.TrackPoints, "there must be any track points");
-        Assert.IsFalse(parsingErrors.Any(), "there must be no parsing errors");
+        Assert.IsEmpty(parsingErrors, "there must be no parsing errors");
     }
 
     /// <summary>
@@ -48,14 +48,14 @@ public class IgcParserTests
     {
         // set up
         var expectedDate = new DateTime(2021, 2, 7, 0, 0, 0, DateTimeKind.Local);
-        var lines = new string[]
-        {
+        string[] lines =
+        [
             "HFDTE070221",
             "HFDTE 070221",
             "HFDTEDATE:070221",
             "HFDTEDATE:070221,01",
             "HFDTEDATE: 070221,01",
-        };
+        ];
 
         // run
         foreach (string lineToParse in lines)

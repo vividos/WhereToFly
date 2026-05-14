@@ -309,14 +309,14 @@ public class CurrentPositionDetailsViewModel : ViewModelBase
 
         this.SetupTimer();
 
-        this.SharePositionCommand = new AsyncRelayCommand(this.SharePosition);
+        this.SharePositionCommand = new AsyncRelayCommand(SharePosition);
     }
 
     /// <summary>
     /// Called when toolbar button "Share" was clicked
     /// </summary>
     /// <returns>task to wait on</returns>
-    private async Task SharePosition()
+    private static async Task SharePosition()
     {
         var geolocationService = Services.GetRequiredService<IGeolocationService>();
 

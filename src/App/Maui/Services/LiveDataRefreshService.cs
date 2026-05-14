@@ -120,10 +120,9 @@ public class LiveDataRefreshService
         {
             foreach (Location liveWaypointLocation in liveWaypointLocationList)
             {
-                if (!this.liveWaypointMap.ContainsKey(liveWaypointLocation.Id))
-                {
-                    this.liveWaypointMap.Add(liveWaypointLocation.Id, liveWaypointLocation);
-                }
+                this.liveWaypointMap.TryAdd(
+                    liveWaypointLocation.Id,
+                    liveWaypointLocation);
             }
         }
 
@@ -529,10 +528,10 @@ public class LiveDataRefreshService
                     TrackData = queryResult.Data,
                 });
 
-            if (queryResult.Data.TrackPoints.Any())
+            if (queryResult.Data.TrackPoints.Length != 0)
             {
                 double offset = queryResult.Data.
-                    TrackPoints[queryResult.Data.TrackPoints.Length - 1]
+                    TrackPoints[^1]
                     .Offset;
 
                 nextLastTrackPointTime = queryResult.Data.TrackStart.AddSeconds(offset);

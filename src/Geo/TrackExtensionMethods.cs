@@ -138,13 +138,13 @@ public static class TrackExtensionMethods
             return;
         }
 
-        if (track.TrackPoints[0].Time > trackPointsToJoin.TrackPoints[trackPointsToJoin.TrackPoints.Count - 1].Time)
+        if (track.TrackPoints[0].Time > trackPointsToJoin.TrackPoints[^1].Time)
         {
             track.TrackPoints.InsertRange(0, trackPointsToJoin.TrackPoints);
             return;
         }
 
-        if (track.TrackPoints[track.TrackPoints.Count - 1].Time < trackPointsToJoin.TrackPoints[0].Time)
+        if (track.TrackPoints[^1].Time < trackPointsToJoin.TrackPoints[0].Time)
         {
             track.TrackPoints.AddRange(trackPointsToJoin.TrackPoints);
             return;

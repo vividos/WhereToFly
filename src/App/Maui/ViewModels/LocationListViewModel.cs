@@ -428,8 +428,8 @@ public class LocationListViewModel : ViewModelBase
                 FileTypes = new FilePickerFileType(
                     new Dictionary<DevicePlatform, IEnumerable<string>>
                     {
-                        { DevicePlatform.Android, new string[] { } },
-                        { DevicePlatform.WinUI, new string[] { ".kml", ".kmz", ".gpx", ".xctsk", ".cup" } },
+                        { DevicePlatform.Android, [] },
+                        { DevicePlatform.WinUI, [".kml", ".kmz", ".gpx", ".xctsk", ".cup"] },
                     }),
                 PickerTitle = "Select a Location file to import",
             };

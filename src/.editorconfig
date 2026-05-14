@@ -288,6 +288,9 @@ dotnet_diagnostic.CsWinRT1028.severity = none
 # CsWinRT1030: Project needs to be updated with '<AllowUnsafeBlocks>true</AllowUnsafeBlocks>' to allow generic interface code generation.
 dotnet_diagnostic.CsWinRT1030.severity = none
 
+# IDE0160: Convert to block scoped namespace
+dotnet_diagnostic.IDE0160.severity = none
+
 # StyleCop rules
 
 # SA0001: XML comment analysis is disabled due to project configuration

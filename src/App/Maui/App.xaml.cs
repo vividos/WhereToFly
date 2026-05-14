@@ -72,13 +72,14 @@ public partial class App : Application
             typeof(Crashes));
 #endif
 
-        TaskScheduler.UnobservedTaskException += this.TaskScheduler_UnobservedTaskException;
+        TaskScheduler.UnobservedTaskException +=
+            TaskScheduler_UnobservedTaskException;
 
         this.InitializeComponent();
 
-        App.InitializedTask = Task.Run(this.LoadAppDataAsync);
+        App.InitializedTask = Task.Run(LoadAppDataAsync);
 
-        this.RequestedThemeChanged += this.OnRequestedThemeChanged;
+        this.RequestedThemeChanged += OnRequestedThemeChanged;
     }
 
     /// <summary>
@@ -110,7 +111,9 @@ public partial class App : Application
     /// </summary>
     /// <param name="sender">sender object</param>
     /// <param name="args">event args</param>
-    private void OnRequestedThemeChanged(object? sender, AppThemeChangedEventArgs args)
+    private static void OnRequestedThemeChanged(
+        object? sender,
+        AppThemeChangedEventArgs args)
     {
         Debug.WriteLine($"OS App Theme changed to {args.RequestedTheme}");
 
@@ -126,7 +129,7 @@ public partial class App : Application
     /// live waypoint refresh services.
     /// </summary>
     /// <returns>task to wait on</returns>
-    private async Task LoadAppDataAsync()
+    private static async Task LoadAppDataAsync()
     {
         var dataService = Services.GetRequiredService<IDataService>();
         Config = await dataService.GetAppConfigAsync(CancellationToken.None);
@@ -144,7 +147,7 @@ public partial class App : Application
     /// </summary>
     /// <param name="sender">sender object</param>
     /// <param name="args">event args</param>
-    private void TaskScheduler_UnobservedTaskException(
+    private static void TaskScheduler_UnobservedTaskException(
         object? sender,
         UnobservedTaskExceptionEventArgs args)
     {

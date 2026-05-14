@@ -92,11 +92,8 @@ internal partial class WebViewLongTapToSaveImageBehavior :
 
         this.webView.Touch -= this.OnTouch;
 
-        if (this.gestureDetector != null)
-        {
-            this.gestureDetector.Dispose();
-            this.gestureDetector = null;
-        }
+        this.gestureDetector?.Dispose();
+        this.gestureDetector = null;
     }
 
     /// <summary>
@@ -176,7 +173,7 @@ internal partial class WebViewLongTapToSaveImageBehavior :
             (sender1, args1) => { });
 
         builder.SetItems(
-            new string[] { "Download" },
+            ["Download"],
             (sender2, args2) => this.StartDownload(imageLink, filename));
 
         builder.Show();

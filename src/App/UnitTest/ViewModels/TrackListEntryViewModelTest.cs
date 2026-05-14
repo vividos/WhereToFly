@@ -24,8 +24,8 @@ public class TrackListEntryViewModelTest : UserInterfaceTestBase
         var viewModel = new TrackListEntryViewModel(parentViewModel, track);
 
         // check
-        Assert.IsTrue(viewModel.Name.Any(), "name must contain value");
-        Assert.IsTrue(viewModel.DetailInfos.Any(), "detail infos must contain value");
+        Assert.IsNotEmpty(viewModel.Name, "name must contain value");
+        Assert.IsNotEmpty(viewModel.DetailInfos, "detail infos must contain value");
         Assert.IsNotNull(viewModel.Track, "track must be not null");
 
         Assert.IsNotNull(viewModel.ShowTrackDetailsCommand, "show track details command must not be null");

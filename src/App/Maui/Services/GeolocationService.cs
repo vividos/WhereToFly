@@ -137,7 +137,7 @@ public class GeolocationService : IGeolocationService
         }
 
         this.geolocation.LocationChanged += this.OnLocationChanged;
-        this.geolocation.ListeningFailed += this.OnLocationError;
+        this.geolocation.ListeningFailed += OnLocationError;
 
         return await this.geolocation.StartListeningForegroundAsync(
             new GeolocationListeningRequest(
@@ -165,7 +165,9 @@ public class GeolocationService : IGeolocationService
     /// </summary>
     /// <param name="sender">sender object</param>
     /// <param name="args">event args</param>
-    private void OnLocationError(object? sender, GeolocationListeningFailedEventArgs args)
+    private static void OnLocationError(
+        object? sender,
+        GeolocationListeningFailedEventArgs args)
     {
         Debug.WriteLine($"PositionError: {args.Error}");
     }
@@ -181,7 +183,7 @@ public class GeolocationService : IGeolocationService
         }
 
         this.geolocation.LocationChanged -= this.OnLocationChanged;
-        this.geolocation.ListeningFailed -= this.OnLocationError;
+        this.geolocation.ListeningFailed -= OnLocationError;
 
         this.geolocation.StopListeningForeground();
     }

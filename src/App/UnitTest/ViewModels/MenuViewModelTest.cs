@@ -20,7 +20,7 @@ public class MenuViewModelTest
         var viewModel = new MenuViewModel();
 
         // check
-        Assert.IsTrue(viewModel.MenuItemList.Any(), "menu item list must contain items");
+        Assert.IsNotEmpty(viewModel.MenuItemList, "menu item list must contain items");
 
         foreach (var menuItem in viewModel.MenuItemList)
         {

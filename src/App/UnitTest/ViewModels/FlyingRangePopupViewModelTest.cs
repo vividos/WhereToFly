@@ -38,7 +38,7 @@ public class FlyingRangePopupViewModelTest : UserInterfaceTestBase
             viewModel.WindDirectionList,
             "wind direction must be in the wind direction list");
 
-        Assert.IsTrue(viewModel.WindSpeed.Any(), "wind speed must contain text");
+        Assert.IsNotEmpty(viewModel.WindSpeed, "wind speed must contain text");
 
         // modify values
         viewModel.GlideRatio = 8.5;

@@ -28,7 +28,7 @@ public class LayerListViewModelTest : UserInterfaceTestBase
         // check
         Assert.IsTrue(result, "LayerList property must have been changed");
         Assert.IsNotNull(viewModel.LayerList, "layer list must be available");
-        Assert.IsTrue(viewModel.LayerList.Any(), "layer list must not be empty");
+        Assert.IsNotEmpty(viewModel.LayerList, "layer list must not be empty");
         Assert.IsFalse(viewModel.IsListEmpty, "layer list must not be empty");
         Assert.IsTrue(viewModel.IsClearLayerListEnabled, "layer list must not be empty");
         Assert.IsNotNull(viewModel.ImportLayerCommand, "command must not be null");

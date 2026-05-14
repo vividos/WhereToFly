@@ -26,7 +26,7 @@ public class AddLiveWaypointPopupViewModelTest
 
         // check
         Assert.AreEqual(location.Name, viewModel.Name, "location mame must match");
-        Assert.IsTrue(viewModel.Type.Any(), "location type must contain text");
+        Assert.IsNotEmpty(viewModel.Type, "location type must contain text");
 
         // modify values
         viewModel.Name = "Live42";

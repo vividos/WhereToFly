@@ -49,7 +49,7 @@ public class TrackViewModelTest : UserInterfaceTestBase
         var viewModel = new TrackDetailsViewModel(track);
 
         // check
-        Assert.IsTrue(viewModel.Name.Any(), "name must contain value");
+        Assert.IsNotEmpty(viewModel.Name, "name must contain value");
         Assert.IsNotNull(viewModel.TypeImageSource, "type image source must not be null");
     }
 
@@ -68,16 +68,16 @@ public class TrackViewModelTest : UserInterfaceTestBase
 
         // check
         Assert.IsGreaterThan(0, viewModel.NumTrackPoints, "there must be some track points");
-        Assert.IsTrue(viewModel.Distance.Any(), "distance must contain value");
-        Assert.IsTrue(viewModel.Duration.Any(), "duration must contain value");
+        Assert.IsNotEmpty(viewModel.Distance, "distance must contain value");
+        Assert.IsNotEmpty(viewModel.Duration, "duration must contain value");
 
-        Assert.IsTrue(viewModel.HeightGain.Any(), "height gain must contain value");
-        Assert.IsTrue(viewModel.HeightLoss.Any(), "height loss must contain value");
-        Assert.IsTrue(viewModel.MaxHeight.Any(), "max. height must contain value");
-        Assert.IsTrue(viewModel.MinHeight.Any(), "min. height must contain value");
-        Assert.IsTrue(viewModel.MaxClimbRate.Any(), "max. climb rate must contain value");
-        Assert.IsTrue(viewModel.MaxSinkRate.Any(), "max. sink rate must contain value");
-        Assert.IsTrue(viewModel.MaxSpeed.Any(), "max. speed must contain value");
-        Assert.IsTrue(viewModel.AverageSpeed.Any(), "average speed must contain value");
+        Assert.IsNotEmpty(viewModel.HeightGain, "height gain must contain value");
+        Assert.IsNotEmpty(viewModel.HeightLoss, "height loss must contain value");
+        Assert.IsNotEmpty(viewModel.MaxHeight, "max. height must contain value");
+        Assert.IsNotEmpty(viewModel.MinHeight, "min. height must contain value");
+        Assert.IsNotEmpty(viewModel.MaxClimbRate, "max. climb rate must contain value");
+        Assert.IsNotEmpty(viewModel.MaxSinkRate, "max. sink rate must contain value");
+        Assert.IsNotEmpty(viewModel.MaxSpeed, "max. speed must contain value");
+        Assert.IsNotEmpty(viewModel.AverageSpeed, "average speed must contain value");
     }
 }

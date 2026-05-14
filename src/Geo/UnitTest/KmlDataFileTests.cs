@@ -149,8 +149,8 @@ public class KmlDataFileTests
             .Where(kvp => kvp.Value > 1)
             .Select(kvp => kvp.Key);
 
-        Assert.IsFalse(
-            locationIdsWithMultipleCounts.Any(),
+        Assert.IsEmpty(
+            locationIdsWithMultipleCounts,
             "there must be no placemark IDs which two or more locations");
     }
 }

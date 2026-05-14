@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Windows.Input;
 using WhereToFly.App.Abstractions;
 using WhereToFly.App.Logic;
 using WhereToFly.Geo.Model;
@@ -103,6 +104,10 @@ public class TrackDetailsViewModel : ViewModelBase
     /// <summary>
     /// Indicates if the height profile view is displayed using a dark theme
     /// </summary>
+    [SuppressMessage(
+        "Minor Code Smell",
+        "S2325:Methods and properties that don't access instance data should be static",
+        Justification = "Property is used in XAML Binding")]
     public bool UseDarkTheme => UserInterface.IsDarkTheme;
     #endregion
 

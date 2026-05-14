@@ -87,8 +87,8 @@ public class AppConfigTest
             appConfig,
             "deserialized app config must not be null");
 
-        Assert.IsTrue(
-            appConfig.ExpiryDate != DateTimeOffset.MinValue,
+        Assert.AreNotEqual(
+            DateTimeOffset.MinValue, appConfig.ExpiryDate,
             "epiry date must be valid");
 
         Assert.AreEqual(

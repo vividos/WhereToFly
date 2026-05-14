@@ -268,8 +268,8 @@ public class LayerListViewModel : ViewModelBase
                 FileTypes = new FilePickerFileType(
                     new Dictionary<DevicePlatform, IEnumerable<string>>
                     {
-                        { DevicePlatform.Android, new string[] { } },
-                        { DevicePlatform.WinUI, new string[] { ".czml" } },
+                        { DevicePlatform.Android, [] },
+                        { DevicePlatform.WinUI, [".czml"] },
                     }),
                 PickerTitle = "Select a CZML layer file to import",
             };
@@ -311,8 +311,8 @@ public class LayerListViewModel : ViewModelBase
                 FileTypes = new FilePickerFileType(
                     new Dictionary<DevicePlatform, IEnumerable<string>>
                     {
-                        { DevicePlatform.Android, new string[] { "text/plain" } },
-                        { DevicePlatform.WinUI, new string[] { ".txt" } },
+                        { DevicePlatform.Android, ["text/plain"] },
+                        { DevicePlatform.WinUI, [".txt"] },
                     }),
                 PickerTitle = "Select an OpenAir text file to import",
             };
@@ -354,8 +354,8 @@ public class LayerListViewModel : ViewModelBase
                 FileTypes = new FilePickerFileType(
                     new Dictionary<DevicePlatform, IEnumerable<string>>
                     {
-                        { DevicePlatform.Android, new string[] { } },
-                        { DevicePlatform.WinUI, new string[] { ".xctsk" } },
+                        { DevicePlatform.Android, [] },
+                        { DevicePlatform.WinUI, [".xctsk"] },
                     }),
                 PickerTitle = "Select an XC Track task file (.xctsk) to import",
             };

@@ -30,7 +30,7 @@ public class LocationListViewModelTest : UserInterfaceTestBase
 
         // check
         Assert.IsNotNull(viewModel.LocationList, "location list must be available");
-        Assert.IsTrue(viewModel.LocationList.Any(), "location list initially contains the default locations");
+        Assert.IsNotEmpty(viewModel.LocationList, "location list initially contains the default locations");
         Assert.AreEqual(0, viewModel.FilterText.Length, "filter text is initially empty");
         Assert.IsFalse(viewModel.AreAllLocationsFilteredOut, "as there is no filter text, no location was filtered out");
     }
