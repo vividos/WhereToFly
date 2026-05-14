@@ -79,4 +79,10 @@ public interface IAppMapService
     /// </summary>
     /// <returns>task to wait on</returns>
     Task ClearTempPlanTourLocations();
+
+    /// <summary>
+    /// Adds start location of planned tour to map
+    /// </summary>
+    /// <param name="startLocation">start location</param>
+    void AddPlannedTourStartLocation(Location startLocation);
 }

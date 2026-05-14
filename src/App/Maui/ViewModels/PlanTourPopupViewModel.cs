@@ -300,6 +300,8 @@ public class PlanTourPopupViewModel : ViewModelBase
             await this.AddLocation(location);
 
             this.appMapService.MapView.AddLocation(location);
+
+            this.appMapService.AddPlannedTourStartLocation(location);
         }
 
         await this.appMapService.ClearTempPlanTourLocations();

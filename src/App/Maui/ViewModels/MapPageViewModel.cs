@@ -790,6 +790,15 @@ internal class MapPageViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Adds start location of planned tour to map
+    /// </summary>
+    /// <param name="startLocation">start location</param>
+    internal void AddPlannedTourStartLocation(Location startLocation)
+    {
+        this.locationList.Add(startLocation);
+    }
+
+    /// <summary>
     /// Called when toolbar button "Find nearby pois" was clicked
     /// </summary>
     /// <returns>task to wait on</returns>

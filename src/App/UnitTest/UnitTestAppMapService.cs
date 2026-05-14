@@ -82,4 +82,10 @@ internal class UnitTestAppMapService : IAppMapService
         Debug.WriteLine("Clearing temporary plan tour locations");
         return Task.CompletedTask;
     }
+
+    /// <inheritdoc />
+    public void AddPlannedTourStartLocation(Location startLocation)
+    {
+        Debug.WriteLine("Adding planned tour start location");
+    }
 }

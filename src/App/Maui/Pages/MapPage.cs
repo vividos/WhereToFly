@@ -307,6 +307,13 @@ public class MapPage : ContentPage
     internal async Task ClearTempPlanTourLocations()
         => await this.viewModel.ClearTempPlanTourLocations();
 
+    /// <summary>
+    /// Adds start location of planned tour to map
+    /// </summary>
+    /// <param name="startLocation">start location</param>
+    internal void AddPlannedTourStartLocation(Location startLocation)
+        => this.viewModel.AddPlannedTourStartLocation(startLocation);
+
     #region Page lifecycle methods
     /// <summary>
     /// Called when page is appearing; start position updates

@@ -258,4 +258,13 @@ internal class AppMapService : IAppMapService
             await MapPage.ClearTempPlanTourLocations();
         }
     }
+
+    /// <summary>
+    /// Adds start location of planned tour to map
+    /// </summary>
+    /// <param name="startLocation">start location</param>
+    public void AddPlannedTourStartLocation(Location startLocation)
+    {
+        MapPage?.AddPlannedTourStartLocation(startLocation);
+    }
 }
