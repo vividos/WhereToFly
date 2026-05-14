@@ -3189,7 +3189,8 @@ export class MapView {
                     new Date(timePoint * 1000)));
         }
 
-        const lastTimePoint = track.listOfTimePoints[track.listOfTimePoints.length - 1];
+        const lastTimePointIndex = track.listOfTimePoints.length - 1;
+        const lastTimePoint = track.listOfTimePoints[lastTimePointIndex];
 
         MapView.log("added new track points, from " +
             new Date(track.listOfTimePoints[0] * 1000) +
@@ -3201,10 +3202,12 @@ export class MapView {
 
         // update visibility and text of label
         const showLabelProperty = trackData.liveTrackEntity.label.show;
+
+        const lastJulianTimePointIndex = julianTimePoints.length - 1;
         showLabelProperty.intervals.addInterval(
             new TimeInterval({
                 start: julianTimePoints[0],
-                stop: julianTimePoints[julianTimePoints.length - 1],
+                stop: julianTimePoints[lastJulianTimePointIndex],
                 data: false // label is not visible
             }));
 
