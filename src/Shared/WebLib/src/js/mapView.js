@@ -2406,7 +2406,7 @@ export class MapView {
             ", longitude:" + options.longitude +
             ", altitude:" + options.altitude.toFixed(1) + "}";
 
-        text += "<p><img height=\"32em\" width=\"32em\" src=\"images/map-marker-plus.svg\" style=\"vertical-align:middle\" />" +
+        text += "<p><img height=\"32em\" width=\"32em\" src=\"images/playlist-plus.svg\" style=\"vertical-align:middle\" />" +
             "<a href=\"javascript:parent.map.onAddFindResult(" + optionsText + ");\">Add as waypoint</a>";
 
         text += "<img height=\"32em\" width=\"32em\" src=\"images/map-marker-plus.svg\" style=\"vertical-align:middle\" /> " +
