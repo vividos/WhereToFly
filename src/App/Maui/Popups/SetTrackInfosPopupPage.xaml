@@ -12,7 +12,7 @@
 
     <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto"
           RowSpacing="10"
-          Padding="10">
+          Padding="8">
 
         <!-- Caption -->
         <Label Grid.Row="0"
