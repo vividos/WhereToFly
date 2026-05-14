@@ -77,6 +77,13 @@
     "WebLink": "https://breezedude.de/?lat=47.2643&lon=11.8421&z=8.0"
   },
   {
+    "Name": "Sichtflug.app",
+    "Group": "Weather forecast",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://sichtflug.app/?z=7.1&lat=47.0104&lng=12.1481"
+  },
+  {
     "Name": "Meteo.guru (Velivole.fr)",
     "Group": "Weather forecast",
     "Type": 0,
