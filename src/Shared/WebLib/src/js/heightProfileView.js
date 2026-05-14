@@ -92,7 +92,7 @@ export class HeightProfileView {
             isFlightTrack: false,
             callback: {}
         };
-        
+
         this.options = { ...defaultOptions, ...options };
 
         if (this.options.callback === undefined)
@@ -184,7 +184,7 @@ export class HeightProfileView {
                         pan: {
                             enabled: true,
                             mode: "x",
-                            onPanStart: this.onPanZoomStart.bind(this),
+                            onPanStart: this.onPanStart.bind(this),
                             onPanComplete: this.onPanZoomComplete.bind(this)
                         },
                         zoom: {
@@ -230,6 +230,21 @@ export class HeightProfileView {
         chartButtonInfo.style.display = this.options.showInfoButton ? "block" : "none";
 
         this.setModeZoomAndPan();
+    }
+
+    /**
+     * Called when panning starts; checks if panning when fully zoomed out
+     * @param {object} args event args
+     * @returns {boolean} true to continue panning, or false to cancel it
+     */
+    onPanStart(args) {
+        // prevent panning when fully zoomed out
+        if (!args.chart.isZoomedOrPanned()) {
+            HeightProfileView.log("prevented panning since fully zoomed out");
+            return false;
+        }
+
+        return this.onPanZoomStart(args);
     }
 
     /**

@@ -13,6 +13,7 @@ Released on ?.
 
 🐛 Bugfixes
 
+- Fixed panning over height profile when the track is fully zoomed out
 - Fixed crash when opening external links
 - Fixed potential crash when app tries to change the app's color theme
 - Fixed entering text in location filter field
