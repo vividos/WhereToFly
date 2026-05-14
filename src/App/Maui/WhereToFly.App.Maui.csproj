@@ -132,6 +132,12 @@
     <WindowsPackageType>None</WindowsPackageType>
   </PropertyGroup>
 
+  <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows' And '$(Configuration)' == 'Debug'">
+    <!-- App Icon -->
+    <MauiIcon Remove="Resources\AppIcon\appicon.svg" />
+    <MauiIcon Include="Resources\AppIcon\debug\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#9e2f29" />
+  </ItemGroup>
+
   <!-- .NET Windows release properties -->
   <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows' And '$(Configuration)' == 'Release'">
     <WindowsPackageType>None</WindowsPackageType>
@@ -156,6 +162,13 @@
     <ApplicationTitle>Debug Where-to-fly</ApplicationTitle>
     <RuntimeIdentifiers>android-arm64;android-x64</RuntimeIdentifiers>
   </PropertyGroup>
+
+  <ItemGroup Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' And '$(Configuration)' == 'Debug' ">
+    <!-- App Icon -->
+    <MauiIcon Remove="Resources\AppIcon\appicon.svg" />
+    <MauiIcon Include="Resources\AppIcon\debug\appicon.svg" ForegroundFile="Resources\AppIcon\debug\appiconfg.svg" Color="#9e2f29" />
+    <AndroidResource Remove="Platforms\Android\Resources\mipmap-anydpi-v26\appicon.xml" />
+  </ItemGroup>
 
   <!-- .NET Android release properties -->
   <PropertyGroup Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' And '$(Configuration)' == 'Release' ">
