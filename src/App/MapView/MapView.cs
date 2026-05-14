@@ -242,7 +242,7 @@ public class MapView :
     /// <summary>
     /// Event that is signaled when a map point should be set as compass target
     /// </summary>
-    public event OnSetMapPointAsCompassTargetCallback ? SetMapPointAsCompassTarget;
+    public event OnSetMapPointAsCompassTargetCallback? SetMapPointAsCompassTarget;
 
     /// <summary>
     /// Delegate of function to call when track details should be shown
