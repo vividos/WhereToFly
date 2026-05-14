@@ -112,7 +112,7 @@ export class MapView {
 
         MapView.log("creating new 3D map view");
 
-        this.options = Object.assign({
+        const defaultOptions = {
             id: "mapElement",
             liveTrackToolbarId: "liveTrackToolbar",
             heightProfileElementId: "heightProfileView",
@@ -121,7 +121,9 @@ export class MapView {
             hasMouse: false,
             useAsynchronousPrimitives: true,
             useEntityClustering: true
-        }, options);
+        };
+
+        this.options = { ...defaultOptions, ...options };
 
         if (this.options.callback === undefined)
             this.options.callback = Utils.callAction;
@@ -508,7 +510,7 @@ export class MapView {
     onScreenTouchDown(movement) {
 
         this.currentLeftDownPosition = movement.position;
-        this.currentLeftDownTime = new Date().getTime();
+        this.currentLeftDownTime = Date.now();
     }
 
     /**
@@ -521,7 +523,7 @@ export class MapView {
         const deltaY = this.currentLeftDownPosition.y - movement.position.y;
         const deltaSquared = deltaX * deltaX + deltaY * deltaY;
 
-        const deltaTime = new Date().getTime() - this.currentLeftDownTime;
+        const deltaTime = Date.now() - this.currentLeftDownTime;
 
         // check if tap was longer than 600ms and moved less than 10 pixels
         let longTapDetected = false;
@@ -1419,7 +1421,7 @@ export class MapView {
      * @returns {string} formatted text, or empty string
      */
     static formatAltitude(altitude, prefixText, suffixText) {
-        if (typeof altitude === "undefined" ||
+        if (altitude === undefined ||
             altitude === null ||
             altitude === 0)
             return "";
@@ -2292,10 +2294,11 @@ export class MapView {
             const angle = 180 - angleBit * sliceAngle;
 
             if ((takeoffBits & bitmask) !== 0) {
-                pointArray.push(MapView.pointFromCenterRadiusAngle(center, radius, angle - sliceAngle / 2));
-                pointArray.push(MapView.pointFromCenterRadiusAngle(center, radius, angle));
-                pointArray.push(MapView.pointFromCenterRadiusAngle(center, radius, angle + sliceAngle / 2));
-                pointArray.push(center);
+                pointArray.push(
+                    MapView.pointFromCenterRadiusAngle(center, radius, angle - sliceAngle / 2),
+                    MapView.pointFromCenterRadiusAngle(center, radius, angle),
+                    MapView.pointFromCenterRadiusAngle(center, radius, angle + sliceAngle / 2),
+                    center);
             }
         }
 
@@ -3073,9 +3076,10 @@ export class MapView {
         for (const modifiedTrackPoint of modifiedTrackPointArray) {
             const oldTrackPointIndex = modifiedTrackPoint.trackPointIndex;
 
-            newListOfTrackPoints.push(track.listOfTrackPoints[oldTrackPointIndex * 3]);
-            newListOfTrackPoints.push(track.listOfTrackPoints[oldTrackPointIndex * 3 + 1]);
-            newListOfTrackPoints.push(track.listOfTrackPoints[oldTrackPointIndex * 3 + 2]);
+            newListOfTrackPoints.push(
+                track.listOfTrackPoints[oldTrackPointIndex * 3],
+                track.listOfTrackPoints[oldTrackPointIndex * 3 + 1],
+                track.listOfTrackPoints[oldTrackPointIndex * 3 + 2]);
 
             if (hasListOfTimePoints)
                 newListOfTimePoints.push(track.listOfTimePoints[oldTrackPointIndex]);
@@ -3117,9 +3121,10 @@ export class MapView {
 
             const trackPoint = track.trackPoints[trackPointIndex];
 
-            track.listOfTrackPoints.push(trackPoint.longitude);
-            track.listOfTrackPoints.push(trackPoint.latitude);
-            track.listOfTrackPoints.push(trackPoint.altitude);
+            track.listOfTrackPoints.push(
+                trackPoint.longitude,
+                trackPoint.latitude,
+                trackPoint.altitude);
 
             track.listOfTimePoints.push(trackStart + trackPoint.offset);
         }

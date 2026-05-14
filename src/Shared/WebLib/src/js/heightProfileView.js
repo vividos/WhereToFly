@@ -82,7 +82,7 @@ export class HeightProfileView {
 
         this.isZoomAndPanActive = true;
 
-        this.options = Object.assign({
+        const defaultOptions = {
             id: "heightProfileView",
             setBodyBackgroundColor: true,
             trackName: "Track",
@@ -91,7 +91,9 @@ export class HeightProfileView {
             showInfoButton: false,
             isFlightTrack: false,
             callback: {}
-        }, options);
+        };
+        
+        this.options = { ...defaultOptions, ...options };
 
         if (this.options.callback === undefined)
             this.options.callback = Utils.callAction;
@@ -544,7 +546,8 @@ export class HeightProfileView {
             return;
         }
 
-        const lastDate = new Date(trackData[trackData.length - 1].x);
+        const lastIndex = trackData.length - 1;
+        const lastDate = new Date(trackData[lastIndex].x);
         const lastTimePoint = lastDate.getTime() / 1000;
 
         const newStartTimePos = track.listOfTimePoints.indexOf(lastTimePoint) + 1;
@@ -619,7 +622,7 @@ export class HeightProfileView {
 
         const heightProfileElement = document.getElementById(this.options.id);
         while (heightProfileElement.firstChild)
-            heightProfileElement.removeChild(heightProfileElement.lastChild);
+            heightProfileElement.lastChild.remove();
 
         this.options = undefined;
         this.chart = undefined;
@@ -686,9 +689,9 @@ export class HeightProfileView {
      */
     getGroundProfileDataPoint(groundProfileDataIndex) {
         const dataset = this.getGroundProfileDataArray();
-        return dataset !== null
-            ? dataset[groundProfileDataIndex]
-            : null;
+        return dataset === null
+            ? null
+            : dataset[groundProfileDataIndex];
     }
 
     /**
@@ -881,7 +884,7 @@ export class HeightProfileView {
         // display, position, and set styles for font
         tooltipElement.style.opacity = 1;
         tooltipElement.style.left = showLeft ? (position.x + window.scrollX + 50) + "px" : "";
-        tooltipElement.style.right = !showLeft ? "10px" : "";
+        tooltipElement.style.right = showLeft ? "" : "10px";
         tooltipElement.style.top = "60px";
         tooltipElement.style.font = bodyFont.string;
         tooltipElement.style.padding = tooltipModel.padding + "px " + tooltipModel.padding + "px";
