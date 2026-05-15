@@ -27,7 +27,7 @@
                 Wrap="Wrap">
 
                 <!-- Latitude / Longitude -->
-                <Grid WidthRequest="380"
+                <Grid WidthRequest="388"
                       HeightRequest="80"
                       Style="{StaticResource PositionInfoTileStyle}">
                     <Border Style="{StaticResource PositionInfoBorderStyle}">

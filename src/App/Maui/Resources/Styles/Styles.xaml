@@ -478,8 +478,8 @@
     </Style>
 
     <Style x:Key="PositionInfoTileStyle" TargetType="Grid">
-        <Setter Property="WidthRequest" Value="121" />
-        <Setter Property="HeightRequest" Value="121" />
+        <Setter Property="WidthRequest" Value="124" />
+        <Setter Property="HeightRequest" Value="124" />
         <Setter Property="Margin" Value="8,8,0,0" />
     </Style>
 

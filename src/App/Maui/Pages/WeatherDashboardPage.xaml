@@ -42,8 +42,8 @@
                     <DataTemplate x:DataType="viewmodels:WeatherIconViewModel">
                         <!-- Square layout -->
                         <Grid
-                            WidthRequest="121"
-                            HeightRequest="121"
+                            WidthRequest="124"
+                            HeightRequest="124"
                             Margin="8,8,0,0">
 
                             <!-- Recognize taps anywhere in the layout -->
@@ -68,7 +68,7 @@
                                            MaxLines="3"
                                            HorizontalTextAlignment="Center"
                                            VerticalTextAlignment="Center"
-                                           HeightRequest="48"
+                                           HeightRequest="52"
                                            VerticalOptions="Fill" />
                                 </VerticalStackLayout>
                             </Border>
