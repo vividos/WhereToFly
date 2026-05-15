@@ -8,8 +8,8 @@ The app uses [CesiumJS](https://www.cesium.com/) to visualize a 3D map.
 The component is licensed using the
 [Apache License 2.0](https://github.com/CesiumGS/cesium/blob/master/LICENSE.md).
 
-The app uses the [Microsoft App Center](https://appcenter.ms/) SDK packages to
-distribute the app and to collect crash information.
+The app uses the [Microsoft App Center](https://appcenter.ms/) SDK to
+collect crash information.
 The components are licensed using the
 [MIT License](https://github.com/Microsoft/AppCenter-SDK-DotNet/blob/master/license.txt)
 
