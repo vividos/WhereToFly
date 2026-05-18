@@ -183,7 +183,7 @@
   <Target Name="SetAndroidVersionCode" DependsOnTargets="GetBuildVersion" Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' ">
     <PropertyGroup>
       <!-- Set versionCode to MmmHHH, with M = major version, mm = minor version, HHH = git height -->
-      <ApplicationVersion>$([System.String]::Format('{0}{1:00}{2:000}',
+      <ApplicationVersion>$([System.String]::Format('{0}{1:D2}{2:D3}',
           $([System.Version]::Parse($(BuildVersionSimple)).Major),
           $([System.Version]::Parse($(BuildVersionSimple)).Minor),
           $(GitVersionHeight)
