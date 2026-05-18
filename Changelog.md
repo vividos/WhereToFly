@@ -1,5 +1,15 @@
 ﻿# Changelog
 
+## Version 1.18.0
+
+Released on ?.
+
+✨ New Features / Improvements
+
+- Using CesiumJS version 1.141.0
+
+🐛 Bugfixes
+
 ## Version 1.17.0
 
 Released on 2026-05-15.
