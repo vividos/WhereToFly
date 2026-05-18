@@ -4,9 +4,9 @@
     <Copyright>Copyright © 2017-2026 Michael Fink</Copyright>
     <Company></Company>
     <NuGetPackagePrefix>Vividos</NuGetPackagePrefix>
-    <DotNetVersion>net10.0</DotNetVersion>
-    <DotNetMauiVersion>10.0.60</DotNetMauiVersion>
-    <DotNetMicrosoftPackagesVersion>10.0.7</DotNetMicrosoftPackagesVersion>
+    <DotNetVersion>net11.0</DotNetVersion>
+    <DotNetMauiVersion>11.0.0-preview.4.26230.3</DotNetMauiVersion>
+    <DotNetMicrosoftPackagesVersion>11.0.0-preview.4.26230.115</DotNetMicrosoftPackagesVersion>
   </PropertyGroup>
 
   <PropertyGroup>

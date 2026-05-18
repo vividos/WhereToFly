@@ -25,7 +25,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v5
       with:
-        dotnet-version: 10.0.x
+        dotnet-version: 11.0.x
 
     - name: Install workloads
       shell: cmd
@@ -44,14 +44,14 @@ jobs:
       run: >
         dotnet build
         src/App/MapView/WhereToFly.App.MapView.csproj
-        -f net10.0-android
+        -f net11.0-android
         -c Release
 
     - name: Build Android .apk
       run: >
         dotnet publish
         src/App/Maui/WhereToFly.App.Maui.csproj
-        -f net10.0-android
+        -f net11.0-android
         -p:AndroidKeyStore=true
         -p:AndroidPackageFormats=apk
         -p:AndroidSigningKeyStore=keystore.jks
@@ -64,4 +64,4 @@ jobs:
 
       with:
         name: APK file
-        path: artifacts/publish/WhereToFly.App.Maui/release_net10.0-android/de.vividos.app.wheretofly.android-Signed.apk
+        path: artifacts/publish/WhereToFly.App.Maui/release_net11.0-android/de.vividos.app.wheretofly.android-Signed.apk
