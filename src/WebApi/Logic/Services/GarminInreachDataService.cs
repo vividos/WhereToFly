@@ -196,6 +196,16 @@ namespace WhereToFly.WebApi.Logic.Services
                 this.lastRequestByMapShareIdentifier[mapShareIdentifier] = new DateTimeOffset(when.Value);
             }
 
+            string description = FormatDescriptionFromPlacemark(placemark);
+
+            if (mapShareIdentifier == "vividos")
+            {
+                description += LiveWaypointCacheManager.GetCoveredDistanceDescription(
+                    new MapPoint(
+                        point.Coordinate.Latitude,
+                        point.Coordinate.Longitude));
+            }
+
             return new LiveWaypointData(FormatLiveWaypointId(mapShareIdentifier))
             {
                 Name = "Garmin inReach " + placemark.Name,
@@ -203,11 +213,7 @@ namespace WhereToFly.WebApi.Logic.Services
                 Longitude = point.Coordinate.Longitude,
                 Altitude = (int)(point.Coordinate.Altitude ?? 0.0),
                 TimeStamp = when.HasValue ? new DateTimeOffset(when.Value) : DateTimeOffset.Now,
-                Description = FormatDescriptionFromPlacemark(placemark) +
-                    LiveWaypointCacheManager.GetCoveredDistanceDescription(
-                        new MapPoint(
-                            point.Coordinate.Latitude,
-                            point.Coordinate.Longitude)),
+                Description = description,
                 DetailsLink = string.Format(MapSharePublicUrl, mapShareIdentifier),
             };
         }
