@@ -893,6 +893,14 @@ internal class MapPageViewModel : ViewModelBase
             return;
         }
 
+        if (text.StartsWith(
+            AppResourceUri.DefaultScheme,
+            StringComparison.InvariantCultureIgnoreCase))
+        {
+            this.appMapService.OpenAppResourceUri(text);
+            return;
+        }
+
         if (CoordinatesParser.TryParse(text, out var parsedCoordinates) &&
             parsedCoordinates != null)
         {
