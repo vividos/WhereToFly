@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace WhereToFly.Shared.Model;
 
@@ -24,11 +25,13 @@ public class LiveTrackQueryResult
     /// <summary>
     /// Live track data; always set, but may contain zero live track points
     /// </summary>
+    [JsonPropertyName("data")]
     public LiveTrackData Data { get; set; }
 
     /// <summary>
     /// Date where next request for the requested live track will be most probably
     /// available
     /// </summary>
+    [JsonPropertyName("nextRequestDate")]
     public DateTimeOffset NextRequestDate { get; set; }
 }

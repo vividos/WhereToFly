@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace WhereToFly.Shared.Model;
 
@@ -10,21 +11,25 @@ public class LiveTrackData
     /// <summary>
     /// Live Track ID
     /// </summary>
+    [JsonPropertyName("id")]
     public string ID { get; set; }
 
     /// <summary>
     /// Name of live waypoint
     /// </summary>
+    [JsonPropertyName("name")]
     public string Name { get; set; }
 
     /// <summary>
     /// Detailed description, in MarkDown format
     /// </summary>
+    [JsonPropertyName("description")]
     public string Description { get; set; } = string.Empty;
 
     /// <summary>
     /// Track starting point
     /// </summary>
+    [JsonPropertyName("trackStart")]
     public DateTimeOffset TrackStart { get; set; }
 
     /// <summary>
@@ -35,27 +40,32 @@ public class LiveTrackData
         /// <summary>
         /// Offset of track point to track start
         /// </summary>
+        [JsonPropertyName("offset")]
         public double Offset { get; set; }
 
         /// <summary>
         /// Latitude value, positive values to the north
         /// </summary>
+        [JsonPropertyName("latitude")]
         public double Latitude { get; set; }
 
         /// <summary>
         /// Longitude value, positive values to the east
         /// </summary>
+        [JsonPropertyName("longitude")]
         public double Longitude { get; set; }
 
         /// <summary>
         /// Altitude value, if available; 0 means "clamp to ground"
         /// </summary>
+        [JsonPropertyName("altitude")]
         public double Altitude { get; set; }
     }
 
     /// <summary>
     /// List of all track points
     /// </summary>
+    [JsonPropertyName("trackPoints")]
     public LiveTrackPoint[] TrackPoints { get; set; } = [];
 
     /// <summary>
