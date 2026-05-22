@@ -713,7 +713,7 @@ export class MapView {
         sliderInput.classList.add("livetrack-slider");
 
         sliderInput.oninput = function() {
-            const timeOffset = Number.parseInt(this.value, 10);
+            const timeOffset = Number.parseInt(sliderInput.value, 10);
             this.setLiveTrackTime(timeOffset);
         }.bind(this);
         sliderCont.appendChild(sliderInput);
