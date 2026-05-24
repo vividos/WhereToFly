@@ -20,8 +20,11 @@ $(function () {
 /**
  * Initializes live tracking
  */
-function initLiveTracking() {
-    const liveTracking = new LiveTracking();
+async function initLiveTracking() {
+    const options = {
+        apiKeys: await getApiKeys(),
+    };
+    const liveTracking = new LiveTracking(options);
 
     const liveTrackingInfoList = getLiveTrackingInfoList();
     for (const key in liveTrackingInfoList) {

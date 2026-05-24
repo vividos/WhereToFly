@@ -20,6 +20,11 @@ namespace WhereToFly.Web.LiveTracking.Pages
 #pragma warning restore S1075 // URIs should not be hardcoded
 
         /// <summary>
+        /// Configuration object
+        /// </summary>
+        private readonly IConfiguration configuration;
+
+        /// <summary>
         /// Backend Web API access
         /// </summary>
         private readonly IBackendWebApi backendWebApi;
@@ -55,8 +60,11 @@ namespace WhereToFly.Web.LiveTracking.Pages
         /// <summary>
         /// Creates a new index model
         /// </summary>
-        public IndexModel()
+        /// <param name="configuration">configuration object</param>
+        public IndexModel(IConfiguration configuration)
         {
+            this.configuration = configuration;
+
             this.backendWebApi =
                 RestService.For<IBackendWebApi>(
                     BaseUrl,
@@ -109,6 +117,19 @@ namespace WhereToFly.Web.LiveTracking.Pages
                         isFlightTrack)
                 ];
             }
+        }
+
+        /// <summary>
+        /// Gets API keys necessary for the page
+        /// </summary>
+        /// <returns>API keys as JSON</returns>
+        public JsonResult OnGetApiKeys()
+        {
+            return new JsonResult(
+                new
+                {
+                    cesiumIonApiKey = this.configuration["CESIUM_ION_API_KEY"],
+                });
         }
 
         /// <summary>

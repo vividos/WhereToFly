@@ -13,8 +13,11 @@ export default class LiveTracking {
 
     /**
      * Creates a new live tracking object
+     * @param {object} [options] Options to use for initializing the app
+     * @param {object} [options.apiKeys] Object with all API keys
+     * @param {object} [options.apiKeys.cesiumIonApiKey] Cesium Ion API key
      */
-    constructor() {
+    constructor(options) {
 
         LiveTracking.log("initializing live tracking site");
 
@@ -28,6 +31,7 @@ export default class LiveTracking {
             id: "mapElement",
             liveTrackToolbarId: "liveTrackToolbar",
             heightProfileElementId: "heightProfileView",
+            cesiumIonApiKey: options.apiKeys.cesiumIonApiKey,
             initialCenterPoint: { latitude: 47.083, longitude: 12.178 },
             initialViewingDistance: 5000.0,
             hasMouse: true,

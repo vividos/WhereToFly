@@ -86,9 +86,14 @@
 
 <script type="text/javascript">
 
-        function getLiveTrackingInfoList() {
-            var liveTrackingInfoList = @Html.Raw(Json.Serialize(Model.LiveTrackingInfoList));
-            return liveTrackingInfoList;
-        }
+    async function getApiKeys() {
+        const result = await fetch("/?handler=ApiKeys");
+        return await result.json();
+    }
+
+    function getLiveTrackingInfoList() {
+        var liveTrackingInfoList = @Html.Raw(Json.Serialize(Model.LiveTrackingInfoList));
+        return liveTrackingInfoList;
+    }
 
 </script>
