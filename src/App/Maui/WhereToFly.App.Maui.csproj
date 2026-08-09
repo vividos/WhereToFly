@@ -101,8 +101,12 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="$(DotNetMicrosoftPackagesVersion)" />
     <PackageReference Include="Microsoft.Maui.Controls" Version="$(DotNetMauiVersion)" />
     <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.119.2" />
-    <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
-    <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.11" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.11.285" />
+    <!--
+    Workaround: Microsoft.AppCenter.* packages reference a very old SQLitePCLRaw version.
+    Reference a current version to fix vulnerabilities.
+    -->
+    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="3.53.3" />
   </ItemGroup>
 
   <ItemGroup>
