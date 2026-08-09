@@ -173,7 +173,7 @@ namespace WhereToFly.WebApi.Logic.TourPlanning
 
             if (!result.IsSuccessStatusCode)
             {
-                string errorJson = await result.Content.ReadAsStringAsync();
+                string errorJson = await result.Content.ReadAsStringAsync(cancellationToken);
                 var errorObject = JsonSerializer.Deserialize<ErrorInfo>(
                     errorJson,
                     OpenRouteServiceJsonSerializerContext.Default.ErrorInfo);
