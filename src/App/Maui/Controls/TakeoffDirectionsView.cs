@@ -269,7 +269,7 @@ public class TakeoffDirectionsView : SKCanvasView
     /// <param name="radius">radius of compass</param>
     private void DrawFilledSegments(SKCanvas canvas, SKPoint center, float radius)
     {
-        using var path = new SKPath();
+        using var pathBuilder = new SKPathBuilder();
         using var fillPaint = new SKPaint
         {
             IsAntialias = true,
@@ -287,12 +287,12 @@ public class TakeoffDirectionsView : SKCanvasView
 
             float startAngle = (segmentIndex * SegmentAngle) - (0.5f * SegmentAngle) - 90.0f;
 
-            path.MoveTo(center);
-            path.ArcTo(rect, startAngle, SegmentAngle, false);
-            path.Close();
+            pathBuilder.MoveTo(center);
+            pathBuilder.ArcTo(rect, startAngle, SegmentAngle, false);
+            pathBuilder.Close();
         }
 
-        canvas.DrawPath(path, fillPaint);
+        canvas.DrawPath(pathBuilder.Detach(), fillPaint);
     }
 
     /// <summary>

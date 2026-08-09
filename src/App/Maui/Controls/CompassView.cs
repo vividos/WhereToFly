@@ -432,22 +432,22 @@ public class CompassView : SKCanvasView
         float deltaSideX = (float)Math.Cos(sideAngleRadians) * innerRadius;
         float deltaSideY = (float)Math.Sin(sideAngleRadians) * innerRadius;
 
-        var filledPath = new SKPath();
-        filledPath.MoveTo(center.X, center.Y - startRadius);
-        filledPath.LineTo(center.X, center.Y - outerRadius);
-        filledPath.LineTo(center.X + deltaSideX, center.Y - startRadius - deltaSideY);
-        filledPath.Close();
+        var filledPathBuilder = new SKPathBuilder();
+        filledPathBuilder.MoveTo(center.X, center.Y - startRadius);
+        filledPathBuilder.LineTo(center.X, center.Y - outerRadius);
+        filledPathBuilder.LineTo(center.X + deltaSideX, center.Y - startRadius - deltaSideY);
+        filledPathBuilder.Close();
 
-        var outlinePath = new SKPath();
-        outlinePath.MoveTo(center.X, center.Y - startRadius);
-        outlinePath.LineTo(center.X, center.Y - outerRadius);
-        outlinePath.LineTo(center.X - deltaSideX, center.Y - startRadius - deltaSideY);
-        outlinePath.Close();
+        var outlinePathBuilder = new SKPathBuilder();
+        outlinePathBuilder.MoveTo(center.X, center.Y - startRadius);
+        outlinePathBuilder.LineTo(center.X, center.Y - outerRadius);
+        outlinePathBuilder.LineTo(center.X - deltaSideX, center.Y - startRadius - deltaSideY);
+        outlinePathBuilder.Close();
 
         for (int angle = 0; angle < 360; angle += 90)
         {
-            canvas.DrawPath(filledPath, filledPaint);
-            canvas.DrawPath(outlinePath, outlinePaint);
+            canvas.DrawPath(filledPathBuilder.Detach(), filledPaint);
+            canvas.DrawPath(outlinePathBuilder.Detach(), outlinePaint);
 
             canvas.DrawText(
                 directionNames[angle / 90],
