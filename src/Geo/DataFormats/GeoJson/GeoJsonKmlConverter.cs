@@ -187,7 +187,7 @@ public class GeoJsonKmlConverter
 
         if (!string.IsNullOrWhiteSpace(element.Title))
         {
-            return element.Title!;
+            return element.Title;
         }
 
         if (element.Properties != null)

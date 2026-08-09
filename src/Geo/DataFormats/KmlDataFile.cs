@@ -659,7 +659,7 @@ internal class KmlDataFile : IGeoDataFile
                 string? link = GetStyleMapNormalStyleIconLink(kml, styleMap);
                 if (!string.IsNullOrEmpty(link))
                 {
-                    return link!;
+                    return link;
                 }
             }
         }

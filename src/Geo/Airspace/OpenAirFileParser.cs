@@ -875,7 +875,7 @@ public class OpenAirFileParser
             return null;
         }
 
-        int posSeparator = coordinates!.IndexOf('N');
+        int posSeparator = coordinates.IndexOf('N');
         if (posSeparator == -1)
         {
             posSeparator = coordinates.IndexOf('S');
