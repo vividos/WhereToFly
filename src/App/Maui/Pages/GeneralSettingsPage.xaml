@@ -36,47 +36,6 @@
                             Margin="8" />
                     </Border>
                 </Grid>
-
-                <!-- Alptherm -->
-                <Grid Grid.Row="1"
-                      RowDefinitions="Auto, Auto"
-                      RowSpacing="8">
-                    <Label Grid.Row="0"
-                           Style="{StaticResource CardLabelStyle}"
-                           Text="Alptherm" />
-                    <Border Grid.Row="1"
-                            Style="{StaticResource CardBorderStyle}"
-                            Padding="8">
-
-                        <Grid RowDefinitions="Auto, Auto"
-                              ColumnDefinitions="1*, 1*"
-                              RowSpacing="16"
-                              Margin="8">
-                            <!-- Alptherm username -->
-                            <Label Grid.Row="0" Grid.Column="0"
-                                   FontSize="Small"
-                                   Text="Username"
-                                   VerticalOptions="Center" />
-                            <Entry Grid.Row="0" Grid.Column="1"
-                                   Placeholder="Alptherm username"
-                                   Text="{Binding AlpthermUsername}"
-                                   IsSpellCheckEnabled="False"
-                                   IsTextPredictionEnabled="false"
-                                   ClearButtonVisibility="WhileEditing" />
-
-                            <!-- Alptherm password -->
-                            <Label Grid.Row="1" Grid.Column="0"
-                                   FontSize="Small"
-                                   Text="Password"
-                                   VerticalOptions="Center" />
-                            <Entry Grid.Row="1" Grid.Column="1"
-                                   Placeholder="Alptherm password"
-                                   Text="{Binding AlpthermPassword}"
-                                   IsPassword="True"
-                                   ClearButtonVisibility="WhileEditing" />
-                        </Grid>
-                    </Border>
-                </Grid>
             </Grid>
 
         </ScrollView>

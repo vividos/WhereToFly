@@ -492,13 +492,6 @@ The default setting is "Same as device". When the device switches themes
 automatically (e.g. dark theme in the evening), then the app also switches the
 theme automatically.
 
-#### Alptherm
-
-Lets you enter username/passwort of an account for the Alptherm weather
-service. When opening one of the Alptherm links, the app automatically logs
-you in if necessary. The password is stored using
-[secure storage](https://docs.microsoft.com/en-us/xamarin/essentials/secure-storage?tabs=android).
-
 ### ![Map](images/map.svg) Map tab
 
 ![Settings](images/settings-map.png)

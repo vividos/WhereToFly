@@ -26,13 +26,6 @@ public static class WeatherImageCache
         switch (iconDescription.Type)
         {
             case WeatherIconDescription.IconType.IconLink:
-                if (iconDescription.WebLink.StartsWith("https://www.austrocontrol.at"))
-                {
-                    return ImageSource.FromStream(
-                        async (cancellationToken) =>
-                            await Assets.Get("alptherm-favicon.png"));
-                }
-
                 string faviconLink = await GetFaviconFromLinkAsync(iconDescription.WebLink);
 
                 if (!string.IsNullOrEmpty(faviconLink))
@@ -74,11 +67,6 @@ public static class WeatherImageCache
     /// <returns>link with hostname and favicon.ico prefixed</returns>
     private static async Task<string> GetFaviconFromLinkAsync(string webLink)
     {
-        if (webLink.StartsWith("https://www.austrocontrol.at"))
-        {
-            return "https://www.austrocontrol.at/favicon.ico";
-        }
-
         int pos = webLink.IndexOf(";jsessionid=");
         if (pos != -1)
         {

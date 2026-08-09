@@ -63,7 +63,6 @@ version.
 # Settings
 
 - [ ] Set app theme and check different pages
-- [ ] Add Alptherm login data and open weather page
 - [ ] Change map imagery and check map
 - [ ] Change map layer and check map
 - [ ] Set map shading option and check map

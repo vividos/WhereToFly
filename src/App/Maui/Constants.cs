@@ -52,18 +52,4 @@ public static class Constants
     /// Bing maps API key; used for geocoding in Windows app
     /// </summary>
     public static readonly string BingMapsKeyWindows = "8KK08riht3IKUuEIHhO9~kiUuKLsWDkuE5jm4d2gBDQ~Aho0ktyzI5HmMR7lM_2JwyptBV5ltSyzJAgvfISK_RE1BexmpSH2bInepuuZrMjP";
-
-    /// <summary>
-    /// Key for the SecureStorage to store and read username for Alptherm web page
-    /// </summary>
-    public static readonly string SecureSettingsAlpthermUsername = "AlpthermUsername";
-
-    /// <summary>
-    /// Key for the SecureStorage to store and read password for Alptherm web page
-    /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage(
-        "Sonar Vulnerability",
-        "S2068:Hard-coded credentials are security-sensitive",
-        Justification = "false positive")]
-    public static readonly string SecureSettingsAlpthermPassword = "AlpthermPassword";
 }

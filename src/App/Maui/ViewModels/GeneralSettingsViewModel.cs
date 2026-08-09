@@ -72,16 +72,6 @@ public class GeneralSettingsViewModel : ViewModelBase
             }
         }
     }
-
-    /// <summary>
-    /// Username for the alptherm web page
-    /// </summary>
-    public string AlpthermUsername { get; set; } = string.Empty;
-
-    /// <summary>
-    /// Password for the alptherm web page
-    /// </summary>
-    public string AlpthermPassword { get; set; } = string.Empty;
     #endregion
 
     /// <summary>
@@ -97,48 +87,6 @@ public class GeneralSettingsViewModel : ViewModelBase
             new AppThemeViewModel("Light theme", AppTheme.Light),
             new AppThemeViewModel("Dark theme", AppTheme.Dark),
         ];
-
-        Task.Run(this.LoadDataAsync);
-    }
-
-    /// <summary>
-    /// Loads view model data from secure storage
-    /// </summary>
-    /// <returns>task to wait on</returns>
-    private async Task LoadDataAsync()
-    {
-        this.AlpthermUsername =
-            await SecureStorage.GetAsync(Constants.SecureSettingsAlpthermUsername)
-            ?? string.Empty;
-
-        this.OnPropertyChanged(nameof(this.AlpthermUsername));
-
-        this.AlpthermPassword =
-            await SecureStorage.GetAsync(Constants.SecureSettingsAlpthermPassword)
-            ?? string.Empty;
-
-        this.OnPropertyChanged(nameof(this.AlpthermPassword));
-    }
-
-    /// <summary>
-    /// Stores view model data to secure storage
-    /// </summary>
-    /// <returns>task to wait on</returns>
-    public async Task StoreDataAsync()
-    {
-        if (!string.IsNullOrEmpty(this.AlpthermUsername))
-        {
-            await SecureStorage.SetAsync(
-                Constants.SecureSettingsAlpthermUsername,
-                this.AlpthermUsername);
-        }
-
-        if (!string.IsNullOrEmpty(this.AlpthermPassword))
-        {
-            await SecureStorage.SetAsync(
-                Constants.SecureSettingsAlpthermPassword,
-                this.AlpthermPassword);
-        }
     }
 
     /// <summary>
