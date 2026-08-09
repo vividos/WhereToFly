@@ -160,7 +160,7 @@ public class NavigationService : INavigationService
             Debug.Assert(parameter != null, "passed parameter must be non-null");
 
             Debug.Assert(
-                parameterType.FullName == parameter!.GetType().FullName,
+                parameterType.FullName == parameter.GetType().FullName,
                 "passed parameter must be of the correct type " + parameterType.Name);
         }
 

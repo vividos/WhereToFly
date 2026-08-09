@@ -392,7 +392,7 @@ internal partial class SqliteDatabaseDataService : IDataService
 
         if (!string.IsNullOrEmpty(faviconUrl))
         {
-            return faviconUrl!;
+            return faviconUrl;
         }
 
         try

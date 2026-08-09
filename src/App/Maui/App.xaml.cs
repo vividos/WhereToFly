@@ -188,12 +188,17 @@ public partial class App : Application
     /// <returns>hex color string, in the format #RRGGBB</returns>
     public static string GetResourceColor(string colorKey, bool addThemeSuffix)
     {
+        if (Current == null)
+        {
+            return "#000000";
+        }
+
         if (addThemeSuffix)
         {
             bool isDarkTheme =
-                Current!.UserAppTheme == AppTheme.Dark ||
-                (Current!.UserAppTheme == AppTheme.Unspecified &&
-                 Current!.RequestedTheme == AppTheme.Dark);
+                Current.UserAppTheme == AppTheme.Dark ||
+                (Current.UserAppTheme == AppTheme.Unspecified &&
+                 Current.RequestedTheme == AppTheme.Dark);
 
             string themeSuffix = isDarkTheme
                 ? "Dark"
@@ -202,7 +207,7 @@ public partial class App : Application
             colorKey += themeSuffix;
         }
 
-        return Current?.Resources != null &&
+        return Current.Resources != null &&
             Current.Resources.TryGetValue(colorKey, out object value) &&
             value is Color color
             ? color.ToHex()

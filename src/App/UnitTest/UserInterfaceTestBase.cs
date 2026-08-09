@@ -110,10 +110,10 @@ public class UserInterfaceTestBase
 
         App.Settings = new AppSettings();
 
-        App.Current!.Resources.MergedDictionaries.Add(
+        App.Current?.Resources.MergedDictionaries.Add(
             new WhereToFly.App.Resources.Styles.Colors());
 
-        App.Current!.Resources.MergedDictionaries.Add(
+        App.Current?.Resources.MergedDictionaries.Add(
             new WhereToFly.App.Resources.Styles.Styles());
     }
 
