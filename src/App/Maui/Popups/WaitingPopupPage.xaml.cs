@@ -75,7 +75,7 @@ public partial class WaitingPopupPage : Popup
         {
             if (this.isShown)
             {
-                await this.CloseAsync();
+                await this.CloseAsync(CancellationToken.None);
             }
         }
         catch (Exception)
@@ -96,6 +96,6 @@ public partial class WaitingPopupPage : Popup
         this.cancellationTokenSource?.Cancel();
 
         MainThread.BeginInvokeOnMainThread(
-            async () => await this.CloseAsync());
+            async () => await this.CloseAsync(CancellationToken.None));
     }
 }

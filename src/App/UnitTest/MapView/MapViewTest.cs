@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.App.MapView.Models;
 using WhereToFly.App.MapView.Serializers;
@@ -18,7 +19,7 @@ public class MapViewTest : UserInterfaceTestBase
     /// <summary>
     /// Test context to access the cancellation token
     /// </summary>
-    public TestContext TestContext { get; set; }
+    public TestContext? TestContext { get; set; }
 
     /// <summary>
     /// Tests CreateAsync() method
@@ -34,12 +35,12 @@ public class MapViewTest : UserInterfaceTestBase
 
         // run
         _ = Task.Run(
-            () =>
+            async () =>
             {
-                Task.Delay(10);
+                await Task.Delay(10, CancellationToken.None);
                 mapView.OnMapInitialized();
             },
-            this.TestContext.CancellationTokenSource.Token);
+            this.TestContext?.CancellationTokenSource.Token ?? CancellationToken.None);
 
         await mapView.CreateAsync(
             Constants.InitialCenterPoint,
