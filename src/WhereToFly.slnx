@@ -9,6 +9,7 @@
       <BuildDependency Project="App/Maui/WhereToFly.App.Maui.csproj" />
     </Project>
     <Project Path="App/UnitTest/WhereToFly.App.UnitTest.csproj" />
+    <Project Path="App/Weather/WhereToFly.App.Weather.csproj" />
   </Folder>
   <Folder Name="/Backend/">
     <Project Path="WebApi/Core/WhereToFly.WebApi.Core.csproj" />
