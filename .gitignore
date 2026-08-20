@@ -304,5 +304,6 @@ stuff/
 /src/App/Android/WhereToFly.App.Android.xml
 /src/App/UWP/WhereToFly.App.UWP.xml
 .dotnet-tools/
+.dotnet/
 .env
 /src/Web/App/wwwroot/
