@@ -65,8 +65,6 @@ public class NavigationService : INavigationService
             { PageKey.TrackListPage, new PageInfo(typeof(TrackListPage), null) },
             { PageKey.TrackInfoPage, new PageInfo(typeof(TrackInfoTabbedPage), typeof(Track)) },
             { PageKey.TrackHeightProfilePage, new PageInfo(typeof(TrackHeightProfilePage), typeof(Track)) },
-            { PageKey.WeatherDashboardPage, new PageInfo(typeof(WeatherDashboardPage), null) },
-            { PageKey.WeatherDetailsPage, new PageInfo(typeof(WeatherDetailsPage), typeof(WeatherIconDescription)) },
             { PageKey.SettingsPage, new PageInfo(typeof(SettingsPage), null) },
             { PageKey.InfoPage, new PageInfo(typeof(InfoPage), null) },
         };
@@ -81,13 +79,11 @@ public class NavigationService : INavigationService
             { PopupPageKey.AddLayerPopupPage, new PopupPageInfo(typeof(AddLayerPopupPage), typeof(Layer), typeof(Layer)) },
             { PopupPageKey.AddLiveWaypointPopupPage, new PopupPageInfo(typeof(AddLiveWaypointPopupPage), typeof(Location), typeof(Location)) },
             { PopupPageKey.AddTrackPopupPage, new PopupPageInfo(typeof(AddTrackPopupPage), typeof(Track), typeof(Track)) },
-            { PopupPageKey.AddWeatherLinkPopupPage, new PopupPageInfo(typeof(AddWeatherLinkPopupPage), typeof(WeatherIconDescription), null) },
             { PopupPageKey.FilterTakeoffDirectionsPopupPage, new PopupPageInfo(typeof(FilterTakeoffDirectionsPopupPage), typeof(LocationFilterSettings), typeof(LocationFilterSettings)) },
             { PopupPageKey.FindLocationPopupPage, new PopupPageInfo(typeof(FindLocationPopupPage), typeof(string), null) },
             { PopupPageKey.FlyingRangePopupPage, new PopupPageInfo(typeof(FlyingRangePopupPage), typeof(FlyingRangeParameters), null) },
             { PopupPageKey.PlanTourPopupPage, new PopupPageInfo(typeof(PlanTourPopupPage), null, typeof(PlanTourParameters)) },
             { PopupPageKey.SelectAirspaceClassPopupPage, new PopupPageInfo(typeof(SelectAirspaceClassPopupPage), typeof(ISet<AirspaceClass>), typeof(List<AirspaceClass>)) },
-            { PopupPageKey.SelectWeatherIconPopupPage, new PopupPageInfo(typeof(SelectWeatherIconPopupPage), typeof(WeatherIconDescription), typeof(string)) },
             { PopupPageKey.SetCompassTargetDirectionPopupPage, new PopupPageInfo(typeof(SetCompassTargetDirectionPopupPage), typeof(Tuple<int>), null) },
             { PopupPageKey.SetTrackInfosPopupPage, new PopupPageInfo(typeof(SetTrackInfosPopupPage), typeof(Track), typeof(Track)) },
         };

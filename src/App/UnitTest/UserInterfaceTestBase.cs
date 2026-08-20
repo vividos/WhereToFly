@@ -100,7 +100,6 @@ public class UserInterfaceTestBase
         builder.Services.AddSingleton<IGeolocationService, UnitTestGeolocationService>();
         builder.Services.AddSingleton<IDataService, SqliteDatabaseDataService>();
         builder.Services.AddSingleton<INavigationService, UnitTestNavigationService>();
-        builder.Services.AddSingleton<IAppManager, UnitTestAppManager>();
         builder.Services.AddSingleton<LiveDataRefreshService>();
 
         this.unitTestApp = builder.Build();

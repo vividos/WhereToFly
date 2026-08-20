@@ -23,11 +23,20 @@
     <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#2F299E" BaseSize="128,128" />
     <MauiImage Include="Resources\Images\*" />
     <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+    <!-- Workaround: Xaml source generators use obsolete classes like Device and NamedSize -->
+    <MauiXaml Update="**/*.xaml" NoWarn="0612" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Maui" Version="14.2.0" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="$(DotNetMicrosoftPackagesVersion)" />
     <PackageReference Include="Microsoft.Maui.Controls" Version="$(DotNetMauiVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Configure implicit usings -->
+    <Using Include="CommunityToolkit.Mvvm.Input" />
   </ItemGroup>
 
   <!-- .NET Windows properties -->

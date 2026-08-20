@@ -1,4 +1,6 @@
-﻿namespace WhereToFly.App.Weather;
+﻿using WhereToFly.App.Weather.Pages;
+
+namespace WhereToFly.App.Weather;
 
 /// <summary>
 /// WhereToFly weather app
@@ -20,6 +22,21 @@ public partial class App : Application
     /// <returns>window object</returns>
     protected override Window CreateWindow(IActivationState? activationState)
     {
-        return new Window(new MainPage());
+        var titleBar = DeviceInfo.Platform == DevicePlatform.WinUI
+            ? new TitleBar
+            {
+                Title = Constants.AppTitle,
+                BackgroundColor = Constants.PrimaryColor,
+                ForegroundColor = Colors.White,
+            }
+            : null;
+
+        return new Window
+        {
+            Title = Constants.AppTitle,
+            TitleBar = titleBar,
+            Page = new NavigationPage(
+                new WeatherDashboardPage()),
+        };
     }
 }

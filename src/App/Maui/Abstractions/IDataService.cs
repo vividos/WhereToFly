@@ -53,27 +53,6 @@ public interface IDataService
     ILayerDataService GetLayerDataService();
 
     /// <summary>
-    /// Returns a data service for WeatherIconDescription objects. The data services manages
-    /// all weather icon descriptions that are available.
-    /// </summary>
-    /// <returns>weather icon description data service</returns>
-    IWeatherIconDescriptionDataService GetWeatherIconDescriptionDataService();
-
-    /// <summary>
-    /// Returns a data service for WeatherIconDescription objects that are visible on the
-    /// weather dashboard.
-    /// </summary>
-    /// <returns>weather icon description data service</returns>
-    IWeatherIconDescriptionDataService GetWeatherDashboardIconDataService();
-
-    /// <summary>
-    /// Retrieves a favicon URL for the given website URL
-    /// </summary>
-    /// <param name="websiteUrl">website URL</param>
-    /// <returns>favicon URL or empty string when none was found</returns>
-    Task<string> GetFaviconUrlAsync(string websiteUrl);
-
-    /// <summary>
     /// Retrieves latest info about a live waypoint, including new coordinates and
     /// description.
     /// </summary>

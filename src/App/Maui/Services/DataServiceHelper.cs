@@ -1,7 +1,4 @@
-﻿using System.Text.Json;
-using WhereToFly.App.Models;
-using WhereToFly.App.Resources;
-using WhereToFly.App.Serializers;
+﻿using WhereToFly.App.Resources;
 using WhereToFly.Geo.Airspace;
 using WhereToFly.Geo.DataFormats;
 using WhereToFly.Geo.Model;
@@ -17,11 +14,6 @@ internal static class DataServiceHelper
     /// Filename of the default layer OpenAir file in the Assets folder
     /// </summary>
     private const string DefaultLayerFilename = "defaultLayerOpenAir.txt";
-
-    /// <summary>
-    /// Filename of the default favicon URL cache in the Assets folder
-    /// </summary>
-    public const string FaviconUrlCacheFilename = "defaultFaviconUrlCache.json";
 
     /// <summary>
     /// Returns the default layer list with only the built-in layers
@@ -221,67 +213,5 @@ internal static class DataServiceHelper
     internal static List<Track> GetDefaultTrackList()
     {
         return [];
-    }
-
-    /// <summary>
-    /// Returns a default mapping for the favicon cache, e.g. when the app is initialized
-    /// the first time.
-    /// </summary>
-    /// <returns>mapping from base URL to favicon URL</returns>
-    internal static async Task<Dictionary<string, string>> GetDefaultFaviconCache()
-    {
-        try
-        {
-            using var stream = await Assets.Get(FaviconUrlCacheFilename);
-            if (stream == null)
-            {
-                return [];
-            }
-
-            using var reader = new StreamReader(stream);
-            string json = await reader.ReadToEndAsync();
-
-            return JsonSerializer.Deserialize(
-                json,
-                ModelsJsonSerializerContext.Default.DictionaryStringString)
-                ?? [];
-        }
-        catch (Exception)
-        {
-            // this code path is only used in unit tests
-            return [];
-        }
-    }
-
-    /// <summary>
-    /// Returns the repository of all available weather icon descriptions that can be used
-    /// to select weather icons for the customized list
-    /// </summary>
-    /// <returns>repository of all weather icons</returns>
-    public static async Task<IEnumerable<WeatherIconDescription>> GetWeatherIconDescriptionRepository()
-    {
-        try
-        {
-            using var stream = await Assets.Get("weathericons.json");
-            if (stream == null)
-            {
-                return [];
-            }
-
-            using var reader = new StreamReader(stream);
-            string json = await reader.ReadToEndAsync();
-
-            var weatherIconList = JsonSerializer.Deserialize(
-                json,
-                ModelsJsonSerializerContext.Default.ListWeatherIconDescription);
-
-            return weatherIconList ?? Enumerable.Empty<WeatherIconDescription>();
-        }
-        catch (Exception ex)
-        {
-            App.LogError(ex);
-
-            return new List<WeatherIconDescription>();
-        }
     }
 }

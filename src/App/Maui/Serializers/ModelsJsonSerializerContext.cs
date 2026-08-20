@@ -19,8 +19,6 @@ namespace WhereToFly.App.Serializers;
 [JsonSerializable(typeof(MapPoint))]
 [JsonSerializable(typeof(List<double>))]
 [JsonSerializable(typeof(List<TrackPoint>))]
-[JsonSerializable(typeof(Dictionary<string, string>))]
-[JsonSerializable(typeof(List<WeatherIconDescription>))]
 [JsonSerializable(typeof(Dictionary<LatLongKey, List<Location>>))]
 internal partial class ModelsJsonSerializerContext : JsonSerializerContext
 {

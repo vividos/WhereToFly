@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Net.Http.Json;
+﻿using System.Net.Http.Json;
 using System.Text.Json;
 using WhereToFly.Geo.Model;
 using WhereToFly.Shared.Model;
@@ -54,21 +53,6 @@ public class BackendDataService
     {
         return await this.Get<AppConfig>(
             $"/api/AppConfig?appVersion={appVersion}");
-    }
-
-    /// <summary>
-    /// Returns a favicon URL representing the icon for a given website.
-    /// </summary>
-    /// <param name="websiteUrl">website to get favicon URL</param>
-    /// <returns>favicon URL</returns>
-    public async Task<string> GetFaviconUrlAsync(string websiteUrl)
-    {
-        Debug.WriteLine($"Backend: Retrieving favicon for URL {websiteUrl}");
-
-        websiteUrl = System.Net.WebUtility.UrlEncode(websiteUrl);
-
-        return await this.client.GetStringAsync(
-            $"/api/FaviconUrl?websiteUrl={websiteUrl}");
     }
 
     /// <summary>

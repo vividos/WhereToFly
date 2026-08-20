@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
 
     <Style TargetType="ActivityIndicator">
         <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
@@ -366,30 +367,6 @@
         </Setter>
     </Style>
 
-    <!--
-    <Style TargetType="TitleBar">
-        <Setter Property="MinimumHeightRequest" Value="32"/>
-        <Setter Property="VisualStateManager.VisualStateGroups">
-            <VisualStateGroupList>
-                <VisualStateGroup x:Name="TitleActiveStates">
-                    <VisualState x:Name="TitleBarTitleActive">
-                        <VisualState.Setters>
-                            <Setter Property="BackgroundColor" Value="Transparent" />
-                            <Setter Property="ForegroundColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="TitleBarTitleInactive">
-                        <VisualState.Setters>
-                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
-                            <Setter Property="ForegroundColor" Value="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}" />
-                        </VisualState.Setters>
-                    </VisualState>
-                </VisualStateGroup>
-            </VisualStateGroupList>
-        </Setter>
-    </Style>
-    -->
-
     <Style TargetType="Page" ApplyToDerivedTypes="True">
         <Setter Property="Padding" Value="0"/>
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}" />
@@ -401,11 +378,43 @@
         <Setter Property="IconColor" Value="{StaticResource White}" />
     </Style>
 
-    <Style TargetType="TabbedPage">
-        <Setter Property="BarBackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray950}}" />
-        <Setter Property="BarTextColor" Value="{AppThemeBinding Light={StaticResource Magenta}, Dark={StaticResource White}}" />
-        <Setter Property="UnselectedTabColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray950}}" />
-        <Setter Property="SelectedTabColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
+    <Style TargetType="TabbedPage" ApplyToDerivedTypes="True">
+        <Setter Property="BarBackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray950}}" />
+        <Setter Property="BarTextColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray100}}" />
+        <Setter Property="UnselectedTabColor" Value="{AppThemeBinding Light={StaticResource PrimaryDark}, Dark={StaticResource Gray400}}" />
+        <Setter Property="SelectedTabColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray100}}" />
+    </Style>
+
+    <!-- Where-to-fly specific styles -->
+    <Style TargetType="toolkit:Popup" ApplyToDerivedTypes="True">
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Light={StaticResource PopupPageBackgroundColorLight}, Dark={StaticResource PopupPageBackgroundColorDark}}" />
+    </Style>
+
+    <Style x:Key="ListViewItemStyle" TargetType="VisualElement">
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Light={StaticResource ListViewItemBackgroundColorLight}, Dark={StaticResource ListViewItemBackgroundColorDark}}" />
+    </Style>
+
+    <Style x:Key="ListViewItemBorderStyle" TargetType="Border">
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 8" />
+        <Setter Property="Padding" Value="8" />
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Light={StaticResource ListViewItemBackgroundColorLight}, Dark={StaticResource ListViewItemBackgroundColorDark}}" />
+    </Style>
+
+    <Style x:Key="ListItemTextStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="Large" />
+    </Style>
+
+    <Style x:Key="WeatherDashboardTileBorderStyle" TargetType="Border">
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 8" />
+        <Setter Property="Padding" Value="4" />
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Light={StaticResource ListViewItemBackgroundColorLight}, Dark={StaticResource ListViewItemBackgroundColorDark}}" />
     </Style>
 
 </ResourceDictionary>

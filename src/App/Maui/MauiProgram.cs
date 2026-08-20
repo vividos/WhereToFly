@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Maui.LifecycleEvents;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using WhereToFly.App.Abstractions;
-using WhereToFly.App.Controls;
 using WhereToFly.App.MapView;
 using WhereToFly.App.Services;
 
@@ -59,8 +58,6 @@ public static class MauiProgram
             .UseSkiaSharp()
             .UseMapView();
 
-        builder = WeatherWebView.UseWeatherWebView(builder);
-
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
@@ -72,12 +69,6 @@ public static class MauiProgram
         builder.Services.AddSingleton<IGeolocationService, GeolocationService>();
         builder.Services.AddSingleton<CompassGeoServices>();
         builder.Services.AddSingleton<LiveDataRefreshService>();
-
-#if ANDROID
-        builder.Services.AddSingleton<IAppManager, Platforms.Android.AndroidAppManager>();
-#elif WINDOWS
-        builder.Services.AddSingleton<IAppManager, Platforms.Windows.WindowsAppManager>();
-#endif
 
         return builder.Build();
     }

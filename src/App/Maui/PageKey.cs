@@ -59,17 +59,6 @@ public enum PageKey
     TrackHeightProfilePage,
 
     /// <summary>
-    /// Page key to navigate to weather dashboard page.
-    /// </summary>
-    WeatherDashboardPage,
-
-    /// <summary>
-    /// Page key to navigate to weather details page. The page must be started with a string
-    /// parameter specifying the URL of the web page to display.
-    /// </summary>
-    WeatherDetailsPage,
-
-    /// <summary>
     /// Page key to navigate to settings page
     /// </summary>
     SettingsPage,

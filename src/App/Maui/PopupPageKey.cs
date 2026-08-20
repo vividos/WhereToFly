@@ -26,12 +26,6 @@ public enum PopupPageKey
     AddTrackPopupPage,
 
     /// <summary>
-    /// Popup page key to show the "add weather link" popup page.
-    /// Returns: WeatherIconDescription object, or null when popup was dismissed
-    /// </summary>
-    AddWeatherLinkPopupPage,
-
-    /// <summary>
     /// Popup page key to show the pop page to specifying a filter based on takeoff.
     /// directions.
     /// Parameter: LocationFilterSettings object to edit
@@ -65,13 +59,6 @@ public enum PopupPageKey
     /// Returns: ISet of AirspaceClass, or null when popup was dismissed
     /// </summary>
     SelectAirspaceClassPopupPage,
-
-    /// <summary>
-    /// Popup page key to show the weather icon selection popup page.
-    /// Parameter: The weather icon group as string (or null)
-    /// Returns: WeatherIconDescription object, or null when the popup was dismissed
-    /// </summary>
-    SelectWeatherIconPopupPage,
 
     /// <summary>
     /// Popup page key to show a popup to set the compass target direction.

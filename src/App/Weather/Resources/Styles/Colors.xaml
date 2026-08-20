@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
-<ResourceDictionary 
+<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
@@ -41,4 +41,26 @@
     <SolidColorBrush x:Key="Gray600Brush" Color="{StaticResource Gray600}"/>
     <SolidColorBrush x:Key="Gray900Brush" Color="{StaticResource Gray900}"/>
     <SolidColorBrush x:Key="Gray950Brush" Color="{StaticResource Gray950}"/>
+
+    <!-- Where-to-fly Weather specific colors -->
+
+    <Color x:Key="AccentColor">#2F299E</Color>
+    <Color x:Key="AccentColorLight">#2F299E</Color>
+    <Color x:Key="AccentColorDark">#6059d4</Color>
+
+    <!-- Background colors -->
+    <Color x:Key="PageBackgroundColorLight">White</Color>
+    <Color x:Key="PageBackgroundColorDark">#1f1f1f</Color>
+    <Color x:Key="PopupPageBackgroundColorLight">#F5F5F5</Color>
+    <Color x:Key="PopupPageBackgroundColorDark">#606164</Color>
+
+    <!-- Colors for different elements -->
+    <Color x:Key="ElementTextColorLight">#1C1C1C</Color>
+    <Color x:Key="ElementTextColorDark">#ceced3</Color>
+    <Color x:Key="ElementOnPopupPageBackgroundColorLight">#F5F5F5</Color>
+    <Color x:Key="ElementOnPopupPageBackgroundColorDark">#404144</Color>
+
+    <!-- List view colors -->
+    <Color x:Key="ListViewItemBackgroundColorLight">#e0e0e0</Color>
+    <Color x:Key="ListViewItemBackgroundColorDark">#404040</Color>
 </ResourceDictionary>

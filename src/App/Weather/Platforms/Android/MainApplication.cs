@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace WhereToFly.App.Weather;
+namespace WhereToFly.App.Weather.Platforms.Android;
 
 /// <summary>
 /// Android MAUI app application

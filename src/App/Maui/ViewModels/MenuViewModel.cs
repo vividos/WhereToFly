@@ -83,7 +83,6 @@ public class MenuViewModel : ViewModelBase
             new MenuItemViewModel("Locations", "format_list_bulleted.png", PageKey.LocationListPage),
             new MenuItemViewModel("Tracks", "map_marker_distance.png", PageKey.TrackListPage),
             new MenuItemViewModel("Current Position", "compass.png", PageKey.CurrentPositionDetailsPage),
-            new MenuItemViewModel("Weather", "weather_partlycloudy.png", PageKey.WeatherDashboardPage),
             new MenuItemViewModel("Settings", "settings.png", PageKey.SettingsPage),
             new MenuItemViewModel("Info", "information_outline.png", PageKey.InfoPage),
         ];
