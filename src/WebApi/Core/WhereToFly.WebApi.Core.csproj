@@ -10,11 +10,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="$(DotNetMicrosoftPackagesVersion)" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="10.2.3" />
-    <!--
-    Workaround: Current Microsoft.AspNetCore.OpenApi references a vulnerable version
-    of Microsoft.OpenApi, so update it to a non vulnerable 2.x version
-    -->
-    <PackageReference Include="Microsoft.OpenApi" Version="2.11.0" />
   </ItemGroup>
 
   <ItemGroup>
