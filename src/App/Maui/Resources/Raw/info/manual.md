@@ -431,40 +431,6 @@ The following title bar buttons are available:
 - ![Clear compass target](images/close.svg) Clear compass target:
   Clears the currently set compass direction.
 
-## ![Weather](images/weather-partly-cloudy.svg) Weather
-
-![Weather Dashboard](images/weather-dashboard.png)
-
-The weather page lets you quickly choose and view weather related pages, such
-as forecast and current weather websites, or webcam pages. The app contains a
-fixed list of different websites that can be added to the dashboard by tapping
-on the ![Add new...](images/border-none-variant.svg) "Add new..." tile or by
-using the ![Add](images/playlist-plus.svg) button.
-
-The ![Add bookmark](images/bookmark-plus-outline.svg) button lets you add new
-web links not included in the app. The following dialog appears to add the
-link:
-
-![Add Weblink](images/weather-add-weblink.png)
-
-### Weather browser
-
-![Weather Browser](images/weather-browser.png)
-
-When a weather dashboard tile was tapped, the corresponding weather website is
-loaded and shown. The following buttons are available in this page:
-
-- ![Refresh](images/refresh.svg) Reloads the current page, e.g. to update the
-  weather infos.
-- ![Forecast websites](images/calendar-clock.svg) Shows a list of forecast
-  websites to visit next.
-- ![Current weather websites](images/weather-partly-cloudy.svg) Shows a list
-  of current weather websites.
-- ![Webcam websites](images/camera.svg) Shows a list of webcam websites.
-
-Any images in the browser can be saved to the device by long-tapping the
-image. A menu appears to confirm the download.
-
 ## ![Settings](images/cog.svg) Settings
 
 The settings page shows two tabs, the general tab and the map tab.
