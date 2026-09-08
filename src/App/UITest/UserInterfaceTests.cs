@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System.IO;
+using System.Threading.Tasks;
 using Xamarin.UITest;
 
 namespace WhereToFly.App.UITest;
@@ -56,8 +57,9 @@ public class UserInterfaceTests
     /// <summary>
     /// A test that visits all pages by using the menu navigation
     /// </summary>
+    /// <returns>task to wait on</returns>
     [Test]
-    public void VisitAllPages()
+    public async Task VisitAllPages()
     {
         Assert.That(
             this.app,
@@ -80,7 +82,6 @@ public class UserInterfaceTests
             PageToOpen.LocationList,
             PageToOpen.TrackList,
             PageToOpen.CurrentPositionDetails,
-            PageToOpen.WeatherDashboard,
             PageToOpen.Map,
         ];
 
@@ -100,9 +101,7 @@ public class UserInterfaceTests
                 this.app.WaitForNoElement(c => c.Marked("ExploreMapWebView"));
             }
 
-#pragma warning disable S2925 // "Thread.Sleep" should not be used in tests
-            System.Threading.Thread.Sleep(100);
-#pragma warning restore S2925 // "Thread.Sleep" should not be used in tests
+            await Task.Delay(100);
 
             var fileInfo = this.app.Screenshot($"Page: {pageToOpen}");
             Assert.That(

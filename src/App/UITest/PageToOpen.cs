@@ -32,11 +32,6 @@ internal enum PageToOpen
     CurrentPositionDetails,
 
     /// <summary>
-    /// Weather dashboard page
-    /// </summary>
-    WeatherDashboard,
-
-    /// <summary>
     /// Settings page
     /// </summary>
     Settings,
