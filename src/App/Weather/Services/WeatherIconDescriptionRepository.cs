@@ -107,7 +107,7 @@ internal sealed class WeatherIconDescriptionRepository
 
             await this.Save();
             return;
-        };
+        }
 
         string json =
             await File.ReadAllTextAsync(this.filename);

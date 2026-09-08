@@ -28,7 +28,6 @@ internal sealed class WeatherDashboardIconDataService : IWeatherDashboardIconDat
     /// </summary>
     private readonly List<string> weatherIconIdList = [];
 
-
     /// <summary>
     /// Creates a new weather dashboard icon data service
     /// </summary>
