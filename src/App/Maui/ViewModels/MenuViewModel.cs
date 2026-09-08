@@ -78,7 +78,6 @@ public class MenuViewModel : ViewModelBase
 
         this.MenuItemList =
         [
-            new MenuItemViewModel("Map", "map.png", PageKey.MapPage),
             new MenuItemViewModel("Layers", "layers_outline.png", PageKey.LayerListPage),
             new MenuItemViewModel("Locations", "format_list_bulleted.png", PageKey.LocationListPage),
             new MenuItemViewModel("Tracks", "map_marker_distance.png", PageKey.TrackListPage),
