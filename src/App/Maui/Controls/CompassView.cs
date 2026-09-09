@@ -446,8 +446,8 @@ public class CompassView : SKCanvasView
 
         for (int angle = 0; angle < 360; angle += 90)
         {
-            canvas.DrawPath(filledPathBuilder.Detach(), filledPaint);
-            canvas.DrawPath(outlinePathBuilder.Detach(), outlinePaint);
+            canvas.DrawPath(filledPathBuilder.Snapshot(), filledPaint);
+            canvas.DrawPath(outlinePathBuilder.Snapshot(), outlinePaint);
 
             canvas.DrawText(
                 directionNames[angle / 90],
