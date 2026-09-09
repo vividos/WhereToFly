@@ -6,8 +6,7 @@ const common = require("./webpack.common.config.js");
 
 const path = require("path");
 
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
+const MinimizerPlugin = require("minimizer-webpack-plugin");
 
 module.exports = merge(common, {
     mode: "production",
@@ -34,8 +33,7 @@ module.exports = merge(common, {
         usedExports: true,
         minimize: true,
         minimizer: [
-            new TerserPlugin(),
-            new CssMinimizerPlugin()
+            new MinimizerPlugin()
         ]
     },
     performance: {
