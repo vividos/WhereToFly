@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace WhereToFly.App.Weather.Models;
+﻿namespace WhereToFly.App.Weather.Models;
 
 /// <summary>
 /// Description for a single weather icon
@@ -10,8 +8,7 @@ public record WeatherIconDescription
     /// <summary>
     /// Unique ID for weather icon description
     /// </summary>
-    [JsonIgnore]
-    public string Id { get; } = Guid.NewGuid().ToString("B");
+    public string Id { get; set; } = Guid.NewGuid().ToString("B");
 
     /// <summary>
     /// Name of weather icon to display

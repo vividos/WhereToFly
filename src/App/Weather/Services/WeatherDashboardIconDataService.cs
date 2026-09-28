@@ -53,6 +53,9 @@ internal sealed class WeatherDashboardIconDataService : IWeatherDashboardIconDat
     {
         await this.initTask;
 
+        await this.weatherIconDescriptionRepository.Add(
+            weatherIconDescriptionToAdd);
+
         this.weatherIconIdList.Add(
             weatherIconDescriptionToAdd.Id);
 
