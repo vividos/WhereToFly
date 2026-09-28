@@ -17,6 +17,18 @@ public static class HtmlConverter
         .Build();
 
     /// <summary>
+    /// Acceptable HTML tags when santitizing HTML code
+    /// </summary>
+    private static readonly List<string> AcceptableTags =
+    [
+        "div", "span", "p", "br",
+        "b", "i", "strong", "em",
+        "table", "th", "tr", "td", "thead",
+        "ul", "li",
+        "img", "a",
+    ];
+
+    /// <summary>
     /// Sanitizes any potentially dangerous tags from the provided raw HTML input using
     /// a whitelist based approach, leaving the "safe" HTML tags. See:
     /// https://stackoverflow.com/questions/12787449/html-agility-pack-removing-unwanted-tags-without-removing-content
@@ -28,16 +40,7 @@ public static class HtmlConverter
         var htmlDocument = new HtmlDocument();
         htmlDocument.LoadHtml(htmlText);
 
-        var acceptableTags = new List<string>
-        {
-            "div", "span", "p", "br",
-            "b", "i", "strong", "em",
-            "table", "th", "tr", "td", "thead",
-            "ul", "li",
-            "img", "a",
-        };
-
-        ReplaceUnwantedTags(htmlDocument.DocumentNode, acceptableTags);
+        ReplaceUnwantedTags(htmlDocument.DocumentNode, AcceptableTags);
 
         return htmlDocument.DocumentNode.InnerHtml;
     }
@@ -59,10 +62,16 @@ public static class HtmlConverter
         var nodes = new Queue<HtmlNode>(selectedNodes);
         while (nodes.Count > 0)
         {
-            var node = nodes.Dequeue();
-            var parentNode = node.ParentNode;
+            HtmlNode node = nodes.Dequeue();
 
-            if (!acceptableTags.Contains(node.Name) && node.Name != "#text")
+            HtmlNode? parentNode = node.ParentNode;
+            if (parentNode == null)
+            {
+                continue;
+            }
+
+            if (!acceptableTags.Contains(node.Name) &&
+                node.Name != "#text")
             {
                 var childNodes = node.SelectNodes("./*|./text()");
 

@@ -16,6 +16,11 @@ namespace WhereToFly.App.ViewModels;
 public class LocationListViewModel : ViewModelBase
 {
     /// <summary>
+    /// Text for cancelling alerts and action sheets
+    /// </summary>
+    private const string CancelText = "Cancel";
+
+    /// <summary>
     /// A mapping of display string to locations list filename, stored as Assets in the app
     /// </summary>
     private readonly Dictionary<string, string> includedLocationsList = new()
@@ -337,7 +342,7 @@ public class LocationListViewModel : ViewModelBase
 
         string result = await UserInterface.DisplayActionSheet(
             $"Import location",
-            "Cancel",
+            CancelText,
             null,
             importActions.ToArray());
 
@@ -402,7 +407,7 @@ public class LocationListViewModel : ViewModelBase
     {
         string result = await UserInterface.DisplayActionSheet(
             "Select a location list",
-            "Cancel",
+            CancelText,
             null,
             this.includedLocationsList.Keys.ToArray());
 
@@ -467,7 +472,7 @@ public class LocationListViewModel : ViewModelBase
     {
         string result = await UserInterface.DisplayActionSheet(
             "Select a web page to open",
-            "Cancel",
+            CancelText,
             null,
             this.downloadWebSiteList.Keys.ToArray());
 
@@ -517,7 +522,7 @@ public class LocationListViewModel : ViewModelBase
         bool result = await UserInterface.DisplayAlert(
             "Really clear all locations?",
             "Clear",
-            "Cancel");
+            CancelText);
 
         if (!result)
         {

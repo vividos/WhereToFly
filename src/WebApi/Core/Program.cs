@@ -28,6 +28,8 @@ builder.Services.ConfigureHttpJsonOptions(
 builder.Services.AddCors(
     options =>
     {
+#if DEBUG
+#pragma warning disable S5122
         options.AddPolicy(
             DebugCorsPolicyName,
             builder =>
@@ -36,6 +38,8 @@ builder.Services.AddCors(
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             });
+#pragma warning restore S5122
+#endif
     });
 
 var app = builder.Build();

@@ -22,53 +22,52 @@ namespace WhereToFly.WebApi.Logic
         private const double MaximumRadiusInMeter = 50 * 1000;
 
         /// <summary>
-        /// Task that is completed when the manager is initialized completely.
+        /// Task that is completed when the manager is initialized completely. Returns the SQLite
+        /// database connection.
         /// </summary>
-        private readonly Task initializedTask;
-
-        /// <summary>
-        /// Memory database connection
-        /// </summary>
-        private SQLiteAsyncConnection? connection;
+        private readonly Task<SQLiteAsyncConnection> initializedTask;
 
         /// <summary>
         /// Creates a new location find manager
         /// </summary>
         public LocationFindManager()
         {
-            this.initializedTask = this.InitAsync();
+            this.initializedTask = InitAsync();
         }
 
         /// <summary>
         /// Initializes the manager
         /// </summary>
-        /// <returns>task to wait on</returns>
-        private async Task InitAsync()
+        /// <returns>SQLite database connection</returns>
+        private static async Task<SQLiteAsyncConnection> InitAsync()
         {
-            this.connection = new SQLiteAsyncConnection(
+            var connection = new SQLiteAsyncConnection(
                 ":memory:",
                 SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
 
-            var result = await this.connection.CreateTableAsync<FindLocationEntry>();
+            var result = await connection.CreateTableAsync<FindLocationEntry>();
 
             if (result == CreateTableResult.Created)
             {
                 try
                 {
-                    await this.ImportDataAsync();
+                    await ImportDataAsync(connection);
                 }
                 catch (Exception ex)
                 {
                     Debug.WriteLine(ex.ToString());
                 }
             }
+
+            return connection;
         }
 
         /// <summary>
         /// Imports all location data into the database for faster searching
         /// </summary>
+        /// <param name="localConnection">SQLite database connection</param>
         /// <returns>task to wait on</returns>
-        private async Task ImportDataAsync()
+        private static async Task ImportDataAsync(SQLiteAsyncConnection localConnection)
         {
             var importAndPrefixList = new Tuple<string, string>[]
             {
@@ -104,7 +103,7 @@ namespace WhereToFly.WebApi.Logic
 
                 var entriesList = locationList.Select(location => new FindLocationEntry(location));
 
-                await this.connection!.InsertAllAsync(entriesList);
+                await localConnection.InsertAllAsync(entriesList);
             }
         }
 
@@ -115,9 +114,9 @@ namespace WhereToFly.WebApi.Logic
         /// <returns>location object</returns>
         public async Task<Location?> GetAsync(string locationId)
         {
-            await this.initializedTask;
+            var localConnection = await this.initializedTask;
 
-            var layerEntry = await this.connection!.FindAsync<FindLocationEntry>(locationId);
+            var layerEntry = await localConnection.FindAsync<FindLocationEntry>(locationId);
 
             return layerEntry?.Location;
         }
@@ -130,12 +129,12 @@ namespace WhereToFly.WebApi.Logic
         /// <returns>list of locations found</returns>
         public async Task<IEnumerable<Location>> FindAsync(MapPoint mapPoint, double rangeInMeter)
         {
-            await this.initializedTask;
+            var localConnection = await this.initializedTask;
 
             MapPoint minMapPoint = mapPoint.Offset(rangeInMeter, -rangeInMeter, 0.0);
             MapPoint maxMapPoint = mapPoint.Offset(-rangeInMeter, rangeInMeter, 0.0);
 
-            var result = await this.connection!.QueryAsync<FindLocationEntry>(
+            var result = await localConnection.QueryAsync<FindLocationEntry>(
                 "select * from locations where latitude >= ? and latitude <= ? and longitude >= ? and longitude <= ?",
                 minMapPoint.Latitude,
                 maxMapPoint.Latitude,
@@ -173,9 +172,9 @@ namespace WhereToFly.WebApi.Logic
         /// <returns>list of locations</returns>
         public async Task<IEnumerable<Location>> GetInRectAsync(int latitude, int longitude)
         {
-            await this.initializedTask;
+            var localConnection = await this.initializedTask;
 
-            var result = await this.connection!.QueryAsync<FindLocationEntry>(
+            var result = await localConnection.QueryAsync<FindLocationEntry>(
                 "select * from locations where latitude >= ? and latitude <= ? and longitude >= ? and longitude <= ?",
                 latitude,
                 latitude + 1,

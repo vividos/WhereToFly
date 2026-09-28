@@ -97,7 +97,7 @@ namespace WhereToFly.WebApi.Logic.Services
                 : await this.GetStreamWithBasicAuth(
                     requestUrl,
                     string.Empty,
-                    password!);
+                    password);
 
             var thisRequestTime = DateTimeOffset.Now;
             this.lastRequest = thisRequestTime;
@@ -129,7 +129,7 @@ namespace WhereToFly.WebApi.Logic.Services
                 : await this.GetStreamWithBasicAuth(
                     requestUrl,
                     string.Empty,
-                    password!);
+                    password);
 
             var thisRequestTime = DateTimeOffset.Now;
             this.lastRequest = thisRequestTime;

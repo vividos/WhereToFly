@@ -136,7 +136,12 @@ namespace WhereToFly.WebApi.Logic
             if (selectedNode != null &&
                 selectedNode.Attributes.Contains(attributeName))
             {
-                string linkUri = selectedNode.Attributes[attributeName].Value;
+                string? linkUri = selectedNode.Attributes[attributeName]?.Value;
+                if (string.IsNullOrEmpty(linkUri))
+                {
+                    return null;
+                }
+
                 var completeUri = new Uri(new Uri(baseUri), linkUri);
 
                 return completeUri.AbsoluteUri;
