@@ -409,6 +409,16 @@
         <Setter Property="FontSize" Value="Large" />
     </Style>
 
+    <Style x:Key="EntryOnPopupPageStyle" TargetType="Entry">
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Light={StaticResource ElementOnPopupPageBackgroundColorLight}, Dark={StaticResource ElementOnPopupPageBackgroundColorDark}}" />
+    </Style>
+
+    <Style x:Key="PickerOnPopupPageStyle" TargetType="Picker">
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Light={StaticResource ElementOnPopupPageBackgroundColorLight}, Dark={StaticResource ElementOnPopupPageBackgroundColorDark}}" />
+    </Style>
+
     <Style x:Key="WeatherDashboardTileBorderStyle" TargetType="Border">
         <Setter Property="StrokeThickness" Value="0" />
         <Setter Property="StrokeShape" Value="RoundRectangle 8" />
