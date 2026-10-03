@@ -986,11 +986,11 @@ export class MapView {
 
     /**
      * Returns HTML code for the info text to show a button with icon and text.
-     * @param {string} imageUrl relative image URL of image to show
      * @param {string} buttonText button text to display
+     * @param {string} imageUrl relative image URL of image to show
      * @param {string} javascriptCode Javascript code to execute when the
      * button is clicked
-     * @returns HTML code for the button
+     * @returns {string} HTML code for the button
      */
     static getInfoTextButtonHtml(buttonText, imageUrl, javascriptCode) {
         return "<img height=\"32em\" width=\"32em\" src=\"" + imageUrl +
