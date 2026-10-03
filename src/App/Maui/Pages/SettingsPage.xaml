@@ -21,6 +21,7 @@
                   MaximumWidthRequest="450"
                   HorizontalOptions="Center"
                   VerticalOptions="Fill"
+                  RowSpacing="16"
                   Padding="8">
 
                 <!-- App theme picker -->
