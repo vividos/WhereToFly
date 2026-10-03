@@ -49,6 +49,13 @@
     "WebLink": "https://www.austrocontrol.at/flugwetter/index.php?id=560&lang=de"
   },
   {
+    "Name": "XC Therm ICON",
+    "Group": "Weather forecast",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://xctherm.com/icon"
+  },
+  {
     "Name": "Meteo Parapente",
     "Group": "Weather forecast",
     "Type": 0,
@@ -89,6 +96,13 @@
     "Type": 0,
     "Icon": null,
     "WebLink": "https://www.meteo.guru/"
+  },
+  {
+    "Name": "Flybubble weather map",
+    "Group": "Weather forecast",
+    "Type": 0,
+    "Icon": null,
+    "WebLink": "https://weather.flybubble.com/"
   },
   {
     "Name": "Föhndiagramm",
