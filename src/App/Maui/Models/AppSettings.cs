@@ -63,11 +63,6 @@ public record AppSettings
         = new FlyingRangeParameters();
 
     /// <summary>
-    /// Last shown settings page
-    /// </summary>
-    public int LastShownSettingsPage { get; set; } = 0;
-
-    /// <summary>
     /// Indicates if the flight planning disclaimer was already shown to the user
     /// </summary>
     public bool ShownFlightPlanningDisclaimer { get; set; } = false;

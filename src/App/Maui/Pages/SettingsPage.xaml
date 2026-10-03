@@ -2,13 +2,12 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
-             x:Class="WhereToFly.App.Pages.MapSettingsPage"
-             x:DataType="viewmodels:MapSettingsViewModel"
-             Title="Map"
-             IconImageSource="map.png">
+             x:Class="WhereToFly.App.Pages.SettingsPage"
+             x:DataType="viewmodels:SettingsViewModel"
+             Title="Settings">
 
     <ContentPage.BindingContext>
-        <viewmodels:MapSettingsViewModel />
+        <viewmodels:SettingsViewModel />
     </ContentPage.BindingContext>
 
     <ContentPage.Content>
@@ -17,14 +16,33 @@
 
             <!-- Grid with all settings -->
             <Grid ColumnDefinitions="1*"
+                  RowDefinitions="Auto, Auto"
                   WidthRequest="350"
                   MaximumWidthRequest="450"
                   HorizontalOptions="Center"
                   VerticalOptions="Fill"
                   Padding="8">
 
+                <!-- App theme picker -->
                 <Grid RowDefinitions="Auto, Auto"
                       RowSpacing="8">
+                    <Label Grid.Row="0"
+                           Style="{StaticResource CardLabelStyle}"
+                           Text="App theme" />
+                    <Border Grid.Row="1"
+                            Style="{StaticResource CardBorderStyle}">
+                        <Picker
+                            ItemsSource="{Binding AppThemeItems}"
+                            ItemDisplayBinding="{Binding Text, x:DataType=viewmodels:SettingsViewModel+AppThemeViewModel}"
+                            SelectedItem="{Binding SelectedAppTheme}"
+                            Margin="8" />
+                    </Border>
+                </Grid>
+
+                <!-- Map settings controls -->
+                <Grid RowDefinitions="Auto, Auto"
+                      RowSpacing="8"
+                      Grid.Row="1">
                     <Label Grid.Row="0"
                            Style="{StaticResource CardLabelStyle}"
                            Text="Map settings" />
@@ -45,7 +63,7 @@
                                    Text="Base layer" />
                             <Picker Grid.Row="0" Grid.Column="1"
                                     ItemsSource="{Binding MapImageryTypeItems}"
-                                    ItemDisplayBinding="{Binding Text, x:DataType=viewmodels:MapSettingsViewModel+MapImageryTypeViewModel}"
+                                    ItemDisplayBinding="{Binding Text, x:DataType=viewmodels:SettingsViewModel+MapImageryTypeViewModel}"
                                     SelectedItem="{Binding SelectedMapImageryType}" />
 
                             <!-- Map overlay type -->
@@ -55,7 +73,7 @@
                                    Text="Overlay" />
                             <Picker Grid.Row="1" Grid.Column="1"
                                     ItemsSource="{Binding MapOverlayTypeItems}"
-                                    ItemDisplayBinding="{Binding Text, x:DataType=viewmodels:MapSettingsViewModel+MapOverlayTypeViewModel}"
+                                    ItemDisplayBinding="{Binding Text, x:DataType=viewmodels:SettingsViewModel+MapOverlayTypeViewModel}"
                                     SelectedItem="{Binding SelectedMapOverlayType}" />
 
                             <!-- Map shading mode -->
@@ -65,7 +83,7 @@
                                    Text="Map shading" />
                             <Picker Grid.Row="2" Grid.Column="1"
                                     ItemsSource="{Binding MapShadingModeItems}"
-                                    ItemDisplayBinding="{Binding Text, x:DataType=viewmodels:MapSettingsViewModel+MapShadingModeViewModel}"
+                                    ItemDisplayBinding="{Binding Text, x:DataType=viewmodels:SettingsViewModel+MapShadingModeViewModel}"
                                     SelectedItem="{Binding SelectedMapShadingModeItem}" />
 
                             <!-- Lat/long coordinates display format -->
@@ -75,7 +93,7 @@
                                    Text="Coordinates format" />
                             <Picker Grid.Row="3" Grid.Column="1"
                                     ItemsSource="{Binding CoordinateDisplayFormatItems}"
-                                    ItemDisplayBinding="{Binding Text, x:DataType=viewmodels:MapSettingsViewModel+CoordinateDisplayFormatViewModel}"
+                                    ItemDisplayBinding="{Binding Text, x:DataType=viewmodels:SettingsViewModel+CoordinateDisplayFormatViewModel}"
                                     SelectedItem="{Binding SelectedCoordinateDisplayFormatItem}" />
 
                             <!-- Map entity clustering -->
