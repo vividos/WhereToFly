@@ -396,7 +396,6 @@ public class SettingsViewModel : ViewModelBase
         ];
     }
 
-
     /// <summary>
     /// Saves settings to data service
     /// </summary>
@@ -405,8 +404,7 @@ public class SettingsViewModel : ViewModelBase
     {
         UserInterface.UserAppTheme = this.appSettings.AppTheme;
 
-        var dataService = Services.GetRequiredService<IDataService>();
-        await dataService.StoreAppSettingsAsync(this.appSettings);
+        await this.dataService.StoreAppSettingsAsync(this.appSettings);
     }
 
     /// <summary>
