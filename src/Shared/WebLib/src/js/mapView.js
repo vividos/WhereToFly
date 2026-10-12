@@ -419,6 +419,9 @@ export class MapView {
 
         this.currentLeftDownPosition = movement.position;
         this.currentLeftDownTime = Date.now();
+
+        if (this.zoomEntity.show)
+            this.viewer.camera.cancelFlight();
     }
 
     /**

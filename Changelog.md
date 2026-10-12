@@ -6,6 +6,7 @@ Released on ?.
 
 ✨ New Features / Improvements
 
+- Stop zooming to a location when tapping on the screen
 - Using CesiumJS version 1.145
 
 🐛 Bugfixes
