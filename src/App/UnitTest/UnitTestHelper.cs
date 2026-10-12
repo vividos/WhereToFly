@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics.CodeAnalysis;
-using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Models;
 
 [assembly: SuppressMessage(
     "Minor Code Smell",

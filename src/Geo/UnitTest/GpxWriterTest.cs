@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using WhereToFly.Geo.DataFormats;
-using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Models;
 
 namespace WhereToFly.Geo.UnitTest;
 

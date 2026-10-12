@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Models;
 using WhereToFly.WebApi.Logic;
 
 namespace WhereToFly.WebApi.UnitTest

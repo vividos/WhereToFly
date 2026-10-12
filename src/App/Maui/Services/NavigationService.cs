@@ -10,9 +10,9 @@ using WhereToFly.App.Models;
 using WhereToFly.App.Pages;
 using WhereToFly.App.Popups;
 using WhereToFly.Geo.Airspace;
-using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Models;
 using WhereToFly.Shared.Model;
-using Location = WhereToFly.Geo.Model.Location;
+using Location = WhereToFly.Geo.Models.Location;
 
 #pragma warning disable S4136 // All 'NavigateAsync' method overloads should be adjacent.
 

@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using WhereToFly.Geo;
-using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Models;
 
 namespace WhereToFly.WebApi.Logic
 {

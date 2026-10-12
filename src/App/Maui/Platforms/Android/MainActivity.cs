@@ -4,6 +4,7 @@ using Android.Content.PM;
 using WhereToFly.App.Abstractions;
 using WhereToFly.App.Logic;
 using WhereToFly.Geo;
+using WhereToFly.Geo.Models;
 
 #pragma warning disable SA1118 // Parameter should not span multiple lines
 
@@ -154,7 +155,7 @@ public class MainActivity : MauiAppCompatActivity
 
             if (intent.DataString != null &&
                 intent.DataString.StartsWith("geo:") &&
-                CoordinatesParser.TryParse(intent.DataString, out Geo.Model.MapPoint? mapPoint) &&
+                CoordinatesParser.TryParse(intent.DataString, out MapPoint? mapPoint) &&
                 mapPoint != null)
             {
                 var appMapService = App.Services.GetRequiredService<IAppMapService>();

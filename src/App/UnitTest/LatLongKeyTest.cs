@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.Json;
 using WhereToFly.App.Serializers;
 using WhereToFly.App.Services;
-using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Models;
 
 namespace WhereToFly.App.UnitTest;
 

@@ -1,5 +1,5 @@
 ﻿using Microsoft.Maui.Devices.Sensors;
-using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Models;
 
 namespace WhereToFly.App;
 

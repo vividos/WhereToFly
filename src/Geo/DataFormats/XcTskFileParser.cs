@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 using System.Text.Json;
 using WhereToFly.Geo.DataFormats.Czml;
-using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Models;
 using WhereToFly.Geo.Serializers;
 
 namespace WhereToFly.Geo.DataFormats;

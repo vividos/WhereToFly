@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using WhereToFly.Geo.DataFormats;
-using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Models;
 
 namespace WhereToFly.Geo.UnitTest;
 

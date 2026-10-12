@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Models;
 
 // make Geo internals visible to unit tests
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("WhereToFly.Geo.UnitTest")]

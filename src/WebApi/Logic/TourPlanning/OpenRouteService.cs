@@ -8,7 +8,7 @@ using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.Geo;
-using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Models;
 using WhereToFly.WebApi.Logic.Serializers;
 
 namespace WhereToFly.WebApi.Logic.TourPlanning

@@ -4,7 +4,7 @@ using WhereToFly.App.Behaviors;
 using WhereToFly.App.MapView.Abstractions;
 using WhereToFly.App.Services;
 using WhereToFly.App.ViewModels;
-using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Models;
 
 namespace WhereToFly.App.Pages;
 

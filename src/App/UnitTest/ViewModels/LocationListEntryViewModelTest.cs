@@ -2,7 +2,7 @@
 using System;
 using WhereToFly.App.Models;
 using WhereToFly.App.ViewModels;
-using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Models;
 
 namespace WhereToFly.App.UnitTest.ViewModels;
 

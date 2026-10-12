@@ -55,7 +55,7 @@ public class KmlLocationImporter
     /// Imports all locations and returns a list of locations
     /// </summary>
     /// <returns>list of locations</returns>
-    public Task<IEnumerable<Model.Location>> ImportAsync()
+    public Task<IEnumerable<Models.Location>> ImportAsync()
     {
         return Task.FromResult(
             this.GetLocationRecursive(this.kmlFile.Root));
@@ -67,7 +67,7 @@ public class KmlLocationImporter
     /// </summary>
     /// <param name="element">KML element to use</param>
     /// <returns>list of locations</returns>
-    private IEnumerable<Model.Location> GetLocationRecursive(Element element)
+    private IEnumerable<Models.Location> GetLocationRecursive(Element element)
     {
         switch (element)
         {
@@ -81,7 +81,7 @@ public class KmlLocationImporter
                 return folder.Features.SelectMany(this.GetLocationRecursive);
 
             case Placemark placemark when placemark.Geometry is Point:
-                Model.Location location = KmlDataFile.LocationFromPlacemark(
+                Models.Location location = KmlDataFile.LocationFromPlacemark(
                     this.kmlFile,
                     placemark,
                     true,

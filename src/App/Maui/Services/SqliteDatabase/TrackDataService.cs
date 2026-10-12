@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Text.Json;
 using WhereToFly.App.Abstractions;
 using WhereToFly.App.Serializers;
-using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Models;
 
 namespace WhereToFly.App.Services.SqliteDatabase;
 

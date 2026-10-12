@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using WhereToFly.App.Abstractions;
-using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Models;
 using WhereToFly.Shared.Model;
 
 namespace WhereToFly.App.Services;

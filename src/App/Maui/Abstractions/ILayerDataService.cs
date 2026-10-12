@@ -1,4 +1,4 @@
-﻿using WhereToFly.Geo.Model;
+﻿using WhereToFly.Geo.Models;
 
 namespace WhereToFly.App.Abstractions;
 

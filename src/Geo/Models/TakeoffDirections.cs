@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
-namespace WhereToFly.Geo.Model;
+namespace WhereToFly.Geo.Models;
 
 /// <summary>
 /// Takeoff direction as flags that can be combined. Used to mark takeoff locations with the

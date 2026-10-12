@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using WhereToFly.App.MapView.Abstractions;
 using WhereToFly.App.MapView.Models;
 using WhereToFly.Geo;
-using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Models;
 using WhereToFly.Shared.Model;
 
 namespace WhereToFly.App.UnitTest;

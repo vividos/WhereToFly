@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using WhereToFly.App.MapView.Models;
-using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Models;
 
 namespace WhereToFly.App.MapView.Serializers;
 

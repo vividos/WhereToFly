@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using WhereToFly.Geo;
-using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Models;
 using WhereToFly.Shared.Model;
 
 [assembly: InternalsVisibleTo("WhereToFly.WebApi.Logic.Test")]

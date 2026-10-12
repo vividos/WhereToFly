@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using WhereToFly.App.Serializers;
-using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Models;
 
 namespace WhereToFly.App.UnitTest;
 

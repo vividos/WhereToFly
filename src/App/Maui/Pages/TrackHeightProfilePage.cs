@@ -1,6 +1,6 @@
 ﻿using WhereToFly.App.Abstractions;
 using WhereToFly.App.MapView;
-using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Models;
 
 namespace WhereToFly.App.Pages;
 

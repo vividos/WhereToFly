@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Models;
 
 namespace WhereToFly.Geo.DataFormats;
 
@@ -192,7 +192,7 @@ internal class KmlDataFile : IGeoDataFile
     /// </summary>
     /// <param name="trackIndex">index of track to load</param>
     /// <returns>loaded track</returns>
-    public Model.Track LoadTrack(int trackIndex)
+    public Models.Track LoadTrack(int trackIndex)
     {
         if (trackIndex >= this.trackPlacemarkList.Count)
         {
@@ -201,7 +201,7 @@ internal class KmlDataFile : IGeoDataFile
 
         var placemark = this.trackPlacemarkList[trackIndex];
 
-        Model.Track? track = null;
+        Models.Track? track = null;
 
         if (placemark.Geometry is LineString lineString)
         {
@@ -241,7 +241,7 @@ internal class KmlDataFile : IGeoDataFile
     /// </summary>
     /// <param name="lineString">line string object</param>
     /// <returns>loaded track</returns>
-    private static Model.Track LoadTrackFromLineString(LineString lineString)
+    private static Models.Track LoadTrackFromLineString(LineString lineString)
     {
         var track = CreateTrackFromPlacemark(lineString?.Parent as Placemark);
 
@@ -281,7 +281,7 @@ internal class KmlDataFile : IGeoDataFile
     /// </summary>
     /// <param name="gxtrack">track object</param>
     /// <returns>loaded track </returns>
-    private static Model.Track LoadTrackFromGXTrack(SharpKml.Dom.GX.Track gxtrack)
+    private static Models.Track LoadTrackFromGXTrack(SharpKml.Dom.GX.Track gxtrack)
     {
         var track = CreateTrackFromPlacemark(gxtrack.Parent as Placemark);
 
@@ -296,7 +296,7 @@ internal class KmlDataFile : IGeoDataFile
     /// </summary>
     /// <param name="multiTrack">multi track object</param>
     /// <returns>loaded track </returns>
-    private static Model.Track LoadTrackFromGXMultiTrack(MultipleTrack multiTrack)
+    private static Models.Track LoadTrackFromGXMultiTrack(MultipleTrack multiTrack)
     {
         var track = CreateTrackFromPlacemark(multiTrack?.Parent as Placemark);
 
@@ -318,7 +318,7 @@ internal class KmlDataFile : IGeoDataFile
     /// </summary>
     /// <param name="multiGeometry">multi geometry object</param>
     /// <returns>loaded track </returns>
-    private static Model.Track LoadTrackFromMultipleGeometry(MultipleGeometry multiGeometry)
+    private static Models.Track LoadTrackFromMultipleGeometry(MultipleGeometry multiGeometry)
     {
         var track = CreateTrackFromPlacemark(multiGeometry?.Parent as Placemark);
 
@@ -363,9 +363,9 @@ internal class KmlDataFile : IGeoDataFile
     /// </summary>
     /// <param name="placemark">placemark object</param>
     /// <returns>newly created track object</returns>
-    private static Model.Track CreateTrackFromPlacemark(Placemark? placemark)
+    private static Models.Track CreateTrackFromPlacemark(Placemark? placemark)
     {
-        return new Model.Track(Guid.NewGuid().ToString("B"))
+        return new Models.Track(Guid.NewGuid().ToString("B"))
         {
             Name = placemark?.Name ?? "Track",
         };
@@ -376,7 +376,7 @@ internal class KmlDataFile : IGeoDataFile
     /// </summary>
     /// <param name="track">track object to add points to</param>
     /// <param name="gxtrack">GX.Track object to use</param>
-    private static void AddGxTrackPointsToTrack(Model.Track track, SharpKml.Dom.GX.Track gxtrack)
+    private static void AddGxTrackPointsToTrack(Models.Track track, SharpKml.Dom.GX.Track gxtrack)
     {
         foreach (var vector in gxtrack.Coordinates)
         {
@@ -390,7 +390,7 @@ internal class KmlDataFile : IGeoDataFile
     /// Loads location list from kml or kmz file
     /// </summary>
     /// <returns>list of locations found in the file</returns>
-    public List<Model.Location> LoadLocationList()
+    public List<Models.Location> LoadLocationList()
     {
         if (this.kml == null)
         {
@@ -416,7 +416,7 @@ internal class KmlDataFile : IGeoDataFile
     /// </param>
     /// <param name="idPrefix">prefix for the ID</param>
     /// <returns>location object</returns>
-    internal static Model.Location LocationFromPlacemark(
+    internal static Models.Location LocationFromPlacemark(
         KmlFile kml,
         Placemark placemark,
         bool createStablePlacemarkIds,
@@ -435,7 +435,7 @@ internal class KmlDataFile : IGeoDataFile
             ? GetStablePlacemarkId(placemark, idPrefix)
             : placemark.Id ?? Guid.NewGuid().ToString("B");
 
-        var location = new Model.Location(
+        var location = new Models.Location(
             locationId,
             new MapPoint(point.Coordinate.Latitude, point.Coordinate.Longitude, point.Coordinate.Altitude))
         {

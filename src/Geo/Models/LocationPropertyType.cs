@@ -1,4 +1,4 @@
-﻿namespace WhereToFly.Geo.Model;
+﻿namespace WhereToFly.Geo.Models;
 
 /// <summary>
 /// Type of a location property stored in the Properties dictionary on a location.

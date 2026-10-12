@@ -1,6 +1,6 @@
 ﻿using SQLite;
 using WhereToFly.App.Abstractions;
-using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Models;
 
 namespace WhereToFly.App.Services.SqliteDatabase;
 

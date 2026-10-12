@@ -15,7 +15,7 @@ using WhereToFly.App.MapView.Abstractions;
 using WhereToFly.App.MapView.Models;
 using WhereToFly.App.MapView.Serializers;
 using WhereToFly.Geo;
-using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Models;
 using WhereToFly.Shared.Model;
 
 // make MapView internals visible to unit tests

@@ -1,7 +1,6 @@
 ﻿using System;
-using WhereToFly.Geo.Model;
 
-namespace WhereToFly.Geo;
+namespace WhereToFly.Geo.Models;
 
 /// <summary>
 /// Position data

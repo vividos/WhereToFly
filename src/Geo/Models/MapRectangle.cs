@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.Json.Serialization;
 
-namespace WhereToFly.Geo.Model;
+namespace WhereToFly.Geo.Models;
 
 /// <summary>
 /// Map rectangle

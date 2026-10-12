@@ -5,8 +5,8 @@ using WhereToFly.App.Logic;
 using WhereToFly.App.Models;
 using WhereToFly.App.Resources;
 using WhereToFly.App.Services;
-using WhereToFly.Geo.Model;
-using Location = WhereToFly.Geo.Model.Location;
+using WhereToFly.Geo.Models;
+using Location = WhereToFly.Geo.Models.Location;
 
 namespace WhereToFly.App.ViewModels;
 

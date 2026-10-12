@@ -1,5 +1,5 @@
 ﻿using WhereToFly.Geo.Airspace;
-using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Models;
 
 namespace WhereToFly.Geo;
 

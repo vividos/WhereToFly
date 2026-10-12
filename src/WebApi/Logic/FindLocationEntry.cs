@@ -1,7 +1,7 @@
 ﻿using SQLite;
 using System;
 using System.Text.Json;
-using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Models;
 using WhereToFly.Shared.Model.Serializers;
 
 namespace WhereToFly.WebApi.Logic

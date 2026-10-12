@@ -1,4 +1,4 @@
-﻿namespace WhereToFly.Geo.Model;
+﻿namespace WhereToFly.Geo.Models;
 
 /// <summary>
 /// Layer type

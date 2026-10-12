@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Xml;
+using WhereToFly.Geo.Models;
 
 namespace WhereToFly.Geo.DataFormats;
 
@@ -18,7 +19,7 @@ public class GpxWriter
     /// </summary>
     /// <param name="filename">filename to write to</param>
     /// <param name="track">track to write</param>
-    public static void WriteTrack(string filename, Model.Track track)
+    public static void WriteTrack(string filename, Track track)
     {
         using var fileStream = new FileStream(filename, FileMode.Create);
         WriteTrack(fileStream, track);
@@ -29,7 +30,7 @@ public class GpxWriter
     /// </summary>
     /// <param name="stream">stream to write to</param>
     /// <param name="track">track to write</param>
-    public static void WriteTrack(Stream stream, Model.Track track)
+    public static void WriteTrack(Stream stream, Track track)
     {
         var writer = new GpxWriter(stream);
         writer.Write(track);
@@ -48,7 +49,7 @@ public class GpxWriter
     /// Writes track to stream
     /// </summary>
     /// <param name="track">track to write</param>
-    private void Write(Model.Track track)
+    private void Write(Track track)
     {
         var settings = new XmlWriterSettings();
         using var writer = XmlWriter.Create(this.stream, settings);

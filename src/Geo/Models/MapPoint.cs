@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Text.Json.Serialization;
 
-namespace WhereToFly.Geo.Model;
+namespace WhereToFly.Geo.Models;
 
 /// <summary>
 /// A point on a map, in WGS84 decimal coordinates. Negative values are

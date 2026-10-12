@@ -10,9 +10,9 @@ using WhereToFly.App.Models;
 using WhereToFly.App.Pages;
 using WhereToFly.App.Services;
 using WhereToFly.Geo;
-using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Models;
 using WhereToFly.Shared.Model;
-using Location = WhereToFly.Geo.Model.Location;
+using Location = WhereToFly.Geo.Models.Location;
 
 namespace WhereToFly.App.ViewModels;
 

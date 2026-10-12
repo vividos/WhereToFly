@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WhereToFly.Geo.Model;
+namespace WhereToFly.Geo.Models;
 
 /// <summary>
 /// A single track consisting of track points

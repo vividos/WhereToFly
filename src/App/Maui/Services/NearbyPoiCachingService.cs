@@ -2,7 +2,7 @@
 using System.Text.Json;
 using WhereToFly.App.MapView.Abstractions;
 using WhereToFly.App.Serializers;
-using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Models;
 
 namespace WhereToFly.App.Services;
 

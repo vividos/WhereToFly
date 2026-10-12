@@ -5,7 +5,7 @@ using WhereToFly.App.Popups;
 using WhereToFly.App.Services;
 using WhereToFly.App.ViewModels;
 using WhereToFly.Geo;
-using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Models;
 
 namespace WhereToFly.App.Pages;
 

@@ -1,4 +1,4 @@
-﻿namespace WhereToFly.Geo.Model;
+﻿namespace WhereToFly.Geo.Models;
 
 /// <summary>
 /// A layer that contains map objects, e.g. the location pins, tracks or any .czml that the

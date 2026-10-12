@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui.Core;
 using WhereToFly.App.ViewModels;
-using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Models;
+
 #if ANDROID
 using Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;
 using System.Diagnostics;

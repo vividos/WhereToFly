@@ -1,7 +1,7 @@
 ﻿using System.Windows.Input;
 using WhereToFly.App.Abstractions;
 using WhereToFly.App.Logic;
-using WhereToFly.Geo.Model;
+using WhereToFly.Geo.Models;
 
 namespace WhereToFly.App.ViewModels;
 
