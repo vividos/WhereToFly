@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using WhereToFly.App.Abstractions;
 using WhereToFly.App.Models;
+using WhereToFly.App.Services;
 using WhereToFly.Geo;
 using WhereToFly.Geo.SunCalcNet;
 

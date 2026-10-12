@@ -1,4 +1,4 @@
-﻿namespace WhereToFly.App;
+﻿namespace WhereToFly.App.Services;
 
 /// <summary>
 /// Compass geographic services

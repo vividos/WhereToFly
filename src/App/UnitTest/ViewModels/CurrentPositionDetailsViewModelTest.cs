@@ -3,6 +3,7 @@ using Microsoft.Maui.Graphics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using WhereToFly.App.Models;
+using WhereToFly.App.Services;
 using WhereToFly.App.ViewModels;
 using WhereToFly.Geo;
 
