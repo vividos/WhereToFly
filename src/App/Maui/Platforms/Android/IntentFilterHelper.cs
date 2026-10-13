@@ -2,7 +2,7 @@
 using Android.Database;
 using Uri = Android.Net.Uri;
 
-namespace WhereToFly.App;
+namespace WhereToFly.App.Platforms.Android;
 
 /// <summary>
 /// Helper for intent filter functions

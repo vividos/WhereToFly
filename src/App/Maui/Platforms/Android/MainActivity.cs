@@ -8,7 +8,7 @@ using WhereToFly.Geo.Models;
 
 #pragma warning disable SA1118 // Parameter should not span multiple lines
 
-namespace WhereToFly.App;
+namespace WhereToFly.App.Platforms.Android;
 
 /// <summary>
 /// Android MAUI app main activity.

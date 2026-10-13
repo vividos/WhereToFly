@@ -6,7 +6,7 @@ using Microsoft.Maui.Platform;
 using System;
 using System.Diagnostics;
 
-namespace WhereToFly.App.MapView;
+namespace WhereToFly.App.MapView.Platforms.Android;
 
 /// <summary>
 /// WebViewClient implementation for Android

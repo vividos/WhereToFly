@@ -4,7 +4,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.Web.WebView2.Core;
 using WhereToFly.App.MapView.Abstractions;
 
-namespace WhereToFly.App.MapView;
+namespace WhereToFly.App.MapView.Platforms.Windows;
 
 /// <summary>
 /// Handler for <see cref="MapView"/> control, Windows platform.

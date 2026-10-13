@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 
-namespace WhereToFly.App.MapView;
+namespace WhereToFly.App.MapView.Platforms.Android;
 
 /// <summary>
 /// CORS website cache

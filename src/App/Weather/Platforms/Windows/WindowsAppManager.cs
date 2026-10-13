@@ -1,6 +1,6 @@
 ﻿using WhereToFly.App.Weather.Abstractions;
 
-namespace WhereToFly.App.Platforms.Windows;
+namespace WhereToFly.App.Weather.Platforms.Windows;
 
 /// <summary>
 /// Windows app manager implementation that provides operations on external Windows apps.

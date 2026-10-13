@@ -3,7 +3,7 @@ using Android.Webkit;
 using AndroidX.WebKit;
 using WhereToFly.App.MapView.Abstractions;
 
-namespace WhereToFly.App.MapView;
+namespace WhereToFly.App.MapView.Platforms.Android;
 
 /// <summary>
 /// Web message listener implementation for Android WebKit

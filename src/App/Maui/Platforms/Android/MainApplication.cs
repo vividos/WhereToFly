@@ -2,7 +2,7 @@
 using Android.Runtime;
 using Android.Webkit;
 
-namespace WhereToFly.App;
+namespace WhereToFly.App.Platforms.Android;
 
 /// <summary>
 /// Android MAUI app application

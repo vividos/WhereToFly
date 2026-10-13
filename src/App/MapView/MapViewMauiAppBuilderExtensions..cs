@@ -1,6 +1,12 @@
 ﻿using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
 
+#if ANDROID
+using WhereToFly.App.MapView.Platforms.Android;
+#elif WINDOWS
+using WhereToFly.App.MapView.Platforms.Windows;
+#endif
+
 namespace WhereToFly.App.MapView;
 
 /// <summary>
