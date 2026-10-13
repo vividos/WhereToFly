@@ -16,10 +16,10 @@ public class SettingsPageTest : UserInterfaceTestBase
     public void TestDefaultCtor()
     {
         // set up
-        var page = new SettingsPage(this.Services);
+        var page = new SettingsPage();
 
         // check
         Assert.IsGreaterThan(0, page.Title.Length, "page title must have been set");
-        Assert.IsNotEmpty(page.Children, "tabbed page must have at least one sub page");
+        Assert.IsNotNull(page.Content, "settings page must have content");
     }
 }

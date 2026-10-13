@@ -18,7 +18,7 @@ public class SettingsViewModelTest : UserInterfaceTestBase
     public void TestDefaultCtor()
     {
         // run
-        var viewModel = new MapSettingsViewModel();
+        var viewModel = new SettingsViewModel();
 
         Debug.WriteLine($"SelectedMapImageryType = {viewModel.SelectedMapImageryType}");
         Debug.WriteLine($"SelectedMapOverlayType = {viewModel.SelectedMapOverlayType}");
