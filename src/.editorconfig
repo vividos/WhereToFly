@@ -299,6 +299,9 @@ dotnet_diagnostic.SA1124.severity = silent
 # SA1133: Do not combine attributes
 dotnet_diagnostic.SA1133.severity = silent
 
+# SA1143: Conditional expressions must be formatted consistently
+dotnet_diagnostic.SA1143.severity = none
+
 # SA1201: Elements should appear in the correct order
 dotnet_diagnostic.SA1201.severity = silent
 
@@ -310,6 +313,12 @@ dotnet_diagnostic.SA1204.severity = silent
 
 # SA1208: System using directives should be placed before other using directives
 dotnet_diagnostic.SA1208.severity = silent
+
+# SA1315: Parameter names should match inherited names
+dotnet_diagnostic.SA1315.severity = none
+
+# SA1504: All accessors should be single-line or multi-line
+dotnet_diagnostic.SA1504.severity = none
 
 # SA1514: Element documentation header should be preceded by blank line
 dotnet_diagnostic.SA1514.severity = silent

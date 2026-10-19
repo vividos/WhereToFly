@@ -4,9 +4,9 @@ using WhereToFly.Geo.Models;
 
 namespace WhereToFly.App.Services.SqliteDatabase;
 
-/// <summary>
+/// <content>
 /// Layer data service implementation of SQLite database data service
-/// </summary>
+/// </content>
 internal partial class SqliteDatabaseDataService
 {
     /// <summary>

@@ -28,7 +28,7 @@
     </PackageReference>
 
     <!-- Add reference to StyleCop analyzers to all projects -->
-    <PackageReference Include="StyleCop.Analyzers" Version="1.3.18-beta">
+    <PackageReference Include="StyleCop.Analyzers" Version="1.3.109-beta">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

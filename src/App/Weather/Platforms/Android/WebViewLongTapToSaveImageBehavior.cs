@@ -8,11 +8,11 @@ using WebView = global::Android.Webkit.WebView;
 
 namespace WhereToFly.App.Weather.Behaviors;
 
-/// <summary>
+/// <content>
 /// Behavior for Android <see cref="WebView"/>. The behavior provides long-tapping on image
 /// links, shows a prompt to download the image and then hands off to the Android's download
 /// manager. Can also download images that need authentication.
-/// </summary>
+/// </content>
 internal partial class WebViewLongTapToSaveImageBehavior :
     PlatformBehavior<Microsoft.Maui.Controls.WebView, WebView>
 {

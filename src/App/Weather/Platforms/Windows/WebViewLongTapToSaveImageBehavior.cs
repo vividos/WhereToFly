@@ -1,8 +1,8 @@
 ﻿namespace WhereToFly.App.Weather.Behaviors;
 
-/// <summary>
+/// <content>
 /// Empty behavior implementation for Windows. The behavior is only implemented for Android.
-/// </summary>
+/// </content>
 internal partial class WebViewLongTapToSaveImageBehavior :
     PlatformBehavior<Microsoft.Maui.Controls.WebView>
 {

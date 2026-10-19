@@ -3,10 +3,10 @@ using Microsoft.Web.WebView2.Core;
 
 namespace WhereToFly.App.Behaviors;
 
-/// <summary>
+/// <content>
 /// Behavior that can be attached to a <see cref="WebView"/> to open web links in an external
 /// browser
-/// </summary>
+/// </content>
 internal partial class OpenLinkExternalBrowserWebViewBehavior :
     PlatformBehavior<WebView, WebView2>
 {
