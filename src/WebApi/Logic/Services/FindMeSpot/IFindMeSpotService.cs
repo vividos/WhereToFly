@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WhereToFly.WebApi.Logic.Serializers;
 
 #pragma warning disable SA1402 // File may only contain a single type
+#pragma warning disable SA1649 // File name should match first type name
 #pragma warning disable CA1034 // Nested types should not be visible
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 

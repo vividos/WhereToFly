@@ -50,6 +50,7 @@ internal partial class MapViewHandler :
 #if DEBUG
         WebView.SetWebContentsDebuggingEnabled(true);
 #endif
+
         // Note: don't put platformView.Settings in a local variable, it doesn't work
         platformView.Settings.JavaScriptEnabled = true;
 

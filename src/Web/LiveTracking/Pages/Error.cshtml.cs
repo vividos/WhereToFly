@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Diagnostics;
 
+#pragma warning disable SA1649 // File name should match first type name
+
 namespace WhereToFly.Web.LiveTracking.Pages
 {
     /// <summary>

@@ -5,6 +5,8 @@ using System.Text.Json;
 using WhereToFly.Shared.Model;
 using WhereToFly.Shared.Model.Serializers;
 
+#pragma warning disable SA1649 // File name should match first type name
+
 namespace WhereToFly.Web.LiveTracking.Pages
 {
     /// <summary>
@@ -86,7 +88,7 @@ namespace WhereToFly.Web.LiveTracking.Pages
                 new LiveTrackingInfo(
                     "TestPos Schliersee",
                     TestPosDataUri,
-                    default)
+                    default),
             ];
         }
 
@@ -114,7 +116,7 @@ namespace WhereToFly.Web.LiveTracking.Pages
                         name ?? "Live Waypoint",
                         liveWaypointUri.ToString(),
                         liveWaypointUri.IsTrackResourceType,
-                        isFlightTrack)
+                        isFlightTrack),
                 ];
             }
         }

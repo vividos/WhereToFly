@@ -25,7 +25,7 @@ internal class LongTapGestureListener : GestureDetector.SimpleOnGestureListener
     /// </summary>
     /// <param name="javaReference">java reference</param>
     /// <param name="transfer">transfer ownership</param>
-    protected LongTapGestureListener(IntPtr javaReference, JniHandleOwnership transfer)
+    protected LongTapGestureListener(nint javaReference, JniHandleOwnership transfer)
         : base(javaReference, transfer)
     {
     }

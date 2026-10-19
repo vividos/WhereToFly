@@ -2,6 +2,8 @@
 
 namespace WhereToFly.App.Popups;
 
+#pragma warning disable SA1649 // File name should match first type name
+
 /// <summary>
 /// Base class for all popup pages that want to return a result.
 /// </summary>

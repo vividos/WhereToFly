@@ -14,7 +14,7 @@ public class MainApplication : MauiApplication
     /// </summary>
     /// <param name="handle">Android handle</param>
     /// <param name="ownership">handle ownership</param>
-    public MainApplication(IntPtr handle, JniHandleOwnership ownership)
+    public MainApplication(nint handle, JniHandleOwnership ownership)
         : base(handle, ownership)
     {
     }
