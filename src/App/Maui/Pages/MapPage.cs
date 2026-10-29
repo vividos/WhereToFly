@@ -69,7 +69,7 @@ public class MapPage : ContentPage
             LogErrorAction = App.LogError,
             VerticalOptions = LayoutOptions.Fill,
             HorizontalOptions = LayoutOptions.Fill,
-            AutomationId = "ExploreMapWebView",
+            AutomationId = "MapView",
             NearbyPoiService = nearbyPoiService,
         };
 

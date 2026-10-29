@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.Content.PM;
+using Android.Runtime;
 using WhereToFly.App.Abstractions;
 using WhereToFly.App.Logic;
 using WhereToFly.Geo;
@@ -105,6 +106,10 @@ namespace WhereToFly.App.Platforms.Android;
     DataSchemes = ["geo"],
     Categories = [Intent.CategoryDefault, Intent.CategoryBrowsable],
     Icon = "@mipmap/appicon")]
+//// For UI tests on Appium
+#if DEBUG
+[Register("de.vividos.app.wheretofly.android_dbg.MainActivity")]
+#endif
 public class MainActivity : MauiAppCompatActivity
 {
     /// <summary>
