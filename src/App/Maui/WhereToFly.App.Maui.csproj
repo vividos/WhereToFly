@@ -102,11 +102,6 @@
     <PackageReference Include="Microsoft.Maui.Controls" Version="$(DotNetMauiVersion)" />
     <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="4.152.0" />
     <PackageReference Include="sqlite-net-pcl" Version="1.11.285" />
-    <!--
-    Workaround: Microsoft.AppCenter.* packages reference a very old SQLitePCLRaw version.
-    Reference a current version to fix vulnerabilities.
-    -->
-    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="3.53.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -114,14 +109,23 @@
     <LinkerDescriptor Include="TrimmerLinkerDescriptor.xml" />
   </ItemGroup>
 
-  <PropertyGroup Condition="'$(PkgMicrosoft_AppCenter_Crashes)' != ''">
-    <DefineConstants>$(DefineConstants);APPCENTER</DefineConstants>
-  </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\Geo\WhereToFly.Geo.csproj" />
     <ProjectReference Include="..\..\Shared\Model\WhereToFly.Shared.Model.csproj" />
     <ProjectReference Include="..\MapView\WhereToFly.App.MapView.csproj" />
+  </ItemGroup>
+
+  <!-- AppCenter -->
+  <PropertyGroup Condition="'$(PkgMicrosoft_AppCenter_Crashes)' != ''">
+    <DefineConstants>$(DefineConstants);APPCENTER</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(PkgMicrosoft_AppCenter_Crashes)' != ''">
+    <!--
+    Workaround: Microsoft.AppCenter.* packages reference a very old SQLitePCLRaw version.
+    Reference a current version to fix vulnerabilities.
+    -->
+    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="3.53.3" />
   </ItemGroup>
 
   <!-- .NET Windows properties -->
