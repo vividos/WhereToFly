@@ -1,4 +1,4 @@
-﻿using Xamarin.UITest;
+﻿using Plugin.Maui.UITestHelpers.Core;
 
 namespace WhereToFly.App.UITest;
 
@@ -10,36 +10,14 @@ internal class PageBase
     /// <summary>
     /// App under test
     /// </summary>
-#pragma warning disable SA1401 // Fields should be private
-    protected readonly IApp app;
-#pragma warning restore SA1401 // Fields should be private
+    protected IApp App { get; }
 
     /// <summary>
     /// Creates a new page base class object; call this from the page classes
     /// </summary>
     /// <param name="app">app under test</param>
-    protected PageBase(IApp app)
+    public PageBase(IApp app)
     {
-        this.app = app;
-    }
-
-    /// <summary>
-    /// Opens page and returns new page object
-    /// </summary>
-    /// <param name="page">page to open</param>
-    /// <returns>new page object</returns>
-    public PageBase OpenPage(PageToOpen page)
-    {
-        this.app.Tap(x => x.Class("AppCompatImageButton"));
-
-        // the PageToOpen enum has the same values as the AutomationId
-        // attributes on the menu plus a suffix
-        this.app.Tap(x => x.Marked($"{page}Page"));
-
-        return page switch
-        {
-            PageToOpen.Map => new MapPage(this.app),
-            _ => new PageBase(this.app),
-        };
+        this.App = app;
     }
 }

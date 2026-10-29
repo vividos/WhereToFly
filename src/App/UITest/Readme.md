@@ -1,23 +1,16 @@
 # Readme for UI-Tests
 
-In order to run User Interface tests for Where-to-fly, you have to do some
-steps:
+This project contains the UI tests for Where-to-fly. The tests use Appium and
+can run on Android or Windows. To test debug versions of the app, deploy the
+app on the device. For release tests, create a package of the app (.apk or
+.msixbundle) and copy it to the folder containing the test assembly.
 
-1. Install the "NUnit 2 Test Adapter" extension. You'll need this as Visual
-   Studio won't find your test when the NuGet package "NUnitTestAdapter" is
-   not restored in your project's bin folder.
+In order to install appium, follow these steps:
+https://learn.microsoft.com/en-us/samples/dotnet/maui-samples/uitest-appium-nunit/
 
-2. Be sure your ANDROID_HOME environment variable is set; otherwise starting
-   up the tests don't work. Mine is set to:
-   ANDROID_HOME = C:\Program Files (x86)\Android\android-sdk
+The tests can be controlled using the following envrionment variables:
 
-   That's the same path that can be found in:
-   Tools > Options > Xamarin > Android SDK Location
-
-3. Build the Release version of the WhereToFly.App.Android project and deploy
-   it to the Android device.
-
-4. Connect a device - only one should be connected, or UITest doesn't know
-   which one to use.
-
-5. Start the UI tests using the "Test Explorer" window.
+- `UITEST_PLATFORM`: Set to Android to test on Android, or to Windows to test
+  on Windows.
+- `UITEST_APPID`: Set to the Android Package ID or Windows Package ID of the
+  app to test.

@@ -1,4 +1,5 @@
-﻿using Xamarin.UITest;
+﻿using Plugin.Maui.UITestHelpers.Appium;
+using Plugin.Maui.UITestHelpers.Core;
 
 namespace WhereToFly.App.UITest;
 
@@ -22,7 +23,24 @@ internal class MapPage : PageBase
     /// </summary>
     private void WaitForCompletePage()
     {
-        this.app.WaitForElement(x => x.Marked("ExploreMapWebView"));
-        this.app.WaitForElement(x => x.WebView());
+        this.App.WaitForElement("MapView");
+    }
+
+    /// <summary>
+    /// Opens page and returns new page object
+    /// </summary>
+    /// <param name="page">page to open</param>
+    /// <returns>new page object</returns>
+    public PageBase OpenPage(PageToOpen page)
+    {
+        this.App.Tap("AppCompatImageButton");
+
+        // the PageToOpen enum has the same values as the AutomationId
+        // attributes on the menu plus a suffix
+        this.App.Tap($"{page}Page");
+
+        this.App.WaitForElement($"{page}Page");
+
+        return new PageBase(this.App);
     }
 }

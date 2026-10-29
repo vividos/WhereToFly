@@ -7,11 +7,6 @@
 internal enum PageToOpen
 {
     /// <summary>
-    /// Map page
-    /// </summary>
-    Map,
-
-    /// <summary>
     /// Layer list page
     /// </summary>
     LayerList,
