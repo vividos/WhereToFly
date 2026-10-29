@@ -4,7 +4,8 @@
              xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
              x:Class="WhereToFly.App.Pages.SettingsPage"
              x:DataType="viewmodels:SettingsViewModel"
-             Title="Settings">
+             Title="Settings"
+             AutomationId="SettingsPage">
 
     <ContentPage.BindingContext>
         <viewmodels:SettingsViewModel />

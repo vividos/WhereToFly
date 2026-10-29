@@ -5,7 +5,8 @@
              xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
              x:Class="WhereToFly.App.Pages.InfoPage"
              x:DataType="viewmodels:InfoPageViewModel"
-             Title="Info">
+             Title="Info"
+             AutomationId="InfoPage">
 
     <ContentPage.BindingContext>
         <viewmodels:InfoPageViewModel />

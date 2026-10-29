@@ -5,7 +5,8 @@
              xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
              x:Class="WhereToFly.App.Pages.TrackListPage"
              x:DataType="viewmodels:TrackListViewModel"
-             Title="Track list">
+             Title="Track list"
+             AutomationId="TrackListPage">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Import track"

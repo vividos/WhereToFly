@@ -5,7 +5,8 @@
              xmlns:viewmodels="clr-namespace:WhereToFly.App.ViewModels"
              x:Class="WhereToFly.App.Pages.LayerListPage"
              x:DataType="viewmodels:LayerListViewModel"
-             Title="Layer list">
+             Title="Layer list"
+             AutomationId="LayerListPage">
 
     <ContentPage.BindingContext>
         <viewmodels:LayerListViewModel />
