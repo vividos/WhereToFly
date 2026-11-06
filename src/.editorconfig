@@ -42,10 +42,6 @@ indent_size = 4
 [*.cmd]
 charset = latin1
 
-# Shell script files
-[*.sh]
-charset = utf-8
-
 # MAUI generated files
 [*.sg.cs]
 generated_code = true
@@ -218,10 +214,12 @@ csharp_using_directive_placement = outside_namespace:warning
 # Code-block preferences
 csharp_prefer_simple_using_statement = true:suggestion
 csharp_prefer_braces = true:suggestion
-csharp_style_namespace_declarations = block_scoped:suggestion
+csharp_style_namespace_declarations = file_scoped:suggestion
 csharp_style_prefer_method_group_conversion = true:silent
 csharp_style_prefer_top_level_statements = false:silent
 csharp_style_prefer_primary_constructors = true:suggestion
+csharp_prefer_system_threading_lock = true:suggestion
+csharp_style_prefer_simple_property_accessors = true:suggestion
 
 # Expression-bodied members
 csharp_style_expression_bodied_methods = false:silent
@@ -292,6 +290,9 @@ dotnet_diagnostic.CsWinRT1030.severity = none
 dotnet_diagnostic.IDE0160.severity = none
 
 # StyleCop rules
+
+# SA0001: XML comment analysis is disabled due to project configuration
+dotnet_diagnostic.SA0001.severity = silent
 
 # SA1124: Do not use regions
 dotnet_diagnostic.SA1124.severity = silent
