@@ -21,6 +21,11 @@ public class CurrentPositionDetailsViewModel : ViewModelBase
     private readonly AppSettings appSettings;
 
     /// <summary>
+    /// Geolocation service
+    /// </summary>
+    private readonly IGeolocationService geolocationService;
+
+    /// <summary>
     /// Compass geo services
     /// </summary>
     private readonly CompassGeoServices compassGeoServices;
@@ -300,17 +305,22 @@ public class CurrentPositionDetailsViewModel : ViewModelBase
     /// Creates a new current position details view model
     /// </summary>
     /// <param name="appSettings">app settings to use</param>
+    /// <param name="geolocationService">geolocation service</param>
     /// <param name="compassGeoServices">compass geo services</param>
     public CurrentPositionDetailsViewModel(
         AppSettings appSettings,
+        IGeolocationService geolocationService,
         CompassGeoServices compassGeoServices)
     {
         this.appSettings = appSettings;
+        this.geolocationService = geolocationService;
         this.compassGeoServices = compassGeoServices;
 
         this.SetupTimer();
 
         this.SharePositionCommand = new AsyncRelayCommand(SharePosition);
+
+        Task.Run(this.InitPositionAsync);
     }
 
     /// <summary>
@@ -362,7 +372,7 @@ public class CurrentPositionDetailsViewModel : ViewModelBase
     /// </summary>
     /// <param name="sender">sender object</param>
     /// <param name="args">event args, including position</param>
-    public void OnPositionChanged(object? sender, GeolocationEventArgs args)
+    private void OnPositionChanged(object? sender, GeolocationEventArgs args)
     {
         this.position = args.Position;
 
@@ -490,9 +500,49 @@ public class CurrentPositionDetailsViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Starts updates to geolocation and compass
+    /// </summary>
+    public async Task StartUpdates()
+    {
+        this.geolocationService.PositionChanged += this.OnPositionChanged;
+
+        await this.InitPositionAsync();
+
+        this.StartCompass();
+    }
+
+    /// <summary>
+    /// Get initial position and show it. Waits for 1 second; when no position is found, just
+    /// waits for regular PositionChanged events from Geolocator.
+    /// </summary>
+    /// <returns>task to wait on</returns>
+    private async Task InitPositionAsync()
+    {
+        var position =
+            await this.geolocationService.GetPositionAsync(timeout: TimeSpan.FromSeconds(1));
+
+        if (position != null)
+        {
+            this.OnPositionChanged(
+                this,
+                new GeolocationEventArgs(position));
+        }
+    }
+
+    /// <summary>
+    /// Stops updates to geolocation and compass
+    /// </summary>
+    public void StopUpdates()
+    {
+        this.geolocationService.PositionChanged -= this.OnPositionChanged;
+
+        this.StopCompass();
+    }
+
+    /// <summary>
     /// Starts compass monitoring, if compass is available
     /// </summary>
-    public void StartCompass()
+    private void StartCompass()
     {
         this.isCompassAvailable = false;
 

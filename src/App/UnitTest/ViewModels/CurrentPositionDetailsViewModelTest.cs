@@ -25,6 +25,7 @@ public class CurrentPositionDetailsViewModelTest : UserInterfaceTestBase
         var appSettings = new AppSettings();
         var viewModel = new CurrentPositionDetailsViewModel(
             appSettings,
+            this.Services.GetRequiredService<IGeolocationService>(),
             this.Services.GetRequiredService<CompassGeoServices>());
 
         // check
