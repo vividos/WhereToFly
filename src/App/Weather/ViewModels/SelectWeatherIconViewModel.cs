@@ -84,7 +84,7 @@ public partial class SelectWeatherIconViewModel : ViewModelBase
 
         this.OnPropertyChanged(nameof(this.GroupedWeatherIconList));
 
-        bool IsInGroup(string? groupToCheck, WeatherIconDescription weatherIcon)
+        static bool IsInGroup(string? groupToCheck, WeatherIconDescription weatherIcon)
         {
             return groupToCheck == null || groupToCheck == weatherIcon.Group;
         }

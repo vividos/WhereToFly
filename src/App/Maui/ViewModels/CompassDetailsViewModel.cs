@@ -361,6 +361,7 @@ public class CompassDetailsViewModel : ViewModelBase
     /// <summary>
     /// Starts updates to geolocation and compass
     /// </summary>
+    /// <returns>task to wait on</returns>
     public async Task StartUpdates()
     {
         this.geolocationService.PositionChanged += this.OnPositionChanged;
@@ -377,14 +378,15 @@ public class CompassDetailsViewModel : ViewModelBase
     /// <returns>task to wait on</returns>
     private async Task InitPositionAsync()
     {
-        var position =
-            await this.geolocationService.GetPositionAsync(timeout: TimeSpan.FromSeconds(1));
+        var currentPosition =
+            await this.geolocationService.GetPositionAsync(
+                timeout: TimeSpan.FromSeconds(1));
 
-        if (position != null)
+        if (currentPosition != null)
         {
             this.OnPositionChanged(
                 this,
-                new GeolocationEventArgs(position));
+                new GeolocationEventArgs(currentPosition));
         }
     }
 

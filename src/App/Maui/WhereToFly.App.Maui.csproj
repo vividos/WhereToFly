@@ -118,6 +118,11 @@
   <!-- AppCenter -->
   <PropertyGroup Condition="'$(PkgMicrosoft_AppCenter_Crashes)' != ''">
     <DefineConstants>$(DefineConstants);APPCENTER</DefineConstants>
+    <!--
+    Workaround: Don't warn about Android.Runtime.PreserveAttribute used in
+    package Microsoft.AppCenter.Crashes
+    -->
+    <NoWarn>$(NoWarn);IL6001</NoWarn>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(PkgMicrosoft_AppCenter_Crashes)' != ''">

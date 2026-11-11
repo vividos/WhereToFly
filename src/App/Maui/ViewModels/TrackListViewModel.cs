@@ -277,7 +277,7 @@ public class TrackListViewModel : ViewModelBase
                     new Dictionary<DevicePlatform, IEnumerable<string>>
                     {
                         { DevicePlatform.Android, [] },
-                        { DevicePlatform.WinUI, [".kml", ".kmz", ".gpx", ".igc"] },
+                        { DevicePlatform.WinUI, (string[])[".kml", ".kmz", ".gpx", ".igc"] },
                     }),
                 PickerTitle = "Select a Track file to import",
             };

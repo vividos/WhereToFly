@@ -72,15 +72,22 @@
     {
         if (firstRender)
         {
-            var referenceToThis = DotNetObjectReference.Create(this);
+            try
+            {
+                var referenceToThis = DotNetObjectReference.Create(this);
 
-            IJSObjectReference options =
-                await JS.InvokeAsync<IJSObjectReference>(
-                    "getAppOptions",
-                    referenceToThis);
+                IJSObjectReference options =
+                    await JS.InvokeAsync<IJSObjectReference>(
+                        "getAppOptions",
+                        referenceToThis);
 
-            this.app =
-                await JS.InvokeAsync<IJSObjectReference>("createApp", options);
+                this.app =
+                    await JS.InvokeAsync<IJSObjectReference>("createApp", options);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"OnAfterRenderAsync: couldn't create app: {ex.Message}");
+            }
         }
 
         await base.OnAfterRenderAsync(firstRender);
@@ -222,7 +229,14 @@
             from location in locationList
             select CreateJsonObjectFromLocation(location);
 
-        await this.app.InvokeVoidAsync("addLocationList", jsonLocationList);
+        try
+        {
+            await this.app.InvokeVoidAsync("addLocationList", jsonLocationList);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"AddLocationList: couldn't add location list: {ex.Message}");
+        }
     }
 
     /// <summary>

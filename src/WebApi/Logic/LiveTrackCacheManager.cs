@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using WhereToFly.Shared.Model;
 using WhereToFly.WebApi.Logic.Services;
@@ -32,7 +33,7 @@ namespace WhereToFly.WebApi.Logic
         /// <summary>
         /// Lock object for cache and queue
         /// </summary>
-        private readonly object lockCacheAndQueue = new();
+        private readonly Lock lockCacheAndQueue = new();
 
         /// <summary>
         /// Data service for querying Garmin inReach services

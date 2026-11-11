@@ -13,7 +13,6 @@
   <ItemGroup>
     <PackageVersion Include="HtmlAgilityPack" Version="1.13.1" />
     <PackageVersion Include="Markdig" Version="1.6.0" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="$(DotNetMicrosoftPackagesVersion)" />
     <PackageVersion Include="Refit" Version="16.4.0" />
     <PackageVersion Include="Sandwych.QuickGraph.Core" Version="1.0.0" />
     <PackageVersion Include="SharpKml.Core" Version="6.1.0" />

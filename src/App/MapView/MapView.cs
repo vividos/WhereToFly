@@ -1076,10 +1076,10 @@ public class MapView :
         }
 
         // round lat/long to 6 digits, getting about 0,1m accuracy
-        decimal GetRoundedLatLong(double latlong) => Math.Round((decimal)latlong, 6);
+        static decimal GetRoundedLatLong(double latlong) => Math.Round((decimal)latlong, 6);
 
         // round altitude to 0,1m accuracy
-        decimal GetRoundedHeightFromAltitude(double altitude) => Math.Round((decimal)altitude, 1);
+        static decimal GetRoundedHeightFromAltitude(double altitude) => Math.Round((decimal)altitude, 1);
 
         var trackPointsList =
             track.TrackPoints.SelectMany(x => new decimal[]
