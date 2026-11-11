@@ -2,6 +2,7 @@
 using Microsoft.Maui.Graphics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using WhereToFly.App.Abstractions;
 using WhereToFly.App.Models;
 using WhereToFly.App.Services;
 using WhereToFly.App.ViewModels;
@@ -57,6 +58,7 @@ public class CurrentPositionDetailsViewModelTest : UserInterfaceTestBase
 
         var viewModel = new CurrentPositionDetailsViewModel(
             appSettings,
+            this.Services.GetRequiredService<IGeolocationService>(),
             this.Services.GetRequiredService<CompassGeoServices>());
 
         // run
@@ -101,6 +103,7 @@ public class CurrentPositionDetailsViewModelTest : UserInterfaceTestBase
         var appSettings = new AppSettings();
         var viewModel = new CurrentPositionDetailsViewModel(
             appSettings,
+            this.Services.GetRequiredService<IGeolocationService>(),
             this.Services.GetRequiredService<CompassGeoServices>());
 
         // run

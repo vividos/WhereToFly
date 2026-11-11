@@ -372,7 +372,7 @@ public class CurrentPositionDetailsViewModel : ViewModelBase
     /// </summary>
     /// <param name="sender">sender object</param>
     /// <param name="args">event args, including position</param>
-    private void OnPositionChanged(object? sender, GeolocationEventArgs args)
+    internal void OnPositionChanged(object? sender, GeolocationEventArgs args)
     {
         this.position = args.Position;
 
