@@ -30,16 +30,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="coverlet.collector" Version="10.0.1">
+    <PackageReference Include="coverlet.collector">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Maui.Controls" Version="$(DotNetMauiVersion)" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.10.0" />
-    <PackageReference Include="Mocks.Maui" Version="1.2.5" />
-    <PackageReference Include="MSTest.TestAdapter" Version="4.4.0" />
-    <PackageReference Include="MSTest.TestFramework" Version="4.4.0" />
-    <PackageReference Include="sqlite-net-pcl" Version="1.11.285" />
+    <PackageReference Include="Microsoft.Maui.Controls" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Mocks.Maui" />
+    <PackageReference Include="MSTest.TestAdapter" />
+    <PackageReference Include="MSTest.TestFramework" />
+    <PackageReference Include="sqlite-net-pcl" />
   </ItemGroup>
 
   <ItemGroup>

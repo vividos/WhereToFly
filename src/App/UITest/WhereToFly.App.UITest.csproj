@@ -10,13 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Appium.WebDriver" Version="5.0.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.11.0" />
-    <PackageReference Include="NUnit" Version="5.0.0" />
-    <PackageReference Include="NUnit3TestAdapter" Version="6.3.1" />
-    <PackageReference Include="Plugin.Maui.UITestHelpers.Appium" Version="1.0.0-preview5" />
-    <PackageReference Include="Plugin.Maui.UITestHelpers.Core" Version="1.0.0-preview5" />
-    <PackageReference Include="Plugin.Maui.UITestHelpers.NUnit" Version="1.0.0-preview5" />
+    <PackageReference Include="Appium.WebDriver" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Plugin.Maui.UITestHelpers.Appium" />
+    <PackageReference Include="Plugin.Maui.UITestHelpers.Core" />
+    <PackageReference Include="Plugin.Maui.UITestHelpers.NUnit" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(SonarQubeTargetsImported)' == '' And $(Configuration) == 'Debug' ">

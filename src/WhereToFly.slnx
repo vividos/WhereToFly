@@ -35,6 +35,7 @@
     <File Path=".editorconfig" />
     <File Path="Clean.cmd" />
     <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
     <File Path="SonarCloud.cmd" />
     <File Path="SonarQube.Analysis.xml" />
     <File Path="stylecop.json" />

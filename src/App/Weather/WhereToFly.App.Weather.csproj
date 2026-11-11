@@ -28,10 +28,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Maui" Version="15.0.1" />
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="$(DotNetMicrosoftPackagesVersion)" />
-    <PackageReference Include="Microsoft.Maui.Controls" Version="$(DotNetMauiVersion)" />
+    <PackageReference Include="CommunityToolkit.Maui" />
+    <PackageReference Include="CommunityToolkit.Mvvm" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" />
+    <PackageReference Include="Microsoft.Maui.Controls" />
   </ItemGroup>
 
   <ItemGroup>
