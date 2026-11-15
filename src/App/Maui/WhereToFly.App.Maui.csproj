@@ -130,7 +130,9 @@
     Workaround: Microsoft.AppCenter.* packages reference a very old SQLitePCLRaw version.
     Reference a current version to fix vulnerabilities.
     -->
+    <PackageReference Include="SQLitePCLRaw.bundle_green" />
     <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" />
+    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3.android" />
   </ItemGroup>
 
   <!-- .NET Windows properties -->
