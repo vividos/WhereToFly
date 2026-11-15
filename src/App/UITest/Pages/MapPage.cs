@@ -1,7 +1,7 @@
 ﻿using Plugin.Maui.UITestHelpers.Appium;
 using Plugin.Maui.UITestHelpers.Core;
 
-namespace WhereToFly.App.UITest;
+namespace WhereToFly.App.UITest.Pages;
 
 /// <summary>
 /// Map page; using the UI test Page Object Pattern
@@ -12,7 +12,17 @@ internal class MapPage : PageBase
     /// Creates a new map page from IApp instance that just has started up
     /// </summary>
     /// <param name="app">app under test</param>
-    public MapPage(IApp app)
+    /// <returns>map page</returns>
+    public static MapPage FromApp(IApp app)
+    {
+        return new MapPage(app);
+    }
+
+    /// <summary>
+    /// Creates a new map page object
+    /// </summary>
+    /// <param name="app">app under test</param>
+    private MapPage(IApp app)
         : base(app)
     {
         this.WaitForCompletePage();
@@ -24,6 +34,30 @@ internal class MapPage : PageBase
     private void WaitForCompletePage()
     {
         this.App.WaitForElement("MapView");
+    }
+
+    /// <summary>
+    /// Opens info page
+    /// </summary>
+    /// <returns>info page</returns>
+    public InfoPage OpenInfo()
+    {
+        this.App.ShowFlyout();
+        this.App.Tap("InfoPage");
+
+        return new InfoPage(this.App);
+    }
+
+    /// <summary>
+    /// Opens settings page
+    /// </summary>
+    /// <returns>settings page</returns>
+    public SettingsPage OpenSettings()
+    {
+        this.App.ShowFlyout();
+        this.App.Tap("SettingsPage");
+
+        return new SettingsPage(this.App);
     }
 
     /// <summary>

@@ -1,6 +1,6 @@
 ﻿using Plugin.Maui.UITestHelpers.Core;
 
-namespace WhereToFly.App.UITest;
+namespace WhereToFly.App.UITest.Pages;
 
 /// <summary>
 /// UI test page base class; using the UI test Page Object Pattern

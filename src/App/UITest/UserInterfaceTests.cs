@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Plugin.Maui.UITestHelpers.Appium;
 using Plugin.Maui.UITestHelpers.Core;
+using WhereToFly.App.UITest.Pages;
 
 namespace WhereToFly.App.UITest;
 
@@ -22,7 +23,7 @@ public class UserInterfaceTests : BaseTest
             Is.Not.Null,
             "app must have been initialized");
 
-        var mapPage = new MapPage(this.App);
+        var mapPage = MapPage.FromApp(this.App);
 
         Assert.That(
             mapPage,
@@ -50,7 +51,7 @@ public class UserInterfaceTests : BaseTest
         }
 
         // wait for map
-        var mapPage = new MapPage(this.App);
+        var mapPage = MapPage.FromApp(this.App);
 
         PageToOpen[] pagesToOpenList =
         [
