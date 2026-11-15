@@ -44,6 +44,6 @@ public partial class FlyingRangePopupPage : BasePopupPage<FlyingRangeParameters>
     {
         this.Closed -= this.OnClosed;
 
-        await this.viewModel.StoreFlyingRangeParameters();
+        await this.viewModel.StoreFlyingRangeParameters().LogTaskException();
     }
 }

@@ -37,7 +37,7 @@ public partial class CompassDetailsPage : ContentPage
     {
         base.OnAppearing();
 
-        await this.viewModel.StartUpdates();
+        await this.viewModel.StartUpdates().LogTaskException();
     }
 
     /// <summary>
