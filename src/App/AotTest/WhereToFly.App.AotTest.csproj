@@ -17,11 +17,6 @@
 
   <PropertyGroup Condition=" $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' ">
     <RuntimeIdentifiers>android-arm64</RuntimeIdentifiers>
-    <!-- Native AOT is not supported on Android yet -->
-    <PublishAot>false</PublishAot>
-    <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
-    <EnableSingleFileAnalyzer>true</EnableSingleFileAnalyzer>
-    <EnableAotAnalyzer>true</EnableAotAnalyzer>
     <SupportedOSPlatformVersion>31.0</SupportedOSPlatformVersion>
   </PropertyGroup>
 
