@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>$(DotNetVersion)</TargetFramework>
+    <OutputType>Exe</OutputType>
     <Description>Where-to-fly App unit tests</Description>
     <UseMaui>true</UseMaui>
     <IsPackable>false</IsPackable>
@@ -30,12 +31,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="coverlet.MTP">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="coverlet.MTP" />
     <PackageReference Include="Microsoft.Maui.Controls" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Microsoft.Testing.Platform" />
     <PackageReference Include="Microsoft.Testing.Extensions.TrxReport" />
     <PackageReference Include="Mocks.Maui" />
     <PackageReference Include="MSTest.TestAdapter" />
