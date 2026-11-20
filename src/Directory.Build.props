@@ -16,5 +16,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <UseArtifactsOutput>true</UseArtifactsOutput>
     <ArtifactsPath>$(MSBuildThisFileDirectory)..\artifacts</ArtifactsPath>
+    <EnableNUnitRunner>true</EnableNUnitRunner>
+    <EnableMSTestRunner>true</EnableMSTestRunner>
   </PropertyGroup>
 </Project>

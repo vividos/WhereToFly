@@ -1,7 +1,7 @@
 @echo off
 REM
 REM Where-to-fly - an app to decide where to (hike up and) fly with a paraglider
-REM Copyright (C) 2017-2025 Michael Fink
+REM Copyright (C) 2017-2026 Michael Fink
 REM
 REM Runs Unit tests and coverage analysis
 REM
@@ -27,26 +27,32 @@ REM
 dotnet test ^
     App\UnitTest\WhereToFly.App.UnitTest.csproj ^
     --configuration Release ^
-    --collect:"XPlat Code Coverage;Format=opencover" ^
     --results-directory TestResults ^
-    --logger:trx;LogFileName=WhereToFly-App-Log.xml ^
-    --logger:console;verbosity=detailed
+    --output Detailed ^
+    --report-trx ^
+    --report-trx-filename WhereToFly-App-Log.xml ^
+    --coverlet ^
+    --coverlet-output-format opencover
 
 dotnet test ^
     Geo\UnitTest\WhereToFly.Geo.UnitTest.csproj ^
     --configuration Release ^
-    --collect:"XPlat Code Coverage;Format=opencover" ^
     --results-directory TestResults ^
-    --logger:trx;LogFileName=WhereToFly-Geo-Log.trx ^
-    --logger:console;verbosity=detailed
+    --output Detailed ^
+    --report-trx ^
+    --report-trx-filename WhereToFly-Geo-Log.trx ^
+    --coverlet ^
+    --coverlet-output-format opencover
 
 dotnet test ^
     WebApi\UnitTest\WhereToFly.WebApi.UnitTest.csproj ^
     --configuration Release ^
-    --collect:"XPlat Code Coverage;Format=opencover" ^
     --results-directory TestResults ^
-    --logger:trx;LogFileName=WhereToFly-WebApi-Log.trx ^
-    --logger:console;verbosity=detailed
+    --output Detailed ^
+    --report-trx ^
+    --report-trx-filename LogFileName=WhereToFly-WebApi-Log.trx ^
+    --coverlet ^
+    --coverlet-output-format opencover
 
 ReportGenerator ^
     -reports:TestResults\**\*.opencover.xml ^

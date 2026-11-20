@@ -1,5 +1,8 @@
 {
   "sdk": {
     "paths": [ ".dotnet", "$host$" ]
+  },
+  "test": {
+    "runner": "Microsoft.Testing.Platform"
   }
 }
