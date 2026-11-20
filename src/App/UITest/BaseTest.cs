@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium.Appium.Enums;
+﻿using NUnit.Framework;
+using OpenQA.Selenium.Appium.Enums;
 using Plugin.Maui.UITestHelpers.Core;
 using System.Diagnostics;
 using UITest.Appium.NUnit;
